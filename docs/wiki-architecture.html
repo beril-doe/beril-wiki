@@ -67,6 +67,13 @@
   .layer.entry { border-color: var(--primary); background: var(--primary-soft); }
   .layers .down { text-align: center; color: var(--muted); font-size: .8rem;
     font-family: "IBM Plex Mono", monospace; padding: .05rem 0; }
+  .how { display: grid; gap: .45rem; max-width: 46rem; margin: 0 auto; }
+  .how .row { display: flex; gap: 1rem; align-items: baseline;
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    padding: .55rem 1rem; }
+  .how .k { font-family: "IBM Plex Mono", monospace; font-size: .78rem; color: var(--primary);
+    min-width: 4.6rem; text-transform: uppercase; letter-spacing: .06em; }
+  .how .v { color: var(--fg); font-size: .93rem; }
   .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: .9rem; }
   .tile { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.2rem; }
   .tile h3 { margin: 0 0 .3rem; font-size: 1.02rem; font-weight: 600; color: var(--primary); }
@@ -208,6 +215,19 @@
     </svg>
     <figcaption>The verify gate is structural: an uncited claim or a number absent from its source is rejected at write time, never published.</figcaption>
   </figure>
+</section>
+
+<section>
+  <h2>Under the hood</h2>
+  <p class="sub">No agent framework, no chat sessions — a plain Python pipeline making direct model calls.</p>
+  <div class="how">
+    <div class="row"><span class="k">engine</span><span class="v">Python scripts; each stage calls the model API directly (litellm → LBL's CBORG gateway)</span></div>
+    <div class="row"><span class="k">models</span><span class="v">Claude Sonnet-class for synthesis — configurable per stage, swappable in one line</span></div>
+    <div class="row"><span class="k">division</span><span class="v">the model writes prose and JSON decisions only; code owns pages, links, figures, indexes</span></div>
+    <div class="row"><span class="k">rules</span><span class="v">one editorial contract file, injected into every call — change the rules, not the code</span></div>
+    <div class="row"><span class="k">memory</span><span class="v">every input content-hashed; a rerun redoes only what changed</span></div>
+    <div class="row"><span class="k">output</span><span class="v">plain markdown in git → Quartz renders the static site; no database, no lock-in</span></div>
+  </div>
 </section>
 
 <section>
