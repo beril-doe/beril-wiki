@@ -207,8 +207,9 @@ Write the entity page for: {title} (type: {etype}, file: entities/{name}.md)
 
 This entity relates to document "{sid}", summarized above.
 
-Requirements: what this entity is (canonical name; list known aliases and any
-stable external identifier), the key facts about it from this document with
+Requirements: H1 title first, then what this entity is (canonical name; list
+known aliases and any stable external identifier), the key facts about it from
+this document with
 exact numbers, every factual claim ending with [src: {sid}], and [[wikilinks]]
 to related pages including [[summaries/{summary_stem}]] — subject to the
 whitelist rules above.
