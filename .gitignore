@@ -2,9 +2,8 @@
 quartz/
 staging/
 projects-cache/
-pipeline.log
 nohup.out
 __pycache__/
 parity/
 wiki/sources/
-parity_run.log
+*.log
