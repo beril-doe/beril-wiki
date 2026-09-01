@@ -194,6 +194,10 @@ Merge-rewrite this page to integrate the new evidence from document "{sid}"
 - Every NEW factual claim ends with [src: {sid}]; numbers copied exactly.
 - Follow the wikilink whitelist rules above; add [[summaries/{summary_stem}]].
 - Keep (and extend if warranted) the ## Open Directions ending.
+- Keep the merged page TIGHT: at most ~25% longer than the current page.
+  Weave the new evidence into existing sections; do not restate the summary's
+  result tables (fine detail lives on the summary page, cite and link it).
+  This is a claim-delta merge, not a second report.
 
 Return a JSON object with two keys:
 - "description": a single sentence (under 100 chars) defining this concept (may change)
@@ -233,7 +237,9 @@ Merge-rewrite to integrate the new facts about this entity from document
 numbers, and citations; state relations to adjacent existing claims explicitly
 (**supports** / **contradicts** / **refines**); every new claim ends with
 [src: {sid}]; numbers copied exactly; follow the whitelist rules above and add
-[[summaries/{summary_stem}]].
+[[summaries/{summary_stem}]]. Keep the merged page TIGHT: at most ~25% longer
+than the current page — weave the new facts in, do not restate the summary
+(fine detail lives on the summary page, cite and link it).
 
 Return a JSON object with three keys:
 - "description": a single sentence (under 100 chars) identifying this entity
@@ -294,7 +300,8 @@ def parse_json_reply(text: str) -> dict:
     m = re.search(r"\{.*\}", t, re.S)
     if not m:
         raise ValueError(f"no JSON object in reply: {t[:120]!r}")
-    obj = json.loads(m.group(0))
+    # strict=False: models sometimes emit raw control chars inside strings.
+    obj = json.loads(m.group(0), strict=False)
     if not isinstance(obj, dict):
         raise ValueError(f"expected JSON object, got {type(obj).__name__}")
     return obj
@@ -373,18 +380,23 @@ def generate_page(messages: list[dict], step: str, sources: dict[str, str],
                   targets: set[str], require_slots: bool = False, check_links: bool = True) -> dict:
     """One LLM page call + write-time validation with a single violation-quoting
     retry. Raises PageError on second failure (caller keeps the old page)."""
-    raw = llm(messages, step)
-    obj = parse_json_reply(raw)
-    violations = validate_page(obj.get("content") or "", sources, targets, require_slots, check_links)
+    def attempt(msgs: list[dict], name: str) -> tuple[str, dict | None, list[str]]:
+        raw = llm(msgs, name)
+        try:
+            obj = parse_json_reply(raw)
+        except (json.JSONDecodeError, ValueError) as e:
+            # A malformed reply costs the page a retry, never the whole doc.
+            return raw, None, [f"your reply was not parseable JSON ({e}) — resend the SAME page as one valid JSON object"]
+        return raw, obj, validate_page(obj.get("content") or "", sources, targets, require_slots, check_links)
+
+    raw, obj, violations = attempt(messages, step)
     if violations:
         print(f"    {step}: {len(violations)} violation(s), retrying")
         retry = messages + [
             {"role": "assistant", "content": raw},
             {"role": "user", "content": RETRY_USER.format(violations="\n".join(f"- {x}" for x in violations))},
         ]
-        raw = llm(retry, f"{step}/retry")
-        obj = parse_json_reply(raw)
-        violations = validate_page(obj.get("content") or "", sources, targets, require_slots, check_links)
+        raw, obj, violations = attempt(retry, f"{step}/retry")
         if violations:
             raise PageError(f"{step}: still invalid after retry: " + "; ".join(violations[:5]))
     return obj
