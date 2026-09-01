@@ -44,10 +44,11 @@ from wiki_check import NUMBER, SRC_TAG, cited_ids, duplicate_concepts, is_table_
 HERE = pathlib.Path(__file__).parent
 REPO = HERE.parent
 MODEL = os.environ.get("COMPILE_MODEL", "openai/claude-sonnet-5")
-# Merge-rewrites return the FULL page; long concept pages run 8-10k tokens, so
-# 8192 truncated them (parity run 2026-09-01) — 16k gives headroom without
-# inviting bloat (the contract caps page scope, not the token limit).
-MAX_TOKENS = 16384
+# Merge-rewrites re-emit the FULL page: the corpus's hot hub pages are 27-44KB
+# (9-15k tokens of content), so 8k and even 16k caps truncated their merges
+# (parity runs 2026-09-01). 32k covers the largest page plus growth headroom;
+# the ~25% length rule in the update prompts polices bloat separately.
+MAX_TOKENS = 32768
 # Budget guard: estimated at Anthropic Sonnet list price ($3/$15 per Mtok);
 # CBORG bills LBL, so this is a tripwire, not an invoice.
 BUDGET_USD = float(os.environ.get("COMPILE_BUDGET_USD", "5"))
