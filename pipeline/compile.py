@@ -52,7 +52,8 @@ MAX_TOKENS = 32768
 # Budget guard: estimated at Anthropic Sonnet list price ($3/$15 per Mtok);
 # CBORG bills LBL, so this is a tripwire, not an invoice.
 BUDGET_USD = float(os.environ.get("COMPILE_BUDGET_USD", "5"))
-PRICE_IN, PRICE_OUT = 3e-6, 15e-6
+PRICE_IN = float(os.environ.get("COMPILE_PRICE_IN", "3e-6"))    # $/token; Sonnet default
+PRICE_OUT = float(os.environ.get("COMPILE_PRICE_OUT", "15e-6"))  # override for cheaper models (Luna)
 
 ENTITY_TYPES = ("organism", "gene_or_pathway", "compound", "method", "dataset", "place", "person", "other")
 WIKILINK = re.compile(r"\[\[([^\]|#]+?)(?:[#|][^\]]*)?\]\]")
