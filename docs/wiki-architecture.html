@@ -222,7 +222,7 @@
   <p class="sub">No agent framework, no chat sessions — a plain Python pipeline making direct model calls.</p>
   <div class="how">
     <div class="row"><span class="k">engine</span><span class="v">Python scripts; each stage calls the model API directly (litellm → LBL's CBORG gateway)</span></div>
-    <div class="row"><span class="k">models</span><span class="v">Claude Sonnet-class for synthesis — configurable per stage, swappable in one line</span></div>
+    <div class="row"><span class="k">models</span><span class="v">picked per stage by A/B test: a fast model (GPT&#8209;5.6&nbsp;Luna) for bulk compilation, Sonnet&#8209;class where deep synthesis pays — swappable in one line</span></div>
     <div class="row"><span class="k">division</span><span class="v">the model writes prose and JSON decisions only; code owns pages, links, figures, indexes</span></div>
     <div class="row"><span class="k">rules</span><span class="v">one editorial contract file, injected into every call — change the rules, not the code</span></div>
     <div class="row"><span class="k">memory</span><span class="v">every input content-hashed; a rerun redoes only what changed</span></div>
