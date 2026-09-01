@@ -7,3 +7,4 @@ nohup.out
 __pycache__/
 parity/
 wiki/sources/
+parity_run.log
