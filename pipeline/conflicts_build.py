@@ -21,7 +21,8 @@ import re
 from litellm import completion
 
 HERE = pathlib.Path(__file__).parent
-OUT = HERE / "wiki-extra" / "conflicts"
+ROOT = HERE.parent
+OUT = ROOT / "wiki-extra" / "conflicts"
 MODEL = "openai/claude-sonnet-5"
 
 PROMPT = """You are writing a CONFLICT page for a research wiki: a first-class record of a
@@ -47,7 +48,7 @@ Link the source concept pages with [[concepts/<stem>]] wikilinks where given.
 
 def tension_blocks() -> list[dict]:
     blocks = []
-    for page in sorted((HERE / "wiki/concepts").glob("*.md")):
+    for page in sorted((ROOT / "wiki/concepts").glob("*.md")):
         text = page.read_text(encoding="utf-8", errors="replace")
         m = re.search(r"^## Tensions?\s*\n(.*?)(?=\n## |\Z)", text, re.M | re.S)
         if not m:

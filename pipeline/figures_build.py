@@ -28,8 +28,11 @@ import re
 
 from litellm import completion
 
+from fetch_reports import CHECKOUT
+
 HERE = pathlib.Path(__file__).parent
-REPO = HERE.parent
+ROOT = HERE.parent
+STATE = ROOT / "state"
 MODEL = "openai/claude-sonnet-5"
 MAX_PLACE = {"summaries": 2, "topics": 3, "conflicts": 1}
 MAX_CANDIDATES = 40
@@ -60,7 +63,7 @@ def paragraphs(body: str) -> list[str]:
 
 def build_manifest() -> dict[str, list[dict]]:
     manifest: dict[str, list[dict]] = {}
-    for report in sorted(REPO.glob("projects/*/REPORT.md")):
+    for report in sorted(CHECKOUT.glob("projects/*/REPORT.md")):
         project = report.parent.name
         text = report.read_text(encoding="utf-8", errors="replace")
         figs = []
@@ -72,7 +75,8 @@ def build_manifest() -> dict[str, list[dict]]:
                     figs.append({"file": m.group(2), "caption": m.group(1), "context": ctx})
         if figs:
             manifest[project] = figs
-    (HERE / "figures-manifest.json").write_text(json.dumps(manifest, indent=1))
+    STATE.mkdir(exist_ok=True)
+    (STATE / "figures-manifest.json").write_text(json.dumps(manifest, indent=1))
     return manifest
 
 
@@ -86,10 +90,10 @@ def cited_projects(text: str, projects: set[str]) -> list[str]:
 
 def target_pages() -> list[tuple[str, pathlib.Path]]:
     out = []
-    for f in sorted((HERE / "wiki/summaries").glob("*__REPORT.md")):
+    for f in sorted((ROOT / "wiki/summaries").glob("*__REPORT.md")):
         out.append(("summaries", f))
     for sub in ("topics", "conflicts"):
-        for f in sorted((HERE / "wiki-extra" / sub).glob("*.md")):
+        for f in sorted((ROOT / "wiki-extra" / sub).glob("*.md")):
             out.append((sub, f))
     return out
 
@@ -97,9 +101,9 @@ def target_pages() -> list[tuple[str, pathlib.Path]]:
 def main() -> None:
     manifest = build_manifest()
     print(f"manifest: {sum(len(v) for v in manifest.values())} figures across {len(manifest)} projects")
-    state_path = HERE / ".figures-state.json"
+    state_path = STATE / "figures-state.json"
     state = json.loads(state_path.read_text()) if state_path.exists() else {}
-    placements_path = HERE / "figures-placements.json"
+    placements_path = STATE / "figures-placements.json"
     placements = json.loads(placements_path.read_text()) if placements_path.exists() else {}
     csv_flags: dict[str, list[str]] = {}
     calls = skipped = 0
@@ -169,7 +173,7 @@ def main() -> None:
             lines.append(f"## {rel}")
             lines += [f"- {f}" for f in flags]
             lines.append("")
-        (HERE / "figures-csv-queue.md").write_text("\n".join(lines))
+        (STATE / "figures-csv-queue.md").write_text("\n".join(lines))
     total = sum(len(v["placements"]) for v in placements.values())
     print(f"figures: {calls} pages placed, {skipped} unchanged, {total} total placements"
           + (f", csv queue: {sum(len(v) for v in csv_flags.values())} flags" if csv_flags else ""))

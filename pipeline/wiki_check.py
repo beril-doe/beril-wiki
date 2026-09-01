@@ -65,8 +65,29 @@ def is_table_or_links(par: str) -> bool:
     return all(ln.startswith("|") or ln.startswith("- [[") for ln in lines)
 
 
+def duplicate_concepts(kb: pathlib.Path) -> list[str]:
+    """Near-duplicate concept pairs: heavy source overlap + shared name tokens.
+
+    Shared with compile.py's plan step, which injects the current output so
+    extend-don't-duplicate is enforced at write time, not just audited here.
+    """
+    stops = {"the", "of", "in", "and", "for", "to", "a", "vs", "with"}
+    cinfo = []
+    for page in (kb / "wiki" / "concepts").glob("*.md"):
+        text = page.read_text(encoding="utf-8", errors="replace")
+        srcs = set(re.findall(r'summaries/([\w.-]+?)__REPORT', text[:1500]))
+        toks = set(page.stem.split("-")) - stops
+        cinfo.append((page.stem, srcs, toks))
+    out = []
+    for i, (a, sa, ta) in enumerate(cinfo):
+        for b, sb, tb in cinfo[i + 1:]:
+            if sa and sb and len(sa & sb) / max(1, len(sa | sb)) >= 0.5 and len(ta & tb) >= 2:
+                out.append(f"duplicate-concepts? '{a}' and '{b}' share {len(sa & sb)} sources and name tokens {sorted(ta & tb)}")
+    return out
+
+
 def main() -> int:
-    kb = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else pathlib.Path(__file__).parent
+    kb = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else pathlib.Path(__file__).parent.parent
     sources = source_ids(kb)
     if not sources:
         print(f"wiki_check: no sources found under {kb}/staging or {kb}/raw", file=sys.stderr)
@@ -112,18 +133,7 @@ def main() -> int:
         if uptake.get(p, 0) < 2:
             warns.append(f"uptake: project '{p}' cited by only {uptake.get(p, 0)} concept/topic page(s) — under-integrated")
 
-    # Near-duplicate concepts: heavy source overlap + shared name tokens.
-    stops = {"the", "of", "in", "and", "for", "to", "a", "vs", "with"}
-    cinfo = []
-    for page in (kb / "wiki" / "concepts").glob("*.md"):
-        text = page.read_text(encoding="utf-8", errors="replace")
-        srcs = set(re.findall(r'summaries/([\w.-]+?)__REPORT', text[:1500]))
-        toks = set(page.stem.split("-")) - stops
-        cinfo.append((page.stem, srcs, toks))
-    for i, (a, sa, ta) in enumerate(cinfo):
-        for b, sb, tb in cinfo[i + 1:]:
-            if sa and sb and len(sa & sb) / max(1, len(sa | sb)) >= 0.5 and len(ta & tb) >= 2:
-                warns.append(f"duplicate-concepts? '{a}' and '{b}' share {len(sa & sb)} sources and name tokens {sorted(ta & tb)}")
+    warns.extend(duplicate_concepts(kb))
 
     print(f"wiki_check: {n_pages} pages, {n_cited_pars} cited paragraphs, "
           f"{n_numeric_pars} numeric paragraphs verified against {len(sources)} sources")

@@ -18,6 +18,8 @@ import shutil
 import subprocess
 import sys
 
+from fetch_reports import CHECKOUT
+
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
 SKIP = {"AGENTS.md", "log.md"}
 FM = re.compile(r"^(---\n.*?\n---\n)", re.S)
@@ -128,7 +130,7 @@ def main() -> None:
     }
     targets.add("catalog")  # wiki/index.md is renamed to catalog.md below
     targets.discard("index")
-    pl_path = kb / "figures-placements.json"
+    pl_path = kb / "state" / "figures-placements.json"
     placements = json.loads(pl_path.read_text()) if pl_path.exists() else {}
     shutil.rmtree(dst, ignore_errors=True)
 
@@ -147,10 +149,10 @@ def main() -> None:
             out.parent.mkdir(parents=True, exist_ok=True)
             text = src.read_text(encoding="utf-8", errors="replace")
             if rel.parts[0] == "sources" and rel.stem.endswith("__REPORT"):
-                text = rewrite_source_figures(text, re.sub(r"__REPORT$", "", rel.stem), kb.parent, dst)
+                text = rewrite_source_figures(text, re.sub(r"__REPORT$", "", rel.stem), CHECKOUT, dst)
             entry = placements.get(str(rel))
             if entry and entry.get("placements"):
-                text = splice_figures(text, entry, kb.parent, dst)
+                text = splice_figures(text, entry, CHECKOUT, dst)
             text = linkify_src(strip_dead_wikilinks(text, targets), known)
             # Summaries must lead to their raw report, and self-[src:] tags are
             # circular — point both at the sources/ page (the provenance hop

@@ -16,11 +16,12 @@ import re
 
 import yaml
 
+from fetch_reports import CHECKOUT
 from people import build_author_index
 
 HERE = pathlib.Path(__file__).parent
-REPO = HERE.parent
-OUT = HERE / "wiki-extra"
+ROOT = HERE.parent
+OUT = ROOT / "wiki-extra"
 
 
 def slugify(text: str) -> str:
@@ -31,14 +32,14 @@ def wiki_projects() -> list[str]:
     """Project ids that have (or will have) a summary page, from staging/."""
     return sorted(
         re.sub(r"__REPORT$", "", f.stem)
-        for f in (HERE / "staging").glob("*__REPORT.md")
+        for f in (ROOT / "staging").glob("*__REPORT.md")
     )
 
 
 def write_authors() -> int:
     readmes = {
         p.parent.name: (p.read_text(encoding="utf-8", errors="replace"))
-        for p in REPO.glob("projects/*/README.md")
+        for p in CHECKOUT.glob("projects/*/README.md")
         if (p.parent / "REPORT.md").exists()
     }
     index = build_author_index(readmes)
@@ -60,14 +61,14 @@ def write_authors() -> int:
 
 
 def write_collections() -> int:
-    cfg = yaml.safe_load((REPO / "ui/config/collections.yaml").read_text(encoding="utf-8"))
+    cfg = yaml.safe_load((CHECKOUT / "ui/config/collections.yaml").read_text(encoding="utf-8"))
     out = OUT / "data"
     out.mkdir(parents=True, exist_ok=True)
     projects = wiki_projects()
     # Which projects mention this collection id in their report (cheap deterministic join).
     mention: dict[str, list[str]] = {}
     for proj in projects:
-        text = (HERE / "staging" / f"{proj}__REPORT.md").read_text(encoding="utf-8", errors="replace")
+        text = (ROOT / "staging" / f"{proj}__REPORT.md").read_text(encoding="utf-8", errors="replace")
         for coll in cfg["collections"]:
             if coll["id"] in text:
                 mention.setdefault(coll["id"], []).append(proj)

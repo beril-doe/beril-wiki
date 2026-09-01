@@ -25,7 +25,8 @@ import networkx as nx
 from litellm import completion
 
 HERE = pathlib.Path(__file__).parent
-OUT = HERE / "wiki-extra"
+ROOT = HERE.parent
+OUT = ROOT / "wiki-extra"
 HUB_MODEL = "openai/claude-sonnet-5"
 MIN_CLUSTER = 3
 PER_PAGE_CHARS = 7000  # truncate very long concept pages in hub context
@@ -119,13 +120,14 @@ def slugify(text: str) -> str:
 
 
 def main() -> None:
-    concepts = {p.stem: parse_page(p) for p in sorted((HERE / "wiki/concepts").glob("*.md"))}
-    entities = {p.stem: parse_page(p) for p in sorted((HERE / "wiki/entities").glob("*.md"))}
+    concepts = {p.stem: parse_page(p) for p in sorted((ROOT / "wiki/concepts").glob("*.md"))}
+    entities = {p.stem: parse_page(p) for p in sorted((ROOT / "wiki/entities").glob("*.md"))}
     clusters = cluster_concepts(concepts)
     print(f"{len(concepts)} concepts -> {len(clusters)} clusters: {[len(c) for c in clusters]}")
 
     (OUT / "topics").mkdir(parents=True, exist_ok=True)
-    state_path = HERE / ".topics-state.json"
+    state_path = ROOT / "state" / "topics-state.json"
+    state_path.parent.mkdir(exist_ok=True)
     state = json.loads(state_path.read_text()) if state_path.exists() else {}
 
     # Topic names are cached by member set so identical clusters never get
@@ -198,8 +200,8 @@ def main() -> None:
         print("home unchanged; done")
         return
 
-    n_sum = len(list((HERE / "wiki/summaries").glob("*.md")))
-    n_digests = sum((HERE / "wiki/summaries" / f"{d}.md").exists() for d in ("discoveries", "pitfalls"))
+    n_sum = len(list((ROOT / "wiki/summaries").glob("*.md")))
+    n_digests = sum((ROOT / "wiki/summaries" / f"{d}.md").exists() for d in ("discoveries", "pitfalls"))
     stats = (f"{n_sum - n_digests} project reports + {n_digests} cross-project digests, "
              f"{len(concepts)} concepts, {len(entities)} entities, {len(hubs)} topics")
     hub_list = "\n".join(f"- [[topics/{slug}|{t}]] ({n} concepts): {lead}" for t, slug, lead, n in hubs)

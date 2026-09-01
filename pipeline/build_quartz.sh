@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
-# Build the Quartz site for the OpenKB wiki. Idempotent; first run clones Quartz (~2 min).
+# Build the Quartz site for the BERIL wiki. Idempotent; first run clones Quartz (~2 min).
 #   ./build_quartz.sh            then: cd quartz && npx quartz build --serve
 # Serves at http://localhost:8080. The quartz/ clone is gitignored; content is derived.
 set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
-QP="$HERE/quartz"
+REPO="$(dirname "$HERE")"
+QP="$REPO/quartz"
 
 if [ ! -d "$QP" ]; then
   git clone --depth 1 --quiet https://github.com/jackyzha0/quartz.git "$QP"
@@ -16,7 +17,7 @@ fi
 # build (idempotent) so theme/config changes here always take effect.
 # Palette + type mirror the BERIL workbench themes (apps/web/src/themes.css):
 # "paper" light and "observatory" violet-ink dark; Fraunces / IBM Plex.
-"$HERE/.venv/bin/python" - "$QP" <<'PY'
+uv run --project "$REPO" python - "$QP" <<'PY'
 import pathlib, sys, yaml
 qp = pathlib.Path(sys.argv[1])
 cfg = yaml.safe_load((qp / "quartz.config.default.yaml").read_text())
@@ -52,8 +53,8 @@ c["theme"]["colors"]["darkMode"] = {           # workbench "observatory"
 (qp / "quartz.config.yaml").write_text(yaml.safe_dump(cfg, sort_keys=False, allow_unicode=True))
 PY
 
-"$HERE/.venv/bin/python" "$HERE/extra_pages.py"
-"$HERE/.venv/bin/python" "$HERE/quartz_ingest.py" "$HERE" "$QP/content"
+uv run --project "$REPO" python "$HERE/extra_pages.py"
+uv run --project "$REPO" python "$HERE/quartz_ingest.py" "$REPO" "$QP/content"
 (cd "$QP" && npx quartz build)
 echo
 echo "built. serve with:  cd $QP && npx quartz build --serve"
