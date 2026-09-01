@@ -44,7 +44,10 @@ from wiki_check import NUMBER, SRC_TAG, cited_ids, duplicate_concepts, is_table_
 HERE = pathlib.Path(__file__).parent
 REPO = HERE.parent
 MODEL = os.environ.get("COMPILE_MODEL", "openai/claude-sonnet-5")
-MAX_TOKENS = 8192
+# Merge-rewrites return the FULL page; long concept pages run 8-10k tokens, so
+# 8192 truncated them (parity run 2026-09-01) — 16k gives headroom without
+# inviting bloat (the contract caps page scope, not the token limit).
+MAX_TOKENS = 16384
 # Budget guard: estimated at Anthropic Sonnet list price ($3/$15 per Mtok);
 # CBORG bills LBL, so this is a tripwire, not an invoice.
 BUDGET_USD = float(os.environ.get("COMPILE_BUDGET_USD", "5"))
@@ -596,11 +599,16 @@ def main(root: pathlib.Path, only: list[str] | None = None) -> int:
             skipped += 1
             continue
         print(f"  compiling {fname}")
+        n_fail_before = len(_failures)
         try:
             compile_doc(root, fname, sources, system)
         except (PageError, ValueError, json.JSONDecodeError) as e:
             print(f"    [ERROR] {fname}: {e} — doc not integrated")
             _failures.append(fname)
+            continue
+        if len(_failures) > n_fail_before:
+            # Rejected pages leave the doc dirty so the next run retries them.
+            print(f"    [ERROR] {fname}: {len(_failures) - n_fail_before} page(s) rejected — doc left dirty for re-run")
             continue
         hashes[fname] = digest
         state_path.write_text(json.dumps(hashes, indent=1, sort_keys=True))
