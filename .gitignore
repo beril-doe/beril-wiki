@@ -5,3 +5,5 @@ projects-cache/
 pipeline.log
 nohup.out
 __pycache__/
+parity/
+wiki/sources/

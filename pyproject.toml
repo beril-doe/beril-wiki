@@ -1,0 +1,10 @@
+[project]
+name = "beril-wiki"
+version = "0.1.0"
+description = "Compiler + pipeline for the BERIL knowledge wiki"
+requires-python = ">=3.11"
+dependencies = [
+    "litellm>=1.40",
+    "networkx>=3.2",
+    "pyyaml>=6.0",
+]
