@@ -1,0 +1,244 @@
+<title>BERIL Wiki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #faf9f7; --fg: #1d1b24; --card: #ffffff; --surface: #f6f4f1;
+    --muted: #6f6c7a; --border: #e5e2db; --primary: #6d28d9;
+    --primary-soft: rgba(109, 40, 217, 0.09);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b0a10; --fg: #e7e5ee; --card: #121118; --surface: #14131b;
+      --muted: #918e9f; --border: #272430; --primary: #a78bfa;
+      --primary-soft: rgba(167, 139, 250, 0.12);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b0a10; --fg: #e7e5ee; --card: #121118; --surface: #14131b;
+    --muted: #918e9f; --border: #272430; --primary: #a78bfa;
+    --primary-soft: rgba(167, 139, 250, 0.12);
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--fg);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 1.02rem; line-height: 1.55; margin: 0; padding: 0 1.5rem 5rem;
+  }
+  .wrap { max-width: 62rem; margin: 0 auto; }
+  header { padding: 4.5rem 0 1rem; text-align: center; }
+  h1 {
+    font-family: "Fraunces", Georgia, serif; font-weight: 600;
+    font-size: clamp(2.6rem, 6vw, 3.8rem); margin: 0 0 .6rem; letter-spacing: -0.01em;
+  }
+  .dek { color: var(--muted); font-size: 1.25rem; margin: 0; text-wrap: balance; }
+  .chips { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; margin: 1.8rem 0 0; }
+  .chip {
+    font-family: "IBM Plex Mono", monospace; font-size: .82rem;
+    border: 1px solid var(--border); background: var(--card);
+    border-radius: 999px; padding: .38rem .95rem; white-space: nowrap;
+  }
+  .chip b { color: var(--primary); font-weight: 500; }
+  section { margin: 4.2rem 0 0; }
+  h2 {
+    font-family: "Fraunces", Georgia, serif; font-weight: 600;
+    font-size: 1.7rem; margin: 0 0 .3rem; text-align: center; text-wrap: balance;
+  }
+  .sub { color: var(--muted); text-align: center; margin: 0 0 1.6rem; font-size: 1.02rem; }
+  figure { margin: 0; }
+  figure svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+  figcaption {
+    color: var(--muted); font-size: .9rem; text-align: center; margin-top: .9rem;
+  }
+  .legend { display: flex; gap: 1.4rem; justify-content: center; margin-top: .7rem;
+    font-family: "IBM Plex Mono", monospace; font-size: .75rem; color: var(--muted); }
+  .sw { display: inline-block; width: .8em; height: .8em; border-radius: 3px;
+    vertical-align: -0.08em; margin-right: .45em; border: 1.5px solid var(--muted); }
+  .sw.llm { background: var(--primary-soft); border-color: var(--primary); }
+  .layers { display: grid; gap: .5rem; max-width: 44rem; margin: 0 auto; }
+  .layer {
+    display: flex; align-items: baseline; gap: .9rem;
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    padding: .7rem 1.1rem;
+  }
+  .layer .name { font-weight: 600; white-space: nowrap; }
+  .layer .what { color: var(--muted); font-size: .92rem; flex: 1; }
+  .layer .n { font-family: "IBM Plex Mono", monospace; font-size: .8rem; color: var(--primary); white-space: nowrap; }
+  .layer.entry { border-color: var(--primary); background: var(--primary-soft); }
+  .layers .down { text-align: center; color: var(--muted); font-size: .8rem;
+    font-family: "IBM Plex Mono", monospace; padding: .05rem 0; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: .9rem; }
+  .tile { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.2rem; }
+  .tile h3 { margin: 0 0 .3rem; font-size: 1.02rem; font-weight: 600; color: var(--primary); }
+  .tile p { margin: 0; color: var(--muted); font-size: .92rem; }
+  footer { margin-top: 4.5rem; text-align: center; color: var(--muted); font-size: .85rem;
+    border-top: 1px solid var(--border); padding-top: 1.3rem;
+    font-family: "IBM Plex Mono", monospace; }
+</style>
+
+<div class="wrap">
+<header>
+  <h1>BERIL Wiki</h1>
+  <p class="dek">Research reports in. A living scientific wiki out.</p>
+  <div class="chips">
+    <span class="chip"><b>73</b> project reports</span>
+    <span class="chip"><b>14</b> topics</span>
+    <span class="chip"><b>21</b> conflict pages</span>
+    <span class="chip"><b>~350</b> pages</span>
+    <span class="chip"><b>~$0.50</b> per new project</span>
+  </div>
+</header>
+
+<section>
+  <h2>One pipeline, always incremental</h2>
+  <p class="sub">The same command runs the first build and every addition — finished work is never redone.</p>
+  <figure>
+    <svg viewBox="0 0 960 96" role="img" aria-label="Seven pipeline stages from fetch to publish; compile, conflicts, topics, and figures are model-driven, the rest deterministic.">
+      <defs>
+        <marker id="a" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,0 L8,4 L0,8 z" fill="currentColor" opacity="0.55"/>
+        </marker>
+      </defs>
+      <g font-family="IBM Plex Sans, sans-serif" font-size="13" text-anchor="middle">
+        <!-- boxes: x = 4 + i*138, w=118 h=44 y=14 -->
+        <g stroke="currentColor" stroke-opacity="0.45" fill="none">
+          <rect x="4"   y="14" width="118" height="44" rx="8"/>
+          <rect x="832" y="14" width="118" height="44" rx="8"/>
+          <rect x="694" y="14" width="118" height="44" rx="8"/>
+        </g>
+        <g stroke="var(--primary)" fill="var(--primary-soft)">
+          <rect x="142" y="14" width="118" height="44" rx="8"/>
+          <rect x="280" y="14" width="118" height="44" rx="8"/>
+          <rect x="418" y="14" width="118" height="44" rx="8"/>
+          <rect x="556" y="14" width="118" height="44" rx="8"/>
+        </g>
+        <g fill="currentColor">
+          <text x="63"  y="41">Fetch</text>
+          <text x="201" y="41">Compile</text>
+          <text x="339" y="41">Conflicts</text>
+          <text x="477" y="41">Topics</text>
+          <text x="615" y="41">Figures</text>
+          <text x="753" y="41">Verify</text>
+          <text x="891" y="41">Publish</text>
+        </g>
+        <g fill="currentColor" opacity="0.55" font-size="10.5">
+          <text x="63"  y="82">reports + figures</text>
+          <text x="201" y="82">merge into wiki</text>
+          <text x="339" y="82">promote tensions</text>
+          <text x="477" y="82">cluster + write hubs</text>
+          <text x="615" y="82">place flagship figs</text>
+          <text x="753" y="82">errors block publish</text>
+          <text x="891" y="82">themed static site</text>
+        </g>
+        <g stroke="currentColor" stroke-opacity="0.55">
+          <line x1="122" y1="36" x2="138" y2="36" marker-end="url(#a)"/>
+          <line x1="260" y1="36" x2="276" y2="36" marker-end="url(#a)"/>
+          <line x1="398" y1="36" x2="414" y2="36" marker-end="url(#a)"/>
+          <line x1="536" y1="36" x2="552" y2="36" marker-end="url(#a)"/>
+          <line x1="674" y1="36" x2="690" y2="36" marker-end="url(#a)"/>
+          <line x1="812" y1="36" x2="828" y2="36" marker-end="url(#a)"/>
+        </g>
+      </g>
+    </svg>
+    <figcaption>Every stage is hash-cached: unchanged reports, tensions, and hubs are skipped.</figcaption>
+  </figure>
+  <div class="legend">
+    <span><span class="sw llm"></span>model-driven</span>
+    <span><span class="sw"></span>deterministic</span>
+  </div>
+</section>
+
+<section>
+  <h2>Knowledge accumulates by rewriting</h2>
+  <p class="sub">A new report doesn't get filed — it updates every page it touches, and nothing unverified survives.</p>
+  <figure>
+    <svg viewBox="0 0 960 250" role="img" aria-label="A new report is summarized, planned against the current wiki, merged into touched pages, and verified; rejected pages retry, accepted pages update the wiki, which feeds back into planning.">
+      <defs>
+        <marker id="b" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,0 L8,4 L0,8 z" fill="currentColor" opacity="0.55"/>
+        </marker>
+        <marker id="bp" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,0 L8,4 L0,8 z" fill="var(--primary)"/>
+        </marker>
+      </defs>
+      <g font-family="IBM Plex Sans, sans-serif" font-size="13" text-anchor="middle">
+        <!-- main row y=96 h=46 -->
+        <g stroke="currentColor" stroke-opacity="0.45" fill="none">
+          <rect x="10" y="96" width="120" height="46" rx="8"/>
+        </g>
+        <g stroke="var(--primary)" fill="var(--primary-soft)">
+          <rect x="180" y="96" width="130" height="46" rx="8"/>
+          <rect x="360" y="96" width="130" height="46" rx="8"/>
+          <rect x="540" y="96" width="130" height="46" rx="8"/>
+        </g>
+        <!-- verify gate diamond -->
+        <polygon points="745,119 795,86 845,119 795,152" stroke="var(--primary)" fill="var(--primary-soft)"/>
+        <!-- wiki store -->
+        <rect x="880" y="60" width="70" height="118" rx="10" stroke="currentColor" stroke-opacity="0.6" fill="none"/>
+        <g fill="currentColor">
+          <text x="70"  y="116">New</text><text x="70" y="132">report</text>
+          <text x="245" y="123">Summarize</text>
+          <text x="425" y="123">Plan</text>
+          <text x="605" y="123">Merge</text>
+          <text x="795" y="124" font-size="12.5">Verify</text>
+          <text x="915" y="115">Wiki</text><text x="915" y="131" font-size="10.5" opacity="0.6">~350 pages</text>
+        </g>
+        <g fill="currentColor" opacity="0.55" font-size="10.5">
+          <text x="425" y="160">which pages change?</text>
+          <text x="605" y="160">rewrite touched pages</text>
+          <text x="795" y="172">citations + numbers</text>
+        </g>
+        <!-- forward arrows -->
+        <g stroke="currentColor" stroke-opacity="0.55">
+          <line x1="130" y1="119" x2="176" y2="119" marker-end="url(#b)"/>
+          <line x1="310" y1="119" x2="356" y2="119" marker-end="url(#b)"/>
+          <line x1="490" y1="119" x2="536" y2="119" marker-end="url(#b)"/>
+          <line x1="670" y1="119" x2="741" y2="119" marker-end="url(#b)"/>
+        </g>
+        <!-- accept -->
+        <line x1="845" y1="119" x2="876" y2="119" stroke="var(--primary)" marker-end="url(#bp)"/>
+        <text x="860" y="105" fill="var(--primary)" font-size="10.5">accept</text>
+        <!-- reject/retry loop under -->
+        <path d="M795,152 L795,208 L605,208 L605,146" fill="none" stroke="var(--primary)" stroke-dasharray="5 4" marker-end="url(#bp)"/>
+        <text x="700" y="200" fill="var(--primary)" font-size="10.5">reject → retry with the exact violations</text>
+        <!-- wiki feeds back into plan/merge -->
+        <path d="M880,66 C700,18 500,26 428,92" fill="none" stroke="currentColor" stroke-opacity="0.45" stroke-dasharray="2 4" marker-end="url(#b)"/>
+        <text x="640" y="34" fill="currentColor" opacity="0.55" font-size="10.5">reads the current wiki — pages grow, they are not re-filed</text>
+      </g>
+    </svg>
+    <figcaption>The verify gate is structural: an uncited claim or a number absent from its source is rejected at write time, never published.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>Built to be read downward</h2>
+  <p class="sub">Every layer answers one question, then links you deeper — down to the raw report.</p>
+  <div class="layers">
+    <div class="layer entry"><span class="name">Home</span><span class="what">the corpus in one page</span><span class="n">start here</span></div>
+    <div class="down">↓</div>
+    <div class="layer"><span class="name">Topics</span><span class="what">discovered by clustering, argued across projects</span><span class="n">14</span></div>
+    <div class="down">↓</div>
+    <div class="layer"><span class="name">Conflicts</span><span class="what">where projects disagree — and what would settle it</span><span class="n">21</span></div>
+    <div class="down">↓</div>
+    <div class="layer"><span class="name">Concepts &amp; Entities</span><span class="what">the claims, organisms, methods, datasets</span><span class="n">134</span></div>
+    <div class="down">↓</div>
+    <div class="layer"><span class="name">Project summaries</span><span class="what">findings with exact numbers and flagship figures</span><span class="n">73</span></div>
+    <div class="down">↓</div>
+    <div class="layer"><span class="name">Raw reports</span><span class="what">the full evidence, every figure, one click away</span><span class="n">provenance</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>What the reader can trust</h2>
+  <div class="tiles">
+    <div class="tile"><h3>Cited</h3><p>Every claim carries its source project; numbers are copied exactly, never rounded.</p></div>
+    <div class="tile"><h3>Verified</h3><p>Pages are validated as they are written; a failing corpus cannot publish.</p></div>
+    <div class="tile"><h3>Connected</h3><p>Each project is woven into multiple synthesis pages — links, not lists.</p></div>
+    <div class="tile"><h3>Current</h3><p>New projects flow in automatically; only affected pages change.</p></div>
+  </div>
+</section>
+
+<footer>
+  BERIL Research Observatory · independently reviewed against two prior generations — ranked first · Apache-2.0
+</footer>
+</div>
