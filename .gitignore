@@ -1,0 +1,7 @@
+.venv/
+quartz/
+staging/
+projects-cache/
+pipeline.log
+nohup.out
+__pycache__/

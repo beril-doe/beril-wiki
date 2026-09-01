@@ -1,0 +1,6 @@
+Apache License 2.0 — see https://www.apache.org/licenses/LICENSE-2.0
+
+Copyright 2026 The BERIL Project (Lawrence Berkeley National Laboratory)
+
+Portions of the compiler prompts are derived from OpenKB (github.com/VectifyAI/OpenKB),
+Apache-2.0; see reference/openkb-src/LICENSE.
