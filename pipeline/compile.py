@@ -550,6 +550,11 @@ def compile_doc(root: pathlib.Path, fname: str, sources: dict[str, str], system:
         path = wiki / group / f"{name}.md"
         path.parent.mkdir(parents=True, exist_ok=True)
         old_fm, old_body = parse_fm(path.read_text(encoding="utf-8", errors="replace")) if path.exists() else ({}, "")
+        if old_body and summary_rel in (old_fm.get("sources") or []):
+            # ponytail: resume-skip assumes a report is stable once integrated;
+            # drop this guard if source reports start mutating after ingest.
+            print(f"    {sid}/{group}/{name}: already integrated — skipping (resume)")
+            continue
         if group == "concepts":
             task = (CONCEPT_UPDATE_USER.format(title=title, name=name, sid=sid, existing=old_body, summary_stem=stem)
                     if old_body else
