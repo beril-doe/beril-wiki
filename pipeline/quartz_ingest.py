@@ -117,16 +117,45 @@ def strip_dead_wikilinks(text: str, targets: set[str]) -> str:
     return re.sub(r"\[\[([^\]|#]+?)(?:\|([^\]]*))?\]\]", repl, text)
 
 
+def single_source_entities(kb: pathlib.Path) -> set[str]:
+    """Entity pages citing exactly one source: passing-mention noise at
+    publish time. Filtered from the site (links downgrade to plain text); the
+    wiki source keeps them, and they surface once a second doc cites them."""
+    out = set()
+    for f in (kb / "wiki" / "entities").glob("*.md"):
+        m = FM.match(f.read_text(encoding="utf-8", errors="replace"))
+        if m and len(re.findall(r"summaries/", m.group(1))) == 1:
+            out.add(f.stem)
+    return out
+
+
+def concept_uptake(kb: pathlib.Path) -> dict[str, list[str]]:
+    """project id -> concept stems whose pages cite it (deterministic
+    reverse index; becomes the 'Feeds into' line on summary pages)."""
+    up: dict[str, list[str]] = {}
+    for f in sorted((kb / "wiki" / "concepts").glob("*.md")):
+        text = f.read_text(encoding="utf-8", errors="replace")
+        for m in SRC_TAG.finditer(text):
+            for part in re.split(r"[,;]", m.group(1)):
+                sid = re.sub(r"__REPORT$", "", part.strip())
+                if sid and f.stem not in up.setdefault(sid, []):
+                    up[sid].append(f.stem)
+    return up
+
+
 def main() -> None:
     kb, dst = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
     known = {
         re.sub(r"__REPORT$", "", f.stem): f.stem
         for f in (kb / "wiki" / "summaries").glob("*.md")
     }
+    skip_entities = single_source_entities(kb)
+    uptake = concept_uptake(kb)
     targets = {
         _slug(str(f.relative_to(root)).removesuffix(".md"))
         for root in (kb / "wiki", kb / "wiki-extra") if root.is_dir()
         for f in root.rglob("*.md")
+        if not (root.name == "wiki" and f.parent.name == "entities" and f.stem in skip_entities)
     }
     targets.add("catalog")  # wiki/index.md is renamed to catalog.md below
     targets.discard("index")
@@ -141,6 +170,8 @@ def main() -> None:
         for src in root.rglob("*.md"):
             rel = src.relative_to(root)
             if src.name in SKIP or rel.parts[0] == "reports":
+                continue
+            if root.name == "wiki" and rel.parts[0] == "entities" and src.stem in skip_entities:
                 continue
             # OpenKB's catalog index steps aside for the narrative home in wiki-extra/.
             if root.name == "wiki" and rel == pathlib.Path("index.md"):
@@ -157,11 +188,19 @@ def main() -> None:
             # Summaries must lead to their raw report, and self-[src:] tags are
             # circular — point both at the sources/ page (the provenance hop
             # reviewers need).
-            if rel.parts[0] == "summaries" and (root / "sources" / src.name).exists():
-                raw = f"sources/{rel.stem}"
-                text = text.replace(f"[[summaries/{rel.stem}|", f"[[{raw}|")
-                text = re.sub(r"^# .+$", lambda m: m.group(0) + f"\n\n> Raw report: [[{raw}|{rel.stem}]]",
-                              text, count=1, flags=re.M)
+            if rel.parts[0] == "summaries":
+                header_lines = []
+                if (root / "sources" / src.name).exists():
+                    raw = f"sources/{rel.stem}"
+                    text = text.replace(f"[[summaries/{rel.stem}|", f"[[{raw}|")
+                    header_lines.append(f"> Raw report: [[{raw}|{rel.stem}]]")
+                feeds = uptake.get(re.sub(r"__REPORT$", "", rel.stem), [])
+                if feeds:
+                    links = ", ".join(f"[[concepts/{c}]]" for c in feeds)
+                    header_lines.append(f"> Feeds into: {links}")
+                if header_lines:
+                    text = re.sub(r"^# .+$", lambda m: m.group(0) + "\n\n" + "\n".join(header_lines),
+                                  text, count=1, flags=re.M)
             out.write_text(text, encoding="utf-8")
             n += 1
 

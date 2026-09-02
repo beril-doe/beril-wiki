@@ -30,11 +30,17 @@ echo "== compile" | tee -a "$LOG"
 "${PY[@]}" "$HERE/compile.py" | tee -a "$LOG" | tail -3
 if grep -qE "\[ERROR\]" "$LOG"; then echo "compile had errors — see $LOG"; exit 1; fi
 
+echo "== enrich" | tee -a "$LOG"
+"${PY[@]}" "$HERE/enrich_concepts.py" | tee -a "$LOG" | tail -3
+
 echo "== conflicts" | tee -a "$LOG"
 "${PY[@]}" "$HERE/conflicts_build.py" | tee -a "$LOG"
 
 echo "== hubs" | tee -a "$LOG"
 "${PY[@]}" "$HERE/topics_build.py" | tee -a "$LOG"
+
+echo "== literature" | tee -a "$LOG"
+"${PY[@]}" "$HERE/lit_context.py" | tee -a "$LOG" | tail -3
 
 echo "== figures" | tee -a "$LOG"
 "${PY[@]}" "$HERE/figures_build.py" | tee -a "$LOG" | tail -3

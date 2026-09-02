@@ -45,7 +45,10 @@ def source_ids(kb: pathlib.Path) -> dict[str, str]:
 
 def paragraphs(body: str) -> list[str]:
     # Fold bullet lists into their own paragraphs; skip headings and frontmatter.
+    # Literature Context sections cite external papers (PMID-verified by
+    # lit_context.py), so their numbers are exempt from corpus-source checks.
     body = re.sub(r"^---\n.*?\n---\n", "", body, flags=re.S)
+    body = re.sub(r"^## Literature Context\s*\n.*?(?=\n## |\Z)", "", body, flags=re.M | re.S)
     return [p.strip() for p in re.split(r"\n\s*\n", body) if p.strip() and not p.lstrip().startswith("#")]
 
 

@@ -98,6 +98,47 @@ def write_collections() -> int:
     return len(cfg["collections"])
 
 
+def write_opportunities() -> int:
+    """Aggregate every concept's ## Open Directions into one browse page."""
+    lines = ["# Research Opportunities", "",
+             "Concrete next analyses this corpus makes possible — every concept page's",
+             "Open Directions, gathered in one place. Follow a link for the evidence.", ""]
+    n = 0
+    for page in sorted((ROOT / "wiki/concepts").glob("*.md")):
+        text = page.read_text(encoding="utf-8", errors="replace")
+        m = re.search(r"^## Open Directions\s*\n(.*?)(?=\n## |\Z)", text, re.M | re.S)
+        if not m or not m.group(1).strip():
+            continue
+        h1 = re.search(r"^# (.+)$", text, re.M)
+        lines += [f"## [[concepts/{page.stem}|{h1.group(1).strip() if h1 else page.stem}]]", "",
+                  m.group(1).strip(), ""]
+        n += 1
+    (OUT / "opportunities.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return n
+
+
+def write_negative_results() -> int:
+    """Digest of the summaries' caveat/limitation/null-result sections, so
+    collaborators can see what did not work before repeating it."""
+    pat = re.compile(r"^## .*(caveat|limitation|negative|null|did not work|open work).*\n(.*?)(?=\n## |\Z)",
+                     re.M | re.S | re.I)
+    lines = ["# Negative Results and Caveats", "",
+             "What each project reports as limitations, null results, or abandoned",
+             "analyses — read before repeating an analysis.", ""]
+    n = 0
+    for page in sorted((ROOT / "wiki/summaries").glob("*.md")):
+        text = page.read_text(encoding="utf-8", errors="replace")
+        blocks = [m.group(2).strip() for m in pat.finditer(text) if m.group(2).strip()]
+        if not blocks:
+            continue
+        h1 = re.search(r"^# (.+)$", text, re.M)
+        lines += [f"## [[summaries/{page.stem}|{h1.group(1).strip() if h1 else page.stem}]]", "",
+                  "\n\n".join(blocks), ""]
+        n += 1
+    (OUT / "negative-results.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return n
+
+
 def write_indexes() -> None:
     for sub, title in (("authors", "Authors"), ("data", "Data Collections")):
         pages = sorted(p.stem for p in (OUT / sub).glob("*.md") if p.stem != "index")
@@ -109,5 +150,8 @@ def write_indexes() -> None:
 if __name__ == "__main__":
     n_a = write_authors()
     n_c = write_collections()
+    n_o = write_opportunities()
+    n_n = write_negative_results()
     write_indexes()
-    print(f"wrote {n_a} author pages, {n_c} collection pages + 2 indexes -> {OUT}")
+    print(f"wrote {n_a} author pages, {n_c} collection pages, opportunities ({n_o} concepts), "
+          f"negative-results ({n_n} projects) + 2 indexes -> {OUT}")

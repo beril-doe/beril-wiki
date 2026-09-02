@@ -101,7 +101,9 @@ Write the summary page for this document in Markdown: dense and faithful,
 preserving exact numbers (never round, estimate, or reconcile), every factual
 paragraph ending with its [src: {sid}] citation tag. Start with an H1 title,
 then ## Overview, then the key findings with their exact numbers, then the
-caveats the document itself states. End the page with a ## Slots Into section
+caveats the document itself states — explicitly including null/negative
+results and analyses that were tried and abandoned, so collaborators can see
+what did not work. End the page with a ## Slots Into section
 listing the concept pages these findings feed, one bullet each:
 "- [[concepts/<slug>]] — which finding and why". Use existing concept slugs
 from the whitelist where they fit; a finding that fits no existing concept may
