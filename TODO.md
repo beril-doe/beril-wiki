@@ -56,6 +56,17 @@ wishlist are tagged [P]; platform-dependent items are deferred at the bottom.
   check compile pages get; the hub-number warnings in `wiki_check` are that gap.
   `topics_build.py` has its own untracked `llm()` rather than `generate_page`,
   so routing it through the shared validator is its own change, not a one-liner.
+- Nor do those stages validate WIKILINK targets the way `generate_page` does, so
+  newly generated hub/conflict pages carry a few `[[concepts/<project_id>]]`
+  links to pages that never existed. Harmless today — `wiki_check` does not scan
+  links in `wiki-extra/`, and `quartz_ingest.strip_dead_wikilinks` removes them
+  at publish — but it is the same untracked-`llm()` gap as the numeric check.
+- The budget tripwire UNDERCOUNTS. A consolidation pass self-reported `~$0.80`
+  while the gateway billed $1.29 (~2x), so `COMPILE_BUDGET_USD` is not a hard
+  ceiling; reasoning tokens appear to be billed but absent from
+  `usage.completion_tokens`. `topics_build`, `conflicts_build` and
+  `figures_build` have no tripwire at all. Real spend is readable from
+  `GET https://api.cborg.lbl.gov/user/info` (`user_info.spend`).
 - `conflicts_build.py` never deletes stale conflict pages (`topics_build` does
   reap stale hubs), so a concept merge can strand a conflict page. `wiki_check`
   does not scan `wiki-extra/conflicts`, so it will not flag one.

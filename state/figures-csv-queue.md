@@ -2,19 +2,26 @@
 
 Pages the placement pass flagged as needing a chart for evidence with no figure.
 
-## topics/antimicrobial-resistance-fitness.md
-- Visualize the metal-fitness atlas by comparing core enrichment of metal-important versus baseline genes and the fraction of responses classified as metal-specific versus generally sick across metals, because these quantitative results are described without a dedicated candidate figure.
+## topics/contextual-gene-essentiality.md
+- Visualize ENIGMA binary-growth prediction AUC by condition class alongside coverage, because the text reports substantial condition-dependent performance and missing-condition coverage without a candidate figure.
 
-## topics/bacterial-gene-content-ecotypes.md
-- Visualize the subsystem-specific environmental evidence, including the 2,355 significant soil-metal–COG associations and conditional distance-based signals, to show how narrow environmental effects coexist with the broad environmental null.
+## topics/environmental-functional-ecology.md
+- Visualize the 47 laboratory-to-environment prediction tests, including concordant versus non-concordant results and the four abiotic correlations, to make the reported field-validation evidence directly inspectable.
+- Visualize enrichment outcomes for the 137 tested dark-gene clusters, showing significant versus non-significant clusters by environmental category and FDR, because the text reports these counts without a matching figure.
 
-## topics/condition-dependent-gene-essentiality.md
-- Visualize ROC performance comparing continuous fitness effects with binary essentiality fractions for predicting knockout-essential genes across rich and minimal media, because the reported AUC values are central evidence for assay-design effects but no candidate figure shows this comparison.
+## topics/environmental-resistome-dynamics.md
+- Visualize T4SS-associated CAZy enrichment by environment and genomic distance, together with the distribution of cross-phylum GT2 HGT events, because these quantitative horizontal-transfer results are described in prose without a candidate figure.
 
-## topics/fitness-module-inference.md
-- Visualize experiment count and condition diversity against module stability, enrichment, or predictive performance across organisms to support the claim that experimental depth constrains module inference.
+## topics/integrative-microbial-phenotyping.md
+- Visualize bacterial versus fungal ecological-history effects, including explained variance and Bray–Curtis distance distributions, to support the reported cross-kingdom contrast.
+- Visualize paired transcript and protein changes for Caulobacter lipid-A-loss rescue genes to make cross-modal discordance and concordance directly comparable.
 
-## topics/microbial-community-engineering.md
-- Visualize the enumerated consortium design space by formulation size, composite score, and bootstrap confidence intervals to show how the reported global optimum compares with near-optimal candidates and how uncertain the ranking is.
-- Visualize growth-onset versus maximum-growth-rate comparisons across substrates, including the 13.8% and 43.1% fractions and the change in model fit to R² = 0.311, to make the added value of kinetics explicit.
-- Visualize pairwise interaction coverage for the five-species core, distinguishing measured from missing pairs and flagging the duplicated interaction and carbon-utilization values, to show why interaction conclusions are unreliable.
+## topics/metabolic-function-annotation.md
+- Visualize annotation coverage by eggNOG, Bakta, and their union across COG, KEGG, Pfam, GO, product descriptions, and EC annotations to show tool complementarity and the coverage rescued by integration.
+
+## topics/microbial-consortium-design.md
+- Plot metabolic overlap with PA14 against measured inhibition, with a fitted relationship and residuals, to show both the predictive signal and the approximately 73% of inhibition variance left unexplained.
+- Visualize the optimization trade-off between inhibition, complete niche coverage, safety, and inferred engraftability across candidate two- and three-member formulations.
+
+## topics/subsurface-microbial-ecology.md
+- Visualize corrected marker-detector positive rates and pairwise effect sizes for anchor_deep, anchor_shallow, and soil_baseline, because the text reports the central quantitative test but no candidate figure clearly presents these comparisons.

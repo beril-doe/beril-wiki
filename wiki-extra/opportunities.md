@@ -3,13 +3,6 @@
 Concrete next analyses this corpus makes possible — every concept page's
 Open Directions, gathered in one place. Follow a link for the evidence.
 
-## [[concepts/gene-essentiality|Essential genes can be strain-specific, accessory, or highly divergent]]
-
-- Use Fitness Browser condition-specific fitness values, focusing on genes with fitness < -2 under stress conditions, and test whether stress-important genes show stronger accessory or strain-specific enrichment than genes classified as essential under library-construction conditions. [src: conservation_vs_fitness]
-- Combine Fitness Browser ortholog data with pangenome clusters and cross-species conservation statistics to identify essential gene families that recur across species while retaining strain-specific members. [src: conservation_vs_fitness]
-- Analyze the 3,683 essential-auxiliary genes with functional annotation and genomic-context methods to test whether they compensate for missing core functions or instead represent mobile-element-associated dependencies. [src: conservation_vs_fitness]
-- Re-run essentiality–conservation models after stratifying by pangenome clade size and coverage to determine how much the 1.56 median odds ratio depends on low-resolution core classifications. [src: conservation_vs_fitness]
-
 ## [[concepts/adaptive-versus-housekeeping-functional-differentiation|Adaptive Functions Differentiate More Strongly Than Housekeeping Functions Among Gene-Content Ecotypes]]
 
 - Use the 1,820 genome-to-ecotype assignments and core-genome phylogenetic trees with phylogenetically controlled models to test whether the 2.13x adaptive-versus-housekeeping mean-effect-size ratio persists after accounting for shared ancestry. [src: ecotype_functional_differentiation]
@@ -17,6 +10,10 @@ Open Directions, gathered in one place. Follow a link for the evidence.
 - Combine the ecotype assignments with habitat metadata and multivariate association methods to test whether the larger adaptive-category shifts predict environmental differences rather than only lineage structure. [src: ecotype_functional_differentiation]
 - Analyze the 62% of gene clusters lacking COG annotations with AlphaFold or domain analysis to determine whether unannotated ecotype-differentiating genes are enriched for adaptive functions and whether the adaptive-versus-housekeeping contrast changes after their inclusion. [src: ecotype_functional_differentiation]
 - Recluster the same genome-by-gene-content data with HDBSCAN and compare category-level significance and effect sizes with the KMeans results to test whether the conclusion depends on spherical-cluster assumptions and the selected value of k. [src: ecotype_functional_differentiation]
+- Repeat the ecotype analysis with the broader COG comparison’s mobile-element and defense categories separated from housekeeping categories, testing whether the +10.88% COG L and +2.83% COG V novelty enrichments predict within-species ecotype differentiation. [src: cog_analysis]
+- Test the adaptive-category contrast against alternative environmental distances and direct metadata in the 172-species dataset, asking whether the weak whole-genome environmental signal is stronger for specific COG subsets. [src: ecotype_analysis]
+- Overlay ecotype-specific COG shifts with condition-resolved fitness measurements to test whether categories with larger adaptive-versus-housekeeping effects also contain more costly conserved or condition-dependent trade-off genes. [src: ecotype_functional_differentiation, core_gene_tradeoffs]
+- Use condition-resolved fitness data while controlling for transposon coverage to test whether ecotype-differentiating housekeeping and adaptive categories differ in the breadth of their fitness effects, rather than only in COG-level abundance. [src: fitness_effects_conservation]
 
 ## [[concepts/adversarial-research-quality-assurance|Adversarial Validation of Computational Biology Claims]]
 
@@ -26,37 +23,23 @@ Open Directions, gathered in one place. Follow a link for the evidence.
 - Execute representative BERDL analyses from lineage files and schema dictionaries, then measure how often stale catalogs, sentinel codes, or incomplete joins change the result. [src: discoveries]
 - Benchmark cached CSV-based Spark workflows against direct `toPandas()` execution on joins involving the 2.5B-row UniProt identifier table, then identify reproducible thresholds for kernel failure and runtime degradation. [src: discoveries]
 
-## [[concepts/environmental-resistome|Resistance Ecology Is Shaped by Annotation Completeness]]
-
-- Re-annotate the 15,550 mechanism-unassigned clusters with broader homology, profile-HMM, and structure-based searches, then test whether environment-dependent mechanism fractions and effect sizes change. [src: amr_environmental_resistome]
-- Compare AMRFinderPlus calls with independent resistance-gene resources and manually reviewed environmental candidates to quantify false-negative rates by environment and mechanism. [src: amr_environmental_resistome]
-- Recalculate core and accessory AMR after stratifying species by genome-count depth, then test whether the clinical 68% versus soil 43% accessory contrast persists under matched sampling. [src: amr_environmental_resistome]
-- Use metagenome-assembled genomes and isolate genomes with comparable annotation quality to test whether clinical enrichment remains after reducing differences in sampling and annotation coverage. [src: amr_environmental_resistome]
-- Perform environment-specific gene identification on annotated and previously unclassified clusters, asking whether novel environmental candidates explain part of the observed metal-resistance enrichment. [src: amr_environmental_resistome]
-
 ## [[concepts/antimicrobial-resistance-fitness-cost|Fitness costs and conditional benefits of antimicrobial-resistance genes]]
 
 - Use organism-stratified models on Cup4G11 (**77** AMR genes) and BFirm (**50** AMR genes) to test mechanism effects while controlling for genetic background. [src: amr_fitness_cost]
-- Subclassify efflux pumps into narrow-spectrum drug pumps and general RND systems such as AcrAB-TolC, then test whether constitutively expressed systems have lower baseline costs. [src: amr_fitness_cost]
-- Replace averages across non-antibiotic experiments with condition-specific analyses of metal, osmotic, and carbon-limitation stresses to test whether the baseline-cost estimate changes by environmental condition. [src: amr_fitness_cost]
-- Cross-reference the **144** metal-resistance genes with fitness measurements and the metal fitness atlas to test whether genes costly under standard conditions are protective under metal stress. [src: amr_fitness_cost]
+- Use matched genomes from the **25** lab-adapted organisms, comparative genomics, and fitness association analysis to ask whether specific compensatory mutations explain the residual **+0.086** shift. [src: amr_fitness_cost]
+- Reconstruct newly acquired and compensated AMR genotypes in isogenic strains and measure growth and competition fitness to distinguish original from post-compensation costs. [src: amr_fitness_cost]
+- Subclassify efflux pumps into narrow-spectrum drug pumps and general RND systems such as AcrAB-TolC, then test whether constitutively expressed systems have lower baseline costs under condition-specific assays. [src: amr_fitness_cost]
+- Replace averages across non-antibiotic experiments with condition-specific analyses of metal, osmotic, and carbon-limitation stresses to test whether baseline cost changes by environment. [src: amr_fitness_cost]
+- Cross-reference the **144** metal-resistance genes with the metal fitness atlas and matched metal-stress measurements to test whether genes costly under standard conditions are protective under metal stress. [src: amr_fitness_cost]
+- Expand GTDB sampling beyond the median of **9** genomes per Fitness Browser species and recompute the **≥95%** core/accessory labels to ask whether the cost null result persists with deeper pangenomes. [src: amr_fitness_cost]
+- Use mean-fitness-matched permutations, including random non-AMR genes in the **−0.05 to +0.05** range, to test whether AMR-neighborhood structure exceeds what is expected from fitness level alone. [src: amr_cofitness_networks]
+- Recompute cofitness separately for antibiotic-treatment and standard-growth conditions, and repeat network-size–cost analyses at |r| > 0.4 and |r| > 0.5. [src: amr_cofitness_networks]
+- Quantify variance in AMR fitness costs and use power analysis or a hierarchical model to ask whether the null result reflects insufficient variation across genes, mechanisms, or organisms. [src: amr_cofitness_networks]
+- Compare cofitness network breadth with direct regulatory evidence and Pfam-domain enrichment to test whether broad networks reflect shared cofitness, co-regulation, or common functional architecture. [src: amr_cofitness_networks]
+- Within organisms with dense AMR and cofitness data, test network breadth, mechanism, and core/accessory status jointly under matched conditions; directly measure flagellar-knockout fitness to distinguish shared dispensability from co-regulation. [src: amr_fitness_cost] [src: amr_cofitness_networks]
 - Extend the analysis from **25** Fitness Browser organisms to all **293K** BERDL genomes by predicting AMR cost from gene-cluster conservation patterns and testing whether the laboratory-derived relationship generalizes across the broader genome collection. [src: amr_fitness_cost]
 
-## [[concepts/gene-essentiality|Bidirectional fitness effects of core genes]]
-
-- Reanalyze the Fitness Browser data with condition-stratified effect distributions and interaction terms to test whether the heavier positive and negative tails of core genes persist within matched assay conditions. [src: fitness_effects_conservation]
-- Combine transposon coverage metrics with singleton and auxiliary-gene fitness estimates to distinguish true neutrality from callability-limited missing data. [src: fitness_effects_conservation]
-- Compare single-gene knockout effects with multi-gene or combinatorial perturbation data to test whether epistasis explains additional bidirectional effects among core genes. [src: fitness_effects_conservation]
-- Add environmental-condition data beyond rich media and standard stresses to test whether the core-gene cost-benefit pattern transfers to natural niche conditions. [src: fitness_effects_conservation]
-- Use phylogenetically stratified models across the 43 bacteria to test whether the association between fitness breadth and core status is lineage-specific or broadly transferable. [src: fitness_effects_conservation]
-
-## [[concepts/structural-annotation-gap|Reference-database coverage shapes genomic annotation inference]]
-
-- Recompute the bridge using all 132,531,501 gene clusters, including the 70.7% without a successful AlphaFold entry, with identifier recovery and stratified missingness analysis to test whether the unrepresented population has a larger annotation gap. [src: alphafold_msa_annotation]
-- Recalculate MSA depth and InterProScan richness by phylogenetically balanced taxon strata, using mixed-effects or stratified Spearman analyses, to determine how much of ρ = 0.7563 is driven by organism composition. [src: alphafold_msa_annotation]
-- Compare representative-sequence MSA depths with member-level depths within gene clusters, using within-cluster distributions, to quantify whether representatives systematically overestimate or underestimate typical reference coverage. [src: alphafold_msa_annotation]
-- Join the 415,603 core clusters with Fitness Browser measurements and test condition-specific associations between low MSA depth, hypothetical status, and fitness effects. [src: alphafold_msa_annotation]
-- Reprocess the static version-6 AlphaFold snapshot against later UniProt deposits and compare MSA-depth changes, to measure how temporal database growth alters inferred annotation coverage. [src: alphafold_msa_annotation]
+The source reports and their detailed evidence are available in [[summaries/amr_fitness_cost__REPORT]] and [[summaries/amr_cofitness_networks__REPORT]]. [src: amr_fitness_cost] [src: amr_cofitness_networks]
 
 ## [[concepts/biosynthetic-prototrophy-and-auxotrophy|Biosynthetic Prototrophy, Auxotrophy, and Nutrient Dependence]]
 
@@ -65,7 +48,11 @@ Open Directions, gathered in one place. Follow a link for the evidence.
 - Expand organism-to-genome mapping across the remaining 38 organisms and rerun GapMind to test whether the 17-of-18 amino-acid completeness pattern persists across broader phylogenetic coverage. [src: essential_metabolome]
 - Combine GapMind with [[entities/eggnog]] EC-to-[[entities/kegg]] pathway analysis to test whether independent annotation pipelines recover the same serine and carbon-source capacities. [src: essential_metabolome]
 - Link essential-gene calls directly to pathway membership and assay organisms in defined media to test whether predicted pathway completeness corresponds to condition-specific biosynthetic essentiality. [src: essential_metabolome]
+- Independently calibrate the condition-specific importance threshold against known essentials from essential_metabolome before interpreting Latent Capability reclassification as biological confirmation. [src: pathway_capability_dependency]
 - Stratify pathway gaps by phylogeny and ecology after expanding the sample to test whether nutrient dependence is associated with lineage or environment. [src: essential_metabolome]
+- Test whether accessory-dependent amino-acid pathways predict measured metabolite exchange in defined microbial communities rather than inferring sharing from gene-content differences alone. [src: pathway_capability_dependency]
+- Reanalyze the 48-organism capability dataset with direct GapMind gene assignments and matched condition-specific fitness assays to determine whether the carbon-versus-amino-acid latent-fraction contrast reflects biology or SEED-proxy and laboratory-condition biases. [src: metabolic_capability_dependency]
+- Use condition-matched fitness assays and pangenome conservation to test whether costly-and-conserved biosynthetic genes retain fitness in defined nutrient-limited media, rather than inferring natural purifying selection from rich-medium measurements. [src: conservation_fitness_synthesis]
 
 ## [[concepts/biosynthetic-self-sufficiency-and-cultivation|Cultured genomes do not necessarily capture extreme biosynthetic self-sufficiency]]
 
@@ -121,25 +108,15 @@ Open Directions, gathered in one place. Follow a link for the evidence.
 - Compare classifier-derived eukaryotic fractions with targeted plastid, fungal, and protist markers in the 1,186-run NEON subset, using within-study models to ask whether the GOTTCHA2 signal tracks distinct biological sources or database-specific detection. [src: euk_in_prok_correlates]
 - Reconstruct pooled-run metadata from all contributing biosamples rather than the representative `MIN(biosample_id)` record, then test whether metadata-label uncertainty changes the within-study vegetation and geography associations. [src: euk_in_prok_correlates]
 
-## [[concepts/sampling-depth-and-downsampling-effects|Clinical Sampling Bias and the Interpretation of Ecological Genomic Patterns]]
-
-- Compare downsampled and full-genome gene-cluster extraction on the same species, using matched distance calculations, to determine why the median partial correlation changed from 0.003 to 0.081 and was characterized as a 27x difference. [src: ecotype_env_reanalysis]
-- Add genome count as a covariate in the partial-correlation analysis to test whether unequal sampling depth inflates correlations in species with more genomes. [src: ecotype_env_reanalysis]
-- Recompute correlations for transport, secondary-metabolism, and other functional gene subsets using the same environmental and human-associated groups to test whether whole-genome Jaccard distances mask ecological effects. [src: ecotype_env_reanalysis]
-- Replace majority-vote categories with structured ENVO terms from env_broad_scale and repeat the group and continuous-fraction analyses to test whether finer environmental ontology changes the null result. [src: ecotype_env_reanalysis]
-- Stratify or model NaN outcomes jointly with environment category, genome count, and phylogeny to test whether nonrandom missingness changes the Environmental versus Human-associated comparison. [src: ecotype_env_reanalysis]
-- Compare AlphaEarth geographic signal with independent epidemiological and ecological metadata for species such as Klebsiella or Enterococcus to test whether embedding structure reflects regional epidemiology rather than ecological differentiation. [src: ecotype_env_reanalysis]
-
 ## [[concepts/cofitness-network-architecture|Cofitness Network Architecture, Organism Specificity, and Shared Dispensability]]
 
-- Run AMR and non-AMR permutations matched on mean fitness, including the −0.05 to +0.05 range, and test whether flagellar and amino-acid enrichment persists; recompute truly-dark neighborhood enrichment with insertion-density and mean-fitness controls. [src: amr_cofitness_networks; truly_dark_genes]
-- Recompute cofitness by antibiotic versus standard-growth conditions; measure mean fitness for flagellar knockouts; and test phage-defense and secondary-metabolite controls. [src: amr_cofitness_networks]
-- Apply PADLOC MacSyFinder-style multi-PFam and gene-order rules to Retron, DISARM, and Gabija, then test whether the R-M Type II × Gabija syndrome survives stricter calls. [src: phage_defense_arsenal]
-- Fit the defense–prophage relationship with a GTDB-tree phylogenetic mixed-effects model and refit the negative-binomial model with estimated dispersion. [src: phage_defense_arsenal]
-- Compare Cas1-specific, EggNOG, and context-refined CRISPR-Cas calls, and determine whether defense-pair enrichment is stable across detection methods. [src: phage_defense_arsenal]
-- Experimentally compare R-M Type II-only and R-M Type II-plus-Gabija species in matched phage-challenge assays. [src: phage_defense_arsenal]
-- Expand defense analysis beyond seven systems and cross-reference defense syndromes with isolation-source metadata or AlphaEarth embeddings. [src: phage_defense_arsenal]
+- Recompute AMR and non-AMR permutations matched on mean fitness, including the −0.05 to +0.05 range, and test whether flagellar and amino-acid enrichment persists; recompute truly-dark neighborhood enrichment with insertion-density and mean-fitness controls. [src: amr_cofitness_networks; truly_dark_genes]
+- Partition fitness matrices into antibiotic-exposure and standard-growth conditions; compare direct transcription-factor targets and expression responses with cofitness edges; measure mean fitness for flagellar knockouts and other conditionally dispensable genes. [src: amr_cofitness_networks]
+- Recalculate networks at |r| > 0.4 and |r| > 0.5, using coordinate-based operon exclusion rather than matrix row position, and test whether organism-specificity and enrichment remain stable. [src: amr_cofitness_networks]
 - Apply Pfam enrichment, replace the row-index operon heuristic with genomic coordinates, and reassess extra-operon network sizes. [src: amr_cofitness_networks]
+- Apply PADLOC MacSyFinder-style multi-PFam and gene-order rules to Retron, DISARM, and Gabija; compare Cas1-specific, EggNOG, and context-refined CRISPR-Cas calls; test whether defense-pair enrichment survives stricter calls. [src: phage_defense_arsenal]
+- Fit the defense–prophage relationship with a GTDB-tree phylogenetic mixed-effects model and refit the negative-binomial model with estimated dispersion. [src: phage_defense_arsenal]
+- Experimentally compare R-M Type II-only and R-M Type II-plus-Gabija species in matched phage-challenge assays; expand defense analysis beyond seven systems and cross-reference syndromes with isolation-source metadata or AlphaEarth embeddings. [src: phage_defense_arsenal]
 - Reanalyze ICA with |weight| >= 0.3, a 50-gene cap, and a 40% component cap across organisms matched for experiment count. [src: fitness_modules]
 - Experimentally test module-only, family-backed, and truly-dark top-100 predictions under module-informed conditions without treating them as exact KO assignments; prioritize PV4/5210953 motility, ANA3/7026383 nitrogen limitation, DvH/206658 stress, and Methanococcus_S2/MMP_RS06570 fluoride-efflux-associated tests. [src: fitness_modules; truly_dark_genes]
 - Extend pangenome linkage to the 17,479 unlinked dark genes; test whether the estimated approximately 2,841 additional truly dark genes and their 2,208 estimated strong-phenotype subset are enriched in dark islands, mobile elements, or ICA modules. [src: truly_dark_genes]
@@ -156,8 +133,7 @@ Open Directions, gathered in one place. Follow a link for the evidence.
 - Apply ICA to metal–NaCl matrices to test whether shared-stress modules explain condition-specific architecture. [src: counter_ion_effects]
 - Hold ortholog scope and Pfam coverage constant when testing whether process-level module predictions replicate across 32 organisms. [src: discoveries]
 - Test whether the 1.29× core enrichment and 17.8% trade-off rate persist after matching prevalence, mean fitness, organism, condition, and experimental coverage. [src: discoveries]
-- Characterize 7,084 orphan essentials for mobile-element association, recent acquisition, rapid evolution, and missed divergent orthology. [src: essential_genome]
-- Test the 1,382 module-transfer predictions by CRISPRi under module-informed conditions and link variable essentiality to pathway completeness. [src: essential_genome]
+- Characterize 7,084 orphan essentials for mobile-element association, recent acquisition, rapid evolution, and missed divergent orthology; test the 1,382 module-transfer predictions by CRISPRi under module-informed conditions and link variable essentiality to pathway completeness. [src: essential_genome]
 - Expand Fitness Browser taxonomic coverage and compare universal essential families with the Database of Essential Genes. [src: essential_genome]
 - Test the 57,011 dark-gene spectrum using CRISPRi for essential candidates, RB-TnSeq or targeted deletion for non-essential candidates, and matched conditions across organisms; ask whether module, synteny, and cofitness evidence predicts reproducible phenotypes. [src: functional_dark_matter]
 - Reanalyze the 1,256 GapMind gaps with direct EC and structure-based matching, then experimentally test the highest-confidence gene–pathway assignments rather than treating organism-level co-occurrence as assignment. [src: functional_dark_matter]
@@ -176,14 +152,6 @@ Open Directions, gathered in one place. Follow a link for the evidence.
 - Test whether the 38 accessory module families retain apparent co-inheritance or niche-specific signatures after controlling for phylogeny, prevalence, genome size, and annotation coverage; distinguish horizontal transfer from other causes of low core fraction. [src: module_conservation]
 - Use CRISPRi or other perturbations to determine whether essential genes form condition-specific modules invisible to transposon-based ICA. [src: module_conservation]
 
-## [[concepts/cofitness-network-architecture|Cofitness Networks Do Not Establish Direct Co-regulation]]
-
-- Recompute AMR cofitness against random non-AMR genes matched to the same mean-fitness distribution, including the −0.05 to +0.05 range proposed in the report, and test whether flagellar and amino-acid-biosynthesis enrichment persists after mean-fitness matching. [src: amr_cofitness_networks]
-- Partition fitness matrices into antibiotic-exposure and standard-growth conditions, then test whether support-network edges and functional enrichment are condition-specific or persist across both regimes. [src: amr_cofitness_networks]
-- Compare direct regulatory evidence, such as shared transcription-factor targets or condition-specific expression responses, with cofitness edges to ask what fraction of high-|r| associations have independent support for co-regulation. [src: amr_cofitness_networks]
-- Recalculate networks at |r| > 0.4 and |r| > 0.5, using coordinate-based operon exclusion rather than matrix row position, and test whether the organism-specificity and enrichment results remain stable. [src: amr_cofitness_networks]
-- Measure mean fitness for flagellar knockouts and other conditionally dispensable gene classes under the same experimental conditions, then test whether their fitness profiles explain the AMR-neighborhood enrichment without invoking direct co-regulation. [src: amr_cofitness_networks]
-
 ## [[concepts/collection-site-versus-microenvironment-mismatch|Collection-Site Versus Organismal Microenvironment Mismatch]]
 
 - Combine the 13,381-genome metadata table with direct environmental metadata and alternative embedding distances, then test whether environmental predictors improve gene-content associations after accounting for phylogenetic distance. [src: ecotype_analysis]
@@ -198,6 +166,11 @@ Open Directions, gathered in one place. Follow a link for the evidence.
 - Combine sample-level metabolite abundances with genome-resolved pathway presence and condition-specific fitness measurements to test whether negative metabolite associations identify producers, consumers, or both. [src: discoveries]
 - Test the tyrosine outlier using independent cohorts and targeted metabolomics to distinguish a real anti-Black-Queen relationship from cohort, annotation, or measurement effects. [src: discoveries]
 - Compare pathway presence, pathway completeness, and measured metabolite pools across the 7 Fitness Browser organisms and 23 GapMind pathways to ask when Latent Capabilities become realized community dependencies. [src: discoveries]
+- Add pH, temperature, and total organic carbon to partial-correlation or mixed-effects models, and pair metabolomics with metatranscriptomics, to separate abiotic confounding and genomic potential from expressed biosynthetic activity. [src: nmdc_community_metabolic_ecology]
+- Obtain metabolomics for the 33 Freshwater samples and resolve the 61 Unknown-ecosystem samples through NMDC environmental annotations to test whether the Black Queen pattern generalizes beyond the predominantly soil H1 cohort. [src: nmdc_community_metabolic_ecology]
+- Reconcile the 7-organism condition-specific result with the 48-organism threshold analysis by applying matched pathway definitions and condition-stratified fitness models, testing whether latent capabilities remain neutral or become important under community-relevant media. [src: metabolic_capability_dependency]
+- Link clade-level pangenome openness to genome-resolved metabolite production and consumption, testing whether the ρ = 0.69 association reflects actual exchange networks rather than shared phylogeny or sampling structure. [src: metabolic_capability_dependency]
+- Validate the pathway-openness and ecotype-openness associations with phylogenetically independent models and genome-resolved metabolite production or consumption, testing whether accessory-dependent amino-acid pathways correspond to realized exchange. [src: pathway_capability_dependency]
 
 ## [[concepts/comparative-conservation-metric-calibration|Calibrating Conservation Metrics for Unknown Bacterial Genes]]
 
@@ -206,6 +179,12 @@ Open Directions, gathered in one place. Follow a link for the evidence.
 - Use bootstrap resampling of species and phyla in the 93.5M gene-cluster reference to quantify confidence intervals for conservation ranks and identify candidates whose priority is database-sensitive. [src: functional_dark_matter]
 - Re-run the 42-organism covering-set optimization under alternative conservation metrics and compare coverage of the 28,584 high-priority dark genes, asking whether the selected experimental panel is robust to metric choice. [src: functional_dark_matter]
 - Test whether conservation-weighted candidates outperform fitness-only candidates in CRISPRi or RB-TnSeq follow-up, separating broad conservation from experimentally validated functional importance. [src: functional_dark_matter]
+- Recompute essential-core enrichment across matched clade sizes and coverage thresholds, then compare binary essentiality and continuous fitness effects to determine whether the 1.56 median odds ratio is stable across reference designs. [src: conservation_vs_fitness]
+- Test whether conservation-weighted candidates with strong condition-specific or beneficial deletion effects replicate across underrepresented ecological conditions, separating genuine conditional importance from laboratory and transposon-coverage bias. [src: fitness_effects_conservation]
+- Characterize the 5,526 costly-and-dispensable genes and the 48 accessory co-regulated modules, then test whether mobile-element status, recent acquisition, or gene loss explains their departure from conservation-based expectations. [src: conservation_fitness_synthesis]
+- Compare the 1,116 fitness modules with taxonomic conservation tiers and ecological metadata to test whether module-level conservation predicts reproducible phenotypes better than gene-level breadth. [src: conservation_fitness_synthesis]
+- Reanalyze the 25,271 trade-off genes and the 28,017 Costly + Conserved genes across ecologically relevant conditions, testing whether category-specific burden differences replicate outside experimentally convenient Fitness Browser conditions. [src: core_gene_tradeoffs]
+- Test the 90% identity matching threshold and alternative orthology methods on rapidly evolving genes, asking whether apparent conservation–burden relationships change when homology-search negative evidence is strengthened. [src: core_gene_tradeoffs]
 
 ## [[concepts/competitive-exclusion-consortium-design|Designing Protective Microbial Consortia Requires Joint Optimization of Inhibition, Coverage, Safety, and Engraftability]]
 
@@ -232,11 +211,15 @@ Open Directions, gathered in one place. Follow a link for the evidence.
 
 ## [[concepts/composite-resistance-score-limitations|Limits of Composite Resistance Scores for Mechanistic Inference]]
 
-- Match BacDive strains to GTDB genomes using GCA accessions and repeat the phenotype-to-score analysis to test whether the 38.4% species-name matching rate limited mechanistic resolution. [src: bacdive_phenotype_metal_tolerance]
+- Match BacDive strains to GTDB genomes using GCA accessions and repeat the phenotype-to-score analysis to test whether species-name matching limited mechanistic resolution; reconcile the 37,368/5,647 and 42,227/6,426 bridge totals first. [src: bacdive_phenotype_metal_tolerance] [src: bacdive_metal_validation]
 - Replace the composite score with per-metal scores and use PGLS (phylogenetic generalized least squares) or phylogenetic PCA to test whether catalase predicts copper, urease predicts nickel, and H₂S production predicts zinc, copper, or cadmium tolerance after removing phylogenetic signal. [src: bacdive_phenotype_metal_tolerance]
 - Assemble urease-positive and urease-negative organisms within the same taxonomic classes and apply [[entities/tnseq]] or [[entities/crispri]] under nickel and other metals to test nickel-specific mechanisms rather than general composite tolerance. [src: bacdive_phenotype_metal_tolerance]
 - Experimentally test the H₂S hypothesis with balanced positive and negative controls under zinc, copper, and cadmium exposure to determine whether the observed d = -0.867 was a small-sample artifact. [src: bacdive_phenotype_metal_tolerance]
-- Compare composite-score predictions with direct Fitness Browser growth or fitness measurements across matched organisms and metals to determine which resistance-gene features predict measured tolerance rather than a derived genome-based score. [src: bacdive_phenotype_metal_tolerance]
+- Compare composite-score predictions with direct Fitness Browser growth or fitness measurements across matched organisms and metals, and integrate ENIGMA CORAL community data from the Oak Ridge metal-contaminated site, to determine which resistance-gene features predict measured tolerance rather than a derived genome-based score. [src: bacdive_phenotype_metal_tolerance] [src: bacdive_metal_validation]
+- Reanalyze a common strain-level BacDive/Fitness Browser bridge with per-metal scores, metal-dose normalization, and non-metal stress controls to determine whether the positive cross-metal layer is general stress rather than metal-specific resistance. [src: metal_cross_resistance]
+- Resolve the 40.7% locusId-related gene attrition, validate classifications against the Fitness Browser's `specificphenotype` annotations, and repeat module analysis with precomputed z-scored activities to test whether candidate metal-specific modules were missed by scale and callability effects. [src: metal_specificity]
+- Refit the atlas using concentration-relative-to-MIC normalization, phylogenetic independent contrasts, and genes important for metals but not other stresses; test whether regulatory or expression features outperform presence-only repertoire scores for direct per-metal fitness. [src: metal_fitness_atlas]
+- Functionally annotate the 149 conserved atlas candidates with PaperBLAST, InterPro, and structural prediction, then test the strongest candidates under matched metal and non-metal conditions to distinguish general stress from metal-specific mechanisms. [src: metal_fitness_atlas]
 
 ## [[concepts/computational-pathway-prediction-validation|Pathway-completeness predictions gain support from matched growth phenotypes]]
 
@@ -244,6 +227,9 @@ Open Directions, gathered in one place. Follow a link for the evidence.
 - Repeat the GapMind–Fitness Browser comparison for other ENIGMA isolates, including *Pseudomonas stutzeri* RCH2, and ask whether the observed 13/13 agreement generalizes across organisms. [src: fw300_metabolic_consistency]
 - Compare complete GapMind predictions with growth across multiple media and single-substrate conditions, and ask how often pathway completeness remains predictive when environmental context changes. [src: fw300_metabolic_consistency]
 - Integrate WoM metabolite profiles with GapMind predictions and community metabolic modeling to test whether predicted biosynthetic capacity explains tryptophan secretion and potential cross-feeding in the Oak Ridge groundwater community. [src: fw300_metabolic_consistency]
+- Validate condition-specific capability/dependency calls against an independent essentiality set such as essential_metabolome, and test whether the 24 Incomplete but Important pairs are explained by annotation gaps, alternate pathways, or salvage routes. [src: pathway_capability_dependency]
+
+See the source-level synthesis in [[summaries/pathway_capability_dependency__REPORT]].
 
 ## [[concepts/condition-dependent-gene-tradeoffs|Condition-Dependent Gene Fitness Trade-Offs]]
 
@@ -252,6 +238,11 @@ Open Directions, gathered in one place. Follow a link for the evidence.
 - Compare the 28,017 Costly + Conserved genes with direct field or host-associated fitness measurements to test whether their conservation is consistent with purifying selection rather than condition sampling or annotation bias. [src: core_gene_tradeoffs]
 - Repeat conservation mapping with similarity thresholds below and above 90% identity, followed by targeted homology searches, to quantify how rapidly evolving genes affect the trade-off classification. [src: core_gene_tradeoffs]
 - Test whether the -1 and 1 fitness cutoffs alter the number and functional composition of trade-off genes by applying preregistered alternative thresholds to the same per-gene measurements. [src: core_gene_tradeoffs]
+- Stratify the 4,450 ephemeral-niche genes by functional category and assay coverage, then test with phylogenetically controlled models whether their core enrichment reflects genuine conditional importance or differential detectability. [src: fitness_effects_conservation]
+- Compare the positive and negative fitness tails of core and auxiliary genes across matched conditions to determine whether the apparent core-gene trade-off architecture persists after controlling for gene length, transposon callability, and condition count. [src: fitness_effects_conservation]
+- Test the 48 accessory co-regulated modules against module-family breadth and environmental-condition coverage to determine whether their flexible-genome architecture reflects genuine accessory coordination or sampling and callability bias. [src: conservation_fitness_synthesis]
+- Extend the linked essentiality analysis from binary essentiality to condition-specific fitness and ortholog-family effects, while correcting for transposon callability and pangenome clade size, to test whether essential-auxiliary genes compensate for missing core functions. [src: conservation_vs_fitness]
+- Replicate the field-versus-lab comparison across organisms with Fitness Browser and environmental metadata, using quantitative gene-cluster prevalence and callability-adjusted models to test whether the weak condition-class effect and accessory resistance signal generalize beyond *D. vulgaris*. [src: field_vs_lab_fitness]
 
 ## [[concepts/condition-space-dimensionality|Condition-space dimensionality separates general sensitivity from substrate-specific requirements]]
 
@@ -285,6 +276,9 @@ The detailed analyses are available in [[summaries/adp1_deletion_phenotypes__REP
 - Fit models including depth, location cluster, sampling date, and compositional controls, using mixed-effects or hierarchical structure, to determine whether the exploratory defense association persists beyond coarse `location_prefix` adjustment. [src: enigma_contamination_functional_potential]
 - Investigate the 862 unmapped genera and expand the genus-to-clade bridge to test whether missing coverage changes the direction or magnitude of the contamination–functional association. [src: enigma_contamination_functional_potential]
 - Reanalyze the 212 sample-fraction rows with preregistered fraction-stratified and pooled contrasts to determine whether the pooled exploratory signal can be reproduced across the `0.2_micron_filter` and `10_micron_filter` fractions. [src: enigma_contamination_functional_potential]
+- Compare downsampled and full-genome ecotype extraction under a shared genome set, then add genome count as a covariate, to determine whether the 27x partial-correlation discrepancy is methodological or reflects sampling power. [src: ecotype_env_reanalysis]
+- Repeat the ecotype association using functional subsets and structured ENVO terms to test whether whole-genome Jaccard distances or coarse environmental categories mask environment-linked gene-content signals. [src: ecotype_env_reanalysis]
+- Recompute the original, reanalysis, and new ecotype correlations on a shared genome set with matched embedding coverage and nonlinear distance-based methods, then test COG categories including V-Defense and L-Mobile to determine whether environmental effects are localized to functional subsets. [src: ecotype_analysis]
 
 ## [[concepts/continuous-versus-modular-phenotype-landscapes|Continuous Versus Modular Phenotype Landscapes]]
 
@@ -300,6 +294,10 @@ The detailed analyses are available in [[summaries/adp1_deletion_phenotypes__REP
 - Compare representative-sequence MSA depths with member-level sequence diversity for the 415,603 low-MSA core clusters, using within-cluster pangenome sequence analysis to ask whether representatives conceal deeper or shallower support among cluster members. [src: alphafold_msa_annotation]
 - Prioritize the 286,439 hypothetical low-MSA core clusters for structure prediction and experimental characterization, using the 137 EC-annotated and 346 KEGG-mapped clusters as annotated comparators to ask which structural features predict recoverable function. [src: alphafold_msa_annotation]
 - Extend the bridge analysis to the 70.7% of clusters without AlphaFold MSA depth, using alternative sequence-similarity and domain resources to ask whether the unbridged population contains a larger conserved annotation gap. [src: alphafold_msa_annotation]
+- Intersect low-MSA core clusters with the 28,017 Costly + Conserved genes and test their fitness across ecologically relevant conditions, asking whether shallow sequence representation predicts condition-dependent burden or essentiality. [src: core_gene_tradeoffs]
+- Test whether low-MSA core clusters are overrepresented in the 38 accessory module families, and whether module membership or module-family breadth predicts annotation recovery after controlling for pangenome class. [src: module_conservation]
+- Intersect the low-MSA core set with the 5,526 costly-and-dispensable genes and test mobile-element, acquisition, and gene-loss hypotheses using genomic-context and phylogenetic analyses. [src: conservation_fitness_synthesis]
+- Intersect low-MSA core clusters with the fitness-effect categories from the 43-bacterium dataset and test whether shallow MSA representation predicts condition-specific burden, benefit, or apparent neutrality after controlling for transposon coverage. [src: fitness_effects_conservation]
 
 ## [[concepts/core-genome-burden-paradox|The Core-Genome Burden Paradox]]
 
@@ -308,14 +306,22 @@ The detailed analyses are available in [[summaries/adp1_deletion_phenotypes__REP
 - Analyze the 43-organism conservation and fitness dataset with cross-species comparative methods to identify gene families that are universally essential across all 43 organisms. [src: conservation_fitness_synthesis]
 - Reanalyze the 48 accessory modules containing exclusively flexible-genome co-regulated functions with module-level fitness and conservation data to determine whether they represent coherent adaptive programs. [src: conservation_fitness_synthesis]
 - Pair RB-TnSeq measurements with fitness assays in soil, biofilm, and host-associated conditions to test whether laboratory-burdensome conserved genes become beneficial in natural-environment proxies. [src: conservation_fitness_synthesis]
+- Stratify the 25,271 trade-off genes and the functional-category burden differences by assay condition and organism to test whether the Cell Wall reversal and the larger RNA-metabolism excess persist after condition coverage and phylogenetic structure are controlled. [src: core_gene_tradeoffs]
+- Test whether the 4,450 ephemeral-niche genes remain enriched in core genomes after controlling for the number and type of conditions assayed, and whether singleton neutrality tracks transposon callability. [src: fitness_effects_conservation]
+- Reanalyze the 33-organism essentiality–pangenome linkage with harmonized organism inclusion, pangenome clade size, coverage thresholds, and essentiality definitions to determine how much the 86.1% versus 81.2% association depends on dataset composition. [src: conservation_vs_fitness]
 
 ## [[concepts/costly-dispensable-gene-loss|Evolutionary loss of costly, non-conserved genes]]
 
 - Reanalyze gene presence as a continuous fraction of pangenome genomes, rather than a binary core/accessory label, and test whether increasing laboratory burden predicts decreasing prevalence after controlling for organism and gene length. [src: costly_dispensable_genes]
 - Re-link Fitness Browser genes to pangenomes with sequence-similarity-sensitive homology methods and manual synteny checks to determine how many apparent costly+dispensable genes were missed or misclassified by the 90% identity DIAMOND threshold. [src: costly_dispensable_genes]
-- Compare longitudinal genomes or closely related strain phylogenies for mobile-element-rich costly genes to test whether their loss, retention, or pseudogenization follows the predicted burden-associated pattern. [src: costly_dispensable_genes]
+- Longitudinally test whether costly+dispensable genes are lost, retained, or pseudogenized along closely related strain phylogenies, while comparing them with the more prevalent Costly + Conserved trade-off class. [src: costly_dispensable_genes, core_gene_tradeoffs]
 - Test *Pseudomonas stutzeri* RCH2 against related strains using mobile-element annotation, genome architecture, and phylogenetic reconstruction to distinguish recent invasion from strain-specific genomic expansion. [src: costly_dispensable_genes]
 - Measure the 14.1% condition-specific subset across community, host-associated, and environmental conditions using targeted competition assays to ask whether context-specific benefits explain persistence of costly+dispensable genes. [src: costly_dispensable_genes]
+- Stratify the cost–conservation relationship by functional category and condition, especially Cell Wall versus Protein, Motility, and RNA Metabolism genes, to test whether the observed burden reversal replicates beyond the analyzed dataset. [src: core_gene_tradeoffs]
+- Characterize the 48 accessory fitness modules containing co-regulated functions exclusively in the flexible genome, testing whether their prevalence and laboratory burden predict persistence or loss across related strains. [src: conservation_fitness_synthesis]
+- Test whether the weak fitness–conservation gradient persists after restricting analyses to well-covered genes and adding epistasis-aware, non-rich-media assays, particularly for singleton and condition-specific genes. [src: fitness_effects_conservation]
+- Reanalyze the 3,683 essential-auxiliary genes and 1,259 essential-unmapped genes using continuous pangenome prevalence, identifier-resolved orthology, and condition-specific fitness assays to test whether poorly annotated essential genes are retained, replaced, or lost through distinct evolutionary routes. [src: conservation_vs_fitness]
+- Extend the essentiality comparison beyond binary calls by correlating mean fitness effects with pangenome prevalence and testing whether genes with fitness < -2 under stress conditions show a different cost–conservation relationship. [src: conservation_vs_fitness]
 
 ## [[concepts/coverage-confounding-of-community-functional-scores|Mapped Coverage Constrains Community Functional Associations]]
 
@@ -342,6 +348,13 @@ The detailed analyses are available in [[summaries/adp1_deletion_phenotypes__REP
 - Expand Web-of-Microbes–BacDive matching with InChIKey or CHEBI identifiers, and test whether identifier-based joining increases the 8/58 BacDive match count without conflating biologically distinct compounds. [src: fw300_metabolic_consistency]
 - Use community metabolic modeling for the Oak Ridge groundwater community to test whether FW300-N2E3 tryptophan secretion can support auxotrophic community members under the relevant environmental conditions. [src: fw300_metabolic_consistency]
 - Compare FW300-N2E3 Web-of-Microbes profiles across growth media to test which metabolites are constitutive and which are medium-dependent. [src: fw300_metabolic_consistency]
+- Apply direct GapMind gene-step assignments and matched-condition fitness assays across the 48-organism panel to test whether latent classifications reflect true ecological inactivity or missing laboratory conditions. [src: metabolic_capability_dependency]
+- Recalibrate the condition-specific importance threshold against independently known essentials, then test whether the 66 Latent Capability pairs remain conditionally important without median-threshold circularity. [src: pathway_capability_dependency]
+- Extend matched capability–dependency comparisons beyond the 7 model organisms and compute phylogenetically independent relationships between pathway variation, pangenome openness, and metabolic ecotype counts. [src: pathway_capability_dependency]
+- Test the apparent *D. vulgaris* serine auxotrophy on serine-free minimal medium, inspect lower-confidence GapMind steps-missing calls, and expand organism-to-genome mapping beyond the 7-organism pilot. [src: essential_metabolome]
+- Combine GapMind with eggNOG EC-to-KEGG pathway analysis and direct essential-gene mapping to determine whether conserved pathway completeness predicts condition-specific dependency across the remaining mapped organisms. [src: essential_metabolome]
+- Obtain a current Web of Microbes or GNPS2/Northen laboratory dataset with consumption measurements, then repeat production-versus-use comparisons under explicitly matched media and organisms. [src: webofmicrobes_explorer]
+- Build a pathway-to-metabolite lookup table for Web of Microbes internal pathway identifiers and manually curate the 107 formula-only ModelSEED candidate sets before testing whether compound-resolution improvements alter cross-database concordance. [src: webofmicrobes_explorer]
 
 ## [[concepts/cross-species-fitness-transferability|Ortholog-transferred fitness phenotypes are constrained by organism-specific network architecture]]
 
@@ -350,6 +363,7 @@ The detailed analyses are available in [[summaries/adp1_deletion_phenotypes__REP
 - Stratify the [[entities/kescience-fitnessbrowser]] ortholog-transferred data by organism and respiratory-chain architecture, then compare effect sizes across architectures to quantify transferability. [src: aromatic_catabolism_network]
 - Expand comparative pangenome analysis across aromatic-degrading species to test whether Complex I retention and NDH-2 presence predict transferred fitness phenotypes. [src: aromatic_catabolism_network]
 - Rebuild the ADP1 FBA model with PQQ biosynthesis, iron homeostasis, and respiratory-chain capacity constraints, then test whether architecture-aware constraints reduce the gap between predicted 0% essentiality and the observed defects in 10/13 Complex I subunits. [src: aromatic_catabolism_network]
+- Reanalyze transferred fitness alongside pathway completeness and condition-specific fitness across organisms with matched GapMind and Fitness Browser data to test whether architecture-aware transfer predicts Active Dependency, Latent Capability, or Incomplete but Important classifications. [src: pathway_capability_dependency]
 
 ## [[concepts/cross-tenant-data-bridging|Schema-Level Bridges and Validated Cross-Tenant Data Integration]]
 
@@ -379,6 +393,13 @@ The detailed analyses are available in [[summaries/adp1_deletion_phenotypes__REP
 - Stratify matched BacDive strains by metal-tolerance gene families and contamination environment, using metals with sufficient representation including iron and manganese, to test whether specific functions predict specific environments. [src: bacdive_metal_validation]
 - Expand BacDive phenotype extraction beyond the `metabolite_utilization` table to include MIC and growth-inhibition data, then test whether independently measured tolerance agrees with genome-derived scores. [src: bacdive_metal_validation]
 - Reanalyze contamination effects within taxonomic strata and after genome-size normalization, using the small Bacillota and Bacteroidota groups to determine whether their null results reflect biology or limited power. [src: bacdive_metal_validation]
+- Build multi-primer, multi-region occurrence datasets and perform species-per-genus rarefaction to test whether the metal-type/niche-breadth association persists after detection probability and pangenome coverage are jointly equalized. [src: microbeatlas_metal_ecology]
+- For community-level validation, relate covered-read fraction to weighted metal-diversity scores and compare genus-level predictions with independent metal measurements across sites. [src: microbeatlas_metal_ecology]
+- Recalculate environmental–gene-content associations using direct environmental metadata and alternative embedding distances, then test COG functional subsets and ecotype-cluster gene content to determine whether environmental effects are masked by incomplete AlphaEarth coverage or whole-genome aggregation. [src: ecotype_analysis]
+- Compare downsampled and full-genome extraction on the same species, controlling for genome count, to resolve the 27x partial-correlation discrepancy; repeat the test with structured ENVO terms and functional subsets. [src: ecotype_env_reanalysis]
+- Expand plant-associated phylogenetic-tree coverage beyond 18 of 65 candidate species and repeat within-species host/subclade tests, while matching collection metadata to genome identifiers, to determine whether apparent host specialization generalizes beyond the currently testable lineages. [src: plant_microbiome_ecotypes]
+- Compare pangenome-derived plant association with MGnify detection after genus-level rarefaction and matched taxonomic coverage, then test whether compartment effects persist when genome-rich species and uneven environmental sampling are controlled. [src: plant_microbiome_ecotypes]
+- Validate plant-associated beneficial and pathogenic marker sets with transcriptomics or experiments, and test whether continuous scores outperform categorical labels under matched genome-size and taxonomic controls. [src: plant_microbiome_ecotypes]
 
 ## [[concepts/data-landscape-ownership-and-coverage-bias|Agency and Tenant Ownership Shape Biological Data Coverage]]
 
@@ -405,15 +426,6 @@ The detailed analyses are available in [[summaries/adp1_deletion_phenotypes__REP
 - Add intermediate passage time points and fit community trajectories to distinguish rapid restructuring from gradual historical persistence. [src: lignin_community_enrichment]
 - Increase ITS sequencing depth, use UNITE-based taxonomy, and repeat the history experiment to test whether the absent fungal memory signal reflects biology or poor replicate structure. [src: lignin_community_enrichment]
 
-## [[concepts/environmental-resistome|From Ecological Association to Causal Resistance Selection]]
-
-- Use the existing per-genome AMR calls, NCBI environment metadata, and phylogenetically matched comparisons to perform environment-specific gene identification, then ask which resistance clusters remain enriched after controlling for lineage and sampling intensity. [src: amr_environmental_resistome]
-- Use the AMR mechanism profiles and environmental classifications with PCoA and PERMANOVA, a permutation-based multivariate analysis of variance, to test whether environment explains multivariate resistance composition beyond taxonomic structure. [src: amr_environmental_resistome]
-- Reanalyze the 293K-genome collection with metagenome-assembled genomes and isolate genomes separated, then ask whether the clinical-accessory AMR contrast persists when genome-recovery and isolate-sampling processes are modeled explicitly. [src: amr_environmental_resistome]
-- Combine the 2,659 species with AlphaEarth embeddings and measured exposure metadata, using partial correlation or phylogenetically controlled models, to test whether interpretable environmental gradients account for the A34 association and the Mantel result of r = 0.098. [src: amr_environmental_resistome]
-- Reconstruct within-species comparisons from per-genome AMR profiles rather than the species-level clinical-fraction proxy, then test whether genomes from environments with higher antibiotic or metal exposure contain more acquired resistance after matching on lineage. [src: amr_environmental_resistome]
-- Expand mechanism annotation for the 15,550 unclassified clusters using independent annotation resources, then test whether the environment-dependent mechanism fractions change when the 18.7% unassigned fraction is included. [src: amr_environmental_resistome]
-
 ## [[concepts/ecotype-clustering-validity|Cluster assumptions and weak separation limit inference about bacterial gene-content ecotypes]]
 
 - Recluster the 1,820 genome assignments with HDBSCAN and compare cluster membership, silhouette scores, and cluster number with the KMeans results to test whether ecotype structure is robust to cluster geometry and density assumptions. [src: ecotype_functional_differentiation]
@@ -421,6 +433,13 @@ The detailed analyses are available in [[summaries/adp1_deletion_phenotypes__REP
 - Scale the same PCA/KMeans and HDBSCAN comparison from the 15-species sample to all 456 eligible species to test whether weak separation and functional differentiation generalize across genome-count bins and phylogenetic diversity. [src: ecotype_functional_differentiation]
 - Reanalyze the 62% of gene clusters lacking COG annotations with AlphaFold or domain analysis to ask whether unannotated genes improve separation or reveal adaptive functions hidden by annotation coverage. [src: ecotype_functional_differentiation]
 - Join ecotype assignments to habitat metadata and test with phylogenetically controlled models whether the inferred groups predict environments rather than only gene-content or lineage structure. [src: ecotype_functional_differentiation]
+- For the 172 species with correlation results, replace or supplement AlphaEarth distances with direct environmental metadata and test nonlinear, phylogenetically controlled associations to determine whether the weak environmental signal reflects measurement limitations or genuinely weak habitat structuring. [src: ecotype_analysis]
+- Compare downsampled and full-genome extraction on the same species, controlling genome count and genome set, to resolve the 27x partial-correlation discrepancy; then repeat the environmental comparison with genome count as a covariate. [src: ecotype_env_reanalysis]
+- Replace majority-vote labels with structured ENVO terms from env_broad_scale and test functional subsets such as transport and secondary metabolism to determine whether whole-genome distances mask habitat-associated gene-content signals. [src: ecotype_env_reanalysis]
+- Partition prophage and other accessory modules from whole-genome gene-content distances, then compare KMeans, HDBSCAN, and phylogenetically controlled environmental associations to test whether module-level environmental structure produces reproducible ecotypes or continuous gradients. [src: prophage_ecology]
+- Validate the prophage-module signal with dedicated prophage detection and genome-level rather than taxonomy-bridged metagenomic measurements to determine whether environmental associations persist after annotation and genus-conservation biases are removed. [src: prophage_ecology]
+- Apply phylogenetically controlled compartment and host-association models to the plant-marker panel, testing whether the R² = 0.060 location effect persists after balancing dominant taxa and expanding tree coverage. [src: plant_microbiome_ecotypes]
+- Compare marker-defined, accessory-gene, and whole-genome clusters in the 5 plant-associated species with corrected subclade associations, including *Xanthomonas campestris* and *Xanthomonas vasicola*, to test whether host structure is discrete or continuous. [src: plant_microbiome_ecotypes]
 
 ## [[concepts/ecotype-environment-gene-content|Environmental Context and Functional Gene-Content Differentiation]]
 
@@ -468,32 +487,32 @@ The detailed analyses are available in [[summaries/adp1_deletion_phenotypes__REP
 
 ## [[concepts/environment-embedding-geography|Geographic and environmental structure in microbial genomic patterns]]
 
-- Re-run [[concepts/ecotype-environment-gene-content]] on environmental-only samples, stratifying the 52.7% unknown-label burden and comparing keyword with species-majority assignments; test whether the median partial correlation increases. [src: env_embedding_explorer; pitfalls]
-- Use coordinates, isolation_source homogeneity, suspicious-cluster flags, and alternative DBSCAN parameters to distinguish field sites, institutional addresses, and taxonomic composition. [src: env_embedding_explorer]
-- Correlate A00–A63 with latitude, temperature, precipitation, NDVI, and land cover; compare keyword harmonization with env_broad_scale and analyze the 3,838 NaN-containing records. [src: env_embedding_explorer]
-- Re-test environment signals with GroupKFold by study, within-study contrasts, pooled versus single-biosample NMDC runs, and carrier-versus-non-carrier controls. [src: euk_in_prok_correlates; functional_dark_matter]
-- Refit ecotypes with held-out-feature clustering, leave-one-species-out refitting, and pathway/EC-number clustering; test whether E1 and E3 Jaccard values remain below 0.3 and whether the independent list remains at 3 candidates. [src: pitfalls]
-- Reanalyze AlphaEarth-clade associations with leaf_consistency, rank-stratified scores, study-blocked validation, and broader phenotype coverage, especially Cyanobacteriia. [src: gene_function_ecological_agora]
+- Compare keyword isolation_source with env_broad_scale for the 34,800 and 76,295 covered genomes using confusion matrices, category-specific embedding distances, and alternative ENVO mappings; determine which schema preserves ecological separation with fewer ambiguous assignments. [src: env_embedding_explorer]
+- Reclassify the 30,469 Suspicious cluster and 2,708 Low precision coordinates using isolation_source homogeneity, species composition, coordinate precision, and field-site evidence; test the 0.41-to-0.82 distance pattern after reclassification. [src: env_embedding_explorer]
+- Reweight or downsample Human clinical, Human gut, Human other, Soil, Marine, Freshwater, Extreme, and Plant categories, then repeat geographic-distance and gene-content analyses. [src: env_embedding_explorer]
+- Directly compare full-genome extraction with diversity-maximized downsampling, including genome count as a covariate, to resolve the 27× partial-correlation discrepancy; repeat environmental-only analyses and test whether median association exceeds 0.0025. [src: ecotype_env_reanalysis; env_embedding_explorer]
+- Test V-Defense, L-Mobile, transport, and secondary-metabolism subsets rather than whole-genome Jaccard distances, using structured ENVO terms and phylogeny-controlled partial correlations. [src: ecotype_analysis; ecotype_env_reanalysis]
+- Re-run UMAP and DBSCAN across alternative n_neighbors, min_dist, and eps values and test whether environment-dominated clusters persist in the original 64-dimensional space. [src: env_embedding_explorer]
+- Correlate A00–A63 with latitude, temperature, precipitation, NDVI, and land cover; analyze the 3,838 NaN-containing records. [src: env_embedding_explorer]
+- Re-test environmental associations with GroupKFold by study, within-study contrasts, pooled versus single-biosample NMDC runs, and carrier-versus-non-carrier controls. [src: euk_in_prok_correlates; functional_dark_matter]
+- Refit ecotypes with held-out-feature clustering, leave-one-species-out refitting, pathway/EC-number clustering, and independent validation; test whether E1 and E3 Jaccard values remain below 0.3 and whether the independent list remains at 3 candidates. [src: pitfalls]
 - Reconcile ENIGMA and global profiles using GTDB-validated identifiers, ChEBI-ID condition canonicalization, and study/site-blocked validation. [src: genotype_to_phenotype_enigma; pitfalls]
 - Reanalyze Harvard Forest with horizon-matched DNA, RNA, and metabolite contrasts, restored temperature, pH, and nitrogen covariates, and multi-site comparisons. [src: harvard_forest_warming]
 - Match Oak Ridge assemblies to Fitness Browser organisms at species or strain level and test uranium-specific fitness while controlling for pH, redox, carbon, and date. [src: lab_field_ecology]
 - Reanalyze xoxF/mxaF with phylogeny-aware models, ORF-integrity checks, Bakta validation, and expanded REE-AMD sampling. [src: lanthanide_methylotrophy_atlas]
 - Complete the metal-resistance map, normalize hotspots by log(n_MAGs), check sample-accession prefixes, and stratify the 30.8% coordinate gap. [src: metal_resistance_global_biogeography]
-- Reanalyze MicrobeAtlas with finer environment categories, phylogenetic mixed models, sampling-effort covariates, covered-read fractions, contamination metadata, and distinct accession prefixes. [src: microbeatlas_metal_ecology]
+- Reanalyze MicrobeAtlas with finer environments, phylogenetic mixed models, sampling-effort covariates, covered-read fractions, contamination metadata, and accession-prefix controls. [src: microbeatlas_metal_ecology]
 - For PHB, map PF00561/PF07167, reconstruct a phaC tree, and apply phylogenetic logistic regression to distinguish transfer, lineage, genome-size, and environmental effects. [src: phb_granule_ecology]
 - Extend plant analyses with phylogenetic GLMMs, broader tree coverage, genome-size matching, independent metagenomes/transcriptomes, and reaction-level complementarity after recovering the 62/322 lost genera. [src: plant_microbiome_ecotypes]
-- Test prophage effects with geNomad or VIBRANT, intact-versus-domesticated classification, lineage and genome-size controls, and assembly-level validation of the NMDC bridge. [src: prophage_ecology]
-- Resolve module-versus-lineage effects by integrating module exchange, contig co-localization, TerL trees, host phylogeny, and defense-island analyses. [src: prophage_ecology]
-- Extend Pseudomonas profiling with aromatic-degradation modules and PGLS or phylogenetic logistic regression; test within-species ecotypes in *P. fluorescens* and *P. putida* against [[entities/kescience-fitnessbrowser]]. [src: pseudomonas_carbon_ecology]
-- Test SNIPE environmental association using PF13250/DUF4041 plus PF13455 rather than PF01541; quantify false positives from DUF4041-only calls, search divergent homologues, and compare SNIPE-bearing and non-bearing species within phylogenetically and coverage-matched strata. [src: snipe_defense_system]
-- Test whether SNIPE status predicts selected AlphaEarth dimensions, measured pH, temperature, precipitation, land cover, or NMDC ecosystem metadata after controlling for lineage, genome size, sampling effort, and coordinate quality; determine whether the A19 effect generalizes beyond the 1,069 SNIPE-bearing and 13,977 non-SNIPE species. [src: snipe_defense_system]
-- Test the proposed SNIPE–ManYZ trade-off experimentally in Klebsiella using strain-specific mutant libraries or curated Tn-Seq data, and compare phage susceptibility with mannose/glucosamine fitness; the current co-occurrence evidence cannot establish the mechanism. [src: snipe_defense_system]
-- Decompose the soil negative R² using spatial blocking, train/test distribution-shift diagnostics, fold-level MSE leverage checks, and outlier sensitivity analyses to distinguish model failure from genuine unpredictability. [src: soil_frontier_genomics]
-- Recompute GDI after uniform 16S rarefaction, report OTU richness and mean completeness separately, bootstrap biome-level 95% CIs, and test whether forest and cropland remain jointly highest. [src: soil_frontier_genomics]
-- Control the +0.8 pH discovery gap for the number of 16S samples per pH bin and compare GDI with independent completeness and assembly-quality measures to distinguish sampling gaps from assembly or annotation gaps. [src: soil_frontier_genomics]
-- For soil-metal associations, rerun Spearman and partial-correlation models from the `kescience_mgnify` and `kbase_ke_pangenome` Spark tables; test COG ~ Cr | Cu + Zn + Pb, report rho distributions and unconditional db-RDA R², and assess whether the 2,355 associations survive effect-size and dependence-aware FDR checks. [src: soil_metal_functional_genomics]
-- Test copper proximity sensitivity at 5 km, 10 km, and 20 km, and apply Moran’s I to residuals with SEVM if spatial autocorrelation is significant; determine whether copper–COG associations persist after spatial and project controls. [src: soil_metal_functional_genomics]
-- Classify significant metal-associated COGs into resistance, stress, membrane, energy, and unknown categories, and compare soil, marine, and wastewater models to distinguish metal-specific responses from generic multi-metal contamination. [src: soil_metal_functional_genomics]
+- Test prophage effects with geNomad or VIBRANT, intact-versus-domesticated classification, lineage and genome-size controls, and assembly-level validation of the NMDC bridge; resolve module-versus-lineage effects with TerL trees, host phylogeny, and defense-island analyses. [src: prophage_ecology]
+- Extend Pseudomonas profiling with aromatic-degradation modules and PGLS or phylogenetic logistic regression; test within-species ecotypes in P. fluorescens and P. putida against [[entities/kescience-fitnessbrowser]]. [src: pseudomonas_carbon_ecology]
+- Test SNIPE using PF13250/DUF4041 plus PF13455 rather than PF01541; quantify DUF4041-only false positives, search divergent homologues, and compare coverage- and phylogeny-matched species. [src: snipe_defense_system]
+- Test whether SNIPE predicts A19 and other AlphaEarth dimensions, pH, temperature, precipitation, land cover, or NMDC ecosystem metadata after controlling for lineage, genome size, sampling effort, and coordinate quality; determine whether the effect generalizes beyond n=1,069 and n=13,977. [src: snipe_defense_system]
+- Test the proposed SNIPE–ManYZ trade-off experimentally in Klebsiella using strain-specific mutant libraries or curated Tn-Seq data; current co-occurrence evidence cannot establish mechanism. [src: snipe_defense_system]
+- Decompose soil negative R² using spatial blocking, train/test distribution-shift diagnostics, fold-level MSE leverage checks, and outlier sensitivity analyses. [src: soil_frontier_genomics]
+- Recompute GDI after uniform 16S rarefaction, report richness and completeness separately, bootstrap biome-level 95% CIs, and control the +0.8 pH gap for sample number per pH bin. [src: soil_frontier_genomics]
+- Rerun soil-metal models as COG ~ Cr | Cu + Zn + Pb, report rho distributions and unconditional db-RDA R², assess dependence-aware FDR and effect sizes, and test copper proximity at 5 km, 10 km, and 20 km with Moran’s I and SEVM. [src: soil_metal_functional_genomics]
+- Classify significant metal-associated COGs into resistance, stress, membrane, energy, and unknown categories and compare soil, marine, and wastewater models to distinguish metal-specific from generic multi-metal contamination. [src: soil_metal_functional_genomics]
 - Build a provenance audit that discovers live BERDL namespaces and schemas, validates tenant and identifier mappings, uses genome_id and sample_id bridge keys, and records missingness before environmental joins. [src: pitfalls]
 
 ## [[concepts/environmental-embedding-ecological-validity|Ecological Validity of Environmental Embeddings]]
@@ -504,47 +523,35 @@ The detailed analyses are available in [[summaries/adp1_deletion_phenotypes__REP
 - For species with identified ecotype clusters, compare gene content between clusters to determine whether environmental structure is detectable at the ecotype or locus level despite weak genome-wide correlations. [src: ecotype_analysis]
 - Restrict host-associated analyses to metadata describing actual microenvironments rather than collection coordinates and test whether the environmental effect changes. [src: ecotype_analysis]
 
-## [[concepts/environment-embedding-geography|Environmental Metadata Harmonization Can Reshape Ecological Genomic Inference]]
-
-- Use isolation_source homogeneity, species composition, and coordinate precision to reclassify the 30,469 Suspicious cluster and 2,708 Low precision coordinates, then test whether the embedding–geographic-distance relationship changes. [src: env_embedding_explorer]
-- For the 34,800 genomes with env_broad_scale and the 76,295 with isolation_source, compare keyword categories with structured classifications using confusion matrices and category-specific embedding distances, asking which schema preserves ecological separation with fewer ambiguous assignments. [src: env_embedding_explorer]
-- Repeat the [[concepts/ecotype-environment-gene-content]] analysis on environmental-only samples, using phylogeny-controlled partial correlations, to test whether removing the 38% human-associated subset increases the median association above 0.0025. [src: env_embedding_explorer]
-- Add clinical body-site terms, underground-laboratory terms, generic water-source terms, and env_broad_scale fallback values to the harmonization workflow, then measure how many of the 13,944 Other genomes move into interpretable categories. [src: env_embedding_explorer]
-- Re-run UMAP and DBSCAN across alternative n_neighbors, min_dist, and eps values, then test whether environment-dominated clusters persist in the original 64-dimensional space rather than only in the projection. [src: env_embedding_explorer]
-- Correlate embedding dimensions A00–A63 with latitude, temperature, precipitation, NDVI, and land-cover classifications to identify which environmental features drive the observed distance-decay pattern. [src: env_embedding_explorer]
-
 ## [[concepts/environmental-resistome|Environmental structuring of the bacterial resistome]]
 
-- Use assembled per-genome environment metadata and AMR calls with stratified contingency analysis to test clinical versus environmental genomes within species. [src: amr_environmental_resistome]
-- Apply PCoA and PERMANOVA to AMR mechanism profiles and reanalyze AlphaEarth dimensions with interpretable environmental covariates. [src: amr_environmental_resistome]
-- Harmonize core/accessory thresholds, genome sampling, mechanism annotations, and the 21% versus 7.0% human-gut efflux estimates. [src: discoveries, amr_environmental_resistome]
-- Map the 1,517 resistance islands to plasmids, chromosomes, integron boundaries, and insertion sequences. [src: amr_strain_variation]
-- Match BacDive GCA accessions directly to pangenome genome_ids, expand MIC and growth-inhibition extraction, and apply PGLS or phylogenetic PCA. [src: bacdive_metal_validation, bacdive_phenotype_metal_tolerance]
-- Resolve the metal-isolation tension by mapping cross-resistance gene signatures with KEGG/PFAM across 27K species and 42K strains using matched metadata and phylogenetic correction. [src: metal_cross_resistance]
-- Normalize metal fitness by concentration relative to MIC, add non-metal stress controls, and repeat ICA with precomputed z-scored module activities to distinguish universal stress from chemistry-specific modules. [src: metal_cross_resistance, metal_specificity]
-- Resolve the 40.7% locusId attrition, validate classifications against Fitness Browser `specificphenotype` annotations, and test whether the 5% threshold changes candidate rankings. [src: metal_specificity]
-- Use AlphaFold predictions to examine candidate metal-binding sites in UCP030820, YebC, and DUF1043/YhcB. [src: metal_specificity]
-- Complete the soil-metal validation by rerunning the Spearman analyses from the `kescience_mgnify` and `kbase_ke_pangenome` Spark tables, auditing rho values and effect sizes, and flagging associations with rho < 0.05. [src: soil_metal_functional_genomics]
-- Fit partial-correlation models such as COG ~ Cr | Cu + Zn + Pb, classify significant COGs into resistance, stress, membrane, energy, and unknown categories, and report both conditional and unconditional db-RDA R² values. [src: soil_metal_functional_genomics]
-- Test Moran’s I on model residuals and apply SEVM if spatial autocorrelation is significant; repeat the copper analysis with 5 km and 20 km genome–soil proximity thresholds. [src: soil_metal_functional_genomics]
-- Validate global biogeography by checking distinct `sample_accession` prefixes, normalizing prevalence by log(n_MAGs), testing biome-specific coordinate missingness, and repairing the missing matplotlib import. [src: metal_resistance_global_biogeography]
-- Bridge spatial and genomic context by testing whether hotspot MAGs are enriched for particular metal-resistance genes, resistance-island architectures, clades, or metal-diversity profiles after controlling for sampling effort. [src: metal_resistance_global_biogeography]
-- Reanalyze MicrobeAtlas with finer marine, freshwater, and saline categories; fit alternative phylogenetic count or mixed models; quantify multi-primer detection; and test whether metal-type diversity predicts niche breadth after explicit sampling-effort correction. [src: microbeatlas_metal_ecology]
-- Validate the MicrobeAtlas association experimentally using the 435 candidate OTUs and eight priority OTUs in 4–6 metal-stress treatments, 5 replicates, and 7- and 14-day time points, with relative-abundance fold-change as the primary endpoint. [src: microbeatlas_metal_ecology]
-- Replace broad ENIGMA COG-fraction proxies with curated metal-stress gene sets and pathway-level summaries, controlling for mapped abundance, depth, location, date, and compositional structure. [src: enigma_contamination_functional_potential]
-- Load the 221 registered SSO geochemistry samples into CORAL, generate metagenomes at matching spatial resolution, and repeat profiling with AMR calls. [src: enigma_sso_asv_ecology]
-- Apply the DvH condition classification and fitness–conservation analysis to other environmentally relevant organisms while controlling for gene length and essential-gene exclusion. [src: field_vs_lab_fitness]
-- Execute value-space-validated NMDC–PROTECT and ENIGMA–PhageFoundry bridges and harmonize pangenome, AlphaEarth, BacDive, and environmental sample identifiers. [src: berdl_data_atlas]
-- Test whether the PGP soil-enrichment signal and AMR mechanism profiles persist after matched phylum, genome-size, sampling-effort, and environment-label controls; compare acdS, pqqC, hcnC, and nifH distributions with AMR metal-resistance distributions without assuming shared causation. [src: pgp_pangenome_ecology]
-- Analyze genomic neighborhoods and phylogenies for pqqC–acdS and hcnA–hcnC, and test whether their environmental associations reflect linkage, repeated acquisition, or lineage structure. [src: pgp_pangenome_ecology]
-- Reanalyze all available genomes from [[entities/klebsiella-pneumoniae]], [[entities/acinetobacter-baumannii]], [[entities/pseudomonas-aeruginosa]], and [[entities/escherichia-coli]] with dedicated prophage predictors, scaffold-based distances, and explicit plasmid/ICE controls to test whether prophage-proximal AMR is enriched within species. [src: prophage_amr_comobilization]
-- Apply geNomad or PHASTER to BERDL genomes and compare prophage-marker calls with Bakta/Pfam calls, testing false-positive rates from phage-defense systems and missed divergent prophages. [src: prophage_amr_comobilization]
-- Use base-pair-resolution neighborhoods and exhaustive genome sampling to determine whether the species-level prophage-density association persists after controlling for pangenome openness, genome count, phylogeny, and plasmid or ICE mobilization. [src: prophage_amr_comobilization]
-- Revisit prophage-proximal AMR fitness costs as Fitness Browser coverage expands, using matched organisms and condition-specific RB-TnSeq measurements. [src: prophage_amr_comobilization]
-- Run the pending T4SS–CAZy synteny-threshold permutation test on unfiltered Spark data, validate Node_4915 by BLAST against NCBI nr, establish a housekeeping-gene null baseline, and calculate θ = OR(T4SS-CAZy) / [OR(T4SS) × OR(CAZy)] for biome enrichment. [src: t4ss_cazy_environmental_hgt]
-- Use base-pair-resolution neighborhoods, explicit plasmid/ICE controls, and experimental transfer assays to test whether T4SS-proximal GT2–GH23 loci are transferred chromosomally or through integrative elements and whether their 11× metal-resistance association persists after phylogenetic and MGE-density adjustment. [src: t4ss_cazy_environmental_hgt]
+- Map the 83,008 AMRFinderPlus hits to CARD ARO terms; separate classical antibiotic-resistance genes from mercury-, arsenic-, and other stress-response genes; and repeat mechanism counts, core fractions, environmental contrasts, the 30.3% versus 46.8% core comparison, and the 2.2x auxiliary-genome enrichment. [src: amr_pangenome_atlas]
+- Re-annotate the 15,550 mechanism-unassigned clusters with broader homology, profile-HMM, and structure-based searches; compare independent resistance resources; quantify false-negative rates by environment and mechanism; and test whether the 18.7% unassigned fraction changes mechanism effect sizes. [src: amr_environmental_resistome]
+- Validate singleton calls with homology, domain, and synteny analyses, asking whether the 55.4% singleton rate among sparsely annotated one-source clusters represents artifacts or genuine resistance. [src: amr_pangenome_atlas]
+- Use the 280,337 genomes with NCBI environment metadata and a scalable per-genome AMR-by-environment contingency analysis, such as the originally planned Fisher’s exact test, to determine whether AMR enrichment remains after conditioning on species. [src: amr_environmental_resistome]
+- Use the 823 species in the multi-environment subset and hierarchical or mixed-effects models to separate within-species environment effects from between-species clinical representation, asking whether the 72.9-versus-16.4 mean AMR-cluster contrast persists within species. [src: amr_environmental_resistome]
+- Use deeply sampled species including [[entities/klebsiella-pneumoniae]], [[entities/staphylococcus-aureus]], and [[entities/salmonella-enterica]], with genome-level environment labels and accessory-cluster matrices, to test whether the reported 99%, 99%, and 99% accessory fractions are concentrated in particular environments. [src: amr_environmental_resistome]
+- Reanalyze the 190 species with at least 2 AMR ecotypes using curated isolation_source labels, phylogeny, and genome-level AMR matrices to test whether ecotypes correspond to environments after lineage composition is controlled. [src: amr_strain_variation]
+- Subsample deeply represented species and species with >500 genomes, repeat ANI–AMR Mantel analyses, and use phylogeny-aware models to separate lineage inheritance from repeated acquisition and loss. [src: amr_strain_variation]
+- Curate collection dates and isolation_source metadata, then apply temporal regression and adequately powered within-species association tests to distinguish AMR change through time from sampling composition. [src: amr_strain_variation]
+- Use the 1,305 genome-by-AMR matrices and genomic-context mapping to test whether the 1,517 resistance islands reside on plasmids, chromosomes, integron boundaries, or insertion sequences, and whether physical context predicts persistence across lineages. [src: amr_strain_variation]
+- Combine AMR ecotype assignments with virulence-factor profiles and metabolic pathway variation to test whether resistance-defined lineages also differ in pathogenicity-associated or ecological functions, and whether existing co-inheritance patterns predict future AMR gene co-acquisition. [src: amr_strain_variation]
+- Reanalyze AMR repertoires with resistance databases beyond AMRFinderPlus and replace keyword-based mechanism labels with CARD ARO mappings to quantify effects on rare, variable, fixed, core-fraction, and ecotype estimates. [src: amr_strain_variation, amr_pangenome_atlas]
+- Reanalyze the 172 ecotype-analysis species using direct environmental metadata and alternative embedding distances, then test COG functional subsets rather than whole-genome gene content. [src: ecotype_analysis]
+- Harmonize core/accessory thresholds, mechanism annotations, genome sampling, the 21% versus 7.0% efflux estimates, and all denominator differences; test whether the clinical 68% versus soil 43% accessory contrast persists under matched sampling. [src: discoveries, amr_environmental_resistome, amr_fitness_cost]
+- Compare catalog-defined gradients against NMDC and MGnify metagenomes after CARD ARO harmonization and metadata-stratified modeling. [src: amr_pangenome_atlas, amr_strain_variation]
+- Map the resistance islands to plasmids, chromosomes, integrons, ICEs, and insertion sequences, then test whether mechanism composition predicts persistence or acquisition after controlling for phylogeny. [src: amr_strain_variation, discoveries]
+- Match BacDive accessions directly to pangenome genome_ids, expand MIC and growth-inhibition extraction, and apply PGLS or phylogenetic PCA; resolve the metal-isolation tension with matched metadata, KEGG/PFAM signatures, concentration-normalized fitness, non-metal stress controls, and independent validation. [src: bacdive_metal_validation, bacdive_phenotype_metal_tolerance, metal_cross_resistance, metal_specificity]
+- Fit partial-correlation models such as COG ~ Cr | Cu + Zn + Pb, classify COGs into resistance, stress, membrane, energy, and unknown categories, report conditional and unconditional db-RDA R², and test Moran’s I and spatial residuals. [src: soil_metal_functional_genomics]
+- Validate global biogeography with sample-accession checks, prevalence normalization by log(n_MAGs), biome-specific missingness tests, and sampling-effort correction; reanalyze MicrobeAtlas with finer habitats, alternative phylogenetic or mixed models, primer-detection correction, rarefaction, and experimental validation. [src: metal_resistance_global_biogeography, microbeatlas_metal_ecology]
+- Replace broad ENIGMA COG-fraction proxies with curated metal-stress gene sets while controlling for abundance, depth, location, date, and compositional structure; load registered SSO geochemistry samples into CORAL and repeat AMR profiling. [src: enigma_contamination_functional_potential, enigma_sso_asv_ecology]
+- Apply field/lab fitness–conservation analyses to additional organisms while controlling for gene length and essential-gene exclusion. [src: field_vs_lab_fitness]
+- Execute value-space-validated NMDC–PROTECT and ENIGMA–PhageFoundry bridges and harmonize pangenome, AlphaEarth, BacDive, and environmental identifiers. [src: berdl_data_atlas]
+- Test whether PGP soil-enrichment signals and AMR mechanism profiles persist after matched phylum, genome-size, sampling-effort, and environment-label controls; analyze pqqC–acdS and hcnA–hcnC neighborhoods and phylogenies. [src: pgp_pangenome_ecology]
+- Reanalyze genomes from [[entities/klebsiella-pneumoniae]], [[entities/acinetobacter-baumannii]], [[entities/pseudomonas-aeruginosa]], and [[entities/escherichia-coli]] with dedicated prophage predictors, scaffold-based distances, exhaustive sampling, and explicit plasmid/ICE controls; apply geNomad or PHASTER and test whether density associations persist after controlling for pangenome openness, genome count, phylogeny, plasmids, and ICEs. [src: prophage_amr_comobilization]
+- Run the pending T4SS–CAZy synteny-threshold permutation test, validate Node_4915 by BLAST against NCBI nr, establish a housekeeping-gene null, calculate θ = OR(T4SS-CAZy) / [OR(T4SS) × OR(CAZy)], and perform experimental transfer assays with base-pair-resolution neighborhoods. [src: t4ss_cazy_environmental_hgt]
 
-See the project summaries: [[summaries/amr_environmental_resistome__REPORT]], [[summaries/amr_fitness_cost__REPORT]], [[summaries/amr_pangenome_atlas__REPORT]], [[summaries/amr_strain_variation__REPORT]], [[summaries/bacdive_metal_validation__REPORT]], [[summaries/bacdive_phenotype_metal_tolerance__REPORT]], [[summaries/berdl_data_atlas__REPORT]], [[summaries/discoveries]], [[summaries/enigma_contamination_functional_potential__REPORT]], [[summaries/enigma_sso_asv_ecology__REPORT]], [[summaries/field_vs_lab_fitness__REPORT]], [[summaries/gene_function_ecological_agora__REPORT]], [[summaries/lab_field_ecology__REPORT]], [[summaries/metal_cross_resistance__REPORT]], [[summaries/metal_resistance_global_biogeography__REPORT]], [[summaries/metal_specificity__REPORT]], [[summaries/microbeatlas_metal_ecology__REPORT]], [[summaries/pgp_pangenome_ecology__REPORT]], [[summaries/prophage_amr_comobilization__REPORT]], [[summaries/soil_metal_functional_genomics__REPORT]], and [[summaries/t4ss_cazy_environmental_hgt__REPORT]].
+See the project summaries: [[summaries/amr_environmental_resistome__REPORT]], [[summaries/amr_fitness_cost__REPORT]], [[summaries/amr_pangenome_atlas__REPORT]], [[summaries/amr_strain_variation__REPORT]], [[summaries/bacdive_metal_validation__REPORT]], [[summaries/bacdive_phenotype_metal_tolerance__REPORT]], [[summaries/berdl_data_atlas__REPORT]], [[summaries/discoveries]], [[summaries/ecotype_analysis__REPORT]], [[summaries/enigma_contamination_functional_potential__REPORT]], [[summaries/enigma_sso_asv_ecology__REPORT]], [[summaries/field_vs_lab_fitness__REPORT]], [[summaries/gene_function_ecological_agora__REPORT]], [[summaries/metal_cross_resistance__REPORT]], [[summaries/metal_resistance_global_biogeography__REPORT]], [[summaries/metal_specificity__REPORT]], [[summaries/microbeatlas_metal_ecology__REPORT]], [[summaries/pgp_pangenome_ecology__REPORT]], [[summaries/prophage_amr_comobilization__REPORT]], [[summaries/soil_metal_functional_genomics__REPORT]], and [[summaries/t4ss_cazy_environmental_hgt__REPORT]].
 
 ## [[concepts/essentiality-assay-discordance|Why transposon fitness and complete-knockout essentiality disagree]]
 
@@ -553,22 +560,19 @@ See the project summaries: [[summaries/amr_environmental_resistome__REPORT]], [[
 - Compare continuous fitness, essentiality fraction, knockout calls, and growth rates with a preregistered threshold-selection and multiple-testing procedure to determine which representation generalizes across conditions. [src: adp1_triple_essentiality]
 - Fit combined FBA-plus-fitness-plus-proteomics models and evaluate whether multi-omic predictors improve knockout-essentiality classification over any single assay. [src: adp1_triple_essentiality]
 
-## [[concepts/gene-essentiality|Prediction Targets and Evaluation Boundaries in Gene-Essentiality Analysis]]
-
-- Perform condition-matched RB-TnSeq and complete-gene knockout experiments, then compare binary lethality, continuous fitness, and quantitative growth within the same media and genes to determine which discordances arise from assay modality. [src: adp1_triple_essentiality]
-- Analyze insertion position, retained domains, and transcript structure for the 211 knockout-essential/TnSeq-dispensable genes to test whether partial gene products explain the discordance. [src: adp1_triple_essentiality]
-- Add measured trace aromatic compounds to the FBA media definitions and rerun condition-specific flux simulations to test whether environmental assumptions explain the aromatic-degradation errors. [src: adp1_triple_essentiality]
-- Fit combined FBA-plus-fitness-plus-proteomics predictors separately for lethal-versus-dispensable classification and quantitative growth ranking, then compare metrics appropriate to each target. [src: adp1_triple_essentiality]
-- Reanalyze the eight-carbon-source data with explicitly condition-specific labels and dependence-aware aggregation to determine how inter-condition correlation changes essentiality estimates. [src: adp1_triple_essentiality]
-
 ## [[concepts/evidence-triangulation-for-functional-annotation|Evidence Triangulation Improves Functional Annotation Beyond Any Single Signal]]
 
-- Use the 44 high-confidence assignments and targeted gene-knockout or CRISPRi experiments to ask which integrated candidates produce reproducible reaction- or carbon-source-specific phenotypes. [src: annotation_gap_discovery]
-- Reconstruct the 38 false-negative cases with gapseq and compare the resulting reaction sets with default ModelSEED gapfilling to ask whether alternative gapfilling reduces the 330 baseline false positives without lowering recovery of growth-positive conditions. [src: annotation_gap_discovery]
-- Characterize the 50 EC-less reactions with stoichiometric analysis, profile comparison, and experimental assays to ask which dark reactions can acquire testable enzyme-function hypotheses. [src: annotation_gap_discovery]
-- Extend the pipeline from 14 organisms to all 48 Fitness Browser organisms and stratify resolution by phylogeny, annotation quality, and experiment count to ask whether the 47.8% resolution rate transfers beyond the Proteobacteria-heavy dataset. [src: annotation_gap_discovery]
+- Use the 44 high-confidence assignments and targeted gene-knockout or CRISPRi experiments to ask which integrated candidates produce reproducible reaction- or carbon-source-specific phenotypes; prioritize rxn02185 and rxn03436 across 9 organisms and ask whether transferability predicts cross-organism phenotype confirmation. [src: annotation_gap_discovery]
+- Reconstruct the 38 false-negative cases with gapseq and compare the resulting reaction sets with default ModelSEED gapfilling, including false-positive FBA rates, to ask whether alternative gapfilling reduces the 330 baseline false positives without lowering recovery of growth-positive conditions. [src: annotation_gap_discovery]
+- Characterize the 50 EC-less reactions with stoichiometric analysis, sequence, structure, pathway, phenotype evidence, profile comparison, and experimental assays to ask which dark reactions can acquire testable enzyme-function hypotheses and whether improved representation raises the 16% resolution rate. [src: annotation_gap_discovery]
+- Extend the pipeline from 14 organisms to all 48 Fitness Browser organisms, stratify resolution by phylogenetic clade, annotation quality, and experiment count, and test whether the 47.8% rate and the low *B. thetaiotaomicron* resolution transfer beyond the Proteobacteria-heavy dataset. [src: annotation_gap_discovery]
 - Integrate the 104 GapMind-gapfill pathway pairings with step-level pathway annotations to ask whether reaction-level concordance improves when pathway-level `not_present` or `steps_missing` calls are mapped to individual steps. [src: annotation_gap_discovery]
 - Apply independent-component analysis (ICA), a method for decomposing correlated fitness profiles into latent components, to the 71 expanded fitness profiles and compare the resulting modules with candidate gene-reaction assignments to ask whether module-level evidence resolves currently unresolved pairs. [src: annotation_gap_discovery]
+- Compare organisms with matched numbers of carbon-source experiments and matched annotation quality, using existing fitness and pangenome records, to ask whether resolution differences remain after data-coverage effects are controlled. [src: annotation_gap_discovery]
+- Test whether annotation resolution varies with auxiliary fraction, Heap's law alpha, or pangenome fluidity rather than openness alone, and whether openness-by-lifestyle interactions predict functional classes that transfer unequally. [src: pangenome_openness]
+- Apply an independently calibrated fitness threshold to the 161 capability-pathway pairs and test whether condition-specific reclassification remains after controlling for organism, pathway, and experiment coverage. [src: pathway_capability_dependency]
+
+See the source summaries: [[summaries/annotation_gap_discovery__REPORT]], [[summaries/pangenome_openness__REPORT]], and [[summaries/pathway_capability_dependency__REPORT]].
 
 ## [[concepts/experimental-prioritization-of-functional-dark-matter|Evidence-weighted experimental prioritization of unknown bacterial genes]]
 
@@ -578,6 +582,8 @@ See the project summaries: [[summaries/amr_environmental_resistome__REPORT]], [[
 - Combine EC matching, structure prediction, purified-protein enzymology, and pathway growth assays for the GapMind candidates to resolve organism-level pathway co-occurrence into direct gene-to-reaction assignments. [src: functional_dark_matter]
 - Repeat the six-axis prioritization with expanded Fitness Browser condition coverage and more evenly distributed taxa to quantify how much candidate rank is driven by assay depth and Pseudomonadota representation. [src: functional_dark_matter]
 - Compare conserved-synteny, co-fitness, and CRISPRi perturbation results for the 998 double-validated operon pairs to test whether network evidence predicts causal functional coupling. [src: functional_dark_matter]
+- Extend pangenome linkage to the 17,479 unlinked dark genes and test whether the estimated approximately 2,841 additional truly dark genes show the same clue, essentiality, and genomic-context distributions as the linked set. [src: truly_dark_genes]
+- Apply structure prediction and Foldseek searches to the 100 persistent truly dark candidates, then test the highest-ranked motility, nitrogen-source, stress, and transporter-associated hypotheses experimentally. [src: truly_dark_genes]
 
 ## [[concepts/fitness-condition-coverage-prioritization-bias|Uneven Experimental Condition Coverage Biases Fitness-Based Gene Prioritization]]
 
@@ -586,39 +592,29 @@ See the project summaries: [[summaries/amr_environmental_resistome__REPORT]], [[
 - Compare condition-class-balanced rankings for stress, carbon-source, and nitrogen-source assays, asking whether cross-organism concordance among the 65 ortholog groups changes when only shared condition classes are evaluated. [src: functional_dark_matter]
 - Add a coverage penalty or an explicit untested-condition uncertainty term to the six-axis score, then compare top-50 retention against the reported 64% fitness-active retention under conservation-dominant or drop-tractability settings. [src: functional_dark_matter]
 - Design targeted RB-TnSeq or CRISPRi experiments for high-priority genes from poorly profiled organisms, asking whether missing condition coverage explains their absence from the current top candidates rather than a lack of measurable phenotype. [src: functional_dark_matter]
-
-## [[concepts/antimicrobial-resistance-fitness-cost|Network Breadth Does Not Necessarily Predict Fitness Cost]]
-
-- Recompute cofitness separately for antibiotic-treatment and standard-growth conditions, then test whether network breadth predicts fitness cost in either condition-specific matrix. [src: amr_cofitness_networks]
-- Apply a fitness-matched permutation using random non-AMR genes with the same mean-fitness distribution, including the −0.05 to +0.05 range, and ask whether the observed network-size–cost correlation differs from the matched null. [src: amr_cofitness_networks]
-- Repeat the network-size–cost analysis at |r| > 0.4 and |r| > 0.5, then test whether stricter support-network definitions produce a correlation that is absent at |r| > 0.3. [src: amr_cofitness_networks]
-- Quantify the variance of AMR fitness costs and use a power analysis or hierarchical model to ask whether the null result could reflect insufficient variation across genes, mechanisms, or organisms. [src: amr_cofitness_networks]
-- Compare cofitness network breadth with direct regulatory evidence and Pfam-domain enrichment to test whether broad networks reflect shared cofitness, co-regulation, or common functional architecture. [src: amr_cofitness_networks]
-
-## [[concepts/fitness-module-detection-sensitivity|Experimental Depth Limits the Reliability of Fitness-Module Inference]]
-
-- Use matched experiment subsets and bootstrap or split-sample ICA to determine whether the 94.2% significant-module rate and 2.8x correlation enrichment remain stable as experiment count changes. [src: fitness_modules]
-- Reanalyze organisms across a controlled range of experiment depths to test whether the approximately 100-experiment threshold predicts module stability and whether the 2.9x enrichment observed for Caulo reflects organism-specific biology or data composition. [src: fitness_modules]
-- Vary the 40% component cap together with FastICA convergence diagnostics to quantify how many modules are missed under sparse experimental designs. [src: fitness_modules]
-- Compare module recovery after balancing condition classes across organisms to determine whether experimental diversity, rather than experiment count alone, explains differences in module reliability. [src: fitness_modules]
-- Test whether cross-organism module families remain detectable after downsampling every organism to the same number of experiments, using the 156 identified families as the reference set. [src: fitness_modules]
-
-## [[concepts/gene-essentiality|Fitness Importance and Pangenome Conservation]]
-
-- Combine the existing fitness and pangenome data with environmental-condition metadata and test, using stratified models, whether the 82% versus 66% conservation contrast persists outside rich media and standard stresses. [src: fitness_effects_conservation]
-- Reanalyze singleton and novel genes after filtering or modeling transposon coverage, asking whether their near-zero mean fitness reflects true neutrality or callability failure. [src: fitness_effects_conservation]
-- Use multi-gene perturbation or interaction datasets to test whether the observed conservation gradient changes when epistatic effects omitted by single-gene knockouts are included. [src: fitness_effects_conservation]
-- Compare the conservation–fitness relationship across bacterial lineages beyond the primarily Proteobacteria representation in the 43-bacterium Fitness Browser coverage. [src: fitness_effects_conservation]
-- Test whether core genes with heavier positive and negative fitness tails show reproducible condition-specific trade-offs across independent experiments rather than assay-specific effects. [src: fitness_effects_conservation]
+- Stratify the coverage-adjusted analysis by core, auxiliary, and singleton status, asking whether the observed 77.3% versus 70.3% condition-specific phenotype contrast persists after matched condition depth and transposon-callability controls. [src: fitness_effects_conservation]
+- Replicate the field-versus-lab comparison across organisms with Fitness Browser data and unequal ecological condition panels, testing whether the weak field/lab AUCs and the stronger gene-length-inclusive model persist after matched condition depth and callability controls. [src: field_vs_lab_fitness]
+- Partition the coverage-adjusted analysis by functional category, testing whether the core-gene burden advantage in Protein Metabolism, Motility, and RNA Metabolism and the Cell Wall reversal persist after matched condition depth. [src: core_gene_tradeoffs]
 
 ## [[concepts/fitness-importance-versus-ecological-context|Fitness importance predicts genome conservation more strongly than field-versus-lab context]]
 
+- Use `gene_fitness_conservation.csv` for the 2,725 analyzed genes, together with insertion counts or other transposon-callability measures, in nested cross-validated models to test how much of gene length's CV-AUC 0.645 contribution remains after measurement quality is modeled explicitly. [src: field_vs_lab_fitness]
+- Add the 678 essential genes through an essentiality-aware missing-fitness or two-stage model, and test whether gene length predicts core status similarly among essential genes and genes with recovered transposon mutants. [src: field_vs_lab_fitness]
+- Replace binary core/auxiliary labels with quantitative gene-cluster prevalence and fit length-adjusted models to ask whether gene length primarily predicts the core boundary or also intermediate prevalence across the pangenome. [src: field_vs_lab_fitness]
+- Reanalyze thresholds from -1 to -3 with gene length, insertion coverage, and fitness uncertainty as covariates to test whether length confounding changes condition-specific conservation patterns. [src: field_vs_lab_fitness]
+- Extend length- and callability-adjusted analysis across the 194,216-gene, 43-bacterium comparison to test whether the weak fitness–conservation gradient persists after measurement quality and lineage are controlled. [src: fitness_effects_conservation]
+- Reanalyze the 33-organism conservation_vs_fitness dataset with gene length, insertion coverage, pangenome clade size, and quantitative cluster prevalence to determine whether the median odds ratio of 1.56 persists after callability and pangenome-coverage confounding are controlled. [src: conservation_vs_fitness]
+- Test whether the 28,017 costly-and-conserved and 5,526 costly-and-dispensable genes show different length, insertion-callability, mobile-element, or prevalence profiles before interpreting them as signatures of natural selection. [src: conservation_fitness_synthesis]
+- Stratify the 25,271 trade-off genes and the Costly + Conserved and Costly + Dispensable groups by gene length, insertion callability, functional category, and pangenome prevalence to test whether core enrichment persists after structural and measurement adjustment. [src: core_gene_tradeoffs]
 - Use Fitness Browser experiments and quantitative gene-cluster prevalence across additional environmentally relevant organisms to test whether the weak field-versus-lab effect generalizes beyond DvH. [src: field_vs_lab_fitness]
-- Add the 678 essential genes through an essentiality-aware model and test whether including their 80.1% core fraction changes the comparison between conditional fitness and conservation. [src: field_vs_lab_fitness]
-- Fit continuous-fitness prediction models with gene length, transposon insertion coverage, and pangenome prevalence to determine whether continuous fitness improves on the reported CV-AUC values of 0.517, 0.531, and 0.548. [src: field_vs_lab_fitness]
 - Combine genomic-context analyses with resistance-gene calls to test whether the 73.4% core fraction for lab-antibiotic genes and 71.2% for heavy-metal genes is associated with mobile genetic elements. [src: field_vs_lab_fitness]
 - Reanalyze the 52 ICA modules using functional annotation and environmental metadata to test whether the 52 unannotated genes in ecological modules mediate adaptation rather than merely co-varying with conserved genes. [src: field_vs_lab_fitness]
 - Link the 4,346 ENIGMA CORAL field samples with geochemistry and 213,044 ASVs to test ecological associations for DvH or other organisms with both environmental data and gene-level fitness measurements. [src: field_vs_lab_fitness]
+
+[[summaries/fitness_effects_conservation__REPORT]]
+[[summaries/conservation_vs_fitness__REPORT]]
+[[summaries/conservation_fitness_synthesis__REPORT]]
+[[summaries/core_gene_tradeoffs__REPORT]]
 
 ## [[concepts/fitness-matched-null-models|Fitness-Matched Null Models for Functional Enrichment]]
 
@@ -631,11 +627,17 @@ See the project summaries: [[summaries/amr_environmental_resistome__REPORT]], [[
 
 ## [[concepts/fitness-module-detection-sensitivity|Fitness-Module Discovery Depends on Thresholds and Decomposition Constraints]]
 
-- Re-run ICA across organisms after systematically varying the |weight| threshold, the 50-gene maximum, and the 40% component cap; test which settings preserve the 94.2% within-module significance rate, 2.8x correlation enrichment, and 22.7x genomic-adjacency enrichment. [src: fitness_modules]
-- Use matched experiment subsampling and convergence diagnostics to quantify how module recovery changes below and above approximately 100 experiments, including the Caulo case with 198 experiments and 2.9x correlation enrichment. [src: fitness_modules]
-- Compare PFam, KEGG KO, and other annotation layers at fixed module memberships to determine whether the increase from 8% to 80% annotation reflects genuine biological coverage or domain-level overcounting. [src: fitness_modules]
-- Benchmark module-level predictions against independently measured phenotypes or perturbation data to test whether process-level predictions improve biological interpretation despite <1% strict KEGG KO precision. [src: fitness_modules]
-- Reconstruct cross-organism module families under alternative orthology definitions and test whether the 156 families, including the family spanning 21 organisms, remain stable without assuming identical molecular functions. [src: fitness_modules]
+- Re-run ICA across organisms while varying the |weight| threshold, 50-gene maximum, and 40% component cap; test which settings preserve the 94.2% significant-module rate, 2.8x correlation enrichment, and 22.7x genomic-adjacency enrichment. [src: fitness_modules]
+- Use matched experiment subsets, bootstrap or split-sample ICA, and convergence diagnostics to quantify recovery below and above approximately 100 experiments, including Caulo's 198 experiments and 2.9x enrichment. [src: fitness_modules]
+- Balance condition classes across organisms to test whether experimental diversity, rather than experiment count alone, explains module-reliability differences. [src: fitness_modules]
+- Compare PFam, KEGG KO, and other annotation layers at fixed memberships to determine whether the increase from 8% to 80% reflects genuine coverage or domain-level overcounting. [src: fitness_modules]
+- Combine the 6,691 hypothetical-protein predictions with ortholog transfer, domain architectures, and targeted gene-level experiments to test which module-only predictions acquire specific molecular-function support. [src: fitness_modules]
+- Reanalyze the held-out benchmark with process-level gold standards in addition to KEGG KO labels to ask whether Module-ICA has useful precision when evaluated against biological-process membership rather than gene-level identity. [src: fitness_modules]
+- Benchmark module-level predictions against independently measured phenotypes or perturbation data to test whether process-level predictions improve interpretation despite <1% strict KEGG KO precision. [src: fitness_modules]
+- Use larger, condition-diverse RB-TnSeq datasets and compare module stability before and after the 40% component cap to determine which conserved modules are missed in organisms with fewer experiments. [src: fitness_modules]
+- Reconstruct cross-organism families under alternative orthology definitions and after downsampling every organism to the same experiment count; test whether the 156 families, including the family spanning 21 organisms, remain stable without assuming identical molecular functions. [src: fitness_modules]
+- Test the 156 cross-organism module families with gene-neighborhood, domain-combination, and experimental perturbation data to determine whether shared module membership reflects conserved regulation, conserved pathway involvement, or recurrent genomic organization. [src: fitness_modules]
+- Recalculate module conservation under alternative membership and core/accessory thresholds, with essentiality-aware missingness and matched pangenome coverage, to test whether the 86.0% versus 81.5% enrichment and the rho=-0.01 family-breadth result persist. [src: module_conservation]
 
 ## [[concepts/functional-dark-matter|Genomic under-representation limits inference about microbial functional potential]]
 
@@ -646,6 +648,8 @@ See the project summaries: [[summaries/amr_environmental_resistome__REPORT]], [[
 - Report OTU richness and mean genome completeness as separate dimensions alongside GDI, asking whether the same locations are identified as underrepresented when the ratio-based index is not used. [src: soil_frontier_genomics]
 - Extend pangenome linkage to the 17,479 unlinked dark genes and compare their Bakta, Pfam, KEGG, eggNOG, and orthology coverage with the 6,427 linked truly dark genes, asking how much of the residual functional gap is a linkage artifact. [src: truly_dark_genes]
 - Link the 3,683 essential-auxiliary and 1,259 essential-unmapped genes to broader pangenomes and condition-specific Fitness Browser measurements, asking whether poor annotation reflects strain-specific compensation, divergent core functions, or growth-condition dependence. [src: conservation_vs_fitness]
+- Reweight the functional-dark-matter prioritization across taxonomic strata and condition depth, then test whether the top candidates and covering set change when Pseudomonadota and heavily assayed organisms no longer dominate. [src: functional_dark_matter]
+- Apply sample-label permutations and annotated-accessory-gene controls to the NMDC and lab–field analyses, asking whether the observed environmental concordance survives compositional coupling and baseline annotation controls. [src: functional_dark_matter]
 
 ## [[concepts/functional-marker-validation|Validating Functional Markers Before Ecological Inference]]
 
@@ -668,41 +672,38 @@ See the project summaries: [[summaries/amr_environmental_resistome__REPORT]], [[
 - Compare gene neighborhoods, synteny, mobile-element context, and gene-tree reconciliation for pqqC, acdS, hcnC, and ipdC to distinguish vertical conservation from repeated horizontal acquisition. [src: pgp_pangenome_ecology]
 - Reanalyze nifH associations after stratifying by environment, lineage, and diazotrophic ecological context to determine whether the negative nifH–pqqC and nifH–hcnC associations reflect ecological separation or sampling structure. [src: pgp_pangenome_ecology]
 - Functionally validate representative co-occurring clusters with transcript or phenotype data to test whether annotated pqqC, acdS, hcnC, and ipdC genes are active components of the proposed guild. [src: pgp_pangenome_ecology]
+- Reanalyze gene-specific guild associations with alternative environmental distances and direct metadata, then compare them with whole-genome and ecotype-cluster contrasts to test whether environmental signal is concentrated in selected loci. [src: ecotype_analysis]
+- Restrict co-fitness comparisons to auxiliary-only pairs below 95% prevalence and test whether the pairwise guild signal strengthens after removing the prevalence ceiling. [src: cofitness_coinheritance]
+- Build module co-transfer networks and compare their accessory-module membership with environmental gene guilds, testing whether multi-gene co-inheritance predicts ecological distribution better than pairwise co-occurrence. [src: cofitness_coinheritance]
 
 ## [[concepts/gene-essentiality|Gene Essentiality Across Conditions and Predictors]]
 
-- Reanalyze the 499 minimal-media-essential and 346 LB-essential genes with condition-matched FBA and TnSeq calls, focusing on the 177 genes whose flux classes changed. [src: acinetobacter_adp1_explorer]
-- Test the 625 condition-specific genes with replicated growth measurements and an expanded carbon-source panel. [src: adp1_deletion_phenotypes]
-- Compare universal, variable, orphan, and never-essential ortholog families across matched condition panels. [src: discoveries]
-- Characterize the 7,084 orphan essentials and test whether their low 49.5% core fraction reflects lineage-specific innovation or missed orthology. [src: essential_genome]
-- Extend the conservation analysis from binary essentiality to condition-specific fitness, especially genes with fitness < -2 under stress, and test whether their core/auxiliary fractions differ from viability-essential genes. [src: conservation_vs_fitness]
-- Use the 177,863 Fitness Browser–pangenome links to correlate mean fitness effects, rather than only essential/non-essential status, with core fraction; analyze the 3,683 essential-auxiliary genes for compensation of missing core functions. [src: conservation_vs_fitness]
-- Expand GapMind mapping from 7 to the remaining 38 organisms, including *Escherichia coli* K-12, and test whether completeness varies by phylogeny and ecology. [src: essential_metabolome]
-- Fit combined FBA-plus-fitness-plus-proteomics predictors on held-out knockout data and analyze the 227 discordant genes. [src: acinetobacter_adp1_explorer] [src: adp1_triple_essentiality]
-- Test Complex I, PQQ, iron-acquisition, and NADH-flux hypotheses with matched ADP1 perturbations. [src: aromatic_catabolism_network]
-- Construct an ADP1 NDH-2 deletion mutant, measure NADH/NAD⁺ ratios on quinate, glucose, acetate, lactate, and urea, and test whether respiratory requirements follow flux rate rather than total NADH yield. [src: respiratory_chain_wiring]
-- Expand K03885 and K00330–K00343 searches across 27K species using KO-based orthology, then test NDH-2/Complex I co-occurrence and the proposed compensation relationship. [src: respiratory_chain_wiring]
-- Characterize ACIAD3522 biochemically and reanalyze quinate-versus-succinate proteomics for respiratory-chain proteins. [src: respiratory_chain_wiring]
-- Stratify the 82%–66% conservation gradient by organism, condition type, gene length, transposon coverage, and pangenome sampling depth. [src: fitness_effects_conservation]
-- Compare pathway-level conservation with gene-level essentiality after direct GapMind per-step gene mapping, and recompute latent rates across the 16 threshold combinations. [src: metabolic_capability_dependency]
-- Independently calibrate condition-specific importance thresholds against known essentials and test whether all 66 Latent Capability reclassifications persist under a preregistered threshold. [src: pathway_capability_dependency]
-- Expand the four-way capability–dependency analysis beyond the 7 matched organisms and quantify KEGG-mapping failures using direct per-step gene evidence. [src: pathway_capability_dependency]
-- Compare variable pathway count and ecotype number with pangenome openness using phylogenetic independent contrasts and genome-count-matched resampling across the 2,810 species. [src: pathway_capability_dependency]
-- Compare metabolic ecotypes with environment metadata using phylogenetic correction, especially for *Salmonella enterica* and *Phenylobacterium*. [src: metabolic_capability_dependency]
-- Compare ICA modules with ortholog-transfer predictions while varying experiment count, component caps, membership thresholds, and Pfam/KEGG enrichment rules. [src: fitness_modules]
-- Test whether the 38 accessory module families are enriched for mobile elements, operon structure, or niche-associated environments. [src: module_conservation]
-- Test the 9,557 essential dark genes with CRISPRi and validate the 998 dark-gene operon pairs supported by conserved synteny and strong cofitness. [src: functional_dark_matter]
-- Fold the 6,427 truly dark genes into the essentiality-prioritization workflow, beginning with structure prediction, Foldseek searches, and condition-matched growth assays for the 100 ranked candidates. [src: truly_dark_genes]
-- Extend pangenome linkage to the 17,479 unlinked dark genes and test whether the estimated approximately 2,841 additional truly dark genes reproduce the linked-set essentiality and phenotype distributions. [src: truly_dark_genes]
-- Test the Methanococcus-focused cofitness signal reported as r > 0.97 and characterize contiguous dark islands as possible prophage remnants or acquired metabolic cassettes. [src: truly_dark_genes]
+- Perform condition-matched RB-TnSeq and complete-gene knockout experiments, then compare binary lethality, continuous fitness, and quantitative growth within the same media and genes to determine which discordances arise from assay modality. [src: adp1_triple_essentiality]
+- Analyze insertion position, retained domains, and transcript structure for the 211 knockout-essential/TnSeq-dispensable genes to test whether partial gene products explain the discordance. [src: adp1_triple_essentiality]
+- Reanalyze the 499 minimal-media-essential and 346 LB-essential genes with condition-matched FBA and TnSeq calls, focusing on the 177 genes whose flux classes changed; test the 625 condition-specific genes with replicated growth measurements and an expanded carbon-source panel. [src: acinetobacter_adp1_explorer] [src: adp1_deletion_phenotypes]
+- Reanalyze the eight-carbon-source data with explicitly condition-specific labels and dependence-aware aggregation to determine how inter-condition correlation changes essentiality estimates. [src: adp1_triple_essentiality]
+- Fit combined FBA-plus-fitness-plus-proteomics predictors separately for lethal-versus-dispensable classification and quantitative growth ranking, then compare metrics appropriate to each target. [src: adp1_triple_essentiality]
+- Add measured trace aromatic compounds to the FBA media definitions and rerun condition-specific flux simulations to test whether environmental assumptions explain the aromatic-degradation errors. [src: adp1_triple_essentiality]
+- Compare universal, variable, orphan, and never-essential ortholog families across matched condition panels, and characterize the 7,084 orphan essentials for lineage-specific innovation versus missed orthology. [src: discoveries] [src: essential_genome]
+- Extend conservation analysis from binary essentiality to condition-specific fitness, especially genes with fitness < -2 under stress; use the 177,863 Fitness Browser–pangenome links to correlate mean fitness effects with core fraction and analyze the 3,683 essential-auxiliary genes for compensation of missing core functions. [src: conservation_vs_fitness]
+- Reanalyze fitness effects with condition-stratified distributions and interaction terms; test whether core genes’ heavier positive and negative tails persist within matched assays, whether epistasis explains additional bidirectional effects, and whether the 82% versus 66% contrast transfers outside rich media and standard stresses. [src: fitness_effects_conservation]
+- Combine transposon coverage metrics with singleton and auxiliary-gene estimates to distinguish true neutrality from callability-limited missing data, and compare conservation–fitness relationships across bacterial lineages beyond primarily Proteobacteria representation. [src: fitness_effects_conservation]
+- Harmonize the two essentiality–core analyses with identical organism filters, pangenome clade definitions, coverage thresholds, and essentiality denominators to determine why the core fractions are 82% versus 86.1%. [src: fitness_effects_conservation] [src: conservation_vs_fitness]
+- Expand GapMind mapping from 7 to the remaining 38 organisms, including *Escherichia coli* K-12; compare pathway-level conservation with gene-level essentiality after direct per-step mapping and recompute latent rates across the 16 threshold combinations. [src: essential_metabolome] [src: metabolic_capability_dependency]
+- Expand the four-way capability–dependency analysis beyond the 7 matched organisms, quantify KEGG-mapping failures using direct per-step gene evidence, and test whether all 66 Latent Capability reclassifications persist under preregistered thresholds. [src: pathway_capability_dependency]
+- Compare variable pathway count and ecotype number with pangenome openness using phylogenetic independent contrasts and genome-count-matched resampling across the 2,810 species; compare metabolic ecotypes with environment metadata using phylogenetic correction. [src: pathway_capability_dependency] [src: metabolic_capability_dependency]
+- Test Complex I, PQQ, iron-acquisition, and NADH-flux hypotheses with matched ADP1 perturbations; construct an ADP1 NDH-2 deletion mutant, measure NADH/NAD⁺ ratios on quinate, glucose, acetate, lactate, and urea, and test whether respiratory requirements follow flux rate rather than total NADH yield. [src: aromatic_catabolism_network] [src: respiratory_chain_wiring]
+- Expand K03885 and K00330–K00343 searches across 27K species using KO-based orthology, test NDH-2/Complex I co-occurrence, characterize ACIAD3522 biochemically, and reanalyze quinate-versus-succinate proteomics. [src: respiratory_chain_wiring]
+- Analyze the 3,683 essential-auxiliary genes with functional annotation and genomic-context methods to test whether they compensate for missing core functions or instead represent mobile-element-associated dependencies. [src: conservation_vs_fitness]
+- Combine BBH, profile-based homology, genomic-context analysis, and module-informed CRISPRi (CRISPR interference, transcriptional knockdown) tests to distinguish genuinely lineage-specific essential genes from divergent or missed homologs among the 7,084 orphan essentials. [src: essential_genome]
+- Compare ICA modules with ortholog-transfer predictions while varying experiment count, component caps, membership thresholds, and Pfam/KEGG enrichment rules; test whether the 38 accessory module families are enriched for mobile elements, operon structure, or niche-associated environments. [src: fitness_modules] [src: module_conservation]
+- Test the 9,557 essential dark genes with CRISPRi, validate the 998 dark-gene operon pairs supported by conserved synteny and strong cofitness, and fold the 6,427 truly dark genes into structure-, Foldseek-, and condition-matched growth validation beginning with the 100 ranked candidates. [src: functional_dark_matter] [src: truly_dark_genes]
+- Extend pangenome linkage to the 17,479 unlinked dark genes and test whether the estimated approximately 2,841 additional truly dark genes reproduce linked-set essentiality and phenotype distributions; test the Methanococcus-focused cofitness signal reported as r > 0.97 and characterize contiguous dark islands. [src: truly_dark_genes]
 - Refit genotype–condition models after ChEBI-based canonicalization and compare high-AUC substrates with condition-matched TnSeq and knockout essentiality. [src: genotype_to_phenotype_enigma]
-- Reanalyze the metal atlas with organism-specific tolerance normalization, phylogenetic independent contrasts, and removal of genes important for non-metal stresses. [src: metal_fitness_atlas]
-- Resolve locusId mismatches, validate classifications against `specificphenotype`, and repeat metal-specificity estimates across sick-rate thresholds from 1–20%. [src: metal_specificity]
-- Rebuild all cross-project organism and strain joins with assembly accessions, genus checks, NCBI-taxid-backed synonymy, and explicit GTDB-version tracking. [src: pitfalls]
-- Obtain current Web of Microbes or GNPS2/Northen laboratory data with consumption actions; test whether produced and consumed metabolites predict Fitness Browser gene importance after strain-resolved matching. [src: webofmicrobes_explorer]
-- Curate exact compound identities for the 107 formula-only ModelSEED matches and build a pathway-to-metabolite lookup table for GapMind; then test the proposed E/(E+I) metabolic-novelty phenotype against accessory genes and pangenome openness. [src: webofmicrobes_explorer]
-- Repeat environment-linked essentiality analyses after AlphaEarth NaN filtering and stratification by environmental versus human-associated samples, quantifying the effect of 52.7% unknown per-genome environment labels. [src: pitfalls]
-- Execute large-scale joins with live catalog discovery, explicit casts, key-filtered Spark SQL, and checkpointed outputs; compare results against legacy namespace and REST workflows. [src: pitfalls]
+- Reanalyze the metal atlas with organism-specific tolerance normalization, phylogenetic independent contrasts, and removal of genes important for non-metal stresses; resolve locusId mismatches and repeat metal-specificity estimates across sick-rate thresholds from 1–20%. [src: metal_fitness_atlas] [src: metal_specificity]
+- Obtain current Web of Microbes or GNPS2/Northen data with consumption actions; curate exact identities for the 107 formula-only ModelSEED matches, build a pathway-to-metabolite lookup table for GapMind, and test E/(E+I) against accessory genes and pangenome openness after strain-resolved matching. [src: webofmicrobes_explorer]
+- Rebuild organism and strain joins with assembly accessions, genus checks, NCBI-taxid-backed synonymy, and explicit GTDB-version tracking; repeat environment-linked essentiality analyses after AlphaEarth NaN filtering and stratification by environmental versus human-associated samples, quantifying the effect of 52.7% unknown per-genome environment labels. [src: pitfalls]
+- Execute large-scale joins with live catalog discovery, explicit casts, key-filtered Spark SQL, and checkpointed outputs, comparing results against legacy namespace and REST workflows. [src: pitfalls]
 
 ## [[concepts/gene-function-acquisition-depth|Phylogenetic acquisition depth and ecological distribution of gene functions]]
 
@@ -719,29 +720,15 @@ See the project summaries: [[summaries/amr_environmental_resistome__REPORT]], [[
 - Perform the pending T4SS–CAZy synteny-threshold permutation test using unfiltered Spark data, BLAST-validate Node_4915 against NCBI nr, construct a housekeeping-gene null baseline, and calculate θ = OR(T4SS-CAZy) / [OR(T4SS) × OR(CAZy)] for biome enrichment. [src: t4ss_cazy_environmental_hgt]
 - Measure growth across environmental media for pathways classified as latent in Fitness Browser conditions, asking whether latent capability becomes condition-specific dependency and whether continuous performance remains poorly predicted by pathway presence alone. [src: pathway_capability_dependency]
 
-## [[concepts/fitness-importance-versus-ecological-context|Gene length confounds fitness-based prediction of pangenome conservation]]
-
-- Use the `gene_fitness_conservation.csv` data for the 2,725 analyzed genes, together with insertion counts or other transposon-callability measures, in nested cross-validated models to test how much of gene length's CV-AUC 0.645 contribution remains after measurement quality is modeled explicitly. [src: field_vs_lab_fitness]
-- Add the 678 essential genes through a missing-fitness or two-stage model, then test whether gene length predicts core status similarly among essential genes and genes with recovered transposon mutants. [src: field_vs_lab_fitness]
-- Replace binary core/auxiliary labels with quantitative gene-cluster prevalence and fit length-adjusted regression models to ask whether gene length primarily predicts the core boundary or also predicts intermediate prevalence across the pangenome. [src: field_vs_lab_fitness]
-- Reanalyze fitness across the reported thresholds from -1 to -3 with gene length, insertion coverage, and fitness uncertainty as covariates to test whether length confounding changes condition-specific conservation patterns. [src: field_vs_lab_fitness]
-
 ## [[concepts/genetic-perturbation-coverage-bias|Perturbation-Collection Coverage Bias]]
 
 - Re-sequence and re-annotate the 272 TnSeq-dispensable genes lacking deletion-collection growth data, then test whether annotation updates explain their missing perturbation phenotypes. [src: adp1_deletion_phenotypes]
 - Compare deletion-mutant construction success and phenotype completeness against gene length, annotation status, pangenome frequency, and pseudogene indicators using a multivariable logistic model to separate technical and evolutionary predictors of coverage. [src: adp1_deletion_phenotypes]
 - Replace the species-level core/accessory labels with population-level pangenome frequencies and test whether the coverage association remains after controlling for gene fragments and uncertain classifications. [src: adp1_deletion_phenotypes]
 - Add the 316 genes with incomplete data and the 499 excluded essential genes where technically possible, then repeat condition-specific fitness analyses to quantify how collection composition changes the inferred essentiality landscape. [src: adp1_deletion_phenotypes]
-
-## [[concepts/subsurface-bacillota-specialization|Genome Expansion Versus Streamlining in Specialized Microbes]]
-
-- Partition the 547 enriched OGs by genus and phylogenetic background using genus-stratified enrichment or a phylogenetically controlled model to determine which signals persist beyond lineage structure. [src: bacillota_b_subsurface_accessory]
-- Reclassify the 462 “other or unannotated” OGs with an LLM-assisted or manual functional scan, then test whether the inferred 80–100 anaerobic-respiration-related OGs remain enriched after standardized annotation. [src: bacillota_b_subsurface_accessory]
-- Compare genome size, OG count, and functional categories across additional phylum-matched subsurface cohorts to test whether expansion is specific to these Bacillota_B lineages or recurs across subsurface specialists. [src: bacillota_b_subsurface_accessory]
-- Add rock-attached Bacillota_B genomes and repeat the same pangenome comparison to test whether the observed expansion characterizes porewater-associated isolates specifically or deep-clay Bacillota_B more broadly. [src: bacillota_b_subsurface_accessory]
-- Use pathway-level reconstruction and phenotype or growth data to test whether the additional genome content improves predicted self-sufficiency under anaerobic subsurface conditions rather than merely reflecting lineage-specific accessory genes. [src: bacillota_b_subsurface_accessory]
-
-See the source-level discussion in [[summaries/bacillota_b_subsurface_accessory__REPORT]].
+- Stratify coverage analyses by functional category and condition, then test whether the observed core-gene burden pattern persists after accounting for which genes are recoverable in the deletion collection. [src: core_gene_tradeoffs]
+- Reassess singleton neutrality with coverage-aware models and perturbation assays spanning non-rich-media conditions, testing whether missing transposon coverage or unmeasured ecological conditions explain the apparent lack of fitness effects. [src: fitness_effects_conservation]
+- Test whether the costly+dispensable mobile-element and annotation profile predicts failed mutant construction or incomplete phenotype coverage after controlling for gene length, orthology breadth, and organism. [src: costly_dispensable_genes]
 
 ## [[concepts/genome-size-confounding-of-functional-scores|Genome Size and Annotation Breadth Can Confound Normalized Functional Scores]]
 
@@ -757,31 +744,31 @@ See the source-level discussion in [[summaries/bacillota_b_subsurface_accessory_
 - Reanalyze the 172 species with alternative [[entities/alph-aearth]] embedding distances and direct environmental metadata to test whether the weak environmental signal is caused by representation or distance-choice limitations. [src: ecotype_analysis]
 - For species with identified ecotype clusters, compare gene-cluster presence/absence profiles between clusters while controlling for phylogenetic similarity to test whether ecological differentiation is concentrated in particular loci. [src: ecotype_analysis]
 - Quantify the effect of missing or imprecise geographic metadata by repeating the analysis on species and genomes with higher-resolution environmental records, asking whether environmental effects become stronger when microenvironment assignments improve. [src: ecotype_analysis]
+- Extend the ecotype analysis to all 456 eligible species and overlay core-genome phylogenetic trees with habitat metadata to test whether COG differentiation persists after ancestry and environment are modeled jointly. [src: ecotype_functional_differentiation]
+- Replace openness with auxiliary fraction, Heap’s law alpha, or pangenome fluidity, and stratify by gene function and lifestyle, to test whether alternative pangenome metrics reveal category-specific ecological or phylogenetic effects missed by openness. [src: pangenome_openness]
+- Compare downsampled and full-genome extraction on the same species, controlling genome count as a covariate, to determine whether sampling depth or gene-cluster extraction changes explain the 27x correlation discrepancy. [src: ecotype_env_reanalysis]
+- Repeat the environmental comparison with structured ENVO terms and functional subsets, testing whether more precise habitat definitions reveal locus-specific associations masked by whole-genome Jaccard distances. [src: ecotype_env_reanalysis]
 
 ## [[concepts/genomic-dispersal-functional-coupling|Physically Dispersed Genes Can Form Tightly Coupled Metabolic Systems]]
 
 - Add benzoate, catechol, vanillate, iron limitation, and respiratory-inhibitor conditions to the ADP1 fitness matrix, then test whether the dispersed support network separates aromatic-substrate effects from iron, cofactor, and respiratory-load effects. [src: aromatic_catabolism_network]
-- Search the ADP1 genome for NDH-2 and compare NDH-2 deletion fitness on quinate versus glucose to test whether alternative NADH dehydrogenase capacity explains condition-dependent Complex I coupling. [src: aromatic_catabolism_network]
+- Construct an NDH-2 deletion mutant and measure NADH/NAD⁺ ratios and fitness on quinate versus glucose; this would test whether alternative NADH dehydrogenase capacity explains condition-dependent Complex I coupling. [src: respiratory_chain_wiring]
 - Test ACIAD3137 and ACIAD2176 with protein-protein interaction or co-purification assays to determine whether their r > 0.98 co-fitness relationships reflect physical Complex I association. [src: aromatic_catabolism_network]
 - Add PQQ biosynthesis, iron homeostasis, and respiratory-chain capacity constraints to the ADP1 FBA model, then ask whether explicit support-system constraints reconcile the 0% predicted Complex I essentiality with the observed defects in 10/13 Complex I operon subunits. [src: aromatic_catabolism_network]
+- Expand KO-based K03885 and K00330–K00343 searches across 27K species and compare Complex I/NDH-2 co-occurrence and fitness to test whether the ADP1 wiring model generalizes beyond one organism. [src: respiratory_chain_wiring]
 - Compare Complex I retention across aromatic-degrading species using pangenome data to test whether genomic dispersion and respiratory coupling are conserved beyond ADP1. [src: aromatic_catabolism_network]
-
-## [[concepts/subsurface-hydrogeological-zonation|Groundwater–Sediment Community Partitioning]]
-
-- Collect groundwater and sediment contemporaneously at the same wells and repeat paired Bray–Curtis comparisons to separate habitat partitioning from the 18-month sampling offset. [src: enigma_sso_asv_ecology]
-- Load the 221 registered SSO geochemistry samples into CORAL and test whether nitrate, pH, and metal concentrations explain the groundwater–sediment taxonomic contrast. [src: enigma_sso_asv_ecology]
-- Extract pump-test ASVs from Brick 460-462 for L8, M5, and U2 and test whether the predicted *Rhodanobacter* maximum occurs at M5. [src: enigma_sso_asv_ecology]
-- Perform same-resolution metagenomic profiling of groundwater and sediment to test whether habitat-enriched taxa carry the inferred denitrification, iron-oxidation, iron-reduction, sulfur-oxidation, and methanotrophy functions. [src: enigma_sso_asv_ecology]
-- Repeat groundwater and sediment sampling across seasons to determine whether the observed partitioning persists during plume and environmental change. [src: enigma_sso_asv_ecology]
-
-Related source: [[summaries/enigma_sso_asv_ecology__REPORT]]
+- Compare the 1,116 ICA modules across organisms with gene-neighborhood data to test whether co-regulated, core-enriched modules are physically dispersed or locally clustered, and extend this analysis to the 195 modules with prevalence-matched co-inheritance statistics to test whether accessory module coupling predicts cross-genome retention. [src: conservation_fitness_synthesis; cofitness_coinheritance]
+- Restrict co-inheritance comparisons to auxiliary-only pairs below 95% prevalence, restore Ralstonia with raw Fitness Browser genefitness data, and use broader phylogenetic strata to distinguish functional coupling from shared ancestry. [src: cofitness_coinheritance]
+- Combine COG L, V, and S enrichment with gene-neighborhood, co-fitness, and habitat metadata across additional taxa to test whether mobile, defense, and unknown-function novelty forms distributed ecological modules or remains primarily an annotation-level partition. [src: cog_analysis]
 
 ## [[concepts/homology-search-negative-evidence|Negative homology-search results require sensitivity validation]]
 
-- Search named RefSeq proteomes with Pfam HMMs and sequence-based homology methods to determine whether unannotated paralogs explain the PaperBLAST negatives for LpxA, LpxC, LpxD, LpxB, and LpxK. [src: caulobacter_fur_lipida_loss]
+- Search named RefSeq proteomes with Pfam HMMs and other profile-based or sequence-based homology methods to determine whether unannotated paralogs explain or undermine the reported absence of LpxA, LpxC, LpxD, LpxB, LpxK, *spt*, *cerR*, ChvG, and ChvI in comparator species. [src: caulobacter_fur_lipida_loss]
 - Build a sensitivity benchmark from the 11 NCBI LpxA hits, 15 NCBI LpxC hits, 15 NCBI LpxD hits, 18 NCBI LpxB hits, and 18 NCBI LpxK hits, then compare recall across PaperBLAST, NCBI annotation, and Pfam HMM searches. [src: caulobacter_fur_lipida_loss]
-- Reanalyze *M. catarrhalis* with a complete, quality-controlled proteome because the PaperBLAST representation contained 162 genes total, and test whether the reported absence claims persist after improved coverage. [src: caulobacter_fur_lipida_loss]
-- Compare the Caulobacter sphingolipid substitution route with PBP1A, Ld-transpeptidase, capsule-biosynthesis, and *lpxX/lpxL* alternatives using profile-HMM and synteny searches to ask whether replacement pathways are genuinely absent or merely poorly annotated. [src: caulobacter_fur_lipida_loss]
+- Reanalyze the four comparator proteomes, especially *M. catarrhalis*, with consistent gene calling, complete quality-controlled proteomes, and annotation pipelines to test whether the reported absence claims persist after replacing its 162-gene PaperBLAST representation. [src: caulobacter_fur_lipida_loss]
+- Compare the Caulobacter sphingolipid-substitution route with PBP1A, Ld-transpeptidase, capsule-biosynthesis, and *lpxX/lpxL* alternatives using profile-HMM, synteny, and genome-resolved pathway searches to ask whether replacement pathways are genuinely absent or merely poorly annotated. [src: caulobacter_fur_lipida_loss]
+- Combine genome-resolved pathway reconstruction with targeted lipidomics to test whether annotated absence of comparator lipid A-loss alternatives corresponds to absence of predicted biochemical products. [src: caulobacter_fur_lipida_loss]
+- Perform cross-species genetic engineering or complementation to test whether the Caulobacter sphingolipid-substitution route is functionally distinct from the alternative routes identified in *A. baumannii* and *N. meningitidis*. [src: caulobacter_fur_lipida_loss]
 
 ## [[concepts/horizontal-gene-transfer-driven-innovation|Horizontal Gene Transfer as a Driver of Bacterial Gene Novelty]]
 
@@ -790,6 +777,8 @@ Related source: [[summaries/enigma_sso_asv_ecology__REPORT]]
 - Examine COG L and COG V genes as linked neighborhoods using synteny and module-level coinheritance analyses to test the hypothesis that mobile defense islands explain the +0.34% LV enrichment. [src: cog_analysis]
 - Join COG assignments to environmental metadata and use habitat-stratified comparisons to ask whether mobile, defense, and unknown-function enrichment varies by habitat. [src: cog_analysis]
 - Quantify how genes without COG annotation change the inferred novelty partition using alternative annotation resources and sensitivity analyses. [src: cog_analysis]
+- Reanalyze costly+dispensable genes using gene presence fractions rather than binary core/accessory labels, and transfer-resolved methods, to test whether mobile-element enrichment tracks recent HGT or subsequent gene loss. [src: costly_dispensable_genes]
+- Complete the T4SS–CAZy synteny permutation test, GT2-event BLAST validation, housekeeping-gene null comparison, and biome-enrichment factorization to test whether the apparent cross-phylum transfer signal exceeds threshold, homology, and background-association artifacts. [src: t4ss_cazy_environmental_hgt]
 
 ## [[concepts/intrinsic-versus-acquired-resistance|Intrinsic and Acquired Resistance Occupy Different Genomic Compartments]]
 
@@ -806,6 +795,12 @@ Related source: [[summaries/enigma_sso_asv_ecology__REPORT]]
 - Expand environmental validation beyond the 5 of 6 matched carrier genera by integrating species-resolved or strain-resolved observations and asking whether laboratory phenotype–environment concordance persists below genus level. [src: functional_dark_matter]
 - Increase environmental metadata coverage beyond the 28% AlphaEarth genome coverage and harmonize isolation-source fields to test whether the 29/47 concordance estimate changes with improved environmental resolution. [src: functional_dark_matter]
 - Replicate the pre-registered pH, nitrogen-source, carbon-source, and anaerobic predictions in independent cohorts using partial-correlation or matched-sample models to distinguish ecological signal from study and taxonomic composition. [src: functional_dark_matter]
+- Compare environmental carrier predictions with condition-specific fitness across additional organisms, using continuous fitness scores and quantitative gene-cluster prevalence rather than binary core/auxiliary status to test whether the DvH pattern generalizes. [src: field_vs_lab_fitness]
+- Test COG functional subsets, alternative embedding distances, and direct environmental metadata in the 172-species ecotype dataset to determine whether locus-specific environmental effects are obscured by whole-genome analyses. [src: ecotype_analysis]
+- Match species- or strain-resolved Oak Ridge metagenomic observations to uranium-specific laboratory fitness scores, while controlling for pH, redox, and carbon sources, to test whether the genus-level bidirectional associations persist below 16S resolution. [src: lab_field_ecology]
+- Test whether the weak fitness–conservation relationship generalizes to environmental prevalence by modeling continuous gene-cluster abundance across matched habitats, while controlling for gene length, transposon coverage, phylogeny, and taxonomic composition. [src: fitness_effects_conservation]
+
+See [[summaries/field_vs_lab_fitness__REPORT]] for the DvH analysis details, [[summaries/ecotype_analysis__REPORT]] for the ecotype correlation analysis, [[summaries/lab_field_ecology__REPORT]] for the Oak Ridge laboratory-to-field test, and [[summaries/fitness_effects_conservation__REPORT]] for the cross-species fitness–conservation analysis.
 
 ## [[concepts/laboratory-fitness-versus-natural-selection|Laboratory Fitness as an Imperfect Proxy for Natural Selection]]
 
@@ -814,6 +809,11 @@ Related source: [[summaries/enigma_sso_asv_ecology__REPORT]]
 - Compare RB-TnSeq results across the 43 organisms and identify gene families that are essential in every organism, then test whether their conservation persists across additional environmental conditions. [src: conservation_fitness_synthesis]
 - Characterize the 48 accessory modules containing co-regulated functions exclusively in the flexible genome, then test their fitness across environmental conditions and genetic backgrounds. [src: conservation_fitness_synthesis]
 - Pair direct fitness assays in soil, biofilms, or host-associated conditions with pangenome conservation to determine which laboratory-burdened core genes provide context-dependent natural-environment benefits. [src: conservation_fitness_synthesis]
+- Reassess apparently neutral singleton genes with improved transposon coverage and environmental fitness assays to distinguish assay missingness from genuine dispensability. [src: fitness_effects_conservation]
+- For DvH, add organisms and quantitative gene-cluster prevalence to the field/lab comparison, then test whether the weak fitness-only prediction persists after accounting for gene length and transposon callability. [src: field_vs_lab_fitness]
+- Link DvH resistance-gene genomic context to environmental geochemistry and acquisition histories to test whether the heavy-metal versus field-stress contrast reflects accessory acquisition or distinct physiological requirements. [src: field_vs_lab_fitness]
+- Reanalyze the 33-organism essential-core enrichment with matched pangenome clade sizes, explicit gene-length and transposon-callability covariates, and additional conditions to determine whether the 1.56 median odds ratio persists beyond the current cohort. [src: conservation_vs_fitness]
+- Characterize the 3,683 essential-auxiliary and 1,259 essential-unmapped genes with orthology, gene-context, and multi-condition fitness data to test whether they are strain-specific replacements for core functions or poorly annotated mobile and divergent genes. [src: conservation_vs_fitness]
 
 ## [[concepts/metabolic-capacity-specialization|Utilization capacities are phylogenetically concentrated and specialist-dominated]]
 
@@ -822,6 +822,11 @@ Related source: [[summaries/enigma_sso_asv_ecology__REPORT]]
 - Link the 569 utilizer prediction rows to the 3825 taxonomy-bearing NMDC metagenomes and use sample-aware models to test whether high-versatility genera are enriched in periphyton relative to soil, freshwater, sediment, and plant environments. [src: enigma_carbon_census_1]
 - Experimentally test specialist and generalist isolates on multiple callable compounds using matched enrichment and growth assays to ask whether predicted capacity breadth corresponds to realized carbon utilization. [src: enigma_carbon_census_1]
 - Extend the analysis to the 74 organism-dark compounds using targeted PaperBLAST, abstract-level literature mining, and pathway reconstruction to determine whether the apparent specialization persists after annotation gaps are reduced. [src: enigma_carbon_census_1]
+- Map callable utilization pathways onto core, novel, and singleton gene classes in the COG dataset, then test with phylogenetically controlled models whether specialist capacities are disproportionately associated with mobile-element or defense-enriched genomic compartments. [src: cog_analysis]
+- Pair GapMind completeness with direct gene assignments and condition-matched fitness assays to test whether lineage-concentrated callable capacities are realized, latent, or conditionally dependent. [src: metabolic_capability_dependency]
+- Apply phylogenetically controlled models to the 2,810-species pathway dataset and test whether the pathway-variation/open-pangenome association persists after independent contrasts rather than genome-count adjustment alone. [src: pathway_capability_dependency]
+- Validate the 4-per-species ecotype summary across clustering cutoffs and with condition-matched fitness data to distinguish robust metabolic structure from threshold- and sampling-dependent partitions. [src: pathway_capability_dependency]
+- Intersect callable-capacity genes with Fitness Browser essentiality and condition-specific fitness, then test whether specialist capacities are preferentially core, auxiliary, or conditionally important after controlling for phylogeny and gene-length bias. [src: conservation_vs_fitness]
 
 ## [[concepts/metabolic-competition-versus-direct-antagonism|Metabolic Overlap Explains Part but Not All of Microbial Antagonism]]
 
@@ -833,44 +838,28 @@ Related source: [[summaries/enigma_sso_asv_ecology__REPORT]]
 
 ## [[concepts/metabolic-model-gapfilling|Metabolic Model Gapfilling and Prediction Reliability]]
 
-- Join the 243 missing functions and 105,376 gap-dependent growth predictions to pangenome conservation and functional annotations, then test whether core versus accessory status predicts false-negative frequency and mean gap count. [src: acinetobacter_adp1_explorer]
-- Re-run pathway enrichment on the 227 FBA-TnSeq-discordant genes; stratify 121,519 predictions by exact gap count, reaction conservation class, and phenotype; and compare rich- versus minimal-media flux changes for the 177 genes with condition-specific fitness. [src: acinetobacter_adp1_explorer]
-- Build a matched-gene comparison of FBA, knockout lethality, TnSeq fitness, and growth rate; reconstruct the 38 false-negative cases with alternative gapfilling and curated media while testing whether 42.5% accuracy and 330 false positives improve without reducing recall of 86.5%. [src: adp1_triple_essentiality, annotation_gap_discovery]
+- Join the 243 missing functions and 105,376 gap-dependent predictions to pangenome conservation and annotations; test whether core/accessory status predicts false-negative frequency and mean gap count. [src: acinetobacter_adp1_explorer]
+- Re-run enrichment on the 227 FBA–TnSeq discordances, stratify 121,519 predictions by gap count, reaction class, and phenotype, and compare rich/minimal flux for the 177 condition-changing genes. [src: acinetobacter_adp1_explorer]
+- Build matched-gene comparisons of FBA, knockout lethality, TnSeq fitness, and growth; reconstruct 38 false negatives with curated media and alternative gapfilling and test whether 42.5% accuracy and 330 false positives improve without reducing 86.5% recall. [src: adp1_triple_essentiality, annotation_gap_discovery]
 - Prioritize the 44 high-confidence assignments and characterize the 50 EC-less reactions. [src: annotation_gap_discovery]
-- Add measured trace aromatic compounds to FBA media, re-simulate beta-ketoadipate cases, and test whether the 9-of-11 aromatic discordance and FBA under-prediction enrichment are reduced. [src: adp1_triple_essentiality]
-- Measure the ADP1 NDH-2 deletion phenotype, NADH/NAD⁺ ratios, respiratory-chain protein levels, and growth on quinate, glucose, acetate, lactate, and urea; characterize ACIAD3522 and add enzyme-capacity constraints to test whether flux-rate limits explain the Complex I and alternative-dehydrogenase profiles. [src: respiratory_chain_wiring]
-- Expand the cross-species K03885 and K00330–K00343 search across 27K species using KO-based orthology, and perform the planned Acinetobacter pangenome co-occurrence analysis. [src: respiratory_chain_wiring]
-- Re-run the 23 pathway-organism comparisons with explicit condition-specific fitness measurements and benchmark Bakta, eggNOG, and their union on unresolved gapfilled reaction-organism pairs. [src: discoveries]
-- Check DvH for lower-confidence serine predictions and test growth on serine-free minimal medium with complementation or targeted pathway-gene validation. [src: essential_metabolome]
-- For the 1,256 functional-dark-matter organism–pathway pairs, compare GapMind calls with condition-matched Fitness Browser phenotypes and test whether high-confidence EC-prefix matches predict growth better than Pfam-family or keyword matches. [src: functional_dark_matter]
-- Map the 601 FW300-N2E3 fitness-active genes to GapMind pathway steps and distinguish biosynthetic, catabolic, regulatory, and housekeeping signals. [src: fw300_metabolic_consistency]
-- Re-run the metabolic-capability/dependency analysis using direct GapMind per-step gene assignments, matched media, and explicit clade linkage; test whether the 15.8% latent fraction and the ρ = 0.69 pangenome association persist after correcting the taxonomy-field failure. [src: metabolic_capability_dependency]
-- Measure growth, uptake, secretion, and flux for representative carbon-utilization pathways classified as latent, intermediate, and active, testing whether pathway class predicts FBA reliability under matched conditions. [src: metabolic_capability_dependency]
-- Obtain the current WoM dataset from GNPS2 or the Northen laboratory, recover organism consumption actions, and re-test whether produced or consumed metabolites predict Fitness Browser gene fitness under matched conditions. [src: webofmicrobes_explorer]
-- Build a WoM pathway-to-substrate/product lookup table, manually curate the 107 formula-only ModelSEED candidate sets, and test whether exact compound identity improves reaction-level gapfilling. [src: webofmicrobes_explorer]
-- Test whether higher WoM `E/(E+I)` metabolic novelty fractions associate with pangenome openness or accessory genes, using strain-to-genome mappings rather than genus-level links. [src: webofmicrobes_explorer]
-- Test whether the 10 metabolic ecotype clusters remain environment-associated after phylogenetic correction and finer metadata integration, then use validated environment-linked pathway differences as model constraints rather than direct evidence of flux. [src: metabolic_capability_dependency]
-- Add measured metabolite concentrations and uptake bounds to NMDC-linked models, and use study-aware mixed models or sample-level permutations to distinguish environmental occurrence from utilization. [src: discoveries, enigma_carbon_census_1]
-- Obtain metabolomics for the 33 Freshwater samples and add pH, temperature, and total organic carbon to study-aware partial-correlation or mixed-effects models; test whether the 11/13 negative pathway–metabolite directions persist after abiotic and study-level adjustment. [src: nmdc_community_metabolic_ecology]
-- Pair community GapMind completeness with metatranscriptomics, measured uptake, secretion, and metabolite concentrations to test whether expression-weighted pathway completeness predicts flux more reliably than genomic potential alone. [src: nmdc_community_metabolic_ecology]
-- Resolve the 61 Unknown-ecosystem samples through NMDC ENVO annotations and improve KEGG compound mapping for cysteine, histidine, and lysine before extending community-scale FBA constraints. [src: nmdc_community_metabolic_ecology]
-- Calibrate the condition-specific importance score against an independent essentiality set, such as known essentials from essential_metabolome, then re-test the 66 Latent Capability pairs without a subset-defined median threshold. [src: pathway_capability_dependency]
-- Re-run the pathway-variation and ecotype-openness analyses with phylogenetic independent contrasts, balanced genome sampling, and alternative clustering cutoffs; test whether rho=0.530 and rho=0.322 persist within genera and across species. [src: pathway_capability_dependency]
-- Test the accessory-dependent amino-acid completeness gaps experimentally by comparing community composition, extracellular leucine, valine, arginine, lysine, and threonine, uptake, secretion, and expression; this would distinguish accessory capacity from demonstrated metabolite sharing. [src: pathway_capability_dependency]
-- Recalculate plant-associated pathway completeness with less stringent core thresholds, direct GapMind gene assignments, and matched BacDive strains; test whether the 83.1% GapMind–BacDive consistency and 0% core-level completeness persist after taxonomic and annotation controls. [src: plant_microbiome_ecotypes]
-- Pair plant-associated genomic markers with transcriptomics, measured uptake, secretion, and growth under defined root, rhizosphere, and phyllosphere conditions; test whether the 78.7% dual-nature classification predicts condition-specific activity rather than marker presence alone. [src: plant_microbiome_ecotypes]
-- Reassess plant-community complementarity after restoring the 62/322 lost NMDC genera, using reaction-level pathway profiles and explicit metabolite exchange measurements rather than genus-level completeness alone. [src: plant_microbiome_ecotypes]
-- Expand phylogenetic-tree coverage and apply accessory-gene or gene-content trees to the 65 plant-associated species; test whether the five Bonferroni-supported within-species signals and host segregation in *Xanthomonas campestris* and *Xanthomonas vasicola* predict transferable model constraints. [src: plant_microbiome_ecotypes]
-- Extend GapMind with KEGG modules for toluene, naphthalene, benzoate, and other aromatic pathways, then test whether these additions improve environmental prediction beyond the 62 common pathways in *Pseudomonas*. [src: pseudomonas_carbon_ecology]
-- Apply PGLS or phylogenetic logistic regression to the *Pseudomonas* pathway profiles using the GTDB species tree, balanced genome sampling, and finer source metadata; test whether the p = 0.006 environment association and the subgenus sugar-pathway differences persist after phylogenetic control. [src: pseudomonas_carbon_ecology]
-- Use the 789,012-row genome-level carbon-pathway matrix to model within-species variation in *P. fluorescens* and *P. putida*, and cross-reference predicted ecotypes with RB-TnSeq fitness data from the `kescience_fitnessbrowser` collection. [src: pseudomonas_carbon_ecology]
-
-## [[concepts/metabolic-model-gapfilling|Empirical validation reveals condition-dependent limits of metabolic-model predictions]]
-
-- Use the 227 FBA–TnSeq-discordant genes with pathway enrichment and targeted inspection of regulatory annotations to ask whether discordance is concentrated in particular metabolic functions or reflects regulatory effects absent from the model. [src: acinetobacter_adp1_explorer]
-- Refit and revalidate the ADP1 metabolic model separately on minimal media and LB using the 499-versus-346 essentiality calls and the 177 of 866 flux-class changes to ask which condition-specific constraints improve prediction agreement. [src: acinetobacter_adp1_explorer]
-- Reassess the 121,519 growth phenotype predictions after removing or ranking the 243 missing functions by pangenome support, then test whether gapfill confidence reduces the false-negative excess associated with higher mean gap counts. [src: acinetobacter_adp1_explorer]
-- Compare predictions across the eight carbon-source fitness conditions, prioritizing urea versus quinate and butanediol-acetate versus butanediol-lactate, to ask whether condition-specific mutant fitness can identify missing model reactions. [src: acinetobacter_adp1_explorer]
+- Add measured aromatic compounds, re-simulate beta-ketoadipate cases, and test whether 9/11 discordance and FBA under-prediction decline. [src: adp1_triple_essentiality]
+- Measure ADP1 NDH-2 deletion, NADH/NAD⁺, respiratory proteins, and growth on quinate, glucose, acetate, lactate, and urea; characterize ACIAD3522 and add enzyme-capacity constraints. [src: respiratory_chain_wiring]
+- Expand K03885 and K00330–K00343 searches across 27K species and perform Acinetobacter pangenome co-occurrence analysis. [src: respiratory_chain_wiring]
+- Re-run the 23 pathway-organism comparisons with condition-specific fitness and benchmark Bakta, eggNOG, and their union on unresolved gapfilled pairs. [src: discoveries]
+- Check lower-confidence DvH serine predictions with serine-free medium, complementation, and targeted validation. [src: essential_metabolome]
+- For 1,256 functional-dark-matter organism–pathway pairs, compare GapMind with matched Fitness Browser phenotypes and test EC-prefix, Pfam, and keyword evidence. [src: functional_dark_matter]
+- Map 601 FW300-N2E3 fitness-active genes to GapMind steps and distinguish biosynthetic, catabolic, regulatory, and housekeeping signals. [src: fw300_metabolic_consistency]
+- Re-run capability/dependency analyses with direct GapMind assignments, matched media, explicit clade linkage, independent threshold calibration, and phylogenetic contrasts; test whether the 15.8% latent fraction, ρ = 0.69, rho=0.530, and rho=0.322 persist. [src: metabolic_capability_dependency, pathway_capability_dependency]
+- Measure growth, uptake, secretion, and flux for latent, intermediate, and active pathways; test whether class predicts FBA reliability. [src: metabolic_capability_dependency]
+- Obtain current WoM/GNPS2 data, recover consumption actions, build pathway-to-substrate/product mappings, curate 107 formula-only candidate sets, and test whether exact identity improves reaction-level gapfilling. [src: webofmicrobes_explorer]
+- Add measured metabolite concentrations, uptake bounds, metatranscriptomics, and study-aware mixed models to NMDC; obtain metabolomics for 33 Freshwater samples and test whether 11/13 negative directions persist after abiotic adjustment. [src: nmdc_community_metabolic_ecology]
+- Resolve 61 Unknown-ecosystem samples through NMDC ENVO annotations and improve KEGG mapping for cysteine, histidine, and lysine. [src: nmdc_community_metabolic_ecology]
+- Test accessory-dependent amino-acid completeness experimentally using community composition, extracellular leucine, valine, arginine, lysine, and threonine, uptake, secretion, and expression. [src: pathway_capability_dependency]
+- Recalculate plant-associated completeness with relaxed core thresholds, direct GapMind assignments, and matched BacDive strains; test whether 83.1% GapMind–BacDive consistency and 0% core completeness persist. [src: plant_microbiome_ecotypes]
+- Pair plant markers with transcriptomics, uptake, secretion, and growth under defined conditions; test whether 78.7% dual-nature classification predicts activity. [src: plant_microbiome_ecotypes]
+- Restore the 62/322 lost NMDC genera and reassess plant complementarity using reaction-level profiles and exchange measurements. [src: plant_microbiome_ecotypes]
+- Extend GapMind with toluene, naphthalene, benzoate, and other aromatic pathways; apply PGLS or phylogenetic logistic regression using the GTDB tree and balanced sampling. [src: pseudomonas_carbon_ecology]
+- Use the 789,012-row carbon-pathway matrix to model within-species variation in *P. fluorescens* and *P. putida* and cross-reference ecotypes with RB-TnSeq fitness data. [src: pseudomonas_carbon_ecology]
 
 ## [[concepts/metabolic-overflow-and-ecological-secretion|Metabolic Overflow and Ecological Secretion]]
 
@@ -887,13 +876,6 @@ Related source: [[summaries/enigma_sso_asv_ecology__REPORT]]
 - Test ACIAD3137 and ACIAD2176 by protein–protein interaction or co-purification experiments to distinguish direct Complex I accessory roles from indirect phenotypic correlations. [src: aromatic_catabolism_network]
 - Add PQQ-biosynthesis, iron-homeostasis, and respiratory-chain capacity constraints to the ADP1 FBA model, then compare predicted essentiality with the observed defects for 10/13 Complex I operon subunits. [src: aromatic_catabolism_network]
 - Compare Complex I retention across aromatic-degrading species using pangenome data to test whether respiratory-support architecture is conserved or lineage-specific. [src: aromatic_catabolism_network]
-
-## [[concepts/environmental-resistome|Metadata Resolution Can Hide Within-Species Environmental Heterogeneity]]
-
-- Use the 280,337 genomes with NCBI environment metadata and a per-genome AMR-by-environment contingency analysis, such as the originally planned Fisher's exact test or a scalable equivalent, to determine whether AMR enrichment remains after conditioning on species. [src: amr_environmental_resistome]
-- Use the 823 species in the reported multi-environment subset and hierarchical or mixed-effects models to separate within-species environment effects from between-species clinical representation, asking whether the 72.9-versus-16.4 mean AMR-cluster contrast persists within species. [src: amr_environmental_resistome]
-- Use deeply sampled species including *Klebsiella pneumoniae*, *Staphylococcus aureus*, and *Salmonella enterica*, with genome-level environment labels and accessory-cluster presence/absence matrices, to test whether the reported 99%, 99%, and 99% accessory fractions are concentrated in particular environments. [src: amr_environmental_resistome]
-- Use per-genome environment metadata together with phylogeny and family-level stratification to test whether the 20 of 141 significant family-level effects reflect genuine within-family ecological structure or uneven environmental sampling. [src: amr_environmental_resistome]
 
 ## [[concepts/metal-cross-resistance|Metal cross-resistance across bacterial fitness landscapes]]
 
@@ -914,15 +896,6 @@ Related source: [[summaries/enigma_sso_asv_ecology__REPORT]]
 - Repeat copper genome–soil attribution at 5 km, 10 km, and 20 km, then compare mechanistically classified resistance, stress, membrane, energy, and unknown COGs across biomes. [src: soil_metal_functional_genomics]
 - Validate the ≤10 kb T4SS–CAZy synteny threshold with permutation tests, test Node_4915 against NCBI nr and a housekeeping-gene null, and determine whether GT2-neighborhood metal-resistance enrichment persists after controlling for genome background and biome. [src: t4ss_cazy_environmental_hgt]
 
-## [[concepts/subsurface-hydrogeological-zonation|Inferring subsurface redox gradients from microbial community composition]]
-
-- Load the 221 SSO geochemistry samples into CORAL and test whether nitrate, pH, and metal concentrations form the predicted northeast-to-southwest gradient. [src: enigma_sso_asv_ecology]
-- Extract pump-test ASVs from Brick 460-462 for L8, M5, and U2 and test whether [[entities/rhodanobacter]] is highest at M5 and lower at L8 and U2. [src: enigma_sso_asv_ecology]
-- Generate metagenomes at the same spatial resolution and test whether genes for inferred denitrification, iron oxidation, sulfur oxidation, nitrification, methanotrophy, and fermentation occur in the predicted locations. [src: enigma_sso_asv_ecology]
-- Analyze the 18 M6-C2 isolate genomes for anaerobic metabolisms and test the hypothesis that M6 represents an anaerobic zone. [src: enigma_sso_asv_ecology]
-- Apply weighted UniFrac to ASV sequences from Bricks 457/460/477 and test whether phylogenetic community structure strengthens the inferred hydrogeological zonation. [src: enigma_sso_asv_ecology]
-- Repeat 16S profiling across seasons and test whether the U3–M6–L7 corridor and the inferred redox hotspots persist through time. [src: enigma_sso_asv_ecology]
-
 ## [[concepts/mobile-element-associated-fitness-burden|Mobile genetic elements as measurable host fitness burdens]]
 
 - Reanalyze Fitness Browser measurements with replicate-level models and a continuous burden score rather than the max_fit > 1 rule to test whether MGE-associated genes retain a fitness deficit after reducing single-experiment noise. [src: costly_dispensable_genes]
@@ -931,6 +904,8 @@ Related source: [[summaries/enigma_sso_asv_ecology__REPORT]]
 - Compare long-read assemblies, element-boundary calls, and gene-neighborhood information for *Pseudomonas stutzeri* RCH2 to test whether its 21.5% costly+dispensable proportion reflects mobile-element invasion or strain-specific genomic expansion. [src: costly_dispensable_genes]
 - Measure costly+dispensable candidates across environmental conditions not represented in the laboratory dataset to test whether the 14.1% condition-specific fraction underestimates context-dependent benefits. [src: costly_dispensable_genes]
 - Integrate MGE annotation, ortholog prevalence, and phylogeny across a larger organism set to test whether the observed burden is general or concentrated in particular lineages. [src: costly_dispensable_genes]
+- Stratify MGE-associated and conserved genes by functional category and condition, using the existing Fitness Browser measurements, to test whether the core-gene burden differences of +6.2, +7.8, +12.9, and -14.1 percentage points persist after controlling for assay coverage and gene length. [src: core_gene_tradeoffs]
+- Reanalyze MGE-associated genes jointly by fitness-effect breadth, conservation class, and condition-specific phenotype to test whether broad or ephemeral fitness effects explain the apparent persistence of burdensome accessory genes. [src: fitness_effects_conservation]
 
 ## [[concepts/module-level-coinheritance|Multi-gene fitness modules predict pangenome co-inheritance better than pairwise links]]
 
@@ -939,6 +914,9 @@ Related source: [[summaries/enigma_sso_asv_ecology__REPORT]]
 - Resolve reference-genome mapping and apply stronger phylogenetic controls, then test whether module-level delta phi remains higher than pairwise delta phi after ancestry is accounted for. [src: cofitness_coinheritance]
 - Build module co-transfer networks and test cross-module prediction to determine whether modules predict one another’s pangenome distributions beyond within-module co-occurrence. [src: cofitness_coinheritance]
 - Expand the analysis to species with >30% auxiliary genes and existing co-fitness data, then test whether auxiliary-gene fraction predicts the size and reproducibility of the module-level signal. [src: cofitness_coinheritance]
+- Reanalyze the 974 mapped modules using the same prevalence-matched co-inheritance test, separating the 577 (59%) >90% core modules, 349 (36%) mixed modules, and 48 (5%) <50% core modules, to determine whether the accessory enrichment persists across the larger 32-organism conservation set. [src: module_conservation]
+- Test whether the null family-breadth association (rho=-0.01, p=0.914) remains after matching module families for core fraction and prevalence, distinguishing gene-level conservation from module-scope effects. [src: module_conservation]
+- Apply the prevalence-matched co-inheritance test to the 156 cross-organism module families and ask whether family-level conservation predicts co-occurrence beyond organism, ancestry, and core-fraction controls. [src: fitness_modules]
 
 ## [[concepts/multi-heme-cytochrome-detection|Correcting Multi-Heme Cytochrome Markers for Iron-Reduction Comparisons]]
 
@@ -1010,13 +988,6 @@ Related source: [[summaries/enigma_sso_asv_ecology__REPORT]]
 - Replace exploratory soil-versus-freshwater rank tests with a study-aware mixed model or sample-level permutation using the environmental atlas to ask whether source-associated occurrence remains after accounting for study structure and compositional, zero-inflated abundances. [src: enigma_carbon_census_1]
 - Integrate chemical identity, reaction evidence, measured fitness, taxonomy, and environmental metadata through provenance-aware joins to ask which missing evidence layer most often blocks conversion from dark to callable status. [src: enigma_carbon_census_1]
 
-## [[concepts/homology-search-negative-evidence|Orthogonal validation of gene absence]]
-
-- Search named RefSeq proteomes with Pfam HMMs and profile-based homology methods to determine whether unannotated paralogs undermine the reported absence of *spt*, *cerR*, ChvG, and ChvI in comparator species. [src: caulobacter_fur_lipida_loss]
-- Reanalyze the four comparator proteomes with consistent gene calling and annotation pipelines to test whether the *M. catarrhalis* result changes when its 162-gene PaperBLAST representation is replaced by a more complete proteome. [src: caulobacter_fur_lipida_loss]
-- Combine genome-resolved pathway reconstruction with targeted lipidomics to test whether the annotated absence of comparator lipid A-loss alternatives corresponds to absence of the predicted biochemical products. [src: caulobacter_fur_lipida_loss]
-- Perform cross-species genetic engineering or complementation to test whether the Caulobacter sphingolipid-substitution route is functionally distinct from the alternative routes identified in *A. baumannii* and *N. meningitidis*. [src: caulobacter_fur_lipida_loss]
-
 ## [[concepts/outer-membrane-lipid-homeostasis|Outer-membrane lipid homeostasis after lipid A loss]]
 
 - Generate replicated outer-membrane proteomics and targeted *lptC2* and Pal assays to test whether the observed LptD/LptE decline, *lptC2* protein increase, CCNA_01217 increase, and Pal induction are reproducible and statistically supported. [src: caulobacter_fur_lipida_loss]
@@ -1040,6 +1011,12 @@ Related source: [[summaries/enigma_sso_asv_ecology__REPORT]]
 - Recalculate core/accessory labels from expanded GTDB sampling and test the association with fitness using prevalence thresholds and species-stratified models, asking whether the null result persists when the median sample of 9 genomes is replaced by broader within-species coverage. [src: amr_fitness_cost]
 - Analyze mechanism effects within organisms with many AMR genes, including Cup4G11 (77) and BFirm (50), using genetic-background-controlled comparisons to ask whether conservation–cost relationships emerge within species. [src: amr_fitness_cost]
 - Extend the analysis from 25 Fitness Browser organisms to all 293K BERDL genomes by predicting AMR cost from gene-cluster conservation patterns, then test whether predicted cost varies with pangenome prevalence outside the lab-adapted strains. [src: amr_fitness_cost]
+- Reanalyze the AMR subset using fitness-effect breadth and condition-specific annotations, asking whether the genome-wide conservation gradient appears when baseline means are replaced by conditional importance. [src: fitness_effects_conservation]
+- Recompute the essential-versus-core association with expanded within-species pangenomes and matched condition-specific fitness effects, asking whether the 1.56 median odds ratio persists after correcting for clade size, gene-length bias, and assay coverage. [src: conservation_vs_fitness]
+- Test the 5,526 costly-and-dispensable genes for mobile-element, recent-acquisition, or gene-loss signatures using expanded pangenomes and transfer-aware analyses. [src: conservation_fitness_synthesis]
+- Compare core trade-off frequencies across organisms sampled from variable versus stable environments using AlphaEarth environmental data, testing whether environmental variability predicts the architecture of conservation–fitness coupling. [src: conservation_fitness_synthesis]
+- Analyze the 48 accessory co-regulated modules with module-level conservation and functional-enrichment tests to determine whether flexible-genome coordination reflects shared mobility, recent acquisition, or ecological specialization. [src: conservation_fitness_synthesis, module_conservation]
+- Reanalyze the 974 mapped modules with insertion-callability masks and organism-stratified models, asking whether the 86.0% module-gene core fraction and 59% core-module fraction persist after accounting for the exclusion of essential genes and the 29/32 organism linkage coverage. [src: module_conservation]
 
 ## [[concepts/pangenome-core-boundary-and-clade-size-bias|Pangenome Core Boundaries and Clade-Size Bias]]
 
@@ -1047,6 +1024,10 @@ Related source: [[summaries/enigma_sso_asv_ecology__REPORT]]
 - Reanalyze the 10 organisms excluded for less than 90% DIAMOND coverage with identifier harmonization and orthology-based recovery, asking whether their exclusion changes the 82.0% core and 18.0% auxiliary proportions. [src: conservation_vs_fitness]
 - Compare clades with different genome counts using confidence intervals or hierarchical models, asking whether essential-core enrichment remains after explicitly modeling clade size and coverage. [src: conservation_vs_fitness]
 - Extend the comparison from binary essentiality to condition-specific fitness, especially genes with fitness < -2 under stress conditions, asking whether conditionally important genes show the same sampling-sensitive conservation pattern. [src: conservation_vs_fitness]
+- Reconcile the 86.1%-versus-81.2% and 82%-versus-66% gradients by rerunning both phenotype classifications on the same clades and coverage-filtered gene set, testing whether category definitions or sampling explain the discrepancy. [src: conservation_vs_fitness; fitness_effects_conservation]
+- Test whether the 86.0%-versus-81.5% module-gene enrichment persists after matching module and non-module genes by organism, callability, module size, and pangenome clade size, and separately quantify the essential genes that remain unobservable to ICA. [src: module_conservation]
+- Stratify pangenome openness by functional category and lifestyle, and compare openness, auxiliary fraction, Heap’s law alpha, and pangenome fluidity against environment and phylogeny effects to test whether the null result is specific to the single summary metric. [src: pangenome_openness]
+- Reclassify the core-gene trade-off and costly-conserved signals within matched clades and functional categories, testing whether the observed burden reversals persist after clade size, coverage, and condition space are controlled. [src: core_gene_tradeoffs; conservation_vs_fitness]
 
 ## [[concepts/pangenome-integration|Pangenome Integration Across Identifier Systems]]
 
@@ -1083,6 +1064,10 @@ See the source reports: [[summaries/acinetobacter_adp1_explorer__REPORT]], [[sum
 - Model AlphaEarth missingness and coordinate crowding explicitly, including the 3,838 genomes with NaN dimensions and the 36.6% of genomes in densely shared coordinates; test whether pathway-completeness associations survive inverse-coverage weighting or leave-one-coordinate-out validation. [src: discoveries]
 - Partition variable metabolic pathways into core metabolic, secondary metabolic, and transport categories using pathway-level annotations; test which categories account for the partial rho=0.530 association with openness. [src: discoveries]
 - Compare species-level openness with independent sampling-depth measures and geographic-range estimates; test whether the correlations for niche breadth, embedding variance, and geographic range reflect biological ecological breadth or uneven genome and environment sampling. [src: discoveries]
+- Recompute metabolic ecotypes across alternative clustering distances and genome-count cutoffs, then test whether the partial rho=0.322 association survives phylogenetically independent or coverage-weighted models. [src: pathway_capability_dependency]
+- Test whether the latent-capability rate correlation rho=0.69 persists after direct GapMind-to-fitness gene mapping, expanded fitness-condition coverage, and phylogenetically independent models; distinguish genome-dynamic effects from pathway-specific conservation. [src: metabolic_capability_dependency]
+- Stratify openness by functional categories, including mobile and defense-associated genes, and compare auxiliary fraction, Heap's law alpha, and pangenome fluidity across lifestyle groups; test whether the null broad environment result masks function-specific or lifestyle-dependent associations. [src: pangenome_openness]
+- Link openness and functional categories to fitness breadth and condition-specific annotations across the 43-bacterium dataset; test whether the weak conservation-fitness gradient and core enrichment of ephemeral-niche genes persist after controlling for genome count, transposon callability, and phylogeny. [src: fitness_effects_conservation]
 
 ## [[concepts/pathway-versus-reaction-evidence-resolution|Pathway-Level Evidence Does Not Map Directly to Reaction-Level Gene Assignments]]
 
@@ -1091,6 +1076,9 @@ See the source reports: [[summaries/acinetobacter_adp1_explorer__REPORT]], [[sum
 - Stratify the 105 (52.2%) unresolved pairs by GapMind coverage and EC-number status, using contingency or regression analysis to ask whether missing pathway coverage or EC-less reactions explains more of the unresolved set. [src: annotation_gap_discovery]
 - Apply alternative gapfilling solutions to the 38 false-negative cases and compare their reaction sets with GapMind step deficits, asking whether non-uniqueness is responsible for pathway–reaction discordance. [src: annotation_gap_discovery]
 - Experimentally test high-confidence reaction–gene candidates with targeted gene knockout or CRISPRi and compare the results with pathway-level GapMind predictions, asking whether pathway agreement predicts reaction-specific fitness effects. [src: annotation_gap_discovery]
+- For the DvH serine gap, inspect GapMind `steps_missing` predictions and annotations, then test growth on serine-free minimal medium and complement candidate genes; this would distinguish a genuine auxotrophy from pathway-detection failure. [src: essential_metabolome]
+- Recalibrate the condition-specific capability–dependency threshold against known essentials from [[summaries/essential_metabolome__REPORT]], then test whether reclassified pathways yield reproducible reaction-level assignments across independent fitness conditions. [src: pathway_capability_dependency]
+- Replace SEED-proxy pathway membership with direct GapMind per-step gene assignments for the 1,695 complete pathway-organism pairs, then test whether pathway–fitness classes become more predictive of reaction-level candidates without increasing false-positive assignments. [src: metabolic_capability_dependency]
 
 ## [[concepts/perturbation-modality-dependent-phenotypic-architecture|Genetic deletions and chemical perturbations may expose different phenotype architectures]]
 
@@ -1139,51 +1127,42 @@ See the source reports: [[summaries/acinetobacter_adp1_explorer__REPORT]], [[sum
 - Combine repeated environmental measurements with NMDC taxonomic abundances and PHB inference scores to test temporal variability directly rather than using point-in-time abiotic measurements. [src: phb_granule_ecology]
 - Reanalyze the AlphaEarth association after expanding embedding coverage beyond 83K/293K genomes and testing lineage-balanced sampling, asking whether the partial rho = -0.047 association is reproducible across underrepresented clades. [src: phb_granule_ecology]
 - Use genome-quality filtering and independent pathway evidence to test whether the 46.5% precursors-only category reflects genuine partial PHB capability or pleiotropic phaA/phaB metabolism. [src: phb_granule_ecology]
+- Test whether environmental associations are stronger for PHB and other specific functional modules than for whole-genome gene content by combining lineage-balanced pangenomes, COG functional categories, direct environmental metadata, and nonlinear or phylogenetically informed models. [src: ecotype_analysis]
+- Apply the prophage study’s constrained, genome-size-stratified module-enrichment design to PHB and other accessory pathways, asking whether pathway-specific environmental associations persist after matched host phylogeny and genome-size controls. [src: prophage_ecology]
+- Use plant-compartment genomes to test whether PHB prevalence and phaC core/accessory status differ after matching genome size, phylogeny, and metadata quality, rather than treating plant association as a homogeneous environmental category. [src: plant_microbiome_ecotypes]
+- Compare direct mobile-element annotations with phaC gene-tree incongruence across matched genome- and genus-level analyses to determine whether transfer signals change with aggregation scale. [src: plant_microbiome_ecotypes]
+- Apply the pending T4SS–CAZy synteny permutation test, Node_4915 BLAST validation, housekeeping-gene null baseline, and biome-enrichment factorization to determine whether the observed integrative-transfer signal is robust; then test the resulting transfer signatures against phaC neighborhoods without treating GT2 as a direct proxy for PHB. [src: t4ss_cazy_environmental_hgt]
 
 ## [[concepts/phenotype-database-coverage-bias|Coverage and Study Bias in Microbial Phenotype Databases]]
 
-- Apply GCA accession matching to the BacDive and GTDB records, then quantify whether recovered species alter feature-level coverage and the estimated phenotype–metal-score associations. [src: bacdive_phenotype_metal_tolerance]
-- Use PGLS (phylogenetic generalized least squares) or phylogenetic PCA on the matched 3,994-species set to test whether Gram stain, urease, catalase, and other phenotype associations persist after explicit removal of phylogenetic signal. [src: bacdive_phenotype_metal_tolerance]
-- Reweight or stratify analyses by phenotype-test coverage and taxonomic representation, then test whether the model rankings and exact effect estimates change when well-studied lineages are prevented from dominating the comparison. [src: bacdive_phenotype_metal_tolerance]
-- Add BacDive machine-learning-predicted phenotypes and compare their associations with experimentally recorded phenotypes to determine whether expanded coverage introduces model-dependent bias. [src: bacdive_phenotype_metal_tolerance]
-- Assemble urease-positive and urease-negative organisms from the same taxonomic class and test them with RB-TnSeq (random barcode transposon sequencing) under nickel and other metals to distinguish nickel-specific effects from general tolerance. [src: bacdive_phenotype_metal_tolerance]
-- Expand direct validation across Gram-positive and Gram-negative organisms, multiple oxygen-tolerance states, and balanced metal panels to determine whether the database associations reproduce in measured metal-tolerance phenotypes. [src: bacdive_phenotype_metal_tolerance]
+- Apply GCA accession matching to BacDive and GTDB records, then quantify whether recovered species alter feature-level coverage and the Gram-stain, urease, and catalase associations. [src: bacdive_phenotype_metal_tolerance]
+- Use PGLS, meaning phylogenetic generalized least squares, or phylogenetic PCA on the matched 3,994-species set to test whether phenotype associations persist after phylogenetic signal is removed. [src: bacdive_phenotype_metal_tolerance]
+- Reweight or stratify analyses by phenotype-test coverage and taxonomic representation, then test whether model rankings and exact effect estimates change when well-studied lineages cannot dominate. [src: bacdive_phenotype_metal_tolerance]
+- Replace the composite score with per-metal scores and use within-class regression to test whether catalase predicts copper, urease predicts nickel, and H₂S predicts zinc, copper, or cadmium tolerance. [src: bacdive_phenotype_metal_tolerance]
+- Add BacDive machine-learning-predicted phenotypes and compare them with experimentally recorded phenotypes to determine whether expanded coverage introduces model-dependent bias. [src: bacdive_phenotype_metal_tolerance]
+- Assemble urease-positive and urease-negative organisms from the same taxonomic classes and test them under nickel and other metals with RB-TnSeq, meaning random barcode transposon sequencing, to distinguish nickel-specific effects from general lineage differences. [src: bacdive_phenotype_metal_tolerance]
+- Expand direct Fitness Browser–BacDive validation across Gram-positive and Gram-negative organisms, urease-positive organisms, multiple oxygen-tolerance states, anaerobes, and balanced metal panels to determine whether database associations reproduce in directly measured metal-fitness data. [src: bacdive_phenotype_metal_tolerance]
+- Reanalyze the 172-species ecotype set with alternative environmental distances and direct metadata, then test COG functional categories and ecotype-cluster gene content to determine whether the weak whole-genome environmental signal masks subset-specific associations. [src: ecotype_analysis]
+- Scale the ecotype-functional analysis from the 15-species sample to all 456 eligible species, overlay core-genome phylogenies, and compare KMeans with HDBSCAN to test whether COG differentiation persists after cluster geometry and lineage structure are addressed. [src: ecotype_functional_differentiation]
+- Characterize the unannotated S-category genes with AlphaFold or domain analysis and relate them to phenotype databases, testing whether annotation missingness is concentrated in ecotype-specific functions. [src: ecotype_functional_differentiation]
+- Estimate rarefaction curves across multiple species-per-genus thresholds in MicrobeAtlas and test whether metal-type coefficients stabilize as pangenome coverage increases. [src: microbeatlas_metal_ecology]
+- Recompute community-weighted metal diversity after relating covered-read fraction to the estimate, and subdivide heterogeneous aquatic categories into marine, freshwater, and saline environments. [src: microbeatlas_metal_ecology]
+- Fit a sparse or subsampled full PGLMM using GTDB-tree covariance to test whether plant-compartment and host associations persist after lineage structure is modeled, and expand tree coverage for the 47 currently unrepresented candidate species. [src: plant_microbiome_ecotypes]
+- Compare pangenome-derived and MGnify-derived plant associations after harmonizing genus, genome, and environmental detection units; test whether the 11.7% Jaccard overlap reflects sampling coverage, taxonomic resolution, or genuine ecological differences. [src: plant_microbiome_ecotypes]
+- Validate plant marker panels with transcriptomics and condition-specific experiments, testing whether dual-nature marker sets are co-expressed rather than merely co-occurring in larger genomes. [src: plant_microbiome_ecotypes]
 
 ## [[concepts/phylogenetic-confounding-of-pangenome-associations|Phylogenetic Confounding of Pangenome Associations]]
 
 - Use the existing species-level openness, AMR-count, and taxonomic data with phylogenetic generalized least squares (PGLS), a regression method that models covariance among related species, to test whether the openness–AMR association remains after accounting for shared ancestry. [src: amr_pangenome_atlas]
 - Combine the pangenome species table with a species phylogeny and fit within-phylum hierarchical models to ask whether the positive associations in 8/10 phyla share a common slope or instead arise from lineage-specific processes. [src: amr_pangenome_atlas]
 - Reanalyze the six-category environmental comparison using taxonomic matching or lineage-stratified permutation tests to determine whether the clinical, soil, plant, aquatic, and animal contrasts persist after controlling for uneven taxonomic sampling. [src: amr_pangenome_atlas]
+- Extend this matching to the 14,723-species environmental-resistome dataset and test whether the five significant within-phylum effects and 20 significant within-family effects remain under balanced sampling and explicit phylogenetic models. [src: amr_environmental_resistome]
 - Add environmental metadata and AlphaEarth embeddings for the currently under-covered genomes, then use phylogeny-aware partial association analyses to test whether environmental diversity predicts AMR count independently of lineage. [src: amr_pangenome_atlas]
 - Estimate AMR gene gain and loss rates on a dated or calibrated species phylogeny, and test whether pangenome openness predicts transition rates rather than only present-day AMR counts. [src: amr_pangenome_atlas]
-
-## [[concepts/phenotype-database-coverage-bias|Phylogenetic Confounding of Microbial Phenotype Associations]]
-
-- Match BacDive records to GTDB species using GCA accessions, then repeat the species-level association and test whether the Gram-stain, urease, and catalase effects change after expanded coverage. [src: bacdive_phenotype_metal_tolerance]
-- Apply PGLS, meaning phylogenetic generalized least squares, or phylogenetic PCA to the matched phenotype and metal-score data, and ask whether any phenotype retains an association after phylogenetic signal is removed. [src: bacdive_phenotype_metal_tolerance]
-- Replace the composite Metal Fitness Atlas score with per-metal scores and use within-class regression to test whether catalase predicts copper tolerance, urease predicts nickel tolerance, and H₂S predicts zinc, copper, or cadmium tolerance. [src: bacdive_phenotype_metal_tolerance]
-- Assemble urease-positive and urease-negative organisms from the same taxonomic classes and test them under nickel and other metals with RB-TnSeq, meaning random barcode transposon sequencing, to distinguish nickel-specific effects from general lineage differences. [src: bacdive_phenotype_metal_tolerance]
-- Expand the direct Fitness Browser–BacDive validation with Gram-positive organisms, urease-positive organisms, and multiple anaerobes, then test whether phenotype associations replicate in directly measured metal-fitness data rather than genome-based scores. [src: bacdive_phenotype_metal_tolerance]
-
-## [[concepts/environmental-resistome|Phylogenetic Structure of Within-Species Resistomes]]
-
-- Subsample species with more than 500 genomes and repeat ANI extraction and Mantel testing to determine whether the 55.6% significant-species estimate changes when mega-species are included. [src: amr_strain_variation]
-- Combine phylogeny-aware models with AMR presence/absence matrices to test whether non-core AMR associations persist after separating lineage inheritance from repeated acquisition and loss. [src: amr_strain_variation]
-- Map resistance-island genes to plasmids, chromosomes, integron boundaries, and insertion sequences, then test whether genomic context explains the observed median Mantel correlations of 0.222 for non-core genes and 0.117 for core genes. [src: amr_strain_variation]
-- Reanalyze AMR phylogenetic structure using curated environmental and collection-date metadata to test whether lineage effects differ between clinical, host-associated, terrestrial, and aquatic sampling contexts. [src: amr_strain_variation]
-- Compare AMR phylogenetic structure with virulence-factor profiles and metabolic pathway variation to test whether AMR-defined lineages are broader genomic ecotypes. [src: amr_strain_variation]
-
-[[summaries/amr_strain_variation__REPORT]]
-
-## [[concepts/evidence-triangulation-for-functional-annotation|Functional Annotation Inference Varies Across Phylogenetic Contexts]]
-
-- Reanalyze the full 48 Fitness Browser organisms with the same evidence pipeline, stratifying resolution by phylogenetic clade and asking whether the low resolution observed for *B. thetaiotaomicron* persists beyond the 14-organism, Proteobacteria-biased dataset. [src: annotation_gap_discovery]
-- Reconstruct the models with gapseq and compare false-positive FBA rates and annotation-gap resolution against the default ModelSEED gapfilling results, asking how much apparent context dependence is caused by model construction. [src: annotation_gap_discovery]
-- Experimentally validate the 44 high-confidence assignments, prioritizing rxn02185 and rxn03436 across 9 organisms, using targeted gene knockout or CRISPRi and asking whether transferability predicts cross-organism phenotype confirmation. [src: annotation_gap_discovery]
-- Characterize the 50 EC-less reactions with sequence, structure, pathway, and phenotype evidence, asking whether improved reaction-level representation raises the 16% resolution rate for dark reactions. [src: annotation_gap_discovery]
-- Compare organisms with matched numbers of carbon-source experiments and matched annotation quality, using the existing fitness and pangenome records to ask whether resolution differences remain after data-coverage effects are controlled. [src: annotation_gap_discovery]
-
-See the source summary: [[summaries/annotation_gap_discovery__REPORT]].
+- Stratify the openness-versus-environment and openness-versus-phylogeny analyses by gene function, auxiliary fraction, Heap's law alpha, and pangenome fluidity to test whether the null result reflects an overly coarse openness metric. [src: pangenome_openness]
+- Recompute the prophage-density–AMR-breadth association using dedicated prophage predictors, base-pair distances, all available genomes, and explicit phylogenetic models to distinguish shared ancestry, broad mobile-element propensity, and phage-mediated transfer. [src: prophage_amr_comobilization]
+- Within the 1,305-species AMR dataset, subsample species with more than 500 genomes and fit phylogeny-aware models to test whether within-species AMR Mantel signals and non-core/core contrasts persist without computational-cap and prevalence-variance artifacts. [src: amr_strain_variation]
+- Curate collection dates and isolation sources, then repeat AMR ecotype–environment tests with balanced within-species sampling to distinguish ecological structure from lineage and metadata coverage. [src: amr_strain_variation]
 
 ## [[concepts/planktonic-to-biofilm-translation|Planktonic Competition Assays Do Not Directly Establish Biofilm Protection in Cystic-Fibrosis Airways]]
 
@@ -1202,12 +1181,12 @@ See the source summary: [[summaries/annotation_gap_discovery__REPORT]].
 
 ## [[concepts/potential-versus-realized-data-integration|Potential Data Connectivity Often Exceeds Realized Cross-Dataset Use]]
 
-- Execute UC2 on ENIGMA and PhageFoundry tables using its 11 shared keys, then test whether subsurface prophage, metal-resistance, and Oak Ridge contamination-gradient records overlap in value space. [src: berdl_data_atlas]
-- Execute UC3 between KBase and refdata using its 11 shared keys, then quantify GTDB versus KBase species-pangenome disagreement after identifier harmonization. [src: berdl_data_atlas]
-- Execute UC4 between NMDC and PROTECT using its 10 shared keys, combining environmental distribution records with pathogen and biogeochemical data to test whether clinically relevant pathogen signals are geographically and environmentally recoverable. [src: berdl_data_atlas]
-- Execute UC5 between NMDC and refdata using its 9 shared keys, then measure ENVO ontology completeness in NMDC biosamples and assess whether missing annotations are recoverable from reference resources. [src: berdl_data_atlas]
+- Execute UC2 on the ENIGMA and PhageFoundry live-cluster tables using its 11 candidate keys plus identifier, overlap, namespace, representative-record, and duplicate audits, to determine whether subsurface prophage, metal-resistance, and Oak Ridge contamination-gradient records share a valid biological value space. [src: berdl_data_atlas]
+- Execute UC3 between KBase and refdata using its 11 shared keys and genome/species-pangenome identifiers, with overlap, namespace, and representative-record checks, to quantify GTDB versus KBase species-pangenome disagreement after identifier harmonization. [src: berdl_data_atlas]
+- Execute UC4 between NMDC and PROTECT using its 10 shared keys, including sample, genome, and taxonomic validation, then cross-check environmental distributions against pathogen and biogeochemical records to determine whether clinically relevant pathogen observations can be joined without identifier conflation. [src: berdl_data_atlas]
+- Execute UC5 between NMDC and refdata using its 9 shared keys and ENVO ontology identifiers, measuring annotation coverage and semantic validity to test whether NMDC biosample metadata support the proposed ontology-completeness analysis and whether missing annotations are recoverable from reference resources. [src: berdl_data_atlas]
 - Re-audit project notebooks and research plans in addition to README files, then compare the expanded realized-use count with the current lower-bound estimate of 51 of 66 multi-tenant projects. [src: berdl_data_atlas]
-- Add or compute per-residue pLDDT and structural features for the validated UC1 cohort, then test whether structure-derived variables explain condition-specific fitness patterns beyond the existing gene-level join. [src: berdl_data_atlas]
+- Extend the validated UC1 cohort with per-residue pLDDT and structural-feature data from PDB files, because `kescience_alphafold.alphafold_entries` lacks those fields, then test whether structure-derived variables explain condition-specific fitness patterns beyond the existing gene-level join. [src: berdl_data_atlas]
 
 ## [[concepts/prevalence-ceiling-in-pangenome-associations|Prevalence ceilings limit detection and interpretation of pangenome co-occurrence]]
 
@@ -1216,13 +1195,6 @@ See the source summary: [[summaries/annotation_gap_discovery__REPORT]].
 - Combine prevalence-stratified phi estimates with reference-resolved phylogenetic distances, then test whether co-fitness predicts co-occurrence after separately controlling for prevalence and shared ancestry. [src: cofitness_coinheritance]
 - Build module co-transfer networks from the ICA modules and test whether cross-module prediction remains detectable after matching module prevalence and auxiliary content. [src: cofitness_coinheritance]
 - Expand the analysis to species with >30% auxiliary genes and existing co-fitness data, then measure whether increased accessory variation improves pairwise and module-level detection. [src: cofitness_coinheritance]
-
-## [[concepts/fitness-module-detection-sensitivity|Process-Level Context Does Not Establish Gene-Level Function]]
-
-- Combine the 6,691 hypothetical-protein predictions with ortholog transfer, domain architectures, and targeted gene-level experiments to test which module-only predictions acquire specific molecular-function support. [src: fitness_modules]
-- Reanalyze the held-out benchmark with process-level gold standards in addition to KEGG KO labels to ask whether Module-ICA has useful precision when evaluated against biological-process membership rather than gene-level identity. [src: fitness_modules]
-- Use larger, condition-diverse RB-TnSeq datasets and compare module stability before and after the 40% component cap to determine which conserved modules are missed in organisms with fewer experiments. [src: fitness_modules]
-- Test the 156 cross-organism module families with gene-neighborhood, domain-combination, and experimental perturbation data to determine whether shared module membership reflects conserved regulation, conserved pathway involvement, or recurrent genomic organization. [src: fitness_modules]
 
 ## [[concepts/provenance-aware-resource-discovery|Provenance, scale, and currency must be exposed during resource discovery]]
 
@@ -1262,46 +1234,25 @@ See the source summary: [[summaries/annotation_gap_discovery__REPORT]].
 - Build a provenance-aware project–dataset graph from project artifacts and deduplicate records by project, tenant, dataset, and canonical join key, asking whether tenant-use rankings change from the README audit. [src: berdl_data_atlas]
 - Audit notebook and query artifacts for the 36 documented kbase × kescience projects, asking whether their pangenome-by-fitness joins are reproducible and whether additional join keys beyond genome_id and ncbi_taxon_id were used. [src: berdl_data_atlas]
 
-## [[concepts/antimicrobial-resistance-fitness-cost|Compensation and the hidden cost of antimicrobial resistance]]
-
-- Use matched genomes from the **25** lab-adapted organisms, comparative genomics, and fitness association analysis to ask whether specific compensatory mutations explain the residual **+0.086** AMR-versus-background shift. [src: amr_fitness_cost]
-- Reconstruct newly acquired and compensated AMR genotypes in isogenic strains and measure growth and competition fitness to distinguish the original cost from the post-compensation cost. [src: amr_fitness_cost]
-- Subclassify efflux genes into narrow-spectrum pumps and general RND systems such as AcrAB-TolC, then use condition-specific fitness assays to ask whether constitutive systems have lower baseline costs. [src: amr_fitness_cost]
-- Cross-reference the **144** metal-resistance genes with the metal fitness atlas and test, using matched metal-stress fitness measurements, whether genes costly under standard conditions are protective under metal stress. [src: amr_fitness_cost]
-- Expand GTDB sampling beyond the median of **9** genomes per Fitness Browser species and recompute the **≥95%** core/accessory labels to ask whether the core-versus-accessory cost null result persists with deeper pangenomes. [src: amr_fitness_cost]
-
 ## [[concepts/resistance-island-coinheritance|Resistance-Island Co-inheritance and Mechanistic Linkage]]
 
 - Use the 1,517 island records together with genome assemblies and genomic-context mapping to plasmids, chromosomes, integron boundaries, and insertion sequences; determine which islands are physically linked and which are lineage-level co-occurrence patterns. [src: amr_strain_variation]
+- Apply geNomad or PHASTER to BERDL genomes and use scaffold sequences for base-pair-resolution distances; test whether strict prophage proximity, rather than contig co-occurrence, predicts AMR accessory status. [src: prophage_amr_comobilization]
 - Combine island membership with curated exposure metadata and phylogeny-aware models; test whether multi-mechanism islands are co-selected under shared antimicrobial environments rather than merely inherited together. [src: amr_strain_variation]
 - Integrate resistance-island genes with virulence-factor profiles and metabolic pathway variation; test whether island composition predicts host-associated phenotypes or fitness beyond lineage background. [src: amr_strain_variation]
 - Apply perturbation or competition experiments to representative multi-mechanism islands; test whether linked resistance genes produce additive, synergistic, or independent protection across drug classes. [src: amr_strain_variation]
 - Use the reported phi coefficients with fitness and genomic-context data in predictive models; test whether high co-inheritance predicts future AMR gene co-acquisition. [src: amr_strain_variation]
-
-## [[concepts/environmental-resistome|Resistome conclusions depend on gene-catalog scope and mechanism classification]]
-
-- Map the 83,008 AMRFinderPlus hits to CARD ARO terms and compare mechanism counts, core fractions, and environmental contrasts with the keyword-based classification to determine how much of the 18,448-hit Other/Unclassified category is reclassified. [src: amr_pangenome_atlas]
-- Separate classical antibiotic-resistance genes from mercury-, arsenic-, and other stress-response genes, then repeat the 30.3% versus 46.8% core comparison and the 2.2x auxiliary-genome enrichment test to quantify the effect of catalog scope. [src: amr_pangenome_atlas]
-- Reanalyze AMR functional enrichment using the 77K AMR clusters and 86M-cluster baseline after stratifying by mechanism and catalog class, asking whether the 7.05x COG V and 1.93x COG P enrichments persist for antibiotic-only genes. [src: amr_pangenome_atlas]
-- Validate singleton AMR clusters with broader homology, domain, and synteny analyses, asking whether the 55.4% singleton rate among sparsely annotated one-source clusters represents annotation artifacts or genuine species-specific resistance. [src: amr_pangenome_atlas]
-- Compare the catalog-defined environmental gradients against AMR calls in NMDC and MGnify metagenomes, using CARD ARO harmonization and metadata-stratified models to test whether clinical, soil, aquatic, and plant differences persist under comparable sampling and classification. [src: amr_pangenome_atlas]
+- Revisit fitness-cost comparisons as fitness-browser coverage expands, and separate prophage, plasmid, and integrative-conjugative-element mobilization in the same genomes. [src: prophage_amr_comobilization]
+- Stratify physical-island and co-selection analyses by the environmental categories and mechanism profiles reported in the 293K-genome resistome dataset; test whether clinical, soil, and aquatic contexts predict distinct island architectures after phylogenetic control. [src: amr_environmental_resistome]
+- Reclassify island genes with CARD ARO mappings and test whether the clinical-versus-environmental core-fraction contrast persists after separating antibiotic resistance from metal and other stress-response genes. [src: amr_pangenome_atlas]
 
 ## [[concepts/respiratory-capacity-and-nadh-load|Respiratory-chain dependence tracks reducing-equivalent load rather than substrate identity]]
 
 - Measure Complex I and NDH-2 deletion fitness in ADP1 on quinate, acetate, succinate, glucose, and lactate, using matched growth assays to ask whether fitness loss follows NADH-generating load rather than aromatic substrate identity. [src: aromatic_catabolism_network]
-- Search the ADP1 genome for NDH-2 and test the deletion on quinate versus glucose to determine whether an alternative NADH dehydrogenase explains the reported dispensability pattern. [src: aromatic_catabolism_network]
+- Measure NADH/NAD⁺ ratios across those carbon sources and test whether an NDH-2 deletion changes the predicted condition-specific respiratory requirement. [src: respiratory_chain_wiring]
 - Expand the condition panel with benzoate, catechol, vanillate, iron limitation, and respiratory inhibitors, then recompute co-fitness and condition-specific fitness to separate aromatic chemistry, iron demand, and respiratory load. [src: aromatic_catabolism_network]
 - Add PQQ biosynthesis, iron homeostasis, and respiratory-chain capacity constraints to the ADP1 FBA model, then compare predicted essentiality and flux with the observed defects in 10/13 Complex I operon subunits. [src: aromatic_catabolism_network]
-- Compare Complex I retention and NDH-2 complements across aromatic-degrading species using pangenome data to test whether respiratory architecture predicts transferability of the NADH-load hypothesis. [src: aromatic_catabolism_network]
-
-## [[concepts/shared-stress-versus-stressor-specific-fitness|Salt Chemistry Can Confound Fitness Assays Beyond the Intended Stressor]]
-
-- Compare matched KCl and choline chloride controls with NaCl using RB-TnSeq to determine whether shared fitness signals track chloride, sodium, osmolarity, or the combined salt condition. [src: counter_ion_effects]
-- Repeat CuCl₂/CuSO₄, ZnCl₂/ZnSO₄, and CoCl₂/CoSO₄ assays under identical aerobic conditions, metal concentrations, and media to isolate counter-ion effects from oxygen-regime confounding. [src: counter_ion_effects]
-- Run DvH NaCl dose-response experiments at 0.1, 1, 10, 100, and 500 mM and compare gene-level profiles with metal dose responses to test whether correlation follows effective chloride exposure. [src: counter_ion_effects]
-- Apply formal COG, KEGG, and PFAM enrichment tests to shared-stress and metal-specific gene sets to test the proposed cell-envelope, DNA-repair, and ion-homeostasis mechanisms. [src: counter_ion_effects]
-- Use independent component analysis (ICA) and module-level comparisons to separate shared salt-stress programs from metal-specific fitness modules. [src: counter_ion_effects]
-- Reanalyze metal fitness with condition-specific models and matched salt controls to determine which genes remain metal-associated after accounting for shared stress. [src: counter_ion_effects]
+- Compare Complex I retention and NDH-2 complements across aromatic-degrading species using pangenome data and KO-based searches to test whether respiratory architecture predicts transferability of the NADH-load hypothesis. [src: aromatic_catabolism_network] [src: respiratory_chain_wiring]
 
 ## [[concepts/sample-size-aware-phenotype-consensus|Species-level utilization claims require sample-size-aware strain consensus]]
 
@@ -1310,21 +1261,21 @@ See the source summary: [[summaries/annotation_gap_discovery__REPORT]].
 - Reanalyze BacDive records with explicit per-strain consensus and sample-size thresholds, asking which utilization claims remain stable after duplicate records and low-n comparisons are separated. [src: fw300_metabolic_consistency]
 - Compare strain-resolved BacDive phenotypes with isolate-specific Fitness Browser and WoM data, asking whether species-level non-utilization predicts or obscures FW300-N2E3-specific growth and secretion. [src: fw300_metabolic_consistency]
 
-## [[concepts/environment-embedding-geography|Sampling Composition Confounding of Environmental Signal]]
-
-- Restrict the AlphaEarth dataset to environmental categories, recompute partial correlations between embedding similarity and gene-content similarity, and test whether the median partial correlation differs from 0.0025. [src: env_embedding_explorer]
-- Reweight or downsample Human clinical, Human gut, Human other, Soil, Marine, Freshwater, Extreme, and Plant categories, then repeat the geographic-distance analysis to test whether the reported 0.41-to-0.82 distance pattern changes with composition. [src: env_embedding_explorer]
-- Compare keyword-based isolation_source categories with env_broad_scale for the 42% of genomes covered by the structured field, and test whether environment–gene-content associations are stable across classification schemes. [src: env_embedding_explorer]
-- Use isolation_source homogeneity together with coordinate clustering to distinguish institutional addresses from legitimate field sites, then recompute embedding distance–geography relationships under each coordinate-quality definition. [src: env_embedding_explorer]
-- Fit phylogeny-aware models to environmental-only samples and test whether similar AlphaEarth embeddings predict greater accessory-gene sharing after controlling for taxonomic relatedness. [src: env_embedding_explorer]
-
 ## [[concepts/sampling-depth-and-downsampling-effects|Sampling Depth and Downsampling Effects]]
 
-- Use the same species and genome universe to compare diversity-maximizing downsampling with full-genome extraction, then test whether sampling strategy or genome-set composition explains the partial-correlation discrepancy. [src: ecotype_env_reanalysis]
+- Use the same species and genome universe to compare diversity-maximizing downsampling with full-genome extraction, using matched distance calculations, then test whether sampling strategy or genome-set composition explains the change from 0.003 to 0.081 and the reported 27x difference. [src: ecotype_env_reanalysis]
 - Add genome count as a covariate to the species-level correlation model, then test whether unequal sampling depth inflates correlations in species with more genomes. [src: ecotype_env_reanalysis]
 - Recompute correlations after matched-depth downsampling across species, then test whether the environmental-versus-human-associated comparison remains null when statistical power is balanced. [src: ecotype_env_reanalysis]
-- Analyze functional gene subsets, including transport and secondary-metabolism categories, with identical downsampling and extraction settings, then test whether whole-genome Jaccard distances mask sampling-depth effects on specific functions. [src: ecotype_env_reanalysis]
-- Reassess species with NaN correlations using alternative missing-data and minimum-sample thresholds, then test whether the higher Environmental NaN rate changes the group comparison. [src: ecotype_env_reanalysis]
+- Analyze transport, secondary-metabolism, and other functional gene subsets with identical downsampling and extraction settings, then test whether whole-genome Jaccard distances mask sampling-depth or ecological effects. [src: ecotype_env_reanalysis]
+- Replace majority-vote categories with structured ENVO terms from env_broad_scale and repeat group and continuous-fraction analyses, testing whether finer environmental ontology changes the null result. [src: ecotype_env_reanalysis]
+- Reassess species with NaN correlations using alternative missing-data and minimum-sample thresholds, and model NaN outcomes jointly with environment category, genome count, and phylogeny to test whether the higher Environmental NaN rate changes the group comparison. [src: ecotype_env_reanalysis]
+- Compare AlphaEarth geographic signal with independent epidemiological and ecological metadata for species such as Klebsiella or Enterococcus, testing whether embedding structure reflects regional epidemiology rather than ecological differentiation. [src: ecotype_env_reanalysis]
+- Using the same matched genomes, compare AlphaEarth distances with direct environmental metadata and test whether COG categories such as V-Defense and L-Mobile reveal ecological effects hidden at the whole-genome level. [src: ecotype_analysis]
+- Reanalyze the 172 species with sufficient environmental and phylogenetic data using alternative embedding distances and direct environmental metadata, then test COG subsets and ecotype-cluster gene content to determine whether ecological effects are localized rather than genome-wide. [src: ecotype_analysis]
+- Recalculate openness using auxiliary fraction, Heap's law alpha, and pangenome fluidity on the matched genome universe, then test whether functional subsets or lifestyle interactions reveal relationships hidden by the single openness metric. [src: pangenome_openness]
+- Pair matched genome-set analyses with matched condition or functional-subset analyses, then test whether the observed correlation scale changes are attributable to sampling depth, condition coverage, or aggregation across heterogeneous gene functions. [src: core_gene_tradeoffs, ecotype_env_reanalysis]
+- Repeat the environmental-only ecotype analysis after excluding ambiguous coordinates and records classified as Other or Unknown, then test whether the environment–gene-content relationship changes when spatial and harmonization uncertainty are reduced. [src: env_embedding_explorer]
+- Compare keyword harmonization with env_broad_scale on the 41.8% of records covered by the structured field, using matched genomes and identical downsampling to test whether classification uncertainty contributes to the correlation-scale discrepancy. [src: env_embedding_explorer]
 
 ## [[concepts/scale-dependent-mobile-element-associations|Scale-Dependent Mobile-Element Associations and Mobilization Inference]]
 
@@ -1332,15 +1283,12 @@ See the source summary: [[summaries/annotation_gap_discovery__REPORT]].
 - Recompute AMR–prophage distances from scaffold sequences at base-pair resolution and test whether the threshold-dependent odds ratios persist when ordinal gene-position errors are removed. [src: prophage_amr_comobilization]
 - Analyze all available genomes from Klebsiella pneumoniae, Acinetobacter baumannii, Pseudomonas aeruginosa, and Escherichia coli to determine whether the local and species-level associations are robust to the 20-genomes-per-species sampling design. [src: prophage_amr_comobilization]
 - Partition prophage, plasmid, and integrative-conjugative-element signals and fit comparative models that test whether prophage density predicts AMR breadth independently of other mobile elements. [src: prophage_amr_comobilization]
+- Map the 1,517 resistance islands to plasmids, chromosomes, integron boundaries, insertion sequences, and prophage calls to determine which carriers explain tight AMR co-inheritance. [src: amr_strain_variation]
 - Revisit the fitness comparison as fitness-browser coverage expands, testing whether prophage-proximal and distal AMR genes differ in RB-TnSeq fitness effects. [src: prophage_amr_comobilization]
-
-## [[concepts/potential-versus-realized-data-integration|Schema Compatibility Does Not Establish Valid Biological Joins]]
-
-- Execute UC2 on the enigma and phagefoundry live-cluster tables, using the 11 candidate keys plus identifier and duplicate audits, to determine whether subsurface prophage, metal-resistance, and Oak Ridge contamination-gradient records share a valid biological value space. [src: berdl_data_atlas]
-- Execute UC3 across kbase and refdata with genome and species-pangenome identifiers, using overlap, namespace, and representative-record checks, to test the proposed GTDB–KBase species-pangenome disagreement analysis. [src: berdl_data_atlas]
-- Execute UC4 across nmdc and protect with sample, genome, and taxonomic validation, then cross-check environmental distributions against biogeochemical records, to determine whether clinically relevant pathogen observations can be joined without identifier conflation. [src: berdl_data_atlas]
-- Execute UC5 across nmdc and refdata with ENVO ontology identifiers, measuring annotation coverage and semantic validity, to test whether NMDC biosample metadata support the proposed ontology-completeness analysis. [src: berdl_data_atlas]
-- Extend the validated UC1 cohort with per-residue pLDDT and structural-feature data from PDB files, because kescience_alphafold.alphafold_entries lacks those fields, to test structure–fitness relationships after the identifier join has been validated. [src: berdl_data_atlas]
+- Stratify the mobile-element analysis by environment and clinical representation, then test whether prophage density predicts AMR breadth after accounting for environment, phylogeny, genome count, and other mobile elements. This would address the environmental confounding identified in the 14,723-species resistome analysis. [src: amr_environmental_resistome]
+- Replace keyword-based AMR mechanism labels with CARD ARO mappings and test whether prophage-density and resistance-island associations persist after separating antibiotic resistance from metal and other stress-response genes. [src: amr_pangenome_atlas]
+- Use the full Fitness Browser pangenome link table and antibiotic-stress conditions to test whether the apparently low laboratory cost of AMR genes generalizes to mobile, clinical-associated resistance and differs by prophage proximity. [src: amr_pangenome_atlas]
+- Perform fitness-matched permutations of the AMR cofitness neighborhoods, recompute cofitness separately in antibiotic and standard-growth conditions, and test flagellar knockouts and other conditionally dispensable gene classes; this would distinguish shared dispensability from regulatory coupling before using cofitness as functional support for mobilization hypotheses. [src: amr_cofitness_networks]
 
 ## [[concepts/selection-on-outcome-leakage|Selection-on-outcome leakage in microbiome and genomic inference]]
 
@@ -1349,15 +1297,19 @@ See the source summary: [[summaries/annotation_gap_discovery__REPORT]].
 - Cluster the same samples using pathways or EC numbers instead of taxa, then test taxon-level associations; determine whether a feature representation that is independent of the tested taxa reduces the leakage signal. [src: pitfalls]
 - Combine the four IBD sub-studies with at least 10 CD and 10 nonIBD samples using within-substudy contrasts and inverse-variance meta-analysis; compare the resulting candidates with the ecotype-derived list. [src: pitfalls]
 - Recalculate stability across the reported Jaccard values of 0.230 for E1 and 0.064 for E3 under alternative feature-holdout partitions; determine whether the observed instability is specific to the cited partitioning procedure. [src: pitfalls]
+- Reconcile the 27x partial-correlation discrepancy by extracting downsampled and full-genome sets under the same pipeline, then test whether genome count and feature reuse jointly alter environmental-versus-human-associated comparisons. [src: ecotype_env_reanalysis]
+- Test whether COG functional categories and alternative environmental metadata reveal associations masked at whole-genome resolution without reusing features to define groups. [src: ecotype_analysis]
+- Reanalyze ecotype clusters with held-out COG categories and within-species phylogenetic controls; test whether the 170/257 significant COG contrasts persist independently of gene-content clustering and phylogenetic structure. [src: ecotype_functional_differentiation]
 
 ## [[concepts/shared-stress-versus-stressor-specific-fitness|Separating Shared Stress Responses from Stressor-Specific Fitness Requirements]]
 
-- Compare matched choline chloride and NaCl datasets to ask whether the shared component follows chloride specifically or instead reflects sodium and osmotic stress; choline chloride would provide a more specific chloride control than NaCl. [src: counter_ion_effects]
+- Compare matched KCl, choline chloride, and NaCl controls using RB-TnSeq—random barcode transposon sequencing—to determine whether shared fitness signals track chloride, sodium, osmolarity, or the combined salt condition; choline chloride would provide a more specific chloride control than NaCl. [src: counter_ion_effects]
+- Repeat matched CuCl₂/CuSO₄, ZnCl₂/ZnSO₄, and CoCl₂/CoSO₄ assays under identical aerobic conditions, metal concentrations, media, and culture conditions to isolate counter-ion effects from oxygen-regime confounding. [src: counter_ion_effects]
+- Generate DvH NaCl dose-response data at 0.1, 1, 10, 100, and 500 mM to match effective chloride doses and test whether the metal–NaCl correlation hierarchy changes with dose or follows effective chloride exposure. [src: counter_ion_effects]
 - Perform formal COG, KEGG, and PFAM enrichment tests on shared-stress versus metal-specific genes to test whether cell-envelope, DNA-repair, and ion-homeostasis categories are genuinely overrepresented. [src: counter_ion_effects]
-- Apply independent component analysis (ICA), a method that decomposes correlated measurements into latent components, to metal and NaCl fitness profiles to ask whether shared and stressor-specific axes can be separated at the module level. [src: counter_ion_effects]
-- Run matched CuCl₂/CuSO₄, ZnCl₂/ZnSO₄, and CoCl₂/CoSO₄ RB-TnSeq experiments—random barcode transposon sequencing—under identical oxygen and culture conditions to test counter-ion effects without aerobic/anaerobic confounding. [src: counter_ion_effects]
-- Generate DvH NaCl dose-response data at 0.1, 1, 10, 100, and 500 mM to match effective chloride doses and test whether the metal–NaCl correlation hierarchy changes with dose. [src: counter_ion_effects]
-- Reanalyze the 10,821 metal-important records with stricter and more permissive NaCl-importance thresholds to quantify how much the estimated 39.8% shared-stress fraction depends on classification rules. [src: counter_ion_effects]
+- Apply independent component analysis (ICA), a method that decomposes correlated measurements into latent components, and module-level comparisons to separate shared salt-stress programs from metal-specific fitness modules. [src: counter_ion_effects] The metal-specificity analysis identified 0 metal-specific modules using per-module z-normalization, but its raw module-condition scale differed from the precomputed z-scored profiles that identified 600 metal-responsive module records; rerunning the comparison on the latter profiles would test whether the negative result is scale-dependent. [src: metal_specificity]
+- Reanalyze the 10,821 metal-important records with stricter and more permissive NaCl-importance thresholds, and use condition-specific models with matched salt controls, to quantify how classification rules affect the 39.8% shared-stress fraction and determine which genes remain metal-associated after accounting for shared stress. [src: counter_ion_effects]
+- Resolve the metal-specificity locusId mismatches and repeat its classification across the excluded organisms to test whether attrition changes the shared-versus-specific balance. [src: metal_specificity]
 
 ## [[concepts/spatial-sampling-effort-confounding|Spatial Sampling Effort and Geographic Hotspot Confounding]]
 
@@ -1385,49 +1337,51 @@ See the source summary: [[summaries/annotation_gap_discovery__REPORT]].
 
 ## [[concepts/structural-annotation-gap|Sequence-space depth predicts functional annotation richness]]
 
-- Stratify the 38,051,842 gene cluster–UniProt pairs by core, auxiliary non-singleton, and auxiliary+singleton status, then recompute Spearman correlations and domain-richness curves to determine whether the global ρ = 0.7563 is consistent across pangenome classes. [src: alphafold_msa_annotation]
-- Use the full 132,531,501-cluster table, including the 70.7% without an AlphaFold bridge, to compare InterProScan coverage and hypothetical-protein rates between bridged and unbridged clusters; test whether the unbridged population has a larger annotation gap. [src: alphafold_msa_annotation]
-- Replace representative-sequence MSA depth with within-cluster depth distributions and compare domain annotations across cluster members to measure how much representative choice obscures sequence-space heterogeneity. [src: alphafold_msa_annotation]
-- Join the 415,603 low-MSA-depth core clusters to [[entities/kescience-fitnessbrowser]] fitness measurements and test whether low-depth status predicts condition-specific or essential phenotypes. [src: alphafold_msa_annotation]
-- Reweight or stratify the analysis across the 293K genomes by phylogeny and organismal abundance, then test whether the 2.89× and 2.77× core–accessory median-depth ratios persist in a phylogenetically balanced dataset. [src: alphafold_msa_annotation]
+- Recompute the bridge using all 132,531,501 gene clusters, including the 70.7% without a successful AlphaFold entry, with identifier recovery and stratified missingness analysis to test whether the unrepresented population has a larger annotation gap. [src: alphafold_msa_annotation]
+- Stratify the 38,051,842 pairs by core, auxiliary non-singleton, and auxiliary+singleton status and by phylogenetically balanced taxon strata; recompute Spearman correlations and domain-richness curves to test whether ρ = 0.7563 and the 2.89× and 2.77× median-depth ratios persist. [src: alphafold_msa_annotation]
+- Compare representative-sequence MSA depths with member-level depth distributions and InterProScan annotations to quantify whether representatives overestimate or underestimate typical reference coverage. [src: alphafold_msa_annotation]
+- Join the 415,603 core clusters with [[entities/kescience-fitnessbrowser]] measurements and test condition-specific associations between low MSA depth, hypothetical status, essentiality, and fitness effects. [src: alphafold_msa_annotation]
+- Reprocess the static version-6 AlphaFold snapshot against later UniProt deposits and compare MSA-depth changes, measuring how database growth alters inferred annotation coverage. [src: alphafold_msa_annotation]
+- Cross-tabulate MSA depth, InterProScan status, PaperBLAST paper counts, and pangenome class for the same sequences, testing whether literature-poor families are also sequence-space-poor or instead reflect PMC/text-mining limitations. [src: paperblast_explorer]
+- Apply the integrated gapfilling, fitness, pangenome, and homology evidence pipeline to low-depth core clusters to test whether multimodal evidence preferentially resolves candidates that sequence-space depth alone leaves poorly annotated. [src: annotation_gap_discovery]
 
 ## [[concepts/study-batch-confounding-of-environmental-associations|Study and batch confounding can reverse environmental generalization]]
 
-- Use additional NMDC studies with overlapping biome categories, apply study-held-out GroupKFold, and test whether environmental prediction remains above the R²=−0.30 observed in the original cross-study analysis. [src: euk_in_prok_correlates]
-- Obtain extraction, filtration, size-fractionation, host-depletion, and library-preparation metadata, then fit hierarchical or batch-adjusted models to test whether these measured workflow factors explain the residual study effect. [src: euk_in_prok_correlates]
-- Reanalyze the 1,186-run NEON soil subset with sampling campaign or field-collection batch as held-out groups, testing whether the within-study R²=+0.17 ± 0.06 survives sub-batch validation. [src: euk_in_prok_correlates]
-- Separate pooled and unpooled workflow runs and compare representative-biosample metadata with biosample-resolved metadata, testing how the 1,067 pooled runs affect environmental effect estimates. [src: euk_in_prok_correlates]
-- Repeat eukaryotic-fraction estimation with classifiers whose reference databases include comparable eukaryotic and plastid coverage, testing whether the observed environment-by-study pattern is robust to the GOTTCHA2-specific measurement scale. [src: euk_in_prok_correlates]
+- Recover DNA-extraction kit, filtration, size-fractionation, host-depletion, and library-preparation records from laboratory information systems, then fit hierarchical or batch-stratified models to test which protocol variables explain residual eukaryotic-fraction variation. [src: euk_in_prok_correlates]
+- Reanalyze the 2,759 runs with classifier-compatible reference databases and a common taxonomic estimator, testing whether environmental associations persist after database effects are controlled. [src: euk_in_prok_correlates]
+- Use additional NMDC studies with overlapping biome categories and study-held-out GroupKFold to test whether prediction remains above the original cross-study R²=−0.30. [src: euk_in_prok_correlates]
+- Reanalyze the 1,186-run NEON subset with sampling-campaign identifiers, restricted permutations, or mixed-effects models, testing whether the within-study R²=+0.17 ± 0.06 survives sub-batch control. [src: euk_in_prok_correlates]
+- Separate pooled and unpooled workflow runs, retain biosample-level protocol and environmental labels, and compare run-level models with measurement-error or partial-pooling models to quantify how the 1,067 pooled runs affect environmental estimates. [src: euk_in_prok_correlates]
+- Expand the analysis to studies with recorded sequencing depth and laboratory metadata, then use GroupKFold by study to ask whether protocol-aware models generalize beyond the dominant NEON soil study. [src: euk_in_prok_correlates]
 
 ## [[concepts/subsurface-bacillota-specialization|Subsurface Bacillota_B specialization and genome expansion]]
 
-- Reanalyze the 547 enriched OGs with an LLM-based functional scan and manual curation to determine whether the estimated 80–100 anaerobic-respiration-related OGs can be resolved into reproducible functional categories. [src: bacillota_b_subsurface_accessory]
-- Decompose enrichment by genus or lineage, using the existing 10-anchor and 62-baseline cohorts, to test which OGs persist after reducing phylogenetic confounding. [src: bacillota_b_subsurface_accessory]
-- Localize the accessory functions responsible for the genome-size difference by partitioning anchor and baseline OGs into respiratory, persistence, mineral-attachment, regulatory, and osmoadaptation modules. [src: bacillota_b_subsurface_accessory]
-- Apply the same phylum-matched enrichment framework to additional subsurface comparisons to test whether larger genomes and the identified accessory-function profile recur beyond this borehole- and porewater-dominated cohort. [src: bacillota_b_subsurface_accessory]
-- Apply the corrected multi-heme cytochrome detector to the clay-project branch and compare its results with the retained sulfite-reduction signal to determine which parts of the porewater-bias interpretation remain supported. [src: bacillota_b_subsurface_accessory]
-- Test the genome-expansion/self-sufficiency tension with finer-grained amino-acid EC-number completeness from eggNOG and with MAG-augmented Mont Terri, Olkiluoto, MX-80 bentonite, and Oak Ridge cohorts; determine whether accessory expansion and extreme biosynthetic independence co-occur outside the cultured cohort. [src: clay_confined_subsurface]
-- Compare BRC-3 and BIC-A1 directly and resolve Bacillota_B differences at genus level, linking genome presence to Bagnoud’s metaproteomic evidence to distinguish porewater cultivation bias from broader community specialization. [src: clay_confined_subsurface]
-- Load the 221 SSO geochemistry samples into CORAL and test whether nitrate, pH, and metal concentrations form the predicted northeast-to-southwest gradient; pair these measurements with metagenomics and genome-resolved Bacillota_B analysis to determine whether the inferred environmental gradients explain the accessory functions. [src: enigma_sso_asv_ecology]
-- Extract the available pump-test ASVs from Brick 460-462 and compare them with the 16S spatial pattern, especially the predicted groundwater enrichment of Rhodanobacter at M5; this would test whether the SSO community signal reaches the critical hotspot wells excluded from the current groundwater dataset. [src: enigma_sso_asv_ecology]
-
-## [[concepts/subsurface-bacillota-specialization|Subsurface metabolic signatures depend on porewater versus rock-attached compartment]]
-
-- Add deep-subsurface MAGs from Mont Terri, Olkiluoto, MX-80 bentonite, and Oak Ridge, then apply the same sulfate-reduction and corrected iron-reduction detectors to ask whether the porewater signature persists when rock-attached and uncultivated lineages are represented. [src: clay_confined_subsurface]
-- Compare BRC-3 and BIC-A1 genomes directly using compartment-resolved marker analysis to test whether borehole source explains part of the deep-cohort signal. [src: clay_confined_subsurface]
-- Link genome-predicted sulfate-reduction markers to Bagnoud’s metaproteomic evidence to test whether the inferred porewater signature is expressed in situ. [src: clay_confined_subsurface]
-- Resolve Bacillota_B differences at genus level and repeat the WL, NiFe, and SR comparisons to distinguish lineage-specific metabolism from a compartment effect. [src: clay_confined_subsurface]
-- Apply the sulfate-reduction and corrected iron-reduction diagnostic to other subsurface settings to test whether the compartment distinction generalizes beyond the Mont Terri and bentonite-associated cohorts. [src: clay_confined_subsurface]
+- Partition the 547 enriched OGs by genus and phylogenetic background using genus-stratified enrichment or a phylogenetically controlled model; decompose functions into respiratory, persistence, mineral-attachment, regulatory, and osmoadaptation modules. [src: bacillota_b_subsurface_accessory]
+- Reanalyze the 547 enriched OGs with an LLM-based functional scan and manual curation to resolve whether the estimated 80–100 anaerobic-respiration-related OGs form reproducible categories, including standardized reclassification of the 462 “other or unannotated” OGs. [src: bacillota_b_subsurface_accessory]
+- Apply the framework to additional subsurface comparisons and test whether larger genomes and the accessory profile recur beyond the borehole- and porewater-dominated cohort. [src: bacillota_b_subsurface_accessory]
+- Add rock-attached Bacillota_B genomes and repeat the pangenome comparison to test whether expansion characterizes porewater-associated isolates specifically or deep-clay Bacillota_B more broadly. [src: bacillota_b_subsurface_accessory]
+- Apply the corrected multi-heme cytochrome detector to the clay-project branch and compare it with the retained sulfite-reduction signal. [src: bacillota_b_subsurface_accessory]
+- Test the genome-expansion/self-sufficiency tension with finer-grained amino-acid EC-number completeness from eggNOG and MAG-augmented Mont Terri, Olkiluoto, MX-80 bentonite, and Oak Ridge cohorts. [src: clay_confined_subsurface]
+- Add deep-subsurface MAGs from Mont Terri, Olkiluoto, MX-80 bentonite, and Oak Ridge and repeat sulfate-reduction and corrected iron-reduction detection with rock-attached and uncultivated lineages represented. [src: clay_confined_subsurface]
+- Compare BRC-3 and BIC-A1 directly, resolve Bacillota_B differences at genus level, and link genome presence to Bagnoud’s metaproteomic evidence to distinguish porewater cultivation bias from broader specialization. [src: clay_confined_subsurface]
+- Link genome-predicted sulfate-reduction markers to Bagnoud’s metaproteomic evidence and apply the diagnostic to other subsurface settings. [src: clay_confined_subsurface]
+- Use pathway-level reconstruction and phenotype or growth data to test whether additional genome content improves predicted self-sufficiency under anaerobic subsurface conditions rather than merely reflecting lineage-specific accessory genes. [src: bacillota_b_subsurface_accessory]
+- Load the 221 SSO geochemistry samples into CORAL and test whether nitrate, pH, and metal concentrations form the predicted northeast-to-southwest gradient; pair them with metagenomics and genome-resolved Bacillota_B analysis. [src: enigma_sso_asv_ecology]
+- Extract pump-test ASVs from Brick 460-462 and compare them with the 16S spatial pattern, especially predicted groundwater enrichment of Rhodanobacter at M5. [src: enigma_sso_asv_ecology]
+- Re-run the soil-frontier NB05 validation with spatial blocking to separate distributional shift, outlier leverage, and genuine unpredictability in the negative R² results before using global clay predictability as a null for local Bacillota_B specialization. [src: soil_frontier_genomics]
+- Recalculate GDI after uniform 16S sequencing-depth correction, report richness and completeness separately, estimate bootstrap 95% CIs for biome rankings, and control the +0.8 pH unit gap for the number of 16S samples per pH bin. [src: soil_frontier_genomics]
+- Reanalyze Bacillota_B genome expansion alongside pathway-specific accessory traits, including PHB, with phylogenetic models and genome-size adjustment to test whether subsurface enrichment reflects broad genome capacity or repeated selection for particular functions. [src: phb_granule_ecology]
+- Reconstruct gene trees for PHB and Bacillota_B respiratory markers, then compare transfer, loss, core/accessory status, and compartment representation to distinguish horizontal acquisition from lineage-associated retention. [src: phb_granule_ecology]
 
 ## [[concepts/subsurface-hydrogeological-zonation|Hydrogeological depth and flow structure subsurface microbial communities]]
 
-- Load the 221 SSO geochemistry samples into CORAL and use spatial-gradient analysis to test whether nitrate, pH, and metal concentrations follow the predicted northeast-to-southwest pattern. [src: enigma_sso_asv_ecology]
-- Extract pump-test ASVs from Brick 460-462 and compare M5, L8, and U2 to test whether Rhodanobacter is highest at M5. [src: enigma_sso_asv_ecology]
-- Add groundwater samples from M5 and U3 and use matched-well community comparisons to determine whether the inferred hotspots are represented in groundwater. [src: enigma_sso_asv_ecology]
-- Sequence metagenomes at the same spatial resolution and compare gene-level metabolic capacity with the 16S-derived redox and process assignments. [src: enigma_sso_asv_ecology]
+- Collect groundwater and sediment contemporaneously at the same wells, repeat paired Bray–Curtis comparisons across seasons, and include sediment temporal replication to separate habitat partitioning from the 18-month offset and test persistence during plume or environmental change. [src: enigma_sso_asv_ecology]
+- Load the 221 SSO geochemistry samples into CORAL and use spatial-gradient analysis to test whether nitrate, pH, and metal concentrations form the predicted northeast-to-southwest pattern and explain the groundwater–sediment contrast. [src: enigma_sso_asv_ecology]
+- Extract pump-test ASVs from Brick 460-462 and compare L8, M5, and U2 to test whether the predicted Rhodanobacter maximum occurs at M5; add groundwater samples from M5 and U3 to test inferred hotspots. [src: enigma_sso_asv_ecology]
+- Perform same-resolution metagenomic profiling of groundwater and sediment to test whether habitat-enriched taxa carry inferred denitrification, iron-oxidation, iron-reduction, sulfur-oxidation, nitrification, methanotrophy, and fermentation functions, and compare gene-level metabolic capacity with the 16S-derived assignments. [src: enigma_sso_asv_ecology]
 - Analyze the 18 M6-C2 isolate genomes for anaerobic metabolisms and compare their capacities with the inferred M6 anaerobic-dead-zone hypothesis. [src: enigma_sso_asv_ecology]
 - Apply weighted UniFrac to ASV sequences from Bricks 457/460/477 to test whether phylogenetic community structure reinforces the Bray–Curtis spatial pattern. [src: enigma_sso_asv_ecology]
-- Repeat 16S profiling across seasons and include sediment temporal replication to distinguish persistent hydrogeological structure from seasonal or plume-driven dynamics. [src: enigma_sso_asv_ecology]
+- Repeat 16S profiling across seasons and test whether the U3–M6–L7 corridor and inferred redox hotspots persist through time. [src: enigma_sso_asv_ecology]
 
 ## [[concepts/taxonomic-nomenclature-reconciliation|Taxonomic nomenclature and identifier reconciliation across databases]]
 
@@ -1443,6 +1397,9 @@ See the source summary: [[summaries/annotation_gap_discovery__REPORT]].
 - Quantify the contribution of the 862 unmapped genera and expand the genus-to-clade bridge, then evaluate whether missing abundance explains the difference between mapping modes. [src: enigma_contamination_functional_potential]
 - Fit mixed-effects or hierarchical models including depth, location cluster, sampling date, and compositional controls to test whether the relaxed-mode defense association persists under richer site structure. [src: enigma_contamination_functional_potential]
 - Compare aggregate, within-fraction, and high-coverage analyses using the same resolution-specific samples and bootstrap procedure to determine whether coverage or taxonomic ambiguity is the dominant source of sensitivity. [src: enigma_contamination_functional_potential]
+- Overlay core-genome phylogenetic trees on the 12-species ecotype assignments and repeat COG enrichment tests to separate within-species ecological differentiation from phylogenetic structure. [src: ecotype_functional_differentiation]
+- Extend the species- and strain-resolution bridge with the ecotype assignments, then test whether the functional differences detected in gene-content ecotypes predict contamination-associated community scores after coverage adjustment. [src: ecotype_functional_differentiation]
+- Repeat the taxonomic-resolution comparison with COG L, COG V, and composite LV features separately, testing whether mobile-element and defense signals remain detectable as clade specificity increases and mapped abundance decreases. [src: cog_analysis]
 
 ## [[concepts/transcript-protein-discordance|Transcript–protein discordance reveals post-transcriptional control]]
 
@@ -1466,14 +1423,10 @@ See the source summary: [[summaries/annotation_gap_discovery__REPORT]].
 - Join novel-gene COG assignments to environmental metadata and use habitat-stratified comparisons to test whether accessory functions vary by environment. [src: cog_analysis]
 - Reanalyze unassigned genes with complementary functional annotation and compare the result with the approximately 70% COG-annotated fraction to determine how annotation gaps affect the two-speed pattern. [src: cog_analysis]
 - Compare gene-level counting of composite COG assignments with component-split counting to test how representation choices affect the reported LV and other composite-category signals. [src: cog_analysis]
-
-## [[concepts/study-batch-confounding-of-environmental-associations|Missing laboratory-protocol metadata leaves residual confounding in environmental metagenomics]]
-
-- Recover DNA-extraction kit, filtration, size-fractionation, host-depletion, and library-preparation records from laboratory information systems, then fit hierarchical models or batch-stratified models to test which protocol variables explain residual eukaryotic-fraction variation. [src: euk_in_prok_correlates]
-- Reanalyze the 2,759 runs with classifier-compatible reference databases and a common taxonomic estimator, then test whether environmental associations persist after database effects are controlled. [src: euk_in_prok_correlates]
-- Use the 1,186-run NEON subset with sampling-campaign identifiers and restricted permutations or mixed-effects models to test whether the vegetation and geography signal survives sub-batch control. [src: euk_in_prok_correlates]
-- Resolve pooled-run heterogeneity by retaining all biosample-level protocol and environmental labels, then compare run-level models with measurement-error or partial-pooling models to quantify label-noise attenuation. [src: euk_in_prok_correlates]
-- Expand the analysis to additional studies with recorded sequencing depth and laboratory metadata, then use GroupKFold by study to ask whether protocol-aware models generalize beyond the dominant NEON soil study. [src: euk_in_prok_correlates]
+- Map the 28,017 costly-and-conserved and 5,526 costly-and-dispensable genes onto COG categories and coordinated modules, then test natural-environment fitness or longitudinal gene-loss signals to distinguish retained core functions from accessory genes undergoing loss. [src: conservation_fitness_synthesis]
+- Stratify the 25,271 trade-off genes by COG category and assay condition, then test whether the category-specific burden reversals persist after matching organisms and environmental conditions. [src: core_gene_tradeoffs]
+- Test the 7,084 orphan essentials with broader homology, mobile-element, and lineage-specificity analyses, then compare their COG and module profiles with conserved essentials to determine whether accessory indispensability reflects innovation, annotation gaps, or undetected homology. [src: essential_genome]
+- Reclassify essential, auxiliary, and unmapped genes across matched pangenome clades using condition-specific fitness and broader homology searches to test whether the 1.56 median odds ratio persists beyond RB-TnSeq library conditions and whether poorly annotated essential genes are truly lineage-specific. [src: conservation_vs_fitness]
 
 ## [[concepts/within-species-conservation-between-species-functional-divergence|Conserved Within-Species Functions Can Coexist with Between-Species Functional Divergence]]
 
@@ -1482,13 +1435,6 @@ See the source summary: [[summaries/annotation_gap_discovery__REPORT]].
 - Fit genome-size- and metabolic-complexity-adjusted models using the BacDive isolation metadata and pangenome annotations to test whether contamination association remains after controlling for correlated functional capacity. [src: bacdive_metal_validation]
 - Expand matched metal phenotypes beyond the 24 existing utilization records with MIC and growth-inhibition data, then test whether specific metal-tolerance gene families distinguish contamination environments. [src: bacdive_metal_validation]
 - Integrate ENIGMA CORAL community data from the Oak Ridge metal-contaminated site and compare field distributions with species-level pangenome scores to test whether the pattern generalizes beyond culture collections. [src: bacdive_metal_validation]
-
-## [[concepts/environmental-resistome|Within-Species Resistome Heterogeneity]]
-
-- Use the 1,305 genome-by-AMR presence/absence matrices and genomic-context mapping to test whether the 1,517 resistance islands reside on plasmids, chromosomes, integron boundaries, or insertion sequences, and whether physical context predicts persistence across lineages. [src: amr_strain_variation]
-- Subsample species with >500 genomes and repeat ANI–AMR Mantel analyses to determine whether the phylogenetic signal generalizes to mega-species excluded by the current computational cap. [src: amr_strain_variation]
-- Curate collection dates and isolation_source metadata, then apply temporal regression and adequately powered within-species association tests to distinguish AMR change through time from sampling composition. [src: amr_strain_variation]
-- Combine AMR ecotype assignments with virulence-factor profiles and metabolic pathway variation to test whether resistance-defined lineages also differ in pathogenicity-associated or ecological functions. [src: amr_strain_variation]
-- Apply predictive modeling to the per-gene prevalence records and resistance-island records to ask whether existing co-inheritance patterns predict future AMR gene co-acquisition. [src: amr_strain_variation]
-- Reanalyze AMR repertoires with resistance databases beyond AMRFinderPlus to quantify how database scope changes estimates of rare, variable, and fixed within-species resistance. [src: amr_strain_variation]
+- Apply phylogenetic independent contrasts or PGLS to the 28-organism cross-resistance dataset, and compare gene-tier conservation with species-level environmental scores to test whether the apparent conserved-to-specialized gradient survives phylogenetic control. [src: metal_cross_resistance]
+- Map cross-resistance gene signatures with KEGG/PFAM across 27K species and test whether pangenome-scale validation resolves the species-scale null result. [src: metal_cross_resistance]
 

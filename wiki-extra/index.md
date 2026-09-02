@@ -1,30 +1,27 @@
 # BERIL Knowledge Wiki
 
-The BERIL Research Observatory corpus collects AI-conducted microbial-biology research performed over the KBase BER Data Lakehouse. It brings together project reports and cross-project digests spanning microbial genomes, communities, environments, metabolism, fitness, annotation, and data integration.
+The BERIL Research Observatory corpus documents AI-conducted microbial-biology research over the KBase BER Data Lakehouse. It brings together project reports and cross-project digests that examine microbial genomes, communities, phenotypes, environments, fitness measurements, metabolic functions, and the data resources used to study them.
 
-Read the wiki through its **topics**, which are the main entry points into recurring research questions. Within each topic, **concepts**, **entities**, and **summaries** provide reference layers: concepts organize the ideas, entities identify the biological objects and evidence, and summaries consolidate discoveries or pitfalls across the corpus.
+Read the wiki through its **topics**, which are the main entry points into recurring research questions. Each topic connects to **concepts**, **entities**, and **summaries**: concepts provide the analytical vocabulary, entities identify the organisms, genes, pathways, datasets, and other referenced objects, and summaries collect cross-project discoveries and pitfalls. Together, these layers provide both a guided route through the corpus and a reference structure for tracing its evidence.
 
 ## Topics
 
-- [[topics/condition-dependent-gene-essentiality|Condition-Dependent Gene Essentiality]] — Growth dependence on a gene under a defined environmental, nutritional, or chemical condition, shaped by medium, substrate, stressor, genetic background, perturbation modality, and measurement coverage.
-- [[topics/environmental-genomics-confounding|Environmental Genomics Confounding]] — The problem of apparent genome–environment relationships being produced partly or primarily by sampling composition, batch, metadata, taxonomy, laboratory processing, or analytical choices.
-- [[topics/fitness-module-inference|Fitness Module Inference]] — Using coordinated mutant-growth patterns across conditions, including ICA applied to RB-TnSeq data, pangenomes, annotations, and comparative genomics.
-- [[topics/functional-annotation-uncertainty|Functional Annotation Uncertainty]] — The gap between observing a sequence, reaction, compound, or phenotype and assigning it a defensible biological function.
-- [[topics/bacterial-gene-content-ecotypes|Bacterial Gene-Content Ecotypes]] — Proposed within-species groups distinguished by accessory-gene composition and potentially reflecting ecological specialization, lineage history, or both.
-- [[topics/comparative-resistome-ecology|Comparative Resistome Ecology]] — How resistance repertoires differ across environments, lineages, species, and genomic compartments, and how those differences arise through inheritance, selection, stress responses, and horizontal gene transfer.
-- [[topics/microbial-community-engineering|Microbial Community Engineering]] — The deliberate design, assembly, and evaluation of microbial consortia for desired ecological or host-associated functions, including suppression of *Pseudomonas aeruginosa* in cystic-fibrosis airways.
-- [[topics/condition-dependent-metabolic-modeling|Condition-Dependent Metabolic Modeling]] — What organisms can do, must do, and which genes become important under specified media, substrates, electron-donor loads, or ecological contexts.
-- [[topics/computational-biology-validation|Computational Biology Validation]] — Determining whether computational results are supported by independent evidence, appropriate statistical design, reproducible data integration, and biologically meaningful tests.
-- [[topics/subsurface-microbial-biogeography|Subsurface Microbial Biogeography]] — How microbial communities, functional potential, and metabolic activity vary across depth, hydrogeological position, groundwater flow paths, and attached versus planktonic habitats.
-- [[topics/microbiome-association-inference|Microbiome Association Inference]] — Relating microbial composition, inferred functions, phenotypes, or genomic features to environmental or host variables while separating biological signal from measurement, mapping, and design artifacts.
-- [[topics/biological-data-interoperability|Biological Data Interoperability]] — Discovering, connecting, and interpreting data across databases, tenants, projects, and evidence systems without confusing technical connectivity with biological comparability.
-- [[topics/bacterial-genome-evolution|Bacterial Genome Evolution]] — How conserved cellular functions coexist with rapidly changing accessory DNA, shaped by inheritance, horizontal gene transfer, selection, ecology, and measurement.
-- [[topics/antimicrobial-resistance-fitness|Antimicrobial Resistance Fitness]] — How resistance genes affect organismal performance across conditions, including the trade-off between constitutive burden without antibiotics and protection during exposure.
-- [[topics/accessory-function-evolution|Accessory Function Evolution]] — How variable genes and pathways provide ecological capabilities, defenses, metabolic options, and interactions with mobile elements beyond the conserved core.
+- [[topics/microbial-ecotype-inference|Microbial Ecotype Inference]] — Whether genomic groups correspond to distinct ecological niches, exposures, or functional strategies, while recognizing that broad genome-wide similarity often tracks phylogeny more strongly.
+- [[topics/fitness-conservation-genomics|Fitness-Conservation Genomics]] — How experimentally measured gene-disruption effects from RB-TnSeq relate to gene retention across orthology groups, pangenomes, annotations, and structures.
+- [[topics/biological-data-provenance|Biological Data Provenance]] — How data origin, stewardship, transformations, identifiers, evidence types, currency, and accessibility shape biological interpretation.
+- [[topics/microbial-metabolic-dependency|Microbial Metabolic Dependency]] — How organisms rely on supplied compounds, neighboring organisms, or environmental resources when biosynthetic or utilization capacity is incomplete or conditionally insufficient.
+- [[topics/environmental-resistome-dynamics|Environmental Resistome Dynamics]] — How resistance-related genes and phenotypes are distributed, retained, exchanged, and expressed across environments and lineages, including AMR, metal, and stress-response genes.
+- [[topics/fitness-network-architecture|Fitness Network Architecture]] — How gene–phenotype relationships are organized across conditions, organisms, genomic neighborhoods, and pangenomes rather than as isolated gene effects.
+- [[topics/metabolic-function-annotation|Metabolic Function Annotation]] — How genes, proteins, reactions, pathways, compounds, and phenotypes are connected through evidence integration across sequence, chemical, reaction, model, and taxonomic representations.
+- [[topics/integrative-microbial-phenotyping|Integrative Microbial Phenotyping]] — How genetic potential relates to observed microbial behavior across molecular measurements, ecological context, metabolic models, community composition, and fitness assays.
+- [[topics/contextual-gene-essentiality|Contextual Gene Essentiality]] — Why gene essentiality depends on the medium, substrate, stressor, perturbation method, and measurement definition rather than being a fixed property.
+- [[topics/microbial-consortium-design|Microbial Consortium Design]] — How multispecies communities can be assembled for desired functions, illustrated by a cystic-fibrosis airway case involving suppression of *Pseudomonas aeruginosa*.
+- [[topics/subsurface-microbial-ecology|Subsurface Microbial Ecology]] — How microbial communities and functional potential vary with depth, groundwater flow, mineral or clay-associated habitats, and isolation history.
+- [[topics/environmental-functional-ecology|Environmental Functional Ecology]] — How environmental conditions shape functions encoded, expressed, or maintained by microbial communities and their constituent genomes.
 
 ## Corpus
 
-73 project reports + 2 cross-project digests, 153 concepts, 336 entities, 15 topics
+73 project reports + 2 cross-project digests, 122 concepts, 336 entities, 12 topics
 
 ## Browse
 

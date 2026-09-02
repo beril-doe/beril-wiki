@@ -59,14 +59,27 @@ paths, dashes, or prose. Conflict and concept pages are referenced only as
 """
 
 
+def src_id(entry: str) -> str:
+    """A `sources:` frontmatter entry -> the project id used in [src:] tags.
+
+    Must match wiki_check.cited_ids' normalization. The old code extracted only
+    `summaries/<id>__REPORT` and fell back to the RAW quoted string when a page
+    had none, so a concept sourced solely from a digest put the literal
+    "summaries/discoveries.md" into the valid-id set. bad_src_ids then accepted
+    `[src: summaries/discoveries.md]` in a hub, which wiki_check rejects as an
+    unknown source id — 8 publish-blocking errors from one format mismatch."""
+    return re.sub(r"__REPORT$", "", entry.strip().rsplit("/", 1)[-1].removesuffix(".md"))
+
+
 def parse_page(path: pathlib.Path) -> dict:
     text = path.read_text(encoding="utf-8", errors="replace")
     m = re.search(r'^sources:\s*\[(.*?)\]', text, re.M)
     if m:
-        sources = re.findall(r'summaries/([\w.-]+?)__REPORT', m.group(1)) or re.findall(r'"([^"]+)"', m.group(1))
+        raw = re.findall(r'"([^"]+)"', m.group(1))
     else:
         m2 = re.search(r'^sources:\n((?:\s+-\s.*\n)+)', text, re.M)
-        sources = re.findall(r'summaries/([\w.-]+?)__REPORT', m2.group(1)) if m2 else []
+        raw = re.findall(r'-\s*"?([^"\n]+?)"?\s*$', m2.group(1), re.M) if m2 else []
+    sources = [src_id(s) for s in raw]
     h1 = re.search(r'^# (.+)$', text, re.M)
     desc = re.search(r'^description:\s*"?(.*?)"?$', text, re.M)
     links = set(re.findall(r'\[\[concepts/([\w.-]+?)(?:\|[^\]]*)?\]\]', text))
