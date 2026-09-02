@@ -27,7 +27,7 @@ from litellm import completion
 HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
 OUT = ROOT / "wiki-extra"
-HUB_MODEL = "openai/claude-sonnet-5"
+HUB_MODEL = os.environ.get("WIKI_MODEL", "openai/gpt-5.6-luna")
 MIN_CLUSTER = 3
 PER_PAGE_CHARS = 7000  # truncate very long concept pages in hub context
 

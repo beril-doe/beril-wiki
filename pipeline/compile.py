@@ -43,7 +43,9 @@ from wiki_check import NUMBER, SRC_TAG, cited_ids, duplicate_concepts, is_table_
 
 HERE = pathlib.Path(__file__).parent
 REPO = HERE.parent
-MODEL = os.environ.get("COMPILE_MODEL", "openai/claude-sonnet-5")
+# Draft stage runs all-Luna by user decision; WIKI_MODEL flips every LLM stage
+# at once, COMPILE_MODEL overrides just this one.
+MODEL = os.environ.get("COMPILE_MODEL", os.environ.get("WIKI_MODEL", "openai/gpt-5.6-luna"))
 # Merge-rewrites re-emit the FULL page: the corpus's hot hub pages are 27-44KB
 # (9-15k tokens of content), so 8k and even 16k caps truncated their merges
 # (parity runs 2026-09-01). 32k covers the largest page plus growth headroom;
@@ -52,8 +54,8 @@ MAX_TOKENS = 32768
 # Budget guard: estimated at Anthropic Sonnet list price ($3/$15 per Mtok);
 # CBORG bills LBL, so this is a tripwire, not an invoice.
 BUDGET_USD = float(os.environ.get("COMPILE_BUDGET_USD", "5"))
-PRICE_IN = float(os.environ.get("COMPILE_PRICE_IN", "3e-6"))    # $/token; Sonnet default
-PRICE_OUT = float(os.environ.get("COMPILE_PRICE_OUT", "15e-6"))  # override for cheaper models (Luna)
+PRICE_IN = float(os.environ.get("COMPILE_PRICE_IN", "0.3e-6"))   # $/token; Luna default —
+PRICE_OUT = float(os.environ.get("COMPILE_PRICE_OUT", "1.5e-6"))  # override when running Sonnet (3e-6/15e-6)
 
 ENTITY_TYPES = ("organism", "gene_or_pathway", "compound", "method", "dataset", "place", "person", "other")
 WIKILINK = re.compile(r"\[\[([^\]|#]+?)(?:[#|][^\]]*)?\]\]")

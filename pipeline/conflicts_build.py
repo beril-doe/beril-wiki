@@ -23,7 +23,7 @@ from litellm import completion
 HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
 OUT = ROOT / "wiki-extra" / "conflicts"
-MODEL = "openai/claude-sonnet-5"
+MODEL = os.environ.get("WIKI_MODEL", "openai/gpt-5.6-luna")
 
 PROMPT = """You are writing a CONFLICT page for a research wiki: a first-class record of a
 real disagreement between projects in the corpus. Input: the tension text as written on

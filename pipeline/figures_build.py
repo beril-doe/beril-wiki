@@ -33,7 +33,7 @@ from fetch_reports import CHECKOUT
 HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
 STATE = ROOT / "state"
-MODEL = "openai/claude-sonnet-5"
+MODEL = os.environ.get("WIKI_MODEL", "openai/gpt-5.6-luna")
 MAX_PLACE = {"summaries": 2, "topics": 3, "conflicts": 1}
 MAX_CANDIDATES = 40
 PROMPT_V = "v2-flagship"  # bump to invalidate all cached placements
