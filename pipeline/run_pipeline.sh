@@ -48,6 +48,9 @@ echo "== figures" | tee -a "$LOG"
 echo "== extras" | tee -a "$LOG"
 "${PY[@]}" "$HERE/extra_pages.py" | tee -a "$LOG"
 
+echo "== authors" | tee -a "$LOG"
+"${PY[@]}" "$HERE/authors_build.py" | tee -a "$LOG" | tail -3
+
 echo "== check" | tee -a "$LOG"
 "${PY[@]}" "$HERE/wiki_check.py" "$REPO" | tee -a "$LOG"
 

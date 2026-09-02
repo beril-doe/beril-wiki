@@ -53,15 +53,9 @@ c["theme"]["colors"]["darkMode"] = {           # workbench "observatory"
 (qp / "quartz.config.yaml").write_text(yaml.safe_dump(cfg, sort_keys=False, allow_unicode=True))
 PY
 
-# extra_pages regenerates author/data/digest pages from the observatory
-# checkout; a viewer's clone doesn't have one — the committed wiki-extra/
-# pages are current, so skip regeneration.
-CHECKOUT="${BERIL_CHECKOUT:-/Volumes/WorkSSD/Work/BERIL/BERIL-research-observatory}"
-if [ -d "$CHECKOUT" ]; then
-  uv run --project "$REPO" python "$HERE/extra_pages.py"
-else
-  echo "no observatory checkout at $CHECKOUT — using committed wiki-extra/ pages (figures will be omitted)"
-fi
+# Publish is render-only: wiki/ and wiki-extra/ are committed, so no stage
+# regeneration here (run_pipeline.sh owns that). Figures come from the
+# observatory checkout when present; a checkout-less clone renders without them.
 uv run --project "$REPO" python "$HERE/quartz_ingest.py" "$REPO" "$QP/content"
 (cd "$QP" && npx quartz build)
 echo

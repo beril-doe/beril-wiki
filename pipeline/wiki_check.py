@@ -34,7 +34,9 @@ def source_ids(kb: pathlib.Path) -> dict[str, str]:
     """Map source id -> source text. Ids match the [src: <id>] convention:
     the staging filename minus __REPORT.md / .md."""
     texts: dict[str, str] = {}
-    for d in (kb / "staging", kb / "raw"):
+    # wiki/sources is the committed in-corpus copy, so a fresh clone without a
+    # populated staging/ can still run every check.
+    for d in (kb / "staging", kb / "raw", kb / "wiki" / "sources"):
         if not d.is_dir():
             continue
         for f in d.glob("*.md"):

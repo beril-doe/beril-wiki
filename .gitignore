@@ -5,5 +5,4 @@ projects-cache/
 nohup.out
 __pycache__/
 parity/
-wiki/sources/
 *.log

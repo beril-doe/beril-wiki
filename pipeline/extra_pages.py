@@ -47,16 +47,24 @@ def write_authors() -> int:
     out.mkdir(parents=True, exist_ok=True)
     known = set(wiki_projects())
     for record in index.values():
+        path = out / f"{slugify(record.name)}.md"
+        # Carry the LLM-written Profile (authors_build.py) across regenerations.
+        profile = ""
+        if path.exists():
+            m = re.search(r"^## Profile\s*\n.*?(?=\n## |\Z)", path.read_text(encoding="utf-8"), re.M | re.S)
+            profile = m.group(0).strip() if m else ""
         lines = [f"# {record.name}", ""]
         if record.orcid:
             lines.append(f"ORCID: [{record.orcid}](https://orcid.org/{record.orcid})")
             lines.append("")
+        if profile:
+            lines += [profile, ""]
         lines.append(f"## Projects ({len(record.projects)})")
         lines.append("")
         for proj in record.projects:
             link = f"[[summaries/{proj}__REPORT|{proj}]]" if proj in known else proj
             lines.append(f"- {link}")
-        (out / f"{slugify(record.name)}.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+        path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return len(index)
 
 
