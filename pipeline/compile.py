@@ -306,8 +306,9 @@ def parse_json_reply(text: str) -> dict:
     m = re.search(r"\{.*\}", t, re.S)
     if not m:
         raise ValueError(f"no JSON object in reply: {t[:120]!r}")
-    # strict=False: models sometimes emit raw control chars inside strings.
-    obj = json.loads(m.group(0), strict=False)
+    # strict=False: models sometimes emit raw control chars inside strings;
+    # the sub() drops trailing commas before } or ] (a common Luna slip).
+    obj = json.loads(re.sub(r",\s*([}\]])", r"\1", m.group(0)), strict=False)
     if not isinstance(obj, dict):
         raise ValueError(f"expected JSON object, got {type(obj).__name__}")
     return obj

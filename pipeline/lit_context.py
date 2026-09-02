@@ -122,6 +122,11 @@ def review_hub(page: pathlib.Path, system: str) -> bool:
     queries = [q for q in (C.parse_json_reply(q_raw).get("queries") or []) if isinstance(q, str)]
     papers = fetch_candidates(queries)
     if not papers:
+        # Model queries can be too narrow for PubMed; fall back to the title.
+        h1 = re.search(r"^# (.+)$", stripped, re.M)
+        title = re.sub(r"[^\w\s-]", " ", h1.group(1)) if h1 else page.stem.replace("-", " ")
+        papers = fetch_candidates([f"{title} bacteria", title])
+    if not papers:
         print(f"    {page.stem}: no candidate papers — skipping")
         return False
 
