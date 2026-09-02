@@ -119,6 +119,25 @@ def slugify(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
 
 
+SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
+
+
+def bad_src_ids(page: str, valid: set[str]) -> list[str]:
+    return sorted({re.sub(r"__REPORT$", "", p.strip())
+                   for m in SRC_TAG.finditer(page) for p in re.split(r"[,;]", m.group(1))
+                   if re.sub(r"__REPORT$", "", p.strip()) not in valid})
+
+
+def strip_bad_src(page: str, valid: set[str]) -> str:
+    """Last-resort repair: drop invalid ids from [src:] tags (whole tag if none
+    survive) — the claim's real citations live on the linked concept pages."""
+    def repl(m: re.Match) -> str:
+        keep = [p.strip() for p in re.split(r"[,;]", m.group(1))
+                if re.sub(r"__REPORT$", "", p.strip()) in valid]
+        return f"[src: {', '.join(keep)}]" if keep else ""
+    return SRC_TAG.sub(repl, page)
+
+
 def main() -> None:
     concepts = {p.stem: parse_page(p) for p in sorted((ROOT / "wiki/concepts").glob("*.md"))}
     entities = {p.stem: parse_page(p) for p in sorted((ROOT / "wiki/entities").glob("*.md"))}
@@ -175,13 +194,23 @@ def main() -> None:
             f"[conflict page: conflicts/{c}]\n{conflicts[c][:3000]}" for c in rel_conflicts
         )
         ents = sorted(entities, key=lambda e: -len(entities[e]["sources"] & srcs))[:10]
-        page = llm(
+        prompt = (
             f"TOPIC: {topic}\n\nMEMBER CONCEPT PAGES:\n\n{member_text}\n\n"
             + (f"PROMOTED CONFLICT PAGES (anchor the Tensions section on these; link them as [[conflicts/<stem>]]):\n{conflict_text}\n\n" if conflict_text else "")
             + f"RELATED ENTITY PAGES (link candidates): {', '.join('entities/' + e for e in ents)}\n"
-            f"PROJECTS IN SCOPE (for [src:] tags and [[summaries/<id>__REPORT]] links): {', '.join(sorted(srcs))}",
-            system=TEMPLATE,
+            f"PROJECTS IN SCOPE (for [src:] tags and [[summaries/<id>__REPORT]] links): {', '.join(sorted(srcs))}"
         )
+        page = llm(prompt, system=TEMPLATE)
+        bad = bad_src_ids(page, srcs)
+        if bad:  # one violation-quoting retry, then deterministic repair
+            print(f"  ! topics/{slug}: invalid [src:] ids {bad} — retrying")
+            page = llm(prompt + f"\n\nYOUR PREVIOUS ATTEMPT cited invalid [src:] ids: {bad}. "
+                       "[src:] tags may contain ONLY project ids from PROJECTS IN SCOPE — "
+                       "concept or conflict pages are referenced as [[wikilinks]], never inside [src:]. "
+                       "Rewrite the full page fixing every such tag.", system=TEMPLATE)
+            if bad_src_ids(page, srcs):
+                print(f"  ! topics/{slug}: still invalid — stripping bad [src:] ids")
+                page = strip_bad_src(page, srcs)
         out_path.write_text(page.strip() + "\n", encoding="utf-8")
         state[slug] = digest
         any_changed = True

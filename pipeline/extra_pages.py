@@ -120,7 +120,9 @@ def write_opportunities() -> int:
 def write_negative_results() -> int:
     """Digest of the summaries' caveat/limitation/null-result sections, so
     collaborators can see what did not work before repeating it."""
-    pat = re.compile(r"^## .*(caveat|limitation|negative|null|did not work|open work).*\n(.*?)(?=\n## |\Z)",
+    # [^\n]* keeps the heading match on its own line — a dot under re.S would
+    # swallow the section body and capture nothing.
+    pat = re.compile(r"^## [^\n]*(?:caveat|limitation|negative|null|did not work)[^\n]*\n(.*?)(?=\n## |\Z)",
                      re.M | re.S | re.I)
     lines = ["# Negative Results and Caveats", "",
              "What each project reports as limitations, null results, or abandoned",
@@ -128,7 +130,7 @@ def write_negative_results() -> int:
     n = 0
     for page in sorted((ROOT / "wiki/summaries").glob("*.md")):
         text = page.read_text(encoding="utf-8", errors="replace")
-        blocks = [m.group(2).strip() for m in pat.finditer(text) if m.group(2).strip()]
+        blocks = [m.group(1).strip() for m in pat.finditer(text) if m.group(1).strip()]
         if not blocks:
             continue
         h1 = re.search(r"^# (.+)$", text, re.M)
