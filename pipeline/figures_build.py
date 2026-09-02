@@ -28,8 +28,6 @@ import re
 
 from litellm import completion
 
-from fetch_reports import CHECKOUT
-
 HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
 STATE = ROOT / "state"
@@ -62,14 +60,16 @@ def paragraphs(body: str) -> list[str]:
 
 
 def build_manifest() -> dict[str, list[dict]]:
+    """Figure candidates from the committed corpus: wiki/sources report text +
+    wiki/figures files (synced by fetch_reports) — no checkout needed."""
     manifest: dict[str, list[dict]] = {}
-    for report in sorted(CHECKOUT.glob("projects/*/REPORT.md")):
-        project = report.parent.name
+    for report in sorted((ROOT / "wiki" / "sources").glob("*__REPORT.md")):
+        project = re.sub(r"__REPORT$", "", report.stem)
         text = report.read_text(encoding="utf-8", errors="replace")
         figs = []
         for par in paragraphs(text):
             for m in re.finditer(r"!\[([^\]]*)\]\((figures/[^)]+)\)", par):
-                path = report.parent / m.group(2)
+                path = ROOT / "wiki" / "figures" / project / re.sub(r"^figures/", "", m.group(2))
                 if path.exists():
                     ctx = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", par).strip()[:400]
                     figs.append({"file": m.group(2), "caption": m.group(1), "context": ctx})

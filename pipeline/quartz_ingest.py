@@ -18,8 +18,6 @@ import shutil
 import subprocess
 import sys
 
-from fetch_reports import CHECKOUT
-
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
 SKIP = {"AGENTS.md", "log.md"}
 FM = re.compile(r"^(---\n.*?\n---\n)", re.S)
@@ -44,14 +42,19 @@ def split_paragraphs(body: str) -> list[str]:
     return [c for c in re.split(r"\n\s*\n", body) if c.strip()]
 
 
-def splice_figures(text: str, entry: dict, repo: pathlib.Path, dst_root: pathlib.Path) -> str:
+def fig_src(kb: pathlib.Path, project: str, rel: str) -> pathlib.Path:
+    """A figure's committed location: wiki/figures/<project>/<path-under-figures/>."""
+    return kb / "wiki" / "figures" / project / re.sub(r"^figures/", "", rel)
+
+
+def splice_figures(text: str, entry: dict, kb: pathlib.Path, dst_root: pathlib.Path) -> str:
     if hashlib.sha256(text.encode()).hexdigest()[:16] != entry.get("page_hash"):
         return text  # page changed since placement; figures_build will re-run
     m = FM.match(text)
     front, body = (m.group(1), text[m.end():]) if m else ("", text)
     pars = split_paragraphs(body)
     for pl in sorted(entry["placements"], key=lambda p: -p["after_paragraph"]):
-        src = repo / "projects" / pl["project"] / pl["file"]
+        src = fig_src(kb, pl["project"], pl["file"])
         if not src.exists():
             continue
         name = pathlib.Path(pl["file"]).name
@@ -64,9 +67,9 @@ def splice_figures(text: str, entry: dict, repo: pathlib.Path, dst_root: pathlib
     return front + "\n\n".join(pars) + "\n"
 
 
-def rewrite_source_figures(text: str, project: str, repo: pathlib.Path, dst_root: pathlib.Path) -> str:
+def rewrite_source_figures(text: str, project: str, kb: pathlib.Path, dst_root: pathlib.Path) -> str:
     def repl(m: re.Match) -> str:
-        src = repo / "projects" / project / m.group(2)
+        src = fig_src(kb, project, m.group(2))
         if not src.exists():
             return m.group(1)  # drop the broken embed, keep the alt text
         name = pathlib.Path(m.group(2)).name
@@ -180,10 +183,10 @@ def main() -> None:
             out.parent.mkdir(parents=True, exist_ok=True)
             text = src.read_text(encoding="utf-8", errors="replace")
             if rel.parts[0] == "sources" and rel.stem.endswith("__REPORT"):
-                text = rewrite_source_figures(text, re.sub(r"__REPORT$", "", rel.stem), CHECKOUT, dst)
+                text = rewrite_source_figures(text, re.sub(r"__REPORT$", "", rel.stem), kb, dst)
             entry = placements.get(str(rel))
             if entry and entry.get("placements"):
-                text = splice_figures(text, entry, CHECKOUT, dst)
+                text = splice_figures(text, entry, kb, dst)
             text = linkify_src(strip_dead_wikilinks(text, targets), known)
             # Summaries must lead to their raw report, and self-[src:] tags are
             # circular — point both at the sources/ page (the provenance hop

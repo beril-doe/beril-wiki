@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import os
 import pathlib
+import re
 import shutil
 import sys
 
@@ -27,17 +28,35 @@ CHECKOUT = pathlib.Path(
 BACKEND = os.environ.get("FETCH_BACKEND", "local")
 
 
+FIG_EMBED = re.compile(r"!\[[^\]]*\]\((figures/[^)]+)\)")
+
+
 def fetch_local(staging: pathlib.Path) -> int:
     staging.mkdir(parents=True, exist_ok=True)
-    n = 0
+    figroot = ROOT / "wiki" / "figures"
+    n = nf = 0
     for report in sorted(CHECKOUT.glob("projects/*/REPORT.md")):
+        text = report.read_text(encoding="utf-8", errors="replace")
         shutil.copy2(report, staging / f"{report.parent.name}__REPORT.md")
         n += 1
+        # Figures referenced by the report travel with the wiki repo, so the
+        # site is fully renderable from a clone; the checkout is fetch-only.
+        for rel in set(FIG_EMBED.findall(text)):
+            src = report.parent / rel
+            if not src.exists():
+                continue
+            dst = figroot / report.parent.name / re.sub(r"^figures/", "", rel)
+            if not dst.exists() or dst.stat().st_size != src.stat().st_size:
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(src, dst)
+                nf += 1
     for digest in ("discoveries.md", "pitfalls.md"):
         src = CHECKOUT / "docs" / digest
         if src.exists():
             shutil.copy2(src, staging / digest)
             n += 1
+    if nf:
+        print(f"synced {nf} figure(s) -> {figroot}")
     return n
 
 
