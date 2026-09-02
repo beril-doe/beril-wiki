@@ -7,45 +7,53 @@ wishlist are tagged [P]; platform-dependent items are deferred at the bottom.
 
 ## P0 — the wiki must be openable and navigable
 
-- [ ] **Concept-enrichment pass** (~$12–15): Sonnet planning sweep over the 75
-      summaries to create the missing synthesis-layer concepts (Luna bootstrap
-      produced 19 vs ~80 expected); adds a `PLAN_MODEL`/enrich mode to
-      compile.py. Everything below (hubs, lit context) builds on concepts.
-- [ ] **Run downstream stages** (~$5–8): conflicts → topic hubs → figures →
-      extras → check. Produces the home page, topics, conflict pages,
-      author/data pages — the entire navigation layer. [P: adoption]
-- [ ] **Host the site** ($0): Quartz build → GitHub Pages on beril-doe/beril-wiki
-      (baseUrl change + CI or manual push). A shareable URL is the adoption
-      prerequisite. [P: adoption, multi-user readership]
+- [x] **Concept-enrichment pass** (DONE, all-Luna ~$1.5): now a permanent
+      pipeline stage (`enrich_concepts.py`, hash-cached per summary) rather
+      than a one-off; grew the synthesis layer 19 → 153 concepts. Calibrated
+      prompt requires cross-project recurrence per create.
+- [x] **Run downstream stages** (DONE, all-Luna ~$1): conflicts (13), topic
+      hubs (15), figures (179 placements), extras, check (0 errors). Full
+      pipeline re-run is a $0 no-op. [P: adoption]
+- [ ] **Host the site** — ON HOLD pending Paramvir's approval for a public
+      GitHub Pages deploy; local Quartz build works meanwhile
+      (`pipeline/build_quartz.sh`, serves at localhost:8080).
+      [P: adoption, multi-user readership]
 
 ## P1 — reader value on top of the compiled corpus
 
-- [ ] **Open Directions browse page** ($0): deterministically aggregate every
-      concept's `## Open Directions` into one "Research Opportunities" page,
-      grouped by topic hub. The wiki becomes a what-to-do-next surface.
+- [x] **Open Directions browse page** (DONE): `wiki-extra/opportunities.md`,
+      deterministic aggregation of all 153 concepts' Open Directions.
       [P: surface hypotheses, recommend next steps]
-- [ ] **Literature-context stage** (~$5–10): `lit_context.py` adds a cited
-      `## Literature Context` section to concept pages + discoveries digest;
-      PubMed via NCBI eutils, PMIDs verified deterministically in the
-      write-time validator (no fabricated references). Answers the reader's
-      first question: known or novel? [P: literature investigation, scoped
-      from agent to compile-time stage]
-- [ ] **Negative-results digest** ($0 + prompt line): aggregate the summaries'
-      "Caveats and Open Work" sections (present in 73/75) into a browsable
-      negative/null-results page; add an explicit null-results instruction to
-      the summary prompt for future compiles. [P: make negative results
-      discoverable so collaborators don't repeat analyses]
-- [ ] **Entity hygiene** ($0): deterministically retire single-source
-      passing-mention entity pages (197 of 336), downgrading their wikilinks —
-      same mechanism quartz_ingest already uses for dead links.
+- [x] **Literature-context stage** (DONE, ~$0.2): `lit_context.py` — detailed
+      literature review spliced at the TOP of every topic hub (per Paramvir's
+      intent): model-proposed PubMed queries, NCBI eutils candidates, every
+      cited PMID verified in code. All 15 hubs reviewed. Extending the same
+      stage to major concept pages is a config change when wanted.
+      [P: place BERIL work in the context of existing literature]
+- [x] **Negative-results digest** (DONE): `wiki-extra/negative-results.md`
+      aggregates all 75 projects' caveat/null sections; summary prompt now
+      demands null results explicitly. [P: don't repeat what didn't work]
+- [x] **Entity hygiene** (DONE): single-source entity pages (197/336) are
+      filtered at publish time (reversible — they surface at 2+ sources);
+      their links downgrade to plain text.
 
 ## P2 — cheap visibility wins, after P0/P1
 
-- [ ] **Uptake section on summaries** ($0): deterministic reverse-index — each
-      summary page gets "This project feeds: [concepts...]" — a first, honest
-      version of impact tracking. [P: track how outputs influence later work]
-- [ ] **Publish CI** ($0): GitHub Action to rebuild + deploy on push, so the
-      site stays current with the incremental pipeline. [P: living synthesis]
+- [x] **Uptake section on summaries** (DONE): publish-time "Feeds into:
+      [concepts]" reverse-index line on every summary page.
+      [P: track how outputs influence later work]
+- [ ] **Publish CI** ($0): GitHub Action to rebuild + deploy on push — blocked
+      with hosting on Paramvir's approval. [P: living synthesis]
+
+## Known draft-stage debts
+
+- 3 duplicate-concept pairs flagged by wiki_check (enrichment shards to
+  consolidate); 153 concepts vs the reference's 81 — finer grain, all-Luna.
+- Enrichment-created concepts start single-source; they accrete more sources
+  only as new docs compile. A cross-doc back-merge pass is a possible later
+  stage.
+- One second-run lit/hub churn cycle observed (a few hubs regenerate once
+  after their reviews land); converges, costs cents.
 
 ## Deferred — platform features, not compiler features
 
