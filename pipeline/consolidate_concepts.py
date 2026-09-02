@@ -6,10 +6,10 @@ document at a time and hardcodes a one-element `sources` list; compile only
 merges a document into pages when THAT document changes. So a concept created
 from document #60 is never revisited against documents #1-59, and 136 of 153
 concepts cite exactly one project. This stage closes that loop in two phases,
-both driven by embeddings from CBORG's LBL-hosted nomic-embed-text (free), which
-replaces wiki_check's name-token duplicate heuristic for candidate generation:
+both driven by embeddings through the CBORG gateway, which replace wiki_check's
+name-token duplicate heuristic for candidate generation:
 
-  1. merge  — near-duplicate concept pages (cosine >= --merge-threshold) get one
+  1. merge  — near-duplicate concept pages (union of each model's top-N) get one
               LLM merge/keep judgement; a merge is one merge-rewrite of the
               survivor through compile.generate_page, the loser deleted and its
               inbound wikilinks rewritten in code.
@@ -46,11 +46,17 @@ import litellm
 import compile as C
 from wiki_check import cited_ids, paragraphs, source_ids
 
-# LBL-hosted and free on the CBORG gateway ("Nomic Embed Text (Free)", 8192-token
-# context), so embeddings are never cached: 228 pages re-embed in ~5s for $0 and
-# state/ does not gain a multi-megabyte vector blob.
+# nomic is LBL-hosted and free; cohere is added for the merge phase only, as a
+# second opinion on candidates (~$0.04 a pass). Embeddings are never cached:
+# re-embedding is cheap and state/ stays free of multi-megabyte vector blobs.
 EMBED_MODEL = os.environ.get("EMBED_MODEL", "openai/lbl/nomic-embed-text")
-EMBED_BATCH = 100
+MERGE_MODELS = os.environ.get("MERGE_EMBED_MODELS",
+                              "openai/lbl/nomic-embed-text,openai/cohere-embed-v4").split(",")
+# the gateway corrupts big batches for every model, so keep them all small
+MODEL_BATCH = {"openai/cohere-embed-v4": 32, "openai/gemini-embedding-001": 16}
+# 8, not 100: the gateway duplicates nomic rows at a stride of 16, intermittently,
+# so anything above 16 can come back corrupted. See embed().
+EMBED_BATCH = 8
 EMBED_CHARS = 6000
 UNCHANGED = "UNCHANGED"
 # Bump when a prompt below changes, so cached negative verdicts are re-asked
@@ -147,18 +153,58 @@ document's topic. Only real, citable evidence earns an edit to this page.
 # ---------------------------------------------------------------------------
 
 
-def embed(texts: list[str]) -> list[list[float]]:
-    """Embed and L2-normalise, so cosine is a plain dot product."""
+def embed(texts: list[str], model: str = EMBED_MODEL) -> list[list[float]]:
+    """Embed and L2-normalise, so cosine is a plain dot product.
+
+    Verifies that distinct inputs produced distinct vectors. The CBORG
+    nomic endpoint intermittently returns DUPLICATED rows at a stride of 16:
+    two unrelated concepts come back with byte-identical vectors (cos=1.000000).
+    Nothing errors and the vectors look plausible; the only symptoms are
+    impossible cosine=1.000 pairs and silently lost recall. Colliding rows are
+    re-embedded singly, and we give up loudly rather than rank on bad vectors."""
+    batch = MODEL_BATCH.get(model, EMBED_BATCH)
     raw: list[list[float]] = []
-    for i in range(0, len(texts), EMBED_BATCH):
+    for i in range(0, len(texts), batch):
         resp = litellm.embedding(
-            model=EMBED_MODEL,
-            input=[t[:EMBED_CHARS] for t in texts[i:i + EMBED_BATCH]],
+            model=model,
+            input=[t[:EMBED_CHARS] for t in texts[i:i + batch]],
             api_key=os.environ["OPENAI_API_KEY"],
             api_base=os.environ.get("OPENAI_BASE_URL", "https://api.cborg.lbl.gov"),
         )
         raw += [d["embedding"] for d in resp.data]
+    if len(raw) != len(texts):
+        raise SystemExit(f"[ERROR] {model} returned {len(raw)} vectors for {len(texts)} inputs")
+    for attempt in range(3):
+        bad = _collisions(texts, raw)
+        if not bad:
+            return [unit(v) for v in raw]
+        print(f"    {model}: {len(bad)} corrupted vector(s), re-embedding individually")
+        for i in bad:
+            resp = litellm.embedding(
+                model=model, input=[texts[i][:EMBED_CHARS]],
+                api_key=os.environ["OPENAI_API_KEY"],
+                api_base=os.environ.get("OPENAI_BASE_URL", "https://api.cborg.lbl.gov"))
+            raw[i] = resp.data[0]["embedding"]
+    # A few residual collisions are tolerable: they add a spurious cosine=1.0
+    # pair, and the LLM judge rejects it. Lost recall is the real harm, and the
+    # repair passes above remove nearly all of it. Widespread corruption is not
+    # tolerable — it would silently degrade the whole ranking.
+    left = _collisions(texts, raw)
+    if len(left) > max(4, len(texts) // 20):
+        raise SystemExit(f"[ERROR] {model} returned {len(left)} duplicate vectors for distinct "
+                         f"inputs after 3 repair passes — refusing to rank on corrupt embeddings")
+    print(f"    [WARN] {model}: {len(left)} vector(s) still duplicated "
+          f"({', '.join(str(i) for i in left[:6])}) — proceeding; the judge gates any false pair")
     return [unit(v) for v in raw]
+
+
+def _collisions(texts: list[str], raw: list[list[float]]) -> list[int]:
+    """Indices whose vector is shared with a DIFFERENT input's vector."""
+    groups: dict[tuple, list[int]] = {}
+    for i, v in enumerate(raw):
+        groups.setdefault(tuple(v), []).append(i)
+    return [i for g in groups.values() if len(g) > 1
+            and len({texts[k][:EMBED_CHARS] for k in g}) > 1 for i in g]
 
 
 def unit(v: list[float]) -> list[float]:
@@ -219,21 +265,47 @@ def load_summaries(wiki: pathlib.Path) -> list[dict]:
     return out
 
 
-def merge_candidates(concepts: list[dict], vecs: list[list[float]],
-                     threshold: float, mature: int) -> list[tuple]:
-    """Ranked (sim, i, j) pairs above threshold, skipping pairs where BOTH sides
+def both_mature(ca: set[str], cb: set[str], mature: int) -> bool:
+    """Two concepts that each already cite `mature` projects are never merged
+    into each other. Checked at candidate generation AND again against the
+    live pages in phase_merge: a pair can become mature-mature mid-run, either
+    because an earlier merge redirected one side onto a hub or because an
+    earlier merge grew it. Checking only at generation merged a 28-project and
+    a 32-project concept."""
+    return len(ca) >= mature and len(cb) >= mature
+
+
+def merge_candidates(concepts: list[dict], vecs_by_model: dict[str, list],
+                     topn: int, mature: int) -> list[tuple]:
+    """Union of each model's top-`topn` pairs, skipping pairs where BOTH sides
     are already mature. Absorbing a shard into a hub is in scope; collapsing two
-    mature hubs into one is a destructive rewrite this stage should not make."""
-    out = []
-    for i in range(len(concepts)):
-        for j in range(i + 1, len(concepts)):
-            sim = cosine(vecs[i], vecs[j])
-            if sim < threshold:
-                continue
-            if len(concepts[i]["cited"]) >= mature and len(concepts[j]["cited"]) >= mature:
-                continue
-            out.append((sim, i, j))
-    return sorted(out, reverse=True)
+    mature hubs into one is a destructive rewrite this stage should not make.
+
+    Selection is by RANK per model, not by a shared cosine cutoff: cosine ranges
+    are not comparable across embedding models (cohere's medians sit ~0.2 below
+    nomic's on identical text), so one threshold cannot serve both.
+
+    Two models are used because one alone has recall holes. Measured on this
+    corpus against 12 judge-confirmed duplicate pairs, nomic ranked 11 in its
+    top-30 but buried `homology-search-negative-evidence` /
+    `orthogonal-validation-of-gene-absence` at rank 518 of 11,628 — a genuine
+    duplicate (same single source, same numbers restated) that cohere and gemini
+    both put in their top-30. The union costs only extra judge calls, and the
+    judge is what actually decides, so recall is the thing worth buying here.
+
+    Returns (best_rank, sim, i, j), sorted best-rank first; `sim` is the score
+    from whichever model ranked the pair highest, shown for eyeballing only."""
+    best: dict[tuple[int, int], tuple[int, float]] = {}
+    for vecs in vecs_by_model.values():
+        pairs = sorted(
+            ((cosine(vecs[i], vecs[j]), i, j)
+             for i in range(len(concepts)) for j in range(i + 1, len(concepts))),
+            reverse=True)[:topn]
+        for rank, (sim, i, j) in enumerate(pairs, 1):
+            if (rank, sim) < best.get((i, j), (10**9, 0.0)):
+                best[(i, j)] = (rank, sim)
+    return sorted((rank, sim, i, j) for (i, j), (rank, sim) in best.items()
+                  if not both_mature(concepts[i]["cited"], concepts[j]["cited"], mature))
 
 
 def backmerge_candidates(concepts: list[dict], cvecs: list[list[float]],
@@ -330,12 +402,12 @@ def generate_retaining(messages: list[dict], step: str, sources: dict[str, str],
 
 
 def phase_merge(root: pathlib.Path, concepts: list[dict], pairs: list[tuple],
-                sources: dict[str, str], system: str, state: dict) -> int:
+                sources: dict[str, str], system: str, state: dict, mature: int) -> int:
     wiki = root / "wiki"
     targets = C.wikilink_targets(root)
     redirect: dict[str, str] = {}
     merged = 0
-    for sim, i, j in pairs:
+    for rank, sim, i, j in pairs:
         a, b = concepts[i]["stem"], concepts[j]["stem"]
         a, b = redirect.get(a, a), redirect.get(b, b)
         if a == b:
@@ -350,6 +422,11 @@ def phase_merge(root: pathlib.Path, concepts: list[dict], pairs: list[tuple],
         fa, ba = C.parse_fm(ta)
         fb, bb = C.parse_fm(tb)
         ca, cb = body_src_ids(ta), body_src_ids(tb)
+        # Re-check against the LIVE pages, not the candidate-time snapshot: a
+        # redirect or an earlier merge can have made both sides mature since.
+        if both_mature(ca, cb, mature):
+            print(f"    skipping {a}+{b}: both mature ({len(ca)}, {len(cb)} projects)")
+            continue
 
         raw = C.llm([{"role": "system", "content": system},
                      {"role": "user", "content": MERGE_JUDGE_USER.format(
@@ -370,7 +447,7 @@ def phase_merge(root: pathlib.Path, concepts: list[dict], pairs: list[tuple],
         loser = b if survivor == a else a
         sfm, sbody = (fa, ba) if survivor == a else (fb, bb)
         lfm, lbody = (fb, bb) if survivor == a else (fa, ba)
-        print(f"  merging concepts/{loser} -> concepts/{survivor} (sim {sim:.3f}): "
+        print(f"  merging concepts/{loser} -> concepts/{survivor} (rank {rank}, sim {sim:.3f}): "
               f"{str(verdict.get('justification') or '')[:90]}")
 
         task = CONCEPT_MERGE_USER.format(
@@ -476,13 +553,13 @@ def report(concepts: list[dict], summaries: list[dict], cvecs,
 
     allpairs = sorted((cosine(cvecs[i], cvecs[j]) for i in range(len(concepts))
                        for j in range(i + 1, len(concepts))), reverse=True)
-    print("concept-concept pairs above threshold (before the mature-pair skip):")
+    print(f"concept-concept cosine ({EMBED_MODEL}) at thresholds:")
     for t in REPORT_THRESHOLDS:
         print(f"    >= {t:.2f}: {sum(1 for s in allpairs if s >= t):5d}")
-    print(f"\n{len(pairs)} MERGE CANDIDATES at >= {args.merge_threshold} "
-          f"(both sides >= {args.min_sources} cited projects skipped):")
-    for sim, i, j in pairs:
-        print(f"    {sim:.3f}  {concepts[i]['stem']} ({len(concepts[i]['cited'])})"
+    print(f"\n{len(pairs)} MERGE CANDIDATES: union of top-{args.merge_topn} pairs from each of "
+          f"{args.merge_models} (both sides >= {args.min_sources} cited projects skipped):")
+    for rank, sim, i, j in pairs:
+        print(f"    #{rank:<3d} {sim:.3f}  {concepts[i]['stem']} ({len(concepts[i]['cited'])})"
               f"  ||  {concepts[j]['stem']} ({len(concepts[j]['cited'])})")
 
     print(f"\n{len(cands)} BACK-MERGE CANDIDATES at >= {args.backmerge_threshold}, "
@@ -506,10 +583,12 @@ def main(root: pathlib.Path, args) -> int:
     state.setdefault("no_evidence", {})
 
     concepts, summaries = load_concepts(wiki), load_summaries(wiki)
+    models = [m.strip() for m in args.merge_models.split(",") if m.strip()]
     print(f"consolidate: embedding {len(concepts)} concepts + {len(summaries)} summaries "
-          f"({EMBED_MODEL}, free)")
-    cvecs, svecs = embed([c["etext"] for c in concepts]), embed([s["etext"] for s in summaries])
-    pairs = merge_candidates(concepts, cvecs, args.merge_threshold, args.min_sources)
+          f"({', '.join(models)})")
+    cvecs_by = {m: embed([c["etext"] for c in concepts], m) for m in models}
+    cvecs, svecs = cvecs_by[EMBED_MODEL], embed([s["etext"] for s in summaries])
+    pairs = merge_candidates(concepts, cvecs_by, args.merge_topn, args.min_sources)
     cands = backmerge_candidates(concepts, cvecs, summaries, svecs,
                                  args.backmerge_threshold, args.topk, args.min_sources)
 
@@ -517,10 +596,10 @@ def main(root: pathlib.Path, args) -> int:
         report(concepts, summaries, cvecs, pairs, cands, args)
         return 0
 
-    merged = phase_merge(root, concepts, pairs, sources, system, state)
+    merged = phase_merge(root, concepts, pairs, sources, system, state, args.min_sources)
     state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
 
-    if merged:   # survivors changed and losers are gone — re-embed ($0) before phase 2
+    if merged:   # survivors changed and losers are gone — re-embed before phase 2
         concepts = load_concepts(wiki)
         cvecs = embed([c["etext"] for c in concepts])
     cands = backmerge_candidates(concepts, cvecs, summaries, svecs,
@@ -543,7 +622,10 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", type=pathlib.Path, default=C.REPO)
     ap.add_argument("--dry-run", action="store_true", help="rank and print candidates; no LLM calls, $0")
-    ap.add_argument("--merge-threshold", type=float, default=0.85)
+    ap.add_argument("--merge-topn", type=int, default=45,
+                    help="pairs taken from EACH embedding model's ranking; the union is judged")
+    ap.add_argument("--merge-models", default=",".join(MERGE_MODELS),
+                    help="comma-separated embedding models for merge candidate generation")
     # 0.78 chosen from the dry-run sweep: it reaches 68 of 139 thin concepts,
     # where 0.82 reaches 39 and 0.75 only adds weak candidates that no-op.
     ap.add_argument("--backmerge-threshold", type=float, default=0.78)

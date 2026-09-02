@@ -3,7 +3,7 @@
 Concrete next analyses this corpus makes possible — every concept page's
 Open Directions, gathered in one place. Follow a link for the evidence.
 
-## [[concepts/accessory-essentiality|Essential genes can be strain-specific, accessory, or highly divergent]]
+## [[concepts/gene-essentiality|Essential genes can be strain-specific, accessory, or highly divergent]]
 
 - Use Fitness Browser condition-specific fitness values, focusing on genes with fitness < -2 under stress conditions, and test whether stress-important genes show stronger accessory or strain-specific enrichment than genes classified as essential under library-construction conditions. [src: conservation_vs_fitness]
 - Combine Fitness Browser ortholog data with pangenome clusters and cross-species conservation statistics to identify essential gene families that recur across species while retaining strain-specific members. [src: conservation_vs_fitness]
@@ -587,7 +587,7 @@ See the project summaries: [[summaries/amr_environmental_resistome__REPORT]], [[
 - Add a coverage penalty or an explicit untested-condition uncertainty term to the six-axis score, then compare top-50 retention against the reported 64% fitness-active retention under conservation-dominant or drop-tractability settings. [src: functional_dark_matter]
 - Design targeted RB-TnSeq or CRISPRi experiments for high-priority genes from poorly profiled organisms, asking whether missing condition coverage explains their absence from the current top candidates rather than a lack of measurable phenotype. [src: functional_dark_matter]
 
-## [[concepts/fitness-cost-and-network-breadth|Network Breadth Does Not Necessarily Predict Fitness Cost]]
+## [[concepts/antimicrobial-resistance-fitness-cost|Network Breadth Does Not Necessarily Predict Fitness Cost]]
 
 - Recompute cofitness separately for antibiotic-treatment and standard-growth conditions, then test whether network breadth predicts fitness cost in either condition-specific matrix. [src: amr_cofitness_networks]
 - Apply a fitness-matched permutation using random non-AMR genes with the same mean-fitness distribution, including the −0.05 to +0.05 range, and ask whether the observed network-size–cost correlation differs from the matched null. [src: amr_cofitness_networks]
@@ -888,7 +888,7 @@ Related source: [[summaries/enigma_sso_asv_ecology__REPORT]]
 - Add PQQ-biosynthesis, iron-homeostasis, and respiratory-chain capacity constraints to the ADP1 FBA model, then compare predicted essentiality with the observed defects for 10/13 Complex I operon subunits. [src: aromatic_catabolism_network]
 - Compare Complex I retention across aromatic-degrading species using pangenome data to test whether respiratory-support architecture is conserved or lineage-specific. [src: aromatic_catabolism_network]
 
-## [[concepts/metadata-resolution-and-within-species-heterogeneity|Metadata Resolution Can Hide Within-Species Environmental Heterogeneity]]
+## [[concepts/environmental-resistome|Metadata Resolution Can Hide Within-Species Environmental Heterogeneity]]
 
 - Use the 280,337 genomes with NCBI environment metadata and a per-genome AMR-by-environment contingency analysis, such as the originally planned Fisher's exact test or a scalable equivalent, to determine whether AMR enrichment remains after conditioning on species. [src: amr_environmental_resistome]
 - Use the 823 species in the reported multi-environment subset and hierarchical or mixed-effects models to separate within-species environment effects from between-species clinical representation, asking whether the 72.9-versus-16.4 mean AMR-cluster contrast persists within species. [src: amr_environmental_resistome]
@@ -1165,7 +1165,7 @@ See the source reports: [[summaries/acinetobacter_adp1_explorer__REPORT]], [[sum
 - Assemble urease-positive and urease-negative organisms from the same taxonomic classes and test them under nickel and other metals with RB-TnSeq, meaning random barcode transposon sequencing, to distinguish nickel-specific effects from general lineage differences. [src: bacdive_phenotype_metal_tolerance]
 - Expand the direct Fitness Browser–BacDive validation with Gram-positive organisms, urease-positive organisms, and multiple anaerobes, then test whether phenotype associations replicate in directly measured metal-fitness data rather than genome-based scores. [src: bacdive_phenotype_metal_tolerance]
 
-## [[concepts/within-species-resistome-heterogeneity|Phylogenetic Structure of Within-Species Resistomes]]
+## [[concepts/environmental-resistome|Phylogenetic Structure of Within-Species Resistomes]]
 
 - Subsample species with more than 500 genomes and repeat ANI extraction and Mantel testing to determine whether the 55.6% significant-species estimate changes when mega-species are included. [src: amr_strain_variation]
 - Combine phylogeny-aware models with AMR presence/absence matrices to test whether non-core AMR associations persist after separating lineage inheritance from repeated acquisition and loss. [src: amr_strain_variation]
@@ -1217,7 +1217,7 @@ See the source summary: [[summaries/annotation_gap_discovery__REPORT]].
 - Build module co-transfer networks from the ICA modules and test whether cross-module prediction remains detectable after matching module prevalence and auxiliary content. [src: cofitness_coinheritance]
 - Expand the analysis to species with >30% auxiliary genes and existing co-fitness data, then measure whether increased accessory variation improves pairwise and module-level detection. [src: cofitness_coinheritance]
 
-## [[concepts/process-level-versus-gene-level-fitness-inference|Process-Level Context Does Not Establish Gene-Level Function]]
+## [[concepts/fitness-module-detection-sensitivity|Process-Level Context Does Not Establish Gene-Level Function]]
 
 - Combine the 6,691 hypothetical-protein predictions with ortholog transfer, domain architectures, and targeted gene-level experiments to test which module-only predictions acquire specific molecular-function support. [src: fitness_modules]
 - Reanalyze the held-out benchmark with process-level gold standards in addition to KEGG KO labels to ask whether Module-ICA has useful precision when evaluated against biological-process membership rather than gene-level identity. [src: fitness_modules]
@@ -1278,7 +1278,7 @@ See the source summary: [[summaries/annotation_gap_discovery__REPORT]].
 - Apply perturbation or competition experiments to representative multi-mechanism islands; test whether linked resistance genes produce additive, synergistic, or independent protection across drug classes. [src: amr_strain_variation]
 - Use the reported phi coefficients with fitness and genomic-context data in predictive models; test whether high co-inheritance predicts future AMR gene co-acquisition. [src: amr_strain_variation]
 
-## [[concepts/resistome-scope-and-classification-bias|Resistome conclusions depend on gene-catalog scope and mechanism classification]]
+## [[concepts/environmental-resistome|Resistome conclusions depend on gene-catalog scope and mechanism classification]]
 
 - Map the 83,008 AMRFinderPlus hits to CARD ARO terms and compare mechanism counts, core fractions, and environmental contrasts with the keyword-based classification to determine how much of the 18,448-hit Other/Unclassified category is reclassified. [src: amr_pangenome_atlas]
 - Separate classical antibiotic-resistance genes from mercury-, arsenic-, and other stress-response genes, then repeat the 30.3% versus 46.8% core comparison and the 2.2x auxiliary-genome enrichment test to quantify the effect of catalog scope. [src: amr_pangenome_atlas]
@@ -1294,7 +1294,7 @@ See the source summary: [[summaries/annotation_gap_discovery__REPORT]].
 - Add PQQ biosynthesis, iron homeostasis, and respiratory-chain capacity constraints to the ADP1 FBA model, then compare predicted essentiality and flux with the observed defects in 10/13 Complex I operon subunits. [src: aromatic_catabolism_network]
 - Compare Complex I retention and NDH-2 complements across aromatic-degrading species using pangenome data to test whether respiratory architecture predicts transferability of the NADH-load hypothesis. [src: aromatic_catabolism_network]
 
-## [[concepts/salt-chemistry-confounding-of-fitness-assays|Salt Chemistry Can Confound Fitness Assays Beyond the Intended Stressor]]
+## [[concepts/shared-stress-versus-stressor-specific-fitness|Salt Chemistry Can Confound Fitness Assays Beyond the Intended Stressor]]
 
 - Compare matched KCl and choline chloride controls with NaCl using RB-TnSeq to determine whether shared fitness signals track chloride, sodium, osmolarity, or the combined salt condition. [src: counter_ion_effects]
 - Repeat CuCl₂/CuSO₄, ZnCl₂/ZnSO₄, and CoCl₂/CoSO₄ assays under identical aerobic conditions, metal concentrations, and media to isolate counter-ion effects from oxygen-regime confounding. [src: counter_ion_effects]
@@ -1483,7 +1483,7 @@ See the source summary: [[summaries/annotation_gap_discovery__REPORT]].
 - Expand matched metal phenotypes beyond the 24 existing utilization records with MIC and growth-inhibition data, then test whether specific metal-tolerance gene families distinguish contamination environments. [src: bacdive_metal_validation]
 - Integrate ENIGMA CORAL community data from the Oak Ridge metal-contaminated site and compare field distributions with species-level pangenome scores to test whether the pattern generalizes beyond culture collections. [src: bacdive_metal_validation]
 
-## [[concepts/within-species-resistome-heterogeneity|Within-Species Resistome Heterogeneity]]
+## [[concepts/environmental-resistome|Within-Species Resistome Heterogeneity]]
 
 - Use the 1,305 genome-by-AMR presence/absence matrices and genomic-context mapping to test whether the 1,517 resistance islands reside on plasmids, chromosomes, integron boundaries, or insertion sequences, and whether physical context predicts persistence across lineages. [src: amr_strain_variation]
 - Subsample species with >500 genomes and repeat ANI–AMR Mantel analyses to determine whether the phylogenetic signal generalizes to mega-species excluded by the current computational cap. [src: amr_strain_variation]

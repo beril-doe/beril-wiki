@@ -79,12 +79,19 @@ document changes — so a concept created from document #60 is never revisited
 against documents #1–59. Consolidation closes that loop.
 
 Candidates are ranked by cosine similarity over embeddings of every concept and
-summary (`lbl/nomic-embed-text` through the same CBORG gateway, free and 768-dim,
-so nothing is cached — 228 pages re-embed in ~5s). This replaces the name-token
+summary (`lbl/nomic-embed-text`, free, plus `cohere-embed-v4` at ~$0.04 a pass; nothing
+is cached). **Batches are kept to 8-32**: the gateway intermittently returns
+duplicated embedding rows at a stride of 16 for large batches, giving unrelated
+pages byte-identical vectors and silently destroying recall. `embed()` detects
+collisions, re-embeds the affected rows individually, and aborts rather than
+rank on corrupt vectors. This replaces the name-token
 heuristic in `wiki_check.duplicate_concepts`, which needs ≥50% source-set
 Jaccard and so cannot see duplicates among single-source pages. Then:
 
-- **merge** — pairs above `--merge-threshold` get one merge/keep judgement. The
+- **merge** — the union of each embedding model's top-`--merge-topn` pairs gets
+  one merge/keep judgement. Two models are used because one alone has recall
+  holes, and selection is by rank per model, since cosine ranges are not
+  comparable across models. The
   judge is shown each page's *cited projects* and their overlap, because the
   decisive question is whether two pages rest on the same evidence, not whether
   they are framed differently. Pairs where both sides are already mature

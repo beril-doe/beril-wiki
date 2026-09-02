@@ -1,7 +1,7 @@
 ---
 type: "Concept"
-description: "Adaptive functions show larger ecotype shifts, but phylogeny dominates genome-wide gene content"
-sources: ["summaries/ecotype_functional_differentiation__REPORT.md", "summaries/cog_analysis__REPORT.md", "summaries/ecotype_analysis__REPORT.md"]
+description: "Adaptive functions show stronger ecotype differentiation than housekeeping functions"
+sources: ["summaries/ecotype_functional_differentiation__REPORT.md", "summaries/cog_analysis__REPORT.md", "summaries/ecotype_analysis__REPORT.md", "summaries/core_gene_tradeoffs__REPORT.md", "summaries/fitness_effects_conservation__REPORT.md"]
 ---
 # Adaptive Functions Differentiate More Strongly Than Housekeeping Functions Among Gene-Content Ecotypes
 
@@ -33,11 +33,17 @@ The reported mean effect sizes were 0.0051 for J, 0.0041 for F, 0.0069 for H, an
 
 The contrast therefore concerns effect magnitude more strongly than an absolute separation between adaptive and housekeeping functions, because housekeeping categories differentiated in many species and had a significance rate of 68.8%. [src: ecotype_functional_differentiation]
 
+Evidence from laboratory fitness and gene conservation **refines** this contrast: core genes were more burdensome than non-core genes in Protein Metabolism, Motility, and RNA Metabolism, whereas non-core genes were more burdensome in the Cell Wall category. [src: core_gene_tradeoffs] Thus, conserved or housekeeping-associated functions cannot be assumed to be uniformly low-cost; their burden can depend on function and condition. [src: core_gene_tradeoffs] The same analysis identified 25,271 condition-dependent trade-off genes and 28,017 genes that were both costly and conserved, supporting the interpretation that conservation may preserve functions whose laboratory costs are offset by benefits in other environments. [src: core_gene_tradeoffs]
+
+The fitness-conservation analysis **supports** this condition-dependent interpretation: across approximately 194,000 genes from 43 bacteria, essential genes were 82% core whereas always-neutral genes were 66% core, although the association was weak overall. [src: fitness_effects_conservation] It also **refines** the adaptive-versus-housekeeping contrast because strong condition-specific effects were enriched among core genes (77.3% core versus 70.3% without specific phenotypes), showing that conditionally active functions are not restricted to accessory genes. [src: fitness_effects_conservation] Core genes had heavier fitness-effect tails in both negative and positive directions, consistent with conserved functions having both condition-specific benefits and costs rather than being uniformly constitutive or low-cost. [src: fitness_effects_conservation]
+
 The broader 32-species COG comparison **supports** this functional partitioning: novel or singleton genes were enriched in defense category V by +2.83%, while core genes were depleted relative to novel or singleton genes in translation J by -4.65%, nucleotide metabolism F by -2.09%, coenzyme metabolism H by -2.06%, amino acid metabolism E by -1.81%, and energy production C by -1.75%. These patterns were observed across 9 phyla and 357,623 genes, but they describe core-versus-novel gene classes rather than within-species ecotype contrasts. [src: cog_analysis]
 
 ## Interpretation and Boundaries
 
 The findings are consistent with a model in which ecotype-defining gene-content differences preferentially alter defense, transport, secondary metabolism, carbohydrate use, amino-acid metabolism, and envelope functions, while also affecting core cellular processes. [src: ecotype_functional_differentiation]
+
+The core-gene fitness analysis **supports** the condition-specific component of this model: genes with strong condition-specific effects were more likely to be core, and the report interprets costly conserved genes as functions maintained despite laboratory-measured burden. [src: core_gene_tradeoffs] Because these measurements are laboratory-based rather than direct observations of natural selection, they **refine** rather than establish the ecological explanation for why particular functions differentiate or remain conserved. [src: core_gene_tradeoffs] The fitness-conservation study likewise cautions that its assays emphasized rich media and standard stresses, omitted epistatic interactions, and covered primarily Proteobacteria, so its core-versus-accessory pattern does not directly establish natural ecological selection. [src: fitness_effects_conservation]
 
 The ecotype correlation analysis **refines** this model’s ecological interpretation: across 172 species, the median partial correlation between environmental similarity and gene-content similarity was 0.0025, compared with 0.0143 for phylogeny; phylogeny dominated in 60.5% of species, and environmental effects were non-significant in 156 species (90.7%). [src: ecotype_analysis] This does not negate the larger adaptive-category effect sizes; it suggests the hypothesis that ecological differentiation is concentrated in specific gene subsets rather than governing whole-genome gene-content similarity. [src: ecotype_analysis]
 
@@ -47,7 +53,7 @@ This interpretation remains an association between gene-content clusters and fun
 
 The analysis identified valid gene-content ecotypes in 12 of 15 sampled species (80%), assigning 1,820 genomes across 12 species spanning 6 phyla, but the sample was drawn from 456 eligible species and may not represent broader phylogenetic or ecological diversity. [src: ecotype_functional_differentiation]
 
-Approximately 38% of gene clusters had COG annotations, leaving 62% unannotated, so unannotated ecotype-specific adaptive genes may have been missed or the observed pattern may be biased toward better-characterized functions. [src: ecotype_functional_differentiation] The new comparison **refines** this caveat rather than replacing it: its COG annotations covered approximately 70% of genes, and unassigned genes may skew its distributions; the differing coverage figures may reflect different datasets or annotation denominators. [src: cog_analysis]
+Approximately 38% of gene clusters had COG annotations, leaving 62% unannotated, so unannotated ecotype-specific adaptive genes may have been missed or the observed pattern may be biased toward better-characterized functions. [src: ecotype_functional_differentiation] The new comparison **refines** this caveat rather than replacing it: its COG annotations covered approximately 70% of genes, and unassigned genes may skew its distributions; the differing coverage figures may reflect different datasets or annotation denominators. [src: cog_analysis] The fitness-conservation analysis adds that singleton neutrality may also reflect poor transposon coverage rather than true absence of function. [src: fitness_effects_conservation]
 
 The largest mean effect sizes were 0.0392 for S (unknown function) and 0.0337 for L (replication, recombination, and repair), indicating that the strongest functional differences were not confined to the predefined adaptive set. [src: ecotype_functional_differentiation]
 
@@ -55,7 +61,7 @@ Without within-species phylogenetic controls such as core-genome trees, the anal
 
 The report’s interpretation should therefore be integrated with [[concepts/ecotype-environment-gene-content]], [[concepts/phylogenetic-confounding-of-pangenome-associations]], [[concepts/ontology-and-category-schema-sensitivity]], and [[concepts/functional-dark-matter]].
 
-The underlying project summaries are [[summaries/ecotype_functional_differentiation__REPORT]], [[summaries/cog_analysis__REPORT]], and [[summaries/ecotype_analysis__REPORT]].
+The underlying project summaries are [[summaries/ecotype_functional_differentiation__REPORT]], [[summaries/cog_analysis__REPORT]], [[summaries/ecotype_analysis__REPORT]], [[summaries/core_gene_tradeoffs__REPORT]], and [[summaries/fitness_effects_conservation__REPORT]].
 
 ## Open Directions
 
@@ -66,3 +72,5 @@ The underlying project summaries are [[summaries/ecotype_functional_differentiat
 - Recluster the same genome-by-gene-content data with HDBSCAN and compare category-level significance and effect sizes with the KMeans results to test whether the conclusion depends on spherical-cluster assumptions and the selected value of k. [src: ecotype_functional_differentiation]
 - Repeat the ecotype analysis with the broader COG comparison’s mobile-element and defense categories separated from housekeeping categories, testing whether the +10.88% COG L and +2.83% COG V novelty enrichments predict within-species ecotype differentiation. [src: cog_analysis]
 - Test the adaptive-category contrast against alternative environmental distances and direct metadata in the 172-species dataset, asking whether the weak whole-genome environmental signal is stronger for specific COG subsets. [src: ecotype_analysis]
+- Overlay ecotype-specific COG shifts with condition-resolved fitness measurements to test whether categories with larger adaptive-versus-housekeeping effects also contain more costly conserved or condition-dependent trade-off genes. [src: ecotype_functional_differentiation, core_gene_tradeoffs]
+- Use condition-resolved fitness data while controlling for transposon coverage to test whether ecotype-differentiating housekeeping and adaptive categories differ in the breadth of their fitness effects, rather than only in COG-level abundance. [src: fitness_effects_conservation]

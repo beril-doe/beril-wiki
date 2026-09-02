@@ -1,13 +1,13 @@
 ---
 type: "Concept"
-description: "Framework for distinguishing confirmatory nulls from exploratory ecological signals"
-sources: ["summaries/enigma_contamination_functional_potential__REPORT.md", "summaries/ecotype_env_reanalysis__REPORT.md"]
+description: "How confirmatory nulls and exploratory ecological signals diverge."
+sources: ["summaries/enigma_contamination_functional_potential__REPORT.md", "summaries/ecotype_env_reanalysis__REPORT.md", "summaries/ecotype_analysis__REPORT.md"]
 ---
 # Confirmatory Nulls and Exploratory Signals in Ecological Association Testing
 
 This concept describes how predeclared ecological association tests can remain null while exploratory, coverage-adjusted analyses produce apparently positive signals that are sensitive to mapping, covariates, taxonomic resolution, multiple-testing correction, and environmental classification. [src: enigma_contamination_functional_potential] [src: ecotype_env_reanalysis]
 
-The evidence includes [[summaries/enigma_contamination_functional_potential__REPORT]], which tested whether contamination in [[entities/enigma-coral]] communities was associated with pangenome- and [[entities/eggnog]]-derived functional proxies, and [[summaries/ecotype_env_reanalysis__REPORT]], which reanalyzed environment–gene-content associations across bacterial species. [src: enigma_contamination_functional_potential] [src: ecotype_env_reanalysis]
+The evidence includes [[summaries/enigma_contamination_functional_potential__REPORT]], which tested whether contamination in [[entities/enigma-coral]] communities was associated with pangenome- and [[entities/eggnog]]-derived functional proxies; [[summaries/ecotype_env_reanalysis__REPORT]], which reanalyzed environment–gene-content associations across bacterial species; and [[summaries/ecotype_analysis__REPORT]], which performed a separate phylogeny-versus-environment comparison across 172 species. [src: enigma_contamination_functional_potential] [src: ecotype_env_reanalysis] [src: ecotype_analysis]
 
 ## Evidence Pattern
 
@@ -18,6 +18,8 @@ Its contamination index combined arsenic, cadmium, chromium, copper, lead, nicke
 The workflow generated 324 site functional-score rows across three mapping modes and 12 model-result rows covering four outcomes across those modes. [src: enigma_contamination_functional_potential]
 
 The ecotype reanalysis provides a related control for sampling composition. Among 224 species selected with at least 20 genomes containing AlphaEarth embeddings and at least 30% coverage, 106 species (47%) were majority human-associated, 47 (21%) were majority environmental, and 71 (32%) were Mixed/Other. [src: ecotype_env_reanalysis]
+
+The new ecotype analysis **refines** this evidence by analyzing 13,381 genomes across 224 species and obtaining correlation results for 172 species. It used AlphaEarth environmental embeddings, genome metadata and taxonomy, NCBI environmental and isolation-source metadata, pangenome composition, and gene-cluster presence/absence profiles from the kbase_ke_pangenome database. [src: ecotype_analysis]
 
 ## Confirmatory Nulls
 
@@ -36,6 +38,8 @@ These results **support** treating the broad genus-level contamination–defense
 The ecotype reanalysis **supports** this confirmatory-null interpretation at a different ecological scale: environmental species had median partial correlation 0.051, compared with 0.084 for human-associated species and 0.109 for Mixed/Other species; the one-sided Environmental > Human-associated Mann–Whitney U test gave U=1536 and p=0.83. [src: ecotype_env_reanalysis]
 
 The continuous analysis likewise found no relationship between the fraction of environmental genomes per species and partial-correlation strength (Spearman rho=-0.085 and p=0.25), or between the fraction of human-associated genomes and correlation strength (rho=0.030 and p=0.69). [src: ecotype_env_reanalysis]
+
+The new analysis **supports** the broad null interpretation while distinguishing phylogenetic structure from ecological association: the median partial correlation was 0.0025 for environment versus 0.0143 for phylogeny; phylogeny dominated the gene-content signal in 60.5% of species, environment in 39.5%, and environmental effects were significant in only 12 species (7.0%) positively and 4 species (2.3%) negatively, with no significant effect in 156 species (90.7%). [src: ecotype_analysis]
 
 ## Exploratory Signals
 
@@ -79,6 +83,8 @@ The ecotype result **supports** caution about interpreting apparent ecological s
 
 The reanalysis also found that its median partial correlation across all 183 species was 0.081, compared with 0.003 in the original ecotype analysis, characterized as a 27x difference. It used all genomes with embeddings, including up to 3,505 genomes per species, rather than diversity-maximizing downsampling with a maximum of 250 genomes. Absolute correlations are therefore not comparable across methods, although the within-method Environmental versus Human-associated comparison remains valid. [src: ecotype_env_reanalysis]
 
+The new analysis **refines** this methodological caution: AlphaEarth embeddings covered only 28.4% of genomes, geographic coordinates were often missing or imprecise, and partial correlations assume linear relationships between distance matrices. It found no significant difference in environmental effects between environmental and host-associated bacteria (p=0.66), and cautioned that host-associated coordinates may represent collection sites rather than actual microenvironments. [src: ecotype_analysis]
+
 ## Tensions
 
 The principal tension is between null predeclared genus-level Spearman tests and positive exploratory models that adjust for mapped coverage and additional covariates. [src: enigma_contamination_functional_potential]
@@ -89,9 +95,13 @@ The discordance is not resolved by the high-coverage subset or fraction-aware an
 
 The ecotype reanalysis adds a related methodological tension: the original and reanalysis median partial correlations were 0.003 and 0.081, respectively, but the changed genome sets and downsampling procedures prevent treating the 27x difference as a biological effect. [src: ecotype_env_reanalysis]
 
+The new ecotype analysis adds a third, related tension: its environment median partial correlation was 0.0025 and phylogeny median was 0.0143, while the reanalysis median was 0.081. The differing genome coverage, species inclusion, embedding coverage, and sampling procedures prevent treating these values as directly comparable biological estimates. [src: ecotype_analysis] [src: ecotype_env_reanalysis]
+
 The project evidence therefore supports a cautious hypothesis that contamination-linked functional differentiation may exist at finer taxonomic, pathway, or strain resolution than the current genus-level COG-fraction proxies, but it does not establish that hypothesis as a community-wide finding. [src: enigma_contamination_functional_potential]
 
 Similarly, the ecotype report proposes—but does not directly establish—that AlphaEarth embeddings may capture regional epidemiological patterns rather than ecological differences, and that unequal genome counts may provide greater statistical power for weak correlations. [src: ecotype_env_reanalysis]
+
+The new analysis **supports** this hypothesis as a limitation rather than resolving it: it suggests that AlphaEarth embeddings may not fully capture ecologically relevant environmental variation, while its result that phylogeny generally dominates whole-genome gene-content similarity does not exclude environmental effects on specific gene subsets. [src: ecotype_analysis]
 
 ## Relation to Other Concepts
 
@@ -114,3 +124,4 @@ The ecotype reanalysis **refines** this framework by showing that genome-level e
 - Reanalyze the 212 sample-fraction rows with preregistered fraction-stratified and pooled contrasts to determine whether the pooled exploratory signal can be reproduced across the `0.2_micron_filter` and `10_micron_filter` fractions. [src: enigma_contamination_functional_potential]
 - Compare downsampled and full-genome ecotype extraction under a shared genome set, then add genome count as a covariate, to determine whether the 27x partial-correlation discrepancy is methodological or reflects sampling power. [src: ecotype_env_reanalysis]
 - Repeat the ecotype association using functional subsets and structured ENVO terms to test whether whole-genome Jaccard distances or coarse environmental categories mask environment-linked gene-content signals. [src: ecotype_env_reanalysis]
+- Recompute the original, reanalysis, and new ecotype correlations on a shared genome set with matched embedding coverage and nonlinear distance-based methods, then test COG categories including V-Defense and L-Mobile to determine whether environmental effects are localized to functional subsets. [src: ecotype_analysis]

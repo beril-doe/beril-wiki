@@ -33,7 +33,7 @@ A defensible join should document the semantic definition of each key, identifie
 
 Cross-tenant deduplication is also relevant to interpretation: the atlas did not perform it, and it notes that Refdata and KBase may contain the same UniProt entries through different cluster indices, while ENIGMA and genome-depot tables share genome records with the ENIGMA SDT layer. [src: berdl_data_atlas] Counts from a joined dataset should therefore distinguish matched records, distinct biological entities, and duplicated representations. [src: berdl_data_atlas]
 
-This concept connects to [[concepts/cross-tenant-data-bridging]], [[concepts/provenance-aware-resource-discovery]], [[concepts/pangenome-integration]], [[concepts/multi-omics-integration]], and [[concepts/metadata-resolution-and-within-species-heterogeneity]]. [src: berdl_data_atlas]
+This concept connects to [[concepts/cross-tenant-data-bridging]], [[concepts/provenance-aware-resource-discovery]], [[concepts/pangenome-integration]], [[concepts/multi-omics-integration]], and [[concepts/environmental-resistome]]. [src: berdl_data_atlas]
 
 ## Open Directions
 

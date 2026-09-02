@@ -9,6 +9,7 @@ from __future__ import annotations
 from consolidate_concepts import (
     backmerge_candidates,
     body_src_ids,
+    both_mature,
     cosine,
     merge_candidates,
     rewrite_concept_links,
@@ -51,16 +52,21 @@ def _concepts(*cited):
 
 
 def test_merge_candidates():
-    vecs = [unit([1.0, 0.0]), unit([0.99, 0.14]), unit([0.0, 1.0])]
-    # c0 thin, c1 thin, c2 orthogonal -> only the c0/c1 pair clears 0.85
+    m1 = {"m1": [unit([1.0, 0.0]), unit([0.99, 0.14]), unit([0.0, 1.0])]}
+    # c0/c1 are near-identical, c2 is orthogonal -> c0/c1 ranks first
     cs = _concepts("a", "b", "c")
-    assert [(i, j) for _, i, j in merge_candidates(cs, vecs, 0.85, mature=4)] == [(0, 1)]
+    assert [(i, j) for _, _, i, j in merge_candidates(cs, m1, 1, mature=4)] == [(0, 1)]
     # both mature -> skipped even though they are near-identical
-    mature = _concepts("abcd", "efgh", "c")
-    assert merge_candidates(mature, vecs, 0.85, mature=4) == []
+    assert merge_candidates(_concepts("abcd", "efgh", "c"), m1, 1, mature=4) == []
     # one mature, one thin -> still in scope (shard absorbed into a hub)
-    mixed = _concepts("abcd", "b", "c")
-    assert [(i, j) for _, i, j in merge_candidates(mixed, vecs, 0.85, mature=4)] == [(0, 1)]
+    assert [(i, j) for _, _, i, j in
+            merge_candidates(_concepts("abcd", "b", "c"), m1, 1, mature=4)] == [(0, 1)]
+    # UNION across models: a second model whose top pair is (0,2) contributes it
+    # even though model 1 ranks that pair last. This is the recall fix -- one
+    # model buried a confirmed duplicate at rank 518 of 11,628.
+    two = {"m1": m1["m1"], "m2": [unit([1.0, 0.0]), unit([0.0, 1.0]), unit([0.99, 0.14])]}
+    got = {(i, j) for _, _, i, j in merge_candidates(cs, two, 1, mature=4)}
+    assert got == {(0, 1), (0, 2)}
 
 
 def test_backmerge_candidates():
@@ -75,6 +81,24 @@ def test_backmerge_candidates():
     # the mature concept is not offered anything; proj_a is already integrated,
     # proj_c is below threshold -> only thin+proj_b survives
     assert [(cs[i]["stem"], ss[j]["sid"]) for _, i, j in got] == [("thin", "proj_b")]
+
+
+def test_both_mature():
+    """Regression: phase_merge re-keys a pair through the redirect map when one
+    side was already merged away. Checking maturity only at candidate-generation
+    time let a (thin, mature) pair become (mature, mature) after re-keying, and
+    it merged a 28-project concept into a 32-project one. Both call sites now
+    share this predicate, so the rule cannot hold in one place and not the other."""
+    thin, hub, other_hub = set("ab"), set("abcdefgh"), set("ijklmnop")
+    assert both_mature(hub, other_hub, 4) is True      # never merge two hubs
+    assert both_mature(thin, hub, 4) is False          # shard into hub is fine
+    assert both_mature(thin, thin, 4) is False
+    # the exact shape of the bug: a thin page redirected onto a hub
+    redirected = hub                                    # 'thin' merged into 'hub' earlier
+    assert both_mature(redirected, other_hub, 4) is True
+    # boundary: mature is inclusive
+    assert both_mature(set("abcd"), set("efgh"), 4) is True
+    assert both_mature(set("abc"), set("efgh"), 4) is False
 
 
 def test_rewrite_concept_links():
@@ -108,6 +132,7 @@ if __name__ == "__main__":
     test_body_src_ids()
     test_cosine()
     test_merge_candidates()
+    test_both_mature()
     test_backmerge_candidates()
     test_rewrite_concept_links()
     test_padding_gate()

@@ -1,7 +1,7 @@
 ---
 type: "Concept"
 description: "Distinguishes genome-wide ancestry effects from locus-specific ecological adaptation."
-sources: ["summaries/ecotype_analysis__REPORT.md", "summaries/ecotype_functional_differentiation__REPORT.md", "summaries/pangenome_openness__REPORT.md"]
+sources: ["summaries/ecotype_analysis__REPORT.md", "summaries/ecotype_functional_differentiation__REPORT.md", "summaries/pangenome_openness__REPORT.md", "summaries/ecotype_env_reanalysis__REPORT.md"]
 ---
 # Genome-Wide Versus Locus-Specific Ecological Adaptation
 
@@ -15,13 +15,15 @@ The result is consistent with a model in which clonal ancestry structures broad 
 
 The pangenome openness analysis **refines** this interpretation rather than demonstrating locus-specific adaptation: openness showed no significant relationship with either the environment effect (Spearman rho = -0.05, p-value = 0.54) or the phylogeny effect (Spearman rho = 0.03, p-value = 0.73). [src: pangenome_openness] Thus, open-versus-closed pangenome status did not predict which force dominated gene-content variation in the tested species, suggesting that a single genome-wide openness metric is insufficient to identify eco-phylogenetic dynamics. [src: pangenome_openness] The report further proposes, as hypotheses rather than direct demonstrations, that pangenome structure may be independent of eco-phylogenetic dynamics and that core/accessory classification may miss genes relevant to functional adaptation. [src: pangenome_openness]
 
+The [[summaries/ecotype_env_reanalysis__REPORT]] **supports** the environmental null interpretation rather than the hypothesis that clinical sampling bias explains it: using genome-level harmonized classifications, environmental species did not show stronger environment–gene-content correlations than human-associated species (one-sided Environmental > Human-associated test U=1536, p=0.83). [src: ecotype_env_reanalysis] This **refines** the earlier environmental-versus-host comparison (p=0.66) by using a more systematic classification while retaining the conclusion that the comparison does not establish stronger environmental effects. [src: ecotype_analysis, ecotype_env_reanalysis]
+
 ## Evidence
 
 The study evaluated 172 bacterial species with sufficient environmental and phylogenetic data. [src: ecotype_analysis] Across these species, the median partial correlation for environment was 0.0025, compared with 0.0143 for phylogeny; partial correlation measures the association between two variables while accounting for another variable. [src: ecotype_analysis]
 
 Phylogeny dominated the gene-content signal in 60.5% of species, whereas environment dominated in 39.5% of species. [src: ecotype_analysis] A significant positive environment effect was detected in 12 species (7.0%), a significant negative environment effect in 4 species (2.3%), and no significant effect in 156 species (90.7%). [src: ecotype_analysis] These results **support** phylogeny as the stronger general predictor of whole-genome gene-content similarity, but they do not exclude ecological effects in a minority of species or in restricted genomic regions. [src: ecotype_analysis]
 
-Environmental and host-associated bacteria did not show a significant difference in environmental effects (p=0.66). [src: ecotype_analysis] The analysis cautioned that geographic coordinates for host-associated bacteria may represent collection sites rather than the organisms’ actual microenvironments. [src: ecotype_analysis]
+Environmental and host-associated bacteria did not show a significant difference in environmental effects (p=0.66). [src: ecotype_analysis] The analysis cautioned that geographic coordinates for host-associated bacteria may represent collection sites rather than the organisms’ actual microenvironments. [src: ecotype_analysis] The reanalysis **supports** this null result: among 224 species selected with >=20 genomes having AlphaEarth embeddings and >=30% coverage, 106 (47%) were majority human-associated, 47 (21%) majority environmental, and 71 (32%) Mixed/Other, confirming strong clinical sampling bias without finding stronger environmental correlations. [src: ecotype_env_reanalysis]
 
 The source analysis used environmental embeddings from [[entities/alph-aearth]], genome metadata and taxonomy, NCBI environmental and isolation-source metadata, pangenome composition, and gene-cluster presence/absence profiles queried from [[entities/kbase-ke-pangenome]]. [src: ecotype_analysis] It extracted data for 13,381 genomes across 224 species and produced correlation results for 172 species. [src: ecotype_analysis]
 
@@ -35,6 +37,8 @@ The evidence for locus-specific adaptation is therefore a hypothesis suggested b
 
 The openness result has a related limitation: the sample included only species with both pangenome statistics and ecotype-analysis results, openness was represented by a single summary metric, and the environment and phylogeny effects were derived from partial correlations. [src: pangenome_openness] The upstream ecotype analysis may also have had limited statistical power for some species with few genomes. [src: pangenome_openness] These constraints prevent the null openness relationships from ruling out functional or locus-specific ecological adaptation. [src: pangenome_openness]
 
+The reanalysis **refines** the methodological limitation: its median partial correlation across 183 species was 0.081, whereas the original analysis reported 0.003 and characterized the difference as 27x; the reanalysis used all genomes with embeddings, including up to 3,505 genomes per species, rather than diversity-maximizing downsampling capped at 250 genomes. [src: ecotype_env_reanalysis] Absolute correlations are therefore not comparable across methods, although the within-method environmental-versus-human-associated comparison remains interpretable. [src: ecotype_env_reanalysis]
+
 ## Tensions
 
 The dataset indicates that environment dominated the gene-content signal in 39.5% of species, yet significant positive or negative environmental effects were detected in only 12 species (7.0%) and 4 species (2.3%), respectively. [src: ecotype_analysis] This apparent tension may reflect differences between dominance in comparative effect sizes and statistical significance, but the source does not resolve that distinction. [src: ecotype_analysis]
@@ -42,6 +46,8 @@ The dataset indicates that environment dominated the gene-content signal in 39.5
 The absence of a strong genome-wide environmental signal may indicate that ecological adaptation is locus-specific, but it may also result from incomplete AlphaEarth coverage, imprecise metadata, or environmental embeddings that do not capture biologically relevant variation. [src: ecotype_analysis] The ecotype study adds functional differentiation without environmental assignment or phylogenetic control, so it **supports** the locus-specific hypothesis while leaving the ecological interpretation unresolved. [src: ecotype_functional_differentiation]
 
 The null relationship between pangenome openness and environment or phylogeny effects **qualifies** the interpretation that broad pangenome structure can explain genome-wide versus locus-specific ecological dynamics: openness did not predict either effect, but this test did not directly compare individual loci or functional categories. [src: pangenome_openness] It therefore does not contradict the evidence for functional differentiation, while leaving unresolved whether openness metrics conceal category-specific ecological associations. [src: pangenome_openness, ecotype_functional_differentiation]
+
+The original and reanalysis correlation magnitudes also cannot be treated as a directly replicated effect: the reanalysis reports a median of 0.081 across 183 species versus 0.003 in the original analysis, while the original page reports 0.0025 across its 172-species analysis. [src: ecotype_env_reanalysis, ecotype_analysis] This **refines** rather than resolves the comparison, because the reanalysis attributes the discrepancy to different genome sets and downsampling procedures and explicitly preserves only the within-method group comparison. [src: ecotype_env_reanalysis]
 
 ## Open Directions
 
@@ -51,3 +57,5 @@ The null relationship between pangenome openness and environment or phylogeny ef
 - Quantify the effect of missing or imprecise geographic metadata by repeating the analysis on species and genomes with higher-resolution environmental records, asking whether environmental effects become stronger when microenvironment assignments improve. [src: ecotype_analysis]
 - Extend the ecotype analysis to all 456 eligible species and overlay core-genome phylogenetic trees with habitat metadata to test whether COG differentiation persists after ancestry and environment are modeled jointly. [src: ecotype_functional_differentiation]
 - Replace openness with auxiliary fraction, Heap’s law alpha, or pangenome fluidity, and stratify by gene function and lifestyle, to test whether alternative pangenome metrics reveal category-specific ecological or phylogenetic effects missed by openness. [src: pangenome_openness]
+- Compare downsampled and full-genome extraction on the same species, controlling genome count as a covariate, to determine whether sampling depth or gene-cluster extraction changes explain the 27x correlation discrepancy. [src: ecotype_env_reanalysis]
+- Repeat the environmental comparison with structured ENVO terms and functional subsets, testing whether more precise habitat definitions reveal locus-specific associations masked by whole-genome Jaccard distances. [src: ecotype_env_reanalysis]
