@@ -45,7 +45,7 @@ The condition-specific measurements are limited to conditions that can be tested
 
 ## Organism-level heterogeneity
 
-*Pseudomonas stutzeri* RCH2 contributed 21.5% of its genes as costly+dispensable, compared with 14.0% for the next organism, *Bacteroides thetaiotaomicron*. [src: costly_dispensable_genes] The report identifies recent mobile-element invasion or strain-specific genomic expansion as possible explanations for this outlier but does not resolve the cause. [src: costly_dispensable_genes] This unresolved variation links the concept to [[concepts/genome-expansion-versus-streamlining]] and [[concepts/horizontal-gene-transfer-driven-innovation]] without establishing that either process caused the RCH2 pattern. [src: costly_dispensable_genes]
+*Pseudomonas stutzeri* RCH2 contributed 21.5% of its genes as costly+dispensable, compared with 14.0% for the next organism, *Bacteroides thetaiotaomicron*. [src: costly_dispensable_genes] The report identifies recent mobile-element invasion or strain-specific genomic expansion as possible explanations for this outlier but does not resolve the cause. [src: costly_dispensable_genes] This unresolved variation links the concept to [[concepts/subsurface-bacillota-specialization]] and [[concepts/horizontal-gene-transfer-driven-innovation]] without establishing that either process caused the RCH2 pattern. [src: costly_dispensable_genes]
 
 ## Interpretation and limits
 

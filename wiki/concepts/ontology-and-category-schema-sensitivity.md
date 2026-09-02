@@ -5,7 +5,7 @@ sources: ["summaries/discoveries.md"]
 ---
 # Ontology and Category-Schema Dependence of Biological Conclusions
 
-Biological conclusions are partly determined by the ontology, category schema, and matching rules used to represent observations, so analyses should treat schema choice as an explicit source of uncertainty rather than as a neutral preprocessing step. [src: discoveries] The findings summarized in [[summaries/discoveries]] connect this issue to [[concepts/environmental-resistome]], [[concepts/composite-functional-annotation]], [[concepts/evidence-triangulation-for-functional-annotation]], and [[concepts/schema-to-value-space-join-validation]].
+Biological conclusions are partly determined by the ontology, category schema, and matching rules used to represent observations, so analyses should treat schema choice as an explicit source of uncertainty rather than as a neutral preprocessing step. [src: discoveries] The findings summarized in [[summaries/discoveries]] connect this issue to [[concepts/environmental-resistome]], [[concepts/composite-functional-annotation]], [[concepts/evidence-triangulation-for-functional-annotation]], and [[concepts/potential-versus-realized-data-integration]].
 
 ## Category definitions can reverse pathway conclusions
 

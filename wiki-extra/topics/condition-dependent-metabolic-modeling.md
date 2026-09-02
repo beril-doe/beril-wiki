@@ -12,7 +12,7 @@ The corpus further extends the literature by quantifying how inferred network st
 
 ## What the Corpus Shows
 
-**Condition changes the biological question being modeled.** A metabolic model does not predict a single condition-free property of a gene. In ADP1, 499 genes were essential on minimal media compared with 346 on LB, and FBA flux classes changed for 177 of 866 genes between rich and minimal media. [src: acinetobacter_adp1_explorer] Across eight carbon sources, 333 of 478 genes showed condition-specific growth defects, whereas only 10 showed defects across all eight conditions; mean pairwise defect correlation was 0.38, ranging from -0.03 to 1.0. [src: adp1_triple_essentiality] These results make the medium part of the prediction target: a model tested on one nutrient regime should not automatically be treated as validated in another. [[concepts/metabolic-model-gapfilling]] and [[concepts/essentiality-prediction-task-definition]] develop this distinction.
+**Condition changes the biological question being modeled.** A metabolic model does not predict a single condition-free property of a gene. In ADP1, 499 genes were essential on minimal media compared with 346 on LB, and FBA flux classes changed for 177 of 866 genes between rich and minimal media. [src: acinetobacter_adp1_explorer] Across eight carbon sources, 333 of 478 genes showed condition-specific growth defects, whereas only 10 showed defects across all eight conditions; mean pairwise defect correlation was 0.38, ranging from -0.03 to 1.0. [src: adp1_triple_essentiality] These results make the medium part of the prediction target: a model tested on one nutrient regime should not automatically be treated as validated in another. [[concepts/metabolic-model-gapfilling]] and [[concepts/gene-essentiality]] develop this distinction.
 
 The distinction also applies to continuous phenotypes. Continuous mutant fitness preserves ranking information that can be lost when outcomes are reduced to essential versus dispensable. In the ADP1 analysis, inverted fitness predicted knockout essentiality with AUC = 0.700 in rich media and AUC = 0.725 in minimal media, while an essentiality-fraction predictor produced AUC = 0.344 and AUC = 0.403, respectively. [src: adp1_triple_essentiality] Here, AUC means Area Under the ROC Curve, a threshold-independent measure of classification performance. The appropriate model evaluation therefore depends on whether the intended output is lethality, growth impairment, or quantitative condition-specific fitness. [src: adp1_triple_essentiality]
 
@@ -43,7 +43,7 @@ Cross-species transfer adds another load-bearing limitation. Ortholog-transferre
 ## Where to Go Deeper
 
 - [[concepts/metabolic-model-gapfilling]] — start here for FBA–TnSeq agreement, media-dependent essentiality, and the empirical boundaries of model validation.
-- [[concepts/essentiality-prediction-task-definition]] — distinguish lethal, quantitative, continuous-fitness, and condition-specific prediction targets.
+- [[concepts/gene-essentiality]] — distinguish lethal, quantitative, continuous-fitness, and condition-specific prediction targets.
 - [[concepts/metabolic-model-gapfilling]] — examine how inferred reactions, annotation gaps, and incomplete evidence shape model reliability.
 - [[concepts/respiratory-capacity-and-nadh-load]] — investigate why reducing-equivalent load may matter more than substrate class.
 - [[concepts/metabolic-pathway-support-networks]] — follow pathway dependencies into cofactors, metals, respiration, and regulation.

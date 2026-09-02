@@ -9,7 +9,7 @@ The study distinguishes two genotype-to-phenotype tasks: predicting whether a st
 
 ## Core distinction
 
-Binary growth capability asks whether genomic content supports growth on or under a specified condition, while continuous kinetics asks how rapidly, how long after inoculation, or to what yield the organism grows. The distinction is central to [[concepts/condition-specific-fitness]] and to the definition of the prediction task in [[concepts/essentiality-prediction-task-definition]]. [src: genotype_to_phenotype_enigma]
+Binary growth capability asks whether genomic content supports growth on or under a specified condition, while continuous kinetics asks how rapidly, how long after inoculation, or to what yield the organism grows. The distinction is central to [[concepts/condition-specific-fitness]] and to the definition of the prediction task in [[concepts/gene-essentiality]]. [src: genotype_to_phenotype_enigma]
 
 The biological interpretation is that gene content can encode the presence of transporters, catabolic enzymes, biosynthetic pathways, and regulators needed to use a substrate, while growth rate also depends on enzyme kinetics, expression, regulatory state, and ribosome efficiency. The report therefore treats capability prediction as more directly encoded by comparative genome features than continuous kinetic prediction. [src: genotype_to_phenotype_enigma]
 

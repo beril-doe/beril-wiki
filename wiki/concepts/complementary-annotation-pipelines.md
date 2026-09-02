@@ -23,7 +23,7 @@ The result connects directly to [[concepts/evidence-triangulation-for-functional
 
 Only 33.3% of Bakta's 17.6M distinct UniRef50 identifiers existed in the BERDL UniProt identifier table. [src: discoveries] This **weakens** any interpretation that a Bakta UniRef50 link automatically provides locally recoverable downstream functional detail, because identifier presence in the annotation output did not guarantee representation in the queried BERDL table. [src: discoveries]
 
-The findings therefore **support** provenance-aware joins between annotation outputs and reference databases, with explicit reporting of missing identifiers and source-specific coverage. [src: discoveries] This requirement is related to [[concepts/schema-to-value-space-join-validation]] and [[concepts/provenance-aware-resource-discovery]], which address whether an annotation can be connected to usable reference data rather than merely recorded as a label. [src: discoveries]
+The findings therefore **support** provenance-aware joins between annotation outputs and reference databases, with explicit reporting of missing identifiers and source-specific coverage. [src: discoveries] This requirement is related to [[concepts/potential-versus-realized-data-integration]] and [[concepts/provenance-aware-resource-discovery]], which address whether an annotation can be connected to usable reference data rather than merely recorded as a label. [src: discoveries]
 
 ## Implications for functional inference
 

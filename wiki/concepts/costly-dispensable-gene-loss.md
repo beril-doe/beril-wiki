@@ -55,7 +55,7 @@ The new analysis **supports** this caution: strong condition-specific phenotypes
 
 ## Organism-level heterogeneity
 
-*Pseudomonas stutzeri* RCH2 contributes 21.5% of its genes as costly+dispensable, compared with 14.0% for the next organism, *Bacteroides thetaiotaomicron*. [src: costly_dispensable_genes] The report identifies a recent mobile-element invasion or strain-specific genomic expansion as possible explanations, but leaves the cause unresolved. [src: costly_dispensable_genes] This outlier **qualifies** the cross-organism interpretation and links the concept to [[concepts/genome-expansion-versus-streamlining]]. [src: costly_dispensable_genes]
+*Pseudomonas stutzeri* RCH2 contributes 21.5% of its genes as costly+dispensable, compared with 14.0% for the next organism, *Bacteroides thetaiotaomicron*. [src: costly_dispensable_genes] The report identifies a recent mobile-element invasion or strain-specific genomic expansion as possible explanations, but leaves the cause unresolved. [src: costly_dispensable_genes] This outlier **qualifies** the cross-organism interpretation and links the concept to [[concepts/subsurface-bacillota-specialization]]. [src: costly_dispensable_genes]
 
 ## Interpretation and limits
 

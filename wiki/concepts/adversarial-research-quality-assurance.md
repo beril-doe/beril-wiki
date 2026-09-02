@@ -5,7 +5,7 @@ sources: ["summaries/discoveries.md"]
 ---
 # Adversarial Validation of Computational Biology Claims
 
-Computational-biology claims require adversarial validation: an intentional effort to challenge citations, statistical interpretations, feature construction, confounding control, null models, sample-size statements, and data provenance rather than only checking whether an analysis runs. [src: discoveries] This practice complements [[concepts/evidence-triangulation-for-functional-annotation]], [[concepts/provenance-aware-resource-discovery]], and [[concepts/schema-to-value-space-join-validation]] by testing whether apparently supported results remain valid under independent scrutiny. [src: discoveries]
+Computational-biology claims require adversarial validation: an intentional effort to challenge citations, statistical interpretations, feature construction, confounding control, null models, sample-size statements, and data provenance rather than only checking whether an analysis runs. [src: discoveries] This practice complements [[concepts/evidence-triangulation-for-functional-annotation]], [[concepts/provenance-aware-resource-discovery]], and [[concepts/potential-versus-realized-data-integration]] by testing whether apparently supported results remain valid under independent scrutiny. [src: discoveries]
 
 ## What adversarial review adds
 

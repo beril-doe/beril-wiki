@@ -51,7 +51,7 @@ Finally, [[conflicts/conflict--berdl_data_atlas--cofitness_coinheritance--ecotyp
 ## Where to Go Deeper
 
 - [[concepts/study-batch-confounding-of-environmental-associations]] — begin here to see how random validation can reverse under study-held-out testing.
-- [[concepts/environmental-metadata-harmonization-bias]] — examine how category construction, missingness, and coordinate quality alter the environmental variable itself.
+- [[concepts/environment-embedding-geography]] — examine how category construction, missingness, and coordinate quality alter the environmental variable itself.
 - [[concepts/classifier-database-compatibility-in-taxonomic-quantification]] — assess why taxonomic measurements from different classifiers cannot automatically be compared.
 - [[concepts/collection-site-versus-microenvironment-mismatch]] — investigate why coordinates may fail to represent organism-proximal exposure.
 - [[concepts/environmental-resistome]] — follow the limitations of species-level environmental labels in AMR comparisons.
