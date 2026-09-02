@@ -19,7 +19,7 @@ Despite the PaperBLAST false negatives, NCBI annotation independently supported 
 
 ## Database and naming coverage are part of the evidence
 
-The comparison was vulnerable to naming-convention false negatives, and *M. catarrhalis* was under-annotated in PaperBLAST with 162 genes total. [src: caulobacter_fur_lipida_loss] These limitations make database representation and annotation completeness explicit components of the evidential basis for a negative homology result. [src: caulobacter_fur_lipida_loss] This issue connects to [[concepts/annotation-dependent-resistome-inference]], where inferred biological absence or prevalence can depend on how genes are represented and annotated in the underlying resource. [src: caulobacter_fur_lipida_loss]
+The comparison was vulnerable to naming-convention false negatives, and *M. catarrhalis* was under-annotated in PaperBLAST with 162 genes total. [src: caulobacter_fur_lipida_loss] These limitations make database representation and annotation completeness explicit components of the evidential basis for a negative homology result. [src: caulobacter_fur_lipida_loss] This issue connects to [[concepts/environmental-resistome]], where inferred biological absence or prevalence can depend on how genes are represented and annotated in the underlying resource. [src: caulobacter_fur_lipida_loss]
 
 ## Species-specific alternatives require separate testing
 

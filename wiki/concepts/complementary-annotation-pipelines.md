@@ -29,7 +29,7 @@ The findings therefore **support** provenance-aware joins between annotation out
 
 A practical composite workflow should preserve Bakta and eggNOG assignments separately, merge them only after identifier and evidence-type validation, and mark whether a function is pipeline-specific or independently supported. [src: discoveries] The workflow should also distinguish descriptive product labels, orthology assignments, domain evidence, pathway mappings, GO terms, and UniRef50 links instead of treating them as interchangeable evidence. [src: discoveries]
 
-This approach **refines** [[concepts/annotation-dependent-resistome-inference]] because resistance conclusions can change when one annotation namespace detects relevant functions and another does not. [src: discoveries] It also **supports** [[concepts/structural-annotation-gap]]: recovering a label through a complementary pipeline is useful, but it does not by itself demonstrate that the underlying gene model, family assignment, or biological interpretation is correct. [src: discoveries]
+This approach **refines** [[concepts/environmental-resistome]] because resistance conclusions can change when one annotation namespace detects relevant functions and another does not. [src: discoveries] It also **supports** [[concepts/structural-annotation-gap]]: recovering a label through a complementary pipeline is useful, but it does not by itself demonstrate that the underlying gene model, family assignment, or biological interpretation is correct. [src: discoveries]
 
 ## Open Directions
 

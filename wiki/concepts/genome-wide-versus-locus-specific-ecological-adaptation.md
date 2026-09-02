@@ -1,7 +1,7 @@
 ---
 type: "Concept"
-description: "Tests whether ecology shapes whole genomes or specific gene loci"
-sources: ["summaries/ecotype_analysis__REPORT.md"]
+description: "Distinguishes genome-wide ancestry effects from locus-specific ecological adaptation."
+sources: ["summaries/ecotype_analysis__REPORT.md", "summaries/ecotype_functional_differentiation__REPORT.md", "summaries/pangenome_openness__REPORT.md"]
 ---
 # Genome-Wide Versus Locus-Specific Ecological Adaptation
 
@@ -9,9 +9,11 @@ This concept distinguishes genome-wide gene-content similarity driven by ancestr
 
 ## Core Interpretation
 
-The analysis supports the interpretation that vertical inheritance generally dominates genome-wide bacterial gene-content similarity, whereas environmental adaptation may be concentrated in specific gene subsets rather than distributed uniformly across the genome. [src: ecotype_analysis] This **refines** [[concepts/pangenome-integration]] by indicating that integrating environmental and phylogenetic distances at the whole-genome level can obscure ecological signals restricted to particular functional categories. [src: ecotype_analysis]
+The analysis supports the interpretation that vertical inheritance generally dominates genome-wide bacterial gene-content similarity, whereas environmental adaptation may be concentrated in specific gene subsets rather than distributed uniformly across the genome. [src: ecotype_analysis] New evidence from [[summaries/ecotype_functional_differentiation__REPORT]] **supports and refines** this interpretation: within-species gene-content ecotypes showed systematic differences in COG functional profiles, with adaptive categories having larger effect sizes than housekeeping categories, although the analysis did not test environmental selection directly. [src: ecotype_functional_differentiation] This **refines** [[concepts/pangenome-integration]] by indicating that integrating environmental and phylogenetic distances at the whole-genome level can obscure ecological signals restricted to particular functional categories. [src: ecotype_analysis]
 
-The result is consistent with a model in which clonal ancestry structures broad genome-wide similarity, while horizontal gene transfer and selection contribute to population structure at particular loci. [src: ecotype_analysis] This **connects** the question to [[concepts/phylogenetic-confounding-of-pangenome-associations]], because genome-wide ancestry can make an ecological association appear weaker or less general than a locus-specific association. [src: ecotype_analysis]
+The result is consistent with a model in which clonal ancestry structures broad genome-wide similarity, while horizontal gene transfer and selection contribute to population structure at particular loci. [src: ecotype_analysis] The ecotype analysis **supports** the locus-specific component of this model: valid gene-content ecotypes were detected in 12 of 15 sampled species, and all 12 showed at least one significantly differentiated COG category. [src: ecotype_functional_differentiation] This **connects** the question to [[concepts/phylogenetic-confounding-of-pangenome-associations]], because genome-wide ancestry can make an ecological association appear weaker or less general than a locus-specific association. [src: ecotype_analysis]
+
+The pangenome openness analysis **refines** this interpretation rather than demonstrating locus-specific adaptation: openness showed no significant relationship with either the environment effect (Spearman rho = -0.05, p-value = 0.54) or the phylogeny effect (Spearman rho = 0.03, p-value = 0.73). [src: pangenome_openness] Thus, open-versus-closed pangenome status did not predict which force dominated gene-content variation in the tested species, suggesting that a single genome-wide openness metric is insufficient to identify eco-phylogenetic dynamics. [src: pangenome_openness] The report further proposes, as hypotheses rather than direct demonstrations, that pangenome structure may be independent of eco-phylogenetic dynamics and that core/accessory classification may miss genes relevant to functional adaptation. [src: pangenome_openness]
 
 ## Evidence
 
@@ -23,17 +25,23 @@ Environmental and host-associated bacteria did not show a significant difference
 
 The source analysis used environmental embeddings from [[entities/alph-aearth]], genome metadata and taxonomy, NCBI environmental and isolation-source metadata, pangenome composition, and gene-cluster presence/absence profiles queried from [[entities/kbase-ke-pangenome]]. [src: ecotype_analysis] It extracted data for 13,381 genomes across 224 species and produced correlation results for 172 species. [src: ecotype_analysis]
 
+The ecotype study provides functional evidence adjacent to this genome-wide result: across 257 COG-category tests, 170 (66.1%) were significant after BH-FDR (Benjamini–Hochberg false-discovery-rate) correction at q < 0.05. [src: ecotype_functional_differentiation] Adaptive categories had a significance rate of 79.8% (67/84), compared with 68.8% (33/48) for housekeeping categories, and mean effect sizes of 0.0136 versus 0.0064; the one-sided Mann–Whitney U test gave p = 2.53 x 10^-6. [src: ecotype_functional_differentiation] This **supports** the hypothesis that ecotype-associated differentiation is concentrated more strongly in adaptive functions, but it remains evidence of functional differentiation rather than proof of environmental causation. [src: ecotype_functional_differentiation]
+
 ## Scope and Limitations
 
 Environmental embeddings from [[entities/alph-aearth]] covered only 28.4% of genomes, limiting the environmental signal available for analysis. [src: ecotype_analysis] Geographic coordinates in NCBI metadata were often missing or imprecise, reducing the quality of environmental associations. [src: ecotype_analysis] Partial correlations assume linear relationships between distance matrices and may fail to capture nonlinear ecological effects. [src: ecotype_analysis]
 
-The evidence for locus-specific adaptation is therefore a hypothesis suggested by the weak whole-genome environmental signal, not a direct demonstration that particular loci are environmentally selected. [src: ecotype_analysis] The analysis did not establish that any specific COG functional category has a stronger environmental association than whole-genome gene content. [src: ecotype_analysis]
+The evidence for locus-specific adaptation is therefore a hypothesis suggested by the weak whole-genome environmental signal, not a direct demonstration that particular loci are environmentally selected. [src: ecotype_analysis] The ecotype results **strengthen but do not remove** this limitation: approximately 38% of gene clusters had COG annotations, leaving 62% unannotated, and the analysis lacked within-species phylogenetic controls, so functional differences could reflect annotation bias or phylogenetic and demographic substructure. [src: ecotype_functional_differentiation] The analysis did not establish that any specific COG functional category has a stronger environmental association than whole-genome gene content. [src: ecotype_analysis]
+
+The openness result has a related limitation: the sample included only species with both pangenome statistics and ecotype-analysis results, openness was represented by a single summary metric, and the environment and phylogeny effects were derived from partial correlations. [src: pangenome_openness] The upstream ecotype analysis may also have had limited statistical power for some species with few genomes. [src: pangenome_openness] These constraints prevent the null openness relationships from ruling out functional or locus-specific ecological adaptation. [src: pangenome_openness]
 
 ## Tensions
 
 The dataset indicates that environment dominated the gene-content signal in 39.5% of species, yet significant positive or negative environmental effects were detected in only 12 species (7.0%) and 4 species (2.3%), respectively. [src: ecotype_analysis] This apparent tension may reflect differences between dominance in comparative effect sizes and statistical significance, but the source does not resolve that distinction. [src: ecotype_analysis]
 
-The absence of a strong genome-wide environmental signal may indicate that ecological adaptation is locus-specific, but it may also result from incomplete AlphaEarth coverage, imprecise metadata, or environmental embeddings that do not capture biologically relevant variation. [src: ecotype_analysis]
+The absence of a strong genome-wide environmental signal may indicate that ecological adaptation is locus-specific, but it may also result from incomplete AlphaEarth coverage, imprecise metadata, or environmental embeddings that do not capture biologically relevant variation. [src: ecotype_analysis] The ecotype study adds functional differentiation without environmental assignment or phylogenetic control, so it **supports** the locus-specific hypothesis while leaving the ecological interpretation unresolved. [src: ecotype_functional_differentiation]
+
+The null relationship between pangenome openness and environment or phylogeny effects **qualifies** the interpretation that broad pangenome structure can explain genome-wide versus locus-specific ecological dynamics: openness did not predict either effect, but this test did not directly compare individual loci or functional categories. [src: pangenome_openness] It therefore does not contradict the evidence for functional differentiation, while leaving unresolved whether openness metrics conceal category-specific ecological associations. [src: pangenome_openness, ecotype_functional_differentiation]
 
 ## Open Directions
 
@@ -41,3 +49,5 @@ The absence of a strong genome-wide environmental signal may indicate that ecolo
 - Reanalyze the 172 species with alternative [[entities/alph-aearth]] embedding distances and direct environmental metadata to test whether the weak environmental signal is caused by representation or distance-choice limitations. [src: ecotype_analysis]
 - For species with identified ecotype clusters, compare gene-cluster presence/absence profiles between clusters while controlling for phylogenetic similarity to test whether ecological differentiation is concentrated in particular loci. [src: ecotype_analysis]
 - Quantify the effect of missing or imprecise geographic metadata by repeating the analysis on species and genomes with higher-resolution environmental records, asking whether environmental effects become stronger when microenvironment assignments improve. [src: ecotype_analysis]
+- Extend the ecotype analysis to all 456 eligible species and overlay core-genome phylogenetic trees with habitat metadata to test whether COG differentiation persists after ancestry and environment are modeled jointly. [src: ecotype_functional_differentiation]
+- Replace openness with auxiliary fraction, Heap’s law alpha, or pangenome fluidity, and stratify by gene function and lifestyle, to test whether alternative pangenome metrics reveal category-specific ecological or phylogenetic effects missed by openness. [src: pangenome_openness]

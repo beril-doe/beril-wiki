@@ -1,13 +1,15 @@
 ---
 type: "Concept"
-description: "Fitness importance explains conservation better than field-versus-lab context"
-sources: ["summaries/field_vs_lab_fitness__REPORT.md"]
+description: "Fitness importance predicts conservation more reliably than ecological context"
+sources: ["summaries/field_vs_lab_fitness__REPORT.md", "summaries/fitness_effects_conservation__REPORT.md"]
 ---
 # Fitness importance predicts genome conservation more strongly than field-versus-lab context
 
 ## Core claim
 
 In *Desulfovibrio vulgaris* Hildenborough (DvH), strong fitness importance was more consistently associated with genome conservation than whether a condition was classified as field or laboratory. [src: field_vs_lab_fitness] This conclusion is based on 757 Fitness Browser experiments, 2,725 non-essential genes with both fitness data and pangenome links, and 52 independent component analysis (ICA) fitness modules. [src: field_vs_lab_fitness] The source analysis is summarized at [[summaries/field_vs_lab_fitness__REPORT]].
+
+A broader analysis **supports** this interpretation: across approximately 194,000 genes from 43 diverse bacteria, fitness importance and pangenome conservation showed a positive but weak association, with essential genes 82% core versus always-neutral genes 66% core. [src: fitness_effects_conservation] Fitness breadth likewise correlated positively with core status (Spearman rho=0.086, p=8.1e-230), indicating that repeated or strong fitness effects carry more conservation signal than a field-versus-lab label. [src: fitness_effects_conservation] The comparison is complementary rather than identical, because the broader analysis pooled organisms and conditions while the DvH analysis explicitly tested ecological context.
 
 ## Evidence from condition classes
 
@@ -17,11 +19,15 @@ This **supports** [[concepts/condition-specific-fitness]] by showing that condit
 
 The ranking was stable across fitness thresholds from -1 to -3: field-stress genes were 89.4%, 83.6%, 84.0%, and 82.1% core at thresholds -3.0, -2.0, -1.5, and -1.0, respectively, while heavy-metal genes were 70.6%, 71.2%, 76.7%, and 76.7% core at those same thresholds. [src: field_vs_lab_fitness] Field-stress was highest at every tested threshold, whereas heavy-metals was consistently lowest. [src: field_vs_lab_fitness]
 
+The cross-bacterial analysis **supports** the importance component of these comparisons: genes with strong or broad fitness effects were more conserved, but the effect was weak overall, while genes with strong condition-specific annotations were 77.3% core versus 70.3% without such annotations (OR=1.78, p=1.8e-97). [src: fitness_effects_conservation] This **refines** the DvH result by showing that condition-specific effects need not be predominantly accessory; core genes can also have detectable conditional effects. [src: fitness_effects_conservation]
+
 ## Evidence from specificity and prediction
 
 The specificity analysis found 50 lab-specific genes that were 96.0% core, 52 field-specific genes that were 88.5% core, 89 field-biased genes that were 83.1% core, 352 universal genes that were 79.8% core, and 2,083 neutral genes that were 74.5% core. [src: field_vs_lab_fitness] Universal genes were significantly more core than neutral genes (OR=1.35, p=0.033), whereas the difference between lab-specific and field-specific genes was not statistically significant (Fisher exact OR=0.32, p=0.27). [src: field_vs_lab_fitness] These results **support** the interpretation that repeated or strong fitness importance predicts conservation more reliably than the field-versus-lab label. [src: field_vs_lab_fitness]
 
 Logistic regression with 10-fold cross-validated area under the receiver operating characteristic curve (CV-AUC) produced weak performance for field fitness alone (0.517, standard deviation 0.052), lab fitness alone (0.531, 0.052), and field plus lab fitness (0.548, 0.053). [src: field_vs_lab_fitness] Adding gene length increased performance to 0.645 (0.068), indicating that gene length was more predictive of core status than either fitness dimension in this model. [src: field_vs_lab_fitness] This result **refines** [[concepts/pangenome-integration]] by showing that integrating fitness and pangenome status does not make ecological context alone a strong conservation predictor. [src: field_vs_lab_fitness]
+
+The broader analysis **supports** the direction of this result but qualifies its strength: essential genes were 82% core, genes affecting 20+ experiments were 79% core, and genes with 0 experiments were 66% core, yet the association between fitness breadth and core status remained weak. [src: fitness_effects_conservation] Its singleton genes were near-neutral under tested laboratory conditions, although poor transposon coverage may partly explain that apparent neutrality. [src: fitness_effects_conservation]
 
 ## Module-level evidence
 
@@ -33,9 +39,13 @@ The module results did not support the hypothesis that field activity predicts m
 
 The analysis **supports** [[concepts/adaptive-versus-housekeeping-functional-differentiation]] insofar as broadly important genes were more conserved, but it does not establish that field-associated genes are generally more conserved than laboratory-associated genes. [src: field_vs_lab_fitness] Field and lab fitness effects were correlated at approximately r ~ 0.7 from the scatter plot, so most genes that were sick in one context were also sick in the other. [src: field_vs_lab_fitness]
 
+The cross-organism results **support** the same conservation gradient while adding that core genes were more likely than auxiliary genes to show beneficial deletion effects (24.4% versus 19.9%) and condition-specific effects, suggesting a broader core-gene trade-off architecture rather than uniformly stronger costs. [src: fitness_effects_conservation] This does not overturn the DvH context comparison, but **refines** it: conservation tracks functional importance more consistently than any simple field-versus-lab distinction, while the measured effect remains modest. [src: fitness_effects_conservation]
+
 The low conservation of lab-antibiotic and heavy-metal-important genes is consistent with resistance functions being disproportionately accessory and potentially associated with recently acquired mobile genetic elements, but the analysis did not directly measure mobile-element association. [src: field_vs_lab_fitness] The report therefore suggests the hypothesis that specific metal-resistance mechanisms such as efflux pumps and metal-binding proteins are accessory, whereas uranium and mercury responses may involve more fundamental stress pathways, including DNA repair and sulfate reduction. [src: field_vs_lab_fitness] This interpretation connects to [[concepts/environmental-resistome]] and [[concepts/metal-cross-resistance]] without establishing a causal mechanism for the observed conservation differences. [src: field_vs_lab_fitness]
 
 The result is limited to a single-organism analysis of DvH, whose pangenome contains relatively few genomes and has a 76.3% baseline core fraction among the analyzed non-essential genes. [src: field_vs_lab_fitness] Fitness comparisons also excluded 678 essential genes, 80.1% of which were core, because no transposon mutants were recovered. [src: field_vs_lab_fitness] Gene length is confounded with both fitness-measurement quality, because short genes receive fewer transposon insertions, and core status, because core genes tend to be longer. [src: field_vs_lab_fitness] The field-specific and lab-specific gene sets were small, with n=50–52 per group, limiting statistical power for their comparison. [src: field_vs_lab_fitness]
+
+The broader analysis has related boundaries: its measurements were biased toward rich media and standard stresses, covered 43 bacteria primarily from Proteobacteria, used single-gene knockouts that did not capture epistasis, and may have mistaken poor transposon coverage for neutrality in singleton genes. [src: fitness_effects_conservation]
 
 ## Relation to existing concepts
 
@@ -43,6 +53,7 @@ The result is limited to a single-organism analysis of DvH, whose pangenome cont
 - This **extends** [[concepts/pangenome-integration]]: fitness effects and core/auxiliary status can be integrated, while gene length remains a stronger predictor in the reported model. [src: field_vs_lab_fitness]
 - This **supports** [[concepts/gene-essentiality]]: essential genes were largely core but were absent from the transposon fitness comparison, separating constitutive essentiality from measured conditional importance. [src: field_vs_lab_fitness]
 - This **refines** [[concepts/environmental-resistome]]: resistance-associated fitness importance can occur in relatively unconserved, accessory portions of the DvH pangenome. [src: field_vs_lab_fitness]
+- The broader cross-bacterial analysis **supports** these links by showing that fitness magnitude and breadth predict conservation across approximately 194,000 genes, while also demonstrating that the prediction is weak. [src: fitness_effects_conservation]
 
 ## Open Directions
 
@@ -52,3 +63,4 @@ The result is limited to a single-organism analysis of DvH, whose pangenome cont
 - Combine genomic-context analyses with resistance-gene calls to test whether the 73.4% core fraction for lab-antibiotic genes and 71.2% for heavy-metal genes is associated with mobile genetic elements. [src: field_vs_lab_fitness]
 - Reanalyze the 52 ICA modules using functional annotation and environmental metadata to test whether the 52 unannotated genes in ecological modules mediate adaptation rather than merely co-varying with conserved genes. [src: field_vs_lab_fitness]
 - Link the 4,346 ENIGMA CORAL field samples with geochemistry and 213,044 ASVs to test ecological associations for DvH or other organisms with both environmental data and gene-level fitness measurements. [src: field_vs_lab_fitness]
+- Reanalyze the approximately 194,000-gene dataset with insertion coverage, gene length, phylogeny, and pangenome prevalence to determine how much of the weak fitness–conservation association survives measurement-bias correction. [src: fitness_effects_conservation]

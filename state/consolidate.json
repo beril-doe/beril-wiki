@@ -1,0 +1,11 @@
+{
+ "no_evidence": {},
+ "rejected": {
+  "antimicrobial-resistance-fitness-cost|resistance-cost-compensation|1a9bf48281b11edd06ae4c2eb7b84277": "These are distinct concepts: Page A synthesizes measured baseline AMR fitness costs and condition-specific benefits, whereas Page B focuses on the separate, explicitly hypothesized mechanism of compen",
+  "phylogenetic-structure-of-resistomes|within-species-resistome-heterogeneity|024eb09bfacbe922070f0d8c3ed7cd60": "These are distinct concepts: Page B synthesizes multiple forms and mechanisms of within-species resistome heterogeneity, whereas Page A focuses specifically on phylogenetic structuring and its statist",
+  "v2-evidence-overlap|condition-dependent-gene-tradeoffs|fitness-importance-and-pangenome-conservation|25969b10614abc8e4907095449d7fdf5": "These are distinct concepts supported by different projects and measurements: Page A evaluates genome-wide associations between essentiality, fitness breadth or magnitude, and pangenome conservation a",
+  "v2-evidence-overlap|core-genome-burden-paradox|fitness-importance-and-pangenome-conservation|25969b10614abc8ed1e6f4c03d37e594": "The pages cite disjoint projects and rest on distinct analyses: Page A focuses on the weak relationship between mutant fitness importance and pangenome conservation, whereas Page B focuses on laborato",
+  "v2-evidence-overlap|pairwise-to-community-interaction-extrapolation|within-species-resistome-heterogeneity|de18382f9a8753f1f10ffab6fbb4d4c0": "These are distinct concepts supported by different projects and measurements: one concerns extrapolating sparse pairwise microbial interactions to multispecies community effects, while the other conce",
+  "v2-evidence-overlap|phenotype-database-coverage-bias|phylogenetic-confounding-of-pangenome-associations|14a29fb4f3bb19821d99cf609bfc7885": "These are distinct concepts supported by different projects and measurements: Page A addresses phylogenetic confounding in pangenome\u2013AMR associations, whereas Page B evaluates database coverage bias a"
+ }
+}

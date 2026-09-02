@@ -17,7 +17,7 @@ Across 9 adversarial review rounds, two recurring citation failures were PMID hi
 
 Methodology revisions M1–M26 were not automatically one multiple-testing family. [src: discoveries] The reviewed project had 4 pre-registered hypotheses, for which Bonferroni correction used α=0.0125, and all 4 hypotheses survived that correction. [src: discoveries] Only M14, M21, and M23 were genuine post-hoc metric corrections. [src: discoveries] The appropriate rule is to correct actual hypothesis-test families, not transparent documentation of methodological changes. [src: discoveries]
 
-Adversarial validation should explicitly test whether non-significant results are being described as positive findings, whether covariates have been adjusted, whether a null distribution exists for an enrichment or association claim, and whether the reported sample size matches the independent observational units. [src: discoveries] These checks are especially relevant to [[concepts/phylogenetic-confounding-of-phenotype-associations]], [[concepts/phylogenetic-confounding-of-pangenome-associations]], and [[concepts/fitness-matched-null-models]], where dependence structure and null-model choice can change the interpretation of an association. [src: discoveries]
+Adversarial validation should explicitly test whether non-significant results are being described as positive findings, whether covariates have been adjusted, whether a null distribution exists for an enrichment or association claim, and whether the reported sample size matches the independent observational units. [src: discoveries] These checks are especially relevant to [[concepts/phenotype-database-coverage-bias]], [[concepts/phylogenetic-confounding-of-pangenome-associations]], and [[concepts/fitness-matched-null-models]], where dependence structure and null-model choice can change the interpretation of an association. [src: discoveries]
 
 ## Data and provenance validation
 
@@ -39,7 +39,7 @@ This protocol does not guarantee that a claim is true, but it makes unsupported 
 
 ## Relation to the wider corpus
 
-Adversarial validation strengthens [[concepts/annotation-dependent-resistome-inference]] by requiring marker definitions and database provenance to be explicit before resistance classifications are interpreted. [src: discoveries] It also complements [[concepts/metabolic-model-validation]] and [[concepts/circularity-in-metabolic-model-validation]] by challenging whether model support, annotations, and validation data are independent. [src: discoveries] The same principle applies to [[concepts/cross-cohort-microbiome-portability]], where leakage repair and independent cohort checks determine whether a classifier or biomarker transfers beyond its training data. [src: discoveries]
+Adversarial validation strengthens [[concepts/environmental-resistome]] by requiring marker definitions and database provenance to be explicit before resistance classifications are interpreted. [src: discoveries] It also complements [[concepts/metabolic-model-gapfilling]] and [[concepts/circularity-in-metabolic-model-validation]] by challenging whether model support, annotations, and validation data are independent. [src: discoveries] The same principle applies to [[concepts/cross-cohort-microbiome-portability]], where leakage repair and independent cohort checks determine whether a classifier or biomarker transfers beyond its training data. [src: discoveries]
 
 ## Open Directions
 

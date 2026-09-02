@@ -29,7 +29,7 @@ Adding KO × condition interaction features increased mean AUC from 0.620 to 0.6
 
 Capability prediction was also constrained by annotation and training coverage. GapMind achieved AUC 0.646, 78.8% accuracy, and 24.3% coverage on 118 testable pairs, with 96.5% recall and 79% precision. Matched-condition Carbon Source Phenotypes transfer achieved AUC 0.800 and 76.8% accuracy at 23% coverage, while internal five-fold Carbon Source Phenotypes validation achieved AUC 0.858. Approximately 76% of ENIGMA conditions lacked GapMind pathway coverage or Carbon Source Phenotypes training data, and prediction on those conditions fell to approximately AUC 0.63. [src: genotype_to_phenotype_enigma]
 
-These results support [[concepts/computational-pathway-prediction-validation]] and [[concepts/annotation-dependent-resistome-inference]] as related methodological concerns: a capability prediction can be limited not only by biology but also by whether the relevant pathway and condition are represented in the annotation and training resources. [src: genotype_to_phenotype_enigma]
+These results support [[concepts/computational-pathway-prediction-validation]] and [[concepts/environmental-resistome]] as related methodological concerns: a capability prediction can be limited not only by biology but also by whether the relevant pathway and condition are represented in the annotation and training resources. [src: genotype_to_phenotype_enigma]
 
 ## Continuous kinetics did not transfer across genera
 

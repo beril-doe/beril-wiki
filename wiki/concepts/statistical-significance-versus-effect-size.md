@@ -49,7 +49,7 @@ The analysis used 12 species from a 15-species sample drawn from 456 eligible sp
 
 Without within-species phylogenetic controls such as core-genome trees, the analysis cannot distinguish ecological adaptation from phylogenetic or demographic substructure. [src: ecotype_functional_differentiation]
 
-This limitation connects the interpretation to [[concepts/phylogenetic-confounding-of-phenotype-associations]] and means that a small but significant category shift should not automatically be treated as an independently evolved ecological adaptation. [src: ecotype_functional_differentiation]
+This limitation connects the interpretation to [[concepts/phenotype-database-coverage-bias]] and means that a small but significant category shift should not automatically be treated as an independently evolved ecological adaptation. [src: ecotype_functional_differentiation]
 
 ## Practical Reporting Principle
 

@@ -28,7 +28,7 @@ The broader metal-fitness corpus gives a related but not identical picture. Acro
 
 **Pangenome prevalence does not explain the measured AMR cost.** Core or intrinsic AMR genes (**N=638**) and accessory or acquired AMR genes (**N=163**) had virtually identical mean fitness values of **−0.024**, with Cohen’s **d = 0.002** and Mann–Whitney U **p = 0.33**. [src: amr_fitness_cost] Related stratifications also found no conservation difference (**p = 0.33**), no Tier 1-versus-Tier 2 difference (**p = 0.26**), and no antibiotic-versus-metal resistance-type difference (**p = 0.87**). [src: amr_fitness_cost] These null results indicate that prevalence across sampled genomes and knockout fitness are different properties.
 
-One possible explanation is that horizontal transfer preferentially retains cost-optimized resistance genes, or that compensatory evolution reduces costs after acquisition; these are interpretations, not processes directly measured in the dataset. [src: amr_fitness_cost] The compensation hypothesis is discussed in [[concepts/resistance-cost-compensation]]. It is also consistent with the observation that all **25** tested organisms were laboratory-adapted strains, potentially reducing the apparent cost relative to newly acquired resistance in natural populations. [src: amr_fitness_cost]
+One possible explanation is that horizontal transfer preferentially retains cost-optimized resistance genes, or that compensatory evolution reduces costs after acquisition; these are interpretations, not processes directly measured in the dataset. [src: amr_fitness_cost] The compensation hypothesis is discussed in [[concepts/antimicrobial-resistance-fitness-cost]]. It is also consistent with the observation that all **25** tested organisms were laboratory-adapted strains, potentially reducing the apparent cost relative to newly acquired resistance in natural populations. [src: amr_fitness_cost]
 
 ## Tensions and Caveats
 
@@ -46,7 +46,7 @@ Finally, RB-TnSeq disruption is not equivalent to measuring the fitness of acqui
 - [[concepts/relative-fitness-and-transposon-interpretation]] — Learn why the **+0.086** estimate is relative rather than an absolute growth advantage.
 - [[concepts/condition-specific-fitness]] — Place AMR responses in the broader framework of environment-dependent mutant fitness.
 - [[concepts/pangenome-conservation-fitness-decoupling]] — Examine why core/accessory status did not predict baseline AMR cost.
-- [[concepts/resistance-cost-compensation]] — Follow the hypothesis that laboratory adaptation or compensation obscures the original acquisition cost.
+- [[concepts/antimicrobial-resistance-fitness-cost]] — Follow the hypothesis that laboratory adaptation or compensation obscures the original acquisition cost.
 - [[conflicts/conflict--metal_cross_resistance--metal_fitness_atlas--metal_specificity]] — Assess the limits of extending AMR-fitness conclusions to metal resistance.
 
 Key entities: [[entities/kescience-fitnessbrowser]], [[entities/tnseq]], [[entities/kbase-ke-pangenome]], [[entities/gtdb]], [[entities/acinetobacter-bayli-adp1]]

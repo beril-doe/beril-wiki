@@ -56,7 +56,7 @@ Finally, [[conflicts/conflict--berdl_data_atlas--cofitness_coinheritance--ecotyp
 - [[concepts/collection-site-versus-microenvironment-mismatch]] — investigate why coordinates may fail to represent organism-proximal exposure.
 - [[concepts/metadata-resolution-and-within-species-heterogeneity]] — follow the limitations of species-level environmental labels in AMR comparisons.
 - [[concepts/pooled-run-pseudoreplication-and-metadata-label-noise]] — understand statistical-unit errors and inherited labels in pooled metagenomic runs.
-- [[concepts/ecological-resistance-association-and-causality]] — evaluate when environmental AMR associations can support, but not establish, causal selection.
+- [[concepts/environmental-resistome]] — evaluate when environmental AMR associations can support, but not establish, causal selection.
 - [[concepts/lab-field-fitness-concordance]] — examine conditional agreement between laboratory phenotypes and environmental gene distributions.
 
 Key entities: [[entities/alph-aearth]], [[entities/kbase-ke-pangenome]], [[entities/ncbi-environment-metadata]], [[entities/benjamini-hochberg-fdr]], [[entities/partial-correlation]]

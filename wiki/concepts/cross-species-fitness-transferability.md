@@ -1,7 +1,7 @@
 ---
 type: "Concept"
-description: "Why transferred fitness phenotypes depend on species-specific respiratory networks"
-sources: ["summaries/aromatic_catabolism_network__REPORT.md"]
+description: "Ortholog fitness transfer depends on recipient-specific metabolic network architecture"
+sources: ["summaries/aromatic_catabolism_network__REPORT.md", "summaries/pathway_capability_dependency__REPORT.md"]
 ---
 # Ortholog-transferred fitness phenotypes are constrained by organism-specific network architecture
 
@@ -13,17 +13,23 @@ The [[entities/kescience-fitnessbrowser]] ortholog-transferred dataset contains 
 
 This result supports the hypothesis that ortholog-level fitness transfer can recover a substrate-associated respiratory demand, but it does not establish that aromatic catabolism itself causes the dependency in every recipient organism. [src: aromatic_catabolism_network] The largest Complex I defects relative to background occurred on acetate (-1.55) and succinate (-1.39), which are non-aromatic substrates that also generate high NADH flux through the TCA cycle. [src: aromatic_catabolism_network] Thus, the transferred phenotype refines the interpretation from an aromatic-specific effect toward a dependence associated with NADH-generating substrates. [src: aromatic_catabolism_network]
 
+The capability–dependency analysis supports this caution: across 161 organism-pathway pairs, complete pathway capability and observed fitness dependency were distinct classifications, with 66 complete but non-important “Latent Capability” pairs; all 66 became fitness-important under at least one tested condition type, although the median-based reclassification threshold is partly circular. [src: pathway_capability_dependency] This supports interpreting transferred phenotypes as condition-dependent evidence of pressure rather than as permanent pathway essentiality; see [[summaries/pathway_capability_dependency__REPORT]].
+
 ## Why architecture limits transferability
 
 Bacterial respiratory chains can contain both proton-pumping Complex I, also called NDH-1, and non-pumping NDH-2, an alternative NADH dehydrogenase. [src: aromatic_catabolism_network] In the proposed model, NDH-2 can compensate under lower NADH flux but may not match Complex I capacity under high NADH flux. [src: aromatic_catabolism_network] A fitness phenotype transferred between orthologs therefore depends not only on the ortholog's molecular role but also on whether the recipient organism has an alternative route with sufficient capacity. [src: aromatic_catabolism_network]
 
 The transferred evidence is not definitive for [[entities/acinetobacter-baylyi-adp1]] because the dataset mixes organisms with different respiratory-chain architectures. [src: aromatic_catabolism_network] Complex I was reported as dispensable on glucose and lactate, which is consistent with compensation by NDH-2 under lower NADH flux, but this interpretation remains a hypothesis rather than a demonstrated universal rule. [src: aromatic_catabolism_network]
 
+The pathway-capability analysis **supports** this architecture-aware interpretation at a broader scale: only 7 of 48 Fitness Browser organisms had matching GapMind genome data, and the matched Tier 1 organisms had near-complete, well-annotated core genomes, with mean core-gene completeness of 0.986 for Active Dependencies and 0.975 for Latent Capabilities. [src: pathway_capability_dependency] This limited and potentially compressed comparison makes organism-specific network differences especially important when generalizing transferred fitness effects. [src: pathway_capability_dependency]
+
 ## Relation to direct ADP1 evidence
 
 In *Acinetobacter baylyi* ADP1, the aromatic-catabolism study identified a 51-gene support network surrounding the [[entities/beta-ketoadipate-pathway]], including 21 Complex I genes. [src: aromatic_catabolism_network] FBA, or flux-balance analysis, captured 1.76× higher Complex I flux on aromatic substrates than on the comparison condition, with fluxes of 0.55 versus 0.31, but predicted 0% essentiality for Complex I. [src: aromatic_catabolism_network] Independently, 10/13 Complex I operon subunits produced quinate-specific growth defects. [src: aromatic_catabolism_network]
 
 The direct ADP1 measurements therefore show that a model or transferred phenotype can understate a complex-level dependency when alternative flux routes are available in the representation. [src: aromatic_catabolism_network] They also provide a species-specific anchor for evaluating whether the cross-species Complex I signal reflects aromatic catabolism, high NADH flux, or differences in respiratory-chain architecture. [src: aromatic_catabolism_network]
+
+The pathway-capability results **refine** this comparison by showing that an apparently complete pathway can remain fitness-silent under standard conditions yet become important under stress, nitrogen limitation, or carbon limitation. [src: pathway_capability_dependency] Conversely, an Incomplete but Important classification can reflect annotation gaps or salvage routes rather than absence of function. [src: pathway_capability_dependency] These categories reinforce that pathway completeness, transferred fitness, and direct organism-level dependency are related but non-equivalent evidence layers.
 
 ## Interpretation and limitation
 
@@ -38,3 +44,4 @@ This limitation connects to [[concepts/cross-species-fitness-transferability]] a
 - Stratify the [[entities/kescience-fitnessbrowser]] ortholog-transferred data by organism and respiratory-chain architecture, then compare effect sizes across architectures to quantify transferability. [src: aromatic_catabolism_network]
 - Expand comparative pangenome analysis across aromatic-degrading species to test whether Complex I retention and NDH-2 presence predict transferred fitness phenotypes. [src: aromatic_catabolism_network]
 - Rebuild the ADP1 FBA model with PQQ biosynthesis, iron homeostasis, and respiratory-chain capacity constraints, then test whether architecture-aware constraints reduce the gap between predicted 0% essentiality and the observed defects in 10/13 Complex I subunits. [src: aromatic_catabolism_network]
+- Reanalyze transferred fitness alongside pathway completeness and condition-specific fitness across organisms with matched GapMind and Fitness Browser data to test whether architecture-aware transfer predicts Active Dependency, Latent Capability, or Incomplete but Important classifications. [src: pathway_capability_dependency]

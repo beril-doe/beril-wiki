@@ -1,27 +1,29 @@
 ---
 type: "Concept"
-description: "How confirmatory nulls can coexist with coverage-sensitive exploratory signals"
-sources: ["summaries/enigma_contamination_functional_potential__REPORT.md"]
+description: "Framework for distinguishing confirmatory nulls from exploratory ecological signals"
+sources: ["summaries/enigma_contamination_functional_potential__REPORT.md", "summaries/ecotype_env_reanalysis__REPORT.md"]
 ---
 # Confirmatory Nulls and Exploratory Signals in Ecological Association Testing
 
-This concept describes how predeclared ecological association tests can remain null while exploratory, coverage-adjusted analyses produce apparently positive signals that are sensitive to mapping, covariates, taxonomic resolution, and multiple-testing correction. [src: enigma_contamination_functional_potential]
+This concept describes how predeclared ecological association tests can remain null while exploratory, coverage-adjusted analyses produce apparently positive signals that are sensitive to mapping, covariates, taxonomic resolution, multiple-testing correction, and environmental classification. [src: enigma_contamination_functional_potential] [src: ecotype_env_reanalysis]
 
-The evidence comes from [[summaries/enigma_contamination_functional_potential__REPORT]], which tested whether contamination in [[entities/enigma-coral]] communities was associated with pangenome- and [[entities/eggnog]]-derived functional proxies. [src: enigma_contamination_functional_potential]
+The evidence includes [[summaries/enigma_contamination_functional_potential__REPORT]], which tested whether contamination in [[entities/enigma-coral]] communities was associated with pangenome- and [[entities/eggnog]]-derived functional proxies, and [[summaries/ecotype_env_reanalysis__REPORT]], which reanalyzed environment–gene-content associations across bacterial species. [src: enigma_contamination_functional_potential] [src: ecotype_env_reanalysis]
 
 ## Evidence Pattern
 
-The analysis used 108 samples with geochemistry and community composition, a geochemistry matrix of shape `(108, 49)`, 41,711 community taxon rows, 212 distinct communities, and 1,392 distinct genera. [src: enigma_contamination_functional_potential]
+The ENIGMA analysis used 108 samples with geochemistry and community composition, a geochemistry matrix of shape `(108, 49)`, 41,711 community taxon rows, 212 distinct communities, and 1,392 distinct genera. [src: enigma_contamination_functional_potential]
 
-The contamination index combined arsenic, cadmium, chromium, copper, lead, nickel, uranium, and zinc by per-metal `log1p` z-scoring followed by a row-wise mean; across 108 samples, it ranged from -0.448 to 3.836, with median -0.271 and IQR [-0.363, 0.053]. [src: enigma_contamination_functional_potential]
+Its contamination index combined arsenic, cadmium, chromium, copper, lead, nickel, uranium, and zinc by per-metal `log1p` z-scoring followed by a row-wise mean; across 108 samples, it ranged from -0.448 to 3.836, with median -0.271 and IQR [-0.363, 0.053]. [src: enigma_contamination_functional_potential]
 
 The workflow generated 324 site functional-score rows across three mapping modes and 12 model-result rows covering four outcomes across those modes. [src: enigma_contamination_functional_potential]
+
+The ecotype reanalysis provides a related control for sampling composition. Among 224 species selected with at least 20 genomes containing AlphaEarth embeddings and at least 30% coverage, 106 species (47%) were majority human-associated, 47 (21%) were majority environmental, and 71 (32%) were Mixed/Other. [src: ecotype_env_reanalysis]
 
 ## Confirmatory Nulls
 
 Predeclared Spearman tests of `site_defense_score` against contamination were non-significant in both genus-level mapping modes. [src: enigma_contamination_functional_potential]
 
-In `relaxed_all_clades`, rho = 0.0587, the 95% bootstrap CI was [-0.128, 0.250], Spearman p = 0.546, and false-discovery-rate (FDR) q = 0.862. [src: enigma_contamination_functional_potential]
+In `relaxed_all_clades`, rho = 0.0587, the 95% bootstrap CI was [-0.128, 0.250], Spearman p = 0.546, and false-discovery-rate (FDR), a multiple-testing correction, q = 0.862. [src: enigma_contamination_functional_potential]
 
 In `strict_single_clade`, rho = 0.0682, the 95% bootstrap CI was [-0.111, 0.253], Spearman p = 0.483, and FDR q = 0.849. [src: enigma_contamination_functional_potential]
 
@@ -30,6 +32,10 @@ The null result was robust to four contamination-index definitions: the composit
 All eight confirmatory variant tests remained non-significant after FDR, with q = 0.546 across the tests, including uranium-only. [src: enigma_contamination_functional_potential]
 
 These results **support** treating the broad genus-level contamination–defense association as unconfirmed rather than as evidence of a monotonic community-level relationship. [src: enigma_contamination_functional_potential]
+
+The ecotype reanalysis **supports** this confirmatory-null interpretation at a different ecological scale: environmental species had median partial correlation 0.051, compared with 0.084 for human-associated species and 0.109 for Mixed/Other species; the one-sided Environmental > Human-associated Mann–Whitney U test gave U=1536 and p=0.83. [src: ecotype_env_reanalysis]
+
+The continuous analysis likewise found no relationship between the fraction of environmental genomes per species and partial-correlation strength (Spearman rho=-0.085 and p=0.25), or between the fraction of human-associated genomes and correlation strength (rho=0.030 and p=0.69). [src: ecotype_env_reanalysis]
 
 ## Exploratory Signals
 
@@ -49,6 +55,8 @@ In the high-coverage subset defined by `mapped_abundance_fraction >= 0.25`, defe
 
 Most non-defense outcomes remained non-significant, although `site_stress_score` in the strict high-coverage subset had rho = 0.2489 and p = 0.0407. [src: enigma_contamination_functional_potential]
 
+The ecotype reanalysis **refines** this pattern by showing that a genuine clinical sampling imbalance need not explain a weak ecological association. Environmental species were not more strongly associated with environment-derived embeddings than human-associated species, despite the AlphaEarth subset's strong clinical sampling bias. [src: ecotype_env_reanalysis]
+
 ## Robustness and Sources of Discordance
 
 Within-fraction defense Spearman tests were non-significant for both mapping modes and both fractions: relaxed `0.2_micron_filter` p = 0.767, relaxed `10_micron_filter` p = 0.898, strict `0.2_micron_filter` p = 0.780, and strict `10_micron_filter` p = 0.793. [src: enigma_contamination_functional_potential]
@@ -67,6 +75,10 @@ A total of 862 of 1,392 observed genera were unmapped to the current pangenome b
 
 These coverage, ambiguity, and unmapped-genus patterns **refine** the interpretation of the exploratory signal: it may reflect functional differences detectable through the retained mapped fraction, while the broader community-level relationship remains unresolved. [src: enigma_contamination_functional_potential]
 
+The ecotype result **supports** caution about interpreting apparent ecological signals from heterogeneous sampling, but it also **contradicts** the specific explanation that clinical composition alone accounts for the null. The environmental group had a higher NaN partial-correlation rate than the human-associated group, 10/47 = 21% versus 7/100 = 7%; the report states that this filtering would, if anything, favor detection of a stronger environmental signal, which was not observed. [src: ecotype_env_reanalysis]
+
+The reanalysis also found that its median partial correlation across all 183 species was 0.081, compared with 0.003 in the original ecotype analysis, characterized as a 27x difference. It used all genomes with embeddings, including up to 3,505 genomes per species, rather than diversity-maximizing downsampling with a maximum of 250 genomes. Absolute correlations are therefore not comparable across methods, although the within-method Environmental versus Human-associated comparison remains valid. [src: ecotype_env_reanalysis]
+
 ## Tensions
 
 The principal tension is between null predeclared genus-level Spearman tests and positive exploratory models that adjust for mapped coverage and additional covariates. [src: enigma_contamination_functional_potential]
@@ -75,7 +87,11 @@ The confirmatory tests provide no robust monotonic contamination–defense assoc
 
 The discordance is not resolved by the high-coverage subset or fraction-aware analyses, because high-coverage defense tests have global FDR q-values of 0.301 and 0.189, and within-fraction tests are non-significant. [src: enigma_contamination_functional_potential]
 
-The project therefore supports a cautious hypothesis that contamination-linked functional differentiation may exist at finer taxonomic, pathway, or strain resolution than the current genus-level COG-fraction proxies, but it does not establish that hypothesis as a community-wide finding. [src: enigma_contamination_functional_potential]
+The ecotype reanalysis adds a related methodological tension: the original and reanalysis median partial correlations were 0.003 and 0.081, respectively, but the changed genome sets and downsampling procedures prevent treating the 27x difference as a biological effect. [src: ecotype_env_reanalysis]
+
+The project evidence therefore supports a cautious hypothesis that contamination-linked functional differentiation may exist at finer taxonomic, pathway, or strain resolution than the current genus-level COG-fraction proxies, but it does not establish that hypothesis as a community-wide finding. [src: enigma_contamination_functional_potential]
+
+Similarly, the ecotype report proposes—but does not directly establish—that AlphaEarth embeddings may capture regional epidemiological patterns rather than ecological differences, and that unequal genome counts may provide greater statistical power for weak correlations. [src: ecotype_env_reanalysis]
 
 ## Relation to Other Concepts
 
@@ -87,6 +103,8 @@ It **supports** [[concepts/taxonomic-resolution-dependent-functional-inference]]
 
 It **connects** to [[concepts/confirmatory-exploratory-ecological-association-discordance]] as a general framework for separating predeclared evidence from sensitivity-generated hypotheses. [src: enigma_contamination_functional_potential]
 
+The ecotype reanalysis **refines** this framework by showing that genome-level environmental classification, continuous environmental fractions, and a more systematic classification scheme can confirm a null without eliminating sampling and methodological explanations. [src: ecotype_env_reanalysis]
+
 ## Open Directions
 
 - Replace broad COG-fraction proxies with curated metal-stress gene sets and pathway-level summaries, then test whether the confirmatory contamination association remains null at finer functional resolution. [src: enigma_contamination_functional_potential]
@@ -94,3 +112,5 @@ It **connects** to [[concepts/confirmatory-exploratory-ecological-association-di
 - Fit models including depth, location cluster, sampling date, and compositional controls, using mixed-effects or hierarchical structure, to determine whether the exploratory defense association persists beyond coarse `location_prefix` adjustment. [src: enigma_contamination_functional_potential]
 - Investigate the 862 unmapped genera and expand the genus-to-clade bridge to test whether missing coverage changes the direction or magnitude of the contamination–functional association. [src: enigma_contamination_functional_potential]
 - Reanalyze the 212 sample-fraction rows with preregistered fraction-stratified and pooled contrasts to determine whether the pooled exploratory signal can be reproduced across the `0.2_micron_filter` and `10_micron_filter` fractions. [src: enigma_contamination_functional_potential]
+- Compare downsampled and full-genome ecotype extraction under a shared genome set, then add genome count as a covariate, to determine whether the 27x partial-correlation discrepancy is methodological or reflects sampling power. [src: ecotype_env_reanalysis]
+- Repeat the ecotype association using functional subsets and structured ENVO terms to test whether whole-genome Jaccard distances or coarse environmental categories mask environment-linked gene-content signals. [src: ecotype_env_reanalysis]

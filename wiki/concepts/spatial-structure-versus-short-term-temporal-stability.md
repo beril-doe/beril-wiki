@@ -7,7 +7,7 @@ sources: ["summaries/enigma_sso_asv_ecology__REPORT.md"]
 
 ## Scope and interpretation
 
-This concept describes the coexistence of strong well-specific spatial structure with minimal community change over a 9-day groundwater sampling interval at the SSO subsurface site. [src: enigma_sso_asv_ecology] The evidence supports [[concepts/subsurface-hydrogeological-zonation]] and refines [[concepts/groundwater-sediment-community-partitioning]] by showing that spatial differences can persist even when short-term temporal turnover is low. [src: enigma_sso_asv_ecology]
+This concept describes the coexistence of strong well-specific spatial structure with minimal community change over a 9-day groundwater sampling interval at the SSO subsurface site. [src: enigma_sso_asv_ecology] The evidence supports [[concepts/subsurface-hydrogeological-zonation]] and refines [[concepts/subsurface-hydrogeological-zonation]] by showing that spatial differences can persist even when short-term temporal turnover is low. [src: enigma_sso_asv_ecology]
 
 The result should be interpreted as short-term persistence, not long-term ecological stability, because the groundwater comparison covered only 9 days and did not resolve seasonal or longer plume dynamics. [src: enigma_sso_asv_ecology]
 
@@ -54,6 +54,5 @@ The sediment analysis suggests that hydrogeological zone can dominate well ident
 
 - [[summaries/enigma_sso_asv_ecology__REPORT]]
 - [[concepts/subsurface-hydrogeological-zonation]]
-- [[concepts/groundwater-sediment-community-partitioning]]
 - [[concepts/collection-site-versus-microenvironment-mismatch]]
 - [[concepts/environmental-embedding-ecological-validity]]

@@ -47,11 +47,18 @@ wishlist are tagged [P]; platform-dependent items are deferred at the bottom.
 
 ## Known draft-stage debts
 
-- 3 duplicate-concept pairs flagged by wiki_check (enrichment shards to
-  consolidate); 153 concepts vs the reference's 81 — finer grain, all-Luna.
-- Enrichment-created concepts start single-source; they accrete more sources
-  only as new docs compile. A cross-doc back-merge pass is a possible later
-  stage.
+- Concept consolidation (`consolidate_concepts.py`) now merges near-duplicate
+  shards and back-merges cross-document evidence, so the two debts that used to
+  live here are closed. What it cannot fix: ~51 thin concepts have no summary
+  above 0.75 cosine — they are genuinely single-project ideas, and no threshold
+  reaches them. Do not read a remaining single-source page as a stage failure.
+- Hub/conflict/author pages get `bad_src_ids` stripping but NOT the numeric
+  check compile pages get; the hub-number warnings in `wiki_check` are that gap.
+  `topics_build.py` has its own untracked `llm()` rather than `generate_page`,
+  so routing it through the shared validator is its own change, not a one-liner.
+- `conflicts_build.py` never deletes stale conflict pages (`topics_build` does
+  reap stale hubs), so a concept merge can strand a conflict page. `wiki_check`
+  does not scan `wiki-extra/conflicts`, so it will not flag one.
 - One second-run lit/hub churn cycle observed (a few hubs regenerate once
   after their reviews land); converges, costs cents.
 

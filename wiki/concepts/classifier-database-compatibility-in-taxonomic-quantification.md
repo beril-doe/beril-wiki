@@ -49,7 +49,7 @@ In this analysis, the response was GOTTCHA2 relative eukaryotic abundance, defin
 
 Because Kraken2 and Centrifuge were prokaryote-restricted in this NMDC deployment while GOTTCHA2 was plastid- and eukaryote-aware, their outputs could not be treated as interchangeable measurements of eukaryotic fraction. [src: euk_in_prok_correlates]
 
-This supports [[concepts/taxonomic-resolution-dependent-functional-inference]] and [[concepts/annotation-dependent-resistome-inference]] at the measurement level: downstream ecological or functional conclusions inherit the representational limits of the upstream database. [src: euk_in_prok_correlates]
+This supports [[concepts/taxonomic-resolution-dependent-functional-inference]] and [[concepts/environmental-resistome]] at the measurement level: downstream ecological or functional conclusions inherit the representational limits of the upstream database. [src: euk_in_prok_correlates]
 
 The same limitation applies to negative evidence: an approximately 0 Eukaryota signal from a prokaryote-restricted database cannot by itself demonstrate that eukaryotic reads were absent. [src: euk_in_prok_correlates]
 

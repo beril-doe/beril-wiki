@@ -101,15 +101,19 @@ Two backends behind one function, selected by config:
 - Cross-links: `[[wikilinks]]`, paths relative to corpus root
   (`[[concepts/x]]`, `[[summaries/x__REPORT]]`).
 - Frontmatter on wiki/ pages: `type`, `description`, `sources` (list of
-  `summaries/...` paths).
+  `summaries/...` paths). `sources` must never list a project the body does not
+  cite: the v3 corpus padded it with bare "See also" links on 60 of 81 concept
+  pages, which reads as synthesis without being it. Distinct `[src:]` ids in the
+  body is the real measure; `consolidate_concepts.py` enforces the two in step.
 - Downstream stages (`conflicts_build`, `topics_build`, `figures_build`,
   `extra_pages`, `wiki_check`, `quartz_ingest`) all parse these conventions —
   they are the compatibility test for compiler output.
 
 ## Pipeline (already built — adapt paths only)
 
-`run_pipeline.sh` orchestrates: fetch → compile → conflicts → hubs → figures →
-extras → check (errors block publish) → publish (Quartz v5, BERIL-workbench
+`run_pipeline.sh` orchestrates: fetch → compile → enrich → consolidate →
+conflicts → hubs → literature → figures → extras → authors →
+check (errors block publish) → publish (Quartz v5, BERIL-workbench
 theme baked into `build_quartz.sh`; dead-wikilink stripping, summary→raw-report
 provenance links, figure splicing at publish). Topic hubs: Louvain over the
 concept graph, resolution 2.0, names cached in state to prevent churn; only

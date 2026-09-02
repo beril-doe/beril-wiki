@@ -1,7 +1,7 @@
 ---
 type: "Concept"
-description: "MSA depth tracks the richness of bacterial functional annotation."
-sources: ["summaries/alphafold_msa_annotation__REPORT.md"]
+description: "Sequence-space depth predicts functional annotation richness across bacterial pangenomes"
+sources: ["summaries/alphafold_msa_annotation__REPORT.md", "summaries/annotation_gap_discovery__REPORT.md"]
 ---
 # Sequence-space depth predicts functional annotation richness
 
@@ -27,13 +27,17 @@ The class-level pattern does not eliminate a substantial annotation gap within t
 
 The report distinguishes two annotation-gap layers: an MSA-depth-driven gap affecting core and accessory classes, and a pangenome-class gap in which accessory and singleton genes have higher hypothetical rates. [src: alphafold_msa_annotation] The cross-class comparison is dominated by the higher average MSA depth of core genes, whereas the low-depth core subset demonstrates that conservation does not guarantee rich functional annotation. [src: alphafold_msa_annotation]
 
+The annotation-gap discovery study **refines** this sequence-space account by showing that functional recovery also depends on convergent evidence beyond homology. Across 201 gapfilled enzymatic reaction-organism pairs, its integrated pipeline assigned candidate genes to 96 pairs (47.8%), while BLAST alone resolved 70 (34.8%); no single evidence stream exceeded 35% resolution. [src: annotation_gap_discovery] Thus, the MSA-depth relationship supports homology-based annotation potential, but fitness, pangenome conservation, pathway evidence, and metabolic-model evidence can add resolution where sequence evidence alone is insufficient. [src: annotation_gap_discovery]
+
+The same study **supports** the interpretation that annotation difficulty is function-dependent: 8 of 50 EC-less “dark reactions” (16%) were resolved, compared with 88 of 151 reactions with known EC numbers (58.3%). [src: annotation_gap_discovery] This provides an independent, reaction-level analogue of the low-depth core gap, while not establishing that low MSA depth caused those unresolved reactions. [src: annotation_gap_discovery]
+
 The low-depth core proteins are candidates for experimental structural characterisation, but this is a prioritisation hypothesis rather than direct experimental validation. [src: alphafold_msa_annotation] Top-ranked proteins with MSA depth = 1 came primarily from poorly characterised marine and soil bacteria, including Oceanicoccus, Dwaynesavagella, and CAILRJ01. [src: alphafold_msa_annotation]
 
 The reported ρ = 0.7563 was computed on the full 38,051,842-pair dataset without subgroup stratification, so it may differ among core, auxiliary, and singleton clusters and among organisms with different annotation gaps. [src: alphafold_msa_annotation] The analysis used one representative sequence per gene cluster, so within-cluster sequence diversity was not captured. [src: alphafold_msa_annotation] The 293K genomes were not phylogenetically balanced, with common taxa such as Pseudomonas and E. coli over-represented. [src: alphafold_msa_annotation] Because only 29.3% of gene clusters bridged to AlphaFold MSA depths, the inference that the remaining 70.7% contains a larger annotation gap is plausible but not directly measured. [src: alphafold_msa_annotation]
 
 ## Connections to other research
 
-This concept supports [[concepts/structural-annotation-gap]] as a measurable bridge between sequence-space representation and functional annotation, while [[concepts/pangenome-integration]] captures the accompanying core–accessory structure. [src: alphafold_msa_annotation] Joining the 415,603 low-depth core clusters to [[entities/kescience-fitnessbrowser]] measurements could test whether structurally isolated proteins have condition-specific or growth-essential phenotypes, connecting this annotation problem to [[concepts/gene-essentiality]] and [[concepts/multi-omics-integration]]. [src: alphafold_msa_annotation]
+This concept supports [[concepts/structural-annotation-gap]] as a measurable bridge between sequence-space representation and functional annotation, while [[concepts/pangenome-integration]] captures the accompanying core–accessory structure. [src: alphafold_msa_annotation] The annotation-gap discovery results further support [[concepts/multi-omics-integration]] by demonstrating that homology is most informative when combined with fitness and metabolic-model evidence. [src: annotation_gap_discovery] Joining the 415,603 low-depth core clusters to [[entities/kescience-fitnessbrowser]] measurements could test whether structurally isolated proteins have condition-specific or growth-essential phenotypes, connecting this annotation problem to [[concepts/gene-essentiality]] and [[concepts/multi-omics-integration]]. [src: alphafold_msa_annotation]
 
 ## Open Directions
 
@@ -42,3 +46,4 @@ This concept supports [[concepts/structural-annotation-gap]] as a measurable bri
 - Replace representative-sequence MSA depth with within-cluster depth distributions and compare domain annotations across cluster members to measure how much representative choice obscures sequence-space heterogeneity. [src: alphafold_msa_annotation]
 - Join the 415,603 low-MSA-depth core clusters to [[entities/kescience-fitnessbrowser]] fitness measurements and test whether low-depth status predicts condition-specific or essential phenotypes. [src: alphafold_msa_annotation]
 - Reweight or stratify the analysis across the 293K genomes by phylogeny and organismal abundance, then test whether the 2.89× and 2.77× core–accessory median-depth ratios persist in a phylogenetically balanced dataset. [src: alphafold_msa_annotation]
+- Apply the integrated gapfilling, fitness, pangenome, and homology evidence pipeline to low-depth core clusters to test whether multimodal evidence preferentially resolves candidates that sequence-space depth alone leaves poorly annotated. [src: annotation_gap_discovery]

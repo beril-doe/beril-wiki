@@ -7,7 +7,7 @@ sources: ["summaries/amr_cofitness_networks__REPORT.md"]
 
 Functional enrichment in cofitness neighborhoods can arise from genuine shared regulation or from genes having similar fitness behavior under the assay conditions. A fitness-matched null model tests these explanations by comparing AMR-associated neighborhoods with random non-AMR genes whose mean-fitness distribution is matched, rather than matching only conservation class. [src: amr_cofitness_networks]
 
-This problem connects [[concepts/condition-specific-fitness]] with [[concepts/cofitness-versus-coregulation]]: cofitness measures similarity in fitness phenotypes, not direct transcriptional control, so enrichment requires a null model that reproduces the relevant fitness structure. [src: amr_cofitness_networks]
+This problem connects [[concepts/condition-specific-fitness]] with [[concepts/cofitness-network-architecture]]: cofitness measures similarity in fitness phenotypes, not direct transcriptional control, so enrichment requires a null model that reproduces the relevant fitness structure. [src: amr_cofitness_networks]
 
 ## Why conservation-matched nulls are insufficient
 
@@ -37,7 +37,7 @@ The fitness-matched test should not be used to reinterpret every result in the a
 
 A fitness-matched null is mainly needed to interpret functional enrichment, not to erase the observed organism-specific organization of support networks. [src: amr_cofitness_networks] Different AMR mechanisms within the same organism had mean Jaccard similarity 0.375, compared with 0.207 for the same mechanism across organisms, with MWU p = 4.3×10⁻¹³. [src: amr_cofitness_networks] The report describes this relative comparison as robust to the dispensability confound because it tests how support networks are organized within and across organisms rather than relying only on the presence of individual enriched categories. [src: amr_cofitness_networks]
 
-The planned null model therefore complements [[concepts/cofitness-network-architecture]] and [[concepts/cofitness-versus-coregulation]]: it asks whether particular functional categories are overrepresented beyond expected fitness similarity, while the network-organization comparison asks whether organism context structures support relationships more strongly than AMR mechanism. [src: amr_cofitness_networks]
+The planned null model therefore complements [[concepts/cofitness-network-architecture]] and [[concepts/cofitness-network-architecture]]: it asks whether particular functional categories are overrepresented beyond expected fitness similarity, while the network-organization comparison asks whether organism context structures support relationships more strongly than AMR mechanism. [src: amr_cofitness_networks]
 
 ## Evidence status
 

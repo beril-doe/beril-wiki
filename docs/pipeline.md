@@ -20,6 +20,9 @@ flowchart TD
     WIKI -->|enrich_concepts.py| CON2[new synthesis concepts]
     CON2 --> WIKI
 
+    WIKI -->|"consolidate_concepts.py<br/>(free embeddings)"| CON3[merges + back-merged evidence]
+    CON3 --> WIKI
+
     WIKI -->|conflicts_build.py| CFL[wiki-extra/conflicts/]
     WIKI -->|"topics_build.py<br/>(Louvain clustering)"| HUB[wiki-extra/topics/]
     HUB -->|"lit_context.py<br/>(PubMed eutils)"| HUB
@@ -39,6 +42,7 @@ flowchart TD
 | fetch | `fetch_reports.py` | sync `REPORT.md` per project + digests into `staging/`; backend-switchable (local checkout now, BERIL hub later) | — |
 | compile | `compile.py` | per changed doc: summarize → plan against the live concept/entity index → merge-rewrite each touched page | `state/hashes.json` |
 | enrich | `enrich_concepts.py` | per summary: audit the concept layer for *missing* synthesis concepts; justified creates only | `state/enrich.json` |
+| consolidate | `consolidate_concepts.py` | embedding-ranked candidates: merge near-duplicate concepts, back-merge evidence into thin ones (see below) | `state/consolidate.json` |
 | conflicts | `conflicts_build.py` | promote multi-project `## Tensions` to conflict pages (Evidence Sides / Resolving Work) | in-page hash |
 | hubs | `topics_build.py` | Louvain-cluster the concept graph; one narrative hub per topic + the home page | `state/topics-state.json` |
 | literature | `lit_context.py` | splice a PMID-verified literature review under each hub's lead (see below) | `state/litcontext.json` |
@@ -66,6 +70,43 @@ Write-time validation is the core design difference from the previous
 number, or links a nonexistent page is never written. A rejected page leaves
 its document "dirty", so the next run retries exactly the missing pieces
 (pages whose frontmatter already lists the doc's summary are resume-skipped).
+
+## Concept consolidation
+
+Enrichment creates concepts one document at a time and hardcodes a one-element
+`sources` list, while compile only merges a document into pages when *that*
+document changes — so a concept created from document #60 is never revisited
+against documents #1–59. Consolidation closes that loop.
+
+Candidates are ranked by cosine similarity over embeddings of every concept and
+summary (`lbl/nomic-embed-text` through the same CBORG gateway, free and 768-dim,
+so nothing is cached — 228 pages re-embed in ~5s). This replaces the name-token
+heuristic in `wiki_check.duplicate_concepts`, which needs ≥50% source-set
+Jaccard and so cannot see duplicates among single-source pages. Then:
+
+- **merge** — pairs above `--merge-threshold` get one merge/keep judgement. The
+  judge is shown each page's *cited projects* and their overlap, because the
+  decisive question is whether two pages rest on the same evidence, not whether
+  they are framed differently. Pairs where both sides are already mature
+  (`--min-sources` cited projects) are skipped: absorbing a shard into a hub is
+  in scope, collapsing two mature hubs is not. A merge is one merge-rewrite of
+  the survivor through `compile.generate_page`, the loser deleted and its inbound
+  wikilinks repointed in code.
+- **back-merge** — thin concepts are offered their top-`--topk` most similar
+  summaries through compile's existing `CONCEPT_UPDATE_USER` rewrite.
+
+Two invariants, both deterministic and both enforced after the model replies:
+no `[src:]` id present in an input may be missing from the output (one retry,
+then the merge is abandoned), and `sources` frontmatter may only grow alongside a
+real `[src:]` citation in the prose. The second one matters — the
+previous-generation corpus *looked* multi-source but padded frontmatter with bare
+"See also" links on 60 of its 81 concept pages. The metric is distinct `[src:]`
+ids in the body; a rewrite that merely name-drops a project is discarded whole,
+and the prompt offers an explicit `UNCHANGED` reply for the common case where a
+similar-looking document has nothing to add.
+
+`--dry-run` ranks and prints both candidate lists for $0 — no LLM calls, no
+writes. Use it to pick thresholds before spending.
 
 ## Literature context
 

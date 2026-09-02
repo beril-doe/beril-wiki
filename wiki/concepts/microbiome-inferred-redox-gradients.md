@@ -7,7 +7,7 @@ sources: ["summaries/enigma_sso_asv_ecology__REPORT.md"]
 
 This concept examines how spatial patterns in microbial community composition can be used to infer subsurface redox structure when direct geochemical measurements are unavailable. [src: enigma_sso_asv_ecology]
 
-The approach is an inference rather than a direct measurement: taxa or taxonomic groups are assigned to redox-associated processes, and their spatial enrichment is interpreted as a possible sequence of electron-acceptor zones. [src: enigma_sso_asv_ecology] This distinction connects the SSO analysis to [[concepts/taxonomic-resolution-dependent-functional-inference]], [[concepts/occurrence-versus-catabolic-activity]], and [[concepts/subsurface-compartment-specific-metabolism]].
+The approach is an inference rather than a direct measurement: taxa or taxonomic groups are assigned to redox-associated processes, and their spatial enrichment is interpreted as a possible sequence of electron-acceptor zones. [src: enigma_sso_asv_ecology] This distinction connects the SSO analysis to [[concepts/taxonomic-resolution-dependent-functional-inference]], [[concepts/occurrence-versus-catabolic-activity]], and [[concepts/subsurface-bacillota-specialization]].
 
 ## SSO spatial evidence
 
@@ -73,7 +73,7 @@ Groundwater ASV coverage included only 5 of 9 wells—L7, L9, M4, M6, and U2—a
 - [[summaries/enigma_sso_asv_ecology__REPORT]]
 - [[concepts/ecotype-environment-gene-content]]
 - [[concepts/environmental-embedding-ecological-validity]]
-- [[concepts/subsurface-compartment-specific-metabolism]]
+- [[concepts/subsurface-bacillota-specialization]]
 - [[concepts/occurrence-versus-catabolic-activity]]
 - [[concepts/taxonomic-resolution-dependent-functional-inference]]
 - [[concepts/multi-omics-integration]]

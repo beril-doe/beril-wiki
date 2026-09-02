@@ -22,7 +22,7 @@ The groundwater data show that this spatial organization is not simply a transie
 
 **Groundwater and sediment are distinct subsurface habitats.** Paired groundwater and sediment samples collected at the same wells had median Bray–Curtis dissimilarity of 0.424, with within-well values ranging from 0.364–0.450 across 5 wells. [src: enigma_sso_asv_ecology] Groundwater was enriched in taxa associated in the report with plume or oxidative processes, including *Rhodanobacter* at 3.62% versus 1.23% in sediment, *Gallionella* at 0.14% versus 0.01%, and *Sideroxydans* at 0.06% versus 0.01%. [src: enigma_sso_asv_ecology] Sediment was enriched in *Anaeromyxobacter* at 1.24% versus 0.03% in groundwater, *Arcobacter* at 0.54% versus 0.00%, and *Ca. Methanoperedens* at 0.42% versus 0.00%. [src: enigma_sso_asv_ecology]
 
-Thus, groundwater cannot be treated as a simple sample of the attached sediment microbiota. [src: enigma_sso_asv_ecology] The contrast is consistent with groundwater enrichment in denitrifiers and iron oxidizers and sediment enrichment in anaerobic taxa, but these assignments were inferred from taxonomy rather than measured directly in the sampled populations. [src: enigma_sso_asv_ecology] The distinction between attached and planktonic habitats is developed in [[concepts/groundwater-sediment-community-partitioning]] and is important when interpreting redox gradients or comparing genome collections from porewater and rock-associated sources.
+Thus, groundwater cannot be treated as a simple sample of the attached sediment microbiota. [src: enigma_sso_asv_ecology] The contrast is consistent with groundwater enrichment in denitrifiers and iron oxidizers and sediment enrichment in anaerobic taxa, but these assignments were inferred from taxonomy rather than measured directly in the sampled populations. [src: enigma_sso_asv_ecology] The distinction between attached and planktonic habitats is developed in [[concepts/subsurface-hydrogeological-zonation]] and is important when interpreting redox gradients or comparing genome collections from porewater and rock-associated sources.
 
 **Community geography suggests, but does not prove, redox geography.** The SSO analysis used taxon-to-trait inference to identify possible process distributions. Functional inference covered 22 classes at 78% coverage and 65 annotated genera at 21% coverage. [src: enigma_sso_asv_ecology] Denitrification ranged from 1.9–7.7% and peaked at M5 at 7.7%, iron oxidation peaked at U3 at 2.8%, iron reduction peaked at U1 at 2.3%, sulfur oxidation and methanotrophy both peaked at M4 at 1.9%, and fermentation peaked at L9 at 5.3%. [src: enigma_sso_asv_ecology]
 
@@ -47,11 +47,11 @@ The SSO spatial model is also limited by sampling design. Sediment was collected
 ## Where to Go Deeper
 
 - [[concepts/subsurface-hydrogeological-zonation]] — Start here for the depth, grid-scale distance-decay, and proposed flow-corridor model.  
-- [[concepts/groundwater-sediment-community-partitioning]] — Examine why groundwater and sediment should be treated as distinct habitats.  
+- [[concepts/subsurface-hydrogeological-zonation]] — Examine why groundwater and sediment should be treated as distinct habitats.  
 - [[concepts/spatial-structure-versus-short-term-temporal-stability]] — Follow the evidence that spatial organization persisted across 9 days.  
 - [[concepts/microbiome-inferred-redox-gradients]] — Review how community composition was translated into candidate redox zones.  
 - [[concepts/subsurface-bacillota-specialization]] — Investigate deep-clay genome expansion and accessory-function enrichment.  
-- [[concepts/subsurface-compartment-specific-metabolism]] — Read the porewater-versus-rock-attached interpretation.  
+- [[concepts/subsurface-bacillota-specialization]] — Read the porewater-versus-rock-attached interpretation.  
 - [[concepts/functional-marker-validation]] — Learn why marker identity must be checked before ecological inference.  
 - [[concepts/multi-heme-cytochrome-detection]] — Inspect the corrected iron-reduction comparison and its statistical consequences.  
 

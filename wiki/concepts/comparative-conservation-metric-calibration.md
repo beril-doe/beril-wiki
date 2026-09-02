@@ -1,19 +1,21 @@
 ---
 type: "Concept"
-description: "How conservation metrics affect prioritization of unknown bacterial genes"
-sources: ["summaries/functional_dark_matter__REPORT.md"]
+description: "Calibrates conservation metrics for prioritizing unknown bacterial genes."
+sources: ["summaries/functional_dark_matter__REPORT.md", "summaries/conservation_vs_fitness__REPORT.md", "summaries/fitness_effects_conservation__REPORT.md"]
 ---
 # Calibrating Conservation Metrics for Unknown Bacterial Genes
 
 Conservation metrics are not interchangeable: the apparent priority of an unknown bacterial gene depends on how ortholog breadth is defined, how species and taxonomic coverage are counted, and whether the metric distinguishes broad conservation from annotation or database-coverage artifacts. [src: functional_dark_matter]
 
-The [[summaries/functional_dark_matter__REPORT]] provides a direct calibration case by comparing an eggNOG-based ortholog-group breadth ranking with a species-count variant and a larger GTDB r214 pangenome analysis. [src: functional_dark_matter]
+The [[summaries/functional_dark_matter__REPORT]] provides a direct calibration case by comparing an eggNOG-based ortholog-group breadth ranking with a species-count variant and a larger GTDB r214 pangenome analysis. [src: functional_dark_matter] The [[summaries/conservation_vs_fitness__REPORT]] adds a complementary calibration against Fitness Browser essentiality: across 33 organisms, 86.1% of essential genes were core versus 81.2% of non-essential genes, with a median odds ratio of 1.56. [src: conservation_vs_fitness] This **supports** conservation as a measurable, but modest, discriminator of biological importance rather than a standalone proxy for function. [src: conservation_vs_fitness] The [[summaries/fitness_effects_conservation__REPORT]] **supports and refines** this conclusion across approximately 194,000 genes from 43 diverse bacteria: essential genes were 82% core versus 66% for always-neutral genes, while fitness breadth had only a weak association with core status (Spearman rho=0.086, p=8.1e-230). [src: fitness_effects_conservation]
 
 ## Why Metric Choice Matters
 
 The initial analysis mapped 30,756 dark-gene clusters across 27,690 species. [src: functional_dark_matter] The eggNOG ortholog-group breadth classification assigned 30,721 of 30,756 clusters (99.9%) to universal breadth, making that category poorly discriminative for ranking unknown genes. [src: functional_dark_matter] Species counts in this analysis ranged from 1 to 33, with median 1 and mean 2.2. [src: functional_dark_matter]
 
 Replacing the original breadth score with a species-count scoring variant produced Spearman ρ = 0.982 with the original ranking, but top-50 overlap was 62% and top-100 overlap was 58%. [src: functional_dark_matter] This **refines** the interpretation of rank correlation: a high global correlation did not imply stable membership among the highest-priority candidates. [src: functional_dark_matter]
+
+The conservation-versus-fitness analysis **supports** this distinction by showing that a core-versus-auxiliary metric can detect essentiality enrichment while retaining limited discriminative power: essential genes were only 1.56 times more likely to be core, and 18 of 33 organisms showed significant enrichment after Benjamini-Hochberg false discovery rate correction. [src: conservation_vs_fitness] The result is therefore consistent with conservation helping prioritize candidates, but not uniquely determining their importance. [src: conservation_vs_fitness] The larger fitness-effects analysis **supports** the same calibration: conservation increased across fitness-importance categories, but the gradient was only 16 percentage points between essential and always-neutral genes, so statistical robustness did not make fitness importance a strong standalone predictor of conservation. [src: fitness_effects_conservation]
 
 ## Expanded GTDB Calibration
 
@@ -23,11 +25,15 @@ Among 11,774 root ortholog groups, 55.9% were kingdom-level, 11.0% class-level, 
 
 The expanded result **supports** using broader and more explicitly taxonomic reference data when the goal is to separate widely conserved unknown genes from narrowly distributed ones, but it does not establish that broad conservation alone predicts gene function. [src: functional_dark_matter] The report classified 6.0% of dark genes as strong testable hypotheses, 52.5% as weak leads, and 41.5% as true knowledge gaps under a conservation-by-ignorance scheme. [src: functional_dark_matter]
 
+The Fitness Browser integration **refines** this calibration: its pangenome categories placed 82.0% of linked genes in core clusters and 18.0% in auxiliary clusters, but clades containing only 2 genomes could have trivially high core fractions because presence in both genomes equals 100% core. [src: conservation_vs_fitness] Thus, even a conservation metric that is associated with essentiality remains sensitive to clade size, coverage, and the reference construction procedure. [src: conservation_vs_fitness] The newer cross-species analysis **supports** retaining continuous fitness magnitude and breadth alongside binary core status, because essential genes were 82.2% core, genes with min_fit < -3 were 77.7% core, and genes with min_fit from -1 to 0 were 66.4% core, despite the weak overall association. [src: fitness_effects_conservation]
+
 ## Conservation and Experimental Prioritization
 
 The conservation-weighted covering set selected 42 organisms covering 95.6% of importance-weighted priority across 28,584 high-priority dark genes. [src: functional_dark_matter] A separate darkness-spectrum analysis selected 42 organisms from 28 genera to cover 95% of scored priority, with 32 organisms sufficient for 80% coverage. [src: functional_dark_matter] These results **support** using conservation metrics not only to rank individual genes but also to design organism panels that maximize coverage of experimentally actionable unknowns. [src: functional_dark_matter]
 
 Conservation was one of six axes in the prioritization score, alongside fitness importance, inference quality, pangenome distribution, biogeographic signal, and experimental tractability. [src: functional_dark_matter] Overall rank correlations remained ρ > 0.93 across six alternative configurations, but only 64% of the original fitness-active top 50 remained under conservation-dominant or drop-tractability settings. [src: functional_dark_matter] Essential-gene top-50 retention was 36% when tractability was dropped and 48% when neighbor context was dropped. [src: functional_dark_matter] These sensitivity results **qualify** conservation-weighted ranking as a useful prioritization input rather than a uniquely correct ordering. [src: functional_dark_matter]
+
+The essentiality comparison **supports** combining conservation with an independent functional axis: essential-core genes were 87% annotated with known function, whereas essential-auxiliary genes were 38.2% hypothetical and essential-unmapped genes were 44.7% hypothetical. [src: conservation_vs_fitness] This suggests the highest-value unknowns may not be those with the broadest conservation alone, but those whose conservation, fitness importance, and annotation uncertainty jointly identify testable gaps. [src: conservation_vs_fitness] The fitness-effects analysis **refines** this prioritization logic: core genes were more likely than auxiliary genes to show beneficial deletion effects (24.4% versus 19.9%), and strong condition-specific phenotypes were 77.3% core versus 70.3% for genes without such annotations. [src: fitness_effects_conservation] Conservation therefore does not simply identify universally important genes; it can also capture genes with condition-dependent trade-offs that should be tested across environments. [src: fitness_effects_conservation]
 
 ## Tensions
 
@@ -35,13 +41,15 @@ The initial eggNOG metric suggested near-universal breadth for 99.9% of clusters
 
 The species-count variant was highly correlated with the original ranking at the global level, with Spearman ρ = 0.982, yet its top-50 and top-100 overlaps were only 62% and 58%, respectively. [src: functional_dark_matter] Thus, rank correlation and decision stability answer different questions and should be reported together when conservation metrics guide experimental selection. [src: functional_dark_matter]
 
+The Fitness Browser comparison introduces a further metric-resolution tension rather than a contradiction: essential genes showed only modest core enrichment (median odds ratio 1.56), while the expanded GTDB analysis produced conservation categories spanning kingdom to species and mobile levels. [src: conservation_vs_fitness, functional_dark_matter] The difference **refines** the interpretation of “conserved”: core membership within a species clade and broad taxonomic ortholog breadth are related but not interchangeable measurements. [src: conservation_vs_fitness, functional_dark_matter] The broader fitness-effects result adds a related qualification: core genes showed heavier fitness-effect tails in both directions, so core status may identify genes with stronger conditional costs and benefits rather than genes with uniformly greater importance. [src: fitness_effects_conservation]
+
 ## Relation to Other Concepts
 
 This concept **refines** [[concepts/pangenome-integration]] by focusing on how pangenome reference breadth and ortholog-group propagation change conservation estimates rather than on pangenome integration generally. [src: functional_dark_matter]
 
 It **supports** [[concepts/comparative-conservation-metric-calibration]] as a framework for testing whether conservation scores are discriminative, stable at decision thresholds, and appropriate for experimental design. [src: functional_dark_matter]
 
-It also connects to [[concepts/fitness-importance-and-pangenome-conservation]] because conservation was combined with fitness importance in candidate prioritization, while the sensitivity analysis showed that changing conservation emphasis altered high-priority membership. [src: functional_dark_matter]
+It also connects to [[concepts/gene-essentiality]] because conservation was combined with fitness importance in candidate prioritization, while the sensitivity analysis showed that changing conservation emphasis altered high-priority membership. [src: functional_dark_matter] The cross-species essentiality analysis **supports** this connection by finding core enrichment among essential genes, while also showing that the association is modest and condition-dependent because essentiality was inferred from RB-TnSeq under represented growth conditions. [src: conservation_vs_fitness] The new analysis **supports** and broadens this connection by showing that fitness breadth and conditional phenotypes add information beyond binary essentiality, while also warning that laboratory condition coverage and transposon coverage limit interpretation. [src: fitness_effects_conservation]
 
 ## Open Directions
 
@@ -50,3 +58,5 @@ It also connects to [[concepts/fitness-importance-and-pangenome-conservation]] b
 - Use bootstrap resampling of species and phyla in the 93.5M gene-cluster reference to quantify confidence intervals for conservation ranks and identify candidates whose priority is database-sensitive. [src: functional_dark_matter]
 - Re-run the 42-organism covering-set optimization under alternative conservation metrics and compare coverage of the 28,584 high-priority dark genes, asking whether the selected experimental panel is robust to metric choice. [src: functional_dark_matter]
 - Test whether conservation-weighted candidates outperform fitness-only candidates in CRISPRi or RB-TnSeq follow-up, separating broad conservation from experimentally validated functional importance. [src: functional_dark_matter]
+- Recompute essential-core enrichment across matched clade sizes and coverage thresholds, then compare binary essentiality and continuous fitness effects to determine whether the 1.56 median odds ratio is stable across reference designs. [src: conservation_vs_fitness]
+- Test whether conservation-weighted candidates with strong condition-specific or beneficial deletion effects replicate across underrepresented ecological conditions, separating genuine conditional importance from laboratory and transposon-coverage bias. [src: fitness_effects_conservation]

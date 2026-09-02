@@ -8,6 +8,7 @@
 # pass and every subsequent addition:
 #   fetch    sync projects/*/REPORT.md + docs digests into staging/
 #   compile  first-party compiler — content-hash skips unchanged docs
+#   consolidate embedding-ranked concept merges + evidence back-merge (free embeds)
 #   conflicts promote multi-project Tensions to conflict pages (hash-skipped)
 #   hubs     re-cluster + regenerate only topic hubs whose members changed
 #   figures  manifest + LLM figure placements (hash-skipped)
@@ -32,6 +33,9 @@ if grep -qE "\[ERROR\]" "$LOG"; then echo "compile had errors — see $LOG"; exi
 
 echo "== enrich" | tee -a "$LOG"
 "${PY[@]}" "$HERE/enrich_concepts.py" | tee -a "$LOG" | tail -3
+
+echo "== consolidate" | tee -a "$LOG"
+"${PY[@]}" "$HERE/consolidate_concepts.py" | tee -a "$LOG" | tail -3
 
 echo "== conflicts" | tee -a "$LOG"
 "${PY[@]}" "$HERE/conflicts_build.py" | tee -a "$LOG"

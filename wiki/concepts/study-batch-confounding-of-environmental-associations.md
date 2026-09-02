@@ -9,7 +9,7 @@ Environmental associations estimated across heterogeneous studies can reflect st
 
 ## Core claim
 
-When environmental categories are strongly nested within studies, an environmental predictor can act as a proxy for study-specific protocols, populations, sequencing workflows, or unmeasured sample-processing factors. [src: euk_in_prok_correlates] In this setting, random train/test splits allow closely related samples from the same study to appear in both partitions, whereas study-held-out validation tests whether the environmental association transfers to a new batch or study. [src: euk_in_prok_correlates] This makes [[concepts/study-batch-confounding-of-environmental-associations]] a direct extension of [[concepts/sampling-composition-confounding-of-environmental-signal]] and [[concepts/callability-limited-comparative-inference]].
+When environmental categories are strongly nested within studies, an environmental predictor can act as a proxy for study-specific protocols, populations, sequencing workflows, or unmeasured sample-processing factors. [src: euk_in_prok_correlates] In this setting, random train/test splits allow closely related samples from the same study to appear in both partitions, whereas study-held-out validation tests whether the environmental association transfers to a new batch or study. [src: euk_in_prok_correlates] This makes [[concepts/study-batch-confounding-of-environmental-associations]] a direct extension of [[concepts/environmental-metadata-harmonization-bias]] and [[concepts/callability-limited-comparative-inference]].
 
 ## Evidence from eukaryotic read fractions
 
