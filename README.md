@@ -16,7 +16,9 @@ cd quartz && npx quartz build --serve   # http://localhost:8080
 
 Needs [uv](https://docs.astral.sh/uv/) and [node](https://nodejs.org)
 (`brew install uv node`). No API keys required — the compiled wiki is
-committed; you are only rendering it.
+committed; you are only rendering it. Report figures are the one omission:
+they splice in only if `BERIL_CHECKOUT` points at a clone of the
+[observatory repo](https://github.com/beril-doe/BERIL-research-observatory).
 
 ## Run the pipeline (maintainers)
 
