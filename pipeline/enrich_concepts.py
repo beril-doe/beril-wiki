@@ -37,15 +37,16 @@ Existing concept pages:
 Duplicate-concept audit (do not add overlaps of these):
 {dup_report}
 
-A reader-facing synthesis wiki needs a concept page for every abstract,
-recurring idea/pattern/mechanism/methodological caveat this document's
-findings speak to. The current concept list is known to be too sparse: most
-documents should contribute to 3-6 concepts, and right now many findings have
-no conceptual home at all. Err toward CREATING: a focused new concept page
-with a clear justification is better than stretching a broad existing one.
-Good concepts argue across projects (e.g. "phylogenetic-confounding",
-"cultivation-bias", "gene-essentiality") — not document topics, organisms, or
-datasets (those are entities).
+A reader-facing synthesis wiki needs a concept page for each abstract,
+RECURRING idea/pattern/mechanism this document's findings speak to. A concept
+earns a page only when it would plausibly draw evidence from at least two
+OTHER projects in a corpus about microbial genomics, fitness, ecology, and
+annotation — name one such likely project or theme in the justification. Most
+documents warrant 0-2 new concepts; a document whose findings all have
+conceptual homes warrants 0. Good concepts argue across projects (e.g.
+"phylogenetic-confounding", "cultivation-bias", "gene-essentiality") — never
+document topics, single findings, organisms, or datasets (those are
+entities), and never a finer-grained restatement of an existing page.
 
 Return ONLY valid JSON:
 {{"create": [{{"name": "concept-slug", "title": "Title",
