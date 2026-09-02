@@ -1,0 +1,48 @@
+---
+type: "Concept"
+description: "A conserved metabolic core contrasts with mobile, defense-rich accessory innovation."
+sources: ["summaries/cog_analysis__REPORT.md"]
+---
+# Two-Speed Bacterial Genomes Separate Conserved Metabolism from Accessory Innovation
+
+The two-speed bacterial genome model proposes that bacterial genomes contain a conserved core devoted largely to metabolism and housekeeping, alongside a more variable accessory component enriched for mobile, defense, and unknown functions. This page synthesizes the cross-species COG analysis reported in [[summaries/cog_analysis__REPORT]]. [src: cog_analysis]
+
+## Evidence from Cross-Species COG Profiles
+
+Clusters of Orthologous Groups (COG) categories were compared across 32 species spanning 9 phyla and 357,623 genes. [src: cog_analysis] The analysis found a consistent functional separation between core genes and novel or singleton genes, supporting the broader interpretation of [[concepts/pangenome-integration]] that pangenome variation has functional structure rather than being uniformly distributed across genes. [src: cog_analysis]
+
+Novel or singleton genes were enriched in COG L, the category for replication, recombination, and mobile elements, by +10.88%, with 100% consistency across species. [src: cog_analysis] This was the strongest reported signal and supports the hypothesis that mobile genetic processes are a major source of accessory genomic novelty. [src: cog_analysis]
+
+Novel or singleton genes were also enriched in COG V, defense mechanisms, by +2.83%, with 100% consistency, and in COG S, unknown function, by +1.64%, with 69% consistency. [src: cog_analysis] These enrichments associate accessory novelty with ecological interaction, defense, and incompletely characterized functions, linking this model to [[concepts/functional-dark-matter]] and [[concepts/phage-defense-syndromes-and-arms-race]]. [src: cog_analysis]
+
+Core genes were depleted relative to the novel or singleton class in COG J, translation, by -4.65%, with 97% consistency. [src: cog_analysis] Core genes were also depleted in COG F, nucleotide metabolism, by -2.09%, with 100% consistency; COG H, coenzyme metabolism, by -2.06%, with 97% consistency; COG E, amino acid metabolism, by -1.81%, with 81% consistency; and COG C, energy production, by -1.75%, with 88% consistency. [src: cog_analysis]
+
+Taken together, these distributions support an interpretation in which core genes form an ancient, conserved metabolic engine centered on translation, energy production, and biosynthesis, whereas novel genes represent more recent acquisitions associated with ecological adaptation, mobile elements, defense, and niche-specific functions. [src: cog_analysis] This interpretation complements [[concepts/genome-expansion-versus-streamlining]] by distinguishing the functional character of conserved and variable genome fractions rather than treating genome size alone as the relevant axis. [src: cog_analysis]
+
+## Evolutionary Interpretation
+
+The report interprets horizontal gene transfer (HGT), the movement of genetic material between lineages, as the primary innovation mechanism rather than vertical inheritance. [src: cog_analysis] The +10.88% enrichment of COG L was presented as evidence that most genomic novelty may come from mobile elements, although this conclusion is an interpretation of functional-category distributions rather than a direct measurement of transfer events. [src: cog_analysis]
+
+Because the reported patterns held across the analyzed bacterial phyla, the report proposes that they reflect deep evolutionary constraint. [src: cog_analysis] The cross-species consistency strengthens the two-speed model, while the limited taxonomic sample leaves open the possibility that additional phylum-specific patterns would emerge in a larger comparison. [src: cog_analysis]
+
+All 8 predictions from the initial N. gonorrhoeae analysis were reported as confirmed in the 32-species comparison. [src: cog_analysis]
+
+## Composite Functional Categories
+
+Composite COG assignments containing multiple functional letters were treated as biologically meaningful rather than as annotation artifacts. [src: cog_analysis] The LV composite, representing mobile and defense functions, showed +0.34% enrichment with 76% consistency and was interpreted as evidence for multifunctional modules such as mobile defense islands. [src: cog_analysis]
+
+The analysis recommends retaining composite COG categories because they may represent genuine multifunctional genes rather than noise. [src: cog_analysis] Composite categories were counted once per gene rather than split across their component letters, a choice that preserves the gene-level interpretation of multifunctionality but affects how category frequencies should be compared with analyses using split assignments. [src: cog_analysis]
+
+## Limits of the Model
+
+COG annotations covered approximately 70% of genes, so unassigned genes may skew the observed distributions. [src: cog_analysis] The analysis used 32 species, and a larger sample could reveal phylum-specific patterns not visible in the current comparison. [src: cog_analysis] Composite categories were counted once per gene, and [[entities/eggnog]] v6 annotations may differ from original COG assignments. [src: cog_analysis]
+
+The two-speed model should therefore be treated as a strongly supported cross-species pattern in the analyzed dataset, not as a complete account of all bacterial genome evolution. [src: cog_analysis]
+
+## Open Directions
+
+- Add additional taxonomic groups and repeat the COG comparison to test whether the reported +10.88%, +2.83%, +1.64%, -4.65%, -2.09%, -2.06%, -1.81%, and -1.75% contrasts remain consistent across a broader phylogenetic sample. [src: cog_analysis]
+- Examine COG L and COG V genes with gene-neighborhood, mobility, and defense-system analyses to test whether their enrichment reflects transferred elements, independently evolving defense loci, or both. [src: cog_analysis]
+- Join novel-gene COG assignments to environmental metadata and use habitat-stratified comparisons to test whether accessory functions vary by environment. [src: cog_analysis]
+- Reanalyze unassigned genes with complementary functional annotation and compare the result with the approximately 70% COG-annotated fraction to determine how annotation gaps affect the two-speed pattern. [src: cog_analysis]
+- Compare gene-level counting of composite COG assignments with component-split counting to test how representation choices affect the reported LV and other composite-category signals. [src: cog_analysis]

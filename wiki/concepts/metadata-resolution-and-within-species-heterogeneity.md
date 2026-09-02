@@ -1,0 +1,41 @@
+---
+type: "Concept"
+description: "Species-level metadata can mask environmental variation within bacterial species."
+sources: ["summaries/amr_environmental_resistome__REPORT.md"]
+---
+# Metadata Resolution Can Hide Within-Species Environmental Heterogeneity
+
+Species-level environmental labels can conceal substantial variation among genomes from the same bacterial species. The [[summaries/amr_environmental_resistome__REPORT]] shows that ecological associations with antimicrobial-resistance (AMR) diversity remain detectable after aggregation, but its majority-vote classification and species-level proxy analyses cannot establish how AMR varies among co-specific genomes sampled from different environments. [src: amr_environmental_resistome]
+
+## Evidence from Environmental Classification
+
+The dataset contained 280,337 genomes with NCBI environment metadata, and 93.5% of those genomes were classified per genome. [src: amr_environmental_resistome] Species-level majority-vote environmental classifications covered 95% of species, or 13,981 species. [src: amr_environmental_resistome] Majority voting therefore converts potentially mixed within-species metadata into a single species label, which can erase environmental heterogeneity when genomes from one species occur in multiple source categories. [src: amr_environmental_resistome]
+
+The report tested sensitivity to majority-vote thresholds of 50%, 60%, 75%, and 90%; the association between environment and AMR count persisted across these thresholds, with η² = 0.044–0.056. [src: amr_environmental_resistome] This **supports** the robustness of the broad environment–AMR association, but it does not show that individual genomes within a species share the majority environment or the same AMR profile. [src: amr_environmental_resistome]
+
+## Within-Species Proxy and Its Limitation
+
+Among species represented by genomes from at least 2 environments and with at least 5 genomes in each environment, 884 species met the initial criterion, while the reported within-species analysis included 823 species. [src: amr_environmental_resistome] In this analysis, the fraction of genomes from clinical sources predicted total AMR cluster count, with Spearman rho = 0.465 and p = 2.2×10⁻⁴⁵. [src: amr_environmental_resistome] Clinical-dominated species had a mean of 72.9 AMR clusters compared with 16.4 in environmental-dominated species, a 4.4× difference with Mann–Whitney U test p = 2×10⁻¹⁸. [src: amr_environmental_resistome] Clinical-dominated species also had a higher grouped accessory fraction, 93.6% versus 81.7%, with p = 0.004. [src: amr_environmental_resistome]
+
+These results **refine** rather than replace the species-level environment comparison: they show that species containing genomes from multiple environments can be used to test environmental representation, but the analysis summarizes each species by its dominant source rather than comparing AMR directly among genomes within the same species. [src: amr_environmental_resistome] The continuous correlation between clinical fraction and accessory percentage was borderline, with rho = 0.065 and p = 0.064, further limiting the claim that increasing clinical representation directly predicts accessory AMR within species. [src: amr_environmental_resistome]
+
+The report states that the planned per-genome Fisher's exact test was replaced by the species-level within-species proxy because billion-row joins were computationally costly. [src: amr_environmental_resistome] Consequently, the evidence supports an association between species-level environmental composition and AMR burden, but it does not identify which individual genomes acquired resistance, whether environmental transitions drive that acquisition, or how much AMR variation exists among genomes sharing a species name. [src: amr_environmental_resistome]
+
+## Consequences for Resistome Interpretation
+
+At the species level, clinical-source species had a median of 5 AMR gene clusters, compared with 2 for soil, aquatic, and host-associated species; the difference was 2.5×, with Kruskal–Wallis H = 781.9, p = 9.4×10⁻¹⁶⁷, and η² = 0.056. [src: amr_environmental_resistome] Clinical species had 68% accessory AMR compared with 43% in soil species, with Kruskal–Wallis H = 506.0, p = 4×10⁻¹⁰⁷, and η² = 0.036. [src: amr_environmental_resistome] These findings **support** [[concepts/environmental-resistome]], but their ecological meaning depends on how accurately source metadata represent the environments of individual genomes. [src: amr_environmental_resistome]
+
+The metadata-resolution issue is especially important because NCBI sampling overrepresents clinical isolates, whereas soil and aquatic species are undersampled. [src: amr_environmental_resistome] Majority-vote classifications also collapse within-species variation, and the report identifies sampling, classification, and annotation limitations as potential contributors to the clinical-versus-environmental contrast. [src: amr_environmental_resistome] This **connects** the resistome result to [[concepts/bioinformatic-representation-coverage-bias]] and [[concepts/pangenome-integration]]: broad pangenome coverage can increase statistical power while still leaving the environmental distribution of genomes unevenly represented. [src: amr_environmental_resistome]
+
+The deeply sampled examples illustrate why species labels are not sufficient for resolving environmental heterogeneity. *Klebsiella pneumoniae* included 13,637 genomes and 1,115 AMR clusters, of which 7 were core and 1,108 were accessory (99%); it was clinical-dominant at 80%. [src: amr_environmental_resistome] *Staphylococcus aureus* included 13,274 genomes and 642 clusters, of which 9 were core and 633 were accessory (99%); it was clinical-dominant at 85%. [src: amr_environmental_resistome] *Salmonella enterica* included 10,097 genomes and 836 clusters, of which 11 were core and 825 were accessory (99%); it was host-associated-dominant at 31%. [src: amr_environmental_resistome] These cases show that a single species can combine large numbers of genomes with extensive accessory AMR, but the reported summary does not provide a per-genome environment-by-AMR contingency table for them. [src: amr_environmental_resistome]
+
+## Tensions
+
+The environment–AMR association persisted after several majority-vote thresholds and after phylum- and family-level controls, which **supports** an ecological signal beyond a simple species-label artifact. [src: amr_environmental_resistome] However, only 20 of 141 testable families, or 14%, showed significant within-family environment effects after false-discovery-rate correction, and many families lacked enough environmental breadth for testing. [src: amr_environmental_resistome] The remaining tension is therefore between evidence for a broad ecological association and uncertainty about whether that association is consistently resolved within species and families. [src: amr_environmental_resistome]
+
+## Open Directions
+
+- Use the 280,337 genomes with NCBI environment metadata and a per-genome AMR-by-environment contingency analysis, such as the originally planned Fisher's exact test or a scalable equivalent, to determine whether AMR enrichment remains after conditioning on species. [src: amr_environmental_resistome]
+- Use the 823 species in the reported multi-environment subset and hierarchical or mixed-effects models to separate within-species environment effects from between-species clinical representation, asking whether the 72.9-versus-16.4 mean AMR-cluster contrast persists within species. [src: amr_environmental_resistome]
+- Use deeply sampled species including *Klebsiella pneumoniae*, *Staphylococcus aureus*, and *Salmonella enterica*, with genome-level environment labels and accessory-cluster presence/absence matrices, to test whether the reported 99%, 99%, and 99% accessory fractions are concentrated in particular environments. [src: amr_environmental_resistome]
+- Use per-genome environment metadata together with phylogeny and family-level stratification to test whether the 20 of 141 significant family-level effects reflect genuine within-family ecological structure or uneven environmental sampling. [src: amr_environmental_resistome]

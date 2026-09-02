@@ -1,0 +1,44 @@
+---
+type: "Concept"
+description: "MSA depth tracks the richness of bacterial functional annotation."
+sources: ["summaries/alphafold_msa_annotation__REPORT.md"]
+---
+# Sequence-space depth predicts functional annotation richness
+
+Sequence-space depth, measured here as AlphaFold multiple-sequence-alignment (MSA) depth—the number of aligned homologous sequences available for a representative protein—provides a quantitative lens on the bacterial structural annotation gap. The analysis joined [[entities/kbase-ke-pangenome]], Bakta annotations, [[entities/interproscan]], and [[entities/kescience-alphafold]] through 38,051,842 gene cluster–UniProt pairs. [src: alphafold_msa_annotation] The complete report is available at [[summaries/alphafold_msa_annotation__REPORT]].
+
+## Core evidence
+
+MSA depth was strongly associated with functional domain annotation richness: Spearman ρ = 0.7563 across 38,051,842 gene cluster–UniProt pairs. [src: alphafold_msa_annotation] Mean domain hits increased from 0.59 for proteins with MSA depth < 10 to 10.83 for proteins with MSA depth ≥ 10,000. [src: alphafold_msa_annotation] Mean distinct InterPro (IPR) families increased from 0.059 to 4.601 across the same bins, an 18× span in mean domain hits. [src: alphafold_msa_annotation]
+
+The relationship was monotonic within core, auxiliary non-singleton, and auxiliary+singleton gene classes, with core genes showing slightly higher domain richness than accessory genes at equivalent MSA depth. [src: alphafold_msa_annotation] This supports the interpretation that sequence-space representation, rather than pangenome class alone, is a major predictor of the amount of available functional annotation. [src: alphafold_msa_annotation]
+
+The AlphaFold bridge covered 38,051,842 of 132,531,501 total gene clusters, or 28.7% of clusters; 70.7% lacked UniRef100 identifiers or had UniParc-only identifiers without an AlphaFold entry. [src: alphafold_msa_annotation] By contrast, 111,035,431 gene clusters, or 83.8% of the total, had at least one InterProScan domain annotation, with mean hits of 7.5 and mean distinct IPR families of 3.3. [src: alphafold_msa_annotation] The difference indicates that domain annotation coverage is broader than the AlphaFold MSA bridge, while the MSA-linked subset provides the evidence for the depth–richness relationship. [src: alphafold_msa_annotation]
+
+## Pangenome structure and annotation depth
+
+Core gene clusters had a median MSA depth of 15,308, compared with 5,299 for auxiliary+singleton clusters and 5,527 for auxiliary non-singleton clusters. [src: alphafold_msa_annotation] Thus, the core median was 2.89× higher than auxiliary+singleton and 2.77× higher than auxiliary non-singleton. [src: alphafold_msa_annotation] The 10th-percentile MSA depth was 334 for core genes versus 25–32 for accessory genes. [src: alphafold_msa_annotation]
+
+Hypothetical-protein rates were 3.8% in core clusters, 11.6% in auxiliary non-singleton clusters, and 13.8% in auxiliary+singleton clusters. [src: alphafold_msa_annotation] Chi-square tests were overwhelmingly significant, with χ² > 500,000 and p ≈ 0, while the odds ratios were 0.25 for core versus auxiliary+singleton and 0.31 for core versus auxiliary non-singleton. [src: alphafold_msa_annotation] These results support [[concepts/pangenome-integration]] by showing that pangenome class is associated with both sequence-space depth and annotation completeness. [src: alphafold_msa_annotation]
+
+The class-level pattern does not eliminate a substantial annotation gap within the core genome. [src: alphafold_msa_annotation] The analysis identified 415,603 distinct core clusters with MSA depth < 10 across 14,768 species clades. [src: alphafold_msa_annotation] Their mean and median MSA depths were 4.57 and 4.0, respectively; 286,439, or 68.9%, were hypothetical, 137, or 0.033%, were EC-annotated, and 346, or 0.083%, were KEGG-mapped. [src: alphafold_msa_annotation] This subset refines [[concepts/functional-dark-matter]] by identifying conserved core proteins that remain distant from characterised sequence space. [src: alphafold_msa_annotation]
+
+## Interpretation and limits
+
+The report distinguishes two annotation-gap layers: an MSA-depth-driven gap affecting core and accessory classes, and a pangenome-class gap in which accessory and singleton genes have higher hypothetical rates. [src: alphafold_msa_annotation] The cross-class comparison is dominated by the higher average MSA depth of core genes, whereas the low-depth core subset demonstrates that conservation does not guarantee rich functional annotation. [src: alphafold_msa_annotation]
+
+The low-depth core proteins are candidates for experimental structural characterisation, but this is a prioritisation hypothesis rather than direct experimental validation. [src: alphafold_msa_annotation] Top-ranked proteins with MSA depth = 1 came primarily from poorly characterised marine and soil bacteria, including Oceanicoccus, Dwaynesavagella, and CAILRJ01. [src: alphafold_msa_annotation]
+
+The reported ρ = 0.7563 was computed on the full 38,051,842-pair dataset without subgroup stratification, so it may differ among core, auxiliary, and singleton clusters and among organisms with different annotation gaps. [src: alphafold_msa_annotation] The analysis used one representative sequence per gene cluster, so within-cluster sequence diversity was not captured. [src: alphafold_msa_annotation] The 293K genomes were not phylogenetically balanced, with common taxa such as Pseudomonas and E. coli over-represented. [src: alphafold_msa_annotation] Because only 29.3% of gene clusters bridged to AlphaFold MSA depths, the inference that the remaining 70.7% contains a larger annotation gap is plausible but not directly measured. [src: alphafold_msa_annotation]
+
+## Connections to other research
+
+This concept supports [[concepts/structural-annotation-gap]] as a measurable bridge between sequence-space representation and functional annotation, while [[concepts/pangenome-integration]] captures the accompanying core–accessory structure. [src: alphafold_msa_annotation] Joining the 415,603 low-depth core clusters to [[entities/kescience-fitnessbrowser]] measurements could test whether structurally isolated proteins have condition-specific or growth-essential phenotypes, connecting this annotation problem to [[concepts/gene-essentiality]] and [[concepts/multi-omics-integration]]. [src: alphafold_msa_annotation]
+
+## Open Directions
+
+- Stratify the 38,051,842 gene cluster–UniProt pairs by core, auxiliary non-singleton, and auxiliary+singleton status, then recompute Spearman correlations and domain-richness curves to determine whether the global ρ = 0.7563 is consistent across pangenome classes. [src: alphafold_msa_annotation]
+- Use the full 132,531,501-cluster table, including the 70.7% without an AlphaFold bridge, to compare InterProScan coverage and hypothetical-protein rates between bridged and unbridged clusters; test whether the unbridged population has a larger annotation gap. [src: alphafold_msa_annotation]
+- Replace representative-sequence MSA depth with within-cluster depth distributions and compare domain annotations across cluster members to measure how much representative choice obscures sequence-space heterogeneity. [src: alphafold_msa_annotation]
+- Join the 415,603 low-MSA-depth core clusters to [[entities/kescience-fitnessbrowser]] fitness measurements and test whether low-depth status predicts condition-specific or essential phenotypes. [src: alphafold_msa_annotation]
+- Reweight or stratify the analysis across the 293K genomes by phylogeny and organismal abundance, then test whether the 2.89× and 2.77× core–accessory median-depth ratios persist in a phylogenetically balanced dataset. [src: alphafold_msa_annotation]

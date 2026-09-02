@@ -1,0 +1,45 @@
+---
+type: "Concept"
+description: "Schema connectivity is broader than the cross-dataset analyses actually realized."
+sources: ["summaries/berdl_data_atlas__REPORT.md"]
+---
+# Potential Data Connectivity Often Exceeds Realized Cross-Dataset Use
+
+The BERDL Data Atlas distinguishes **potential connectivity**—schema-level compatibility through shared join keys—from **realized integration**, in which a cross-dataset join has actually been used and validated. [src: berdl_data_atlas] The atlas shows that the potential connection surface is substantially larger than documented cross-tenant use, while warning that shared key names do not establish value-space overlap. [src: berdl_data_atlas]
+
+## Evidence
+
+The inventory contains 1,740 deduplicated tables across 119 databases and 17 tenants, and identifies 536 unordered cross-tenant bridges at tenant-by-topic-cell granularity using 29 canonical join keys. [src: berdl_data_atlas] These keys span genome, taxonomy, sample, annotation, pathway, biochemistry, protein, phage, literature, and KBase workspace relationships. [src: berdl_data_atlas] The most widespread keys are `sample_id` across 10 tenants, `genome_id` across 9, `ncbi_taxon_id` across 9, `feature_id` across 9, and `ec_number` across 8. [src: berdl_data_atlas]
+
+The realized-use audit found that 51 of 66 BERIL projects, or 77%, span multiple tenants, with KBase appearing in 53/66 projects, or 80%, and KEScience appearing in 35/66, or 53%. [src: berdl_data_atlas] The realized KBase × KEScience bridge accounts for 36 cross-tenant projects, mostly pangenome-by-fitness joins through `genome_id` and `ncbi_taxon_id`. [src: berdl_data_atlas] Thus, cross-tenant work is common, but its observed distribution is concentrated in a subset of the available bridge surface. [src: berdl_data_atlas]
+
+Five high-leverage bridges had zero realized use at audit time: UC1 between KEScience and refdata with 12 shared keys, UC2 between ENIGMA and PhageFoundry with 11 keys, UC3 between KBase and refdata with 11 keys, UC4 between NMDC and PROTECT with 10 keys, and UC5 between NMDC and refdata with 9 keys. [src: berdl_data_atlas] These unused bridges represent proposed analyses involving structural fitness signatures, subsurface prophages and metal resistance, GTDB–KBase species-pangenome disagreement, environmental distributions of clinically relevant pathogens, and ENVO ontology completeness in NMDC biosamples. [src: berdl_data_atlas]
+
+The atlas provides a direct example of why potential connectivity must be separated from realized validity: `genome_id` can represent different identifiers in KBase, NCBI, and MAG pipelines, so schema-level compatibility does not establish value-space overlap. [src: berdl_data_atlas] UC1 was the only bridge sample-executed in the study, and SQL probing corrected its proposed join because FitnessBrowser exposes the composite `orgId`, `locusId` key rather than `protein_id`. [src: berdl_data_atlas] The validated path joined gene-fitness records to SwissProt best hits using `orgId` and `locusId`, then joined SwissProt accessions to AlphaFold entries. [src: berdl_data_atlas]
+
+The validated UC1 join produced a cohort of 55,454 genes across 48 organisms with both fitness data and an AlphaFold model, including 22,303 distinct AlphaFold models. [src: berdl_data_atlas] The source tables contained 27,410,721 FitnessBrowser gene-fitness measurements, 79,180 genes with a SwissProt best hit, and 241,070,489 AlphaFold entries; 78,753 of the 79,180 SwissProt best hits were represented in AlphaFold. [src: berdl_data_atlas] This is strong evidence that a bridge can move from a proposed schema connection to a usable analytical cohort, but it does not validate UC2–UC5. [src: berdl_data_atlas]
+
+## Interpretation
+
+The atlas **supports** [[concepts/cross-tenant-data-bridging]] by showing that shared keys create a large structural opportunity for integration, while realized project use covers only part of that opportunity. [src: berdl_data_atlas] It **refines** [[concepts/schema-to-value-space-join-validation]] by demonstrating that join-key presence must be followed by live value-space testing and, where necessary, correction of the assumed join columns. [src: berdl_data_atlas] It also **supports** [[concepts/provenance-aware-resource-discovery]] because selecting an appropriate dataset requires knowing not only that a bridge is listed, but also whether its values, identifiers, and provenance have been validated. [src: berdl_data_atlas]
+
+The gap between potential and realized use is not necessarily evidence that the unused bridges lack scientific value: the atlas identifies them as high-leverage use cases, but UC2–UC5 require live-cluster execution and were not validated in this study. [src: berdl_data_atlas] The realized-use audit mined project README files, so data-source mentions in research plans or notebook source may have been missed and the reported tenant breadth is a lower bound. [src: berdl_data_atlas]
+
+## Implications for Integration Practice
+
+A proposed bridge should be treated as a sequence of evidence states: shared schema keys, overlapping values, executable join, and scientifically interpretable result. [src: berdl_data_atlas] The atlas explicitly establishes only the first state for UC2–UC5, whereas UC1 reached executable-cohort validation. [src: berdl_data_atlas] This distinction is relevant to [[concepts/pangenome-integration]] and [[concepts/multi-omics-integration]], where large inventories and many nominal links can otherwise be mistaken for demonstrated analytical reuse. [src: berdl_data_atlas]
+
+The atlas’s operational heuristic is to identify which of `genome_id`, `ncbi_taxon_id`, `sample_id`, or `feature_id` is exposed by both datasets when an analysis crosses genome, phenotype, or environment topics. [src: berdl_data_atlas] That heuristic identifies candidate bridges, but the UC1 correction and the `genome_id` caveat show that it must be paired with value inspection, identifier semantics, and sample execution. [src: berdl_data_atlas]
+
+## Related Source
+
+The full inventory, bridge catalog, realized-use audit, and UC1 validation are summarized in [[summaries/berdl_data_atlas__REPORT]]. [src: berdl_data_atlas]
+
+## Open Directions
+
+- Execute UC2 on ENIGMA and PhageFoundry tables using its 11 shared keys, then test whether subsurface prophage, metal-resistance, and Oak Ridge contamination-gradient records overlap in value space. [src: berdl_data_atlas]
+- Execute UC3 between KBase and refdata using its 11 shared keys, then quantify GTDB versus KBase species-pangenome disagreement after identifier harmonization. [src: berdl_data_atlas]
+- Execute UC4 between NMDC and PROTECT using its 10 shared keys, combining environmental distribution records with pathogen and biogeochemical data to test whether clinically relevant pathogen signals are geographically and environmentally recoverable. [src: berdl_data_atlas]
+- Execute UC5 between NMDC and refdata using its 9 shared keys, then measure ENVO ontology completeness in NMDC biosamples and assess whether missing annotations are recoverable from reference resources. [src: berdl_data_atlas]
+- Re-audit project notebooks and research plans in addition to README files, then compare the expanded realized-use count with the current lower-bound estimate of 51 of 66 multi-tenant projects. [src: berdl_data_atlas]
+- Add or compute per-residue pLDDT and structural features for the validated UC1 cohort, then test whether structure-derived variables explain condition-specific fitness patterns beyond the existing gene-level join. [src: berdl_data_atlas]
