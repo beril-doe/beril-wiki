@@ -87,6 +87,22 @@ automatically invalidates and rebuilds its review (the cache hashes the page
 - The editorial rulebook (`contract/AGENTS.md`) is injected into every LLM
   call and is runtime-editable without code changes.
 
+## Where the data lives
+
+| What | Where | Committed here? |
+|---|---|---|
+| Source reports (`REPORT.md` + digests) | `wiki/sources/` (in-corpus copy) and the [observatory repo](https://github.com/beril-doe/BERIL-research-observatory) (`projects/<id>/REPORT.md`, source of truth) | **yes** — a fresh clone can render raw reports and run every check |
+| Compiled wiki + navigation layer | `wiki/`, `wiki-extra/` | yes |
+| Stage caches | `state/*.json` | yes |
+| Figures (binary images) | observatory repo, `projects/<id>/figures/` | no — spliced at publish when `BERIL_CHECKOUT` points at a clone; omitted otherwise |
+| Underlying analysis data | KBase BER Data Lakehouse (queried by the original projects) | no — the wiki compiles reports, not raw data |
+| `staging/` | derived scratch (fetch output) | no |
+
+So: viewing and verifying the wiki needs only this repo; recompiling or
+rendering figures needs a checkout of the observatory repo
+(`BERIL_CHECKOUT=/path/to/BERIL-research-observatory`, default
+`../BERIL-research-observatory`-style local path).
+
 ## Adding new content
 
 Drop a new `projects/<id>/REPORT.md` into the observatory checkout and run
