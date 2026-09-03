@@ -44,7 +44,7 @@ import sys
 import litellm
 
 import compile as C
-from wiki_check import cited_ids, paragraphs, source_ids
+from wiki_check import NUMBER, cited_ids, norm_num, paragraphs, source_ids
 
 # nomic is LBL-hosted and free; cohere is added for the merge phase only, as a
 # second opinion on candidates (~$0.04 a pass). Embeddings are never cached:
@@ -243,11 +243,14 @@ def load_concepts(wiki: pathlib.Path) -> list[dict]:
         text = p.read_text(encoding="utf-8", errors="replace")
         fm, body = C.parse_fm(text)
         desc = str(fm.get("description") or "")
-        lead = body.split("\n## ")[0].strip()
+        # Whole page, NOT just the lead. Measured against 8 duplicate pairs with
+        # near-identical numbers: lead-only ranked them at median 2214 of 7381
+        # (recall@45 = 0/8) because a lead paragraph carries topic vocabulary and
+        # none of the evidence; the whole page ranks them at median 189.
         out.append({
             "stem": p.stem, "path": p, "fm": fm, "body": body, "digest": digest(text),
-            "cited": body_src_ids(text),
-            "etext": f"{p.stem.replace('-', ' ')}. {desc}\n{lead}",
+            "cited": body_src_ids(text), "nums": page_numbers(text),
+            "etext": f"{p.stem.replace('-', ' ')}. {desc}\n{body}",
         })
     return out
 
@@ -273,6 +276,35 @@ def both_mature(ca: set[str], cb: set[str], mature: int) -> bool:
     earlier merge grew it. Checking only at generation merged a 28-project and
     a 32-project concept."""
     return len(ca) >= mature and len(cb) >= mature
+
+
+def page_numbers(text: str) -> set[str]:
+    return {norm_num(x) for par in paragraphs(text) for x in NUMBER.findall(par)}
+
+
+def evidence_candidates(concepts: list[dict], min_shared: int, min_jaccard: float) -> list[tuple]:
+    """Pairs that restate the same measurements — deterministic, free, exact.
+
+    The shard defect IS "two pages restating one study's numbers under different
+    titles", so numeric overlap measures it directly instead of proxying it
+    through semantic similarity. Embeddings rank these badly: a pair citing
+    IDENTICAL number sets sat at rank 3016 of 7381 by cosine, because a whole-page
+    vector encodes topic register far more strongly than which figures appear.
+    Both sides must also cite a project in common, so coincidental number reuse
+    across unrelated studies does not qualify."""
+    out = []
+    for i in range(len(concepts)):
+        for j in range(i + 1, len(concepts)):
+            a, b = concepts[i], concepts[j]
+            if not (a["cited"] & b["cited"]):
+                continue
+            shared = a["nums"] & b["nums"]
+            if len(shared) < min_shared:
+                continue
+            jac = len(shared) / max(1, len(a["nums"] | b["nums"]))
+            if jac >= min_jaccard:
+                out.append((jac, len(shared), i, j))
+    return sorted(out, reverse=True)
 
 
 def merge_candidates(concepts: list[dict], vecs_by_model: dict[str, list],
@@ -588,7 +620,14 @@ def main(root: pathlib.Path, args) -> int:
           f"({', '.join(models)})")
     cvecs_by = {m: embed([c["etext"] for c in concepts], m) for m in models}
     cvecs, svecs = cvecs_by[EMBED_MODEL], embed([s["etext"] for s in summaries])
-    pairs = merge_candidates(concepts, cvecs_by, args.merge_topn, args.min_sources)
+    ev = evidence_candidates(concepts, args.min_shared_numbers, args.evidence_jaccard)
+    ev = [(0, j, i, k) for j, _, i, k in ev
+          if not both_mature(concepts[i]["cited"], concepts[k]["cited"], args.min_sources)]
+    emb_pairs = merge_candidates(concepts, cvecs_by, args.merge_topn, args.min_sources)
+    seen = {(i, j) for _, _, i, j in ev}
+    pairs = ev + [p for p in emb_pairs if (p[2], p[3]) not in seen]
+    print(f"  merge candidates: {len(ev)} from evidence overlap + "
+          f"{len(pairs) - len(ev)} more from embeddings")
     cands = backmerge_candidates(concepts, cvecs, summaries, svecs,
                                  args.backmerge_threshold, args.topk, args.min_sources)
 
@@ -622,6 +661,10 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", type=pathlib.Path, default=C.REPO)
     ap.add_argument("--dry-run", action="store_true", help="rank and print candidates; no LLM calls, $0")
+    ap.add_argument("--min-shared-numbers", type=int, default=3,
+                    help="evidence-overlap generator: shared exact figures required")
+    ap.add_argument("--evidence-jaccard", type=float, default=0.5,
+                    help="evidence-overlap generator: numeric-set Jaccard floor")
     ap.add_argument("--merge-topn", type=int, default=45,
                     help="pairs taken from EACH embedding model's ranking; the union is judged")
     ap.add_argument("--merge-models", default=",".join(MERGE_MODELS),
