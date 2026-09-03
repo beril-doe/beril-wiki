@@ -24,6 +24,9 @@ import re
 import networkx as nx
 from litellm import completion
 
+import compile as C
+from wiki_check import source_ids
+
 HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
 OUT = ROOT / "wiki-extra"
@@ -152,6 +155,8 @@ def strip_bad_src(page: str, valid: set[str]) -> str:
 
 
 def main() -> None:
+    src_texts = source_ids(ROOT)
+    targets = C.wikilink_targets(ROOT)
     concepts = {p.stem: parse_page(p) for p in sorted((ROOT / "wiki/concepts").glob("*.md"))}
     entities = {p.stem: parse_page(p) for p in sorted((ROOT / "wiki/entities").glob("*.md"))}
     clusters = cluster_concepts(concepts)
@@ -224,6 +229,19 @@ def main() -> None:
             if bad_src_ids(page, srcs):
                 print(f"  ! topics/{slug}: still invalid — stripping bad [src:] ids")
                 page = strip_bad_src(page, srcs)
+        # Same two guarantees generate_page gives every compile-written page:
+        # figures traceable to a cited source, and no link to a page that does
+        # not exist. One retry for numbers, then deterministic link repair.
+        nv = C.prose_violations(page, src_texts)
+        if nv:
+            print(f"  ! topics/{slug}: {len(nv)} unsupported figure(s) — retrying")
+            page = llm(prompt + "\n\nYOUR PREVIOUS ATTEMPT contained figures that appear in none "
+                       "of the cited sources:\n" + "\n".join(f"- {x}" for x in nv[:12]) +
+                       "\nRewrite the full page. Every number must be copied exactly from a source "
+                       "you cite in the same paragraph; drop any figure you cannot attribute.",
+                       system=TEMPLATE)
+            page = strip_bad_src(page, srcs)
+        page = C.downgrade_dead_links(page, targets | {f"topics/{slug}"})
         out_path.write_text(page.strip() + "\n", encoding="utf-8")
         state[slug] = digest
         any_changed = True

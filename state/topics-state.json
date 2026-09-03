@@ -1,24 +1,22 @@
 {
  "__names__": {
-  "18d0896be94e": "Bacterial Gene Fitness Conservation",
-  "bb2dd97c3538": "Ecological Genomic Inference",
-  "2ca0d3be0f8f": "Microbiome Data Translation",
-  "7ff5852bff92": "Comparative Microbial Metabolism",
-  "af15970b88b8": "Evidence-Based Functional Annotation",
-  "d75fe9c10d23": "Bacterial Resistome Ecology",
-  "fc9aca435b2a": "Metal Stress Fitness",
-  "350fb74766c3": "Gene Transfer and Co-inheritance",
-  "e6a2ab4ee514": "Subsurface Microbial Ecology",
-  "91def427e602": "Bacterial Functional Darkness"
+  "58fa72442f97": "Bacterial Fitness-Conservation Dynamics",
+  "fd4a567e032e": "Ecological Genomics Biases",
+  "3db8006d2381": "Comparative Metabolic Dependencies",
+  "f94bbdff5356": "Bacterial Resistance Ecology",
+  "3db49f52ef44": "Biological Evidence Integration",
+  "937bc07f418a": "Functional Annotation Gaps",
+  "7cc4758168f0": "Biological Classification Robustness",
+  "3e1f76340644": "Subsurface Microbial Ecology",
+  "3accb6df7435": "Fitness Network Modules"
  },
- "bacterial-gene-fitness-conservation": "d8f04f0208d237f9",
- "ecological-genomic-inference": "79ec32fb3f48b260",
- "microbiome-data-translation": "5fd490c7f73393a7",
- "comparative-microbial-metabolism": "04b746e3ac532eec",
- "evidence-based-functional-annotation": "94e05838b3736e16",
- "bacterial-resistome-ecology": "208a99af6881cb49",
- "metal-stress-fitness": "0d57bc902ab675be",
- "gene-transfer-and-co-inheritance": "331cf41b290cedad",
- "subsurface-microbial-ecology": "1bb3569c086a2089",
- "bacterial-functional-darkness": "7d0a1725ba9387e1"
+ "bacterial-fitness-conservation-dynamics": "f820f2b04201b895",
+ "ecological-genomics-biases": "3ff98646fa6d174e",
+ "comparative-metabolic-dependencies": "a0c136a7fe07452d",
+ "bacterial-resistance-ecology": "b151319daf928525",
+ "biological-evidence-integration": "b35c45562fcc2748",
+ "functional-annotation-gaps": "bb3658b4d9feb523",
+ "biological-classification-robustness": "ca4b1878b5f46377",
+ "subsurface-microbial-ecology": "cac14c7abd834c30",
+ "fitness-network-modules": "f79dcf17f331bf63"
 }

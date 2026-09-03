@@ -1,25 +1,24 @@
 # BERIL Knowledge Wiki
 
-The BERIL Research Observatory corpus records AI-conducted microbial-biology research over the KBase BER Data Lakehouse. It brings together project reports and cross-project syntheses spanning comparative genomics, fitness experiments, metabolism, microbiomes, environmental observations, and related biological evidence.
+The BERIL Research Observatory corpus presents AI-conducted microbial-biology research over the KBase BER Data Lakehouse. It brings together project reports and cross-project syntheses spanning microbial fitness, genomics, metabolism, resistance, ecological context, annotation, classification, subsurface environments, and fitness networks.
 
-Read this wiki through its **topics**, which are the main entry points into recurring research questions. **Concepts**, **entities**, and **summaries** provide the reference layers: concepts organize ideas, entities identify the biological objects and datasets discussed, and summaries collect cross-project discoveries and pitfalls.
+Read the wiki through its **topics**, which are the main entry points into recurring research questions and findings. Within each topic, **concepts** provide focused biological ideas, **entities** identify the organisms, genes, pathways, datasets, and other referenced objects, and **summaries** provide cross-project digests and synthesized evidence.
 
 ## Topics
 
-- [[topics/bacterial-gene-fitness-conservation|Bacterial Gene Fitness Conservation]] — Gene essentiality or conditional importance has a reproducible but modest association with pangenome-core status, but conservation is not equivalent to essentiality or uniform benefit.
-- [[topics/ecological-genomic-inference|Ecological Genomic Inference]] — Connects environmental context, geography, lineage, gene content, and measured phenotypes while distinguishing genomic potential from realized ecological function.
-- [[topics/microbiome-data-translation|Microbiome Data Translation]] — Converts heterogeneous sequence, taxonomy, metadata, metabolic, fitness, and intervention observations into biological claims or actionable decisions.
-- [[topics/comparative-microbial-metabolism|Comparative Microbial Metabolism]] — Examines how pathway capacity, measured fitness, respiratory architecture, community context, and ecological distribution combine—or fail to combine—to explain microbial use, synthesis, and exchange.
-- [[topics/evidence-based-functional-annotation|Evidence-Based Functional Annotation]] — Assigns roles to genes, proteins, reactions, and pathways by integrating multiple traceable signals rather than relying on a single label or similarity hit.
-- [[topics/bacterial-resistome-ecology|Bacterial Resistome Ecology]] — Investigates how antimicrobial-resistance genes are distributed across environments, lineages, genomic compartments, and ecological contexts, and how those patterns arise.
-- [[topics/metal-stress-fitness|Metal Stress Fitness]] — Studies condition-specific bacterial gene dependence under metal exposure, including shared cellular stress responses and metal-specific mechanisms.
-- [[topics/gene-transfer-and-co-inheritance|Gene Transfer and Co-inheritance]] — Connects comparative genomics, laboratory fitness, pangenome presence/absence, and metabolic phenotypes to questions of gene movement and joint retention or transmission.
-- [[topics/subsurface-microbial-ecology|Subsurface Microbial Ecology]] — Examines microbial persistence, distribution, and potential function below the soil surface using subsurface community profiles and environmental context.
-- [[topics/bacterial-functional-darkness|Bacterial Functional Darkness]] — Describes genes, protein families, and genomic regions lacking reliable functional interpretation, a condition that is not equivalent to biological inactivity.
+- [[topics/bacterial-fitness-conservation-dynamics|Bacterial Fitness-Conservation Dynamics]] — How laboratory gene-importance measurements relate to pangenome retention, while keeping fitness, conservation, essentiality, burden, ecological value, and annotation distinct.
+- [[topics/ecological-genomics-biases|Ecological Genomics Biases]] — How environmental context shapes microbial genomes and functions, and how sampling, encoding, database representation, and phylogenetic controls affect the answer.
+- [[topics/comparative-metabolic-dependencies|Comparative Metabolic Dependencies]] — When genome-encoded pathways indicate nutritional independence, condition-specific requirements, latent capability, or functions supplied by other organisms.
+- [[topics/bacterial-resistance-ecology|Bacterial Resistance Ecology]] — How antimicrobial, metal, phage-defense, and related mobile functions vary across environments, lineages, genomic compartments, and fitness conditions.
+- [[topics/biological-evidence-integration|Biological Evidence Integration]] — How measurements, annotations, metadata, models, and experimental phenotypes can support biological claims through multiple evidentiary routes.
+- [[topics/functional-annotation-gaps|Functional Annotation Gaps]] — Why “unknown” can refer to missing product descriptions, reaction identifiers, protein-family literature, or reference-database representation at different biological layers.
+- [[topics/biological-classification-robustness|Biological Classification Robustness]] — Whether biological categories, functional labels, ecotypes, and predictive models retain their meaning across datasets, pipelines, organisms, and validation procedures.
+- [[topics/subsurface-microbial-ecology|Subsurface Microbial Ecology]] — How depth, groundwater flow, mineral confinement, redox conditions, and limited substrates shape microbial distribution, persistence, and potential function below the surface.
+- [[topics/fitness-network-modules|Fitness Network Modules]] — How coordinated gene-disruption growth patterns connect laboratory phenotypes with genomic organization, pathway support, and pangenome inheritance.
 
 ## Corpus
 
-73 project reports + 2 cross-project digests, 99 concepts, 336 entities, 10 topics
+73 project reports + 2 cross-project digests, 93 concepts, 336 entities, 9 topics
 
 ## Browse
 

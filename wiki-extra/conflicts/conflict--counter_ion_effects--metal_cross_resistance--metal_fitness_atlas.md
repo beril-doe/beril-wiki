@@ -1,33 +1,31 @@
 <!-- tension-hash: b7accc771db7edad -->
-# Shared-stress fitness: common signal or analysis-specific response?
+# Shared-Stress Signals Versus Stressor-Specific Fitness
 
-The disagreement concerns whether shared-stress fitness patterns reflect a stable, broadly directional biological response or depend strongly on the stressor pair, record set, organism coverage, and correction procedure. The conflict is documented on [[concepts/shared-stress-versus-stressor-specific-fitness]] and has two related dimensions: different estimates of per-metal conservation after shared-stress treatment, and different interpretations of positive cross-metal correlations. Resolving it matters because a universal mechanism should remain evident under matched analyses, whereas analysis-specific signals would limit how broadly the results can be generalized.
+The disagreement concerns whether shared-stress conservation estimates and cross-resistance correlations reveal a broadly uniform biological response or instead depend strongly on the conditions, records, organisms, and corrections used in each analysis. The tension documented on [[concepts/shared-stress-versus-stressor-specific-fitness]] matters because combining these results without matching their underlying data could mistake methodological variation for biological conservation—or interpret a positive cross-metal pattern as evidence for a response that does not generalize to individual stressors.
 
 ## Evidence Sides
 
-**Counter-ion analysis: manganese and iron are +0.182, while zinc is +0.115**  
-After shared-stress treatment, the counter-ion analysis reports manganese at +0.182, zinc at +0.115, and iron at +0.182. [src: counter_ion_effects]
+**Counter-ion analysis: metal-specific conservation estimates and variable NaCl responses**  
+The counter-ion analysis reports manganese at +0.182, zinc at +0.115, and iron at +0.182 after shared-stress treatment. It also shows that metal–NaCl correlations vary substantially across metals, including iron r=0.086 and zinc r=0.715. [src: counter_ion_effects]
 
-**Primary atlas: manganese is +0.198, zinc is +0.151, and iron is +0.116**  
-The primary atlas reports manganese at +0.198, zinc at +0.151, and iron at +0.116. [src: metal_fitness_atlas]
+**Primary atlas: different per-metal conservation estimates**  
+The primary atlas reports manganese at +0.198, zinc at +0.151, and iron at +0.116 after shared-stress treatment. These estimates differ from the counter-ion analysis and cannot be reconciled by averaging because the analyses differ in record sets, organism coverage, and correction procedure. [src: metal_fitness_atlas] [src: counter_ion_effects, metal_fitness_atlas]
 
-**Metal cross-resistance study: all tested metal-pair correlations were positive**  
+**Metal cross-resistance study: universal positive direction across tested pairs**  
 The metal cross-resistance study reports that all tested metal-pair correlations were positive and interprets this as a universal directional layer. [src: metal_cross_resistance]
 
-**Counter-ion analysis: metal–NaCl correlations vary substantially across metals**  
-The counter-ion analysis shows that metal–NaCl correlations vary substantially across metals, including iron r=0.086 and zinc r=0.715. [src: counter_ion_effects] It states that this is not a direct contradiction because the analyses compare different condition pairs, but refines the interpretation: positivity across metals does not establish a uniform response to NaCl or identify which shared stressor generates the signal. [src: metal_cross_resistance, counter_ion_effects]
+**Counter-ion analysis: positivity does not identify a uniform NaCl response**  
+The counter-ion analysis shows metal–NaCl correlations including iron r=0.086 and zinc r=0.715, which vary substantially across metals. This refines, rather than directly contradicts, the metal cross-resistance interpretation because the studies compare different condition pairs. [src: counter_ion_effects, metal_cross_resistance]
 
 ## Possible Reconciliations
 
-- **Hypothesis — record-set difference:** The per-metal estimate discrepancies may arise because the analyses use different record sets rather than because the underlying biology differs. The input explicitly states that the analyses differ in record sets, organism coverage, and correction procedure. [src: counter_ion_effects, metal_fitness_atlas]
-- **Hypothesis — organism-coverage difference:** Different organism coverage could change the relative conservation estimates while preserving a shared-stress pattern within each analysis.
-- **Hypothesis — correction-procedure difference:** The correction procedure may shift manganese, zinc, and iron estimates in different directions without implying biological disagreement.
-- **Hypothesis — condition-pair difference:** Positive metal-pair correlations may represent a directional layer specific to metal-pair comparisons, while metal–NaCl correlations capture a different response structure.
-- **Hypothesis — partially shared biology:** Both analyses may detect positive relationships, but the magnitude and uniformity of the response may depend on which stressor is paired with which metal.
+- **Hypothesis — measurement and correction differences:** The different manganese, zinc, and iron estimates may result from the analyses’ different record sets, organism coverage, and correction procedure rather than from biological disagreement. A matched-data reanalysis could test this.
+- **Hypothesis — condition-pair scope:** Positive correlations among metal pairs may coexist with variable metal–NaCl correlations because the two analyses examine different condition pairs.
+- **Hypothesis — layered biology:** A universal directional layer may describe metal-to-metal responses while allowing stressor-specific responses to vary by metal.
 
 ## Resolving Work
 
-- Re-run both conservation analyses on the same records, organisms, and metal conditions using each correction procedure; test whether the per-metal estimates converge.
-- Perform a leave-one-organism and leave-one-record-set analysis; test whether manganese, zinc, and iron discrepancies are driven by coverage.
-- Analyze metal-pair and metal–NaCl correlations in one matched dataset; test whether positivity persists across stressor-pair definitions.
-- Use a common statistical model with interaction terms for metal and stressor pair; test whether a universal directional effect or metal-specific responses better explain the data.
+- Reconstruct a matched record set containing only observations shared by both conservation analyses; apply each correction procedure to the same records and ask whether the estimates converge.
+- Stratify the matched reanalysis by organism coverage and metal; test whether manganese, zinc, and iron differences persist within the same organism strata.
+- Recalculate metal-pair and metal–NaCl correlations on a common condition-pair dataset; test whether positivity remains universal across both pair types.
+- Compare confidence intervals or uncertainty estimates for iron r=0.086 and zinc r=0.715 using the same sample definitions; ask whether their apparent difference is statistically and biologically distinguishable.

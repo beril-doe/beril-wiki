@@ -99,6 +99,7 @@ def main() -> int:
         if bad:
             print(f"    ! stripping invalid [src:] ids {bad}")
             section = strip_bad_src(section, set(summaries))
+            section = C.downgrade_dead_links(section, C.wikilink_targets(C.REPO))
 
         body = re.sub(r"^## Profile\s*\n.*?(?=\n## |\Z)", "", stub, flags=re.M | re.S)
         at = body.find("## Projects")

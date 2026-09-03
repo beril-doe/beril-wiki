@@ -373,6 +373,21 @@ def validate_page(content: str, sources: dict[str, str], targets: set[str],
     return v
 
 
+def prose_violations(page: str, sources: dict[str, str]) -> list[str]:
+    """Numeric-fidelity violations for a stage that emits markdown directly.
+
+    topics_build, conflicts_build and authors_build build their pages with their
+    own completion call rather than generate_page, so nothing checked their
+    figures or their wikilinks. That is how 94 unsupported numbers and 24 dead
+    concept links reached publish behind a green gate."""
+    v = []
+    for i, par in enumerate(paragraphs(page), 1):
+        ids = cited_ids(par)
+        for tok in unsupported_numbers(par, ids, sources):
+            v.append(f"paragraph {i}: number {tok!r} is in none of its cited sources {ids}")
+    return v
+
+
 def downgrade_dead_links(text: str, targets: set[str]) -> str:
     """Deterministic fallback for links validation can't save (e.g. a Slots
     Into slug the plan declined to create): keep the label, drop the brackets."""

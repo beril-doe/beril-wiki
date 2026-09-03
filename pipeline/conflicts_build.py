@@ -20,6 +20,10 @@ import re
 
 from litellm import completion
 
+import compile as C
+from topics_build import bad_src_ids, strip_bad_src
+from wiki_check import source_ids
+
 HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
 OUT = ROOT / "wiki-extra" / "conflicts"
@@ -81,6 +85,8 @@ def conflict_slug(projects: tuple[str, ...]) -> str:
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
+    src_texts = source_ids(ROOT)
+    targets = C.wikilink_targets(ROOT)
     existing = {}
     for f in OUT.glob("*.md"):
         m = re.search(r"^<!-- tension-hash: (\w+) -->", f.read_text(encoding="utf-8"), re.M)
@@ -113,6 +119,30 @@ def main() -> None:
                       {"role": "user", "content": payload}],
             temperature=0.3, timeout=600,
         ).choices[0].message.content.strip()
+        # Concept names must never end up inside [src:]; topics_build has always
+        # stripped them, conflicts_build never did, and wiki_check could not see
+        # it because it did not scan this directory.
+        bad = bad_src_ids(resp, set(src_texts))
+        if bad:
+            print(f"  ! conflicts/{slug}: invalid [src:] ids {bad[:4]} — stripping")
+            resp = strip_bad_src(resp, set(src_texts))
+        nv = C.prose_violations(resp, src_texts)
+        if nv:
+            print(f"  ! conflicts/{slug}: {len(nv)} unsupported figure(s) — retrying")
+            resp = completion(
+                model=MODEL, api_key=os.environ["OPENAI_API_KEY"],
+                base_url=os.environ.get("OPENAI_BASE_URL", "https://api.cborg.lbl.gov"),
+                messages=[{"role": "system", "content": PROMPT},
+                          {"role": "user", "content": payload},
+                          {"role": "assistant", "content": resp},
+                          {"role": "user", "content":
+                           "Figures in your page appear in none of the sources cited beside them:\n"
+                           + "\n".join(f"- {x}" for x in nv[:12])
+                           + "\nRewrite the full page. Copy every number exactly from a source cited "
+                             "in the same paragraph, or drop the claim."}],
+                temperature=0.3, timeout=600,
+            ).choices[0].message.content.strip()
+        resp = C.downgrade_dead_links(resp, targets)
         (OUT / f"{slug}.md").write_text(f"<!-- tension-hash: {digest} -->\n{resp}\n", encoding="utf-8")
         written += 1
         print(f"  wrote conflicts/{slug}.md ({len(blocks)} tension block(s), {len(projects)} projects)")
