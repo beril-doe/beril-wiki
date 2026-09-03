@@ -1,33 +1,33 @@
-<!-- tension-hash: 942dda8e6fd33d47 -->
-# Conservation breadth versus metric resolution
+<!-- tension-hash: 25a0fad461ccd0cf -->
+# Laboratory Burden Versus Evolutionary Retention
 
-The disagreement concerns what conservation metrics actually measure: an initial eggNOG-based score suggested nearly universal breadth, whereas GTDB-based ortholog analysis resolved conservation across multiple taxonomic and mobile categories. The conflict matters because conservation rankings may appear robust in aggregate while changing substantially at the decision thresholds used to select experimental targets. It is documented on [[concepts/comparative-conservation-metric-calibration]].
+The disagreement documented on [[concepts/core-genome-burden-paradox]] is whether genes that impose measurable growth costs in laboratory conditions should nonetheless remain broadly conserved because they provide fitness benefits in environments not captured by those assays. This matters because the relationship between deletion-based burden, essentiality, and evolutionary conservation could reflect a general principle—or a condition-, category-, and dataset-dependent pattern.
 
 ## Evidence Sides
 
-**Initial eggNOG metric and global ranking stability**
+### **Laboratory burden favors deletion**
 
-The initial eggNOG metric suggested near-universal breadth for 99.9% of clusters. [src: functional_dark_matter] The species-count variant was highly correlated with the original ranking at the global level, with Spearman ρ = 0.982, yet its top-50 and top-100 overlaps were only 62% and 58%, respectively. [src: functional_dark_matter] This supports reporting rank correlation and decision stability together when conservation metrics guide experimental selection. [src: functional_dark_matter]
+Deletion can improve growth under tested conditions, indicating that at least some conserved genes impose a measurable laboratory burden. The aggregate core-burden result therefore supports a tension between laboratory performance and evolutionary retention: genes can be costly in the assay while remaining broadly conserved across genomes. [src: conservation_fitness_synthesis]
 
-**GTDB taxonomic resolution and narrower interpretation of conservation**
+The genome-wide pattern is also not universal across functional categories. In the Cell Wall reversal, non-core genes were more burdensome than core genes. This shows that the aggregate core-burden excess cannot be treated as a universal functional rule. [src: core_gene_tradeoffs]
 
-The GTDB r214 analysis resolved root ortholog groups across kingdom, phylum, class, order, family, genus, species, and mobile categories. [src: functional_dark_matter] Apparent conservation can therefore depend strongly on reference-database composition, ortholog-group propagation, and the taxonomic level used for scoring. [src: functional_dark_matter] Core membership within a species clade and broad taxonomic ortholog breadth are related but not interchangeable measurements. [src: conservation_vs_fitness, functional_dark_matter]
+### **Evolutionary conservation favors retention**
 
-**Fitness and ecological qualifications**
+Broad conservation despite laboratory burden supports the hypothesis that unmeasured environments, ecological interactions, or long-term selection maintain at least some costly core genes. However, the available evidence does not resolve the tension through direct measurements of fitness in natural environments. [src: conservation_fitness_synthesis]
 
-Essential genes showed only modest core enrichment, with median odds ratio 1.56, while the expanded GTDB analysis produced conservation categories spanning kingdom to species and mobile levels. [src: conservation_vs_fitness, functional_dark_matter] Core genes showed heavier fitness-effect tails in both directions, so core status may identify genes with stronger conditional costs and benefits rather than genes with uniformly greater importance. [src: fitness_effects_conservation] Module-family breadth did not predict conservation (rho=-0.01, p=0.91), and condition-specific fitness did not establish niche-specific fitness. [src: conservation_fitness_synthesis] Laboratory fitness measurements and conservation patterns do not by themselves establish that costly conserved genes are maintained by natural selection. [src: core_gene_tradeoffs]
+### **Essentiality and conservation show a positive but variable association**
+
+The 33-organism linkage analysis reported essentiality-associated core fractions of **86.1% versus 81.2%**, while the 43-organism synthesis and independent analysis reported **82% versus 66%**. The former result supports a positive essentiality–conservation association, but the effect sizes are not directly comparable because the cohorts and classifications differ. [src: conservation_vs_fitness, conservation_fitness_synthesis, fitness_effects_conservation] The differing magnitudes leave the strength of the association sensitive to dataset composition and operational definitions. [src: conservation_vs_fitness]
 
 ## Possible Reconciliations
 
-- **Hypothesis — database and propagation effects:** eggNOG’s near-universal breadth and GTDB’s category structure may reflect different reference compositions and ortholog-group propagation rules rather than incompatible biological observations.
-- **Hypothesis — rank versus selection stability:** ρ = 0.982 may describe global ordering, while 62% and 58% overlaps reveal instability among the highest-ranked candidates.
-- **Hypothesis — scope and definition:** “conserved” may refer either to broad taxonomic ortholog breadth or to core membership within a species clade; these definitions need not produce the same enrichment or fitness associations.
-- **Hypothesis — laboratory versus natural relevance:** condition-specific fitness, module-family breadth, and core status may capture laboratory or structural properties without directly measuring niche-specific fitness or natural ecological importance.
+- **Environmental-scope hypothesis:** Laboratory deletion assays may measure fitness in tested conditions, whereas conservation reflects selection across environments, ecological interactions, and longer timescales. Both sides could therefore be correct without directly contradicting one another.
+- **Category-resolution hypothesis:** The aggregate core-burden excess may coexist with the Cell Wall reversal because different functional categories have different burden–conservation relationships. [src: core_gene_tradeoffs]
+- **Definition-and-cohort hypothesis:** The difference between **86.1% versus 81.2%** and **82% versus 66%** may reflect cohort composition and operational classifications rather than incompatible biological effects. [src: conservation_vs_fitness, conservation_fitness_synthesis, fitness_effects_conservation]
 
 ## Resolving Work
 
-- Recompute both eggNOG and GTDB scores from the same gene set, with matched ortholog-propagation rules, to test whether database composition explains the breadth difference.
-- Compare rank correlation and top-50/top-100 overlap across taxonomic scoring levels to determine where decision instability emerges.
-- Stratify essentiality and Fitness Browser effects by conservation definition and taxonomic level, asking whether median odds ratio 1.56 changes when “conserved” is redefined.
-- Test module-family breadth and condition-specific fitness against independently sampled ecological or field-associated fitness data to assess natural niche relevance.
-- Reanalyze rapidly evolving genes using matching methods that do not rely solely on the 90% identity threshold for DIAMOND matching, and test whether the conclusions change.
+- Measure gene-level fitness effects for the same organisms and genes across laboratory conditions and natural or environmentally representative conditions; test whether costly conserved genes gain fitness outside the laboratory.
+- Stratify burden and conservation analyses by functional category, including Cell Wall genes; test whether the reversal is confined to particular categories or conditions.
+- Reanalyze the 33-organism and 43-organism cohorts using harmonized essentiality and conservation definitions; test whether the reported fractions converge.
+- Use longitudinal or comparative evolutionary data to test whether genes with laboratory costs show evidence of retention under ecological interactions or long-term selection.

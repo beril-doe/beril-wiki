@@ -1,32 +1,28 @@
-<!-- tension-hash: 7cda878f9e1f40d6 -->
-# Coverage Sensitivity Versus Resolution-Robust Null Results
+<!-- tension-hash: 7e3317ca95842077 -->
+# Does Functional Association Survive Taxonomic and Coverage-Resolution Choices?
 
-The disagreement concerns whether a contamination-associated functional signal should be treated as meaningful when it appears under a relaxed coverage-adjusted specification but disappears under stricter or coarser analyses. [[concepts/taxonomic-resolution-dependent-functional-inference]] The tension matters because the results bear on whether taxonomic bridging and coverage adjustment reveal real ecological structure or instead produce mode-sensitive associations, while independent ecotype and COG analyses suggest that functional differentiation exists at other resolutions or under other definitions.
+The disagreement concerns whether contamination-associated functional signals are robust ecological associations or instead depend on coverage adjustment, taxonomic resolution, model specification, and compositional structure. One set of analyses finds coverage-sensitive or finer-resolution evidence, while stricter genus-level and confirmatory analyses are null or attenuated. The distinction matters because functional differentiation may be real without implying that a particular contamination-associated estimate is stable across analytical choices.
 
 ## Evidence Sides
 
-**Coverage-sensitive exploratory association**
+### **Coverage-sensitive and finer-resolution analyses detect functional structure**
 
-The relaxed coverage-adjusted model yielded FDR q = 0.0462, whereas the strict coverage-adjusted model yielded FDR q = 0.130, and both confirmatory genus-level modes were null after predeclared testing. [src: enigma_contamination_functional_potential] This is a methodological tension between a coverage-sensitive exploratory association and a resolution- and specification-robust association, not evidence that the conflicting estimates should be averaged. [src: enigma_contamination_functional_potential] The difference could reflect retained abundance, bridge ambiguity, covariate sensitivity, taxonomic aggregation, or a combination of these factors. [src: enigma_contamination_functional_potential]
+The relaxed coverage-adjusted model yielded FDR q = 0.0462, whereas the strict coverage-adjusted model yielded FDR q = 0.130, and both confirmatory genus-level modes were null after predeclared testing. [src: enigma_contamination_functional_potential] The functional-dark-matter report found that 29 of 47 testable lab–field clusters were concordant (61.7%), with Fisher’s combined probability across 47 individual tests giving p = 0.031. [src: functional_dark_matter] NMDC confirmed all 4 testable pre-registered abiotic predictions. [src: functional_dark_matter] Within-species ecotype analysis detected functional differentiation, although it lacked within-species phylogenetic controls. [src: ecotype_functional_differentiation] The COG comparison also found consistent core-versus-novel functional partitioning across 32 species. [src: cog_analysis]
 
-**Within-species functional differentiation**
+### **Strict, confirmatory, and composition-aware analyses weaken the association**
 
-The within-species ecotype evidence supports the premise that finer functional structure exists, but it does not resolve whether such structure is ecological or phylogenetic because the ecotype analysis lacked within-species phylogenetic controls. [src: ecotype_functional_differentiation] This tension limits direct extrapolation from gene-content ecotypes to contamination-associated community functions: the ENIGMA analysis is null or mode-sensitive at genus resolution, whereas the ecotype analysis detects functional differentiation within species. [src: enigma_contamination_functional_potential] [src: ecotype_functional_differentiation]
-
-**Broad core-versus-novel functional partitioning**
-
-The COG comparison found consistent core-versus-novel functional partitioning across 32 species, whereas the ENIGMA analysis did not find a robust contamination-associated shift in coarse COG proxies at genus resolution. [src: cog_analysis] [src: enigma_contamination_functional_potential] This is not a direct contradiction because the studies test different signals: broad evolutionary partitioning by gene novelty versus a site-level ecological association after taxonomic bridging. [src: cog_analysis] [src: enigma_contamination_functional_potential]
+The strict coverage-adjusted model yielded FDR q = 0.130, and both confirmatory genus-level modes were null after predeclared testing. [src: enigma_contamination_functional_potential] For the 29 of 47 testable lab–field clusters that were concordant (61.7%), the one-sided binomial test gave p = 0.072. [src: functional_dark_matter] Although 441 of 449 exploratory trait tests reached FDR < 0.05, the report cautions that this was largely because of compositional coupling. [src: functional_dark_matter] In plant-associated communities, compartment effects explained only 0.060 of location-only variance, and the earlier large effect was reduced to R² = 0.072 after removal of genome-rich species. [src: plant_microbiome_ecotypes] The same report found that categorical assignments misclassified all four neutral controls in a curated 18-organism panel. [src: plant_microbiome_ecotypes]
 
 ## Possible Reconciliations
 
-- **Hypothesis — measurement sensitivity:** The relaxed model may retain abundance or coverage information that is attenuated by stricter adjustment, while the null confirmatory modes indicate that the association is not robust to specification.
-- **Hypothesis — resolution dependence:** Ecotype-level differentiation may be real within species but become diluted, misassigned, or obscured after aggregation to genus-level taxonomic bridges.
-- **Hypothesis — distinct biological signals:** Core-versus-novel COG partitioning may describe broad evolutionary structure rather than a contamination-associated shift, allowing both findings to hold.
-- **Hypothesis — unresolved confounding:** The ecotype signal could be phylogenetic rather than ecological because within-species phylogenetic controls were absent.
+- **Hypothesis — coverage and retained-abundance effects:** The relaxed and strict ENIGMA models may estimate different signals because coverage adjustment changes which abundance information is retained. [src: enigma_contamination_functional_potential]
+- **Hypothesis — taxonomic and bridge ambiguity:** Taxonomic aggregation or ambiguity in bridging reads and functions may erase a real finer-scale association at genus resolution. [src: enigma_contamination_functional_potential]
+- **Hypothesis — compositional and genome-size artifacts:** Broad exploratory associations may be inflated by compositional coupling or genome-rich taxa, while finer-resolution signals may still contain genuine structure. [src: functional_dark_matter] [src: plant_microbiome_ecotypes]
+- **Hypothesis — different estimands:** COG core-versus-novel partitioning and site-level contamination association test different signals, so their differing results need not conflict. [src: cog_analysis] [src: enigma_contamination_functional_potential]
 
 ## Resolving Work
 
-- Reanalyze the ENIGMA association across retained-abundance, coverage-adjustment, covariate, and taxonomic-aggregation specifications; test whether the FDR q = 0.0462 result persists under preregistered robustness criteria.
-- Repeat the ecotype analysis with within-species phylogenetic controls; test whether functional differentiation remains after separating ecological effects from lineage structure.
-- Map ecotype-level functional features onto the ENIGMA samples and compare species-level, ecotype-level, and genus-level models; test whether aggregation explains the genus-resolution null.
-- Partition COG features by novelty and evaluate contamination associations separately for core and novel functions; test whether a site-level signal is hidden by coarse COG proxies.
+- Reanalyze the ENIGMA data under matched relaxed and strict coverage models, quantifying retained abundance, bridge ambiguity, covariate sensitivity, and genus-level aggregation; ask which component changes FDR q = 0.0462 to FDR q = 0.130.
+- Replicate the 29 of 47 lab–field clusters in independent samples using preregistered directional tests and Fisher’s combination; ask whether p = 0.072 or p = 0.031 better predicts held-out data.
+- Add within-species phylogenetic controls to the ecotype analysis; ask whether functional differentiation remains after separating ecological effects from shared ancestry.
+- Refit plant-association models with genome-size and compositional controls, including neutral controls; ask whether the compartment variance of 0.060 and R² = 0.072 persist.

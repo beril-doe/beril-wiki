@@ -1,33 +1,29 @@
-<!-- tension-hash: 5fdeecf0f11662b2 -->
-# Leakage or Real Structure? A Tension Between Instability and Biological Signal
+<!-- tension-hash: 538e5b1b3fdfe665 -->
+# Genome-Wide Environmental Dominance Versus Locus-Specific Ecological Adaptation
 
-The disagreement is whether unstable or cross-pipeline results should be interpreted primarily as evidence of outcome leakage or as evidence of genuine functional and environmental structure measured differently across analyses. [[concepts/selection-on-outcome-leakage]] cautions that the available evidence does not establish universal leakage criteria, while the ecotype analyses report differentiated gene functions and environmental associations that may reflect real biology. The distinction matters because methodological instability can be mistaken for leakage, while genuine structure can also be amplified or obscured by annotation, sampling, clustering, and validation choices.
+The tension in [[concepts/genome-wide-versus-locus-specific-ecological-adaptation]] is whether ecological adaptation is expressed broadly across gene content or concentrated in particular loci and functional categories. One analysis reports that environment dominated the gene-content signal in 39.5% of species, yet detected significant positive environmental effects in only 12 species (7.0%) and significant negative effects in only 4 species (2.3%). This matters because the two patterns imply different biological interpretations: widespread environmental influence on genome-wide composition versus more localized ecological differentiation that may not produce a strong whole-genome signal.
 
 ## Evidence Sides
 
-**Side 1 — Instability does not establish leakage**
+**Genome-wide environmental effects**
 
-The evidence does not establish a universal Jaccard cutoff for detecting leakage. [src: pitfalls] The values 0.5 and 0.3 were explicitly project-specific decision thresholds for the cited sensitivity procedure, so applying them unchanged to another dataset or clustering method would be an unsupported extrapolation. [src: pitfalls] The observed instability also does not by itself identify whether clustering, differential-abundance modeling, subgroup sample size, or study structure contributed most to the changes. [src: pitfalls]
+The dataset indicates that environment dominated the gene-content signal in 39.5% of species. However, significant positive or negative environmental effects were detected in only 12 species (7.0%) and 4 species (2.3%), respectively. [src: ecotype_analysis] This side treats environmental influence on comparative effect sizes as evidence that ecological variables can shape broad gene-content patterns, even when formal significance is uncommon. The original analysis reports a correlation magnitude of 0.0025 across its 172-species analysis. [src: ecotype_analysis]
 
-The ecotype reanalysis further shows that absolute partial-correlation values can differ substantially when genome inclusion and downsampling change: its median across 183 species was 0.081 versus 0.003 in the original analysis, described as a 27x difference. [src: ecotype_env_reanalysis] This supports retaining the existing warning against interpreting instability or magnitude across incompatible methodologies as evidence of leakage alone, while the within-method environmental-versus-human-associated null comparison remains informative. [src: ecotype_env_reanalysis]
+**Locus-specific adaptation and limited genome-wide evidence**
 
-**Side 2 — The analyses retain evidence of biological structure**
-
-The ecotype functional-differentiation result refines this tension rather than resolving it: all 12 analyzed species had at least one differentiated COG category, but approximately 38% of gene clusters had COG annotations, and the report notes that effect significance may partly reflect large sample sizes. [src: ecotype_functional_differentiation] Thus, widespread COG differences are compatible with real functional structure, annotation and sampling effects, or reuse of related gene-content information; they do not alone quantify leakage. [src: ecotype_functional_differentiation]
-
-The original ecotype analysis reports a weak environmental signal overall, whereas the reanalysis reports a median partial correlation of 0.081 under a different pipeline. [src: ecotype_analysis, ecotype_env_reanalysis] This supports treating cross-pipeline magnitude comparisons as a tension in measurement and sampling rather than as evidence that leakage caused either result. [src: ecotype_analysis, ecotype_env_reanalysis]
+The absence of a strong genome-wide environmental signal may indicate that ecological adaptation is locus-specific. [src: ecotype_analysis] The ecotype study adds functional differentiation without environmental assignment or phylogenetic control, supporting the locus-specific hypothesis while leaving the ecological interpretation unresolved. [src: ecotype_functional_differentiation] Pangenome openness did not predict either environment or phylogeny effects, although the test did not directly compare individual loci or functional categories. [src: pangenome_openness] The reanalysis reports a median correlation of 0.081 across 183 species versus 0.003 in the original analysis. [src: ecotype_env_reanalysis, ecotype_analysis] It attributes this discrepancy to different genome sets and downsampling procedures and preserves only the within-method group comparison. [src: ecotype_env_reanalysis]
 
 ## Possible Reconciliations
 
-- **Measurement hypothesis:** The 0.081 versus 0.003 medians may reflect genome inclusion, downsampling, or other pipeline differences rather than a change in the underlying biological signal. [src: ecotype_env_reanalysis]
-- **Scope hypothesis:** The 0.5 and 0.3 thresholds may be valid for the cited sensitivity procedure but not transferable across datasets or clustering methods. [src: pitfalls]
-- **Definitional hypothesis:** “Instability,” “functional differentiation,” and “leakage” may describe different properties; differentiated COG categories do not alone quantify leakage. [src: ecotype_functional_differentiation]
-- **Sampling hypothesis:** Large sample sizes, subgroup size, and study structure may influence apparent significance or instability without determining whether the biological structure is genuine. [src: ecotype_functional_differentiation, pitfalls]
+- **Measurement-versus-significance hypothesis:** Environment may dominate comparative effect sizes in 39.5% of species while only a smaller subset reaches significance because effect-size ranking and statistical testing answer different questions.
+- **Scope hypothesis:** Ecological adaptation may be concentrated in individual loci or functional categories, so genome-wide summaries could dilute biologically meaningful associations.
+- **Coverage and metadata hypothesis:** The weak genome-wide signal may reflect incomplete AlphaEarth coverage, imprecise metadata, or environmental embeddings that omit relevant variation. [src: ecotype_analysis]
+- **Method-comparison hypothesis:** The correlation discrepancy may result from different genome sets and downsampling rather than a directly replicated effect. [src: ecotype_env_reanalysis]
 
 ## Resolving Work
 
-- Re-run the analyses across feature partitions and clustering methods while preserving the underlying samples and labels; test whether instability tracks partitioning or clustering.
-- Repeat validation with controlled subgroup sample sizes and study-structure splits; determine whether the observed changes persist after balancing sampling conditions.
-- Compare leakage diagnostics using the project-specific 0.5 and 0.3 thresholds only within their original procedure, then evaluate calibration on independent datasets.
-- Reanalyze COG differentiation after restricting to annotated clusters and applying sample-size-aware effect estimates; test whether the 12-species pattern remains.
-- Hold genome inclusion, downsampling, and environmental covariates constant across pipelines; determine whether the 0.081 versus 0.003 difference is methodological or biological.
+- Reanalyze the same species and genome sets with identical downsampling, asking whether the 0.081, 0.003, and 0.0025 correlation magnitudes converge.
+- Test environmental associations separately for individual loci and functional categories, asking whether category-specific effects are hidden by genome-wide aggregation.
+- Expand and harmonize AlphaEarth coverage and metadata, asking whether improved environmental measurement increases the number of significant species.
+- Add environmental assignment and phylogenetic control to the functional-differentiation analysis, asking whether the observed differentiation is ecological rather than non-environmental structure.
+- Compare effect-size dominance with formally adjusted significance using the same model, asking whether 39.5% and the 12-species and 4-species counts reflect distinct statistical quantities.

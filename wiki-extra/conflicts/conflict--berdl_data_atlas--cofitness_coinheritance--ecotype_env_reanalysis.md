@@ -1,31 +1,31 @@
-<!-- tension-hash: 1934e98a144b783f -->
-# Broad cross-collection bridges vs evidential and biological validation
+<!-- tension-hash: 459994d3d70b48a3 -->
+# Broad Data Bridges vs Demonstrated Biological Use
 
-[[concepts/cross-tenant-data-bridging]] records a disagreement over whether technically successful joins and large-scale associations constitute validated biological evidence. One side emphasizes the breadth and actionability of cross-collection bridges; the other emphasizes untested use cases, ambiguous authority, uncertain chemical direction, annotation error, sampling structure, and weak external validation. The distinction matters because a valid computational join may still fail to establish shared provenance, biological utilization, mechanism, or clinical usefulness.
+[[concepts/cross-tenant-data-bridging]] exposes a disagreement between the apparent reach of cross-tenant and cross-collection integration and the evidence that those joins represent real, biologically meaningful use. One side treats schema-level compatibility, actionable bridges, and concordant patterns as evidence that integration is productive; the other emphasizes that technical joins can lack validation, directionality, provenance, or independent clinical and experimental support. The distinction matters because a large bridge inventory may otherwise be mistaken for demonstrated interoperability or biological utilization.
 
 ## Evidence Sides
 
-### **Broad integration and association claims**
+### **Integration is technically broad and sometimes actionable**
 
-The atlas exposes **536 schema-level bridges**, and the 19-metabolite Fitness Browser bridge is directly actionable. [src: berdl_data_atlas] [src: webofmicrobes_explorer] The prophage study found module-level pangenome and NMDC associations were concordant, and its environmental effect exceeded family-level phylogeny in the reported PERMANOVA. [src: prophage_ecology] Human-associated environments enriched tail (**log2(OR)=2.21**), head morphogenesis (**1.98**), and anti-defense (**1.70**); **TerL** lineages did not show independent enrichment in **0/500** FDR-corrected tests. [src: prophage_ecology] Binary growth was predicted for tryptophan (**AUC 0.933**), phenylalanine (**0.932**), and valine (**0.927**). [src: genotype_to_phenotype_enigma] The IBD CCA result was **r=0.964**, and PaperBLAST reported organism-level Gini **0.967** and gene-level Gini **0.669**. [src: ibd_phage_targeting] [src: paperblast_explorer]
+The atlas contains **536 schema-level bridges**, and the original audit identified five high-leverage bridges; **UC1 was subsequently sample-executed**. [src: berdl_data_atlas] The WoM snapshot found a directly actionable **19-metabolite Fitness Browser bridge**, while **107 formula-only ModelSEED matches** expanded to **900 candidate molecules**. [src: webofmicrobes_explorer] These results support a framework in which a join can be technically valid even when downstream interpretation remains incomplete. The prophage study further found module-level pangenome and NMDC associations were concordant. [src: prophage_ecology] Its reported environmental effect exceeded family-level phylogeny in PERMANOVA, and human-associated environments were enriched for tail (**log2(OR)=2.21**), head morphogenesis (**1.98**), and anti-defense (**1.70**), consistent with the arms-race framework in [[concepts/phage-defense-syndromes-and-arms-race]]. [src: prophage_ecology]
 
-### **Validation, provenance, and biological meaning remain limited**
+### **Technical connection does not establish use, authority, or mechanism**
 
-Only UC1 was sample-executed, while UC2–UC5 remained untested. [src: berdl_data_atlas] The NMDC audit found **20 entries resolve to 7 resources**, with `kbase.nmdc_neon` a NEON namesake collision. [src: nmdc_context_audit] Missing consumption actions mean production cannot be treated as utilization, while **107** formula-only ModelSEED matches expand to **900** candidate molecules. [src: webofmicrobes_explorer] Tryptophan had **231** significant Fitness Browser genes and a complete GapMind pathway, yet **0/50** *P. fluorescens* strains used it as carbon. [src: fw300_metabolic_consistency]
+The original audit recorded five high-leverage bridges with **zero realized use**, while **UC2–UC5 remained untested**. [src: berdl_data_atlas] The realized-use count is a lower bound because README mining may miss plans and notebooks. [src: berdl_data_atlas] In the NMDC audit, **20 entries resolve to 7 resources**, and `kbase.nmdc_neon` is a NEON namesake collision. [src: nmdc_context_audit] In WoM, missing consumption actions meant production could not be treated as utilization. [src: webofmicrobes_explorer] Tryptophan increased in WoM and had **231 significant Fitness Browser genes** and a complete GapMind pathway, yet **0/50** *P. fluorescens* strains used it as carbon. [src: fw300_metabolic_consistency] Binary growth prediction reached **AUC 0.933**, **0.932**, and **0.927** for tryptophan, phenylalanine, and valine, while continuous phenotypes had negative R². [src: genotype_to_phenotype_enigma]
 
-Prophage annotations came from eggNOG rather than geNomad or VIBRANT; the false-positive rate is uncharacterized. Genome size was dominant (**rho=0.717**), only **28%** of genomes had embeddings, and genus-level NMDC inference assumed conserved prophage content. [src: prophage_ecology] The arms-race pattern therefore does not demonstrate coevolution. [src: prophage_ecology] Field-versus-lab prediction was weak (**AUC 0.548; field-only 0.517; lab-only 0.531**) with no significant module-conservation correlation (**rho=0.071, p=0.62**). [src: field_vs_lab_fitness] HMP2/FRANZOSA clustering had cross-cohort LOSO **ARI=0.000**, and the cocktail covered only tested strains. [src: ibd_phage_targeting]
+Mechanistic and evidential support is also uneven: prophage false-positive rate was uncharacterized, only **28%** of genomes had embeddings, and genome size was dominant (**rho=0.717**). [src: prophage_ecology] TerL lineages showed independent enrichment in **0/500** FDR-corrected tests. [src: prophage_ecology] PaperBLAST had organism-level Gini **0.967** and gene-level Gini **0.669**; **9.2%** of 50%-identity families had zero papers, **46.1%** exactly one, and **4.3%** at least 20. [src: paperblast_explorer] The IBD CCA result was **r=0.964**, but cross-cohort LOSO ARI was **0.000** and the cocktail covered only tested strains. [src: ibd_phage_targeting]
 
 ## Possible Reconciliations
 
-- **Hypothesis—scope:** schema-level bridges may be valid for UC1 or auxiliary comparisons without validating UC2–UC5 or clinical use.
-- **Hypothesis—definition:** production, presence, association, and predicted growth may be distinct endpoints; a join can establish correspondence without establishing utilization or mechanism.
-- **Hypothesis—measurement:** formula-only matches, namesake collisions, eggNOG annotations, and incomplete embeddings may inflate apparent integration while preserving useful candidate-generation value.
-- **Hypothesis—sampling:** the ecotype median partial correlation was **0.081** across **183 species** versus **0.003** originally, a reported **27x** difference caused by different sampling. [src: ecotype_env_reanalysis]
+- **Measurement hypothesis:** “Zero documented use” may differ from zero use because README mining can miss plans and notebooks.
+- **Scope hypothesis:** A schema bridge can be valid at the data-model level while its biological direction, chemical identity, or consumption action remains untested.
+- **Provenance hypothesis:** Resource resolution and namesake collisions may make apparent tenant or catalog agreement weaker than the join suggests.
+- **Evidence hypothesis:** Concordant modules or predictive binary phenotypes may support association without establishing mechanism, utilization, or clinical validity.
 
 ## Resolving Work
 
-- Re-run UC1–UC5 with provenance-aware identifiers; measure which bridges preserve authority, resource identity, and reproducibility.
-- Validate the **107** formula-only matches experimentally using standards and consumption assays; test whether **900** candidate molecules resolve to biologically distinct compounds.
-- Reannotate prophages with geNomad, VIBRANT, and eggNOG, then estimate false-positive rates and repeat the PERMANOVA with genome-size and embedding-coverage controls.
-- Perform blinded cross-cohort and cross-strain validation of phage targeting and genotype-to-phenotype models; ask whether performance exceeds tested-strain and cohort-specific baselines.
-- Reanalyze co-fitness, field activity, and PaperBLAST evidence after prevalence, sampling, and publication-coverage matching.
+- Audit all **536** bridges with repositories, notebooks, execution logs, and plans to determine whether “zero documented use” reflects missing documentation or absent execution.
+- Trace the **19-metabolite** and **107-to-900** matches to reaction direction, measured consumption, and molecular identity; test whether each bridge supports utilization rather than production-only association.
+- Re-resolve the **20 entries** against authoritative resource identifiers and provenance metadata; test whether the **7 resources** and `kbase.nmdc_neon` collision represent distinct authorities.
+- Reanalyze prophage calls with geNomad and VIBRANT, estimate false-positive rates, and test whether environmental effects persist after genome size, embedding coverage, and genus-level inference are controlled.
+- Validate IBD and fitness findings in held-out cohorts and untested strains, asking whether the observed associations generalize beyond the discovery and tested sets.

@@ -47,11 +47,16 @@ wishlist are tagged [P]; platform-dependent items are deferred at the bottom.
 
 ## Known draft-stage debts
 
-- Concept consolidation (`consolidate_concepts.py`) now merges near-duplicate
-  shards and back-merges cross-document evidence, so the two debts that used to
-  live here are closed. What it cannot fix: ~51 thin concepts have no summary
-  above 0.75 cosine — they are genuinely single-project ideas, and no threshold
-  reaches them. Do not read a remaining single-source page as a stage failure.
+- Concept consolidation (`consolidate_concepts.py`) closed the two debts that
+  used to live here: 153 -> 99 concepts, single-source 136 -> 15.
+- Embeddings are a WEAK detector for this defect and should not be trusted alone.
+  Measured against pairs whose bodies restate near-identical numbers, whole-page
+  cosine put them at median rank 189 of 7381 and recall@45 was 29%; the
+  deterministic evidence-overlap generator (shared cited project + >=3 identical
+  figures) finds them exactly, for free. Numbers-in-common is the direct
+  signature of a restated shard; semantic similarity is only a proxy for it.
+  If this ever regresses, suspect the REPRESENTATION before the model: embedding
+  only the lead paragraph scored median rank 2214 and recall@45 of 0%.
 - Hub/conflict/author pages get `bad_src_ids` stripping but NOT the numeric
   check compile pages get; the hub-number warnings in `wiki_check` are that gap.
   `topics_build.py` has its own untracked `llm()` rather than `generate_page`,
