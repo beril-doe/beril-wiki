@@ -6,16 +6,20 @@ document at a time and hardcodes a one-element `sources` list; compile only
 merges a document into pages when THAT document changes. So a concept created
 from document #60 is never revisited against documents #1-59, and 136 of 153
 concepts cite exactly one project. This stage closes that loop in two phases,
-both driven by embeddings through the CBORG gateway, which replace wiki_check's
-name-token duplicate heuristic for candidate generation:
+replacing wiki_check's name-token duplicate heuristic for candidate generation:
 
-  1. merge  — near-duplicate concept pages (union of each model's top-N) get one
-              LLM merge/keep judgement; a merge is one merge-rewrite of the
+  1. merge  — candidates come from three generators, most precise first: pages
+              restating the same FIGURES, pages built from the same EVIDENCE
+              BASE, and finally embedding rank as a recall net. Each pair gets
+              one LLM merge/keep judgement; a merge is one merge-rewrite of the
               survivor through compile.generate_page, the loser deleted and its
               inbound wikilinks rewritten in code.
   2. back-merge — thin concepts (fewer than --min-sources cited projects) are
               offered their top-k most similar summaries through compile's
               existing CONCEPT_UPDATE_USER merge-rewrite.
+
+Every rewrite is gated on losing nothing: no [src:] id and no figure present in
+an input may be missing from the output.
 
 The success metric is distinct [src:] ids in the page BODY, never the length of
 the `sources` frontmatter list. The previous-generation corpus looked
@@ -26,8 +30,8 @@ deterministic gate that discards any rewrite which does not add a real citation.
     OPENAI_API_KEY=$CBORG_API_KEY OPENAI_BASE_URL=https://api.cborg.lbl.gov \
         uv run python pipeline/consolidate_concepts.py [--dry-run] [--root DIR]
 
---dry-run costs $0: it embeds, ranks and prints both candidate lists, and makes
-no LLM calls and no writes.
+--dry-run costs $0 and writes nothing: it ranks and prints both candidate lists
+using only free embedding models, and makes no LLM calls.
 """
 
 from __future__ import annotations
@@ -56,12 +60,13 @@ MERGE_MODELS = os.environ.get("MERGE_EMBED_MODELS",
 MODEL_BATCH = {"openai/cohere-embed-v4": 32, "openai/gemini-embedding-001": 16}
 # 8, not 100: the gateway duplicates nomic rows at a stride of 16, intermittently,
 # so anything above 16 can come back corrupted. See embed().
+FREE_MODELS = {"openai/lbl/nomic-embed-text"}   # LBL-hosted, $0/token
 EMBED_BATCH = 8
 EMBED_CHARS = 6000
 UNCHANGED = "UNCHANGED"
 # Bump when a prompt below changes, so cached negative verdicts are re-asked
 # instead of silently outliving the prompt that produced them.
-PROMPT_V = "v2-evidence-overlap"
+PROMPT_V = "v3-retain-figures"
 REPORT_THRESHOLDS = (0.75, 0.78, 0.80, 0.82, 0.85, 0.87, 0.90)
 
 
@@ -123,8 +128,10 @@ Write the merged page. Rules:
 - Follow the wikilink whitelist rules above. Do not link [[concepts/{loser}]];
   that page is being deleted.
 - Keep the ## Open Directions ending, merging both pages' entries.
-- Keep it TIGHT: at most ~25% longer than the LONGER of the two inputs. This is
-  a merge, not a concatenation.
+- Weave rather than concatenate: aim for at most ~25% longer than the LONGER of
+  the two inputs. This is a length GUIDANCE, not a licence to drop evidence — if
+  keeping every measurement needs more room, take the room. Compress by merging
+  duplicated sentences and shared framing, never by deleting a figure or a claim.
 
 Return ONLY valid JSON, no fences:
 {{"description": "one line, at most 110 characters", "content": "# Title\\n\\n..."}}
@@ -307,6 +314,35 @@ def evidence_candidates(concepts: list[dict], min_shared: int, min_jaccard: floa
     return sorted(out, reverse=True)
 
 
+def same_source_candidates(concepts: list[dict], mature: int) -> list[tuple]:
+    """Thin pages built from the SAME evidence base — the structural signature of
+    the defect, and a bounded set.
+
+    `enrich_concepts.py` audits one summary at a time and may create several
+    concepts from it, so its shards are pages resting on an IDENTICAL set of
+    cited projects. That grouping is exact, free, and owes nothing to similarity:
+    at the pre-consolidation revision it was 159 pairs out of 11,628, and judging
+    it directly beats relying on a global embedding top-N whose measured recall
+    on known duplicates was 29%.
+
+    Equality, not containment: a shard whose source is merely a subset of a hub's
+    is the absorb-into-hub case, which the figure and embedding generators
+    already cover, and containment fires on almost every shard/hub pair once the
+    corpus is mostly multi-source (128 candidates versus 8 on this corpus).
+
+    It also catches what the numeric generator structurally cannot: qualitative
+    shards that share a source but fewer than `--min-shared-numbers` figures."""
+    out = []
+    for i in range(len(concepts)):
+        for j in range(i + 1, len(concepts)):
+            a, b = concepts[i]["cited"], concepts[j]["cited"]
+            if not a or not b or both_mature(a, b, mature):
+                continue
+            if a == b:                    # the SAME evidence base, not merely overlapping
+                out.append((len(a), i, j))
+    return sorted(out, reverse=True)
+
+
 def merge_candidates(concepts: list[dict], vecs_by_model: dict[str, list],
                      topn: int, mature: int) -> list[tuple]:
     """Union of each model's top-`topn` pairs, skipping pairs where BOTH sides
@@ -348,10 +384,9 @@ def backmerge_candidates(concepts: list[dict], cvecs: list[list[float]],
     for i, c in enumerate(concepts):
         if len(c["cited"]) >= mature:
             continue
-        have = set(c["fm"].get("sources") or []) | {f"summaries/{s}__REPORT.md" for s in c["cited"]}
         scored = sorted(
             ((cosine(cvecs[i], svecs[j]), j) for j, s in enumerate(summaries)
-             if s["rel"] not in have and s["sid"] not in c["cited"]),
+             if s["sid"] not in c["cited"]),
             reverse=True)
         out += [(sim, i, j) for sim, j in scored[:topk] if sim >= threshold]
     return sorted(out, reverse=True)
@@ -400,31 +435,53 @@ def repoint_links(root: pathlib.Path, loser: str, survivor: str) -> int:
 
 
 def generate_retaining(messages: list[dict], step: str, sources: dict[str, str],
-                       targets: set[str], required: set[str],
+                       targets: set[str], required: set[str], required_nums: set[str],
                        unchanged_ok: bool = False) -> dict:
-    """compile.generate_page plus a merge-specific guard: no [src:] id may be
-    dropped. generate_page takes no custom validator, so this is a post-check
-    with its own single retry, phrased through the same RETRY_USER prompt."""
-    def lost_ids(obj: dict) -> list[str]:
+    """compile.generate_page plus a merge-specific guard: neither a [src:] id nor
+    a FIGURE present in an input may be dropped.
+
+    Checking ids alone is far too weak. A rewrite can delete any number of
+    measurements and still keep one [src:] tag per source, and
+    CONCEPT_MERGE_USER's "at most ~25% longer than the longer input" actively
+    pressures it to do exactly that. Before numbers were checked here, merging
+    `essentiality-prediction-task-definition` into `gene-essentiality` silently
+    dropped 16 of its 97 figures — the condition-specific FBA correlations, the
+    aromatic-degradation enrichments (OR 9.70, q 0.012) and a p = 0.80 null —
+    and every gate in the pipeline passed, because wiki_check validates the
+    numbers that remain, never the ones a rewrite deleted.
+
+    generate_page takes no custom validator, so this is a post-check with its
+    own single retry, phrased through the same RETRY_USER prompt."""
+    def losses(obj: dict) -> tuple[list[str], list[str]]:
         content = (obj.get("content") or "").strip()
         if unchanged_ok and content == UNCHANGED:
-            return []
-        return sorted(required - body_src_ids(content))
+            return [], []
+        return (sorted(required - body_src_ids(content)),
+                sorted(required_nums - page_numbers(content)))
+
+    def violations(ids: list[str], nums: list[str]) -> str:
+        v = [f"- you dropped citation [src: {s}]; every claim citing {s} must survive" for s in ids]
+        if nums:
+            v.append(f"- you deleted {len(nums)} figure(s) that appear in the page(s) above: "
+                     f"{', '.join(nums[:25])}. Every measurement in the inputs must appear in "
+                     f"your page, copied exactly. Restore the claims carrying them; if that makes "
+                     f"the page longer than the length guidance, the length guidance yields.")
+        return "\n".join(v)
 
     obj = C.generate_page(messages, step, sources, targets)
-    lost = lost_ids(obj)
-    if not lost:
+    lost_ids, lost_nums = losses(obj)
+    if not lost_ids and not lost_nums:
         return obj
-    print(f"    {step}: dropped [src:] {lost} — retrying")
+    print(f"    {step}: dropped {len(lost_ids)} citation(s), {len(lost_nums)} figure(s) — retrying")
     obj = C.generate_page(
         messages
         + [{"role": "assistant", "content": json.dumps(obj)},
-           {"role": "user", "content": C.RETRY_USER.format(violations="\n".join(
-               f"- you dropped citation [src: {s}]; every claim citing {s} must survive" for s in lost))}],
+           {"role": "user", "content": C.RETRY_USER.format(violations=violations(lost_ids, lost_nums))}],
         f"{step}/retention", sources, targets)
-    lost = lost_ids(obj)
-    if lost:
-        raise C.PageError(f"{step}: still dropping [src:] {lost} after retry")
+    lost_ids, lost_nums = losses(obj)
+    if lost_ids or lost_nums:
+        raise C.PageError(f"{step}: still dropping citations {lost_ids} / figures {lost_nums[:8]} "
+                          f"after retry")
     return obj
 
 
@@ -433,8 +490,19 @@ def generate_retaining(messages: list[dict], step: str, sources: dict[str, str],
 # ---------------------------------------------------------------------------
 
 
+def replay_pending(root: pathlib.Path, state: dict, state_path: pathlib.Path) -> None:
+    """Finish link repair a previous run was interrupted mid-way through."""
+    for loser, survivor in list(state.get("pending", {}).items()):
+        n = repoint_links(root, loser, survivor)
+        print(f"  resuming interrupted merge {loser} -> {survivor}: {n} page(s) repointed")
+        state["pending"].pop(loser, None)
+    if state.get("pending") == {}:
+        state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
+
+
 def phase_merge(root: pathlib.Path, concepts: list[dict], pairs: list[tuple],
-                sources: dict[str, str], system: str, state: dict, mature: int) -> int:
+                sources: dict[str, str], system: str, state: dict, mature: int,
+                state_path: pathlib.Path) -> int:
     wiki = root / "wiki"
     targets = C.wikilink_targets(root)
     redirect: dict[str, str] = {}
@@ -492,7 +560,8 @@ def phase_merge(root: pathlib.Path, concepts: list[dict], pairs: list[tuple],
                  {"role": "user", "content": C.KNOWN_TARGETS_USER.format(
                      targets="\n".join(f"- {t}" for t in sorted(targets - {f"concepts/{loser}"})))},
                  {"role": "user", "content": task}],
-                f"merge/{survivor}", sources, targets, required=ca | cb)
+                f"merge/{survivor}", sources, targets, required=ca | cb,
+                required_nums=page_numbers(ta) | page_numbers(tb))
         except C.PageError as e:
             print(f"    [ERROR] {e} — keeping both pages")
             C._failures.append(f"consolidate:merge:{survivor}+{loser}")
@@ -502,9 +571,17 @@ def phase_merge(root: pathlib.Path, concepts: list[dict], pairs: list[tuple],
         (wiki / "concepts" / f"{survivor}.md").write_text(
             C.fm_block({"type": "Concept", "description": obj.get("description", ""), "sources": srcs})
             + obj["content"].strip() + "\n", encoding="utf-8")
+        # Persist the redirect BEFORE deleting, so an interrupt between the
+        # unlink and the link rewrite is recoverable: the next run finds the
+        # loser gone, has no candidate to re-derive it from, and would otherwise
+        # leave every inbound [[concepts/<loser>]] dangling forever.
+        state.setdefault("pending", {})[loser] = survivor
+        state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
         (wiki / "concepts" / f"{loser}.md").unlink()
         targets.discard(f"concepts/{loser}")
         n = repoint_links(root, loser, survivor)
+        state["pending"].pop(loser, None)
+        state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
         redirect[loser] = survivor
         for k, v in list(redirect.items()):
             if v == loser:
@@ -527,7 +604,10 @@ def phase_backmerge(root: pathlib.Path, concepts: list[dict], summaries: list[di
             continue
         text = path.read_text(encoding="utf-8", errors="replace")
         fm, body = C.parse_fm(text)
-        if s["rel"] in (fm.get("sources") or []):
+        # Body citations, not frontmatter: a `sources` entry the prose never
+        # cites is padding, and treating it as "already integrated" would let
+        # that padding permanently block the back-merge that would fix it.
+        if s["sid"] in body_src_ids(text):
             continue
         key = f"{PROMPT_V}|{c['stem']}|{s['stem']}|{digest(text)}{s['digest']}"
         if key in state["no_evidence"]:
@@ -545,7 +625,8 @@ def phase_backmerge(root: pathlib.Path, concepts: list[dict], summaries: list[di
                  {"role": "user", "content": f"Summary of document {s['sid']}:\n\n{s['body']}"},
                  {"role": "user", "content": task}],
                 f"backmerge/{c['stem']}+{s['sid']}", sources, targets,
-                required=body_src_ids(text), unchanged_ok=True)
+                required=body_src_ids(text), required_nums=page_numbers(text),
+                unchanged_ok=True)
         except C.PageError as e:
             print(f"    [ERROR] {e} — keeping old version")
             C._failures.append(f"consolidate:backmerge:{c['stem']}+{s['sid']}")
@@ -588,8 +669,9 @@ def report(concepts: list[dict], summaries: list[dict], cvecs,
     print(f"concept-concept cosine ({EMBED_MODEL}) at thresholds:")
     for t in REPORT_THRESHOLDS:
         print(f"    >= {t:.2f}: {sum(1 for s in allpairs if s >= t):5d}")
-    print(f"\n{len(pairs)} MERGE CANDIDATES: union of top-{args.merge_topn} pairs from each of "
-          f"{args.merge_models} (both sides >= {args.min_sources} cited projects skipped):")
+    print(f"\n{len(pairs)} MERGE CANDIDATES "
+          f"(evidence-overlap, then same-source, then embedding top-{args.merge_topn} per model; "
+          f"pairs with both sides >= {args.min_sources} cited projects skipped):")
     for rank, sim, i, j in pairs:
         print(f"    #{rank:<3d} {sim:.3f}  {concepts[i]['stem']} ({len(concepts[i]['cited'])})"
               f"  ||  {concepts[j]['stem']} ({len(concepts[j]['cited'])})")
@@ -609,25 +691,37 @@ def main(root: pathlib.Path, args) -> int:
     sources = source_ids(root)
     system = C.SYSTEM.format(contract=(C.REPO / "contract" / "AGENTS.md").read_text(encoding="utf-8"))
     state_path = root / "state" / "consolidate.json"
-    state_path.parent.mkdir(exist_ok=True)
     state = json.loads(state_path.read_text()) if state_path.exists() else {}
     state.setdefault("rejected", {})
     state.setdefault("no_evidence", {})
+    state.setdefault("pending", {})
 
     concepts, summaries = load_concepts(wiki), load_summaries(wiki)
     models = [m.strip() for m in args.merge_models.split(",") if m.strip()]
+    # --dry-run is advertised as $0, so it may only use free models. cohere is
+    # ~$0.04 a pass; running it here would quietly bill an inspection command.
+    if args.dry_run:
+        models = [m for m in models if m in FREE_MODELS] or [EMBED_MODEL]
+    if EMBED_MODEL not in models:            # back-merge always ranks with EMBED_MODEL
+        models.append(EMBED_MODEL)
     print(f"consolidate: embedding {len(concepts)} concepts + {len(summaries)} summaries "
           f"({', '.join(models)})")
     cvecs_by = {m: embed([c["etext"] for c in concepts], m) for m in models}
     cvecs, svecs = cvecs_by[EMBED_MODEL], embed([s["etext"] for s in summaries])
-    ev = evidence_candidates(concepts, args.min_shared_numbers, args.evidence_jaccard)
-    ev = [(0, j, i, k) for j, _, i, k in ev
+    # Three generators, most-precise first. Both deterministic ones are free and
+    # exact; embeddings are the recall net behind them for cross-source paraphrase.
+    ev = [(0, j, i, k) for j, _, i, k in
+          evidence_candidates(concepts, args.min_shared_numbers, args.evidence_jaccard)
           if not both_mature(concepts[i]["cited"], concepts[k]["cited"], args.min_sources)]
-    emb_pairs = merge_candidates(concepts, cvecs_by, args.merge_topn, args.min_sources)
     seen = {(i, j) for _, _, i, j in ev}
-    pairs = ev + [p for p in emb_pairs if (p[2], p[3]) not in seen]
-    print(f"  merge candidates: {len(ev)} from evidence overlap + "
-          f"{len(pairs) - len(ev)} more from embeddings")
+    ss = [(1, float(n), i, j) for n, i, j in same_source_candidates(concepts, args.min_sources)
+          if (i, j) not in seen]
+    seen |= {(i, j) for _, _, i, j in ss}
+    emb = [p for p in merge_candidates(concepts, cvecs_by, args.merge_topn, args.min_sources)
+           if (p[2], p[3]) not in seen]
+    pairs = ev + ss + emb
+    print(f"  merge candidates: {len(ev)} evidence-overlap + {len(ss)} same-source + "
+          f"{len(emb)} embedding = {len(pairs)}")
     cands = backmerge_candidates(concepts, cvecs, summaries, svecs,
                                  args.backmerge_threshold, args.topk, args.min_sources)
 
@@ -635,7 +729,9 @@ def main(root: pathlib.Path, args) -> int:
         report(concepts, summaries, cvecs, pairs, cands, args)
         return 0
 
-    merged = phase_merge(root, concepts, pairs, sources, system, state, args.min_sources)
+    state_path.parent.mkdir(exist_ok=True)   # first write of the run happens here
+    replay_pending(root, state, state_path)
+    merged = phase_merge(root, concepts, pairs, sources, system, state, args.min_sources, state_path)
     state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
 
     if merged:   # survivors changed and losers are gone — re-embed before phase 2

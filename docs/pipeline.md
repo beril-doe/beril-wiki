@@ -83,14 +83,22 @@ summary (`lbl/nomic-embed-text`, free, plus `cohere-embed-v4` at ~$0.04 a pass; 
 is cached). **Batches are kept to 8-32**: the gateway intermittently returns
 duplicated embedding rows at a stride of 16 for large batches, giving unrelated
 pages byte-identical vectors and silently destroying recall. `embed()` detects
-collisions, re-embeds the affected rows individually, and aborts rather than
-rank on corrupt vectors. This replaces the name-token
+collisions, re-embeds the affected rows individually, and aborts if more than a
+handful survive that repair; a small residue is tolerated and logged, because a
+copied vector only costs that page its ranking and the judge gates any false
+pair it produces. This replaces the name-token
 heuristic in `wiki_check.duplicate_concepts`, which needs ≥50% source-set
 Jaccard and so cannot see duplicates among single-source pages. Then:
 
-- **merge** — the union of each embedding model's top-`--merge-topn` pairs gets
-  one merge/keep judgement. Two models are used because one alone has recall
-  holes, and selection is by rank per model, since cosine ranges are not
+- **merge** — candidates come from three generators, judged most-precise first:
+  pages that restate the same **figures** (shared cited project, ≥3 identical
+  numbers, numeric Jaccard ≥ 0.5); pages built from the same **evidence base**
+  (one page's cited-project set equal to or contained in the other's — 159 pairs
+  of 11,628 at the pre-consolidation revision, and the structural signature of
+  enrichment splitting one summary into several concepts); and finally the union
+  of each embedding model's top-`--merge-topn` pairs as a recall net for
+  cross-source paraphrase. Two embedding models are used because one alone has
+  recall holes, and selection is by rank per model, since cosine ranges are not
   comparable across models. The
   judge is shown each page's *cited projects* and their overlap, because the
   decisive question is whether two pages rest on the same evidence, not whether
@@ -102,10 +110,14 @@ Jaccard and so cannot see duplicates among single-source pages. Then:
 - **back-merge** — thin concepts are offered their top-`--topk` most similar
   summaries through compile's existing `CONCEPT_UPDATE_USER` rewrite.
 
-Two invariants, both deterministic and both enforced after the model replies:
-no `[src:]` id present in an input may be missing from the output (one retry,
-then the merge is abandoned), and `sources` frontmatter may only grow alongside a
-real `[src:]` citation in the prose. The second one matters — the
+Three invariants, all deterministic and all enforced after the model replies:
+no `[src:]` id present in an input may be missing from the output; **no figure
+present in an input may be missing either** — a rewrite can otherwise delete
+whole measurements while keeping one citation tag, which is how a merge once
+dropped 16 of a page's 97 numbers with every gate passing; and `sources`
+frontmatter may only grow alongside a real `[src:]` citation in the prose. The
+first two get one retry quoting what was lost, then the merge is abandoned and
+both pages kept. The second one matters — the
 previous-generation corpus *looked* multi-source but padded frontmatter with bare
 "See also" links on 60 of its 81 concept pages. The metric is distinct `[src:]`
 ids in the body; a rewrite that merely name-drops a project is discarded whole,

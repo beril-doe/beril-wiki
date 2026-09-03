@@ -12,6 +12,8 @@ from consolidate_concepts import (
     both_mature,
     cosine,
     merge_candidates,
+    page_numbers,
+    same_source_candidates,
     rewrite_concept_links,
     sid_of,
     unit,
@@ -101,6 +103,37 @@ def test_both_mature():
     assert both_mature(set("abc"), set("efgh"), 4) is False
 
 
+def test_same_source_candidates():
+    """The structural generator: shards enrich built from one summary share an
+    evidence base. Bounded and exact — 159 pairs of 11,628 at the base revision."""
+    cs = [{"stem": "a", "cited": {"p1"}, "fm": {"sources": []}},
+          {"stem": "b", "cited": {"p1"}, "fm": {"sources": []}},        # same single source
+          {"stem": "c", "cited": {"p1", "p2"}, "fm": {"sources": []}},  # superset of a and b
+          {"stem": "d", "cited": {"p9"}, "fm": {"sources": []}},        # unrelated
+          {"stem": "hub", "cited": set("wxyz"), "fm": {"sources": []}}]
+    got = {(cs[i]["stem"], cs[j]["stem"]) for _, i, j in same_source_candidates(cs, mature=4)}
+    assert ("a", "b") in got                      # identical evidence base
+    # containment is NOT enough: it fires on nearly every shard/hub pair once the
+    # corpus is mostly multi-source, and those are the other generators' job
+    assert ("a", "c") not in got and ("b", "c") not in got
+    assert ("a", "d") not in got                  # disjoint evidence
+    assert not any("hub" in p for p in got)       # mature side with disjoint evidence
+    # a page citing nothing never pairs
+    assert same_source_candidates([{"stem": "e", "cited": set(), "fm": {}},
+                                   {"stem": "f", "cited": {"p1"}, "fm": {}}], mature=4) == []
+
+
+def test_page_numbers():
+    """The retention gate compares these sets, so normalisation must match
+    wiki_check: commas stripped, percent stripped."""
+    t = "Covered 7,609 genes (59.3%) at p = 0.0001. [src: proj_a]"
+    assert page_numbers(t) == {"7609", "59.3", "0.0001"}
+    # a merge that drops a figure is detectable even when the [src:] id survives
+    before = page_numbers("A: 9.70 and 12.0 and 0.80. [src: proj_a]")
+    after = page_numbers("A: 9.70. [src: proj_a]")
+    assert before - after == {"12.0", "0.80"}
+
+
 def test_rewrite_concept_links():
     text = ("Prose about [[concepts/loser]] and [[concepts/loser|the old name]].\n"
             "- [[concepts/survivor]] — reason\n"
@@ -133,6 +166,8 @@ if __name__ == "__main__":
     test_cosine()
     test_merge_candidates()
     test_both_mature()
+    test_same_source_candidates()
+    test_page_numbers()
     test_backmerge_candidates()
     test_rewrite_concept_links()
     test_padding_gate()
