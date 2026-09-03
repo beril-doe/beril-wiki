@@ -49,7 +49,7 @@ Finally, system-level associations do not equal mechanism. Prophage markers may 
 ## Where to Go Deeper
 
 - [[concepts/environmental-resistome]] — the broadest synthesis of environmental, phylogenetic, catalog, and mobile-structure effects.
-- [[concepts/intrinsic-versus-acquired-resistance]] — how core and accessory conservation distinguish stable intrinsic functions from often-acquired resistance.
+- [[concepts/environmental-resistome]] — how core and accessory conservation distinguish stable intrinsic functions from often-acquired resistance.
 - [[concepts/resistance-island-coinheritance]] — co-inherited multi-mechanism AMR modules and their limits as evidence of physical linkage.
 - [[concepts/scale-dependent-mobile-element-associations]] — why contig proximity, islands, and species-level covariance support different inferences.
 - [[concepts/chromosomal-and-integrative-gene-transfer]] — T4SS, IME, cross-phylum HGT, and resistance-associated genomic neighborhoods.

@@ -1,7 +1,7 @@
 ---
 type: "Concept"
-description: "Unequal research coverage leaves many genes and protein families functionally dark"
-sources: ["summaries/paperblast_explorer__REPORT.md"]
+description: "Unequal research attention leaves many organisms, genes, and protein families functionally dark."
+sources: ["summaries/paperblast_explorer__REPORT.md", "summaries/core_gene_tradeoffs__REPORT.md", "summaries/functional_dark_matter__REPORT.md"]
 ---
 # Research-Attention Inequality and Functional Darkness
 
@@ -39,9 +39,13 @@ At 90% identity, 83.3% of clusters are singletons; at 50% identity, 67.5% are si
 
 The evidence supports a research-attention inequality model in which a small set of organisms and genes accumulates a large share of available literature, while many sequence families remain minimally studied or entirely unstudied. [src: paperblast_explorer] The organism-level and gene-level Lorenz analyses quantify the concentration, while the 50%-identity clustering extends the analysis from named genes to protein-family-level functional darkness. [src: paperblast_explorer]
 
-This finding **supports** [[concepts/gene-function-acquisition-depth]], because the organism-, gene-, and family-level distributions measure how unevenly functional knowledge is acquired. [src: paperblast_explorer] It also **refines** [[concepts/functional-dark-matter]] by identifying 5,218 multi-member protein families with zero PaperBLAST literature coverage, while not establishing that those families lack biological function. [src: paperblast_explorer]
+The [[summaries/functional_dark_matter__REPORT]] evidence **supports** the functional-darkness interpretation while distinguishing literature darkness from annotation darkness: across 48 Fitness Browser organisms, 57,011 of 228,709 genes (24.9%) were classified as lacking functional annotation, and 17,344 of those had either strong fitness effects or essentiality evidence. [src: functional_dark_matter] This shows that a gene or family can be poorly annotated yet experimentally consequential; it does not establish that PaperBLAST literature-free families are biologically inactive. [src: functional_dark_matter]
 
-The result **supports** [[concepts/research-use-observability-bias]]: visibility in the literature is concentrated, but the analysis cannot determine whether poorly covered genes are genuinely neglected, absent from available full text, or missed by text mining. [src: paperblast_explorer] The result also **refines** [[concepts/phenotype-database-coverage-bias]] by showing that uneven knowledge coverage occurs upstream of phenotype interpretation, at the level of literature connected to genes and protein families. [src: paperblast_explorer]
+This finding **supports** [[concepts/gene-function-acquisition-depth]], because the organism-, gene-, and family-level distributions measure how unevenly functional knowledge is acquired. [src: paperblast_explorer] It also **refines** [[concepts/functional-dark-matter]] by identifying 5,218 multi-member protein families with zero PaperBLAST literature coverage, while not establishing that those families lack biological function. [src: paperblast_explorer] The functional-darkness study further **refines** this relationship: 33,105 of 39,532 pangenome-linked dark genes (83.7%) were reclassified as not hypothetical by Bakta, indicating that database-visible annotation can reduce apparent darkness without direct functional validation. [src: functional_dark_matter]
+
+The [[summaries/core_gene_tradeoffs__REPORT]] evidence further **refines** this interpretation: 25,271 genes were classified as condition-dependent trade-off genes, and 28,017 as costly plus conserved, showing that conservation and laboratory fitness patterns can identify functional importance or environmental trade-offs that literature coverage alone cannot reveal. [src: core_gene_tradeoffs] The report's burden pattern was function-specific rather than uniformly distributed, so literature-free or sparsely studied families should not be treated as functionally inert on that basis. [src: core_gene_tradeoffs]
+
+The result **supports** [[concepts/cross-tenant-data-bridging]]: visibility in the literature is concentrated, but the analysis cannot determine whether poorly covered genes are genuinely neglected, absent from available full text, or missed by text mining. [src: paperblast_explorer] The result also **refines** [[concepts/phenotype-database-coverage-bias]] by showing that uneven knowledge coverage occurs upstream of phenotype interpretation, at the level of literature connected to genes and protein families. [src: paperblast_explorer]
 
 ## Measurement limits
 
@@ -49,10 +53,16 @@ Text-mined mention is not equivalent to functional characterization, because a g
 
 The organism-domain classification is approximate: 35% of organisms were classified as Unknown, and formal taxonomy lookup could improve the assignment. [src: paperblast_explorer] The 50% sequence-identity threshold is conventional rather than a universal definition of a protein family. [src: paperblast_explorer] PaperBLAST contains approximately 19% of the full SwissProt database, estimated in the report as approximately 570K reviewed entries as of 2024, so curated knowledge exists for proteins that PaperBLAST cannot connect to literature. [src: paperblast_explorer] The analysis has no negative controls and cannot easily distinguish genuinely unstudied genes from genes whose literature was missed by text mining. [src: paperblast_explorer]
 
+The functional-darkness study adds a separate measurement caveat: its 57,011-gene count likely overestimates true functional darkness because annotations in databases or releases not checked may be absent from the integrated census. [src: functional_dark_matter] Its module predictions and pathway-compatible matches are also inference rather than direct validation, so annotation darkness, literature darkness, and experimentally unresolved function should not be treated as identical categories. [src: functional_dark_matter]
+
+The costly-plus-conserved interpretation is also based on laboratory fitness measurements and conservation patterns rather than direct measurement of natural selection. [src: core_gene_tradeoffs] Fitness Browser conditions are biased toward experimentally convenient conditions rather than ecologically relevant conditions, and “burden” defined as fit > 1 may reflect trade-offs rather than true dispensability. [src: core_gene_tradeoffs]
+
 ## Open Directions
 
 - Compare PaperBLAST coverage with the full SwissProt and curated annotation sets using capture–recapture or stratified coverage analysis to test how many apparently dark families are dark because of missing PMC linkage rather than absent functional knowledge. [src: paperblast_explorer]
 - Recompute organism- and gene-level Lorenz curves after formal taxonomy normalization and stratification by domain, pathogen status, and environmental origin to test whether the measured inequality is driven by classification uncertainty or research selection. [src: paperblast_explorer]
 - Use MMseqs2 clusters at multiple identity thresholds and compare them with curated functional annotations to test whether the 5,218 literature-free multi-member families remain dark under alternative family definitions. [src: paperblast_explorer]
 - Link the 129,823 VIMSS cross-references to Fitness Browser phenotypes and prioritize dark families with experimental fitness evidence for targeted functional characterization. [src: paperblast_explorer]
+- Compare literature coverage between the 28,017 costly-plus-conserved genes and the 86,761 neutral-plus-conserved genes, then test whether dark families with condition-dependent fitness evidence are disproportionately conserved or burdened. [src: core_gene_tradeoffs]
+- Cross-tabulate the 5,218 PaperBLAST literature-free families with the 57,011 annotation-dark genes and their fitness, essentiality, and Bakta status to separate literature gaps from annotation gaps and identify experimentally actionable families. [src: paperblast_explorer, functional_dark_matter]
 - Sample full-text and paywalled literature outside PubMed Central, then estimate false-negative rates for text-mined gene–paper links to quantify how much open-access availability contributes to the observed attention inequality. [src: paperblast_explorer]

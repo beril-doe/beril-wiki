@@ -47,7 +47,7 @@ Finally, absence claims require sensitivity validation. PaperBLAST returned 0 hi
 - [[concepts/ontology-and-category-schema-sensitivity]] — why pathway themes, marker calls, and functional counts change with representation.
 - [[concepts/ecological-memory]] — a concrete test of history-dependent community phenotypes.
 - [[concepts/outer-membrane-lipid-homeostasis]] — a detailed molecular case linking transcriptomics, proteomics, regulation, and envelope fitness.
-- [[concepts/transcript-protein-discordance]] — how cross-modal disagreement can expose post-transcriptional control.
+- [[concepts/outer-membrane-lipid-homeostasis]] — how cross-modal disagreement can expose post-transcriptional control.
 - [[concepts/homology-search-negative-evidence]] — safeguards for interpreting gene and pathway absence.
 - [[concepts/phased-envelope-stress-regulation]] — temporal organization of a stress phenotype across regulatory cohorts.
 

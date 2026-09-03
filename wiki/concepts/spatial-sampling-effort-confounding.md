@@ -29,7 +29,7 @@ The report identifies the Atacama/Andean and USA hotspots as possible single-stu
 
 The report proposes testing whether hotspots persist after normalising by **log(n_MAGs)**, where `n_MAGs` is the number of MAGs represented in a grid cell. [src: metal_resistance_global_biogeography] This proposed correction directly tests whether hotspot status is robust to sampling effort, but the corrected results were not reported in the preliminary analysis. [src: metal_resistance_global_biogeography]
 
-The findings therefore refine [[concepts/environment-embedding-geography]]: coordinate availability can support geographic mapping, but geographic interpretation remains conditional on sampling effort, study replication, and environmental composition. [src: metal_resistance_global_biogeography] They also connect to [[concepts/spatial-structure-versus-short-term-temporal-stability]], because spatial contrasts cannot be interpreted independently of how samples were distributed across locations and collection contexts. [src: metal_resistance_global_biogeography]
+The findings therefore refine [[concepts/environment-embedding-geography]]: coordinate availability can support geographic mapping, but geographic interpretation remains conditional on sampling effort, study replication, and environmental composition. [src: metal_resistance_global_biogeography] They also connect to [[concepts/subsurface-hydrogeological-zonation]], because spatial contrasts cannot be interpreted independently of how samples were distributed across locations and collection contexts. [src: metal_resistance_global_biogeography]
 
 ## Tensions
 

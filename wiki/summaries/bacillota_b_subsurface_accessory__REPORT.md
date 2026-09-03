@@ -66,4 +66,4 @@ The report proposes applying the correction to the clay-project branch, refining
 
 - [[concepts/pangenome-integration]] — The 547 enriched OGs, genome-size expansion, cohort construction, and taxonomic limitations provide a within-lineage pangenome comparison.
 - [[concepts/subsurface-bacillota-specialization]] — The central finding that deep-clay Bacillota_B encode anaerobic-respiration, sporulation-revival, mineral-attachment, regulatory, and osmoadaptation features while retaining larger genomes.
-- [[concepts/multi-heme-cytochrome-detection]] — The corrected triple-signal detector and the resulting loss of the original shallow-versus-deep iron-reduction contrast provide a reusable marker-correction workflow.
+- [[concepts/functional-marker-validation]] — The corrected triple-signal detector and the resulting loss of the original shallow-versus-deep iron-reduction contrast provide a reusable marker-correction workflow.

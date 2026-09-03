@@ -48,12 +48,12 @@ Finally, modeled support can disagree with phenotype. FBA predicted **0%** essen
 
 - [[concepts/cofitness-network-architecture]] — the central synthesis of AMR support networks, conserved modules, and organism specificity.
 - [[concepts/fitness-module-detection-sensitivity]] — how ICA thresholds, experiment depth, and annotation choices shape recovered modules.
-- [[concepts/metabolic-pathway-support-networks]] — a detailed example of cofactor, metal, respiratory, and regulatory support around one pathway.
+- [[concepts/genomic-dispersal-functional-coupling]] — a detailed example of cofactor, metal, respiratory, and regulatory support around one pathway.
 - [[concepts/genomic-dispersal-functional-coupling]] — why physiological integration can span distant chromosomal regions.
 - [[concepts/module-level-coinheritance]] — evidence that coordinated modules predict pangenome co-occurrence better than pairwise links.
 - [[concepts/fitness-matched-null-models]] — the key methodological test for separating shared dispensability from functional enrichment.
 - [[concepts/gene-cooccurrence-ecological-guilds]] — ecological guilds, environmental association, and the limits of co-occurrence.
-- [[concepts/relative-fitness-and-transposon-interpretation]] — how to read RB-TnSeq fitness effects without confusing relative and absolute fitness.
+- [[concepts/antimicrobial-resistance-fitness-cost]] — how to read RB-TnSeq fitness effects without confusing relative and absolute fitness.
 
 Key entities: [[entities/kescience-fitnessbrowser]], [[entities/independent-component-analysis]], [[entities/tnseq]], [[entities/kbase-ke-pangenome]], [[entities/gtdb]], [[entities/bakta]]
 

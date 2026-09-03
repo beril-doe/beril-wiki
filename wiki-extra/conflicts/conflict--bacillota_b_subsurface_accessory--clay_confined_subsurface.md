@@ -1,7 +1,7 @@
 <!-- tension-hash: 6c57ba851fd6e5e4 -->
 # Sulfite Reduction or Dissimilatory Sulfate Reduction — Terminology or Biological Difference?
 
-The [[concepts/multi-heme-cytochrome-detection]] record identifies a disagreement between an existing source and a new clay report over what the retained signal represents. Both sources report 5/9 positives and the same null scale, but one calls the signal “sulfite reduction” while the other calls it dissimilatory “sulfate reduction.” The numerical agreement could suggest continuity between the findings, yet the non-identical terminology may reflect different marker definitions, biological processes, or reporting conventions. Resolving this matters because silently treating sulfite and sulfate reduction as interchangeable could misclassify the underlying metabolism and distort comparisons across projects.
+The [[concepts/functional-marker-validation]] record identifies a disagreement between an existing source and a new clay report over what the retained signal represents. Both sources report 5/9 positives and the same null scale, but one calls the signal “sulfite reduction” while the other calls it dissimilatory “sulfate reduction.” The numerical agreement could suggest continuity between the findings, yet the non-identical terminology may reflect different marker definitions, biological processes, or reporting conventions. Resolving this matters because silently treating sulfite and sulfate reduction as interchangeable could misclassify the underlying metabolism and distort comparisons across projects.
 
 ## Evidence Sides
 

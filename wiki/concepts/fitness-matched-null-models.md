@@ -1,13 +1,13 @@
 ---
 type: "Concept"
-description: "Null models that match fitness to test functional enrichment fairly"
-sources: ["summaries/amr_cofitness_networks__REPORT.md"]
+description: "Designing fitness-matched null models for cofitness enrichment"
+sources: ["summaries/amr_cofitness_networks__REPORT.md", "summaries/fitness_effects_conservation__REPORT.md", "summaries/conservation_fitness_synthesis__REPORT.md"]
 ---
 # Fitness-Matched Null Models for Functional Enrichment
 
 Functional enrichment in cofitness neighborhoods can arise from genuine shared regulation or from genes having similar fitness behavior under the assay conditions. A fitness-matched null model tests these explanations by comparing AMR-associated neighborhoods with random non-AMR genes whose mean-fitness distribution is matched, rather than matching only conservation class. [src: amr_cofitness_networks]
 
-This problem connects [[concepts/condition-specific-fitness]] with [[concepts/cofitness-network-architecture]]: cofitness measures similarity in fitness phenotypes, not direct transcriptional control, so enrichment requires a null model that reproduces the relevant fitness structure. [src: amr_cofitness_networks]
+This problem connects [[concepts/condition-specific-fitness]] with [[concepts/cofitness-network-architecture]]: cofitness measures similarity in fitness phenotypes, not direct transcriptional control, so enrichment requires a null model that reproduces the relevant fitness structure. [src: amr_cofitness_networks] Evidence from a 43-bacterium comparison **supports** this concern: fitness importance was positively but weakly associated with core status, so conservation class does not fully capture fitness behavior. [src: fitness_effects_conservation] The same evidence **refines** the proposed control: fitness breadth and condition-specific effects may also need consideration alongside mean fitness. [src: fitness_effects_conservation] A broader synthesis further **supports** this limitation: essential genes were 82% core whereas always-neutral genes were 66% core, while core genes were 1.78x more likely to have strong condition-specific phenotypes. [src: conservation_fitness_synthesis]
 
 ## Why conservation-matched nulls are insufficient
 
@@ -17,11 +17,15 @@ The observed enrichment included flagellum-dependent cell motility in 5 organism
 
 Evidence consistent with a dispensability-driven signal includes the absence of energy-metabolism enrichment in 0/25 organisms, with a permutation-test fold of 0.91. [src: amr_cofitness_networks] The report also notes that Pearson correlation removes each gene’s mean fitness before correlating profiles, but genes with similar condition-responsive dispensability can still have correlated fitness patterns without direct co-regulation. [src: amr_cofitness_networks]
 
+The broader fitness-conservation analysis **supports** treating conservation matching as incomplete: essential genes were 82% core whereas always-neutral genes were 66% core, but the association between fitness breadth and core status was weak (Spearman rho=0.086, p=8.1e-230). [src: fitness_effects_conservation] It also found that strong condition-specific effects were enriched among core genes (77.3% core versus 70.3% without specific phenotypes), so conservation class cannot be treated as a proxy for either dispensability or condition dependence. [src: fitness_effects_conservation] The synthesis **refines** this point by showing that core genes were also more likely to be burdensome in laboratory conditions: 24.4% had positive fitness when deleted versus 19.9% of accessory genes, and core genes were 1.29x more likely to be important in some conditions but burdensome in others. [src: conservation_fitness_synthesis]
+
 ## Proposed null model
 
 The primary proposed test is to draw random non-AMR genes while matching the AMR genes’ mean-fitness distribution, including the reported −0.05 to +0.05 range. [src: amr_cofitness_networks] The resulting randomized neighborhoods should be analyzed with the same cofitness thresholds, module assignments, and enrichment procedure as the observed AMR neighborhoods so that differences reflect AMR association rather than changes in analysis scale. [src: amr_cofitness_networks]
 
 A useful implementation would preserve conservation class while additionally matching mean fitness, because the existing analysis already matched conservation class and the unresolved confound is the lack of mean-fitness matching. [src: amr_cofitness_networks] Repeating the enrichment tests across many such permutations would provide a null distribution for odds ratios, enriched-term counts, and the number of organisms sharing each term. [src: amr_cofitness_networks]
+
+The new comparison **refines** this design rather than replacing it: core genes showed heavier tails in both negative and positive fitness effects, while singleton genes had near-zero mean fitness that may reflect poor transposon coverage rather than true neutrality. [src: fitness_effects_conservation] Where data permit, the null should therefore assess fitness-effect breadth or coverage in addition to mean fitness, or explicitly test whether those features alter the enrichment result. [src: fitness_effects_conservation] This is also warranted because independent component analysis (ICA), a decomposition method for coordinated fitness modules, found 1,116 modules across 32 organisms that were 86% core versus an 81.5% baseline (odds ratio 1.46, p=1.6e-87); conservation-linked module structure could otherwise contribute to functional enrichment. [src: conservation_fitness_synthesis]
 
 The null should be evaluated at more than one cofitness threshold because the mean support network contained 233 genes at |r| > 0.3, 110 at |r| > 0.4, and 71 at |r| > 0.5. [src: amr_cofitness_networks] The report specifically recommends confirmation at |r| > 0.4 because the |r| > 0.3 networks include many weak associations. [src: amr_cofitness_networks]
 
@@ -29,7 +33,7 @@ The null should be evaluated at more than one cofitness threshold because the me
 
 If flagellar motility and amino acid-biosynthesis enrichment remains stronger than the fitness-matched null, the result would support—but would not by itself prove—shared condition-dependent regulation or another structured biological association. [src: amr_cofitness_networks] If the enrichment disappears after matching mean fitness, the evidence would favor shared dispensability under the laboratory conditions as the explanation for the original signal. [src: amr_cofitness_networks]
 
-The distinction matters because the original InterProScan analysis found 35/3,193 significant tests at FDR (false discovery rate) < 0.05, whereas the old SEED/KEGG analysis found 0/280 significant tests at FDR < 0.05. [src: amr_cofitness_networks] Improved annotation can expose real functional structure, but it can also make it more important to use a null model that controls the fitness properties of the compared genes. [src: amr_cofitness_networks]
+The distinction matters because the original InterProScan analysis found 35/3,193 significant tests at FDR (false discovery rate) < 0.05, whereas the old SEED/KEGG analysis found 0/280 significant tests at FDR < 0.05. [src: amr_cofitness_networks] Improved annotation can expose real functional structure, but it can also make it more important to use a null model that controls the fitness properties of the compared genes.
 
 The fitness-matched test should not be used to reinterpret every result in the analysis: AMR-containing ICA modules had median size 46 genes versus 27 genes for non-AMR modules, with Mann–Whitney U (MWU) p = 1.7×10⁻⁸, and the report treats this module-size result as robust to the shared-dispensability concern. [src: amr_cofitness_networks] Likewise, support-network size was not correlated with AMR fitness cost (Spearman rho = −0.006, p = 0.87, N = 769), although limited variation in fitness cost may reduce the ability to detect such a relationship. [src: amr_cofitness_networks]
 
@@ -37,13 +41,13 @@ The fitness-matched test should not be used to reinterpret every result in the a
 
 A fitness-matched null is mainly needed to interpret functional enrichment, not to erase the observed organism-specific organization of support networks. [src: amr_cofitness_networks] Different AMR mechanisms within the same organism had mean Jaccard similarity 0.375, compared with 0.207 for the same mechanism across organisms, with MWU p = 4.3×10⁻¹³. [src: amr_cofitness_networks] The report describes this relative comparison as robust to the dispensability confound because it tests how support networks are organized within and across organisms rather than relying only on the presence of individual enriched categories. [src: amr_cofitness_networks]
 
-The planned null model therefore complements [[concepts/cofitness-network-architecture]] and [[concepts/cofitness-network-architecture]]: it asks whether particular functional categories are overrepresented beyond expected fitness similarity, while the network-organization comparison asks whether organism context structures support relationships more strongly than AMR mechanism. [src: amr_cofitness_networks]
+The planned null model therefore complements [[concepts/cofitness-network-architecture]]: it asks whether particular functional categories are overrepresented beyond expected fitness similarity, while the network-organization comparison asks whether organism context structures support relationships more strongly than AMR mechanism. [src: amr_cofitness_networks]
 
 ## Evidence status
 
-The need for a fitness-matched null is a methodological conclusion supported by a specific unresolved confound, not evidence that the observed enrichment is artifactual. [src: amr_cofitness_networks] The current data support the hypothesis that flagellar, chemotaxis, and amino acid-biosynthesis enrichment may reflect shared dispensability, while leaving genuine co-regulation as an alternative explanation. [src: amr_cofitness_networks]
+The need for a fitness-matched null is a methodological conclusion supported by a specific unresolved confound, not evidence that the observed enrichment is artifactual. [src: amr_cofitness_networks] The current data support the hypothesis that flagellar, chemotaxis, and amino acid-biosynthesis enrichment may reflect shared dispensability, while leaving genuine co-regulation as an alternative explanation. [src: amr_cofitness_networks] The fitness-conservation comparison **supports** the need to control assay-visible fitness structure, but its weak conservation association and coverage caveat mean that it does not establish that mean-fitness matching alone is sufficient. [src: fitness_effects_conservation] The synthesis **supports** retaining this cautious interpretation: its costly-and-conserved category is evidence for, rather than a direct measurement of, natural-environment purifying selection. [src: conservation_fitness_synthesis]
 
-The source report is summarized at [[summaries/amr_cofitness_networks__REPORT]]. [src: amr_cofitness_networks]
+The source reports are summarized at [[summaries/amr_cofitness_networks__REPORT]], [[summaries/fitness_effects_conservation__REPORT]], and [[summaries/conservation_fitness_synthesis__REPORT]].
 
 ## Open Directions
 
@@ -53,3 +57,5 @@ The source report is summarized at [[summaries/amr_cofitness_networks__REPORT]].
 - Measure mean fitness directly for flagellar knockouts and other conditionally dispensable gene classes, then use those distributions in the null; ask whether their observed neighborhoods are predictable from dispensability alone. [src: amr_cofitness_networks]
 - Extend the matched-null analysis to phage-defense and secondary-metabolite genes; ask whether enrichment of other conditionally dispensable classes is similarly explained by fitness structure. [src: amr_cofitness_networks]
 - Replace the operon-exclusion row-index heuristic with coordinate-based genomic filtering before permutation testing; ask whether local-gene structure changes the enrichment estimates. [src: amr_cofitness_networks]
+- Add fitness breadth, condition-specific-effect status, and transposon-callability measures to the matching or stratification scheme; ask whether the enrichment survives controls motivated by the weak conservation–fitness association and possible singleton coverage bias. [src: fitness_effects_conservation]
+- Test whether the 1,116 conservation-enriched fitness modules alter functional-enrichment null distributions when module composition, rather than only gene-level conservation and mean fitness, is matched. [src: conservation_fitness_synthesis]

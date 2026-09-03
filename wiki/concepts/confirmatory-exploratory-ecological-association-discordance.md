@@ -1,13 +1,13 @@
 ---
 type: "Concept"
-description: "How confirmatory nulls and exploratory ecological signals diverge."
-sources: ["summaries/enigma_contamination_functional_potential__REPORT.md", "summaries/ecotype_env_reanalysis__REPORT.md", "summaries/ecotype_analysis__REPORT.md"]
+description: "Separating confirmatory nulls from coverage- and resolution-sensitive ecological signals"
+sources: ["summaries/enigma_contamination_functional_potential__REPORT.md", "summaries/ecotype_env_reanalysis__REPORT.md", "summaries/ecotype_analysis__REPORT.md", "summaries/lab_field_ecology__REPORT.md", "summaries/pangenome_openness__REPORT.md"]
 ---
 # Confirmatory Nulls and Exploratory Signals in Ecological Association Testing
 
-This concept describes how predeclared ecological association tests can remain null while exploratory, coverage-adjusted analyses produce apparently positive signals that are sensitive to mapping, covariates, taxonomic resolution, multiple-testing correction, and environmental classification. [src: enigma_contamination_functional_potential] [src: ecotype_env_reanalysis]
+This concept describes how predeclared ecological association tests can remain null while exploratory, coverage-adjusted analyses produce apparently positive signals that are sensitive to mapping, covariates, taxonomic resolution, multiple-testing correction, environmental classification, and pangenome summary metrics. [src: enigma_contamination_functional_potential] [src: ecotype_env_reanalysis] [src: pangenome_openness]
 
-The evidence includes [[summaries/enigma_contamination_functional_potential__REPORT]], which tested whether contamination in [[entities/enigma-coral]] communities was associated with pangenome- and [[entities/eggnog]]-derived functional proxies; [[summaries/ecotype_env_reanalysis__REPORT]], which reanalyzed environment–gene-content associations across bacterial species; and [[summaries/ecotype_analysis__REPORT]], which performed a separate phylogeny-versus-environment comparison across 172 species. [src: enigma_contamination_functional_potential] [src: ecotype_env_reanalysis] [src: ecotype_analysis]
+The evidence includes [[summaries/enigma_contamination_functional_potential__REPORT]], which tested whether contamination in [[entities/enigma-coral]] communities was associated with pangenome- and [[entities/eggnog]]-derived functional proxies; [[summaries/ecotype_env_reanalysis__REPORT]], which reanalyzed environment–gene-content associations across bacterial species; [[summaries/ecotype_analysis__REPORT]], which performed a separate phylogeny-versus-environment comparison across 172 species; [[summaries/lab_field_ecology__REPORT]], which compared laboratory metal-tolerance measurements with field abundance across 108 Oak Ridge groundwater sites; and [[summaries/pangenome_openness__REPORT]], which tested whether species-level pangenome openness predicts the relative influence of environment or phylogeny on gene-content variation. [src: enigma_contamination_functional_potential] [src: ecotype_env_reanalysis] [src: ecotype_analysis] [src: lab_field_ecology] [src: pangenome_openness]
 
 ## Evidence Pattern
 
@@ -20,6 +20,10 @@ The workflow generated 324 site functional-score rows across three mapping modes
 The ecotype reanalysis provides a related control for sampling composition. Among 224 species selected with at least 20 genomes containing AlphaEarth embeddings and at least 30% coverage, 106 species (47%) were majority human-associated, 47 (21%) were majority environmental, and 71 (32%) were Mixed/Other. [src: ecotype_env_reanalysis]
 
 The new ecotype analysis **refines** this evidence by analyzing 13,381 genomes across 224 species and obtaining correlation results for 172 species. It used AlphaEarth environmental embeddings, genome metadata and taxonomy, NCBI environmental and isolation-source metadata, pangenome composition, and gene-cluster presence/absence profiles from the kbase_ke_pangenome database. [src: ecotype_analysis]
+
+The pangenome-openness analysis **refines** the ecotype evidence by testing the pangenome metric directly: among species with both pangenome statistics and ecotype-analysis results, openness had no detectable relationship with either environment or phylogeny effects. The reported Spearman correlations were openness versus environment rho = -0.05, p = 0.54, and openness versus phylogeny rho = 0.03, p = 0.73. These null correlations do not show that pangenome structure is biologically independent of eco-phylogenetic dynamics; they show that this single openness summary did not predict the measured effect sizes in the available overlap. [src: pangenome_openness]
+
+The Oak Ridge comparison **supports** the same confirmatory-versus-exploratory distinction in a field-fitness setting: the aggregate laboratory metal-tolerance score was positively but non-significantly associated with the high-uranium/low-uranium abundance ratio (Spearman rho=0.503, p=0.095, n=12 genera), while five of 11 tested genera had FDR-significant bidirectional uranium associations. [src: lab_field_ecology]
 
 ## Confirmatory Nulls
 
@@ -41,6 +45,10 @@ The continuous analysis likewise found no relationship between the fraction of e
 
 The new analysis **supports** the broad null interpretation while distinguishing phylogenetic structure from ecological association: the median partial correlation was 0.0025 for environment versus 0.0143 for phylogeny; phylogeny dominated the gene-content signal in 60.5% of species, environment in 39.5%, and environmental effects were significant in only 12 species (7.0%) positively and 4 species (2.3%) negatively, with no significant effect in 156 species (90.7%). [src: ecotype_analysis]
 
+The pangenome-openness result **supports** caution against treating openness as a confirmatory predictor of those effect sizes: openness versus environment had Spearman rho = -0.05 and p-value = 0.54, while openness versus phylogeny had rho = 0.03 and p-value = 0.73. Because the sample was limited to species with both pangenome statistics and ecotype results, and because openness is a single summary metric, this is a null prediction test rather than evidence that open/closed pangenome status has no ecological relevance. [src: pangenome_openness]
+
+The Oak Ridge result **refines** this pattern rather than overturning it: the laboratory-to-field tolerance test was classified as not supported but suggestive, despite the positive direction, because only 12 genera were available for the aggregate correlation. [src: lab_field_ecology]
+
 ## Exploratory Signals
 
 Coverage-adjusted ordinary least squares models adjusted for contamination, depth, latitude, longitude, and mapped abundance fraction. [src: enigma_contamination_functional_potential]
@@ -60,6 +68,10 @@ In the high-coverage subset defined by `mapped_abundance_fraction >= 0.25`, defe
 Most non-defense outcomes remained non-significant, although `site_stress_score` in the strict high-coverage subset had rho = 0.2489 and p = 0.0407. [src: enigma_contamination_functional_potential]
 
 The ecotype reanalysis **refines** this pattern by showing that a genuine clinical sampling imbalance need not explain a weak ecological association. Environmental species were not more strongly associated with environment-derived embeddings than human-associated species, despite the AlphaEarth subset's strong clinical sampling bias. [src: ecotype_env_reanalysis]
+
+The pangenome-openness null **supports** treating such exploratory environmental and phylogenetic effects as not predictable from openness alone: neither openness–environment nor openness–phylogeny was significant in the overlapping species set. The report instead proposes testing auxiliary fraction, Heap's law alpha, pangenome fluidity, and function-specific categories, indicating that the null may reflect metric resolution rather than absence of adaptation. These are proposed hypotheses, not findings established by the correlation analysis. [src: pangenome_openness]
+
+The Oak Ridge genus-level results **support** treating exploratory signals as heterogeneous rather than as a single monotonic effect: five genera passed FDR correction, with *Herbaspirillum* and *Bacteroides* increasing and *Caulobacter*, *Sphingomonas*, and *Pedobacter* decreasing with uranium. [src: lab_field_ecology]
 
 ## Robustness and Sources of Discordance
 
@@ -85,6 +97,10 @@ The reanalysis also found that its median partial correlation across all 183 spe
 
 The new analysis **refines** this methodological caution: AlphaEarth embeddings covered only 28.4% of genomes, geographic coordinates were often missing or imprecise, and partial correlations assume linear relationships between distance matrices. It found no significant difference in environmental effects between environmental and host-associated bacteria (p=0.66), and cautioned that host-associated coordinates may represent collection sites rather than actual microenvironments. [src: ecotype_analysis]
 
+The pangenome-openness analysis **refines** the same limitation: the overlap was restricted to species with both openness statistics and ecotype results, and the report notes that upstream ecotype analyses may have limited power for species with few genomes. Its use of a single openness metric also leaves untested whether auxiliary fraction, Heap's law alpha, pangenome fluidity, or function-specific gene classes would show associations. [src: pangenome_openness]
+
+The Oak Ridge study **supports** the same caution about ecological resolution: 16S amplicon sequencing could not match laboratory organisms at species or strain level, and uranium-associated community restructuring also varied with redox conditions and carbon and energy sources. [src: lab_field_ecology]
+
 ## Tensions
 
 The principal tension is between null predeclared genus-level Spearman tests and positive exploratory models that adjust for mapped coverage and additional covariates. [src: enigma_contamination_functional_potential]
@@ -97,6 +113,10 @@ The ecotype reanalysis adds a related methodological tension: the original and r
 
 The new ecotype analysis adds a third, related tension: its environment median partial correlation was 0.0025 and phylogeny median was 0.0143, while the reanalysis median was 0.081. The differing genome coverage, species inclusion, embedding coverage, and sampling procedures prevent treating these values as directly comparable biological estimates. [src: ecotype_analysis] [src: ecotype_env_reanalysis]
 
+The pangenome-openness result **refines** rather than resolves this tension: openness versus environment was rho = -0.05 with p = 0.54, and openness versus phylogeny was rho = 0.03 with p = 0.73, so the species-level openness metric did not explain either set of ecotype effect sizes. This does not contradict the existence of environmental or phylogenetic gene-content effects; it leaves open whether the effects are confined to functional subsets or are missed by the openness summary. [src: pangenome_openness]
+
+The Oak Ridge evidence **supports** the confirmatory-null side for aggregate laboratory-to-field prediction but **refines** the exploratory side by showing statistically significant associations in both directions at genus level after multiple-testing correction. This tension is not resolvable from the field correlations alone because pH, dissolved oxygen, carbon sources, temporal history, community interactions, and genus-to-strain variation were not controlled. [src: lab_field_ecology]
+
 The project evidence therefore supports a cautious hypothesis that contamination-linked functional differentiation may exist at finer taxonomic, pathway, or strain resolution than the current genus-level COG-fraction proxies, but it does not establish that hypothesis as a community-wide finding. [src: enigma_contamination_functional_potential]
 
 Similarly, the ecotype report proposes—but does not directly establish—that AlphaEarth embeddings may capture regional epidemiological patterns rather than ecological differences, and that unequal genome counts may provide greater statistical power for weak correlations. [src: ecotype_env_reanalysis]
@@ -105,15 +125,19 @@ The new analysis **supports** this hypothesis as a limitation rather than resolv
 
 ## Relation to Other Concepts
 
-This concept **supports** [[concepts/statistical-significance-versus-effect-size]] because nominal p-values and exploratory FDR results differ from the broader evidence needed for a stable ecological association. [src: enigma_contamination_functional_potential]
+This concept **supports** [[concepts/adaptive-versus-housekeeping-functional-differentiation]] because nominal p-values and exploratory FDR results differ from the broader evidence needed for a stable ecological association. [src: enigma_contamination_functional_potential]
 
-It **refines** [[concepts/coverage-confounding-of-community-functional-scores]] by showing that mapped abundance fraction changes the apparent defense association and that low-coverage modes can lose usable signal. [src: enigma_contamination_functional_potential]
+It **refines** [[concepts/taxonomic-resolution-dependent-functional-inference]] by showing that mapped abundance fraction changes the apparent defense association and that low-coverage modes can lose usable signal. [src: enigma_contamination_functional_potential]
 
 It **supports** [[concepts/taxonomic-resolution-dependent-functional-inference]] because strict, relaxed, and species-proxy mapping modes produce different coverage and association results. [src: enigma_contamination_functional_potential]
 
 It **connects** to [[concepts/confirmatory-exploratory-ecological-association-discordance]] as a general framework for separating predeclared evidence from sensitivity-generated hypotheses. [src: enigma_contamination_functional_potential]
 
 The ecotype reanalysis **refines** this framework by showing that genome-level environmental classification, continuous environmental fractions, and a more systematic classification scheme can confirm a null without eliminating sampling and methodological explanations. [src: ecotype_env_reanalysis]
+
+The pangenome-openness analysis **refines** this framework by showing that a species-level openness summary did not predict either environmental or phylogenetic gene-content effect sizes, while leaving function-specific and alternative openness metrics as testable explanations for the null. [src: pangenome_openness]
+
+The Oak Ridge comparison **supports** this framework by showing that a suggestive aggregate laboratory–field relationship can coexist with significant, directionally mixed genus-level associations, emphasizing the need to separate broad confirmatory hypotheses from finer exploratory contrasts. [src: lab_field_ecology]
 
 ## Open Directions
 
@@ -125,3 +149,5 @@ The ecotype reanalysis **refines** this framework by showing that genome-level e
 - Compare downsampled and full-genome ecotype extraction under a shared genome set, then add genome count as a covariate, to determine whether the 27x partial-correlation discrepancy is methodological or reflects sampling power. [src: ecotype_env_reanalysis]
 - Repeat the ecotype association using functional subsets and structured ENVO terms to test whether whole-genome Jaccard distances or coarse environmental categories mask environment-linked gene-content signals. [src: ecotype_env_reanalysis]
 - Recompute the original, reanalysis, and new ecotype correlations on a shared genome set with matched embedding coverage and nonlinear distance-based methods, then test COG categories including V-Defense and L-Mobile to determine whether environmental effects are localized to functional subsets. [src: ecotype_analysis]
+- Compare openness with auxiliary fraction, Heap's law alpha, and pangenome fluidity on the same species and genome set, then test openness-by-lifestyle interactions and L-Mobile/V-Defense subsets to determine whether the null is specific to the single openness metric or extends to functional pangenome structure. [src: pangenome_openness]
+- Match Fitness Browser metal-tolerance scores to species- or strain-resolved Oak Ridge metagenomic observations and fit multivariate models controlling for pH, redox, carbon sources, and sampling date to test whether the suggestive aggregate relationship and bidirectional genus signals persist. [src: lab_field_ecology]

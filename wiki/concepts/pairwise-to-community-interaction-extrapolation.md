@@ -25,7 +25,7 @@ The limitation connects directly to [[concepts/competitive-exclusion-consortium-
 
 ## Relationship to assay context
 
-The inhibition assays were planktonic, whereas *Pseudomonas aeruginosa* in cystic-fibrosis lungs primarily occupies structured biofilms. [src: cf_formulation_design] Thus, even a more complete planktonic pairwise matrix would not by itself establish multispecies performance in the biofilm context relevant to the intended application. [src: cf_formulation_design] This limitation links the concept to [[concepts/planktonic-to-biofilm-translation]] and [[concepts/condition-specific-fitness]]. [src: cf_formulation_design]
+The inhibition assays were planktonic, whereas *Pseudomonas aeruginosa* in cystic-fibrosis lungs primarily occupies structured biofilms. [src: cf_formulation_design] Thus, even a more complete planktonic pairwise matrix would not by itself establish multispecies performance in the biofilm context relevant to the intended application. [src: cf_formulation_design] This limitation links the concept to [[concepts/competitive-exclusion-consortium-design]] and [[concepts/condition-specific-fitness]]. [src: cf_formulation_design]
 
 The formulation report combined pairwise interactions with carbon utilization, growth kinetics, patient metagenomics, metatranscriptomics, and pangenome analysis, but the pairwise component remained the least complete evidence for assigning additive or synergistic community effects. [src: cf_formulation_design] This is a case for [[concepts/multi-omics-integration]] in which complementary data improve candidate selection but do not replace direct measurement of higher-order interactions. [src: cf_formulation_design]
 

@@ -1,7 +1,7 @@
 ---
 type: "Concept"
-description: "Combining annotation pipelines expands functional coverage and exposes residual uncertainty."
-sources: ["summaries/discoveries.md"]
+description: "How complementary annotation pipelines improve functional inference"
+sources: ["summaries/discoveries.md", "summaries/annotation_gap_discovery__REPORT.md"]
 ---
 # Complementary Annotation Pipelines Rescue Functional Inference
 
@@ -13,17 +13,21 @@ Across 132.5M gene clusters, eggNOG provided higher COG coverage (51% versus 8.2
 
 These results **support** a complementary-pipeline model: eggNOG contributes broad orthology, pathway, and domain mappings, while Bakta contributes product descriptions, GO assignments, and distinct UniRef50 connectivity. [src: discoveries] The comparison does not establish that either pipeline is universally more accurate, because the reported metrics measure coverage of annotation categories rather than independent functional correctness. [src: discoveries]
 
+Evidence from [[summaries/annotation_gap_discovery__REPORT]] **supports** this broader triangulation principle: combining fitness, pangenome, Bakta, pathway, and sequence-homology evidence resolved 96 of 201 gapfilled enzymatic reaction-organism pairs (47.8%), whereas BLAST alone resolved 70 (34.8%), NB03 alone 51 (25.4%), and NB04 alone 22 (10.9%). [src: annotation_gap_discovery] The full pipeline therefore added 13 percentage points over BLAST alone, although these streams are not directly equivalent to the Bakta-versus-eggNOG coverage comparison. [src: annotation_gap_discovery]
+
 ## Union rescues missed clusters
 
 Combining Bakta and eggNOG increased coverage for any functional annotation to 77.3%. [src: discoveries] Bakta rescued 11.2M gene clusters among the 39.2M clusters missed by eggNOG. [src: discoveries] This **supports** using a union or evidence-triangulation workflow when the objective is to minimize unannotated sequence space, while retaining the provenance of which pipeline supplied each assignment. [src: discoveries]
 
-The result connects directly to [[concepts/evidence-triangulation-for-functional-annotation]] and [[concepts/composite-functional-annotation]]: an annotation supported by multiple independent evidence types should be distinguished from an assignment supplied by only one pipeline. [src: discoveries] It also refines [[concepts/functional-dark-matter]], because apparent darkness can reflect pipeline-specific blind spots rather than complete absence of functional evidence. [src: discoveries]
+The result connects directly to [[concepts/evidence-triangulation-for-functional-annotation]] and [[concepts/composite-functional-annotation]]: an annotation supported by multiple independent evidence types should be distinguished from an assignment supplied by only one pipeline. [src: discoveries] It also refines [[concepts/functional-dark-matter]], because apparent darkness can reflect pipeline-specific blind spots rather than complete absence of functional evidence. [src: discoveries] The gapfilling study **refines** this point by showing that 50 of 201 gapfilled reactions (24.9%) lacked an EC number and only 8 of those 50 (16%) were resolved, compared with 88 of 151 (58.3%) reactions with known EC numbers. [src: annotation_gap_discovery]
 
 ## Provenance and database coverage remain limiting factors
 
 Only 33.3% of Bakta's 17.6M distinct UniRef50 identifiers existed in the BERDL UniProt identifier table. [src: discoveries] This **weakens** any interpretation that a Bakta UniRef50 link automatically provides locally recoverable downstream functional detail, because identifier presence in the annotation output did not guarantee representation in the queried BERDL table. [src: discoveries]
 
-The findings therefore **support** provenance-aware joins between annotation outputs and reference databases, with explicit reporting of missing identifiers and source-specific coverage. [src: discoveries] This requirement is related to [[concepts/potential-versus-realized-data-integration]] and [[concepts/provenance-aware-resource-discovery]], which address whether an annotation can be connected to usable reference data rather than merely recorded as a label. [src: discoveries]
+The findings therefore **support** provenance-aware joins between annotation outputs and reference databases, with explicit reporting of missing identifiers and source-specific coverage. [src: discoveries] This requirement is related to [[concepts/cross-tenant-data-bridging]] and [[concepts/provenance-aware-resource-discovery]], which address whether an annotation can be connected to usable reference data rather than merely recorded as a label.
+
+The gapfilling workflow **supports** retaining evidence provenance at the candidate level: its 44 high-confidence assignments required BLAST homology, fitness evidence, and pangenome conservation, while 105 of 201 pairs (52.2%) remained unresolved. [src: annotation_gap_discovery] Thus, a pipeline union can increase coverage without making single-source assignments equivalent to triangulated evidence.
 
 ## Implications for functional inference
 
@@ -37,3 +41,4 @@ This approach **refines** [[concepts/environmental-resistome]] because resistanc
 - Build a gold-standard subset with experimentally characterized proteins, then compare Bakta-only, eggNOG-only, and union annotations by precision and recall rather than coverage alone. [src: discoveries]
 - Stratify the 11.2M Bakta-rescued clusters by COG, KEGG, Pfam, GO, product-description, and UniRef50 evidence to determine which annotation classes contribute most to functional recovery. [src: discoveries]
 - Test whether pipeline-specific annotations alter downstream resistome, pangenome, or dark-gene conclusions by rerunning the same analyses with Bakta-only, eggNOG-only, and provenance-filtered union annotations. [src: discoveries]
+- Compare provenance-filtered annotation unions with the confidence tiers used for the 96 resolved gapfilled pairs, testing whether multi-stream support predicts experimentally validated function better than coverage alone. [src: annotation_gap_discovery]
