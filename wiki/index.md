@@ -82,28 +82,27 @@
 - [[concepts/adversarial-research-quality-assurance]] — Adversarial review exposes hidden weaknesses in computational biology claims.
 - [[concepts/antimicrobial-resistance-fitness-cost]] — Evidence on AMR fitness costs, conditional benefits, conservation, and network context
 - [[concepts/biosynthetic-prototrophy-and-auxotrophy]] — How pathway completeness, fitness, and nutrient dependence relate
-- [[concepts/biosynthetic-self-sufficiency-and-cultivation]] — Cultured genomes may underrepresent extreme biosynthetic self-sufficiency
+- [[concepts/biosynthetic-self-sufficiency-and-cultivation]] — Cultured genomes may miss extreme biosynthetic self-sufficiency in uncultured lineages
 - [[concepts/callability-limited-comparative-inference]] — Evidence callability limits whether ecological contrasts can be tested
 - [[concepts/capability-versus-kinetic-predictability]] — Genomic capability is more transferable than continuous kinetic performance
-- [[concepts/chromosomal-and-integrative-gene-transfer]] — Evidence for chromosomal and integrative routes of horizontal gene transfer
+- [[concepts/chromosomal-and-integrative-gene-transfer]] — Evidence and limits for chromosomal and integrative HGT routes.
 - [[concepts/circularity-in-metabolic-model-validation]] — Gapfilled reactions can become assumptions rather than independent tests of model validity.
-- [[concepts/classifier-database-compatibility-in-taxonomic-quantification]] — Classifier database compatibility constrains cross-study taxonomic comparison
+- [[concepts/classifier-database-compatibility-in-taxonomic-quantification]] — Classifier databases constrain cross-study taxonomic comparisons and ecological inference.
 - [[concepts/cofitness-network-architecture]] — Synthesis of cofitness network architecture, organism specificity, and shared dispensability
 - [[concepts/community-metabolic-interdependence]] — Evidence and limits of community metabolic interdependence and Black Queen dynamics
 - [[concepts/comparative-conservation-metric-calibration]] — How conservation metrics calibrate unknown-gene prioritization
-- [[concepts/competitive-exclusion-consortium-design]] — Jointly optimize inhibition, resource coverage, safety, and engraftability when designing protective microbial consortia.
-- [[concepts/complementary-annotation-pipelines]] — How complementary annotation pipelines improve functional inference
+- [[concepts/competitive-exclusion-consortium-design]] — Framework for balancing inhibition, coverage, safety, compatibility, and proxy-based engraftability in consortia.
 - [[concepts/composite-functional-annotation]] — Composite annotations can preserve multifunctional gene biology.
 - [[concepts/composite-resistance-score-limitations]] — Why aggregate metal-resistance scores cannot establish metal-specific mechanisms
 - [[concepts/computational-pathway-prediction-validation]] — Evidence boundaries for validating computational pathway-completeness predictions
 - [[concepts/condition-dependent-gene-tradeoffs]] — How gene fitness trade-offs vary across conditions and relate to conservation
-- [[concepts/condition-space-dimensionality]] — How many independent condition axes distinguish general sensitivity from substrate-specific requirements
+- [[concepts/condition-space-dimensionality]] — How multiple environmental axes separate general sensitivity from substrate-specific fitness requirements
 - [[concepts/condition-specific-fitness]] — Environmental context distinguishes genomic capability from measured fitness dependence.
 - [[concepts/confirmatory-exploratory-ecological-association-discordance]] — Separating confirmatory nulls from coverage- and resolution-sensitive ecological signals
 - [[concepts/core-gene-annotation-paradox]] — How conserved core genes can remain poorly characterized despite broad retention.
 - [[concepts/core-genome-burden-paradox]] — How conserved core genes can remain costly under laboratory conditions
 - [[concepts/costly-dispensable-gene-loss]] — How laboratory fitness burden, mobile DNA, and pangenome conservation shape gene loss
-- [[concepts/cross-cohort-microbiome-portability]] — Evidence-based limits and requirements for microbiome classifier portability across cohorts
+- [[concepts/cross-cohort-microbiome-portability]] — How microbiome classifiers and metabolomics analyses transfer across cohorts.
 - [[concepts/cross-condition-metabolic-comparability]] — Metabolic evidence depends on assay scope, growth conditions, identifiers, and ecological context.
 - [[concepts/cross-species-fitness-transferability]] — Ortholog fitness transfer depends on recipient-specific network architecture
 - [[concepts/cross-tenant-data-bridging]] — Schema bridges require provenance, identifier, value-space, and observability validation before reuse claims are interpretable.
@@ -113,17 +112,14 @@
 - [[concepts/ecological-memory]] — Prior exposure preserves community differences after environmental conditions change.
 - [[concepts/ecotype-clustering-validity]] — Cluster assumptions and weak separation constrain bacterial gene-content ecotype inference
 - [[concepts/ecotype-environment-gene-content]] — How environment, pangenome structure, and metabolism jointly shape bacterial ecotypes
-- [[concepts/embedding-cluster-interpretation-limits]] — Why embedding clusters require validation as ecological structure
-- [[concepts/engraftability-proxy-validation]] — Prevalence and activity scores estimate, but do not measure, microbiome engraftment.
-- [[concepts/environment-embedding-geography]] — How metadata harmonization, sampling, coordinates, and environmental structure shape microbial genomic inference.
-- [[concepts/environmental-embedding-ecological-validity]] — Evidence on whether environmental embeddings capture ecologically relevant variation.
+- [[concepts/environment-embedding-geography]] — How geography, environmental metadata, and embeddings shape microbial genomic inference
 - [[concepts/environmental-resistome]] — Evidence for how environment, phylogeny, and genomic compartment structure the bacterial resistome.
-- [[concepts/essentiality-assay-discordance]] — Why RB-TnSeq fitness and complete knockouts yield discordant essentiality calls
-- [[concepts/evidence-triangulation-for-functional-annotation]] — Triangulated evidence improves functional annotation but remains coverage- and representation-limited.
+- [[concepts/essentiality-assay-discordance]] — Why transposon fitness and complete-knockout essentiality disagree
+- [[concepts/evidence-triangulation-for-functional-annotation]] — Integrated annotation pipelines and orthogonal evidence resolve more functional gaps than any single signal.
 - [[concepts/experimental-prioritization-of-functional-dark-matter]] — Evidence-weighted prioritization of unknown bacterial genes for experimental testing
 - [[concepts/fitness-condition-coverage-prioritization-bias]] — Unequal condition coverage distorts fitness-based gene prioritization
 - [[concepts/fitness-importance-versus-ecological-context]] — Fitness importance relates to genome conservation, but gene length and callability strongly shape prediction.
-- [[concepts/fitness-matched-null-models]] — Designing fitness-matched null models for cofitness enrichment
+- [[concepts/fitness-matched-null-models]] — How fitness-matched nulls distinguish functional enrichment from shared fitness behavior
 - [[concepts/fitness-module-detection-sensitivity]] — How thresholds, assay depth, and decomposition constrain fitness-module discovery
 - [[concepts/functional-dark-matter]] — Sampling and annotation gaps limit inference about microbial functional potential
 - [[concepts/functional-marker-validation]] — Validating functional markers before making ecological inferences
@@ -142,10 +138,9 @@
 - [[concepts/metal-cross-resistance]] — Cross-metal fitness architecture and the limits of environmental resistance validation
 - [[concepts/module-level-coinheritance]] — Multi-gene fitness modules predict pangenome co-inheritance better than pairwise links
 - [[concepts/multi-omics-integration]] — Cross-modal integration links molecular, ecological, metadata, and fitness evidence.
-- [[concepts/occurrence-versus-catabolic-activity]] — Why environmental occurrence and pathway potential do not prove catabolic activity
+- [[concepts/occurrence-versus-catabolic-activity]] — Environmental occurrence and genomic potential do not establish in situ catabolic activity.
 - [[concepts/ontology-and-category-schema-sensitivity]] — Biological conclusions can change when ontology or category definitions change.
-- [[concepts/outer-membrane-lipid-homeostasis]] — Caulobacter envelope remodeling and transcript–protein discordance after lipid A loss
-- [[concepts/pairwise-to-community-interaction-extrapolation]] — Sparse pairwise assays limit reliable prediction of multispecies community effects
+- [[concepts/outer-membrane-lipid-homeostasis]] — Caulobacter lipid A-loss rescue links phased stress regulation to envelope lipid homeostasis.
 - [[concepts/pangenome-conservation-fitness-decoupling]] — Conservation and fitness cost are related but non-equivalent genomic properties.
 - [[concepts/pangenome-core-boundary-and-clade-size-bias]] — How sampling and coverage shape pangenome core boundaries and fitness links
 - [[concepts/pangenome-integration]] — Cross-dataset pangenome integration connects genes to fitness, function, defense, and ecology.
@@ -153,16 +148,15 @@
 - [[concepts/pathway-versus-reaction-evidence-resolution]] — Limits of inferring reaction-level genes from pathway-level metabolic evidence
 - [[concepts/phage-defense-syndromes-and-arms-race]] — Cross-project synthesis of bacterial defense syndromes, prophage ecology, and mobile AMR associations
 - [[concepts/phage-therapy-evidence-translation]] — Framework for converting phage host-range evidence into individualized therapy
-- [[concepts/phased-envelope-stress-regulation]] — Two-stage ChvI programs organize transport and envelope remodeling under stress
 - [[concepts/phb-granule-ecology]] — PHB ecology is shaped by genome size, environmental variability, and possible horizontal transfer.
 - [[concepts/phenotype-database-coverage-bias]] — How taxonomic, sampling, and annotation coverage bias microbial phenotype associations
 - [[concepts/phylogenetic-confounding-of-pangenome-associations]] — How shared ancestry can distort pangenome association signals
 - [[concepts/pooled-run-pseudoreplication-and-metadata-label-noise]] — Pooled runs complicate statistical units and can add metadata label noise.
 - [[concepts/provenance-aware-resource-discovery]] — Discovery should expose provenance, scale, access, and freshness together.
-- [[concepts/research-attention-inequality]] — Unequal research attention leaves many organisms, genes, and protein families functionally dark.
+- [[concepts/research-attention-inequality]] — Research attention inequality and the distinction between literature and functional darkness.
 - [[concepts/resistance-island-coinheritance]] — AMR resistance islands, inheritance patterns, and evidence for physical or ecological linkage
 - [[concepts/respiratory-capacity-and-nadh-load]] — Respiratory-chain dependence tracks reducing-equivalent load, not substrate identity
-- [[concepts/sample-size-aware-phenotype-consensus]] — Sample-size-aware consensus is essential for species-level phenotype claims.
+- [[concepts/sample-size-aware-phenotype-consensus]] — Sample-size-aware consensus for species-level phenotype and utilization claims
 - [[concepts/sampling-depth-and-downsampling-effects]] — How genome sampling, missingness, metadata coverage, and downsampling alter comparative-genomic inference.
 - [[concepts/scale-dependent-mobile-element-associations]] — How genomic scale changes inference about mobile-element associations and mobilization
 - [[concepts/selection-on-outcome-leakage]] — How reuse of grouping features can inflate microbiome and genomic associations
@@ -171,10 +165,10 @@
 - [[concepts/structural-annotation-gap]] — Sequence-space depth predicts functional annotation richness
 - [[concepts/study-batch-confounding-of-environmental-associations]] — Environmental associations can fail to generalize when study and batch structure are confounded
 - [[concepts/subsurface-bacillota-specialization]] — Deep-clay Bacillota_B show expanded, anaerobically specialized genomes, with strong sampling and lineage limits.
-- [[concepts/subsurface-hydrogeological-zonation]] — Hydrogeological depth and flow structure subsurface microbial communities
+- [[concepts/subsurface-hydrogeological-zonation]] — Hydrogeological depth and flow jointly structure spatially variable subsurface communities
 - [[concepts/taxonomic-nomenclature-reconciliation]] — Reconciling names, identifiers, and taxonomic scopes across databases
 - [[concepts/taxonomic-resolution-dependent-functional-inference]] — How taxonomic resolution and coverage shape detectable functional associations
-- [[concepts/transposon-callability-bias]] — Technical and biological biases affecting transposon-based essentiality calls
+- [[concepts/transposon-callability-bias]] — Technical and biological biases that distort transposon-based essentiality inference
 - [[concepts/two-speed-bacterial-genome]] — Evidence for conserved metabolic cores and innovative accessory genomes
 - [[concepts/within-species-conservation-between-species-functional-divergence]] — How conserved functions coexist with species-level functional divergence
 

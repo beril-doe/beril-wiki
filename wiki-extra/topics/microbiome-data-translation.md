@@ -61,7 +61,7 @@ Finally, intervention scores remain provisional. The consortium study measured o
 - [[concepts/sample-size-aware-phenotype-consensus]] — see why strain denominators and duplicate handling determine phenotype strength.
 - [[concepts/phage-therapy-evidence-translation]] — trace translation from host-range panels to patient-specific intervention plans.
 - [[concepts/competitive-exclusion-consortium-design]] — examine multi-objective microbial formulation design.
-- [[concepts/engraftability-proxy-validation]] — distinguish an engraftment ranking proxy from direct establishment evidence.
+- [[concepts/competitive-exclusion-consortium-design]] — distinguish an engraftment ranking proxy from direct establishment evidence.
 
 **Key entities:** [[entities/kbase-ke-pangenome]], [[entities/kescience-fitnessbrowser]], [[entities/tnseq]], [[entities/gtdb]], [[entities/gapmind]], [[entities/bacdive]], [[entities/flux-balance-analysis]], [[entities/nmdc-arkin]]
 

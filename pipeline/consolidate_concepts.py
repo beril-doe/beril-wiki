@@ -502,7 +502,7 @@ def replay_pending(root: pathlib.Path, state: dict, state_path: pathlib.Path) ->
 
 def phase_merge(root: pathlib.Path, concepts: list[dict], pairs: list[tuple],
                 sources: dict[str, str], system: str, state: dict, mature: int,
-                state_path: pathlib.Path) -> int:
+                state_path: pathlib.Path, refused: list[str]) -> int:
     wiki = root / "wiki"
     targets = C.wikilink_targets(root)
     redirect: dict[str, str] = {}
@@ -563,8 +563,13 @@ def phase_merge(root: pathlib.Path, concepts: list[dict], pairs: list[tuple],
                 f"merge/{survivor}", sources, targets, required=ca | cb,
                 required_nums=page_numbers(ta) | page_numbers(tb))
         except C.PageError as e:
-            print(f"    [ERROR] {e} — keeping both pages")
-            C._failures.append(f"consolidate:merge:{survivor}+{loser}")
+            # NOT a failure: the retention gate refusing a lossy rewrite is the
+            # gate doing its job, and both pages are left intact. Counting it in
+            # C._failures would exit 1, and run_pipeline.sh runs under
+            # `set -euo pipefail`, so one safely-declined merge would abort the
+            # whole pipeline before conflicts, hubs and figures ever run.
+            print(f"    [WARN] declined merge — {e}; keeping both pages")
+            refused.append(f"merge:{survivor}+{loser}")
             continue
 
         srcs = list(dict.fromkeys((sfm.get("sources") or []) + (lfm.get("sources") or [])))
@@ -593,7 +598,7 @@ def phase_merge(root: pathlib.Path, concepts: list[dict], pairs: list[tuple],
 
 def phase_backmerge(root: pathlib.Path, concepts: list[dict], summaries: list[dict],
                     cands: list[tuple], sources: dict[str, str], system: str,
-                    state: dict) -> tuple[int, int]:
+                    state: dict, refused: list[str]) -> tuple[int, int]:
     wiki = root / "wiki"
     targets = C.wikilink_targets(root)
     added = skipped = 0
@@ -628,8 +633,8 @@ def phase_backmerge(root: pathlib.Path, concepts: list[dict], summaries: list[di
                 required=body_src_ids(text), required_nums=page_numbers(text),
                 unchanged_ok=True)
         except C.PageError as e:
-            print(f"    [ERROR] {e} — keeping old version")
-            C._failures.append(f"consolidate:backmerge:{c['stem']}+{s['sid']}")
+            print(f"    [WARN] declined back-merge — {e}; keeping old version")
+            refused.append(f"backmerge:{c['stem']}+{s['sid']}")
             continue
 
         content = (obj.get("content") or "").strip()
@@ -731,7 +736,9 @@ def main(root: pathlib.Path, args) -> int:
 
     state_path.parent.mkdir(exist_ok=True)   # first write of the run happens here
     replay_pending(root, state, state_path)
-    merged = phase_merge(root, concepts, pairs, sources, system, state, args.min_sources, state_path)
+    refused: list[str] = []
+    merged = phase_merge(root, concepts, pairs, sources, system, state, args.min_sources,
+                         state_path, refused)
     state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
 
     if merged:   # survivors changed and losers are gone — re-embed before phase 2
@@ -739,7 +746,7 @@ def main(root: pathlib.Path, args) -> int:
         cvecs = embed([c["etext"] for c in concepts])
     cands = backmerge_candidates(concepts, cvecs, summaries, svecs,
                                  args.backmerge_threshold, args.topk, args.min_sources)
-    added, skipped = phase_backmerge(root, concepts, summaries, cands, sources, system, state)
+    added, skipped = phase_backmerge(root, concepts, summaries, cands, sources, system, state, refused)
     state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
 
     C.rebuild_index(root)
@@ -747,9 +754,12 @@ def main(root: pathlib.Path, args) -> int:
     single = sum(1 for c in final if len(c["cited"]) < 2)
     est = C._usage["in"] * C.PRICE_IN + C._usage["out"] * C.PRICE_OUT
     print(f"consolidate: {merged} merge(s), {added} back-merge(s), {skipped} no-evidence, "
+          f"{len(refused)} declined to avoid evidence loss, "
           f"{len(final)} concepts ({single} still citing one project), "
           f"{len(C._failures)} failure(s); tokens in={C._usage['in']} out={C._usage['out']} "
           f"(~${est:.2f} est)")
+    if refused:
+        print(f"  declined: {', '.join(refused)}")
     return 1 if C._failures else 0
 
 

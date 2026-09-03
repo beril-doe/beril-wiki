@@ -203,7 +203,7 @@ A reported positive or negative transposon fitness contrast should state its per
 - Experimentally test xylitol, myoinositol, xylose, and arabinose supplementation with the candidate commensals and PA, asking whether predicted pathway gaps create selective commensal growth without increasing PA growth. [src: cf_formulation_design]
 - Recompute the multi-objective ranking with uncertainty intervals for inhibition, coverage, safety, and measured engraftment, asking whether the recommended formulation remains optimal when inferred objectives are replaced by direct measurements. [src: cf_formulation_design]
 
-## [[concepts/complementary-annotation-pipelines|Complementary Annotation Pipelines Rescue Functional Inference]]
+## [[concepts/evidence-triangulation-for-functional-annotation|Complementary Annotation Pipelines Rescue Functional Inference]]
 
 - Join the 17.6M Bakta UniRef50 identifiers against a refreshed BERDL UniProt identifier table, and quantify how much downstream functional evidence becomes recoverable after the missing identifier coverage is addressed. [src: discoveries]
 - Build a gold-standard subset with experimentally characterized proteins, then compare Bakta-only, eggNOG-only, and union annotations by precision and recall rather than coverage alone. [src: discoveries]
@@ -487,7 +487,7 @@ The detailed analyses are available in [[summaries/adp1_deletion_phenotypes__REP
 - Repeat copper genome–soil matching at 5 km and 20 km, classify significant COGs as resistance, stress, membrane, energy, or unknown, and test whether the copper-associated energetic trade-off persists. [src: soil_metal_functional_genomics]
 - Rerun the soil-metal models from the kescience_mgnify and kbase_ke_pangenome Spark tables with dependence-aware FDR or other procedures that account for correlated metal predictors and COG tests. [src: soil_metal_functional_genomics]
 
-## [[concepts/embedding-cluster-interpretation-limits|Dimensionality Reduction and Density Clustering Can Overstate Ecological Structure]]
+## [[concepts/environment-embedding-geography|Dimensionality Reduction and Density Clustering Can Overstate Ecological Structure]]
 
 - Recompute UMAP over the 79,449 genomes with valid values across all 64 dimensions while varying `n_neighbors` and `min_dist`; test whether the same environmental and taxonomic separations persist. [src: env_embedding_explorer]
 - Re-run DBSCAN across a grid of `eps` values, compare the resulting cluster assignments with coarser alternatives, and ask which resolution best reproduces independently harmonized environment categories. [src: env_embedding_explorer]
@@ -498,7 +498,7 @@ The detailed analyses are available in [[summaries/adp1_deletion_phenotypes__REP
 - Directly compare downsampled and full-genome extraction, and add genome count as a covariate, to determine whether sampling depth explains the reanalysis’s 27x difference in overall median partial correlation from the original analysis. [src: ecotype_env_reanalysis]
 - Test specific COG functional categories and alternative embedding distances against direct environmental metadata; determine whether ecological signal is stronger for gene subsets than for whole-genome gene content. [src: ecotype_analysis]
 
-## [[concepts/engraftability-proxy-validation|Prevalence and Transcriptional Activity Are Proxies Rather Than Measurements of Formulation Engraftment]]
+## [[concepts/competitive-exclusion-consortium-design|Prevalence and Transcriptional Activity Are Proxies Rather Than Measurements of Formulation Engraftment]]
 
 - Administer barcoded or otherwise strain-resolvable versions of the candidate organisms in an airway-relevant model, then use longitudinal quantitative metagenomics to test whether the prevalence × log(activity ratio) score predicts recovery, persistence, and dose-normalized abundance. [src: cf_formulation_design]
 - Measure candidate abundance and transcription before administration and at multiple post-administration time points in cystic-fibrosis airway samples to distinguish transient detection from sustained engraftment. [src: cf_formulation_design]
@@ -536,7 +536,7 @@ The detailed analyses are available in [[summaries/adp1_deletion_phenotypes__REP
 - Classify significant metal-associated COGs into resistance, stress, membrane, energy, and unknown categories and compare soil, marine, and wastewater models to distinguish metal-specific from generic multi-metal contamination. [src: soil_metal_functional_genomics]
 - Build a provenance audit that discovers live BERDL namespaces and schemas, validates tenant and identifier mappings, uses genome_id and sample_id bridge keys, and records missingness before environmental joins. [src: pitfalls]
 
-## [[concepts/environmental-embedding-ecological-validity|Ecological Validity of Environmental Embeddings]]
+## [[concepts/environment-embedding-geography|Ecological Validity of Environmental Embeddings]]
 
 - Use the 13,381-genome metadata set with direct environmental metadata and alternative environmental embedding distances to test whether non-AlphaEarth representations improve gene-content associations after accounting for phylogenetic distance. [src: ecotype_analysis]
 - Combine direct environmental metadata with embedding distances and partial-correlation or nonlinear distance-based methods to determine whether coarse descriptors or linear modeling hide environmental effects. [src: ecotype_analysis]
@@ -981,7 +981,7 @@ See [[summaries/field_vs_lab_fitness__REPORT]] for the DvH analysis details, [[s
 - Add RB-TnSeq experiments under bipyridyl chelation, ferric supplementation, and hemin to test the unresolved iron axis. [src: caulobacter_fur_lipida_loss]
 - Use Pfam HMM searches against named RefSeq proteomes to test whether comparator species lack alternative lipid A-loss routes missed by annotation-dependent searches. [src: caulobacter_fur_lipida_loss]
 
-## [[concepts/pairwise-to-community-interaction-extrapolation|Sparse Pairwise Interaction Data Limit Prediction of Multi-Species Community Effects]]
+## [[concepts/competitive-exclusion-consortium-design|Sparse Pairwise Interaction Data Limit Prediction of Multi-Species Community Effects]]
 
 - Measure all 10 pairwise interactions among the five proposed core species using the same RFU-based competition assay, then test whether the observed edges predict the k=3 and k=5 formulation outcomes. [src: cf_formulation_design]
 - Repeat the complete pairwise matrix and the candidate formulations in structured biofilm models, asking whether planktonic synergy scores predict biofilm inhibition of *P. aeruginosa*. [src: cf_formulation_design]
@@ -1087,7 +1087,7 @@ See the source reports: [[summaries/acinetobacter_adp1_explorer__REPORT]], [[sum
 - Perform controlled longitudinal phage or hybrid-intervention studies with target abundance, metabolomics, resistance, and clinical outcomes to distinguish phage-mediated causality from the modest endogenous-phage associations observed in HMP2. [src: ibd_phage_targeting]
 - Compare direct phage targeting, GAG-degrading enzyme inhibitors, bile-acid co-therapy, and engineered-phage approaches in patient-derived communities to determine whether hybrid treatment can address phage gaps without worsening bile-acid coupling costs. [src: ibd_phage_targeting]
 
-## [[concepts/phased-envelope-stress-regulation|Phased regulatory programs coordinate envelope stress responses]]
+## [[concepts/outer-membrane-lipid-homeostasis|Phased regulatory programs coordinate envelope stress responses]]
 
 - Perform SigU-induction RNA-seq during the relevant envelope-stress transition and test whether SigU-dependent expression explains the 49-gene late-consequence cohort. [src: caulobacter_fur_lipida_loss]
 - Repeat time-resolved transcriptomics with replicated samples and ChvI/SigU perturbations to determine whether the 20 early-only, 10 both-phases, and 49 late-consequence genes follow a reproducible sequence. [src: caulobacter_fur_lipida_loss]

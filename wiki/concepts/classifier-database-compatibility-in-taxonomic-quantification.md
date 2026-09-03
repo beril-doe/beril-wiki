@@ -1,7 +1,7 @@
 ---
 type: "Concept"
-description: "Classifier database compatibility constrains cross-study taxonomic comparison"
-sources: ["summaries/euk_in_prok_correlates__REPORT.md", "summaries/ecotype_analysis__REPORT.md"]
+description: "Classifier databases constrain cross-study taxonomic comparisons and ecological inference."
+sources: ["summaries/euk_in_prok_correlates__REPORT.md", "summaries/ecotype_analysis__REPORT.md", "summaries/ecotype_env_reanalysis__REPORT.md"]
 ---
 # Classifier database compatibility limits cross-study taxonomic quantification
 
@@ -31,6 +31,8 @@ These findings support [[concepts/environment-embedding-geography]] only after c
 
 The [[summaries/ecotype_analysis__REPORT]] analysis **refines** this safeguard: environmental representation can also be incomplete before taxonomic classification, because AlphaEarth embeddings covered only 28.4% of genomes in an analysis of 13,381 genomes across 224 species, yielding correlation results for 172 species. [src: ecotype_analysis]
 
+The [[summaries/ecotype_env_reanalysis__REPORT]] **refines** that limitation further: using genome-level environmental classifications and a consistent full-embedding methodology, environmental species did not have stronger environment–gene-content correlations than human-associated species (one-sided Mann–Whitney U, U=1536, p=0.83). The fraction of environmental genomes likewise showed no relationship to partial-correlation strength (rho=-0.085, p=0.25), indicating that the confirmed clinical sampling bias did not explain the weak signal. [src: ecotype_env_reanalysis]
+
 The eukaryotic fraction differed by matrix in a Kruskal–Wallis test with H=77.8 and p=1.3×10⁻¹⁷, and all pairwise matrix contrasts were significant after BH-FDR, where BH-FDR denotes the Benjamini–Hochberg false-discovery-rate procedure. [src: euk_in_prok_correlates]
 
 However, these statistical results describe variation in one classifier-derived response and do not establish that the reported fractions are absolute or directly comparable across independently processed datasets. [src: euk_in_prok_correlates]
@@ -45,6 +47,8 @@ This refines [[concepts/cross-cohort-microbiome-portability]]: portability requi
 
 The ecotype analysis **supports** this portability caution at a different measurement layer: phylogeny dominated whole-genome gene-content similarity in most species, while significant environment effects were uncommon, suggesting that environmental signal may be confined to particular gene subsets rather than being reliably recoverable from genome-wide similarity. [src: ecotype_analysis]
 
+The reanalysis **supports** the within-method version of this caution but changes the interpretation of sampling bias: environmental species had a median partial correlation of 0.051 versus 0.084 for human-associated species, while Mixed/Other species had the highest median, 0.109. The report presents unequal genome counts and heterogeneous sampling campaigns as possible explanations, not demonstrated causes. [src: ecotype_env_reanalysis]
+
 ## Database compatibility is part of the measurement model
 
 A classifier-derived abundance is a measurement produced jointly by sequencing reads, the classifier, its reference database, and its taxonomic reporting scheme. [src: euk_in_prok_correlates]
@@ -56,6 +60,8 @@ Because Kraken2 and Centrifuge were prokaryote-restricted in this NMDC deploymen
 This supports [[concepts/taxonomic-resolution-dependent-functional-inference]] and [[concepts/environmental-resistome]] at the measurement level: downstream ecological or functional conclusions inherit the representational limits of the upstream database. [src: euk_in_prok_correlates]
 
 The ecotype analysis **refines** this claim by showing that environmental conclusions also inherit limitations in environmental embeddings and metadata: geographic coordinates were often missing or imprecise, and partial correlations assume linear relationships between distance matrices. [src: ecotype_analysis]
+
+The ecotype reanalysis **supports** the need to separate measurement layers: its environmental-versus-human comparison remained null within one methodology, but its overall median partial correlation was 0.081 versus 0.003 in the original analysis, a reported 27x difference, because it used all genomes with embeddings rather than diversity-maximizing downsampling. Absolute correlations therefore cannot be compared across the two methodologies, even though the within-method group comparison is valid. [src: ecotype_env_reanalysis]
 
 The same limitation applies to negative evidence: an approximately 0 Eukaryota signal from a prokaryote-restricted database cannot by itself demonstrate that eukaryotic reads were absent. [src: euk_in_prok_correlates]
 
@@ -81,6 +87,8 @@ This is not a contradiction between the classifier and the ecological result; it
 
 The ecotype analysis presents a related but non-identical limitation: it found that phylogeny generally dominated environmental similarity as a predictor of genome-wide gene-content similarity, whereas the present analysis detected strong within-matrix classifier-derived environmental associations. These results cannot be directly reconciled because they use different responses, data structures, and environmental representations. [src: ecotype_analysis, euk_in_prok_correlates]
 
+The ecotype reanalysis **refines** this tension rather than resolving it: its genome-level environmental comparison also found no stronger correlations for environmental species (p=0.83), but the full-genome extraction produced a reported 27x higher overall median partial correlation than the original downsampled analysis. The report explicitly identifies the methodological discrepancy as unresolved, so the absolute correlation difference must not be interpreted as a biological contradiction. [src: ecotype_env_reanalysis]
+
 ## Open Directions
 
 - Reclassify the same raw reads with matched, eukaryote-aware Kraken2, Centrifuge, and GOTTCHA2 databases, then use paired agreement analyses to determine which environmental contrasts persist after database scope is harmonized. [src: euk_in_prok_correlates]
@@ -88,3 +96,4 @@ The ecotype analysis presents a related but non-identical limitation: it found t
 - Compare classifier-derived eukaryotic fractions with targeted plastid, fungal, and protist markers in the 1,186-run NEON subset, using within-study models to ask whether the GOTTCHA2 signal tracks distinct biological sources or database-specific detection. [src: euk_in_prok_correlates]
 - Reconstruct pooled-run metadata from all contributing biosamples rather than the representative `MIN(biosample_id)` record, then test whether metadata-label uncertainty changes the within-study vegetation and geography associations. [src: euk_in_prok_correlates]
 - In the 172-species ecotype subset, compare direct environmental metadata and alternative embedding distances with classifier-compatible taxonomic measures, then test whether specific COG categories recover environmental effects missed by whole-genome similarity. [src: ecotype_analysis]
+- Compare downsampled and full-genome gene-cluster extraction on the same species, controlling genome count and missingness, to identify the source of the 27x partial-correlation discrepancy before comparing absolute environmental effects. [src: ecotype_env_reanalysis]

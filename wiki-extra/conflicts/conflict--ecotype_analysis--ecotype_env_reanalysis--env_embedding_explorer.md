@@ -1,7 +1,7 @@
 <!-- tension-hash: 7aa1c14b3277bf3d -->
 # Embedding Structure, Environmental Effects, and Gene-Content Validity
 
-The disagreement concerns what environmental structure in the embedding can establish about ecological effects on genomes. [[concepts/embedding-cluster-interpretation-limits]] notes that a 38% human-associated composition may reshape the full projection, while the reanalysis found that this bias did not explain the weak environment–gene-content relationship. [[concepts/environmental-embedding-ecological-validity]] adds that environmental similarity was generally weaker than phylogenetic similarity, even though environment dominated for 39.5% of species. The tension matters because visible embedding structure, species-level dominance, and genome-wide gene-content correlation are related but not interchangeable outcomes.
+The disagreement concerns what environmental structure in the embedding can establish about ecological effects on genomes. [[concepts/environment-embedding-geography]] notes that a 38% human-associated composition may reshape the full projection, while the reanalysis found that this bias did not explain the weak environment–gene-content relationship. [[concepts/environment-embedding-geography]] adds that environmental similarity was generally weaker than phylogenetic similarity, even though environment dominated for 39.5% of species. The tension matters because visible embedding structure, species-level dominance, and genome-wide gene-content correlation are related but not interchangeable outcomes.
 
 ## Evidence Sides
 
