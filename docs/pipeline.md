@@ -93,9 +93,11 @@ Jaccard and so cannot see duplicates among single-source pages. Then:
 - **merge** — candidates come from three generators, judged most-precise first:
   pages that restate the same **figures** (shared cited project, ≥3 identical
   numbers, numeric Jaccard ≥ 0.5); pages built from the same **evidence base**
-  (one page's cited-project set equal to or contained in the other's — 159 pairs
-  of 11,628 at the pre-consolidation revision, and the structural signature of
-  enrichment splitting one summary into several concepts); and finally the union
+  (two pages whose cited-project sets are **identical** — 159 pairs of 11,628 at
+  the pre-consolidation revision, and the structural signature of enrichment
+  splitting one summary into several concepts. Equality, not containment:
+  containment fires on nearly every shard/hub pair once the corpus is mostly
+  multi-source, 128 candidates against 8); and finally the union
   of each embedding model's top-`--merge-topn` pairs as a recall net for
   cross-source paraphrase. Two embedding models are used because one alone has
   recall holes, and selection is by rank per model, since cosine ranges are not
