@@ -572,7 +572,10 @@ def phase_merge(root: pathlib.Path, concepts: list[dict], pairs: list[tuple],
             refused.append(f"merge:{survivor}+{loser}")
             continue
 
-        srcs = list(dict.fromkeys((sfm.get("sources") or []) + (lfm.get("sources") or [])))
+        # Union then canonicalise: a union alone carries both pages' padding forward.
+        srcs = C.canonical_sources(obj["content"],
+                                   list(dict.fromkeys((sfm.get("sources") or [])
+                                                      + (lfm.get("sources") or []))))
         (wiki / "concepts" / f"{survivor}.md").write_text(
             C.fm_block({"type": "Concept", "description": obj.get("description", ""), "sources": srcs})
             + obj["content"].strip() + "\n", encoding="utf-8")
@@ -649,7 +652,7 @@ def phase_backmerge(root: pathlib.Path, concepts: list[dict], summaries: list[di
             continue
         path.write_text(
             C.fm_block({"type": "Concept", "description": obj.get("description", ""),
-                        "sources": C.merge_sources(fm, s["rel"])})
+                        "sources": C.canonical_sources(content, C.merge_sources(fm, s["rel"]))})
             + content + "\n", encoding="utf-8")
         print(f"    backmerge/{c['stem']}+{s['sid']} (sim {sim:.3f}): evidence added")
         added += 1

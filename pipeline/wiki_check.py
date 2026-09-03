@@ -21,13 +21,67 @@ import re
 import sys
 
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
-# Numbers worth verifying: decimals, percentages, thousands-separated, or >=3 digits.
+WIKILINK = re.compile(r"\[\[([^\]|#]+?)(?:[|#][^\]]*)?\]\]")
+# Numbers worth verifying: decimals, percentages, thousands-separated, or >=4 digits.
 # Skips small integers (list positions, "3 lines of evidence") to avoid noise.
-NUMBER = re.compile(r"\d[\d,]*\.\d+|\d[\d,]{3,}|\d+(?:\.\d+)?%|\d+\.\d+e-?\d+")
+#
+# Ordering and boundaries both carry weight, and the previous one-line version got
+# them wrong in ways that silently disabled the check:
+#   - scientific notation must come FIRST, or `1.3e-43` matches the decimal
+#     alternative and is verified as the mantissa `1.3` alone — every p-value in
+#     the corpus was effectively unchecked.
+#   - the tail guard must reject only a CONTINUING number (`,` then a digit).
+#     Rejecting any following comma dropped `0.038,` in prose, so ordinary
+#     decimals never got verified.
+#   - the identifier guards keep Pfam/assembly accessions out: without them
+#     `PF00034` and `PF13442` are read as the figures 00034 and 13442.
+NUMBER = re.compile(r"""
+    (?<![\w.])
+    (?:
+        \d[\d,]*(?:\.\d+)?[eE][-+]?\d+     # 1.3e-43, 2.0E+4  (must precede the decimal rule)
+      | \d[\d,]*\.\d+\s?%                  # 59.3%
+      | \d[\d,]*\.\d+(?!\d|,\d)            # 0.038, 1,234.56
+      | \d[\d,]*\d\s?% | \d\s?%            # 66%, 7%
+      | \d[\d,]{2,}\d(?!\d|,\d)            # 7,609, 10000
+    )
+    (?!\w)
+""", re.X)
+
+_SRC_NUMS: dict[tuple[str, int], set[str]] = {}
 
 
 def norm_num(tok: str) -> str:
-    return tok.replace(",", "").rstrip("%")
+    """Percent-insensitive on purpose: sources routinely state a proportion that a
+    page renders as a percentage, and treating `%` as significant flags 143 such
+    pairs on this corpus against 28 genuine misses."""
+    return tok.replace(",", "").replace(" ", "").rstrip("%")
+
+
+def numbers_in(text: str) -> set[str]:
+    return {norm_num(t) for t in NUMBER.findall(text)}
+
+
+def source_numbers(sid: str, text: str) -> set[str]:
+    """Tokenized figures of one source, memoized — validate_page runs per paragraph."""
+    key = (sid, len(text))
+    if key not in _SRC_NUMS:
+        _SRC_NUMS[key] = numbers_in(text)
+    return _SRC_NUMS[key]
+
+
+def unsupported_numbers(par: str, ids: list[str], sources: dict[str, str]) -> list[str]:
+    """Figures in `par` that appear in NONE of its cited sources.
+
+    Matches whole tokens against each source's tokenized figures rather than
+    substring-searching a concatenation of them. The substring form passed
+    `12%` against a source containing only `123.4%`, `66%` against a bare count
+    `66`, and `2.4%` against a source whose only `2.4` was the version string
+    `v2.4`."""
+    known = [s for s in ids if s in sources]
+    if not known:
+        return []
+    allowed = set().union(*(source_numbers(s, sources[s]) for s in known))
+    return [t for t in NUMBER.findall(SRC_TAG.sub("", par)) if norm_num(t) not in allowed]
 
 
 def source_ids(kb: pathlib.Path) -> dict[str, str]:
@@ -92,17 +146,29 @@ def duplicate_concepts(kb: pathlib.Path) -> list[str]:
 
 
 def main() -> int:
-    kb = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else pathlib.Path(__file__).parent.parent
+    argv = [a for a in sys.argv[1:] if not a.startswith("--")]
+    kb = pathlib.Path(argv[0]) if argv else pathlib.Path(__file__).parent.parent
     sources = source_ids(kb)
     if not sources:
         print(f"wiki_check: no sources found under {kb}/staging or {kb}/raw", file=sys.stderr)
         return 1
 
+    # --strict promotes numeric mismatches and dead links from warning to error.
+    # They are warnings by default because this corpus carries pre-existing
+    # violations that predate the check being able to see them; turn it on once
+    # they are repaired and the gate becomes meaningful.
+    strict = "--strict" in sys.argv
     errors: list[str] = []
     warns: list[str] = []
     n_pages = n_cited_pars = n_numeric_pars = 0
 
-    roots = [(kb / "wiki", "concepts"), (kb / "wiki", "entities"), (kb / "wiki-extra", "topics")]
+    # Every LLM-written publishable collection, not just three of them. Conflict
+    # pages and author profiles were unscanned, which is how eight unsupported
+    # figures and 26 dead concept links reached publish with the gate reporting
+    # zero errors.
+    roots = [(kb / "wiki", "concepts"), (kb / "wiki", "entities"),
+             (kb / "wiki-extra", "topics"), (kb / "wiki-extra", "conflicts"),
+             (kb / "wiki-extra", "authors")]
     for base, sub in roots:
         for page in sorted((base / sub).glob("*.md")):
             n_pages += 1
@@ -116,15 +182,30 @@ def main() -> int:
                 for s in unknown:
                     errors.append(f"{rel} ¶{i}: unknown source id [src: {s}]")
                 if nums and not ids:
-                    if not is_table_or_links(par):
-                        warns.append(f"{rel} ¶{i}: {len(nums)} figure(s) but no [src:] citation: {par[:90]!r}")
+                    warns.append(f"{rel} ¶{i}: {len(nums)} figure(s) but no [src:] citation: {par[:90]!r}")
                     continue
                 if nums and ids:
                     n_numeric_pars += 1
-                    pool = "".join(sources[s] for s in ids if s in sources).replace(",", "")
-                    for tok in nums:
-                        if norm_num(tok) not in pool:
-                            warns.append(f"{rel} ¶{i}: number {tok!r} not found in cited source(s) {ids}")
+                    for tok in unsupported_numbers(par, ids, sources):
+                        msg = f"{rel} ¶{i}: number {tok!r} not found in cited source(s) {ids}"
+                        (errors if strict else warns).append(msg)
+
+    # Dead [[wikilinks]]. compile.generate_page validates targets at write time,
+    # but topics_build, conflicts_build and authors_build use their own llm() and
+    # never did, so their pages accumulated links to concepts that no longer
+    # exist. quartz_ingest downgrades them at publish, which hid the problem
+    # rather than fixing it.
+    targets = {str(f.relative_to(b)).removesuffix(".md")
+               for b in (kb / "wiki", kb / "wiki-extra") if b.is_dir()
+               for f in b.rglob("*.md")}
+    for base, sub in roots:
+        for page in sorted((base / sub).glob("*.md")):
+            text = page.read_text(encoding="utf-8", errors="replace")
+            dead = sorted({m.group(1).strip().lstrip("/") for m in WIKILINK.finditer(text)}
+                          - targets)
+            for d in dead:
+                msg = f"{sub}/{page.name}: link [[{d}]] targets a page that does not exist"
+                (errors if strict else warns).append(msg)
 
     # Integration-depth audit: every project should feed >=2 concept/topic pages.
     uptake: dict[str, int] = {}

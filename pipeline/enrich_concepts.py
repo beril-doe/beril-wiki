@@ -122,7 +122,8 @@ def main(root: pathlib.Path) -> int:
                 ok = False
                 continue
             path.write_text(C.fm_block({"type": "Concept", "description": obj.get("description", ""),
-                                        "sources": [f"summaries/{stem}.md"]})
+                                        "sources": C.canonical_sources(obj["content"],
+                                                                       [f"summaries/{stem}.md"])})
                             + obj["content"].strip() + "\n", encoding="utf-8")
             created += 1
         if ok:

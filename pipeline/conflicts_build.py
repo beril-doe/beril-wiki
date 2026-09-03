@@ -63,6 +63,22 @@ def tension_blocks() -> list[dict]:
     return blocks
 
 
+def conflict_slug(projects: tuple[str, ...]) -> str:
+    """Filename for a tension group, unique to its COMPLETE project set.
+
+    The slug used to be the first three ids only, so two groups sharing those
+    three overwrote one file — three such collisions existed on this corpus, and
+    because `existing` is read once, the collided file flipped between the two
+    groups on every otherwise-unchanged run. Groups of three or fewer keep the
+    readable name; longer ones carry a short digest of the full set so identity
+    is exact without unbounded filenames."""
+    head = "conflict--" + "--".join(projects[:3])
+    if len(projects) <= 3:
+        return head
+    tail = hashlib.sha256("|".join(projects).encode()).hexdigest()[:8]
+    return f"{head}--{tail}"
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     existing = {}
@@ -78,8 +94,10 @@ def main() -> None:
         groups.setdefault(tuple(sorted(b["projects"])), []).append(b)
 
     written = skipped = 0
+    live: set[str] = set()
     for projects, blocks in sorted(groups.items()):
-        slug = "conflict--" + "--".join(projects[:3])
+        slug = conflict_slug(projects)
+        live.add(slug)
         digest = hashlib.sha256("\n".join(b["text"] for b in blocks).encode()).hexdigest()[:16]
         if existing.get(slug) == digest:
             skipped += 1
@@ -98,7 +116,18 @@ def main() -> None:
         (OUT / f"{slug}.md").write_text(f"<!-- tension-hash: {digest} -->\n{resp}\n", encoding="utf-8")
         written += 1
         print(f"  wrote conflicts/{slug}.md ({len(blocks)} tension block(s), {len(projects)} projects)")
-    print(f"conflicts: {written} written, {skipped} unchanged")
+    # Retire conflict pages whose tension group no longer exists. topics_build
+    # has always reaped its stale hubs; this stage never did, so every concept
+    # merge stranded a page. Only reap after a clean pass, so an interrupted run
+    # cannot delete pages it simply did not get to.
+    reaped = 0
+    if written or skipped:
+        for stale in sorted(OUT.glob("*.md")):
+            if stale.stem not in live:
+                stale.unlink()
+                reaped += 1
+                print(f"  removed stale conflicts/{stale.stem}.md")
+    print(f"conflicts: {written} written, {skipped} unchanged, {reaped} retired, {len(live)} live")
 
 
 if __name__ == "__main__":

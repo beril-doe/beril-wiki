@@ -39,7 +39,8 @@ import sys
 import yaml
 from litellm import completion
 
-from wiki_check import NUMBER, SRC_TAG, cited_ids, duplicate_concepts, is_table_or_links, norm_num, paragraphs
+from wiki_check import (NUMBER, SRC_TAG, cited_ids, duplicate_concepts, is_table_or_links,
+                        norm_num, paragraphs, unsupported_numbers)
 
 HERE = pathlib.Path(__file__).parent
 REPO = HERE.parent
@@ -354,13 +355,14 @@ def validate_page(content: str, sources: dict[str, str], targets: set[str],
                 v.append(f"paragraph {i}: unknown source id [src: {s}]")
         nums = NUMBER.findall(SRC_TAG.sub("", par))
         known = [s for s in ids if s in sources]
-        if nums and not ids and not is_table_or_links(par):
+        if nums and not ids:
+            # No table/link exemption when FIGURES are present: the exemption was
+            # meant for link lists and layout tables, and it let an uncited
+            # "- [[concepts/x]] 99.9% ..." bullet carry an invented number.
             v.append(f"paragraph {i}: contains figure(s) {nums[:4]} but no [src:] citation: {par[:80]!r}")
         elif nums and known:
-            pool = "".join(sources[s] for s in known).replace(",", "")
-            for tok in nums:
-                if norm_num(tok) not in pool:
-                    v.append(f"paragraph {i}: number {tok!r} not found in cited source(s) {known}")
+            for tok in unsupported_numbers(par, ids, sources):
+                v.append(f"paragraph {i}: number {tok!r} not found in cited source(s) {known}")
     if check_links:
         for m in WIKILINK.finditer(content):
             t = m.group(1).strip().lstrip("/")
@@ -433,6 +435,31 @@ def merge_sources(fm: dict, summary_path: str) -> list[str]:
     if summary_path not in srcs:
         srcs.append(summary_path)
     return srcs
+
+
+def canonical_sources(body: str, prior: list[str] | None = None) -> list[str]:
+    """`sources` derived from the citations the prose actually makes.
+
+    Frontmatter used to be appended to after any accepted rewrite, whether or not
+    the new document left a citation behind, so it drifted into a claim the page
+    could not back: four concept and three entity pages list summaries their body
+    never cites. It also drives compile's resume-skip, so a padded entry told the
+    next run "already integrated" about a document that was not — and in
+    consolidation it blocked the back-merge that would have fixed it.
+
+    Deriving it from the body keeps the two in step. Losing an entry is the
+    correct signal: it means the body does not carry that document, so the doc is
+    genuinely un-integrated and should be retried. `prior` preserves the order of
+    entries that are still cited, so unchanged pages produce an unchanged list."""
+    cited = {s for par in paragraphs(body) for s in cited_ids(par)}
+    keep = [p for p in (prior or []) if re.sub(r"__REPORT$", "", pathlib.Path(p).stem) in cited]
+    seen = {re.sub(r"__REPORT$", "", pathlib.Path(p).stem) for p in keep}
+    for sid in sorted(cited - seen):
+        if sid in ("discoveries", "pitfalls"):
+            keep.append(f"summaries/{sid}.md")
+        else:
+            keep.append(f"summaries/{sid}__REPORT.md")
+    return keep
 
 
 def rebuild_index(root: pathlib.Path) -> None:
@@ -583,7 +610,7 @@ def compile_doc(root: pathlib.Path, fname: str, sources: dict[str, str], system:
             targets.discard(f"{group}/{name}")
             continue
         fm = {"type": "Concept", "description": obj.get("description", ""),
-              "sources": merge_sources(old_fm, summary_rel)}
+              "sources": canonical_sources(obj["content"], merge_sources(old_fm, summary_rel))}
         if group == "entities":
             etype = obj.get("type") if obj.get("type") in ENTITY_TYPES else (it.get("type") or "other")
             fm["type"] = fm_entity_type(etype)
