@@ -67,6 +67,10 @@ def prose_only(par: str) -> str:
     A link target is a filename, not a claim: `[[conflicts/conflict--a--b--57107100]]`
     carries the 8-hex set-digest this repo puts in conflict slugs, and reading it
     as the figure 57107100 invents a violation the prose never made."""
+    # HTML comments are machinery, not prose: conflicts_build stamps a
+    # `<!-- tension-hash: 9514b16e -->` cache key on line 1 of every page, and
+    # its hex digits read as a figure the page never claimed.
+    par = re.sub(r"<!--.*?-->", " ", par, flags=re.S)
     text = WIKILINK.sub(lambda m: m.group(0).split("|", 1)[1][:-2] if "|" in m.group(0) else " ",
                         SRC_TAG.sub("", par))
     # ORCIDs are identifiers: 0000-0003-2728-7671 is four 4-digit "figures".
