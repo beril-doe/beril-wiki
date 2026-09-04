@@ -1,27 +1,23 @@
 ---
 type: "Concept"
-description: "Perturbation datasets overrepresent conserved and well-annotated genes"
-sources: ["summaries/adp1_deletion_phenotypes__REPORT.md"]
+description: "Biases in which genes receive usable genetic perturbation phenotypes"
+sources: ["summaries/adp1_deletion_phenotypes__REPORT.md", "summaries/core_gene_tradeoffs__REPORT.md", "summaries/fitness_effects_conservation__REPORT.md", "summaries/costly_dispensable_genes__REPORT.md"]
 ---
 # Perturbation-Collection Coverage Bias
 
-Perturbation collections can overrepresent genes that are conserved, annotated, and successfully recoverable as mutants, while underrepresenting less-conserved or poorly annotated genes. [src: adp1_deletion_phenotypes]
+Perturbation collections can overrepresent genes that are conserved, annotated, and successfully recoverable as mutants, while underrepresenting less-conserved or poorly annotated genes. [src: adp1_deletion_phenotypes] The broader Fitness Browser comparison supports this concern: across approximately 194,000 genes from 43 bacteria, essential genes were 82% core whereas always-neutral genes were 66% core, although fitness importance was only a weak predictor of conservation. [src: fitness_effects_conservation]
 
-This pattern matters for interpreting [[concepts/gene-essentiality]] and [[concepts/condition-specific-fitness]]: apparent functional coverage may reflect which genes enter the perturbation collection rather than the full genomic distribution of gene functions. [src: adp1_deletion_phenotypes]
+This pattern matters for interpreting [[concepts/gene-essentiality]] and [[concepts/condition-specific-fitness]]: apparent functional coverage may reflect which genes enter the perturbation collection rather than the full genomic distribution of gene functions. [src: adp1_deletion_phenotypes] Evidence that core genes can themselves be conditionally burdensome **refines** this interpretation: core status is not equivalent to uniformly low burden or universal essentiality. In the broader Fitness Browser analysis, core genes were more burdensome than non-core genes in several functional categories, and 25,271 genes were classified as condition-dependent trade-offs; these findings are based on laboratory fitness and conservation patterns rather than direct measurement of natural selection. [src: core_gene_tradeoffs] The new comparison further **supports** this refinement: core genes showed heavier tails in both negative and positive fitness effects, and 24.4% were ever beneficial versus 19.9% of auxiliary genes. [src: fitness_effects_conservation]
 
 ## Evidence from the ADP1 deletion collection
 
 The analysis compared a complete growth matrix of 2,034 genes across 8 carbon sources with TnSeq, or transposon sequencing, essentiality classifications and pangenome annotations. [src: adp1_deletion_phenotypes]
 
-Among 2,593 TnSeq-dispensable genes, 272 (10.5%) lacked growth data from the deletion collection, whereas 2,321 had growth data. [src: adp1_deletion_phenotypes]
+Among 2,593 TnSeq-dispensable genes, 272 (10.5%) lacked growth data from the deletion collection, whereas 2,321 had growth data. [src: adp1_deletion_phenotypes] The genes missing from the deletion collection had a mean length of 813 bp, compared with 981 bp for present dispensable genes. [src: adp1_deletion_phenotypes] Missing genes were RAST annotated at 91% versus 100% for present dispensable genes and KO annotated at 49% versus 59%. [src: adp1_deletion_phenotypes] The missing genes were also less likely to be pangenome-core: 76.5% were core compared with 93.3% of present dispensable genes, a difference with p = 1.4×10⁻²⁰. [src: adp1_deletion_phenotypes]
 
-The genes missing from the deletion collection had a mean length of 813 bp, compared with 981 bp for present dispensable genes. [src: adp1_deletion_phenotypes]
+These results support the interpretation that deletion-collection coverage is biased toward more conserved genes, as measured by species-level pangenome core status, and toward genes with stronger functional annotation. [src: adp1_deletion_phenotypes] The broader conservation–fitness gradient **supports** the direction of this association while showing that it is not deterministic: genes affecting 20+ experiments were 79% core, compared with 66% for genes with 0 experiments, with Spearman rho=0.086 and p=8.1e-230. [src: fitness_effects_conservation] The core-gene trade-off analysis **refines** the meaning of this bias by showing that conserved genes can have strong condition-specific fitness effects rather than forming a uniformly inert or universally essential class. [src: core_gene_tradeoffs]
 
-Missing genes were RAST annotated at 91% versus 100% for present dispensable genes and KO annotated at 49% versus 59%. [src: adp1_deletion_phenotypes]
-
-The missing genes were also less likely to be pangenome-core: 76.5% were core compared with 93.3% of present dispensable genes, a difference with p = 1.4×10⁻²⁰. [src: adp1_deletion_phenotypes]
-
-These results support the interpretation that deletion-collection coverage is biased toward more conserved genes, as measured by species-level pangenome core status, and toward genes with stronger functional annotation. [src: adp1_deletion_phenotypes]
+The cross-organism costly–dispensable analysis **supports** the annotation and conservation concern: among 142,190 genes from 43 bacteria, costly+dispensable genes had SEED annotation rates of 50.8% versus 74.9% for costly+conserved genes and KEGG annotation rates of 20.0% versus 42.7%; 44.5% were orphans with no ortholog group, compared with 13.1% of costly+conserved genes. [src: costly_dispensable_genes] It also **refines** the interpretation by showing that the poorly annotated, narrowly distributed group is enriched for mobile-element signatures rather than being simply a random collection of uncharacterized genes: mobile-element keywords were 7.45x more likely in costly+dispensable than costly+conserved genes (OR=7.45, p=4.6e-71). [src: costly_dispensable_genes] This result characterizes the genes most vulnerable to coverage or interpretation bias but does not itself measure mutant-recovery probability. [src: costly_dispensable_genes]
 
 ## Annotation bias and uncertain genes
 
@@ -29,27 +25,33 @@ Hypothetical proteins were enriched among genes missing from the deletion collec
 
 The 313 uncertain-class genes had a mean length of 361 bp, 42% annotation coverage, and 31% pangenome-core status, a profile the report considers consistent with gene fragments or pseudogenes rather than true essential genes. [src: adp1_deletion_phenotypes]
 
-This annotation pattern connects coverage bias to [[concepts/functional-dark-matter]]: poorly characterized genes are not merely difficult to interpret after perturbation, but may also be less likely to have usable perturbation phenotypes in the first place. [src: adp1_deletion_phenotypes]
+This annotation pattern connects coverage bias to [[concepts/functional-dark-matter]]: poorly characterized genes are not merely difficult to interpret after perturbation, but may also be less likely to have usable perturbation phenotypes in the first place. [src: adp1_deletion_phenotypes] The Fitness Browser analysis **supports** retaining this caution: novel singleton genes showed near-zero mean fitness under the tested laboratory conditions, but the report notes that apparent neutrality may reflect poor transposon coverage rather than biological inactivity. [src: fitness_effects_conservation] The costly–dispensable analysis **refines** this caution: 24.2% of costly+dispensable genes were singletons, while no costly+conserved genes were singletons, but within the dispensable category costly genes were only slightly more likely than neutral genes to be singletons (OR=1.09, p=0.02); the report also notes that the first comparison is partly structural because core genes cannot be singletons by definition. [src: costly_dispensable_genes]
 
 ## Consequences for inference
 
 The deletion matrix excludes 499 essential genes and 316 genes with incomplete data, so its condition-specific fitness landscape is biased toward dispensable genes with successful deletion mutants. [src: adp1_deletion_phenotypes]
 
-The report therefore supports using perturbation results together with pangenome and annotation data, rather than treating the assayed gene set as an unbiased sample of the genome. [src: adp1_deletion_phenotypes]
+The report therefore supports using perturbation results together with pangenome and annotation data, rather than treating the assayed gene set as an unbiased sample of the genome. [src: adp1_deletion_phenotypes] This **supports** separating collection coverage from biological interpretation of fitness: the core-gene analysis found 28,017 Costly + Conserved genes, indicating that conservation and laboratory burden can coexist, although the result does not directly measure selection in nature. [src: core_gene_tradeoffs] The broader analysis **refines** this consequence by finding that strong condition-specific effects were enriched among core genes, with 77.3% of genes tagged with strong specific phenotypes core versus 70.3% without them. [src: fitness_effects_conservation] Likewise, 14.1% of costly+dispensable genes had condition-specific phenotypes, compared with 16.7% of costly+conserved genes and 2.7% of neutral+dispensable genes, suggesting that some poorly conserved genes can remain phenotypically informative under particular laboratory conditions. [src: costly_dispensable_genes]
 
-The conservation comparison is informative but limited because core/accessory status came from BERDL’s species-level *Acinetobacter baylyi* pangenome and may have less resolution than a population-level analysis. [src: adp1_deletion_phenotypes]
-
-This limitation refines [[concepts/pangenome-integration]]: pangenome status can diagnose collection bias, but its interpretation depends on the taxonomic and population scale of the reference pangenome. [src: adp1_deletion_phenotypes]
+The conservation comparison is informative but limited because core/accessory status came from BERDL’s species-level *Acinetobacter baylyi* pangenome and may have less resolution than a population-level analysis. [src: adp1_deletion_phenotypes] This limitation refines [[concepts/pangenome-integration]]: pangenome status can diagnose collection bias, but its interpretation depends on the taxonomic and population scale of the reference pangenome. [src: adp1_deletion_phenotypes] The Fitness Browser comparison adds a distinct generalizability limitation: its measurements were biased toward rich media and standard stresses, covered 43 bacteria primarily from Proteobacteria, and used single-gene knockouts that did not capture epistatic interactions. [src: fitness_effects_conservation]
 
 ## Tensions
 
-The observed association between perturbation coverage, annotation, and pangenome-core status could reflect biological conservation, technical difficulty in constructing or measuring mutants, misclassified gene fragments, or some combination of these factors. [src: adp1_deletion_phenotypes]
+The observed association between perturbation coverage, annotation, and pangenome-core status could reflect biological conservation, technical difficulty in constructing or measuring mutants, misclassified gene fragments, or some combination of these factors. [src: adp1_deletion_phenotypes] The report does not establish which mechanism causes the missing-data pattern, so the association should not be interpreted as proof that evolutionary conservation directly determines deletion-mutant recovery. [src: adp1_deletion_phenotypes]
 
-The report does not establish which mechanism causes the missing-data pattern, so the association should not be interpreted as proof that evolutionary conservation directly determines deletion-mutant recovery. [src: adp1_deletion_phenotypes]
+The ADP1 collection indicates that successful coverage is enriched among core genes, whereas the broader trade-off analysis shows that core genes can carry substantial laboratory burden and condition-specific costs. This is not a direct contradiction because the studies measure different outcomes, but it creates a boundary on interpretation: core enrichment in a collection cannot by itself establish either low burden or universal essentiality. [src: adp1_deletion_phenotypes, core_gene_tradeoffs] The Fitness Browser result that singleton genes were near-neutral under tested conditions creates a related interpretive tension: neutrality may represent genuine lack of measured effect or inadequate transposon coverage, and the analysis does not distinguish these explanations. [src: fitness_effects_conservation]
+
+The costly–dispensable analysis adds a related boundary rather than resolving this tension: its classification of burden used max_fit > 1 in any experiment, so a single experiment can classify a gene as burdensome and the result is sensitive to fitness-data noise; its 90% identity DIAMOND threshold may also miss recently acquired genes with low sequence similarity. [src: costly_dispensable_genes] Thus, mobile-element enrichment and poor annotation narrow the biological interpretation of costly non-conserved genes toward horizontally acquired DNA, but do not establish that such genes are systematically absent from perturbation collections. [src: costly_dispensable_genes]
 
 ## Source
 
 The underlying analysis is summarized in [[summaries/adp1_deletion_phenotypes__REPORT]]. [src: adp1_deletion_phenotypes]
+
+The integrated conservation–fitness evidence is summarized in [[summaries/core_gene_tradeoffs__REPORT]]. [src: core_gene_tradeoffs]
+
+The broader Fitness Browser comparison is summarized in [[summaries/fitness_effects_conservation__REPORT]]. [src: fitness_effects_conservation]
+
+The costly–dispensable gene analysis is summarized in [[summaries/costly_dispensable_genes__REPORT]]. [src: costly_dispensable_genes]
 
 ## Open Directions
 
@@ -57,3 +59,6 @@ The underlying analysis is summarized in [[summaries/adp1_deletion_phenotypes__R
 - Compare deletion-mutant construction success and phenotype completeness against gene length, annotation status, pangenome frequency, and pseudogene indicators using a multivariable logistic model to separate technical and evolutionary predictors of coverage. [src: adp1_deletion_phenotypes]
 - Replace the species-level core/accessory labels with population-level pangenome frequencies and test whether the coverage association remains after controlling for gene fragments and uncertain classifications. [src: adp1_deletion_phenotypes]
 - Add the 316 genes with incomplete data and the 499 excluded essential genes where technically possible, then repeat condition-specific fitness analyses to quantify how collection composition changes the inferred essentiality landscape. [src: adp1_deletion_phenotypes]
+- Stratify coverage analyses by functional category and condition, then test whether the observed core-gene burden pattern persists after accounting for which genes are recoverable in the deletion collection. [src: core_gene_tradeoffs]
+- Reassess singleton neutrality with coverage-aware models and perturbation assays spanning non-rich-media conditions, testing whether missing transposon coverage or unmeasured ecological conditions explain the apparent lack of fitness effects. [src: fitness_effects_conservation]
+- Test whether the costly+dispensable mobile-element and annotation profile predicts failed mutant construction or incomplete phenotype coverage after controlling for gene length, orthology breadth, and organism. [src: costly_dispensable_genes]

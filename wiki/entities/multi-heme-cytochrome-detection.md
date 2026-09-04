@@ -49,7 +49,7 @@ The source characterizes this correction as robust for the multi-heme cytochrome
 
 ## Relation to the research corpus
 
-This method provides the marker-correction workflow discussed in [[concepts/multi-heme-cytochrome-detection]]. [src: bacillota_b_subsurface_accessory]
+This method provides the marker-correction workflow discussed in [[concepts/functional-marker-validation]]. [src: bacillota_b_subsurface_accessory]
 
 Its application revises the interpretation of deep-clay Bacillota_B specialization described in [[concepts/subsurface-bacillota-specialization]]. [src: bacillota_b_subsurface_accessory]
 

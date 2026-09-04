@@ -5,7 +5,7 @@ sources: ["summaries/discoveries.md"]
 ---
 # Ontology and Category-Schema Dependence of Biological Conclusions
 
-Biological conclusions are partly determined by the ontology, category schema, and matching rules used to represent observations, so analyses should treat schema choice as an explicit source of uncertainty rather than as a neutral preprocessing step. [src: discoveries] The findings summarized in [[summaries/discoveries]] connect this issue to [[concepts/annotation-dependent-resistome-inference]], [[concepts/composite-functional-annotation]], [[concepts/evidence-triangulation-for-functional-annotation]], and [[concepts/schema-to-value-space-join-validation]].
+Biological conclusions are partly determined by the ontology, category schema, and matching rules used to represent observations, so analyses should treat schema choice as an explicit source of uncertainty rather than as a neutral preprocessing step. [src: discoveries] The findings summarized in [[summaries/discoveries]] connect this issue to [[concepts/environmental-resistome]], [[concepts/composite-functional-annotation]], [[concepts/evidence-triangulation-for-functional-annotation]], and [[concepts/cross-tenant-data-bridging]].
 
 ## Category definitions can reverse pathway conclusions
 
@@ -29,7 +29,7 @@ Their union increased any-functional-annotation coverage to 77.3%, and Bakta res
 
 Annotation proxies can produce substantially different biological counts depending on the selected preferred name, KO, or product definition. [src: discoveries] eggNOG `Preferred_name='lanM'` produced 505 additional hits with zero overlap with 62 Bakta-validated Lanmodulin genomes. [src: discoveries] eggNOG KO K02030 produced 46,369 nonspecific hits, and only 418 of 5,092 genomes with any xoxF marker hit both eggNOG K00114 and Bakta lanthanide-dependent methanol-dehydrogenase products. [src: discoveries]
 
-The findings **support** [[concepts/annotation-dependent-resistome-inference]] and [[concepts/homology-search-negative-evidence]] by showing that generic KOs and stale preferred names should not be treated as definitive markers. [src: discoveries] Analyses should report marker definitions explicitly and validate them against an independent annotation or curated reference set. [src: discoveries]
+The findings **support** [[concepts/environmental-resistome]] and [[concepts/homology-search-negative-evidence]] by showing that generic KOs and stale preferred names should not be treated as definitive markers. [src: discoveries] Analyses should report marker definitions explicitly and validate them against an independent annotation or curated reference set. [src: discoveries]
 
 ## Schema choice interacts with integration and transfer
 
@@ -41,7 +41,7 @@ A CLR-plus-PCA GMM projection assigned all 26 Kuehl samples to E3 at confidence 
 
 Ontology selection, category construction, marker definition, and identifier mapping should be recorded as model choices that can alter effect sizes, pathway counts, and inferred biological themes. [src: discoveries] A robust analysis should compare at least one curator-validated hierarchy with a simpler sensitivity schema, preserve multi-label assignments where biologically justified, and validate positive and negative marker calls against independent evidence. [src: discoveries]
 
-This approach **supports** [[concepts/ontology-and-category-schema-sensitivity]] as a methodological complement to [[concepts/multi-omics-integration]] and [[concepts/potential-versus-realized-data-integration]]: a cross-modal conclusion is only as stable as the mappings and category definitions used to connect its modalities. [src: discoveries]
+This approach **supports** [[concepts/ontology-and-category-schema-sensitivity]] as a methodological complement to [[concepts/multi-omics-integration]] and [[concepts/cross-tenant-data-bridging]]: a cross-modal conclusion is only as stable as the mappings and category definitions used to connect its modalities. [src: discoveries]
 
 ## Open Directions
 

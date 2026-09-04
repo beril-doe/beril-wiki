@@ -1,7 +1,7 @@
 ---
 type: "Concept"
-description: "Bias from using the same features to define groups and test their differences"
-sources: ["summaries/pitfalls.md"]
+description: "How reuse of grouping features can inflate microbiome and genomic associations"
+sources: ["summaries/pitfalls.md", "summaries/ecotype_env_reanalysis__REPORT.md", "summaries/ecotype_analysis__REPORT.md", "summaries/ecotype_functional_differentiation__REPORT.md"]
 ---
 # Selection-on-outcome leakage in microbiome and genomic inference
 
@@ -11,7 +11,7 @@ Selection-on-outcome leakage occurs when observations are grouped or selected us
 
 In the cited workflow, samples were clustered on a taxon-abundance matrix, and the same taxa were subsequently tested within the clusters. [src: pitfalls] Because the taxa influence both cluster membership and the test outcome, the apparent within-cluster differences are not independent evidence for the clusters or for the selected taxa. [src: pitfalls] This is a form of outcome-dependent feature selection: the analysis uses a feature to define the comparison and then treats the feature's contrast as if it had been selected independently. [src: pitfalls]
 
-The problem is not limited to microbiome taxa; the same design risk applies whenever genomic or functional features are used to construct groups and are then reused as outcomes. [src: pitfalls] Independent validation, held-out features, or a genuinely different data representation is therefore needed before treating selected associations as confirmatory findings. [src: pitfalls]
+The problem is not limited to microbiome taxa; the same design risk applies whenever genomic or functional features are used to construct groups and are then reused as outcomes. [src: pitfalls] The [[summaries/ecotype_functional_differentiation__REPORT]] **supports** this genomic extension: PCA and KMeans clustering of within-species gene content was followed by testing COG (Clusters of Orthologous Groups) functional profiles, which summarize overlapping gene-content variation. Across 12 species, 170 of 257 COG tests (66.1%) were significant after BH-FDR correction, but this demonstrates functional differentiation rather than independent confirmation of it because the tested representation is biologically related to the grouping representation. [src: ecotype_functional_differentiation] Independent validation, held-out features, or a genuinely different data representation is therefore needed before treating selected associations as confirmatory findings. [src: pitfalls]
 
 ## Evidence from the IBD ecotype analysis
 
@@ -27,13 +27,23 @@ Leakage should be assessed with held-out-feature clustering, leave-one-feature-o
 
 The findings should be interpreted as evidence about analysis design, not as evidence that all ecotype-associated taxa are false discoveries. [src: pitfalls] The document instead shows that the original 33-species list was sensitive to feature reuse and that independent within-substudy analysis provided a more restrictive set of 3 candidates. [src: pitfalls] This **refines** [[concepts/confirmatory-exploratory-ecological-association-discordance]] by identifying feature reuse as a concrete source of discordance between exploratory and confirmatory ecological associations. [src: pitfalls]
 
-Leakage safeguards also matter for [[concepts/ecotype-environment-gene-content]], because ecotype-linked environmental or genomic interpretations can inherit instability when the grouping variables are tested again as explanatory features. [src: pitfalls] They complement, rather than replace, design-consistent within-substudy contrasts, because the documented healthy and disease buckets contained disjoint sub-studies and pooled mixed-model contrasts were structurally unidentifiable in that setting. [src: pitfalls]
+Leakage safeguards also matter for [[concepts/ecotype-environment-gene-content]], because ecotype-linked environmental or genomic interpretations can inherit instability when the grouping variables are tested again as explanatory features. [src: pitfalls] The [[summaries/ecotype_env_reanalysis__REPORT]] **refines** this caution: using genome-level environmental classifications and a consistent within-method comparison, environmental species had no stronger environment–gene-content correlations than human-associated species (one-sided Mann-Whitney U: U=1536, p=0.83), and the clinical sampling bias did not explain the weak signal. [src: ecotype_env_reanalysis] This distinguishes selection or composition effects from outcome leakage rather than establishing that either is absent. [src: ecotype_env_reanalysis] The reanalysis also used a different genome-extraction and downsampling strategy, so its absolute correlations are not comparable with the original analysis; only the within-method group comparison was treated as valid. [src: ecotype_env_reanalysis]
+
+The independent `ecotype_analysis` **supports** separating leakage from a genuinely weak environmental signal: across 172 bacterial species, the median partial correlation for environment was 0.0025 versus 0.0143 for phylogeny, with no significant environmental effect in 156 species (90.7%). [src: ecotype_analysis] It therefore suggests that weak whole-genome environmental associations cannot, by themselves, demonstrate outcome leakage; the study instead hypothesized that environmental adaptation may affect specific gene subsets and that AlphaEarth embeddings may miss relevant variation. [src: ecotype_analysis] AlphaEarth embeddings covered only 28.4% of genomes, making limited environmental coverage an alternative explanation that should be distinguished from feature reuse. [src: ecotype_analysis]
+
+They complement, rather than replace, design-consistent within-substudy contrasts, because the documented healthy and disease buckets contained disjoint sub-studies and pooled mixed-model contrasts were structurally unidentifiable in that setting. [src: pitfalls]
 
 ## Tensions
 
 The evidence does not establish a universal Jaccard cutoff for detecting leakage. [src: pitfalls] The values 0.5 and 0.3 were explicitly project-specific decision thresholds for the cited sensitivity procedure, so applying them unchanged to another dataset or clustering method would be an unsupported extrapolation. [src: pitfalls]
 
 The observed instability also does not by itself identify whether clustering, differential-abundance modeling, subgroup sample size, or study structure contributed most to the changes. [src: pitfalls] Resolving those components requires analyses that vary the feature partition and validation design while preserving the underlying samples and labels. [src: pitfalls]
+
+The ecotype functional-differentiation result **refines** this tension rather than resolving it: all 12 analyzed species had at least one differentiated COG category, but approximately 38% of gene clusters had COG annotations, and the report notes that effect significance may partly reflect large sample sizes. [src: ecotype_functional_differentiation] Thus, widespread COG differences are compatible with real functional structure, annotation and sampling effects, or reuse of related gene-content information; they do not alone quantify leakage.
+
+The ecotype reanalysis further shows that absolute partial-correlation values can differ substantially when genome inclusion and downsampling change: its median across 183 species was 0.081 versus 0.003 in the original analysis, described as a 27x difference. [src: ecotype_env_reanalysis] This **supports** retaining the existing warning against interpreting instability or magnitude across incompatible methodologies as evidence of leakage alone, while the within-method environmental-versus-human-associated null comparison remains informative. [src: ecotype_env_reanalysis]
+
+The original ecotype analysis reports a weak environmental signal overall, whereas the reanalysis reports a median partial correlation of 0.081 under a different pipeline. [src: ecotype_analysis, ecotype_env_reanalysis] This **supports** treating cross-pipeline magnitude comparisons as a tension in measurement and sampling rather than as evidence that leakage caused either result. [src: ecotype_analysis, ecotype_env_reanalysis]
 
 ## Open Directions
 
@@ -42,3 +52,6 @@ The observed instability also does not by itself identify whether clustering, di
 - Cluster the same samples using pathways or EC numbers instead of taxa, then test taxon-level associations; determine whether a feature representation that is independent of the tested taxa reduces the leakage signal. [src: pitfalls]
 - Combine the four IBD sub-studies with at least 10 CD and 10 nonIBD samples using within-substudy contrasts and inverse-variance meta-analysis; compare the resulting candidates with the ecotype-derived list. [src: pitfalls]
 - Recalculate stability across the reported Jaccard values of 0.230 for E1 and 0.064 for E3 under alternative feature-holdout partitions; determine whether the observed instability is specific to the cited partitioning procedure. [src: pitfalls]
+- Reconcile the 27x partial-correlation discrepancy by extracting downsampled and full-genome sets under the same pipeline, then test whether genome count and feature reuse jointly alter environmental-versus-human-associated comparisons. [src: ecotype_env_reanalysis]
+- Test whether COG functional categories and alternative environmental metadata reveal associations masked at whole-genome resolution without reusing features to define groups. [src: ecotype_analysis]
+- Reanalyze ecotype clusters with held-out COG categories and within-species phylogenetic controls; test whether the 170/257 significant COG contrasts persist independently of gene-content clustering and phylogenetic structure. [src: ecotype_functional_differentiation]

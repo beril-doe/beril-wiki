@@ -166,6 +166,9 @@ def main(root: pathlib.Path) -> int:
     state_path = root / "state" / "litcontext.json"
     state_path.parent.mkdir(exist_ok=True)
     state = json.loads(state_path.read_text()) if state_path.exists() else {}
+    if "--force" in sys.argv:
+        state = {}
+        print("  --force: ignoring cached digests")
 
     done = skipped = 0
     for page in sorted(topics.glob("*.md")):

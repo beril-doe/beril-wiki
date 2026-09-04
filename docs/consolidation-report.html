@@ -1,0 +1,613 @@
+<title>Concept Consolidation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+  :root{
+    --ground:#F7F8F7; --surface:#FFFFFF; --surface-2:#F1F4F3;
+    --ink:#14202A; --ink-2:#33454F; --muted:#5A6B76; --faint:#8A99A1;
+    --rule:#DCE3E4; --rule-strong:#C3CFD1;
+    --accent:#00897B; --accent-soft:#E2F1EE;
+    --before:#B4740E; --before-soft:#F6EDDC;
+    --critical:#A63A2B; --critical-soft:#F8E9E6;
+    --serif:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+    --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --measure:68ch;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#12181B; --surface:#182126; --surface-2:#1E282E;
+      --ink:#E4EBEC; --ink-2:#C2CFD3; --muted:#93A2A9; --faint:#75858D;
+      --rule:#26333A; --rule-strong:#36474F;
+      --accent:#1FA592; --accent-soft:#12302E;
+      --before:#C08420; --before-soft:#2C2415;
+      --critical:#D2705E; --critical-soft:#31201C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#12181B; --surface:#182126; --surface-2:#1E282E;
+    --ink:#E4EBEC; --ink-2:#C2CFD3; --muted:#93A2A9; --faint:#75858D;
+    --rule:#26333A; --rule-strong:#36474F;
+    --accent:#1FA592; --accent-soft:#12302E;
+    --before:#C08420; --before-soft:#2C2415;
+    --critical:#D2705E; --critical-soft:#31201C;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--ground); color:var(--ink);
+    font-family:var(--sans); font-size:16px; line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:1080px; margin:0 auto; padding:0 28px 96px}
+  .col{max-width:var(--measure)}
+  p{margin:0 0 1.05em}
+  a{color:var(--accent)}
+  strong{font-weight:600}
+  code{font-family:var(--mono); font-size:.88em; background:var(--surface-2);
+       padding:.12em .38em; border-radius:3px; color:var(--ink-2);
+       border:1px solid var(--rule)}
+
+  /* ---- masthead ---- */
+  header.mast{padding:64px 0 38px; border-bottom:2px solid var(--ink)}
+  .kicker{font-family:var(--mono); font-size:11.5px; letter-spacing:.14em;
+          text-transform:uppercase; color:var(--muted); margin:0 0 18px}
+  h1{font-family:var(--serif); font-weight:600; font-size:clamp(38px,6vw,60px);
+     line-height:1.03; letter-spacing:-.018em; margin:0 0 20px; text-wrap:balance}
+  .standfirst{font-family:var(--serif); font-size:clamp(17px,2.1vw,20px);
+              line-height:1.55; color:var(--ink-2); max-width:60ch; margin:0}
+
+  /* ---- headline figures ---- */
+  .figures{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+           gap:0; border-bottom:1px solid var(--rule); margin-bottom:56px}
+  .fig{padding:26px 26px 26px 0; border-right:1px solid var(--rule)}
+  .fig:last-child{border-right:0}
+  .fig .lab{font-family:var(--mono); font-size:11px; letter-spacing:.1em;
+            text-transform:uppercase; color:var(--muted); display:block; margin-bottom:10px}
+  .fig .val{font-family:var(--serif); font-size:34px; font-weight:600;
+            line-height:1; font-variant-numeric:tabular-nums; display:flex;
+            align-items:baseline; gap:9px; flex-wrap:wrap}
+  .fig .was{font-family:var(--mono); font-size:14px; font-weight:400; color:var(--faint);
+            text-decoration:line-through}
+  .fig .note{font-size:13.5px; color:var(--muted); margin:9px 0 0; line-height:1.45}
+
+  h2{font-family:var(--serif); font-size:30px; font-weight:600; letter-spacing:-.012em;
+     line-height:1.18; margin:0 0 6px; text-wrap:balance}
+  .sec{padding-top:52px}
+  .sec + .sec{padding-top:64px}
+  .eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.14em;
+           text-transform:uppercase; color:var(--accent); margin:0 0 14px}
+  .sec > .col > p:first-of-type{margin-top:14px}
+
+  h3{font-family:var(--sans); font-size:16.5px; font-weight:600; margin:30px 0 8px;
+     letter-spacing:-.005em}
+
+  /* ---- pipeline flow ---- */
+  .flow{display:flex; flex-wrap:wrap; gap:7px; align-items:stretch;
+        margin:26px 0 12px; padding:22px; background:var(--surface);
+        border:1px solid var(--rule); border-radius:2px}
+  .stage{font-family:var(--mono); font-size:12.5px; padding:8px 11px;
+         border:1px solid var(--rule-strong); border-radius:2px; color:var(--muted);
+         background:var(--surface-2); white-space:nowrap; display:flex; gap:7px; align-items:center}
+  .stage .n{font-size:10px; color:var(--faint); font-variant-numeric:tabular-nums}
+  .stage.new{background:var(--accent); border-color:var(--accent); color:#fff;
+             font-weight:600; box-shadow:0 1px 5px rgba(0,0,0,.16)}
+  .stage.new .n{color:rgba(255,255,255,.72)}
+  .flow-note{font-size:13.5px; color:var(--muted); margin:0 0 4px}
+
+  /* ---- mechanism diagram ---- */
+  .mech{display:flex; flex-direction:column; gap:0; margin:28px 0 10px}
+  .mrow{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px}
+  .mbox{background:var(--surface); border:1px solid var(--rule); border-radius:2px; padding:18px 20px}
+  .mbox.gen{border-top:3px solid var(--accent)}
+  .mbox.wide{border-top:3px solid var(--ink-2)}
+  .mh{font-family:var(--sans); font-size:14.5px; font-weight:600; margin:0 0 10px;
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+  .tag{font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase;
+       color:var(--muted); background:var(--surface-2); border:1px solid var(--rule);
+       padding:2px 7px; border-radius:2px; font-weight:400}
+  .tag.free{color:var(--accent); border-color:var(--accent); background:var(--accent-soft)}
+  .mb{font-size:14px; color:var(--ink-2); margin:0 0 10px; line-height:1.55}
+  .mout{font-family:var(--mono); font-size:11.5px; color:var(--muted); margin:0;
+        padding-top:9px; border-top:1px dashed var(--rule)}
+  .marrow{font-family:var(--mono); font-size:11.5px; color:var(--muted);
+          text-align:center; margin:0; padding:13px 0; position:relative}
+  .marrow::before{content:"↓"; display:block; font-size:14px; color:var(--rule-strong); margin-bottom:4px}
+  .msteps{margin:0; padding-left:20px; font-size:14px; color:var(--ink-2); line-height:1.55}
+  .msteps li{padding:4px 0}
+  .msteps li::marker{font-family:var(--mono); font-size:11.5px; color:var(--muted)}
+  .gate{font-family:var(--mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase;
+        color:var(--critical); border:1px solid var(--critical); border-radius:2px;
+        padding:1px 5px; margin-right:6px; white-space:nowrap}
+
+  /* ---- charts ---- */
+  figure{margin:30px 0 8px; padding:24px 24px 18px; background:var(--surface);
+         border:1px solid var(--rule); border-radius:2px}
+  figcaption{font-size:13.5px; color:var(--muted); line-height:1.5;
+             margin-top:16px; padding-top:14px; border-top:1px solid var(--rule)}
+  .chart-title{font-family:var(--sans); font-size:15px; font-weight:600; margin:0 0 3px}
+  .chart-sub{font-size:13px; color:var(--muted); margin:0 0 20px}
+  .legend{display:flex; gap:18px; margin:0 0 18px; font-size:13px; color:var(--ink-2)}
+  .legend span{display:flex; align-items:center; gap:7px}
+  .swatch{width:11px; height:11px; border-radius:2px; display:inline-block}
+  .chart-scroll{overflow-x:auto}
+  svg{display:block; max-width:100%; height:auto}
+  .gridline{stroke:var(--rule); stroke-width:1}
+  .axis-txt{font-family:var(--mono); font-size:10.5px; fill:var(--muted)}
+  .bar-val{font-family:var(--mono); font-size:11px; fill:var(--ink-2);
+           font-variant-numeric:tabular-nums}
+  .bar-lab{font-family:var(--mono); font-size:11.5px; fill:var(--ink-2)}
+  .bar-lab.bad{fill:var(--critical); font-weight:600}
+
+  /* ---- tables ---- */
+  .twrap{overflow-x:auto; margin:26px 0 8px}
+  table{border-collapse:collapse; width:100%; font-size:14.5px}
+  th,td{text-align:left; padding:11px 16px 11px 0; border-bottom:1px solid var(--rule);
+        vertical-align:top}
+  th{font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
+     color:var(--muted); font-weight:500; border-bottom:1px solid var(--rule-strong)}
+  td.num{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap}
+  .delta{color:var(--accent); font-weight:600}
+  .flat{color:var(--muted)}
+  tr.hi td{background:var(--critical-soft)}
+
+  /* ---- callout ---- */
+  .callout{background:var(--surface); border:1px solid var(--rule);
+           border-left:3px solid var(--critical); padding:20px 22px; margin:26px 0;
+           border-radius:2px}
+  .callout .ct{font-family:var(--mono); font-size:10.5px; letter-spacing:.11em;
+               text-transform:uppercase; color:var(--critical); margin:0 0 9px; font-weight:600}
+  .callout p:last-child{margin-bottom:0}
+  .callout.good{border-left-color:var(--accent)}
+  .callout.good .ct{color:var(--accent)}
+
+  /* ---- code block ---- */
+  pre{font-family:var(--mono); font-size:13px; line-height:1.72; background:var(--surface);
+      border:1px solid var(--rule); border-radius:2px; padding:18px 20px;
+      overflow-x:auto; margin:20px 0; color:var(--ink-2)}
+  pre .cm{color:var(--faint)}
+  pre .ok{color:var(--accent)}
+
+  ul.plain{margin:14px 0 0; padding:0; list-style:none}
+  ul.plain li{padding:0 0 12px 20px; position:relative; color:var(--ink-2)}
+  ul.plain li::before{content:""; position:absolute; left:2px; top:.62em;
+                      width:6px; height:6px; border-radius:50%; background:var(--accent)}
+  ul.plain li.warn::before{background:var(--before)}
+
+  footer{margin-top:72px; padding-top:24px; border-top:1px solid var(--rule);
+         font-size:13px; color:var(--muted); display:flex; flex-wrap:wrap; gap:8px 26px}
+  footer code{background:none; border:0; padding:0; color:var(--muted)}
+
+  @media (max-width:640px){
+    .fig{border-right:0; border-bottom:1px solid var(--rule); padding-right:0}
+    .fig:last-child{border-bottom:0}
+    header.mast{padding-top:44px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+
+<div class="page">
+
+<header class="mast">
+  <p class="kicker">BERIL wiki · pipeline stage · <code style="background:none;border:0;padding:0">consolidate_concepts.py</code></p>
+  <h1>Concept Consolidation</h1>
+  <p class="standfirst">The wiki claimed to be synthesis, but 136 of its 153 concept pages cited a single
+  project — a restated summary wearing a concept title. This stage merges the duplicates and
+  back-fills cross-project evidence, and it runs as part of the ordinary pipeline.</p>
+</header>
+
+<div class="figures">
+  <div class="fig">
+    <span class="lab">Concept pages</span>
+    <span class="val">99 <span class="was">153</span></span>
+    <p class="note">Duplicate shards merged into surviving pages.</p>
+  </div>
+  <div class="fig">
+    <span class="lab">Citing one project</span>
+    <span class="val">15 <span class="was">136</span></span>
+    <p class="note">Counted from <code>[src:]</code> tags in the prose, not frontmatter.</p>
+  </div>
+  <div class="fig">
+    <span class="lab">Citing 2+ projects</span>
+    <span class="val">84 <span class="was">17</span></span>
+    <p class="note">Pages that actually argue across projects.</p>
+  </div>
+  <div class="fig">
+    <span class="lab">wiki_check</span>
+    <span class="val">0 <span style="font-family:var(--sans);font-size:15px;font-weight:400;color:var(--muted)">errors</span></span>
+    <p class="note">Warnings 13 → 4. Publish gate stayed green throughout.</p>
+  </div>
+</div>
+
+<!-- ============ PROBLEM ============ -->
+<section class="sec">
+  <div class="col">
+    <p class="eyebrow">The problem</p>
+    <h2>A concept page that cites one project is just a summary with a different title</h2>
+    <p>The defect was structural, not a bug. <code>enrich_concepts.py</code> creates concepts one
+    document at a time and hard-codes a single-element <code>sources</code> list. <code>compile.py</code>
+    merges a document into pages only when <em>that document</em> changes. So a concept created from
+    document&nbsp;#60 was never revisited against documents #1–59 — nothing in the pipeline ever looked
+    backwards.</p>
+    <p>The existing duplicate detector could not see it either. <code>wiki_check.duplicate_concepts</code>
+    requires <strong>≥50% source-set overlap</strong> between two pages; single-source pages can only clear
+    that bar by sharing their one identical source. It found 3 pairs in the whole corpus.</p>
+  </div>
+
+  <figure>
+    <p class="chart-title">Projects cited per concept page</p>
+    <p class="chart-sub">Distinct <code>[src:]</code> ids in the page body. The corpus was bimodal —
+      a wall of single-source pages and a handful of mega-hubs, with nothing in between.</p>
+    <div class="legend">
+      <span><i class="swatch" style="background:var(--before)"></i> Before (153 pages)</span>
+      <span><i class="swatch" style="background:var(--accent)"></i> After (99 pages)</span>
+    </div>
+    <div class="chart-scroll">
+      <svg viewBox="0 0 720 300" width="720" role="img"
+           aria-label="Grouped bar chart. Before: 136 pages cite 1 project, 1 cites 2, 2 cite 3, 3 cite 4 to 6, none cite 7 to 13, 7 cite 14 to 21, 4 cite 22 or more. After: 15 cite 1, 6 cite 2, 14 cite 3, 53 cite 4 to 6, none cite 7 to 13, 7 cite 14 to 21, 4 cite 22 or more.">
+        <!-- gridlines + y labels: scale 0..140, plot y 30..250 -->
+        <g>
+          <line class="gridline" x1="52" y1="250" x2="700" y2="250"></line>
+          <line class="gridline" x1="52" y1="203" x2="700" y2="203"></line>
+          <line class="gridline" x1="52" y1="156" x2="700" y2="156"></line>
+          <line class="gridline" x1="52" y1="109" x2="700" y2="109"></line>
+          <line class="gridline" x1="52" y1="62" x2="700" y2="62"></line>
+          <text class="axis-txt" x="44" y="254" text-anchor="end">0</text>
+          <text class="axis-txt" x="44" y="207" text-anchor="end">30</text>
+          <text class="axis-txt" x="44" y="160" text-anchor="end">60</text>
+          <text class="axis-txt" x="44" y="113" text-anchor="end">90</text>
+          <text class="axis-txt" x="44" y="66" text-anchor="end">120</text>
+        </g>
+        <!-- bars: 7 bins, group width 92, x start 62 -->
+        <!-- bin 1: before 136 -> h=213 ; after 15 -> h=23.5 -->
+        <g>
+          <rect x="62"  y="37"    width="38" height="213" rx="4" fill="var(--before)"></rect>
+          <rect x="102" y="226.5" width="38" height="23.5" rx="4" fill="var(--accent)"></rect>
+          <text class="bar-val" x="81"  y="31" text-anchor="middle">136</text>
+          <text class="bar-val" x="121" y="220" text-anchor="middle">15</text>
+
+          <rect x="154" y="248.4" width="38" height="1.6" rx="1" fill="var(--before)"></rect>
+          <rect x="194" y="240.6" width="38" height="9.4" rx="4" fill="var(--accent)"></rect>
+          <text class="bar-val" x="173" y="242" text-anchor="middle">1</text>
+          <text class="bar-val" x="213" y="234" text-anchor="middle">6</text>
+
+          <rect x="246" y="246.9" width="38" height="3.1" rx="2" fill="var(--before)"></rect>
+          <rect x="286" y="228.1" width="38" height="21.9" rx="4" fill="var(--accent)"></rect>
+          <text class="bar-val" x="265" y="241" text-anchor="middle">2</text>
+          <text class="bar-val" x="305" y="222" text-anchor="middle">14</text>
+
+          <rect x="338" y="245.3" width="38" height="4.7" rx="2" fill="var(--before)"></rect>
+          <rect x="378" y="167"   width="38" height="83"   rx="4" fill="var(--accent)"></rect>
+          <text class="bar-val" x="357" y="239" text-anchor="middle">3</text>
+          <text class="bar-val" x="397" y="161" text-anchor="middle">53</text>
+
+          <text class="axis-txt" x="449" y="244" text-anchor="middle">0</text>
+          <text class="axis-txt" x="449" y="232" text-anchor="middle">·</text>
+
+          <rect x="522" y="239"   width="38" height="11"   rx="4" fill="var(--before)"></rect>
+          <rect x="562" y="239"   width="38" height="11"   rx="4" fill="var(--accent)"></rect>
+          <text class="bar-val" x="541" y="233" text-anchor="middle">7</text>
+          <text class="bar-val" x="581" y="233" text-anchor="middle">7</text>
+
+          <rect x="614" y="243.7" width="38" height="6.3" rx="3" fill="var(--before)"></rect>
+          <rect x="654" y="243.7" width="38" height="6.3" rx="3" fill="var(--accent)"></rect>
+          <text class="bar-val" x="633" y="238" text-anchor="middle">4</text>
+          <text class="bar-val" x="673" y="238" text-anchor="middle">4</text>
+        </g>
+        <!-- x labels -->
+        <g>
+          <text class="axis-txt" x="101" y="272" text-anchor="middle">1</text>
+          <text class="axis-txt" x="193" y="272" text-anchor="middle">2</text>
+          <text class="axis-txt" x="285" y="272" text-anchor="middle">3</text>
+          <text class="axis-txt" x="377" y="272" text-anchor="middle">4–6</text>
+          <text class="axis-txt" x="449" y="272" text-anchor="middle">7–13</text>
+          <text class="axis-txt" x="561" y="272" text-anchor="middle">14–21</text>
+          <text class="axis-txt" x="653" y="272" text-anchor="middle">22+</text>
+          <text class="axis-txt" x="376" y="292" text-anchor="middle">projects cited per page</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption>The 7–13 band is empty in both. The mega-hubs on the right were never the problem and
+      were deliberately left alone; the work was moving the left-hand wall into the middle.</figcaption>
+  </figure>
+</section>
+
+<!-- ============ WHAT WAS BUILT ============ -->
+<section class="sec">
+  <div class="col">
+    <p class="eyebrow">What was built</p>
+    <h2>One new stage, slotted between enrich and conflicts</h2>
+    <p><code>pipeline/consolidate_concepts.py</code> reuses <code>compile.py</code>'s machinery — the same
+    <code>generate_page</code> call, so write-time validation, the one-retry path, frontmatter handling and
+    index maintenance are identical to every other page write in the wiki. No new dependency.</p>
+  </div>
+
+  <div class="flow" role="list" aria-label="Pipeline stages in order">
+    <span class="stage" role="listitem"><span class="n">01</span>fetch</span>
+    <span class="stage" role="listitem"><span class="n">02</span>compile</span>
+    <span class="stage" role="listitem"><span class="n">03</span>enrich</span>
+    <span class="stage new" role="listitem"><span class="n">04</span>consolidate ← new</span>
+    <span class="stage" role="listitem"><span class="n">05</span>conflicts</span>
+    <span class="stage" role="listitem"><span class="n">06</span>hubs</span>
+    <span class="stage" role="listitem"><span class="n">07</span>literature</span>
+    <span class="stage" role="listitem"><span class="n">08</span>figures</span>
+    <span class="stage" role="listitem"><span class="n">09</span>extras</span>
+    <span class="stage" role="listitem"><span class="n">10</span>authors</span>
+    <span class="stage" role="listitem"><span class="n">11</span>check</span>
+    <span class="stage" role="listitem"><span class="n">12</span>publish</span>
+  </div>
+  <p class="flow-note">It runs after enrichment creates concepts and before anything downstream reads the
+    concept layer, so hubs and conflict pages are built from the consolidated set.</p>
+
+  <div class="col">
+    <h3>Step 0 — index every page</h3>
+    <p>Each concept page yields four things, all derived from the <em>prose</em> rather than the
+    frontmatter: <code>cited</code>, the project ids inside real <code>[src:]</code> tags;
+    <code>nums</code>, every figure in the body, normalised; <code>etext</code>, the slug + description +
+    <strong>whole body</strong> for embedding; and a content digest for the cache.</p>
+  </div>
+
+  <div class="mech">
+    <div class="mrow">
+      <div class="mbox gen">
+        <p class="mh">A · Evidence overlap <span class="tag free">deterministic · $0</span></p>
+        <p class="mb">Every pair must <strong>share a cited project</strong>, share <strong>≥3 exact
+        figures</strong>, and reach <strong>numeric-set Jaccard ≥ 0.5</strong>.</p>
+        <p class="mout">≈20 pairs of 7,381 · judged first</p>
+      </div>
+      <div class="mbox gen">
+        <p class="mh">B · Embedding rank <span class="tag">recall net</span></p>
+        <p class="mb">Two models embed every page; each contributes <strong>its own top-45 by
+        cosine</strong>. Ranked by the best rank any model gave the pair — not a shared cosine cutoff,
+        because ranges differ per model.</p>
+        <p class="mout">catches paraphrases sharing no numbers</p>
+      </div>
+    </div>
+    <p class="marrow">union, then drop pairs where <strong>both</strong> sides already cite 4+ projects</p>
+
+    <div class="mbox wide">
+      <p class="mh">Phase 1 · merge <span class="tag">per pair, in rank order</span></p>
+      <ol class="msteps">
+        <li>Re-key through the <code>redirect</code> map if a side was already merged away</li>
+        <li>Skip if either file is gone, or the pair sits in the <code>rejected</code> cache</li>
+        <li><span class="gate">gate</span> re-check <em>both-mature</em> against the <strong>live</strong>
+            pages — a redirect can turn a legal pair into a hub-into-hub merge</li>
+        <li>One judge call: both bodies, each page's cited projects, and their intersection</li>
+        <li>On merge, one <code>generate_page</code> rewrite of the survivor</li>
+        <li><span class="gate">gate</span> <strong>citation retention</strong> — every <code>[src:]</code>
+            id from <em>both</em> inputs must survive; else one retry, else the merge is abandoned and both
+            pages kept</li>
+        <li>Write survivor with the union of both <code>sources</code>; delete the loser; repoint every
+            <code>[[concepts/loser]]</code> and <code>[[concepts/loser|alias]]</code> across
+            <code>wiki/</code> and <code>wiki-extra/</code></li>
+      </ol>
+    </div>
+    <p class="marrow">re-embed if anything merged — page content changed, so similarity did too</p>
+
+    <div class="mbox wide">
+      <p class="mh">Phase 2 · back-merge <span class="tag">per thin concept</span></p>
+      <ol class="msteps">
+        <li>For each concept citing &lt;4 projects, take its top-2 summaries above cosine 0.78 that are not
+            already in <code>sources</code></li>
+        <li>Run compile's existing <code>CONCEPT_UPDATE_USER</code>, plus a tail offering an explicit
+            <code>UNCHANGED</code> reply</li>
+        <li><span class="gate">gate</span> citation retention, as above</li>
+        <li><span class="gate">gate</span> <strong>anti-padding</strong> — if the reply is
+            <code>UNCHANGED</code>, <em>or</em> the new project id never appears in a real
+            <code>[src:]</code> tag, the whole rewrite is discarded and the page left untouched</li>
+        <li>Otherwise write, extending <code>sources</code> by exactly that one summary</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="callout good">
+      <p class="ct">Why the anti-padding gate exists</p>
+      <p>The previous-generation corpus <em>looked</em> multi-source but padded frontmatter with bare
+      "See also" links on 60 of its 81 concept pages — 65% of its concept bodies cite exactly one source.
+      Chasing its numbers would have copied its defect, so <code>sources</code> can only ever grow
+      alongside a real citation in the prose.</p>
+    </div>
+
+    <h3>What the state file holds</h3>
+    <p>Only <strong>negatives</strong> — <code>rejected</code> and <code>no_evidence</code>, keyed by prompt
+    version plus both content digests, so an edited page or a changed prompt is re-asked rather than
+    inheriting a stale answer. Positives need no cache at all: a completed merge is a missing file, and a
+    completed back-merge is a summary already listed in <code>sources</code>.</p>
+  </div>
+</section>
+
+<!-- ============ THE MEASUREMENT ============ -->
+<section class="sec">
+  <div class="col">
+    <p class="eyebrow">The correction</p>
+    <h2>The first version found almost nothing, and the cause was the representation</h2>
+    <p>Candidate generation originally ranked pages by embedding similarity. To test whether that worked,
+    ground truth was built <em>without</em> embeddings: single-source concepts sharing their one cited
+    project, narrowed to pairs whose bodies restate near-identical numbers — the objective signature of a
+    restated shard.</p>
+
+    <div class="callout">
+      <p class="ct">What the measurement showed</p>
+      <p>The shipped representation surfaced <strong>none of them</strong>. Median rank 624 of 7,381 pairs;
+      recall at the stage's own cut-off was <strong>0 of 8</strong>. A pair citing <em>identical</em> number
+      sets sat at rank 3016 with cosine 0.677 — below the corpus median.</p>
+      <p>The cause: <code>load_concepts</code> embedded <code>body.split("\n## ")[0]</code> — the lead
+      paragraph only — discarding every evidence section, which is exactly where the shared figures live.</p>
+    </div>
+  </div>
+
+  <figure>
+    <p class="chart-title">How well each representation ranks known duplicate pairs</p>
+    <p class="chart-sub">Median rank out of 7,381 pairs — lower is better. Same model, same corpus;
+      only the text handed to the embedder changes.</p>
+    <div class="chart-scroll">
+      <svg viewBox="0 0 720 250" width="720" role="img"
+           aria-label="Horizontal bar chart of median rank, lower is better. Title plus description only 3947. Lead paragraph only, the shipped version, 2214. Per paragraph max pooled 420. Whole page 189. Per section max pooled 148.">
+        <g>
+          <line class="gridline" x1="250" y1="18" x2="250" y2="206"></line>
+          <line class="gridline" x1="365" y1="18" x2="365" y2="206"></line>
+          <line class="gridline" x1="480" y1="18" x2="480" y2="206"></line>
+          <line class="gridline" x1="595" y1="18" x2="595" y2="206"></line>
+          <line class="gridline" x1="710" y1="18" x2="710" y2="206"></line>
+          <text class="axis-txt" x="250" y="224" text-anchor="middle">0</text>
+          <text class="axis-txt" x="365" y="224" text-anchor="middle">1000</text>
+          <text class="axis-txt" x="480" y="224" text-anchor="middle">2000</text>
+          <text class="axis-txt" x="595" y="224" text-anchor="middle">3000</text>
+          <text class="axis-txt" x="710" y="224" text-anchor="middle">4000</text>
+          <text class="axis-txt" x="480" y="243" text-anchor="middle">median rank of a true duplicate pair (lower is better)</text>
+        </g>
+        <!-- scale: 115px per 1000 -> x = 250 + v*0.115 -->
+        <g>
+          <text class="bar-lab" x="242" y="34" text-anchor="end">title + description</text>
+          <rect x="250" y="22" width="453.9" height="20" rx="4" fill="var(--before)"></rect>
+          <text class="bar-val" x="712" y="37" text-anchor="end" fill="#fff">3947</text>
+
+          <text class="bar-lab bad" x="242" y="72" text-anchor="end">lead only ← shipped</text>
+          <rect x="250" y="60" width="254.6" height="20" rx="4" fill="var(--critical)"></rect>
+          <text class="bar-val" x="496" y="75" text-anchor="end" fill="#fff">2214</text>
+
+          <text class="bar-lab" x="242" y="110" text-anchor="end">per paragraph</text>
+          <rect x="250" y="98" width="48.3" height="20" rx="4" fill="var(--before)"></rect>
+          <text class="bar-val" x="308" y="113">420</text>
+
+          <text class="bar-lab" x="242" y="148" text-anchor="end">whole page ← now</text>
+          <rect x="250" y="136" width="21.7" height="20" rx="4" fill="var(--accent)"></rect>
+          <text class="bar-val" x="281" y="151">189</text>
+
+          <text class="bar-lab" x="242" y="186" text-anchor="end">per section</text>
+          <rect x="250" y="174" width="17" height="20" rx="4" fill="var(--accent)"></rect>
+          <text class="bar-val" x="277" y="189">148</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption>Embedding the whole page is a 12× improvement over the lead alone. Per-section pooling
+      scores a better median but worse recall at the cut-off the stage actually uses (12% vs 29%), so the
+      whole page ships.</figcaption>
+  </figure>
+
+  <div class="col">
+    <h3>The bigger lesson: don't proxy what you can measure directly</h3>
+    <p>Even after the fix, embeddings find only a minority of duplicates. The defect <em>is</em> "two pages
+    restating one study's measurements", so the stage now detects that <strong>directly</strong>: pages
+    sharing a cited project and three or more identical figures, at a numeric-set overlap of 0.5 or higher.
+    That yields <strong>20 pairs out of 7,381</strong> — deterministic, free, and containing every known
+    duplicate. Those are judged first; embeddings still contribute paraphrases that share no numbers.</p>
+    <p>The effect on precision was immediate: the merge judge accepted <strong>15 of 17</strong> candidates
+    on the first run after the change, against roughly 40% for embedding-only candidates.</p>
+  </div>
+</section>
+
+<!-- ============ RESULT ============ -->
+<section class="sec">
+  <div class="col">
+    <p class="eyebrow">What changed in the wiki</p>
+    <h2>Results across the whole corpus</h2>
+  </div>
+  <div class="twrap">
+    <table>
+      <thead>
+        <tr><th>Measure</th><th>Before</th><th>After</th><th>Change</th><th>Why it moved</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Concept pages</td><td class="num">153</td><td class="num">99</td>
+            <td class="num delta">−54</td><td>Duplicate shards merged.</td></tr>
+        <tr><td>Citing one project</td><td class="num">136</td><td class="num">15</td>
+            <td class="num delta">−121</td><td>The headline fix: pages now carry cross-project evidence.</td></tr>
+        <tr><td>Citing 2+ projects</td><td class="num">17</td><td class="num">84</td>
+            <td class="num delta">+67</td><td>Real synthesis rather than restated summaries.</td></tr>
+        <tr><td>Conflict pages</td><td class="num">13</td><td class="num">51</td>
+            <td class="num delta">+38</td><td>Multi-source concepts expose cross-project tensions that
+            single-source pages structurally could not.</td></tr>
+        <tr><td>Topic hubs</td><td class="num">15</td><td class="num">10</td>
+            <td class="num flat">−5</td><td>Re-clustered over a denser, better-connected concept graph.</td></tr>
+        <tr><td>wiki_check errors</td><td class="num">0</td><td class="num">0</td>
+            <td class="num flat">—</td><td>The publish gate never went red.</td></tr>
+        <tr><td>wiki_check warnings</td><td class="num">13</td><td class="num">4</td>
+            <td class="num delta">−9</td><td>Duplicate-pair warnings largely resolved.</td></tr>
+        <tr><td>Entity &amp; summary pages</td><td class="num">336 / 75</td><td class="num">336 / 75</td>
+            <td class="num flat">—</td><td>Untouched by this stage.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col">
+    <p style="margin-top:22px">99 concepts lands inside the 80–100 range the original brief asked for,
+    though the count was never the target — the number of pages still citing a single project was.</p>
+  </div>
+</section>
+
+<!-- ============ REPRODUCIBILITY ============ -->
+<section class="sec">
+  <div class="col">
+    <p class="eyebrow">Reproducibility</p>
+    <h2>Yes — it is a stage, not a one-off script</h2>
+    <p>It is wired into <code>pipeline/run_pipeline.sh</code> and obeys the same contract as every other
+    stage: hash-cached, idempotent, resumable, and a no-op when nothing changed. Running the pipeline on an
+    unchanged corpus still costs $0.</p>
+  </div>
+
+  <pre><span class="cm"># the whole pipeline — consolidation runs in its normal slot</span>
+CBORG_API_KEY=... ./pipeline/run_pipeline.sh
+
+<span class="cm"># just this stage, and see the candidates before spending anything</span>
+uv run python pipeline/consolidate_concepts.py --dry-run     <span class="ok"># $0 — no LLM calls, no writes</span>
+uv run python pipeline/consolidate_concepts.py               <span class="cm"># the real run</span>
+
+<span class="cm"># the runnable check that ships with it</span>
+uv run python pipeline/test_consolidate.py</pre>
+
+  <div class="col">
+    <ul class="plain">
+      <li><strong>A $0 dry run comes first.</strong> <code>--dry-run</code> embeds, ranks and prints both
+      candidate lists with their scores, making no LLM calls and no writes — so candidates can be eyeballed
+      and thresholds picked from data before any spend.</li>
+      <li><strong>Re-running is safe.</strong> A completed back-merge shows up in <code>sources</code> and a
+      completed merge shows up as a missing file, so both are skipped for free. Only negative verdicts need
+      state, in <code>state/consolidate.json</code>, keyed by page digest and prompt version so an edited
+      page or prompt is re-asked rather than silently inheriting a stale answer.</li>
+      <li><strong>It converges over passes rather than in one.</strong> Merging changes page content, which
+      changes what looks similar next time. Four passes were run here; each is cheaper than the last.</li>
+      <li><strong>Spend is bounded and tunable.</strong> <code>COMPILE_BUDGET_USD</code> aborts before
+      overrun, and <code>--merge-topn</code>, <code>--backmerge-threshold</code>, <code>--topk</code>,
+      <code>--min-sources</code> and <code>--evidence-jaccard</code> control how aggressive a run is.</li>
+      <li class="warn"><strong>The budget tripwire under-counts.</strong> One pass self-reported $0.80 while
+      the gateway billed $1.29 — reasoning tokens appear to be billed but absent from the reported
+      completion count. Treat it as a guard rail, not a ceiling; real spend is readable from the gateway's
+      <code>/user/info</code>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ DEBTS ============ -->
+<section class="sec">
+  <div class="col">
+    <p class="eyebrow">Known debts</p>
+    <h2>What is still open</h2>
+    <ul class="plain">
+      <li class="warn"><strong>15 concepts still cite one project.</strong> Some have no similar summary at
+      any threshold — genuinely single-project ideas. Forcing evidence into them is the padding the stage
+      exists to prevent.</li>
+      <li class="warn"><strong>The entity layer has no duplicate detection at all.</strong> 336 pages, and
+      <code>duplicate_concepts</code> scans only concepts — while the editorial contract requires one page
+      per real-world entity with aliases and external ids. <code>egg-nog</code> and <code>eggnog</code> are
+      two pages for one tool.</li>
+      <li class="warn"><strong>Hub and conflict stages skip two validators</strong> that compile pages get:
+      the numeric check and wikilink-target validation. They use their own untracked LLM call rather than
+      <code>generate_page</code>, so a few dead links reach those pages and are stripped at publish.</li>
+      <li class="warn"><strong><code>conflicts_build</code> never reaps stale pages</strong> the way
+      <code>topics_build</code> does. One fully-orphaned conflict page exists today.</li>
+      <li class="warn"><strong>Four pages list a source their body never cites</strong> — pre-existing, from
+      compile and enrich rather than this stage, which cannot add one.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <span>7 commits on <code>concept-consolidation</code></span>
+  <span>Stage: <code>pipeline/consolidate_concepts.py</code></span>
+  <span>Check: <code>pipeline/test_consolidate.py</code></span>
+  <span>Model: <code>openai/gpt-5.6-luna</code> via CBORG</span>
+</footer>
+
+</div>

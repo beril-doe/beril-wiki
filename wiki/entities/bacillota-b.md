@@ -81,7 +81,7 @@ The newer study further **refines** the habitat interpretation by finding that t
 
 - [[concepts/subsurface-bacillota-specialization]] — synthesis of deep-clay Bacillota_B functional specialization and genome expansion. [src: bacillota_b_subsurface_accessory, clay_confined_subsurface]
 - [[concepts/pangenome-integration]] — within-lineage orthologous-group enrichment, cohort construction, and pangenome limitations. [src: bacillota_b_subsurface_accessory]
-- [[concepts/multi-heme-cytochrome-detection]] — corrected marker logic and the loss of the original iron-reduction contrast. [src: bacillota_b_subsurface_accessory, clay_confined_subsurface]
+- [[concepts/functional-marker-validation]] — corrected marker logic and the loss of the original iron-reduction contrast. [src: bacillota_b_subsurface_accessory, clay_confined_subsurface]
 - [[concepts/metabolic-model-gapfilling]] — GapMind pathway completeness and the limits of the self-sufficiency metric. [src: clay_confined_subsurface]
 - [[summaries/bacillota_b_subsurface_accessory__REPORT]] — source-project summary. [src: bacillota_b_subsurface_accessory]
 - [[summaries/clay_confined_subsurface__REPORT]] — source-project summary. [src: clay_confined_subsurface]

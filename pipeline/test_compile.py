@@ -10,6 +10,7 @@ import pathlib
 import tempfile
 
 from compile import (
+    canonical_sources,
     downgrade_dead_links,
     fm_block,
     fm_entity_type,
@@ -53,6 +54,19 @@ def test_links_and_fm():
     assert fm_entity_type("gene_or_pathway") == "Gene_Or_Pathway"
 
 
+def test_canonical_sources():
+    """`sources` must state what the prose cites, no more: a padded entry is a
+    claim the page cannot back AND tells resume the doc is already integrated."""
+    body = "Claim. [src: proj_a]\n\nAnother. [src: pitfalls]\n"
+    prior = ["summaries/proj_a__REPORT.md", "summaries/uncited__REPORT.md"]
+    got = canonical_sources(body, prior)
+    assert got == ["summaries/proj_a__REPORT.md", "summaries/pitfalls.md"]
+    assert canonical_sources(body, got) == got          # stable, so unchanged pages don't churn
+    assert canonical_sources("No citations here.", prior) == []
+    # digests use the bare filename, report summaries carry __REPORT
+    assert canonical_sources("x [src: discoveries]", []) == ["summaries/discoveries.md"]
+
+
 def test_plan():
     with tempfile.TemporaryDirectory() as td:
         root = pathlib.Path(td)
@@ -77,5 +91,6 @@ if __name__ == "__main__":
     test_json()
     test_validate()
     test_links_and_fm()
+    test_canonical_sources()
     test_plan()
     print("test_compile: all checks passed")

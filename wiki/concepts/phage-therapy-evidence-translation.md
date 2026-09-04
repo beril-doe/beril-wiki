@@ -77,7 +77,7 @@ The unresolved gaps motivate [[concepts/phage-therapy-evidence-translation]] as 
 
 The framework should also be interpreted alongside [[concepts/pangenome-integration]], because susceptibility was measured across strains and the proposed AIEC-relevant selection depends on strain-level diagnostics that were not available in the current patient data. [src: ibd_phage_targeting]
 
-It also intersects [[concepts/ecological-resistance-association-and-causality]], because patient-specific treatment requires distinguishing a target's abundance association from evidence that phage-mediated removal will alter disease-relevant ecology. [src: ibd_phage_targeting]
+It also intersects [[concepts/environmental-resistome]], because patient-specific treatment requires distinguishing a target's abundance association from evidence that phage-mediated removal will alter disease-relevant ecology. [src: ibd_phage_targeting]
 
 Finally, the integration of PhageFoundry, HMP2 viromics, and UC Davis profiles illustrates the cross-dataset provenance and comparability issues captured by [[concepts/cross-tenant-data-bridging]]. [src: ibd_phage_targeting]
 

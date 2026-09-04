@@ -140,6 +140,6 @@ Annotation proxies require source-specific validation. EggNOG `Preferred_name='l
 - [[concepts/multi-omics-integration]] — metabolite pools versus pathway capacity, NMDC community metabolomics, and multi-line microbiome corroboration support cross-modal integration. [src: discoveries]
 - [[concepts/environmental-resistome]] — environment-dependent AMR composition, phylogenetic retention, resistance islands, and metal-specificity findings expand the environmental resistome synthesis. [src: discoveries]
 - [[concepts/subsurface-bacillota-specialization]] — clay cohort bias, Bacillota_B genome expansion, sulfate-reduction enrichment, and corrected iron-reduction markers refine subsurface specialization. [src: discoveries]
-- [[concepts/multi-heme-cytochrome-detection]] — corrected multi-heme cytochrome detection overturns the clay iron-reduction signal and establishes a marker-validation requirement. [src: discoveries]
+- [[concepts/functional-marker-validation]] — corrected multi-heme cytochrome detection overturns the clay iron-reduction signal and establishes a marker-validation requirement. [src: discoveries]
 - [[concepts/cross-tenant-data-bridging]] — live catalog discovery, BacDive-to-GTDB matching, PhageFoundry data, and BERDL data-mart conventions provide cross-tenant integration lessons. [src: discoveries]
 - [[concepts/condition-specific-fitness]] — microbiome ecotype leakage, classifier mismatch, and cohort-batch effects define limits on transferring condition-specific models across cohorts. [src: discoveries]

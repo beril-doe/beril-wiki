@@ -47,11 +47,49 @@ wishlist are tagged [P]; platform-dependent items are deferred at the bottom.
 
 ## Known draft-stage debts
 
-- 3 duplicate-concept pairs flagged by wiki_check (enrichment shards to
-  consolidate); 153 concepts vs the reference's 81 — finer grain, all-Luna.
-- Enrichment-created concepts start single-source; they accrete more sources
-  only as new docs compile. A cross-doc back-merge pass is a possible later
-  stage.
+- Concept consolidation (`consolidate_concepts.py`) closed the two debts that
+  used to live here: 153 -> 99 concepts, single-source 136 -> 15.
+- Embeddings are a WEAK detector for this defect and should not be trusted alone.
+  Measured against pairs whose bodies restate near-identical numbers, whole-page
+  cosine put them at median rank 189 of 7381 and recall@45 was 29%; the
+  deterministic evidence-overlap generator (shared cited project + >=3 identical
+  figures) finds them exactly, for free. Numbers-in-common is the direct
+  signature of a restated shard; semantic similarity is only a proxy for it.
+  If this ever regresses, suspect the REPRESENTATION before the model: embedding
+  only the lead paragraph scored median rank 2214 and recall@45 of 0%.
+- CLOSED: hub/conflict/author pages now get the same numeric and wikilink
+  validation compile pages get, and `wiki_check` scans all five publishable
+  collections. Dead concept links went 34 -> 0.
+- The numeric check verifies that a figure APPEARS in a cited source. It cannot
+  verify units, denominators, direction, that a figure attaches to the right
+  claim, or any non-numeric claim. Do not read "0 errors" as "the corpus is
+  true". Small integers (<4 digits, no decimal) are deliberately out of scope.
+- One known mis-citation: `entities/mycobacterium-tuberculosis.md` credits a
+  91% accessory-AMR fraction to `metabolic_capability_dependency`, which does
+  not report it (`amr_environmental_resistome` does). Compile's resume-skip
+  will not rewrite the page because it legitimately cites that document
+  elsewhere, and `wiki/` is generated so it must not be hand-edited. It needs a
+  targeted page-repair path, which does not exist yet.
+- 4 duplicate-concept warnings are pairs where BOTH sides are mature (>= 4 cited
+  projects), which `consolidate_concepts.py` declines by design. They need a
+  human call, not a threshold change.
+- Entity deduplication is the one collection still unaddressed. 336 pages, no
+  detector, and the concept detectors must NOT be reused: embeddings rank
+  `aciad2176`/`aciad3137` (different genes) at 0.971 and numeric overlap scores
+  `cyanobacteriia`/`photosystem-ii` at 1.00. It needs identity resolution on
+  canonical names, aliases and external ids -- which `contract/AGENTS.md`
+  requires but only ~40 of 336 pages record, so an id-extraction pass comes
+  first. Low priority: 1 exact name collision (`egg-nog`/`eggnog`) plus a
+  handful of plausible ones, and 197 of 336 pages are hidden at publish.
+- The budget tripwire UNDERCOUNTS. A consolidation pass self-reported `~$0.80`
+  while the gateway billed $1.29 (~2x), so `COMPILE_BUDGET_USD` is not a hard
+  ceiling; reasoning tokens appear to be billed but absent from
+  `usage.completion_tokens`. `topics_build`, `conflicts_build` and
+  `figures_build` have no tripwire at all. Real spend is readable from
+  `GET https://api.cborg.lbl.gov/user/info` (`user_info.spend`).
+- `conflicts_build.py` never deletes stale conflict pages (`topics_build` does
+  reap stale hubs), so a concept merge can strand a conflict page. `wiki_check`
+  does not scan `wiki-extra/conflicts`, so it will not flag one.
 - One second-run lit/hub churn cycle observed (a few hubs regenerate once
   after their reviews land); converges, costs cents.
 

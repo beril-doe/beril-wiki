@@ -24,6 +24,7 @@ import hashlib
 import json
 import os
 import pathlib
+import sys
 import re
 
 from litellm import completion
@@ -103,6 +104,9 @@ def main() -> None:
     print(f"manifest: {sum(len(v) for v in manifest.values())} figures across {len(manifest)} projects")
     state_path = STATE / "figures-state.json"
     state = json.loads(state_path.read_text()) if state_path.exists() else {}
+    if "--force" in sys.argv:
+        state = {}
+        print("  --force: ignoring cached digests")
     placements_path = STATE / "figures-placements.json"
     placements = json.loads(placements_path.read_text()) if placements_path.exists() else {}
     csv_flags: dict[str, list[str]] = {}

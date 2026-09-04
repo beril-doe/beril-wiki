@@ -8,13 +8,23 @@
 # pass and every subsequent addition:
 #   fetch    sync projects/*/REPORT.md + docs digests into staging/
 #   compile  first-party compiler — content-hash skips unchanged docs
+#   consolidate embedding-ranked concept merges + evidence back-merge (free embeds)
 #   conflicts promote multi-project Tensions to conflict pages (hash-skipped)
 #   hubs     re-cluster + regenerate only topic hubs whose members changed
 #   figures  manifest + LLM figure placements (hash-skipped)
 #   extras   deterministic author/data pages
 #   check    citation, numeric, uptake, and duplicate-concept audits (fails on errors)
 #   publish  Quartz static site (dead links stripped at publish)
+#
+# ./run_pipeline.sh --force        rebuild every derived stage, ignoring caches
+# ./run_pipeline.sh --no-publish   skip the Quartz build
 set -euo pipefail
+# --force rebuilds every derived stage instead of trusting its cache. Use it
+# after a change to a stage's prompt or grouping rule, which the content hashes
+# cannot see. Without it the pipeline is incremental and an unchanged corpus is
+# a no-op. Anything reproducible belongs here, not in ad-hoc rm of state files.
+FORCE=""
+for a in "$@"; do [ "$a" = "--force" ] && FORCE="--force"; done
 HERE="$(cd "$(dirname "$0")" && pwd)"
 REPO="$(dirname "$HERE")"
 LOG="$REPO/pipeline.log"
@@ -33,17 +43,20 @@ if grep -qE "\[ERROR\]" "$LOG"; then echo "compile had errors — see $LOG"; exi
 echo "== enrich" | tee -a "$LOG"
 "${PY[@]}" "$HERE/enrich_concepts.py" | tee -a "$LOG" | tail -3
 
+echo "== consolidate" | tee -a "$LOG"
+"${PY[@]}" "$HERE/consolidate_concepts.py" | tee -a "$LOG" | tail -3
+
 echo "== conflicts" | tee -a "$LOG"
-"${PY[@]}" "$HERE/conflicts_build.py" | tee -a "$LOG"
+"${PY[@]}" "$HERE/conflicts_build.py" ${FORCE} | tee -a "$LOG"
 
 echo "== hubs" | tee -a "$LOG"
-"${PY[@]}" "$HERE/topics_build.py" | tee -a "$LOG"
+"${PY[@]}" "$HERE/topics_build.py" ${FORCE} | tee -a "$LOG"
 
 echo "== literature" | tee -a "$LOG"
-"${PY[@]}" "$HERE/lit_context.py" | tee -a "$LOG" | tail -3
+"${PY[@]}" "$HERE/lit_context.py" ${FORCE} | tee -a "$LOG" | tail -3
 
 echo "== figures" | tee -a "$LOG"
-"${PY[@]}" "$HERE/figures_build.py" | tee -a "$LOG" | tail -3
+"${PY[@]}" "$HERE/figures_build.py" ${FORCE} | tee -a "$LOG" | tail -3
 
 echo "== extras" | tee -a "$LOG"
 "${PY[@]}" "$HERE/extra_pages.py" | tee -a "$LOG"

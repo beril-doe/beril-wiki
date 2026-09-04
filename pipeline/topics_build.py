@@ -20,15 +20,20 @@ import json
 import os
 import pathlib
 import re
+import sys
 
 import networkx as nx
 from litellm import completion
+
+import compile as C
+from wiki_check import source_ids
 
 HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
 OUT = ROOT / "wiki-extra"
 HUB_MODEL = os.environ.get("WIKI_MODEL", "openai/gpt-5.6-luna")
 MIN_CLUSTER = 3
+FORCE = "--force" in sys.argv
 PER_PAGE_CHARS = 7000  # truncate very long concept pages in hub context
 
 TEMPLATE = """You are writing a TOPIC HUB page for the BERIL Research Observatory wiki — the
@@ -59,14 +64,27 @@ paths, dashes, or prose. Conflict and concept pages are referenced only as
 """
 
 
+def src_id(entry: str) -> str:
+    """A `sources:` frontmatter entry -> the project id used in [src:] tags.
+
+    Must match wiki_check.cited_ids' normalization. The old code extracted only
+    `summaries/<id>__REPORT` and fell back to the RAW quoted string when a page
+    had none, so a concept sourced solely from a digest put the literal
+    "summaries/discoveries.md" into the valid-id set. bad_src_ids then accepted
+    `[src: summaries/discoveries.md]` in a hub, which wiki_check rejects as an
+    unknown source id — 8 publish-blocking errors from one format mismatch."""
+    return re.sub(r"__REPORT$", "", entry.strip().rsplit("/", 1)[-1].removesuffix(".md"))
+
+
 def parse_page(path: pathlib.Path) -> dict:
     text = path.read_text(encoding="utf-8", errors="replace")
     m = re.search(r'^sources:\s*\[(.*?)\]', text, re.M)
     if m:
-        sources = re.findall(r'summaries/([\w.-]+?)__REPORT', m.group(1)) or re.findall(r'"([^"]+)"', m.group(1))
+        raw = re.findall(r'"([^"]+)"', m.group(1))
     else:
         m2 = re.search(r'^sources:\n((?:\s+-\s.*\n)+)', text, re.M)
-        sources = re.findall(r'summaries/([\w.-]+?)__REPORT', m2.group(1)) if m2 else []
+        raw = re.findall(r'-\s*"?([^"\n]+?)"?\s*$', m2.group(1), re.M) if m2 else []
+    sources = [src_id(s) for s in raw]
     h1 = re.search(r'^# (.+)$', text, re.M)
     desc = re.search(r'^description:\s*"?(.*?)"?$', text, re.M)
     links = set(re.findall(r'\[\[concepts/([\w.-]+?)(?:\|[^\]]*)?\]\]', text))
@@ -139,6 +157,8 @@ def strip_bad_src(page: str, valid: set[str]) -> str:
 
 
 def main() -> None:
+    src_texts = source_ids(ROOT)
+    targets = C.wikilink_targets(ROOT)
     concepts = {p.stem: parse_page(p) for p in sorted((ROOT / "wiki/concepts").glob("*.md"))}
     entities = {p.stem: parse_page(p) for p in sorted((ROOT / "wiki/entities").glob("*.md"))}
     clusters = cluster_concepts(concepts)
@@ -148,6 +168,11 @@ def main() -> None:
     state_path = ROOT / "state" / "topics-state.json"
     state_path.parent.mkdir(exist_ok=True)
     state = json.loads(state_path.read_text()) if state_path.exists() else {}
+    if FORCE:
+        # Keep __names__ so topic identity (and therefore page slugs) stays put;
+        # drop only the content digests so every hub regenerates.
+        state = {"__names__": state.get("__names__", {})}
+        print("  --force: ignoring cached hub digests")
 
     # Topic names are cached by member set so identical clusters never get
     # renamed (renames churn page identity and force needless hub regens).
@@ -211,6 +236,19 @@ def main() -> None:
             if bad_src_ids(page, srcs):
                 print(f"  ! topics/{slug}: still invalid — stripping bad [src:] ids")
                 page = strip_bad_src(page, srcs)
+        # Same two guarantees generate_page gives every compile-written page:
+        # figures traceable to a cited source, and no link to a page that does
+        # not exist. One retry for numbers, then deterministic link repair.
+        nv = C.prose_violations(page, src_texts)
+        if nv:
+            print(f"  ! topics/{slug}: {len(nv)} unsupported figure(s) — retrying")
+            page = llm(prompt + "\n\nYOUR PREVIOUS ATTEMPT contained figures that appear in none "
+                       "of the cited sources:\n" + "\n".join(f"- {x}" for x in nv[:12]) +
+                       "\nRewrite the full page. Every number must be copied exactly from a source "
+                       "you cite in the same paragraph; drop any figure you cannot attribute.",
+                       system=TEMPLATE)
+            page = strip_bad_src(page, srcs)
+        page = C.downgrade_dead_links(page, targets | {f"topics/{slug}"})
         out_path.write_text(page.strip() + "\n", encoding="utf-8")
         state[slug] = digest
         any_changed = True
