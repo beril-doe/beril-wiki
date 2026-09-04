@@ -48,7 +48,7 @@ flowchart TD
 | literature | `lit_context.py` | splice a PMID-verified literature review under each hub's lead (see below) | `state/litcontext.json` |
 | figures | `figures_build.py` | choose flagship report figures for summary/hub/conflict pages | `state/figures-*.json` |
 | extras | `extra_pages.py` | deterministic pages: authors, data collections, Research Opportunities, Negative Results | — (pure code) |
-| check | `wiki_check.py` | citation, numeric-fidelity, uptake, and duplicate-concept audits; **errors block publish** | — |
+| check | `wiki_check.py` | citation, numeric-fidelity, dead-link, uptake and duplicate-concept audits over all five publishable collections; **errors block publish**; `--strict` promotes numeric and link warnings to errors | — |
 | publish | `build_quartz.sh` | Quartz v5 site build (see [publish-time transforms](wiki.md#publish-time-transforms)) | — |
 
 ## The compile loop (accumulate-by-rewrite)

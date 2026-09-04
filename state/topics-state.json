@@ -10,13 +10,13 @@
   "3e1f76340644": "Subsurface Microbial Ecology",
   "3accb6df7435": "Fitness Network Modules"
  },
- "bacterial-fitness-conservation-dynamics": "f820f2b04201b895",
- "ecological-genomics-biases": "3ff98646fa6d174e",
- "comparative-metabolic-dependencies": "a0c136a7fe07452d",
- "bacterial-resistance-ecology": "b151319daf928525",
+ "bacterial-fitness-conservation-dynamics": "df5fedeae4f95aad",
+ "comparative-metabolic-dependencies": "b86dcff39f047503",
+ "bacterial-resistance-ecology": "ce702df15fa5ef32",
  "biological-evidence-integration": "b35c45562fcc2748",
  "functional-annotation-gaps": "bb3658b4d9feb523",
- "biological-classification-robustness": "ca4b1878b5f46377",
  "subsurface-microbial-ecology": "cac14c7abd834c30",
- "fitness-network-modules": "f79dcf17f331bf63"
+ "fitness-network-modules": "41eab44ccd332769",
+ "ecological-genomics-biases": "3ff98646fa6d174e",
+ "biological-classification-robustness": "ca4b1878b5f46377"
 }

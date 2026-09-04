@@ -57,15 +57,22 @@ wishlist are tagged [P]; platform-dependent items are deferred at the bottom.
   signature of a restated shard; semantic similarity is only a proxy for it.
   If this ever regresses, suspect the REPRESENTATION before the model: embedding
   only the lead paragraph scored median rank 2214 and recall@45 of 0%.
-- Hub/conflict/author pages get `bad_src_ids` stripping but NOT the numeric
-  check compile pages get; the hub-number warnings in `wiki_check` are that gap.
-  `topics_build.py` has its own untracked `llm()` rather than `generate_page`,
-  so routing it through the shared validator is its own change, not a one-liner.
-- Nor do those stages validate WIKILINK targets the way `generate_page` does, so
-  newly generated hub/conflict pages carry a few `[[concepts/<project_id>]]`
-  links to pages that never existed. Harmless today — `wiki_check` does not scan
-  links in `wiki-extra/`, and `quartz_ingest.strip_dead_wikilinks` removes them
-  at publish — but it is the same untracked-`llm()` gap as the numeric check.
+- CLOSED: hub/conflict/author pages now get the same numeric and wikilink
+  validation compile pages get, and `wiki_check` scans all five publishable
+  collections. Dead concept links went 34 -> 0.
+- The numeric check verifies that a figure APPEARS in a cited source. It cannot
+  verify units, denominators, direction, that a figure attaches to the right
+  claim, or any non-numeric claim. Do not read "0 errors" as "the corpus is
+  true". Small integers (<4 digits, no decimal) are deliberately out of scope.
+- One known mis-citation: `entities/mycobacterium-tuberculosis.md` credits a
+  91% accessory-AMR fraction to `metabolic_capability_dependency`, which does
+  not report it (`amr_environmental_resistome` does). Compile's resume-skip
+  will not rewrite the page because it legitimately cites that document
+  elsewhere, and `wiki/` is generated so it must not be hand-edited. It needs a
+  targeted page-repair path, which does not exist yet.
+- 4 duplicate-concept warnings are pairs where BOTH sides are mature (>= 4 cited
+  projects), which `consolidate_concepts.py` declines by design. They need a
+  human call, not a threshold change.
 - The budget tripwire UNDERCOUNTS. A consolidation pass self-reported `~$0.80`
   while the gateway billed $1.29 (~2x), so `COMPILE_BUDGET_USD` is not a hard
   ceiling; reasoning tokens appear to be billed but absent from
