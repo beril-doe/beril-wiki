@@ -22,6 +22,7 @@ import sys
 
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
 WIKILINK = re.compile(r"\[\[([^\]|#]+?)(?:[|#][^\]]*)?\]\]")
+ORCID = re.compile(r"\b\d{4}-\d{4}-\d{4}-\d{3}[\dXx]\b")
 # Numbers worth verifying: decimals, percentages, thousands-separated, or >=4 digits.
 # Skips small integers (list positions, "3 lines of evidence") to avoid noise.
 #
@@ -63,8 +64,10 @@ def prose_only(par: str) -> str:
     A link target is a filename, not a claim: `[[conflicts/conflict--a--b--57107100]]`
     carries the 8-hex set-digest this repo puts in conflict slugs, and reading it
     as the figure 57107100 invents a violation the prose never made."""
-    return WIKILINK.sub(lambda m: m.group(0).split("|", 1)[1][:-2] if "|" in m.group(0) else " ",
+    text = WIKILINK.sub(lambda m: m.group(0).split("|", 1)[1][:-2] if "|" in m.group(0) else " ",
                         SRC_TAG.sub("", par))
+    # ORCIDs are identifiers: 0000-0003-2728-7671 is four 4-digit "figures".
+    return ORCID.sub(" ", text)
 
 
 def numbers_in(text: str) -> set[str]:

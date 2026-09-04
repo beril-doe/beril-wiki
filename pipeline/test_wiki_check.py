@@ -48,6 +48,7 @@ def test_link_targets_are_not_figures():
     their project set, and reading it as a figure invents a violation."""
     par = "See [[conflicts/conflict--a--b--c--57107100]] for the split. [src: p]"
     assert unsupported_numbers(par, ["p"], SOURCES) == []
+    assert NUMBER.findall(prose_only("ORCID: 0000-0003-2728-7671")) == []   # identifier, not figures
     # an alias is prose and stays checkable
     assert "9,999" in NUMBER.findall(prose_only("[[concepts/x|the 9,999 figure]]"))
 
