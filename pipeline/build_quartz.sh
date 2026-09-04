@@ -53,6 +53,36 @@ c["theme"]["colors"]["darkMode"] = {           # workbench "observatory"
 (qp / "quartz.config.yaml").write_text(yaml.safe_dump(cfg, sort_keys=False, allow_unicode=True))
 PY
 
+# Thin, quiet scrollbars everywhere — mirrors the workbench's .beril-scroll
+# (apps/web/src/index.css) against Quartz's palette, where --lightgray is the
+# workbench --border and --gray is --muted-foreground. Rewritten every build
+# because quartz/ is a gitignored clone.
+cat > "$QP/quartz/styles/custom.scss" <<'SCSS'
+@use "./variables.scss" as *;
+
+// Scrollbars that do not shout. Mirrors the BERIL workbench .beril-scroll.
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--gray) 40%, transparent);
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--gray) 60%, transparent);
+}
+@supports (scrollbar-width: thin) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--lightgray) transparent;
+  }
+}
+SCSS
+
 # Publish is render-only: wiki/ and wiki-extra/ are committed, so no stage
 # regeneration here (run_pipeline.sh owns that). Figures come from the
 # observatory checkout when present; a checkout-less clone renders without them.
