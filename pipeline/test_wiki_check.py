@@ -6,7 +6,7 @@
 
 from __future__ import annotations
 
-from wiki_check import NUMBER, norm_num, numbers_in, unsupported_numbers
+from wiki_check import NUMBER, norm_num, numbers_in, prose_only, unsupported_numbers
 
 SOURCES = {"p": "covered 7,609 genes (59.3%) with OR=1.46 p=1.3e-43 and |dGC| 0.047 vs 0.038, d = 0.247",
            "q": "a second study reported 123.4% and 66 genes"}
@@ -43,6 +43,15 @@ def test_unsupported_numbers():
     assert unsupported_numbers("Claim 7,609. [src: nope]", ["nope"], SOURCES) == []
 
 
+def test_link_targets_are_not_figures():
+    """A wikilink target is a filename. Conflict slugs carry an 8-hex digest of
+    their project set, and reading it as a figure invents a violation."""
+    par = "See [[conflicts/conflict--a--b--c--57107100]] for the split. [src: p]"
+    assert unsupported_numbers(par, ["p"], SOURCES) == []
+    # an alias is prose and stays checkable
+    assert "9,999" in NUMBER.findall(prose_only("[[concepts/x|the 9,999 figure]]"))
+
+
 def test_numbers_in():
     assert numbers_in("0.047 vs 0.038, d = 0.247") == {"0.047", "0.038", "0.247"}
 
@@ -50,5 +59,6 @@ def test_numbers_in():
 if __name__ == "__main__":
     test_tokenizer()
     test_unsupported_numbers()
+    test_link_targets_are_not_figures()
     test_numbers_in()
     print("test_wiki_check: all checks passed")

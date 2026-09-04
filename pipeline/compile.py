@@ -40,7 +40,7 @@ import yaml
 from litellm import completion
 
 from wiki_check import (NUMBER, SRC_TAG, cited_ids, duplicate_concepts, is_table_or_links,
-                        norm_num, paragraphs, unsupported_numbers)
+                        norm_num, paragraphs, prose_only, unsupported_numbers)
 
 HERE = pathlib.Path(__file__).parent
 REPO = HERE.parent
@@ -353,7 +353,7 @@ def validate_page(content: str, sources: dict[str, str], targets: set[str],
         for s in ids:
             if s not in sources:
                 v.append(f"paragraph {i}: unknown source id [src: {s}]")
-        nums = NUMBER.findall(SRC_TAG.sub("", par))
+        nums = NUMBER.findall(prose_only(par))
         known = [s for s in ids if s in sources]
         if nums and not ids:
             # No table/link exemption when FIGURES are present: the exemption was

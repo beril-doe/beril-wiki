@@ -57,6 +57,16 @@ def norm_num(tok: str) -> str:
     return tok.replace(",", "").replace(" ", "").rstrip("%")
 
 
+def prose_only(par: str) -> str:
+    """Paragraph text with citation tags and wikilink TARGETS removed.
+
+    A link target is a filename, not a claim: `[[conflicts/conflict--a--b--57107100]]`
+    carries the 8-hex set-digest this repo puts in conflict slugs, and reading it
+    as the figure 57107100 invents a violation the prose never made."""
+    return WIKILINK.sub(lambda m: m.group(0).split("|", 1)[1][:-2] if "|" in m.group(0) else " ",
+                        SRC_TAG.sub("", par))
+
+
 def numbers_in(text: str) -> set[str]:
     return {norm_num(t) for t in NUMBER.findall(text)}
 
@@ -81,7 +91,7 @@ def unsupported_numbers(par: str, ids: list[str], sources: dict[str, str]) -> li
     if not known:
         return []
     allowed = set().union(*(source_numbers(s, sources[s]) for s in known))
-    return [t for t in NUMBER.findall(SRC_TAG.sub("", par)) if norm_num(t) not in allowed]
+    return [t for t in NUMBER.findall(prose_only(par)) if norm_num(t) not in allowed]
 
 
 def source_ids(kb: pathlib.Path) -> dict[str, str]:
@@ -175,7 +185,7 @@ def main() -> int:
             rel = f"{sub}/{page.name}"
             for i, par in enumerate(paragraphs(page.read_text(encoding="utf-8", errors="replace")), 1):
                 ids = cited_ids(par)
-                nums = NUMBER.findall(SRC_TAG.sub("", par))
+                nums = NUMBER.findall(prose_only(par))
                 if ids:
                     n_cited_pars += 1
                 unknown = [s for s in ids if s not in sources]
