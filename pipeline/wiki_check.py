@@ -114,7 +114,12 @@ def paragraphs(body: str) -> list[str]:
     # Literature Context sections cite external papers (PMID-verified by
     # lit_context.py), so their numbers are exempt from corpus-source checks.
     body = re.sub(r"^---\n.*?\n---\n", "", body, flags=re.S)
-    body = re.sub(r"^## Literature Context\s*\n.*?(?=\n## |\Z)", "", body, flags=re.M | re.S)
+    # Forward-looking sections propose future work rather than asserting
+    # evidence, so their figures have nothing to cite: "Re-run the comparison at
+    # n=500" is a plan, not a claim. Literature Context is exempt for the
+    # adjacent reason — it cites external PMIDs, verified by lit_context.py.
+    body = re.sub(r"^## (Literature Context|Open Directions|Resolving Work|Possible Reconciliations)"
+                  r"\s*\n.*?(?=\n## |\Z)", "", body, flags=re.M | re.S)
     return [p.strip() for p in re.split(r"\n\s*\n", body) if p.strip() and not p.lstrip().startswith("#")]
 
 
