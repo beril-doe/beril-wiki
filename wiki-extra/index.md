@@ -1,20 +1,20 @@
 # BERIL Knowledge Wiki
 
-The BERIL Research Observatory is a corpus of AI-conducted microbial-biology research carried out over the KBase BER Data Lakehouse. It brings together project reports and cross-project digests that examine microbial genomes, phenotypes, environments, metabolic capabilities, fitness measurements, resistance traits, and related biological evidence.
+The BERIL Research Observatory corpus collects AI-conducted microbial-biology research carried out over the KBase BER Data Lakehouse. It brings together project reports and cross-project syntheses that connect genomic content, experimental measurements, microbial communities, environmental context, annotations, and computational inference.
 
-Read the wiki through its **topics**, which are the main entry points into recurring research questions. **Concepts**, **entities**, and **summaries** provide the reference layers: concepts define important ideas, entities identify the biological objects and resources discussed, and summaries synthesize discoveries and pitfalls across the corpus.
+Read the wiki through its **topics**, which are the main entry points into recurring research questions. Within each topic, **concepts** define the ideas being examined, **entities** provide the referenced biological objects, datasets, methods, and other particulars, and **summaries** provide cross-project digests of discoveries and pitfalls. These layers are complementary: topics orient the reader, concepts and entities provide reference detail, and summaries synthesize the corpus.
 
 ## Topics
 
-- [[topics/bacterial-fitness-conservation-dynamics|Bacterial Fitness-Conservation Dynamics]] — How mutant fitness, gene essentiality, condition dependence, and pangenome retention relate—and where conservation does not imply universal essentiality or ecological activity. *(21 concepts)*
-- [[topics/ecological-genomics-biases|Ecological Genomics Biases]] — How sampling, classification, annotation, and comparability shape apparent links between microbial genomes, environments, phenotypes, and ecological interactions. *(15 concepts)*
-- [[topics/comparative-metabolic-dependencies|Comparative Metabolic Dependencies]] — When genome-encoded pathways indicate nutritional independence, condition-specific requirements, latent capabilities, or functions supplied by other organisms. *(15 concepts)*
-- [[topics/bacterial-resistance-ecology|Bacterial Resistance Ecology]] — How antimicrobial- and metal-resistance traits are distributed across genomes, lineages, environments, and mobile genetic contexts, and how they affect fitness. *(13 concepts)*
-- [[topics/biological-evidence-integration|Biological Evidence Integration]] — How measurements, annotations, metadata, models, and experimental phenotypes can be combined to support biological claims through multiple evidentiary routes. *(11 concepts)*
-- [[topics/functional-annotation-gaps|Functional Annotation Gaps]] — The unresolved links among genes, proteins, reactions, pathways, phenotypes, and ecological roles, where “unknown” can reflect different kinds of missing evidence. *(8 concepts)*
-- [[topics/biological-classification-robustness|Biological Classification Robustness]] — Whether biological conclusions remain interpretable when datasets, annotation systems, cohorts, sampling designs, or analytical definitions change. *(4 concepts)*
-- [[topics/subsurface-microbial-ecology|Subsurface Microbial Ecology]] — How depth, groundwater flow, mineral confinement, redox conditions, and limited substrates shape microbial distribution, persistence, and potential function below the surface. *(3 concepts)*
-- [[topics/fitness-network-modules|Fitness Network Modules]] — Groups of genes with coordinated disruption patterns across conditions, connecting individual fitness effects with condition-dependent functional architectures. *(3 concepts)*
+- [[topics/gene-fitness-conservation-dynamics|Gene Fitness-Conservation Dynamics]] — Relates experimentally measured gene-disruption effects to gene retention across bacterial genomes using fitness assays, pangenomes, annotations, and environmental comparisons.
+- [[topics/ecological-genomic-inference-biases|Ecological Genomic Inference Biases]] — Examines how sampling, metadata, database recognition, and testable ecological contrasts shape inferences linking environments, organisms, and genomic content.
+- [[topics/metabolic-capability-inference|Metabolic Capability Inference]] — Uses genome content, pathway annotations, fitness, growth, metabolomics, and ecological context to distinguish metabolic potential from requirement, expression, or in situ performance.
+- [[topics/resistance-ecology-and-mobility|Resistance Ecology and Mobility]] — Studies how resistance traits are distributed across environments, lineages, strains, and genomic compartments, and how they move, persist, or become conditionally valuable.
+- [[topics/biological-evidence-integration|Biological Evidence Integration]] — Combines molecular measurements, phenotypes, ecological observations, metadata, and computational predictions to support biological claims.
+- [[topics/functional-annotation-gaps|Functional Annotation Gaps]] — Maps the layered gaps connecting sequences, protein families, reactions, phenotypes, and ecological signals to defensible biological functions.
+- [[topics/schema-dependent-functional-inference|Schema-Dependent Functional Inference]] — Examines how ontologies, annotation systems, identifier mappings, composite labels, feature namespaces, and cohort representation shape functional comparisons.
+- [[topics/subsurface-ecological-genomics|Subsurface Ecological Genomics]] — Connects microbial communities, recovered genomes, functional markers, and environmental context in sediments, groundwater, and confined clay.
+- [[topics/cofitness-network-modules|Cofitness Network Modules]] — Uses condition-linked gene-fitness profiles to study functional organization beyond operons, annotations, or single-gene effects.
 
 ## Corpus
 

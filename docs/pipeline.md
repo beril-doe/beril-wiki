@@ -43,7 +43,7 @@ flowchart TD
 | compile | `compile.py` | per changed doc: summarize → plan against the live concept/entity index → merge-rewrite each touched page | `state/hashes.json` |
 | enrich | `enrich_concepts.py` | per summary: audit the concept layer for *missing* synthesis concepts; justified creates only | `state/enrich.json` |
 | consolidate | `consolidate_concepts.py` | embedding-ranked candidates: merge near-duplicate concepts, back-merge evidence into thin ones (see below) | `state/consolidate.json` |
-| conflicts | `conflicts_build.py` | promote multi-project `## Tensions` to conflict pages (Evidence Sides / Resolving Work) | in-page hash |
+| conflicts | `conflicts_build.py` | promote multi-project `## Tensions` to conflict pages (Evidence Sides / Resolving Work); folds together groups describing one disagreement, retires groups that disappear | in-page hash |
 | hubs | `topics_build.py` | Louvain-cluster the concept graph; one narrative hub per topic + the home page | `state/topics-state.json` |
 | literature | `lit_context.py` | splice a PMID-verified literature review under each hub's lead (see below) | `state/litcontext.json` |
 | figures | `figures_build.py` | choose flagship report figures for summary/hub/conflict pages | `state/figures-*.json` |
@@ -127,7 +127,44 @@ and the prompt offers an explicit `UNCHANGED` reply for the common case where a
 similar-looking document has nothing to add.
 
 `--dry-run` ranks and prints both candidate lists for $0 — no LLM calls, no
-writes. Use it to pick thresholds before spending.
+writes, free embedding models only. Use it to pick thresholds before spending.
+
+## Forcing a rebuild
+
+Content hashes cannot see a change to a stage's prompt or grouping rule, so
+`./pipeline/run_pipeline.sh --force` rebuilds every derived stage instead of
+trusting its cache (`conflicts_build`, `topics_build`, `lit_context` and
+`figures_build` each take `--force` individually too). Reach for that rather
+than deleting `state/*.json` or generated pages by hand: a rebuild anyone can
+reproduce is the point, and hand-deletion leaves no record of what was rebuilt
+or why. `topics_build --force` deliberately keeps its topic-name cache so page
+slugs do not churn.
+
+## Consolidation applies to concepts and conflicts, and only there
+
+Duplication is possible only where an LLM decides how many pages to make.
+
+- **concepts** — one page per idea, so the same idea can be written twice. This
+  is what `consolidate_concepts.py` fixes.
+- **conflicts** — grouped by their exact project set, so one disagreement
+  reaching two different sets became two pages. `conflicts_build` now folds
+  groups together when they share a project AND either restate the same figures
+  or read near-identically (cosine ≥ `CONFLICT_SIM`, default 0.93 — above the
+  99th percentile of 0.900, because these pages share a template and the median
+  unrelated pair already sits at 0.79).
+- **topics** — Louvain returns a partition, so clusters are disjoint by
+  construction and stale hubs are reaped. Duplication is impossible.
+- **summaries, authors, data** — one page per input. Impossible.
+- **entities** — duplication is possible, but the concept detectors do NOT
+  transfer and must not be reused here. Entity pages describing the same *kind*
+  of thing read alike: the highest-scoring pair in the corpus, `aciad2176` and
+  `aciad3137` at cosine 0.971, is two different genes, as is `pmoa`/`pmob` at
+  0.941. Numeric overlap is equally misleading, scoring `cyanobacteriia` against
+  `photosystem-ii` at 1.00 because they are co-mentioned in one passage. Entities
+  need identity resolution (canonical name, aliases, external ids), and the ids
+  `contract/AGENTS.md` requires are recorded on only ~40 of 336 pages. Left as
+  its own piece of work; the observed duplicate rate is low and 197 of 336
+  entity pages are hidden at publish anyway.
 
 ## Literature context
 

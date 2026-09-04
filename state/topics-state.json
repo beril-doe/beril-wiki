@@ -1,22 +1,22 @@
 {
  "__names__": {
-  "58fa72442f97": "Bacterial Fitness-Conservation Dynamics",
-  "fd4a567e032e": "Ecological Genomics Biases",
-  "3db8006d2381": "Comparative Metabolic Dependencies",
-  "f94bbdff5356": "Bacterial Resistance Ecology",
+  "58fa72442f97": "Gene Fitness-Conservation Dynamics",
+  "fd4a567e032e": "Ecological Genomic Inference Biases",
+  "3db8006d2381": "Metabolic Capability Inference",
+  "f94bbdff5356": "Resistance Ecology and Mobility",
   "3db49f52ef44": "Biological Evidence Integration",
   "937bc07f418a": "Functional Annotation Gaps",
-  "7cc4758168f0": "Biological Classification Robustness",
-  "3e1f76340644": "Subsurface Microbial Ecology",
-  "3accb6df7435": "Fitness Network Modules"
+  "7cc4758168f0": "Schema-Dependent Functional Inference",
+  "3e1f76340644": "Subsurface Ecological Genomics",
+  "3accb6df7435": "Cofitness Network Modules"
  },
- "bacterial-fitness-conservation-dynamics": "df5fedeae4f95aad",
- "comparative-metabolic-dependencies": "b86dcff39f047503",
- "bacterial-resistance-ecology": "ce702df15fa5ef32",
- "biological-evidence-integration": "b35c45562fcc2748",
- "functional-annotation-gaps": "bb3658b4d9feb523",
- "subsurface-microbial-ecology": "cac14c7abd834c30",
- "fitness-network-modules": "41eab44ccd332769",
- "ecological-genomics-biases": "3ff98646fa6d174e",
- "biological-classification-robustness": "ca4b1878b5f46377"
+ "gene-fitness-conservation-dynamics": "dd4b467320c4d747",
+ "ecological-genomic-inference-biases": "98b967f90291c4a7",
+ "metabolic-capability-inference": "58459d964b9ef1ce",
+ "resistance-ecology-and-mobility": "df278dbf49ab68ca",
+ "biological-evidence-integration": "0af8395165ac78fd",
+ "functional-annotation-gaps": "e4930ff92ed3fd45",
+ "schema-dependent-functional-inference": "a79984f2de88ddfc",
+ "subsurface-ecological-genomics": "cac14c7abd834c30",
+ "cofitness-network-modules": "2e340b1bb66a6eed"
 }

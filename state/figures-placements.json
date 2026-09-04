@@ -2716,25 +2716,25 @@
   ]
  },
  "topics/functional-annotation-gaps.md": {
-  "page_hash": "5cee4770de661768",
+  "page_hash": "4b4785760c41687e",
   "placements": [
    {
     "after_paragraph": 10,
-    "project": "annotation_gap_discovery",
-    "file": "figures/fig1_resolution_overview.png",
-    "caption": "Cumulative resolution and confidence breakdown for 201 gapfilled reaction\u2013organism pairs, showing that more than half remained unresolved."
-   },
-   {
-    "after_paragraph": 15,
     "project": "alphafold_msa_annotation",
     "file": "figures/NB03_msa_depth_pangenome_class.png",
-    "caption": "MSA depth and annotation-related properties by pangenome class, illustrating poorer sequence-space representation and higher hypothetical-protein rates in auxiliary and singleton clusters."
+    "caption": "Greater AlphaFold MSA depth is associated with richer domain annotation across pangenome classes, while hypothetical and structurally novel proteins remain concentrated in poorly represented sequence space."
    },
    {
-    "after_paragraph": 16,
+    "after_paragraph": 13,
     "project": "annotation_gap_discovery",
     "file": "figures/fig2_cross_validation.png",
-    "caption": "Cross-validation of complementary evidence streams, showing why integrated evidence is needed to resolve annotation gaps."
+    "caption": "Cross-validation shows that combining orthogonal evidence streams resolves more metabolic annotation gaps than relying on any single method."
+   },
+   {
+    "after_paragraph": 14,
+    "project": "functional_dark_matter",
+    "file": "figures/fig03_dark_gene_coverage.png",
+    "caption": "Evidence coverage across dark genes shows that many genes lacking standard annotations nevertheless have experimentally measurable phenotypes or other prioritizing evidence."
    }
   ]
  },
@@ -2779,25 +2779,25 @@
   ]
  },
  "topics/resistance-ecology-and-mobility.md": {
-  "page_hash": "6d1469b2559fe75a",
+  "page_hash": "c139016d0080d641",
   "placements": [
    {
-    "after_paragraph": 9,
+    "after_paragraph": 8,
     "project": "amr_environmental_resistome",
     "file": "figures/h2_core_accessory_by_env.png",
-    "caption": "Core and accessory AMR fractions reveal stronger environmental differences and enrichment of AMR in variable genomic compartments."
+    "caption": "Core and accessory AMR fractions differ across environments, with AMR disproportionately enriched in the accessory genome."
    },
    {
     "after_paragraph": 10,
     "project": "amr_strain_variation",
     "file": "figures/nb03_cooccurrence.png",
-    "caption": "Resistance-island size, co-occurrence, and prevalence across species support modular inheritance of AMR genes."
+    "caption": "Resistance-island co-occurrence reveals modular inheritance across species, including island-size distributions and enrichment relative to null expectations."
    },
    {
     "after_paragraph": 15,
     "project": "amr_fitness_cost",
     "file": "figures/antibiotic_validation.png",
-    "caption": "Fitness shifts between antibiotic and non-antibiotic conditions show that AMR importance is conditional on treatment context."
+    "caption": "Fitness shifts between antibiotic and non-antibiotic conditions show that many AMR genes become conditionally important under antibiotic exposure."
    }
   ]
  },
@@ -3305,25 +3305,25 @@
   ]
  },
  "topics/biological-evidence-integration.md": {
-  "page_hash": "5648b2825aefc8c1",
+  "page_hash": "4b79a397c29726a2",
   "placements": [
    {
-    "after_paragraph": 8,
-    "project": "berdl_data_atlas",
-    "file": "figures/nb02_linkage_graph.png",
-    "caption": "Tenant\u2013topic linkage graph showing where resources share canonical join keys and where cross-tenant integration is possible."
-   },
-   {
-    "after_paragraph": 10,
+    "after_paragraph": 7,
     "project": "acinetobacter_adp1_explorer",
     "file": "figures/fba_tnseq_concordance.png",
-    "caption": "Concordance between flux-balance-analysis predictions and TnSeq fitness measurements, illustrating agreement across complementary evidence streams."
+    "caption": "FBA and TnSeq essentiality show how genome-scale metabolic capability compares with experimentally observed dependency across conditions."
    },
    {
-    "after_paragraph": 12,
-    "project": "lignin_community_enrichment",
-    "file": "figures/16S_ecological_memory_pcoa.png",
-    "caption": "Ecological-memory PCoA showing how prior carbon history structures bacterial community composition beyond the current enrichment substrate."
+    "after_paragraph": 11,
+    "project": "berdl_data_atlas",
+    "file": "figures/nb02_linkage_graph.png",
+    "caption": "The BERDL tenant\u2013topic linkage graph illustrates how shared canonical identifiers create potential cross-dataset integration pathways."
+   },
+   {
+    "after_paragraph": 14,
+    "project": "caulobacter_fur_lipida_loss",
+    "file": "figures/NB07_synthesis_master.png",
+    "caption": "A multi-layer synthesis of transcriptomic, proteomic, RB-TnSeq, regulon, and comparative-annotation evidence reveals distinct early and late responses to lipid-A loss."
    }
   ]
  },
@@ -3387,6 +3387,148 @@
     "project": "cofitness_coinheritance",
     "file": "figures/fig5_module_coinheritance.png",
     "caption": "Module-level co-inheritance is stronger than expected under a prevalence-matched null, supporting multi-gene modules as units of pangenome inheritance."
+   }
+  ]
+ },
+ "topics/cofitness-network-modules.md": {
+  "page_hash": "d8d8188dfcf4a173",
+  "placements": [
+   {
+    "after_paragraph": 3,
+    "project": "fitness_modules",
+    "file": "figures/validation_summary.png",
+    "caption": "Within-module cofitness correlations are stronger than background correlations, supporting the presence of structured, condition-dependent modules."
+   },
+   {
+    "after_paragraph": 6,
+    "project": "cofitness_coinheritance",
+    "file": "figures/fig5_module_coinheritance.png",
+    "caption": "Module-level co-inheritance shows how coordinated gene groups provide a stronger genome-wide occurrence signal than isolated pairwise cofitness links."
+   },
+   {
+    "after_paragraph": 9,
+    "project": "fitness_modules",
+    "file": "figures/module_families.png",
+    "caption": "Cross-organism module families vary in size and taxonomic span, illustrating both the portability and organism-specific limits of module conservation."
+   }
+  ]
+ },
+ "topics/ecological-genomic-inference-biases.md": {
+  "page_hash": "432cc4f5f6729d90",
+  "placements": [
+   {
+    "after_paragraph": 7,
+    "project": "bacdive_metal_validation",
+    "file": "figures/bridge_summary.png",
+    "caption": "BacDive\u2013pangenome bridge summary showing how uneven strain and metadata representation limits ecological-genomic coverage."
+   },
+   {
+    "after_paragraph": 9,
+    "project": "env_embedding_explorer",
+    "file": "figures/geo_vs_embedding_by_env_group.png",
+    "caption": "Geographic distance versus AlphaEarth embedding distance by environment group, illustrating that environmental embeddings encode spatial and sampling structure rather than neutral context."
+   },
+   {
+    "after_paragraph": 11,
+    "project": "ecotype_env_reanalysis",
+    "file": "figures/partial_corr_distributions.png",
+    "caption": "Distribution of partial correlations across species, showing that environmental associations are generally weaker and more variable than lineage-related structure."
+   }
+  ]
+ },
+ "topics/gene-fitness-conservation-dynamics.md": {
+  "page_hash": "03c5a9397880c3a2",
+  "placements": [
+   {
+    "after_paragraph": 7,
+    "project": "conservation_fitness_synthesis",
+    "file": "figures/fitness_conservation_gradient.png",
+    "caption": "Across bacterial genomes, gene conservation is positively but weakly associated with experimentally measured fitness importance."
+   },
+   {
+    "after_paragraph": 9,
+    "project": "conservation_fitness_synthesis",
+    "file": "figures/core_genome_active.png",
+    "caption": "Core genes are frequently active in laboratory growth and can impose a measurable fitness burden when deleted."
+   }
+  ]
+ },
+ "topics/metabolic-capability-inference.md": {
+  "page_hash": "d2529bde318ac63e",
+  "placements": [
+   {
+    "after_paragraph": 7,
+    "project": "metabolic_capability_dependency",
+    "file": "figures/nb03_stacked_bar.png",
+    "caption": "Distribution of pathway dependency classes across carbon-utilization and amino-acid biosynthesis pathways, showing that predicted capability often remains latent rather than growth-required."
+   },
+   {
+    "after_paragraph": 10,
+    "project": "adp1_deletion_phenotypes",
+    "file": "figures/pca_biplot.png",
+    "caption": "PCA of ADP1 deletion phenotypes showing how gene effects and carbon-source conditions organize the condition-dependent phenotype space."
+   },
+   {
+    "after_paragraph": 14,
+    "project": "fw300_metabolic_consistency",
+    "file": "figures/consistency_heatmap.png",
+    "caption": "Cross-database consistency heatmap comparing metabolite production, fitness evidence, BacDive records, and GapMind pathway predictions."
+   }
+  ]
+ },
+ "topics/schema-dependent-functional-inference.md": {
+  "page_hash": "621fe7c33fac697b",
+  "placements": [
+   {
+    "after_paragraph": 14,
+    "project": "ecotype_functional_differentiation",
+    "file": "figures/effect_size_distributions.png",
+    "caption": "Effect-size distributions show that adaptive COG categories differentiate ecotypes more strongly than housekeeping categories."
+   },
+   {
+    "after_paragraph": 15,
+    "project": "ecotype_functional_differentiation",
+    "file": "figures/cog_differentiation_heatmap.png",
+    "caption": "Across 12 species, the heatmap shows the distribution of statistically significant COG differentiation tests after false-discovery-rate correction."
+   }
+  ]
+ },
+ "topics/subsurface-ecological-genomics.md": {
+  "page_hash": "0582e473e3130ba5",
+  "placements": [
+   {
+    "after_paragraph": 7,
+    "project": "enigma_sso_asv_ecology",
+    "file": "figures/nmds_samples_zone_well.png",
+    "caption": "Sample-level ordination shows community separation by hydrogeological zone and well across the SSO sediment survey."
+   },
+   {
+    "after_paragraph": 10,
+    "project": "bacillota_b_subsurface_accessory",
+    "file": "figures/summary_figure.png",
+    "caption": "A synthesis of deep-clay Bacillota_B genome comparisons highlights accessory-genome expansion and associated functional potential relative to soil baselines."
+   }
+  ]
+ },
+ "conflicts/conflict--acinetobacter_adp1_explorer--adp1_triple_essentiality--alphafold_msa_annotation--8af84dcc.md": {
+  "page_hash": "eada4c48f8d2d4ac",
+  "placements": [
+   {
+    "after_paragraph": 5,
+    "project": "amr_fitness_cost",
+    "file": "figures/h3_core_vs_accessory.png",
+    "caption": "Core and accessory AMR genes show nearly identical baseline fitness distributions, indicating that conservation status does not predict laboratory fitness burden in this analysis."
+   }
+  ]
+ },
+ "conflicts/conflict--bacdive_metal_validation--metal_cross_resistance--metal_fitness_atlas--a8afd400.md": {
+  "page_hash": "3e2c92ca61255d6f",
+  "placements": [
+   {
+    "after_paragraph": 5,
+    "project": "microbeatlas_metal_ecology",
+    "file": "figures/fig3_synthesis.png",
+    "caption": "MicrobeAtlas synthesis showing phylogenetic signal across trait\u2013domain combinations and PGLS estimates for the association between metal-type diversity and inferred niche breadth."
    }
   ]
  }

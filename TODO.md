@@ -73,6 +73,14 @@ wishlist are tagged [P]; platform-dependent items are deferred at the bottom.
 - 4 duplicate-concept warnings are pairs where BOTH sides are mature (>= 4 cited
   projects), which `consolidate_concepts.py` declines by design. They need a
   human call, not a threshold change.
+- Entity deduplication is the one collection still unaddressed. 336 pages, no
+  detector, and the concept detectors must NOT be reused: embeddings rank
+  `aciad2176`/`aciad3137` (different genes) at 0.971 and numeric overlap scores
+  `cyanobacteriia`/`photosystem-ii` at 1.00. It needs identity resolution on
+  canonical names, aliases and external ids -- which `contract/AGENTS.md`
+  requires but only ~40 of 336 pages record, so an id-extraction pass comes
+  first. Low priority: 1 exact name collision (`egg-nog`/`eggnog`) plus a
+  handful of plausible ones, and 197 of 336 pages are hidden at publish.
 - The budget tripwire UNDERCOUNTS. A consolidation pass self-reported `~$0.80`
   while the gateway billed $1.29 (~2x), so `COMPILE_BUDGET_USD` is not a hard
   ceiling; reasoning tokens appear to be billed but absent from

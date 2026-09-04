@@ -17,16 +17,22 @@ import hashlib
 import os
 import pathlib
 import re
+import sys
 
 from litellm import completion
 
 import compile as C
+from consolidate_concepts import cosine, embed
 from topics_build import bad_src_ids, strip_bad_src
-from wiki_check import source_ids
+from wiki_check import numbers_in, source_ids
 
 HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
 OUT = ROOT / "wiki-extra" / "conflicts"
+# Above the 99th percentile of pair similarity (0.900) on this corpus: conflict
+# pages share a template, so the median pair is already 0.79.
+CONFLICT_SIM = float(os.environ.get("CONFLICT_SIM", "0.93"))
+FORCE = "--force" in sys.argv
 MODEL = os.environ.get("WIKI_MODEL", "openai/gpt-5.6-luna")
 
 PROMPT = """You are writing a CONFLICT page for a research wiki: a first-class record of a
@@ -67,6 +73,60 @@ def tension_blocks() -> list[dict]:
     return blocks
 
 
+def merge_similar_groups(groups: dict[tuple, list[dict]], threshold: float) -> dict[tuple, list[dict]]:
+    """Fold together tension groups that describe ONE disagreement.
+
+    Groups are keyed by their exact project set, so the same argument reaching a
+    different set of projects becomes a second page. Two pages on this corpus
+    said the same thing that way: "Species-Scale Null Versus Positive
+    Metal-Conservation Associations" and "Species-Scale Nulls Versus Broad
+    Environmental and Fitness Signals", cosine 0.954.
+
+    A merge needs BOTH a shared project and near-identical text. Similarity
+    alone is unsafe here: conflict pages share a rigid template, so the corpus
+    median pair already sits at 0.79 and the 99th percentile at 0.90 — the
+    default cutoff is deliberately above that, and over-merging would put two
+    genuinely different disagreements on one page. Evidence overlap (the same
+    figures restated) merges regardless of similarity, matching the concept
+    stage's more precise detector."""
+    keys = sorted(groups)
+    if len(keys) < 2:
+        return groups
+    texts = ["\n".join(b["text"] for b in groups[k]) for k in keys]
+    vecs = embed(texts)
+    figs = [numbers_in(t) for t in texts]
+    parent = {k: k for k in keys}
+
+    def find(k):
+        while parent[k] != k:
+            parent[k] = parent[parent[k]]
+            k = parent[k]
+        return k
+
+    for i, a in enumerate(keys):
+        for j in range(i + 1, len(keys)):
+            b = keys[j]
+            if not (set(a) & set(b)):
+                continue
+            shared = figs[i] & figs[j]
+            same_evidence = len(shared) >= 3 and len(shared) / max(1, len(figs[i] | figs[j])) >= 0.5
+            if same_evidence or cosine(vecs[i], vecs[j]) >= threshold:
+                ra, rb = find(a), find(b)
+                if ra != rb:
+                    parent[rb] = ra
+                    print(f"  merging tension groups {sorted(set(b))[:3]} into {sorted(set(a))[:3]}"
+                          f" ({'shared figures' if same_evidence else f'cosine {cosine(vecs[i], vecs[j]):.3f}'})")
+
+    merged: dict[tuple, list[dict]] = {}
+    for k in keys:
+        merged.setdefault(find(k), []).extend(groups[k])
+    # the surviving key must cover every project the folded groups carried
+    out = {}
+    for root, blocks in merged.items():
+        out[tuple(sorted({p for b in blocks for p in b["projects"]}))] = blocks
+    return out
+
+
 def conflict_slug(projects: tuple[str, ...]) -> str:
     """Filename for a tension group, unique to its COMPLETE project set.
 
@@ -88,7 +148,9 @@ def main() -> None:
     src_texts = source_ids(ROOT)
     targets = C.wikilink_targets(ROOT)
     existing = {}
-    for f in OUT.glob("*.md"):
+    if FORCE:
+        print("  --force: ignoring cached tension hashes")
+    for f in ([] if FORCE else OUT.glob("*.md")):
         m = re.search(r"^<!-- tension-hash: (\w+) -->", f.read_text(encoding="utf-8"), re.M)
         if m:
             existing[f.stem] = m.group(1)
@@ -98,6 +160,7 @@ def main() -> None:
     groups: dict[tuple, list[dict]] = {}
     for b in tension_blocks():
         groups.setdefault(tuple(sorted(b["projects"])), []).append(b)
+    groups = merge_similar_groups(groups, CONFLICT_SIM)
 
     written = skipped = 0
     live: set[str] = set()

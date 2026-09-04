@@ -20,6 +20,7 @@ import json
 import os
 import pathlib
 import re
+import sys
 
 import networkx as nx
 from litellm import completion
@@ -32,6 +33,7 @@ ROOT = HERE.parent
 OUT = ROOT / "wiki-extra"
 HUB_MODEL = os.environ.get("WIKI_MODEL", "openai/gpt-5.6-luna")
 MIN_CLUSTER = 3
+FORCE = "--force" in sys.argv
 PER_PAGE_CHARS = 7000  # truncate very long concept pages in hub context
 
 TEMPLATE = """You are writing a TOPIC HUB page for the BERIL Research Observatory wiki — the
@@ -166,6 +168,11 @@ def main() -> None:
     state_path = ROOT / "state" / "topics-state.json"
     state_path.parent.mkdir(exist_ok=True)
     state = json.loads(state_path.read_text()) if state_path.exists() else {}
+    if FORCE:
+        # Keep __names__ so topic identity (and therefore page slugs) stays put;
+        # drop only the content digests so every hub regenerates.
+        state = {"__names__": state.get("__names__", {})}
+        print("  --force: ignoring cached hub digests")
 
     # Topic names are cached by member set so identical clusters never get
     # renamed (renames churn page identity and force needless hub regens).
