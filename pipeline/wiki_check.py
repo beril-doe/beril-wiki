@@ -45,8 +45,11 @@ NUMBER = re.compile(r"""
       | \d[\d,]*\d\s?% | \d\s?%            # 66%, 7%
       | \d[\d,]{2,}\d(?!\d|,\d)            # 7,609, 10000
     )
-    (?!\w)
 """, re.X)
+# NOTE: no trailing (?!\w) guard. The LEADING guard already excludes identifiers
+# (PF00034, GCF_000005845 — their digits follow a letter or underscore), while a
+# trailing one also rejects unit suffixes: sources write "+7.8pp" and "18.8M", so
+# it made those figures invisible and every page quoting them looked unsupported.
 
 _SRC_NUMS: dict[tuple[str, int], set[str]] = {}
 
@@ -71,7 +74,19 @@ def prose_only(par: str) -> str:
 
 
 def numbers_in(text: str) -> set[str]:
-    return {norm_num(t) for t in NUMBER.findall(text)}
+    """Figures in `text`, plus the MANTISSA of every scientific value.
+
+    A source writing `p = 1.77e-06` yields one token, so a page quoting the same
+    result as `1.77 x 10^-6` — whose exponent is not ASCII scientific notation —
+    matched nothing. Emitting `1.77` as well makes the two spellings agree."""
+    out = set()
+    for t in NUMBER.findall(text):
+        n = norm_num(t)
+        out.add(n)
+        m = re.match(r"([\d.]+)[eE][-+]?\d+$", n)
+        if m:
+            out.add(m.group(1))
+    return out
 
 
 def source_numbers(sid: str, text: str) -> set[str]:
@@ -80,6 +95,47 @@ def source_numbers(sid: str, text: str) -> set[str]:
     if key not in _SRC_NUMS:
         _SRC_NUMS[key] = numbers_in(text)
     return _SRC_NUMS[key]
+
+
+def _derivable(val: float, pool: set[float]) -> bool:
+    """True if `val` is a difference or ratio of two figures in the cited sources.
+
+    A concept page legitimately computes across its sources: "core 24.4% vs
+    non-core 16.6%" supports a stated "+7.8 percentage-point excess" that appears
+    nowhere verbatim. Accepting these is a deliberate loosening — with pools of
+    20-40 figures a coincidental pair is entirely possible, so a derivable value
+    is REPORTED in its own class rather than silently passed, and it is never
+    accepted at write time in compile.validate_page."""
+    xs = sorted(pool)
+    for i, a in enumerate(xs):
+        for b in xs[i + 1:]:
+            if abs(abs(a - b) - abs(val)) < 0.0051:
+                return True
+            if b and abs(abs(a / b) - abs(val)) < 0.0051:
+                return True
+    return False
+
+
+def _as_float(tok: str) -> float | None:
+    try:
+        return float(tok.replace(",", "").replace(" ", "").rstrip("%"))
+    except ValueError:
+        return None
+
+
+def derivable_numbers(par: str, ids: list[str], sources: dict[str, str]) -> set[str]:
+    """Of the unsupported figures in `par`, those computable from cited figures."""
+    known = [s for s in ids if s in sources]
+    if not known:
+        return set()
+    pool = {v for v in (_as_float(t) for s in known for t in source_numbers(s, sources[s]))
+            if v is not None}
+    out = set()
+    for tok in unsupported_numbers(par, ids, sources):
+        v = _as_float(tok)
+        if v is not None and _derivable(v, pool):
+            out.add(tok)
+    return out
 
 
 def unsupported_numbers(par: str, ids: list[str], sources: dict[str, str]) -> list[str]:
@@ -178,7 +234,7 @@ def main() -> int:
     strict = "--strict" in sys.argv
     errors: list[str] = []
     warns: list[str] = []
-    n_pages = n_cited_pars = n_numeric_pars = 0
+    n_pages = n_cited_pars = n_numeric_pars = n_derived = 0
 
     # Every LLM-written publishable collection, not just three of them. Conflict
     # pages and author profiles were unscanned, which is how eight unsupported
@@ -204,7 +260,12 @@ def main() -> int:
                     continue
                 if nums and ids:
                     n_numeric_pars += 1
-                    for tok in unsupported_numbers(par, ids, sources):
+                    bad = unsupported_numbers(par, ids, sources)
+                    deriv = derivable_numbers(par, ids, sources) if bad else set()
+                    for tok in bad:
+                        if tok in deriv:
+                            n_derived += 1
+                            continue
                         msg = f"{rel} ¶{i}: number {tok!r} not found in cited source(s) {ids}"
                         (errors if strict else warns).append(msg)
 
@@ -245,7 +306,10 @@ def main() -> int:
         print(f"  WARN  {w}")
     for e in errors:
         print(f"  ERROR {e}")
-    print(f"wiki_check: {len(errors)} error(s), {len(warns)} warning(s)")
+    if n_derived:
+        print(f"  NOTE  {n_derived} figure(s) not verbatim in a cited source but derivable from "
+              f"two of its figures (a difference or ratio) — accepted, not verified")
+    print(f"wiki_check: {len(errors)} error(s), {len(warns)} warning(s), {n_derived} derived")
     return 1 if errors else 0
 
 
