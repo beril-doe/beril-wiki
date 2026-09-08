@@ -261,7 +261,12 @@ def main() -> int:
     # pages and author profiles were unscanned, which is how eight unsupported
     # figures and 26 dead concept links reached publish with the gate reporting
     # zero errors.
+    # Summaries are LLM-written and published, so their citations and figures
+    # are gated too. NOT sources/: those are the verbatim research reports and
+    # are the evidence, so a figure there needs no [src:] tag. NOT data/: those
+    # are built deterministically from collections.yaml, not written by a model.
     roots = [(kb / "wiki", "concepts"), (kb / "wiki", "entities"),
+             (kb / "wiki", "summaries"),
              (kb / "wiki-extra", "topics"), (kb / "wiki-extra", "conflicts"),
              (kb / "wiki-extra", "authors")]
     for base, sub in roots:
@@ -289,6 +294,26 @@ def main() -> int:
                             continue
                         msg = f"{rel} ¶{i}: number {tok!r} not found in cited source(s) {ids}"
                         (errors if strict else warns).append(msg)
+
+    # Corpus-format contract (DESIGN.md): `sources` must never list a project
+    # the body does not cite. Nothing checked it, so six pages drifted — one
+    # entity listed 47 sources against 31 real citations. A padded list reads as
+    # synthesis without being it, and it also drives compile's resume-skip, so a
+    # phantom entry tells the next run "already integrated" about a document
+    # that is not.
+    for base, sub in [(kb / "wiki", "concepts"), (kb / "wiki", "entities")]:
+        for page in sorted((base / sub).glob("*.md")):
+            text = page.read_text(encoding="utf-8", errors="replace")
+            m = re.match(r"^---\n(.*?)\n---\n", text, re.S)
+            if not m:
+                continue
+            listed = {re.sub(r"__REPORT$", "", s.rsplit("/", 1)[-1].removesuffix(".md"))
+                      for s in re.findall(r'"([^"]*summaries/[^"]+)"', m.group(1))}
+            cited = {s for par in paragraphs(text) for s in cited_ids(par)}
+            for extra in sorted(listed - cited):
+                msg = (f"{sub}/{page.name}: frontmatter lists source {extra!r} "
+                       "that the body never cites")
+                (errors if strict else warns).append(msg)
 
     # Dead [[wikilinks]]. compile.generate_page validates targets at write time,
     # but topics_build, conflicts_build and authors_build use their own llm() and

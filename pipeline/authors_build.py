@@ -61,49 +61,71 @@ Return ONLY the section Markdown, starting with "{heading}" (no fences).
 
 # Two tiers, because the same verb can report a result or characterise a
 # person. ALWAYS names a disposition that only makes sense about someone —
-# there is no innocent reading of "their research interests". ABOUT_PERSON
-# holds verbs that are only a problem when the sentence is talking about the
-# author: "the project focused on metal tolerance" and "the results suggest a
-# shared mechanism" are ordinary reporting and must survive, while "their
-# projects center on..." must not.
+# there is no innocent reading of "their research interests" or "interested
+# in". ABOUT_PERSON holds predicates that are only a problem when the sentence
+# is about the author: "the project focused on metal tolerance" and "the
+# results suggest a shared mechanism" are ordinary reporting and must survive,
+# while "their projects focus on..." must not.
 ALWAYS = re.compile(
     r"\b(?:research |recurring |apparent )?interests?\b"
-    r"|\ban interest in\b"
-    r"|\bresearch (?:program|programme|agenda|identity)\b"
+    r"|\b(?:an |any )?interest in\b"
+    r"|\binterested in\b"
+    r"|\bresearch (?:program|programme|agenda|identity|focus)\b"
     r"|\brecurring theme\w*"
-    r"|\bmotivat(?:ion|ions|ed by)\b",
+    r"|\bmotivat(?:ion|ions|ed by)\b"
+    r"|\bpassionate about\b"
+    r"|\bexpertise\b|\bknown for\b",
     re.I,
 )
 ABOUT_PERSON = re.compile(
     r"\bcent(?:er|re)(?:s|ed)? (?:on|around)\b"
-    r"|\bfocus(?:es|ed)? on\b"
+    r"|\bfocus(?:es|ed|ing)? on\b"
     r"|\bsuggest(?:s|ed|ing)?\b"
     r"|\bemphasi[sz]\w+"
-    r"|\bappears? to\b|\bapparent(?:ly)?\b",
+    r"|\bappears? to\b|\bapparent(?:ly)?\b"
+    r"|\bprioriti[sz]\w+"
+    r"|\b(?:devoted|dedicated|committed) to\b"
+    r"|\bspecialis\w+|\bspecializ\w+"
+    r"|\bworks on\b|\bstudies\b|\binvestigates\b",
     re.I,
 )
-# The author as the thing being described: a possessive or a demonstrative
-# standing in for them. "their projects", "this author", "the corpus therefore
-# suggests <about them>". Deliberately not the author's name — a factual
-# sentence may name them.
+# The author as the thing being described. Possessives only, never a bare
+# "they"/"he"/"she": this corpus says "they" about genes, clusters and species
+# far more often than about a person, and a bare pronoun flagged the factual
+# sentence "...candidates for characterization because they were conserved".
+# Constructions like "They are interested in X" are still caught, by ALWAYS.
+# The author's own NAME counts as a subject — "Adam P. Arkin focuses on
+# microbial systems" is the same claim as "his work focuses on...", and
+# omitting the name was a reachable bypass. name_pattern() adds it per author.
 PERSON_SUBJECT = re.compile(
-    r"\b(?:their|his|her|the author'?s?|this (?:author|person|researcher)|these projects"
-    r"|their (?:work|projects?|corpus|research)|the corpus)\b",
+    r"\b(?:their|his|her|the author'?s?|this (?:author|person|researcher)"
+    r"|these projects|the corpus)\b",
     re.I,
 )
 SENTENCE = re.compile(r"(?<=[.!?])\s+(?=[A-Z\[])")
 
 
-def subjective_hits(section: str) -> list[str]:
+def name_pattern(name: str) -> re.Pattern | None:
+    """Match the author by full name or surname, so a sentence naming them is
+    treated exactly like one that says "they"."""
+    parts = [re.escape(p) for p in name.split() if len(p.rstrip(".")) > 1]
+    if not parts:
+        return None
+    return re.compile(r"\b(?:" + re.escape(name) + r"|" + parts[-1] + r")\b", re.I)
+
+
+def subjective_hits(section: str, name: str | None = None) -> list[str]:
     """Sentences that characterise the person rather than report the work."""
+    who = name_pattern(name) if name else None
     out = []
     for s in SENTENCE.split(section):
-        if ALWAYS.search(s) or (ABOUT_PERSON.search(s) and PERSON_SUBJECT.search(s)):
+        about_person = PERSON_SUBJECT.search(s) or (who and who.search(s))
+        if ALWAYS.search(s) or (ABOUT_PERSON.search(s) and about_person):
             out.append(s.strip())
     return out
 
 
-def strip_subjective(section: str) -> str:
+def strip_subjective(section: str, name: str | None = None) -> str:
     """Deterministic repair: drop offending sentences, keep the rest.
 
     Mirrors topics_build's strip_bad_src fallback — a page that survives one
@@ -113,7 +135,7 @@ def strip_subjective(section: str) -> str:
         if para.lstrip().startswith("#"):
             out.append(para)
             continue
-        kept = [s for s in SENTENCE.split(para) if not subjective_hits(s)]
+        kept = [s for s in SENTENCE.split(para) if not subjective_hits(s, name)]
         if kept:
             out.append(" ".join(s.strip() for s in kept))
     return "\n\n".join(out)
@@ -162,7 +184,7 @@ def main() -> int:
                 {"role": "user", "content": CONTRIB_USER.format(name=name, heading=HEADING)}]
         try:
             section = C.llm(msgs, f"authors/{page.stem}").strip()
-            hits = subjective_hits(section)
+            hits = subjective_hits(section, name)
             if hits:  # one violation-quoting retry, then deterministic repair
                 print(f"    ! {len(hits)} sentence(s) characterising the person — retrying")
                 section = C.llm(
@@ -174,9 +196,9 @@ def main() -> int:
                                "what it reported. Never write what this person is interested in, "
                                "focused on, motivated by, or what their work suggests about them."}],
                     f"authors/{page.stem}/retry").strip()
-                if subjective_hits(section):
+                if subjective_hits(section, name):
                     print("    ! still characterising — stripping offending sentences")
-                    section = strip_subjective(section)
+                    section = strip_subjective(section, name)
         except C.PageError as e:
             print(f"    [ERROR] {e} — section skipped")
             failed += 1

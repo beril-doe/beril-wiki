@@ -31,7 +31,7 @@ across projects instead of being restated per project.
 
 Synthesis pages carry a computed line under the title:
 
-> **Evidence** · 5 source projects · well corroborated · conflict on record · literature-reviewed
+> **Evidence** · 5 source projects · well corroborated · conflict on record · literature context
 
 Every part of it is counted, not judged:
 
@@ -42,7 +42,7 @@ Every part of it is counted, not judged:
 | *corroborated* | 2–3 projects |
 | *well corroborated* | 4 or more projects |
 | *conflict on record* | the corpus records a disagreement spanning these same sources |
-| *literature-reviewed* | the page opens with a PubMed-verified literature review |
+| *literature context* | the page opens with a literature-context section |
 
 **It is not a confidence rating and not a review status.** "Well corroborated"
 means several projects in this corpus point the same way; it does not mean the
@@ -60,7 +60,6 @@ Automatically, on every build, and blocking publication:
   Pages that fail are re-run against their own sources and rejected if they
   fail again.
 - Every `[[wikilink]]` resolves; dead ones are downgraded to plain text.
-- Literature-review citations are checked against PubMed by PMID.
 
 Not checked by anything:
 
@@ -69,8 +68,14 @@ Not checked by anything:
 - Whether the underlying research report reached a sound conclusion.
 - Whether a synthesis fairly represents the projects it draws on.
 
-Numeric fidelity is a real guarantee and a narrow one: it proves a number was
-copied faithfully from a report, never that the report was right.
+Checked once, when the page is written, but not re-checked at publication:
+literature-context citations are verified against PubMed by PMID at that point.
+The *literature context* evidence term only records that such a section exists.
+
+Numeric fidelity is a real guarantee and a narrow one. It proves a figure
+appears in a source the paragraph cites. It compares figures as tokens, so it
+does not catch a flipped sign or a changed unit, and it ignores small integers.
+It never shows the source was right.
 
 ## Known limitations
 

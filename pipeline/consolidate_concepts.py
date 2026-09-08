@@ -46,6 +46,7 @@ import re
 import sys
 
 import litellm
+import yaml
 
 import compile as C
 from wiki_check import NUMBER, cited_ids, norm_num, paragraphs, source_ids
@@ -579,6 +580,75 @@ def rename_concept(root: pathlib.Path, old: str, new: str) -> int:
     return n
 
 
+DECISIONS = "contract/concept-decisions.yaml"
+
+
+def load_decisions(root: pathlib.Path) -> dict:
+    f = root / DECISIONS
+    if not f.is_file():
+        return {"renames": [], "merges": []}
+    d = yaml.safe_load(f.read_text(encoding="utf-8")) or {}
+    return {"renames": d.get("renames") or [], "merges": d.get("merges") or []}
+
+
+def apply_decisions(root: pathlib.Path, sources: dict[str, str], system: str,
+                    state: dict, state_path: pathlib.Path) -> list[str]:
+    """Apply the committed concept-identity decisions, idempotently.
+
+    Runs at the top of every pass so the manifest — not shell history — is what
+    reproduces the corpus. Each decision is a no-op once applied: a rename whose
+    source is gone and target present, or a merge whose loser is already gone.
+    Returns the decisions that could not be applied, so main() can fail closed."""
+    d = load_decisions(root)
+    concepts = root / "wiki" / "concepts"
+    failures: list[str] = []
+    for r in d["renames"]:
+        old, new = str(r.get("from", "")).strip(), str(r.get("to", "")).strip()
+        if not old or not new:
+            failures.append(f"malformed rename entry: {r!r}")
+            continue
+        if not (concepts / f"{old}.md").exists():
+            if not (concepts / f"{new}.md").exists():
+                failures.append(f"rename {old}->{new}: neither page exists")
+            continue                      # already applied
+        rename_concept(root, old, new)
+    targets = None
+    for m in d["merges"]:
+        loser = str(m.get("loser", "")).strip()
+        survivor = str(m.get("survivor", "")).strip()
+        if not loser or not survivor:
+            failures.append(f"malformed merge entry: {m!r}")
+            continue
+        if not (concepts / f"{loser}.md").exists():
+            if not (concepts / f"{survivor}.md").exists():
+                failures.append(f"merge {loser}->{survivor}: neither page exists")
+            continue                      # already applied
+        if not (concepts / f"{survivor}.md").exists():
+            failures.append(f"merge {loser}->{survivor}: survivor missing")
+            continue
+        if targets is None:
+            targets = C.wikilink_targets(root)
+        print(f"  applying decision: merge concepts/{loser} -> concepts/{survivor}")
+        if not apply_merge(root, loser, survivor, targets, sources, system,
+                           state, state_path, []):
+            failures.append(f"merge {loser}->{survivor}: retention gate declined")
+    return failures
+
+
+def record_decision(root: pathlib.Path, kind: str, a: str, b: str) -> None:
+    """Append a decision to the manifest so it is reproducible from the repo."""
+    f = root / DECISIONS
+    text = f.read_text(encoding="utf-8") if f.is_file() else "renames:\n\nmerges:\n"
+    entry = (f"  - from: {a}\n    to: {b}\n    why: recorded from the command line\n"
+             if kind == "rename" else
+             f"  - loser: {a}\n    survivor: {b}\n    why: recorded from the command line\n")
+    key = "renames:" if kind == "rename" else "merges:"
+    i = text.index(key) + len(key)
+    j = text.find("\nmerges:", i) if kind == "rename" else len(text)
+    f.write_text(text[:j].rstrip("\n") + "\n" + entry + text[j:], encoding="utf-8")
+    print(f"  recorded in {DECISIONS}")
+
+
 def phase_merge(root: pathlib.Path, concepts: list[dict], pairs: list[tuple],
                 sources: dict[str, str], system: str, state: dict, mature: int,
                 state_path: pathlib.Path, refused: list[str]) -> int:
@@ -745,29 +815,28 @@ def main(root: pathlib.Path, args) -> int:
     state.setdefault("no_evidence", {})
     state.setdefault("pending", {})
 
-    # Human-decided concept identity, applied before anything is ranked, so the
-    # rest of the run sees the corrected corpus. Both are one-shot operations
-    # recorded in the command that ran them; neither weakens a threshold, which
-    # is what the mature-mature pairs actually needed.
-    if args.rename:
-        for spec in args.rename:
-            old, _, new = spec.partition(":")
-            rename_concept(root, old.strip(), new.strip())
-    if args.force_merge:
-        refused_now: list[str] = []
-        targets = C.wikilink_targets(root)
-        for spec in args.force_merge:
-            loser, _, survivor = spec.partition(":")
-            loser, survivor = loser.strip(), survivor.strip()
-            print(f"  force-merging concepts/{loser} -> concepts/{survivor} (human decision)")
-            apply_merge(root, loser, survivor, targets, sources, system,
-                        state, state_path, refused_now)
-    if args.rename or args.force_merge:
+    # Human-decided concept identity. The CLI flags only RECORD a decision in
+    # contract/concept-decisions.yaml; applying it is the manifest's job, so
+    # every run reaches the same corpus and nothing depends on shell history.
+    for spec in (args.rename or []):
+        old, _, new = spec.partition(":")
+        record_decision(root, "rename", old.strip(), new.strip())
+    for spec in (args.force_merge or []):
+        loser, _, survivor = spec.partition(":")
+        record_decision(root, "merge", loser.strip(), survivor.strip())
+
+    decision_failures = apply_decisions(root, sources, system, state, state_path)
+    if args.rename or args.force_merge or decision_failures:
         C.rebuild_index(root)
+    for f in decision_failures:
+        print(f"  [ERROR] decision not applied: {f}")
+    if args.rename or args.force_merge:
         est = C._usage["in"] * C.PRICE_IN + C._usage["out"] * C.PRICE_OUT
-        print(f"consolidate: applied human decisions (~${est:.2f} est); "
+        print(f"consolidate: recorded and applied decisions (~${est:.2f} est); "
               "re-run without these flags for the automatic pass")
-        return 0  # one-shot operations, not part of the ranked pass
+        return 1 if decision_failures else 0
+    if decision_failures:
+        return 1
 
     concepts, summaries = load_concepts(wiki), load_summaries(wiki)
     models = [m.strip() for m in args.merge_models.split(",") if m.strip()]

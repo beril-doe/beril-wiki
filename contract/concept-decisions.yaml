@@ -1,0 +1,32 @@
+# Human decisions about concept identity.
+#
+# The consolidation stage refuses to merge two concepts that are both mature,
+# by design — that call needs a person. This file is where the person's answer
+# lives, so it is reproducible from the repository rather than from whoever
+# happened to type the command. consolidate_concepts applies it idempotently at
+# the start of every run: a decision already applied is a silent no-op, so a
+# fresh clone rebuilding the corpus reaches the same concept set.
+#
+# Record a new decision with the CLI, which appends here and then applies it:
+#   uv run python pipeline/consolidate_concepts.py --rename OLD:NEW
+#   uv run python pipeline/consolidate_concepts.py --force-merge LOSER:SURVIVOR
+
+renames:
+  - from: functional-dark-matter
+    to: genomic-under-representation
+    why: >-
+      The slug disagreed with the page's own title, "Genomic under-representation
+      limits inference about microbial functional potential", and that mismatch
+      was what made it collide with
+      experimental-prioritization-of-functional-dark-matter, which is a
+      different subject (a prioritisation framework, not a sampling limit).
+
+merges:
+  - loser: fitness-importance-versus-ecological-context
+    survivor: laboratory-fitness-versus-natural-selection
+    why: >-
+      The loser was a single empirical result in Desulfovibrio vulgaris —
+      fitness importance predicted conservation better than field-versus-lab
+      classification. The survivor is the general caveat that result
+      illustrates. Four shared sources; the result is evidence inside the
+      caveat, not a concept beside it.

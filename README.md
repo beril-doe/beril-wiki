@@ -11,8 +11,10 @@ pipeline.
 
 > These pages are compiled by software from AI-conducted research reports and
 > are **not peer-reviewed**. Nothing here has been checked by a human scientist
-> before publication. Citations and numeric fidelity are machine-verified;
-> scientific correctness is not. Read
+> before publication. Citations and numeric fidelity are machine-verified, and
+> narrowly: a figure is checked to appear in a source the paragraph cites, as a
+> token, so a flipped sign or a changed unit passes. Scientific correctness is
+> not checked at all. Read
 > [About This Wiki](https://beril-doe.github.io/beril-wiki/about) before citing
 > anything, and prefer the underlying research report over the synthesis page
 > that aggregates it.

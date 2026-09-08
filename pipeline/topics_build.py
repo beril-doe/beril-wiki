@@ -156,7 +156,8 @@ def strip_bad_src(page: str, valid: set[str]) -> str:
     return SRC_TAG.sub(repl, page)
 
 
-def main() -> None:
+def main() -> int:
+    failures: list[str] = []
     src_texts = source_ids(ROOT)
     targets = C.wikilink_targets(ROOT)
     concepts = {p.stem: parse_page(p) for p in sorted((ROOT / "wiki/concepts").glob("*.md"))}
@@ -248,6 +249,14 @@ def main() -> None:
                        "you cite in the same paragraph; drop any figure you cannot attribute.",
                        system=TEMPLATE)
             page = strip_bad_src(page, srcs)
+            # Revalidate the retry before accepting it. Writing the second
+            # response unchecked meant a retry that fixed nothing was cached as
+            # the current page, and the next pipeline check saw it only as a
+            # warning.
+            if C.prose_violations(page, src_texts):
+                print(f"  ! topics/{slug}: retry still unsupported — page rejected, keeping previous")
+                failures.append(f"topics/{slug}")
+                continue
         page = C.downgrade_dead_links(page, targets | {f"topics/{slug}"})
         out_path.write_text(page.strip() + "\n", encoding="utf-8")
         state[slug] = digest
@@ -265,7 +274,7 @@ def main() -> None:
             print(f"  removed stale topics/{stale.stem}.md")
     if not any_changed and (OUT / "index.md").exists():
         print("home unchanged; done")
-        return
+        return 1 if failures else 0
 
     n_sum = len(list((ROOT / "wiki/summaries").glob("*.md")))
     n_digests = sum((ROOT / "wiki/summaries" / f"{d}.md").exists() for d in ("discoveries", "pitfalls"))
@@ -284,7 +293,10 @@ def main() -> None:
         f"Base every topic description on these leads, do not invent findings:\n\n{hub_list}")
     (OUT / "index.md").write_text(home.strip() + "\n", encoding="utf-8")
     print(f"wrote index.md; {stats}")
+    for f in failures:
+        print(f"  [ERROR] rejected: {f}")
+    return 1 if failures else 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

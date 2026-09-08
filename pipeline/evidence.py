@@ -3,8 +3,10 @@
 
 How much of the corpus stands behind a page, derived from the corpus alone:
 how many distinct source projects the page cites, whether the corpus records
-a conflict over those same sources, and whether the page carries a
-PMID-verified literature review.
+a conflict over those same sources, and whether the page carries a literature
+context section. That last term states PRESENCE, not review: it is a heading
+test, and nothing here re-verifies the PMIDs that lit_context.py checked when
+the section was written.
 
 This is deliberately NOT the v1 atlas's `confidence:` field. That field was a
 human judgement carrying a `last_reviewed` date; this wiki has no reviewer and
@@ -29,8 +31,6 @@ import sys
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
 LABELLED = ("concepts", "entities", "topics", "conflicts")
 LIT_HEADING = re.compile(r"^##\s+Literature Context\s*$", re.M)
-# conflicts_build.conflict_slug appends sha256[:8] only for groups of >3.
-HASH_SUFFIX = re.compile(r"[0-9a-f]{8}")
 
 
 def page_sources(text: str) -> set[str]:
@@ -47,19 +47,18 @@ def page_sources(text: str) -> set[str]:
 def conflict_sources(kb: pathlib.Path) -> list[set[str]]:
     """Project sets the corpus records a disagreement over.
 
-    Read from conflict page filenames, which conflicts_build owns and keeps in
-    step with the page bodies. Its conflict_slug only appends a digest for
-    groups of MORE than three projects, so the trailing component is a hash
-    only when it looks like one — stripping it unconditionally ate a real
-    project id from all eight unhashed files, and turned two-project conflicts
-    into one-project sets that could never meet the two-source test below."""
+    Read from each conflict page's own [src:] citations, NOT its filename.
+    conflicts_build.conflict_slug names a page after its first three projects
+    and appends a digest beyond that, so 33 of 41 filenames cannot express the
+    full set: a page overlapping only the omitted projects silently missed its
+    "conflict on record" flag. The body cites every project in the group, so it
+    is the authoritative set, and reading it also removes the filename-parsing
+    special cases entirely."""
     out = []
-    for f in (kb / "wiki-extra" / "conflicts").glob("conflict--*.md"):
-        parts = f.stem.split("--")[1:]
-        if parts and HASH_SUFFIX.fullmatch(parts[-1]):
-            parts = parts[:-1]
-        if parts:
-            out.append(set(parts))
+    for f in sorted((kb / "wiki-extra" / "conflicts").glob("conflict--*.md")):
+        srcs = page_sources(f.read_text(encoding="utf-8", errors="replace"))
+        if len(srcs) > 1:  # a one-project set can never meet the two-source test
+            out.append(srcs)
     return out
 
 
@@ -83,7 +82,7 @@ def label(text: str, collection: str, conflicts: list[set[str]]) -> str | None:
     if collection != "conflicts" and any(len(srcs & c) >= 2 for c in conflicts):
         bits.append("conflict on record")
     if LIT_HEADING.search(text):
-        bits.append("literature-reviewed")
+        bits.append("literature context")
     return " · ".join(bits)
 
 
