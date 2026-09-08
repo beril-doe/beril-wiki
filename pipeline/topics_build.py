@@ -26,6 +26,7 @@ import networkx as nx
 from litellm import completion
 
 import compile as C
+import okf
 from wiki_check import source_ids
 
 HERE = pathlib.Path(__file__).parent
@@ -61,6 +62,9 @@ CITATION SYNTAX (strict): a [src: ...] tag contains ONLY project ids from the
 PROJECTS IN SCOPE list, comma-separated — never concept names, conflict-page
 paths, dashes, or prose. Conflict and concept pages are referenced only as
 [[conflicts/...]] / [[concepts/...]] wikilinks, never inside [src: ...].
+Native input citations appear as [^project_id]. Use those same project IDs
+in output [src:] tags. Relative Markdown links belong to their input page;
+express output internal links as the [[wikilinks]] specified above.
 """
 
 
@@ -73,7 +77,7 @@ def src_id(entry: str) -> str:
     "summaries/discoveries.md" into the valid-id set. bad_src_ids then accepted
     `[src: summaries/discoveries.md]` in a hub, which wiki_check rejects as an
     unknown source id — 8 publish-blocking errors from one format mismatch."""
-    return re.sub(r"__REPORT$", "", entry.strip().rsplit("/", 1)[-1].removesuffix(".md"))
+    return okf.source_id(entry)
 
 
 def parse_page(path: pathlib.Path) -> dict:
@@ -84,10 +88,17 @@ def parse_page(path: pathlib.Path) -> dict:
     else:
         m2 = re.search(r'^sources:\n((?:\s+-\s.*\n)+)', text, re.M)
         raw = re.findall(r'-\s*"?([^"\n]+?)"?\s*$', m2.group(1), re.M) if m2 else []
-    sources = [src_id(s) for s in raw]
+    fields, _ = okf.parse(text)
+    sources = [src_id(s) for s in fields.get("sources", raw)]
     h1 = re.search(r'^# (.+)$', text, re.M)
     desc = re.search(r'^description:\s*"?(.*?)"?$', text, re.M)
     links = set(re.findall(r'\[\[concepts/([\w.-]+?)(?:\|[^\]]*)?\]\]', text))
+    def collect_link(url):
+        target = path.parent / url.split("#", 1)[0]
+        if target.suffix == ".md" and target.resolve().parent.name == "concepts":
+            links.add(target.stem)
+        return url
+    okf.map_links(text, collect_link)
     return {
         "stem": path.stem,
         "title": h1.group(1).strip() if h1 else path.stem,
@@ -141,9 +152,7 @@ SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
 
 
 def bad_src_ids(page: str, valid: set[str]) -> list[str]:
-    return sorted({re.sub(r"__REPORT$", "", p.strip())
-                   for m in SRC_TAG.finditer(page) for p in re.split(r"[,;]", m.group(1))
-                   if re.sub(r"__REPORT$", "", p.strip()) not in valid})
+    return sorted(set(okf.cited_ids(page)) - valid)
 
 
 def strip_bad_src(page: str, valid: set[str]) -> str:
@@ -153,7 +162,7 @@ def strip_bad_src(page: str, valid: set[str]) -> str:
         keep = [p.strip() for p in re.split(r"[,;]", m.group(1))
                 if re.sub(r"__REPORT$", "", p.strip()) in valid]
         return f"[src: {', '.join(keep)}]" if keep else ""
-    return SRC_TAG.sub(repl, page)
+    return okf.map_prose(page, lambda chunk: okf.REF.sub(lambda m: m[0] if m[1] in valid else "", SRC_TAG.sub(repl, chunk)))
 
 
 def main() -> None:
@@ -249,7 +258,7 @@ def main() -> None:
                        system=TEMPLATE)
             page = strip_bad_src(page, srcs)
         page = C.downgrade_dead_links(page, targets | {f"topics/{slug}"})
-        out_path.write_text(page.strip() + "\n", encoding="utf-8")
+        okf.write(out_path, page.strip() + "\n", encoding="utf-8")
         state[slug] = digest
         any_changed = True
         lead = re.search(r"^# .+?\n+(.+?)(?:\n\n|\n#)", page, re.S)
@@ -282,7 +291,7 @@ def main() -> None:
         "linking [[catalog|Full page catalog]], [[summaries/discoveries|Discoveries digest]], "
         "[[summaries/pitfalls|Pitfalls digest]], [[authors/index|Authors]], and [[data/index|Data collections]]. "
         f"Base every topic description on these leads, do not invent findings:\n\n{hub_list}")
-    (OUT / "index.md").write_text(home.strip() + "\n", encoding="utf-8")
+    okf.write(OUT / "home.md", home.strip() + "\n", encoding="utf-8")
     print(f"wrote index.md; {stats}")
 
 

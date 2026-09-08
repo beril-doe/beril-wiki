@@ -19,6 +19,7 @@ from __future__ import annotations
 import pathlib
 import re
 import sys
+import okf
 
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
 WIKILINK = re.compile(r"\[\[([^\]|#]+?)(?:[|#][^\]]*)?\]\]")
@@ -74,7 +75,7 @@ def prose_only(par: str) -> str:
     text = WIKILINK.sub(lambda m: m.group(0).split("|", 1)[1][:-2] if "|" in m.group(0) else " ",
                         SRC_TAG.sub("", par))
     # ORCIDs are identifiers: 0000-0003-2728-7671 is four 4-digit "figures".
-    return ORCID.sub(" ", text)
+    return ORCID.sub(" ", okf.prose(text))
 
 
 def numbers_in(text: str) -> set[str]:
@@ -168,7 +169,7 @@ def source_ids(kb: pathlib.Path) -> dict[str, str]:
             continue
         for f in d.glob("*.md"):
             sid = re.sub(r"__REPORT$", "", f.stem)
-            texts.setdefault(sid, f.read_text(encoding="utf-8", errors="replace"))
+            texts.setdefault(sid, okf.parse(f.read_text(encoding="utf-8", errors="replace"))[1])
     return texts
 
 
@@ -176,7 +177,11 @@ def paragraphs(body: str) -> list[str]:
     # Fold bullet lists into their own paragraphs; skip headings and frontmatter.
     # Literature Context sections cite external papers (PMID-verified by
     # lit_context.py), so their numbers are exempt from corpus-source checks.
-    body = re.sub(r"^---\n.*?\n---\n", "", body, flags=re.S)
+    fields, _ = okf.parse(body)
+    body = okf.body(body)
+    if fields:
+        allowed = {okf.source_id(s) for s in fields.get("sources", [])}
+        body = okf.REF.sub(lambda m: m[0] if m[1] in allowed else "", body)
     # Forward-looking sections propose future work rather than asserting
     # evidence, so their figures have nothing to cite: "Re-run the comparison at
     # n=500" is a plan, not a claim. Literature Context is exempt for the
@@ -187,13 +192,7 @@ def paragraphs(body: str) -> list[str]:
 
 
 def cited_ids(par: str) -> list[str]:
-    ids: list[str] = []
-    for m in SRC_TAG.finditer(par):
-        for part in re.split(r"[,;]", m.group(1)):
-            sid = re.sub(r"__REPORT$", "", part.strip())
-            if sid and sid not in ids:
-                ids.append(sid)
-    return ids
+    return okf.cited_ids(par)
 
 
 def is_table_or_links(par: str) -> bool:
@@ -236,7 +235,7 @@ def main() -> int:
     # violations that predate the check being able to see them; turn it on once
     # they are repaired and the gate becomes meaningful.
     strict = "--strict" in sys.argv
-    errors: list[str] = []
+    errors: list[str] = okf.validate(kb)
     warns: list[str] = []
     n_pages = n_cited_pars = n_numeric_pars = n_derived = 0
 

@@ -22,6 +22,7 @@ import sys
 from litellm import completion
 
 import compile as C
+import okf
 from consolidate_concepts import cosine, embed
 from topics_build import bad_src_ids, strip_bad_src
 from wiki_check import numbers_in, source_ids
@@ -53,6 +54,9 @@ Write markdown with exactly these sections:
 
 Rules: copy numbers exactly; a claim you cannot attribute must not be written; 300-600 words.
 Link the source concept pages with [[concepts/<stem>]] wikilinks where given.
+Native input citations appear as [^project_id]; retain those IDs in [src:]
+tags. Input relative Markdown links belong to their source page, so express
+internal links in your response with the [[wikilinks]] specified above.
 """
 
 
@@ -64,10 +68,7 @@ def tension_blocks() -> list[dict]:
         if not m:
             continue
         body = m.group(1).strip()
-        projects = set()
-        for t in re.finditer(r"\[src:\s*([^\]]+)\]", body):
-            for p in re.split(r"[,;]", t.group(1)):
-                projects.add(re.sub(r"__REPORT$", "", p.strip()))
+        projects = set(okf.cited_ids(body))
         if len(projects) >= 2:
             blocks.append({"concept": page.stem, "text": body, "projects": projects})
     return blocks
@@ -206,7 +207,7 @@ def main() -> None:
                 temperature=0.3, timeout=600,
             ).choices[0].message.content.strip()
         resp = C.downgrade_dead_links(resp, targets)
-        (OUT / f"{slug}.md").write_text(f"<!-- tension-hash: {digest} -->\n{resp}\n", encoding="utf-8")
+        okf.write(OUT / f"{slug}.md", f"<!-- tension-hash: {digest} -->\n{resp}\n", encoding="utf-8")
         written += 1
         print(f"  wrote conflicts/{slug}.md ({len(blocks)} tension block(s), {len(projects)} projects)")
     # Retire conflict pages whose tension group no longer exists. topics_build

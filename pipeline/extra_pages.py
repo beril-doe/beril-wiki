@@ -15,6 +15,7 @@ import pathlib
 import re
 
 import yaml
+import okf
 
 from fetch_reports import CHECKOUT
 from people import build_author_index
@@ -64,7 +65,7 @@ def write_authors() -> int:
         for proj in record.projects:
             link = f"[[summaries/{proj}__REPORT|{proj}]]" if proj in known else proj
             lines.append(f"- {link}")
-        path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        okf.write(path, "\n".join(lines) + "\n", encoding="utf-8")
     return len(index)
 
 
@@ -102,7 +103,7 @@ def write_collections() -> int:
             lines += [f"## Used by projects ({len(used)})", ""]
             lines += [f"- [[summaries/{p}__REPORT|{p}]]" for p in used]
             lines.append("")
-        (out / f"{slugify(coll['id'])}.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+        okf.write(out / f"{slugify(coll['id'])}.md", "\n".join(lines) + "\n", encoding="utf-8")
     return len(cfg["collections"])
 
 
@@ -114,14 +115,14 @@ def write_opportunities() -> int:
     n = 0
     for page in sorted((ROOT / "wiki/concepts").glob("*.md")):
         text = page.read_text(encoding="utf-8", errors="replace")
-        m = re.search(r"^## Open Directions\s*\n(.*?)(?=\n## |\Z)", text, re.M | re.S)
+        m = re.search(r"^## Open Directions\s*\n(.*?)(?=\n## |\Z)", okf.body(text), re.M | re.S)
         if not m or not m.group(1).strip():
             continue
         h1 = re.search(r"^# (.+)$", text, re.M)
         lines += [f"## [[concepts/{page.stem}|{h1.group(1).strip() if h1 else page.stem}]]", "",
-                  m.group(1).strip(), ""]
+                  okf.excerpt(m.group(1).strip(), text, page, OUT / "opportunities.md"), ""]
         n += 1
-    (OUT / "opportunities.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    okf.write(OUT / "opportunities.md", "\n".join(lines) + "\n", encoding="utf-8")
     return n
 
 
@@ -138,14 +139,15 @@ def write_negative_results() -> int:
     n = 0
     for page in sorted((ROOT / "wiki/summaries").glob("*.md")):
         text = page.read_text(encoding="utf-8", errors="replace")
-        blocks = [m.group(1).strip() for m in pat.finditer(text) if m.group(1).strip()]
+        blocks = [okf.excerpt(m.group(1).strip(), text, page, OUT / "negative-results.md")
+                  for m in pat.finditer(okf.body(text)) if m.group(1).strip()]
         if not blocks:
             continue
         h1 = re.search(r"^# (.+)$", text, re.M)
         lines += [f"## [[summaries/{page.stem}|{h1.group(1).strip() if h1 else page.stem}]]", "",
                   "\n\n".join(blocks), ""]
         n += 1
-    (OUT / "negative-results.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    okf.write(OUT / "negative-results.md", "\n".join(lines) + "\n", encoding="utf-8")
     return n
 
 
@@ -154,7 +156,7 @@ def write_indexes() -> None:
         pages = sorted(p.stem for p in (OUT / sub).glob("*.md") if p.stem != "index")
         lines = [f"# {title}", ""]
         lines += [f"- [[{sub}/{s}|{s.replace('-', ' ').title()}]]" for s in pages]
-        (OUT / sub / "index.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+        okf.write(OUT / sub / "index.md", "\n".join(lines) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

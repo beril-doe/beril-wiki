@@ -37,6 +37,7 @@ import shutil
 import sys
 
 import yaml
+import okf
 from litellm import completion
 
 from wiki_check import (NUMBER, SRC_TAG, cited_ids, duplicate_concepts, is_table_or_links,
@@ -79,6 +80,12 @@ cross-document concept and entity pages, following the editorial contract below.
 Write all content in English. Use [[wikilinks]] to connect related pages
 (e.g. [[concepts/gene-essentiality]]). Never emit YAML frontmatter (---) in
 generated content; it is managed by code.
+Existing pages use native Markdown links and [^project_id] citations. Preserve
+their evidence and source identities when revising them. The serializer converts
+response wikilinks and [src: project_id] tags to native links and footnotes.
+Relative Markdown links in excerpts belong to their source page. In your
+response, express internal page links with the approved [[wikilink]] targets
+instead of copying relative paths from a different source page.
 """
 
 KNOWN_TARGETS_USER = """\
@@ -316,10 +323,7 @@ def parse_json_reply(text: str) -> dict:
 
 
 def parse_fm(text: str) -> tuple[dict, str]:
-    m = FM.match(text)
-    if not m:
-        return {}, text
-    return (yaml.safe_load(m.group(1)) or {}), text[m.end():]
+    return okf.parse(text)
 
 
 def fm_block(fields: dict) -> str:
@@ -446,8 +450,8 @@ def page_briefs(d: pathlib.Path, with_sources: bool = False) -> str:
 
 
 def merge_sources(fm: dict, summary_path: str) -> list[str]:
-    srcs = [s for s in (fm.get("sources") or []) if isinstance(s, str)]
-    if summary_path not in srcs:
+    srcs = list(fm.get("sources") or [])
+    if okf.source_id(summary_path) not in {okf.source_id(s) for s in srcs}:
         srcs.append(summary_path)
     return srcs
 
@@ -467,8 +471,8 @@ def canonical_sources(body: str, prior: list[str] | None = None) -> list[str]:
     genuinely un-integrated and should be retried. `prior` preserves the order of
     entries that are still cited, so unchanged pages produce an unchanged list."""
     cited = {s for par in paragraphs(body) for s in cited_ids(par)}
-    keep = [p for p in (prior or []) if re.sub(r"__REPORT$", "", pathlib.Path(p).stem) in cited]
-    seen = {re.sub(r"__REPORT$", "", pathlib.Path(p).stem) for p in keep}
+    keep = [p for p in (prior or []) if okf.source_id(p) in cited]
+    seen = {okf.source_id(p) for p in keep}
     for sid in sorted(cited - seen):
         if sid in ("discoveries", "pitfalls"):
             keep.append(f"summaries/{sid}.md")
@@ -492,16 +496,15 @@ def rebuild_index(root: pathlib.Path) -> None:
         fm, _ = parse_fm(p.read_text(encoding="utf-8", errors="replace"))
         etype = str(fm.get("type") or "other").lower()
         lines.append(f"- [[entities/{p.stem}]] ({etype}) — {fm.get('description', '')}")
-    (wiki / "index.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    okf.write(wiki / "index.md", "\n".join(lines) + "\n", encoding="utf-8")
 
 
 def append_log(root: pathlib.Path, fname: str) -> None:
     log = root / "wiki" / "log.md"
     if not log.exists():
-        log.write_text("# Operations Log\n", encoding="utf-8")
+        okf.write(log, "# Operations Log\n", encoding="utf-8")
     ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with log.open("a", encoding="utf-8") as f:
-        f.write(f"\n## [{ts}] ingest | {fname}\n")
+    okf.write(log, log.read_text(encoding="utf-8") + f"\n## [{ts}] ingest | {fname}\n")
 
 
 # ---------------------------------------------------------------------------
@@ -581,11 +584,11 @@ def compile_doc(root: pathlib.Path, fname: str, sources: dict[str, str], system:
     # Summary links that the plan declined to create get downgraded in code.
     (wiki / "summaries").mkdir(parents=True, exist_ok=True)
     (wiki / "sources").mkdir(parents=True, exist_ok=True)
-    (wiki / "summaries" / f"{stem}.md").write_text(
+    okf.write(wiki / "summaries" / f"{stem}.md",
         fm_block({"type": "Summary", "description": summary_obj.get("description", ""),
                   "doc_type": "short", "full_text": f"sources/{fname}"})
         + downgrade_dead_links(summary_md, targets).strip() + "\n", encoding="utf-8")
-    shutil.copy2(root / "staging" / fname, wiki / "sources" / fname)
+    okf.write(wiki / "sources" / fname, (root / "staging" / fname).read_text(encoding="utf-8"))
 
     # 3 — merge-rewrite each touched page
     summary_ctx = {"role": "user", "content": f"Summary of the new document {fname} (source id {sid}):\n\n{summary_md}"}
@@ -598,7 +601,7 @@ def compile_doc(root: pathlib.Path, fname: str, sources: dict[str, str], system:
         path = wiki / group / f"{name}.md"
         path.parent.mkdir(parents=True, exist_ok=True)
         old_fm, old_body = parse_fm(path.read_text(encoding="utf-8", errors="replace")) if path.exists() else ({}, "")
-        if old_body and summary_rel in (old_fm.get("sources") or []):
+        if old_body and sid in set(cited_ids(old_body)):
             # ponytail: resume-skip assumes a report is stable once integrated;
             # drop this guard if source reports start mutating after ingest.
             print(f"    {sid}/{group}/{name}: already integrated — skipping (resume)")
@@ -629,7 +632,7 @@ def compile_doc(root: pathlib.Path, fname: str, sources: dict[str, str], system:
         if group == "entities":
             etype = obj.get("type") if obj.get("type") in ENTITY_TYPES else (it.get("type") or "other")
             fm["type"] = fm_entity_type(etype)
-        path.write_text(fm_block(fm) + obj["content"].strip() + "\n", encoding="utf-8")
+        okf.write(path, fm_block(fm) + obj["content"].strip() + "\n", encoding="utf-8")
 
     # 5 — deterministic bookkeeping
     rebuild_index(root)

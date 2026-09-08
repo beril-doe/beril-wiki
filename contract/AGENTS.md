@@ -32,7 +32,12 @@ Each log entry: `## [YYYY-MM-DD HH:MM:SS] operation | description`
 Operations: ingest, query, lint
 
 ## Format
-- Use [[wikilink]] to link other wiki pages (e.g., [[concepts/attention]])
+- Persisted pages use OKF v0.2: YAML metadata, standard relative Markdown
+  links ending in `.md`, and keyed citation footnotes with `sources` records.
+- Model responses may use the prompt's `[[wikilink]]` and `[src: id]`
+  shorthand. The page writer converts these to native OKF before saving.
+- When updating existing content, preserve its citation footnotes and their
+  IDs. Never turn a cited claim into an uncited claim.
 - Standard Markdown heading hierarchy
 - Keep each page focused on a single topic
 
@@ -59,3 +64,5 @@ This KB compiles research-project reports from a microbial-biology observatory (
   one field OKF requires; consumers use it for routing/filtering/presentation.
 - `description:` — a single-sentence one-liner (the field formerly named `brief`).
 - Do not include YAML frontmatter (---) in generated content; it is managed by code.
+- Source records and citation definitions are also managed by code. Do not
+  invent authors, verification status, generation dates, or other trust signals.

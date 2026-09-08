@@ -35,6 +35,7 @@ import urllib.parse
 import urllib.request
 
 import compile as C
+import okf
 
 EUTILS = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
 SECTION = re.compile(r"^## Literature Context\s*\n.*?(?=\n## |\Z)", re.M | re.S)
@@ -153,7 +154,7 @@ def review_hub(page: pathlib.Path, system: str) -> bool:
     # Splice under the lead: after H1 + first paragraph, before the first H2.
     m = re.search(r"\n## ", stripped)
     at = m.start() if m else len(stripped)
-    page.write_text(stripped[:at].rstrip() + "\n\n" + section.strip() + "\n" + stripped[at:], encoding="utf-8")
+    okf.write(page, stripped[:at].rstrip() + "\n\n" + section.strip() + "\n" + stripped[at:], encoding="utf-8")
     return True
 
 

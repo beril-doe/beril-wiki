@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import conflicts_build as CB
+from unittest.mock import patch
 
 
 def test_conflict_slug():
@@ -32,7 +33,8 @@ def test_merge_similar_groups(monkeypatched=None):
         ("x", "y"): [{"text": "Unrelated: 91.2% of 8,314 loci.", "projects": {"x", "y"}}],
     }
     # threshold 1.1 disables the similarity path, isolating the evidence rule
-    out = CB.merge_similar_groups(groups, 1.1)
+    with patch.object(CB, "embed", side_effect=lambda texts: [[1.0, 0.0] for _ in texts]):
+        out = CB.merge_similar_groups(groups, 1.1)
     assert len(out) == 2, out
     assert ("a", "b", "c") in out and len(out[("a", "b", "c")]) == 2
     assert ("x", "y") in out
@@ -40,7 +42,8 @@ def test_merge_similar_groups(monkeypatched=None):
     # no shared project -> never merged, however alike the text
     apart = {("a", "b"): [{"text": shared, "projects": {"a", "b"}}],
              ("c", "d"): [{"text": shared, "projects": {"c", "d"}}]}
-    assert len(CB.merge_similar_groups(apart, 1.1)) == 2
+    with patch.object(CB, "embed", side_effect=lambda texts: [[1.0, 0.0] for _ in texts]):
+        assert len(CB.merge_similar_groups(apart, 1.1)) == 2
 
 
 if __name__ == "__main__":

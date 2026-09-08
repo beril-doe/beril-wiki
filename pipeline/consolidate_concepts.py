@@ -48,7 +48,8 @@ import sys
 import litellm
 
 import compile as C
-from wiki_check import NUMBER, cited_ids, norm_num, paragraphs, source_ids
+import okf
+from wiki_check import NUMBER, cited_ids, norm_num, paragraphs, source_ids, prose_only
 
 # nomic is LBL-hosted and free; cohere is added for the merge phase only, as a
 # second opinion on candidates (~$0.04 a pass). Embeddings are never cached:
@@ -286,7 +287,7 @@ def both_mature(ca: set[str], cb: set[str], mature: int) -> bool:
 
 
 def page_numbers(text: str) -> set[str]:
-    return {norm_num(x) for par in paragraphs(text) for x in NUMBER.findall(par)}
+    return {norm_num(x) for par in paragraphs(text) for x in NUMBER.findall(prose_only(par))}
 
 
 def evidence_candidates(concepts: list[dict], min_shared: int, min_jaccard: float) -> list[tuple]:
@@ -392,17 +393,22 @@ def backmerge_candidates(concepts: list[dict], cvecs: list[list[float]],
     return sorted(out, reverse=True)
 
 
-def rewrite_concept_links(text: str, loser: str, survivor: str) -> str:
+def rewrite_concept_links(text: str, loser: str, survivor: str, page: pathlib.Path | None = None) -> str:
     """Repoint [[concepts/loser]] and [[concepts/loser|alias]] at the survivor,
     then drop lines the rewrite made exact duplicates of an earlier line.
 
-    # ponytail: only EXACT duplicate lines collapse. Two Slots-Into bullets that
-    # now link the survivor with different rationales both survive; that reads
-    # slightly redundant but loses no claim. Dedupe semantically if it shows up.
+    Only exact duplicate link lines collapse; distinct rationales survive.
     """
-    out = re.sub(
+    out = okf.map_prose(text, lambda chunk: re.sub(
         r"\[\[concepts/" + re.escape(loser) + r"((?:\|[^\]]*)?)\]\]",
-        lambda m: f"[[concepts/{survivor}{m.group(1)}]]", text)
+        lambda m: f"[[concepts/{survivor}{m.group(1)}]]", chunk))
+    def redirect(url):
+        target = url.split("#", 1)[0]
+        is_concept = "/concepts/" in "/" + target
+        if page is not None:
+            is_concept = (page.parent / target).resolve().parent.name == "concepts"
+        return re.sub(r"(^|/)" + re.escape(loser) + r"(?=\.md(?:#|$))", lambda m: m[1] + survivor, url) if is_concept else url
+    out = okf.map_links(out, redirect)
     if out == text:
         return text
     link = f"[[concepts/{survivor}"
@@ -422,7 +428,7 @@ def repoint_links(root: pathlib.Path, loser: str, survivor: str) -> int:
     for base in (root / "wiki", root / "wiki-extra"):
         for f in base.rglob("*.md") if base.is_dir() else []:
             text = f.read_text(encoding="utf-8", errors="replace")
-            new = rewrite_concept_links(text, loser, survivor)
+            new = rewrite_concept_links(text, loser, survivor, f)
             if new != text:
                 f.write_text(new, encoding="utf-8")
                 changed += 1
@@ -574,10 +580,10 @@ def phase_merge(root: pathlib.Path, concepts: list[dict], pairs: list[tuple],
 
         # Union then canonicalise: a union alone carries both pages' padding forward.
         srcs = C.canonical_sources(obj["content"],
-                                   list(dict.fromkeys((sfm.get("sources") or [])
-                                                      + (lfm.get("sources") or []))))
-        (wiki / "concepts" / f"{survivor}.md").write_text(
-            C.fm_block({"type": "Concept", "description": obj.get("description", ""), "sources": srcs})
+                                   list({okf.source_id(s): s for s in (sfm.get("sources") or [])
+                                                      + (lfm.get("sources") or [])}.values()))
+        okf.write(wiki / "concepts" / f"{survivor}.md",
+            C.fm_block({**lfm, **sfm, "type": "Concept", "description": obj.get("description", ""), "sources": srcs})
             + obj["content"].strip() + "\n", encoding="utf-8")
         # Persist the redirect BEFORE deleting, so an interrupt between the
         # unlink and the link rewrite is recoverable: the next run finds the
@@ -650,7 +656,7 @@ def phase_backmerge(root: pathlib.Path, concepts: list[dict], summaries: list[di
             state["no_evidence"][key] = True
             skipped += 1
             continue
-        path.write_text(
+        okf.write(path,
             C.fm_block({"type": "Concept", "description": obj.get("description", ""),
                         "sources": C.canonical_sources(content, C.merge_sources(fm, s["rel"]))})
             + content + "\n", encoding="utf-8")

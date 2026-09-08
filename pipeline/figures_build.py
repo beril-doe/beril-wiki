@@ -26,6 +26,7 @@ import os
 import pathlib
 import sys
 import re
+import okf
 
 from litellm import completion
 
@@ -56,7 +57,7 @@ Reply with ONLY JSON:
 
 
 def paragraphs(body: str) -> list[str]:
-    body = re.sub(r"^---\n.*?\n---\n", "", body, flags=re.S)
+    body = okf.body(body)
     return [p.strip() for p in re.split(r"\n\s*\n", body) if p.strip()]
 
 
@@ -67,6 +68,7 @@ def build_manifest() -> dict[str, list[dict]]:
     for report in sorted((ROOT / "wiki" / "sources").glob("*__REPORT.md")):
         project = re.sub(r"__REPORT$", "", report.stem)
         text = report.read_text(encoding="utf-8", errors="replace")
+        text = okf.map_links(text, lambda url: url.replace(f"../figures/{project}/", "figures/"))
         figs = []
         for par in paragraphs(text):
             for m in re.finditer(r"!\[([^\]]*)\]\((figures/[^)]+)\)", par):
@@ -82,10 +84,7 @@ def build_manifest() -> dict[str, list[dict]]:
 
 
 def cited_projects(text: str, projects: set[str]) -> list[str]:
-    ids = set()
-    for m in re.finditer(r"\[src:\s*([^\]]+)\]", text):
-        for p in re.split(r"[,;]", m.group(1)):
-            ids.add(re.sub(r"__REPORT$", "", p.strip()))
+    ids = set(okf.cited_ids(text))
     return sorted(ids & projects)
 
 

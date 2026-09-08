@@ -25,6 +25,7 @@ import re
 import sys
 
 import compile as C
+import okf
 from wiki_check import duplicate_concepts
 
 ENRICH_PLAN_USER = """\
@@ -121,7 +122,7 @@ def main(root: pathlib.Path) -> int:
                 targets.discard(f"concepts/{name}")
                 ok = False
                 continue
-            path.write_text(C.fm_block({"type": "Concept", "description": obj.get("description", ""),
+            okf.write(path, C.fm_block({"type": "Concept", "description": obj.get("description", ""),
                                         "sources": C.canonical_sources(obj["content"],
                                                                        [f"summaries/{stem}.md"])})
                             + obj["content"].strip() + "\n", encoding="utf-8")

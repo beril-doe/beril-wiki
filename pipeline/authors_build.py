@@ -22,6 +22,7 @@ import re
 import sys
 
 import compile as C
+import okf
 from topics_build import bad_src_ids, strip_bad_src
 
 HERE = pathlib.Path(__file__).parent
@@ -48,7 +49,7 @@ Return ONLY the section Markdown, starting with "## Profile" (no fences).
 
 
 def author_projects(stub: str) -> list[str]:
-    return re.findall(r"\[\[summaries/([\w.-]+?)__REPORT(?:\|[^\]]*)?\]\]", stub)
+    return list(dict.fromkeys(re.findall(r"summaries/([\w.-]+?)__REPORT(?:\.md|(?:\|[^\]]*)?\]\])", stub)))
 
 
 def main() -> int:
@@ -104,7 +105,7 @@ def main() -> int:
         body = re.sub(r"^## Profile\s*\n.*?(?=\n## |\Z)", "", stub, flags=re.M | re.S)
         at = body.find("## Projects")
         at = at if at >= 0 else len(body)
-        page.write_text(body[:at].rstrip() + "\n\n" + section + "\n\n" + body[at:], encoding="utf-8")
+        okf.write(page, body[:at].rstrip() + "\n\n" + section + "\n\n" + body[at:], encoding="utf-8")
         state[page.name] = digest
         state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
         done += 1
