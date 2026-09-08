@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+title: BERIL Knowledge Wiki
+message: >-
+  Compiled by software from AI-conducted research reports and not peer-reviewed.
+  Cite the specific page and access date; for a finding, prefer the underlying
+  research report linked from its summary page.
+type: dataset
+abstract: >-
+  A compiled, hub-structured scientific wiki over the BERIL Research
+  Observatory's corpus of AI-conducted microbial-biology research reports:
+  topic hubs with PubMed-verified literature context, cross-project concept
+  syntheses, per-claim citations, recorded conflicts, and negative results.
+authors:
+  - name: The BERIL Project
+    address: Lawrence Berkeley National Laboratory
+    city: Berkeley
+    region: California
+    country: US
+license: CC-BY-4.0
+license-url: https://creativecommons.org/licenses/by/4.0/
+repository-code: https://github.com/beril-doe/beril-wiki
+url: https://beril-doe.github.io/beril-wiki
+keywords:
+  - microbial genomics
+  - pangenomics
+  - antimicrobial resistance
+  - bacterial fitness
+  - knowledge base

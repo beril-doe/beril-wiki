@@ -22,6 +22,17 @@ import evidence
 
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
 SKIP = {"AGENTS.md", "log.md"}
+# Every page says this, because a reader can land on any page. Rendered as an
+# Obsidian callout (Quartz styles these natively — no custom CSS), whose title
+# carries the computed evidence terms from pipeline/evidence.py when the page
+# has any.
+PROVENANCE = ("Compiled by pipeline from AI-conducted research reports; not reviewed "
+              "by a human scientist. See [[about|About This Wiki]].")
+
+
+def provenance_block(evidence_terms: str | None) -> str:
+    title = f"Evidence · {evidence_terms}" if evidence_terms else "Provenance"
+    return f"> [!info] {title}\n> {PROVENANCE}"
 FM = re.compile(r"^(---\n.*?\n---\n)", re.S)
 BIG_FIGURE = 1_500_000  # bytes; larger images are downscaled at publish
 
@@ -190,6 +201,9 @@ def main() -> None:
             entry = placements.get(str(rel))
             if entry and entry.get("placements"):
                 text = splice_figures(text, entry, kb, dst)
+            # Count the evidence before linkify_src rewrites [src:] tags into
+            # <sub> links — after it there is nothing left to count.
+            ev = evidence.label(text, rel.parts[0], conflict_srcs)
             text = linkify_src(strip_dead_wikilinks(text, targets), known)
             # Summaries must lead to their raw report, and self-[src:] tags are
             # circular — point both at the sources/ page (the provenance hop
@@ -207,12 +221,14 @@ def main() -> None:
                 if header_lines:
                     text = re.sub(r"^# .+$", lambda m: m.group(0) + "\n\n" + "\n".join(header_lines),
                                   text, count=1, flags=re.M)
-            # How much of the corpus stands behind a synthesis page. Computed,
-            # not judged — see pipeline/evidence.py on why this is not the v1
-            # atlas's human `confidence:` field.
-            ev = evidence.label(text, rel.parts[0], conflict_srcs)
-            if ev:
-                text = re.sub(r"^# .+$", lambda m: m.group(0) + "\n\n" + ev,
+            # Provenance on every page, plus — on synthesis pages — how much of
+            # the corpus stands behind it. The evidence line is computed, not
+            # judged: see pipeline/evidence.py on why it is not the v1 atlas's
+            # human `confidence:` field. The about page explains both, so it
+            # does not carry the banner pointing at itself.
+            if rel.stem != "about":
+                block = provenance_block(ev)
+                text = re.sub(r"^# .+$", lambda m: m.group(0) + "\n\n" + block,
                               text, count=1, flags=re.M)
             out.write_text(text, encoding="utf-8")
             n += 1

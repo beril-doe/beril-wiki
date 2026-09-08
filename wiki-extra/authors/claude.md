@@ -1,5 +1,7 @@
 # Claude
 
+*Not a person — an AI research agent. Listed as an author on the projects below.*
+
 ## Contributions
 
 [[summaries/prophage_amr_comobilization__REPORT]] analyzed associations between antimicrobial-resistance (AMR) genes and prophage markers across the GTDB pangenome using gene-neighborhood co-localization and species-level repertoire comparisons. The project identified 83,008 AMR gene clusters and 3,465,244 broad prophage marker clusters, including 1,261,929 strict prophage markers, and found that 14,669 of 27,702 species (52.9%) carried both AMR and prophage markers. [src: prophage_amr_comobilization] Among 36,041 AMR gene instances from 1,953 genomes across 100 species, 20,073 (55.7%) occurred on contigs carrying strict prophage markers, while 3,731 (10.4%) were within 10 genes and 1,991 (5.5%) within 5 genes of a prophage marker. [src: prophage_amr_comobilization]

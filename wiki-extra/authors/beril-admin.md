@@ -1,5 +1,7 @@
 # Beril Admin
 
+*Not a person — a BERIL service account. Listed as an author on the projects below.*
+
 ORCID: [0009-0007-0287-2979](https://orcid.org/0009-0007-0287-2979)
 
 ## Contributions

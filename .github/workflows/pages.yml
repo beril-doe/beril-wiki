@@ -1,0 +1,66 @@
+name: Publish wiki
+
+# Render-only: wiki/, wiki-extra/ and every figure are committed, so this needs
+# no CBORG key and no observatory checkout. Refreshing the *content* is still a
+# maintainer running pipeline/run_pipeline.sh and committing the result; this
+# job only turns what is committed into the published site.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "wiki/**"
+      - "wiki-extra/**"
+      - "pipeline/build_quartz.sh"
+      - "pipeline/quartz_ingest.py"
+      - "pipeline/evidence.py"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never publish two builds at once; let a newer push win the queue.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Build site
+        env:
+          WIKI_BASE_URL: beril-doe.github.io/beril-wiki
+        run: ./pipeline/build_quartz.sh
+
+      # A build that silently dropped the corpus would still deploy green.
+      - name: Check the site is not empty
+        run: |
+          pages=$(find quartz/public -name '*.html' | wc -l)
+          echo "$pages HTML pages built"
+          [ "$pages" -ge 400 ] || { echo "::error::only $pages pages built, expected >=400"; exit 1; }
+          test -f quartz/public/about.html || { echo "::error::about page missing"; exit 1; }
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: quartz/public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

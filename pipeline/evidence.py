@@ -56,7 +56,10 @@ def conflict_sources(kb: pathlib.Path) -> list[set[str]]:
 
 
 def label(text: str, collection: str, conflicts: list[set[str]]) -> str | None:
-    """The evidence line for a page, or None when it earns no label."""
+    """Interpunct-joined evidence terms for a page, or None if it earns none.
+
+    Returns the terms alone; the caller decides how to present them (publish
+    renders them as the title of a callout under the page's H1)."""
     if collection not in LABELLED:
         return None
     srcs = page_sources(text)
@@ -73,7 +76,7 @@ def label(text: str, collection: str, conflicts: list[set[str]]) -> str | None:
         bits.append("conflict on record")
     if LIT_HEADING.search(text):
         bits.append("literature-reviewed")
-    return "> **Evidence** · " + " · ".join(bits)
+    return " · ".join(bits)
 
 
 def main() -> int:
@@ -84,8 +87,9 @@ def main() -> int:
         for f in sorted(root.rglob("*.md")):
             line = label(f.read_text(encoding="utf-8", errors="replace"), f.parent.name, conflicts)
             if line:
-                counts[line.split("·")[2].strip()] = counts.get(line.split("·")[2].strip(), 0) + 1
-                print(f"{f.relative_to(kb)}: {line[2:]}")
+                tier = line.split("·")[1].strip()
+                counts[tier] = counts.get(tier, 0) + 1
+                print(f"{f.relative_to(kb)}: {line}")
     print(f"\n{sum(counts.values())} labelled; " + ", ".join(f"{v} {k}" for k, v in sorted(counts.items())))
     return 0
 

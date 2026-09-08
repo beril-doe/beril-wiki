@@ -1,6 +1,30 @@
-Apache License 2.0 — see https://www.apache.org/licenses/LICENSE-2.0
-
 Copyright 2026 The BERIL Project (Lawrence Berkeley National Laboratory)
 
-Portions of the compiler prompts are derived from OpenKB (github.com/VectifyAI/OpenKB),
-Apache-2.0; see reference/openkb-src/LICENSE.
+This repository is dual-licensed: the software under Apache-2.0, the wiki
+content it produces under CC BY 4.0.
+
+SOFTWARE — Apache License 2.0
+    https://www.apache.org/licenses/LICENSE-2.0
+
+    Applies to pipeline/, setup.sh, contract/, and the repository's
+    configuration and documentation files.
+
+    Portions of the compiler prompts are derived from OpenKB
+    (github.com/VectifyAI/OpenKB), Apache-2.0; see reference/openkb-src/LICENSE.
+
+CONTENT — Creative Commons Attribution 4.0 International (CC BY 4.0)
+    https://creativecommons.org/licenses/by/4.0/
+
+    Applies to the compiled wiki and the material it is compiled from:
+    wiki/, wiki-extra/, and the figures under wiki/figures/.
+
+    Attribute as: "BERIL Knowledge Wiki, The BERIL Project (Lawrence Berkeley
+    National Laboratory), CC BY 4.0." Per-page citation guidance is on the
+    wiki's About page (wiki-extra/about.md).
+
+    These pages are compiled by software from AI-conducted research reports and
+    are not peer-reviewed. The licence grants reuse rights; it makes no claim
+    about scientific correctness. See wiki-extra/about.md for what is and is
+    not checked before publication.
+
+reference/ is neither: see reference/README.md.

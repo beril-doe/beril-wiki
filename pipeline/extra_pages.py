@@ -24,6 +24,15 @@ ROOT = HERE.parent
 OUT = ROOT / "wiki-extra"
 
 
+# Author blocks in project READMEs also name the agents and service accounts
+# that ran the work. They are real authors of these reports and keep their
+# pages, but the page must not read as a person's publication record.
+NON_HUMAN = {
+    "claude": "an AI research agent",
+    "beril-admin": "a BERIL service account",
+}
+
+
 def slugify(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
 
@@ -57,6 +66,9 @@ def write_authors() -> int:
                           path.read_text(encoding="utf-8"), re.M | re.S)
             profile = m.group(0).strip() if m else ""
         lines = [f"# {record.name}", ""]
+        if (kind := NON_HUMAN.get(slugify(record.name))):
+            lines += [f"*Not a person — {kind}. Listed as an author on the "
+                      f"projects below.*", ""]
         if record.orcid:
             lines.append(f"ORCID: [{record.orcid}](https://orcid.org/{record.orcid})")
             lines.append("")
