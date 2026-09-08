@@ -74,6 +74,13 @@ for p in cfg["plugins"]:
     # when a real custom domain is asked for.
     if p["source"] == "@quartz-community/cname":
         p["enabled"] = bool(os.environ.get("WIKI_CNAME"))
+    # Frontmatter here is machinery — type, description, the sources list that
+    # keeps citations honest. Rendered as a properties table above every page
+    # it reads as debug output, and the description just restates the opening
+    # paragraph. Hide the table, do NOT disable the plugin: it is also Quartz's
+    # frontmatter parser, so switching it off leaves every page "Untitled".
+    if p["source"] == "@quartz-community/note-properties":
+        p["options"]["hidePropertiesView"] = True
     if p["source"] == "@quartz-community/footer":
         p["options"]["links"] = {
             "About & how to cite": "https://" + base_url.rstrip("/") + "/about",
