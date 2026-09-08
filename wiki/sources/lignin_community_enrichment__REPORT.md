@@ -1,3 +1,7 @@
+---
+title: 'Report: Lignin Enrichment and Ecological Memory in Microbial Communities'
+type: Source
+---
 # Report: Lignin Enrichment and Ecological Memory in Microbial Communities
 
 ## Key Findings
@@ -6,7 +10,7 @@
 
 The base community is dominated by unclassified taxa (Incertae Sedis, 44.3%) with low abundances of Pseudomonas (<0.1%). After a single round of lignin enrichment, Pseudomonas (39.3%) and Acinetobacter (25.2%) become the dominant genera, together comprising >64% of 16S reads. This shift is consistent across replicates and represents a near-complete community turnover from the unenriched state. Alpha diversity drops dramatically: Shannon index from 6.46 (Base) to 3.16 (L), and observed OTUs from 1,594 to 163 — a 90% reduction. PERMANOVA confirms that treatment explains 97.9% of community variance (R²=0.979, p=0.001).
 
-![16S PCoA ordination](figures/16S_pcoa.png)
+![16S PCoA ordination](../figures/lignin_community_enrichment/16S_pcoa.png)
 
 *(Notebooks: NB01_read_processing.ipynb, NB03_alpha_diversity.ipynb, NB04_beta_diversity.ipynb)*
 
@@ -14,7 +18,7 @@ The base community is dominated by unclassified taxa (Incertae Sedis, 44.3%) wit
 
 Adding labile carbon alongside lignin (Group LC) shifts the bacterial community away from the lignin-only profile: Acinetobacter dominance increases (41.7% in LC vs 25.2% in L), Pseudomonas decreases (23.0% vs 39.3%), and Aeromonas emerges as a major component (20.2% vs 0.1%). Shannon diversity is further reduced (2.41 in LC vs 3.16 in L), and evenness drops markedly (Pielou's = 0.49 vs 0.62). This suggests labile carbon enables copiotrophic taxa to co-dominate alongside lignin degraders, producing a less even community.
 
-![16S genus bar plot](figures/16S_genus_barplot.png)
+![16S genus bar plot](../figures/lignin_community_enrichment/16S_genus_barplot.png)
 
 *(Notebooks: NB01_read_processing.ipynb, NB03_alpha_diversity.ipynb)*
 
@@ -26,7 +30,7 @@ In Round 2, communities consistently segregate by their Round 1 history:
 
 PERMANOVA on the 12 Round 2 samples shows R1 history explains 58.9% of community variance (F=14.31, R²=0.589, p=0.002), while current R2 carbon source explains only 32.7% (F=4.85, R²=0.327, p=0.018). The history/R2 distance ratio is 1.15–1.59 (values >1 indicate history matters more than current conditions). Communities with different R1 histories do not converge even under identical R2 conditions, providing quantitative evidence for ecological memory.
 
-![16S ecological memory PCoA](figures/16S_ecological_memory_pcoa.png)
+![16S ecological memory PCoA](../figures/lignin_community_enrichment/16S_ecological_memory_pcoa.png)
 
 *(Notebooks: NB04_beta_diversity.ipynb, NB06_ecological_memory.ipynb)*
 
@@ -40,7 +44,7 @@ The fungal community shows more extreme treatment-specific responses than bacter
 
 ITS diversity collapses to 3–8 OTUs per group after enrichment (from 253 in Base). However, ITS replicate consistency is poor — within-group Bray-Curtis distances reach 0.99–1.00 for several Round 2 groups (vs 0.09 for 16S), limiting statistical inference for ITS.
 
-![ITS genus bar plot](figures/ITS_genus_barplot.png)
+![ITS genus bar plot](../figures/lignin_community_enrichment/ITS_genus_barplot.png)
 
 *(Notebooks: NB01_read_processing.ipynb, NB02_composition_overview.ipynb)*
 
@@ -54,7 +58,7 @@ Several genera with known aromatic compound degradation capabilities respond to 
 - **Rhodococcus**: Present at low levels across conditions (0.03–0.67%), highest in lignin-only (L, 0.67%). Well-characterized lignin degrader.
 - **Sphingomonas**: Higher in base (1.74%) than enriched conditions, suggesting it is not selected for by lignin enrichment despite its known aromatic catabolism.
 
-![16S targeted heatmap](figures/16S_targeted_heatmap.png)
+![16S targeted heatmap](../figures/lignin_community_enrichment/16S_targeted_heatmap.png)
 
 *(Notebooks: NB01_read_processing.ipynb, NB05_differential_abundance.ipynb)*
 
@@ -77,9 +81,9 @@ All 21 samples (7 groups x 3 replicates) were sequenced for both 16S V3-V4 and I
 | PE merging (vsearch) | 99.8% | 99.3% |
 | **Total retained** | **~91%** | **~98%** |
 
-![Read counts per sample](figures/read_counts_per_sample.png)
+![Read counts per sample](../figures/lignin_community_enrichment/read_counts_per_sample.png)
 
-![Quality scores](figures/quality_scores_summary.png)
+![Quality scores](../figures/lignin_community_enrichment/quality_scores_summary.png)
 
 ### OTU Clustering and Taxonomy
 
@@ -106,11 +110,11 @@ Enrichment dramatically reduces diversity. The Kruskal-Wallis test is significan
 | L-LC | 155 ± 12 | 2.85 ± 0.31 | 0.57 ± 0.05 | 4 ± 3 | 0.05 ± 0.09 |
 | LC-LC | 153 ± 4 | 2.47 ± 0.05 | 0.49 ± 0.01 | 7 ± 2 | 0.49 ± 0.32 |
 
-![16S alpha diversity](figures/16S_alpha_diversity.png)
+![16S alpha diversity](../figures/lignin_community_enrichment/16S_alpha_diversity.png)
 
-![ITS alpha diversity](figures/ITS_alpha_diversity.png)
+![ITS alpha diversity](../figures/lignin_community_enrichment/ITS_alpha_diversity.png)
 
-![Pielou's evenness](figures/pielou_evenness.png)
+![Pielou's evenness](../figures/lignin_community_enrichment/pielou_evenness.png)
 
 ### Beta Diversity and PERMANOVA
 
@@ -128,9 +132,9 @@ PCoA ordination shows clear separation of all treatment groups. PC1 and PC2 toge
 
 PERMDISP is significant for both markers (16S: p=0.0004; ITS: p=0.0001), indicating heterogeneous dispersions between groups. PERMANOVA results should be interpreted alongside PERMDISP — the group separation is real but dispersion differences contribute to the signal.
 
-![PCoA panel](figures/pcoa_panel.png)
+![PCoA panel](../figures/lignin_community_enrichment/pcoa_panel.png)
 
-![16S community trajectories](figures/16S_community_trajectories.png)
+![16S community trajectories](../figures/lignin_community_enrichment/16S_community_trajectories.png)
 
 ### Differential Abundance
 
@@ -153,9 +157,9 @@ With n=3 per group, no individual OTUs reach FDR significance (minimum p=0.10 fo
 | Peredibacter | L | -7.3 | Bacterial predator |
 | Comamonas | L | -6.8 | Aromatic compound degrader |
 
-![16S volcano plot](figures/16S_volcano_base_vs_L.png)
+![16S volcano plot](../figures/lignin_community_enrichment/16S_volcano_base_vs_L.png)
 
-![ITS targeted heatmap](figures/ITS_targeted_heatmap.png)
+![ITS targeted heatmap](../figures/lignin_community_enrichment/ITS_targeted_heatmap.png)
 
 ### Ecological Memory Analysis
 
@@ -174,7 +178,7 @@ History/R2 ratio: 1.15 (R2=L) and 1.59 (R2=LC). Values >1 indicate enrichment hi
 
 Memory index: ~0.50 — communities with different R1 histories maintain approximately half of the maximum possible divergence even when subjected to the same R2 conditions.
 
-![Ecological memory distances](figures/ecological_memory_distances.png)
+![Ecological memory distances](../figures/lignin_community_enrichment/ecological_memory_distances.png)
 
 **OTU retention across passages (16S):**
 - L → L-L: 81% of Round 1 OTUs retained in Round 2
@@ -195,7 +199,7 @@ Memory index: ~0.50 — communities with different R1 histories maintain approxi
 | L-LC | 52.2% | 20.2% | 1.5% | 8.7% | 3.1% | 3.6% |
 | LC-LC | 25.6% | 34.3% | 6.5% | 18.1% | 1.4% | 4.3% |
 
-![16S phylum bar plot](figures/16S_phylum_barplot.png)
+![16S phylum bar plot](../figures/lignin_community_enrichment/16S_phylum_barplot.png)
 
 ### Fungal Community Composition (ITS)
 
@@ -209,19 +213,19 @@ Memory index: ~0.50 — communities with different R1 histories maintain approxi
 | L-LC | <0.1% | <0.1% | 33.3% | <0.1% | 33.3% | <0.1% | <0.1% |
 | LC-LC | <0.1% | 50.0% | <0.1% | <0.1% | <0.1% | <0.1% | 50.0% |
 
-![ITS phylum bar plot](figures/ITS_phylum_barplot.png)
+![ITS phylum bar plot](../figures/lignin_community_enrichment/ITS_phylum_barplot.png)
 
-![GC content distribution](figures/gc_content_distribution.png)
+![GC content distribution](../figures/lignin_community_enrichment/gc_content_distribution.png)
 
-![Read length distribution](figures/read_length_distribution.png)
+![Read length distribution](../figures/lignin_community_enrichment/read_length_distribution.png)
 
-![16S rarefaction curves](figures/16S_rarefaction.png)
+![16S rarefaction curves](../figures/lignin_community_enrichment/16S_rarefaction.png)
 
-![ITS rarefaction curves](figures/ITS_rarefaction.png)
+![ITS rarefaction curves](../figures/lignin_community_enrichment/ITS_rarefaction.png)
 
-![16S dendrogram](figures/16S_dendrogram.png)
+![16S dendrogram](../figures/lignin_community_enrichment/16S_dendrogram.png)
 
-![ITS dendrogram](figures/ITS_dendrogram.png)
+![ITS dendrogram](../figures/lignin_community_enrichment/ITS_dendrogram.png)
 
 ## Interpretation
 

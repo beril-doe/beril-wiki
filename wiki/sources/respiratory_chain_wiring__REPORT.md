@@ -1,3 +1,7 @@
+---
+title: 'Report: Condition-Specific Respiratory Chain Wiring in ADP1'
+type: Source
+---
 # Report: Condition-Specific Respiratory Chain Wiring in ADP1
 
 ## Key Findings
@@ -6,9 +10,9 @@
 
 ADP1's branched respiratory chain (62 genes across 8 subsystems) is wired in a condition-dependent manner. Quinate requires only Complex I; acetate requires Complex I, cytochrome bo3, ACIAD3522, and more; glucose requires no specific respiratory component. This is not a quantitative gradient — it's qualitatively different respiratory configurations per substrate.
 
-![Respiratory chain growth ratios by carbon source](figures/respiratory_chain_heatmap.png)
+![Respiratory chain growth ratios by carbon source](../figures/respiratory_chain_wiring/respiratory_chain_heatmap.png)
 
-![Mean growth ratio by subsystem and carbon source](figures/subsystem_profiles.png)
+![Mean growth ratio by subsystem and carbon source](../figures/respiratory_chain_wiring/subsystem_profiles.png)
 
 | Carbon Source | Required Components | Dispensable Components |
 |---------------|--------------------|-----------------------|
@@ -30,7 +34,7 @@ ADP1's branched respiratory chain (62 genes across 8 subsystems) is wired in a c
 
 NDH-2 (ACIAD_RS16420, KO K03885) is TnSeq-dispensable but missing from the deletion collection — it has no growth data. FBA predicts zero flux through NDH-2 on all standard carbon sources, routing all NADH through Complex I. NDH-2 is a standalone gene (not in a respiratory operon) and is core genome.
 
-![Respiratory chain wiring model: glucose vs quinate vs acetate](figures/wiring_model.png)
+![Respiratory chain wiring model: glucose vs quinate vs acetate](../figures/respiratory_chain_wiring/wiring_model.png)
 
 *(Notebook: 02_ndh2_indirect.ipynb)*
 
@@ -38,9 +42,9 @@ NDH-2 (ACIAD_RS16420, KO K03885) is TnSeq-dispensable but missing from the delet
 
 Quinate produces FEWER NADH per carbon atom (0.57) than glucose (1.50) or acetate (1.50), yet Complex I is MORE essential on quinate. The resolution: aromatic ring cleavage via the β-ketoadipate pathway produces succinyl-CoA + acetyl-CoA simultaneously, creating a concentrated NADH burst in the TCA cycle that exceeds NDH-2's reoxidation capacity. Glucose distributes NADH production across Entner-Doudoroff pathway steps plus TCA, staying within NDH-2's capacity.
 
-![NADH stoichiometry and reducing equivalent production](figures/nadh_stoichiometry.png)
+![NADH stoichiometry and reducing equivalent production](../figures/respiratory_chain_wiring/nadh_stoichiometry.png)
 
-![Respiratory chain wiring matrix](figures/wiring_matrix.png)
+![Respiratory chain wiring matrix](../figures/respiratory_chain_wiring/wiring_matrix.png)
 
 | Substrate | Total NADH | NADH/Carbon | Pathway Distribution | Complex I Growth |
 |-----------|-----------|-------------|---------------------|-----------------|
@@ -55,9 +59,9 @@ Quinate produces FEWER NADH per carbon atom (0.57) than glucose (1.50) or acetat
 
 After correcting for likely false positives in NDH-2 identification (filtering to organisms with 1-2 NDH-2 hits, excluding those with >2 hits that likely represent misannotated Complex I subunits), 5 of 14 organisms have validated NDH-2. Organisms WITH NDH-2 show LARGER Complex I aromatic deficits (mean = -0.297) than those WITHOUT (mean = -0.156), the opposite of the compensation prediction (p = 0.52, not significant). The NDH-2 compensation hypothesis is not supported by cross-species fitness data — NDH-2 presence does not predict whether Complex I is dispensable on aromatics. The ADP1 respiratory wiring pattern may be species-specific rather than a general rule.
 
-![Complex I fitness: aromatic vs non-aromatic by NDH-2 status](figures/ndh2_vs_complex_I.png)
+![Complex I fitness: aromatic vs non-aromatic by NDH-2 status](../figures/respiratory_chain_wiring/ndh2_vs_complex_I.png)
 
-![Respiratory chain clustermap](figures/respiratory_clustermap.png)
+![Respiratory chain clustermap](../figures/respiratory_chain_wiring/respiratory_clustermap.png)
 
 *(Notebook: 04_cross_species_respiratory.ipynb)*
 
@@ -65,7 +69,7 @@ After correcting for likely false positives in NDH-2 identification (filtering t
 
 All three NADH dehydrogenases are expressed at similar protein levels under standard growth conditions: Complex I mean 27.6 (66th percentile), NDH-2 27.0 (59th percentile), ACIAD3522 26.2 (48th percentile), genome median 26.4. The spread is only 1.4 units. NDH-2 is NOT repressed — it is constitutively co-expressed with Complex I. This means the condition-specific respiratory wiring operates at the metabolic level: all three dehydrogenases are present simultaneously, and which one becomes limiting depends on the NADH flux rate from the carbon source being catabolized. The cell uses a passive, flux-based wiring system rather than an active transcriptional switch.
 
-![Proteomics: NADH dehydrogenase expression vs all genes](figures/proteomics_respiratory.png)
+![Proteomics: NADH dehydrogenase expression vs all genes](../figures/respiratory_chain_wiring/proteomics_respiratory.png)
 
 *(Notebook: 05_proteomics_expression.ipynb)*
 

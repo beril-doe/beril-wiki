@@ -1,10 +1,14 @@
+---
+title: 'Report: BacDive Phenotype Signatures of Metal Tolerance'
+type: Source
+---
 # Report: BacDive Phenotype Signatures of Metal Tolerance
 
 ## Key Findings
 
 ### 1. Gram-Negative Bacteria Have Significantly Higher Metal Tolerance Scores (d=-0.61)
 
-![Univariate effect sizes](figures/univariate_effect_sizes.png)
+![Univariate effect sizes](../figures/bacdive_phenotype_metal_tolerance/univariate_effect_sizes.png)
 
 Gram-negative species have higher metal tolerance scores than Gram-positive species (Cohen's d = -0.61, p < 1e-60, n = 3,272 species). This is the largest effect among all phenotype features tested. However, class-stratified analysis reveals the effect cannot be tested *within* taxonomic classes — it is almost entirely a between-lineage signal (Gram-positive Actinomycetes vs Gram-negative Proteobacteria). The association is mechanistically plausible — the Gram-negative outer membrane provides a permeability barrier restricting metal cation uptake (Biswas et al. 2021; Paulsen et al. 1997) — but statistically confounded with phylogeny.
 
@@ -18,7 +22,7 @@ Seven features pass FDR correction at q < 0.05: Gram stain (d = -0.61), oxidase 
 
 ### 3. Phenotype Features Add Nothing Beyond Taxonomy (Delta R² = -0.009)
 
-![Model comparison](figures/model_comparison.png)
+![Model comparison](../figures/bacdive_phenotype_metal_tolerance/model_comparison.png)
 
 The central finding: taxonomy alone (phylum/class/order) explains 35.4% of metal tolerance variance, and phenotype features alone explain 16.3%, but combining taxonomy + phenotype yields R² = 34.5% — slightly *worse* than taxonomy alone. The phenotype signal is entirely captured by phylogenetic structure. Adding the number of metal resistance gene clusters (`n_metal_clusters`) boosts the full model to R² = 0.63, demonstrating that genome-encoded metal resistance repertoire is the true predictor.
 
@@ -32,7 +36,7 @@ Urease-positive species have significantly lower metal tolerance scores (d = -0.
 
 ### 5. Anaerobe vs Aerobe Difference Is Negligible (H1b Not Supported)
 
-![Feature completeness](figures/feature_completeness.png)
+![Feature completeness](../figures/bacdive_phenotype_metal_tolerance/feature_completeness.png)
 
 Despite 3,751 species with oxygen tolerance data, the anaerobe-aerobe difference in metal tolerance is negligible (d = -0.016, p = 0.55). Facultative anaerobes have the highest mean score (0.221) versus aerobes (0.216) and anaerobes (0.215). The Kruskal-Wallis test across all three groups is marginally significant (H = 8.53, p = 0.014), but the effect is biologically trivial.
 
@@ -40,7 +44,7 @@ Despite 3,751 species with oxygen tolerance data, the anaerobe-aerobe difference
 
 ### 6. SHAP Analysis Confirms Taxonomy and Gene Count Dominate
 
-![SHAP summary](figures/shap_summary.png)
+![SHAP summary](../figures/bacdive_phenotype_metal_tolerance/shap_summary.png)
 
 SHAP feature importance from the full XGBoost model shows that taxonomic class/order codes and `n_metal_clusters` are the top predictors. Phenotype features contribute minimally to individual predictions once taxonomy is included. This confirms that classical microbiology phenotypes are phylogenetic proxies, not independent predictors of metal tolerance.
 
@@ -62,7 +66,7 @@ SHAP feature importance from the full XGBoost model shows that taxonomic class/o
 
 ### Coverage Waterfall
 
-![Coverage waterfall](figures/coverage_waterfall.png)
+![Coverage waterfall](../figures/bacdive_phenotype_metal_tolerance/coverage_waterfall.png)
 
 | Feature | BacDive Strains | Matched Strains | Species with Metal Score |
 |---------|----------------|----------------|------------------------|
@@ -117,7 +121,7 @@ SHAP feature importance from the full XGBoost model shows that taxonomic class/o
 
 ### Direct FB-BacDive Validation (n = 12)
 
-![FB-BacDive phenotype table](figures/fb_bacdive_phenotype_table.png)
+![FB-BacDive phenotype table](../figures/bacdive_phenotype_metal_tolerance/fb_bacdive_phenotype_table.png)
 
 Twelve Fitness Browser organisms match BacDive by taxonomy ID (6 unique species: *Cupriavidus basilensis*, *Methanococcus maripaludis*, *Ralstonia solanacearum*, *Pseudomonas simiae*, *Azospirillum brasilense*, *Pseudomonas fluorescens*). All Gram-typed organisms are Gram-negative, precluding within-set testing of H1a. All urease-typed organisms are urease-negative yet are routinely tested against nickel, consistent with the pangenome-scale finding that urease status does not predict metal tolerance. The single anaerobe (*Methanococcus*) has only 1 metal tested versus 4–5 for aerobes, but n = 1 is not interpretable.
 

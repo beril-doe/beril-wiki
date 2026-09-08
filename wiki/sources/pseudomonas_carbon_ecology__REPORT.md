@@ -1,10 +1,14 @@
+---
+title: 'Report: Carbon Source Utilization Predicts Ecology and Lifestyle in Pseudomonas'
+type: Source
+---
 # Report: Carbon Source Utilization Predicts Ecology and Lifestyle in Pseudomonas
 
 ## Key Findings
 
 ### Finding 1: Host-Associated Pseudomonas Show Dramatic Loss of Plant-Derived Sugar Pathways
 
-![Pathway completeness heatmap across Pseudomonas species ordered by subgenus and lifestyle](figures/pathway_heatmap.png)
+![Pathway completeness heatmap across Pseudomonas species ordered by subgenus and lifestyle](../figures/pseudomonas_carbon_ecology/pathway_heatmap.png)
 
 *Pseudomonas* sensu stricto (the *P. aeruginosa* group) shows near-complete loss of plant-derived sugar catabolism compared to *Pseudomonas_E* (the *P. fluorescens/putida* group). Of the 62 GapMind carbon pathways tested, **43 differ significantly** between the two subgenera (Mann-Whitney U, BH-FDR < 0.05). The largest effect sizes involve pathways for plant-associated sugars and sugar alcohols:
 
@@ -20,13 +24,13 @@
 
 In contrast, amino acid catabolism (arginine, histidine, serine, glutamate, etc.) and core organic acid pathways (citrate, succinate, pyruvate) remain near-universal (>99%) in both groups. This is consistent with *P. aeruginosa* retaining amino acid catabolism for growth in host environments (e.g., CF sputum amino acids) while losing the ability to degrade plant-derived carbon sources it no longer encounters.
 
-![Barplot of pathway completeness differences between subgenera](figures/pathway_loss_barplot.png)
+![Barplot of pathway completeness differences between subgenera](../figures/pseudomonas_carbon_ecology/pathway_loss_barplot.png)
 
 *(Notebook: 03_pathway_lifestyle_analysis.ipynb)*
 
 ### Finding 2: Carbon Pathway Profiles Distinguish Environment Types Among Free-Living Species
 
-![PCA of pathway profiles colored by isolation environment](figures/pathway_pca_by_environment.png)
+![PCA of pathway profiles colored by isolation environment](../figures/pseudomonas_carbon_ecology/pathway_pca_by_environment.png)
 
 Among 54 free-living and plant-associated species (>=5 genomes, >=60% majority environment agreement), carbon pathway profiles are significantly associated with isolation environment. A PERMANOVA-like permutation test (999 permutations) yielded **p = 0.006**, with between-group mean distance (2.054) exceeding within-group mean distance (1.890). PCA of the 62-pathway profiles captured 74.9% of variance in the first 5 components, with PC1 alone explaining 31.2%.
 
@@ -38,13 +42,13 @@ A Random Forest classifier trained on 4 environment classes (soil, freshwater, p
 4. **Fucose** (0.085) — plant/animal glycan sugar
 5. **Xylose** (0.070) — hemicellulose-derived sugar
 
-![Random Forest feature importance for environment prediction](figures/rf_importance.png)
+![Random Forest feature importance for environment prediction](../figures/pseudomonas_carbon_ecology/rf_importance.png)
 
 *(Notebook: 04_ecology_prediction.ipynb)*
 
 ### Finding 3: Free-Living Species Have Greater Pathway Richness Than Host-Associated Species
 
-![Pathway richness boxplots by lifestyle category](figures/pathway_richness_by_lifestyle.png)
+![Pathway richness boxplots by lifestyle category](../figures/pseudomonas_carbon_ecology/pathway_richness_by_lifestyle.png)
 
 Across all *Pseudomonas* species with >= 5 genomes, free-living and plant-associated species maintain higher carbon pathway richness (median = 57 pathways complete in >50% of genomes) than host-associated species (median = 55). Within the *Pseudomonas_E* subgenus alone (controlling for deep phylogenetic divergence), the same trend holds: plant-associated species average 56.7 pathways, free-living 56.1, and host-associated 55.2.
 
@@ -52,11 +56,11 @@ Across all *Pseudomonas* species with >= 5 genomes, free-living and plant-associ
 
 ### Finding 4: The Aeruginosa-Fluorescens Split Dominates Carbon Pathway Variation
 
-![PCA of all Pseudomonas species colored by lifestyle](figures/pathway_pca_by_lifestyle.png)
+![PCA of all Pseudomonas species colored by lifestyle](../figures/pseudomonas_carbon_ecology/pathway_pca_by_lifestyle.png)
 
 PCA of all species' pathway profiles reveals that the primary axis of variation separates *Pseudomonas* s.s. from *Pseudomonas_E*, driven by the dramatic sugar pathway loss described in Finding 1. Within *Pseudomonas_E*, lifestyle categories (free-living, host-associated, plant-associated) show substantial overlap, indicating that the lifestyle-associated variation within this subgenus is more subtle than the deep phylogenetic divide.
 
-![Environment distribution by GTDB subgenus](figures/environment_by_subgenus.png)
+![Environment distribution by GTDB subgenus](../figures/pseudomonas_carbon_ecology/environment_by_subgenus.png)
 
 *(Notebooks: 02_environment_harmonization.ipynb, 04_ecology_prediction.ipynb)*
 

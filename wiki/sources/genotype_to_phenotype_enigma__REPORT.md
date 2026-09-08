@@ -1,3 +1,7 @@
+---
+title: 'Report: Genotype x Condition to Phenotype Prediction from ENIGMA Growth Curves'
+type: Source
+---
 # Report: Genotype x Condition to Phenotype Prediction from ENIGMA Growth Curves
 
 ## Executive Summary
@@ -18,11 +22,11 @@ This project asks whether bacterial growth phenotype — at resolutions from bin
 
 #### 1. A dense multi-dataset anchor set enables genotype-phenotype modeling
 
-![Condition overlap across 4 datasets](figures/NB02_condition_overlap_4way.png)
+![Condition overlap across 4 datasets](../figures/genotype_to_phenotype_enigma/NB02_condition_overlap_4way.png)
 
 The ENIGMA growth curve corpus (27,632 curves across 123 strains and 195 molecules) aligns with Fitness Browser RB-TnSeq data through **486 (strain x condition) anchor pairs** — 7 strains x 72 conditions where growth curves, gene fitness, and genome annotations all coexist. Media names (RCH2_defined_noCarbon, LB, R2A, M9) match exactly between ENIGMA and FB, and 42 molecules align by normalized compound name. Of the 486 anchor pairs, 275 (56.6%) show measurable growth — providing balanced positive and negative labels for binary prediction. Five conditions (cytidine, glycine, inosine, thymidine, uridine) are present in all four datasets (ENIGMA, FB, carbon source phenotype corpus, Web of Microbes), with 30 in three.
 
-![Anchor strain growth heatmap](figures/NB02_anchor_growth_heatmap.png)
+![Anchor strain growth heatmap](../figures/genotype_to_phenotype_enigma/NB02_anchor_growth_heatmap.png)
 
 An additional 795-genome carbon source phenotype corpus (`globalusers_carbon_source_phenotypes`, 379 binary phenotypes, pre-computed KofamScan KO and BacFormer embeddings; Dileep et al., preprint in preparation) is available for pretraining. The full coverage matrix spans 13,632 (strain x condition) pairs across all 123 strains x 194 conditions.
 
@@ -30,63 +34,63 @@ An additional 795-genome carbon source phenotype corpus (`globalusers_carbon_sou
 
 #### 2. Growth curves reveal a 55% no-growth majority with structured kinetic variation
 
-![Growth corpus statistics](figures/NB01_parameter_distributions.png)
+![Growth corpus statistics](../figures/genotype_to_phenotype_enigma/NB01_parameter_distributions.png)
 
 Of 27,632 wells across 303 plates, 15,227 (55.1%) show no detectable growth — a biological signal reflecting substrate incompatibility or stress lethality, not a measurement failure. Among the 9,861 fit-ok curves (35.7%), modified Gompertz fitting achieves median R^2 = 0.98 with the following parameter distributions: median mumax = 0.028 h^-1 (doubling time ~24.5 h), median lag = 11.4 h, median asymptotic OD increase (A) = 0.315. Diauxy is common: 40% of fit-ok curves show >=2 growth phases in their smoothed derivative, suggesting sequential substrate utilization is widespread among Oak Ridge isolates.
 
-![Example curve fits](figures/NB01_curve_fit_examples.png)
+![Example curve fits](../figures/genotype_to_phenotype_enigma/NB01_curve_fit_examples.png)
 
 Pseudomonas anchor strains show 43-61% growth across conditions (metabolic generalists); Pedobacter (23.5%) and Acidovorax (22.4%) show much lower rates, consistent with more specialized metabolic repertoires. The no-growth fraction is itself a prediction target — these are conditions where the genome predicts growth should not occur.
 
-![QC summary across all plates](figures/NB01_qc_summary.png)
+![QC summary across all plates](../figures/genotype_to_phenotype_enigma/NB01_qc_summary.png)
 
 *(Notebook: NB01_curve_fitting.ipynb)*
 
 #### 3. Eight metabolic guilds partition the 123-strain collection
 
-![KO profile PCA colored by guild and taxonomy](figures/NB03_ko_pca_guilds.png)
+![KO profile PCA colored by guild and taxonomy](../figures/genotype_to_phenotype_enigma/NB03_ko_pca_guilds.png)
 
 Hierarchical clustering on KO presence/absence (Jaccard distance, 7,167 unique KOs across 123 strains) identifies 8 metabolic guilds spanning 20 taxonomic orders. Guilds align with but are not identical to taxonomy — they are defined by functional gene content, not phylogeny. The Pseudomonas_E guild (27 strains, avg 2,658 KOs) contains 5 of 7 FB-anchor strains, making it the best-sampled for modeling. Genome sizes range from 2.6 to 11.4 Mb with strong correlation to KO diversity (1,256-3,014 unique KOs per strain, median 2,121).
 
-![COG functional profiles by guild](figures/NB03_cog_by_guild.png)
+![COG functional profiles by guild](../figures/genotype_to_phenotype_enigma/NB03_cog_by_guild.png)
 
 The Flavobacteriales guild (6 strains, avg 1,372 KOs) has the fewest functional genes and represents the hardest out-of-distribution prediction target. COG class profiles show guild-specific functional enrichment, with the largest differences in categories L (replication/repair/recombination) and M (cell wall/membrane biogenesis).
 
-![Genome size vs KO diversity](figures/NB03_genome_vs_ko.png)
+![Genome size vs KO diversity](../figures/genotype_to_phenotype_enigma/NB03_genome_vs_ko.png)
 
 *(Notebook: NB03_functional_census.ipynb)*
 
 #### 4. ENIGMA strains are ecological outliers within their genera
 
-![Genus environment heatmap](figures/NB04_genus_env_heatmap.png)
+![Genus environment heatmap](../figures/genotype_to_phenotype_enigma/NB04_genus_env_heatmap.png)
 
 Genus-level environmental profiling across all GTDB genomes reveals that Pseudomonas globally is 37.8% clinical (driven by P. aeruginosa), 12.9% soil/plant, and 9.4% aquatic. However, all ENIGMA Pseudomonas belong to Pseudomonas_E (the fluorescens/protegens clade) — environmental, not clinical. Rhodanobacter is purely aquatic/contaminated (55% aquatic, 10% contaminated, 0% clinical). This means ENIGMA's subsurface field isolates occupy environmental niches underrepresented in the NCBI genome collection. Transfer learning from clinical phenotype databases may be biased.
 
-![Pangenome species environment profiles](figures/NB04_pangenome_env_profiles.png)
+![Pangenome species environment profiles](../figures/genotype_to_phenotype_enigma/NB04_pangenome_env_profiles.png)
 
 All 14 ENIGMA genera are globally ubiquitous — detected in 4,086-288,686 of 464,000 samples in the Microbial Atlas 16S database. Caulobacter is the most widespread (289K samples), followed by Rhodanobacter (228K) and Pseudomonas (206K). These are ecologically significant genera, not rare specialists.
 
-![Global genus occurrence](figures/NB04_global_genus_occurrence.png)
+![Global genus occurrence](../figures/genotype_to_phenotype_enigma/NB04_global_genus_occurrence.png)
 
 *(Notebook: NB04_environmental_context.ipynb)*
 
 #### 5. A global pH-driven niche partition explains local co-occurrence at Oak Ridge
 
-![Oak Ridge co-occurrence matrix](figures/NB04_oakridge_cooccurrence.png)
+![Oak Ridge co-occurrence matrix](../figures/genotype_to_phenotype_enigma/NB04_oakridge_cooccurrence.png)
 
 Spearman correlation across 587 100-Well-Survey communities identifies two anti-correlated genus clusters with 47 significant pairs (|rho| > 0.2, p < 0.01). Cluster A (Brevundimonas-Caulobacter-Sphingomonas-Variovorax-Sphingobium; strongest pair rho = +0.56) and Cluster B (Rhodanobacter-Ralstonia-Dyella-Serratia-Comamonas; rho = +0.40) are negatively correlated with each other (Brevundimonas-Rhodanobacter rho = -0.34).
 
-![Global co-occurrence matrix](figures/NB04_global_cooccurrence.png)
+![Global co-occurrence matrix](../figures/genotype_to_phenotype_enigma/NB04_global_cooccurrence.png)
 
 Environmental characterization of these clusters across 464K global 16S samples reveals a striking pH gradient: Cluster B environments average pH 5.4 (1.35 units more acidic than Cluster A's 6.8) and are 6.9 degrees C warmer. This mirrors the Oak Ridge contamination gradient where nitric acid leachate lowers pH in plume wells. The co-occurrence pattern is **not site-specific but reflects a global pH-driven niche partition**. Cluster B organisms are acid-tolerant generalists enriched wherever pH drops — contamination sites, peatlands, and acidic soils. Cluster A organisms prefer neutral, cooler conditions typical of uncontaminated groundwater.
 
-![Cluster environment comparison](figures/NB04_cluster_env_comparison.png)
+![Cluster environment comparison](../figures/genotype_to_phenotype_enigma/NB04_cluster_env_comparison.png)
 
 This has direct implications for growth phenotype prediction: strains from Cluster B (acid-tolerant) should show different pH-dependent growth profiles than Cluster A strains, and the genomic features distinguishing the clusters should be predictive of pH tolerance.
 
-![Well guild distribution](figures/NB04_well_guild_distribution.png)
+![Well guild distribution](../figures/genotype_to_phenotype_enigma/NB04_well_guild_distribution.png)
 
-![Strain isolation map](figures/NB04_oak_ridge_strain_map.png)
+![Strain isolation map](../figures/genotype_to_phenotype_enigma/NB04_oak_ridge_strain_map.png)
 
 *(Notebook: NB04_environmental_context.ipynb)*
 
@@ -102,27 +106,27 @@ All planned modeling is complete: full-corpus training with genus-blocked holdou
 
 #### 7. Feature engineering: 4,305 prevalence-filtered KOs preserve interpretability
 
-![Feature summary](figures/NB05_feature_summary.png)
+![Feature summary](../figures/genotype_to_phenotype_enigma/NB05_feature_summary.png)
 
 The modeling table comprises 486 anchor pairs (7 strains x 72 conditions) with features organized into four hierarchical levels: L0 Phylogeny (28), L1 Bulk scalars (8), L2 Specific features (4,305 prevalence-filtered KOs + 23 COG classes), and L3 Condition class + concentration (7). KO selection uses a principled prevalence filter: remove 456 core KOs (p > 0.95, no discriminative power) and 2,406 rare KOs (p < 0.05, too sparse), retaining 4,305 informative KOs as named KEGG orthologs for SHAP interpretability. No PCA — every feature is a named KO.
 
-![KO prevalence filter](figures/NB05_ko_prevalence_filter.png)
+![KO prevalence filter](../figures/genotype_to_phenotype_enigma/NB05_ko_prevalence_filter.png)
 
-![Target distributions](figures/NB05_target_distributions.png)
+![Target distributions](../figures/genotype_to_phenotype_enigma/NB05_target_distributions.png)
 
 *(Notebook: NB05_feature_engineering.ipynb)*
 
 #### 8. Initial variance partitioning: genome scale + condition class dominate with n=7
 
-![Variance partitioning](figures/NB06_variance_partition.png)
+![Variance partitioning](../figures/genotype_to_phenotype_enigma/NB06_variance_partition.png)
 
 Nested GBDT models (LightGBM, leave-one-strain-out CV, 486 pairs) achieve AUC 0.633 (binary growth) with the full feature set. SHAP analysis with correlation grouping (|r| > 0.8 connected components) reveals the signal is dominated by a **63-feature genome-scale axis** (25.3% of total SHAP: genome size, gene count, operons, rRNA/tRNA, and co-inherited KOs/COGs) and **condition class** (45.9%: amino acid, carbon source, metal, etc.). Specific KO gene blocks — membrane adaptation, tRNA modification, aromatic catabolism, flagellar motility — contribute ~2% each but are biologically coherent.
 
-![Group-level SHAP importance](figures/NB06_group_shap.png)
+![Group-level SHAP importance](../figures/genotype_to_phenotype_enigma/NB06_group_shap.png)
 
-![Top 20 SHAP features](figures/NB06_shap_top20.png)
+![Top 20 SHAP features](../figures/genotype_to_phenotype_enigma/NB06_shap_top20.png)
 
-![Feature correlation matrix](figures/NB06_feature_correlation.png)
+![Feature correlation matrix](../figures/genotype_to_phenotype_enigma/NB06_feature_correlation.png)
 
 Continuous targets (mumax, lag, max_A) show negative R^2 — not predictable cross-strain with n=7.
 
@@ -132,7 +136,7 @@ Continuous targets (mumax, lag, max_A) show negative R^2 — not predictable cro
 
 #### 9. Preliminary condition-specific models: GapMind and CSP transfer show promise on matched conditions
 
-![Model comparison](figures/NB07_model_comparison.png)
+![Model comparison](../figures/genotype_to_phenotype_enigma/NB07_model_comparison.png)
 
 Three approaches were compared for binary growth prediction:
 
@@ -145,25 +149,25 @@ Three approaches were compared for binary growth prediction:
 
 GapMind achieves 96.5% recall and 79% precision on 118 testable pairs — it almost never misses a grower but sometimes predicts growth when the pathway is present but unused. CSP transfer reaches AUC 0.800 on the 23% of conditions that match the CSP training set.
 
-![Coverage gap](figures/NB07_coverage_gap.png)
+![Coverage gap](../figures/genotype_to_phenotype_enigma/NB07_coverage_gap.png)
 
 **The coverage gap**: ~76% of ENIGMA conditions (metals, antibiotics, nitrogen, stress) have neither GapMind pathway coverage nor CSP training data. Prediction on these conditions falls to AUC ~0.63 (no better than generic KO features).
 
 #### 9b. Per-metabolite KO correlation recovers 940 mechanistic gene-metabolite associations
 
-![Production-KO heatmap](figures/NB08_production_ko_heatmap.png)
+![Production-KO heatmap](../figures/genotype_to_phenotype_enigma/NB08_production_ko_heatmap.png)
 
 While multivariate GBDT fails at n=6 (AUC=0.500), **univariate per-metabolite point-biserial correlation** between KO presence and metabolite production identifies **940 strong associations (|r| > 0.7)** across **all 62 variable metabolites**. Using FB-cognate KOs (genes with significant fitness effects on rich media in Pseudomonas Fitness Browser anchor organisms) filtered to those variable across the 6 WoM strains yields a compact, mechanistically focused feature set of 156 KOs.
 
-![Mechanistic examples](figures/NB08_mechanistic_examples.png)
+![Mechanistic examples](../figures/genotype_to_phenotype_enigma/NB08_mechanistic_examples.png)
 
 The associations split into **production** (454: KO present → metabolite produced, e.g., K01048 PAPS synthase → taurine, K05710 thymidine phosphorylase → thymine) and **consumption** (486: KO present → metabolite consumed/degraded, e.g., K02613 lactate permease → lactate consumed, K07334 xanthine oxidase → hypoxanthine consumed). These are mechanistically correct gene-function relationships.
 
-![Method comparison](figures/NB08_method_comparison.png)
+![Method comparison](../figures/genotype_to_phenotype_enigma/NB08_method_comparison.png)
 
 **Key methodological insight**: The right analytical method depends on sample size. For cross-genus growth prediction (n=46K pairs), multivariate GBDT identifies condition-specific features. For within-genus metabolite prediction (n=6 strains), univariate per-metabolite correlation recovers genuine signal that multivariate models miss.
 
-![FB cognate results](figures/NB08_fb_cognate_results.png)
+![FB cognate results](../figures/genotype_to_phenotype_enigma/NB08_fb_cognate_results.png)
 
 **H5 revised**: Growth-predictive KOs (cross-genus) and metabolite-production-associated KOs (within-genus) are DIFFERENT feature sets (Spearman rho=0.043), answering different biological questions ("can it grow?" vs "what does it produce?"). But gene content DOES explain both — when analyzed with the appropriate method for the sample size and biological resolution.
 
@@ -171,7 +175,7 @@ The associations split into **production** (454: KO present → metabolite produ
 
 #### 10. Full-corpus modeling reveals condition-specific catabolic genes as genuine predictors
 
-![Full corpus results](figures/NB07_full_corpus_results.png)
+![Full corpus results](../figures/genotype_to_phenotype_enigma/NB07_full_corpus_results.png)
 
 Training on the full corpus (46,389 pairs: 13,632 ENIGMA + 32,757 CSP, 727 genomes, 4,293 shared KOs) with genus-blocked holdout (106 genera) achieves AUC 0.620 overall for binary growth. Per-condition-class performance varies dramatically:
 
@@ -185,7 +189,7 @@ Training on the full corpus (46,389 pairs: 13,632 ENIGMA + 32,757 CSP, 727 genom
 | Metals | 0.605 | 232 | Trivially "predicted" (98% growth rate) |
 | Nitrogen | 0.435 | 152 | **Worse than random** |
 
-![Full corpus SHAP features](figures/NB07_full_corpus_shap.png)
+![Full corpus SHAP features](../figures/genotype_to_phenotype_enigma/NB07_full_corpus_shap.png)
 
 Unlike the n=7 model (NB06) which found genome-scale features, the full-corpus SHAP identifies **condition-specific catabolic genes**: K03762 (proP, proline/betaine transporter), K10440 (rbsC, ribose transporter), K01857 (pcaB, protocatechuate cycloisomerase for aromatic catabolism), K13633 (ftrA, AraC-family carbon catabolism regulator), K01214 (treX, isoamylase for complex carbohydrates). These are the mechanistically correct genes — transporters that import the substrate and enzymes that catabolize it.
 
@@ -193,7 +197,7 @@ Unlike the n=7 model (NB06) which found genome-scale features, the full-corpus S
 
 #### 11. Continuous growth parameters are not predictable from KO content or bulk genomic features
 
-![Bulk features vs continuous parameters](figures/NB07_bulk_vs_continuous.png)
+![Bulk features vs continuous parameters](../figures/genotype_to_phenotype_enigma/NB07_bulk_vs_continuous.png)
 
 Growth rate (mumax), lag time, and yield (max_A) show negative R^2 under genus-blocked holdout in BOTH the full KO model (NB07, 46K pairs) and a dedicated bulk-feature regression (genome size, rRNA/tRNA copies, GC%, coding density, KO count, operons). Weak univariate correlations exist (n_unique_KOs vs mumax: r=+0.42; n_tRNA vs mumax: r=+0.30) but they are phylogenetically confounded — large-genome genera (Pseudomonas) grow fast, small-genome genera (Pedobacter) grow slowly. Under cross-genus holdout, these correlations provide zero predictive power.
 
@@ -203,29 +207,29 @@ Growth rate (mumax), lag time, and yield (max_A) show negative R^2 under genus-b
 
 #### 12. KO x condition interaction features modestly improve prediction; 95 conditions are genuinely predictable
 
-![ROC curves by condition class](figures/NB07_roc_curves.png)
+![ROC curves by condition class](../figures/genotype_to_phenotype_enigma/NB07_roc_curves.png)
 
 Adding KEGG-pathway-based interaction features ("does this genome have KOs relevant to THIS condition's catabolic pathway?") improves mean AUC from 0.620 to **0.653** (+0.032), with 80/106 held-out genera showing improvement. The effect is strongest for Microbacterium (+0.088) and Sphingomonas (+0.074).
 
-![Confusion matrices](figures/NB07_confusion_matrices.png)
+![Confusion matrices](../figures/genotype_to_phenotype_enigma/NB07_confusion_matrices.png)
 
 Per-individual-condition analysis across 343 testable conditions reveals **95 conditions with AUC > 0.75** — genuinely predictable from KO content. The best-predicted individual substrates are tryptophan (AUC 0.933), phenylalanine (0.932), valine (0.927), mannose (0.904), and galactose (0.895). The worst: turanose (0.059), adonitol (0.010) — complex sugars with rare catabolic pathways.
 
-![Per-condition AUC](figures/NB07_per_condition_auc.png)
+![Per-condition AUC](../figures/genotype_to_phenotype_enigma/NB07_per_condition_auc.png)
 
-![Model diagnostics](figures/NB07_model_diagnostics.png)
+![Model diagnostics](../figures/genotype_to_phenotype_enigma/NB07_model_diagnostics.png)
 
 *(Notebook: NB07_full_corpus_prediction.ipynb)*
 
 #### 13. FB concordance shows the model predicts correctly but not mechanistically
 
-![FB concordance detail](figures/NB07_fb_concordance_detail.png)
+![FB concordance detail](../figures/genotype_to_phenotype_enigma/NB07_fb_concordance_detail.png)
 
 Condition-matched FB concordance — the fraction of top SHAP KOs (expanded to correlated gene blocks at |r|>0.8, totaling 57 KOs → 335 FB loci) that show significant fitness effects (|t|>4) in matched FB experiments — is **18.7%** vs **16.3%** random baseline = **1.19x enrichment**. This is a weak positive: the model's features are barely more fitness-significant than random genes under matched conditions.
 
 Per-strain enrichment ranges from 1.72x (Cup4G11) to 0.83x (pseudo1_N1B4, no enrichment). The model predicts growth correctly (AUC 0.78 for amino acids) through *combinations* of prevalence-variable KOs that act as genus-level proxies, not through individually mechanistically causal genes.
 
-![FB concordance overall](figures/NB07_fb_concordance.png)
+![FB concordance overall](../figures/genotype_to_phenotype_enigma/NB07_fb_concordance.png)
 
 **Implication for H3**: The model DOES use condition-specific gene-level functional features — K10440 (ribose transporter) predicting ribose growth IS a gene-function relationship. The weak FB concordance does not mean the features are non-mechanistic; it means **gene presence across genera** (our prediction task) and **gene essentiality within one strain** (the FB fitness task) are fundamentally different biological questions. A gene can be critical for growth prediction across genera (because genera without it don't grow on that substrate) but NOT show a fitness defect when disrupted in one strain (because that strain has redundant pathways or the lab condition differs from the growth assay). Additionally, SHAP distributes credit across correlated features — the mechanistically causal gene may be a correlated neighbor of the SHAP-highlighted one, diluting the concordance signal.
 
@@ -233,11 +237,11 @@ Per-strain enrichment ranges from 1.72x (Cup4G11) to 0.83x (pseudo1_N1B4, no enr
 
 #### 14. The transition from genome-scale to condition-specific features requires 46K training pairs
 
-![SHAP comparison n=7 vs full corpus](figures/NB07_shap_comparison_n7_vs_full.png)
+![SHAP comparison n=7 vs full corpus](../figures/genotype_to_phenotype_enigma/NB07_shap_comparison_n7_vs_full.png)
 
 Comparing SHAP feature importance between the n=7 anchor model (NB06) and the full 46K-pair corpus (NB07) reveals a qualitative shift: with 7 strains, the model uses condition class (45.9%) and genome-scale features (25.3%); with 46K pairs, **condition-specific catabolic genes emerge** — ribose transporter (K10440), proline transporter (K03762), protocatechuate cycloisomerase (K01857), AraC regulators (K13633). This quantifies the data requirement for mechanistic prediction.
 
-![SHAP beeswarm](figures/NB07_shap_beeswarm.png)
+![SHAP beeswarm](../figures/genotype_to_phenotype_enigma/NB07_shap_beeswarm.png)
 
 The beeswarm plot shows not just importance but DIRECTION: KO presence (high feature value, red) pushes toward growth prediction, KO absence (blue) pushes toward no-growth — consistent with the biological expectation that having the catabolic gene enables growth on the corresponding substrate.
 
@@ -249,7 +253,7 @@ The beeswarm plot shows not just importance but DIRECTION: KO presence (high fea
 
 #### 15. Conflict detection identifies 1,276 high-confidence prediction failures concentrated in specific genus × condition-class cells
 
-![NB09 conflict detection](figures/NB09_conflict_detection.png)
+![NB09 conflict detection](../figures/genotype_to_phenotype_enigma/NB09_conflict_detection.png)
 
 Auditing the 42,771 per-pair predictions from the full-corpus genus-blocked holdout against ground truth yields an **overall accuracy of 65.1%** with 7,844 false positives (model predicts growth, actual is no-growth) and 7,101 false negatives (model predicts no-growth, actual is growth). Filtering to predictions with |p − 0.5| > 0.25 (confident predictions) isolates **1,276 high-confidence errors** — these are not borderline calls but cases where the model commits to a wrong answer. They concentrate in specific genus × condition-class cells: Methylobacterium on amino acids, Sphingomonas on other carbon sources, and Microbacterium on nucleosides all show elevated confident-error rates.
 
@@ -259,11 +263,11 @@ These confident errors are the most informative signal for active learning: they
 
 #### 16. Active learning proposes 50 Oak Ridge experiments prioritizing organic acids, nitrate, and field-relevant substrates
 
-![NB09 active learning candidates](figures/NB09_active_learning_candidates.png)
+![NB09 active learning candidates](../figures/genotype_to_phenotype_enigma/NB09_active_learning_candidates.png)
 
 Ranking the 343 testable conditions by a combined score — **error rate × model uncertainty × field relevance weight** — identifies a prioritized set of experiments that would maximally improve model calibration for Oak Ridge-relevant biology. Field relevance doubles the weight for conditions that match the Oak Ridge geochemistry (nitrogen sources including nitrate, organic acids associated with necromass decomposition, low-pH-compatible substrates, and aromatic compounds).
 
-![NB10 active learning proposal](figures/NB10_active_learning_proposal.png)
+![NB10 active learning proposal](../figures/genotype_to_phenotype_enigma/NB10_active_learning_proposal.png)
 
 The top 10 recommended conditions are: **fumaric acid**, **melibionic acid**, fumarate, itaconic acid, 2-hydroxypropanoic acid (lactic acid), hydroxy-glutaric acid γ-lactone, difumarate, L-glutamic acid, **nitrate**, and pyruvic acid. These are overwhelmingly organic acids and nitrogen-cycle compounds — exactly the class where the full-corpus model performs worst (AUC 0.654 for "other" carbon metabolism, 0.435 for nitrogen) and where Oak Ridge's contamination chemistry matters most (nitric-acid-driven pH drop, organic acid accumulation in plume sediments).
 

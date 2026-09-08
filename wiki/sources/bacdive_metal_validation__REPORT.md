@@ -1,10 +1,14 @@
+---
+title: 'Report: BacDive Isolation Environment × Metal Tolerance Prediction'
+type: Source
+---
 # Report: BacDive Isolation Environment × Metal Tolerance Prediction
 
 ## Key Findings
 
 ### 1. Bacteria From Metal-Contaminated Environments Have Significantly Higher Metal Tolerance Scores
 
-![Metal score by environment](figures/metal_score_by_environment.png)
+![Metal score by environment](../figures/bacdive_metal_validation/metal_score_by_environment.png)
 
 Organisms isolated from heavy metal contamination sites have metal tolerance scores a full standard deviation above the environmental baseline (Cohen's d = +1.00, Mann-Whitney p=0.006, n=10). The effect is dose-dependent across contamination intensity: heavy metal (+1.00) > waste/sludge (+0.57) > all contamination (+0.43) > industrial (+0.20). This validates the Metal Fitness Atlas's genome-based prediction method against real-world isolation ecology.
 
@@ -30,7 +34,7 @@ This demonstrates that the metal tolerance score captures real metal adaptation 
 
 ### 3. 42,227 BacDive Strains Linked to Pangenome Metal Scores
 
-![Bridge summary](figures/bridge_summary.png)
+![Bridge summary](../figures/bacdive_metal_validation/bridge_summary.png)
 
 Species name matching between BacDive taxonomy and GTDB pangenome species successfully linked 42,227 BacDive strains (43.4% of 97,334) to metal tolerance scores across 6,426 unique GTDB species. Of these, 25,089 have isolation source metadata. The matching used exact species name agreement (33,535 strains, 34.5%) with GTDB suffix removal as fallback (8,692 additional strains, 8.9%), e.g., matching BacDive "Pseudomonas fluorescens" to GTDB "Pseudomonas fluorescens A".
 
@@ -38,7 +42,7 @@ Species name matching between BacDive taxonomy and GTDB pangenome species succes
 
 ### 4. Metal Utilization Phenotypes: Inconclusive
 
-![Metal utilization vs score](figures/utilization_vs_score.png)
+![Metal utilization vs score](../figures/bacdive_metal_validation/utilization_vs_score.png)
 
 Only 24 BacDive metal utilization test records (iron, manganese, arsenate, chromate, cobalt, zinc) matched to strains with metal tolerance scores. With 8 positive and 16 negative results, the comparison is underpowered (Mann-Whitney p=0.14, d=-0.57). The negative direction (positive utilizers had *lower* metal scores) is surprising but not significant and should not be over-interpreted given the tiny sample size.
 

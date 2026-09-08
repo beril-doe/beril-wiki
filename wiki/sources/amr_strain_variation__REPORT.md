@@ -1,10 +1,14 @@
+---
+title: 'Report: Within-Species AMR Strain Variation'
+type: Source
+---
 # Report: Within-Species AMR Strain Variation
 
 ## Key Findings
 
 ### Finding 1: The majority of AMR genes are variable or rare within species
 
-![Variation landscape showing prevalence classes, variability vs openness, Jaccard diversity by phylum, and prevalence by mechanism](figures/nb02_variation_landscape.png)
+![Variation landscape showing prevalence classes, variability vs openness, Jaccard diversity by phylum, and prevalence by mechanism](../figures/amr_strain_variation/nb02_variation_landscape.png)
 
 Across 1,305 species and 180,025 genomes, 51.3% of AMR gene-species occurrences are **rare** (present in <=5% of strains), 41.3% are **variable** (5-95%), and only 7.5% are **fixed** (>=95%). The median variability index is 0.526, meaning over half of a species' AMR genes fall in the variable zone. The median pairwise Jaccard distance between strains is 0.435, indicating that strains within the same species share less than 60% of their AMR repertoire.
 
@@ -16,7 +20,7 @@ AMR variability weakly anti-correlates with pangenome openness (Spearman rho = -
 
 ### Finding 2: Resistance islands are widespread and tightly co-inherited
 
-![Co-occurrence analysis showing island size distribution, observed vs null phi, and islands per species](figures/nb03_cooccurrence.png)
+![Co-occurrence analysis showing island size distribution, observed vs null phi, and islands per species](../figures/amr_strain_variation/nb03_cooccurrence.png)
 
 We detected 1,517 resistance islands across 705 species (54% of those analyzed), with a mean island size of 6.2 genes (median 4, max 43) and a mean phi coefficient of 0.827 — indicating very tight co-occurrence within each island. Of these, 88% (1,343/1,517) contain genes from multiple resistance mechanisms, with efflux pumps (954 islands) and enzymatic inactivation (698) being the most common components. This multi-mechanism composition suggests that resistance islands provide coordinated defense against multiple drug classes simultaneously.
 
@@ -24,7 +28,7 @@ We detected 1,517 resistance islands across 705 species (54% of those analyzed),
 
 ### Finding 3: AMR variation tracks phylogeny in the majority of species — but acquired genes show stronger signal than intrinsic
 
-![Phylogenetic signal showing Mantel r distribution, core vs non-core, and signal vs diversity](figures/nb04_phylogenetic_signal.png)
+![Phylogenetic signal showing Mantel r distribution, core vs non-core, and signal vs diversity](../figures/amr_strain_variation/nb04_phylogenetic_signal.png)
 
 Mantel tests comparing ANI distance matrices with AMR Jaccard distance matrices across 1,261 species reveal that 55.6% (701 species) show significant phylogenetic signal (FDR < 0.05), with a median Mantel r of 0.247 and 87.8% of species showing positive correlation. AMR profiles are not randomly distributed across phylogeny — closely related strains tend to share more AMR genes.
 

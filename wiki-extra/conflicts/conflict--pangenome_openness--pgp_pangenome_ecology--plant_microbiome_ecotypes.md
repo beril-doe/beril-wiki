@@ -1,15 +1,29 @@
-<!-- tension-hash: 6cbe6ebd14c61211 -->
+---
+title: 'Ecological Guilds: Shared Selection or Complementary Metabolism?'
+type: Conflict
+sources:
+- id: pgp_pangenome_ecology
+  resource: ../../wiki/summaries/pgp_pangenome_ecology__REPORT.md
+  title: pgp pangenome ecology
+- id: plant_microbiome_ecotypes
+  resource: ../../wiki/summaries/plant_microbiome_ecotypes__REPORT.md
+  title: plant microbiome ecotypes
+- id: pangenome_openness
+  resource: ../../wiki/summaries/pangenome_openness__REPORT.md
+  title: pangenome openness
+---
+<!-- tension-hash: fa4a83be64f93d16 -->
 # Ecological Guilds: Shared Selection or Complementary Metabolism?
 
-The disagreement concerns what a gene or genus “guild” represents in microbial ecology. The [[concepts/gene-cooccurrence-ecological-guilds]] evidence supports an ecological-guild interpretation for the pqqC–acdS pair, while another analysis finds that co-occurring genus pairs are slightly less complementary than random pairs. A related tension compares broad pangenome-level measures, which show no significant environment or phylogeny relationship, with strong environmental enrichment for selected genes. The issue matters because guilds may reflect shared environmental selection without implying complementary metabolic provisioning.
+The disagreement concerns what a gene or genus “guild” represents in microbial ecology. The [gene-cooccurrence-ecological-guilds](../../wiki/concepts/gene-cooccurrence-ecological-guilds.md) evidence supports an ecological-guild interpretation for the pqqC–acdS pair, while another analysis finds that co-occurring genus pairs are slightly less complementary than random pairs. A related tension compares broad pangenome-level measures, which show no significant environment or phylogeny relationship, with strong environmental enrichment for selected genes. The issue matters because guilds may reflect shared environmental selection without implying complementary metabolic provisioning.
 
 ## Evidence Sides
 
-**Side 1 — Co-occurrence indicates an environmentally selected guild.** The PGP analysis supports a pqqC–acdS ecological-guild interpretation through strong pairwise association and environmental enrichment. It also found strong environment-associated enrichment for particular genes, including acdS and pqqC. [src: pgp_pangenome_ecology]
+**Side 1 — Co-occurrence indicates an environmentally selected guild.** The PGP analysis supports a pqqC–acdS ecological-guild interpretation through strong pairwise association and environmental enrichment. It also found strong environment-associated enrichment for particular genes, including acdS and pqqC. [^pgp_pangenome_ecology]
 
-**Side 2 — Co-occurring taxa are not metabolically complementary.** The plant-microbiome complementarity analysis found co-occurring genus pairs slightly less complementary than random pairs (Cohen’s d ≈ −0.4, permutation p < 0.001). [src: plant_microbiome_ecotypes] This challenges an interpretation in which co-occurrence itself demonstrates complementary metabolic provisioning.
+**Side 2 — Co-occurring taxa are not metabolically complementary.** The plant-microbiome complementarity analysis found co-occurring genus pairs slightly less complementary than random pairs (Cohen’s d ≈ −0.4, permutation p < 0.001). [^plant_microbiome_ecotypes] This challenges an interpretation in which co-occurrence itself demonstrates complementary metabolic provisioning.
 
-**Side 3 — Broad pangenome openness does not track environment or phylogeny.** The pangenome-openness analysis found no significant relationship between openness and either environment or phylogeny effects (Spearman rho = -0.05, p-value = 0.54; Spearman rho = 0.03, p-value = 0.73). [src: pangenome_openness] In contrast, the PGP analysis found strong environment-associated enrichment for particular genes, including acdS and pqqC. [src: pgp_pangenome_ecology]
+**Side 3 — Broad pangenome openness does not track environment or phylogeny.** The pangenome-openness analysis found no significant relationship between openness and either environment or phylogeny effects (Spearman rho = -0.05, p-value = 0.54; Spearman rho = 0.03, p-value = 0.73). [^pangenome_openness] In contrast, the PGP analysis found strong environment-associated enrichment for particular genes, including acdS and pqqC. [^pgp_pangenome_ecology]
 
 ## Possible Reconciliations
 
@@ -24,3 +38,7 @@ The disagreement concerns what a gene or genus “guild” represents in microbi
 - Reconstruct pathways for co-occurring genus pairs and compare metabolite exchange or resource-use profiles with random pairs, asking whether pqqC–acdS pairs show functional complementarity despite lower genus-level complementarity.
 - Reanalyze environmental associations at matched scales—from whole-pangenome openness to individual genes and pathways—with the same environmental and phylogenetic covariates.
 - Use perturbation or stable-isotope experiments to test whether removing one member or gene changes the other member’s activity or the predicted exchanged metabolite.
+
+[^pgp_pangenome_ecology]: [pgp pangenome ecology](../../wiki/summaries/pgp_pangenome_ecology__REPORT.md)
+[^plant_microbiome_ecotypes]: [plant microbiome ecotypes](../../wiki/summaries/plant_microbiome_ecotypes__REPORT.md)
+[^pangenome_openness]: [pangenome openness](../../wiki/summaries/pangenome_openness__REPORT.md)

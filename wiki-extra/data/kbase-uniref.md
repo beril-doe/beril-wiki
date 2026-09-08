@@ -1,3 +1,7 @@
+---
+title: UniRef Clusters
+type: Dataset
+---
 # UniRef Clusters
 
 Provider: ?
@@ -12,5 +16,5 @@ Reduce redundancy in protein searches. Group related proteins for faster homolog
 
 ## Used by projects (1)
 
-- [[summaries/gene_function_ecological_agora__REPORT|gene_function_ecological_agora]]
+- [gene_function_ecological_agora](../../wiki/summaries/gene_function_ecological_agora__REPORT.md)
 

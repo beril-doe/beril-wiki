@@ -1,3 +1,7 @@
+---
+title: PROTECT Pathogen Browser
+type: Dataset
+---
 # PROTECT Pathogen Browser
 
 Provider: ?
@@ -16,6 +20,6 @@ Support pathogen surveillance research. Catalog pathogen genomes, track strain v
 
 ## Used by projects (2)
 
-- [[summaries/berdl_data_atlas__REPORT|berdl_data_atlas]]
-- [[summaries/cf_formulation_design__REPORT|cf_formulation_design]]
+- [berdl_data_atlas](../../wiki/summaries/berdl_data_atlas__REPORT.md)
+- [cf_formulation_design](../../wiki/summaries/cf_formulation_design__REPORT.md)
 

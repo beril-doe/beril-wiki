@@ -1,3 +1,8 @@
+---
+title: 'Report: Prophage Gene Modules and Terminase-Defined Lineages Across Bacterial
+  Phylogeny and Environmental Gradients'
+type: Source
+---
 # Report: Prophage Gene Modules and Terminase-Defined Lineages Across Bacterial Phylogeny and Environmental Gradients
 
 ## Key Findings
@@ -6,7 +11,7 @@
 
 All 27,702 species in the BERDL pangenome carry prophage-associated gene clusters, with 4,005,537 total prophage gene clusters identified via eggNOG annotations. Three modules are near-universal: packaging (A, 100%), lysis (D, 99.9%), and lysogenic regulation (F, 100%). The structurally variable modules — head morphogenesis (B, 56.1%), tail (C, 55.6%), and anti-defense (G, 64.3%) — show the most phylogenetic and environmental variation. 34.9% of species carry all 7 modules.
 
-![Prophage module prevalence by phylum](figures/prophage_prevalence_by_phylum.png)
+![Prophage module prevalence by phylum](../figures/prophage_ecology/prophage_prevalence_by_phylum.png)
 
 Modules A, D, and F likely include many "domesticated" prophage remnants (Bobay et al. 2014) — defective prophages under purifying selection that retain packaging, lysis, and regulatory genes. The structurally variable modules (B, C, G) are more informative for understanding prophage ecology because their presence indicates more complete prophage elements.
 
@@ -24,9 +29,9 @@ PERMANOVA on Bray-Curtis distances of prophage module composition (n=1,773 speci
 
 Genome size is the dominant predictor (rho=0.717 with prophage cluster count), followed by environment, then phylogeny. However, Kruskal-Wallis tests within each genome size quartile confirm that environment significantly affects prophage module count even after stratification (all p < 6.5e-78), demonstrating that the environmental signal is not a genome size artifact.
 
-![Variance partitioning and module prevalence by environment](figures/variance_partitioning.png)
+![Variance partitioning and module prevalence by environment](../figures/prophage_ecology/variance_partitioning.png)
 
-![Genome size confound analysis](figures/genome_size_confound.png)
+![Genome size confound analysis](../figures/prophage_ecology/genome_size_confound.png)
 
 AlphaEarth environmental embedding analysis (2,008 species with ≥5 embedded genomes) confirms a strong partial correlation between environmental niche breadth and prophage module count after controlling for genome size (partial Spearman rho=0.468, p=8.41e-110).
 
@@ -47,7 +52,7 @@ Constrained permutation null models (500 permutations preserving host family × 
 | Anti-Defense | freshwater | -0.74 | -4.74 | Depleted |
 | Anti-Defense | animal_associated | -0.24 | -8.77 | Depleted |
 
-![Module × environment enrichment](figures/module_environment_enrichment.png)
+![Module × environment enrichment](../figures/prophage_ecology/module_environment_enrichment.png)
 
 The enrichment of structural modules (tail, head) and anti-defense in human-associated bacteria is consistent with Low et al. (2024), who found prophage-encoded cargo genes enriched in human-impacted environments. The anti-defense module depletion in freshwater and animal-associated environments suggests that host-phage coevolutionary arms races are most intense in human-associated niches, where bacterial immune systems (CRISPR-Cas, restriction-modification) are under stronger selection (Bernheim & Sorek 2020).
 
@@ -61,7 +66,7 @@ No individual TerL lineage showed significant environment-specific enrichment af
 - **325 specialist lineages** (Shannon < 1.0 or dominant environment > 80%): concentrated in animal_associated, freshwater, and marine
 - **499 generalist lineages**: distributed across 3+ environments
 
-![Lineage environmental breadth](figures/lineage_environment_heatmap.png)
+![Lineage environmental breadth](../figures/prophage_ecology/lineage_environment_heatmap.png)
 
 This is consistent with Mavrich & Hatfull (2017): temperate phages evolve in two modes (high and low gene flux), and lineage-level ecology largely mirrors host ecology rather than showing independent environmental adaptation.
 
@@ -79,9 +84,9 @@ Taxonomy-based inference of prophage burden across 6,365 NMDC metagenomic sample
 | All modules | depth | 0.361 |
 | All modules | total nitrogen | 0.333 |
 
-![NMDC prophage burden vs abiotic variables](figures/nmdc_prophage_vs_abiotic.png)
+![NMDC prophage burden vs abiotic variables](../figures/prophage_ecology/nmdc_prophage_vs_abiotic.png)
 
-![NMDC module-abiotic correlation heatmap](figures/nmdc_module_abiotic_heatmap.png)
+![NMDC module-abiotic correlation heatmap](../figures/prophage_ecology/nmdc_module_abiotic_heatmap.png)
 
 Cross-validation between pangenome enrichment and NMDC correlations shows concordance: **B_head_morphogenesis, C_tail, and G_anti_defense are significant in both analyses**. Four additional modules (A_packaging, D_lysis, E_integration, F_lysogenic_regulation) are NMDC-significant but not pangenome-enriched beyond phylogenetic expectation, consistent with their near-universal presence masking environment-specific variation in the pangenome analysis.
 
@@ -103,11 +108,11 @@ Querying 93M eggNOG annotations with 112 WHERE clause conditions identified 4,00
 | F. Lysogenic Regulation | 1,682,902 | 100.0% |
 | G. Anti-Defense | 63,508 | 64.3% |
 
-![Prophage gene cluster counts, species presence, and module richness](figures/prophage_module_discovery.png)
+![Prophage gene cluster counts, species presence, and module richness](../figures/prophage_ecology/prophage_module_discovery.png)
 
 Conservation analysis reveals that modules D (lysis, 62.6% core) and A (packaging, 57.0% core) are dominated by core genes, while modules E (integration, 59.3% singleton) and B (head morphogenesis, 56.0% singleton) are dominated by singletons — consistent with the expectation that phage structural genes diversify rapidly while regulatory/lysis genes are more conserved (Hendrix et al. 2000).
 
-![Core/accessory/singleton status of prophage gene clusters by module](figures/prophage_conservation_by_module.png)
+![Core/accessory/singleton status of prophage gene clusters by module](../figures/prophage_ecology/prophage_conservation_by_module.png)
 
 Validation against 8 well-characterized prophage-carrying species (E. coli, S. enterica, S. aureus, P. aeruginosa, M. tuberculosis, B. subtilis, V. cholerae, S. pyogenes) confirmed detection of all 7 modules in every case.
 
@@ -115,7 +120,7 @@ Validation against 8 well-characterized prophage-carrying species (E. coli, S. e
 
 38,085 TerL protein sequences from 11,789 species were clustered at 70% amino acid identity using MMseqs2, yielding 10,991 lineages. The largest lineage (L_SFJM01000051.1_13) spans 1,094 members across 869 species, representing a cosmopolitan prophage type. 6,921 lineages (63%) are singletons — species-specific prophage types.
 
-![TerL lineage size distribution and clustering threshold sensitivity](figures/terL_lineage_overview.png)
+![TerL lineage size distribution and clustering threshold sensitivity](../figures/prophage_ecology/terL_lineage_overview.png)
 
 ### Phylogenetic Distribution (NB04)
 
@@ -146,7 +151,7 @@ Testing H1c across 15 phylogenetically stratified species (one per phylum, max 3
 
 The three core modules (A, D, F) show strong co-occurrence and high contig co-localization, consistent with their role as physically linked prophage functional units. Integration (E) genes explicitly do NOT co-occur — this is biologically expected, as integrases are distributed at different genomic insertion sites and many are domesticated remnants. Anti-defense (G) genes show low co-localization (0.281), consistent with their known tendency to cluster in "defense islands" (Pinilla-Redondo et al. 2020) separately from the core prophage backbone.
 
-![Module co-occurrence heatmap](figures/module_cooccurrence_heatmap.png)
+![Module co-occurrence heatmap](../figures/prophage_ecology/module_cooccurrence_heatmap.png)
 
 ## Interpretation
 

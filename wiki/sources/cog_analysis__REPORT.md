@@ -1,3 +1,7 @@
+---
+title: 'Report: COG Functional Category Analysis'
+type: Source
+---
 # Report: COG Functional Category Analysis
 
 ## Key Findings

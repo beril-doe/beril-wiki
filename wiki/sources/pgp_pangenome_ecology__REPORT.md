@@ -1,16 +1,20 @@
+---
+title: 'Report: PGP Gene Distribution Across Environments & Pangenomes'
+type: Source
+---
 # Report: PGP Gene Distribution Across Environments & Pangenomes
 
 ## Key Findings
 
 ### H1 SUPPORTED — PGP traits form a non-random syndrome, but nitrogen fixation is ecologically distinct
 
-![PGP gene co-occurrence heatmap (log2 odds ratios; * = FDR q < 0.05)](figures/cooccurrence_heatmap.png)
+![PGP gene co-occurrence heatmap (log2 odds ratios; * = FDR q < 0.05)](../figures/pgp_pangenome_ecology/cooccurrence_heatmap.png)
 
 Across 11,272 species with at least one PGP gene, 8 of 10 focal-gene pairs were significantly associated after BH-FDR correction. Five pairs showed positive co-occurrence and three showed negative co-occurrence. The strongest positive association was **pqqC × acdS** (OR = 7.24, n = 286 co-occurring species, q = 1.2e-83), indicating that phosphate solubilization (PQQ cofactor biosynthesis) and ethylene reduction (ACC deaminase) are nearly always found together when either is present. pqqC also co-occurred significantly with hcnC (OR = 1.91) and ipdC (OR = 1.55), forming a coherent "rhizosphere effectiveness" module.
 
 In contrast, nifH (nitrogen fixation) was significantly **negatively** associated with both hcnC (OR = 0.23, q = 5.8e-29) and pqqC (OR = 0.57, q = 2.9e-19), and showed no significant association with ipdC (OR = 1.13, q = 0.54). This means diazotrophs form an ecologically separate guild from pqqC/acdS-bearing rhizobacteria — the classical "PGPB" suite appears to be primarily a non-diazotrophic phenotype.
 
-![Top PGP trait combinations across species](figures/cooccurrence_combinations.png)
+![Top PGP trait combinations across species](../figures/pgp_pangenome_ecology/cooccurrence_combinations.png)
 
 Only 157 species (1.4%) carry ≥3 focal traits. The most common multi-trait genotype is pqqC + acdS (n = 153), followed by nifH + pqqC (n = 225, though these are negatively associated overall, they do co-occur in some generalist lineages).
 
@@ -20,7 +24,7 @@ Only 157 species (1.4%) carry ≥3 focal traits. The most common multi-trait gen
 
 ### H2 SUPPORTED — Soil/rhizosphere environment strongly selects for acdS and pqqC, but not nifH
 
-![Environmental enrichment of PGP genes: prevalence comparison and log2 odds ratios](figures/env_enrichment_barplot.png)
+![Environmental enrichment of PGP genes: prevalence comparison and log2 odds ratios](../figures/pgp_pangenome_ecology/env_enrichment_barplot.png)
 
 Comparing 1,039 soil/rhizosphere species against 10,233 species from other environments, three of five focal genes were significantly enriched in soil (BH-FDR q < 0.05):
 
@@ -42,7 +46,7 @@ Unexpectedly, nifH is significantly **depleted** in soil-classified species (OR 
 
 ### H3 REJECTED — PGP genes are predominantly core, not accessory: vertical inheritance dominates
 
-![Core/auxiliary/singleton fractions per PGP gene (genome-wide baseline: 46.8% core)](figures/pgp_core_accessory_pie.png)
+![Core/auxiliary/singleton fractions per PGP gene (genome-wide baseline: 46.8% core)](../figures/pgp_pangenome_ecology/pgp_core_accessory_pie.png)
 
 All 13 PGP genes showed significantly higher core fractions than the genome-wide baseline of 46.8% core (chi-square vs baseline, BH-FDR q < 0.05 for all genes):
 
@@ -58,7 +62,7 @@ All 13 PGP genes showed significantly higher core fractions than the genome-wide
 
 The mean accessory fraction across all PGP genes is **29.7%**, compared to the genome-wide 53.2%. The HGT hypothesis (H3) is clearly rejected: PGP genes are inherited vertically with the core genome, not acquired laterally.
 
-![Pangenome openness vs PGP gene richness](figures/openness_vs_pgp.png)
+![Pangenome openness vs PGP gene richness](../figures/pgp_pangenome_ecology/openness_vs_pgp.png)
 
 Confirming this interpretation, pangenome openness (singleton fraction) correlates **negatively** with PGP gene richness (Spearman ρ = −0.195, p = 2.0e-97, n = 11,272 species with ≥2 genomes). Species with more PGP genes have *more closed* pangenomes, consistent with stable, specialized ecological niches rather than generalist HGT-driven gene acquisition.
 
@@ -68,7 +72,7 @@ Confirming this interpretation, pangenome openness (singleton fraction) correlat
 
 ### H4 PARTIALLY SUPPORTED — trp completeness predicts ipdC, but ipdC regulation is aromatic-amino-acid-general
 
-![Tryptophan pathway completeness vs ipdC presence (contingency heatmap and prevalence by environment)](figures/trp_iaa_contingency.png)
+![Tryptophan pathway completeness vs ipdC presence (contingency heatmap and prevalence by environment)](../figures/pgp_pangenome_ecology/trp_iaa_contingency.png)
 
 Tryptophan biosynthesis completeness (GapMind score ≥ 0.9) significantly predicts ipdC presence: species with complete trp pathway carry ipdC at 2.5% vs 0.9% in trp-incomplete species (Fisher OR = 2.81, p = 6.3e-10; Model 1 logit, trp only: OR = 2.81, 95% CI 1.97–4.01, p = 1.4e-08, n = 11,272; Model 2 adding soil covariate: OR_trp = 2.87, p = 7.0e-09).
 

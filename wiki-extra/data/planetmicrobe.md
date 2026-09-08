@@ -1,3 +1,7 @@
+---
+title: PlanetMicrobe
+type: Dataset
+---
 # PlanetMicrobe
 
 Provider: ?
@@ -19,6 +23,6 @@ Catalog marine microbial diversity. Connect oceanographic sampling with microbia
 
 ## Used by projects (2)
 
-- [[summaries/berdl_data_atlas__REPORT|berdl_data_atlas]]
-- [[summaries/enigma_carbon_census_1__REPORT|enigma_carbon_census_1]]
+- [berdl_data_atlas](../../wiki/summaries/berdl_data_atlas__REPORT.md)
+- [enigma_carbon_census_1](../../wiki/summaries/enigma_carbon_census_1__REPORT.md)
 

@@ -1,10 +1,14 @@
+---
+title: 'Report: AMR Co-Fitness Support Networks'
+type: Source
+---
 # Report: AMR Co-Fitness Support Networks
 
 ## Key Findings
 
 ### 1. AMR genes are embedded in larger-than-average co-regulated modules
 
-![Module size comparison and mechanism coverage](figures/amr_module_analysis.png)
+![Module size comparison and mechanism coverage](../figures/amr_cofitness_networks/amr_module_analysis.png)
 
 Only 24% of AMR genes (192/801) are assigned to ICA fitness modules, but the modules they inhabit are significantly larger than non-AMR modules: median 46 vs 27 genes (MWU p = 1.7×10⁻⁸). This indicates that when AMR genes are tightly co-regulated with other genes, it is within **large, multi-function cellular programs**, not small isolated modules. Notably, 99% (208/209) of AMR gene-module assignments are in cross-organism conserved module families, indicating these are ancient regulatory relationships. Module size does not differ between AMR mechanisms (efflux = enzymatic = 48, MWU p = 0.91).
 
@@ -12,7 +16,7 @@ Only 24% of AMR genes (192/801) are assigned to ICA fitness modules, but the mod
 
 ### 2. AMR support networks are enriched for flagellar motility and amino acid biosynthesis (H1 supported)
 
-![GO term enrichment in AMR support networks](figures/go_enrichment_interproscan.png)
+![GO term enrichment in AMR support networks](../figures/amr_cofitness_networks/go_enrichment_interproscan.png)
 
 Using InterProScan GO annotations (68% gene coverage — 3.6× better than old SEED annotations), we detect significant functional enrichment in AMR cofitness neighborhoods. The top 6 GO terms enriched in ≥3 organisms (FDR < 0.05) are:
 
@@ -35,7 +39,7 @@ By mechanism, efflux AMR genes show the strongest enrichment for amino acid bios
 
 ### 3. Support networks are organism-specific, not mechanism-specific
 
-![Jaccard comparison showing organism-specificity](figures/jaccard_go_comparison.png)
+![Jaccard comparison showing organism-specificity](../figures/amr_cofitness_networks/jaccard_go_comparison.png)
 
 Different AMR mechanisms within the same organism share far more support partners than the same mechanism across organisms:
 
@@ -47,7 +51,7 @@ Different AMR mechanisms within the same organism share far more support partner
 
 This means the organism's regulatory landscape — its particular wiring of transcription, metabolism, and signaling — shapes the AMR support network far more than the type of resistance mechanism. An efflux pump in *Pseudomonas* shares more cofitness partners with a beta-lactamase in the same *Pseudomonas* than with an efflux pump in *Shewanella*.
 
-![GO term conservation heatmap by mechanism](figures/go_conservation_heatmap.png)
+![GO term conservation heatmap by mechanism](../figures/amr_cofitness_networks/go_conservation_heatmap.png)
 
 The conserved core across all mechanisms includes transmembrane transport (87–100% of organisms), signal transduction (87–100%), transcription regulation (96–100%), and phosphorelay signaling (91–100%). Flagellar motility (53–61%) and amino acid biosynthesis (30–73%) form a second tier of conservation. The only hint of mechanism specificity is histidine biosynthesis (efflux 68% vs metal 30%, p = 0.013 uncorrected, q = 0.18 after FDR).
 
@@ -55,7 +59,7 @@ The conserved core across all mechanisms includes transmembrane transport (87–
 
 ### 4. Support network size does not predict fitness cost (H3 not supported)
 
-![Network size vs fitness cost scatter](figures/network_size_vs_fitness.png)
+![Network size vs fitness cost scatter](../figures/amr_cofitness_networks/network_size_vs_fitness.png)
 
 There is no correlation between cofitness support network size and AMR gene fitness cost (Spearman rho = −0.006, p = 0.87, N = 769). This holds within each mechanism (efflux rho = −0.049, enzymatic rho = +0.038, metal rho = −0.031; all p > 0.4). The uniform cost of resistance (+0.086 from `amr_fitness_cost`) is not explained by the size of the co-regulatory neighborhood.
 

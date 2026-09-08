@@ -1,3 +1,7 @@
+---
+title: 'Report: The Pan-Bacterial Essential Genome'
+type: Source
+---
 # Report: The Pan-Bacterial Essential Genome
 
 ## Key Findings
@@ -10,9 +14,9 @@ The absolute core of bacterial life: ribosomal proteins (rpsC, rplW, rplK, rplB,
 ### Only 5% of Ortholog Families Are Universally Essential
 Of 17,222 ortholog families across 48 bacteria, 859 (5.0%) are universally essential. Of these, 839 are strict single-copy families (copy ratio <=1.5, no non-essential paralogs); 20 contain paralogs. 4,799 families (27.9%) are variably essential -- essential in some organisms, non-essential in others. 11,564 (67.1%) are never essential.
 
-![Essential Families Overview](figures/essential_families_overview.png)
+![Essential Families Overview](../figures/essential_genome/essential_families_overview.png)
 
-![Essential Families Heatmap](figures/essential_families_heatmap.png)
+![Essential Families Heatmap](../figures/essential_genome/essential_families_heatmap.png)
 
 *(Notebook: 02_essential_families.ipynb)*
 
@@ -29,7 +33,7 @@ Module transfer via non-essential orthologs in ICA fitness modules generated 1,3
 ### Universally Essential Families Are Overwhelmingly Core
 Universally essential genes are 91.7% core vs 80.7% for non-essential. 71% of universally essential families are 100% core across all genomes in their species. Orphan essentials are only 49.5% core -- strain-specific essential functions.
 
-![Conservation Architecture](figures/conservation_architecture.png)
+![Conservation Architecture](../figures/essential_genome/conservation_architecture.png)
 
 *(Notebook: 04_conservation_architecture.ipynb)*
 

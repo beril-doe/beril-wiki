@@ -1,3 +1,7 @@
+---
+title: 'Report: Soil Metal Concentrations Drive Functional Gene Shifts'
+type: Source
+---
 # Report: Soil Metal Concentrations Drive Functional Gene Shifts
 
 ## Status

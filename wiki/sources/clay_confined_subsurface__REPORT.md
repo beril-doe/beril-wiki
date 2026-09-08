@@ -1,3 +1,8 @@
+---
+title: 'Report: Self-Sufficiency, Anaerobic Toolkit, and Cultivation Bias in Clay-Confined
+  Cultured Bacterial Genomes'
+type: Source
+---
 # Report: Self-Sufficiency, Anaerobic Toolkit, and Cultivation Bias in Clay-Confined Cultured Bacterial Genomes
 
 > ## ⚠️ Correction Notice (added 2026-05-01)
@@ -22,7 +27,7 @@
 
 ### Finding 1 — Cultured clay-confined genomes carry the Bagnoud Mont Terri porewater signature, not the Mitzscherling rock-attached signature (H3, supported)
 
-![SR vs IR signature by cohort](figures/h3_porewater_vs_rock.png)
+![SR vs IR signature by cohort](../figures/clay_confined_subsurface/h3_porewater_vs_rock.png)
 
 The 9 BERDL genomes traceable to clay-confined deep-subsurface biosamples (8 from Mont Terri Opalinus boreholes, 1 from a bentonite formation) are **strongly enriched for dissimilatory sulfate-reduction (SR) markers** (5/9 = 56%) and depleted for iron-reduction (IR) markers (1/9 = 11%). Compared against the Mitzscherling et al. (2023) rock-attached null distribution (SRB ~0.2%, IRB ~7% of community), SR enrichment is overwhelming (binomial p = 4.0×10⁻¹²; observed 5 vs expected 0.018 of 9). Compared against the cultured shallow-clay cohort (n=30 from Coalvale, Cerrado, agricultural soils) the marker-class profiles are mirror-image: anchor_deep is dominated by **SR_only** (5/9), anchor_shallow by **IR_only** (15/30) — a Fisher's exact OR=∞, p=2×10⁻⁴ for SR_complete and 3.7-fold IR enrichment in shallow versus the broader soil baseline (p=0.0025).
 
@@ -32,7 +37,7 @@ This is exactly the dichotomy Bagnoud (2016) and Mitzscherling (2023) describe: 
 
 ### Finding 2 — The "anaerobic toolkit" signal is real but largely phylum-driven; only sulfate reduction is genuinely clay-deep enriched after phylogenetic control (H2, partially supported)
 
-![Toolkit score by cohort](figures/h2_toolkit_by_cohort.png)
+![Toolkit score by cohort](../figures/clay_confined_subsurface/h2_toolkit_by_cohort.png)
 
 At the cohort level, deep-confined clay isolates jointly carry the Bagnoud Wood–Ljungdahl + group 1 [NiFe]-hydrogenase + dissimilatory sulfate-reduction toolkit at strikingly higher rates than soil baseline or shallow-clay cohorts (mean toolkit score 1.89 vs 0.39 vs 0.03 of 3 modules). Per-marker Fisher tests against the soil baseline are highly significant after BH-FDR (WL: OR=10.4, p_BH=0.004; NiFe: OR=10.5, p_BH=0.004; SR: OR=33.8, p_BH=2×10⁻⁴). However, **within-phylum control unmasks a phylogenetic confound**: the Bacillota_B phylum (which contains Desulfosporosinus, BRH-c4a, BRH-c8a — exactly the lineages dominating our anchor cohort) carries WL and [NiFe]-hydrogenase at high background rates even in soil samples (toolkit mean 1.65 in Bacillota_B baseline). Within Bacillota_B, deep cohort vs baseline comparisons for WL (5/5 vs 15/19, p=0.54) and NiFe (5/5 vs 14/19, p=0.54) are not significant — these markers track the Bacillota_B lineage, not deep-clay habitat per se. **Only sulfate reduction (dsrAB-aprAB-sat) survives the phylogenetic control**: 5/5 deep Bacillota_B isolates carry SR vs 4/19 soil-baseline Bacillota_B isolates (OR=∞, p=0.003, p_BH=0.04).
 
@@ -42,7 +47,7 @@ This decomposition is consistent with Beaver & Neufeld (2024)'s observation that
 
 ### Finding 3 — Biosynthetic self-sufficiency does not generalize from the Beaver & Neufeld synthesis to BERDL's cultured cohort (H1, not supported)
 
-![Self-sufficiency violin](figures/h1_self_sufficiency_violin.png)
+![Self-sufficiency violin](../figures/clay_confined_subsurface/h1_self_sufficiency_violin.png)
 
 BERDL's deep-clay cohort shows GapMind amino-acid pathway-completeness comparable to or slightly *below* the soil baseline, not above. Unfiltered: anchor_deep mean 16.2/18 vs soil_baseline 16.7/18 (Mann–Whitney p=0.15, Cohen's d=−0.17). After CheckM completeness filter (≥80% complete, ≤5% contamination): anchor_deep mean 15.5/18 vs baseline 17.1/18 (p=0.009, d=−0.84). Within Bacillota_B: anchor_deep mean 16.5 vs baseline 16.8 (p=0.07, d=−0.13). Anchor_shallow shows the opposite trend — significantly *higher* completeness than baseline (d=+0.43, p=0.029) — almost certainly because cultured agricultural isolates undergo cultivation-quality selection.
 

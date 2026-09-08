@@ -1,3 +1,7 @@
+---
+title: 'Report: Fitness Modules x Pangenome Conservation'
+type: Source
+---
 # Report: Fitness Modules x Pangenome Conservation
 
 ## Key Findings
@@ -7,7 +11,7 @@
 - **Module genes: 86.0% core** vs all genes: 81.5% (+4.5 percentage points)
 - Genes assigned to ICA modules are co-regulated functional units, and they skew toward the conserved core genome
 
-![Module Core Distribution](figures/module_core_distribution.png)
+![Module Core Distribution](../figures/module_conservation/module_core_distribution.png)
 
 *(Notebook: 01_module_conservation.ipynb)*
 
@@ -26,7 +30,7 @@ The median module is 93.4% core. Most co-regulated fitness response units are em
 
 Surprisingly, module families spanning more organisms do NOT have higher core fractions (Spearman rho=-0.01, p=0.914). Families are nearly all core regardless of how many organisms they span. The core genome baseline is so high (~82%) that there's little room for a gradient.
 
-![Family Breadth vs Conservation](figures/family_breadth_vs_conservation.png)
+![Family Breadth vs Conservation](../figures/module_conservation/family_breadth_vs_conservation.png)
 
 *(Notebook: 02_family_conservation.ipynb)*
 

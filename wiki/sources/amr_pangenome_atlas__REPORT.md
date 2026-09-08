@@ -1,10 +1,14 @@
+---
+title: 'Report: Pan-Bacterial AMR Gene Landscape'
+type: Source
+---
 # Report: Pan-Bacterial AMR Gene Landscape
 
 ## Key Findings
 
 ### 1. AMR Genes Are Massively Depleted from the Core Genome
 
-![AMR conservation vs pangenome baseline](figures/amr_conservation_vs_baseline.png)
+![AMR conservation vs pangenome baseline](../figures/amr_pangenome_atlas/amr_conservation_vs_baseline.png)
 
 AMR genes are significantly less conserved than the pangenome average: only **30.3% are core** vs 46.8% baseline (OR=0.49, chi-squared=23,117, p≈0). The **auxiliary genome is 2.2x enriched** for AMR (33.6% vs 15.3%). This depletion is consistent across species: in a paired test of 4,252 species (each with ≥5 AMR clusters), 63.7% show AMR less core than their species baseline (Wilcoxon p=1.1e-130, mean difference -0.102).
 
@@ -12,29 +16,29 @@ AMR genes are significantly less conserved than the pangenome average: only **30
 
 ### 2. Intrinsic vs Acquired Resistance Creates a Conservation Dichotomy
 
-![Conservation by AMR mechanism](figures/amr_mechanism_conservation.png)
+![Conservation by AMR mechanism](../figures/amr_pangenome_atlas/amr_mechanism_conservation.png)
 
 Not all AMR mechanisms behave the same. **Beta-lactamases are 54.9% core** (p=7.7e-74 for enrichment vs baseline) — these are intrinsic resistance genes present in the species' chromosomal backbone. In contrast, **regulatory genes are only 6.5% core**, and known mobile elements like blaTEM, tet(C), and ant(2'')-Ia are **0% core** (fully accessory/singleton). Efflux pumps split: intrinsic pumps like emhABC are >95% core, while acquired efflux genes are accessory.
 
-![Top 30 AMR gene families by core fraction](figures/amr_gene_families_core_fraction.png)
+![Top 30 AMR gene families by core fraction](../figures/amr_pangenome_atlas/amr_gene_families_core_fraction.png)
 
 *(Notebook: 02_conservation_patterns.ipynb)*
 
 ### 3. AMR Hotspots Are Concentrated in Clinical Pathogens
 
-![AMR hotspot families](figures/amr_hotspot_families.png)
+![AMR hotspot families](../figures/amr_pangenome_atlas/amr_hotspot_families.png)
 
 AMR gene density is highly phylogenetically structured. At the genus level, **Klebsiella** leads with 206 AMR clusters per species, followed by Salmonella (198), Citrobacter (134), and Enterobacter (93). Gammaproteobacteria contain **45% of all AMR clusters** (37,752/83,008). The top hotspot families are Enterobacteriaceae (37.5 AMR/species) and Staphylococcaceae (37.3 AMR/species) — both dominated by clinical pathogens.
 
 Within phyla, pangenome openness positively correlates with AMR count in 8/10 tested phyla, strongest in Bacillota (rho=0.219, p=1.0e-16) and Bacillota_C (rho=0.374, p=3.1e-5). The overall correlation is near zero (rho=0.006), indicating phylogeny dominates the signal.
 
-![AMR vs pangenome openness by phylum](figures/amr_openness_by_phylum.png)
+![AMR vs pangenome openness by phylum](../figures/amr_pangenome_atlas/amr_openness_by_phylum.png)
 
 *(Notebook: 01_amr_census.ipynb, 03_phylogenetic_distribution.ipynb)*
 
 ### 4. AMR Genes Are Enriched in Defense and Ion Transport Functions
 
-![COG enrichment in AMR genes](figures/amr_cog_enrichment.png)
+![COG enrichment in AMR genes](../figures/amr_pangenome_atlas/amr_cog_enrichment.png)
 
 COG category analysis (77K AMR clusters with eggNOG annotations vs 86M baseline) reveals **COG V (Defense mechanisms) is 7.05x enriched** in AMR genes (14.9% vs 2.1%), confirming that AMR annotations target bona fide defense systems. **COG P (Inorganic ion transport) is 1.93x enriched** (10.7% vs 5.6%), reflecting the large mercury (merA, merP, merC) and arsenic (arsD, arsC) resistance gene families. **COG J (Translation) is 1.50x enriched**, consistent with ribosomal protection proteins (erm, helR). COG categories related to replication (L: 0.12x), lipid metabolism (I: 0.10x), and cell motility (N: 0.08x) are strongly depleted.
 
@@ -42,19 +46,19 @@ COG category analysis (77K AMR clusters with eggNOG annotations vs 86M baseline)
 
 ### 5. Clinical Species Carry 2.7x More AMR — and It's More Acquired
 
-![AMR by isolation environment](figures/amr_by_environment.png)
+![AMR by isolation environment](../figures/amr_pangenome_atlas/amr_by_environment.png)
 
 Species classified as **Human/Clinical carry 10.6 AMR clusters per species** (n=2,248), compared to 4.6 for Soil/Terrestrial (n=2,469), 3.9 for Aquatic (n=1,827), and 3.0 for Animal (n=959). This difference is highly significant (Kruskal-Wallis H=440, p=7.0e-93). Critically, clinical AMR is **less core** (30.8%) than soil AMR (58.1%) or plant AMR (63.1%), confirming that clinical environments select for acquired/mobile resistance while environmental AMR is predominantly intrinsic. Note: of the 14,723 AMR-carrying species, 7,838 (53.2%) received a non-"Other/Unknown" environment classification; the Kruskal-Wallis test is restricted to these well-classified species across 6 categories. The large "Other/Unknown" bin (46.8% of species) reflects the sparsity and inconsistency of free-text isolation_source metadata in NCBI BioSample records.
 
 **AlphaEarth embedding analysis** (2,684 species with ≥3 genomes and embeddings) reveals that **environmental diversity strongly predicts AMR count** (Spearman rho=0.466, p=1.6e-144). Species sampled from more diverse environments carry more AMR genes, and those AMR genes are less core (rho=-0.173, p=1.8e-19).
 
-![AlphaEarth environmental diversity vs AMR](figures/amr_alphaearth_diversity.png)
+![AlphaEarth environmental diversity vs AMR](../figures/amr_pangenome_atlas/amr_alphaearth_diversity.png)
 
 *(Notebook: 05_environmental_distribution.ipynb)*
 
 ### 6. AMR Genes Are Not a Fitness Burden in Lab Conditions
 
-![AMR gene fitness distribution](figures/amr_fitness_distribution.png)
+![AMR gene fitness distribution](../figures/amr_pangenome_atlas/amr_fitness_distribution.png)
 
 Using the DIAMOND-based FB-pangenome link table (177,863 links at 100% sequence identity), we identified **178 AMR genes across 37 Fitness Browser organisms**, yielding 29,386 fitness measurements. Surprisingly, AMR genes show **slightly less fitness cost** than the non-AMR baseline (median fitness -0.007 vs -0.012, Mann-Whitney p=3.7e-6). Beta-lactamases are nearly neutral (median -0.001). Singleton AMR genes are costliest (median -0.019). This suggests that the AMR genes present in these predominantly environmental FB organisms are well-integrated intrinsic resistance genes, not recently acquired mobile elements. The 100% identity threshold is conservative — it avoids paralog confusion but may undercount fitness effects for closely related gene variants (e.g., alleles differing by a single synonymous substitution). Furthermore, the Fitness Browser organisms are predominantly environmental isolates where intrinsic resistance predominates; the fitness cost of recently acquired mobile resistance elements in clinical pathogens may differ substantially.
 

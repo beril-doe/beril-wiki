@@ -1,3 +1,7 @@
+---
+title: 'Report: Metagenome-Prioritized Phage Cocktails for Crohn''s Disease and IBD'
+type: Source
+---
 # Report: Metagenome-Prioritized Phage Cocktails for Crohn's Disease and IBD
 
 ## Thesis (Pillars 1–5 closed)
@@ -223,7 +227,7 @@ NB17 consolidates Pillar 1-5 into three artifacts that constitute the project's 
 
 **Concrete phage cocktail drafts: 14 of 23 patients (61 %)**. The 12 quiescent patients (calp < 250 or unmeasured) get the same Tier-A panel but as a "reserve for flare" rather than active cocktail.
 
-![NB17 — Cross-cutting synthesis: target decision matrix + per-patient design map + clinical-translation roadmap](figures/NB17_synthesis.png)
+![NB17 — Cross-cutting synthesis: target decision matrix + per-patient design map + clinical-translation roadmap](../figures/ibd_phage_targeting/NB17_synthesis.png)
 
 **Target decision matrix — final priority class per actionable Tier-A**:
 
@@ -265,11 +269,11 @@ The matrix exposes the structural shape of the clinical-translation problem: the
 
 ### 1. Four reproducible IBD ecotypes with clear disease stratification
 
-![K-selection curves — LDA held-out perplexity / cross-method ARI / GMM BIC](figures/NB01b_K_selection.png)
+![K-selection curves — LDA held-out perplexity / cross-method ARI / GMM BIC](../figures/ibd_phage_targeting/NB01b_K_selection.png)
 
 Training on 8,489 MetaPhlAn3 samples (`fact_taxon_abundance`, CMD_HEALTHY + CMD_IBD cohorts) with two independent methods — LDA on pseudo-counts and GMM on CLR + PCA-20 — across K ∈ {2..8}. Per-method fit measures (LDA held-out perplexity, GMM BIC) monotonically decrease with K, as expected for flexible latent-factor models. The discriminating signal is **cross-method ARI between LDA and GMM**, which has a local maximum at K = 4 (ARI = 0.131) and a second peak at K = 7 (0.140). A parsimony rule — smallest K within 0.02 ARI of the maximum — selects K = 4. Per-sample method agreement at K = 4 is 48.9 %.
 
-![Ecotype-defining species (mean abundance per ecotype)](figures/NB01b_ecotype_species_heatmap.png)
+![Ecotype-defining species (mean abundance per ecotype)](../figures/ibd_phage_targeting/NB01b_ecotype_species_heatmap.png)
 
 The four consensus ecotypes are biologically coherent:
 
@@ -280,7 +284,7 @@ The four consensus ecotypes are biologically coherent:
 | **E2** — *Prevotella copri* enterotype | 920 | *P. copri* 28 %, *F. prausnitzii* 6 % | 16.9 % HC, ~0 % disease (non-Western healthy) |
 | **E3** — Severe Bacteroides-expanded | 1,364 | *P. vulgatus* 14.2 %, *B. fragilis* 3.6 % | **50 % CD, 40 % UC, 67 % IBD acute, 38 % CDI, donor 2708** |
 
-![Consensus ecotype × diagnosis distribution](figures/NB01b_ecotype_by_diagnosis.png)
+![Consensus ecotype × diagnosis distribution](../figures/ibd_phage_targeting/NB01b_ecotype_by_diagnosis.png)
 
 This is **H1a directionally supported**: ≥ 3 reproducible ecotypes. E0 / E1 / E2 / E3 map recognizably onto the original Bacteroides / Prevotella / Ruminococcus enterotype framework (Arumugam 2011, Costea 2018), with E1 / E3 reflecting the Bacteroides2 (Bact2) low-cell-count dysbiosis signature documented in CD by Vandeputte et al. 2017.
 
@@ -288,7 +292,7 @@ This is **H1a directionally supported**: ≥ 3 reproducible ecotypes. E0 / E1 / 
 
 ### 2. UC Davis CD patients span three ecotypes, none in E2
 
-![UC Davis per-patient ecotype calls and reference comparison](figures/NB02_ucdavis_ecotype_assignment.png)
+![UC Davis per-patient ecotype calls and reference comparison](../figures/ibd_phage_targeting/NB02_ucdavis_ecotype_assignment.png)
 
 All 26 Kuehl_WGS samples (23 unique patients) projected onto the K = 4 reference via the synonymy layer. 262 unique Kaiju-classified species normalized to 97 canonical species in the training feature space. UC Davis distributes:
 
@@ -299,7 +303,7 @@ All 26 Kuehl_WGS samples (23 unique patients) projected onto the K = 4 reference
 
 χ²(3) vs uniform = 10.0, **p = 0.019**. The distribution is non-random. UC Davis looks Western (no E2 Prevotella-dominant patients), with active disease dominating (73 % E1 or E3). **H1b directionally supported** — patients distribute across multiple ecotypes rather than concentrating in one, validating the stratified-targeting premise of the project.
 
-![UC Davis: ecotype × Montreal location + ecotype × medication class](figures/NB02_ucdavis_ecotype_x_clinical.png)
+![UC Davis: ecotype × Montreal location + ecotype × medication class](../figures/ibd_phage_targeting/NB02_ucdavis_ecotype_x_clinical.png)
 
 Longitudinal patients: 1112 → E3 at both timepoints; `p1`/`p1reseq` → E3 both; `p2` → E1 both; **1460 (calprotectin 7,280 μg/g) → E1; patient 6967 flips E1 ↔ E3 between two samples**. The 6967 finding is the first direct observation of intra-patient ecosystem instability — relevant to Pillar 5 H5d (dosing-schedule implications).
 
@@ -311,7 +315,7 @@ Projecting Kuehl (Kaiju) onto a MetaPhlAn3-trained embedding exposes an asymmetr
 
 ### 3. Clinical covariates alone are insufficient for within-IBD ecotype assignment
 
-![H1c classifier OvR AUC vs the 0.70 threshold](figures/NB03_h1c_auc.png)
+![H1c classifier OvR AUC vs the 0.70 threshold](../figures/ibd_phage_targeting/NB03_h1c_auc.png)
 
 Two classifiers trained on the pooled CMD cohort (LightGBM) to predict K = 4 consensus ecotype from clinical covariates:
 
@@ -324,7 +328,7 @@ Both exceed the H1c threshold of 0.70. *On paper, H1c passes*. But applied to UC
 - Extended classifier vs NB02: **36 % agreement (8/22)**.
 - 12 / 22 patients disagree under both classifiers.
 
-![Feature importance — minimal vs extended classifier](figures/NB03_feature_importance.png)
+![Feature importance — minimal vs extended classifier](../figures/ibd_phage_targeting/NB03_feature_importance.png)
 
 The minimal classifier predicts E1 for 19/22 UC Davis patients. In the training cohort, IBD samples split ~58 % E1 / ~40 % E3 / ~2 % E0 / ~0 % E2, so the classifier's dominant learned rule is "`is_ibd = 1` → E1." When applied to UC Davis (all-CD, `is_ibd` constant), this rule collapses to the marginal mode. The extended classifier's training subset is 702 E1 / 959 E3 / 3 E0 / 11 E2 — effectively an E1-vs-E3 binary problem — and severity markers do not separate the two reliably.
 
@@ -334,7 +338,7 @@ The minimal classifier predicts E1 for 19/22 UC Davis patients. In the training 
 
 ### 4. Compositional correction partially, but not fully, resolves the *C. scindens* paradox
 
-![Raw Mann-Whitney log₂FC vs CLR Δ for the curated protective-species battery](figures/NB00_protective_species_paradox.png)
+![Raw Mann-Whitney log₂FC vs CLR Δ for the curated protective-species battery](../figures/ibd_phage_targeting/NB00_protective_species_paradox.png)
 
 Starting observation: the preliminary project's pooled Mann-Whitney differential-abundance analysis called *Clostridium scindens* CD-enriched at log₂FC +2.67 — contradicting its established role as a bile-acid-producing protective species (~79 % prevalence in healthy individuals). Three explanations were possible: (1) compositional artifact, (2) strain heterogeneity, (3) ecotype mixing in the pooled analysis.
 
@@ -389,7 +393,7 @@ Across the four IBD sub-studies (242 CD / 369 nonIBD pooled), the 14-species cur
 
 This flatly contradicts NB04's within-ecotype calls for several species. NB04 called *F. prausnitzii* / *R. hominis* / *L. eligens* CD↑ within both E1 and E3 (the "Simpson's paradox" of the original section 5) — the confound-free analysis shows they are CD↓, consistent with their classical protective-commensal role. NB04's *C. scindens* "n.s." within both ecotypes is similarly contradicted. The within-ecotype DA in NB04 was producing direction reversals as a compound artifact of feature leakage plus the pooled-cohort substudy × diagnosis confound — both compositional-bias-aware DA methods we tried on the within-ecotype subsets (CLR-MW and LinDA) share the bias, so n_evidence from within-ecotype methods alone does not resolve it.
 
-![Permutation null for E1↔E3 Jaccard divergence (NB04b §4)](figures/NB04b_jaccard_null.png)
+![Permutation null for E1↔E3 Jaccard divergence (NB04b §4)](../figures/ibd_phage_targeting/NB04b_jaccard_null.png)
 
 #### 5c. NB04e ecotype-specific Tier-A under within-ecotype × within-substudy meta
 
@@ -482,7 +486,7 @@ Three additional analyses (NB04f, NB04g, NB04h) tested the ecotype framework and
 - **Projection confidence is high**: median max LDA posterior = 0.861; 80.4 % of samples have max posterior > 0.70. No Kaiju↔MetaPhlAn3 fragility (unlike the UC Davis GMM projection) because HMP2 uses the same MetaPhlAn3 pipeline as the training data.
 - **E1 Tier-A replicates strongly**: per-species CD-vs-nonIBD CLR-Δ within HMP2-projected E1 samples (593 CD / 337 nonIBD), cross-referenced against the 51-candidate NB04e E1 Tier-A list. **45 / 51 (88.2 %) are sign-concordant** (both CD↑). Top replicators include *M. gnavus* (HMP2 effect +1.08, FDR 3e-13), *E. asparagiformis* (+0.89, FDR 1e-21), *H. symbiosa* (+1.18, FDR 6e-22), *E. innocuum* (+0.28, FDR 4e-16), *E. bolteae* (+1.27, FDR 2e-18), *E. clostridioformis* (+1.04, FDR 2e-21). Only 2 of the top 20 fail: *S. thermophilus* (sign-discordant — HMP2 E1 effect slightly negative; potentially reflects differential dairy exposure in HMP2 vs HallAB/NielsenHB cohorts) and *Bacteroides stercoris* (sign-discordant, n.s.).
 
-![HMP2 external replication — ecotype stratifies CD/UC/nonIBD, projection confidence high, E1 Tier-A 88 % sign-concordant](figures/NB04h_hmp2_external_replication.png)
+![HMP2 external replication — ecotype stratifies CD/UC/nonIBD, projection confidence high, E1 Tier-A 88 % sign-concordant](../figures/ibd_phage_targeting/NB04h_hmp2_external_replication.png)
 
 **Synthesis**. The three tests collectively upgrade Pillar 2 from "rigor-controlled on a single cohort with marginally-stable ecotype framework" to "rigor-controlled on cMD + externally replicated on HMP2 with honest documentation of cross-study ecotype variance." The operational Tier-A for NB05 is validated; the ecotype-framework-reproducibility caveat is honestly stated but bounded (the framework is cross-study variable but externally *usable* because projected ecotypes stratify disease and Tier-A replicates at 88 %).
 
@@ -512,7 +516,7 @@ Four criteria (A3–A6 from `RESEARCH_PLAN.md` §Criteria) applied to the 71 uni
 
 **Tier-B candidates (score 2.2–2.4, sub-threshold)**: *Enterocloster asparagiformis*, *Streptococcus salivarius*, *E. citroniae*, *E. clostridioformis*, *Blautia coccoides*, *Veillonella atypica*, *S. parasanguinis*, *Actinomyces oris*, *V. parvula*. These have BGC + A4-pass + A3 = 1–2 signals but lack direct engraftment or strain-adaptation evidence; Pillar 4 phage-targetability scoring may promote any of these based on B-tier phage-availability evidence.
 
-![NB05 Tier-A scoring — top 30 scoring matrix + total-score bar chart](figures/NB05_tier_a_scored.png)
+![NB05 Tier-A scoring — top 30 scoring matrix + total-score bar chart](../figures/ibd_phage_targeting/NB05_tier_a_scored.png)
 
 *(Notebooks: NB05_tier_a_scoring.ipynb + run_nb05.py. The scored TSV `data/nb05_tier_a_scored.tsv` is the authoritative hand-off to NB06 co-occurrence networks and Pillar 4 phage-target scoring. Note: this notebook was executed via `run_nb05.py` rather than nbconvert due to an environment-specific numpy.bool serialization issue in the nbconvert notebook-save path; outputs are authoritative and pre-populated in the committed .ipynb.)*
 
@@ -553,7 +557,7 @@ The remaining modules per subnet are commensal / *Prevotella* / diverse-healthy 
 
 **Literature grounding — butyrate producers anchor the pathobiont module despite their anti-inflammatory biology.** *Butyricicoccus pullicaecorum* is extensively studied as a butyrate-producing Clostridial-cluster-IV IBD-probiotic candidate (Geirnaert 2015a, Steppe 2014, Jeraldo 2016), with published safety data and anti-inflammatory short-chain-fatty-acid profile. *Anaerostipes caccae* is another canonical butyrate producer. Both being top-degree hubs in the E3 pathobiont module — not in a separate healthy-commensal module — is a **biologically interesting finding**: the ecological niche the pathobionts occupy is shared with butyrate-producing commensals that are CD-depleted in most pooled analyses but co-vary with pathobionts under within-ecotype co-occurrence. This is consistent with a **metabolic-partner / cross-feeding** interpretation (pathobiont-produced substrates support the butyrate-producing commensal; the commensal's butyrate doesn't suppress the pathobiont in this context) and suggests Pillar 3 should look specifically at cross-feeding metabolite exchange in this module. It also cautions against "preserve butyrate-producers" as a naive phage-targeting goal — these species may actually track with the pathobionts, not against them, in the CD ecological context.
 
-![NB06 per-subnet co-occurrence networks — spring-layout with Tier-A actionable (red, large) + Tier-B (orange) highlighted](figures/NB06_cooccurrence_networks.png)
+![NB06 per-subnet co-occurrence networks — spring-layout with Tier-A actionable (red, large) + Tier-B (orange) highlighted](../figures/ibd_phage_targeting/NB06_cooccurrence_networks.png)
 
 *(Notebook: NB06_cooccurrence_networks.ipynb; executed via `run_nb06.py` with pre-populated outputs in the committed .ipynb — same workaround as NB05 for the nbconvert numpy.bool issue.)*
 
@@ -579,7 +583,7 @@ First Pillar 3 notebook, executed under RESEARCH_PLAN.md v1.7 norms (post-advers
 | (b) Category coherence under random-allocation null | **FAIL (degenerate)** | Only 44 / 409 background pathways match the 7 a-priori MetaCyc categories with the v1.7 regex patterns. Only 3 of 52 CD-up passing pathways land in those categories. Test had ~zero power (null also at 100% top-3 concentration). Interpretation below. |
 | (c) Pathway-pathobiont attribution under permutation null | **PASS** | Max |ρ_meta| = 0.797 (vs null 0.177 ± 0.019; empirical p < 0.001). **137 pathway-pathobiont pairs with |ρ_meta| > 0.4.** All 100% sign-concordant across the 3 robust substudies. |
 
-![NB07a H3a falsifiability — 2x2 panel: top CD-up pathways forest plot, count permutation null, MetaCyc category enrichment, pathway-pathobiont attribution null](figures/NB07a_H3a_falsifiability.png)
+![NB07a H3a falsifiability — 2x2 panel: top CD-up pathways forest plot, count permutation null, MetaCyc category enrichment, pathway-pathobiont attribution null](../figures/ibd_phage_targeting/NB07a_H3a_falsifiability.png)
 
 **Top pathway-pathobiont attribution recapitulates known AIEC biology.** The top 25 pairs are all *Escherichia coli* pathways with biological coherence:
 
@@ -626,7 +630,7 @@ NB07a clause-(b) failed because only 3 of 52 CD-up unstratified MetaCyc pathways
 
 **Combined NB07a + NB07b H3a (b) conclusion**: the 7 a-priori IBD-mechanism categories (bile-acid, mucin, sulfide, TMAO, eut/pdu, polyamine, AA-decarb) are **too narrow** to capture HUMAnN3 MetaCyc CD signal at either unstratified or species-resolved level. CD-associated pathways are dominated by **biosynthesis / niche-shift** signals not the prior-literature themes. H3a (b) refutation is real for the v1.7-stated category set but does NOT mean "no compositional themes exist" — it means a different category schema (broader, programmatically derived from MetaCyc taxonomy) is needed.
 
-![NB07b stratified-pathway H3a (b) re-test — per-species × category CD-up heatmap, total-vs-in-7-category bars, top species-stratified pathways forest plot, per-species verdict panel](figures/NB07b_stratified_H3a_b.png)
+![NB07b stratified-pathway H3a (b) re-test — per-species × category CD-up heatmap, total-vs-in-7-category bars, top species-stratified pathways forest plot, per-species verdict panel](../figures/ibd_phage_targeting/NB07b_stratified_H3a_b.png)
 
 **But NB07b reveals biology NB07a couldn't see at the per-species level.**
 
@@ -704,7 +708,7 @@ This **completely reverses the v1.7 H3a (b) "FAIL" verdict** — driven entirely
 
 Other Tier-A core species have insufficient species-level CD-up pathway counts for per-theme power (*M. gnavus, E. lenta, F. plautii* have 0 CD-up; *E. coli, E. bolteae* have 1-2).
 
-![NB07 v1.8 class-based H3a (b) — cohort enrichment bar (iron/heme dominant) + per-species heatmap](figures/NB07_H3a_v18_class_enrichment.png)
+![NB07 v1.8 class-based H3a (b) — cohort enrichment bar (iron/heme dominant) + per-species heatmap](../figures/ibd_phage_targeting/NB07_H3a_v18_class_enrichment.png)
 
 **Four-way convergence on iron biology as the dominant CD pathobiont specialization in this dataset**:
 
@@ -770,7 +774,7 @@ The 15 iron pathways include ENTBACSYN-PWY (Enterobactin biosynthesis, *E. coli*
 
 **This narrows the v1.8 iron-theme interpretation**: rather than "all CD pathobionts have iron specialization," the more accurate framing is **"CD's *E. coli* (AIEC subset) drives the iron-acquisition theme; other Tier-A pathobionts have non-iron specializations."** This is mechanistically coherent with NB05 §5g (only *E. coli* of the actionable Tier-A had iron-siderophore MIBiG matches: Yersiniabactin + Enterobactin) and the NB07b within-carrier *E. coli* CD-DOWN per-pathway pattern (AIEC strain-level specialization at the cost of generalist metabolic capabilities).
 
-![NB07c module-anchor × pathobiont coupling (species ρ heatmap + iron-context heatmap)](figures/NB07c_anchor_pathobiont_coupling.png)
+![NB07c module-anchor × pathobiont coupling (species ρ heatmap + iron-context heatmap)](../figures/ibd_phage_targeting/NB07c_anchor_pathobiont_coupling.png)
 
 **H3a-new verdict: PARTIALLY SUPPORTED.** *A. caccae* × pathobiont coupling is clean in E1_CD (4 strong-positive pairs, all sign-concordant); E3_CD anchors lack metabolic-coupling structure (oral-gut co-trafficking dominates). Cross-feeding vs shared-environment disambiguation deferred to NB09c (metabolite-level test).
 
@@ -835,7 +839,7 @@ The iron_siderophore Fisher OR of **44.4** is one of the largest enrichments in 
 
 All 4 cohorts (HMP2-IBDMDB, MetaHIT, LLDEEP-NLIBD, PRISM) show CD > HC for both ebf and ecf, with cliff-deltas 0.17–0.73. **The Elmassry 2025 immunoactive fatty acid amide BGC family CD-up finding replicates cleanly** in our cohort-meta design at p < 1e-31 — the largest single effect in the project so far.
 
-![NB08a — Tier-A core BGC repertoire + theme OR + ebf/ecf cohort meta](figures/NB08a_bgc_pathobiont_enrichment.png)
+![NB08a — Tier-A core BGC repertoire + theme OR + ebf/ecf cohort meta](../figures/ibd_phage_targeting/NB08a_bgc_pathobiont_enrichment.png)
 
 **H3c verdict — PARTIALLY SUPPORTED.** The hypothesis ("BGC-encoded inflammatory mediators localize to a *minority* of Tier-A pathobionts and show CD-enrichment beyond what species-level abundance captures"):
 
@@ -894,7 +898,7 @@ NB09a is the first metabolomics analysis in the project. It tests whether the me
 
 **Urobilin CD-DOWN** (cliff=-0.38, FDR=0.09). Urobilin is the gut-bacterial catabolic product of bilirubin (produced by *Clostridium* / *Bacteroides* species expressing bilirubin reductase). CD-DOWN urobilin = reduced gut-bacterial bilirubin reduction = consistent with dysbiosis / loss of urobilinoid-producing commensals (Hall 2024; Vital 2018).
 
-![NB09a — HMP2 metabolomics CD-vs-nonIBD volcano + theme OR + top metabolites](figures/NB09a_metabolomics_cd_vs_nonibd.png)
+![NB09a — HMP2 metabolomics CD-vs-nonIBD volcano + theme OR + top metabolites](../figures/ibd_phage_targeting/NB09a_metabolomics_cd_vs_nonibd.png)
 
 **Convergence summary table** — NB09a metabolomics × NB07-pillar pathway findings:
 
@@ -960,7 +964,7 @@ Three findings emerge:
 
 ***F. plautii*, *E. lenta*, and *E. bolteae* — the canonical bile-acid 7α-dehydroxylating bacteria — show the predicted substrate-product signature**: negative correlation with primary tauro-conjugated bile acids (substrates) and positive correlation with secondary unconjugated bile acids (products: deoxycholate, lithocholate). This is the **direct sample-level confirmation** of the bile-acid 7α-dehydroxylation network operating in HMP2 samples. By contrast, ***M. gnavus* and *E. coli* show the OPPOSITE pattern**: positive with primary tauro-BAs, negative with secondary BAs — they are not in the 7α-dehydroxylation network.
 
-![NB09c — Curated cross-feeding panel ρ heatmap (species × metabolite) + cross-feeding-triangle scatter](figures/NB09c_cross_feeding_disambiguation.png)
+![NB09c — Curated cross-feeding panel ρ heatmap (species × metabolite) + cross-feeding-triangle scatter](../figures/ibd_phage_targeting/NB09c_cross_feeding_disambiguation.png)
 
 ### NB07c verdict reframed: shared-environment co-occurrence
 
@@ -1032,7 +1036,7 @@ The cross-species pattern is dominated by **transport, regulation, stress respon
 
 ***F. plautii* informative null**: zero FDR<0.10 strain-adaptation genes in the Kumbhari analysis (3,245 genes total tested in F. plautii). This is biologically meaningful given F. plautii has confirmed CD-association at species level (NB04e, NB05) and at the bile-acid 7α-dehydroxylation activity level (NB09c §13: ρ × cholate -0.26; ρ × lithocholate +0.15). The interpretation: ***F. plautii* CD-association operates through species-level abundance, not strain-level genomic adaptation**. The 7α-dehydroxylation activity is encoded by core *bai*-operon genes that are presumably present in essentially all *F. plautii* strains; the CD signal in NB04e + NB07b reflects how much *F. plautii* (any strain) is present in the sample, not which *F. plautii* strain is dominant. **Independent corroboration of NB07b within-carrier finding** (small per-pathway shifts within carriers; CD signal dominated by carriage prevalence).
 
-![NB10a — per-species gene counts + functional category × direction + F. plautii top genes](figures/NB10a_kumbhari_strain_adaptation.png)
+![NB10a — per-species gene counts + functional category × direction + F. plautii top genes](../figures/ibd_phage_targeting/NB10a_kumbhari_strain_adaptation.png)
 
 **H3b verdict: SUPPORTED.** The Kumbhari strain-adaptation gene-content analysis carries biologically interpretable signal that is statistically distinct from housekeeping artifact. The cross-species shared IBD-adaptation gene set (sigma factor, ABC transport, quorum sensing, capsule LPS, efflux) is consistent with a biologically real "IBD-niche" gene signature operating across multiple commensal species.
 
@@ -1093,7 +1097,7 @@ All 6 axes show canonical IBD direction → data validates standard immunology b
 
 **Biologically plausible directions** (all top pairs are positive r): anti-microbial antibody titers ↑ with target Tier-A species abundance. ANCA × M. gnavus + ANCA × H. hathewayi + ANCA × F. plautii — pANCA antibody (canonically UC-associated) co-elevated with multiple CD-pathobiont species, consistent with high-pathobiont-burden states triggering broader anti-microbial humoral response. CBir1 × E. bolteae mechanistically coherent (CBir1 is anti-bacterial-flagellin; E. bolteae is flagellated). IgA-ASCA × E. coli is the most mucosal-immunity-relevant axis (IgA isotype is the gut-immunity isotype); the +0.23 correlation is consistent with E. coli outer-antigen recognition.
 
-![NB11 — partial Pearson r heatmap (species × serology axis) + top 10 pairs scatter](figures/NB11_serology_pathobiont.png)
+![NB11 — partial Pearson r heatmap (species × serology axis) + top 10 pairs scatter](../figures/ibd_phage_targeting/NB11_serology_pathobiont.png)
 
 **H3e verdict — PARTIAL (NOT SUPPORTED at strict plan threshold).** Per plan v1.7 falsifiability bound, no (assay × species) pair clears the |r|>0.40 + FDR<0.10 effect threshold. The PARTIAL framing reflects (a) cohort sanity check passing on canonical IBD-serology patterns, (b) biologically plausible direction of all top pairs, (c) productive sites reaching |r|≈0.40–0.46 individually, and (d) the structural single-cohort caveat acknowledged in plan v1.7.
 
@@ -1135,7 +1139,7 @@ NB09a §12 found that polyamines (OR=14.6) + long-chain PUFAs (OR=7.9) are CD-up
 
 **3 themes ≥75 % sign-concordant** (urobilin, acyl-carnitines, long-chain PUFA), overall 64 % concordance (76 of 118), **9 strict cross-cohort replications** (both FDR<0.10 + |cliff|>0.20 + sign-match) — these represent the strongest cross-cohort signal in the project's metabolomics analyses.
 
-![NB09b — Cross-cohort cliff δ scatter (themes color-coded) + per-theme sign-concordance bar](figures/NB09b_cross_cohort_metabolomics.png)
+![NB09b — Cross-cohort cliff δ scatter (themes color-coded) + per-theme sign-concordance bar](../figures/ibd_phage_targeting/NB09b_cross_cohort_metabolomics.png)
 
 **Findings**:
 
@@ -1196,7 +1200,7 @@ PC1 explains **79 % of total variance** and separates HMP2 (PC1 ≈ +12) from Fr
 
 The within-pooled bootstrap ARI of 0.937 is **misleading** as a stability metric: it measures how reproducibly the pooled K-means recovers the cohort-batch structure under subsampling, which is high. It does NOT measure whether the clustering is biologically informative; the cohort batch effect is consistently visible in any subsample.
 
-![NB09d — PCA scatter colored by cluster + per-cluster diagnosis composition + stability metrics summary](figures/NB09d_metabolite_ecotype_stability.png)
+![NB09d — PCA scatter colored by cluster + per-cluster diagnosis composition + stability metrics summary](../figures/ibd_phage_targeting/NB09d_metabolite_ecotype_stability.png)
 
 **H3d-clust verdict: NOT SUPPORTED.** Cross-cohort LOSO ARI = 0.000 ≪ 0.113 taxonomic baseline. The metabolite-feature framework on the m/z-bridge feature panel does NOT achieve higher cross-cohort stability than the taxonomic framework.
 
@@ -1253,7 +1257,7 @@ CC1 separates CD (+0.235) from nonIBD (−0.593) by ~0.83 SD on a single joint a
 | **POSITIVE** | docosapentaenoate ×2 (+0.092, +0.091); adrenate +0.081; arachidonate +0.048 | NB09a §12 long-chain PUFAs OR=7.9; NB09b §16 75 % cross-cohort concord |
 | **POSITIVE** | ADMA/SDMA +0.099 | uremic toxin marker; arginine catabolism connected to v1.8 §9 TMA/choline |
 
-![NB07d — Joint factor space (CC1 × CC2) + CC1 top species and metabolite loadings](figures/NB07d_mofa_pilot.png)
+![NB07d — Joint factor space (CC1 × CC2) + CC1 top species and metabolite loadings](../figures/ibd_phage_targeting/NB07d_mofa_pilot.png)
 
 **Pilot verdict: SUCCESSFUL.** CC1 is **the unified Pillar 3 CD-vs-nonIBD axis** in joint species-metabolite space. It is the cleanest single-factor representation of "what is CD biology" that the project has produced — a single principal direction that:
 1. recapitulates the entire NB05 actionable Tier-A set (all 6 species CD-positive)
@@ -1307,7 +1311,7 @@ The Pillar 4 framework starts with a **per-pathobiont phage-availability profile
 
 **Critical**: the 2 highest-NB05-scored species (*H. hathewayi* 4.0, *M. gnavus* 3.8) have the WEAKEST phage availability. *F. plautii* additionally has the HIGHEST BA-coupling cost — phage targeting may be deprioritized in favor of BA-binding co-therapy.
 
-![NB12 — Pillar-4 opener: pathobiont × phage targetability matrix](figures/NB12_phage_targetability.png)
+![NB12 — Pillar-4 opener: pathobiont × phage targetability matrix](../figures/ibd_phage_targeting/NB12_phage_targetability.png)
 
 **Pillar 4 → Pillar 5 hand-off framework — 3 design strategies for the 6 actionable Tier-A**:
 1. **Direct phage targeting (Tier-1)**: *E. coli* (AIEC subset, EcoActive clinical-trial cocktail; require strain-resolution diagnostic per NB07b/NB08a).
@@ -1361,7 +1365,7 @@ AIEC strains are predominantly phylogroup B2 (~80 %) and D (~20 %) per Dogan 201
 
 **HMP2 viromics × PhageFoundry overlap = 0** — the 7 unique E. coli phages observed in HMP2 fact_viromics (D108, EC6, ECML-117, Murica, slur16, vB_EcoM-VpaE1, vB_EcoM_AYO145A) do NOT name-overlap with PhageFoundry phages. The two datasets are **complementary, not overlapping**: PhageFoundry = research/clinical isolates with experimental susceptibility; HMP2 viromics = natural phages observed in patient stool. PhageFoundry is the primary source for cocktail-design.
 
-![NB13 — PhageFoundry quantitative E. coli phage-cocktail design](figures/NB13_phagefoundry_cocktail.png)
+![NB13 — PhageFoundry quantitative E. coli phage-cocktail design](../figures/ibd_phage_targeting/NB13_phagefoundry_cocktail.png)
 
 **Pillar 5 hand-off — concrete E. coli AIEC phage-cocktail recommendation**:
 1. **Tier-1 cocktail (5 phages, 95 % strain coverage)**: DIJ07_P2 + LF73_P1 + AL505_Ev3 + 55989_P2 + LF110_P2
@@ -1410,7 +1414,7 @@ NB14 closes Pillar 4 by adding the **in-vivo phage-community lens** to the curat
 
 ***H. hathewayi* and *M. gnavus*** correlate NEGATIVELY with the "Unknown" phage family (which captures 80 % of HMP2 viromics observations that VirMAP couldn't classify) — pathobiont blooms displace some unclassified phages, consistent with reduced phage diversity in CD dysbiosis.
 
-![NB14 — HMP2 endogenous phageome × ecotype × diagnosis](figures/NB14_endogenous_phageome.png)
+![NB14 — HMP2 endogenous phageome × ecotype × diagnosis](../figures/ibd_phage_targeting/NB14_endogenous_phageome.png)
 
 **Per-ecotype phage-family abundance** (Panel A) shows modest ecotype-specific variation: Anelloviridae E1-specific; Parvoviridae E2-elevated; Unknown family E2-dominant. The dominant signal is the "Unknown" classification (80 % of observations) — VirMAP family-level classification gap is the methodological limit, not biology.
 
@@ -1469,7 +1473,7 @@ NB15 assembles per-patient profiles for 23 UC Davis CD patients combining all Pi
 
 **14 of 23 patients have concrete phage cocktail drafts**. All 9 E1 patients receive concrete cocktails (PMBT24 + PMBT5 + AIEC 5-phage if E. coli present); 4 of 6 E3 patients; 1 mixed (patient 6967); E0 patients lack concrete components because their priority targets (H. hathewayi, M. gnavus) are in Pillar-4 GAP / temperate-only.
 
-![NB15 — UC Davis per-patient cocktail draft (Pillar 5 opener)](figures/NB15_patient_cocktail_draft.png)
+![NB15 — UC Davis per-patient cocktail draft (Pillar 5 opener)](../figures/ibd_phage_targeting/NB15_patient_cocktail_draft.png)
 
 **Per-patient stratification — 4 cocktail-design categories**:
 
@@ -1554,7 +1558,7 @@ NB16 is the central per-patient longitudinal stability test for the project, foc
 
 **Spearman ρ = 1.000 (p < 0.001) on 6 Tier-A** — perfect rank concordance across reseq replicates. Kaiju calls are highly reliable for the actionable Tier-A pathobionts in UC Davis samples.
 
-![NB16 — Patient 6967 longitudinal + tech-replicate concordance + cocktail composition shift](figures/NB16_longitudinal_dosing.png)
+![NB16 — Patient 6967 longitudinal + tech-replicate concordance + cocktail composition shift](../figures/ibd_phage_targeting/NB16_longitudinal_dosing.png)
 
 **State-dependent dosing rule (5 concrete recommendations)**:
 

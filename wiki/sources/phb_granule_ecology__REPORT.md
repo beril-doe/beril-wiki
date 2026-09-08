@@ -1,10 +1,15 @@
+---
+title: 'Report: Polyhydroxybutyrate Granule Formation Pathways — Distribution Across
+  Clades and Environmental Selection'
+type: Source
+---
 # Report: Polyhydroxybutyrate Granule Formation Pathways — Distribution Across Clades and Environmental Selection
 
 ## Key Findings
 
 ### Finding 1: PHB pathways are widespread but phylogenetically concentrated
 
-![PHB pathway prevalence across 20 major bacterial phyla, showing Pseudomonadota, Myxococcota, and Halobacteriota as the most enriched](figures/phb_prevalence_by_phylum.png)
+![PHB pathway prevalence across 20 major bacterial phyla, showing Pseudomonadota, Myxococcota, and Halobacteriota as the most enriched](../figures/phb_granule_ecology/phb_prevalence_by_phylum.png)
 
 Across 27,690 GTDB species, **21.9% carry phaC** (PHA synthase, the committed step for PHB biosynthesis) and **21.7% have a complete PHB pathway** (phaC + phaA/phaB). The near-identical prevalence of phaC-only and complete-pathway species indicates that virtually all phaC-carrying species also possess the upstream biosynthetic enzymes. A total of 118,513 PHB-related gene clusters were identified across 19,496 species using eggNOG annotations.
 
@@ -20,7 +25,7 @@ Several major phyla are entirely devoid of PHB: Campylobacterota (0/271), Gemmat
 
 At order level, 23 orders with >20 species exceed 50% phaC prevalence, led by Azospirillales and Rhodospirillales (both 100%), Caulobacterales (99.3%), and Sphingomonadales (95.9%). Conversely, 117 orders fall below 10%.
 
-![PHB pathway completeness across all 27K species, showing 21.7% complete, 0.2% synthase-only, 46.5% precursors-only, 2.0% accessory-only, and 29.6% absent](figures/phb_pathway_completeness.png)
+![PHB pathway completeness across all 27K species, showing 21.7% complete, 0.2% synthase-only, 46.5% precursors-only, 2.0% accessory-only, and 29.6% absent](../figures/phb_granule_ecology/phb_pathway_completeness.png)
 
 The large "precursors-only" category (46.5%) reflects the pleiotropic nature of phaA (beta-ketothiolase, K00626) and phaB (acetoacetyl-CoA reductase, K00023), which participate in general fatty acid and thiolase metabolism beyond PHB synthesis. Notably, phaR (K18080) was absent from all 27K species in the eggNOG annotations, suggesting either poor annotation coverage or misassignment of this regulatory gene.
 
@@ -28,7 +33,7 @@ The large "precursors-only" category (46.5%) reflects the pleiotropic nature of 
 
 ### Finding 2: PHB is enriched in environmentally variable habitats (H1a supported)
 
-![PHB prevalence by environment type, color-coded by expected temporal variability: high-variability environments (plant, soil, wastewater) show 34-44% prevalence, while low-variability environments (marine, clinical, animal) show 3-19%](figures/phb_by_environment.png)
+![PHB prevalence by environment type, color-coded by expected temporal variability: high-variability environments (plant, soil, wastewater) show 34-44% prevalence, while low-variability environments (marine, clinical, animal) show 3-19%](../figures/phb_granule_ecology/phb_by_environment.png)
 
 PHB prevalence varies dramatically by environment type across 27,690 species with classified primary environments:
 
@@ -50,7 +55,7 @@ Chi-squared test for PHB presence x environmental variability category: **chi2 =
 
 ### Finding 3: PHB-niche breadth association is largely explained by genome size (H1b qualified)
 
-![Box plots showing AlphaEarth embedding variance for phaC+ vs phaC- species, with phaC+ species showing significantly higher environmental breadth (p=1.88e-06)](figures/embedding_variance_phb.png)
+![Box plots showing AlphaEarth embedding variance for phaC+ vs phaC- species, with phaC+ species showing significantly higher environmental breadth (p=1.88e-06)](../figures/phb_granule_ecology/embedding_variance_phb.png)
 
 Using AlphaEarth environmental embeddings (64-dimensional vectors capturing environmental context) for 2,008 species with sufficient genome representation:
 
@@ -60,7 +65,7 @@ Using AlphaEarth environmental embeddings (64-dimensional vectors capturing envi
 
 However, PHB+ species also have substantially larger genomes (median 4.34 Mbp vs 2.44 Mbp for PHB-, rank-biserial r = -0.592, p ~ 0), and genome size itself correlates with niche breadth (rho = 0.302, p = 1.5e-43). After controlling for genome size via partial Spearman correlation, **the PHB-niche breadth association largely disappears**: partial rho = **-0.047** (p = 0.037), a **56.3% reduction** in effect size with a sign reversal compared to the raw correlation (rho = 0.106, p = 1.77e-06).
 
-![Genome size confound analysis: size distributions (left), size vs niche breadth colored by PHB status (center), and PHB enrichment by environment within genome size quartiles (right)](figures/genome_size_confound.png)
+![Genome size confound analysis: size distributions (left), size vs niche breadth colored by PHB status (center), and PHB enrichment by environment within genome size quartiles (right)](../figures/phb_granule_ecology/genome_size_confound.png)
 
 This means H1b (niche breadth) is substantially confounded by genome size and cannot be interpreted as independent evidence for the feast/famine hypothesis. Larger genomes encode more metabolic pathways generally, and PHB is one of many pathways enriched in larger-genome species.
 
@@ -79,7 +84,7 @@ Even among the smallest genomes (Q1, 0.4–1.8 Mbp), species from high-variabili
 
 ### Finding 4: Subclade enrichment reveals heterogeneous selection within phyla (H1d partially supported)
 
-![Heatmap of PHB prevalence by order within six major phyla, showing substantial variation at the order and family level even within PHB-rich phyla](figures/phb_enrichment_heatmap.png)
+![Heatmap of PHB prevalence by order within six major phyla, showing substantial variation at the order and family level even within PHB-rich phyla](../figures/phb_granule_ecology/phb_enrichment_heatmap.png)
 
 Within the 248 families tested (Fisher's exact test, Bonferroni-corrected at alpha = 0.05):
 
@@ -117,7 +122,7 @@ Top recipient families for putative HGT-acquired phaC:
 | Enterobacteriaceae | 11 | 2.3% |
 | Planococcaceae | 10 | 12.8% |
 
-![phaC core vs accessory status by phylum, showing most phyla have predominantly core phaC, but some (SAR324, Bacillota_A, Eremiobacterota, Desulfobacterota) have high accessory fractions](figures/phb_core_vs_accessory.png)
+![phaC core vs accessory status by phylum, showing most phyla have predominantly core phaC, but some (SAR324, Bacillota_A, Eremiobacterota, Desulfobacterota) have high accessory fractions](../figures/phb_granule_ecology/phb_core_vs_accessory.png)
 
 The high accessory fraction in SAR324, Bacillota_A, and Eremiobacterota suggests these lineages are active recipients of phaC via HGT. Overall, 5,371 species carry phaC as core and 1,959 as accessory (some species have both core and accessory copies).
 
@@ -125,11 +130,11 @@ The high accessory fraction in SAR324, Bacillota_A, and Eremiobacterota suggests
 
 ### Finding 6: NMDC metagenomic cross-validation supports pangenome PHB patterns (H1c supported)
 
-![Distribution of PHB inference scores across 6,365 NMDC samples (left) and pangenome matching coverage (right)](figures/nmdc_phb_by_environment.png)
+![Distribution of PHB inference scores across 6,365 NMDC samples (left) and pangenome matching coverage (right)](../figures/phb_granule_ecology/nmdc_phb_by_environment.png)
 
 Using a two-tier taxonomy mapping (Tier 1: `gtdb_metadata` NCBI taxid → GTDB genus bridge, 2,336 taxon columns; Tier 2: direct genus name matching via `taxonomy_dim`, 678 additional columns), we successfully mapped **3,014/3,492 (86.3%) NMDC taxon columns** to GTDB genera with known PHB status. Per-sample PHB inference scores were computed as the abundance-weighted sum of genus-level phaC prevalence across 6,365 NMDC metagenomic samples, with a median 87.2% of taxonomic abundance matched to pangenome genera.
 
-![PHB inference score vs top abiotic correlates: depth, temperature, maximum depth, and minimum depth](figures/nmdc_phb_vs_abiotic.png)
+![PHB inference score vs top abiotic correlates: depth, temperature, maximum depth, and minimum depth](../figures/phb_granule_ecology/nmdc_phb_vs_abiotic.png)
 
 PHB inference scores showed significant Spearman correlations with several abiotic variables:
 
@@ -146,7 +151,7 @@ The negative correlation with depth is consistent with the feast/famine hypothes
 
 A genus-level cross-validation in NB05 provided stronger support: 693 genera were matched between the pangenome and NMDC metagenomes, and PHB-high genera (>=50% phaC prevalence) had significantly higher abundance in NMDC samples than PHB-low genera (**Mann-Whitney p = 8.41 x 10^-22**). Top PHB-high genera by NMDC abundance include *Mycobacterium*, *Pseudomonas*, *Cupriavidus*, *Burkholderia*, and *Methylobacterium* — all well-characterized PHB producers.
 
-![Pangenome PHB prevalence vs NMDC metagenomic abundance (left) and abundance comparison of PHB-high vs PHB-low genera (right)](figures/pangenome_vs_metagenome.png)
+![Pangenome PHB prevalence vs NMDC metagenomic abundance (left) and abundance comparison of PHB-high vs PHB-low genera (right)](../figures/phb_granule_ecology/pangenome_vs_metagenome.png)
 
 The PHA synthase class analysis classified all 11,792 phaC clusters as "other_pfam" because the eggNOG PFAMs column uses domain names (Abhydrolase_1, PhaC_N) rather than Pfam accession IDs (PF00561, PF07167) that the classification code expected. This remains a limitation.
 

@@ -1,10 +1,14 @@
+---
+title: 'Report: AlphaFold MSA Depth as a Lens on the Bacterial Annotation Gap'
+type: Source
+---
 # Report: AlphaFold MSA Depth as a Lens on the Bacterial Annotation Gap
 
 ## Key Findings
 
 ### H1: Core genes are 2.9× more structurally represented than accessory genes
 
-![MSA depth by pangenome class, hypothetical rates, and structurally novel fraction](figures/NB03_msa_depth_pangenome_class.png)
+![MSA depth by pangenome class, hypothetical rates, and structurally novel fraction](../figures/alphafold_msa_annotation/NB03_msa_depth_pangenome_class.png)
 
 Core gene clusters have a median MSA depth of **15,308** — 2.89× higher than the auxiliary+singleton median of 5,299 and 2.77× higher than the auxiliary non-singleton median of 5,527. The separation is most pronounced at the low end: the 10th-percentile MSA depth is 334 for core genes vs. 25–32 for accessory genes. With groups of 5–25 million clusters, the effect size alone makes the result unambiguous.
 

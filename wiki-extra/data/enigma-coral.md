@@ -1,3 +1,7 @@
+---
+title: ENIGMA CORAL
+type: Dataset
+---
 # ENIGMA CORAL
 
 Provider: ENIGMA SFA, LBNL · [Website](https://enigma.lbl.gov/)
@@ -21,11 +25,11 @@ Understand subsurface microbial ecology at contaminated sites. Study how microbi
 
 ## Used by projects (7)
 
-- [[summaries/berdl_data_atlas__REPORT|berdl_data_atlas]]
-- [[summaries/enigma_carbon_census_1__REPORT|enigma_carbon_census_1]]
-- [[summaries/enigma_contamination_functional_potential__REPORT|enigma_contamination_functional_potential]]
-- [[summaries/enigma_sso_asv_ecology__REPORT|enigma_sso_asv_ecology]]
-- [[summaries/field_vs_lab_fitness__REPORT|field_vs_lab_fitness]]
-- [[summaries/genotype_to_phenotype_enigma__REPORT|genotype_to_phenotype_enigma]]
-- [[summaries/lab_field_ecology__REPORT|lab_field_ecology]]
+- [berdl_data_atlas](../../wiki/summaries/berdl_data_atlas__REPORT.md)
+- [enigma_carbon_census_1](../../wiki/summaries/enigma_carbon_census_1__REPORT.md)
+- [enigma_contamination_functional_potential](../../wiki/summaries/enigma_contamination_functional_potential__REPORT.md)
+- [enigma_sso_asv_ecology](../../wiki/summaries/enigma_sso_asv_ecology__REPORT.md)
+- [field_vs_lab_fitness](../../wiki/summaries/field_vs_lab_fitness__REPORT.md)
+- [genotype_to_phenotype_enigma](../../wiki/summaries/genotype_to_phenotype_enigma__REPORT.md)
+- [lab_field_ecology](../../wiki/summaries/lab_field_ecology__REPORT.md)
 

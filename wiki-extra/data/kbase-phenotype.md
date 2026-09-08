@@ -1,3 +1,7 @@
+---
+title: Phenotype Collection
+type: Dataset
+---
 # Phenotype Collection
 
 Provider: ?

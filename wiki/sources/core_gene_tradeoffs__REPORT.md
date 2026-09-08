@@ -1,3 +1,7 @@
+---
+title: 'Report: Core Gene Paradox -- Why Are Core Genes More Burdensome?'
+type: Source
+---
 # Report: Core Gene Paradox -- Why Are Core Genes More Burdensome?
 
 ## Key Findings
@@ -6,9 +10,9 @@
 
 Not all functional categories show the paradox. Core genes are disproportionately burdensome in Protein Metabolism (+6.2pp), Motility (+7.8pp), and RNA Metabolism (+12.9pp). But Cell Wall reverses: non-core cell wall genes are MORE burdensome (-14.1pp).
 
-![Burden by Functional Category](figures/burden_by_function.png)
+![Burden by Functional Category](../figures/core_gene_tradeoffs/burden_by_function.png)
 
-![Burden Patterns by Condition Type](figures/burden_by_condition.png)
+![Burden Patterns by Condition Type](../figures/core_gene_tradeoffs/burden_by_condition.png)
 
 *(Notebook: 01_burden_anatomy.ipynb)*
 
@@ -16,7 +20,7 @@ Not all functional categories show the paradox. Core genes are disproportionatel
 
 25,271 genes (17.8%) are true trade-off genes -- important (fit < -1) in some conditions, burdensome (fit > 1) in others. These are 1.29x more likely to be core (OR=1.29, p=1.2e-44). Core genes have more trade-offs because they participate in more pathways with condition-dependent costs and benefits.
 
-![Trade-off Gene Conservation Enrichment](figures/tradeoff_genes_conservation.png)
+![Trade-off Gene Conservation Enrichment](../figures/core_gene_tradeoffs/tradeoff_genes_conservation.png)
 
 *(Notebook: 01_burden_anatomy.ipynb)*
 
@@ -32,17 +36,17 @@ Not all functional categories show the paradox. Core genes are disproportionatel
 - **Neutral + Conserved** (86,761): Classic housekeeping genes
 - **Neutral + Dispensable** (21,886): Niche-specific genes
 
-![Selection Signature Matrix](figures/selection_signature_matrix.png)
+![Selection Signature Matrix](../figures/core_gene_tradeoffs/selection_signature_matrix.png)
 
 *(Notebook: 01_burden_anatomy.ipynb)*
 
 ### Case Studies
 
-![Specific Phenotype Conditions](figures/specific_phenotype_conditions.png)
+![Specific Phenotype Conditions](../figures/core_gene_tradeoffs/specific_phenotype_conditions.png)
 
 Genes with strong condition-specific effects are more likely core, reinforcing that the conserved genome is functionally active.
 
-![Motility Case Study](figures/motility_case_study.png)
+![Motility Case Study](../figures/core_gene_tradeoffs/motility_case_study.png)
 
 Motility genes exemplify the burden paradox: energetically expensive flagellar machinery is conserved because it is essential for chemotaxis in natural environments, despite being costly under lab conditions.
 

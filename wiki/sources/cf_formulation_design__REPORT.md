@@ -1,3 +1,8 @@
+---
+title: Rational Design of Protective Microbiome Formulations for Competitive Exclusion
+  of *Pseudomonas aeruginosa* in Cystic Fibrosis Airways
+type: Source
+---
 # Rational Design of Protective Microbiome Formulations for Competitive Exclusion of *Pseudomonas aeruginosa* in Cystic Fibrosis Airways
 
 ## Summary
@@ -39,17 +44,17 @@ We integrated experimental data from the PROTECT CF Synbiotic Cocktail Study (4,
 
 The PROTECT study produced 23 structured data tables (30.5M total rows) covering 4,949 isolates from 211 species across 175 patient samples (133 CF, 41 NCFB, 43 subjects, 4 clinical states). The collection is dominated by *P. aeruginosa* (655 isolates), *S. aureus* (379), and *Rothia dentocariosa* (318), reflecting the typical CF airway microbiome plus deliberate oversampling of pathogens. Genome quality is high (mean completeness 99.8%, median contamination 0.08%).
 
-![Isolate species distribution](figures/01_isolate_species_distribution.png)
+![Isolate species distribution](../figures/cf_formulation_design/01_isolate_species_distribution.png)
 
-![Isolate genus distribution — red = known CF pathogens](figures/01_isolate_genus_distribution.png)
+![Isolate genus distribution — red = known CF pathogens](../figures/cf_formulation_design/01_isolate_genus_distribution.png)
 
-![Genome quality: completeness, contamination, reference ANI](figures/01_genome_quality.png)
+![Genome quality: completeness, contamination, reference ANI](../figures/cf_formulation_design/01_genome_quality.png)
 
-![Carbon utilization clustermap — top 50 most variable isolates](figures/01_carbon_util_clustermap.png)
+![Carbon utilization clustermap — top 50 most variable isolates](../figures/cf_formulation_design/01_carbon_util_clustermap.png)
 
 Three experimental assays provide complementary views of competitive potential: planktonic inhibition of PA14 (220 isolates), carbon source utilization profiling (430 isolates on 21 substrates), and growth kinetics (32 isolates with full time-series curves). The core analysis cohort — isolates with both inhibition and carbon utilization data — comprises 142 isolates from 62 species.
 
-![Data type overlap across isolates](figures/01_data_overlap.png)
+![Data type overlap across isolates](../figures/cf_formulation_design/01_data_overlap.png)
 
 *(Notebook: 01_data_integration_eda.ipynb)*
 
@@ -59,9 +64,9 @@ Three experimental assays provide complementary views of competitive potential: 
 
 PA14 shows a clear amino acid preference hierarchy: proline (OD 0.60), histidine (0.56), ornithine (0.46), glutamate (0.40), aspartate (0.36), isoleucine (0.36), arginine (0.35). Glucose supports only moderate growth (0.22). Threonine, methionine, cysteine, serine, and glycine support essentially no growth (<0.07). This profile is consistent with the amino acid-rich composition of CF sputum established by Palmer et al. (2005, 2007) and validates that our assay conditions capture the metabolically relevant competitive landscape.
 
-![PA14 carbon source utilization profile](figures/01_pa14_carbon_profile.png)
+![PA14 carbon source utilization profile](../figures/cf_formulation_design/01_pa14_carbon_profile.png)
 
-![All reporter pathogen carbon utilization profiles](figures/01_reporter_carbon_heatmap.png)
+![All reporter pathogen carbon utilization profiles](../figures/cf_formulation_design/01_reporter_carbon_heatmap.png)
 
 The other reporter pathogens (*A. baumannii*, *K. pneumoniae*) show distinct profiles — PA14's amino acid specialization is not universal among CF pathogens, suggesting formulations may need to be pathogen-specific.
 
@@ -73,11 +78,11 @@ The other reporter pathogens (*A. baumannii*, *K. pneumoniae*) show distinct pro
 
 Across the 142-isolate analysis cohort, metabolic overlap with PA14 (weighted by PA14's substrate preferences) significantly predicts planktonic inhibition: **r = 0.384, p = 2.3×10⁻⁶**. A multivariate model incorporating metabolic overlap, total growth on PA-preferred substrates, metabolic breadth, and maximum growth explains **R² = 0.274**. Adding genus-level taxonomy increases this to **R² = 0.360** — genus explains an additional 8.6% of variance, indicating intrinsic species-level mechanisms (likely direct antagonism) contribute independently of metabolism.
 
-![Metabolic overlap vs inhibition — initial preview (r=0.384)](figures/01_overlap_vs_inhibition_preview.png)
+![Metabolic overlap vs inhibition — initial preview (r=0.384)](../figures/cf_formulation_design/01_overlap_vs_inhibition_preview.png)
 
-![Three metabolic features vs inhibition with regression lines](figures/03_metabolic_features_vs_inhibition.png)
+![Three metabolic features vs inhibition with regression lines](../figures/cf_formulation_design/03_metabolic_features_vs_inhibition.png)
 
-![Predicted vs observed inhibition from metabolic model (R² = 0.274)](figures/03_predicted_vs_observed.png)
+![Predicted vs observed inhibition from metabolic model (R² = 0.274)](../figures/cf_formulation_design/03_predicted_vs_observed.png)
 
 Five-fold cross-validation yields **CV R² = 0.145 ± 0.142**, below the training R² of 0.274, indicating the multivariate model overfits to the 142-isolate cohort. The true out-of-sample predictive power of metabolic features is closer to 15% than 27%. This does not invalidate the qualitative conclusion — metabolic overlap is a statistically significant predictor (p = 2.3×10⁻⁶) — but the effect size should be interpreted conservatively.
 
@@ -85,11 +90,11 @@ Five-fold cross-validation yields **CV R² = 0.145 ± 0.142**, below the trainin
 
 **The residual analysis reveals dual-mechanism species**: Isolates whose inhibition substantially exceeds metabolic predictions are candidate direct antagonists. The top positive residuals — *S. salivarius* ASMA-737 (+74.1%), *G. sanguinis* ASMA-3044 (+62.2%), *N. mucosa* ASMA-3643 (+57.2%) — are the same species that later dominate our FDA-safe formulations. These organisms appear to combine metabolic competition with direct antagonism, making them particularly valuable.
 
-![Inhibition distribution — all measurements and per-isolate best](figures/01_inhibition_distribution.png)
+![Inhibition distribution — all measurements and per-isolate best](../figures/cf_formulation_design/01_inhibition_distribution.png)
 
-![Inhibition by genus — full isolate collection (top 20)](figures/01_inhibition_by_genus.png)
+![Inhibition by genus — full isolate collection (top 20)](../figures/cf_formulation_design/01_inhibition_by_genus.png)
 
-![Inhibition by genus in the analysis cohort](figures/03_inhibition_by_genus_cohort.png)
+![Inhibition by genus in the analysis cohort](../figures/cf_formulation_design/03_inhibition_by_genus_cohort.png)
 
 *(Notebook: 03_explaining_inhibition.ipynb)*
 
@@ -99,17 +104,17 @@ Five-fold cross-validation yields **CV R² = 0.145 ± 0.142**, below the trainin
 
 Commensals beat PA14's maximum growth rate on only **13.8%** of substrate comparisons — PA14 is generally the fastest grower. However, commensals start growing before PA14 on **43.1%** of comparisons (lag advantage > 0). This asymmetry suggests that in a formulation context, **pre-establishing commensals before pathogen exposure** — e.g., via prebiotic biomass pre-loading — could be more important than raw growth rate.
 
-![Growth curves: PA14 (dashed) vs representative commensals](figures/02_growth_curve_gallery.png)
+![Growth curves: PA14 (dashed) vs representative commensals](../figures/cf_formulation_design/02_growth_curve_gallery.png)
 
-![Growth rate advantage vs PA14 per isolate × substrate](figures/02_rate_advantage_heatmap.png)
+![Growth rate advantage vs PA14 per isolate × substrate](../figures/cf_formulation_design/02_rate_advantage_heatmap.png)
 
-![Growth parameter distributions — K, mu_max, lag, AUC](figures/02_parameter_distributions.png)
+![Growth parameter distributions — K, mu_max, lag, AUC](../figures/cf_formulation_design/02_parameter_distributions.png)
 
 Growth kinetic parameters are moderately correlated with endpoint OD (r ≈ 0.40) but not redundant. For the 29 isolates with all three assay types, adding kinetic features to the metabolic overlap model improves prediction to **R² = 0.311**.
 
-![Growth kinetic parameters vs endpoint OD — correlated but not redundant](figures/02_kinetics_vs_endpoint.png)
+![Growth kinetic parameters vs endpoint OD — correlated but not redundant](../figures/cf_formulation_design/02_kinetics_vs_endpoint.png)
 
-![Kinetic advantage vs inhibition (n=29)](figures/03_kinetic_advantage_vs_inhibition.png)
+![Kinetic advantage vs inhibition (n=29)](../figures/cf_formulation_design/03_kinetic_advantage_vs_inhibition.png)
 
 *(Notebook: 02_growth_kinetics.ipynb)*
 
@@ -119,7 +124,7 @@ Growth kinetic parameters are moderately correlated with endpoint OD (r ≈ 0.40
 
 134 species were detected across patient metagenomes. We computed an engraftability score = prevalence × log(activity ratio), where activity ratio = metaRS CPM / metaG CPM captures transcriptional engagement per unit DNA. Among inhibition-tested species, *Neisseria mucosa* stands out with the highest engraftability (1.595), combining high prevalence with strong transcriptional activity. *Rothia dentocariosa* (0.422) and *Streptococcus salivarius* (0.172) are also above the median.
 
-![Species prevalence vs transcriptional activity — blue = has PROTECT isolate](figures/04_prevalence_vs_activity.png)
+![Species prevalence vs transcriptional activity — blue = has PROTECT isolate](../figures/cf_formulation_design/04_prevalence_vs_activity.png)
 
 *(Notebook: 04_patient_ecology.ipynb)*
 
@@ -139,13 +144,13 @@ Growth kinetic parameters are moderately correlated with endpoint OD (r ≈ 0.40
 | 4 | *R. dentocariosa* + *M. luteus* + *N. mucosa* + *S. salivarius* | **100%** | 76% | 0.185 |
 | 5 | *R. dentocariosa* + *M. luteus* + *G. sanguinis* + *N. mucosa* + *S. salivarius* | **100%** | 78% | 0.188 |
 
-![Core species frequency in top strict-safe formulations](figures/05b_strict_safe_species_frequency.png)
+![Core species frequency in top strict-safe formulations](../figures/cf_formulation_design/05b_strict_safe_species_frequency.png)
 
 **Exhaustive validation**: To confirm the top-30-restricted search did not miss better combinations, we exhaustively enumerated all C(97,3) = 147,440 possible triples from the full strict-safe candidate pool. Of 127,598 valid (unique-species) formulations scored, the same *M. luteus* + *N. mucosa* + *S. salivarius* triple emerged as the global optimum (score 0.562), confirming the optimization result is not an artifact of candidate pool restriction.
 
 **Bootstrap confidence intervals**: Resampling 1,000 times over the raw inhibition measurements yields 95% CIs on composite scores: k=1 [0.753, 0.753], k=2 [0.514, 0.588], k=3 [0.551, 0.562], k=4 [0.534, 0.578], k=5 [0.520, 0.587]. All k=2 through k=5 CIs overlap — formulation sizes are **not statistically distinguishable** on the composite score, supporting the recommendation of k=2 as the practical primary candidate (see §3.2).
 
-![Bootstrap confidence intervals on formulation composite scores](figures/05b_bootstrap_ci.png)
+![Bootstrap confidence intervals on formulation composite scores](../figures/cf_formulation_design/05b_bootstrap_ci.png)
 
 **Conclusion**: At k=3, the formulation achieves 100% niche coverage — meaning at least one member grows on every amino acid that PA14 can use. The strict filter costs roughly 15% inhibition ceiling but doubles engraftability. The five-species core is consistent across all formulation sizes, indicating a robust solution rather than an optimization artifact. Exhaustive enumeration and bootstrap analysis further confirm the robustness of these rankings.
 
@@ -177,7 +182,7 @@ The table below presents the top-ranked FDA-safe formulations at each size (k=1�
 
 **k=5** — *R. dentocariosa* [ASMA-2935] + *M. luteus* [ASMA-2965] + *G. sanguinis* [ASMA-3044] + *N. mucosa* [ASMA-3643] + *S. salivarius* [ASMA-737]: composite 0.587, 100% coverage, 78% mean inhibition, engraftability 0.188. **The full formulation** — all five core species, maximum redundancy and inhibition depth.
 
-![Best formulation composite score by size](figures/05_formulation_scores_by_size.png)
+![Best formulation composite score by size](../figures/cf_formulation_design/05_formulation_scores_by_size.png)
 
 #### Design Rationale by Species
 
@@ -193,7 +198,7 @@ The table below presents the top-ranked FDA-safe formulations at each size (k=1�
 
 PA14 outgrows the average commensal on **every tested substrate**. The most selective substrates (cysteine, threonine, methionine) have ratios of only 0.77–0.96. There is no amino acid or simple sugar where commensals have a clear growth advantage.
 
-![Carbon source selectivity ratios — no substrate favors commensals over PA14](figures/06_prebiotic_selectivity.png)
+![Carbon source selectivity ratios — no substrate favors commensals over PA14](../figures/cf_formulation_design/06_prebiotic_selectivity.png)
 
 **Conclusion**: Among the 22 tested substrates, no selective prebiotic exists. Competitive exclusion must work through **community-level resource depletion** — multiple organisms collectively consuming the resource pool faster than PA14 alone — rather than individual substrate advantage. This motivated our genomic extension analysis (Section 2.10) to search for untested substrates.
 
@@ -211,9 +216,9 @@ PA14 outgrows the average commensal on **every tested substrate**. The most sele
 | *N. mucosa* | 15 | 16/16 (100%) | 27/27 (100%) |
 | *G. sanguinis* | 7 | 7/18 (39%) | 37/39 (95%) |
 
-![Amino acid pathway conservation heatmap](figures/07_aa_pathway_conservation.png)
+![Amino acid pathway conservation heatmap](../figures/cf_formulation_design/07_aa_pathway_conservation.png)
 
-![Carbon source pathway conservation heatmap](figures/07_carbon_pathway_conservation.png)
+![Carbon source pathway conservation heatmap](../figures/cf_formulation_design/07_carbon_pathway_conservation.png)
 
 **Conclusion**: H5 (conservation) is strongly supported. The metabolic capabilities we measured are species-level traits conserved across hundreds of genomes. *G. sanguinis* shows the most pathway variability (small pangenome, 7 genomes), suggesting strain selection matters most for this species. For the other four, any well-characterized strain should provide equivalent metabolic competition.
 
@@ -243,9 +248,9 @@ This finding is consistent with Rigauts et al. (2022), who showed *Rothia mucila
 
 Overall mean synergy is −5.8%, indicating mildly antagonistic interactions on average. However, **N. mucosa pairs are near-additive** (+5.3% and −2.2%), supporting its role as a formulation anchor that does not interfere with partners. Some pairs show strong antagonism (ASMA-1478 + ASMA-1197: −19.8%), highlighting the importance of testing specific combinations before advancing to in vivo models.
 
-![Single vs pair inhibition distributions, and synergy score distribution](figures/08_pair_vs_single_inhibition.png)
+![Single vs pair inhibition distributions, and synergy score distribution](../figures/cf_formulation_design/08_pair_vs_single_inhibition.png)
 
-![Dose-response: pair inhibition vs total inoculation density](figures/08_dose_response_pairs.png)
+![Dose-response: pair inhibition vs total inoculation density](../figures/cf_formulation_design/08_dose_response_pairs.png)
 
 **Data note**: The `fact_pairwise_interaction` table proved identical to `fact_carbon_utilization` (correlation = 1.0), meaning per-substrate co-culture effects cannot be assessed from endpoint OD data. The interaction analysis relies solely on the RFU-based competition assay.
 
@@ -270,7 +275,7 @@ Overall mean synergy is −5.8%, indicating mildly antagonistic interactions on 
 
 This per-species specificity has practical implications for prebiotic pairing: xylitol benefits *S. salivarius* (the top inhibitor), while xylose/arabinose/fucose benefit *N. mucosa* (the engraftment anchor) and *G. sanguinis*. A multi-prebiotic cocktail targeting different formulation members may be more effective than a single prebiotic.
 
-![Pathway completeness: PA14 vs core commensals](figures/09_pathway_selectivity_heatmap.png)
+![Pathway completeness: PA14 vs core commensals](../figures/cf_formulation_design/09_pathway_selectivity_heatmap.png)
 
 Patient metatranscriptomics corroborates the genomic predictions: 47 KEGG pathways show >2× commensal-to-PA expression ratio in vivo, dominated by PTS sugar transport systems (maltose, trehalose, N-acetylmuramic acid) that are exclusively commensal-expressed.
 
@@ -284,13 +289,13 @@ Patient metatranscriptomics corroborates the genomic predictions: 47 KEGG pathwa
 
 Among 6,760 PA genomes (5,199 with metadata), 1,796 are from lung/respiratory or CF sources. Seven GapMind pathways differ significantly (FDR < 0.05) between lung and non-lung PA — and all are **carbon source pathways that lung PA is losing**: sorbitol (−0.165), mannitol (−0.204), gluconate (−0.185). Lung PA is undergoing metabolic streamlining: in the amino acid-rich sputum environment, sugar catabolism is dispensable and under relaxed selection. This validates that PA's amino acid dependence is not just a preference — it is an **evolutionary adaptation**.
 
-![PA genome sources in pangenome](figures/10_pa_genome_sources.png)
+![PA genome sources in pangenome](../figures/cf_formulation_design/10_pa_genome_sources.png)
 
-![PA metabolic pathways by isolation source](figures/10_pa_lung_vs_nonlung_pathways.png)
+![PA metabolic pathways by isolation source](../figures/cf_formulation_design/10_pa_lung_vs_nonlung_pathways.png)
 
 Patient metatranscriptomics reveals that during acute exacerbation, PA massively downregulates 170 of 207 measured pathways — including amino acid biosynthesis (cysteine, methionine: 10× lower) and imipenem resistance (OprD: 13× lower). Only phosphate transport is upregulated (64×). Sick PA is metabolically quiescent and dependent on scavenging host-derived amino acids, making it potentially **more vulnerable** to competitive exclusion during acute episodes.
 
-![PA pathway expression: acute vs stable patients](figures/10_pa_sick_vs_stable_pathways.png)
+![PA pathway expression: acute vs stable patients](../figures/cf_formulation_design/10_pa_sick_vs_stable_pathways.png)
 
 *(Notebook: 10_pa_lung_adaptation.ipynb)*
 
@@ -300,19 +305,19 @@ Patient metatranscriptomics reveals that during acute exacerbation, PA massively
 
 Across 1,796 lung PA genomes, amino acid catabolic pathways are **97.4% conserved** (mean completeness). Even proline — PA14's top substrate — is complete in 97% of lung isolates. The main variation among lung PA (PC1 = 79%) is in carbon source pathways (sorbitol, mannitol, gluconate) — substrates our formulation does NOT target.
 
-![Formulation target robustness across lung PA](figures/10_pa_target_robustness.png)
+![Formulation target robustness across lung PA](../figures/cf_formulation_design/10_pa_target_robustness.png)
 
 Two metabolic subpopulations exist: a major cluster (1,743 genomes, 97%) with full metabolic capacity, and a minor cluster (53 genomes, 3%) lacking TCA cycle intermediates. The minor cluster is CF-enriched (25% CF vs 16%) and may represent chronically adapted PA that is even MORE dependent on external metabolites — potentially more vulnerable to competitive exclusion.
 
 CF-derived PA shows 6 FDR-significant differences from non-CF lung PA, but all are in sugar-related pathways — **zero amino acid differences**. Formulations designed for general lung PA should work equivalently for CF PA.
 
-![PA lung metabolic subpopulations and CF vs non-CF](figures/10_pa_lung_clusters.png)
+![PA lung metabolic subpopulations and CF vs non-CF](../figures/cf_formulation_design/10_pa_lung_clusters.png)
 
-![PROTECT PA genome variation (655 isolates, 15 strain groups)](figures/10_protect_pa_genome_variation.png)
+![PROTECT PA genome variation (655 isolates, 15 strain groups)](../figures/cf_formulation_design/10_protect_pa_genome_variation.png)
 
 **Genomic growth rate context**: PA's genome (6.58 Mb, 6,177 CDS) is 2.5–3× larger than our commensal species (2.1–2.7 Mb, 2,200–3,000 CDS). Despite this size disadvantage, our growth curve data (NB02) shows PA14 outgrows most commensals on its preferred amino acid substrates — confirming that PA's catabolic enzyme efficiency, not its ribosomal translation rate, drives its competitive advantage on amino acids. Codon usage bias analysis (NB12) of ribosomal proteins shows variation across species, but cross-species CUB comparisons are confounded by GC content (ranging from 31% for *G. sanguinis* to 73% for *M. luteus*) — organisms with extreme GC composition have inflated CUB scores regardless of growth optimization. The CUB analysis therefore cannot reliably distinguish growth rate differences between our species; the lab growth data remains the definitive measure of competitive dynamics on amino acid substrates.
 
-![Growth rate prediction: CUB scores and genome size for PA vs commensals](figures/12_growth_rate_prediction.png)
+![Growth rate prediction: CUB scores and genome size for PA vs commensals](../figures/cf_formulation_design/12_growth_rate_prediction.png)
 
 **Within-PA strain variation**: Among 15 PROTECT PA strain groups, genome size ranges from 6.12 Mb (5,668 CDS) to 7.35 Mb (7,026 CDS) — a 24% difference in gene content. The largest strain group (725, 98 isolates) carries 1,358 extra genes compared to the smallest. However, since all strain groups retain the same amino acid catabolic pathways (97%+ conservation, NB11), the extra genes are likely conditionally expressed accessory functions (prophages, mobile elements, niche-specific adaptations) that affect virulence and persistence rather than amino acid growth rate. Within-species genome size variation is a much weaker predictor of growth rate than cross-species variation (Vieira-Silva & Rocha 2010). We therefore predict that **PA strains will respond similarly to our formulation**, because the competitive targets — amino acid catabolism — are invariant across the species. Where PA strains are expected to differ is in virulence, antibiotic resistance, and biofilm properties — factors that matter for disease severity but not for the metabolic competition mechanism our formulation exploits.
 
@@ -333,23 +338,23 @@ Across 6,760 PA genomes with environmental metadata for 4,769, T3SS effector typ
 
 CF PA is overwhelmingly ExoS+ — the PA14 ExoU+ phenotype represents only 5% of CF isolates. ExoU prevalence increases with acute/invasive infection contexts (33% in other clinical, 35% in environmental), consistent with ExoU's role as an acute cytotoxic effector rather than a chronic colonization factor.
 
-![T3SS effector type and biofilm polysaccharide distribution by environment](figures/13_t3ss_by_environment.png)
+![T3SS effector type and biofilm polysaccharide distribution by environment](../figures/cf_formulation_design/13_t3ss_by_environment.png)
 
 Biofilm architecture: 96.4% of PA genomes carry both Pel and Psl operons (PAO1-like). Only 3.5% are Pel-only (PA14-like), with slight enrichment in CF (8%) vs environmental (3%). PA14's psl deletion is a rare variant, not representative of the species.
 
-![Biofilm polysaccharide type by environment](figures/13_biofilm_by_environment.png)
+![Biofilm polysaccharide type by environment](../figures/cf_formulation_design/13_biofilm_by_environment.png)
 
 Regulatory genes: ladS is detected in only 0.5% of PA genomes by bakta annotation — PA14's ladS frameshift mutation is an extreme outlier that locks it in an acute-virulence regulatory state unrepresentative of natural infection dynamics.
 
 **Critically, amino acid catabolic pathways are identical between ExoU+ and ExoS+ PA** (GapMind score differences <0.03 on a 1–5 scale, zero FDR-significant pathways). The competitive exclusion targets our formulation exploits are completely independent of the virulence genotype — one formulation should work against all PA variants regardless of their T3SS effector type.
 
-![PA virulence systems summary across environments](figures/13_pa_virulence_summary.png)
+![PA virulence systems summary across environments](../figures/cf_formulation_design/13_pa_virulence_summary.png)
 
 **Formulation implication**: Our PA14-based inhibition assays tested the formulation against a minority (<5%) CF PA variant. The dominance of ExoS+ PA in CF lungs is actually favorable: ExoS mediates slower, apoptotic killing vs ExoU's rapid cytotoxic lysis, potentially providing a wider time window for competitive exclusion to take effect. However, **Proposed Experiment 4.6 (PAO1 and clinical strain extension) is now elevated in importance** — confirming inhibition against ExoS+ strains is essential.
 
 In the PROTECT collection (651 PA genomes), 47% carry exoS and 7% carry exoU, with 45% unannotated for T3SS effectors (annotation coverage gap for GenomeDepot gene names).
 
-![PROTECT PA virulence gene prevalence](figures/13_protect_pa_virulence.png)
+![PROTECT PA virulence gene prevalence](../figures/cf_formulation_design/13_protect_pa_virulence.png)
 
 *(Notebook: 13_pa_virulence_systems.ipynb)*
 
@@ -361,13 +366,13 @@ Of 643 profiled genomes, **304 (47%) are PAO1-like** (ExoS+) and **48 (7%) are P
 
 Strain group assignment is strongly correlated with virulence type: entire strain groups are either uniformly PAO1-like or uniformly PA14-like, indicating that T3SS effector type is a clonal trait inherited within lineages rather than a horizontally transferred variable.
 
-![ASMA PA virulence profiles: T3SS, model similarity, gene prevalence, and strain group breakdown](figures/14_asma_virulence_profiles.png)
+![ASMA PA virulence profiles: T3SS, model similarity, gene prevalence, and strain group breakdown](../figures/cf_formulation_design/14_asma_virulence_profiles.png)
 
 **Pfam-based phylogenetic tree**: To place PROTECT isolates in broader evolutionary context, we constructed a phylogenetic tree using Pfam protein domain profiles as a pipeline-independent vocabulary. PROTECT genomes (annotated by GenomeDepot) and pangenome genomes (annotated by bakta/eggNOG) use different annotation pipelines, making gene names unreliable for cross-database comparison. Pfam domain IDs are standardized — 2,850 domains shared between the two databases, with ~3,200 unique domains per PA genome.
 
 The tree spans 165 PA genomes: 13 PROTECT strain group representatives, 150 sampled lung/airway PA from the pangenome, and the PAO1/PA14 reference strains. Jaccard distances on 1,557 variable Pfam domains (present in 5–95% of genomes) provide resolution into the accessory genome variation that distinguishes PAO1-like from PA14-like strains. Four annotation rings display T3SS effector type, biofilm architecture, isolation source, and genome identity (ASMA/PAO1/PA14/Pangenome).
 
-![Circular Pfam-based tree: 165 PA genomes annotated with T3SS type, biofilm, source, and identity. ASMA isolates (red) distributed across lung PA diversity.](figures/14_pa_phylogenetic_tree.png)
+![Circular Pfam-based tree: 165 PA genomes annotated with T3SS type, biofilm, source, and identity. ASMA isolates (red) distributed across lung PA diversity.](../figures/cf_formulation_design/14_pa_phylogenetic_tree.png)
 
 The tree reveals that PROTECT isolates are distributed across the lung PA diversity, not clustered in a single lineage — confirming that the PROTECT collection samples the breadth of CF PA genomic variation. ExoU+ isolates (red T3SS ring) cluster separately from the ExoS+ majority, consistent with PAPI-1/PAPI-2 pathogenicity island acquisition as a deep phylogenetic event.
 

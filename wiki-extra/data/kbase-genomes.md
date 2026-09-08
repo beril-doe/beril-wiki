@@ -1,3 +1,7 @@
+---
+title: KBase Genomes
+type: Dataset
+---
 # KBase Genomes
 
 Provider: KBase, DOE · [Website](https://www.kbase.us/)
@@ -16,6 +20,6 @@ Provide foundational genome sequence data. Access raw sequences, structural anno
 
 ## Used by projects (2)
 
-- [[summaries/gene_function_ecological_agora__REPORT|gene_function_ecological_agora]]
-- [[summaries/ibd_phage_targeting__REPORT|ibd_phage_targeting]]
+- [gene_function_ecological_agora](../../wiki/summaries/gene_function_ecological_agora__REPORT.md)
+- [ibd_phage_targeting](../../wiki/summaries/ibd_phage_targeting__REPORT.md)
 

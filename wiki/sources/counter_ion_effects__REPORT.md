@@ -1,10 +1,14 @@
+---
+title: 'Report: Counter Ion Effects on Metal Fitness Measurements'
+type: Source
+---
 # Report: Counter Ion Effects on Metal Fitness Measurements
 
 ## Key Findings
 
 ### 1. 39.8% of Metal-Important Genes Are Also NaCl-Important
 
-![Heatmap of metal-NaCl gene overlap by organism and metal](figures/nacl_metal_overlap_heatmap.png)
+![Heatmap of metal-NaCl gene overlap by organism and metal](../figures/counter_ion_effects/nacl_metal_overlap_heatmap.png)
 
 Across 19 organisms and 14 metals (86 organism × metal pairs), 4,304 of 10,821 metal-important gene records (39.8%) are also important under NaCl stress. This substantial overlap exists for every metal tested — from 9.2% for molybdenum to 57.6% for manganese — indicating that a large fraction of the "metal fitness" signal reflects general cellular vulnerability shared between metal and osmotic/ionic stress.
 
@@ -14,17 +18,17 @@ Across 19 organisms and 14 metals (86 organism × metal pairs), 4,304 of 10,821 
 
 ### 2. Counter Ions Are NOT the Primary Driver of the Overlap
 
-![Per-metal overlap colored by counter ion type](figures/metal_nacl_overlap_by_counter_ion.png)
+![Per-metal overlap colored by counter ion type](../figures/counter_ion_effects/metal_nacl_overlap_by_counter_ion.png)
 
 The critical test: does the overlap scale with chloride delivered by the metal salt? **No.** Zinc sulfate (0 mM Cl⁻) shows 44.6% NaCl overlap — higher than most chloride-delivered metals including cobalt (41.3%, up to 500 mM Cl⁻), copper (41.0%), and nickel (39.3%). Chloride metals as a group (mean 41.6%) are barely different from non-chloride metals (37.8%). The overlap is driven by shared stress biology — cell envelope damage, ion homeostasis disruption, and general stress response — not by chloride counter ions.
 
-![Cl⁻ concentration vs NaCl overlap scatter](figures/cl_concentration_vs_overlap.png)
+![Cl⁻ concentration vs NaCl overlap scatter](../figures/counter_ion_effects/cl_concentration_vs_overlap.png)
 
 *(Notebook: 02_metal_nacl_overlap.ipynb)*
 
 ### 3. DvH Metal-NaCl Correlation Follows Toxicity Mechanism, Not Chloride Dose
 
-![DvH fitness profile correlations with NaCl](figures/dvh_nacl_metal_correlation.png)
+![DvH fitness profile correlations with NaCl](../figures/counter_ion_effects/dvh_nacl_metal_correlation.png)
 
 In DvH (the most extensively profiled organism: 13 metals, 6 NaCl experiments), whole-genome fitness correlations between each metal and NaCl reveal a hierarchy: Zinc (r=0.715) > Manganese (0.545) > Copper (0.532) > Cobalt (0.498) > Mercury (0.478) > Nickel (0.446) > Aluminum (0.420) > Molybdenum (0.396) > Uranium (0.350) > Selenium (0.342) > Chromium (0.318) > Tungsten (0.298) > Iron (0.086). This hierarchy does not follow Cl⁻ concentration (zinc is delivered as sulfate with zero Cl⁻ but ranks first). Instead, it follows toxicity mechanism: metals that broadly displace essential cofactors (Zn, Mn, Cu, Co) share more genes with NaCl stress than metals that target specific pathways (Mo, W — molybdopterin enzymes; Fe — iron-sulfur clusters).
 
@@ -32,7 +36,7 @@ In DvH (the most extensively profiled organism: 13 metals, 6 NaCl experiments), 
 
 ### 4. Metal Fitness Atlas Core Enrichment Is Robust After Correction
 
-![Original vs corrected core enrichment per metal](figures/atlas_original_vs_corrected.png)
+![Original vs corrected core enrichment per metal](../figures/counter_ion_effects/atlas_original_vs_corrected.png)
 
 After removing the ~40% shared-stress genes and restricting to metal-specific genes, the core genome enrichment is fully preserved for 12 of 14 metals. Essential metals actually show **stronger** enrichment after correction: Molybdenum (delta +0.132 → +0.145), Tungsten (+0.129 → +0.134), Mercury (+0.116 → +0.133), Selenium (+0.115 → +0.131). Toxic metals with broad cellular effects show modest decreases: Aluminum (+0.099 → +0.068), Zinc (+0.145 → +0.115). Only Cadmium reverses (delta -0.008 → -0.108), but with only 92 original genes from 1 organism, this has very low statistical power. The original atlas conclusion — metal fitness genes are core-enriched — is not an artifact of shared stress response overlap.
 
@@ -40,7 +44,7 @@ After removing the ~40% shared-stress genes and restricting to metal-specific ge
 
 ### 5. Gene Classification: 60% of Metal Fitness Genes Are Metal-Specific
 
-![Per-metal gene classification: shared-stress vs metal-specific](figures/gene_classification_by_metal.png)
+![Per-metal gene classification: shared-stress vs metal-specific](../figures/counter_ion_effects/gene_classification_by_metal.png)
 
 Across all organisms, 6,517 of 10,821 metal-important gene records (60.2%) are classified as metal-specific (important for metals but not NaCl). For DvH, 495 unique metal-important genes split into 73 shared-stress (14.7%) and 422 metal-specific (85.3%). Shared-stress genes tend to be important across more metals (mean 4.1 metals per gene vs 2.5 for metal-specific), consistent with broad cellular vulnerability. In DvH, metal-specific genes are more functionally annotated (90.5% have SEED annotations) than shared-stress genes (78.1%), suggesting that the metal-specific set includes well-characterized metal homeostasis functions (Ni/Fe-hydrogenase, nitrogenase regulators, metal transporters) while shared-stress genes include more uncharacterized general stress proteins.
 
@@ -48,7 +52,7 @@ Across all organisms, 6,517 of 10,821 metal-important gene records (60.2%) are c
 
 ### 6. psRCH2: The Only Within-Metal Counter Ion Comparison
 
-![psRCH2 CuCl₂ vs CuSO₄ fitness profiles](figures/psrch2_copper_comparison.png)
+![psRCH2 CuCl₂ vs CuSO₄ fitness profiles](../figures/counter_ion_effects/psrch2_copper_comparison.png)
 
 psRCH2 is the only organism tested with the same metal (copper) as both CuCl₂ (anaerobic, 3 replicates) and CuSO₄ (aerobic, 3 replicates). The cross-salt correlation is r=0.439, substantially lower than within-replicate correlations (CuCl₂: r=0.720; CuSO₄: r=0.859). However, this comparison is severely confounded by aerobic/anaerobic growth — hundreds of genes differ between these conditions independent of copper. Notably, CuSO₄ (aerobic, no Cl⁻) is more correlated with NaCl (r=0.450) than CuCl₂ (anaerobic, r=0.212), further arguing against chloride as the primary confound and suggesting the aerobic/NaCl correlation reflects shared aerobic stress mechanisms.
 

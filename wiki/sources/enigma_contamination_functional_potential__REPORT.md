@@ -1,3 +1,7 @@
+---
+title: 'Report: Contamination Gradient vs Functional Potential in ENIGMA Communities'
+type: Source
+---
 # Report: Contamination Gradient vs Functional Potential in ENIGMA Communities
 
 ## Key Findings
@@ -18,7 +22,7 @@ This keeps exploratory interpretation calibrated: coverage-aware models increase
 ### Confirmatory Spearman tests remain null with confidence intervals and global FDR
 Predeclared confirmatory tests (`site_defense_score` Spearman vs contamination in genus-level modes) remained non-significant:
 
-![Confirmatory defense score vs contamination index by mapping mode](figures/confirmatory_defense_vs_contamination.png)
+![Confirmatory defense score vs contamination index by mapping mode](../figures/enigma_contamination_functional_potential/confirmatory_defense_vs_contamination.png)
 
 - `relaxed_all_clades`: rho = 0.0587, 95% bootstrap CI [-0.128, 0.250], Spearman p = 0.546, FDR q = 0.862
 - `strict_single_clade`: rho = 0.0682, 95% bootstrap CI [-0.111, 0.253], Spearman p = 0.483, FDR q = 0.849
@@ -47,7 +51,7 @@ Exploratory sensitivity models still show strongest positive defense association
 Most non-defense outcomes remained non-significant in these sensitivity tests, with one exploratory exception:
 - `strict_single_clade`, high-coverage subset (`mapped_abundance_fraction >= 0.25`), `site_stress_score`: Spearman rho = 0.2489, p = 0.0407.
 
-![Exploratory stress score vs contamination index by mapping mode](figures/contamination_vs_functional_score.png)
+![Exploratory stress score vs contamination index by mapping mode](../figures/enigma_contamination_functional_potential/contamination_vs_functional_score.png)
 
 ### Community-fraction robustness does not show strong within-fraction monotonic signal
 To address potential confounding from collapsing multiple community fractions, NB03 now retains `community_fraction_type` parsed from `sdt_community_name` and runs fraction-aware robustness analyses.
@@ -83,7 +87,7 @@ To approximate higher taxonomic resolution despite ENIGMA taxonomy stopping at g
 
 This suggests that with current ENIGMA taxonomy granularity, stricter taxonomic resolution sharply reduces analyzable signal and does not strengthen inference yet.
 
-![Mapping and feature coverage by mode](figures/mapping_coverage_by_mode.png)
+![Mapping and feature coverage by mode](../figures/enigma_contamination_functional_potential/mapping_coverage_by_mode.png)
 
 Coverage diagnostics from upstream outputs:
 - 1,392 ENIGMA genera observed
@@ -107,7 +111,7 @@ NB03 built contamination index from 8 metal columns (`arsenic`, `cadmium`, `chro
 - min = -0.448, max = 3.836
 - median = -0.271, IQR = [-0.363, 0.053]
 
-![Distribution of contamination index](figures/contamination_index_distribution.png)
+![Distribution of contamination index](../figures/enigma_contamination_functional_potential/contamination_index_distribution.png)
 
 *(Notebook: `03_contamination_functional_models.ipynb`)*
 

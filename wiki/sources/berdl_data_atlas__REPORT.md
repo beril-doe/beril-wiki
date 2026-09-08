@@ -1,3 +1,7 @@
+---
+title: BERDL Data Atlas — Inventory, Topic Map, and Cross-Reference Synergies
+type: Source
+---
 # BERDL Data Atlas — Inventory, Topic Map, and Cross-Reference Synergies
 
 **Status:** complete (analysis + one synergy use case sample-validated against the live cluster).
@@ -19,7 +23,7 @@ The atlas is built for two audiences: **KBase users** ("where to look for what",
 
 ### Finding 1: BERDL has billion-row depth across 10+ biological dimensions
 
-![Per-entity-class data volume (log scale)](figures/nb05_volume_by_entity_class.png)
+![Per-entity-class data volume (log scale)](../figures/berdl_data_atlas/nb05_volume_by_entity_class.png)
 
 65 curated 'headline' tables hit on the live cluster show BERDL is simultaneously deep across genomes, genes, proteins, structures, phenotype/fitness, samples, community profiles, mass spec, viruses, biochemistry, ontology, environment, and literature. The single largest entity table is `kbase_ke_pangenome.gene` at **1,011,650,903 rows** (~3.4K genes × 293K genomes).
 
@@ -27,27 +31,27 @@ The atlas is built for two audiences: **KBase users** ("where to look for what",
 
 ### Finding 2: Topic coverage is heavily skewed; DOE-BER is the only broad-coverage funder
 
-![Agency × biological topic coverage](figures/nb01_agency_topic_heatmap.png)
+![Agency × biological topic coverage](../figures/berdl_data_atlas/nb01_agency_topic_heatmap.png)
 
 DOE-BER spans every topic (15 / 15); Defense / HHS = mono-topic (PhageFoundry, all `mobile_phage`); ARPA-H (PROTECT) spans 6 topics; NSF (Planet Microbe), DOE-FE (NETL), DOI (USGS) are narrow in topic but cover unique sample types. Topic concentration: 6 topics are >75 % single-owner (`mobile_phage` 96 % PhageFoundry, `pangenome` 79 % kbase, `reference_protein` 78 % refdata, etc.); 7 topics are cross-tenant with top tenant ≤ 55 % share (`taxonomy` spans 12 tenants — the broadest cross-tenant surface in BERDL).
 
-![Topic concentration — segments are tenants, with top-tenant share annotated](figures/nb01_topic_concentration.png)
+![Topic concentration — segments are tenants, with top-tenant share annotated](../figures/berdl_data_atlas/nb01_topic_concentration.png)
 
 *(Notebook: 01_topic_map.ipynb)*
 
 ### Finding 3: 536 cross-tenant bridges define the lakehouse join surface
 
-![(Tenant, topic) linkage graph — edges = ≥1 shared canonical join key](figures/nb02_linkage_graph.png)
+![(Tenant, topic) linkage graph — edges = ≥1 shared canonical join key](../figures/berdl_data_atlas/nb02_linkage_graph.png)
 
 29 canonical join keys (genome / taxonomy / sample / annotation / pathway / biochemistry / protein / phage / literature / KBase workspace) were scanned across the catalog. Workhorses by tenant span: `sample_id` (10 tenants), `genome_id` (9), `ncbi_taxon_id` (9), `feature_id` (9), `ec_number` (8). 536 unordered cross-tenant bridges exist at the (tenant × topic) cell granularity. Top bridges share up to 7 keys (`kbase.pathway ↔ kescience.pathway`; `kescience.pathway ↔ phagefoundry.mobile_phage`; `refdata.structural ↔ kescience.structural` via `alphafold_pdb` + `pfam` + `protein_id`).
 
-![Join keys × tenants — table counts per key/tenant combination](figures/nb02_key_tenant_heatmap.png)
+![Join keys × tenants — table counts per key/tenant combination](../figures/berdl_data_atlas/nb02_key_tenant_heatmap.png)
 
 *(Notebook: 02_linkage_atlas.ipynb)*
 
 ### Finding 4: 77% of BERIL projects are already cross-tenant; the kbase × kescience axis dominates
 
-![BERIL tenant reuse frequency across 66 audited projects](figures/nb03_tenant_frequency.png)
+![BERIL tenant reuse frequency across 66 audited projects](../figures/berdl_data_atlas/nb03_tenant_frequency.png)
 
 `kbase` appears in 53/66 projects (80%); `kescience` in 35/66 (53%); the `kbase ↔ kescience` realized bridge accounts for 36 cross-tenant projects on its own (mostly pangenome × fitness joins via `genome_id` and `ncbi_taxon_id`). Heavy-in-BERDL ≠ heavy-in-reuse: ENIGMA holds 36% of tables but appears in only 6 projects; PhageFoundry holds 14% / 5 projects; PROTECT holds 4% / 2 projects.
 
@@ -55,7 +59,7 @@ DOE-BER spans every topic (15 / 15); Defense / HHS = mono-topic (PhageFoundry, a
 
 ### Finding 5: Five high-leverage bridges remain untapped
 
-![Realized vs theoretical bridges — top-right = used and rich; bottom-right = untapped](figures/nb03_theoretical_vs_realized.png)
+![Realized vs theoretical bridges — top-right = used and rich; bottom-right = untapped](../figures/berdl_data_atlas/nb03_theoretical_vs_realized.png)
 
 The bridges with the highest schema-level join surface that no BERIL project has yet exercised (at audit time):
 
@@ -93,13 +97,13 @@ E. coli sample rows (thrA → AF-P00561-F1, thrB → AF-P00547-F1, thrC → AF-P
 
 ### Composite atlas view (NB04)
 
-![Composite atlas — tenant × topic heat, per-tenant realized reuse, theory-vs-practice scatter](figures/nb04_atlas_composite.png)
+![Composite atlas — tenant × topic heat, per-tenant realized reuse, theory-vs-practice scatter](../figures/berdl_data_atlas/nb04_atlas_composite.png)
 
 The composite figure ties the inventory, topic mix, and bridge structure onto a single sheet: tenant × topic heatmap (main panel, log-color, exact counts annotated); tenant-reuse bar (top right, from NB03); theory-vs-practice bridge scatter (bottom right, untapped bridges labelled top-left).
 
 ### Per-entity volume — every headline table
 
-![Every headline table, log-scaled, colored by entity class](figures/nb05_volume_per_table.png)
+![Every headline table, log-scaled, colored by entity class](../figures/berdl_data_atlas/nb05_volume_per_table.png)
 
 The full per-table breakdown drives the §Depth picture. Notable headline numbers:
 
@@ -119,15 +123,15 @@ The full per-table breakdown drives the §Depth picture. Notable headline number
 
 ### Topic distribution + tenant×topic context (NB00)
 
-![Primary-topic distribution across 1,740 tables](figures/nb00_topic_distribution.png)
+![Primary-topic distribution across 1,740 tables](../figures/berdl_data_atlas/nb00_topic_distribution.png)
 
-![Tenant × primary topic cross-tab](figures/nb00_tenant_topic_heatmap.png)
+![Tenant × primary topic cross-tab](../figures/berdl_data_atlas/nb00_tenant_topic_heatmap.png)
 
 `field_observational` is 40% of tables (dominated by ENIGMA SDT/DDT structure); `mobile_phage` 14% (PhageFoundry); `fitness_phenotype` 11%; `genome` 6.4%; everything else <4%. Unclassified residual 0.9% (16 rows), all personal scratch / one-off survey data.
 
 ### Synergy capacity per tenant (NB01)
 
-![Synergy capacity (distinct topics × topic entropy); point size ∝ table count](figures/nb01_synergy_capacity.png)
+![Synergy capacity (distinct topics × topic entropy); point size ∝ table count](../figures/berdl_data_atlas/nb01_synergy_capacity.png)
 
 `kbase` (10 topics, entropy 2.87) is the most evenly cross-topic tenant — the biological reference hub. `nmdc` (11 topics, 2.61) is broadest-coverage. `protect` (6 topics, 2.37) punches above its size. `kescience` (11 topics, 1.83) is the knowledge-engine layer. `enigma` (5 topics, 0.43) is *deep-but-narrow*. `phagefoundry` and `usgs` are mono-topic.
 

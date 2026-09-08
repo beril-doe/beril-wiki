@@ -1,10 +1,14 @@
+---
+title: 'Report: GapMind Pathway Analysis Across Essential Gene Organisms'
+type: Source
+---
 # Report: GapMind Pathway Analysis Across Essential Gene Organisms
 
 ## Key Findings
 
 ### High Conservation of Amino Acid Biosynthesis Pathways
 
-![Pathway completeness visualization](figures/pathway_completeness.png)
+![Pathway completeness visualization](../figures/essential_metabolome/pathway_completeness.png)
 
 **17 of 18** amino acid biosynthesis pathways are present in **all 7 organisms** analyzed (100% within this sample):
 - Complete pathways: arg, asn, chorismate, cys, gln, gly, his, ile, leu, lys, met, phe, pro, thr, trp, tyr, val

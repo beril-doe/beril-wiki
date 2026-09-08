@@ -1,3 +1,7 @@
+---
+title: 'BERDL Database: Common Pitfalls & Gotchas'
+type: Source
+---
 # BERDL Database: Common Pitfalls & Gotchas
 
 **Purpose**: Quick reference for avoiding common issues when querying BERDL databases.

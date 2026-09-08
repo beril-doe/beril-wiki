@@ -1,3 +1,8 @@
+---
+title: 'Report: Pan-Bacterial Anti-Phage Defense Arsenal — Distribution, Arms Race,
+  and Syndromes'
+type: Source
+---
 # Report: Pan-Bacterial Anti-Phage Defense Arsenal — Distribution, Arms Race, and Syndromes
 
 ## Key Findings
@@ -6,7 +11,7 @@
 
 Detection of seven anti-phage defense system families across 27,626 of 27,690 (99.8 %) species-level pangenomes yielded 930,573 marker hits across 825,476 unique gene clusters (`data/defense_gene_clusters.tsv.gz`). Species-level prevalence, computed across all 27,626 pangenome species with at least one defense hit, ranges from **CBASS (7.2 %)** to **CRISPR-Cas (96.1 %)**, with intermediate levels for **BREX (80.1 %)**, **R-M Type I (76.8 %)**, **DISARM (58.4 % strict)**, **Retron (54.7 %)**, **R-M Type II (38.9 %)**, and **Gabija (22.8 %)**.
 
-![Defense system prevalence by phylum](figures/system_prevalence_by_phylum.png)
+![Defense system prevalence by phylum](../figures/phage_defense_arsenal/system_prevalence_by_phylum.png)
 
 Prevalence patterns by phylum, restricted to the 9 phyla with ≥100 species in the ≥5-genome analysis set (7,323 species), are consistent with the pan-bacterial totals. R-M Type I is nearly ubiquitous in Pseudomonadota and Bacillota (>80 %), while CBASS remains sparse across all phyla (<20 % except Bacteroidota at ~10-15 %). Gabija is enriched in Bacillota (30-40 %) relative to Actinomycetota (<10 %). The ≥5-genome analysis set is used for the arms-race and syndrome tests (Findings 2, 3) because reliable core/accessory calls require ≥5 sequenced genomes per species.
 
@@ -16,13 +21,13 @@ Prevalence patterns by phylum, restricted to the 9 phyla with ≥100 species in 
 
 The coevolutionary arms-race prediction — that species under more phage pressure invest more in defense — is quantitatively supported at pangenome scale. Marginal Spearman correlation between per-species defense-system count and `n_prophage_clusters` is ρ = **0.609** (p ≈ 0, n = 7,323). After residualizing on log₁₀(median genome size) and phylum, partial ρ remains **0.301** (p = 1.6 × 10⁻¹⁵³) — a moderate effect that survives the two strongest known confounders.
 
-![Arms-race scatter — defense count vs prophage cluster burden by phylum](figures/arms_race_scatter.png)
+![Arms-race scatter — defense count vs prophage cluster burden by phylum](../figures/phage_defense_arsenal/arms_race_scatter.png)
 
 The negative-binomial GLM (`n_defense_systems ~ n_prophage_clusters + log10_genome_size + phylum`) confirms independent contributions from both predictors: `n_prophage_clusters` β = 2.0 × 10⁻⁴ (p < 0.001) and `log10_genome_size` β = 0.755 (p < 0.001; each 10-fold genome-size increase associated with e^0.755 ≈ 2.1× more defense systems).
 
 **Per-phylum consistency**: all 9 major phyla show positive, significant partial ρ (Bonferroni-safe at 9 tests):
 
-![Per-phylum partial correlation](figures/partial_correlation_barplot.png)
+![Per-phylum partial correlation](../figures/phage_defense_arsenal/partial_correlation_barplot.png)
 
 | Phylum | n_species | Partial ρ | p-value |
 |---|---:|---:|---:|
@@ -44,7 +49,7 @@ The negative-binomial GLM (`n_defense_systems ~ n_prophage_clusters + log10_geno
 
 Under a phylum-stratified column-permutation null (N = 1,000 permutations), **27 of 28 tested defense-system pairs** show significant positive co-occurrence at BH-FDR q < 0.05 (`data/syndrome_pairs.tsv`). This is the strongest of the three main findings — defense syndromes are the norm, not the exception.
 
-![Defense syndrome heatmap — signed log₁₀(odds ratio)](figures/syndrome_heatmap.png)
+![Defense syndrome heatmap — signed log₁₀(odds ratio)](../figures/phage_defense_arsenal/syndrome_heatmap.png)
 
 Top syndromes by z-score:
 
@@ -62,7 +67,7 @@ Top syndromes by z-score:
 
 The only pair that does not reach significance is **CRISPR-Cas × CBASS** (z = 0.21, p_emp = 0.98) — the two systems with the largest prevalence gap (96 % vs 7 %), where CBASS is essentially independent of CRISPR-Cas presence.
 
-![Defense syndrome network — positive edges at q<0.05](figures/syndrome_network.png)
+![Defense syndrome network — positive edges at q<0.05](../figures/phage_defense_arsenal/syndrome_network.png)
 
 The strongest syndrome — **R-M Type II × Gabija (OR = 24, z = 46)** — is, to our knowledge, a novel pan-bacterial finding at this scale. The BREX × DISARM syndrome (OR = 8.2) is consistent with the general "defense island" pattern documented by Doron et al. (2018) and Tesson et al. (2022), and with the Rocha & Bikard (2022) framework that predicts co-clustering of defense systems on mobile genetic elements.
 
@@ -72,7 +77,7 @@ The strongest syndrome — **R-M Type II × Gabija (OR = 24, z = 46)** — is, t
 
 Six of seven defense systems show highly significant enrichment in the auxiliary and singleton pangenome relative to the background pangenome-wide baseline (46.8 % core, 37.9 % singleton across 132,531,501 gene clusters).
 
-![Core / auxiliary / singleton distribution per system vs background](figures/core_vs_accessory_by_system.png)
+![Core / auxiliary / singleton distribution per system vs background](../figures/phage_defense_arsenal/core_vs_accessory_by_system.png)
 
 Per-system core fractions vs the 46.8 % background baseline (χ² p ≈ 0 for all):
 

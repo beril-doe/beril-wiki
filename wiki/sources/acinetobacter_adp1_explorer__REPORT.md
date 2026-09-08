@@ -1,3 +1,7 @@
+---
+title: 'Report: Acinetobacter baylyi ADP1 Data Explorer'
+type: Source
+---
 # Report: Acinetobacter baylyi ADP1 Data Explorer
 
 ## Key Findings
@@ -6,7 +10,7 @@
 
 The user-provided SQLite database contains 15 tables with 461,522 total rows and 135 MB of data for *Acinetobacter baylyi* ADP1 and 13 related genomes. The central `genome_features` table has 5,852 genes with 51 annotation columns spanning six data modalities: TnSeq essentiality (58% coverage), FBA metabolic flux (15%), mutant growth fitness on 8 carbon sources (39%), proteomics across 7 strains (41%), pangenome classification (54%), and functional annotations via COG/KO/Pfam/UniRef (34-55%).
 
-![Data coverage by modality](figures/data_coverage_by_modality.png)
+![Data coverage by modality](../figures/acinetobacter_adp1_explorer/data_coverage_by_modality.png)
 
 No single gene has data across all six modalities simultaneously, but the pairwise overlaps are substantial — particularly between essentiality, pangenome, and proteomics.
 
@@ -40,11 +44,11 @@ All 4,891 BERDL clusters mapped successfully to 4,081 unique ADP1 clusters (100%
 
 Of 866 genes with both FBA flux predictions and TnSeq essentiality calls, 639 (73.8%) are concordant. The discordant 26% — genes where the metabolic model and experimental data disagree — are candidates for model refinement or may reflect regulatory effects not captured by FBA.
 
-![FBA vs TnSeq concordance](figures/fba_tnseq_concordance.png)
+![FBA vs TnSeq concordance](../figures/acinetobacter_adp1_explorer/fba_tnseq_concordance.png)
 
 Essentiality also differs between growth conditions: 499 genes are essential on minimal media vs 346 on LB, reflecting the additional biosynthetic burden of minimal media.
 
-![Essentiality overview](figures/essentiality_overview.png)
+![Essentiality overview](../figures/acinetobacter_adp1_explorer/essentiality_overview.png)
 
 *(Notebook: 04_gene_essentiality_and_fitness.ipynb)*
 
@@ -52,9 +56,9 @@ Essentiality also differs between growth conditions: 499 genes are essential on 
 
 Mutant growth fitness across 8 carbon sources shows moderate overall correlation (mean pairwise r = 0.44) but with notable outliers. Urea fitness is nearly uncorrelated with quinate (r = 0.11) and weakly correlated with all other conditions (r = 0.12-0.28), suggesting that urea catabolism involves a largely independent set of genes. Butanediol-acetate (r = 0.58) and butanediol-lactate (r = 0.53) show the strongest correlations, consistent with shared central carbon metabolism.
 
-![Carbon source fitness correlation](figures/growth_condition_correlation.png)
+![Carbon source fitness correlation](../figures/acinetobacter_adp1_explorer/growth_condition_correlation.png)
 
-![Mutant growth fitness distributions](figures/mutant_growth_fitness.png)
+![Mutant growth fitness distributions](../figures/acinetobacter_adp1_explorer/mutant_growth_fitness.png)
 
 *(Notebook: 04_gene_essentiality_and_fitness.ipynb)*
 
@@ -62,11 +66,11 @@ Mutant growth fitness across 8 carbon sources shows moderate overall correlation
 
 Essential genes are dramatically more annotation-rich than dispensable genes: 33% of essential genes have COG assignments vs only 5% of dispensable genes. Similarly, 92% of essential genes have KEGG KO assignments vs 53% of dispensable genes. This pattern is expected — essential genes tend to encode well-characterized housekeeping functions — but it also means the functionally unannotated essential genes (~8% without KO) are particularly interesting as potential novel essential functions.
 
-![Annotation coverage by essentiality](figures/annotation_by_essentiality.png)
+![Annotation coverage by essentiality](../figures/acinetobacter_adp1_explorer/annotation_by_essentiality.png)
 
 Essential genes are also more likely to be in the core pangenome, consistent with the pattern that conserved genes tend to be essential.
 
-![Essentiality vs pangenome status](figures/essentiality_vs_pangenome.png)
+![Essentiality vs pangenome status](../figures/acinetobacter_adp1_explorer/essentiality_vs_pangenome.png)
 
 *(Notebook: 04_gene_essentiality_and_fitness.ipynb)*
 
@@ -74,9 +78,9 @@ Essential genes are also more likely to be in the core pangenome, consistent wit
 
 Of 1,330 unique metabolic reactions, 1,248 (94%) are shared across all 14 Acinetobacter genomes (core), 62 are variable (present in 2-13 genomes), and only 20 are genome-unique. Gapfilling accounts for 7.7% of reactions on average, with 243 missing functions cataloged.
 
-![Reaction conservation](figures/reaction_conservation.png)
+![Reaction conservation](../figures/acinetobacter_adp1_explorer/reaction_conservation.png)
 
-![Reaction gapfilling by genome](figures/reaction_gapfilling.png)
+![Reaction gapfilling by genome](../figures/acinetobacter_adp1_explorer/reaction_gapfilling.png)
 
 *(Notebook: 05_metabolic_model_and_phenotypes.ipynb)*
 
@@ -84,9 +88,9 @@ Of 1,330 unique metabolic reactions, 1,248 (94%) are shared across all 14 Acinet
 
 Of 121,519 growth phenotype predictions across 14 genomes, 105,376 (87%) require at least one gapfilled reaction. This heavy dependence on gapfilling means that prediction accuracy is tightly coupled to gapfilling quality. False negatives have higher mean gap counts than correct predictions.
 
-![Gapfilling impact](figures/gapfilling_impact.png)
+![Gapfilling impact](../figures/acinetobacter_adp1_explorer/gapfilling_impact.png)
 
-![Growth phenotype predictions](figures/growth_phenotype_predictions.png)
+![Growth phenotype predictions](../figures/acinetobacter_adp1_explorer/growth_phenotype_predictions.png)
 
 *(Notebook: 05_metabolic_model_and_phenotypes.ipynb)*
 
@@ -102,25 +106,25 @@ Seven engineered ADP1 strains are documented in the `strains` table, with proteo
 
 Protein abundance was measured across 7 strains for 2,383 genes. Cross-strain correlation is high, indicating that the engineered modifications have targeted rather than global effects on the proteome.
 
-![Proteomics cross-strain comparison](figures/proteomics_cross_strain.png)
+![Proteomics cross-strain comparison](../figures/acinetobacter_adp1_explorer/proteomics_cross_strain.png)
 
-![WT vs most divergent engineered strain](figures/proteomics_wt_vs_engineered.png)
+![WT vs most divergent engineered strain](../figures/acinetobacter_adp1_explorer/proteomics_wt_vs_engineered.png)
 
 ### FBA Flux Class Transitions
 
 20% of genes (177/866) change FBA flux class between rich and minimal media, reflecting condition-dependent metabolic rewiring.
 
-![FBA flux class transition heatmap](figures/fba_flux_class_transition.png)
+![FBA flux class transition heatmap](../figures/acinetobacter_adp1_explorer/fba_flux_class_transition.png)
 
 ### Additional Figures
 
-![Essentiality distribution](figures/essentiality_distribution.png)
+![Essentiality distribution](../figures/acinetobacter_adp1_explorer/essentiality_distribution.png)
 
-![Metabolic flux classes](figures/metabolic_flux_classes.png)
+![Metabolic flux classes](../figures/acinetobacter_adp1_explorer/metabolic_flux_classes.png)
 
-![Mutant growth by condition](figures/mutant_growth_by_condition.png)
+![Mutant growth by condition](../figures/acinetobacter_adp1_explorer/mutant_growth_by_condition.png)
 
-![Ontology term distribution](figures/ontology_distribution.png)
+![Ontology term distribution](../figures/acinetobacter_adp1_explorer/ontology_distribution.png)
 
 ## Interpretation
 

@@ -1,3 +1,7 @@
+---
+title: 'Report: Field vs Lab Gene Importance in *Desulfovibrio vulgaris* Hildenborough'
+type: Source
+---
 # Report: Field vs Lab Gene Importance in *Desulfovibrio vulgaris* Hildenborough
 
 ## Key Findings
@@ -23,7 +27,7 @@ The ENIGMA CORAL database (47 tables, `enigma_coral` on BERDL) was surveyed for 
 
 Broad split: 337 field (44.5%) vs 420 lab (55.5%).
 
-![Heatmap of gene importance (fitness < -2) by condition class and conservation status](figures/fig_condition_importance_heatmap.png)
+![Heatmap of gene importance (fitness < -2) by condition class and conservation status](../figures/field_vs_lab_fitness/fig_condition_importance_heatmap.png)
 
 *(Notebook: 02_condition_classification.ipynb)*
 
@@ -44,7 +48,7 @@ Of 2,725 non-essential genes with both fitness data and pangenome links, 76.3% a
 
 Field-stress (q=0.026), field-core (q=0.026), and lab-nutrient (q=0.037) genes are significantly enriched in the core genome after BH-FDR correction. Heavy-metals and lab-antibiotic genes trend below baseline but are not significant.
 
-![Core genome percentage for genes important under each condition class, with baseline](figures/fig_conservation_by_condition_class.png)
+![Core genome percentage for genes important under each condition class, with baseline](../figures/field_vs_lab_fitness/fig_conservation_by_condition_class.png)
 
 *(Notebook: 03_fitness_conservation.ipynb)*
 
@@ -60,7 +64,7 @@ Field-stress (q=0.026), field-core (q=0.026), and lab-nutrient (q=0.037) genes a
 
 Counter to H1, genes with fitness defects **only under lab conditions** are 96% core (n=50), slightly higher than field-specific genes at 88.5% (n=52). Both are well above the 74.5% baseline, suggesting that any fitness importance -- regardless of ecological context -- predicts conservation. The field-specific vs lab-specific comparison is not statistically significant (Fisher exact OR=0.32, p=0.27). The universal vs neutral comparison is significant (OR=1.35, p=0.033).
 
-![Scatter plot of mean field fitness vs mean lab fitness per gene, colored by core/auxiliary status](figures/fig_field_vs_lab_specificity.png)
+![Scatter plot of mean field fitness vs mean lab fitness per gene, colored by core/auxiliary status](../figures/field_vs_lab_fitness/fig_field_vs_lab_specificity.png)
 
 *(Notebook: 03_fitness_conservation.ipynb)*
 
@@ -77,7 +81,7 @@ Logistic regression with 10-fold cross-validated AUC:
 
 Gene length is a much stronger predictor of core status than fitness effects from either field or lab conditions. Neither fitness dimension alone is informative (CV-AUC near 0.5). Cross-validation confirms the in-sample estimates are not inflated.
 
-![ROC curves comparing field-only, lab-only, combined, and full models for predicting core genome status](figures/fig_roc_conservation_prediction.png)
+![ROC curves comparing field-only, lab-only, combined, and full models for predicting core genome status](../figures/field_vs_lab_fitness/fig_roc_conservation_prediction.png)
 
 *(Notebook: 03_fitness_conservation.ipynb)*
 
@@ -111,9 +115,9 @@ Of 52 ICA fitness modules, the mean core fraction is 0.886 and the median is 1.0
 
 The 9 "lab" modules (mean core fraction 0.516) are notably less conserved, containing genes in the accessory genome. The 21 ecological modules contain 239 member genes, of which 52 are unannotated -- candidates for novel environmental adaptation functions.
 
-![Module core fraction vs field and lab condition activity (two-panel scatter)](figures/fig_module_conservation_vs_activity.png)
+![Module core fraction vs field and lab condition activity (two-panel scatter)](../figures/field_vs_lab_fitness/fig_module_conservation_vs_activity.png)
 
-![Module conservation and activity by module type classification (box + scatter)](figures/fig_ecological_vs_lab_modules.png)
+![Module conservation and activity by module type classification (box + scatter)](../figures/field_vs_lab_fitness/fig_ecological_vs_lab_modules.png)
 
 *(Notebook: 04_module_analysis.ipynb)*
 

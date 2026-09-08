@@ -1,10 +1,14 @@
+---
+title: 'Report: AlphaEarth Embeddings, Geography & Environment Explorer'
+type: Source
+---
 # Report: AlphaEarth Embeddings, Geography & Environment Explorer
 
 ## Key Findings
 
 ### 1. Environmental samples show 3.4x stronger geographic signal than human-associated samples
 
-![Geographic distance vs embedding distance stratified by environment group](figures/geo_vs_embedding_by_env_group.png)
+![Geographic distance vs embedding distance stratified by environment group](../figures/env_embedding_explorer/geo_vs_embedding_by_env_group.png)
 
 AlphaEarth embeddings encode geographic/environmental signal, but the strength depends on the sample source. For **environmental samples** (Soil, Marine, Freshwater, Extreme, Plant), nearby genomes (<100 km) have mean cosine distance 0.27, rising to 0.90 at intercontinental distances (>10,000 km) — a **3.4x ratio**. For **human-associated samples** (gut, clinical, other), the gradient is flatter: 0.37 nearby to 0.75 far — only a **2.0x ratio**.
 
@@ -14,7 +18,7 @@ This reflects the fact that hospitals and clinics worldwide share similar satell
 
 ### 2. AlphaEarth embeddings encode real geographic signal — not noise
 
-![Mean embedding distance increases monotonically with geographic distance](figures/geo_vs_embedding_binned.png)
+![Mean embedding distance increases monotonically with geographic distance](../figures/env_embedding_explorer/geo_vs_embedding_binned.png)
 
 Across all 50,000 sampled genome pairs (using only good-quality coordinates), there is a clear monotonic relationship between geographic distance and embedding cosine distance. The relationship is strongest at short distances (<2,000 km) and plateaus at intercontinental scales (>5,000 km), suggesting the embeddings capture local environmental conditions (climate, vegetation, land use) that are spatially autocorrelated.
 
@@ -32,7 +36,7 @@ Across all 50,000 sampled genome pairs (using only good-quality coordinates), th
 
 ### 3. Strong clinical/human sampling bias in the AlphaEarth subset
 
-![Harmonized environment categories showing human clinical and gut dominance](figures/env_categories.png)
+![Harmonized environment categories showing human clinical and gut dominance](../figures/env_embedding_explorer/env_categories.png)
 
 38% of the 83,287 genomes with AlphaEarth embeddings are human-associated: Human clinical (16,390; 20%), Human gut (13,466; 16%), and Human other (1,669; 2%). Environmental categories are much smaller: Soil (6,073; 7%), Marine (5,850; 7%), Freshwater (5,840; 7%). This reflects NCBI's overall bias toward pathogen sequencing — clinical isolates tend to have good geographic metadata from epidemiological tracking, which is why they have AlphaEarth embeddings.
 
@@ -42,7 +46,7 @@ An additional 13,944 genomes (17%) were classified as "Other" — site-specific 
 
 ### 4. 36% of coordinates flagged as potential institutional addresses
 
-![Global coordinate quality assessment](figures/coord_quality_map.png)
+![Global coordinate quality assessment](../figures/env_embedding_explorer/coord_quality_map.png)
 
 30,469 genomes (36.6%) cluster at shared coordinates with >50 genomes and >10 species — a heuristic for institutional addresses rather than sampling sites. However, several flagged locations are legitimate field research sites:
 
@@ -60,21 +64,21 @@ The current heuristic is a rough first pass. A refined approach should check whe
 
 ### 5. UMAP reveals fine-grained embedding structure with environment-correlated clusters
 
-![UMAP of AlphaEarth embeddings colored by environment category](figures/umap_by_env_category.png)
+![UMAP of AlphaEarth embeddings colored by environment category](../figures/env_embedding_explorer/umap_by_env_category.png)
 
 UMAP reduction of the 64-dimensional embeddings to 2D reveals substantial structure. DBSCAN clustering identified 320 clusters. The cluster–environment cross-tabulation shows that many clusters are dominated by a single environment category:
 
-![Environment category composition of UMAP clusters](figures/cluster_env_heatmap.png)
+![Environment category composition of UMAP clusters](../figures/env_embedding_explorer/cluster_env_heatmap.png)
 
 Rare environment types (Air, Extreme, Plant) concentrate in just a few specific clusters, while common categories (Human gut, Human clinical) are distributed across many clusters — likely reflecting geographic sub-structure within those categories.
 
-![Cluster distribution per environment category](figures/env_cluster_distribution.png)
+![Cluster distribution per environment category](../figures/env_embedding_explorer/env_cluster_distribution.png)
 
 *(Notebook: 02_interactive_exploration.ipynb)*
 
 ### 6. Embedding space also shows taxonomic structure
 
-![UMAP colored by phylum](figures/umap_by_phylum.png)
+![UMAP colored by phylum](../figures/env_embedding_explorer/umap_by_phylum.png)
 
 Coloring the UMAP by phylum reveals some taxonomic clustering, though this is partially confounded with environment (e.g., Campylobacterota are predominantly gut-associated). The interactive HTML version (`figures/umap_by_phylum.html`) allows toggling phyla on/off to explore this structure.
 
@@ -98,11 +102,11 @@ Metadata coverage among the 83,287 AlphaEarth genomes:
 | env_local_scale | 31,541 | 37.9% |
 | env_medium | 31,483 | 37.8% |
 
-![Attribute population rates](figures/coverage_bar.png)
+![Attribute population rates](../figures/env_embedding_explorer/coverage_bar.png)
 
 The NCBI `ncbi_env` table contains 334 distinct harmonized attribute names across 4.1M rows. The most populated are `collection_date` (273K genomes), `geo_loc_name` (272K), and `isolation_source` (245K).
 
-![Metadata attribute combinations](figures/coverage_intersections.png)
+![Metadata attribute combinations](../figures/env_embedding_explorer/coverage_intersections.png)
 
 ### Environment harmonization
 

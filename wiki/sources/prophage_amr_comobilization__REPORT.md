@@ -1,3 +1,7 @@
+---
+title: 'Report: Prophage-AMR Co-mobilization Atlas'
+type: Source
+---
 # Report: Prophage-AMR Co-mobilization Atlas
 
 ## Key Findings
@@ -6,7 +10,7 @@
 
 Over half (55.7%) of AMR gene instances in the top-100 AMR-burdened species reside on contigs that also carry strict prophage markers (terminase, phage structural proteins, holin/lysin). Among these co-localized AMR genes, the median distance to the nearest prophage marker is 34 genes, and 10.4% of all AMR genes are within 10 genes of a prophage marker.
 
-![Census overview showing AMR and prophage distribution](figures/nb01_census_overview.png)
+![Census overview showing AMR and prophage distribution](../figures/prophage_amr_comobilization/nb01_census_overview.png)
 
 Across the full pangenome inventory, 83,008 AMR gene clusters and 3.47 million prophage marker clusters were identified. Prophage markers are overwhelmingly accessory (83.8%) and frequently singleton (53.8%), while AMR genes are also predominantly accessory (69.7%) but less singleton (36.1%). Of 27,702 species in the pangenome, 14,669 (52.9%) carry both AMR and prophage markers.
 
@@ -16,11 +20,11 @@ Across the full pangenome inventory, 83,008 AMR gene clusters and 3.47 million p
 
 Prophage-proximal AMR genes (within 10 genes) are slightly more likely to be accessory (67.6%) than distal AMR genes (65.5%), yielding a statistically significant but modest effect (Fisher's exact OR=1.10, p=0.005, bootstrap 95% CI [1.024, 1.185]).
 
-![Contingency table and threshold sensitivity for H1](figures/nb03_h1_contingency.png)
+![Contingency table and threshold sensitivity for H1](../figures/prophage_amr_comobilization/nb03_h1_contingency.png)
 
 The effect is threshold-dependent: it is absent or reversed at very close range (OR=0.78 at 3 genes, OR=0.92 at 5 genes) and strengthens at broader thresholds (OR=1.19 at 15 genes, OR=1.28 at 50 genes). Per-species analysis reveals heterogeneity: only 33 of 74 testable species show OR>1, with a median species-level OR of 0.85.
 
-![Per-species odds ratios for H1](figures/nb03_h1_species_odds.png)
+![Per-species odds ratios for H1](../figures/prophage_amr_comobilization/nb03_h1_species_odds.png)
 
 *(Notebook: 03_conservation_test.py)*
 
@@ -28,7 +32,7 @@ The effect is threshold-dependent: it is absent or reversed at very close range 
 
 Species with higher prophage marker density carry significantly broader AMR gene repertoires (Spearman rho=0.572, p<10^-300, n=4,770 species). A log-log regression reveals that a 10-fold increase in prophage density predicts a ~6.6-fold increase in AMR breadth (slope=0.823, R²=0.30). The association is robust after controlling for genome count (partial Spearman rho=0.464, p=1.0×10^-253).
 
-![Prophage density vs AMR breadth regression](figures/nb04_h2_breadth_regression.png)
+![Prophage density vs AMR breadth regression](../figures/prophage_amr_comobilization/nb04_h2_breadth_regression.png)
 
 The correlation is significant across all five major phyla: Pseudomonadota (rho=0.54), Bacillota_A (rho=0.55), Bacillota (rho=0.40), Bacteroidota (rho=0.59), and Actinomycetota (rho=0.29). This pan-phylogenetic consistency argues against phylogenetic confounding.
 
@@ -53,7 +57,7 @@ The BERDL fitness browser covers only 48 model organisms with RB-TnSeq data, whi
 | AMR clusters that are accessory | 69.7% |
 | Prophage clusters that are accessory | 83.8% |
 
-![AMR and prophage distribution across phyla](figures/nb01_amr_prophage_phylum_distribution.png)
+![AMR and prophage distribution across phyla](../figures/prophage_amr_comobilization/nb01_amr_prophage_phylum_distribution.png)
 
 ### Gene Neighborhood Co-localization
 
@@ -67,9 +71,9 @@ Across 100 species (20 genomes sampled per species, 1,953 genomes total), 36,041
 | Within 10 genes | 3,731 | 10.4% |
 | Within 5 genes | 1,991 | 5.5% |
 
-![AMR-prophage distance distribution and CDF](figures/nb02_distance_distribution.png)
+![AMR-prophage distance distribution and CDF](../figures/prophage_amr_comobilization/nb02_distance_distribution.png)
 
-![Per-species proximal fraction](figures/nb02_proximal_fraction.png)
+![Per-species proximal fraction](../figures/prophage_amr_comobilization/nb02_proximal_fraction.png)
 
 ### H1: Conservation × Proximity
 

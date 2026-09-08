@@ -1,3 +1,7 @@
+---
+title: 'Report: ADP1 Deletion Collection Phenotype Analysis'
+type: Source
+---
 # Report: ADP1 Deletion Collection Phenotype Analysis
 
 ## Key Findings
@@ -6,7 +10,7 @@
 
 The 8 carbon sources partition into demanding, moderate, and robust tiers based on the fraction of genes showing growth defects. Urea is the most demanding (97.9% of genes show severe defects at ratio < 0.5), while quinate is the most robust (only 1.6% defective). This tier structure is consistent across multiple thresholds.
 
-![Growth defect severity across carbon sources](figures/condition_boxplots.png)
+![Growth defect severity across carbon sources](../figures/adp1_deletion_phenotypes/condition_boxplots.png)
 
 | Tier | Conditions | Mean growth ratio | % genes with defects (ratio < 0.8) |
 |------|-----------|-------------------|-------------------------------------|
@@ -20,13 +24,13 @@ The 8 carbon sources partition into demanding, moderate, and robust tiers based 
 
 PCA of the 2,034×8 growth matrix reveals that 5 principal components are needed to capture 82% of the variance. PC1 (36.7%) represents general growth sensitivity — all conditions load positively. PC2 (12.7%) isolates urea (loading = +0.75), separating nitrogen metabolism from carbon metabolism. The remaining PCs distinguish specific carbon source pairs.
 
-![PCA variance explained and cumulative variance](figures/pca_variance.png)
+![PCA variance explained and cumulative variance](../figures/adp1_deletion_phenotypes/pca_variance.png)
 
-![PCA biplot showing gene scores and condition loadings](figures/pca_biplot.png)
+![PCA biplot showing gene scores and condition loadings](../figures/adp1_deletion_phenotypes/pca_biplot.png)
 
 Pairwise Pearson correlations between conditions are moderate at best (highest: acetate–butanediol, r = 0.58; median across all 28 pairs: r = 0.25). This means the 8 conditions provide approximately 5 independent dimensions of phenotypic information — far more than the 2-group (demanding vs robust) model would suggest.
 
-![Condition correlation heatmap with hierarchical clustering](figures/condition_clustermap.png)
+![Condition correlation heatmap with hierarchical clustering](../figures/adp1_deletion_phenotypes/condition_clustermap.png)
 
 *(Notebook: 02_condition_structure.ipynb)*
 
@@ -34,13 +38,13 @@ Pairwise Pearson correlations between conditions are moderate at best (highest: 
 
 Hierarchical clustering of genes by their 8-condition growth profiles produces an optimal K = 3 with a low silhouette score (0.24). The two large modules (1,160 and 850 genes) represent broad "generally sensitive" vs "generally tolerant" groups without any specific functional enrichment surviving FDR correction. This indicates that gene essentiality varies continuously across conditions rather than falling into discrete functional categories.
 
-![Silhouette analysis for gene clustering](figures/silhouette_analysis.png)
+![Silhouette analysis for gene clustering](../figures/adp1_deletion_phenotypes/silhouette_analysis.png)
 
-![Growth profiles of all 2,034 genes ordered by hierarchical clustering](figures/gene_heatmap.png)
+![Growth profiles of all 2,034 genes ordered by hierarchical clustering](../figures/adp1_deletion_phenotypes/gene_heatmap.png)
 
 The one exception is a small module of 24 genes with extreme quinate-specific defects (mean z-score = -7.28 on quinate, near-zero on other conditions). These are the aromatic degradation pathway genes, which form the only discrete phenotypic module in the dataset.
 
-![Module mean z-score profiles](figures/module_profiles.png)
+![Module mean z-score profiles](../figures/adp1_deletion_phenotypes/module_profiles.png)
 
 *(Notebook: 03_gene_modules.ipynb)*
 
@@ -48,7 +52,7 @@ The one exception is a small module of 24 genes with extreme quinate-specific de
 
 625 genes (31%) have a condition specificity score ≥ 1.0, meaning their growth importance is concentrated on one carbon source. The top condition-specific genes for each carbon source correspond precisely to the expected metabolic pathways:
 
-![Distribution of gene condition-specificity scores](figures/specificity_distribution.png)
+![Distribution of gene condition-specificity scores](../figures/adp1_deletion_phenotypes/specificity_distribution.png)
 
 | Condition | Top specific genes | Pathway |
 |-----------|-------------------|---------|
@@ -61,7 +65,7 @@ The one exception is a small module of 24 genes with extreme quinate-specific de
 | **Butanediol** | 2,3-butanediol dehydrogenase, E2 acetyltransferase | Butanediol catabolism + acetoin pathway |
 | **Lactate** | lldR, cyoC/cyoD | Lactate regulation + cytochrome oxidase |
 
-![Z-score heatmap of top condition-specific genes](figures/condition_specific_heatmap.png)
+![Z-score heatmap of top condition-specific genes](../figures/adp1_deletion_phenotypes/condition_specific_heatmap.png)
 
 The quinate-specific gene set (51 genes at spec > 0.5, z < -1) extends beyond the core degradation pathway to include NADH-ubiquinone oxidoreductase subunits (Complex I), suggesting that aromatic catabolism places unique demands on the electron transport chain. PQQ biosynthesis genes appear as condition-specific for both quinate and glucose, consistent with PQQ-dependent dehydrogenases catalyzing the first step of both pathways.
 
@@ -71,7 +75,7 @@ The quinate-specific gene set (51 genes at spec > 0.5, z < -1) extends beyond th
 
 Of 2,593 TnSeq-dispensable genes, 272 (10.5%) lack growth data from the deletion collection. These missing genes are systematically different from the 2,321 present dispensable genes:
 
-![TnSeq gap coverage by essentiality class](figures/tnseq_gap_coverage.png)
+![TnSeq gap coverage by essentiality class](../figures/adp1_deletion_phenotypes/tnseq_gap_coverage.png)
 
 | Property | Present (n=2,321) | Missing (n=272) | Significance |
 |----------|-------------------|-----------------|--------------|
@@ -80,7 +84,7 @@ Of 2,593 TnSeq-dispensable genes, 272 (10.5%) lack growth data from the deletion
 | KO annotated | 59% | 49% | Less annotated |
 | Pangenome core | 93.3% | 76.5% | Less conserved (p = 1.4×10⁻²⁰) |
 
-![Gene length distribution comparison](figures/missing_gene_length.png)
+![Gene length distribution comparison](../figures/adp1_deletion_phenotypes/missing_gene_length.png)
 
 Hypothetical proteins are massively enriched among missing genes (25 completely unannotated, q = 2.4×10⁻²⁵; 48 annotated as "hypothetical protein", q = 3.0×10⁻⁴). The 313 uncertain-class genes are even more distinctive: 361 bp mean length, 42% annotated, 31% core — consistent with gene fragments or pseudogenes rather than true essential genes.
 

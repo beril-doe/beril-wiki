@@ -1,10 +1,15 @@
+---
+title: 'Report: PaperBLAST Data Explorer — Characterizing Literature Coverage Bias
+  in Protein Sequence Space'
+type: Source
+---
 # Report: PaperBLAST Data Explorer — Characterizing Literature Coverage Bias in Protein Sequence Space
 
 ## Key Findings
 
 ### Finding 1: One organism dominates nearly half of all literature
 
-![Cumulative coverage of organisms by paper count and top 20 organisms bar chart](figures/organism_coverage_skew.png)
+![Cumulative coverage of organisms by paper count and top 20 organisms bar chart](../figures/paperblast_explorer/organism_coverage_skew.png)
 
 *Homo sapiens* alone accounts for **46.7%** of all gene-paper records in PaperBLAST. The top 5 organisms (*H. sapiens*, *M. musculus*, *R. norvegicus*, *A. thaliana*, *D. melanogaster*) capture **72.8%**. Of 20,723 organisms with any literature, the top 1,000 capture 94.2%, leaving the remaining 19,723 organisms sharing just 5.8% of the literature.
 
@@ -12,7 +17,7 @@
 
 ### Finding 2: 65.6% of genes have exactly one paper
 
-![Gene coverage skew: Lorenz curve and papers-per-gene histogram](figures/gene_coverage_skew.png)
+![Gene coverage skew: Lorenz curve and papers-per-gene histogram](../figures/paperblast_explorer/gene_coverage_skew.png)
 
 The distribution of papers per gene is extremely skewed. Of 841K genes with any text-mined paper link, **551K (65.6%)** have exactly 1 paper. The median is 1, the mean is 3.8. The top 50 most-referenced genes are all human — led by p53 (9,988 papers), TNF (6,002), and EGFR (5,895). Just 6% of genes (50K) account for 57.7% of all gene-paper links.
 
@@ -20,7 +25,7 @@ The distribution of papers per gene is extremely skewed. Of 841K genes with any 
 
 ### Finding 3: Literature inequality is extreme — Lorenz curves
 
-![Lorenz inequality curves for organisms and genes](figures/lorenz_curves.png)
+![Lorenz inequality curves for organisms and genes](../figures/paperblast_explorer/lorenz_curves.png)
 
 Lorenz curves quantify the inequality. For organisms, the Gini coefficient is **0.967** (where 1.0 is perfect inequality), indicating near-total concentration. For genes, the Gini is **0.669** — still very high. This mirrors wealth-inequality patterns in economics — a small fraction of biological entities receive nearly all research attention.
 
@@ -28,7 +33,7 @@ Lorenz curves quantify the inequality. For organisms, the Gini coefficient is **
 
 ### Finding 4: Bacterial research is concentrated on pathogens
 
-![Top 20 bacteria by paper count with cumulative percentages](figures/top20_bacteria.png)
+![Top 20 bacteria by paper count with cumulative percentages](../figures/paperblast_explorer/top20_bacteria.png)
 
 Among 15,312 bacterial organisms, the top 100 capture **44.3%** of bacterial literature. The top 3 bacteria are all well-known pathogens or model organisms: *M. tuberculosis* H37Rv (9,079 papers), *E. coli* K-12 (8,860), and *P. aeruginosa* PAO1 (5,928). Environmental and non-pathogenic organisms are dramatically underrepresented.
 
@@ -36,7 +41,7 @@ Among 15,312 bacterial organisms, the top 100 capture **44.3%** of bacterial lit
 
 ### Finding 5: 345K protein families from 816K sequences
 
-![Sequence space reduction at 90%, 50%, and 30% identity](figures/sequence_space_reduction.png)
+![Sequence space reduction at 90%, 50%, and 30% identity](../figures/paperblast_explorer/sequence_space_reduction.png)
 
 MMseqs2 clustering of 815,571 PaperBLAST protein sequences at three identity thresholds reveals: **628K clusters at 90%** (77% — low strain-level redundancy), **345K at 50%** (protein family level), and **215K at 30%** (superfamily level). The largest families are housekeeping proteins: HSP70/BiP (650 members at 50%), GAPDH (609), enolase (552), GroEL (443).
 
@@ -44,7 +49,7 @@ MMseqs2 clustering of 815,571 PaperBLAST protein sequences at three identity thr
 
 ### Finding 6: 55% of protein families are dark or dim
 
-![Literature coverage landscape of protein families](figures/literature_coverage_landscape.png)
+![Literature coverage landscape of protein families](../figures/paperblast_explorer/literature_coverage_landscape.png)
 
 At 50% identity, **9.2% of protein families** (31,653) have **zero papers** across all members, and **46.1%** (159,046) have exactly 1 paper. Only **4.3%** of families (14,904) have 20 or more papers. 5,218 multi-member families — representing 14,534 sequences — have no literature whatsoever. These are the "dark" protein families.
 
@@ -71,7 +76,7 @@ The `kescience_paperblast` collection on BERDL contains **12.4 million rows** ac
 
 ### Temporal Coverage
 
-![Publication year distribution from 1990 onwards](figures/year_distribution.png)
+![Publication year distribution from 1990 onwards](../figures/paperblast_explorer/year_distribution.png)
 
 The database covers papers from **1951 to 2026**. Publications peak around 2020–2021, with 30.6% of records from 2020 onwards. The 2025 data includes 125,438 records from 22,271 papers. 1,425 records from 2026 are present, indicating the snapshot was taken in early 2026.
 
@@ -79,7 +84,7 @@ The database covers papers from **1951 to 2026**. Publications peak around 2020�
 
 ### Taxonomic Coverage
 
-![Domain distribution by organisms and genes](figures/domain_distribution.png)
+![Domain distribution by organisms and genes](../figures/paperblast_explorer/domain_distribution.png)
 
 The 1.1M genes span 27,718 organisms across all domains of life. Bacteria dominate by organism count (6,000) but Eukarya dominate by gene count (291K) due to the massive over-representation of human and model organism genes. 14,798 organisms fell into an "Unknown" domain classification, indicating that the database includes many organisms not easily classified by name heuristics alone.
 
@@ -121,17 +126,17 @@ PaperBLAST includes site annotations for **132,179 PDB structures** with 2.1M si
 
 ### Sequence Clustering
 
-![Cluster size distributions at three identity thresholds](figures/cluster_size_distributions.png)
+![Cluster size distributions at three identity thresholds](../figures/paperblast_explorer/cluster_size_distributions.png)
 
 At 90% identity, 83.3% of clusters are singletons — indicating that most PaperBLAST sequences are already non-redundant at the strain level. The largest 90% cluster is actin (212 members). At 50% identity, 67.5% are singletons; at 30%, 62.8%.
 
-![Cumulative sequence capture by cluster rank](figures/cluster_cumulative_capture.png)
+![Cumulative sequence capture by cluster rank](../figures/paperblast_explorer/cluster_cumulative_capture.png)
 
 The cumulative capture curves show that at 30% identity, a relatively small number of large superfamily clusters capture a substantial fraction of all sequences, while the long tail of singleton families accounts for the remainder.
 
 ### Clustering and Literature: Larger Families Are Better Studied
 
-![Cluster size vs literature coverage scatter plot and bar chart](figures/cluster_vs_literature.png)
+![Cluster size vs literature coverage scatter plot and bar chart](../figures/paperblast_explorer/cluster_vs_literature.png)
 
 There is a positive relationship between protein family size and literature coverage. 95.4% of multi-member 50% identity clusters have at least one member with a paper, but the remaining 4.6% (5,218 families) represent genuinely unstudied protein families. The "dark" families are dominated by REBASE methyltransferases and biolip structural entries — highly specialized proteins that lack published functional studies.
 
@@ -139,7 +144,7 @@ There is a positive relationship between protein family size and literature cove
 
 ### Papers per Gene Distribution
 
-![Papers per gene histogram with median line](figures/papers_per_gene.png)
+![Papers per gene histogram with median line](../figures/paperblast_explorer/papers_per_gene.png)
 
 The log-scale histogram reveals the extreme right skew of the papers-per-gene distribution. The vast majority of genes cluster at 1 paper, with a long tail extending to nearly 10,000 papers for p53.
 

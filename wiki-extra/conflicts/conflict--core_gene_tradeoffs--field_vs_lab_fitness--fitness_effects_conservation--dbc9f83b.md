@@ -1,21 +1,38 @@
-<!-- tension-hash: 5395af897a4039cf -->
+---
+title: Exploitation Versus Correction in Fitness-Condition Prioritization
+type: Conflict
+sources:
+- id: functional_dark_matter
+  resource: ../../wiki/summaries/functional_dark_matter__REPORT.md
+  title: functional dark matter
+- id: fitness_effects_conservation
+  resource: ../../wiki/summaries/fitness_effects_conservation__REPORT.md
+  title: fitness effects conservation
+- id: field_vs_lab_fitness
+  resource: ../../wiki/summaries/field_vs_lab_fitness__REPORT.md
+  title: field vs lab fitness
+- id: core_gene_tradeoffs
+  resource: ../../wiki/summaries/core_gene_tradeoffs__REPORT.md
+  title: core gene tradeoffs
+---
+<!-- tension-hash: 854cf5e117f28740 -->
 # Exploitation Versus Correction in Fitness-Condition Prioritization
 
-The prioritization system faces a tension between exploiting organisms with abundant informative evidence and correcting for unequal observation across condition panels. This matters because rankings that maximize immediate experimental yield may systematically underrepresent genes from organisms with shallow coverage, while rankings that compensate for coverage may sacrifice near-term discovery. The evidence also cautions against treating core-versus-accessory status as a universal correction: observed fitness effects and burdens vary by gene class and functional category. See [[concepts/fitness-condition-coverage-prioritization-bias]].
+The prioritization system faces a tension between exploiting organisms with abundant informative evidence and correcting for unequal observation across condition panels. This matters because rankings that maximize immediate experimental yield may systematically underrepresent genes from organisms with shallow coverage, while rankings that compensate for coverage may sacrifice near-term discovery. The evidence also cautions against treating core-versus-accessory status as a universal correction: observed fitness effects and burdens vary by gene class and functional category. See [fitness-condition-coverage-prioritization-bias](../../wiki/concepts/fitness-condition-coverage-prioritization-bias.md).
 
 ## Evidence Sides
 
 ### **Exploit existing evidence**
 
-Favoring organisms with many informative profiles improves immediate experimental yield, as illustrated by the 242-of-500 coverage achieved by 10 organism–condition experiments, but may underexplore genes from organisms whose condition panels are shallow. [src: functional_dark_matter] The report does not establish that the highest-ranked organisms have intrinsically more dark-gene biology, so this distinction should not be inferred from their candidate counts alone. [src: functional_dark_matter]
+Favoring organisms with many informative profiles improves immediate experimental yield, as illustrated by the 242-of-500 coverage achieved by 10 organism–condition experiments, but may underexplore genes from organisms whose condition panels are shallow. [^functional_dark_matter] The report does not establish that the highest-ranked organisms have intrinsically more dark-gene biology, so this distinction should not be inferred from their candidate counts alone. [^functional_dark_matter]
 
-The conservation analysis supports using observed fitness evidence rather than assuming that only accessory genes matter: core genes showed stronger fitness effects in both negative and positive directions, while novel singleton genes were near-neutral under tested laboratory conditions. [src: fitness_effects_conservation] In one organism, fitness importance predicted conservation more consistently than field-versus-lab classification. [src: field_vs_lab_fitness]
+The conservation analysis supports using observed fitness evidence rather than assuming that only accessory genes matter: core genes showed stronger fitness effects in both negative and positive directions, while novel singleton genes were near-neutral under tested laboratory conditions. [^fitness_effects_conservation] In one organism, fitness importance predicted conservation more consistently than field-versus-lab classification. [^field_vs_lab_fitness]
 
 ### **Correct for unequal observation**
 
-Genes from organisms with shallow condition panels may be underexplored when prioritization favors organisms with many informative profiles. [src: functional_dark_matter] Near-neutral effects for novel singleton genes may reflect poor transposon coverage rather than genuinely low importance. [src: fitness_effects_conservation] Neither result establishes how untested ecological conditions would reorder priorities. [src: fitness_effects_conservation]
+Genes from organisms with shallow condition panels may be underexplored when prioritization favors organisms with many informative profiles. [^functional_dark_matter] Near-neutral effects for novel singleton genes may reflect poor transposon coverage rather than genuinely low importance. [^fitness_effects_conservation] Neither result establishes how untested ecological conditions would reorder priorities. [^fitness_effects_conservation]
 
-A single core-versus-accessory adjustment may also be misleading: burden was higher for core genes in several functional categories but higher for non-core genes in Cell Wall genes. [src: core_gene_tradeoffs] Thus, correction may need to account for functional category and measurement quality rather than applying one global penalty or boost. The field-versus-lab result does not show that unequal condition coverage is harmless. [src: field_vs_lab_fitness]
+A single core-versus-accessory adjustment may also be misleading: burden was higher for core genes in several functional categories but higher for non-core genes in Cell Wall genes. [^core_gene_tradeoffs] Thus, correction may need to account for functional category and measurement quality rather than applying one global penalty or boost. The field-versus-lab result does not show that unequal condition coverage is harmless. [^field_vs_lab_fitness]
 
 ## Possible Reconciliations
 
@@ -31,3 +48,8 @@ A single core-versus-accessory adjustment may also be misleading: burden was hig
 - Stratify ranking performance by functional category, especially Cell Wall genes; measure whether category-specific corrections outperform a single core-versus-accessory adjustment.
 - Validate top-ranked and coverage-corrected candidates in both laboratory and ecologically relevant conditions; ask whether untested environments reorder priorities.
 - Compare predicted conservation from fitness importance, field-versus-lab classification, and coverage-adjusted scores across organisms to determine which signal generalizes.
+
+[^functional_dark_matter]: [functional dark matter](../../wiki/summaries/functional_dark_matter__REPORT.md)
+[^fitness_effects_conservation]: [fitness effects conservation](../../wiki/summaries/fitness_effects_conservation__REPORT.md)
+[^field_vs_lab_fitness]: [field vs lab fitness](../../wiki/summaries/field_vs_lab_fitness__REPORT.md)
+[^core_gene_tradeoffs]: [core gene tradeoffs](../../wiki/summaries/core_gene_tradeoffs__REPORT.md)

@@ -1,10 +1,14 @@
+---
+title: 'Report: Pan-Bacterial Metal Fitness Atlas'
+type: Source
+---
 # Report: Pan-Bacterial Metal Fitness Atlas
 
 ## Key Findings
 
 ### 1. Metal-Important Genes Are Enriched in the Core Genome
 
-![Core genome fraction by metal](figures/core_fraction_by_metal.png)
+![Core genome fraction by metal](../figures/metal_fitness_atlas/core_fraction_by_metal.png)
 
 Across 22 organisms and 14 metals, genes with significant fitness defects under metal stress are **87.4% core** vs 76.9% baseline (OR=2.08, p=4.3e-162). This is the opposite of the initial hypothesis (H1a), which predicted accessory enrichment for toxic metal genes based on the prior DvH finding (71.2% core for condition-specific heavy-metal genes). The discrepancy arises because genome-wide metal fitness defects predominantly reflect core cellular processes vulnerable to metal disruption (cell envelope, DNA repair, central metabolism), not specialized metal resistance mechanisms.
 
@@ -20,13 +24,13 @@ Essential metal tolerance genes (Fe, Mo, W, Se, Mn) show a mean core fraction de
 
 **Coverage note**: Conservation analysis covers 22 of 31 metal-tested organisms (71%). The 9 excluded organisms (Putida, Keio, SynE, Miya, Kang, BFirm, Cola, Ponti, Dino) lack FB-pangenome links. These are taxonomically diverse, so the exclusion is unlikely to introduce systematic bias.
 
-![Per-organism conservation delta](figures/metal_conservation_by_organism.png)
+![Per-organism conservation delta](../figures/metal_fitness_atlas/metal_conservation_by_organism.png)
 
 *(Notebook: 03_metal_conservation_analysis.ipynb)*
 
 ### 3. 559 Metal Experiments Across 31 Organisms and 16 Metals
 
-![Organism x metal experiment matrix](figures/organism_metal_matrix.png)
+![Organism x metal experiment matrix](../figures/metal_fitness_atlas/organism_metal_matrix.png)
 
 The Fitness Browser contains 559 metal-related experiments (8.2% of 6,804 total) covering 16 metals. Six metals have cross-species coverage (≥3 organisms): Cobalt (27 orgs), Nickel (26), Copper (23), Aluminum (22), Zinc (17), and Iron (3). DvH is the most metal-profiled organism (149 experiments, 13 metals). Three USGS critical minerals have broad FB coverage: Aluminum, Cobalt, and Nickel.
 
@@ -34,17 +38,17 @@ The Fitness Browser contains 559 metal-related experiments (8.2% of 6,804 total)
 
 ### 4. 12,838 Metal-Important Gene Records Across 24 Organisms
 
-![Metal fitness distributions](figures/metal_fitness_distributions.png)
+![Metal fitness distributions](../figures/metal_fitness_atlas/metal_fitness_distributions.png)
 
 3.3% of all gene × metal records (12,838 / 383,349) show significant fitness defects (fit < -1, |t| > 4). Iron and essential metal limitation produce the highest fraction of important genes (12.3% for Fe, 11.2% for Mo/W), while toxic metals cluster around 2.7-4.4%. DvH has 1,366 metal-important genes (49.8% of its genome across 13 metals). The cyanobacterium *Synechococcus elongatus* (SynE) is notably metal-sensitive (33.6% of genes important across just 2 metals).
 
-![Metal-important genes by organism](figures/metal_important_genes_by_organism.png)
+![Metal-important genes by organism](../figures/metal_fitness_atlas/metal_important_genes_by_organism.png)
 
 *(Notebook: 02_metal_fitness_extraction.ipynb)*
 
 ### 5. 1,182 Conserved Metal Gene Families Identified
 
-![Metal family breadth and conservation](figures/metal_family_conservation_heatmap.png)
+![Metal family breadth and conservation](../figures/metal_fitness_atlas/metal_family_conservation_heatmap.png)
 
 Of 2,891 ortholog groups with metal phenotypes, 1,182 are conserved across ≥2 organisms and 601 across ≥3 organisms. The most broadly conserved family (OG00128) spans 17 organisms and 9 metals. Families with metal phenotypes in more organisms tend to have higher pangenome conservation (% core), consistent with fundamental cellular processes.
 
@@ -54,7 +58,7 @@ Of 2,891 ortholog groups with metal phenotypes, 1,182 are conserved across ≥2 
 
 ### 6. Metal-Responsive ICA Modules Have High Core Fraction
 
-![Metal-responsive module activity](figures/metal_module_activity_heatmap.png)
+![Metal-responsive module activity](../figures/metal_fitness_atlas/metal_module_activity_heatmap.png)
 
 Using z-scored module activity profiles (standardized across all experiments per organism), 600 metal-responsive module records were identified (|z| > 2.0) across 19,453 total module × metal-experiment records (3.1%). DvH leads with 47 responsive modules across 12 metals. The 183 metal-responsive modules with conservation data have a mean core fraction of **0.826** — consistent with the overall finding that metal fitness genes are core-enriched. The median is even higher (0.929), indicating most metal-responsive modules are predominantly composed of core genes.
 
@@ -62,11 +66,11 @@ Using z-scored module activity profiles (standardized across all experiments per
 
 ### 7. Pangenome-Scale Prediction Validates Metal Gene Signature
 
-![Species metal score distribution](figures/species_metal_score_distribution.png)
+![Species metal score distribution](../figures/metal_fitness_atlas/species_metal_score_distribution.png)
 
 A metal functional signature of 1,286 KEGG KO terms was derived from the conserved metal gene families and used to score all **27,702 pangenome species**. With genome-size normalization (metal clusters / total KEGG-annotated clusters), the true specialist bioleaching organisms emerge: *Leptospirillum* ranks at the 91st percentile, *Acidithiobacillus* at the 77th, *Marinobacter* at the 75th, and *Sulfobacillus* at the 71st. However, bioleaching genera as a group are not significantly enriched over background after normalization (Mann-Whitney p=0.17), indicating that metal tolerance genes are broadly distributed across bacteria rather than concentrated in specialists — consistent with the core genome robustness model. Without normalization, species with large open pangenomes (*K. pneumoniae*, *P. aeruginosa*) dominate, reflecting genome size rather than metal biology.
 
-![Bioleaching species scores](figures/bioleaching_species_scores.png)
+![Bioleaching species scores](../figures/metal_fitness_atlas/bioleaching_species_scores.png)
 
 *(Notebook: 06_pangenome_metal_prediction.ipynb)*
 

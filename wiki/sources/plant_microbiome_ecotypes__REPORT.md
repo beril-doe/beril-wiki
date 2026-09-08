@@ -1,22 +1,27 @@
+---
+title: 'Report: Plant Microbiome Ecotypes — Compartment-Specific Functional Guilds
+  and Their Genetic Architecture'
+type: Source
+---
 # Report: Plant Microbiome Ecotypes — Compartment-Specific Functional Guilds and Their Genetic Architecture
 
 ## Key Findings
 
 ### 1. Plant compartments impose a small but real functional shift on microbial communities (H1, weakly supported)
 
-![Compartment census showing species distribution across plant compartments](figures/nb01_compartment_census.png)
+![Compartment census showing species distribution across plant compartments](../figures/plant_microbiome_ecotypes/nb01_compartment_census.png)
 
 **Canonical Phase 2b finding**: compartment identity explains a small fraction of variance in functional profiles after location-vs-dispersion separation. db-RDA (constrained ordination on PCoA scores of Jaccard distance over the refined 17-marker panel, n=607 plant-compartment species) gives **location-only R² = 0.060** (permutation p = 0.001, 999 permutations); PERMDISP confirms group-dispersion heterogeneity (F = 15.6, p = 0.001), with root tightest (mean centroid distance 0.452), phyllosphere intermediate (0.503), and rhizosphere most variable (0.528). About 84% of the total PERMANOVA R² is real centroid shift; 16% is dispersion. Root, rhizosphere, and phyllosphere are functionally distinct in centroid terms, just at a small effect size (~6% of variance) — see §11 "PERMANOVA + PERMDISP + db-RDA" for the decomposition.
 
 *Phase 1/2 chronology, retained for context*: the original NB04 PERMANOVA on the Phase 1 25-marker panel reported R² = 0.527 (pseudo-F = 235.1, p = 0.001), but NB14's exclude-top-3-species sensitivity showed the residual R² is only 0.072 once a handful of dominant rhizobial / *Pseudomonas* clades are removed — i.e., **most of the original 0.527 was a taxonomic-sampling artifact** of a few genome-rich species rather than a community-wide signal. Among 1,136 plant-associated species classified across four compartments (root 292, rhizosphere 160, phyllosphere 157, endophyte 29), the per-marker Fisher tests in NB04 still showed strong directional patterns: root species had high ACC deaminase (OR = 69.3), T3SS (OR = 65.6), nitrogen fixation (OR = 14.5), and quorum sensing (OR = 24.1) enrichment in the original framework, and 69 of 96 marker × compartment pairs were significant. These per-function enrichments are not contradicted by the Phase 2b decomposition — only the *headline magnitude* of the multivariate R² was inflated.
 
-![Compartment-specific marker enrichment heatmap](figures/compartment_heatmap.png)
+![Compartment-specific marker enrichment heatmap](../figures/plant_microbiome_ecotypes/compartment_heatmap.png)
 
 *(Notebooks: 01_genome_census.ipynb, 04_compartment_profiling.ipynb, 14_deferred_controls.ipynb, `notebooks/_run_h1_dbrda.py`. Verdict revised twice during Phase 2b: 2026-04-24 after the paired adversarial review and again 2026-04-25 after item-20 db-RDA.)*
 
 ### 2. Beneficial genes are core-encoded; pathogenic genes are accessory (H2)
 
-![Core vs accessory distribution by functional cohort](figures/core_vs_pathogenic.png)
+![Core vs accessory distribution by functional cohort](../figures/plant_microbiome_ecotypes/core_vs_pathogenic.png)
 
 Beneficial (PGP) gene clusters are predominantly core genome (64.6% core fraction), significantly exceeding both the genome-wide baseline of 46.8% and pathogenic gene clusters (45.2% core fraction). The Mann-Whitney U test comparing per-species core fractions yielded U=83,567,419 (p=3.38e-125), with a bootstrap 95% CI for the beneficial-pathogenic difference of [0.089, 0.106].
 
@@ -26,7 +31,7 @@ Among specific functions, biofilm (83.3% core), IAA biosynthesis (78.1%), nitrog
 
 ### 3. Pathogenic gene clusters co-occur with transposases, suggesting HGT (H4 — partial)
 
-![Mobility proxy analysis](figures/mobility_proxies.png)
+![Mobility proxy analysis](../figures/plant_microbiome_ecotypes/mobility_proxies.png)
 
 Three HGT proxies were evaluated. Transposase/integrase co-occurrence was strongly positive: among 1,136 plant-associated species, those carrying singleton marker gene clusters were 16× more likely to also carry transposase/integrase singletons (Fisher's exact OR=15.95, p=8.8e-20). However, the overall singleton enrichment ratio for markers was 0.78 (markers are *less* mobile than the genomic average; Wilcoxon p<1e-300). Cross-species context variation (same OG core in one species, singleton in another) was higher for pathogenic markers (0.534) than beneficial (0.450), but not significantly so (Kruskal-Wallis p=0.122).
 
@@ -44,7 +49,7 @@ BacDive metabolite utilization cross-validated GapMind predictions at 83.1% cons
 
 ### 5. Fifty novel gene families distinguish plant-associated species (H5)
 
-![Volcano plot of eggNOG OG enrichment](figures/volcano_enrichment.png)
+![Volcano plot of eggNOG OG enrichment](../figures/plant_microbiome_ecotypes/volcano_enrichment.png)
 
 Genome-wide enrichment analysis of 5,671 eggNOG ortholog groups (OGs) identified 5,341 significantly associated with plant vs. non-plant species (q<0.05), of which 3,840 showed strong enrichment (OR>2). After phylogenetic control via phylum-level logistic regression, 50 novel OGs retained significance (all p<0.05, OR>1). The top hit was COG3569 (Fisher OR=8.92, phylo-controlled OR=6.01, q=7.7e-242), found in 54% of plant-associated species but only 12% of non-plant species.
 
@@ -54,7 +59,7 @@ The attenuation from Fisher OR to phylo-controlled OR (e.g., COG3569: 8.92→6.0
 
 ### 6. Most plant-associated bacteria carry both PGP and pathogenic markers, but the dual-nature label is uninformative at species level — the continuous pathogen ratio is what discriminates
 
-![Cohort distribution by compartment](figures/nb04_cohort_compartment_bar.png)
+![Cohort distribution by compartment](../figures/plant_microbiome_ecotypes/nb04_cohort_compartment_bar.png)
 
 The majority of plant-associated species (65–85% per compartment) carry both PGP and pathogenic marker genes simultaneously. Two classification schemes were applied, producing different dual-nature rates:
 
@@ -63,7 +68,7 @@ The majority of plant-associated species (65–85% per compartment) carry both P
 
 The 35 percentage point difference between schemes reflects the distinction between *carrying* both marker types (nearly universal among bacteria due to ubiquitous functions like flagella and T6SS) and *scoring highly* on both axes when weighted by genomic architecture and metabolic context. The NB02 classification is more inclusive; the NB07 classification is more discriminating but also more assumption-laden.
 
-![Synthesis overview: genus profiles, compartment distribution, genomic architecture](figures/synthesis_overview.png)
+![Synthesis overview: genus profiles, compartment distribution, genomic architecture](../figures/plant_microbiome_ecotypes/synthesis_overview.png)
 
 **Canonical Phase 2b validation**: a curated 18-species panel of model organisms with experimentally confirmed phenotypes (7 known beneficial: *P. simiae* WCS417, *P. protegens* CHA0, *B. velezensis* FZB42, *A. brasilense* Sp245, *R. leguminosarum*, *P. phytofirmans* PsJN, *S. meliloti*; 7 known pathogenic: *P. syringae*, *R. solanacearum*, *X. campestris*, *A. tumefaciens*, *E. amylovora*, *P. carotovorum*, *C. michiganensis*; 4 neutral non-plant controls) was tested in NB13. **All 14 of the beneficial + pathogenic ground-truth species were assigned to the dual-nature class**, which means the categorical cohort label is uninformative at the species level — it cannot discriminate beneficial from pathogenic ground truth. The discriminative signal comes from a *continuous* metric: the pathogenicity ratio `n_pathogen / (n_pgp + n_pathogen)` is lower in known beneficial species (median 0.50) than in known pathogens (median 0.60), Mann-Whitney U = 9, **p = 0.027** on N = 7 vs 7 — small effect at small sample size, but statistically consistent. The earlier Phase 1 figure of "92.7% genus-level agreement" was tautological because cohorts are *defined* from marker presence; the species-level Mann-Whitney is the honest replacement. Practical implication: the refined cohort labels (beneficial / pathogenic / dual-nature / neutral) should be treated as a coarse screen, and the continuous pathogenicity ratio is what discriminates within the dual-nature class.
 
@@ -73,7 +78,7 @@ Key dual-nature genera (Phase 1 / Phase 2 description, unchanged): *Pseudomonas_
 
 ### 7. Novel OGs are functionally characterized: electron transport and iron-sulfur biosynthesis dominate (H5 extension)
 
-![Novel OG annotation: functional classification, core fractions, and domain architecture](figures/novel_og_annotation.png)
+![Novel OG annotation: functional classification, core fractions, and domain architecture](../figures/plant_microbiome_ecotypes/novel_og_annotation.png)
 
 All 50 plant-enriched OGs identified in Phase 1 were fully annotated via eggNOG descriptions, InterProScan domains, GO terms (48/50), and MetaCyc pathways (39/50). None were hypothetical proteins — every OG has a characterized function. The dominant functional themes are:
 
@@ -88,7 +93,7 @@ All 50 OGs had core gene fractions of 60.1–83.1% (baseline: 46.8%), reinforcin
 
 ### 8. Refined marker panel with KEGG module gating improves specificity but confirms persistent dual-nature (H0, H6)
 
-![Refined cohort comparison: Phase 1 vs Phase 2 marker panels](figures/refined_cohort_comparison.png)
+![Refined cohort comparison: Phase 1 vs Phase 2 marker panels](../figures/plant_microbiome_ecotypes/refined_cohort_comparison.png)
 
 Phase 1's 91-marker panel included ubiquitous bacterial functions (flagella, chemotaxis, T6SS, biofilm, quorum sensing, T2SS) that classified even *Escherichia* and *Salmonella* as 100% dual-nature. Phase 2 refined this to 17 plant-specific markers (9 PGP + 8 pathogenic) and applied KEGG module completeness gating for multi-gene systems:
 
@@ -106,7 +111,7 @@ Despite the stricter panel, the dual-nature rate among plant-associated species 
 
 ### 9. MGnify cross-validation reveals mobilome enrichment but low classification concordance (H4, H6)
 
-![MGnify integration: taxonomy bridge, host specificity, mobilome, and BGC profiles](figures/mgnify_integration.png)
+![MGnify integration: taxonomy bridge, host specificity, mobilome, and BGC profiles](../figures/plant_microbiome_ecotypes/mgnify_integration.png)
 
 Cross-validation against the MGnify genome catalogue (20,473 species across 4 biomes) provided independent evidence for several findings:
 
@@ -124,7 +129,7 @@ Cross-validation against the MGnify genome catalogue (20,473 species across 4 bi
 
 ### 10. Within-species subclade analysis shows weak segregation in 5/17 testable species, with two robust pathovar-host specializations (H7 weakly supported, H6 supported)
 
-![Subclade analysis: phylogenetic distance clustering and plant-association mapping](figures/subclade_corrected.png)
+![Subclade analysis: phylogenetic distance clustering and plant-association mapping](../figures/plant_microbiome_ecotypes/subclade_corrected.png)
 
 **Canonical Phase 2b finding (H7)**: of 65 plant-associated species with ≥20 genomes, only **18 (28%) have any phylogenetic-tree distance data** in `kbase_ke_pangenome.phylogenetic_tree_distance_pairs` — the other 47 (including major plant-associated taxa *Bradyrhizobium japonicum*, *B. diazoefficiens*, *Mesorhizobium ciceri*, *Sinorhizobium medicae*, *Burkholderia glumae*, *Methylobacterium extorquens*, *Streptomyces scabiei*, *Xylella taiwanensis*, *Clavibacter michiganensis*) are absent from the tree, a database-coverage limitation now documented in `docs/pitfalls.md`. Of the 17 testable species (≥3 plant + ≥3 non-plant), **5 (29%) pass Bonferroni-corrected Fisher's exact** at α = 0.05/17 = 0.0029: *Xanthomonas vasicola* (p = 1.6×10⁻⁴), *Mesorhizobium* sp002294985 (p = 1.1×10⁻⁴), *Agrobacterium pusense* (p = 4.5×10⁻⁴), *Pseudomonas_E avellanae* (p = 7.3×10⁻⁴), *Xanthomonas campestris* (p = 1.0×10⁻³). Three of those 5 (*X. vasicola*, *P. avellanae*, *X. campestris*) also satisfy Cochran's rule for chi² and are the most robust; the other 2 pass only via Fisher's exact (which is exact and not subject to the small-cell constraint). The pattern is concentrated in *Xanthomonas* and *Pseudomonas* — both genera known for pathovar-level host specialization (Fautt et al. 2024; Satterwhite & Bergelson 2025).
 
@@ -138,7 +143,7 @@ The 5/17 finding is consistent with the wider literature on accessory-genome-med
 
 ### 11. Phase 2b: Adversarial-review corrections (H0, H1, H3, H5, H7 revised)
 
-![Final synthesis of Phase 2b corrections](figures/final_synthesis.png)
+![Final synthesis of Phase 2b corrections](../figures/plant_microbiome_ecotypes/final_synthesis.png)
 
 Three adversarial review issues were fixable and were resolved in notebooks NB13–NB15: the tautological genus-level validation (C3), the original zero-hit Pfam query (documented limitation), and the NB12 subclade genome-ID mismatch (I6). Four additional statistical controls that RESEARCH_PLAN.md had specified but Phase 1 had not executed were also completed (C1, C4, I1, and within-genus label shuffling).
 
@@ -228,7 +233,7 @@ The PERMANOVA R² on the full 607-species set with the v2 panel matches NB14's e
 
 H3 remains **not supported** — the ecological conclusion (redundancy not complementarity) is robust to the aggregation choice. What changes is that the Phase 1 report's emphasis on "Cohen's d = −7.54" as a dramatic effect size was an artifact; the real effect is small (|d| ≈ 0.4) but stable. The Phase 2b value of this analysis is the formula correction and the documentation of the aggregation sensitivity, not a large new biological finding. *(Notebook: 14_deferred_controls.ipynb, data/complementarity_v2.csv, figures/complementarity_comparison.png. Formula-vs-aggregation attribution clarified 2026-04-24 after paired adversarial review.)*
 
-![Complementarity: max-aggregated vs prevalence-weighted](figures/complementarity_comparison.png)
+![Complementarity: max-aggregated vs prevalence-weighted](../figures/plant_microbiome_ecotypes/complementarity_comparison.png)
 
 **Pfam recovery (Pfam gap, NB13 Cell 3) + full bakta-vs-IPS audit (2026-04-25)**: The Phase 1 NB02 query `WHERE pfam_id IN ('PF00771', …)` returned zero rows because `bakta_pfam_domains` stores versioned IDs (`PF00771.22`). Re-running with `LIKE 'PF00771%'` patterns on the 10 Phase 2b marker Pfams recovered **19,364 domain hits across 7,962 species**. Five of those 10 Pfam IDs produced hits: nitrogenase NifH PF00142 (6,632 hits, 4,040 species, 32.4% core), cellulase GH5 PF00150 (6,898 / 3,234 / 25.9%), pectate lyase 3 PF12708 (4,149 / 2,283 / 24.6%), pectate lyase PF00544 (1,115 / 546 / 20.8%), and T6SS VgrG PF05943 (570 / 343 / 10.9%). The remaining five returned 0 hits.
 
@@ -291,7 +296,7 @@ Root is dominated by rhizobia (*Rhizobium* 47, *Mesorhizobium* 45, *Bradyrhizobi
 
 A curated set of 91 marker genes (39 PGP, 44 pathogenic, 9 colonization) was searched across bakta annotations, Pfam domains, KEGG KOs, and product descriptions, yielding 588,098 marker gene clusters across 25,660 species. No Pfam domain hits were found (likely due to the query format in bakta_pfam_domains), so classification relied on gene name, KEGG KO, and product keyword matches.
 
-![Marker gene survey overview](figures/nb02_marker_survey.png)
+![Marker gene survey overview](../figures/plant_microbiome_ecotypes/nb02_marker_survey.png)
 
 The most prevalent functional categories were: T6SS products (80,324 clusters), chemotaxis (69,986), quorum sensing (57,201), T3SS products (52,247), and T4SS (48,145). Among PGP functions, phosphate solubilization (23,876), phenazine (12,727), biofilm (7,512), and nitrogen fixation (6,139) were the most common.
 
@@ -320,11 +325,11 @@ The genome-wide baseline (46.8% core) is computed at the gene cluster level acro
 
 NMDC taxonomy bridge matched 260 of 322 genera (80.7%) to GTDB. Of 69 genera in 348 soil/rhizosphere samples, all had GapMind data across 80 pathways. The 1,048 co-occurring pairs had mean complementarity of 10.72, while the permutation null (1,000 iterations preserving richness) yielded 12.74±0.27.
 
-![Guild interaction network](figures/guild_network.png)
+![Guild interaction network](../figures/plant_microbiome_ecotypes/guild_network.png)
 
-![Complementarity heatmap](figures/complementarity_heatmap.png)
+![Complementarity heatmap](../figures/plant_microbiome_ecotypes/complementarity_heatmap.png)
 
-![Complementarity heatmap detail](figures/complementarity_heatmap_detail.png)
+![Complementarity heatmap detail](../figures/plant_microbiome_ecotypes/complementarity_heatmap_detail.png)
 
 C-score analysis for PGP-pathogen exclusion was not feasible: only 0 PGP-dominant and 2 pathogen-dominant genera were represented in NMDC co-occurrence data (the remaining 67 were dual-nature). *Phase 2b re-test on refined cohorts (`data/cscore_refined_cohorts.csv`, 2026-04-25, gap-3 close): 0 PGP-dominant / 3 pathogen-dominant / 66 dual-or-mixed of 69 NMDC co-occurring genera. The dual-nature class swamps the others regardless of whether the Phase 1 25-marker or the Phase 2 17-marker panel is used — the C-score test is structurally underpowered in this dataset, not a marker-panel artifact. Verification #12 in RESEARCH_PLAN.md (≥5 PGP-only genera) is therefore documented as NOT MET, with the failure-as-result interpretation made explicit.*
 
@@ -480,29 +485,29 @@ Twelve additional analyses addressed concerns raised during adversarial review:
 
 **T3SS/T6SS Sensitivity**: Reclassifying T3SS, T6SS, and T2SS from "pathogenic" to "colonization" markers changed 16.4% of dual-nature species to PGP-only. However, plant-associated species remained 86.0% dual-nature under the revised classification, confirming that the dual-nature finding is robust and not driven solely by secretion system annotations.
 
-![Sensitivity analysis: original vs revised cohort distribution](figures/sensitivity_t3ss_t6ss.png)
+![Sensitivity analysis: original vs revised cohort distribution](../figures/plant_microbiome_ecotypes/sensitivity_t3ss_t6ss.png)
 
 **Marker Drivers**: In dual-nature species, the most prevalent pathogenic markers were T6SS products (64%), T2SS (55%), T3SS products (50%), and chemotaxis (52%), while the most prevalent PGP markers were quorum sensing (49%), phenazine (34%), and flagella (40%). Chemotaxis and flagella — general motility functions — contribute substantially to the dual-nature classification.
 
-![Marker prevalence in dual-nature species](figures/dual_nature_marker_drivers.png)
+![Marker prevalence in dual-nature species](../figures/plant_microbiome_ecotypes/dual_nature_marker_drivers.png)
 
 **PGP vs Pathogen Scatter**: Validated against known model organisms: *B. subtilis*, *R. leguminosarum*, *B. japonicum*, and *S. meliloti* cluster in expected quadrants.
 
-![PGP vs pathogen composite scores with known organism annotations](figures/pgp_vs_pathogen_scatter.png)
+![PGP vs pathogen composite scores with known organism annotations](../figures/plant_microbiome_ecotypes/pgp_vs_pathogen_scatter.png)
 
 **Genome Size**: Moderate correlation (r=0.44) between genome size and marker count. Cross-tabulation showed that genome-size normalization shifts 33% of dual-nature species to neutral, indicating the effect is meaningful but does not eliminate the dual-nature pattern.
 
-![Genome size vs marker count by cohort](figures/genome_size_vs_markers.png)
+![Genome size vs marker count by cohort](../figures/plant_microbiome_ecotypes/genome_size_vs_markers.png)
 
 **Predictive Classifier**: Random Forest achieved 64.4% accuracy for compartment prediction (root/rhizosphere/phyllosphere) using 25 binary markers — above the 33% random baseline but far from deterministic, consistent with compartment being one of multiple factors shaping marker profiles. Cohort prediction achieved 99.9% accuracy (trivially, since cohorts are defined by marker presence).
 
-![Feature importance for compartment classification](figures/feature_importance_compartment.png)
+![Feature importance for compartment classification](../figures/plant_microbiome_ecotypes/feature_importance_compartment.png)
 
 **HGT Deep Dive**: Per-marker transposase co-occurrence analysis revealed that PGP markers show the strongest HGT signal: DAPG biocontrol (OR=8.75), ACC deaminase (OR=6.43), nitrogen fixation (OR=3.76). Among pathogenic markers, T4SS (OR=3.23), T6SS (OR=2.66), and effectors (OR=2.67) also showed significant enrichment. Contig co-location analysis found 498,677 marker-transposase pairs on shared contigs across 18,569 species. T4SS had the most co-located pairs (84,411) with the closest median distance (238 genes). Fifteen marker-transposase pairs were at gene-number distance 1 (immediately adjacent), spanning effectors, T6SS, T3SS, quorum sensing, cellulase, and T4SS in species including *Rhizobium ecuadorense*, *Phytobacter ursingii*, and *Burkholderia puraquae*.
 
-![HGT signal by marker type](figures/hgt_per_marker_transposase.png)
+![HGT signal by marker type](../figures/plant_microbiome_ecotypes/hgt_per_marker_transposase.png)
 
-![Contig co-location distances](figures/hgt_contig_distance.png)
+![Contig co-location distances](../figures/plant_microbiome_ecotypes/hgt_contig_distance.png)
 
 ### Novel OG Functional Annotation (NB09)
 

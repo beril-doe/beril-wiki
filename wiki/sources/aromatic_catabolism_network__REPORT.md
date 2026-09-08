@@ -1,3 +1,7 @@
+---
+title: 'Report: Aromatic Catabolism Support Network in ADP1'
+type: Source
+---
 # Report: Aromatic Catabolism Support Network in ADP1
 
 ## Key Findings
@@ -6,7 +10,7 @@
 
 The 51 quinate-specific genes in ADP1 organize into a coherent metabolic dependency network around the β-ketoadipate pathway. Co-fitness analysis assigns 44/51 genes (86%) to four functional subsystems: the core aromatic degradation pathway (8 genes), Complex I / NADH dehydrogenase (21 genes), iron acquisition (7 genes), and PQQ biosynthesis (2 genes), plus 6 transcriptional regulators. Each subsystem addresses a specific biochemical requirement of aromatic catabolism.
 
-![Quinate-specific genes by functional category](figures/support_network_categories.png)
+![Quinate-specific genes by functional category](../figures/aromatic_catabolism_network/support_network_categories.png)
 
 | Subsystem | Genes | Biochemical rationale |
 |-----------|-------|-----------------------|
@@ -23,7 +27,7 @@ The 51 quinate-specific genes in ADP1 organize into a coherent metabolic depende
 
 Complex I (NADH:ubiquinone oxidoreductase) accounts for 21 of 51 quinate-specific genes (41%), making it the dominant support requirement for aromatic catabolism. The FBA model captures 1.76× higher Complex I flux on aromatic substrates (0.55 vs 0.31), but predicts 0% essentiality — it sees the increased demand but not the bottleneck. Furthermore, 30/51 quinate-specific genes have no FBA reaction mappings at all — cofactor supply chains (PQQ, iron) and regulatory genes are invisible to the metabolic model.
 
-![FBA-predicted flux heatmap for quinate-specific genes](figures/fba_flux_heatmap.png)
+![FBA-predicted flux heatmap for quinate-specific genes](../figures/aromatic_catabolism_network/fba_flux_heatmap.png)
 
 *(Notebook: 01_metabolic_dependencies.ipynb)*
 
@@ -31,9 +35,9 @@ Complex I (NADH:ubiquinone oxidoreductase) accounts for 21 of 51 quinate-specifi
 
 The four subsystems occupy distinct chromosomal locations: Complex I operon at 714–729 kb, pca/qui pathway at 1,709–1,724 kb, PQQ biosynthesis at 2,461 kb, and iron acquisition genes scattered across 4 loci. No cross-category operons exist (except one within the aromatic pathway itself). The metabolic dependency is not encoded by genomic co-localization — it emerges from the biochemistry of aromatic ring cleavage.
 
-![Chromosome map of quinate-specific genes](figures/chromosome_map.png)
+![Chromosome map of quinate-specific genes](../figures/aromatic_catabolism_network/chromosome_map.png)
 
-![Genomic clusters of quinate-specific genes](figures/gene_clusters.png)
+![Genomic clusters of quinate-specific genes](../figures/aromatic_catabolism_network/gene_clusters.png)
 
 The Complex I operon contains 13 subunits (nuoA–N), all on the same strand with <100 bp intergenic distances. Disrupting any single subunit eliminates the entire complex, explaining why 10/13 subunits independently produce quinate-specific growth defects.
 
@@ -43,11 +47,11 @@ The Complex I operon contains 13 subunits (nuoA–N), all on the same strand wit
 
 Of 23 genes initially categorized as "Other" or "Unknown," 16 were assigned to support subsystems with medium or high confidence based on growth profile correlations with known subsystem members. Two DUF-domain proteins (ACIAD3137, ACIAD2176) show r > 0.98 correlation with Complex I genes — these are candidates for uncharacterized Complex I accessory factors. Within-category correlation is dramatically higher than between-category (Complex I mean r = 0.992, Aromatic pathway r = 0.961).
 
-![Co-fitness heatmap among 51 quinate-specific genes](figures/cofitness_heatmap.png)
+![Co-fitness heatmap among 51 quinate-specific genes](../figures/aromatic_catabolism_network/cofitness_heatmap.png)
 
-![Unknown gene correlations with known subsystems](figures/unknown_assignments_heatmap.png)
+![Unknown gene correlations with known subsystems](../figures/aromatic_catabolism_network/unknown_assignments_heatmap.png)
 
-![Within vs between category co-fitness](figures/cofitness_within_between.png)
+![Within vs between category co-fitness](../figures/aromatic_catabolism_network/cofitness_within_between.png)
 
 *(Notebook: 03_cofitness_network.ipynb)*
 
@@ -55,9 +59,9 @@ Of 23 genes initially categorized as "Other" or "Unknown," 16 were assigned to s
 
 Ortholog-transferred fitness data from the Fitness Browser (12,241 entries, 2,005 genes, 13 conditions) shows Complex I orthologs have significantly worse fitness on aromatic conditions (mean = -1.35 vs -0.77, Mann-Whitney p < 0.0001). However, per-condition analysis reveals that the largest Complex I defects relative to background are on acetate (-1.55) and succinate (-1.39) — non-aromatic substrates that also generate high NADH flux through the TCA cycle. ADP1's quinate-specificity of Complex I likely reflects an alternative NADH dehydrogenase (NDH-2) that compensates on simpler substrates.
 
-![Cross-species fitness on aromatic vs non-aromatic conditions](figures/cross_species_fitness.png)
+![Cross-species fitness on aromatic vs non-aromatic conditions](../figures/aromatic_catabolism_network/cross_species_fitness.png)
 
-![Complex I fitness relative to background by condition](figures/complex_I_vs_background.png)
+![Complex I fitness relative to background by condition](../figures/aromatic_catabolism_network/complex_I_vs_background.png)
 
 *(Notebook: 04_cross_species.ipynb)*
 

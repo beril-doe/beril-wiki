@@ -1,3 +1,7 @@
+---
+title: 'Report: Pangenome Openness Analysis'
+type: Source
+---
 # Report: Pangenome Openness Analysis
 
 ## Key Findings
@@ -11,7 +15,7 @@ Analysis of pangenome openness vs environment/phylogeny effects revealed **no si
 | Openness vs Environment effect | -0.05 | 0.54 |
 | Openness vs Phylogeny effect | 0.03 | 0.73 |
 
-![Pangenome Openness vs Effects](figures/pangenome_vs_effects.png)
+![Pangenome Openness vs Effects](../figures/pangenome_openness/pangenome_vs_effects.png)
 
 *(Notebook: 01_explore_gene_data.ipynb)*
 

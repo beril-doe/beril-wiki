@@ -1,20 +1,20 @@
 # Authors
 
-- [[authors/adam-deutschbauer|Adam Deutschbauer]]
-- [[authors/adam-p-arkin|Adam P Arkin]]
-- [[authors/aindrila-mukhopadhyay|Aindrila Mukhopadhyay]]
-- [[authors/beril-admin|Beril Admin]]
-- [[authors/chris-mungall|Chris Mungall]]
-- [[authors/christopher-neely|Christopher Neely]]
-- [[authors/claude|Claude]]
-- [[authors/david-lyon|David Lyon]]
-- [[authors/dileep-kishore|Dileep Kishore]]
-- [[authors/gazi-s-mahmud|Gazi S Mahmud]]
-- [[authors/heather-macgregor|Heather Macgregor]]
-- [[authors/janaka-n-edirisinghe|Janaka N Edirisinghe]]
-- [[authors/justin-reese|Justin Reese]]
-- [[authors/mark-andrew-miller|Mark Andrew Miller]]
-- [[authors/markus-de-raad|Markus De Raad]]
-- [[authors/paramvir-s-dehal|Paramvir S Dehal]]
-- [[authors/priya-ranjan|Priya Ranjan]]
-- [[authors/sierra-moxon|Sierra Moxon]]
+- [Adam Deutschbauer](adam-deutschbauer.md)
+- [Adam P Arkin](adam-p-arkin.md)
+- [Aindrila Mukhopadhyay](aindrila-mukhopadhyay.md)
+- [Beril Admin](beril-admin.md)
+- [Chris Mungall](chris-mungall.md)
+- [Christopher Neely](christopher-neely.md)
+- [Claude](claude.md)
+- [David Lyon](david-lyon.md)
+- [Dileep Kishore](dileep-kishore.md)
+- [Gazi S Mahmud](gazi-s-mahmud.md)
+- [Heather Macgregor](heather-macgregor.md)
+- [Janaka N Edirisinghe](janaka-n-edirisinghe.md)
+- [Justin Reese](justin-reese.md)
+- [Mark Andrew Miller](mark-andrew-miller.md)
+- [Markus De Raad](markus-de-raad.md)
+- [Paramvir S Dehal](paramvir-s-dehal.md)
+- [Priya Ranjan](priya-ranjan.md)
+- [Sierra Moxon](sierra-moxon.md)

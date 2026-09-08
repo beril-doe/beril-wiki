@@ -1,3 +1,7 @@
+---
+title: 'Report: Truly Dark Genes — What Remains Unknown After Modern Annotation?'
+type: Source
+---
 # Report: Truly Dark Genes — What Remains Unknown After Modern Annotation?
 
 ## Key Findings
@@ -6,7 +10,7 @@
 
 Of 39,532 Fitness Browser dark genes with pangenome links, bakta v1.12.0 reannotation reclassifies 33,105 (83.7%) — leaving just 6,427 "truly dark" genes where both the original pipeline and bakta agree: these are hypothetical proteins. An additional 17,479 dark genes lack pangenome links and could not be assessed.
 
-![Organism distribution of truly dark genes](figures/fig01_organism_distribution.png)
+![Organism distribution of truly dark genes](../figures/truly_dark_genes/fig01_organism_distribution.png)
 
 Truly dark genes are concentrated in specific organisms: Methanococcus strains (S2 and JJ) account for 55% of all truly dark genes, reflecting the underrepresentation of archaea in annotation databases. Across organisms, 4–96% of dark genes resist bakta annotation, with archaeal organisms at the high end.
 
@@ -14,7 +18,7 @@ Truly dark genes are concentrated in specific organisms: Methanococcus strains (
 
 ### Finding 2: Truly dark genes are structurally distinct from annotation-lag genes (H1 supported)
 
-![Gene length comparison](figures/fig02_gene_length.png)
+![Gene length comparison](../figures/truly_dark_genes/fig02_gene_length.png)
 
 Truly dark genes differ from annotation-lag genes across multiple properties:
 
@@ -29,7 +33,7 @@ Truly dark genes differ from annotation-lag genes across multiple properties:
 
 All effects exceed pre-registered thresholds (Cohen's d ≥ 0.2 or OR ≥ 1.5). Truly dark genes are shorter, less conserved, more taxonomically restricted, and have lower GC content — consistent with genuine biological novelty rather than database lag.
 
-![Summary comparison](figures/fig03_summary_comparison.png)
+![Summary comparison](../figures/truly_dark_genes/fig03_summary_comparison.png)
 
 *(Notebooks: 01_truly_dark_census.ipynb, 04_cross_organism_concordance.ipynb)*
 
@@ -43,11 +47,11 @@ eggNOG-mapper provides partial signal for 43.5% of truly dark clusters, but 55.4
 
 ### Finding 4: 96% of truly dark genes have at least one partial annotation clue (H4 supported)
 
-![Clue coverage](figures/fig04_clue_coverage.png)
+![Clue coverage](../figures/truly_dark_genes/fig04_clue_coverage.png)
 
 A 12-dimensional "clue matrix" reveals that only 246 genes (3.8%) have zero annotation clues. The remaining 96.2% have combinations of sequence identifiers, eggNOG hits, orthologs, module membership, and/or fitness phenotypes.
 
-![Annotation tiers](figures/fig05_annotation_tiers.png)
+![Annotation tiers](../figures/truly_dark_genes/fig05_annotation_tiers.png)
 
 Genes stratify into four interpretable tiers:
 
@@ -64,11 +68,11 @@ Tier 3 and Tier 4 genes (2,314 total) are the most promising for functional char
 
 ### Finding 5: Truly dark genes are enriched in accessory genomes and show HGT signatures (H3 supported)
 
-![Ortholog breadth](figures/fig06_ortholog_breadth.png)
+![Ortholog breadth](../figures/truly_dark_genes/fig06_ortholog_breadth.png)
 
 Truly dark genes are 4.2× less likely to have cross-organism orthologs (OR = 0.236) and when they do, their orthologs span fewer organisms (median 1 vs 4). Only 3 of 65 dark-gene ortholog groups with cross-organism concordance data contain truly dark genes — they are nearly invisible to cross-organism analysis.
 
-![GC deviation](figures/fig07_gc_deviation.png)
+![GC deviation](../figures/truly_dark_genes/fig07_gc_deviation.png)
 
 GC content deviation from host genome mean is significantly higher for truly dark genes (mean |ΔGC| = 0.047 vs 0.038, d = 0.247, p = 1.3e-43). Strong GC deviation (|z| > 2) affects 9.2% of truly dark genes vs 4.0% of annotation-lag genes — consistent with recent horizontal gene transfer outpacing annotation databases.
 
@@ -78,7 +82,7 @@ Additionally, 12.0% of truly dark genes are within 2 genes of a mobile genetic e
 
 ### Finding 6: Stress enrichment hypothesis rejected (H2 rejected)
 
-![Genomic context](figures/fig08_genomic_context.png)
+![Genomic context](../figures/truly_dark_genes/fig08_genomic_context.png)
 
 Contrary to H2, truly dark genes with strong fitness phenotypes (|f| ≥ 2) are *depleted* in stress conditions relative to annotation-lag genes (28.7% vs 43.2%, OR = 0.53, p < 0.001). Instead, truly dark genes are enriched in nutrient, mixed community, and iron conditions — suggesting they may encode novel metabolic or community-interaction functions rather than stress responses.
 
@@ -86,7 +90,7 @@ Contrary to H2, truly dark genes with strong fitness phenotypes (|f| ≥ 2) are 
 
 ### Finding 7: 100 top candidates prioritized for experimental characterization
 
-![Prioritization](figures/fig09_prioritization.png)
+![Prioritization](../figures/truly_dark_genes/fig09_prioritization.png)
 
 A multi-criteria scoring system (fitness importance, annotation clues, ortholog breadth, genomic context, tractability; max score 12) ranks all 6,427 truly dark genes and identifies 100 top candidates (scores 8–10) across 19 organisms.
 

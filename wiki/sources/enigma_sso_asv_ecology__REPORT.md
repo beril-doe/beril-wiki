@@ -1,10 +1,15 @@
+---
+title: 'Report: SSO Subsurface Community Ecology — Spatial Structure, Functional Gradients,
+  and Hydrogeological Drivers'
+type: Source
+---
 # Report: SSO Subsurface Community Ecology — Spatial Structure, Functional Gradients, and Hydrogeological Drivers
 
 ## Key Findings
 
 ### 1. Community Similarity Tracks Spatial Arrangement at Meter Scale
 
-![Bray-Curtis dissimilarity heatmap across the 9 SSO wells](figures/bc_heatmap_sediment.png)
+![Bray-Curtis dissimilarity heatmap across the 9 SSO wells](../figures/enigma_sso_asv_ecology/bc_heatmap_sediment.png)
 
 Sediment-associated microbial communities across the 9 SSO wells (3×3 grid, ~6 m span) show significant distance-decay of similarity (Mantel test: Spearman ρ = 0.323, p = 0.029, 9,999 permutations). Mean Bray-Curtis dissimilarity = 0.747, ranging from 0.558 (U3–M6, most similar) to 0.872 (U3–L9, most dissimilar). NMDS ordination achieves low stress (0.067), and Procrustes analysis shows marginal correspondence between community ordination and physical grid (m² = 0.379, p = 0.080).
 
@@ -14,7 +19,7 @@ Critically, community turnover is **not** aligned with the hillslope (uphill-dow
 
 ### 2. The Column 3 Corridor: A Plume Flow Path
 
-![NMDS ordination vs physical grid showing nearest community neighbor](figures/nmds_vs_grid.png)
+![NMDS ordination vs physical grid showing nearest community neighbor](../figures/enigma_sso_asv_ecology/nmds_vs_grid.png)
 
 Three wells — U3, M6, and L7 — are far more similar to each other than their geographic distances predict:
 - **U3–M6**: BC = 0.558, residual = −0.170 (most similar pair in the grid)
@@ -23,13 +28,13 @@ Three wells — U3, M6, and L7 — are far more similar to each other than their
 
 These wells trace a **diagonal corridor from the northeast (U3) to the southwest (L7)** that aligns with the expected flow path of the contamination plume from the Area 3 source (high nitrate, low pH, heavy metals) located uphill and northeast of the SSO. The corridor's shared community composition reflects shared plume exposure. Conversely, the largest dissimilarity (U3–M4, BC = 0.871, residual = +0.105) spans from the plume entry point to the well farthest from the plume core.
 
-![Residual analysis and row-separation effects](figures/residual_analysis.png)
+![Residual analysis and row-separation effects](../figures/enigma_sso_asv_ecology/residual_analysis.png)
 
 *(Notebook: 02_sediment_spatial.ipynb)*
 
 ### 3. Depth Dominates Over Horizontal Position
 
-![Sample-level ordination colored by zone and well](figures/nmds_samples_zone_well.png)
+![Sample-level ordination colored by zone and well](../figures/enigma_sso_asv_ecology/nmds_samples_zone_well.png)
 
 PERMANOVA on sample-level communities (37 sediment core segments) reveals:
 - **Hydrogeological zone** (VZ/VSZ/SZ1/SZ2) explains **27.5%** of community variance (F = 4.05, p = 0.0001)
@@ -37,7 +42,7 @@ PERMANOVA on sample-level communities (37 sediment core segments) reveals:
 
 Samples from the same well but different depths are nearly maximally dissimilar (median BC = 0.977), while samples from the same depth zone in different wells are substantially more similar (median BC = 0.835). This is consistent with the contamination plume traveling through the **saturated zone**: depth controls whether a sample intersects the plume, while horizontal position is secondary.
 
-![Phylum-depth correlations](figures/depth_phylum_correlation.png)
+![Phylum-depth correlations](../figures/enigma_sso_asv_ecology/depth_phylum_correlation.png)
 
 Ten of 12 dominant phyla show significant depth associations (p < 0.05), splitting into biologically coherent groups:
 - **Shallow-enriched** (vadose, oxic): Chloroflexi (ρ = −0.73), Patescibacteria (−0.70), Myxococcota (−0.54), Spirochaetota (−0.53)
@@ -47,7 +52,7 @@ Ten of 12 dominant phyla show significant depth associations (p < 0.05), splitti
 
 ### 4. Genus-Level Biogeochemical Processes Map the Redox Ladder
 
-![Genus-inferred biogeochemical processes across the SSO grid](figures/genus_process_grid.png)
+![Genus-inferred biogeochemical processes across the SSO grid](../figures/enigma_sso_asv_ecology/genus_process_grid.png)
 
 Multi-resolution functional inference (class-level: 22 classes, 78% coverage; genus-level: 65 annotated genera, 21% coverage) maps specific biogeochemical processes onto the 3×3 grid. The spatial distribution of processes recapitulates the thermodynamic redox ladder expected along a contamination plume:
 
@@ -65,7 +70,7 @@ Multi-resolution functional inference (class-level: 22 classes, 78% coverage; ge
 
 **M6** is consistently the lowest for every oxidative process (iron oxidation, sulfur oxidation, nitrification) — the **anaerobic dead zone** of the grid, where the plume core has consumed all terminal electron acceptors.
 
-![Clustered heatmap of genus-level processes](figures/genus_process_clustermap.png)
+![Clustered heatmap of genus-level processes](../figures/enigma_sso_asv_ecology/genus_process_clustermap.png)
 
 *(Notebook: 04_functional_inference.ipynb)*
 
@@ -85,13 +90,13 @@ Groundwater and sediment communities at the same well are substantially differen
 
 The groundwater is enriched in denitrifiers (*Rhodanobacter*) and iron oxidizers (*Gallionella*, *Sideroxydans*) — organisms that thrive in the flowing, metal-rich contaminated plume water. Sediment-attached anaerobes (*Anaeromyxobacter*, *Arcobacter*, *Ca. Methanoperedens*) are depleted in groundwater, indicating distinct attached vs planktonic communities rather than simple detachment.
 
-![Phylum composition: groundwater vs sediment](figures/gw_vs_sediment_phylum.png)
+![Phylum composition: groundwater vs sediment](../figures/enigma_sso_asv_ecology/gw_vs_sediment_phylum.png)
 
 *(Notebook: 05_gw_vs_sediment.ipynb)*
 
 ### 6. Metabolic Guild Structure and Inferred Interactions
 
-![Metabolic guild composition across wells](figures/guild_composition_bars.png)
+![Metabolic guild composition across wells](../figures/enigma_sso_asv_ecology/guild_composition_bars.png)
 
 Assigning 65 annotated genera to 11 metabolic guilds reveals distinct functional assemblages at each well. Guild co-occurrence analysis across the 9 wells identifies tightly coupled functional partnerships:
 
@@ -101,13 +106,13 @@ Assigning 65 annotated genera to 11 metabolic guilds reveals distinct functional
 - **Denitrifier × syntroph**: ρ = −0.67 — mutual exclusion across the redox gradient. Denitrifiers thrive where nitrate is available (oxidizing); syntrophs require strictly anaerobic conditions.
 - **Sulfate reducer × aerobic heterotroph**: ρ = −0.75 — textbook redox separation. These guilds occupy opposite ends of the electron acceptor hierarchy.
 
-![Guild co-occurrence matrix](figures/guild_cooccurrence.png)
+![Guild co-occurrence matrix](../figures/enigma_sso_asv_ecology/guild_cooccurrence.png)
 
 *(Notebook: 07_hotspot_interactions.ipynb)*
 
 ### 7. Groundwater Community Stability Over 9 Days
 
-![Temporal vs spatial variation](figures/temporal_vs_spatial_gw.png)
+![Temporal vs spatial variation](../figures/enigma_sso_asv_ecology/temporal_vs_spatial_gw.png)
 
 Groundwater communities at 5 wells sampled 9 days apart (Sep 9 vs Sep 18, 2024) show remarkable short-term stability:
 
@@ -124,7 +129,7 @@ This stability strengthens the plume model: the spatial community patterns we ob
 
 **Note on sediment temporal resolution**: Sediment cores were collected once per well (Feb-Mar 2023). No within-well temporal replication exists for sediment. The 18-month offset between sediment (2023) and groundwater (2024) confounds material type with time, and cross-material temporal comparisons should be interpreted with this caveat.
 
-![Spatial pattern stability across dates](figures/spatial_stability_mantel.png)
+![Spatial pattern stability across dates](../figures/enigma_sso_asv_ecology/spatial_stability_mantel.png)
 
 *(Notebook: 08_temporal_stability.ipynb)*
 
@@ -137,35 +142,35 @@ This stability strengthens the plume model: the spatial community patterns we ob
 - U3-M6-L7 corridor: 3 most negative residuals (more similar than expected)
 - U3-M4 and U3-L9: most positive residuals (more different than expected)
 
-![Distance-decay scatter plot with pair annotations](figures/mantel_distance_decay.png)
+![Distance-decay scatter plot with pair annotations](../figures/enigma_sso_asv_ecology/mantel_distance_decay.png)
 
-![Procrustes superimposition of community ordination onto grid](figures/procrustes_overlay.png)
+![Procrustes superimposition of community ordination onto grid](../figures/enigma_sso_asv_ecology/procrustes_overlay.png)
 
 ### Depth Zonation (NB03)
 - 37 samples classified into VZ (33), VSZ (25), SZ1 (54), SZ2 (45) by depth + description
 - PERMANOVA: zone R² = 27.5% (p = 0.0001); well R² = 19.2% (p = 0.979, NS)
 - 10/12 top phyla significant for depth (Spearman p < 0.05)
 
-![Well grid geometry with inter-well distances](figures/well_grid_geometry.png)
+![Well grid geometry with inter-well distances](../figures/enigma_sso_asv_ecology/well_grid_geometry.png)
 
-![Depth-zone profile across wells](figures/depth_zone_profile.png)
+![Depth-zone profile across wells](../figures/enigma_sso_asv_ecology/depth_zone_profile.png)
 
-![Within-zone vs within-well dissimilarity](figures/zone_vs_well_dissim.png)
+![Within-zone vs within-well dissimilarity](../figures/enigma_sso_asv_ecology/zone_vs_well_dissim.png)
 
-![Phylum composition by hydrogeological zone](figures/phylum_by_zone.png)
+![Phylum composition by hydrogeological zone](../figures/enigma_sso_asv_ecology/phylum_by_zone.png)
 
-![Zone enrichment patterns for top phyla](figures/zone_indicator_heatmap.png)
+![Zone enrichment patterns for top phyla](../figures/enigma_sso_asv_ecology/zone_indicator_heatmap.png)
 
 ### Functional Inference (NB04)
 - Class-level: 22 classes, 78% coverage; redox index range 0.047 (M6) to 0.227 (U3)
 - Genus-level: 65 genera annotated, 12 biogeochemical process categories
 - Denitrification range: 1.9–7.7% (M5 peak); fermentation: 2.0–5.3% (L9 peak)
 
-![All trait profiles mapped onto grid](figures/trait_grid_maps.png)
+![All trait profiles mapped onto grid](../figures/enigma_sso_asv_ecology/trait_grid_maps.png)
 
-![Key functional gradients: redox, fermentation, nitrogen](figures/key_functional_gradients.png)
+![Key functional gradients: redox, fermentation, nitrogen](../figures/enigma_sso_asv_ecology/key_functional_gradients.png)
 
-![Class-level trait clustermap](figures/trait_clustermap.png)
+![Class-level trait clustermap](../figures/enigma_sso_asv_ecology/trait_clustermap.png)
 
 ### Groundwater vs Sediment (NB05)
 - 5 wells with both materials; within-well BC = 0.364–0.450
@@ -175,7 +180,7 @@ This stability strengthens the plume model: the spatial community patterns we ob
 
 ### The Contamination Plume Model
 
-![Synthesis: contamination plume model overlaid on the SSO grid](figures/synthesis_plume_model.png)
+![Synthesis: contamination plume model overlaid on the SSO grid](../figures/enigma_sso_asv_ecology/synthesis_plume_model.png)
 
 All findings converge on a single explanatory model: **the spatial structure of SSO microbial communities is governed by a contamination plume entering from the northeast and flowing southwest through the saturated zone.**
 

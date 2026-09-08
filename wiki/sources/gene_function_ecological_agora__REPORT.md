@@ -1,3 +1,7 @@
+---
+title: 'Report: Gene Function Ecological Agora'
+type: Source
+---
 # Report: Gene Function Ecological Agora
 
 **Status**: Phases 1A/1B/2/3 closed; Phase 4 complete (P4-D1 + P4-D2 + P4-D3 + P4-D4 + P4-D5 all closed). 2 of 4 pre-registered hypotheses confirmed (NB12 Mycobacteriaceae × mycolic-acid Innovator-Isolated; NB16 Cyanobacteria × PSII Innovator-Exchange at class rank), both surviving D2 residualization, both grounded in expected biomes at p < 10⁻¹¹, with phenotype anchors confirming Mycobacteriaceae and Phase 1B Bacteroidota predictions, and all three pre-registered atlas KOs (PSII / PUL / mycolic) confirmed as **not phage-borne** by per-cluster MGE-machinery (0%, 0%, 0.57%) + PSII gene-neighborhood at random baseline (10.91% vs Poisson expected 10.6%). NB11 H1 REFRAMED — direction supports Jain 1999 complexity hypothesis at small effect size, **independently empirically validated by Burch et al. 2023 (PMID:37232518)** at the same direction. **Alm 2006 r ≈ 0.74 NOT REPRODUCED at GTDB scale** (P4-D3: r = 0.10–0.29) — methodology generalization holds (NB17 architectural concordance r = 0.67), point-estimate reproduction does not. **D2 annotation-density bias residualization** (P4-D5) closes a long-standing pre-registration debt. **P4-D4 returns informative null at atlas scale** (M22 and pangenome openness measure distinct evolutionary phenomena). **P4-D1 phenotype/ecology grounding** (NB23+24+25): Cyanobacteriia 2.77× photic aquatic enrichment p<10⁻⁵²; Mycobacteriaceae 7.88× host-pathogen p<10⁻⁴⁵; Bacteroidota 1.40× gut/rumen p<10⁻³⁵; BacDive phenotype anchors confirm mycobacterial aerobic-rod and Bacteroidota saccharolytic profiles; AlphaEarth env-clustering recovers ecological structure with focal clades concentrated in expected env-clusters. All Phase 4 deliverables closed; ADVERSARIAL_REVIEW_8 integrated with verify-before-acting; **NB28 Final Synthesis pass landed (v3.2)** — 6 data deliverables + 7 figures including Hero 1 Atlas Innovation Tree, Hero 2 Three-Substrate Convergence Card, Hero 3 Acquisition-Depth Function Spectrum, Supporting 4 PSII rank-dependence ladder, Supporting 5 Hypothesis Verdict Card, Supporting 6 Function × Phylum × Environment flow, plus the NB22-deliverable atlas heatmap + four-quadrant summary. **M26 tree-based parsimony donor inference at genus rank** added (distinct from M25-deferred composition-based donor inference). **leaf_consistency landed at v3.3** + **3 leaf_consistency-leveraged figures at v3.4**: H3-B control-class signature plane (housekeeping-vs-HGT-active framework validated); S7 per-hypothesis leaf_consistency distribution (PSII LC=0.88 canonical class-defining; PUL 0.41 phylum-tendency; **mycolic 0.15 < atlas 0.20 reveals within-Mycobacteriaceae heterogeneity**); S8 atlas confidence ridge. **REVIEW_9 response landed at v3.5**: I10 sub-clade Cohen's d recomputation (mycolic-positive sub-clade, 10 of 13 genera: producer d=0.39, vs family-rank d=0.31 — modest amplification); 3 new verified citations (Williams 2024, López Sánchez 2026, Gisriel 2023). **Multiple-testing correction pass landed at v3.6** (NB30) — `/submit` REVIEW.md item #1 empirically refuted: 14 of 16 formal hypothesis tests survive family-wise Bonferroni; the 2 non-surviving ones (Mycobacteriaceae × soil; NB11 reg-vs-met) are CORRECTLY null results the project already reports as such. Reviewer's "26-revision × FWER" framing is a category mistake — M1–M26 are pre-registration corrections, not 26 alternative tests. Report v3.6 (2026-04-29).
@@ -288,7 +292,7 @@ The natural_expansion class (200 UniRef50 clusters with documented within-specie
 
 This validates that the clade-matched neutral-family null detects real paralog expansion above cohort baseline. Without this signal, all subsequent Phase 1A scoring would be on a null model that cannot discriminate signal from noise.
 
-![Per-rank score distributions by control class](figures/p1a_scores_by_class_per_rank.png)
+![Per-rank score distributions by control class](../figures/gene_function_ecological_agora/p1a_scores_by_class_per_rank.png)
 
 *(Notebook: `03_p1a_pilot_atlas.ipynb`)*
 
@@ -315,7 +319,7 @@ This is the first interpretable biological pattern in the atlas: **at class rank
 
 The pattern aligns with prior literature: most prokaryotic HGT happens within phylum boundaries (Smillie et al 2011; Soucy et al 2015 review), and cross-phylum HGT is rarer and biased toward specific function classes (Hooper et al 2007). Phase 1A produces a quantitative anchor for this qualitative consensus.
 
-![Per-rank null-model distributions](figures/p1a_null_per_rank_distributions.png)
+![Per-rank null-model distributions](../figures/gene_function_ecological_agora/p1a_null_per_rank_distributions.png)
 
 *(Notebook: `02_p1a_null_model_construction.ipynb`)*
 
@@ -380,7 +384,7 @@ Phase 1B (full GTDB scale: 27,690 species, all UniRef50s) may proceed with M1–
 
 The Phase 1A scores are visualized as a Producer × Consumer (Participation) scatter per rank, with control classes colored. Natural_expansion separates from controls in the producer-positive direction at higher ranks; negative controls cluster near the null origin; positive AMR shows the parent-phylum-clumped signature.
 
-![Producer × Consumer scatter per rank](figures/p1a_producer_consumer_per_rank.png)
+![Producer × Consumer scatter per rank](../figures/gene_function_ecological_agora/p1a_producer_consumer_per_rank.png)
 
 *(Notebook: `03_p1a_pilot_atlas.ipynb`)*
 
@@ -630,7 +634,7 @@ But the absolute-zero criterion turns out to be *over-stringent* at UniRef50 res
 
 *(Notebooks: 07; diagnostic in 08b; data: `p1b_bacteroidota_pul_test.tsv`, `p1b_discrimination_diagnostic.tsv`)*
 
-![Bacteroidota PUL position vs other phyla CAZymes per rank](figures/p1b_bacteroidota_pul_position.png)
+![Bacteroidota PUL position vs other phyla CAZymes per rank](../figures/gene_function_ecological_agora/p1b_bacteroidota_pul_position.png)
 
 ### Finding 1B.4 — HIGH 1 cross-phylum HGT positive controls show real but small discrimination at UniRef50
 
@@ -705,9 +709,9 @@ For readers picking up the project cold, three findings define the Phase 1B clos
 
 The Phase 1B verdict is `PASS_REFRAMED + qualified`: methodology not broken, but the substrate-hierarchy framing is now an *empirical bet* on Phase 2 amplification rather than an established conclusion. The project enters Phase 2 with a sharp falsifiable test.
 
-![Phase 1B per-rank null model distributions](figures/p1b_null_per_rank_distributions.png)
+![Phase 1B per-rank null model distributions](../figures/gene_function_ecological_agora/p1b_null_per_rank_distributions.png)
 
-![Phase 1B scores by control class per rank](figures/p1b_scores_by_class_per_rank.png)
+![Phase 1B scores by control class per rank](../figures/gene_function_ecological_agora/p1b_scores_by_class_per_rank.png)
 
 ## Phase 1B Diagnostic Resolution (v1.3, 2026-04-27)
 
@@ -719,7 +723,7 @@ After REPORT.md v1.2's Phase 1B section landed with a softened substrate-hierarc
 
 ### Headline diagnostic outcome (NB08c)
 
-![Per-class metric diagnostic panels (A–D)](figures/p1b_metric_diagnostic_panels.png)
+![Per-class metric diagnostic panels (A–D)](../figures/gene_function_ecological_agora/p1b_metric_diagnostic_panels.png)
 
 The four panels:
 - **A** (top-left, log-scale): K = n_clades_with at order rank per class. Both pos HGT and neg housekeeping have median K = 1 — UniRefs are clade-restricted regardless of class. Distributions differ statistically (p < 10⁻¹⁹) but the median is the same; K bias does not explain the order-rank anomaly.
@@ -842,7 +846,7 @@ The full assignment parquet (1.4 GB) lands on MinIO; a 2.69 MB control-panel sub
 
 ### M18 first-pass test (NB09b): MARGINAL with direction reversed
 
-![M18 amplification panel](figures/p2_m18_amplification_panel.png)
+![M18 amplification panel](../figures/gene_function_ecological_agora/p2_m18_amplification_panel.png)
 
 Sankoff parsimony scored on the GTDB-r214 species tree (pruned to 18,989 P1B leaves) for all 748 panel KOs in 11 seconds. Pairwise Cohen's d with M19 cluster-bootstrap CIs (B = 200, KO-level resampling within class):
 
@@ -865,7 +869,7 @@ The "neg_ribosomal" class with median n_present ≈ 29 leaves (out of 18,989) is
 
 ### M18 strict-class re-test (NB09c): PASS
 
-![M18 strict-class panel](figures/p2_m18c_strict_class_panel.png)
+![M18 strict-class panel](../figures/gene_function_ecological_agora/p2_m18c_strict_class_panel.png)
 
 Re-classifying housekeeping KOs by strict KEGG-KO ranges (NB05 cell 14 specifies these ranges as KEGG-curated bacterial controls):
 
@@ -947,13 +951,13 @@ The M18 amplification gate verdict from NB09c (2.69M-row panel subset) reproduce
 
 The d values match the NB09c panel-only test almost exactly (NB09c best d = 3.558 with n_pos = 6, n_neg = 20 — slightly different sample composition explains the small drift). **The substrate-hierarchy claim is reconfirmed at full atlas scale.**
 
-![Phase 2 KO atlas per-rank score distributions](figures/p2_ko_atlas_per_rank.png)
+![Phase 2 KO atlas per-rank score distributions](../figures/gene_function_ecological_agora/p2_ko_atlas_per_rank.png)
 
 ### M22 acquisition-depth attribution (NB10b)
 
 Per-class acquisition-depth distribution over 17M gain events tagged by recipient-rank LCA:
 
-![M22 acquisition-depth distribution per class](figures/p2_m22_acquisition_depth_per_class.png)
+![M22 acquisition-depth distribution per class](../figures/gene_function_ecological_agora/p2_m22_acquisition_depth_per_class.png)
 
 | Class | recent% (genus-level gain) | older_recent% | mid% | older% | **ancient% (phylum-or-above)** | total gains |
 |---|---|---|---|---|---|---|
@@ -1094,7 +1098,7 @@ NB11 ran the Phase 2 headline test against the atlas: do KOs in regulatory KEGG 
 
 **No test achieves the pre-registered d ≥ 0.3 threshold.** Two of four tests show small but statistically significant signals after Bonferroni correction; two are null.
 
-![Phase 2 Tier-1 regulatory-vs-metabolic comparison](figures/p2_nb11_regulatory_vs_metabolic.png)
+![Phase 2 Tier-1 regulatory-vs-metabolic comparison](../figures/gene_function_ecological_agora/p2_nb11_regulatory_vs_metabolic.png)
 
 ### Per-test results
 
@@ -1174,7 +1178,7 @@ NB12 ran the second Phase 2 pre-registered hypothesis test:
 
 ### Verdict: **H1 SUPPORTED at both family and order ranks**
 
-![NB12 Mycobacteriaceae × mycolic-acid summary](figures/p2_nb12_mycobacteriota_mycolic.png)
+![NB12 Mycobacteriaceae × mycolic-acid summary](../figures/gene_function_ecological_agora/p2_nb12_mycobacteriota_mycolic.png)
 
 | Rank | Clade | n_mycolic_KOs | producer d | producer MW-p (>ref) | consumer d | consumer MW-p (<ref) | Verdict |
 |---|---|---|---|---|---|---|---|
@@ -1364,7 +1368,7 @@ The 4-subset census reveals the **architectural-promiscuity-correlates-with-flow
 
 Pre-registered hypothesis (plan v2.11 reframe per M25 — donor-undistinguished, joint Broker OR Open): Cyanobacteria show high Producer + high Participation on PSII Pfam architectures.
 
-![NB16 Cyanobacteria PSII test](figures/p3_nb16_cyanobacteria_psii.png)
+![NB16 Cyanobacteria PSII test](../figures/gene_function_ecological_agora/p3_nb16_cyanobacteria_psii.png)
 
 | Rank | n_KOs | producer Cohen's d | consumer Cohen's d | MW p (producer) | MW p (consumer) | Verdict |
 |---|---|---|---|---|---|---|
@@ -1410,7 +1414,7 @@ Top TCS HK architectures by gain count, all showing ~45% recent / ~4-5% ancient:
 
 The canonical Alm 2006 architecture (HisKA + HATPase_c, equivalent to their IPR005467 single-domain detection scaled to multidomain) appears at 25K gain events with 44.7% recent / 4.5% ancient profile — the recent-skewed signature consistent with Alm 2006's lineage-specific-expansion finding. Full r ≈ 0.74 reproduction (per-genome HPK count vs recent-LSE fraction) is deferred to Phase 4 P4-D3.
 
-![NB17 TCS HK architectural backtest — consumer concordance r=0.67, producer concordance r=0.09; canonical PF00512_PF02518 architecture at 25K gain events](figures/p3_nb17_tcs_hk_architectural.png)
+![NB17 TCS HK architectural backtest — consumer concordance r=0.67, producer concordance r=0.09; canonical PF00512_PF02518 architecture at 25K gain events](../figures/gene_function_ecological_agora/p3_nb17_tcs_hk_architectural.png)
 
 *Purpose:* assess KO ↔ Pfam-architecture concordance for the TCS HK substrate Alm 2006 originally analyzed (HisKA-domain-bearing kinases). *Method:* per-(family × architecture) pp-category vs per-(family × KO) pp-category at family rank, joined via interproscan_domains, Spearman correlation across the 8,498 (family × architecture) tuples that overlap the Phase 2 TCS HK KO-level atlas. *Finding:* consumer-side concordance r=0.673 (confirmatory; passes the 0.6 threshold for treating Phase 3 architectural results as confirmatory rather than exploratory); producer-side concordance r=0.093 (exploratory; below threshold). The mixed concordance is biologically interpretable: consumer scores reflect rank-level cross-clade prevalence (which aggregates similarly across resolutions); producer scores reflect within-clade paralog expansion (where the Pfam-architecture-level grain captures domain-shuffling that the KO grain hides).
 
@@ -1599,7 +1603,7 @@ Outputs: `data/p4d3_correlations.tsv`, `data/p4d3_per_species_hpk_lse.tsv`, `dat
 
 Outputs: `data/p4d5_residualized_atlas.parquet` (13.7M rows), `data/p4d5_diagnostics.json`, `data/p4d5_hypothesis_replication.tsv`, `figures/p4d5_residualization_panel.png`.
 
-![P4-D5 residualization panel](figures/p4d5_residualization_panel.png)
+![P4-D5 residualization panel](../figures/gene_function_ecological_agora/p4d5_residualization_panel.png)
 
 ### What P4-D3 + P4-D5 mean together
 
@@ -1653,7 +1657,7 @@ T3a Mycobacteriaceae × mycolic-acid recovers Pearson r = +0.46 (Spearman +0.41)
 
 Outputs: `data/p4d4_pangenome_openness_per_genus.tsv` (3,539 genera), `data/p4d4_recent_acquisition_vs_openness.tsv` (894 solid-substrate genera), `data/p4d4_diagnostics.json`, `figures/p4d4_openness_vs_acquisition.png`.
 
-![P4-D4 openness vs acquisition](figures/p4d4_openness_vs_acquisition.png)
+![P4-D4 openness vs acquisition](../figures/gene_function_ecological_agora/p4d4_openness_vs_acquisition.png)
 
 ## Phase 4 Deliverable P4-D1 — Phenotype/Ecology Grounding (v2.8, 2026-04-28)
 
@@ -1761,11 +1765,11 @@ Outputs:
 - `data/p4d1_alphaearth_clusters.tsv`, `data/p4d1_alphaearth_diagnostics.json`
 - `figures/p4d1_clade_biome_panel.png`, `figures/p4d1_bacdive_phenotype_panel.png`, `figures/p4d1_alphaearth_env_cluster_panel.png`
 
-![P4-D1 biome enrichment](figures/p4d1_clade_biome_panel.png)
+![P4-D1 biome enrichment](../figures/gene_function_ecological_agora/p4d1_clade_biome_panel.png)
 
-![P4-D1 BacDive phenotype](figures/p4d1_bacdive_phenotype_panel.png)
+![P4-D1 BacDive phenotype](../figures/gene_function_ecological_agora/p4d1_bacdive_phenotype_panel.png)
 
-![P4-D1 AlphaEarth env-clusters](figures/p4d1_alphaearth_env_cluster_panel.png)
+![P4-D1 AlphaEarth env-clusters](../figures/gene_function_ecological_agora/p4d1_alphaearth_env_cluster_panel.png)
 
 ## Phase 4 Deliverable P4-D2 — MGE Context per Gain Event (v2.9, 2026-04-29)
 
@@ -1789,7 +1793,7 @@ P4-D2 measures how often pre-registered atlas KOs travel via mobile genetic elem
 
 **All three pre-registered hypotheses show near-zero MGE-machinery rates** — meaning these KOs are not themselves phage / transposase / integrase / plasmid genes. By KO-category: regulatory KOs show ~10× higher MGE-machinery rate (4.13%) than metabolic (0.37%) or mixed (0.27%), consistent with regulatory products including transposon-bound and phage-bound regulators.
 
-![P4-D2 MGE-context panel — per-KO-category (top), per-pre-registered-hypothesis (middle), per-biome (bottom) MGE-machinery fractions](figures/p4d2_mge_context_panel.png)
+![P4-D2 MGE-context panel — per-KO-category (top), per-pre-registered-hypothesis (middle), per-biome (bottom) MGE-machinery fractions](../figures/gene_function_ecological_agora/p4d2_mge_context_panel.png)
 
 *Purpose:* test whether pre-registered atlas KOs (PSII, mycolic-acid, PUL) move through phage/transposase/integrase/plasmid mechanisms. *Method:* `bakta_annotations.product` keyword regex matching (`phage|transposase|integrase|plasmid|transposon|IS element|prophage|conjugation|recombinase|...`) across 132M Bakta cluster reps; per-(KO × genus) MGE-machinery fraction = MGE-flagged-clusters / KO-bearing-clusters; tagged onto 7.95M M22 recent-gain events. *Finding:* atlas baseline 1.37%; all three pre-registered hypothesis KO sets show ≤0.57% (near-zero), confirming these gene families are not phage/transposase/integrase products themselves; biome-stratified MGE rates similar (~1.1–2.0%, no strong biome-specific elevation).
 
@@ -2044,39 +2048,39 @@ Distinct from M25-deferred composition-based donor inference. For each recent-ra
 
 **Hero 1: Atlas Innovation Tree** — top 20 phyla ranked by recent acquisition fraction; size = log species count; color = dominant biome; ★ marks the three confirmed-hypothesis-bearing phyla (Actinomycetota, Cyanobacteriota, Bacteroidota). Provides a single-image view of where on the bacterial domain innovation happens and in which environments.
 
-![Hero 1 — Atlas Innovation Tree](figures/p4_synthesis_H1_innovation_tree.png)
+![Hero 1 — Atlas Innovation Tree](../figures/gene_function_ecological_agora/p4_synthesis_H1_innovation_tree.png)
 
 **Hero 2: Three-Substrate Convergence Card** — for each confirmed-hypothesis clade, three independent measurement substrates (atlas Cohen's d / biome enrichment Fisher's fold / BacDive phenotype %) shown as a side-by-side row. The project's defining methodological move (independent-substrate convergence ⇒ robust verdict) made visible.
 
-![Hero 2 — Three-Substrate Convergence Card](figures/p4_synthesis_H2_three_substrate_convergence.png)
+![Hero 2 — Three-Substrate Convergence Card](../figures/gene_function_ecological_agora/p4_synthesis_H2_three_substrate_convergence.png)
 
 **Hero 3: Acquisition-Depth Function Spectrum** — per-control-class recent vs ancient gain fraction, with explicit recent-to-ancient ratio annotation. Recovers the atlas centerpiece claim (recent-to-ancient ratio is itself a function-class signature): CRISPR-Cas at 24.5× ratio (high recent / low ancient = HGT-active); housekeeping classes near 1× (recent ≈ ancient = vertical inheritance dominant).
 
-![Hero 3 — Acquisition-Depth Function Spectrum](figures/p4_synthesis_H3_acquisition_depth_spectrum.png)
+![Hero 3 — Acquisition-Depth Function Spectrum](../figures/gene_function_ecological_agora/p4_synthesis_H3_acquisition_depth_spectrum.png)
 
 ### Supporting figures
 
 **S4: Cyanobacteriia × PSII rank-dependence (REVIEW_8 C9 response)** — bar chart of PSII producer Cohen's d at each rank from genus (n=2,350, d=0.08, STABLE) through class (n=21, d=1.50, INNOVATOR-EXCHANGE) to phylum (n=21, d=1.60, INNOVATOR-ISOLATED). Annotation: PSII is a class-defining innovation per Cardona 2018; class-rank verdict is biologically appropriate; genus null is *expected* under that biological framing.
 
-![S4 — PSII rank-dependence ladder](figures/p4_synthesis_S4_psii_rank_dependence.png)
+![S4 — PSII rank-dependence ladder](../figures/gene_function_ecological_agora/p4_synthesis_S4_psii_rank_dependence.png)
 
 **S5: Pre-Registered Hypothesis Verdict Card** — tabular figure with cell-color verdict per (hypothesis × substrate); single-image status of the project's pre-registered claims.
 
-![S5 — Hypothesis verdict card](figures/p4_synthesis_S5_hypothesis_verdict_card.png)
+![S5 — Hypothesis verdict card](../figures/gene_function_ecological_agora/p4_synthesis_S5_hypothesis_verdict_card.png)
 
 **S6: Function × Phylum × Environment Flow** — three-column parallel-coordinates flow diagram (KO category → recipient phylum → dominant biome), line width ∝ recent-gain count. The user's "organism × environment × function interactions" diagram. Visualizes which function classes flow into which phyla in which environments at recent ranks.
 
-![S6 — Function × Phylum × Environment flow](figures/p4_synthesis_S6_function_env_flow.png)
+![S6 — Function × Phylum × Environment flow](../figures/gene_function_ecological_agora/p4_synthesis_S6_function_env_flow.png)
 
 ### NB22-deliverable figures (originally planned)
 
 **N7: Atlas heatmap** — % of (family × KO) tuples that are Innovator-* per (top-20 phylum × control class) at family rank. Recovers the original NB22 deliverable. Strong patterns visible at expected positions (Cyanobacteriota and Actinomycetota show elevated Innovator-* fractions for AMR + CRISPR-Cas; housekeeping classes show low Innovator-* across the board).
 
-![N7 — Atlas heatmap](figures/p4_synthesis_N7_atlas_heatmap.png)
+![N7 — Atlas heatmap](../figures/gene_function_ecological_agora/p4_synthesis_N7_atlas_heatmap.png)
 
 **N8: Four-quadrant summary at genus rank** — left panel: top-8 phyla quadrant distribution stacked bar (high+medium confidence subset); right panel: confirmed-hypothesis clades' quadrant distribution. Mycobacteriaceae shows pronounced Open-Innovator dominance (75%) consistent with NB12 + tree-proxy; Cyanobacteriia and Bacteroidota show majority Open-Innovator with tail of Broker / Sink reflecting environment-driven flow.
 
-![N8 — Four-quadrant summary at genus rank](figures/p4_synthesis_N8_four_quadrant_summary.png)
+![N8 — Four-quadrant summary at genus rank](../figures/gene_function_ecological_agora/p4_synthesis_N8_four_quadrant_summary.png)
 
 ### leaf_consistency-leveraged synthesis findings (v3.4 additions)
 
@@ -2091,7 +2095,7 @@ After landing leaf_consistency at v3.3, three additional synthesis figures (NB28
 
 This is the project's cleanest **independent validation of the housekeeping-vs-HGT-active framework via a measurement axis (leaf_consistency) that wasn't used in any pre-registered hypothesis test**.
 
-![H3-B — Control-class signature plane](figures/p4_synthesis_H3b_control_class_signature_plane.png)
+![H3-B — Control-class signature plane](../figures/gene_function_ecological_agora/p4_synthesis_H3b_control_class_signature_plane.png)
 
 **S7 — Per-hypothesis leaf_consistency distribution: novel within-clade heterogeneity finding:**
 
@@ -2105,13 +2109,13 @@ This is the project's cleanest **independent validation of the housekeeping-vs-H
 
 **Implication for the NB12 finding**: the supported claim is *narrower* than "Mycobacteriaceae innovate mycolic-acid biosynthesis." A more accurate statement is: "*Sub-clades of Mycobacteriaceae* are mycolic-acid Innovator-Isolated; the family-rank effect is a population-mixture average across mycolic-positive (Innovator-Isolated) and mycolic-negative members." This refinement is biologically more interpretable and consistent with the host-pathogen biome enrichment (P4-D1 NB23: Mycobacteriaceae 7.88× host-pathogen) which is also driven primarily by the mycolic-positive pathogenic sub-clades.
 
-![S7 — Per-hypothesis leaf_consistency distribution](figures/p4_synthesis_S7_hypothesis_leaf_consistency.png)
+![S7 — Per-hypothesis leaf_consistency distribution](../figures/gene_function_ecological_agora/p4_synthesis_S7_hypothesis_leaf_consistency.png)
 
 **S8 — Atlas confidence ridge (per-rank leaf_consistency distribution):** ridge plot showing leaf_consistency density per depth_bin/rank. Recovers the same signal as the Stage 3c table (recent 0.34 → ancient 0.20) but as full distributions, not just summary statistics. Recent gains have a long right tail toward 1.0 (clades where the KO is fully fixed); ancient gains compress toward 0 (KO retained in a small fraction of phylum members after diversification + loss).
 
 This figure is **the project's atlas-wide signal-confidence map**: it shows where in the depth spectrum the data is most reliable (recent, where attribution is clean) vs where uncertainty grows (ancient, where the underlying signal is diluted by subsequent within-clade losses). Honest framing of the atlas's reliability profile, made visible.
 
-![S8 — Atlas confidence ridge](figures/p4_synthesis_S8_atlas_confidence_ridge.png)
+![S8 — Atlas confidence ridge](../figures/gene_function_ecological_agora/p4_synthesis_S8_atlas_confidence_ridge.png)
 
 ### Methodology contribution from leaf_consistency
 
@@ -2309,15 +2313,15 @@ Outputs: `data/p4_multiple_testing_correction.json`, `data/p4_multiple_testing_c
 
 Three additional pilot diagnostic figures supporting NB02 null model construction:
 
-![Phase 1A pilot null producer distribution](figures/p1a_null_producer_distribution.png)
+![Phase 1A pilot null producer distribution](../figures/gene_function_ecological_agora/p1a_null_producer_distribution.png)
 
 *Purpose:* visualize the producer-z null cohort distribution (per-rank prevalence-bin clade-matched neutral-family permutation null, M5/M6) to confirm cohort moments are well-defined and not pathologically thin in any bin. *Method:* per (rank, prevalence_bin) cohort moments (mean and std of paralog count) computed from neutral-family UniRef50s in the same cohort; plotted as histograms of cohort size + scatter of cohort mean/std against prevalence bin. *Finding:* all bins have ≥30 cohort members at all 5 ranks, validating that producer-z scoring against this null is statistically tractable. (Notebook: `02_p1a_null_model_construction.ipynb`.)
 
-![Phase 1A pilot null consumer distribution](figures/p1a_null_consumer_distribution.png)
+![Phase 1A pilot null consumer distribution](../figures/gene_function_ecological_agora/p1a_null_consumer_distribution.png)
 
 *Purpose:* visualize the consumer-z null distribution (single-rank version, superseded by per-rank null in NB02 Phase 1A v1.1 + Phase 1B M16 Sankoff diagnostic). *Method:* permutation null on UniRef50 prevalence patterns; consumer score = z-vs-permutation. *Finding:* unimodal null shape per rank with distinct shapes per rank validates that consumer-z is comparable across ranks; this single-rank-version was later superseded by NB08c Sankoff parsimony diagnostic (M14) that uses tree-aware reconciliation. (Notebook: `02_p1a_null_model_construction.ipynb`. Superseded — kept for provenance.)
 
-![Phase 1A pilot paralog count distribution by class](figures/p1a_paralog_count_distribution.png)
+![Phase 1A pilot paralog count distribution by class](../figures/gene_function_ecological_agora/p1a_paralog_count_distribution.png)
 
 *Purpose:* sanity-check that positive controls (AMR, CRISPR-Cas, natural_expansion) and negative controls (ribosomal, tRNA-synthetase, RNAP core) show expected paralog-count distributions before scoring. *Method:* boxplot of paralog count per UniRef50 within each control class, on the 1K species × 1.2K UniRef50 pilot. *Finding:* natural_expansion shows the wide distribution expected of paralog-rich families; positive controls (AMR, CRISPR-Cas) show modest paralog inflation; negative controls cluster tightly at 1 paralog (consistent with single-copy housekeeping). (Notebook: `01_p1a_pilot_data_extraction.ipynb`.)
 

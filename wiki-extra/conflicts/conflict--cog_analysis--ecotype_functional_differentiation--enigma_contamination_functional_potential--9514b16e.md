@@ -1,4 +1,24 @@
-<!-- tension-hash: 7e3317ca95842077 -->
+---
+title: Coverage-Sensitive Functional Associations Versus Resolution-Robust Nulls
+type: Conflict
+sources:
+- id: enigma_contamination_functional_potential
+  resource: ../../wiki/summaries/enigma_contamination_functional_potential__REPORT.md
+  title: enigma contamination functional potential
+- id: functional_dark_matter
+  resource: ../../wiki/summaries/functional_dark_matter__REPORT.md
+  title: functional dark matter
+- id: ecotype_functional_differentiation
+  resource: ../../wiki/summaries/ecotype_functional_differentiation__REPORT.md
+  title: ecotype functional differentiation
+- id: cog_analysis
+  resource: ../../wiki/summaries/cog_analysis__REPORT.md
+  title: cog analysis
+- id: plant_microbiome_ecotypes
+  resource: ../../wiki/summaries/plant_microbiome_ecotypes__REPORT.md
+  title: plant microbiome ecotypes
+---
+<!-- tension-hash: b171a95f6ca7ffc4 -->
 # Coverage-Sensitive Functional Associations Versus Resolution-Robust Nulls
 
 The disagreement concerns whether functional differences associated with contamination are genuine ecological signals that emerge under sensitive or fine-grained analyses, or methodological artifacts that disappear under stricter coverage adjustment, taxonomic aggregation, and predeclared testing. It matters because the same corpus contains nominally significant exploratory results, null confirmatory genus-level modes, and extensive finer-resolution structure whose interpretation remains vulnerable to compositional and taxonomic confounding.
@@ -7,18 +27,18 @@ The disagreement concerns whether functional differences associated with contami
 
 ### **Coverage-sensitive and finer-resolution analyses detect functional structure**
 
-The relaxed coverage-adjusted model yielded FDR q = 0.0462, while the functional-dark-matter report found 29 of 47 testable lab–field clusters concordant (61.7%) and Fisher’s combined probability across 47 individual tests gave p = 0.031. [src: enigma_contamination_functional_potential] [src: functional_dark_matter] NMDC confirmed all 4 testable pre-registered abiotic predictions. [src: functional_dark_matter] Within-species ecotype analysis detected functional differentiation, supporting the premise that finer functional structure exists, although the analysis lacked within-species phylogenetic controls. [src: ecotype_functional_differentiation] The COG comparison found consistent core-versus-novel functional partitioning across 32 species. [src: cog_analysis] Plant-associated data also found 78.7% of 1,115 plant-associated species classified as dual-nature under a refined marker scheme. [src: plant_microbiome_ecotypes]
+The relaxed coverage-adjusted model yielded FDR q = 0.0462, while the functional-dark-matter report found 29 of 47 testable lab–field clusters concordant (61.7%) and Fisher’s combined probability across 47 individual tests gave p = 0.031. [^enigma_contamination_functional_potential] [^functional_dark_matter] NMDC confirmed all 4 testable pre-registered abiotic predictions. [^functional_dark_matter] Within-species ecotype analysis detected functional differentiation, supporting the premise that finer functional structure exists, although the analysis lacked within-species phylogenetic controls. [^ecotype_functional_differentiation] The COG comparison found consistent core-versus-novel functional partitioning across 32 species. [^cog_analysis] Plant-associated data also found 78.7% of 1,115 plant-associated species classified as dual-nature under a refined marker scheme. [^plant_microbiome_ecotypes]
 
 ### **Strict, aggregate, or validation-focused analyses do not establish a robust contamination association**
 
-The strict coverage-adjusted model yielded FDR q = 0.130, and both confirmatory genus-level modes were null after predeclared testing. [src: enigma_contamination_functional_potential] The one-sided binomial test for the 29 of 47 concordant lab–field clusters gave p = 0.072. [src: functional_dark_matter] Although 441 of 449 exploratory trait tests reached FDR < 0.05, the report cautions that this was largely because of compositional coupling. [src: functional_dark_matter] Compartment effects in plant-associated data explained only 0.060 of location-only variance, while the earlier large effect was reduced to R² = 0.072 after removal of genome-rich species; categorical assignments misclassified all four neutral controls in a curated 18-organism panel. [src: plant_microbiome_ecotypes] The ENIGMA analysis did not find a robust contamination-associated shift in coarse COG proxies at genus resolution. [src: cog_analysis] [src: enigma_contamination_functional_potential]
+The strict coverage-adjusted model yielded FDR q = 0.130, and both confirmatory genus-level modes were null after predeclared testing. [^enigma_contamination_functional_potential] The one-sided binomial test for the 29 of 47 concordant lab–field clusters gave p = 0.072. [^functional_dark_matter] Although 441 of 449 exploratory trait tests reached FDR < 0.05, the report cautions that this was largely because of compositional coupling. [^functional_dark_matter] Compartment effects in plant-associated data explained only 0.060 of location-only variance, while the earlier large effect was reduced to R² = 0.072 after removal of genome-rich species; categorical assignments misclassified all four neutral controls in a curated 18-organism panel. [^plant_microbiome_ecotypes] The ENIGMA analysis did not find a robust contamination-associated shift in coarse COG proxies at genus resolution. [^cog_analysis] [^enigma_contamination_functional_potential]
 
 ## Possible Reconciliations
 
-- **Hypothesis — coverage and retained-abundance sensitivity:** relaxed adjustment may retain signal that strict adjustment removes, without either estimate being an average or definitive truth. [src: enigma_contamination_functional_potential]
-- **Hypothesis — resolution and taxonomic bridging:** finer functional structure may be real within species or lineages but may not aggregate into a genus-level contamination association. [src: ecotype_functional_differentiation] [src: enigma_contamination_functional_potential]
-- **Hypothesis — compositional and genome-size artifacts:** apparent structure may be amplified by compositional coupling, taxonomic composition, genome size, or classifier definitions. [src: functional_dark_matter] [src: plant_microbiome_ecotypes]
-- **Hypothesis — different estimands:** COG novelty partitioning measures broad evolutionary organization, whereas ENIGMA tests a site-level ecological association after taxonomic bridging. [src: cog_analysis] [src: enigma_contamination_functional_potential]
+- **Hypothesis — coverage and retained-abundance sensitivity:** relaxed adjustment may retain signal that strict adjustment removes, without either estimate being an average or definitive truth. [^enigma_contamination_functional_potential]
+- **Hypothesis — resolution and taxonomic bridging:** finer functional structure may be real within species or lineages but may not aggregate into a genus-level contamination association. [^ecotype_functional_differentiation] [^enigma_contamination_functional_potential]
+- **Hypothesis — compositional and genome-size artifacts:** apparent structure may be amplified by compositional coupling, taxonomic composition, genome size, or classifier definitions. [^functional_dark_matter] [^plant_microbiome_ecotypes]
+- **Hypothesis — different estimands:** COG novelty partitioning measures broad evolutionary organization, whereas ENIGMA tests a site-level ecological association after taxonomic bridging. [^cog_analysis] [^enigma_contamination_functional_potential]
 
 ## Resolving Work
 
@@ -26,3 +46,9 @@ The strict coverage-adjusted model yielded FDR q = 0.130, and both confirmatory 
 - Use strain-resolved metagenomics and within-species phylogenetic controls to test whether ecotype functional differences persist independently of lineage.
 - Apply compositional-null simulations and genome-size-matched controls to determine whether the 441 of 449 exploratory hits and plant-associated classifications exceed artifact expectations.
 - Replicate the genus-level and finer-resolution analyses in independent contamination gradients, asking whether associations reproduce across sites, taxonomic resolutions, and functional definitions.
+
+[^enigma_contamination_functional_potential]: [enigma contamination functional potential](../../wiki/summaries/enigma_contamination_functional_potential__REPORT.md)
+[^functional_dark_matter]: [functional dark matter](../../wiki/summaries/functional_dark_matter__REPORT.md)
+[^ecotype_functional_differentiation]: [ecotype functional differentiation](../../wiki/summaries/ecotype_functional_differentiation__REPORT.md)
+[^cog_analysis]: [cog analysis](../../wiki/summaries/cog_analysis__REPORT.md)
+[^plant_microbiome_ecotypes]: [plant microbiome ecotypes](../../wiki/summaries/plant_microbiome_ecotypes__REPORT.md)

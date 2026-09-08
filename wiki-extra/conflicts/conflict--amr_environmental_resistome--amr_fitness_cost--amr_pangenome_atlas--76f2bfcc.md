@@ -1,19 +1,33 @@
+---
+title: Broad ecological AMR association vs weak within-species environmental structure
+type: Conflict
+sources:
+- id: amr_environmental_resistome
+  resource: ../../wiki/summaries/amr_environmental_resistome__REPORT.md
+  title: amr environmental resistome
+- id: ecotype_analysis
+  resource: ../../wiki/summaries/ecotype_analysis__REPORT.md
+  title: ecotype analysis
+- id: amr_strain_variation
+  resource: ../../wiki/summaries/amr_strain_variation__REPORT.md
+  title: amr strain variation
+---
 <!-- tension-hash: 87f3f57020205fca -->
 # Broad ecological AMR association vs weak within-species environmental structure
 
-The [[concepts/environmental-resistome]] record presents a disagreement about what environmental AMR associations establish. At broad ecological scales, environment explains measurable AMR-composition variance and the association survives several controls. Yet within species, effects are uncommon, heterogeneous, and vulnerable to phylogenetic, sampling, geographic, annotation, and classification limitations. The distinction matters because a community-level association does not by itself demonstrate that environmental exposure causes selection within populations.
+The [environmental-resistome](../../wiki/concepts/environmental-resistome.md) record presents a disagreement about what environmental AMR associations establish. At broad ecological scales, environment explains measurable AMR-composition variance and the association survives several controls. Yet within species, effects are uncommon, heterogeneous, and vulnerable to phylogenetic, sampling, geographic, annotation, and classification limitations. The distinction matters because a community-level association does not by itself demonstrate that environmental exposure causes selection within populations.
 
 ## Evidence Sides
 
 **Broad ecological association is robust**
 
-Environment effects explain 2–13% of AMR-composition variance (η² = 0.02–0.13), although phylogeny, sampling, isolation, gene mobility, and annotation coverage may explain part of these effects. [src: amr_environmental_resistome] The environment–AMR association persisted after majority-vote thresholds and phylum- and family-level controls, supporting an ecological signal beyond a simple species-label artifact. [src: amr_environmental_resistome] These results support an association that is not reducible to one obvious classification control.
+Environment effects explain 2–13% of AMR-composition variance (η² = 0.02–0.13), although phylogeny, sampling, isolation, gene mobility, and annotation coverage may explain part of these effects. [^amr_environmental_resistome] The environment–AMR association persisted after majority-vote thresholds and phylum- and family-level controls, supporting an ecological signal beyond a simple species-label artifact. [^amr_environmental_resistome] These results support an association that is not reducible to one obvious classification control.
 
 **Within-species structure and causal selection remain weak or unresolved**
 
-Only 20 of 141 testable families (14%) showed significant within-family effects after FDR correction. Whole-genome ecotype analysis found environmental effects significant and positive in 12 species (7.0%), significant and negative in 4 species (2.3%), and absent in 156 species (90.7%). [src: amr_environmental_resistome, ecotype_analysis] Strain analysis found AMR ecotypes in 19.5% of eligible species, but metadata were sparse and only 2 species passed strict testing criteria. [src: amr_strain_variation] Thus broad ecological association remains compatible with weak or unresolved within-species environmental structure. [src: amr_environmental_resistome, ecotype_analysis, amr_strain_variation]
+Only 20 of 141 testable families (14%) showed significant within-family effects after FDR correction. Whole-genome ecotype analysis found environmental effects significant and positive in 12 species (7.0%), significant and negative in 4 species (2.3%), and absent in 156 species (90.7%). [^amr_environmental_resistome][^ecotype_analysis] Strain analysis found AMR ecotypes in 19.5% of eligible species, but metadata were sparse and only 2 species passed strict testing criteria. [^amr_strain_variation] Thus broad ecological association remains compatible with weak or unresolved within-species environmental structure. [^amr_environmental_resistome][^ecotype_analysis][^amr_strain_variation]
 
-The positive relationship between AMR and phylogenetic distance in 701/1,261 species may reflect lineage-associated acquisition or uneven sampling of lineages across environments; available analyses do not separate these explanations. Geographic coordinates were often missing or imprecise, and partial correlations assume linear relationships between distance matrices. [src: amr_strain_variation, ecotype_analysis]
+The positive relationship between AMR and phylogenetic distance in 701/1,261 species may reflect lineage-associated acquisition or uneven sampling of lineages across environments; available analyses do not separate these explanations. Geographic coordinates were often missing or imprecise, and partial correlations assume linear relationships between distance matrices. [^amr_strain_variation][^ecotype_analysis]
 
 ## Possible Reconciliations
 
@@ -28,3 +42,7 @@ The positive relationship between AMR and phylogenetic distance in 701/1,261 spe
 - Apply hierarchical models that partition species, lineage, site, and environment effects, asking whether environment explains residual within-lineage AMR variation.
 - Replace majority-vote labels with gene- and allele-level resistance profiles, asking whether within-species signals persist when genomic variation is retained.
 - Improve geographic and exposure resolution, then compare nonlinear and spatial models to determine whether weak effects reflect inadequate environmental representation or absent adaptation.
+
+[^amr_environmental_resistome]: [amr environmental resistome](../../wiki/summaries/amr_environmental_resistome__REPORT.md)
+[^ecotype_analysis]: [ecotype analysis](../../wiki/summaries/ecotype_analysis__REPORT.md)
+[^amr_strain_variation]: [amr strain variation](../../wiki/summaries/amr_strain_variation__REPORT.md)

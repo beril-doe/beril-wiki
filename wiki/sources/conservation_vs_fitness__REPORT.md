@@ -1,10 +1,14 @@
+---
+title: 'Report: Conservation vs Fitness -- Linking FB Genes to Pangenome Clusters'
+type: Source
+---
 # Report: Conservation vs Fitness -- Linking FB Genes to Pangenome Clusters
 
 ## Key Findings
 
 ### Link Table (Phase 1)
 
-![DIAMOND Identity Distributions](figures/identity_distributions.png)
+![DIAMOND Identity Distributions](../figures/conservation_vs_fitness/identity_distributions.png)
 
 - **44 of 48** FB organisms mapped to pangenome species clades
 - **177,863 gene-to-cluster links** at 100.0% median protein identity, 94.2% median gene coverage
@@ -12,7 +16,7 @@
 - 4 organisms unmatched: Cola, Kang, Magneto, SB2B (species had too few genomes in GTDB for pangenome construction)
 - Conservation breakdown: 145,821 core (82.0%), 32,042 auxiliary (18.0%) -- of which 7,574 are singletons (singletons are a subset of auxiliary)
 
-![Conservation Breakdown](figures/conservation_breakdown.png)
+![Conservation Breakdown](../figures/conservation_vs_fitness/conservation_breakdown.png)
 
 *(Notebook: 01_organism_mapping.ipynb, 03_build_link_table.ipynb)*
 
@@ -24,7 +28,7 @@
 - **18 of 33 organisms** show statistically significant enrichment (Fisher's exact test, BH-FDR q < 0.05)
 - Strongest signal: *Methanococcus maripaludis* S2 (OR=5.21), *Ralstonia syzygii* PSI07 (OR=3.41), *Marinobacter adhaerens* (OR=3.08)
 
-![Essential vs Core Forest Plot](figures/essential_vs_core_forest_plot.png)
+![Essential vs Core Forest Plot](../figures/conservation_vs_fitness/essential_vs_core_forest_plot.png)
 
 *(Notebook: 04_essential_conservation.ipynb)*
 
@@ -39,9 +43,9 @@
 
 **Essential-core genes** are the most enzyme-rich (41.9%) and best-annotated (87% with known function). They are enriched in Protein Metabolism (+13.7 percentage points vs non-essential), Cofactors/Vitamins (+6.2%), Cell Wall (+3.9%), and Fatty Acid biosynthesis (+3.1%). They are depleted in Carbohydrates (-7.9%), Amino Acids (-5.6%), and Membrane Transport (-4.0%) -- functions that tend to be conditionally important rather than universally essential.
 
-![Enzyme Classification Breakdown](figures/essential_enzyme_breakdown.png)
+![Enzyme Classification Breakdown](../figures/conservation_vs_fitness/essential_enzyme_breakdown.png)
 
-![SEED Functional Category Heatmap](figures/essential_seed_toplevel_heatmap.png)
+![SEED Functional Category Heatmap](../figures/conservation_vs_fitness/essential_seed_toplevel_heatmap.png)
 
 *(Notebook: 04_essential_conservation.ipynb)*
 
@@ -51,13 +55,13 @@
 
 ### Validation
 
-![Gene Length Validation](figures/essential_length_validation.png)
+![Gene Length Validation](../figures/conservation_vs_fitness/essential_length_validation.png)
 
 Gene length validation confirms that essential genes are slightly shorter on average, consistent with some insertion bias in transposon data.
 
-![Enrichment by Context](figures/essential_enrichment_by_context.png)
+![Enrichment by Context](../figures/conservation_vs_fitness/essential_enrichment_by_context.png)
 
-![Enrichment by Lifestyle](figures/essential_enrichment_by_lifestyle.png)
+![Enrichment by Lifestyle](../figures/conservation_vs_fitness/essential_enrichment_by_lifestyle.png)
 
 Clade size and lifestyle stratification show that the essential-core enrichment is robust across diverse genomic contexts.
 

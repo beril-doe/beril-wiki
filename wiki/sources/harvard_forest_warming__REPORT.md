@@ -1,3 +1,7 @@
+---
+title: 'Report: Harvard Forest Long-Term Warming — DNA vs RNA Functional Response'
+type: Source
+---
 # Report: Harvard Forest Long-Term Warming — DNA vs RNA Functional Response
 
 ## Summary
@@ -8,7 +12,7 @@ The 25-year +5°C soil warming experiment at Harvard Forest Barre Woods (NMDC `n
 
 ### 1. Community composition reproduces the published Actinobacteria-up / Acidobacteria-down signal
 
-![Phylum-level relative abundance and warming response](figures/03_phylum_bars.png)
+![Phylum-level relative abundance and warming response](../figures/harvard_forest_warming/03_phylum_bars.png)
 
 Per-phylum Welch t-test on kraken2 read-based relative abundance (n=14 control + 14 heated direct samples, BH-FDR across phyla × horizon):
 
@@ -26,7 +30,7 @@ PERMANOVA on Bray-Curtis genus distances: R²(treatment)=7.6% (p=0.069), R²(hor
 
 ### 2. H1 is not supported — DNA and RNA functional pools respond comparably to warming
 
-![PCoA panels for DNA and RNA functional pools](figures/04_dna_vs_rna_pcoa.png)
+![PCoA panels for DNA and RNA functional pools](../figures/harvard_forest_warming/04_dna_vs_rna_pcoa.png)
 
 The originally proposed H1 (RNA composition shifts more than DNA under warming) is **not supported** once a horizon × incubation confound is removed. In the paired n=25 subset (samples with both DNA and RNA), PERMANOVA pseudo-F for treatment was 3.12 in DNA (R²=11.9%, p=0.020) vs 0.76 in RNA (R²=3.2%, p=0.60), seemingly contradicting H1 in the opposite direction. However, the paired subset confounds horizon with incubation (every organic sample is incubated, every mineral sample is direct).
 
@@ -53,7 +57,7 @@ The clean comparable-R² verdict here therefore does not rule out an early trans
 
 ### 3. H2 is partially supported — C-cycling KOs are enriched in heated DNA-organic; methanotrophy and glyoxylate genes UP in RNA
 
-![Volcano plot: per-KO heated-vs-control DA, with C-cycling KOs highlighted](figures/05_c_cycling_volcano.png)
+![Volcano plot: per-KO heated-vs-control DA, with C-cycling KOs highlighted](../figures/harvard_forest_warming/05_c_cycling_volcano.png)
 
 A curated 62-KO C-cycling list (CAZymes, peptidases, TCA, β-oxidation, aromatic catabolism, methane, C1; committed at `user_data/c_cycling_kos.tsv`) was tested for enrichment in heated-up KOs (q<0.10, log2 FC > 0):
 
@@ -68,7 +72,7 @@ The DNA-organic enrichment is significant. The RNA pool shows no individual KOs 
 
 ### 4. Methanotrophy (pmoA/pmoB) and the glyoxylate cycle are upregulated under warming
 
-![Spotlight on pmoA/pmoB and glyoxylate cycle in RNA pool](figures/08_synthesis.png)
+![Spotlight on pmoA/pmoB and glyoxylate cycle in RNA pool](../figures/harvard_forest_warming/08_synthesis.png)
 
 Specific carbon-cycling RNA-pool signals (nominal p, do not survive FDR across 14K KOs):
 
@@ -89,7 +93,7 @@ These signals are biologically directional and consistent across horizons even t
 
 ### 5. H3 is supported compositionally — most warming responses are horizon-specific
 
-![Per-KO log2 FC scatter: organic vs mineral, with C-cycling KOs highlighted](figures/06_horizon_interaction.png)
+![Per-KO log2 FC scatter: organic vs mineral, with C-cycling KOs highlighted](../figures/harvard_forest_warming/06_horizon_interaction.png)
 
 KO-level log2 FC for warming is only weakly correlated between organic and mineral horizons:
 
@@ -104,7 +108,7 @@ Most warming responses are horizon-specific (~39% of DNA KOs are organic-only, m
 
 ### 6. Bonus — heated mineral soils have fewer detectable metabolites
 
-![Per-sample ChEBI metabolite richness by treatment × horizon](figures/07_metabolite_heatmap.png)
+![Per-sample ChEBI metabolite richness by treatment × horizon](../figures/harvard_forest_warming/07_metabolite_heatmap.png)
 
 | Treatment × Horizon | Mean ChEBI count | MW p (heated vs control) |
 |---------------------|------------------|--------------------------|
@@ -127,13 +131,13 @@ ChEBI label resolution is left as a follow-up since this project does not query 
 
 ### Multi-panel synthesis
 
-![Synthesis of all six findings](figures/08_synthesis.png)
+![Synthesis of all six findings](../figures/harvard_forest_warming/08_synthesis.png)
 
 The synthesis figure summarizes the six key results above in a single panel: phylum-level treatment effect (A), PERMANOVA R² by factor × pool (B), H1 sensitivity in direct samples (C), C-cycling enrichment (D), RNA spotlight on methanotrophy and glyoxylate (E), and per-sample metabolite richness (F).
 
 ### Sample design
 
-![Sample × omics-layer coverage matrix](figures/01_design.png)
+![Sample × omics-layer coverage matrix](../figures/harvard_forest_warming/01_design.png)
 
 42 biosamples in a factorial design: treatment (control vs heated) × horizon (organic vs mineral) × incubation (direct vs lab-incubated). DNA cohort n=28 (mineral direct + organic incubated), RNA cohort n=39 (full mineral direct + organic direct + organic incubated). Coverage is unbalanced because the underlying NMDC pipeline did not produce metagenomes from organic-direct or some mineral-direct samples — this drives the H1 sensitivity caveat in Finding 2.
 

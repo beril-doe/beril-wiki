@@ -1,10 +1,15 @@
+---
+title: 'Report: Subsurface Bacillota_B Specialization — What Distinguishes Deep-Clay
+  Lineages from Soil Congeners?'
+type: Source
+---
 # Report: Subsurface Bacillota_B Specialization — What Distinguishes Deep-Clay Lineages from Soil Congeners?
 
 ## Key Findings
 
 ### Finding 1 — 547 eggNOG OGs are significantly enriched in deep-clay Bacillota_B vs soil-baseline Bacillota_B; the enriched set falls into the pre-registered functional categories (anaerobic respiration, sporulation revival, mineral attachment, regulators, osmoadaptation), with anaerobic respiration the largest hit (H1, strongly supported)
 
-![4-panel synthesis figure](figures/summary_figure.png)
+![4-panel synthesis figure](../figures/bacillota_b_subsurface_accessory/summary_figure.png)
 
 Per-OG Fisher's exact (anchor n=10 vs baseline n=62) on 14,109 Firmicutes-level eggNOG OGs, BH-FDR corrected. Filters: q<0.05, fold-difference≥3, ≥3 anchor genomes positive. **547 OGs enriched** in deep-clay anchor — far above the H1 prediction of "≥10". Pre-registered functional categories (keyword-scanned on eggNOG `Description`/`Preferred_name` + bakta `gene`/`product`):
 

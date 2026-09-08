@@ -1,16 +1,20 @@
+---
+title: 'Report: Metal-Specific vs General Stress Genes'
+type: Source
+---
 # Report: Metal-Specific vs General Stress Genes
 
 ## Key Findings
 
 ### 1. 55% of Metal-Important Genes Are Metal-Specific
 
-![Specificity breakdown by organism](figures/specificity_breakdown.png)
+![Specificity breakdown by organism](../figures/metal_specificity/specificity_breakdown.png)
 
 Of the 7,609 metal-important gene records with fitness matrix data across 24 organisms, 4,177 (54.9%) are metal-specific — they show significant fitness defects under metal stress but a <5% sick rate across 5,945 non-metal experiments. The remaining genes split into general sick (2,888, 38.0%) and metal+stress (544, 7.2%). This classification is robust across thresholds: at 2% sick rate, ~41% are metal-specific; at 10%, ~67% are.
 
 **Coverage note**: 7 of 31 metal-tested organisms (ANA3, Dino, Keio, MR1, Miya, PV4, SB2B) could not be processed because their metal-important gene locusIds did not match the fitness matrix index format. The 24 included organisms account for 7,609 of 12,838 metal-important gene records (59.3%). The excluded organisms are taxonomically diverse and their absence is not expected to introduce systematic bias.
 
-![Threshold sensitivity](figures/threshold_sensitivity.png)
+![Threshold sensitivity](../figures/metal_specificity/threshold_sensitivity.png)
 
 Per-metal specificity varies across metals but — with DvH now included — essential metals show substantial specificity: Manganese (60.6%), Molybdenum (60.5%), Tungsten (56.5%), Selenium (46.4%). Toxic metals range from 42-56% metal-specific. Iron is lowest at 21.9%, likely reflecting its central role in core metabolism.
 
@@ -18,7 +22,7 @@ Per-metal specificity varies across metals but — with DvH now included — ess
 
 ### 2. Metal-Specific Genes Are Core-Enriched but Less So Than General Sick Genes
 
-![Conservation by specificity](figures/conservation_by_specificity.png)
+![Conservation by specificity](../figures/metal_specificity/conservation_by_specificity.png)
 
 Core fractions across the 22 organisms with pangenome links, reported as both **pooled** (total core / total genes) and **organism-mean** (mean of per-organism core fractions):
 
@@ -41,7 +45,7 @@ All three categories are significantly core-enriched above baseline. Metal-speci
 
 ### 3. Metal-Specific Genes Are Enriched for Metal Resistance Functions
 
-![Functional comparison](figures/functional_comparison.png)
+![Functional comparison](../figures/metal_specificity/functional_comparison.png)
 
 Metal-specific genes are 1.64x more likely to match metal-resistance keywords (efflux, transporter, metal, CDF, siderophore, etc.) than general sick genes (12.2% vs 7.8%, Fisher exact OR=1.64, p=2.4e-8). Conversely, general sick genes show slightly higher enrichment for general stress keywords (DNA repair, cell wall, chaperone, etc.) at 11.5% vs 13.7%. This confirms the specificity classification captures biologically meaningful categories.
 

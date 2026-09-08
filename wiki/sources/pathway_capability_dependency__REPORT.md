@@ -1,3 +1,7 @@
+---
+title: 'Report: Metabolic Capability vs Dependency'
+type: Source
+---
 # Report: Metabolic Capability vs Dependency
 
 ## Executive Summary
@@ -14,7 +18,7 @@ At the pan-bacterial scale (2,810 species with 10+ genomes), species with more v
 
 ### 1. Pathway Completeness Alone Is Insufficient to Predict Metabolic Dependency
 
-![Four-category overview](figures/fig1_four_category_overview.png)
+![Four-category overview](../figures/pathway_capability_dependency/fig1_four_category_overview.png)
 
 Of 161 classified organism-pathway pairs (7 Fitness Browser organisms, 23 GapMind pathways), only 35.4% (57/161) are Active Dependencies where a complete pathway contains fitness-important genes. The largest single category is Latent Capability at 41.0% (66/161): pathways that are genomically complete but whose constituent genes show no significant fitness defects under standard conditions. An additional 14.9% (24/161) are Incomplete but Important -- pathways that GapMind scores as incomplete yet whose mapped genes are fitness-important, suggesting annotation gaps or salvage routes. Only 8.7% (14/161) are Missing (neither complete nor important).
 
@@ -24,7 +28,7 @@ The composite importance score integrates three dimensions: 40% essentiality (fr
 
 ### 2. All "Latent Capabilities" Become Important Under Specific Conditions
 
-![Condition-type shifts](figures/fig5_condition_type_shifts.png)
+![Condition-type shifts](../figures/pathway_capability_dependency/fig5_condition_type_shifts.png)
 
 Condition-type stratification -- separating fitness effects by nitrogen source, carbon source, stress, and other conditions -- reveals that all 66 Latent Capability pathway-organism pairs become fitness-important under at least one condition type. This is consistent with the core_gene_tradeoffs finding that 28,017 genes across the Fitness Browser are "costly in lab but conserved in nature." The conditions that most frequently trigger reclassification are nitrogen limitation, stress, and carbon limitation.
 
@@ -34,7 +38,7 @@ This result means that "Latent Capability" is better understood as "conditionall
 
 ### 3. Conservation Validation: Active Dependencies Have Near-Complete Core Genomes
 
-![Conservation by category](figures/fig2_conservation_by_category.png)
+![Conservation by category](../figures/pathway_capability_dependency/fig2_conservation_by_category.png)
 
 Validation against pangenome conservation data shows that Active Dependencies have mean core gene completeness of 0.986, compared to 0.975 for Latent Capabilities. The gap between categories is small because the 7 Fitness Browser organisms are well-studied model organisms (*Desulfovibrio vulgaris* Hildenborough, *Shewanella oneidensis* MR-1, *Pseudomonas putida*, *Pseudomonas stutzeri*, *Caulobacter crescentus*, *Sinorhizobium meliloti*, *Azospirillum brasilense*) with near-complete, well-annotated core genomes. The small but consistent direction of the enrichment is aligned with the metal_fitness_atlas finding that fitness-important genes are enriched in the core genome (OR=2.08 for metal-fitness genes).
 
@@ -42,7 +46,7 @@ Validation against pangenome conservation data shows that Active Dependencies ha
 
 ### 4. Variable Pathways Strongly Correlate with Pangenome Openness
 
-![Core vs accessory pathway completeness](figures/fig3_core_accessory_pathways.png)
+![Core vs accessory pathway completeness](../figures/pathway_capability_dependency/fig3_core_accessory_pathways.png)
 
 Across 2,810 species with at least 10 genomes, the number of variable pathways (present in 10-90% of genomes) correlates with pangenome openness (fraction of accessory gene clusters). The raw Spearman correlation is rho=0.327 (p=7.2e-71). After controlling for genome count -- a critical confounder since species with more sequenced genomes may appear to have more variable pathways simply from sampling depth -- the partial Spearman correlation strengthens to rho=0.530 (p=2.83e-203).
 
@@ -70,7 +74,7 @@ These gaps mean that for a substantial fraction of bacteria, amino acid biosynth
 
 ### 6. Metabolic Ecotypes Correlate with Pangenome Openness
 
-![Ecotype count vs openness](figures/fig4_ecotype_openness.png)
+![Ecotype count vs openness](../figures/pathway_capability_dependency/fig4_ecotype_openness.png)
 
 Among 225 species with sufficient genome diversity (50+ genomes and 3+ variable pathways), hierarchical clustering of binary pathway profiles (Jaccard distance) identifies a median of 4 metabolic ecotypes per species, with a maximum of 8. The species with the most ecotypes are *Alistipes onderdonkii* (8 ecotypes) and *Barnesiella intestinihominis* (8 ecotypes), both gut commensals with substantial intraspecific metabolic diversity.
 
@@ -108,13 +112,13 @@ The four resulting categories are:
 | Incomplete but Important | 24 | 14.9% |
 | Missing | 14 | 8.7% |
 
-![Classification heatmap](figures/tier1_classification_heatmap.png)
+![Classification heatmap](../figures/pathway_capability_dependency/tier1_classification_heatmap.png)
 
 ### Condition-Type Analysis
 
 The condition-type stratification separates per-gene fitness values by experimental condition (carbon limitation, nitrogen limitation, stress, other). For pathways classified as Latent Capability under the aggregate score, condition-specific reanalysis shows that all 66 shift to fitness-important under at least one condition type. The most frequent triggers are nitrogen limitation and stress conditions, aligning with the expectation that amino acid biosynthesis pathways are critical when nutrients are scarce but dispensable in rich media.
 
-![Condition-type shifts](figures/tier1_condition_type_shifts.png)
+![Condition-type shifts](../figures/pathway_capability_dependency/tier1_condition_type_shifts.png)
 
 ---
 
@@ -134,11 +138,11 @@ The central result is a robust positive correlation between pathway variability 
 
 The strengthening of the correlation after controlling for genome count indicates that the raw correlation was partially suppressed by confounding -- species with many genomes tend to have high openness for sampling reasons, and they also tend to have variable pathways for sampling reasons, but the true biological relationship is even stronger once this shared confound is removed.
 
-![Pathway conservation vs openness](figures/pathway_conservation_vs_openness.png)
+![Pathway conservation vs openness](../figures/pathway_capability_dependency/pathway_conservation_vs_openness.png)
 
 ### Core vs All-Genes Analysis
 
-![Core vs all pathway completeness](figures/core_vs_all_pathway_completeness.png)
+![Core vs all pathway completeness](../figures/pathway_capability_dependency/core_vs_all_pathway_completeness.png)
 
 The comparison of `sequence_scope = 'core'` (core pangenome genes only) vs `sequence_scope = 'all'` (all genes) in GapMind reveals which pathways depend on accessory genome contributions. Amino acid biosynthesis pathways consistently show the largest gaps, meaning their completeness depends on genes that are not universally present within a species. Carbon source utilization pathways tend to show smaller gaps, perhaps because carbon catabolism genes are either universally present or universally absent rather than variably distributed.
 
@@ -146,7 +150,7 @@ The comparison of `sequence_scope = 'core'` (core pangenome genes only) vs `sequ
 
 Per the ecotype_analysis finding that phylogeny dominates gene content in 60.5% of species, all correlations were checked within GTDB genera. The pathway-openness relationship holds in the majority of genera with sufficient species (≥20 species per genus), suggesting it reflects a general evolutionary dynamic rather than a clade-specific artifact. Full phylum-level stratification would require joining the GTDB taxonomy table from BERDL; genus-level grouping from the GTDB species clade names provides a conservative phylogenetic control.
 
-![Pathway conservation by genus](figures/pathway_conservation_by_genus.png)
+![Pathway conservation by genus](../figures/pathway_capability_dependency/pathway_conservation_by_genus.png)
 
 ---
 
@@ -164,7 +168,7 @@ For 225 species with 50+ genomes and at least 3 variable pathways, binary pathwa
 
 The ecotype-openness correlation survives the genome-count control, indicating that species with genuinely more metabolic diversity (not just more sampled genomes) tend to have more open pangenomes.
 
-![Ecotype count vs openness](figures/ecotype_count_vs_openness.png)
+![Ecotype count vs openness](../figures/pathway_capability_dependency/ecotype_count_vs_openness.png)
 
 ---
 

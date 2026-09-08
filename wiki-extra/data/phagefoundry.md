@@ -1,3 +1,7 @@
+---
+title: PhageFoundry Browsers
+type: Dataset
+---
 # PhageFoundry Browsers
 
 Provider: ?
@@ -17,8 +21,8 @@ Support phage therapy research. Catalog phage genomes, understand host-phage int
 
 ## Used by projects (4)
 
-- [[summaries/acinetobacter_adp1_explorer__REPORT|acinetobacter_adp1_explorer]]
-- [[summaries/berdl_data_atlas__REPORT|berdl_data_atlas]]
-- [[summaries/ibd_phage_targeting__REPORT|ibd_phage_targeting]]
-- [[summaries/snipe_defense_system__REPORT|snipe_defense_system]]
+- [acinetobacter_adp1_explorer](../../wiki/summaries/acinetobacter_adp1_explorer__REPORT.md)
+- [berdl_data_atlas](../../wiki/summaries/berdl_data_atlas__REPORT.md)
+- [ibd_phage_targeting](../../wiki/summaries/ibd_phage_targeting__REPORT.md)
+- [snipe_defense_system](../../wiki/summaries/snipe_defense_system__REPORT.md)
 

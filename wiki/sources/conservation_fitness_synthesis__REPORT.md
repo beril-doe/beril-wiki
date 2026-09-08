@@ -1,10 +1,14 @@
+---
+title: 'Report: Gene Conservation, Fitness, and the Architecture of Bacterial Genomes'
+type: Source
+---
 # Report: Gene Conservation, Fitness, and the Architecture of Bacterial Genomes
 
 ## Key Findings
 
 ### The Gradient
 
-![Fitness-Conservation Gradient](figures/fitness_conservation_gradient.png)
+![Fitness-Conservation Gradient](../figures/conservation_fitness_synthesis/fitness_conservation_gradient.png)
 
 There is a clear, quantitative gradient from essential genes (82% core) to always-neutral genes (66% core). More important genes are more conserved -- but the effect is modest. Even genes with no detectable fitness effect in any experiment are 66% core. The gradient spans 194,216 protein-coding genes across 43 diverse bacteria, from archaea (*Methanococcus*) to plant pathogens (*Ralstonia*) to gut commensals (*Bacteroides*).
 
@@ -28,7 +32,7 @@ The conserved genome is the most *functionally active* part of the genome, not t
 
 A gene that shows positive fitness when deleted in rich media may be essential for survival in soil, biofilm, host tissue, or any of the thousands of conditions bacteria face in their natural habitats. The lab captures the *cost* of maintaining these genes; the pangenome captures the *evolutionary pressure* to keep them.
 
-![Selection Signature](figures/selection_signature.png)
+![Selection Signature](../figures/conservation_fitness_synthesis/selection_signature.png)
 
 We quantified this with a selection-signature matrix. The 28,017 genes that are simultaneously **costly in the lab AND conserved in the pangenome** are the strongest evidence for purifying selection in natural environments -- nature maintains them despite their metabolic cost. The 5,526 genes that are costly AND dispensable are candidates for ongoing gene loss.
 
@@ -36,7 +40,7 @@ We quantified this with a selection-signature matrix. The 28,017 genes that are 
 
 ### The Architecture
 
-![Core Genome Active](figures/core_genome_active.png)
+![Core Genome Active](../figures/conservation_fitness_synthesis/core_genome_active.png)
 
 The core genome is not just a collection of individual essential genes -- it contains coordinated functional units. ICA decomposition identified 1,116 co-regulated fitness modules across 32 organisms. These modules are enriched in core genes (86% core vs 81.5% baseline, OR=1.46, p=1.6e-87). 59% of modules are >90% core genes.
 

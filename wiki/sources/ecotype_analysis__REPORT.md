@@ -1,3 +1,7 @@
+---
+title: 'Report: Ecotype Correlation Analysis'
+type: Source
+---
 # Report: Ecotype Correlation Analysis
 
 ## Key Findings
@@ -11,7 +15,7 @@ Analysis of **172 species** with sufficient environmental and phylogenetic data 
 - Phylogeny dominates in **60.5%** of species
 - Environment dominates in **39.5%** of species
 
-![Ecotype correlation summary](figures/ecotype_correlation_summary.png)
+![Ecotype correlation summary](../figures/ecotype_analysis/ecotype_correlation_summary.png)
 
 > Provenance: `notebooks/02_ecotype_correlation_analysis.ipynb`
 
@@ -19,7 +23,7 @@ Analysis of **172 species** with sufficient environmental and phylogenetic data 
 
 Tested whether "environmental" bacteria (free-living, where lat/lon is meaningful) show stronger environment effects than host-associated bacteria. **No significant difference found** (p=0.66).
 
-![Environmental vs host comparison](figures/environmental_vs_host_comparison.png)
+![Environmental vs host comparison](../figures/ecotype_analysis/environmental_vs_host_comparison.png)
 
 > Provenance: `notebooks/02_ecotype_correlation_analysis.ipynb`
 
@@ -31,15 +35,15 @@ Tested whether "environmental" bacteria (free-living, where lat/lon is meaningfu
 
 ### Category Breakdown
 
-![Ecotype effects by category](figures/ecotype_by_category.png)
+![Ecotype effects by category](../figures/ecotype_analysis/ecotype_by_category.png)
 
-![Ecotype scatter by category](figures/ecotype_scatter_by_category.png)
+![Ecotype scatter by category](../figures/ecotype_analysis/ecotype_scatter_by_category.png)
 
 > Provenance: `notebooks/02_ecotype_correlation_analysis.ipynb`
 
 ### Embedding Diversity
 
-![Embedding diversity distribution](figures/embedding_diversity_distribution.png)
+![Embedding diversity distribution](../figures/ecotype_analysis/embedding_diversity_distribution.png)
 
 > Provenance: `notebooks/01_data_extraction.ipynb`
 

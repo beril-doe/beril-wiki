@@ -1,3 +1,7 @@
+---
+title: 'Report: Pan-bacterial Fitness Modules via Independent Component Analysis'
+type: Source
+---
 # Report: Pan-bacterial Fitness Modules via Independent Component Analysis
 
 ## Key Findings
@@ -17,9 +21,9 @@
 - Within-module mean |r| = 0.34 vs background |r| = 0.12 (2.8x enrichment)
 - **22.7x genomic adjacency enrichment** -- module genes are co-located in operons
 
-![PCA eigenvalue spectrum used for component selection across organisms](figures/pca_eigenvalues.png)
+![PCA eigenvalue spectrum used for component selection across organisms](../figures/fitness_modules/pca_eigenvalues.png)
 
-![Distribution of module sizes across all 32 organisms](figures/module_size_distribution.png)
+![Distribution of module sizes across all 32 organisms](../figures/fitness_modules/module_size_distribution.png)
 
 > **Provenance:** `notebooks/03_ica_modules.ipynb` -- Robust ICA decomposition, PCA component selection, module extraction, and cofitness validation.
 
@@ -36,11 +40,11 @@ Held-out evaluation: 20% of KEGG-annotated genes withheld, 4 methods predict KO 
 
 Module-ICA and cofitness show near-zero strict KO precision because KEGG KO groups are gene-level assignments (~1.2 genes per unique KO). A module with 20 annotated members typically has 20 different KOs. Modules capture **process-level co-regulation** (validated by 94.2% cofitness enrichment and 22.7x adjacency enrichment), not specific molecular function. Function predictions should be interpreted as biological process context, not exact KO assignments.
 
-![Cofitness validation: within-module vs background correlation distributions](figures/validation_summary.png)
+![Cofitness validation: within-module vs background correlation distributions](../figures/fitness_modules/validation_summary.png)
 
-![Strict benchmarking: precision and coverage by method](figures/benchmark_strict.png)
+![Strict benchmarking: precision and coverage by method](../figures/fitness_modules/benchmark_strict.png)
 
-![Neighborhood benchmarking: performance when allowing nearby KO matches](figures/benchmark_neighborhood.png)
+![Neighborhood benchmarking: performance when allowing nearby KO matches](../figures/fitness_modules/benchmark_neighborhood.png)
 
 > **Provenance:** `notebooks/07_benchmarking.ipynb` -- Held-out evaluation of function prediction methods; `notebooks/03_ica_modules.ipynb` -- cofitness validation.
 
@@ -50,7 +54,7 @@ Module-ICA and cofitness show near-zero strict KO precision because KEGG KO grou
 - **145 annotated families** with consensus functional labels (93%)
 - Largest family spans 21 organisms -- a pan-bacterial fitness module
 
-![Cross-organism module families: size distribution and taxonomic span](figures/module_families.png)
+![Cross-organism module families: size distribution and taxonomic span](../figures/fitness_modules/module_families.png)
 
 > **Provenance:** `notebooks/05_cross_organism_alignment.ipynb` -- Ortholog fingerprinting and module family construction.
 
@@ -60,9 +64,9 @@ Module-ICA and cofitness show near-zero strict KO precision because KEGG KO grou
 - 4,236 module-only predictions
 - Predictions backed by module enrichment (KEGG, SEED, TIGRFam, PFam)
 
-![Functional enrichment of modules by annotation source](figures/enrichment_summary.png)
+![Functional enrichment of modules by annotation source](../figures/fitness_modules/enrichment_summary.png)
 
-![Function prediction summary: family-backed vs module-only predictions](figures/prediction_summary.png)
+![Function prediction summary: family-backed vs module-only predictions](../figures/fitness_modules/prediction_summary.png)
 
 > **Provenance:** `notebooks/04_module_annotation.ipynb` -- Functional enrichment analysis; `notebooks/06_function_prediction.ipynb` -- Function prediction for hypothetical proteins.
 

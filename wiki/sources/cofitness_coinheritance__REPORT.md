@@ -1,3 +1,7 @@
+---
+title: 'Report: Co-fitness and Co-inheritance in Bacterial Pangenomes'
+type: Source
+---
 # Report: Co-fitness and Co-inheritance in Bacterial Pangenomes
 
 ## Key Findings
@@ -20,7 +24,7 @@ Across 9 organisms with co-fitness data (2.25M cofit pairs vs 22.5M prevalence-m
 
 The signal is strongest in Ddia6719 (delta=+0.093), which despite being near-clonal (ANI 99.47%) has sufficient accessory gene variation to detect co-inheritance. Korea shows a negative delta (-0.042) because 95.2% of its cofit pairs have NaN phi (both genes at 100% prevalence across 72 genomes, producing zero-variance vectors). Only ~8,000 of 166,601 pairs are computable, and the negative delta reflects statistical noise in this small effective sample rather than a biological signal.
 
-![Co-fitness vs Co-occurrence](figures/fig1_cofit_cooccurrence.png)
+![Co-fitness vs Co-occurrence](../figures/cofitness_coinheritance/fig1_cofit_cooccurrence.png)
 
 *(Notebook: 02_cooccurrence.ipynb, 04_cross_organism.ipynb)*
 
@@ -28,7 +32,7 @@ The signal is strongest in Ddia6719 (delta=+0.093), which despite being near-clo
 
 Only 0.7% of cofit pairs are genomically adjacent (within 5 genes). Excluding them does not change the result pattern.
 
-![Operon Control](figures/fig2_operon_control.png)
+![Operon Control](../figures/cofitness_coinheritance/fig2_operon_control.png)
 
 *(Notebook: 02_cooccurrence.ipynb)*
 
@@ -46,7 +50,7 @@ Accessory modules show the strongest co-inheritance signal:
 
 The accessory vs core difference trends toward significance (Mann-Whitney p=0.051).
 
-![Module Co-inheritance](figures/fig5_module_coinheritance.png)
+![Module Co-inheritance](../figures/cofitness_coinheritance/fig5_module_coinheritance.png)
 
 *(Notebook: 03_module_coinheritance.ipynb)*
 
@@ -54,13 +58,13 @@ The accessory vs core difference trends toward significance (Mann-Whitney p=0.05
 
 Stronger co-fitness scores weakly predict *lower* phi (Spearman rho=-0.109, p<1e-300 across 1.04M pairs). This likely reflects that the strongest co-fitness pairs are core genes with near-universal prevalence, leaving little variance for co-occurrence detection -- a prevalence ceiling effect.
 
-![Co-fitness Strength vs Phi](figures/fig4_cofit_strength.png)
+![Co-fitness Strength vs Phi](../figures/cofitness_coinheritance/fig4_cofit_strength.png)
 
 *(Notebook: 02_cooccurrence.ipynb)*
 
 ### Phylogenetic Distance Stratification
 
-![Phylogenetic Control](figures/fig3_phylo_control.png)
+![Phylogenetic Control](../figures/cofitness_coinheritance/fig3_phylo_control.png)
 
 Cofit pair phi is higher among near genomes (mean=0.102) than medium genomes (mean=0.067), as expected from shared ancestry. Most species lack genomes in the "far" stratum (>0.05 branch distance), limiting the ability to fully disentangle functional coupling from phylogenetic signal.
 
@@ -133,7 +137,7 @@ Among high-phi AND high-cofit pairs (top quartile of both), the most common func
 | Mobile elements | 2,716 |
 | DNA metabolism | 2,490 |
 
-![Functional Enrichment](figures/fig6_functional.png)
+![Functional Enrichment](../figures/cofitness_coinheritance/fig6_functional.png)
 
 *(Notebook: 04_cross_organism.ipynb)*
 

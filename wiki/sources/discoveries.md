@@ -1,3 +1,7 @@
+---
+title: Discoveries Log
+type: Source
+---
 # Discoveries Log
 
 Running log of insights discovered during science projects. Tag each with `[project_name]`.

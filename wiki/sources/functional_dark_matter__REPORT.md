@@ -1,3 +1,8 @@
+---
+title: 'Report: Functional Dark Matter — Experimentally Prioritized Novel Genetic
+  Systems'
+type: Source
+---
 # Report: Functional Dark Matter — Experimentally Prioritized Novel Genetic Systems
 
 ## Key Findings
@@ -6,11 +11,11 @@
 
 Across 48 Fitness Browser organisms (228,709 genes), 57,011 (24.9%) lack functional annotation ("hypothetical protein," DUF, or "uncharacterized"). Of these, 7,787 show strong fitness effects (|fitness| ≥ 2 in at least one condition), and 9,557 are essential (no viable transposon mutants). Together, these 17,344 genes represent the experimentally actionable "dark matter" — genes with clear biological importance but unknown function.
 
-![Annotation breakdown by organism](figures/fig01_annotation_breakdown.png)
+![Annotation breakdown by organism](../figures/functional_dark_matter/fig01_annotation_breakdown.png)
 
 Dark genes are not randomly distributed across organisms: some species have >35% hypothetical genes while others have <15%, reflecting differences in annotation depth rather than true functional content.
 
-![Fitness distributions for dark vs annotated genes](figures/fig02_fitness_distributions.png)
+![Fitness distributions for dark vs annotated genes](../figures/functional_dark_matter/fig02_fitness_distributions.png)
 
 *(Notebook: 01_integration_census.ipynb)*
 
@@ -18,9 +23,9 @@ Dark genes are not randomly distributed across organisms: some species have >35%
 
 Of 57,011 dark genes, 39,532 (69.3%) have pangenome links via the `conservation_vs_fitness` project. Among these, 12,686 are accessory (environment-specific) and 511 are both accessory and have strong fitness effects — the prime candidates for biogeographic analysis. Additionally, 6,142 dark genes belong to ICA fitness modules from the `fitness_modules` project, providing guilt-by-association function predictions.
 
-![Dark gene evidence coverage](figures/fig03_dark_gene_coverage.png)
+![Dark gene evidence coverage](../figures/functional_dark_matter/fig03_dark_gene_coverage.png)
 
-![Condition class distribution for dark genes with strong phenotypes](figures/fig04_condition_classes.png)
+![Condition class distribution for dark genes with strong phenotypes](../figures/functional_dark_matter/fig04_condition_classes.png)
 
 Stress conditions (metals, oxidative, osmotic) dominate among dark genes with strong fitness effects, followed by carbon source utilization and nitrogen source utilization.
 
@@ -41,11 +46,11 @@ Across 44 FB-linked species, GapMind pathway analysis identified 1,256 organism-
 
 The organisms with the most gapped pathways — Marinobacter (49), *D. desulfuricans* ME-23 (45), *P. stutzeri* (45) — are also those with the largest dark gene complements and most specific fitness phenotypes, suggesting that their "missing steps" may be encoded by functionally dark genes.
 
-![GapMind gap-filling candidates](figures/fig05_gapmind_gaps.png)
+![GapMind gap-filling candidates](../figures/functional_dark_matter/fig05_gapmind_gaps.png)
 
 **Supplementary domain matching** (NB10 Section 1): To move beyond organism-level co-occurrence, curated pathway-enzyme mappings (EC prefixes, PFam families, functional keywords) were used to identify dark genes with annotations compatible with gapped pathways. Of 1,256 organism-pathway pairs, domain matching identified 42,239 gene-pathway candidates across 3,186 unique dark genes, with 5,398 high-confidence (EC prefix match), 4,687 medium-confidence (PFam family match), and 32,154 low-confidence (keyword match) hits. These domain-compatible candidates narrow the search space from all dark genes in a gapped organism to those with enzymatically plausible annotations.
 
-![Domain matching analysis](figures/fig28_domain_matching.png)
+![Domain matching analysis](../figures/functional_dark_matter/fig28_domain_matching.png)
 
 *(Notebooks: 02_gapmind_concordance_phylo.ipynb, 10_review_improvements.ipynb)*
 
@@ -67,7 +72,7 @@ Of dark gene ortholog groups present in 3+ FB organisms, 65 show measurable fitn
 
 The strongest concordance is in carbon source genes (spanning 3–8 organisms) and motility genes (3 organisms each), suggesting conserved but unannotated components of carbohydrate metabolism and chemotaxis machinery respectively. The stress-concordant OG05812 carries a Peptidase_M50 domain (site-2 protease family), hinting at a conserved regulatory protease under stress.
 
-![Cross-organism concordance](figures/fig06_concordance.png)
+![Cross-organism concordance](../figures/functional_dark_matter/fig06_concordance.png)
 
 *(Notebook: 02_gapmind_concordance_phylo.ipynb)*
 
@@ -77,11 +82,11 @@ Phylogenetic breadth analysis of dark gene clusters reveals a range of conservat
 
 **Note**: The breadth classification derived from eggNOG OG hierarchies is coarse-grained: 99.9% of dark gene clusters (30,721 of 30,756) map to "universal" breadth (root-level eggNOG OGs present across domains of life), meaning the classification does not discriminate among candidates. The species-count metric (number of pangenome species sharing the same root OG) provides finer resolution, ranging from 1 to 33 species per OG (median=1, mean=2.2).
 
-![Phylogenetic breadth distribution](figures/fig07_phylo_breadth.png)
+![Phylogenetic breadth distribution](../figures/functional_dark_matter/fig07_phylo_breadth.png)
 
 **Supplementary species-count scoring** (NB10 Section 3): Replacing the binary breadth classification with a continuous species-count metric (`min(n_species / 20, 1.0) × 0.5`) produces rankings highly correlated with the original (Spearman ρ = 0.982) but with meaningfully different top lists: top-50 overlap is 62% and top-100 overlap is 58%. This confirms that the coarse breadth classification does not discriminate among candidates, while species count provides finer resolution. The species-count variant is provided as supplementary analysis in `data/scoring_species_count_variant.tsv`.
 
-![Species-count scoring variant](figures/fig30_species_count_scoring.png)
+![Species-count scoring variant](../figures/functional_dark_matter/fig30_species_count_scoring.png)
 
 *(Notebooks: 02_gapmind_concordance_phylo.ipynb, 10_review_improvements.ipynb)*
 
@@ -104,11 +109,11 @@ Among 151 accessory dark gene clusters testable via carrier vs. non-carrier geno
 
 Two patterns emerge: (1) *P. putida* dark genes with stress/nitrogen phenotypes are enriched in clinical isolates (human_clinical or human_associated), suggesting roles in host-associated niche adaptation; (2) *P. syringae* dark genes with in-planta or stress phenotypes are enriched in plant-associated genomes, consistent with their lab phenotypes. The *P. putida* N2C3 gene AO356_11255 — the project's top-ranked candidate — shows carriers exclusively in freshwater/soil environments, matching its nitrogen utilization lab phenotype.
 
-![Environmental distribution of carrier species](figures/fig08_env_distribution.png)
+![Environmental distribution of carrier species](../figures/functional_dark_matter/fig08_env_distribution.png)
 
-![Carrier vs non-carrier test results](figures/fig09_carrier_tests.png)
+![Carrier vs non-carrier test results](../figures/functional_dark_matter/fig09_carrier_tests.png)
 
-![AlphaEarth embedding UMAP](figures/fig10_embedding_umap.png)
+![AlphaEarth embedding UMAP](../figures/functional_dark_matter/fig10_embedding_umap.png)
 
 *(Notebook: 03_biogeographic_analysis.ipynb)*
 
@@ -127,7 +132,7 @@ Pre-registered mapping of FB experiment condition classes to expected environmen
 
 The *P. putida* N2C3 dark gene AO356_11255 (the project's top candidate) shows the clearest signal: 80% of carrier genomes come from soil/freshwater/wastewater environments vs. only 8.3% of non-carriers (OR = 44, FDR = 0.093), matching its lab phenotype of strong nitrogen utilization fitness.
 
-![Lab-field concordance matrix](figures/fig11_concordance_matrix.png)
+![Lab-field concordance matrix](../figures/functional_dark_matter/fig11_concordance_matrix.png)
 
 **Formal statistical test** (NB10 Section 5): A one-sided binomial test of the 29/47 concordance rate against the null of p = 0.5 yields p = 0.072 — marginal but consistent with the Wilson score 95% CI of [0.474, 0.742], which includes 0.50. Fisher's combined probability across all 47 individual Fisher's exact test p-values yields p = 0.031, providing stronger aggregate evidence that the lab-field concordance is non-random. Additionally, a binomial sign test on the 7/7 correct-direction pre-registered NMDC trait predictions yields p = 0.0078, confirming that pre-registered directional hypotheses are significantly non-random.
 
@@ -146,11 +151,11 @@ Beyond these pre-registered predictions, 76 of 105 total Spearman correlation te
 
 **Note on condition-environment mapping**: The research plan specified 7 condition-environment mappings (including osmotic, temperature, and oxidative stress). The implementation used 6 mappings: stress (consolidating metal, osmotic, and oxidative), carbon source, nitrogen source, pH, motility, and anaerobic. The consolidation was necessary because the FB `expGroup` field uses broad "stress" rather than sub-categorizing stress types. Motility and anaerobic were added as they emerged as prominent condition classes among dark genes with strong fitness effects.
 
-![NMDC correlation results](figures/fig12_nmdc_correlations.png)
+![NMDC correlation results](../figures/functional_dark_matter/fig12_nmdc_correlations.png)
 
 **NMDC trait-condition validation** (NB06 Section 3) provides an additional layer: using the same genus bridge, carrier genera abundance was correlated with matching community functional trait scores from NMDC `trait_features` (76 functional_group columns across 6,365 samples). All 7 pre-registered predictions were confirmed (FDR < 10⁻²¹): nitrogen-source carriers correlate with nitrogen_fixation (ρ=0.60) and nitrate_denitrification (ρ=0.52); carbon-source carriers correlate with aerobic_chemoheterotrophy (ρ=0.73) and fermentation (ρ=0.59); anaerobic carriers correlate with fermentation (ρ=0.59) and iron_respiration (ρ=0.45). An additional 441/449 exploratory tests reached FDR < 0.05. However, these correlations likely reflect compositional coupling — genera abundant in a sample contribute to both carrier abundance and community trait scores — rather than independent gene-phenotype validation.
 
-![NMDC trait-condition correlations](figures/fig21_trait_correlations.png)
+![NMDC trait-condition correlations](../figures/functional_dark_matter/fig21_trait_correlations.png)
 
 *(Notebooks: 04_lab_field_concordance.ipynb, 06_robustness_checks.ipynb)*
 
@@ -185,11 +190,11 @@ The top 20 candidates with their evidence profiles:
 
 Several patterns emerge in the top candidates: (1) MR-1 genes 199738, 203545, and 202450 all carry K03306 module predictions with different domain architectures, suggesting paralogous members of a conserved nitrogen-responsive system; (2) MR-1 genes 202463 and 203247 both predict PF01145 under stress, pointing to a stress-responsive membrane protein family (YGGT/GBBH-like); (3) the top candidate AO356_11255 is the only accessory gene in the top 10, with the strongest biogeographic signal (lab-field OR = 44, NMDC nitrogen correlation).
 
-![Score component distributions](figures/fig13_score_components.png)
+![Score component distributions](../figures/functional_dark_matter/fig13_score_components.png)
 
-![Top 20 candidate dossiers](figures/fig14_top20_dossiers.png)
+![Top 20 candidate dossiers](../figures/functional_dark_matter/fig14_top20_dossiers.png)
 
-![Organism distribution of top candidates](figures/fig15_organism_distribution.png)
+![Organism distribution of top candidates](../figures/functional_dark_matter/fig15_organism_distribution.png)
 
 *(Notebook: 05_prioritization_dossiers.ipynb)*
 
@@ -288,11 +293,11 @@ The top 10 essential dark gene candidates:
 
 All top-50 candidates have high-confidence functional hypotheses derived from operon context. Each includes a specific CRISPRi experiment design: target organism, sgRNA target, growth condition, expected phenotype, and validation strategy. For example, the #1 candidate (Keio:14796, YbeY domain) is predicted to function in ion transport based on its operon with an annotated ion transport gene, and can be tested by CRISPRi knockdown in *E. coli* Keio grown on varied carbon/nitrogen sources monitoring OD600 for growth defects.
 
-![Gene neighbor analysis overview](figures/fig18_neighbor_analysis.png)
+![Gene neighbor analysis overview](../figures/functional_dark_matter/fig18_neighbor_analysis.png)
 
-![Essential gene score distributions](figures/fig19_essential_scores.png)
+![Essential gene score distributions](../figures/functional_dark_matter/fig19_essential_scores.png)
 
-![Top 20 essential dark gene candidates](figures/fig20_essential_top20.png)
+![Top 20 essential dark gene candidates](../figures/functional_dark_matter/fig20_essential_top20.png)
 
 *(Notebook: 07_essential_dark_prioritization.ipynb)*
 
@@ -310,11 +315,11 @@ The evidence-weighted experimental roadmap ranks MR-1 as the top organism (61 ca
 
 *Caveats*: Our synteny analysis uses a 5-gene window within Fitness Browser organisms only (48 genomes). Tools like STRING v12 and EFI-GNT analyze thousands of genomes and use more sophisticated scoring (gene fusion, shared phylogenetic profiles). Our conservation scores should be treated as lower bounds — true conservation rates are likely higher when assessed across broader taxonomic sampling. The cofit signal is unavailable for essential genes (no viable mutants = no fitness profiles = no co-fitness data).
 
-![Conserved gene neighborhoods](figures/fig22_conserved_neighborhoods.png)
+![Conserved gene neighborhoods](../figures/functional_dark_matter/fig22_conserved_neighborhoods.png)
 
-![Cofit validation](figures/fig23_cofit_validation.png)
+![Cofit validation](../figures/functional_dark_matter/fig23_cofit_validation.png)
 
-![Improved experimental roadmap](figures/fig24_improved_experimental_roadmap.png)
+![Improved experimental roadmap](../figures/functional_dark_matter/fig24_improved_experimental_roadmap.png)
 
 *(Notebook: 08_improved_neighborhoods.ipynb)*
 
@@ -332,11 +337,11 @@ A comprehensive census of all 57,011 dark genes assigns each to a darkness tier 
 
 Greedy weighted set-cover optimization over the 16,488 scored dark genes identifies 42 organisms (from 28 genera) that cover 95% of total priority value. MR-1 ranks first, contributing 587 genes; 32 organisms suffice for 80% coverage. Per-organism action plans classify genes as hypothesis-bearing (14,450 with specific condition recommendations from fitness data, neighbor context, or module predictions) vs. darkest (2,038 requiring broad phenotypic screens). 8,900 essential genes are flagged for CRISPRi-based approaches.
 
-![Darkness spectrum](figures/fig25_darkness_spectrum.png)
+![Darkness spectrum](../figures/functional_dark_matter/fig25_darkness_spectrum.png)
 
-![Minimum covering set](figures/fig26_covering_set.png)
+![Minimum covering set](../figures/functional_dark_matter/fig26_covering_set.png)
 
-![Experimental action plan](figures/fig27_action_plan.png)
+![Experimental action plan](../figures/functional_dark_matter/fig27_action_plan.png)
 
 *(Notebook: 09_final_synthesis.ipynb)*
 
@@ -354,23 +359,23 @@ A conservation-weighted minimum covering set of **42 organisms** covers 95.6% of
 
 Per-organism experimental plans specify recommended experiment types (CRISPRi knockdown for essential genes in tractable organisms, condition-specific TnSeq for fitness-active genes, broad phenotypic screen for true knowledge gaps) and top conditions derived from fitness data or keyword inference.
 
-![Organism taxonomy context](figures/fig32_organism_taxonomy.png)
+![Organism taxonomy context](../figures/functional_dark_matter/fig32_organism_taxonomy.png)
 
-![Conservation tier distribution](figures/fig33_conservation_tiers.png)
+![Conservation tier distribution](../figures/functional_dark_matter/fig33_conservation_tiers.png)
 
-![Classification heatmap](figures/fig34_classification_heatmap.png)
+![Classification heatmap](../figures/functional_dark_matter/fig34_classification_heatmap.png)
 
-![Top knowledge gaps](figures/fig35_top_knowledge_gaps.png)
+![Top knowledge gaps](../figures/functional_dark_matter/fig35_top_knowledge_gaps.png)
 
-![Covering set optimization](figures/fig36_covering_set_curve.png)
+![Covering set optimization](../figures/functional_dark_matter/fig36_covering_set_curve.png)
 
-![Experiment plan heatmap](figures/fig37_experiment_plan_heatmap.png)
+![Experiment plan heatmap](../figures/functional_dark_matter/fig37_experiment_plan_heatmap.png)
 
-![Full pangenome species distribution](figures/fig38_pangenome_species_distribution.png)
+![Full pangenome species distribution](../figures/functional_dark_matter/fig38_pangenome_species_distribution.png)
 
 **Extended covering set** (NB11c): To address the Proteobacteria-heavy FB sampling, a Spark query mapped genus-level OG membership for 25 non-FB organisms across the full pangenome (24 genera, 53,970 genus-OG pairs in 2.9 min). Running the conservation-weighted covering set with all 73 candidates produces a **50-organism set covering 98.7% of OGs across 6 phyla** (vs. 41 organisms, 100%, 4 phyla for FB-only). 16 non-FB organisms are selected, led by *P. aeruginosa* PAO1 (3,713 OGs, tractability 0.8), *V. cholerae* N16961 (1,049 OGs), *B. cenocepacia* K56-2 (956 OGs), and critically *M. tuberculosis* H37Rv (#6, 131 new OGs from Actinomycetota) and *C. jejuni* (#48, Campylobacterota). Coverage at N=5 organisms reaches 57.7% (vs. 38.1% FB-only, +19.6%). Bacillota organisms (B. subtilis, S. aureus) were not selected because their OGs are subsets of coverage already provided by Pseudomonadota, but they remain valuable for studying genes in native Gram-positive genomic context.
 
-![Extended covering set comparison](figures/fig39_extended_covering_set.png)
+![Extended covering set comparison](../figures/functional_dark_matter/fig39_extended_covering_set.png)
 
 *(Notebooks: 11_conservation_classes.ipynb, 11b_extended_conservation.ipynb, 11c_extended_covering_set.ipynb)*
 
@@ -386,8 +391,8 @@ Bakta v1.12.0 (DB v6.0) annotations for the 132.5M pangenome cluster representat
 
 **18,019 genes changed darkness tier** when `has_bakta_annotation` was added as a 7th evidence flag, with the largest shifts from T4 Penumbra → T5 Dawn (genes gaining their final missing evidence line).
 
-![Bakta reclassification breakdown](figures/fig33_bakta_reclassification.png)
-![Bakta coverage heatmap](figures/fig34_bakta_coverage_heatmap.png)
+![Bakta reclassification breakdown](../figures/functional_dark_matter/fig33_bakta_reclassification.png)
+![Bakta coverage heatmap](../figures/functional_dark_matter/fig34_bakta_coverage_heatmap.png)
 
 *(Notebook: 12_bakta_enrichment.ipynb)*
 
@@ -565,9 +570,9 @@ Prioritization is only useful if the underlying signals are robust. Three contro
 
 **Scoring weight sensitivity**: rank correlations remain high (ρ > 0.93) across 6 alternative weight configurations, but specific top-50 lists are moderately sensitive (64% retention for conservation-dominant weighting). Users should treat rankings as approximate and focus on genes that appear in the top tier across multiple weight schemes.
 
-![H1b formal test: stress vs carbon/nitrogen accessory rates](figures/fig16_h1b_test.png)
+![H1b formal test: stress vs carbon/nitrogen accessory rates](../figures/functional_dark_matter/fig16_h1b_test.png)
 
-![Dark vs annotated gene concordance distributions](figures/fig17_concordance_comparison.png)
+![Dark vs annotated gene concordance distributions](../figures/functional_dark_matter/fig17_concordance_comparison.png)
 
 **Conclusion**: The prioritization is defensible but not perfect. Dark genes behave statistically like annotated genes (supporting H1), the overall ranking is stable across weight perturbations, and H1b's rejection reveals genuine biological complexity rather than a flaw in the analysis. The main caution: specific rank positions are sensitive to weight choices, so candidates should be evaluated in tiers rather than by exact rank.
 
@@ -691,13 +696,13 @@ This project contributes:
 
 9. **Dark-vs-annotated controls partial**: The concordance null control (NB06) shows dark genes achieve concordance levels indistinguishable from annotated genes, supporting H1. However, equivalent null controls were not run for the biogeographic and lab-field concordance analyses. NB10 provides a binomial test (29/47 vs. p = 0.5, one-sided p = 0.072) and Wilson score 95% CI [0.474, 0.742], showing the concordance rate is marginally above chance. Fisher's combined probability across all 47 individual tests yields p = 0.031. A full null comparison using annotated accessory genes through the same biogeographic pipeline would further strengthen the H0 rejection but requires Spark for carrier genome queries.
 
-![Statistical tests summary](figures/fig31_statistical_tests.png)
+![Statistical tests summary](../figures/functional_dark_matter/fig31_statistical_tests.png)
 
 10. **Gene neighborhood methodology gap**: NB07's operon predictions use a single-genome positional heuristic (5-gene window, same strand, ≤300 bp gap). NB08 adds cross-species synteny validation across 48 Fitness Browser genomes and co-fitness confirmation, but still falls short of industry-standard tools. DOOR v2.0 uses intergenic distance, neighborhood conservation, phylogenetic distance, and experimentally validated training sets across thousands of genomes. STRING v12 combines genomic neighborhood, gene fusion, phylogenetic co-occurrence, co-expression, and text mining across >14,000 organisms. EFI-GNT provides interactive genome neighborhood diagrams across all sequenced genomes with SSN-guided filtering. Our analysis captures the most accessible signal (positional heuristic + limited cross-species synteny + co-fitness) but lacks gene fusion detection, regulatory element analysis, and broad taxonomic sampling that would improve prediction accuracy.
 
 11. **Scoring weight sensitivity**: Both prioritization frameworks use arbitrary expert-assigned weights. Sensitivity analysis (NB05/NB07) shows that while overall rank correlations remain high across alternative weight configurations (ρ > 0.93), the top-ranked candidate lists are moderately sensitive to weight choices. For NB05 (fitness-active): conservation-dominant and drop-tractability configurations each retain only 32/50 original top candidates (64%). For NB07 (essential): dropping tractability retains only 18/50 (36%) and dropping neighbor context retains 24/50 (48%). NB10 provides robust rank indicators: across all 6 fitness-active weight configurations, 18 genes remain in the top 50 and 35 remain in the top 100 regardless of weight choice. For essential genes, 6 remain always-top-50 and 19 always-top-100. These "always-top" candidates are the most defensible targets for experimental follow-up. Full per-gene rank ranges are in `data/robust_ranks_fitness.tsv` and `data/robust_ranks_essential.tsv`.
 
-![Robust rank indicators](figures/fig29_robust_ranks.png)
+![Robust rank indicators](../figures/functional_dark_matter/fig29_robust_ranks.png)
 
 12. **Proteobacteria-dominated organism set**: The 48 Fitness Browser organisms are 77% Pseudomonadota (37/48). The extended covering set (NB11c) partially addresses this by incorporating 25 non-FB organisms from Bacillota, Actinomycetota, and Campylobacterota, expanding phylum coverage from 4 to 6. However, the non-FB OG coverage is estimated at the genus level (any species in the genus has the OG), which overestimates individual organism coverage. Additionally, non-FB organisms lack Fitness Browser condition profiling, so their dark genes cannot be assigned to condition-specific experiments — only broad phenotypic screens. Bacillota organisms (B. subtilis, S. aureus) were not selected by the covering set algorithm because their OGs are subsets of coverage provided by Pseudomonadota, despite their value for studying genes in native Gram-positive contexts.
 

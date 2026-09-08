@@ -1,3 +1,7 @@
+---
+title: 'Report: Global Biogeography of Environmental Bacterial Metal Resistance'
+type: Source
+---
 # Report: Global Biogeography of Environmental Bacterial Metal Resistance
 
 ## Status

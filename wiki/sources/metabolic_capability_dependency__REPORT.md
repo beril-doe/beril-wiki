@@ -1,10 +1,14 @@
+---
+title: 'Report: Metabolic Capability vs Metabolic Dependency'
+type: Source
+---
 # Report: Metabolic Capability vs Metabolic Dependency
 
 ## Key Findings
 
 ### H1 Supported: A Substantial Fraction of Complete Pathways Are Functionally Neutral
 
-![Pathway dependency class distribution by category](figures/nb03_stacked_bar.png)
+![Pathway dependency class distribution by category](../figures/metabolic_capability_dependency/nb03_stacked_bar.png)
 
 Across 1,695 pathway-organism pairs from 48 organisms, **15.8% of genomically complete pathways were classified as latent capabilities** — pathways the genome encodes but that show no detectable fitness importance under tested conditions (mean |t-score| < 1.0, < 5% essential genes). An additional 32.3% fell in an intermediate zone.
 
@@ -18,9 +22,9 @@ The latent fraction varied substantially across organisms (range 0–31.6%, mean
 
 ### H2 Mixed: Pathway-Level Conservation Undifferentiated; Pangenome Openness Correlated with Latent Rate
 
-![Pathway conservation by dependency class](figures/nb04_conservation_boxplot.png)
+![Pathway conservation by dependency class](../figures/metabolic_capability_dependency/nb04_conservation_boxplot.png)
 
-![Conservation CDF by dependency class](figures/nb04_conservation_cdf.png)
+![Conservation CDF by dependency class](../figures/metabolic_capability_dependency/nb04_conservation_cdf.png)
 
 The Black Queen Hypothesis (H2) was tested at two levels, with contrasting outcomes:
 
@@ -36,7 +40,7 @@ Latent capabilities showed slightly *higher* mean conservation than active depen
 
 **H2b — Pangenome openness (supported).** After aggregating 41 organisms to 22 unique species clades (to ensure independence — multiple Fitness Browser strains from the same clade share a single pangenome openness value), the fraction of latent capabilities per clade correlated positively with pangenome openness (Spearman ρ = 0.69, p = 0.0004, n = 22 clades). Clades with more fitness-neutral complete pathways tend to have more dynamic, less-conserved pangenomes — consistent with the Black Queen framework at the species level.
 
-![Pangenome openness vs latent capability rate](figures/nb04_openness_scatter.png)
+![Pangenome openness vs latent capability rate](../figures/metabolic_capability_dependency/nb04_openness_scatter.png)
 
 *(Notebook: 04_black_queen_test.ipynb)*
 
@@ -44,9 +48,9 @@ Latent capabilities showed slightly *higher* mean conservation than active depen
 
 ### H3 Supported: All Target Species Show Distinct Metabolic Ecotypes
 
-![PCA of metabolic pathway profiles by species](figures/nb05_pca_all_species.png)
+![PCA of metabolic pathway profiles by species](../figures/metabolic_capability_dependency/nb05_pca_all_species.png)
 
-![Pathway heterogeneity overview](figures/nb05_pathway_heterogeneity.png)
+![Pathway heterogeneity overview](../figures/metabolic_capability_dependency/nb05_pathway_heterogeneity.png)
 
 All 10 target species (≥50 genomes, ≥15 variable pathways) showed meaningful metabolic clustering (all silhouette scores > 0.2). Silhouette scores ranged from 0.35 (*PALSA-747* sp.) to 0.89 (*Salmonella enterica*), indicating that some species have near-perfect metabolic separation while others show softer ecotype boundaries.
 
@@ -69,11 +73,11 @@ The most heterogeneous pathways across species were valine/leucine biosynthesis 
 
 **Selected heatmaps:**
 
-![Salmonella enterica metabolic profile heatmap](figures/nb05_heatmap_Salmonella_enterica.png)
+![Salmonella enterica metabolic profile heatmap](../figures/metabolic_capability_dependency/nb05_heatmap_Salmonella_enterica.png)
 
-![Prochlorococcus metabolic profile heatmap](figures/nb05_heatmap_Prochlorococcus_A_sp000635495.png)
+![Prochlorococcus metabolic profile heatmap](../figures/metabolic_capability_dependency/nb05_heatmap_Prochlorococcus_A_sp000635495.png)
 
-![Pelagibacter metabolic profile heatmap](figures/nb05_heatmap_Pelagibacter_sp003209915.png)
+![Pelagibacter metabolic profile heatmap](../figures/metabolic_capability_dependency/nb05_heatmap_Pelagibacter_sp003209915.png)
 
 *(Notebook: 05_metabolic_ecotypes.ipynb)*
 
@@ -103,9 +107,9 @@ Pathways were classified as:
 | Other | 59 (86.8%) | 7 (10.3%) | 2 (2.9%) | 68 |
 | **Total** | **881 (51.9%)** | **547 (32.3%)** | **267 (15.8%)** | **1,695** |
 
-![Scatter: mean |t-score| vs. % essential genes](figures/nb03_scatter.png)
+![Scatter: mean |t-score| vs. % essential genes](../figures/metabolic_capability_dependency/nb03_scatter.png)
 
-![Organism-level overview](figures/nb03_organism_overview.png)
+![Organism-level overview](../figures/metabolic_capability_dependency/nb03_organism_overview.png)
 
 ### Pangenome Openness Context
 

@@ -1,3 +1,7 @@
+---
+title: Triple Essentiality Concordance Analysis for *Acinetobacter baylyi* ADP1
+type: Source
+---
 # Triple Essentiality Concordance Analysis for *Acinetobacter baylyi* ADP1
 
 ## Executive Summary
@@ -61,7 +65,7 @@ All 478 triple-covered genes (having TnSeq + FBA + growth data) are **TnSeq-disp
 
 #### Finding 1: FBA Does Not Predict Growth Defects Among TnSeq-Dispensable Genes
 
-![FBA class vs growth defect contingency table and defect rates](figures/fba_growth_concordance.png)
+![FBA class vs growth defect contingency table and defect rates](../figures/adp1_triple_essentiality/fba_growth_concordance.png)
 
 Among 478 triple-covered genes (all TnSeq-dispensable), FBA class was **not significantly associated** with growth defect status (chi-squared = 0.93, p = 0.63, 2 df). Growth defect rates were nearly identical across FBA classes:
 - **FBA-essential**: 73.1% (57/78 genes)
@@ -76,7 +80,7 @@ The Kruskal-Wallis test on mean growth rates was also non-significant (H = 1.67,
 
 #### Finding 2: The Null Result Is Robust Across Growth Defect Thresholds
 
-![Threshold sensitivity analysis](figures/threshold_sensitivity.png)
+![Threshold sensitivity analysis](../figures/adp1_triple_essentiality/threshold_sensitivity.png)
 
 A sensitivity analysis testing seven thresholds (Q10 through Q40) confirmed that the null result is not an artifact of the Q25 cutoff:
 
@@ -96,7 +100,7 @@ The chi-squared p-value remained above 0.05 for thresholds Q10–Q35. Only at Q4
 
 #### Finding 3: Growth Measurements Cannot Break FBA-TnSeq Ties
 
-![Growth rate distributions by FBA class](figures/growth_by_fba_class.png)
+![Growth rate distributions by FBA class](../figures/adp1_triple_essentiality/growth_by_fba_class.png)
 
 The hypothesis was that growth measurements could adjudicate when FBA and TnSeq disagree. Since all 478 triple-covered genes are TnSeq-dispensable, the "discordant" genes are the 78 FBA-essential ones. Among these:
 
@@ -113,7 +117,7 @@ Growth measurements do not differentially validate FBA-essential vs FBA-blocked 
 
 #### Finding 4: Condition-Specific FBA Flux Shows Weak, Mixed Correlations with Growth
 
-![FBA flux vs mutant growth rate scatter plots by carbon source](figures/flux_vs_growth_scatter.png)
+![FBA flux vs mutant growth rate scatter plots by carbon source](../figures/adp1_triple_essentiality/flux_vs_growth_scatter.png)
 
 Per-condition FBA flux predictions showed weak Spearman correlations with measured growth rates across 6 matched carbon sources:
 
@@ -134,7 +138,7 @@ However, **glucarate** showed a **positive** correlation (ρ = +0.246), opposite
 
 #### Finding 5: Growth Defects Are Partially Condition-Specific
 
-![Growth defect correlation across conditions](figures/defect_condition_correlation.png)
+![Growth defect correlation across conditions](../figures/adp1_triple_essentiality/defect_condition_correlation.png)
 
 Of 478 genes:
 - **333 (70%)** showed condition-specific growth defects (defect on some but not all conditions)
@@ -149,9 +153,9 @@ Mean pairwise defect correlation across conditions was **0.38** (range: -0.03 to
 
 #### Finding 6: Aromatic Degradation Genes Are Enriched Among FBA-Discordant Genes
 
-![RAST functional category enrichment in discordant genes](figures/rast_enrichment_discordant.png)
+![RAST functional category enrichment in discordant genes](../figures/adp1_triple_essentiality/rast_enrichment_discordant.png)
 
-![RAST functional category distribution by concordance class](figures/rast_by_discordance_class.png)
+![RAST functional category distribution by concordance class](../figures/adp1_triple_essentiality/rast_by_discordance_class.png)
 
 Using RAST function annotations (100% gene coverage), two functional categories showed significant enrichment among the 157 discordant genes (Fisher's exact test, BH-FDR correction):
 
@@ -170,7 +174,7 @@ Using RAST function annotations (100% gene coverage), two functional categories 
 - Only **7 of 46** lipid metabolism genes are discordant
 - Suggests the FBA model handles lipid pathways more accurately than aromatic catabolism
 
-![Pangenome status by discordance class](figures/pangenome_discordance.png)
+![Pangenome status by discordance class](../figures/adp1_triple_essentiality/pangenome_discordance.png)
 
 **Pangenome status** was overwhelmingly core across all classes (93–100%), with no significant enrichment in discordant genes (Fisher OR = 0.89, p = 0.80).
 
@@ -298,7 +302,7 @@ The refined analysis addresses several limitations of the original study and exp
 
 #### 1. FBA Performance: Moderate Concordance
 
-![FBA Concordance Comparison](figures/fba_comparison.png)
+![FBA Concordance Comparison](../figures/adp1_triple_essentiality/fba_comparison.png)
 
 **Rich Media (N = 724 genes)**
 - **Recall (Sensitivity)**: 60.8% — catches 61% of truly essential genes
@@ -322,7 +326,7 @@ The refined analysis addresses several limitations of the original study and exp
 
 #### 2. RB-TnSeq Performance: Systematic Discordance
 
-![Concordance Comprehensive](figures/concordance_comprehensive.png)
+![Concordance Comprehensive](../figures/adp1_triple_essentiality/concordance_comprehensive.png)
 
 **Threshold Analysis (Rich Media, N=1,933 genes)**
 
@@ -338,7 +342,7 @@ The refined analysis addresses several limitations of the original study and exp
 
 **Concordance Breakdown (cutoff=0.05)**
 
-![Discordance Analysis](figures/discordance_analysis.png)
+![Discordance Analysis](../figures/adp1_triple_essentiality/discordance_analysis.png)
 
 - **Both Essential**: 18 genes (0.9%) ← Only 18/229 agreement!
 - **Both Dispensable**: 1,411 genes (73.0%)
@@ -356,7 +360,7 @@ The refined analysis addresses several limitations of the original study and exp
 
 #### 3. Proteomics: Strong Positive Correlation
 
-![Proteomics Expression Distribution](figures/proteomics_expression_distribution.png)
+![Proteomics Expression Distribution](../figures/adp1_triple_essentiality/proteomics_expression_distribution.png)
 
 **Expression vs Essentiality (Minimal Media, N=2,288 genes)**
 
@@ -378,7 +382,7 @@ The refined analysis addresses several limitations of the original study and exp
 
 #### 4. ROC Curve Analysis: Continuous Predictors
 
-![ROC Comprehensive](figures/roc_comprehensive.png)
+![ROC Comprehensive](../figures/adp1_triple_essentiality/roc_comprehensive.png)
 
 | Predictor | Set | AUC | Interpretation |
 |-----------|-----|-----|----------------|

@@ -1,10 +1,14 @@
+---
+title: 'Report: Community Metabolic Ecology via NMDC × Pangenome Integration'
+type: Source
+---
 # Report: Community Metabolic Ecology via NMDC × Pangenome Integration
 
 ## Key Findings
 
 ### Finding 1 — Black Queen dynamics are detectable at community scale
 
-![H1 BQH correlation barplot](figures/h1_bqh_barplot.png)
+![H1 BQH correlation barplot](../figures/nmdc_community_metabolic_ecology/h1_bqh_barplot.png)
 
 Across 13 testable amino acid biosynthesis pathways, **11 of 13 (85%) showed negative
 Spearman correlations** between community pathway completeness and ambient amino acid
@@ -27,7 +31,7 @@ q = 0.823) is testable as the 13th pathway but shows no BQH signal at this sampl
 
 ### Finding 2 — Community metabolic potential separates strongly by ecosystem type
 
-![H2 PCA by ecosystem type](figures/h2_pca.png)
+![H2 PCA by ecosystem type](../figures/nmdc_community_metabolic_ecology/h2_pca.png)
 
 PCA of the 220-sample × 80-pathway completeness matrix captured **49.4% of variance
 in PC1** and 16.6% in PC2 (83% total in PC1–5). Soil and Freshwater communities
@@ -48,7 +52,7 @@ Soil cluster.
 
 ### Finding 3 — Amino acid pathway completeness differs across ecosystem types for 17 of 18 pathways
 
-![Pathway completeness boxplot](figures/pathway_completeness_boxplot.png)
+![Pathway completeness boxplot](../figures/nmdc_community_metabolic_ecology/pathway_completeness_boxplot.png)
 
 Per-pathway Kruskal-Wallis tests (BH-FDR corrected) showed that 17 of 18 amino acid
 pathways have significantly different community completeness levels across ecosystem
@@ -110,7 +114,7 @@ The `frac_likely_complete` metric is computed in NB03 for sensitivity comparison
 
 Scatter plots for the four lowest-p pathways:
 
-![H1 scatter top pathways](figures/h1_scatter_top.png)
+![H1 scatter top pathways](../figures/nmdc_community_metabolic_ecology/h1_scatter_top.png)
 
 #### Sensitivity: Soil-only stratification
 

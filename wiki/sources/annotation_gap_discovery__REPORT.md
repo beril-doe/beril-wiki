@@ -1,10 +1,15 @@
+---
+title: 'Report: Annotation-Gap Discovery via Phenotype-Fitness-Pangenome-Gapfilling
+  Integration'
+type: Source
+---
 # Report: Annotation-Gap Discovery via Phenotype-Fitness-Pangenome-Gapfilling Integration
 
 ## Key Findings
 
 ### 1. Evidence Triangulation Resolves 47.8% of Annotation Gaps
 
-![Cumulative resolution and confidence breakdown](figures/fig1_resolution_overview.png)
+![Cumulative resolution and confidence breakdown](../figures/annotation_gap_discovery/fig1_resolution_overview.png)
 
 Of 201 gapfilled enzymatic reaction-organism pairs across 14 Fitness Browser organisms and 18 carbon sources, 96 (47.8%) were assigned candidate genes with confidence scoring. This exceeds the pre-specified H1 threshold of 30%, supporting the hypothesis that integrating multiple evidence types can resolve a significant fraction of metabolic annotation gaps.
 
@@ -17,7 +22,7 @@ Of 201 gapfilled enzymatic reaction-organism pairs across 14 Fitness Browser org
 
 ### 2. No Single Evidence Stream Achieves >35% Resolution
 
-![Cross-validation of evidence streams](figures/fig2_cross_validation.png)
+![Cross-validation of evidence streams](../figures/annotation_gap_discovery/fig2_cross_validation.png)
 
 Leave-one-out cross-validation demonstrates that each evidence stream contributes uniquely to resolution:
 
@@ -37,7 +42,7 @@ BLAST homology was the single most impactful stream (34.8% alone), but the full 
 
 ### 3. Resolution Varies 3.5-fold Across Organisms
 
-![Per-organism resolution breakdown](figures/fig3_organism_resolution.png)
+![Per-organism resolution breakdown](../figures/annotation_gap_discovery/fig3_organism_resolution.png)
 
 Resolution rates ranged from 20% (*Bacteroides thetaiotaomicron*) to 71% (*Klebsiella michiganensis*). Organisms with better-annotated reference genomes and stronger Fitness Browser coverage showed higher resolution rates. *B. thetaiotaomicron* — a Bacteroidetes with more divergent metabolism — had the lowest resolution, consistent with its phylogenetic distance from the proteobacterial majority.
 
@@ -60,7 +65,7 @@ The reactions rxn02185 (2-acetolactate pyruvate-lyase, EC 2.2.1.6, branched-chai
 
 ### 5. "Dark Reactions" Resist Resolution
 
-![EC conservation across organisms](figures/fig6_conservation.png)
+![EC conservation across organisms](../figures/annotation_gap_discovery/fig6_conservation.png)
 
 Of 201 gapfilled reactions, 50 (24.9%) had no EC number assigned by ModelSEED ("dark reactions"). Only 8 of these 50 (16%) were resolved, compared to 88 of 151 (58.3%) for reactions with known EC numbers. Dark reactions represent the hardest annotation gaps — their functions are known only by stoichiometry, not by enzyme classification, making both sequence homology searches and functional annotation cross-referencing far more difficult.
 
@@ -68,7 +73,7 @@ Of 201 gapfilled reactions, 50 (24.9%) had no EC number assigned by ModelSEED ("
 
 ### 6. GapMind and Gapfilling Show Partial Concordance
 
-![GapMind concordance with gapfilling](figures/fig5_gapmind_concordance.png)
+![GapMind concordance with gapfilling](../figures/annotation_gap_discovery/fig5_gapmind_concordance.png)
 
 Of 104 GapMind-gapfill pathway pairings, GapMind pathway predictions partially corroborated the gapfilling results. GapMind identified pathways as incomplete (`not_present` or `steps_missing`) for many of the same carbon sources where ModelSEED required gapfilling. However, exact concordance was limited by GapMind's pathway-level granularity — it reports step counts but not individual step identities in the available BERDL data.
 
@@ -76,7 +81,7 @@ Of 104 GapMind-gapfill pathway pairings, GapMind pathway predictions partially c
 
 ### 7. BLAST Hits Cluster at High Identity for Resolved Cases
 
-![BLAST hit quality distribution](figures/fig4_blast_quality.png)
+![BLAST hit quality distribution](../figures/annotation_gap_discovery/fig4_blast_quality.png)
 
 154 BLAST hits were identified using DIAMOND v2.1.16 blastp (`--evalue 1e-5 --max-target-seqs 20 --id 25 --query-cover 50 --outfmt 6`) against Swiss-Prot exemplar sequences (328 reviewed bacterial sequences for 75/84 unique ECs, retrieved from UniProt REST API). Hits meeting high-confidence thresholds (>=30% identity, >=70% coverage, e-value <=1e-10) were concentrated in branched-chain amino acid biosynthesis and polyamine metabolism reactions. Medium-confidence thresholds were >=25% identity, >=50% coverage, e-value <=1e-5. The top reactions by BLAST hit count (rxn02185, rxn03436, rxn15947) all encode well-characterized enzymes with broad phylogenetic distribution.
 
@@ -102,17 +107,17 @@ Fourteen organisms from the Fitness Browser with rich carbon-source RB-TnSeq cov
 
 ### Figures
 
-![Evidence source distribution from NB04](figures/nb04_candidate_sources.png)
+![Evidence source distribution from NB04](../figures/annotation_gap_discovery/nb04_candidate_sources.png)
 
-![Fitness specificity analysis from NB05](figures/nb05_fitness_specificity.png)
+![Fitness specificity analysis from NB05](../figures/annotation_gap_discovery/nb05_fitness_specificity.png)
 
-![Triangulated evidence from NB06](figures/nb06_triangulated_evidence.png)
+![Triangulated evidence from NB06](../figures/annotation_gap_discovery/nb06_triangulated_evidence.png)
 
-![GapMind score categories](figures/gapmind_score_categories.png)
+![GapMind score categories](../figures/annotation_gap_discovery/gapmind_score_categories.png)
 
-![Annotation gap resolution heatmap](figures/annotation_gap_resolution_heatmap.png)
+![Annotation gap resolution heatmap](../figures/annotation_gap_discovery/annotation_gap_resolution_heatmap.png)
 
-![Evidence distribution](figures/evidence_distribution.png)
+![Evidence distribution](../figures/annotation_gap_discovery/evidence_distribution.png)
 
 ## Interpretation
 

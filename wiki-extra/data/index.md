@@ -1,16 +1,16 @@
 # Data Collections
 
-- [[data/enigma-coral|Enigma Coral]]
-- [[data/kbase-genomes|Kbase Genomes]]
-- [[data/kbase-ke-pangenome|Kbase Ke Pangenome]]
-- [[data/kbase-msd-biochemistry|Kbase Msd Biochemistry]]
-- [[data/kbase-ontology-source|Kbase Ontology Source]]
-- [[data/kbase-phenotype|Kbase Phenotype]]
-- [[data/kbase-uniprot|Kbase Uniprot]]
-- [[data/kbase-uniref|Kbase Uniref]]
-- [[data/kescience-fitnessbrowser|Kescience Fitnessbrowser]]
-- [[data/nmdc-arkin|Nmdc Arkin]]
-- [[data/nmdc-ncbi-biosamples|Nmdc Ncbi Biosamples]]
-- [[data/phagefoundry|Phagefoundry]]
-- [[data/planetmicrobe|Planetmicrobe]]
-- [[data/protect-genomedepot|Protect Genomedepot]]
+- [Enigma Coral](enigma-coral.md)
+- [Kbase Genomes](kbase-genomes.md)
+- [Kbase Ke Pangenome](kbase-ke-pangenome.md)
+- [Kbase Msd Biochemistry](kbase-msd-biochemistry.md)
+- [Kbase Ontology Source](kbase-ontology-source.md)
+- [Kbase Phenotype](kbase-phenotype.md)
+- [Kbase Uniprot](kbase-uniprot.md)
+- [Kbase Uniref](kbase-uniref.md)
+- [Kescience Fitnessbrowser](kescience-fitnessbrowser.md)
+- [Nmdc Arkin](nmdc-arkin.md)
+- [Nmdc Ncbi Biosamples](nmdc-ncbi-biosamples.md)
+- [Phagefoundry](phagefoundry.md)
+- [Planetmicrobe](planetmicrobe.md)
+- [Protect Genomedepot](protect-genomedepot.md)

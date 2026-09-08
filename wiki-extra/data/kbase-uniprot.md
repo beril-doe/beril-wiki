@@ -1,3 +1,7 @@
+---
+title: UniProt Annotations
+type: Dataset
+---
 # UniProt Annotations
 
 Provider: ?

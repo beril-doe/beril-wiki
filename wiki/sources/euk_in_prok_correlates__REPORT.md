@@ -1,3 +1,8 @@
+---
+title: 'Report: Metadata Correlates of Eukaryotic Contamination in NMDC Prokaryote-Targeted
+  Metagenomes'
+type: Source
+---
 # Report: Metadata Correlates of Eukaryotic Contamination in NMDC Prokaryote-Targeted Metagenomes
 
 ## Key Findings
@@ -12,7 +17,7 @@ because their NMDC reference databases are prokaryote-restricted (see Discoverie
 usable estimator here; the near-absence of a Metazoan/host signal is therefore itself informative — host DNA
 is not the dominant contaminant in this (largely environmental) collection.
 
-![Eukaryotic-fraction distribution and source split](figures/fig01_euk_distributions.png)
+![Eukaryotic-fraction distribution and source split](../figures/euk_in_prok_correlates/fig01_euk_distributions.png)
 
 *(Notebook: 01_data_assembly.ipynb)*
 
@@ -34,7 +39,7 @@ and the test is identical to the matrix test — it is not an independent confir
 retained the `Unknown` bucket — which has the highest median eukaryotic fraction — reported an inflated
 p≈10⁻⁵⁰; that was a missingness artifact and has been removed.)
 
-![Eukaryotic fraction by environment](figures/fig02_euk_by_environment.png)
+![Eukaryotic fraction by environment](../figures/euk_in_prok_correlates/fig02_euk_by_environment.png)
 
 *(Notebook: 02_univariate_tests.ipynb)*
 
@@ -63,7 +68,7 @@ statistic is **not** batch-controlled (measured-depth runs come from a handful o
 NEON soil study records no depth), so it is subject to the same study/batch confounding as the environment
 effect above and should be read as suggestive only.
 
-![Variance partition and predictor importance](figures/fig03_variance_partition.png)
+![Variance partition and predictor importance](../figures/euk_in_prok_correlates/fig03_variance_partition.png)
 
 *(Notebook: 03_model_variance.ipynb)*
 
@@ -84,7 +89,7 @@ constant protocol/batch) — the eukaryotic fraction varies strongly with the me
 Note: sampling depth is **not** measured in this NEON soil study (zero non-null `depth` values), so the depth
 association reported below is a *cross-study* statistic and is not part of this batch-controlled result.
 
-![Eukaryotic fraction by within-study environment](figures/fig04_within_study_env.png)
+![Eukaryotic fraction by within-study environment](../figures/euk_in_prok_correlates/fig04_within_study_env.png)
 
 *(Notebook: 04_within_study.ipynb)*
 

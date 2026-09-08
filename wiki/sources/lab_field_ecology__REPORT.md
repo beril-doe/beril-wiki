@@ -1,3 +1,7 @@
+---
+title: 'Report: Lab Fitness Predicts Field Ecology at Oak Ridge'
+type: Source
+---
 # Report: Lab Fitness Predicts Field Ecology at Oak Ridge
 
 ## Key Findings
@@ -6,7 +10,7 @@
 
 Of 26 unique genera represented in the Fitness Browser, 14 are detected in Oak Ridge groundwater communities via 16S amplicon sequencing. The most prevalent are *Sphingomonas* (93% of 108 sites), *Pseudomonas* (91%), and *Caulobacter* (82%). *Desulfovibrio*, the primary ENIGMA model organism, is detected at only 34% of sites at very low abundance (max 0.09% relative abundance).
 
-![FB Genus Prevalence](figures/fig_fb_genus_prevalence.png)
+![FB Genus Prevalence](../figures/lab_field_ecology/fig_fb_genus_prevalence.png)
 
 *(Notebook: 02_genus_abundance.ipynb)*
 
@@ -24,7 +28,7 @@ Of 14 FB genera detected at Oak Ridge, 11 had sufficient prevalence (>=10 sites)
 
 *Azospirillum* (rho=+0.20, p=0.042) is marginal after FDR correction (q=0.077). *Desulfovibrio* shows no correlation (rho=0.022, p=0.82) and *Pseudomonas* shows no correlation (rho=-0.059, p=0.55) despite both being ENIGMA model organisms. Three genera (*Shewanella*, *Dechlorosoma*, *Marinobacter*) were excluded due to low prevalence (<10 sites).
 
-![Abundance vs Uranium](figures/fig_abundance_vs_uranium.png)
+![Abundance vs Uranium](../figures/lab_field_ecology/fig_abundance_vs_uranium.png)
 
 *(Notebook: 03_fitness_vs_field.ipynb)*
 
@@ -32,7 +36,7 @@ Of 14 FB genera detected at Oak Ridge, 11 had sufficient prevalence (>=10 sites)
 
 The correlation between lab-derived metal tolerance score (negative mean fitness under stress, higher = more tolerant) and the high-uranium/low-uranium field abundance ratio is suggestive but not significant (Spearman rho=0.503, p=0.095, n=12 genera). The trend is in the predicted direction -- genera with higher lab tolerance tend to have higher abundance at contaminated sites -- but statistical power is limited by the small number of genera.
 
-![Metal Tolerance Score](figures/fig_metal_tolerance_score.png)
+![Metal Tolerance Score](../figures/lab_field_ecology/fig_metal_tolerance_score.png)
 
 *(Notebook: 03_fitness_vs_field.ipynb)*
 
@@ -40,7 +44,7 @@ The correlation between lab-derived metal tolerance score (negative mean fitness
 
 Sites split at the median uranium concentration show distinct community compositions. The top genera at high-uranium sites differ from low-uranium sites, with rare-biosphere taxa and subsurface specialists becoming more prominent at contaminated sites.
 
-![Community by Contamination](figures/fig_community_by_contamination.png)
+![Community by Contamination](../figures/lab_field_ecology/fig_community_by_contamination.png)
 
 *(Notebook: 03_fitness_vs_field.ipynb)*
 

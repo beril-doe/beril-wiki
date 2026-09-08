@@ -1,4 +1,18 @@
-<!-- tension-hash: e62728ec46873dcf -->
+---
+title: NDH-2 Compensation Versus Weak Cross-Species Support
+type: Conflict
+sources:
+- id: aromatic_catabolism_network
+  resource: ../../wiki/summaries/aromatic_catabolism_network__REPORT.md
+  title: aromatic catabolism network
+- id: respiratory_chain_wiring
+  resource: ../../wiki/summaries/respiratory_chain_wiring__REPORT.md
+  title: respiratory chain wiring
+- id: metabolic_capability_dependency
+  resource: ../../wiki/summaries/metabolic_capability_dependency__REPORT.md
+  title: metabolic capability dependency
+---
+<!-- tension-hash: a739c7b3e9fd8c63 -->
 # NDH-2 Compensation Versus Weak Cross-Species Support
 
 The disagreement concerns whether NDH-2 can explain reduced Complex I dependence on particular substrates. The aromatic-catabolism analysis treats NDH-2 compensation as a substrate- and architecture-based hypothesis, while the cross-species respiratory-chain comparison found no supporting compensation pattern and therefore weakens any generalization across species. The metabolic-capability result adds a related caution: pathway conservation may not predict active fitness dependence, making recipient-specific network and condition measurements important.
@@ -7,13 +21,13 @@ The disagreement concerns whether NDH-2 can explain reduced Complex I dependence
 
 **NDH-2 compensation as a substrate- and architecture-based explanation**
 
-The analysis in aromatic_catabolism_network proposes that NDH-2 compensation can explain lower Complex I dependence on some substrates. This claim is explicitly framed as a substrate- and architecture-based hypothesis rather than a demonstrated universal relationship. [src: aromatic_catabolism_network]
+The analysis in aromatic_catabolism_network proposes that NDH-2 compensation can explain lower Complex I dependence on some substrates. This claim is explicitly framed as a substrate- and architecture-based hypothesis rather than a demonstrated universal relationship. [^aromatic_catabolism_network]
 
 **Cross-species comparison does not support a general compensation pattern**
 
-Among organisms retained after filtering, validated NDH-2 organisms had a larger mean Complex I aromatic deficit (-0.297 versus -0.156), with p = 0.52. The comparison included only 4 organisms lacking NDH-2 and may therefore be underpowered; the two results should not be reconciled as a universal rule. [src: respiratory_chain_wiring] The comparison therefore weakens generalization of the compensation hypothesis across species. [src: respiratory_chain_wiring]
+Among organisms retained after filtering, validated NDH-2 organisms had a larger mean Complex I aromatic deficit (-0.297 versus -0.156), with p = 0.52. The comparison included only 4 organisms lacking NDH-2 and may therefore be underpowered; the two results should not be reconciled as a universal rule. [^respiratory_chain_wiring] The comparison therefore weakens generalization of the compensation hypothesis across species. [^respiratory_chain_wiring]
 
-The related analysis in metabolic_capability_dependency found that pathway-level conservation did not distinguish latent capabilities from active dependencies, with mean conservation of 0.869 for 248 latent capabilities versus 0.829 for 755 active dependencies and Mann–Whitney U p = 0.94 for active > latent. [src: metabolic_capability_dependency] Thus, conserved pathway presence alone does not establish conserved fitness dependence, supporting the caution that ortholog transfer cannot substitute for recipient-specific network and condition measurements. [src: metabolic_capability_dependency]
+The related analysis in metabolic_capability_dependency found that pathway-level conservation did not distinguish latent capabilities from active dependencies, with mean conservation of 0.869 for 248 latent capabilities versus 0.829 for 755 active dependencies and Mann–Whitney U p = 0.94 for active > latent. [^metabolic_capability_dependency] Thus, conserved pathway presence alone does not establish conserved fitness dependence, supporting the caution that ortholog transfer cannot substitute for recipient-specific network and condition measurements. [^metabolic_capability_dependency]
 
 ## Possible Reconciliations
 
@@ -29,3 +43,7 @@ The related analysis in metabolic_capability_dependency found that pathway-level
 - Quantify NDH-2 expression, enzymatic activity, respiratory flux, and pathway routing during the relevant substrate conditions; ask whether genomic presence predicts functional compensation.
 - Separate latent capability from active dependency with condition-specific knockouts or inhibition across the 248 latent capabilities and 755 active dependencies; ask whether conservation tracks measured fitness effects.
 - Test recipient-specific network models against experimental fitness data; ask whether architecture and condition variables explain when ortholog transfer succeeds or fails.
+
+[^aromatic_catabolism_network]: [aromatic catabolism network](../../wiki/summaries/aromatic_catabolism_network__REPORT.md)
+[^respiratory_chain_wiring]: [respiratory chain wiring](../../wiki/summaries/respiratory_chain_wiring__REPORT.md)
+[^metabolic_capability_dependency]: [metabolic capability dependency](../../wiki/summaries/metabolic_capability_dependency__REPORT.md)

@@ -1,3 +1,7 @@
+---
+title: 'Report: NMDC Context Audit'
+type: Source
+---
 # Report: NMDC Context Audit
 
 ## Key Findings
@@ -18,7 +22,7 @@ user copies), falling into six provenance classes:
 | NMDC-derived, kbase tenant | `kbase.nmdc_mags` | KBase / NMDC |
 | Namesake collision | `kbase.nmdc_neon` | **NEON** (NSF) — not NMDC |
 
-![Scale of NMDC-labeled resources by provenance class](figures/nmdc_scale.png)
+![Scale of NMDC-labeled resources by provenance class](../figures/nmdc_context_audit/nmdc_scale.png)
 
 The hypothesis (H1) is supported: the label is systematically overloaded, and every one of
 the four predicted confusion modes is realized by an actual resource.
@@ -45,7 +49,7 @@ a ~3,000× difference with nothing in the names to signal it.
 Iceberg snapshot ages differ by ~4 months across the label, yet nothing surfaces this to a
 user choosing a resource:
 
-![Data currency of NMDC-labeled resources](figures/nmdc_currency.png)
+![Data currency of NMDC-labeled resources](../figures/nmdc_context_audit/nmdc_currency.png)
 
 | Resource | Last commit | Freshness |
 |---|---|---|

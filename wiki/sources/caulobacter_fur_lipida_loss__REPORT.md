@@ -1,8 +1,13 @@
+---
+title: 'Report: The regulatory and proteomic architecture of Δ*fur*-permitted lipid
+  A loss in *Caulobacter crescentus*'
+type: Source
+---
 # Report: The regulatory and proteomic architecture of Δ*fur*-permitted lipid A loss in *Caulobacter crescentus*
 
 ## Key Findings
 
-![Master synthesis figure — 4-panel summary of all five mechanism layers](figures/NB07_synthesis_master.png)
+![Master synthesis figure — 4-panel summary of all five mechanism layers](../figures/caulobacter_fur_lipida_loss/NB07_synthesis_master.png)
 
 ### Finding 1 — Δ*fur* Δ*sspB* is a dual-release switch (Δ*fur* arm statistically supported; Δ*sspB* arm hypothesis-only)
 
@@ -116,17 +121,17 @@ Comparative PaperBLAST presence/absence across *C. crescentus*, *A. baumannii*, 
 
 ### Phase A — orientation findings (NB00) that motivated the analysis plan
 
-![Sphingolipid locus heatmap from orientation notebook — neither induced nor strongly suppressed across the strain series](figures/00_sphingolipid_locus_heatmap.png)
+![Sphingolipid locus heatmap from orientation notebook — neither induced nor strongly suppressed across the strain series](../figures/caulobacter_fur_lipida_loss/00_sphingolipid_locus_heatmap.png)
 
 NB00 motivated three reframings before formal hypothesis testing: (a) the sphingolipid biosynthesis pathway is *not induced* (rejecting the initial "Δfur derepresses sphingolipid biosynthesis" framing); (b) the canonical Lpt apparatus is maintained or up, consistent with Uchendu 2026's shared-component model; (c) SdpA at +4.8 log2 OM proteome surfaced peptidoglycan remodeling as a fourth hypothesis (H4) that wasn't in the v1 plan.
 
 ### NB01 — Leaden 2018 Fur signature
 
-![Leaden Δfur logFC vs our 4584-vs-4580 logFC; concordant_strong in dark blue, buffered set in orange, discordant in red](figures/NB01_fur_signature_scatter.png)
+![Leaden Δfur logFC vs our 4584-vs-4580 logFC; concordant_strong in dark blue, buffered set in orange, discordant in red](../figures/caulobacter_fur_lipida_loss/NB01_fur_signature_scatter.png)
 
 The scatter shows the dramatic asymmetry between our amplified Fur-derepression cohort (top-right quadrant, exceeding Leaden's logFC) and the buffered cohort (cluster near y=0 spanning Leaden's full -9 to -5 range). HutA (the iron-derepressed TBDT) is the extreme top-right point at our +10.5 vs Leaden's +2.2.
 
-![Leaden internal: Δfur vs iron-limitation response — shows the Fur regulon and iron-limitation response are correlated but not identical, providing Leaden's own validation of the signal](figures/NB01_leaden_iron_vs_fur.png)
+![Leaden internal: Δfur vs iron-limitation response — shows the Fur regulon and iron-limitation response are correlated but not identical, providing Leaden's own validation of the signal](../figures/caulobacter_fur_lipida_loss/NB01_leaden_iron_vs_fur.png)
 
 ### NB02 — Fitness data leverage
 
@@ -138,15 +143,15 @@ ChvI itself (CCNA_00237) is in the **both-phases** set with logFC +1.45 in 4584-
 
 ### NB04 — Sphingolipid, CtpA, Lpt panel
 
-![Sphingolipid biosynthesis cluster heatmap — flat-to-slightly-decreasing across strain series](figures/NB04_sphingolipid_locus_heatmap.png)
+![Sphingolipid biosynthesis cluster heatmap — flat-to-slightly-decreasing across strain series](../figures/caulobacter_fur_lipida_loss/NB04_sphingolipid_locus_heatmap.png)
 
-![Canonical LPS-transport apparatus heatmap — MsbA-like CCNA_00307 visibly UP in 4599 vs others](figures/NB04_lpt_apparatus_heatmap.png)
+![Canonical LPS-transport apparatus heatmap — MsbA-like CCNA_00307 visibly UP in 4599 vs others](../figures/caulobacter_fur_lipida_loss/NB04_lpt_apparatus_heatmap.png)
 
-![CtpA / CCNA_03113 expression per strain — clear monotonic rise 37→42→63 CPM despite borderline single-contrast FDR](figures/NB04_ctpA_per_strain.png)
+![CtpA / CCNA_03113 expression per strain — clear monotonic rise 37→42→63 CPM despite borderline single-contrast FDR](../figures/caulobacter_fur_lipida_loss/NB04_ctpA_per_strain.png)
 
 ### NB05 — PG remodeling heatmap
 
-![PG-remodeling enzymes meeting H4 threshold — coordinated up/down pattern across the strain series](figures/NB05_pg_remodeling_heatmap.png)
+![PG-remodeling enzymes meeting H4 threshold — coordinated up/down pattern across the strain series](../figures/caulobacter_fur_lipida_loss/NB05_pg_remodeling_heatmap.png)
 
 ### NB06 — Comparative species presence/absence (PaperBLAST original) + NB06b NCBI confirmation
 

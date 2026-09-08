@@ -1,3 +1,7 @@
+---
+title: 'Report: Web of Microbes Data Explorer'
+type: Source
+---
 # Report: Web of Microbes Data Explorer
 
 ## Key Findings
@@ -35,7 +39,7 @@ The two Pseudomonas direct matches are ENIGMA groundwater isolates with rich FB 
 
 ### 3. 19 WoM-Produced Metabolites Are Tested as FB Carbon/Nitrogen Sources
 
-![ENIGMA isolate metabolite profiles in R2A medium](figures/enigma_metabolite_heatmap.png)
+![ENIGMA isolate metabolite profiles in R2A medium](../figures/webofmicrobes_explorer/enigma_metabolite_heatmap.png)
 
 For `pseudo3_N2E3`, curated matching identified **19 metabolites** that the organism produces (WoM) and that the Fitness Browser tests as carbon or nitrogen sources:
 

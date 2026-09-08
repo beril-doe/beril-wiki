@@ -1,3 +1,8 @@
+---
+title: 'Report: ENIGMA Carbon Census — A Tiered Knowledge Census of 83 Enrichment
+  Compounds'
+type: Source
+---
 # Report: ENIGMA Carbon Census — A Tiered Knowledge Census of 83 Enrichment Compounds
 
 ## Key Findings
@@ -6,7 +11,7 @@
 
 The governing result is a gap, not a coverage claim. Of 83 compounds (59 SSO-groundwater + 24 necromass), all 83 resolved to structures (InChIKey via PubChem), 54 linked to KEGG, but only **9 are "callable"** (review I1: callable = an ENIGMA-isolate utilizer call **or** a Tier-1 measured RB-TnSeq carbon-source fitness experiment). Eight are callable on an `enigma_isolate_call` basis (≥1 ENIGMA-isolate prediction with a catabolic, compound-degrading reaction in a genome); a ninth — **lauric acid** — is callable on a `measured_fitness` basis: it has a Tier-1 measured carbon-source growth experiment in the Fitness Browser, confirmed structurally by an InChIKey re-match (NB02c). Lauric acid's Fitness Browser organism is a reference bacterium, **not** an ENIGMA isolate, so the ENIGMA-isolate deliverable (a) is unchanged. The remaining **74/83 (89%) are organism-dark**: the genetic determinants of their utilization are **not linkable via the queried BERDL and curated resources**. This is *resource-darkness*, not proof of absence from science — class-level catabolic literature exists for several of these compounds (e.g. monoterpenes, nicotine), and the project's own literature-rescue channel (NB02b) returned zero only because it used a shallow PubMed-*title* screen, which is a method floor rather than evidence of absence (see Limitations). This dark list, stratified by reason and chemical class, is the actionable enrichment-design output — it separates *not-linkable-here* compounds (candidate discovery targets) from the small *characterize-known* set, and a literature/PaperBLAST pass would reclassify some of the dark set.
 
-![Discovery funnel](figures/08_funnel.png)
+![Discovery funnel](../figures/enigma_carbon_census_1/08_funnel.png)
 
 The funnel: 83 compounds → 83 structure-resolved → 54 KEGG-linked → **9 callable**; 74 organism-dark.
 
@@ -26,9 +31,9 @@ Among the 8 `enigma_isolate_call` capacities across genomes carrying ≥1 capaci
 
 The effect sizes **sharpen but do not overturn** the verdict. By pair class: within-aromatic median OR 1.12 (3/10 pairs with CI entirely > 1, median Jaccard 0.026); within-other median OR 7.43 (1/3, but driven by Haldane correction on near-zero counts); and the genuine modularity test — **cross-block** pairs (distinct lower pathways) — median OR 2.28 with 4/15 CI > 1 but **median Jaccard ≈ 0**. The one biologically real cross-block signal the OR surfaces (and φ hid) is **phenylethylamine co-occurring with aromatic-funnel acids**: 4-hydroxybenzaldehyde + phenylethylamine OR 2.84 (95% CI 1.49–5.40, q=0.035, n11=11); phthalic acid + phenylethylamine OR 3.37 (95% CI 1.46–7.75, q=0.071, n11=6). This is **expected and mechanistically coherent**, because phenylethylamine is itself an aromatic-derived substrate (deaminated to phenylacetate, then the *paa*/phenylacetyl-CoA route), so versatile aromatic degraders tend to carry both. Crucially the **Jaccard stays ≈ 0.04** even for these enriched pairs — only ~4% of genomes with either capacity carry both — and only **25 of 3109 genomes (0.8%)** carry both an aromatic and a non-aromatic capacity. **Verdict: no broad cross-module modularity**; the one positive signal is itself aromatic-derived, i.e. co-occurrence *within* the broad aromatic-catabolism phenotype, not modular co-assembly of mechanistically-distinct modules. What *is* supported is phylogenetic concentration — Burkholderiales dominate utilizer counts, and high-versatility genera (Polaromonas, Alcaligenes, Burkholderia, Paraburkholderia, Comamonas, Hydrogenophaga) cluster in that order.
 
-![Catabolic co-occurrence](figures/05_cooccurrence.png)
-![Odds-ratio forest plot](figures/05b_odds_ratio_forest.png)
-![Genus versatility](figures/05_genus_versatility.png)
+![Catabolic co-occurrence](../figures/enigma_carbon_census_1/05_cooccurrence.png)
+![Odds-ratio forest plot](../figures/enigma_carbon_census_1/05b_odds_ratio_forest.png)
+![Genus versatility](../figures/enigma_carbon_census_1/05_genus_versatility.png)
 
 *(Notebooks: 05_cooccurrence, 05b_cooccurrence_effects)*
 
@@ -46,9 +51,9 @@ Of the 8 ENIGMA-isolate-callable compounds, only 2 are necromass-sourced (tereph
 
 **H4 verdict (tier-stratified, phylogenetically concentrated isolate predictions per compound): partially supported — strongly for the 8 ENIGMA-isolate-callable compounds, null for the other 75.** The 8 callable-with-isolate compounds each yield a tier-stratified prediction set that concentrates phylogenetically (Pseudomonadota/Burkholderiales, with compound-specific Sphingomonadales/Pseudomonadales contributions), exactly as H4 predicted. The remaining 75 are Tier 0 with no isolate-level placement, so H4 is null there. (Lauric acid, the 9th callable, qualifies only on measured RB-TnSeq fitness in a reference bacterium and contributes no ENIGMA-isolate phylogenetic prediction, so it sits outside both arms.)
 
-![Utilizer genera](figures/04_utilizer_genera.png)
-![Phylogenetic order map](figures/06_phylo_order_map.png)
-![Certainty composition](figures/06_certainty_composition.png)
+![Utilizer genera](../figures/enigma_carbon_census_1/04_utilizer_genera.png)
+![Phylogenetic order map](../figures/enigma_carbon_census_1/06_phylo_order_map.png)
+![Certainty composition](../figures/enigma_carbon_census_1/06_certainty_composition.png)
 
 *(Notebooks: 04_enigma_utilizers, 06_phylo_maps)*
 
@@ -56,13 +61,13 @@ Of the 8 ENIGMA-isolate-callable compounds, only 2 are necromass-sourced (tereph
 
 Beyond the local SSO field atlas, the implicated utilizer genera were placed across global environments — terrestrial/freshwater (NMDC, `kbase.nmdc_arkin`) and marine (Planet Microbe, as a contrast). **This is a biome-abundance proxy, not catabolic activity**: no environmental dataset measures the census compounds, so genus abundance indicates where the *organisms* live, not where the *compounds are degraded*.
 
-![Environmental atlas heatmap](figures/07b_env_atlas_heatmap.png)
+![Environmental atlas heatmap](../figures/enigma_carbon_census_1/07b_env_atlas_heatmap.png)
 
 NMDC scale: **3825 taxonomy-bearing metagenomes** (denominator = covstats files with taxonomy), 83/86 genera detected in 1719 metagenomes, **99% sample-labeled** via two independent ontologies (ENVO MIxS triad + GOLD ecosystem path). Macro-environment distribution: soil 2260, freshwater 723, periphyton 472, plant 119, sediment 42.
 
 Soil-vs-freshwater abundance contrast (**exploratory** — see Limitations) recovers textbook biogeography: soil-enriched genera are classic soil taxa (Mycobacterium log2 +5.09, Terriglobus +5.29, Nitrobacter +4.79, Afipia, Streptomyces, Nocardioides, Mesorhizobium), and freshwater-enriched genera are aquatic Betaproteobacteria (Cellvibrio log2 −2.19, Curvibacter, Rhodoferax, Comamonas, Acidovorax). The newly surfaced **periphyton** class (freshwater biofilms: epilithon/epipsammon/epiphyton) is a strong reservoir — Burkholderiales/Comamonadaceae (Rhizobacter, Variovorax, Polaromonas, Methylibium, Sphingomonas, Hydrogenophaga) at ~96–97% prevalence and mean relative abundance ~0.005–0.009.
 
-![Soil/freshwater enrichment](figures/07b_soil_fresh_enrichment.png)
+![Soil/freshwater enrichment](../figures/enigma_carbon_census_1/07b_soil_fresh_enrichment.png)
 
 **Label-free outlier discovery** (the most defensible signal, robust to label noise): top genus×sample relative-abundance spikes occur in periphyton (Nocardioides 0.43 in epipsammon, Hydrogenophaga 0.28 in epiphyton) and soil (Mycobacterium 0.22). Outliers peak in periphyton (34 genera) and soil (32).
 
@@ -74,8 +79,8 @@ Marine (Planet Microbe, 302 runs): 68/68 listed genera show positive abundance, 
 
 NB09 Part 1 resolves PubChem physicochemical descriptors for all 83 compounds and contrasts callable vs dark. **With only n=9 callable this is directional, not inferential** (Mann–Whitney, reported as direction + uncorrected p). Callable compounds are consistently **smaller and structurally simpler** than dark ones: median Complexity 133 vs 207 (p=0.034), MolecularWeight 152 vs 179 (p=0.066), HeavyAtomCount 11 vs 13 (p=0.057), with directionally higher polarity (TPSA 57 vs 41, H-bond donors 2 vs 1). The honest reading is that this is at least as much an **annotation-coverage ceiling** as a biological-bioavailability one — simple, common, pollutant-adjacent aromatics are exactly the molecules KEGG/ModelSEED/genome_depot annotate, so "callable" tracks structural simplicity partly because the knowledge base does. Notably there is **no physicochemical separation between groundwater and necromass** compounds (all contrasts p>0.14), reinforcing that source does not predict chemistry here.
 
-![Physicochemistry callable vs dark](figures/09a_physicochem_callable_dark.png)
-![Bioavailability space](figures/09a_bioavailability_space.png)
+![Physicochemistry callable vs dark](../figures/enigma_carbon_census_1/09a_physicochem_callable_dark.png)
+![Bioavailability space](../figures/enigma_carbon_census_1/09a_bioavailability_space.png)
 
 *(Notebook: 09_deepening)*
 
@@ -83,8 +88,8 @@ NB09 Part 1 resolves PubChem physicochemical descriptors for all 83 compounds an
 
 NB09 Part 2 transposes the deliverable to genomes. Of genomes carrying ≥1 of the 8 aromatic/alkaloid capacities, **675 are specialists** (exactly 1 capacity) and only **18 are generalists** (≥3; max 4). Generalist chassis concentrate in **Paraburkholderia (5), Burkholderia (4), Hydrogenophaga (2)** and scattered Burkholderiaceae — the same clade that dominates the versatility ranking, confirming versatility is a *clade trait*, not a widely portable module. All callable evidence is catabolic-direction by construction of the NB03 filter (846 Tier-2 pathway + 102 Tier-3 signature genome-compound calls; biosynthetic-only signatures are excluded and land in the dark set). Part 3 (per-clade conservation) shows compound-specific clade specialization rather than a shared generalist toolkit. **These conservation fractions are denominated over depot genomes that already carry some catabolic call — not a census of all genomes of each genus — so they describe within-called-set specialization, not absolute prevalence:** e.g. Castellaniella and Hylemonella carry 3-hydroxybenzoic-acid capacity in ~100% of such genomes, Sphingomonads (Novosphingobium/Sphingobium) carry 4-hydroxybenzaldehyde capacity at ~92–100%, Paenarthrobacter carries phthalic-acid capacity at 100%, and Comamonas spans both 3-hydroxybenzoate (92%) and 4-hydroxybenzaldehyde (85%). Capacity breadth across the chassis is led by 3-hydroxybenzoic acid (296 genomes, 53 genera) and salicylic acid (197 genomes, 28 genera); Abscisic acid is a 2-genome edge case.
 
-![Chassis specialists/generalists](figures/09b_chassis.png)
-![Per-clade conservation](figures/09c_clade_conservation.png)
+![Chassis specialists/generalists](../figures/enigma_carbon_census_1/09b_chassis.png)
+![Per-clade conservation](../figures/enigma_carbon_census_1/09c_clade_conservation.png)
 
 *(Notebook: 09_deepening)*
 
@@ -92,7 +97,7 @@ NB09 Part 2 transposes the deliverable to genomes. Of genomes carrying ≥1 of t
 
 NB09 Part 4 taxonomizes the 74 organism-dark compounds (post-I1) into four buckets: **33** KEGG-linked but no reaction in any queried genome, **29** fully orphan (no KEGG link at all), **6** biosynthesis-known/catabolism-unknown, and **6** only-generic-reactions. The 6 **biosynthesis-known** compounds — **Tyramine, guanidineacetic acid, cinnamic acid, caffeic acid, palmitic acid, farnesol** — have annotated *biosynthetic*-direction signatures but no catabolic call, which is exactly the profile to triage against MIBiG/biosynthetic literature before committing to discovery enrichment (flagged as an **external** consult; MIBiG was not queried in BERDL). The 29 fully-orphan compounds (no KEGG link) are the hardest discovery targets and skew necromass-heavy (13/24 necromass vs 16/59 groundwater are orphan). This per-bucket structure is the operational refinement of the headline gap: it ranks the 74 dark compounds by *why* they are dark and therefore by how to attack them.
 
-![Dark-matter taxonomy](figures/09d_dark_taxonomy.png)
+![Dark-matter taxonomy](../figures/enigma_carbon_census_1/09d_dark_taxonomy.png)
 
 *(Notebook: 09_deepening)*
 

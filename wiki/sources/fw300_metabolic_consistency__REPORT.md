@@ -1,10 +1,15 @@
+---
+title: 'Report: Metabolic Consistency of Pseudomonas FW300-N2E3 Across Four BERDL
+  Databases'
+type: Source
+---
 # Report: Metabolic Consistency of Pseudomonas FW300-N2E3 Across Four BERDL Databases
 
 ## Key Findings
 
 ### 1. High overall concordance across databases (94% mean concordance)
 
-![Concordance categories and cross-database coverage for 58 WoM-produced metabolites](figures/concordance_summary.png)
+![Concordance categories and cross-database coverage for 58 WoM-produced metabolites](../figures/fw300_metabolic_consistency/concordance_summary.png)
 
 Of the 58 metabolites produced or increased by FW300-N2E3 (Web of Microbes), 21 could be cross-referenced against at least one other database. Among these testable metabolites, 17/21 (81%) were fully concordant across all matched databases, 4/21 (19%) were partially concordant, and none were fully discordant. The mean concordance score was 0.94. The remaining 37 metabolites (64%) were only observed in WoM — they were not tested in BacDive, not predicted by GapMind, and not used as a condition in FB experiments for this organism.
 
@@ -22,7 +27,7 @@ FW300-N2E3 increases tryptophan in its exometabolome (WoM action = I), has 231 g
 
 ### 3. All 13 GapMind-matched metabolites have complete pathways
 
-![Consistency heatmap across WoM, Fitness Browser, BacDive, and GapMind](figures/consistency_heatmap.png)
+![Consistency heatmap across WoM, Fitness Browser, BacDive, and GapMind](../figures/fw300_metabolic_consistency/consistency_heatmap.png)
 
 Every metabolite that could be mapped to a GapMind pathway (lactate, valine, alanine, arginine, aspartate, glutamic acid, glycine, phenylalanine, proline, trehalose, tryptophan, malate, lysine) had a "complete" pathway prediction for FW300-N2E3. All 13 also showed growth in Fitness Browser experiments. This perfect agreement between computational prediction and experimental measurement validates GapMind's accuracy for this organism.
 
@@ -30,7 +35,7 @@ Every metabolite that could be mapped to a GapMind pathway (lactate, valine, ala
 
 ### 4. Rich fitness landscapes for produced metabolites
 
-![Number of significant fitness genes per WoM-produced metabolite](figures/fitness_hits_per_metabolite.png)
+![Number of significant fitness genes per WoM-produced metabolite](../figures/fw300_metabolic_consistency/fitness_hits_per_metabolite.png)
 
 Across 21 WoM metabolites with matching FB experiments, FW300-N2E3 showed significant gene fitness effects (|fit| > 1, |t| > 4) for 601 unique genes, with 4,764 total significant gene-condition hits. The most genetically complex metabolisms were carnitine (283 genes), alanine (295 genes across D/L forms), arginine (270 genes), and tryptophan (231 genes).
 

@@ -1,3 +1,7 @@
+---
+title: NMDC BioSamples
+type: Dataset
+---
 # NMDC BioSamples
 
 Provider: NMDC / NCBI · [Website](https://microbiomedata.org/)
@@ -16,5 +20,5 @@ Standardize biosample metadata for cross-study comparisons. Enable sample discov
 
 ## Used by projects (1)
 
-- [[summaries/nmdc_context_audit__REPORT|nmdc_context_audit]]
+- [nmdc_context_audit](../../wiki/summaries/nmdc_context_audit__REPORT.md)
 

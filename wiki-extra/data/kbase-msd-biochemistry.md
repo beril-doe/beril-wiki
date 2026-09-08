@@ -1,3 +1,7 @@
+---
+title: ModelSEED Biochemistry
+type: Dataset
+---
 # ModelSEED Biochemistry
 
 Provider: ModelSEED / Henry Lab · [Website](https://modelseed.org/)
@@ -16,8 +20,8 @@ Enable metabolic modeling and pathway analysis. Map genes to reactions, understa
 
 ## Used by projects (4)
 
-- [[summaries/acinetobacter_adp1_explorer__REPORT|acinetobacter_adp1_explorer]]
-- [[summaries/annotation_gap_discovery__REPORT|annotation_gap_discovery]]
-- [[summaries/berdl_data_atlas__REPORT|berdl_data_atlas]]
-- [[summaries/webofmicrobes_explorer__REPORT|webofmicrobes_explorer]]
+- [acinetobacter_adp1_explorer](../../wiki/summaries/acinetobacter_adp1_explorer__REPORT.md)
+- [annotation_gap_discovery](../../wiki/summaries/annotation_gap_discovery__REPORT.md)
+- [berdl_data_atlas](../../wiki/summaries/berdl_data_atlas__REPORT.md)
+- [webofmicrobes_explorer](../../wiki/summaries/webofmicrobes_explorer__REPORT.md)
 

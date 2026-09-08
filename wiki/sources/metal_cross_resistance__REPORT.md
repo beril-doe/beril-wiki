@@ -1,16 +1,20 @@
+---
+title: 'Report: Gene-Resolution Metal Cross-Resistance Across Diverse Bacteria'
+type: Source
+---
 # Report: Gene-Resolution Metal Cross-Resistance Across Diverse Bacteria
 
 ## Key Findings
 
 ### 1. Metal cross-resistance is universal and directionally conserved (H1 strongly supported)
 
-![DvH cross-resistance matrix](figures/dvh_cross_resistance_heatmap.png)
+![DvH cross-resistance matrix](../figures/metal_cross_resistance/dvh_cross_resistance_heatmap.png)
 
 Across 317 organism-metal pair observations (28 organisms, 85 unique metal pairs), **98.1% of gene-level fitness correlations are positive** (311/317) and **99.1% are statistically significant** (p < 0.05). All 15 metal pairs tested in ≥5 organisms show >90% sign consistency — no metal pair has systematically negative cross-resistance in any organism.
 
 The consensus cross-resistance matrix (mean Pearson r across organisms) reveals biologically meaningful metal clusters:
 
-![Consensus clustering](figures/metal_clustering_dendrogram.png)
+![Consensus clustering](../figures/metal_cross_resistance/metal_clustering_dendrogram.png)
 
 - **Ni-Co** (r = 0.56, n = 28 organisms): The classic divalent cation cross-resistance pair, now validated at gene resolution across diverse phyla
 - **Fe-Zn** (r = 0.61, n = 6): Unexpectedly strong; likely reflects shared disruption of iron-sulfur cluster proteins
@@ -23,15 +27,15 @@ The direction of cross-resistance (all positive) is universal; the quantitative 
 
 ### 2. Cross-resistance patterns are consistent across phylogenetically diverse organisms
 
-![Conservation across organisms](figures/metal_pair_conservation.png)
+![Conservation across organisms](../figures/metal_cross_resistance/metal_pair_conservation.png)
 
 The boxplot shows that for each metal pair, the distribution of Pearson r values across organisms is consistently positive, with tight interquartile ranges. Co-Ni (median r ≈ 0.58) is the strongest pair across 28 organisms spanning Proteobacteria, Bacteroidetes, Firmicutes, and Actinobacteria. Al-Co and Al-Ni are the weakest pairs (median r ≈ 0.30), consistent with aluminum's distinct toxicity mechanism.
 
-![Multi-organism panel](figures/cross_resistance_panel.png)
+![Multi-organism panel](../figures/metal_cross_resistance/cross_resistance_panel.png)
 
 Individual organism heatmaps show the same qualitative structure: warm colors throughout (positive cross-resistance), with the Ni-Co/Co-Zn block consistently among the strongest. DvH (13 metals) provides the richest single-organism view, with Mo standing out as the most independent metal.
 
-![Inter-organism agreement](figures/organism_agreement_heatmap.png)
+![Inter-organism agreement](../figures/metal_cross_resistance/organism_agreement_heatmap.png)
 
 Pairwise Spearman correlations between organism cross-resistance rankings (on the 10 common metal pairs across 12 organisms with ≥5 metals) show mostly positive agreement, confirming that organisms rank metal pairs similarly.
 
@@ -39,13 +43,13 @@ Pairwise Spearman correlations between organism cross-resistance rankings (on th
 
 ### 3. Conservation is validated by Mantel tests and LOO prediction, but the permutation test design requires nuance
 
-![Mantel distribution](figures/mantel_distribution.png)
+![Mantel distribution](../figures/metal_cross_resistance/mantel_distribution.png)
 
 Mantel tests across 351 organism pairs show mean r = 0.23 with 62% positive — moderate but consistent conservation of cross-resistance architecture. The metal-label permutation test (p = 0.42) is non-significant because ALL metal pairs are positive; shuffling labels doesn't change the mean when correlations are uniformly positive. This is not a failure — it confirms that the signal is in the universal positivity of cross-resistance, not in specific metal pair identities.
 
-![Permutation test](figures/permutation_test.png)
+![Permutation test](../figures/metal_cross_resistance/permutation_test.png)
 
-![Consensus vs individual](figures/consensus_vs_individual.png)
+![Consensus vs individual](../figures/metal_cross_resistance/consensus_vs_individual.png)
 
 The leave-one-out consensus prediction (mean r = 0.41) shows that a universal cross-resistance map is a useful predictor of individual organism patterns, though only 2/28 organisms reach individual significance — indicating that the consensus captures the average trend but individual organisms have meaningful deviations.
 
@@ -53,7 +57,7 @@ The leave-one-out consensus prediction (mean r = 0.41) shows that a universal cr
 
 ### 4. Three-tier gene architecture: general stress > metal-shared > metal-specific in core enrichment (H2 supported)
 
-![Core enrichment gradient](figures/core_enrichment_gradient.png)
+![Core enrichment gradient](../figures/metal_cross_resistance/core_enrichment_gradient.png)
 
 Metal-important genes (8,162 across 28 organisms) decompose into three tiers:
 
@@ -67,7 +71,7 @@ The predicted gradient holds: general stress genes (pleiotropic, important acros
 
 This supports the evolutionary model: **ancestral general stress defense** (deepest core) → **shared metal defense** (core, evolving slower) → **specialized metal-specific resistance** (more accessory, evolving faster).
 
-![Functional enrichment by tier](figures/tier_functional_enrichment.png)
+![Functional enrichment by tier](../figures/metal_cross_resistance/tier_functional_enrichment.png)
 
 Functional keyword analysis shows that general stress genes are enriched for energy/respiration and cell envelope functions, while metal-specific genes are enriched for transporters/efflux and iron/metal-related functions — consistent with the expectation that specialized metal resistance is mediated by dedicated transport systems.
 
@@ -81,7 +85,7 @@ NB05 identified 318 ortholog groups (OGs) that are metal-shared (important for �
 
 ### 6. BacDive validation is inconclusive at FB organism scale (H3)
 
-![BacDive validation](figures/multimetal_validation.png)
+![BacDive validation](../figures/metal_cross_resistance/multimetal_validation.png)
 
 The multi-metal tolerance scores do not correlate with BacDive isolation from metal environments at the FB species scale (Spearman rho ~ -0.02, p > 0.8). The validation set was corrected to (a) exclude 2 organisms without tier classification data (azobra, BFirm with <3 metals) and (b) collapse multiple FB strains of the same species to a single species-level entry (e.g., 5 *P. fluorescens* strains sharing the same BacDive pool). After matching and collapsing, the effective sample size is **20 independent species** — far too small for a meaningful correlation test. BacDive matching uses genus+species substring search, which is imprecise for organisms identified only to genus level (e.g., "Acidovorax sp."); these fuzzy matches should be treated with caution.
 

@@ -1,3 +1,7 @@
+---
+title: 'Report: Ecotype Functional Differentiation'
+type: Source
+---
 # Report: Ecotype Functional Differentiation
 
 ## Key Findings
@@ -12,7 +16,7 @@ A total of 1,820 genomes were assigned to ecotypes across 12 species spanning 6 
 
 ### Finding 2: Ecotypes show pervasive COG functional differentiation
 
-![COG differentiation rates by category, colored by adaptive (red) vs housekeeping (blue) vs other (gray)](figures/cog_differentiation_rates.png)
+![COG differentiation rates by category, colored by adaptive (red) vs housekeeping (blue) vs other (gray)](../figures/ecotype_functional_differentiation/cog_differentiation_rates.png)
 
 Chi-square and Fisher's exact tests revealed that 170 of 257 species x COG tests (66.1%) were statistically significant after BH-FDR correction (q < 0.05). All 12 species showed at least one significantly differentiated COG category, strongly rejecting H0 (that ecotype gene content variation is functionally random).
 
@@ -28,7 +32,7 @@ The least differentiated: **A** (RNA processing, 1/9), **B** (Chromatin, 1/8), *
 
 ### Finding 3: Adaptive COG categories show significantly larger effect sizes than housekeeping
 
-![Effect size distributions for adaptive vs housekeeping COG categories](figures/effect_size_distributions.png)
+![Effect size distributions for adaptive vs housekeeping COG categories](../figures/ecotype_functional_differentiation/effect_size_distributions.png)
 
 The hypothesis (H1) predicted that adaptive categories (V, P, G, E, Q, M, K) would differentiate more than housekeeping categories (J, F, H, C). The results **partially support H1**:
 
@@ -46,7 +50,7 @@ This means ecotypes differ in both adaptive and housekeeping functions, but the 
 
 ### Finding 4: Replication/mobile elements and unknown function drive the largest ecotype differences
 
-![Heatmap of COG differentiation significance across species](figures/cog_differentiation_heatmap.png)
+![Heatmap of COG differentiation significance across species](../figures/ecotype_functional_differentiation/cog_differentiation_heatmap.png)
 
 The two COG categories with the largest mean effect sizes were:
 - **S** (Unknown function): mean effect = 0.039, significant in 11/12 species

@@ -1,3 +1,7 @@
+---
+title: 'Report: Fitness Effects vs Conservation -- Quantitative Analysis'
+type: Source
+---
 # Report: Fitness Effects vs Conservation -- Quantitative Analysis
 
 ## Key Findings
@@ -17,9 +21,9 @@ A clear gradient from essential to neutral genes:
 
 The same gradient holds when binning by strongest fitness effect: essential -> 82.2% core, min_fit < -3 -> 77.7%, min_fit -1 to 0 -> 66.4%.
 
-![Conservation by Fitness Profile](figures/conservation_by_fitness_profile.png)
+![Conservation by Fitness Profile](../figures/fitness_effects_conservation/conservation_by_fitness_profile.png)
 
-![Fitness Magnitude vs Conservation](figures/fitness_magnitude_vs_conservation.png)
+![Fitness Magnitude vs Conservation](../figures/fitness_effects_conservation/fitness_magnitude_vs_conservation.png)
 
 *(Notebook: 02_fitness_vs_conservation.ipynb)*
 
@@ -35,9 +39,9 @@ Genes important in more conditions are more likely core (Spearman rho=0.086, p=8
 | 1-5 experiments | 71% |
 | 0 experiments | 66% |
 
-![Fitness Breadth vs Conservation](figures/fitness_breadth_vs_conservation.png)
+![Fitness Breadth vs Conservation](../figures/fitness_effects_conservation/fitness_breadth_vs_conservation.png)
 
-![Broad vs Specific Conservation](figures/broad_vs_specific_conservation.png)
+![Broad vs Specific Conservation](../figures/fitness_effects_conservation/broad_vs_specific_conservation.png)
 
 *(Notebook: 03_breadth_vs_conservation.ipynb)*
 
@@ -45,9 +49,9 @@ Genes important in more conditions are more likely core (Spearman rho=0.086, p=8
 
 Counter to the expectation that accessory genes might be costly to carry, **core genes are MORE likely to show positive fitness effects** when deleted (24.4% ever beneficial vs 19.9% for auxiliary, OR=0.77 for auxiliary vs core). This may reflect that core genes are more likely to participate in trade-off situations -- they help in some conditions but cost in others.
 
-![Burden Genes by Conservation](figures/burden_genes_by_conservation.png)
+![Burden Genes by Conservation](../figures/fitness_effects_conservation/burden_genes_by_conservation.png)
 
-![Cost-Benefit Portrait](figures/cost_benefit_portrait.png)
+![Cost-Benefit Portrait](../figures/fitness_effects_conservation/cost_benefit_portrait.png)
 
 *(Notebook: 02_fitness_vs_conservation.ipynb)*
 
@@ -55,7 +59,7 @@ Counter to the expectation that accessory genes might be costly to carry, **core
 
 Genes with strong condition-specific effects (tagged in `specificphenotype`) are 77.3% core vs 70.3% for genes without specific phenotypes (OR=1.78, p=1.8e-97). This contradicts the naive expectation that condition-specific genes would be accessory. Instead, it suggests that core genes are more likely to have measurable condition-specific effects -- perhaps because they participate in well-characterized pathways.
 
-![Conservation by Condition Type](figures/conservation_by_condition_type.png)
+![Conservation by Condition Type](../figures/fitness_effects_conservation/conservation_by_condition_type.png)
 
 *(Notebook: 03_breadth_vs_conservation.ipynb)*
 
@@ -65,7 +69,7 @@ Genes with strong condition-specific effects (tagged in `specificphenotype`) are
 
 ### Fitness Distributions by Conservation
 
-![Fitness Distributions by Conservation](figures/fitness_distributions_by_conservation.png)
+![Fitness Distributions by Conservation](../figures/fitness_effects_conservation/fitness_distributions_by_conservation.png)
 
 Core and auxiliary genes show distinct fitness effect distributions, with core genes having heavier tails in both the negative (important) and positive (burdensome) directions.
 
@@ -73,7 +77,7 @@ Core and auxiliary genes show distinct fitness effect distributions, with core g
 
 ### Novel Gene Landscape
 
-![Novel Gene Mean Fitness](figures/novel_gene_mean_fitness.png)
+![Novel Gene Mean Fitness](../figures/fitness_effects_conservation/novel_gene_mean_fitness.png)
 
 Novel (singleton) genes show near-zero mean fitness, suggesting they are largely invisible to lab-based fitness assays -- neither beneficial nor detrimental under tested conditions.
 

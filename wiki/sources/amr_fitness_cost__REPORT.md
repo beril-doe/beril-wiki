@@ -1,10 +1,14 @@
+---
+title: 'Report: Fitness Cost of Antimicrobial Resistance Genes'
+type: Source
+---
 # Report: Fitness Cost of Antimicrobial Resistance Genes
 
 ## Key Findings
 
 ### 1. Universal cost of resistance across 25 bacterial species (H1 supported)
 
-![Forest plot showing positive fitness shift for AMR gene knockouts across all 25 organisms](figures/forest_plot_amr_fitness.png)
+![Forest plot showing positive fitness shift for AMR gene knockouts across all 25 organisms](../figures/amr_fitness_cost/forest_plot_amr_fitness.png)
 
 AMR gene knockouts show systematically higher fitness than non-AMR gene knockouts under non-antibiotic conditions, confirming that resistance genes impose a metabolic burden. A DerSimonian-Laird random-effects meta-analysis across 25 organisms yields a pooled effect of **+0.086 [95% CI: +0.074, +0.098], z = 14.3, p ~ 0**. Remarkably, **all 25 of 25 organisms** show a positive shift (AMR > background), making this one of the most consistent signals observed across the Fitness Browser compendium. The median per-organism Cohen's d = 0.18, indicating a small but real effect — consistent with the literature prediction of +0.05 to +0.20 for fitness costs after compensatory evolution.
 
@@ -16,13 +20,13 @@ The Tier 1 (bakta_amr, N=110) and Tier 2 (keyword annotation, N=691) gene sets s
 
 ### 2. AMR genes become more important under antibiotic pressure (H4 partially supported)
 
-![Scatter plot and histogram of fitness flip between antibiotic and non-antibiotic conditions](figures/antibiotic_validation.png)
+![Scatter plot and histogram of fitness flip between antibiotic and non-antibiotic conditions](../figures/amr_fitness_cost/antibiotic_validation.png)
 
 When tested under any antibiotic, 57% of AMR genes show a fitness flip — they become relatively more important (lower fitness when knocked out) compared to non-antibiotic conditions (Wilcoxon signed-rank p = 0.0001, N = 797). The mean flip is +0.045 (noabx − abx fitness), indicating AMR genes shift from slight burden to slight importance.
 
 Critically, this flip is **mechanism-dependent**: efflux genes (broad-spectrum) show a significantly stronger flip than enzymatic inactivation genes (narrow-spectrum): +0.094 vs −0.001, MWU p = 0.007. This is expected — broad-spectrum efflux pumps protect against many antibiotics and should show fitness importance under any antibiotic experiment, while narrow-spectrum enzymes (e.g., beta-lactamases) only become important when the matching antibiotic is present. The 43% of AMR genes that don't flip likely reflect narrow-spectrum resistance being tested against non-matching antibiotics, not non-functional genes.
 
-![Heatmap of AMR gene fitness under class-matched antibiotics](figures/class_matched_heatmap.png)
+![Heatmap of AMR gene fitness under class-matched antibiotics](../figures/amr_fitness_cost/class_matched_heatmap.png)
 
 The class-matched validation (157 gene-antibiotic pairs across 4 resistance classes) shows a mean flip of +0.113, but the Wilcoxon signed-rank test does not reach significance (p = 0.14). This is likely due to the small N per class after matching and heterogeneity across organisms — some organisms show strong flips while others are near zero. The any-antibiotic analysis (N = 797) has much greater power and is highly significant. Within the class-matched set, chloramphenicol resistance genes show the strongest validation: 6/6 (100%) show the expected flip. Beta-lactam genes (105 pairs across 10 organisms) show 50% flip rate, consistent with many being tested against non-carbenicillin beta-lactams.
 
@@ -30,7 +34,7 @@ The class-matched validation (157 gene-antibiotic pairs across 4 resistance clas
 
 ### 3. Resistance mechanism does not predict fitness cost (H2 not supported)
 
-![Box plot of fitness by AMR mechanism](figures/h2_mechanism_stratification.png)
+![Box plot of fitness by AMR mechanism](../figures/amr_fitness_cost/h2_mechanism_stratification.png)
 
 Contrary to H2, the fitness cost of AMR genes does not vary by resistance mechanism. The Kruskal-Wallis test across four testable mechanisms (efflux N=254, enzymatic inactivation N=304, metal resistance N=144, unknown N=74) is not significant (H = 0.65, p = 0.89). The Jonckheere-Terpstra test for the predicted ordering (efflux > enzymatic > metal > unknown) is also non-significant (z = 0.23, p = 0.41). No pairwise comparison survives FDR correction.
 
@@ -40,7 +44,7 @@ This uniformity is itself a finding. If all resistance mechanisms impose the sam
 
 ### 4. Core and accessory AMR genes have identical fitness costs (H3 not supported)
 
-![Box plot comparing core vs accessory AMR gene fitness](figures/h3_core_vs_accessory.png)
+![Box plot comparing core vs accessory AMR gene fitness](../figures/amr_fitness_cost/h3_core_vs_accessory.png)
 
 Core (intrinsic, N=638) and accessory (acquired, N=163) AMR genes show virtually identical fitness distributions: mean −0.024 vs −0.024, Cohen's d = 0.002, MWU p = 0.33.
 
@@ -52,7 +56,7 @@ The result challenges the expectation that recently acquired (accessory) AMR gen
 
 ### 5. Mechanism is strongly associated with conservation, even though cost is not
 
-![Interaction plot showing mechanism × conservation](figures/mechanism_x_conservation.png)
+![Interaction plot showing mechanism × conservation](../figures/amr_fitness_cost/mechanism_x_conservation.png)
 
 While mechanism doesn't predict fitness cost, it strongly predicts conservation status (χ² = 69.3, p = 1.4×10⁻¹³). Metal resistance genes are 44% accessory, while efflux (13%) and enzymatic inactivation (16%) genes are overwhelmingly core. This decoupling — mechanism predicts *where* in the pangenome an AMR gene sits, but not *how costly* it is — suggests that the forces governing AMR gene retention (horizontal transfer frequency, selective advantage in specific environments) are distinct from the forces governing metabolic cost.
 

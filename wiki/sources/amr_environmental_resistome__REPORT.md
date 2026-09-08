@@ -1,10 +1,14 @@
+---
+title: 'Report: Environmental Resistome at Pangenome Scale'
+type: Source
+---
 # Report: Environmental Resistome at Pangenome Scale
 
 ## Key Findings
 
 ### 1. Clinical species carry 2.5× more AMR gene clusters than environmental species (H1 supported)
 
-![AMR diversity by environment](figures/h1_amr_by_environment.png)
+![AMR diversity by environment](../figures/amr_environmental_resistome/h1_amr_by_environment.png)
 
 Species from clinical sources have a median of **5 AMR gene clusters**, compared to 2 for soil, aquatic, and host-associated species (Kruskal-Wallis H = 781.9, p = 9.4×10⁻¹⁶⁷, η² = 0.056). Human gut species are similar to clinical (median 5). Of 15 pairwise environment comparisons, 13 are significant after FDR correction. The largest effect is clinical vs aquatic (rank-biserial r = −0.49).
 
@@ -14,7 +18,7 @@ This extends Gibson et al. (2015, ISME J), who found resistomes cluster by ecolo
 
 ### 2. Clinical species have predominantly acquired resistance; soil/aquatic species have more intrinsic resistance (H2 supported)
 
-![Core vs accessory AMR by environment](figures/h2_core_accessory_by_env.png)
+![Core vs accessory AMR by environment](../figures/amr_environmental_resistome/h2_core_accessory_by_env.png)
 
 The composition of the resistome differs qualitatively across environments. **Clinical species: 68% accessory (acquired) AMR** vs **soil species: 43% accessory** (Kruskal-Wallis H = 506.0, p = 4×10⁻¹⁰⁷, η² = 0.036). A clear gradient emerges:
 
@@ -33,7 +37,7 @@ This confirms at pangenome scale the pattern observed by Jiang et al. (2024) in 
 
 ### 3. Resistance mechanism composition is strongly environment-dependent (H3 supported)
 
-![Mechanism composition by environment](figures/h3_mechanism_by_environment.png)
+![Mechanism composition by environment](../figures/amr_environmental_resistome/h3_mechanism_by_environment.png)
 
 All four AMR mechanisms show significant environment-dependent composition (all q ~ 0 after BH-FDR). The two largest effects are:
 
@@ -55,7 +59,7 @@ This is the most actionable finding: **different ecological niches select for fu
 
 ### 4. Species with more clinical genomes carry more AMR (H4 proxy — species-level analysis)
 
-![Within-species AMR by environment](figures/h4_within_species.png)
+![Within-species AMR by environment](../figures/amr_environmental_resistome/h4_within_species.png)
 
 **Note**: This is a species-level proxy analysis, not a true per-genome within-species comparison (which would require billion-row joins). We test whether species whose genomes are predominantly from clinical sources carry more AMR than species whose genomes are predominantly from environmental sources.
 
@@ -88,7 +92,7 @@ This demonstrates that the environment-AMR relationship is not simply a proxy fo
 
 ### 6. AlphaEarth continuous environment embeddings confirm discrete findings (supplementary)
 
-![AlphaEarth analysis](figures/nb04_alphaearth.png)
+![AlphaEarth analysis](../figures/amr_environmental_resistome/nb04_alphaearth.png)
 
 Among 2,659 species with both AMR data and AlphaEarth environmental embeddings, 52 of 64 embedding dimensions significantly correlate with AMR diversity (FDR < 0.05; top: A34, rho = +0.24). A Mantel test confirms that environmental distance (cosine distance of embeddings) predicts AMR profile distance (Bray-Curtis of mechanism fractions): r = 0.098, p = 0.001. Stratified analysis shows the environment-AMR coupling is strongest for clinical species (r = 0.177), moderate for soil (r = 0.129), and weakest for aquatic (r = 0.061). This continuous analysis confirms the discrete findings from NB02 but adds limited additional interpretability due to the opaque nature of embedding dimensions and 28% genome coverage.
 

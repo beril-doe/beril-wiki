@@ -1,3 +1,8 @@
+---
+title: 'Report: Metal Resistance Ecology — Phylogenetic Conservation vs. Environmental
+  Selection'
+type: Source
+---
 # Report: Metal Resistance Ecology — Phylogenetic Conservation vs. Environmental Selection
 
 **Project**: `microbeatlas_metal_ecology`
@@ -28,7 +33,7 @@ all 13 environment categories.
 
 ### Finding 1: Bacterial niche breadth is moderately phylogenetically conserved; metal type diversity predicts it beyond phylogeny
 
-![Synthesis figure: Pagel's λ heatmap (Panel A) and PGLS forest plot (Panel B)](figures/fig3_synthesis.png)
+![Synthesis figure: Pagel's λ heatmap (Panel A) and PGLS forest plot (Panel B)](../figures/microbeatlas_metal_ecology/fig3_synthesis.png)
 
 Across 1,264 bacterial genera with ≥ 3 OTUs in MicrobeAtlas, Levins' B_std shows strong
 phylogenetic signal (Pagel's λ = 0.787, p = 7.9×10⁻¹⁰², LRT). Habitat range (number of
@@ -45,7 +50,7 @@ total AMR gene burden and core AMR fraction are non-significant.
 
 ### Finding 2: Metal AMR traits show intermediate phylogenetic signal — consistent with mixed vertical inheritance and HGT
 
-![Pagel's λ heatmap: trait × domain](figures/fig1_lambda_heatmap.png)
+![Pagel's λ heatmap: trait × domain](../figures/microbeatlas_metal_ecology/fig1_lambda_heatmap.png)
 
 Among bacterial metal AMR traits (n = 606 genera, GTDB r214), Pagel's λ is intermediate and
 significantly non-zero for all three metrics: total AMR cluster count (λ = 0.260,
@@ -63,7 +68,7 @@ ancient, vertically inherited metabolic entrenchment.
 
 ### Finding 3: Metal type diversity, not total gene burden, distinguishes broad-niche genera
 
-![Metal type diversity vs Levins' B_std scatter](figures/fig4_metal_types_scatter.png)
+![Metal type diversity vs Levins' B_std scatter](../figures/microbeatlas_metal_ecology/fig4_metal_types_scatter.png)
 
 The raw OLS correlation between mean metal type diversity and Levins' B_std is modest
 (r ≈ 0.21), reflecting the baseline phylogenetic structure in both variables. The PGLS β
@@ -104,7 +109,7 @@ Analytical subset: 606 bacterial genera with ≥ 3 OTUs, present in the GTDB r21
 genus tree, and with metal AMR data from `kbase_ke_pangenome`. Predictors z-scored;
 Bonferroni threshold p < 0.0083 (6 simple models).
 
-![PGLS forest plot: all simple models + multi-predictor](figures/fig2_pgls_forest.png)
+![PGLS forest plot: all simple models + multi-predictor](../figures/microbeatlas_metal_ecology/fig2_pgls_forest.png)
 
 **Simple PGLS models**:
 
@@ -136,7 +141,7 @@ Five robustness analyses were run to partially address the main caveats. Scripts
 `scripts/pgls_robustness.R` (analyses 1–3), inline Python (analysis 4), and
 `scripts/pgls_genome_size.R` (analysis 5).
 
-![Robustness summary: Panel A — β across 5 analysis scenarios; Panel B — rarefied β distribution (200 iterations); Panel C — archaeal power curve](figures/fig5_robustness.png)
+![Robustness summary: Panel A — β across 5 analysis scenarios; Panel B — rarefied β distribution (200 iterations); Panel C — archaeal power curve](../figures/microbeatlas_metal_ecology/fig5_robustness.png)
 
 ### R1. Pangenome coverage covariate (addressable with existing data)
 
@@ -1091,7 +1096,7 @@ variation has not been formally tested. A correlation between per-sample CWM and
 covered-read fraction is recommended as a diagnostic before this metric is used in further
 analyses.
 
-![ENIGMA Track B figure: CWM by well, CWM vs time, Sulfurimonas decline](figures/fig_enigma_trackB.png)
+![ENIGMA Track B figure: CWM by well, CWM vs time, Sulfurimonas decline](../figures/microbeatlas_metal_ecology/fig_enigma_trackB.png)
 
 #### Track B statistical results
 
