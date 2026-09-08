@@ -74,8 +74,6 @@ copied faithfully from a report, never that the report was right.
 
 ## Known limitations
 
-- Four concept pairs are near-duplicates that the consolidation stage declines
-  to merge because both sides are mature; they need a human call.
 - Entity pages have no deduplication pass. Single-source entities are hidden
   from this site, but near-duplicate names among the rest are possible.
 - Reported budget figures undercount actual spend, so cost notes in the repo
@@ -106,9 +104,10 @@ summary page, over the synthesis page that aggregates it.
 
 ## License
 
-Wiki content and figures are licensed
-[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The pipeline that
-compiles them is [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+This wiki is compiled from the BERIL Research Observatory's research corpus,
+which is licensed AGPL-3.0, so the pipeline and the compiled pages carry
+[the same licence](https://www.gnu.org/licenses/agpl-3.0.html). The licence
+grants you rights to the text; it makes no claim that the text is correct.
 
 ## Source
 

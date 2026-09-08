@@ -56,7 +56,7 @@ Finally, environmental signals remain vulnerable to coverage and definition. The
 - [[concepts/metabolic-model-gapfilling]] — Read next to understand how model repair creates candidate reactions and new validation risks.
 - [[concepts/circularity-in-metabolic-model-validation]] — Focus on why gapfilled reactions cannot independently validate themselves through dependent knockouts.
 - [[concepts/experimental-prioritization-of-functional-dark-matter]] — See how dark genes are converted into ranked experimental hypotheses.
-- [[concepts/functional-dark-matter]] — Separate annotation, sampling, conservation, and phenotype gaps at genome scale.
+- [[concepts/genomic-under-representation]] — Separate annotation, sampling, conservation, and phenotype gaps at genome scale.
 - [[concepts/homology-search-negative-evidence]] — Use this when interpreting zero-hit searches or pathway-absence claims.
 
 Key entities: [[entities/kescience-fitnessbrowser]], [[entities/kbase-ke-pangenome]], [[entities/tnseq]], [[entities/gapmind]], [[entities/gtdb]], [[entities/bakta]], [[entities/independent-component-analysis]]

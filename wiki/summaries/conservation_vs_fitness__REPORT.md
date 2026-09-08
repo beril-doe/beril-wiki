@@ -70,4 +70,4 @@ It also proposes using FB ortholog data to identify essential gene families cons
 
 - [[concepts/gene-essentiality]] — links essentiality calls to core, auxiliary, and unmapped pangenome conservation, including the 1.56 median odds ratio and essential-auxiliary category. [src: conservation_vs_fitness]
 - [[concepts/pangenome-integration]] — provides a 177,863-link integration between Fitness Browser genes and KBase pangenome clusters, with explicit coverage and unmatched-organism limitations. [src: conservation_vs_fitness]
-- [[concepts/functional-dark-matter]] — shows that essential-unmapped genes are 44.7% hypothetical and essential-auxiliary genes are 38.2% hypothetical, identifying poorly characterized essential functions. [src: conservation_vs_fitness]
+- [[concepts/genomic-under-representation]] — shows that essential-unmapped genes are 44.7% hypothetical and essential-auxiliary genes are 38.2% hypothetical, identifying poorly characterized essential functions. [src: conservation_vs_fitness]

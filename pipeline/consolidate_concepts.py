@@ -500,6 +500,85 @@ def replay_pending(root: pathlib.Path, state: dict, state_path: pathlib.Path) ->
         state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
 
 
+def apply_merge(root: pathlib.Path, loser: str, survivor: str, targets: set[str],
+                sources: dict[str, str], system: str, state: dict,
+                state_path: pathlib.Path, refused: list[str]) -> bool:
+    """Rewrite survivor to absorb loser, delete loser, repoint inbound links.
+
+    Shared by the judged path (phase_merge) and the human-decided one
+    (--force-merge). The retention gate applies to both: a person may decide
+    two pages are one, but not that the merge may drop evidence."""
+    wiki = root / "wiki"
+    pl, ps = wiki / "concepts" / f"{loser}.md", wiki / "concepts" / f"{survivor}.md"
+    tl = pl.read_text(encoding="utf-8", errors="replace")
+    ts = ps.read_text(encoding="utf-8", errors="replace")
+    lfm, lbody = C.parse_fm(tl)
+    sfm, sbody = C.parse_fm(ts)
+
+    task = CONCEPT_MERGE_USER.format(
+        loser=loser, survivor=survivor,
+        title=(sbody.splitlines() or ["#"])[0].lstrip("# ").strip() or survivor,
+        survivor_body=sbody, loser_body=lbody)
+    try:
+        obj = generate_retaining(
+            [{"role": "system", "content": system},
+             {"role": "user", "content": C.KNOWN_TARGETS_USER.format(
+                 targets="\n".join(f"- {t}" for t in sorted(targets - {f"concepts/{loser}"})))},
+             {"role": "user", "content": task}],
+            f"merge/{survivor}", sources, targets,
+            required=body_src_ids(tl) | body_src_ids(ts),
+            required_nums=page_numbers(tl) | page_numbers(ts))
+    except C.PageError as e:
+        # NOT a failure: the retention gate refusing a lossy rewrite is the
+        # gate doing its job, and both pages are left intact. Counting it in
+        # C._failures would exit 1, and run_pipeline.sh runs under
+        # `set -euo pipefail`, so one safely-declined merge would abort the
+        # whole pipeline before conflicts, hubs and figures ever run.
+        print(f"    [WARN] declined merge — {e}; keeping both pages")
+        refused.append(f"merge:{survivor}+{loser}")
+        return False
+
+    # Union then canonicalise: a union alone carries both pages' padding forward.
+    srcs = C.canonical_sources(obj["content"],
+                               list(dict.fromkeys((sfm.get("sources") or [])
+                                                  + (lfm.get("sources") or []))))
+    ps.write_text(
+        C.fm_block({"type": "Concept", "description": obj.get("description", ""), "sources": srcs})
+        + obj["content"].strip() + "\n", encoding="utf-8")
+    # Persist the redirect BEFORE deleting, so an interrupt between the unlink
+    # and the link rewrite is recoverable: the next run finds the loser gone,
+    # has no candidate to re-derive it from, and would otherwise leave every
+    # inbound [[concepts/<loser>]] dangling forever.
+    state.setdefault("pending", {})[loser] = survivor
+    state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
+    pl.unlink()
+    targets.discard(f"concepts/{loser}")
+    n = repoint_links(root, loser, survivor)
+    state["pending"].pop(loser, None)
+    state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
+    print(f"    merged; {n} page(s) repointed")
+    return True
+
+
+def rename_concept(root: pathlib.Path, old: str, new: str) -> int:
+    """Rename a concept page and repoint every inbound wikilink.
+
+    A slug that disagrees with its own page title is a real defect, and it is
+    also what makes the duplicate detector fire on unrelated pages. Nothing in
+    state/ keys on a concept slug, so this needs no bookkeeping beyond the
+    links; the topic hubs whose members changed regenerate on the next run."""
+    src = root / "wiki" / "concepts" / f"{old}.md"
+    dst = root / "wiki" / "concepts" / f"{new}.md"
+    if not src.exists():
+        raise SystemExit(f"[ERROR] concepts/{old}.md does not exist")
+    if dst.exists():
+        raise SystemExit(f"[ERROR] concepts/{new}.md already exists — merge instead of renaming")
+    src.rename(dst)
+    n = repoint_links(root, old, new)
+    print(f"  renamed concepts/{old} -> concepts/{new}; {n} page(s) repointed")
+    return n
+
+
 def phase_merge(root: pathlib.Path, concepts: list[dict], pairs: list[tuple],
                 sources: dict[str, str], system: str, state: dict, mature: int,
                 state_path: pathlib.Path, refused: list[str]) -> int:
@@ -550,51 +629,13 @@ def phase_merge(root: pathlib.Path, concepts: list[dict], pairs: list[tuple],
         print(f"  merging concepts/{loser} -> concepts/{survivor} (rank {rank}, sim {sim:.3f}): "
               f"{str(verdict.get('justification') or '')[:90]}")
 
-        task = CONCEPT_MERGE_USER.format(
-            loser=loser, survivor=survivor,
-            title=(sbody.splitlines() or ["#"])[0].lstrip("# ").strip() or survivor,
-            survivor_body=sbody, loser_body=lbody)
-        try:
-            obj = generate_retaining(
-                [{"role": "system", "content": system},
-                 {"role": "user", "content": C.KNOWN_TARGETS_USER.format(
-                     targets="\n".join(f"- {t}" for t in sorted(targets - {f"concepts/{loser}"})))},
-                 {"role": "user", "content": task}],
-                f"merge/{survivor}", sources, targets, required=ca | cb,
-                required_nums=page_numbers(ta) | page_numbers(tb))
-        except C.PageError as e:
-            # NOT a failure: the retention gate refusing a lossy rewrite is the
-            # gate doing its job, and both pages are left intact. Counting it in
-            # C._failures would exit 1, and run_pipeline.sh runs under
-            # `set -euo pipefail`, so one safely-declined merge would abort the
-            # whole pipeline before conflicts, hubs and figures ever run.
-            print(f"    [WARN] declined merge — {e}; keeping both pages")
-            refused.append(f"merge:{survivor}+{loser}")
+        if not apply_merge(root, loser, survivor, targets, sources, system,
+                           state, state_path, refused):
             continue
-
-        # Union then canonicalise: a union alone carries both pages' padding forward.
-        srcs = C.canonical_sources(obj["content"],
-                                   list(dict.fromkeys((sfm.get("sources") or [])
-                                                      + (lfm.get("sources") or []))))
-        (wiki / "concepts" / f"{survivor}.md").write_text(
-            C.fm_block({"type": "Concept", "description": obj.get("description", ""), "sources": srcs})
-            + obj["content"].strip() + "\n", encoding="utf-8")
-        # Persist the redirect BEFORE deleting, so an interrupt between the
-        # unlink and the link rewrite is recoverable: the next run finds the
-        # loser gone, has no candidate to re-derive it from, and would otherwise
-        # leave every inbound [[concepts/<loser>]] dangling forever.
-        state.setdefault("pending", {})[loser] = survivor
-        state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
-        (wiki / "concepts" / f"{loser}.md").unlink()
-        targets.discard(f"concepts/{loser}")
-        n = repoint_links(root, loser, survivor)
-        state["pending"].pop(loser, None)
-        state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
         redirect[loser] = survivor
         for k, v in list(redirect.items()):
             if v == loser:
                 redirect[k] = survivor
-        print(f"    merged; {n} page(s) repointed")
         merged += 1
     return merged
 
@@ -704,6 +745,30 @@ def main(root: pathlib.Path, args) -> int:
     state.setdefault("no_evidence", {})
     state.setdefault("pending", {})
 
+    # Human-decided concept identity, applied before anything is ranked, so the
+    # rest of the run sees the corrected corpus. Both are one-shot operations
+    # recorded in the command that ran them; neither weakens a threshold, which
+    # is what the mature-mature pairs actually needed.
+    if args.rename:
+        for spec in args.rename:
+            old, _, new = spec.partition(":")
+            rename_concept(root, old.strip(), new.strip())
+    if args.force_merge:
+        refused_now: list[str] = []
+        targets = C.wikilink_targets(root)
+        for spec in args.force_merge:
+            loser, _, survivor = spec.partition(":")
+            loser, survivor = loser.strip(), survivor.strip()
+            print(f"  force-merging concepts/{loser} -> concepts/{survivor} (human decision)")
+            apply_merge(root, loser, survivor, targets, sources, system,
+                        state, state_path, refused_now)
+    if args.rename or args.force_merge:
+        C.rebuild_index(root)
+        est = C._usage["in"] * C.PRICE_IN + C._usage["out"] * C.PRICE_OUT
+        print(f"consolidate: applied human decisions (~${est:.2f} est); "
+              "re-run without these flags for the automatic pass")
+        return 0  # one-shot operations, not part of the ranked pass
+
     concepts, summaries = load_concepts(wiki), load_summaries(wiki)
     models = [m.strip() for m in args.merge_models.split(",") if m.strip()]
     # --dry-run is advertised as $0, so it may only use free models. cohere is
@@ -785,5 +850,10 @@ if __name__ == "__main__":
     ap.add_argument("--min-sources", type=int, default=4,
                     help="a concept citing fewer projects than this is thin; two concepts "
                          "that are both at or above it are never merged with each other")
+    ap.add_argument("--force-merge", action="append", metavar="LOSER:SURVIVOR",
+                    help="merge two concepts on a human decision, skipping the judge and the "
+                         "mature-mature guard. The retention gate still applies. Repeatable")
+    ap.add_argument("--rename", action="append", metavar="OLD:NEW",
+                    help="rename a concept slug and repoint every inbound wikilink. Repeatable")
     a = ap.parse_args()
     sys.exit(main(a.root, a))

@@ -42,6 +42,6 @@ Pending analyses are: decomposing negative R² into distributional shift, outlie
 
 ## Slots Into
 
-- [[concepts/functional-dark-matter]] — The GDI identifies forest and cropland genomic under-representation and an alkaline-soil sampling gap relevant to uncharacterized microbial functional potential. [src: soil_frontier_genomics]
+- [[concepts/genomic-under-representation]] — The GDI identifies forest and cropland genomic under-representation and an alkaline-soil sampling gap relevant to uncharacterized microbial functional potential. [src: soil_frontier_genomics]
 - [[concepts/environment-embedding-geography]] — The report tests spatially structured prediction and shows that spatial autocorrelation and distributional shift must be separated from biological unpredictability. [src: soil_frontier_genomics]
 - [[concepts/provenance-aware-resource-discovery]] — The proposed controls for 16S sampling effort and completeness highlight the need to distinguish database sampling gaps from assembly or annotation gaps. [src: soil_frontier_genomics]

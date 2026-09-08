@@ -202,11 +202,25 @@ def is_table_or_links(par: str) -> bool:
     return all(ln.startswith("|") or ln.startswith("- [[") for ln in lines)
 
 
+# Pairs a person read and judged distinct. The detector keys on shared sources
+# plus shared name tokens, so it cannot tell a shared subject from a shared
+# vocabulary; without this, a warning nobody can act on fires on every run and
+# teaches readers to skim past the ones that matter. Reviewed 2026-09-08.
+NOT_DUPLICATES = {
+    # what transfer produces vs the route it travels
+    frozenset({"horizontal-gene-transfer-driven-innovation",
+               "chromosomal-and-integrative-gene-transfer"}),
+    # core genes can be costly to keep vs core genes can be uncharacterised
+    frozenset({"core-genome-burden-paradox", "core-gene-annotation-paradox"}),
+}
+
+
 def duplicate_concepts(kb: pathlib.Path) -> list[str]:
     """Near-duplicate concept pairs: heavy source overlap + shared name tokens.
 
     Shared with compile.py's plan step, which injects the current output so
     extend-don't-duplicate is enforced at write time, not just audited here.
+    Pairs in NOT_DUPLICATES have been reviewed and dismissed.
     """
     stops = {"the", "of", "in", "and", "for", "to", "a", "vs", "with"}
     cinfo = []
@@ -218,6 +232,8 @@ def duplicate_concepts(kb: pathlib.Path) -> list[str]:
     out = []
     for i, (a, sa, ta) in enumerate(cinfo):
         for b, sb, tb in cinfo[i + 1:]:
+            if frozenset({a, b}) in NOT_DUPLICATES:
+                continue
             if sa and sb and len(sa & sb) / max(1, len(sa | sb)) >= 0.5 and len(ta & tb) >= 2:
                 out.append(f"duplicate-concepts? '{a}' and '{b}' share {len(sa & sb)} sources and name tokens {sorted(ta & tb)}")
     return out

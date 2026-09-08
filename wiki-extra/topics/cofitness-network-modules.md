@@ -39,7 +39,7 @@ Finally, condition-specific modules should not be treated as universal metabolic
 - [[concepts/gene-essentiality]] — distinguish module membership, graded fitness effects, and binary essentiality.
 - [[concepts/pangenome-conservation-fitness-decoupling]] — investigate why conservation and laboratory burden do not always coincide.
 - [[concepts/metabolic-model-gapfilling]] — evaluate the limits of FBA when modules imply respiratory or cofactor dependencies.
-- [[concepts/functional-dark-matter]] — see how module membership prioritizes genes whose molecular functions remain unknown.
+- [[concepts/genomic-under-representation]] — see how module membership prioritizes genes whose molecular functions remain unknown.
 
 Key entities: [[entities/kescience-fitnessbrowser]], [[entities/independent-component-analysis]], [[entities/kbase-ke-pangenome]], [[entities/tnseq]], [[entities/flux-balance-analysis]], [[entities/bidirectional-best-hit-orthology]]
 

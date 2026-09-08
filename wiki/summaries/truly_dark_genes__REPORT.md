@@ -72,7 +72,7 @@ The report proposes structure prediction with AlphaFold2 or ESMFold followed by 
 
 ## Slots Into
 
-- [[concepts/functional-dark-matter]] — Quantifies the residual functional dark matter after modern Bakta, Pfam, KEGG, and eggNOG annotation, and provides a clue-based framework for prioritizing unknown genes.
+- [[concepts/genomic-under-representation]] — Quantifies the residual functional dark matter after modern Bakta, Pfam, KEGG, and eggNOG annotation, and provides a clue-based framework for prioritizing unknown genes.
 - [[concepts/gene-essentiality]] — Shows that 18.0% of truly dark genes are essential versus 13.4% of annotation-lag genes and that 34 of the top 100 candidates are essential.
 - [[concepts/condition-specific-fitness]] — Tests and rejects stress enrichment while identifying reported enrichment in mixed-community, iron, nutrient time-series, and rich-media conditions.
 - [[concepts/cofitness-network-architecture]] — Uses operon-like cofitness and ICA-module membership to infer candidate functions for genes lacking direct annotation.

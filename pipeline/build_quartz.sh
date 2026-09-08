@@ -87,7 +87,7 @@ for p in cfg["plugins"]:
             "BERIL Atlas": "https://beril.kbase.us/atlas",
             "BERIL Observatory": "https://beril.kbase.us/",
             "Source": "https://github.com/beril-doe/beril-wiki",
-            "CC BY 4.0": "https://creativecommons.org/licenses/by/4.0/",
+            "AGPL-3.0": "https://www.gnu.org/licenses/agpl-3.0.html",
         }
 (qp / "quartz.config.yaml").write_text(yaml.safe_dump(cfg, sort_keys=False, allow_unicode=True))
 PY

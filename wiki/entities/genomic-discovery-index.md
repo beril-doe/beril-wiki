@@ -45,4 +45,4 @@ Required validation includes rarefaction-corrected GDI after uniform 16S sequenc
 
 These validations require re-running analyses from the BERIL Observatory 16S tables and [[entities/kbase-ke-pangenome]] completeness data because no local CSV output is available. [src: soil_frontier_genomics]
 
-The method therefore contributes to [[concepts/functional-dark-matter]] by quantifying potential genomic under-representation, to [[concepts/environment-embedding-geography]] by using spatial bins to compare discovery gaps, and to [[concepts/provenance-aware-resource-discovery]] by motivating separation of sampling, assembly, and annotation gaps. [src: soil_frontier_genomics]
+The method therefore contributes to [[concepts/genomic-under-representation]] by quantifying potential genomic under-representation, to [[concepts/environment-embedding-geography]] by using spatial bins to compare discovery gaps, and to [[concepts/provenance-aware-resource-discovery]] by motivating separation of sampling, assembly, and annotation gaps. [src: soil_frontier_genomics]

@@ -26,6 +26,6 @@ sources: ["summaries/truly_dark_genes__REPORT.md"]
 ## Related pages
 
 - [[summaries/truly_dark_genes__REPORT]] — source summary for the analysis of genes remaining unknown after modern annotation.
-- [[concepts/functional-dark-matter]] — cross-project synthesis of residual unknown gene function.
+- [[concepts/genomic-under-representation]] — cross-project synthesis of residual unknown gene function.
 - [[entities/pfam]] — protein-family domain resource used alongside eggNOG evidence.
 - [[entities/kegg]] — pathway and orthology resource used for comparison with eggNOG coverage.

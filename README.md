@@ -67,6 +67,6 @@ figure are committed. Refreshing the *content* is still a maintainer running
 
 ## License
 
-Software Apache-2.0, wiki content and figures
-[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). See
+AGPL-3.0, matching the BERIL Research Observatory corpus this wiki is
+compiled from. Covers the pipeline and the compiled wiki alike. See
 [`LICENSE`](LICENSE) and [`CITATION.cff`](CITATION.cff).
