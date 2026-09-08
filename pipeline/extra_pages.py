@@ -48,10 +48,13 @@ def write_authors() -> int:
     known = set(wiki_projects())
     for record in index.values():
         path = out / f"{slugify(record.name)}.md"
-        # Carry the LLM-written Profile (authors_build.py) across regenerations.
+        # Carry the LLM-written Contributions section (authors_build.py) across
+        # regenerations. "Profile" is the pre-rev-2 heading: matched so old
+        # stubs still parse, never re-emitted — authors_build rewrites them.
         profile = ""
         if path.exists():
-            m = re.search(r"^## Profile\s*\n.*?(?=\n## |\Z)", path.read_text(encoding="utf-8"), re.M | re.S)
+            m = re.search(r"^## (?:Profile|Contributions)\s*\n.*?(?=\n## |\Z)",
+                          path.read_text(encoding="utf-8"), re.M | re.S)
             profile = m.group(0).strip() if m else ""
         lines = [f"# {record.name}", ""]
         if record.orcid:
