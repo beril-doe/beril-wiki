@@ -30,9 +30,10 @@ HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
 PER_SUMMARY_CHARS = 5000
 HEADING = "## Contributions"
-# Bump when CONTRIB_USER or SUBJECTIVE changes: it is folded into the cache
-# digest, so editing the prompt re-runs every author instead of needing
-# state/authors.json to be deleted by hand.
+# Bump when CONTRIB_USER changes: it is folded into the cache digest, so
+# editing the prompt re-runs every author instead of needing
+# state/authors.json cleared by hand. Loosening the subjectivity guard needs
+# no bump — it cannot invalidate a page that already passed the stricter one.
 PROMPT_REV = 2
 
 CONTRIB_USER = """\
@@ -58,20 +59,36 @@ what they worked on and what those projects reported — nothing else.
 Return ONLY the section Markdown, starting with "{heading}" (no fences).
 """
 
-# Phrasings that ascribe interests, motives or a research identity to the
-# person. The corpus knows which projects someone worked on and what those
-# projects reported; everything below is an inference on top of that, which is
-# exactly what these pages must not carry.
-SUBJECTIVE = re.compile(
+# Two tiers, because the same verb can report a result or characterise a
+# person. ALWAYS names a disposition that only makes sense about someone —
+# there is no innocent reading of "their research interests". ABOUT_PERSON
+# holds verbs that are only a problem when the sentence is talking about the
+# author: "the project focused on metal tolerance" and "the results suggest a
+# shared mechanism" are ordinary reporting and must survive, while "their
+# projects center on..." must not.
+ALWAYS = re.compile(
     r"\b(?:research |recurring |apparent )?interests?\b"
-    r"|\bresearch program\b"
-    r"|\bsuggest(?:s|ed|ing)?\b"
-    r"|\bcent(?:er|re)(?:s|ed)? (?:on|around)\b"
+    r"|\ban interest in\b"
+    r"|\bresearch (?:program|programme|agenda|identity)\b"
+    r"|\brecurring theme\w*"
+    r"|\bmotivat(?:ion|ions|ed by)\b",
+    re.I,
+)
+ABOUT_PERSON = re.compile(
+    r"\bcent(?:er|re)(?:s|ed)? (?:on|around)\b"
     r"|\bfocus(?:es|ed)? on\b"
-    r"|\bmotivat\w+"
+    r"|\bsuggest(?:s|ed|ing)?\b"
     r"|\bemphasi[sz]\w+"
-    r"|\bappears? to\b|\bapparent(?:ly)?\b"
-    r"|\brecurring theme\w*",
+    r"|\bappears? to\b|\bapparent(?:ly)?\b",
+    re.I,
+)
+# The author as the thing being described: a possessive or a demonstrative
+# standing in for them. "their projects", "this author", "the corpus therefore
+# suggests <about them>". Deliberately not the author's name — a factual
+# sentence may name them.
+PERSON_SUBJECT = re.compile(
+    r"\b(?:their|his|her|the author'?s?|this (?:author|person|researcher)|these projects"
+    r"|their (?:work|projects?|corpus|research)|the corpus)\b",
     re.I,
 )
 SENTENCE = re.compile(r"(?<=[.!?])\s+(?=[A-Z\[])")
@@ -79,7 +96,11 @@ SENTENCE = re.compile(r"(?<=[.!?])\s+(?=[A-Z\[])")
 
 def subjective_hits(section: str) -> list[str]:
     """Sentences that characterise the person rather than report the work."""
-    return [s.strip() for s in SENTENCE.split(section) if SUBJECTIVE.search(s)]
+    out = []
+    for s in SENTENCE.split(section):
+        if ALWAYS.search(s) or (ABOUT_PERSON.search(s) and PERSON_SUBJECT.search(s)):
+            out.append(s.strip())
+    return out
 
 
 def strip_subjective(section: str) -> str:
@@ -92,7 +113,7 @@ def strip_subjective(section: str) -> str:
         if para.lstrip().startswith("#"):
             out.append(para)
             continue
-        kept = [s for s in SENTENCE.split(para) if not SUBJECTIVE.search(s)]
+        kept = [s for s in SENTENCE.split(para) if not subjective_hits(s)]
         if kept:
             out.append(" ".join(s.strip() for s in kept))
     return "\n\n".join(out)

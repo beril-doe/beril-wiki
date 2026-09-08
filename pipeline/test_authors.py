@@ -30,6 +30,31 @@ FACTUAL = [
 ]
 
 
+# Ordinary reporting that the first version of the guard wrongly flagged: the
+# verbs are about a project or a result, not about a person. Flagging these let
+# strip_subjective() delete source-backed sentences and cache the result.
+FACTUAL_WITH_SHARED_VERBS = [
+    "The project focused on metal tolerance across 14 metals. [src: metal_specificity]",
+    "The results suggest a shared mechanism rather than independent acquisition. "
+    "[src: amr_strain_variation]",
+    "The analysis centered on 4,770 species with both marker types. "
+    "[src: prophage_amr_comobilization]",
+    "Enrichment was apparent in the auxiliary genome at 2.2x. [src: amr_pangenome_atlas]",
+]
+
+
+def test_passes_factual_prose_using_the_same_verbs():
+    for s in FACTUAL_WITH_SHARED_VERBS:
+        assert not subjective_hits(s), f"false positive: {s}"
+
+
+def test_still_catches_those_verbs_about_a_person():
+    for s in ["Their projects center on quantitative integration of fitness data.",
+              "The corpus therefore suggests they prioritise annotation quality.",
+              "Their work focuses on subsurface ecology."]:
+        assert subjective_hits(s), f"missed: {s}"
+
+
 def test_catches_characterising_sentences():
     for s in CHARACTERISING:
         assert subjective_hits(s), f"missed: {s}"
@@ -57,5 +82,7 @@ def test_strip_keeps_factual_sentences_and_headings():
 if __name__ == "__main__":
     test_catches_characterising_sentences()
     test_passes_factual_reporting()
+    test_passes_factual_prose_using_the_same_verbs()
+    test_still_catches_those_verbs_about_a_person()
     test_strip_keeps_factual_sentences_and_headings()
     print("ok")

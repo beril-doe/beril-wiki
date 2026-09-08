@@ -248,9 +248,10 @@ def main() -> int:
         return 1
 
     # --strict promotes numeric mismatches and dead links from warning to error.
-    # They are warnings by default because this corpus carries pre-existing
-    # violations that predate the check being able to see them; turn it on once
-    # they are repaired and the gate becomes meaningful.
+    # The pre-existing violations this waited on are repaired (repair_page.py),
+    # so the publish workflow now runs --strict and the gate is real. Kept as a
+    # flag rather than the default so a mid-pipeline run can still report them
+    # without aborting the stages that follow.
     strict = "--strict" in sys.argv
     errors: list[str] = []
     warns: list[str] = []

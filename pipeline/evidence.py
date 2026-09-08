@@ -29,6 +29,8 @@ import sys
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
 LABELLED = ("concepts", "entities", "topics", "conflicts")
 LIT_HEADING = re.compile(r"^##\s+Literature Context\s*$", re.M)
+# conflicts_build.conflict_slug appends sha256[:8] only for groups of >3.
+HASH_SUFFIX = re.compile(r"[0-9a-f]{8}")
 
 
 def page_sources(text: str) -> set[str]:
@@ -45,13 +47,19 @@ def page_sources(text: str) -> set[str]:
 def conflict_sources(kb: pathlib.Path) -> list[set[str]]:
     """Project sets the corpus records a disagreement over.
 
-    Read from conflict page filenames (conflict--<proj>--<proj>...--<hash>.md),
-    which conflicts_build owns and keeps in step with the page bodies."""
+    Read from conflict page filenames, which conflicts_build owns and keeps in
+    step with the page bodies. Its conflict_slug only appends a digest for
+    groups of MORE than three projects, so the trailing component is a hash
+    only when it looks like one — stripping it unconditionally ate a real
+    project id from all eight unhashed files, and turned two-project conflicts
+    into one-project sets that could never meet the two-source test below."""
     out = []
     for f in (kb / "wiki-extra" / "conflicts").glob("conflict--*.md"):
         parts = f.stem.split("--")[1:]
-        if len(parts) > 1:  # last part is the tension hash, not a project
-            out.append(set(parts[:-1]))
+        if parts and HASH_SUFFIX.fullmatch(parts[-1]):
+            parts = parts[:-1]
+        if parts:
+            out.append(set(parts))
     return out
 
 

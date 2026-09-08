@@ -38,6 +38,16 @@ jobs:
         with:
           enable-cache: true
 
+      # The About page tells readers these checks run on every build and block
+      # publication. That has to be true of the deploy too, not just of a
+      # maintainer's local pipeline run: wiki/ and wiki-extra/ are committed
+      # files, so a direct push can carry an unknown [src:] id, a number in no
+      # cited source, or a dead link straight to the site. wiki_check is
+      # stdlib-only and reads the committed wiki/sources/, so it needs no key
+      # and no observatory checkout.
+      - name: Validate the corpus
+        run: uv run --project . python pipeline/wiki_check.py --strict
+
       - name: Build site
         env:
           WIKI_BASE_URL: beril-doe.github.io/beril-wiki

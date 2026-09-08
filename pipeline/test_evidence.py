@@ -45,13 +45,29 @@ def test_unlabelled_collections_and_uncited_pages():
 
 
 def test_conflict_sources_parses_filenames(tmp_path):
+    """conflict_slug appends a digest only for groups of MORE than three, so the
+    trailing component is a hash only when it looks like one. Stripping it
+    unconditionally ate a real project id from every unhashed file."""
     d = tmp_path / "wiki-extra" / "conflicts"
     d.mkdir(parents=True)
-    (d / "conflict--alpha--beta--gamma--8af84dcc.md").write_text("x")
-    (d / "conflict--solo--deadbeef.md").write_text("x")
+    (d / "conflict--alpha--beta--gamma--delta--8af84dcc.md").write_text("x")   # >3: hashed
+    (d / "conflict--alpha--beta--gamma.md").write_text("x")                    # 3: unhashed
+    (d / "conflict--solo--partner.md").write_text("x")                         # 2: unhashed
     got = conflict_sources(tmp_path)
-    assert {"alpha", "beta", "gamma"} in got          # trailing hash dropped
-    assert {"solo"} in got
+    assert {"alpha", "beta", "gamma", "delta"} in got   # real hash dropped
+    assert {"alpha", "beta", "gamma"} in got            # third id is NOT a hash
+    assert {"solo", "partner"} in got                   # two-project set stays a pair
+
+
+def test_two_project_conflict_can_still_flag(tmp_path):
+    """A two-project conflict degraded to one project could never meet the
+    two-source test in label(), so it silently flagged nothing."""
+    d = tmp_path / "wiki-extra" / "conflicts"
+    d.mkdir(parents=True)
+    (d / "conflict--ecotype_env_reanalysis--enigma_carbon_census_1.md").write_text("x")
+    conflicts = conflict_sources(tmp_path)
+    page = "Claim. [src: ecotype_env_reanalysis] Claim. [src: enigma_carbon_census_1]"
+    assert "conflict on record" in label(page, "concepts", conflicts)
 
 
 def test_label_never_claims_review():
@@ -70,7 +86,8 @@ if __name__ == "__main__":
     test_literature_review_detected()
     test_unlabelled_collections_and_uncited_pages()
     test_label_never_claims_review()
-    with tempfile.TemporaryDirectory() as d:
-        import pathlib
-        test_conflict_sources_parses_filenames(pathlib.Path(d))
+    import pathlib
+    for fn in (test_conflict_sources_parses_filenames, test_two_project_conflict_can_still_flag):
+        with tempfile.TemporaryDirectory() as d:
+            fn(pathlib.Path(d))
     print("ok")
