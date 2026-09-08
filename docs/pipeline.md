@@ -37,6 +37,25 @@ flowchart TD
 
 ## Stages
 
+Both `wiki/` and `wiki-extra/` are native OKF v0.2 collections, linked by
+relative Markdown paths. There is no separate OKF export. `setup.sh`, publishing,
+and the normal pipeline automatically normalize legacy pages with `okf.py`;
+every generator uses the same validated writer for future updates. This adds
+typed YAML, structured source records and keyed footnotes without a model call.
+Existing valid hash caches are rekeyed only when their old inputs match; stale
+work stays stale. Indexes and logs retain the format's reserved-page rules.
+
+Publishing requires the local citation/link checks and the pinned community
+[community conformance validator](https://github.com/Sudhakaran88/okf-conformance) to pass. Quality warnings remain visible but do not
+block a build. The [Google OKF reference viewer](https://github.com/GoogleCloudPlatform/open-knowledge-format) supplies the graph UI;
+an in-memory adapter reads both collections and maps links for that viewer.
+Only tool source and rendered HTML/assets are cached under ignored `build/`;
+no second Markdown corpus is created. `pipeline/okf_tools.py` pins both upstream
+revisions. The graph loads its upstream browser libraries and DOMPurify from
+CDNs, so its interactive view requires network access. The ordinary site does
+not depend on the graph loading successfully. Build output replaces the served
+site only after validation and rendering succeed.
+
 | Stage | Script | What it does | State cache |
 |---|---|---|---|
 | fetch | `fetch_reports.py` | sync `REPORT.md` per project + digests into `staging/`; backend-switchable (local checkout now, BERIL hub later) | — |

@@ -11,13 +11,18 @@ pipeline.
 ```sh
 git clone git@github.com:beril-doe/beril-wiki.git && cd beril-wiki
 ./setup.sh                              # installs deps, builds the site
-cd quartz && npx quartz build --serve   # http://localhost:8080
+node pipeline/serve_quartz.cjs
 ```
 
-Needs [uv](https://docs.astral.sh/uv/) and [node](https://nodejs.org)
-(`brew install uv node`). No API keys required — the compiled wiki, its
+Needs [uv](https://docs.astral.sh/uv/), [Bun](https://bun.sh), and [Node](https://nodejs.org)
+(`brew install uv bun node`). No API keys required — the compiled wiki, its
 source reports, and all referenced figures are committed; you are only
 rendering them.
+
+`wiki/` and `wiki-extra/` contain native Open Knowledge Format v0.2 pages.
+The normal scripts maintain metadata, relative links, and source footnotes;
+setup upgrades legacy formatting automatically. The site includes an OKF
+graph generated with Google's reference viewer from those same files.
 
 ## Run the pipeline (maintainers)
 

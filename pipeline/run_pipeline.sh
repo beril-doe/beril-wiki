@@ -24,7 +24,14 @@ set -euo pipefail
 # cannot see. Without it the pipeline is incremental and an unchanged corpus is
 # a no-op. Anything reproducible belongs here, not in ad-hoc rm of state files.
 FORCE=""
-for a in "$@"; do [ "$a" = "--force" ] && FORCE="--force"; done
+PUBLISH=true
+for a in "$@"; do
+  case "$a" in
+    --force) FORCE="--force" ;;
+    --no-publish) PUBLISH=false ;;
+    *) echo "unknown argument: $a" >&2; exit 2 ;;
+  esac
+done
 HERE="$(cd "$(dirname "$0")" && pwd)"
 REPO="$(dirname "$HERE")"
 LOG="$REPO/pipeline.log"
@@ -33,7 +40,10 @@ export OPENAI_API_KEY="$CBORG_API_KEY"
 export OPENAI_BASE_URL="${OPENAI_BASE_URL:-https://api.cborg.lbl.gov}"
 PY=(uv run --project "$REPO" python)
 
-echo "== fetch" | tee "$LOG"
+echo "== native OKF" | tee "$LOG"
+"${PY[@]}" "$HERE/okf.py" "$REPO" | tee -a "$LOG"
+
+echo "== fetch" | tee -a "$LOG"
 "${PY[@]}" "$HERE/fetch_reports.py" | tee -a "$LOG"
 
 echo "== compile" | tee -a "$LOG"
@@ -66,8 +76,9 @@ echo "== authors" | tee -a "$LOG"
 
 echo "== check" | tee -a "$LOG"
 "${PY[@]}" "$HERE/wiki_check.py" "$REPO" | tee -a "$LOG"
+"${PY[@]}" "$HERE/okf_tools.py" "$REPO" | tee -a "$LOG"
 
-if [ "${1:-}" != "--no-publish" ]; then
+if "$PUBLISH"; then
   echo "== publish" | tee -a "$LOG"
   "$HERE/build_quartz.sh" 2>&1 | tail -2 | tee -a "$LOG"
 fi
