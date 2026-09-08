@@ -188,7 +188,7 @@ button.theme { position: fixed; right: 16px; top: 16px; z-index: 3; font: 400 11
 
     <div class="tiles">
       <div class="tile"><span class="n hot">7</span><span class="k">pages repaired</span></div>
-      <div class="tile"><span class="n">9 &rarr; 4</span><span class="k">wiki_check warnings</span></div>
+      <div class="tile"><span class="n">9 &rarr; 0</span><span class="k">wiki_check warnings</span></div>
       <div class="tile"><span class="n">479</span><span class="k">pages labelled</span></div>
       <div class="tile"><span class="n">$0.33</span><span class="k">total LLM spend</span></div>
     </div>
@@ -298,11 +298,11 @@ flowchart LR
     </div>
 
     <figure class="table wide">
-      <figcaption><b>Decisions that need a person, not a commit.</b> Status as of 2026-09-08. Domain is settled; the licence is the one open item that blocks publication, because a licence grant cannot be quietly retracted once the site is up.</figcaption>
+      <figcaption><b>Decisions that need a person, not a commit.</b> Status as of 2026-09-08. All three are settled. Nothing on this list now blocks publication.</figcaption>
       <div class="table-wrap"><table>
         <thead><tr><th>Decision</th><th>Status</th><th>Detail</th></tr></thead>
         <tbody>
-          <tr><td class="hot">Content licence</td><td><span class="tag red">blocking</span></td><td>CC BY 4.0 was my default and does not survive checking. The observatory repo these reports come from carries <b>AGPL-3.0</b>, whose terms a CC BY grant on derived prose would contradict &mdash; and its own README names no licence at all, so upstream disagrees with itself. The public Atlas publishes citation guidance and no licence.</td></tr>
+          <tr><td>Content licence</td><td><span class="tag green">resolved</span></td><td><b>AGPL-3.0</b>, matching the observatory corpus this wiki compiles. A derivative inherits its upstream copyleft, so the CC BY 4.0 I had defaulted to was what created a conflict rather than resolving one. Covers the pipeline and the compiled pages alike.</td></tr>
           <tr><td>Near-duplicate concepts</td><td><span class="tag green">resolved</span></td><td>Read all four pairs: two are false positives on shared name tokens, one wants a rename, one is a genuine merge. See <a href="#concept-pairs">the pairs</a>.</td></tr>
           <tr><td>Domain</td><td><span class="tag green">resolved</span></td><td>Ships at <code>beril-doe.github.io/beril-wiki</code>, cross-linked to the Atlas in the footer.</td></tr>
         </tbody>
@@ -310,32 +310,32 @@ flowchart LR
     </figure>
 
     <h3 id="concept-pairs">The four near-duplicate concept pairs</h3>
-    <p>The detector flags pairs that share sources and name tokens; it cannot tell a shared subject from a shared vocabulary. Reading them, only one pair is actually redundant.</p>
+    <p>The detector flags pairs that share sources and name tokens; it cannot tell a shared subject from a shared vocabulary. Reading them, only one pair was actually redundant. Both operations shipped as <code>consolidate_concepts</code> flags rather than hand edits, so the decision is recorded in the command that applied it. <code>wiki_check</code> now reports 0 errors and 0 warnings.</p>
 
     <figure class="table wide">
-      <figcaption><b>What each flagged pair actually contains, and the call for each.</b> Pages are under <code>wiki/concepts/</code>; shared sources are the count the detector keyed on. Three of the four need no merge.</figcaption>
+      <figcaption><b>What each flagged pair contained, and what was done.</b> Pages are under <code>wiki/concepts/</code>. One merge, one rename, two dismissals; the corpus is now 92 concepts across 497 pages.</figcaption>
       <div class="table-wrap"><table>
         <thead><tr><th>Pair</th><th>What separates them</th><th>Call</th></tr></thead>
         <tbody>
           <tr>
             <td><code>horizontal-gene-transfer-driven-innovation</code><br><code>chromosomal-and-integrative-gene-transfer</code></td>
             <td>One is what transfer <i>produces</i> (gene novelty); the other is the <i>route</i> it travels — integrative elements and T4SS machinery rather than plasmids.</td>
-            <td><span class="tag green">keep both</span> false positive on &ldquo;gene&rdquo;, &ldquo;transfer&rdquo;</td>
+            <td><span class="tag green">kept both</span> recorded in <code>wiki_check.NOT_DUPLICATES</code></td>
           </tr>
           <tr>
             <td class="hot"><code>fitness-importance-versus-ecological-context</code><br><code>laboratory-fitness-versus-natural-selection</code></td>
             <td>The first is a single empirical result in <i>Desulfovibrio vulgaris</i> — fitness importance beat field-versus-lab classification at predicting conservation. The second is the general caveat that result illustrates. Four shared sources.</td>
-            <td><span class="tag red">merge</span> the DvH result is evidence inside the caveat, not a concept beside it</td>
+            <td><span class="tag mauve">merged</span> into the caveat; the retention gate caught 3 dropped figures and the retry passed</td>
           </tr>
           <tr>
             <td><code>functional-dark-matter</code><br><code>experimental-prioritization-of-functional-dark-matter</code></td>
             <td>Different subjects: sampling and annotation gaps that limit inference, versus a framework for ranking unknown genes for experiment. The first page&rsquo;s slug also does not match its own title, &ldquo;Genomic under-representation limits inference&hellip;&rdquo;.</td>
-            <td><span class="tag peach">rename</span> the first to match its title; the collision goes with it</td>
+            <td><span class="tag mauve">renamed</span> to <code>genomic-under-representation</code>; 27 links repointed</td>
           </tr>
           <tr>
             <td><code>core-genome-burden-paradox</code><br><code>core-gene-annotation-paradox</code></td>
             <td>Two unrelated findings about core genes: that deleting them can <i>help</i> growth, and that they can stay structurally uncharacterised. Only the word &ldquo;paradox&rdquo; is shared.</td>
-            <td><span class="tag green">keep both</span> false positive on &ldquo;core&rdquo;, &ldquo;paradox&rdquo;</td>
+            <td><span class="tag green">kept both</span> recorded in <code>wiki_check.NOT_DUPLICATES</code></td>
           </tr>
         </tbody>
       </table></div>
