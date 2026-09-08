@@ -13,8 +13,9 @@
 #   hubs     re-cluster + regenerate only topic hubs whose members changed
 #   figures  manifest + LLM figure placements (hash-skipped)
 #   extras   deterministic author/data pages
+#   repair   re-run any page failing write-time validation (no-op when clean)
 #   check    citation, numeric, uptake, and duplicate-concept audits (fails on errors)
-#   publish  Quartz static site (dead links stripped at publish)
+#   publish  Quartz static site (dead links stripped, evidence labels added)
 #
 # ./run_pipeline.sh --force        rebuild every derived stage, ignoring caches
 # ./run_pipeline.sh --no-publish   skip the Quartz build
@@ -63,6 +64,13 @@ echo "== extras" | tee -a "$LOG"
 
 echo "== authors" | tee -a "$LOG"
 "${PY[@]}" "$HERE/authors_build.py" | tee -a "$LOG" | tail -3
+
+# Compile's resume-skip is per document, so a page that mis-attributes one
+# number stays broken while the document that fixes it counts as integrated.
+# This runs before check so those pages are repaired rather than merely
+# reported; a corpus that already validates makes no LLM calls.
+echo "== repair" | tee -a "$LOG"
+"${PY[@]}" "$HERE/repair_page.py" | tee -a "$LOG" | tail -3
 
 echo "== check" | tee -a "$LOG"
 "${PY[@]}" "$HERE/wiki_check.py" "$REPO" | tee -a "$LOG"

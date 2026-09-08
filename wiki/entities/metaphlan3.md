@@ -15,7 +15,7 @@ MetaPhlAn3 is a microbial taxonomic profiling method and namespace used in the d
 
 ## Key facts
 
-A linear discriminant analysis plus Gaussian mixture model (LDA-GMM) projection used MetaPhlAn3 and Kaiju namespaces and produced plausible Kuehl cohort proportions of 27%, 42%, and 31% across the inferred ecotypes. [src: discoveries]
+A linear discriminant analysis plus Gaussian mixture model (LDA-GMM) projection used MetaPhlAn3 and Kaiju namespaces and produced plausible Kuehl cohort proportions of 27%, 42%, and 31% across the inferred ecotypes. [src: ibd_phage_targeting]
 
 By contrast, a centered log-ratio transformation plus principal component analysis and Gaussian mixture model (CLR-PCA GMM) projected all 26 Kuehl samples to the E3 ecotype at confidence greater than 0.97 because Kuehl detected only 54% of the training species. [src: discoveries]
 

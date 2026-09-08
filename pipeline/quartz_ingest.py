@@ -18,6 +18,8 @@ import shutil
 import subprocess
 import sys
 
+import evidence
+
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
 SKIP = {"AGENTS.md", "log.md"}
 FM = re.compile(r"^(---\n.*?\n---\n)", re.S)
@@ -164,6 +166,7 @@ def main() -> None:
     targets.discard("index")
     pl_path = kb / "state" / "figures-placements.json"
     placements = json.loads(pl_path.read_text()) if pl_path.exists() else {}
+    conflict_srcs = evidence.conflict_sources(kb)
     shutil.rmtree(dst, ignore_errors=True)
 
     n = 0
@@ -204,6 +207,13 @@ def main() -> None:
                 if header_lines:
                     text = re.sub(r"^# .+$", lambda m: m.group(0) + "\n\n" + "\n".join(header_lines),
                                   text, count=1, flags=re.M)
+            # How much of the corpus stands behind a synthesis page. Computed,
+            # not judged — see pipeline/evidence.py on why this is not the v1
+            # atlas's human `confidence:` field.
+            ev = evidence.label(text, rel.parts[0], conflict_srcs)
+            if ev:
+                text = re.sub(r"^# .+$", lambda m: m.group(0) + "\n\n" + ev,
+                              text, count=1, flags=re.M)
             out.write_text(text, encoding="utf-8")
             n += 1
 
