@@ -56,8 +56,6 @@ unchanged corpus re-runs for $0.
 - [`TODO.md`](TODO.md) — v1 status and open items ·
   [`PARITY_REPORT.md`](PARITY_REPORT.md) — how the compiler was validated
 - `contract/AGENTS.md` — the editorial contract injected into every compile
-- [`reference/README.md`](reference/README.md) — why `reference/` is not the
-  wiki and must not be cited
 
 ## Publishing
 

@@ -256,9 +256,8 @@
 - [[entities/distance-based-redundancy-analysis]] (method) — Multivariate method for relating distance-based functional profiles to explanatory variables
 - [[entities/drosophila-melanogaster]] (organism) — Fruit fly species included among PaperBLAST’s most-studied organisms
 - [[entities/duf1043-yhcb]] (gene_or_pathway) — DUF1043/YhcB is a candidate metal-specific gene family.
-- [[entities/egg-nog]] (dataset) — Orthology database used to provide partial clues for dark genes
 - [[entities/eggerthella-lenta]] (organism) — Eggerthella lenta, a Tier-A IBD pathobiont target
-- [[entities/eggnog]] (dataset) — Functional annotation dataset for orthology, pathways, and gene-family discovery
+- [[entities/eggnog]] (dataset) — Cross-project synthesis of eggNOG orthology, annotation coverage, and interpretation limits.
 - [[entities/enigma-coral]] (dataset) — ENIGMA CORAL is an Oak Ridge field-sample dataset for geochemistry and microbial communities.
 - [[entities/enigma-genome-depot]] (dataset) — Dataset linking ENIGMA isolates, genomes, annotations, and utilization phenotypes
 - [[entities/enigma-growth-curves]] (dataset) — ENIGMA growth curves linking bacterial strains, conditions, and kinetics

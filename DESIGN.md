@@ -133,6 +133,8 @@ that property in everything you touch.
 ## Parity protocol (the acceptance test)
 
 `reference/wiki-v3/` is the benchmark output (compiled by OpenKB+Sonnet/Luna,
+kept OUT of version control — see .gitignore — so a clone will not have it;
+restore it from the previous generation's checkout to re-run parity)
 review-scored 8.7/10). Hold out 2-3 projects (suggest: `metal_specificity`,
 `bacdive_phenotype_metal_tolerance`, `prophage_amr_comobilization`):
 1. Seed a scratch corpus with the reference wiki MINUS pages/mentions of the

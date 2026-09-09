@@ -9,6 +9,7 @@
 #   fetch    sync projects/*/REPORT.md + docs digests into staging/
 #   compile  first-party compiler — content-hash skips unchanged docs
 #   consolidate embedding-ranked concept merges + evidence back-merge (free embeds)
+#   entities  merge entity pages identified as the same entity (no-op when clean)
 #   conflicts promote multi-project Tensions to conflict pages (hash-skipped)
 #   hubs     re-cluster + regenerate only topic hubs whose members changed
 #   figures  manifest + LLM figure placements (hash-skipped)
@@ -46,6 +47,13 @@ echo "== enrich" | tee -a "$LOG"
 
 echo "== consolidate" | tee -a "$LOG"
 "${PY[@]}" "$HERE/consolidate_concepts.py" | tee -a "$LOG" | tail -3
+
+# Entity identity resolution. Deterministic detection (name / declared alias /
+# external id in the Identity section), never similarity: embeddings rank two
+# different genes at 0.971 over these pages. A corpus with no duplicates makes
+# no model call, so this is a no-op in the steady state.
+echo "== entities" | tee -a "$LOG"
+"${PY[@]}" "$HERE/entity_dedup.py" --apply | tee -a "$LOG" | tail -3
 
 echo "== conflicts" | tee -a "$LOG"
 "${PY[@]}" "$HERE/conflicts_build.py" ${FORCE} | tee -a "$LOG"

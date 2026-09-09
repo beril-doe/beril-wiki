@@ -393,8 +393,9 @@ def backmerge_candidates(concepts: list[dict], cvecs: list[list[float]],
     return sorted(out, reverse=True)
 
 
-def rewrite_concept_links(text: str, loser: str, survivor: str) -> str:
-    """Repoint [[concepts/loser]] and [[concepts/loser|alias]] at the survivor,
+def rewrite_concept_links(text: str, loser: str, survivor: str,
+                          collection: str = "concepts") -> str:
+    """Repoint [[<collection>/loser]] and [[...|alias]] at the survivor,
     then drop lines the rewrite made exact duplicates of an earlier line.
 
     # ponytail: only EXACT duplicate lines collapse. Two Slots-Into bullets that
@@ -402,11 +403,11 @@ def rewrite_concept_links(text: str, loser: str, survivor: str) -> str:
     # slightly redundant but loses no claim. Dedupe semantically if it shows up.
     """
     out = re.sub(
-        r"\[\[concepts/" + re.escape(loser) + r"((?:\|[^\]]*)?)\]\]",
-        lambda m: f"[[concepts/{survivor}{m.group(1)}]]", text)
+        r"\[\[" + collection + r"/" + re.escape(loser) + r"((?:\|[^\]]*)?)\]\]",
+        lambda m: f"[[{collection}/{survivor}{m.group(1)}]]", text)
     if out == text:
         return text
-    link = f"[[concepts/{survivor}"
+    link = f"[[{collection}/{survivor}"
     seen: set[str] = set()
     kept = []
     for line in out.split("\n"):
@@ -418,12 +419,13 @@ def rewrite_concept_links(text: str, loser: str, survivor: str) -> str:
     return "\n".join(kept)
 
 
-def repoint_links(root: pathlib.Path, loser: str, survivor: str) -> int:
+def repoint_links(root: pathlib.Path, loser: str, survivor: str,
+                  collection: str = "concepts") -> int:
     changed = 0
     for base in (root / "wiki", root / "wiki-extra"):
         for f in base.rglob("*.md") if base.is_dir() else []:
             text = f.read_text(encoding="utf-8", errors="replace")
-            new = rewrite_concept_links(text, loser, survivor)
+            new = rewrite_concept_links(text, loser, survivor, collection)
             if new != text:
                 f.write_text(new, encoding="utf-8")
                 changed += 1
@@ -492,25 +494,32 @@ def generate_retaining(messages: list[dict], step: str, sources: dict[str, str],
 
 
 def replay_pending(root: pathlib.Path, state: dict, state_path: pathlib.Path) -> None:
-    """Finish link repair a previous run was interrupted mid-way through."""
-    for loser, survivor in list(state.get("pending", {}).items()):
-        n = repoint_links(root, loser, survivor)
-        print(f"  resuming interrupted merge {loser} -> {survivor}: {n} page(s) repointed")
-        state["pending"].pop(loser, None)
+    """Finish link repair a previous run was interrupted mid-way through.
+
+    Keys are `<collection>/<loser>` so entity merges can share this path; a
+    bare key is a concept from before that change and still resolves."""
+    for key, survivor in list(state.get("pending", {}).items()):
+        collection, _, loser = key.rpartition("/")
+        collection = collection or "concepts"
+        n = repoint_links(root, loser, survivor, collection)
+        print(f"  resuming interrupted merge {collection}/{loser} -> {survivor}: "
+              f"{n} page(s) repointed")
+        state["pending"].pop(key, None)
     if state.get("pending") == {}:
         state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
 
 
 def apply_merge(root: pathlib.Path, loser: str, survivor: str, targets: set[str],
                 sources: dict[str, str], system: str, state: dict,
-                state_path: pathlib.Path, refused: list[str]) -> bool:
+                state_path: pathlib.Path, refused: list[str],
+                collection: str = "concepts", page_type: str = "Concept") -> bool:
     """Rewrite survivor to absorb loser, delete loser, repoint inbound links.
 
     Shared by the judged path (phase_merge) and the human-decided one
     (--force-merge). The retention gate applies to both: a person may decide
     two pages are one, but not that the merge may drop evidence."""
     wiki = root / "wiki"
-    pl, ps = wiki / "concepts" / f"{loser}.md", wiki / "concepts" / f"{survivor}.md"
+    pl, ps = wiki / collection / f"{loser}.md", wiki / collection / f"{survivor}.md"
     tl = pl.read_text(encoding="utf-8", errors="replace")
     ts = ps.read_text(encoding="utf-8", errors="replace")
     lfm, lbody = C.parse_fm(tl)
@@ -524,7 +533,7 @@ def apply_merge(root: pathlib.Path, loser: str, survivor: str, targets: set[str]
         obj = generate_retaining(
             [{"role": "system", "content": system},
              {"role": "user", "content": C.KNOWN_TARGETS_USER.format(
-                 targets="\n".join(f"- {t}" for t in sorted(targets - {f"concepts/{loser}"})))},
+                 targets="\n".join(f"- {t}" for t in sorted(targets - {f"{collection}/{loser}"})))},
              {"role": "user", "content": task}],
             f"merge/{survivor}", sources, targets,
             required=body_src_ids(tl) | body_src_ids(ts),
@@ -544,18 +553,18 @@ def apply_merge(root: pathlib.Path, loser: str, survivor: str, targets: set[str]
                                list(dict.fromkeys((sfm.get("sources") or [])
                                                   + (lfm.get("sources") or []))))
     ps.write_text(
-        C.fm_block({"type": "Concept", "description": obj.get("description", ""), "sources": srcs})
+        C.fm_block({"type": page_type, "description": obj.get("description", ""), "sources": srcs})
         + obj["content"].strip() + "\n", encoding="utf-8")
     # Persist the redirect BEFORE deleting, so an interrupt between the unlink
     # and the link rewrite is recoverable: the next run finds the loser gone,
     # has no candidate to re-derive it from, and would otherwise leave every
     # inbound [[concepts/<loser>]] dangling forever.
-    state.setdefault("pending", {})[loser] = survivor
+    state.setdefault("pending", {})[f"{collection}/{loser}"] = survivor
     state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
     pl.unlink()
-    targets.discard(f"concepts/{loser}")
-    n = repoint_links(root, loser, survivor)
-    state["pending"].pop(loser, None)
+    targets.discard(f"{collection}/{loser}")
+    n = repoint_links(root, loser, survivor, collection)
+    state["pending"].pop(f"{collection}/{loser}", None)
     state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
     print(f"    merged; {n} page(s) repointed")
     return True

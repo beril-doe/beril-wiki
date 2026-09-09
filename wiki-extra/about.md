@@ -79,8 +79,11 @@ It never shows the source was right.
 
 ## Known limitations
 
-- Entity pages have no deduplication pass. Single-source entities are hidden
-  from this site, but near-duplicate names among the rest are possible.
+- Entity pages are deduplicated by identity — a shared canonical name, a
+  declared alias, or a shared external identifier — never by similarity, which
+  over these pages cannot tell two genes of one organism apart. Two entities
+  that are the same thing under names sharing none of those signals would not
+  be caught. Entities cited by only one project are not published.
 - Reported budget figures undercount actual spend, so cost notes in the repo
   are lower bounds.
 

@@ -7,3 +7,11 @@ __pycache__/
 parity/
 *.log
 .serena/
+
+# Vendored OpenKB source and the superseded v3 corpus. Kept locally as the
+# compiler's provenance and its parity benchmark, but not published: v3 looks
+# like the live wiki and would invite citation of a superseded corpus, and
+# republishing a whole third-party tree is not what the Apache-2.0 attribution
+# in LICENSE requires. Restore from the previous generation's checkout to
+# re-run the parity protocol in DESIGN.md.
+reference/
