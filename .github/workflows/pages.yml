@@ -7,13 +7,19 @@ name: Publish wiki
 on:
   push:
     branches: [main]
-    paths:
+    paths: &build_paths
       - "wiki/**"
       - "wiki-extra/**"
-      - "pipeline/build_quartz.sh"
-      - "pipeline/quartz_ingest.py"
-      - "pipeline/evidence.py"
+      - "pipeline/**"
       - ".github/workflows/pages.yml"
+  # Build on the PR too, without deploying. Everything here is untested on
+  # Linux otherwise: the figure downscale falls back when `sips` is absent,
+  # the provenance check runs under GNU rather than BSD grep, and the Quartz
+  # clone and npm install happen for real instead of reusing a local checkout.
+  # Finding that out on the first push to main means finding it out with the
+  # repository already public and no site.
+  pull_request:
+    paths: *build_paths
   workflow_dispatch:
 
 permissions:
@@ -22,8 +28,9 @@ permissions:
   id-token: write
 
 # Never publish two builds at once; let a newer push win the queue.
+# Per-ref, so a PR build never cancels a deploy of main.
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -83,6 +90,7 @@ jobs:
 
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
