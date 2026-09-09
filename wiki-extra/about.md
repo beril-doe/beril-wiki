@@ -2,10 +2,10 @@
 
 The BERIL Knowledge Wiki is compiled, not written. Every page here was generated
 by a pipeline from the BERIL Research Observatory's corpus of AI-conducted
-microbial-biology research reports. Not all of it has been reviewed by a
-scientist, and no page was reviewed as a whole before publication, so do not
-assume that any particular claim was checked. Read the rest of this page before
-citing anything here.
+microbial-biology research reports. Not all of that research has been reviewed
+by a scientist, and no page here was reviewed as a whole before publication, so
+do not assume that any particular claim was checked. Read the rest of this page
+before citing anything here.
 
 ## What you are reading
 

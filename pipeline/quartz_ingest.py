@@ -29,8 +29,9 @@ SKIP = {"AGENTS.md", "log.md"}
 # has any.
 # One line, no embedded newline: the callout prefixes each line with "> ", so a
 # wrapped string would put its tail outside the blockquote.
-PROVENANCE = ("Compiled by pipeline from AI-conducted research reports. Not all of it "
-              "has been reviewed by a scientist. See [[about|About This Wiki]].")
+PROVENANCE = ("Compiled by software from AI-conducted research reports. Not all of "
+              "this material has been reviewed by a scientist. "
+              "See [[about|About This Wiki]].")
 
 
 # Landing pages for collections that have no index.md of their own. Without

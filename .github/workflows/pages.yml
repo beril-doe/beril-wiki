@@ -80,7 +80,10 @@ jobs:
         run: |
           uv run --project . python - <<'PY'
           import pathlib, sys
-          PHRASE = "Not all of it has been reviewed by a scientist"
+          # The stable core of the disclaimer. Matching the whole sentence means a
+          # reword silently disarms the gate; matching this much still cannot
+          # pass on a page that carries no disclaimer at all.
+          PHRASE = "reviewed by a scientist"
           missing, checked = [], 0
           for f in sorted(pathlib.Path("quartz/public").rglob("*.html")):
               text = f.read_text(errors="replace")
