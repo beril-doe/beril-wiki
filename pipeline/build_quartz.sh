@@ -3,7 +3,7 @@
 #   ./build_quartz.sh            then: cd quartz && npx quartz build --serve
 # Serves at http://localhost:8080. The quartz/ clone is gitignored; content is derived.
 #
-#   WIKI_BASE_URL=beril-doe.github.io/beril-wiki ./build_quartz.sh   # for publish
+#   WIKI_BASE_URL=beril-doe.org/beril-wiki ./build_quartz.sh   # for publish
 #
 # baseUrl sets absolute links, the sitemap and RSS. A CNAME file is emitted only
 # when WIKI_CNAME is set, since that file belongs to a custom domain and not to
@@ -68,10 +68,11 @@ c["theme"]["colors"]["darkMode"] = {           # workbench "observatory"
 # needs from anywhere: what this is, how to cite it, its licence, and the
 # observatory's reviewed knowledge surface next door.
 for p in cfg["plugins"]:
-    # CNAME is only for a custom domain. Quartz derives it from baseUrl's host,
-    # which for a project page yields "beril-doe.github.io" — a file that would
-    # tell Pages to serve this repo at the org's user-site domain. Emit one only
-    # when a real custom domain is asked for.
+    # CNAME is only for a per-repo custom domain. The org already serves Pages
+    # from the verified domain beril-doe.org, so this project site is routed to
+    # beril-doe.org/beril-wiki without a CNAME file; writing one derived from
+    # baseUrl's host would instead claim the bare domain for this repo. Emit one
+    # only when a per-repo domain is explicitly asked for.
     if p["source"] == "@quartz-community/cname":
         p["enabled"] = bool(os.environ.get("WIKI_CNAME"))
     # Frontmatter here is machinery — type, description, the sources list that

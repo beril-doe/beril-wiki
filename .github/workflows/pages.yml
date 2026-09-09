@@ -57,7 +57,7 @@ jobs:
 
       - name: Build site
         env:
-          WIKI_BASE_URL: beril-doe.github.io/beril-wiki
+          WIKI_BASE_URL: beril-doe.org/beril-wiki
         run: ./pipeline/build_quartz.sh
 
       # A build that silently dropped the corpus would still deploy green.
