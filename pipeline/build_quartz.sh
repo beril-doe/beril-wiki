@@ -81,6 +81,12 @@ for p in cfg["plugins"]:
     # frontmatter parser, so switching it off leaves every page "Untitled".
     if p["source"] == "@quartz-community/note-properties":
         p["options"]["hidePropertiesView"] = True
+    # No page in this corpus declares tags. Every "tag" Quartz finds is Obsidian
+    # syntax matching ordinary prose in the raw reports -- "the #1-ranked gene
+    # AO356_11255" produced a published /tags/1-ranked page. Turning the tag
+    # routes off removes a taxonomy the corpus never claimed.
+    if p["source"] == "@quartz-community/tag-page":
+        p["enabled"] = False
     if p["source"] == "@quartz-community/footer":
         p["options"]["links"] = {
             "About & how to cite": "https://" + base_url.rstrip("/") + "/about",

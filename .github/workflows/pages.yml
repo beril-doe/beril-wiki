@@ -61,6 +61,22 @@ jobs:
           [ "$pages" -ge 400 ] || { echo "::error::only $pages pages built, expected >=400"; exit 1; }
           test -f quartz/public/about.html || { echo "::error::about page missing"; exit 1; }
 
+      # The disclaimer is injected into Markdown inputs, so any route Quartz
+      # generates on its own (a folder listing, a tag page) publishes without
+      # it. That is how six collection listings shipped unattributed. 404 is
+      # an error page with no content; about.html IS the explanation.
+      - name: Every published page states its provenance
+        run: |
+          missing=$(grep -rLZ 'not reviewed by a human scientist' \
+                      --include='*.html' quartz/public \
+                    | tr '\0' '\n' | grep -v -e '/404\.html$' -e '/about\.html$' || true)
+          if [ -n "$missing" ]; then
+            echo "::error::pages published without the provenance callout:"
+            echo "$missing"
+            exit 1
+          fi
+          echo "all published pages carry the provenance callout"
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: quartz/public

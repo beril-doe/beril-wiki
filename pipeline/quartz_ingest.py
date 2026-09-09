@@ -21,6 +21,7 @@ import sys
 import evidence
 
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
+FM = re.compile(r"^(---\n.*?\n---\n)", re.S)
 SKIP = {"AGENTS.md", "log.md"}
 # Every page says this, because a reader can land on any page. Rendered as an
 # Obsidian callout (Quartz styles these natively — no custom CSS), whose title
@@ -28,6 +29,50 @@ SKIP = {"AGENTS.md", "log.md"}
 # has any.
 PROVENANCE = ("Compiled by pipeline from AI-conducted research reports; not reviewed "
               "by a human scientist. See [[about|About This Wiki]].")
+
+
+# Landing pages for collections that have no index.md of their own. Without
+# these Quartz auto-generates a bare folder listing, which carries no
+# provenance callout — the one route by which a reader could reach a published
+# page that does not say how the wiki was made. Wording tracks about.md.
+COLLECTION_INDEX = {
+    "concepts": ("Concepts",
+                 "Recurring ideas, each accumulating evidence from every project "
+                 "in the corpus that speaks to it."),
+    "entities": ("Entities",
+                 "Specific named things: organisms, genes and pathways, compounds, "
+                 "methods, and datasets. Entities cited by only one project are not "
+                 "published."),
+    "topics": ("Topics",
+               "Hubs that cluster related concepts. Each opens with a "
+               "literature-context section whose citations were verified against "
+               "PubMed when it was written."),
+    "conflicts": ("Conflicts",
+                  "Places where projects in the corpus disagree, with the evidence "
+                  "on each side and the work that would resolve it."),
+    "summaries": ("Summaries",
+                  "One page per research project, linking to its raw report."),
+    "sources": ("Sources",
+                "The raw research reports the wiki is compiled from, unedited."),
+}
+
+
+def write_collection_indexes(dst: pathlib.Path) -> int:
+    """Give every collection a real landing page, so none is an untitled,
+    unattributed auto-listing. Quartz appends its file listing below this."""
+    n = 0
+    for slug, (title, blurb) in COLLECTION_INDEX.items():
+        d = dst / slug
+        if not d.is_dir() or (d / "index.md").exists():
+            continue
+        count = sum(1 for f in d.glob("*.md") if f.stem != "index")
+        (d / "index.md").write_text(
+            f"---\ntitle: {json.dumps(title)}\n---\n"
+            f"{provenance_block(None)}\n\n{blurb}\n\n"
+            f"{count} page{'s' if count != 1 else ''} in this collection.\n",
+            encoding="utf-8")
+        n += 1
+    return n
 
 
 def provenance_block(evidence_terms: str | None) -> str:
@@ -58,7 +103,8 @@ def insert_after_fm(text: str, block: str) -> str:
     m = FM.match(text)
     at = m.end() if m else 0
     return text[:at] + block + "\n\n" + text[at:]
-FM = re.compile(r"^(---\n.*?\n---\n)", re.S)
+
+
 BIG_FIGURE = 1_500_000  # bytes; larger images are downscaled at publish
 
 
@@ -259,6 +305,8 @@ def main() -> None:
                 text = insert_after_fm(text, "\n\n".join(head))
             out.write_text(text, encoding="utf-8")
             n += 1
+
+    n += write_collection_indexes(dst)
 
     images = kb / "wiki" / "sources" / "images"
     if images.is_dir():
