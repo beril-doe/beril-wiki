@@ -1,27 +1,5 @@
 Copyright (c) 2026 The BERIL Project (Lawrence Berkeley National Laboratory)
 
-The BERIL Knowledge Wiki is compiled from the BERIL Research Observatory's
-research corpus, which is licensed AGPL-3.0. This repository — the compiler in
-pipeline/, the editorial contract in contract/, and the compiled wiki in wiki/
-and wiki-extra/ including its figures — is licensed under the same terms.
-
-Portions of the compiler prompts in pipeline/compile.py are derived from OpenKB
-(github.com/VectifyAI/OpenKB), which is licensed Apache-2.0:
-
-    Copyright (c) Vectify AI
-    Licensed under the Apache License, Version 2.0
-    https://www.apache.org/licenses/LICENSE-2.0
-
-Apache-2.0 permits redistribution of derived work under AGPL-3.0, and this
-notice is that attribution. A vendored copy of OpenKB is kept outside version
-control for reference and is not distributed with this repository.
-
-The wiki's pages are compiled by software from AI-conducted research reports
-and are not peer-reviewed. This licence grants the rights below; it makes no
-claim about scientific correctness. See wiki-extra/about.md for what is and is
-not checked before publication.
-
-
                     GNU AFFERO GENERAL PUBLIC LICENSE
                        Version 3, 19 November 2007
 

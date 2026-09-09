@@ -73,4 +73,5 @@ blocks publication.
 
 AGPL-3.0, matching the BERIL Research Observatory corpus this wiki is
 compiled from. Covers the pipeline and the compiled wiki alike. See
-[`LICENSE`](LICENSE) and [`CITATION.cff`](CITATION.cff).
+[`LICENSE`](LICENSE) for the terms, [`NOTICE`](NOTICE) for scope and
+third-party attribution, and [`CITATION.cff`](CITATION.cff).
