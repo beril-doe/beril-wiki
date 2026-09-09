@@ -27,8 +27,10 @@ SKIP = {"AGENTS.md", "log.md"}
 # Obsidian callout (Quartz styles these natively — no custom CSS), whose title
 # carries the computed evidence terms from pipeline/evidence.py when the page
 # has any.
-PROVENANCE = ("Compiled by pipeline from AI-conducted research reports; not reviewed "
-              "by a human scientist. See [[about|About This Wiki]].")
+# One line, no embedded newline: the callout prefixes each line with "> ", so a
+# wrapped string would put its tail outside the blockquote.
+PROVENANCE = ("Compiled by pipeline from AI-conducted research reports. Not all of it "
+              "has been reviewed by a scientist. See [[about|About This Wiki]].")
 
 
 # Landing pages for collections that have no index.md of their own. Without
@@ -145,7 +147,7 @@ def splice_figures(text: str, entry: dict, kb: pathlib.Path, dst_root: pathlib.P
         name = pathlib.Path(pl["file"]).name
         copy_figure(src, dst_root / "figures" / pl["project"] / name)
         block = (f"![{pl['caption']}](../figures/{pl['project']}/{name})\n"
-                 f"*{pl['caption']} — from [[summaries/{pl['project']}__REPORT|{pl['project']}]]*")
+                 f"*{pl['caption']}. From [[summaries/{pl['project']}__REPORT|{pl['project']}]].*")
         idx = pl["after_paragraph"]
         if idx < len(pars):
             pars.insert(idx + 1, block)

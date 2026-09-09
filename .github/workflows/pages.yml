@@ -80,7 +80,7 @@ jobs:
         run: |
           uv run --project . python - <<'PY'
           import pathlib, sys
-          PHRASE = "not reviewed by a human scientist"
+          PHRASE = "Not all of it has been reviewed by a scientist"
           missing, checked = [], 0
           for f in sorted(pathlib.Path("quartz/public").rglob("*.html")):
               text = f.read_text(errors="replace")
