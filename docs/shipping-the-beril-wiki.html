@@ -210,7 +210,7 @@ button.theme { position: fixed; right: 16px; top: 16px; z-index: 3; font: 400 11
     <p>A prompt can drift back. The stage now runs the same guard <code>topics_build</code> uses on citations: a regex catches sentences that ascribe interests, motives or a research programme, the model gets one retry with the offending sentences quoted, and anything still failing has those sentences deterministically removed. A <code>PROMPT_REV</code> constant sits in the cache digest, so editing the prompt re-runs every author instead of needing state cleared by hand. All 18 profiles regenerated for six cents; none retain characterising prose.</p>
 
     <h2 id="evidence" data-toc="Evidence labels">Evidence labels count what is countable</h2>
-    <p>The v1 Atlas carried <code>confidence:</code> and <code>last_reviewed:</code> in page frontmatter. That vocabulary vanished in the port to the current compiler, which pins frontmatter to type, description and sources. Restoring it literally would mean generating a confidence rating with no reviewer behind it &mdash; the same unbacked assertion just removed from the author pages, only harder to spot because it wears metadata&rsquo;s clothes.</p>
+    <p>The v1 Atlas carried <code>confidence:</code> and <code>last_reviewed:</code> in page frontmatter, and that vocabulary vanished in the port to the current compiler, which pins frontmatter to type, description and sources. Restoring it literally would have been worse than leaving it out. All 141 Atlas pages carry <code>generated_by: Codex GPT-5</code> and <code>status: draft</code>, none names a reviewer, and the <code>last_reviewed:</code> dates fall on five clusters matching generation batches: its <code>confidence:</code> was a model rating its own output, under a field name asserting a review that never happened. That is the same unbacked assertion just removed from the author pages, only harder to spot because it wears metadata&rsquo;s clothes.</p>
 
     <figure>
       <div class="vega"><script type="application/json">
@@ -304,7 +304,7 @@ flowchart LR
         <tbody>
           <tr><td>Content licence</td><td><span class="tag green">resolved</span></td><td><b>AGPL-3.0</b>, matching the observatory corpus this wiki compiles. A derivative inherits its upstream copyleft, so the CC BY 4.0 I had defaulted to was what created a conflict rather than resolving one. Covers the pipeline and the compiled pages alike.</td></tr>
           <tr><td>Near-duplicate concepts</td><td><span class="tag green">resolved</span></td><td>Read all four pairs: two are false positives on shared name tokens, one wants a rename, one is a genuine merge. See <a href="#concept-pairs">the pairs</a>.</td></tr>
-          <tr><td>Domain</td><td><span class="tag green">resolved</span></td><td>Ships at <code>beril-doe.org/beril-wiki</code>, cross-linked to the Atlas in the footer.</td></tr>
+          <tr><td>Domain</td><td><span class="tag green">resolved</span></td><td>Ships at <code>beril-doe.org/beril-wiki</code>. The footer links the Observatory, not the Atlas: this wiki is meant to take the Atlas's place.</td></tr>
         </tbody>
       </table></div>
     </figure>

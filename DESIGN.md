@@ -127,8 +127,13 @@ beril.kbase.us/atlas, so nothing published here links to it: sending readers to
 the surface being replaced is the wrong direction of travel. That intent is
 recorded here rather than on the site. It is a plan, with no date and no
 announcement behind it, and the public pages state only what is true today.
-Until it happens the Atlas is the reviewed artifact and this wiki is not, which
-is exactly the kind of claim the site must not get wrong.
+
+The Atlas is NOT a reviewed artifact, and an earlier version of this file said
+it was. All 141 of its pages carry `generated_by: Codex GPT-5` and
+`status: draft`, none records a reviewer, and its `last_reviewed:` dates fall
+on five clusters matching generation batches. Its `confidence:` field is a
+model rating its own output. Do not describe it as the reviewed counterpart to
+this wiki, on the site or anywhere else.
 
 The Observatory link (beril.kbase.us) stays in the footer. That is where the
 reports come from, so it is provenance rather than a pointer to a competing

@@ -8,12 +8,16 @@ context section. That last term states PRESENCE, not review: it is a heading
 test, and nothing here re-verifies the PMIDs that lit_context.py checked when
 the section was written.
 
-This is deliberately NOT the v1 atlas's `confidence:` field. That field was a
-human judgement carrying a `last_reviewed` date; this wiki has no reviewer and
-no review ledger, so a generated `confidence: medium` would be an unbacked
-assertion wearing metadata's clothes. Everything here is countable, and the
-label never claims a human read the page — the site-wide banner says the
-opposite, once, on every page.
+This is deliberately NOT the v1 atlas's `confidence:` field, and that field is
+the reason. All 141 atlas pages carry `generated_by: Codex GPT-5` and
+`status: draft`, none names a reviewer, and `last_reviewed:` clusters on five
+dates matching generation batches. So `confidence: medium` there was a model
+rating its own output, and `last_reviewed:` is a generation timestamp under a
+name that asserts human review. A field is not evidence of the thing it is
+named after.
+
+Everything here is countable instead, and the label never claims anyone read
+the page — the site-wide banner says the opposite, once, on every page.
 
 Applies to synthesis pages (concepts, entities, topic hubs, conflicts), where
 "how much backs this" is a real question. Summaries and raw reports are 1:1
