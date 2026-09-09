@@ -174,7 +174,7 @@ For the 100 highest-ranked truly dark genes, proposed work includes AlphaFold2 o
 ## Related wiki pages
 
 - [[concepts/gene-essentiality]] — conserved, variable, orphan, condition-specific, and truly dark-gene essentiality.
-- [[concepts/functional-dark-matter]] — experimentally prioritized dark-gene systems and residual annotation gaps.
+- [[concepts/genomic-under-representation]] — experimentally prioritized dark-gene systems and residual annotation gaps.
 - [[concepts/condition-specific-fitness]] — condition-dependent fitness and stress responses.
 - [[concepts/metal-cross-resistance]] — cross-metal fitness, core stress functions, and specialized resistance. [src: metal_fitness_atlas]
 - [[concepts/metabolic-model-gapfilling]] — fitness-guided metabolic annotation and GapMind.

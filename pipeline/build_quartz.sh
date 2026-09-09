@@ -2,14 +2,28 @@
 # Build the Quartz site for the BERIL wiki. Idempotent; first run clones Quartz (~2 min).
 #   ./build_quartz.sh            then: cd quartz && npx quartz build --serve
 # Serves at http://localhost:8080. The quartz/ clone is gitignored; content is derived.
+#
+#   WIKI_BASE_URL=beril-doe.github.io/beril-wiki ./build_quartz.sh   # for publish
+#
+# baseUrl sets absolute links, the sitemap and RSS. A CNAME file is emitted only
+# when WIKI_CNAME is set, since that file belongs to a custom domain and not to
+# a github.io project page.
 set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
 REPO="$(dirname "$HERE")"
 QP="$REPO/quartz"
+BASE_URL="${WIKI_BASE_URL:-localhost:8080}"
+# Pinned: quartz/ is a gitignored clone, so an unpinned upstream main means
+# every CI build renders against whatever Quartz shipped that day. This is the
+# commit the current site was built and reviewed against; a tag also works.
+QUARTZ_REF="${QUARTZ_REF:-075afd3f712da0088a07f5284a7b3aba37dd61b6}"
 
 if [ ! -d "$QP" ]; then
-  git clone --depth 1 --quiet https://github.com/jackyzha0/quartz.git "$QP"
+  git init --quiet "$QP"
+  git -C "$QP" remote add origin https://github.com/jackyzha0/quartz.git
+  git -C "$QP" fetch --quiet --depth 1 origin "$QUARTZ_REF"
+  git -C "$QP" checkout --quiet FETCH_HEAD
   npm --prefix "$QP" install --silent
 fi
 
@@ -17,13 +31,13 @@ fi
 # build (idempotent) so theme/config changes here always take effect.
 # Palette + type mirror the BERIL workbench themes (apps/web/src/themes.css):
 # "paper" light and "observatory" violet-ink dark; Fraunces / IBM Plex.
-uv run --project "$REPO" python - "$QP" <<'PY'
-import pathlib, sys, yaml
-qp = pathlib.Path(sys.argv[1])
+uv run --project "$REPO" python - "$QP" "$BASE_URL" <<'PY'
+import os, pathlib, sys, yaml
+qp, base_url = pathlib.Path(sys.argv[1]), sys.argv[2]
 cfg = yaml.safe_load((qp / "quartz.config.default.yaml").read_text())
 c = cfg["configuration"]
 c["pageTitle"] = "BERIL Knowledge Wiki"
-c["baseUrl"] = "localhost:8080"
+c["baseUrl"] = base_url
 c["analytics"] = None
 c["theme"]["typography"] = {
     "header": "Fraunces", "body": "IBM Plex Sans", "code": "IBM Plex Mono",
@@ -50,6 +64,37 @@ c["theme"]["colors"]["darkMode"] = {           # workbench "observatory"
     "highlight": "rgba(167, 139, 250, 0.1)",
     "textHighlight": "rgba(167, 139, 250, 0.3)",
 }
+# Footer is on every page by construction, so it carries the things a reader
+# needs from anywhere: what this is, how to cite it, its licence, and the
+# observatory's reviewed knowledge surface next door.
+for p in cfg["plugins"]:
+    # CNAME is only for a custom domain. Quartz derives it from baseUrl's host,
+    # which for a project page yields "beril-doe.github.io" — a file that would
+    # tell Pages to serve this repo at the org's user-site domain. Emit one only
+    # when a real custom domain is asked for.
+    if p["source"] == "@quartz-community/cname":
+        p["enabled"] = bool(os.environ.get("WIKI_CNAME"))
+    # Frontmatter here is machinery — type, description, the sources list that
+    # keeps citations honest. Rendered as a properties table above every page
+    # it reads as debug output, and the description just restates the opening
+    # paragraph. Hide the table, do NOT disable the plugin: it is also Quartz's
+    # frontmatter parser, so switching it off leaves every page "Untitled".
+    if p["source"] == "@quartz-community/note-properties":
+        p["options"]["hidePropertiesView"] = True
+    # No page in this corpus declares tags. Every "tag" Quartz finds is Obsidian
+    # syntax matching ordinary prose in the raw reports -- "the #1-ranked gene
+    # AO356_11255" produced a published /tags/1-ranked page. Turning the tag
+    # routes off removes a taxonomy the corpus never claimed.
+    if p["source"] == "@quartz-community/tag-page":
+        p["enabled"] = False
+    if p["source"] == "@quartz-community/footer":
+        p["options"]["links"] = {
+            "About & how to cite": "https://" + base_url.rstrip("/") + "/about",
+            "BERIL Atlas": "https://beril.kbase.us/atlas",
+            "BERIL Observatory": "https://beril.kbase.us/",
+            "Source": "https://github.com/beril-doe/beril-wiki",
+            "AGPL-3.0": "https://www.gnu.org/licenses/agpl-3.0.html",
+        }
 (qp / "quartz.config.yaml").write_text(yaml.safe_dump(cfg, sort_keys=False, allow_unicode=True))
 PY
 

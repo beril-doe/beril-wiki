@@ -1,0 +1,112 @@
+name: Publish wiki
+
+# Render-only: wiki/, wiki-extra/ and every figure are committed, so this needs
+# no CBORG key and no observatory checkout. Refreshing the *content* is still a
+# maintainer running pipeline/run_pipeline.sh and committing the result; this
+# job only turns what is committed into the published site.
+on:
+  push:
+    branches: [main]
+    paths: &build_paths
+      - "wiki/**"
+      - "wiki-extra/**"
+      - "pipeline/**"
+      - ".github/workflows/pages.yml"
+  # Build on the PR too, without deploying. Everything here is untested on
+  # Linux otherwise: the figure downscale falls back when `sips` is absent,
+  # the provenance check runs under GNU rather than BSD grep, and the Quartz
+  # clone and npm install happen for real instead of reusing a local checkout.
+  # Finding that out on the first push to main means finding it out with the
+  # repository already public and no site.
+  pull_request:
+    paths: *build_paths
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never publish two builds at once; let a newer push win the queue.
+# Per-ref, so a PR build never cancels a deploy of main.
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      # The About page tells readers these checks run on every build and block
+      # publication. That has to be true of the deploy too, not just of a
+      # maintainer's local pipeline run: wiki/ and wiki-extra/ are committed
+      # files, so a direct push can carry an unknown [src:] id, a number in no
+      # cited source, or a dead link straight to the site. wiki_check is
+      # stdlib-only and reads the committed wiki/sources/, so it needs no key
+      # and no observatory checkout.
+      - name: Validate the corpus
+        run: uv run --project . python pipeline/wiki_check.py --strict
+
+      - name: Build site
+        env:
+          WIKI_BASE_URL: beril-doe.github.io/beril-wiki
+        run: ./pipeline/build_quartz.sh
+
+      # A build that silently dropped the corpus would still deploy green.
+      - name: Check the site is not empty
+        run: |
+          pages=$(find quartz/public -name '*.html' | wc -l)
+          echo "$pages HTML pages built"
+          [ "$pages" -ge 400 ] || { echo "::error::only $pages pages built, expected >=400"; exit 1; }
+          test -f quartz/public/about.html || { echo "::error::about page missing"; exit 1; }
+
+      # The disclaimer is injected into Markdown inputs, so any route Quartz
+      # generates on its own publishes without it. Two kinds of file are not
+      # content and are exempt: 404 (an error page) and about.html (which IS
+      # the explanation), plus Quartz's redirect stubs -- the corpus names
+      # pages `X__REPORT` while Quartz's canonical slug is lowercase, so it
+      # emits a noindex meta-refresh at the original casing. Those stubs only
+      # exist as separate files on a case-sensitive filesystem, which is why
+      # this check can only be got right on Linux.
+      - name: Every published page states its provenance
+        run: |
+          uv run --project . python - <<'PY'
+          import pathlib, sys
+          PHRASE = "not reviewed by a human scientist"
+          missing, checked = [], 0
+          for f in sorted(pathlib.Path("quartz/public").rglob("*.html")):
+              text = f.read_text(errors="replace")
+              if 'http-equiv="refresh"' in text or f.name in ("404.html", "about.html"):
+                  continue
+              checked += 1
+              if PHRASE not in text:
+                  missing.append(str(f))
+          if missing:
+              print("::error::pages published without the provenance callout:")
+              print("\n".join(missing))
+              sys.exit(1)
+          print(f"all {checked} content pages carry the provenance callout")
+          PY
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: quartz/public
+
+  deploy:
+    needs: build
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

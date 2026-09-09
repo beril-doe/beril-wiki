@@ -627,7 +627,7 @@ See the source summaries: [[summaries/annotation_gap_discovery__REPORT]], [[summ
 - Replicate the field-versus-lab comparison across organisms with Fitness Browser data and unequal ecological condition panels, testing whether the weak field/lab AUCs and the stronger gene-length-inclusive model persist after matched condition depth and callability controls. [src: field_vs_lab_fitness]
 - Partition the coverage-adjusted analysis by functional category, testing whether the core-gene burden advantage in Protein Metabolism, Motility, and RNA Metabolism and the Cell Wall reversal persist after matched condition depth. [src: core_gene_tradeoffs]
 
-## [[concepts/fitness-importance-versus-ecological-context|Fitness importance predicts genome conservation more strongly than field-versus-lab context]]
+## [[concepts/laboratory-fitness-versus-natural-selection|Fitness importance predicts genome conservation more strongly than field-versus-lab context]]
 
 - Use `gene_fitness_conservation.csv` for the 2,725 analyzed genes, together with insertion counts or other transposon-callability measures, in nested cross-validated models to test how much of gene length's CV-AUC 0.645 contribution remains after measurement quality is modeled explicitly. [src: field_vs_lab_fitness]
 - Add the 678 essential genes through an essentiality-aware missing-fitness or two-stage model, and test whether gene length predicts core status similarly among essential genes and genes with recovered transposon mutants. [src: field_vs_lab_fitness]
@@ -678,7 +678,7 @@ See the source summaries: [[summaries/annotation_gap_discovery__REPORT]], [[summ
 - Partition the 28,017 costly-and-conserved and 5,526 costly-and-dispensable genes by module membership, mobile-element evidence, and environmental breadth; test whether the two classes differ in callability, recent acquisition, or loss signatures. [src: conservation_fitness_synthesis]
 - Reassess the 86% versus 81.5% module-core enrichment after matching organisms on experiment count, condition diversity, pangenome coverage, and essential-gene missingness to determine how much of the signal is biological versus ascertainment. [src: conservation_fitness_synthesis]
 
-## [[concepts/functional-dark-matter|Genomic under-representation limits inference about microbial functional potential]]
+## [[concepts/genomic-under-representation|Genomic under-representation limits inference about microbial functional potential]]
 
 - Re-run the BERIL Observatory 16S tables and [[entities/kbase-ke-pangenome]] completeness data with rarefaction or uniform 16S sequencing-depth correction, then ask whether forest and cropland remain the highest-GDI biomes after sampling effort is equalized. [src: soil_frontier_genomics]
 - Compute bootstrap 95% confidence intervals for biome-level GDI values and explicitly compare Forest GDI = 902.36 with Cropland GDI = 890.82, asking whether their apparent difference is distinguishable from resampling uncertainty. [src: soil_frontier_genomics]

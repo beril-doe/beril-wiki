@@ -202,11 +202,25 @@ def is_table_or_links(par: str) -> bool:
     return all(ln.startswith("|") or ln.startswith("- [[") for ln in lines)
 
 
+# Pairs a person read and judged distinct. The detector keys on shared sources
+# plus shared name tokens, so it cannot tell a shared subject from a shared
+# vocabulary; without this, a warning nobody can act on fires on every run and
+# teaches readers to skim past the ones that matter. Reviewed 2026-09-08.
+NOT_DUPLICATES = {
+    # what transfer produces vs the route it travels
+    frozenset({"horizontal-gene-transfer-driven-innovation",
+               "chromosomal-and-integrative-gene-transfer"}),
+    # core genes can be costly to keep vs core genes can be uncharacterised
+    frozenset({"core-genome-burden-paradox", "core-gene-annotation-paradox"}),
+}
+
+
 def duplicate_concepts(kb: pathlib.Path) -> list[str]:
     """Near-duplicate concept pairs: heavy source overlap + shared name tokens.
 
     Shared with compile.py's plan step, which injects the current output so
     extend-don't-duplicate is enforced at write time, not just audited here.
+    Pairs in NOT_DUPLICATES have been reviewed and dismissed.
     """
     stops = {"the", "of", "in", "and", "for", "to", "a", "vs", "with"}
     cinfo = []
@@ -218,6 +232,8 @@ def duplicate_concepts(kb: pathlib.Path) -> list[str]:
     out = []
     for i, (a, sa, ta) in enumerate(cinfo):
         for b, sb, tb in cinfo[i + 1:]:
+            if frozenset({a, b}) in NOT_DUPLICATES:
+                continue
             if sa and sb and len(sa & sb) / max(1, len(sa | sb)) >= 0.5 and len(ta & tb) >= 2:
                 out.append(f"duplicate-concepts? '{a}' and '{b}' share {len(sa & sb)} sources and name tokens {sorted(ta & tb)}")
     return out
@@ -232,9 +248,10 @@ def main() -> int:
         return 1
 
     # --strict promotes numeric mismatches and dead links from warning to error.
-    # They are warnings by default because this corpus carries pre-existing
-    # violations that predate the check being able to see them; turn it on once
-    # they are repaired and the gate becomes meaningful.
+    # The pre-existing violations this waited on are repaired (repair_page.py),
+    # so the publish workflow now runs --strict and the gate is real. Kept as a
+    # flag rather than the default so a mid-pipeline run can still report them
+    # without aborting the stages that follow.
     strict = "--strict" in sys.argv
     errors: list[str] = []
     warns: list[str] = []
@@ -244,7 +261,12 @@ def main() -> int:
     # pages and author profiles were unscanned, which is how eight unsupported
     # figures and 26 dead concept links reached publish with the gate reporting
     # zero errors.
+    # Summaries are LLM-written and published, so their citations and figures
+    # are gated too. NOT sources/: those are the verbatim research reports and
+    # are the evidence, so a figure there needs no [src:] tag. NOT data/: those
+    # are built deterministically from collections.yaml, not written by a model.
     roots = [(kb / "wiki", "concepts"), (kb / "wiki", "entities"),
+             (kb / "wiki", "summaries"),
              (kb / "wiki-extra", "topics"), (kb / "wiki-extra", "conflicts"),
              (kb / "wiki-extra", "authors")]
     for base, sub in roots:
@@ -272,6 +294,26 @@ def main() -> int:
                             continue
                         msg = f"{rel} ¶{i}: number {tok!r} not found in cited source(s) {ids}"
                         (errors if strict else warns).append(msg)
+
+    # Corpus-format contract (DESIGN.md): `sources` must never list a project
+    # the body does not cite. Nothing checked it, so six pages drifted — one
+    # entity listed 47 sources against 31 real citations. A padded list reads as
+    # synthesis without being it, and it also drives compile's resume-skip, so a
+    # phantom entry tells the next run "already integrated" about a document
+    # that is not.
+    for base, sub in [(kb / "wiki", "concepts"), (kb / "wiki", "entities")]:
+        for page in sorted((base / sub).glob("*.md")):
+            text = page.read_text(encoding="utf-8", errors="replace")
+            m = re.match(r"^---\n(.*?)\n---\n", text, re.S)
+            if not m:
+                continue
+            listed = {re.sub(r"__REPORT$", "", s.rsplit("/", 1)[-1].removesuffix(".md"))
+                      for s in re.findall(r'"([^"]*summaries/[^"]+)"', m.group(1))}
+            cited = {s for par in paragraphs(text) for s in cited_ids(par)}
+            for extra in sorted(listed - cited):
+                msg = (f"{sub}/{page.name}: frontmatter lists source {extra!r} "
+                       "that the body never cites")
+                (errors if strict else warns).append(msg)
 
     # Dead [[wikilinks]]. compile.generate_page validates targets at write time,
     # but topics_build, conflicts_build and authors_build use their own llm() and

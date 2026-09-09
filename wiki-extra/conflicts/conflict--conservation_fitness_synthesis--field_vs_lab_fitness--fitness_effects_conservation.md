@@ -1,7 +1,7 @@
 <!-- tension-hash: cb83a09382224a34 -->
 # Gene Length as a Strong Predictor Versus a Weak Broader Fitness–Conservation Gradient
 
-The disagreement concerns how much explanatory or predictive importance should be assigned to fitness relative to ecological and genomic context. One analysis finds that gene length is highly predictive in a DvH model, while broader analyses find a real but weak fitness–conservation gradient without testing gene length as a covariate. As summarized on [[concepts/fitness-importance-versus-ecological-context]], the tension may reflect differences in datasets, organisms, predictors, and outcomes rather than directly conflicting estimates, but it leaves unresolved whether the broader fitness signal persists after explicit genomic and phylogenetic adjustment.
+The disagreement concerns how much explanatory or predictive importance should be assigned to fitness relative to ecological and genomic context. One analysis finds that gene length is highly predictive in a DvH model, while broader analyses find a real but weak fitness–conservation gradient without testing gene length as a covariate. As summarized on [[concepts/laboratory-fitness-versus-natural-selection]], the tension may reflect differences in datasets, organisms, predictors, and outcomes rather than directly conflicting estimates, but it leaves unresolved whether the broader fitness signal persists after explicit genomic and phylogenetic adjustment.
 
 ## Evidence Sides
 

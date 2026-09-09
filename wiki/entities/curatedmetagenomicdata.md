@@ -31,7 +31,7 @@ The newer analysis **refines** this portability result: among 23 UC Davis patien
 
 On the UC Davis patients, `is_ibd=1` was constant and 19 of 22 patients were predicted as E1, exposing a portability failure in the pooled classifier. [src: discoveries]
 
-Projection using LDA across MetaPhlAn3 namespaces produced plausible Kuehl ecotype proportions of 27%, 42%, and 31%, while CLR-plus-PCA GMM projected all 26 Kuehl samples to E3 at confidence greater than 0.97 because Kuehl detected only 54% of the training species. [src: discoveries]
+Projection using LDA across MetaPhlAn3 namespaces produced plausible Kuehl ecotype proportions of 27%, 42%, and 31%, while CLR-plus-PCA GMM projected all 26 Kuehl samples to E3 at confidence greater than 0.97 because Kuehl detected only 54% of the training species. [src: ibd_phage_targeting]
 
 The newer report **supports** retaining metagenomics for patient-level assignment: leave-one-substudy-out ARI had mean 0.113 and range 0.000–0.282, while pathway-feature refitting gave ARI=0.113 and 50.6% overall agreement. External HMP_2019_ibdmdb replication included 1,627 samples from 130 subjects; 80.4% of samples had projection confidence >0.70, and subject-level ecotype × diagnosis yielded χ²=15.61 and p=0.016. [src: ibd_phage_targeting]
 

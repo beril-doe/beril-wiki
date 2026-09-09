@@ -47,7 +47,7 @@ The DvH results contribute to [[concepts/condition-specific-fitness]] by separat
 
 ## Findings in truly_dark_genes
 
-The truly-dark-gene analysis **refines** the existing annotation-limitation caveat for DvH: DvH/206658 was ranked as a top candidate with score 9, a stress phenotype of |f| = 5.4, and an [[entities/eggnog]] signal suggesting “trehalose synthase” despite its hypothetical annotation. [src: truly_dark_genes] This candidate links DvH’s condition-specific fitness evidence to [[concepts/functional-dark-matter]], while the suggested function remains a hypothesis requiring experimental validation. [src: truly_dark_genes]
+The truly-dark-gene analysis **refines** the existing annotation-limitation caveat for DvH: DvH/206658 was ranked as a top candidate with score 9, a stress phenotype of |f| = 5.4, and an [[entities/eggnog]] signal suggesting “trehalose synthase” despite its hypothetical annotation. [src: truly_dark_genes] This candidate links DvH’s condition-specific fitness evidence to [[concepts/genomic-under-representation]], while the suggested function remains a hypothesis requiring experimental validation. [src: truly_dark_genes]
 
 DvH contributed 13 of the 100 prioritized truly dark genes across 19 organisms. [src: truly_dark_genes] This **supports** using DvH fitness phenotypes and genomic context to prioritize functional characterization, but does not establish that the candidate phenotype is caused directly by the hypothetical gene because polar effects can occur. [src: truly_dark_genes]
 
@@ -95,4 +95,4 @@ The Oak Ridge comparison is additionally limited because 16S amplicon sequencing
 - [[concepts/cofitness-network-architecture]] — cross-condition fitness-profile architecture.
 - [[concepts/gene-essentiality]] — interpretation of gene-level fitness and core-enrichment analyses.
 - [[concepts/metabolic-model-gapfilling]] — computational pathway-completeness evidence and validation gaps.
-- [[concepts/functional-dark-matter]] — residual unknown-gene function and candidate prioritization.
+- [[concepts/genomic-under-representation]] — residual unknown-gene function and candidate prioritization.

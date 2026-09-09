@@ -1,7 +1,7 @@
 <!-- tension-hash: b5ec41b8a9188ac1 -->
 # Is the apparent genomic dark matter a sampling gap or a biological/annotation gap?
 
-The disagreement concerns what the observed under-representation of microbial genomes actually measures. The [[concepts/functional-dark-matter]] material reports patterns consistent with missing alkaline-soil microbiomes and taxonomic coverage gaps, while also warning that the same patterns may arise from incomplete sampling, genome recovery, annotation, or the construction of the GDI metric itself. This matters because prioritizing “dark” biology depends on distinguishing genuinely undiscovered functions from artifacts of where organisms were sampled, how genomes were assembled, and which organisms have experimental fitness data.
+The disagreement concerns what the observed under-representation of microbial genomes actually measures. The [[concepts/genomic-under-representation]] material reports patterns consistent with missing alkaline-soil microbiomes and taxonomic coverage gaps, while also warning that the same patterns may arise from incomplete sampling, genome recovery, annotation, or the construction of the GDI metric itself. This matters because prioritizing “dark” biology depends on distinguishing genuinely undiscovered functions from artifacts of where organisms were sampled, how genomes were assembled, and which organisms have experimental fitness data.
 
 ## Evidence Sides
 

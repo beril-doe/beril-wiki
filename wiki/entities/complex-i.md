@@ -61,7 +61,7 @@ Specific tests include searching the ADP1 genome for NDH-2, testing NDH-2 deleti
 
 ## Related pages
 
-- [[summaries/aromatic_catabolism_network__REPORT]] — source summary for the Complex I support-network analysis.
+- [[summaries/aromatic_catabolism_network__REPORT]] — source summary for the Complex I support-network analysis. [src: aromatic_catabolism_network]
 - [[summaries/respiratory_chain_wiring__REPORT]] — source summary for condition-specific respiratory-chain configuration in ADP1.
 - [[concepts/gene-essentiality]] — contrasts observed Complex I defects with 0% model-predicted essentiality.
 - [[concepts/metabolic-model-gapfilling]] — covers unmapped support functions and respiratory blind spots in FBA.

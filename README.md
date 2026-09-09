@@ -6,7 +6,25 @@ topic hubs with literature context, cross-project concept syntheses, per-claim
 citations, conflicts, and negative results, all produced by a reproducible
 pipeline.
 
-## View the wiki
+**Read it at [beril-doe.github.io/beril-wiki](https://beril-doe.github.io/beril-wiki)**
+· [About & how to cite](https://beril-doe.github.io/beril-wiki/about)
+
+> These pages are compiled by software from AI-conducted research reports and
+> are **not peer-reviewed**. Nothing here has been checked by a human scientist
+> before publication. Citations and numeric fidelity are machine-verified, and
+> narrowly: a figure is checked to appear in a source the paragraph cites, as a
+> token, so a flipped sign or a changed unit passes. Scientific correctness is
+> not checked at all. Read
+> [About This Wiki](https://beril-doe.github.io/beril-wiki/about) before citing
+> anything, and prefer the underlying research report over the synthesis page
+> that aggregates it.
+
+The observatory's reviewed knowledge surface — claims, tensions and data
+products with human-assigned confidence and review dates — is the
+[BERIL Atlas](https://beril.kbase.us/atlas). Where the two disagree, the Atlas
+is the reviewed artifact.
+
+## Build it locally
 
 ```sh
 git clone git@github.com:beril-doe/beril-wiki.git && cd beril-wiki
@@ -38,3 +56,17 @@ unchanged corpus re-runs for $0.
 - [`TODO.md`](TODO.md) — v1 status and open items ·
   [`PARITY_REPORT.md`](PARITY_REPORT.md) — how the compiler was validated
 - `contract/AGENTS.md` — the editorial contract injected into every compile
+
+## Publishing
+
+Pushing to `main` rebuilds and deploys the site
+([`.github/workflows/pages.yml`](.github/workflows/pages.yml)). The job is
+render-only — it needs no API key, because `wiki/`, `wiki-extra/` and every
+figure are committed. Refreshing the *content* is still a maintainer running
+`run_pipeline.sh` and committing the result.
+
+## License
+
+AGPL-3.0, matching the BERIL Research Observatory corpus this wiki is
+compiled from. Covers the pipeline and the compiled wiki alike. See
+[`LICENSE`](LICENSE) and [`CITATION.cff`](CITATION.cff).

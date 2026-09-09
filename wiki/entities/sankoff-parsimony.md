@@ -65,7 +65,7 @@ M26 tree-based donor inference remained exploratory and algebraically counted po
 
 ## Related pages
 
-- [[summaries/gene_function_ecological_agora__REPORT]] — source-project summary.
+- [[summaries/gene_function_ecological_agora__REPORT]] — source-project summary. [src: gene_function_ecological_agora]
 - [[concepts/gene-function-acquisition-depth]] — cross-project synthesis of acquisition-depth signatures and rank-attributed gains.
 - [[concepts/pangenome-integration]] — integration of KO presence, pangenome openness, GTDB phylogeny, and genome-context measurements.
 - [[entities/gtdb]] — taxonomic reference framework used for the 18,989-species atlas.

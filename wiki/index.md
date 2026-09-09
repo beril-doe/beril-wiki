@@ -118,10 +118,8 @@
 - [[concepts/evidence-triangulation-for-functional-annotation]] — Integrated annotation pipelines and orthogonal evidence resolve more functional gaps than any single signal.
 - [[concepts/experimental-prioritization-of-functional-dark-matter]] — Evidence-weighted prioritization of unknown bacterial genes for experimental testing
 - [[concepts/fitness-condition-coverage-prioritization-bias]] — Unequal condition coverage distorts fitness-based gene prioritization
-- [[concepts/fitness-importance-versus-ecological-context]] — Fitness importance relates to genome conservation, but gene length and callability strongly shape prediction.
 - [[concepts/fitness-matched-null-models]] — How fitness-matched nulls distinguish functional enrichment from shared fitness behavior
 - [[concepts/fitness-module-detection-sensitivity]] — How thresholds, assay depth, and decomposition constrain fitness-module discovery
-- [[concepts/functional-dark-matter]] — Sampling and annotation gaps limit inference about microbial functional potential
 - [[concepts/functional-marker-validation]] — Validating functional markers before making ecological inferences
 - [[concepts/gene-cooccurrence-ecological-guilds]] — Gene co-occurrence can reveal ecological guilds without proving physical linkage
 - [[concepts/gene-essentiality]] — Gene essentiality depends on condition, assay target, and the limits of computational and phenotypic predictors.
@@ -129,10 +127,11 @@
 - [[concepts/genetic-perturbation-coverage-bias]] — Biases in which genes receive usable genetic perturbation phenotypes
 - [[concepts/genome-wide-versus-locus-specific-ecological-adaptation]] — Distinguishes genome-wide ancestry effects from locus-specific ecological adaptation.
 - [[concepts/genomic-dispersal-functional-coupling]] — Distributed genes can form tightly coupled metabolic support networks beyond shared genomic neighborhoods.
+- [[concepts/genomic-under-representation]] — Sampling and annotation gaps limit inference about microbial functional potential
 - [[concepts/homology-search-negative-evidence]] — Why gene-absence claims require sensitivity benchmarks and independent, orthogonal evidence.
 - [[concepts/horizontal-gene-transfer-driven-innovation]] — Evidence that horizontal transfer helps generate bacterial gene novelty
 - [[concepts/lab-field-fitness-concordance]] — Evidence for conditional, limited concordance between lab fitness and environmental gene distributions
-- [[concepts/laboratory-fitness-versus-natural-selection]] — Why laboratory fitness only partially predicts natural selection and gene conservation
+- [[concepts/laboratory-fitness-versus-natural-selection]] — Laboratory fitness predicts conservation imperfectly, while ecological context adds limited explanatory power.
 - [[concepts/metabolic-capacity-specialization]] — Phylogenetically concentrated metabolic capacities are dominated by specialists
 - [[concepts/metabolic-model-gapfilling]] — Evidence-based limits of gapfilled metabolic models across conditions, pathways, compounds, and datasets
 - [[concepts/metal-cross-resistance]] — Cross-metal fitness architecture and the limits of environmental resistance validation
@@ -257,9 +256,8 @@
 - [[entities/distance-based-redundancy-analysis]] (method) — Multivariate method for relating distance-based functional profiles to explanatory variables
 - [[entities/drosophila-melanogaster]] (organism) — Fruit fly species included among PaperBLAST’s most-studied organisms
 - [[entities/duf1043-yhcb]] (gene_or_pathway) — DUF1043/YhcB is a candidate metal-specific gene family.
-- [[entities/egg-nog]] (dataset) — Orthology database used to provide partial clues for dark genes
 - [[entities/eggerthella-lenta]] (organism) — Eggerthella lenta, a Tier-A IBD pathobiont target
-- [[entities/eggnog]] (dataset) — Functional annotation dataset for orthology, pathways, and gene-family discovery
+- [[entities/eggnog]] (dataset) — Cross-project synthesis of eggNOG orthology, annotation coverage, and interpretation limits.
 - [[entities/enigma-coral]] (dataset) — ENIGMA CORAL is an Oak Ridge field-sample dataset for geochemistry and microbial communities.
 - [[entities/enigma-genome-depot]] (dataset) — Dataset linking ENIGMA isolates, genomes, annotations, and utilization phenotypes
 - [[entities/enigma-growth-curves]] (dataset) — ENIGMA growth curves linking bacterial strains, conditions, and kinetics

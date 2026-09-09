@@ -46,6 +46,7 @@ import re
 import sys
 
 import litellm
+import yaml
 
 import compile as C
 from wiki_check import NUMBER, cited_ids, norm_num, paragraphs, source_ids
@@ -392,8 +393,9 @@ def backmerge_candidates(concepts: list[dict], cvecs: list[list[float]],
     return sorted(out, reverse=True)
 
 
-def rewrite_concept_links(text: str, loser: str, survivor: str) -> str:
-    """Repoint [[concepts/loser]] and [[concepts/loser|alias]] at the survivor,
+def rewrite_concept_links(text: str, loser: str, survivor: str,
+                          collection: str = "concepts") -> str:
+    """Repoint [[<collection>/loser]] and [[...|alias]] at the survivor,
     then drop lines the rewrite made exact duplicates of an earlier line.
 
     # ponytail: only EXACT duplicate lines collapse. Two Slots-Into bullets that
@@ -401,11 +403,11 @@ def rewrite_concept_links(text: str, loser: str, survivor: str) -> str:
     # slightly redundant but loses no claim. Dedupe semantically if it shows up.
     """
     out = re.sub(
-        r"\[\[concepts/" + re.escape(loser) + r"((?:\|[^\]]*)?)\]\]",
-        lambda m: f"[[concepts/{survivor}{m.group(1)}]]", text)
+        r"\[\[" + collection + r"/" + re.escape(loser) + r"((?:\|[^\]]*)?)\]\]",
+        lambda m: f"[[{collection}/{survivor}{m.group(1)}]]", text)
     if out == text:
         return text
-    link = f"[[concepts/{survivor}"
+    link = f"[[{collection}/{survivor}"
     seen: set[str] = set()
     kept = []
     for line in out.split("\n"):
@@ -417,12 +419,13 @@ def rewrite_concept_links(text: str, loser: str, survivor: str) -> str:
     return "\n".join(kept)
 
 
-def repoint_links(root: pathlib.Path, loser: str, survivor: str) -> int:
+def repoint_links(root: pathlib.Path, loser: str, survivor: str,
+                  collection: str = "concepts") -> int:
     changed = 0
     for base in (root / "wiki", root / "wiki-extra"):
         for f in base.rglob("*.md") if base.is_dir() else []:
             text = f.read_text(encoding="utf-8", errors="replace")
-            new = rewrite_concept_links(text, loser, survivor)
+            new = rewrite_concept_links(text, loser, survivor, collection)
             if new != text:
                 f.write_text(new, encoding="utf-8")
                 changed += 1
@@ -491,13 +494,168 @@ def generate_retaining(messages: list[dict], step: str, sources: dict[str, str],
 
 
 def replay_pending(root: pathlib.Path, state: dict, state_path: pathlib.Path) -> None:
-    """Finish link repair a previous run was interrupted mid-way through."""
-    for loser, survivor in list(state.get("pending", {}).items()):
-        n = repoint_links(root, loser, survivor)
-        print(f"  resuming interrupted merge {loser} -> {survivor}: {n} page(s) repointed")
-        state["pending"].pop(loser, None)
+    """Finish link repair a previous run was interrupted mid-way through.
+
+    Keys are `<collection>/<loser>` so entity merges can share this path; a
+    bare key is a concept from before that change and still resolves."""
+    for key, survivor in list(state.get("pending", {}).items()):
+        collection, _, loser = key.rpartition("/")
+        collection = collection or "concepts"
+        n = repoint_links(root, loser, survivor, collection)
+        print(f"  resuming interrupted merge {collection}/{loser} -> {survivor}: "
+              f"{n} page(s) repointed")
+        state["pending"].pop(key, None)
     if state.get("pending") == {}:
         state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
+
+
+def apply_merge(root: pathlib.Path, loser: str, survivor: str, targets: set[str],
+                sources: dict[str, str], system: str, state: dict,
+                state_path: pathlib.Path, refused: list[str],
+                collection: str = "concepts", page_type: str = "Concept") -> bool:
+    """Rewrite survivor to absorb loser, delete loser, repoint inbound links.
+
+    Shared by the judged path (phase_merge) and the human-decided one
+    (--force-merge). The retention gate applies to both: a person may decide
+    two pages are one, but not that the merge may drop evidence."""
+    wiki = root / "wiki"
+    pl, ps = wiki / collection / f"{loser}.md", wiki / collection / f"{survivor}.md"
+    tl = pl.read_text(encoding="utf-8", errors="replace")
+    ts = ps.read_text(encoding="utf-8", errors="replace")
+    lfm, lbody = C.parse_fm(tl)
+    sfm, sbody = C.parse_fm(ts)
+
+    task = CONCEPT_MERGE_USER.format(
+        loser=loser, survivor=survivor,
+        title=(sbody.splitlines() or ["#"])[0].lstrip("# ").strip() or survivor,
+        survivor_body=sbody, loser_body=lbody)
+    try:
+        obj = generate_retaining(
+            [{"role": "system", "content": system},
+             {"role": "user", "content": C.KNOWN_TARGETS_USER.format(
+                 targets="\n".join(f"- {t}" for t in sorted(targets - {f"{collection}/{loser}"})))},
+             {"role": "user", "content": task}],
+            f"merge/{survivor}", sources, targets,
+            required=body_src_ids(tl) | body_src_ids(ts),
+            required_nums=page_numbers(tl) | page_numbers(ts))
+    except C.PageError as e:
+        # NOT a failure: the retention gate refusing a lossy rewrite is the
+        # gate doing its job, and both pages are left intact. Counting it in
+        # C._failures would exit 1, and run_pipeline.sh runs under
+        # `set -euo pipefail`, so one safely-declined merge would abort the
+        # whole pipeline before conflicts, hubs and figures ever run.
+        print(f"    [WARN] declined merge — {e}; keeping both pages")
+        refused.append(f"merge:{survivor}+{loser}")
+        return False
+
+    # Union then canonicalise: a union alone carries both pages' padding forward.
+    srcs = C.canonical_sources(obj["content"],
+                               list(dict.fromkeys((sfm.get("sources") or [])
+                                                  + (lfm.get("sources") or []))))
+    ps.write_text(
+        C.fm_block({"type": page_type, "description": obj.get("description", ""), "sources": srcs})
+        + obj["content"].strip() + "\n", encoding="utf-8")
+    # Persist the redirect BEFORE deleting, so an interrupt between the unlink
+    # and the link rewrite is recoverable: the next run finds the loser gone,
+    # has no candidate to re-derive it from, and would otherwise leave every
+    # inbound [[concepts/<loser>]] dangling forever.
+    state.setdefault("pending", {})[f"{collection}/{loser}"] = survivor
+    state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
+    pl.unlink()
+    targets.discard(f"{collection}/{loser}")
+    n = repoint_links(root, loser, survivor, collection)
+    state["pending"].pop(f"{collection}/{loser}", None)
+    state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
+    print(f"    merged; {n} page(s) repointed")
+    return True
+
+
+def rename_concept(root: pathlib.Path, old: str, new: str) -> int:
+    """Rename a concept page and repoint every inbound wikilink.
+
+    A slug that disagrees with its own page title is a real defect, and it is
+    also what makes the duplicate detector fire on unrelated pages. Nothing in
+    state/ keys on a concept slug, so this needs no bookkeeping beyond the
+    links; the topic hubs whose members changed regenerate on the next run."""
+    src = root / "wiki" / "concepts" / f"{old}.md"
+    dst = root / "wiki" / "concepts" / f"{new}.md"
+    if not src.exists():
+        raise SystemExit(f"[ERROR] concepts/{old}.md does not exist")
+    if dst.exists():
+        raise SystemExit(f"[ERROR] concepts/{new}.md already exists — merge instead of renaming")
+    src.rename(dst)
+    n = repoint_links(root, old, new)
+    print(f"  renamed concepts/{old} -> concepts/{new}; {n} page(s) repointed")
+    return n
+
+
+DECISIONS = "contract/concept-decisions.yaml"
+
+
+def load_decisions(root: pathlib.Path) -> dict:
+    f = root / DECISIONS
+    if not f.is_file():
+        return {"renames": [], "merges": []}
+    d = yaml.safe_load(f.read_text(encoding="utf-8")) or {}
+    return {"renames": d.get("renames") or [], "merges": d.get("merges") or []}
+
+
+def apply_decisions(root: pathlib.Path, sources: dict[str, str], system: str,
+                    state: dict, state_path: pathlib.Path) -> list[str]:
+    """Apply the committed concept-identity decisions, idempotently.
+
+    Runs at the top of every pass so the manifest — not shell history — is what
+    reproduces the corpus. Each decision is a no-op once applied: a rename whose
+    source is gone and target present, or a merge whose loser is already gone.
+    Returns the decisions that could not be applied, so main() can fail closed."""
+    d = load_decisions(root)
+    concepts = root / "wiki" / "concepts"
+    failures: list[str] = []
+    for r in d["renames"]:
+        old, new = str(r.get("from", "")).strip(), str(r.get("to", "")).strip()
+        if not old or not new:
+            failures.append(f"malformed rename entry: {r!r}")
+            continue
+        if not (concepts / f"{old}.md").exists():
+            if not (concepts / f"{new}.md").exists():
+                failures.append(f"rename {old}->{new}: neither page exists")
+            continue                      # already applied
+        rename_concept(root, old, new)
+    targets = None
+    for m in d["merges"]:
+        loser = str(m.get("loser", "")).strip()
+        survivor = str(m.get("survivor", "")).strip()
+        if not loser or not survivor:
+            failures.append(f"malformed merge entry: {m!r}")
+            continue
+        if not (concepts / f"{loser}.md").exists():
+            if not (concepts / f"{survivor}.md").exists():
+                failures.append(f"merge {loser}->{survivor}: neither page exists")
+            continue                      # already applied
+        if not (concepts / f"{survivor}.md").exists():
+            failures.append(f"merge {loser}->{survivor}: survivor missing")
+            continue
+        if targets is None:
+            targets = C.wikilink_targets(root)
+        print(f"  applying decision: merge concepts/{loser} -> concepts/{survivor}")
+        if not apply_merge(root, loser, survivor, targets, sources, system,
+                           state, state_path, []):
+            failures.append(f"merge {loser}->{survivor}: retention gate declined")
+    return failures
+
+
+def record_decision(root: pathlib.Path, kind: str, a: str, b: str) -> None:
+    """Append a decision to the manifest so it is reproducible from the repo."""
+    f = root / DECISIONS
+    text = f.read_text(encoding="utf-8") if f.is_file() else "renames:\n\nmerges:\n"
+    entry = (f"  - from: {a}\n    to: {b}\n    why: recorded from the command line\n"
+             if kind == "rename" else
+             f"  - loser: {a}\n    survivor: {b}\n    why: recorded from the command line\n")
+    key = "renames:" if kind == "rename" else "merges:"
+    i = text.index(key) + len(key)
+    j = text.find("\nmerges:", i) if kind == "rename" else len(text)
+    f.write_text(text[:j].rstrip("\n") + "\n" + entry + text[j:], encoding="utf-8")
+    print(f"  recorded in {DECISIONS}")
 
 
 def phase_merge(root: pathlib.Path, concepts: list[dict], pairs: list[tuple],
@@ -550,51 +708,13 @@ def phase_merge(root: pathlib.Path, concepts: list[dict], pairs: list[tuple],
         print(f"  merging concepts/{loser} -> concepts/{survivor} (rank {rank}, sim {sim:.3f}): "
               f"{str(verdict.get('justification') or '')[:90]}")
 
-        task = CONCEPT_MERGE_USER.format(
-            loser=loser, survivor=survivor,
-            title=(sbody.splitlines() or ["#"])[0].lstrip("# ").strip() or survivor,
-            survivor_body=sbody, loser_body=lbody)
-        try:
-            obj = generate_retaining(
-                [{"role": "system", "content": system},
-                 {"role": "user", "content": C.KNOWN_TARGETS_USER.format(
-                     targets="\n".join(f"- {t}" for t in sorted(targets - {f"concepts/{loser}"})))},
-                 {"role": "user", "content": task}],
-                f"merge/{survivor}", sources, targets, required=ca | cb,
-                required_nums=page_numbers(ta) | page_numbers(tb))
-        except C.PageError as e:
-            # NOT a failure: the retention gate refusing a lossy rewrite is the
-            # gate doing its job, and both pages are left intact. Counting it in
-            # C._failures would exit 1, and run_pipeline.sh runs under
-            # `set -euo pipefail`, so one safely-declined merge would abort the
-            # whole pipeline before conflicts, hubs and figures ever run.
-            print(f"    [WARN] declined merge — {e}; keeping both pages")
-            refused.append(f"merge:{survivor}+{loser}")
+        if not apply_merge(root, loser, survivor, targets, sources, system,
+                           state, state_path, refused):
             continue
-
-        # Union then canonicalise: a union alone carries both pages' padding forward.
-        srcs = C.canonical_sources(obj["content"],
-                                   list(dict.fromkeys((sfm.get("sources") or [])
-                                                      + (lfm.get("sources") or []))))
-        (wiki / "concepts" / f"{survivor}.md").write_text(
-            C.fm_block({"type": "Concept", "description": obj.get("description", ""), "sources": srcs})
-            + obj["content"].strip() + "\n", encoding="utf-8")
-        # Persist the redirect BEFORE deleting, so an interrupt between the
-        # unlink and the link rewrite is recoverable: the next run finds the
-        # loser gone, has no candidate to re-derive it from, and would otherwise
-        # leave every inbound [[concepts/<loser>]] dangling forever.
-        state.setdefault("pending", {})[loser] = survivor
-        state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
-        (wiki / "concepts" / f"{loser}.md").unlink()
-        targets.discard(f"concepts/{loser}")
-        n = repoint_links(root, loser, survivor)
-        state["pending"].pop(loser, None)
-        state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
         redirect[loser] = survivor
         for k, v in list(redirect.items()):
             if v == loser:
                 redirect[k] = survivor
-        print(f"    merged; {n} page(s) repointed")
         merged += 1
     return merged
 
@@ -704,6 +824,29 @@ def main(root: pathlib.Path, args) -> int:
     state.setdefault("no_evidence", {})
     state.setdefault("pending", {})
 
+    # Human-decided concept identity. The CLI flags only RECORD a decision in
+    # contract/concept-decisions.yaml; applying it is the manifest's job, so
+    # every run reaches the same corpus and nothing depends on shell history.
+    for spec in (args.rename or []):
+        old, _, new = spec.partition(":")
+        record_decision(root, "rename", old.strip(), new.strip())
+    for spec in (args.force_merge or []):
+        loser, _, survivor = spec.partition(":")
+        record_decision(root, "merge", loser.strip(), survivor.strip())
+
+    decision_failures = apply_decisions(root, sources, system, state, state_path)
+    if args.rename or args.force_merge or decision_failures:
+        C.rebuild_index(root)
+    for f in decision_failures:
+        print(f"  [ERROR] decision not applied: {f}")
+    if args.rename or args.force_merge:
+        est = C._usage["in"] * C.PRICE_IN + C._usage["out"] * C.PRICE_OUT
+        print(f"consolidate: recorded and applied decisions (~${est:.2f} est); "
+              "re-run without these flags for the automatic pass")
+        return 1 if decision_failures else 0
+    if decision_failures:
+        return 1
+
     concepts, summaries = load_concepts(wiki), load_summaries(wiki)
     models = [m.strip() for m in args.merge_models.split(",") if m.strip()]
     # --dry-run is advertised as $0, so it may only use free models. cohere is
@@ -785,5 +928,10 @@ if __name__ == "__main__":
     ap.add_argument("--min-sources", type=int, default=4,
                     help="a concept citing fewer projects than this is thin; two concepts "
                          "that are both at or above it are never merged with each other")
+    ap.add_argument("--force-merge", action="append", metavar="LOSER:SURVIVOR",
+                    help="merge two concepts on a human decision, skipping the judge and the "
+                         "mature-mature guard. The retention gate still applies. Repeatable")
+    ap.add_argument("--rename", action="append", metavar="OLD:NEW",
+                    help="rename a concept slug and repoint every inbound wikilink. Repeatable")
     a = ap.parse_args()
     sys.exit(main(a.root, a))

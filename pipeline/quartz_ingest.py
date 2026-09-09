@@ -18,9 +18,94 @@ import shutil
 import subprocess
 import sys
 
+import evidence
+
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
-SKIP = {"AGENTS.md", "log.md"}
 FM = re.compile(r"^(---\n.*?\n---\n)", re.S)
+SKIP = {"AGENTS.md", "log.md"}
+# Every page says this, because a reader can land on any page. Rendered as an
+# Obsidian callout (Quartz styles these natively — no custom CSS), whose title
+# carries the computed evidence terms from pipeline/evidence.py when the page
+# has any.
+PROVENANCE = ("Compiled by pipeline from AI-conducted research reports; not reviewed "
+              "by a human scientist. See [[about|About This Wiki]].")
+
+
+# Landing pages for collections that have no index.md of their own. Without
+# these Quartz auto-generates a bare folder listing, which carries no
+# provenance callout — the one route by which a reader could reach a published
+# page that does not say how the wiki was made. Wording tracks about.md.
+COLLECTION_INDEX = {
+    "concepts": ("Concepts",
+                 "Recurring ideas, each accumulating evidence from every project "
+                 "in the corpus that speaks to it."),
+    "entities": ("Entities",
+                 "Specific named things: organisms, genes and pathways, compounds, "
+                 "methods, and datasets. Entities cited by only one project are not "
+                 "published."),
+    "topics": ("Topics",
+               "Hubs that cluster related concepts. Each opens with a "
+               "literature-context section whose citations were verified against "
+               "PubMed when it was written."),
+    "conflicts": ("Conflicts",
+                  "Places where projects in the corpus disagree, with the evidence "
+                  "on each side and the work that would resolve it."),
+    "summaries": ("Summaries",
+                  "One page per research project, linking to its raw report."),
+    "sources": ("Sources",
+                "The raw research reports the wiki is compiled from, unedited."),
+}
+
+
+def write_collection_indexes(dst: pathlib.Path) -> int:
+    """Give every collection a real landing page, so none is an untitled,
+    unattributed auto-listing. Quartz appends its file listing below this."""
+    n = 0
+    for slug, (title, blurb) in COLLECTION_INDEX.items():
+        d = dst / slug
+        if not d.is_dir() or (d / "index.md").exists():
+            continue
+        # No page count here: Quartz's folder page already renders "N items
+        # under this folder" directly below. A second count would be a second
+        # number to keep in step, saying the same thing.
+        (d / "index.md").write_text(
+            f"---\ntitle: {json.dumps(title)}\n---\n"
+            f"{provenance_block(None)}\n\n{blurb}\n",
+            encoding="utf-8")
+        n += 1
+    return n
+
+
+def provenance_block(evidence_terms: str | None) -> str:
+    title = f"Evidence · {evidence_terms}" if evidence_terms else "Provenance"
+    return f"> [!info] {title}\n> {PROVENANCE}"
+
+
+def promote_title(text: str) -> str:
+    """Move the page's H1 into `title:` frontmatter and drop it from the body.
+
+    Quartz titles a page from frontmatter and falls back to the slug, so
+    without this every page's heading, browser tab, explorer entry and social
+    card read `antimicrobial-resistance-fitness-cost` while the real title sat
+    below it in the body as a duplicate H1."""
+    m = re.search(r"^# +(.+?)[ \t]*$", text, re.M)
+    if not m:
+        return text
+    title = json.dumps(m.group(1).strip())
+    text = text[:m.start()] + text[m.end():].lstrip("\n")
+    fm = FM.match(text)
+    if fm:  # splice into the existing block, before its closing ---
+        return text[:fm.end() - 4] + f"title: {title}\n" + text[fm.end() - 4:]
+    return f"---\ntitle: {title}\n---\n" + text
+
+
+def insert_after_fm(text: str, block: str) -> str:
+    """Put a block at the very top of the body, under any frontmatter."""
+    m = FM.match(text)
+    at = m.end() if m else 0
+    return text[:at] + block + "\n\n" + text[at:]
+
+
 BIG_FIGURE = 1_500_000  # bytes; larger images are downscaled at publish
 
 
@@ -164,6 +249,7 @@ def main() -> None:
     targets.discard("index")
     pl_path = kb / "state" / "figures-placements.json"
     placements = json.loads(pl_path.read_text()) if pl_path.exists() else {}
+    conflict_srcs = evidence.conflict_sources(kb)
     shutil.rmtree(dst, ignore_errors=True)
 
     n = 0
@@ -187,25 +273,41 @@ def main() -> None:
             entry = placements.get(str(rel))
             if entry and entry.get("placements"):
                 text = splice_figures(text, entry, kb, dst)
+            # Count the evidence before linkify_src rewrites [src:] tags into
+            # <sub> links — after it there is nothing left to count.
+            ev = evidence.label(text, rel.parts[0], conflict_srcs)
             text = linkify_src(strip_dead_wikilinks(text, targets), known)
+            # Blocks that render directly under the title, in this order.
+            # Provenance on every page, plus — on synthesis pages — how much of
+            # the corpus stands behind it. The evidence line is computed, not
+            # judged: see pipeline/evidence.py on why it is not the v1 atlas's
+            # human `confidence:` field. The about page explains both, so it
+            # does not carry the banner pointing at itself.
+            head = [] if rel.stem == "about" else [provenance_block(ev)]
             # Summaries must lead to their raw report, and self-[src:] tags are
             # circular — point both at the sources/ page (the provenance hop
             # reviewers need).
             if rel.parts[0] == "summaries":
-                header_lines = []
+                nav = []
                 if (root / "sources" / src.name).exists():
                     raw = f"sources/{rel.stem}"
                     text = text.replace(f"[[summaries/{rel.stem}|", f"[[{raw}|")
-                    header_lines.append(f"> Raw report: [[{raw}|{rel.stem}]]")
+                    nav.append(f"> Raw report: [[{raw}|{rel.stem}]]")
                 feeds = uptake.get(re.sub(r"__REPORT$", "", rel.stem), [])
                 if feeds:
                     links = ", ".join(f"[[concepts/{c}]]" for c in feeds)
-                    header_lines.append(f"> Feeds into: {links}")
-                if header_lines:
-                    text = re.sub(r"^# .+$", lambda m: m.group(0) + "\n\n" + "\n".join(header_lines),
-                                  text, count=1, flags=re.M)
+                    nav.append(f"> Feeds into: {links}")
+                if nav:
+                    head.append("\n".join(nav))
+            # Title must move into frontmatter before the blocks go in, since
+            # this is what removes the H1 they would otherwise sit under.
+            text = promote_title(text)
+            if head:
+                text = insert_after_fm(text, "\n\n".join(head))
             out.write_text(text, encoding="utf-8")
             n += 1
+
+    n += write_collection_indexes(dst)
 
     images = kb / "wiki" / "sources" / "images"
     if images.is_dir():
