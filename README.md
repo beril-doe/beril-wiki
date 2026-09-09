@@ -59,11 +59,19 @@ unchanged corpus re-runs for $0.
 
 ## Publishing
 
-Pushing to `main` rebuilds and deploys the site
-([`.github/workflows/pages.yml`](.github/workflows/pages.yml)). The job is
-render-only — it needs no API key, because `wiki/`, `wiki-extra/` and every
-figure are committed. Refreshing the *content* is still a maintainer running
-`run_pipeline.sh` and committing the result.
+Pushing to `main` rebuilds and deploys the site to
+[beril-doe.org/beril-wiki](https://beril-doe.org/beril-wiki)
+([`.github/workflows/pages.yml`](.github/workflows/pages.yml)). Pull requests
+build without deploying, so the Linux-only parts of the render are checked
+before they reach the live site.
+
+The job is render-only — it needs no API key, because `wiki/`, `wiki-extra/`
+and every figure are committed. Refreshing the *content* is still a maintainer
+running `run_pipeline.sh` and committing the result.
+
+Before it deploys, the workflow runs `wiki_check --strict` over the corpus and
+asserts that every content page carries its provenance callout; either failing
+blocks publication.
 
 ## License
 
