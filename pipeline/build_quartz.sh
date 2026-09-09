@@ -65,8 +65,9 @@ c["theme"]["colors"]["darkMode"] = {           # workbench "observatory"
     "textHighlight": "rgba(167, 139, 250, 0.3)",
 }
 # Footer is on every page by construction, so it carries the things a reader
-# needs from anywhere: what this is, how to cite it, its licence, and the
-# observatory's reviewed knowledge surface next door.
+# needs from anywhere: what this is, how to cite it, its licence, and where the
+# reports come from. No link to the BERIL Atlas: this wiki is intended to take
+# its place, so sending readers there is the wrong direction of travel.
 for p in cfg["plugins"]:
     # CNAME is only for a per-repo custom domain. The org already serves Pages
     # from the verified domain beril-doe.org, so this project site is routed to
@@ -91,7 +92,6 @@ for p in cfg["plugins"]:
     if p["source"] == "@quartz-community/footer":
         p["options"]["links"] = {
             "About & how to cite": "https://" + base_url.rstrip("/") + "/about",
-            "BERIL Atlas": "https://beril.kbase.us/atlas",
             "BERIL Observatory": "https://beril.kbase.us/",
             "Source": "https://github.com/beril-doe/beril-wiki",
             "AGPL-3.0": "https://www.gnu.org/licenses/agpl-3.0.html",

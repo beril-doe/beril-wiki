@@ -120,6 +120,20 @@ concept graph, resolution 2.0, names cached in state to prevent churn; only
 changed hubs regenerate. All stages are hash-cached and idempotent — preserve
 that property in everything you touch.
 
+## Relationship to the v1 Atlas
+
+This wiki is intended to take the place of the BERIL Atlas at
+beril.kbase.us/atlas, so nothing published here links to it: sending readers to
+the surface being replaced is the wrong direction of travel. That intent is
+recorded here rather than on the site. It is a plan, with no date and no
+announcement behind it, and the public pages state only what is true today.
+Until it happens the Atlas is the reviewed artifact and this wiki is not, which
+is exactly the kind of claim the site must not get wrong.
+
+The Observatory link (beril.kbase.us) stays in the footer. That is where the
+reports come from, so it is provenance rather than a pointer to a competing
+surface.
+
 ## Models & environment
 
 - Gateway: CBORG (LBL). `OPENAI_API_KEY=$CBORG_API_KEY`,

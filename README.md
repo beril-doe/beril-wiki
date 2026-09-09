@@ -21,11 +21,6 @@ a reproducible pipeline.
 > anything, and prefer the underlying research report over the synthesis page
 > that aggregates it.
 
-The observatory's reviewed knowledge surface is the
-[BERIL Atlas](https://beril.kbase.us/atlas): claims, tensions and data products
-carrying human-assigned confidence and review dates. Where the two disagree,
-the Atlas is the reviewed artifact.
-
 ## Build it locally
 
 ```sh

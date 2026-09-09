@@ -92,18 +92,6 @@ cited by only one project are not published.
 Reported budget figures undercount actual spend, so the cost notes in the
 repository are lower bounds.
 
-## Relationship to the BERIL Atlas
-
-The [BERIL Atlas](https://beril.kbase.us/atlas) is the observatory's curated
-knowledge surface: claims, tensions, data-product inventories and research
-directions, each carrying a human-assigned confidence and review date. It is
-narrower, editorially controlled, and reviewed.
-
-This wiki takes the opposite trade. It covers the whole corpus, compiles
-automatically, and is not reviewed page by page. Where the two disagree, the
-Atlas is the reviewed artifact. Project reports and per-author project
-attributions appear in both.
-
 ## How to cite
 
 Cite the specific page and the date you read it, since pages change when the
