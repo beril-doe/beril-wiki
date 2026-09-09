@@ -65,11 +65,12 @@ def write_collection_indexes(dst: pathlib.Path) -> int:
         d = dst / slug
         if not d.is_dir() or (d / "index.md").exists():
             continue
-        count = sum(1 for f in d.glob("*.md") if f.stem != "index")
+        # No page count here: Quartz's folder page already renders "N items
+        # under this folder" directly below. A second count would be a second
+        # number to keep in step, saying the same thing.
         (d / "index.md").write_text(
             f"---\ntitle: {json.dumps(title)}\n---\n"
-            f"{provenance_block(None)}\n\n{blurb}\n\n"
-            f"{count} page{'s' if count != 1 else ''} in this collection.\n",
+            f"{provenance_block(None)}\n\n{blurb}\n",
             encoding="utf-8")
         n += 1
     return n

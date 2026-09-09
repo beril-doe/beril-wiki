@@ -26,6 +26,7 @@ import networkx as nx
 from litellm import completion
 
 import compile as C
+import quartz_ingest
 from wiki_check import source_ids
 
 HERE = pathlib.Path(__file__).parent
@@ -156,6 +157,42 @@ def strip_bad_src(page: str, valid: set[str]) -> str:
     return SRC_TAG.sub(repl, page)
 
 
+def corpus_stats(root: pathlib.Path) -> str:
+    """The corpus line, counted from the files, in code.
+
+    Counts PUBLISHED pages: quartz_ingest hides entities cited by only one
+    project, so the raw 336 was a number no reader could reach. DESIGN.md keeps
+    the catalog and log deterministic "in code, not by LLM" for the same reason
+    this line now is — a model transcribing a figure onto the home page is a
+    figure nothing verifies."""
+    summaries = list((root / "wiki" / "summaries").glob("*.md"))
+    digests = sum((root / "wiki" / "summaries" / f"{d}.md").exists()
+                  for d in ("discoveries", "pitfalls"))
+    hidden = quartz_ingest.single_source_entities(root)
+    entities = [f for f in (root / "wiki" / "entities").glob("*.md") if f.stem not in hidden]
+    return (f"{len(summaries) - digests} project reports + {digests} cross-project digests, "
+            f"{len(list((root / 'wiki' / 'concepts').glob('*.md')))} concepts, "
+            f"{len(entities)} entities, "
+            f"{len(list((root / 'wiki-extra' / 'topics').glob('*.md')))} topics")
+
+
+def refresh_corpus_line(path: pathlib.Path, stats: str) -> bool:
+    """Overwrite the '## Corpus' line with the counted truth. True if changed.
+
+    Runs on every invocation, not only when the home page is regenerated: the
+    page is rewritten only when a hub changes, so a concept merge left the old
+    figure on the front page (it said 93 concepts against 92 real ones)."""
+    if not path.exists():
+        return False
+    text = path.read_text(encoding="utf-8")
+    new = re.sub(r"(^## Corpus\s*\n\n).*?(?=\n)", lambda m: m.group(1) + stats,
+                 text, count=1, flags=re.M | re.S)
+    if new == text:
+        return False
+    path.write_text(new, encoding="utf-8")
+    return True
+
+
 def main() -> int:
     failures: list[str] = []
     src_texts = source_ids(ROOT)
@@ -273,13 +310,13 @@ def main() -> int:
             any_changed = True
             print(f"  removed stale topics/{stale.stem}.md")
     if not any_changed and (OUT / "index.md").exists():
-        print("home unchanged; done")
+        if refresh_corpus_line(OUT / "index.md", corpus_stats(ROOT)):
+            print("home unchanged; corpus counts refreshed")
+        else:
+            print("home unchanged; done")
         return 1 if failures else 0
 
-    n_sum = len(list((ROOT / "wiki/summaries").glob("*.md")))
-    n_digests = sum((ROOT / "wiki/summaries" / f"{d}.md").exists() for d in ("discoveries", "pitfalls"))
-    stats = (f"{n_sum - n_digests} project reports + {n_digests} cross-project digests, "
-             f"{len(concepts)} concepts, {len(entities)} entities, {len(hubs)} topics")
+    stats = corpus_stats(ROOT)
     hub_list = "\n".join(f"- [[topics/{slug}|{t}]] ({n} concepts): {lead}" for t, slug, lead, n in hubs)
     home = llm(
         "Write the HOME page (markdown, H1 title 'BERIL Knowledge Wiki') for this research "
@@ -292,6 +329,8 @@ def main() -> int:
         "[[summaries/pitfalls|Pitfalls digest]], [[authors/index|Authors]], and [[data/index|Data collections]]. "
         f"Base every topic description on these leads, do not invent findings:\n\n{hub_list}")
     (OUT / "index.md").write_text(home.strip() + "\n", encoding="utf-8")
+    # The model was given the stats, but it must not own them.
+    refresh_corpus_line(OUT / "index.md", stats)
     print(f"wrote index.md; {stats}")
     for f in failures:
         print(f"  [ERROR] rejected: {f}")

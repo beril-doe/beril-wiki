@@ -18,7 +18,7 @@ Read the wiki through its **topics**, which are the main entry points into recur
 
 ## Corpus
 
-73 project reports + 2 cross-project digests, 93 concepts, 336 entities, 9 topics
+73 project reports + 2 cross-project digests, 92 concepts, 139 entities, 9 topics
 
 ## Browse
 
