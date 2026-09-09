@@ -1,35 +1,39 @@
 # About This Wiki
 
-The BERIL Knowledge Wiki is compiled, not written. Every page here was generated
-by a pipeline from the BERIL Research Observatory's corpus of AI-conducted
-microbial-biology research reports. Not all of that research has been reviewed
-by a scientist, and no page here was reviewed as a whole before publication, so
-do not assume that any particular claim was checked. Read the rest of this page
-before citing anything here.
+This is an AI-generated wiki. A pipeline built every page on this site from the
+BERIL Research Observatory's corpus of AI-conducted microbial-biology research
+reports.
+
+It is partially reviewed. Scientists have checked some of the research
+underneath these pages, but no one reviewed the pages themselves before they
+went up, and nothing marks which claims fall on which side of that line. Do not
+assume anyone checked a particular claim. Read the rest of this page before you
+cite anything here.
 
 ## What you are reading
 
-The corpus is 75 research reports produced by AI agents working over BERDL
-(KBase) data: pangenomes, RB-TnSeq fitness assays, biochemistry, and
-environmental metadata. The pipeline summarises each report, plans which
-synthesis pages it touches, and merge-rewrites those pages, so that a claim
-accumulates evidence across projects instead of being restated once per project.
+AI agents produced the 75 reports in this corpus by working over BERDL (KBase)
+data: pangenomes, RB-TnSeq fitness assays, biochemistry, and environmental
+metadata. For each report the pipeline writes a summary, works out which
+synthesis pages it belongs on, and rewrites those pages to absorb it. A claim
+therefore gathers evidence from every project that supports it, rather than
+appearing once per project.
 
 **Summaries.** One page per research project, linking to its raw report.
 
 **Sources.** The raw reports themselves, unedited.
 
-**Concepts.** Recurring ideas, each accumulating evidence from every project
-that speaks to it.
+**Concepts.** Recurring ideas, each gathering evidence from every project that
+speaks to it.
 
 **Entities.** Specific named things: organisms, genes and pathways, compounds,
 methods, and datasets.
 
-**Topics.** Hubs that cluster related concepts. Each opens with a
-literature-context section whose citations were verified against PubMed.
+**Topics.** Hubs that group related concepts. Each opens with a
+literature-context section whose citations were checked against PubMed.
 
 **Conflicts.** Places where projects in the corpus disagree, with the evidence
-on each side and the work that would resolve it.
+on each side and the work that would settle it.
 
 ## What the evidence label means
 
@@ -42,55 +46,55 @@ Every part of it is counted, not judged:
 | Term | Means |
 | --- | --- |
 | *N source projects* | distinct projects the page's prose actually cites |
-| *single-source* | one project, so the claim has not been corroborated within this corpus |
+| *single-source* | one project, so nothing here corroborates the claim |
 | *corroborated* | 2 or 3 projects |
 | *well corroborated* | 4 or more projects |
 | *conflict on record* | the corpus records a disagreement spanning these same sources |
 | *literature context* | the page opens with a literature-context section |
 
-**It is not a confidence rating and not a review status.** "Well corroborated"
-means several projects in this corpus point the same way. It does not mean the
-finding is correct, and it does not mean anyone checked. Corroboration inside a
-single corpus that shares data sources, tooling and methods is weaker evidence
-than it looks. Several of the conflict pages exist precisely because
-same-direction results turned out to rest on a shared confound.
+**This is not a confidence rating and not a review status.** "Well corroborated"
+means several projects here point the same way. It does not mean the finding is
+correct, and it does not mean anyone checked. Projects in this corpus share data
+sources, tooling and methods, so agreement between them proves less than it
+appears to. Several conflict pages exist because results that pointed the same
+way turned out to rest on one shared confound.
 
 ## What is checked, and what is not
 
-Automatically, on every build, and blocking publication:
+Every build checks these, and a failure stops publication:
 
 - Every `[src:]` citation resolves to a real source document.
 - Every number in a cited paragraph appears in a source that paragraph cites.
-  Pages that fail are re-run against their own sources, and rejected if they
-  fail again.
-- Every `[[wikilink]]` resolves. Dead ones are downgraded to plain text.
+  The pipeline re-runs a page that fails against its own sources, and rejects
+  the page if it fails twice.
+- Every `[[wikilink]]` resolves. Dead ones become plain text.
 
-Not checked by anything:
+Nothing checks these:
 
 - Whether a finding is scientifically correct.
 - Whether a statistical method suited its data.
 - Whether the underlying research report reached a sound conclusion.
 - Whether a synthesis fairly represents the projects it draws on.
 
-Checked once, when the page is written, but not re-checked at publication:
-literature-context citations are verified against PubMed by PMID at that point.
-The *literature context* term only records that such a section exists.
+One check runs when a page is written and not again at publication: the pipeline
+verifies literature-context citations against PubMed by PMID at that point. The
+*literature context* term only records that such a section exists.
 
-Numeric fidelity is a real guarantee and a narrow one. It proves a figure
-appears in a source the paragraph cites. It compares figures as tokens, so it
-misses a flipped sign or a changed unit, and it ignores small integers. It never
-shows the source was right.
+The numeric check is real, and narrow. It proves a figure appears in a source
+the paragraph cites. It compares figures as text, so it misses a flipped sign or
+a changed unit, and it skips small integers. It never shows the source was right.
 
 ## Known limitations
 
-Entity pages are deduplicated by identity: a shared canonical name, a declared
-alias, or a shared external identifier. Never by similarity, which over these
-pages cannot tell two genes of one organism apart. Two entities that are the
-same thing under names sharing none of those signals go undetected. Entities
-cited by only one project are not published.
+The pipeline merges two entity pages only when something identifies them as the
+same entity: a shared canonical name, a declared alias, or a shared external
+identifier. It never merges on similarity, which over these pages cannot tell
+two genes of one organism apart. Two pages naming the same thing without any of
+those signals stay separate. Entities that only one project cites do not appear
+here at all.
 
-Reported budget figures undercount actual spend, so the cost notes in the
-repository are lower bounds.
+Reported budget figures undercount what a run actually spends, so the cost notes
+in the repository are lower bounds.
 
 ## How to cite
 
@@ -107,8 +111,8 @@ For example:
 > https://beril-doe.org/beril-wiki/concepts/antimicrobial-resistance-fitness-cost
 > (accessed 2026-09-09).
 
-For a finding, prefer citing the underlying research report, linked from every
-summary page, over the synthesis page that aggregates it.
+For a finding, cite the underlying research report rather than the synthesis
+page that aggregates it. Every summary page links to its report.
 
 ## License
 

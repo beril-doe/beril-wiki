@@ -9,17 +9,16 @@ a reproducible pipeline.
 **Read it at [beril-doe.org/beril-wiki](https://beril-doe.org/beril-wiki)**
 · [About & how to cite](https://beril-doe.org/beril-wiki/about)
 
-> These pages are compiled by software from AI-conducted research reports and
-> are **not peer-reviewed**. Some of the underlying work has been reviewed by
-> the researchers behind it; the compiled pages have not been checked as a
-> whole, so do not assume any particular claim was. Citations and numeric
-> fidelity are machine-verified, and
-> narrowly: a figure is checked to appear in a source the paragraph cites, as a
-> token, so a flipped sign or a changed unit passes. Scientific correctness is
-> not checked at all. Read
+> **An AI-generated wiki, partially reviewed.** A pipeline built these pages
+> from AI-conducted research reports. Scientists have checked some of that
+> underlying research; no one reviewed the pages themselves, and nothing marks
+> which claims fall on which side. Citations and numbers are machine-verified,
+> and narrowly: a figure is checked to appear in a source the paragraph cites,
+> as text, so a flipped sign or a changed unit passes. Nothing checks whether a
+> finding is correct. Read
 > [About This Wiki](https://beril-doe.org/beril-wiki/about) before citing
-> anything, and prefer the underlying research report over the synthesis page
-> that aggregates it.
+> anything, and cite the underlying research report rather than the synthesis
+> page that aggregates it.
 
 ## Build it locally
 

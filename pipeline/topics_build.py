@@ -32,7 +32,11 @@ from wiki_check import source_ids
 HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
 OUT = ROOT / "wiki-extra"
-HUB_MODEL = os.environ.get("WIKI_MODEL", "openai/gpt-5.6-luna")
+HUB_MODEL = os.environ.get("HUB_MODEL", os.environ.get("WIKI_MODEL", "openai/gpt-5.6-luna"))
+# The home page is one call, and it is the page every reader lands on first, so
+# it is worth a stronger model than the bulk stages: a few cents against prose
+# that frames the whole site. Override like any other stage.
+HOME_MODEL = os.environ.get("HOME_MODEL", "openai/claude-opus-5")
 MIN_CLUSTER = 3
 FORCE = "--force" in sys.argv
 PER_PAGE_CHARS = 7000  # truncate very long concept pages in hub context
@@ -121,9 +125,9 @@ def cluster_concepts(concepts: dict[str, dict]) -> list[list[str]]:
     return [sorted(c) for c in sorted(big, key=len, reverse=True)]
 
 
-def llm(prompt: str, system: str = "") -> str:
+def llm(prompt: str, system: str = "", model: str | None = None) -> str:
     resp = completion(
-        model=HUB_MODEL,
+        model=model or HUB_MODEL,
         api_key=os.environ["OPENAI_API_KEY"],
         base_url=os.environ.get("OPENAI_BASE_URL", "https://api.cborg.lbl.gov"),
         messages=([{"role": "system", "content": system}] if system else [])
@@ -193,8 +197,69 @@ def refresh_corpus_line(path: pathlib.Path, stats: str) -> bool:
     return True
 
 
+def write_home(hubs: list[tuple], stats: str) -> None:
+    hub_list = "\n".join(f"- [[topics/{slug}|{t}]] ({n} concepts): {lead}" for t, slug, lead, n in hubs)
+    style = (
+        "\n\nSTYLE, follow exactly:\n"
+        "- Plain, concrete English. Active voice with a clear subject: 'the pipeline "
+        "compiles X', never 'X is compiled'.\n"
+        "- No em dashes or en dashes anywhere. Use a comma, colon, or a second sentence.\n"
+        "- No inflated framing: nothing 'serves as', 'stands as', 'plays a key role', "
+        "'underscores', 'highlights', 'showcases', or 'reflects a broader' anything.\n"
+        "- No sales words: vibrant, rich, powerful, comprehensive, seamless, robust.\n"
+        "- Do not force ideas into groups of three.\n"
+        "- Say what a thing is, not what it represents. Prefer 'is' and 'has' over "
+        "'serves as' and 'boasts'.\n"
+        "- No closing flourish about what the future holds. End on the last real fact.")
+    home = llm(
+        "Write the HOME page (markdown, H1 title 'BERIL Knowledge Wiki') for this research "
+        "wiki: 2-3 paragraphs introducing the BERIL Research Observatory corpus (AI-conducted "
+        "microbial-biology research over the KBase BER Data Lakehouse) and how to read the wiki "
+        "(topics are the entry points; concepts/entities/summaries are the reference layers), "
+        f"then a '## Topics' section presenting each topic with its one-line hook as a wikilink "
+        f"list, then a '## Corpus' line with these stats: {stats}, then a '## Browse' section "
+        "linking [[catalog|Full page catalog]], [[summaries/discoveries|Discoveries digest]], "
+        "[[summaries/pitfalls|Pitfalls digest]], [[authors/index|Authors]], and [[data/index|Data collections]]. "
+        f"Base every topic description on these leads, do not invent findings:\n\n{hub_list}"
+        + style, model=HOME_MODEL)
+    (OUT / "index.md").write_text(home.strip() + "\n", encoding="utf-8")
+    # The model was given the stats, but it must not own them.
+    refresh_corpus_line(OUT / "index.md", stats)
+    print(f"wrote index.md; {stats}")
+
+
+def hubs_from_disk(out: pathlib.Path) -> list[tuple]:
+    """The published hubs, read from the pages rather than re-derived.
+
+    Regenerating only the home page must not re-cluster: clustering depends on
+    the current concept set, so any run after a concept merge produces a
+    different hub set and rewrites pages nobody asked to change. This reads
+    what is already on disk."""
+    hubs = []
+    for f in sorted(out.glob("topics/*.md")):
+        if f.stem == "index":
+            continue
+        text = f.read_text(encoding="utf-8", errors="replace")
+        title = re.search(r"^# (.+)$", text, re.M)
+        lead = re.search(r"^# .+?\n+(.+?)(?:\n\n|\n#)", text, re.S)
+        members = len(set(re.findall(r"\[\[concepts/([\w.-]+)", text)))
+        hubs.append((title.group(1).strip() if title else f.stem, f.stem,
+                     (lead.group(1).strip() if lead else "")[:400], members))
+    return hubs
+
+
 def main() -> int:
     failures: list[str] = []
+    # --home-only rewrites index.md from the hubs already published and touches
+    # nothing else. Used to refresh the landing page's prose without letting a
+    # re-clustering run churn every hub.
+    if "--home-only" in sys.argv:
+        hubs = hubs_from_disk(OUT)
+        if not hubs:
+            print("topics_build: no hubs on disk; run the full stage first")
+            return 1
+        write_home(hubs, corpus_stats(ROOT))
+        return 0
     src_texts = source_ids(ROOT)
     targets = C.wikilink_targets(ROOT)
     concepts = {p.stem: parse_page(p) for p in sorted((ROOT / "wiki/concepts").glob("*.md"))}
@@ -316,22 +381,7 @@ def main() -> int:
             print("home unchanged; done")
         return 1 if failures else 0
 
-    stats = corpus_stats(ROOT)
-    hub_list = "\n".join(f"- [[topics/{slug}|{t}]] ({n} concepts): {lead}" for t, slug, lead, n in hubs)
-    home = llm(
-        "Write the HOME page (markdown, H1 title 'BERIL Knowledge Wiki') for this research "
-        "wiki: 2-3 paragraphs introducing the BERIL Research Observatory corpus (AI-conducted "
-        "microbial-biology research over the KBase BER Data Lakehouse) and how to read the wiki "
-        "(topics are the entry points; concepts/entities/summaries are the reference layers), "
-        f"then a '## Topics' section presenting each topic with its one-line hook as a wikilink "
-        f"list, then a '## Corpus' line with these stats: {stats}, then a '## Browse' section "
-        "linking [[catalog|Full page catalog]], [[summaries/discoveries|Discoveries digest]], "
-        "[[summaries/pitfalls|Pitfalls digest]], [[authors/index|Authors]], and [[data/index|Data collections]]. "
-        f"Base every topic description on these leads, do not invent findings:\n\n{hub_list}")
-    (OUT / "index.md").write_text(home.strip() + "\n", encoding="utf-8")
-    # The model was given the stats, but it must not own them.
-    refresh_corpus_line(OUT / "index.md", stats)
-    print(f"wrote index.md; {stats}")
+    write_home(hubs, corpus_stats(ROOT))
     for f in failures:
         print(f"  [ERROR] rejected: {f}")
     return 1 if failures else 0

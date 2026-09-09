@@ -29,34 +29,43 @@ SKIP = {"AGENTS.md", "log.md"}
 # has any.
 # One line, no embedded newline: the callout prefixes each line with "> ", so a
 # wrapped string would put its tail outside the blockquote.
-PROVENANCE = ("Compiled by software from AI-conducted research reports. Not all of "
-              "this material has been reviewed by a scientist. "
-              "See [[about|About This Wiki]].")
+# Leads with what the page is, then qualifies it. Two negative clauses ("no one
+# reviewed the page" and "a scientist has checked only some of the research")
+# said overlapping things and read as a disclaimer stack; "partially reviewed"
+# carries the same fact in two words. The About page defines what "partially"
+# covers, which is the right split: the badge is short, the About page precise.
+PROVENANCE = ("AI-generated wiki from AI-conducted research reports. Partially "
+              "reviewed by scientists. See [[about|About This Wiki]].")
+
+
+def provenance_block(evidence_terms: str | None) -> str:
+    title = f"Evidence · {evidence_terms}" if evidence_terms else "Provenance"
+    return f"> [!info] {title}\n> {PROVENANCE}"
 
 
 # Landing pages for collections that have no index.md of their own. Without
 # these Quartz auto-generates a bare folder listing, which carries no
-# provenance callout — the one route by which a reader could reach a published
+# provenance callout: the one route by which a reader could reach a published
 # page that does not say how the wiki was made. Wording tracks about.md.
 COLLECTION_INDEX = {
     "concepts": ("Concepts",
-                 "Recurring ideas, each accumulating evidence from every project "
+                 "Recurring ideas. Each page gathers evidence from every project "
                  "in the corpus that speaks to it."),
     "entities": ("Entities",
                  "Specific named things: organisms, genes and pathways, compounds, "
-                 "methods, and datasets. Entities cited by only one project are not "
-                 "published."),
+                 "methods, and datasets. Entities that only one project cites do "
+                 "not appear here."),
     "topics": ("Topics",
-               "Hubs that cluster related concepts. Each opens with a "
-               "literature-context section whose citations were verified against "
-               "PubMed when it was written."),
+               "Hubs that group related concepts. Each opens with a "
+               "literature-context section whose citations were checked against "
+               "PubMed when the pipeline wrote it."),
     "conflicts": ("Conflicts",
                   "Places where projects in the corpus disagree, with the evidence "
-                  "on each side and the work that would resolve it."),
+                  "on each side and the work that would settle it."),
     "summaries": ("Summaries",
                   "One page per research project, linking to its raw report."),
     "sources": ("Sources",
-                "The raw research reports the wiki is compiled from, unedited."),
+                "The raw research reports this wiki is compiled from, unedited."),
 }
 
 
@@ -78,10 +87,6 @@ def write_collection_indexes(dst: pathlib.Path) -> int:
         n += 1
     return n
 
-
-def provenance_block(evidence_terms: str | None) -> str:
-    title = f"Evidence · {evidence_terms}" if evidence_terms else "Provenance"
-    return f"> [!info] {title}\n> {PROVENANCE}"
 
 
 # A markdown link whose target is a path in the observatory checkout, not a page

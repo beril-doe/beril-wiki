@@ -76,27 +76,37 @@ jobs:
       # emits a noindex meta-refresh at the original casing. Those stubs only
       # exist as separate files on a case-sensitive filesystem, which is why
       # this check can only be got right on Linux.
+      # The disclaimer is injected into Markdown inputs, so any route Quartz
+      # generates on its own publishes without it. Exempt: 404 (an error page),
+      # about.html (which IS the explanation), and Quartz's redirect stubs,
+      # which are meta-refreshes rather than pages.
+      #
+      # The marker is DERIVED from the constant the pipeline injects, not typed
+      # here. Hand-copying it meant every reword silently disarmed the gate:
+      # rewording the sentence once left the check hunting for a phrase no page
+      # contained any more, which fails every page rather than passing them, but
+      # the reverse is just as possible.
       - name: Every published page states its provenance
         run: |
           uv run --project . python - <<'PY'
           import pathlib, sys
-          # The stable core of the disclaimer. Matching the whole sentence means a
-          # reword silently disarms the gate; matching this much still cannot
-          # pass on a page that carries no disclaimer at all.
-          PHRASE = "reviewed by a scientist"
+          sys.path.insert(0, "pipeline")
+          from quartz_ingest import PROVENANCE
+          marker = PROVENANCE.split(".")[0].strip()   # first sentence, rendered verbatim
+          assert len(marker) > 20, marker
           missing, checked = [], 0
           for f in sorted(pathlib.Path("quartz/public").rglob("*.html")):
               text = f.read_text(errors="replace")
               if 'http-equiv="refresh"' in text or f.name in ("404.html", "about.html"):
                   continue
               checked += 1
-              if PHRASE not in text:
+              if marker not in text:
                   missing.append(str(f))
           if missing:
-              print("::error::pages published without the provenance callout:")
-              print("\n".join(missing))
+              print(f"::error::{len(missing)} page(s) published without the provenance callout")
+              print("\n".join(missing[:20]))
               sys.exit(1)
-          print(f"all {checked} content pages carry the provenance callout")
+          print(f"all {checked} content pages carry: {marker!r}")
           PY
 
       - uses: actions/upload-pages-artifact@v3
