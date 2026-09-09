@@ -97,8 +97,15 @@ repository are lower bounds.
 Cite the specific page and the date you read it, since pages change when the
 corpus does.
 
-> BERIL Project. *BERIL Knowledge Wiki: <page title>*. Lawrence Berkeley
-> National Laboratory. <page URL> (accessed <date>).
+> BERIL Project. *BERIL Knowledge Wiki: PAGE TITLE*. Lawrence Berkeley National
+> Laboratory. PAGE URL (accessed DATE).
+
+For example:
+
+> BERIL Project. *BERIL Knowledge Wiki: Fitness costs and conditional benefits
+> of antimicrobial-resistance genes*. Lawrence Berkeley National Laboratory.
+> https://beril-doe.org/beril-wiki/concepts/antimicrobial-resistance-fitness-cost
+> (accessed 2026-09-09).
 
 For a finding, prefer citing the underlying research report, linked from every
 summary page, over the synthesis page that aggregates it.

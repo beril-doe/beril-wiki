@@ -83,6 +83,30 @@ def provenance_block(evidence_terms: str | None) -> str:
     return f"> [!info] {title}\n> {PROVENANCE}"
 
 
+# A markdown link whose target is a path in the observatory checkout, not a page
+# in this wiki: notebooks, ../schemas/, ../references. The raw reports are
+# written to sit inside that repository, so published standalone these lead
+# nowhere. Same rule the wikilinks already get: a link that goes nowhere becomes
+# plain text.
+MD_LINK = re.compile(r"\[([^\]]+)\]\((?!https?://|mailto:|#)([^)]+)\)")
+# Rank notation in prose, which Obsidian markdown reads as a tag: the reports
+# write "the #1-ranked gene", which published a /tags/1-ranked route. Tag pages
+# are off, so the link now dangles; escape the hash so it is never a link.
+PSEUDO_TAG = re.compile(r"(?<![\w&])#(?=\d)")
+
+
+def strip_dead_markdown_links(text: str, page_dir: pathlib.Path, dst: pathlib.Path) -> str:
+    """Downgrade markdown links whose target is not published, keeping the label."""
+    def repl(m: re.Match) -> str:
+        label, target = m.group(1), m.group(2).split("#")[0].strip()
+        if not target:
+            return m.group(0)
+        if (page_dir / target).exists() or (dst / target.lstrip("/")).exists():
+            return m.group(0)
+        return label
+    return MD_LINK.sub(repl, text)
+
+
 def promote_title(text: str) -> str:
     """Move the page's H1 into `title:` frontmatter and drop it from the body.
 
@@ -272,6 +296,11 @@ def main() -> None:
             text = src.read_text(encoding="utf-8", errors="replace")
             if rel.parts[0] == "sources" and rel.stem.endswith("__REPORT"):
                 text = rewrite_source_figures(text, re.sub(r"__REPORT$", "", rel.stem), kb, dst)
+            # Report prose carries links into the observatory checkout and
+            # rank notation Obsidian reads as tags; neither survives publishing.
+            if rel.parts[0] in ("sources", "summaries"):
+                text = strip_dead_markdown_links(text, (dst / rel).parent, dst)
+                text = PSEUDO_TAG.sub(r"\\#", text)
             entry = placements.get(str(rel))
             if entry and entry.get("placements"):
                 text = splice_figures(text, entry, kb, dst)
