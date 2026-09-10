@@ -12,6 +12,11 @@ type Frontmatter = { title?: string; type?: string; description?: string } | und
 
 export const RELS = ["supports", "refines", "contradicts"] as const
 export type Rel = (typeof RELS)[number]
+// The pipeline's vocabulary is exactly these three words, but the prose often
+// compounds them: "supports and refines", "further supports". A negated word
+// is not a relation stated, so "supports rather than contradicts" states one.
+const REL_WORD = /\b(supports|refines|contradicts)\b/g
+const REL_NEGATED = /\b(?:rather than|not|instead of)\s+(?:supports|refines|contradicts)\b/g
 
 export interface Kind {
   label: string
@@ -211,12 +216,17 @@ export function walk(root: Root): Walk {
     const inner = (n: Element) => {
       for (const c of n.children) {
         if (!isEl(c)) continue
-        if (c.tagName === "strong" && c.children.length === 1) {
-          const w = text(c).trim() as Rel
-          if (RELS.includes(w)) {
-            addClass(c, "rel", `rel-${w}`)
-            out.rels[w]++
-            rels.push(w)
+        if (c.tagName === "strong") {
+          // Every relation word in the phrase counts; the phrase takes the
+          // colour of the first.
+          const found = text(c).toLowerCase().replace(REL_NEGATED, "").match(REL_WORD) as Rel[] | null
+          if (found && found.length > 0) {
+            const words = [...new Set(found)]
+            addClass(c, "rel", `rel-${words[0]}`)
+            for (const w of words) {
+              out.rels[w]++
+              rels.push(w)
+            }
             continue
           }
         }
