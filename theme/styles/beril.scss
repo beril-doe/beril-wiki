@@ -1,0 +1,1200 @@
+// BERIL wiki theme. Copied to quartz/styles/custom.scss by
+// pipeline/build_quartz.sh, where Quartz compiles it unlayered so it wins
+// over the base styles. Markup comes from theme/src (the page frame).
+//
+// Colour rules, kept deliberately narrow so each hue means one thing:
+//   topic hues (--t1..--t9)   graph nodes, topic dots, heatmap rows only
+//   page-type colours         record band and entity tags only
+//   relation colours          evidence strip, relation words, evidence list
+
+:root {
+  // Quartz emits --light/--dark/--gray/... from the config palette; alias them
+  // so stock components (search, callouts, popovers, TOC) share one palette.
+  --bg: var(--light);
+  --ink: var(--dark);
+  --ink-2: var(--darkgray);
+  --mute: var(--gray);
+  --line: var(--lightgray);
+  --card: #ffffff;
+  --line-2: #b9c0c6;
+  --heat: #0e5a6b;
+  --concept: #1e2226;
+  --organism: #2f7d4f;
+  --compound: #b07a12;
+  --method: #2c63c7;
+  --dataset: #7b3fa0;
+  --gene: #c2553b;
+  --conflict: #b3261e;
+  --supports: #2f7d4f;
+  --refines: #b07a12;
+  --contradicts: #b3261e;
+  --t1: #5b5bd6;
+  --t2: #1f8a70;
+  --t3: #c77d0a;
+  --t4: #c2455e;
+  --t5: #2f6fd6;
+  --t6: #6b9e1f;
+  --t7: #8e44ad;
+  --t8: #d2691e;
+  --t9: #1c9c9c;
+  --serif: var(--headerFont);
+  --sans: var(--bodyFont);
+  --mono: var(--codeFont);
+}
+
+:root[saved-theme="dark"] {
+  --card: #1b1f23;
+  --line-2: #3e464d;
+  --heat: #4fb3c9;
+  --concept: #e8eaec;
+  --organism: #5fbf85;
+  --compound: #e0a93a;
+  --method: #7fa6f0;
+  --dataset: #b98ae0;
+  --gene: #f08a6e;
+  --conflict: #f07167;
+  --supports: #5fbf85;
+  --refines: #e0a93a;
+  --contradicts: #f07167;
+  --t1: #8585f0;
+  --t2: #3fb596;
+  --t3: #e9a23b;
+  --t4: #e56c85;
+  --t5: #6a9bf2;
+  --t6: #93c64a;
+  --t7: #b47acf;
+  --t8: #ee8c4a;
+  --t9: #3dc2c2;
+}
+
+// Base-layer neutralisation: the default frame's grid and link pills.
+.page[data-frame="beril"] {
+  max-width: none;
+  margin: 0;
+  & > #quartz-body {
+    display: block;
+    // Every section below sets its own gutter; the base layer's padding here
+    // would add a second one and shift the centred maxima off centre.
+    padding: 0;
+  }
+}
+html {
+  font-size: 16.5px;
+  scroll-behavior: smooth;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.55;
+  margin: 0;
+}
+a {
+  color: var(--method);
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  &.internal {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+  }
+}
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--serif);
+  font-weight: 400;
+  color: var(--ink);
+}
+
+// Thin, quiet scrollbars. Mirrors the BERIL workbench .beril-scroll.
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--mute) 40%, transparent);
+}
+@supports (scrollbar-width: thin) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+  }
+}
+
+// ---- top bar ---------------------------------------------------------------
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding: 12px 40px;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  .wordmark {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    color: var(--ink);
+    white-space: nowrap;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  nav {
+    display: flex;
+    gap: 18px;
+    font-size: 0.9rem;
+    overflow-x: auto;
+    // Without this the nav refuses to shrink below its content and pushes the
+    // whole page sideways on a narrow screen instead of scrolling itself.
+    min-width: 0;
+    a {
+      color: var(--ink-2);
+      white-space: nowrap;
+      padding: 4px 0;
+      border-bottom: 1px solid transparent;
+      &[aria-current="page"] {
+        color: var(--ink);
+        border-bottom-color: var(--ink);
+      }
+      &:hover {
+        text-decoration: none;
+        color: var(--ink);
+      }
+    }
+  }
+  .tools {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  // Stock search button, restyled as a quiet field.
+  .search {
+    max-width: 300px;
+    & > .search-button {
+      background: var(--bg);
+      border: 1px solid var(--line-2);
+      border-radius: 0;
+      color: var(--mute);
+      padding: 5px 10px;
+      width: 240px;
+      justify-content: flex-start;
+      gap: 8px;
+      font-size: 0.88rem;
+      font-family: var(--sans);
+      svg {
+        width: 15px;
+        height: 15px;
+        margin: 0;
+        .search-path {
+          stroke: var(--mute);
+        }
+      }
+      p {
+        margin: 0;
+        color: var(--mute);
+      }
+    }
+  }
+}
+
+// ---- record page -----------------------------------------------------------
+// Three widths. Wide: contents and graph left, prose, evidence right.
+// Middle: both rails share the right column, contents first. Narrow (see the
+// media query at the end): one column, contents above the prose, evidence
+// below it.
+.page-grid {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 36px 40px 80px;
+  display: grid;
+  grid-template-columns: minmax(0, 68ch) 300px;
+  column-gap: 56px;
+  justify-content: center;
+  .nav-rail {
+    grid-column: 2;
+    grid-row: 2;
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+  .prose {
+    grid-column: 1;
+    grid-row: 2 / span 2;
+  }
+  .evidence-rail {
+    grid-column: 2;
+    grid-row: 3;
+  }
+}
+@media (min-width: 1360px) {
+  .page-grid {
+    max-width: 1480px;
+    grid-template-columns: 260px minmax(0, 66ch) 300px;
+    column-gap: 48px;
+    .nav-rail {
+      grid-column: 1;
+      grid-row: 2;
+      position: sticky;
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+    }
+    .prose {
+      grid-column: 2;
+      grid-row: 2;
+    }
+    .evidence-rail {
+      grid-column: 3;
+      grid-row: 2;
+    }
+  }
+}
+.record {
+  grid-column: 1 / -1;
+  background: var(--card);
+  border: 1px solid var(--line-2);
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  margin-bottom: 34px;
+  .band {
+    background: var(--line-2);
+  }
+  &.kind-concept .band {
+    background: var(--concept);
+  }
+  &.kind-topic .band {
+    background: var(--ink);
+  }
+  &.kind-conflict .band {
+    background: var(--conflict);
+  }
+  &.kind-organism .band {
+    background: var(--organism);
+  }
+  &.kind-compound .band {
+    background: var(--compound);
+  }
+  &.kind-method .band {
+    background: var(--method);
+  }
+  &.kind-dataset .band {
+    background: var(--dataset);
+  }
+  &.kind-gene .band {
+    background: var(--gene);
+  }
+  &.kind-report .band {
+    background: var(--mute);
+  }
+  &.kind-author .band {
+    background: var(--ink-2);
+  }
+  .body {
+    padding: 22px 28px 20px;
+    min-width: 0;
+  }
+  h1 {
+    font-size: 2.5rem;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 0 16px;
+    max-width: 34ch;
+    overflow-wrap: anywhere;
+  }
+}
+.kind {
+  font-size: 0.88rem;
+  color: var(--ink-2);
+  margin: 0 0 6px;
+  b {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .topic {
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-2);
+    &:hover {
+      text-decoration: none;
+      border-bottom-color: var(--ink);
+    }
+  }
+  .dot {
+    margin: 0 6px 0 2px;
+  }
+}
+.dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--c, var(--line-2));
+  margin-right: 8px;
+  vertical-align: 0;
+}
+.evid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 18px;
+  align-items: center;
+  font-size: 0.86rem;
+  color: var(--ink-2);
+  margin: 0;
+  dt {
+    color: var(--mute);
+  }
+  dd {
+    margin: 0;
+    min-width: 0;
+  }
+  a {
+    color: var(--ink-2);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--line-2);
+  }
+}
+.stripc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  align-items: center;
+  i {
+    display: block;
+    width: 34px;
+    height: 14px;
+    background: var(--line);
+    &.p {
+      background: var(--ink);
+    }
+    &.s {
+      background: var(--supports);
+    }
+    &.r {
+      background: var(--refines);
+    }
+    &.c {
+      background: var(--contradicts);
+    }
+  }
+  .more {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--mute);
+    margin-left: 4px;
+  }
+}
+.rels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  span::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 6px;
+    vertical-align: -1px;
+    background: var(--line-2);
+  }
+  .rel-supports::before {
+    background: var(--supports);
+  }
+  .rel-refines::before {
+    background: var(--refines);
+  }
+  .rel-contradicts::before {
+    background: var(--contradicts);
+  }
+}
+
+// ---- prose -----------------------------------------------------------------
+.prose {
+  min-width: 0;
+  font-size: 1.02rem;
+  article {
+    // Quartz's popover-hint article; the record above carries the heading.
+    & > h1:first-child {
+      display: none;
+    }
+  }
+  h2 {
+    font-size: 1.5rem;
+    margin: 34px 0 10px;
+  }
+  h3 {
+    font-size: 1.18rem;
+    margin: 26px 0 8px;
+  }
+  p,
+  ul,
+  ol {
+    margin: 0 0 18px;
+  }
+  li {
+    margin-bottom: 4px;
+  }
+  img {
+    max-width: 100%;
+    border: 1px solid var(--line);
+    background: var(--card);
+  }
+  em {
+    color: var(--ink-2);
+  }
+  table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    display: block;
+    overflow-x: auto;
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 6px 10px;
+      text-align: left;
+    }
+    th {
+      font-weight: 600;
+    }
+  }
+  blockquote {
+    margin: 0 0 18px;
+    padding: 2px 0 2px 16px;
+    border-left: 3px solid var(--line-2);
+    color: var(--ink-2);
+    p {
+      margin-bottom: 6px;
+    }
+  }
+  code {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    background: color-mix(in oklab, var(--line) 50%, transparent);
+    padding: 0 4px;
+  }
+  pre {
+    border: 1px solid var(--line);
+    padding: 12px 14px;
+    overflow-x: auto;
+    font-size: 0.82rem;
+  }
+  hr {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 28px 0;
+  }
+  // Citation chips: <sub class="src"> with one link per report.
+  sub.src {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--mute);
+    vertical-align: baseline;
+    line-height: 1;
+    margin-left: 4px;
+    white-space: nowrap;
+    a {
+      color: var(--mute);
+      border: 1px solid var(--line);
+      padding: 0 5px;
+      &:hover {
+        color: var(--ink);
+        border-color: var(--line-2);
+        text-decoration: none;
+      }
+    }
+  }
+  // Relation words: the pipeline bolds them; colour says which.
+  strong.rel {
+    font-weight: 600;
+    &.rel-supports {
+      color: var(--supports);
+    }
+    &.rel-refines {
+      color: var(--refines);
+    }
+    &.rel-contradicts {
+      color: var(--contradicts);
+    }
+  }
+  // Folder listings (Quartz folder-page).
+  .page-listing {
+    margin-top: 32px;
+    & > p {
+      color: var(--mute);
+      font-size: 0.9rem;
+    }
+    ul.section-ul {
+      margin-top: 0;
+    }
+    li.section-li {
+      border-top: 1px solid var(--line);
+      padding: 10px 0;
+      margin: 0;
+      & > .section {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+      .meta {
+        display: none;
+      }
+      .desc h3 {
+        font-family: var(--sans);
+        font-size: 1rem;
+        font-weight: 500;
+        margin: 0;
+        a {
+          color: var(--ink);
+        }
+      }
+      .tags {
+        display: none;
+      }
+    }
+  }
+}
+
+// ---- rail ------------------------------------------------------------------
+.rail {
+  position: sticky;
+  top: 20px;
+  align-self: start;
+  font-size: 0.86rem;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  section {
+    border-top: 1px solid var(--line-2);
+    padding: 12px 0 16px;
+    &.map {
+      border: 1px solid var(--line-2);
+      background: var(--card);
+      padding: 10px 12px 8px;
+      margin-bottom: 14px;
+      h3 {
+        margin-bottom: 4px;
+      }
+      svg {
+        width: 100%;
+        height: 172px;
+        display: block;
+      }
+      .more {
+        font-size: 0.8rem;
+        color: var(--mute);
+        margin: 6px 0 0;
+      }
+    }
+  }
+  h3 {
+    font-family: var(--sans);
+    font-size: 0.86rem;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    line-height: 1.3;
+    &::before {
+      content: "";
+      flex: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--d, var(--line-2));
+      transform: translateY(-1px);
+    }
+    &.plain::before {
+      display: none;
+    }
+    &.rest {
+      color: var(--mute);
+      border-bottom: 0;
+    }
+    & > span:first-child {
+      min-width: 0;
+    }
+  }
+  a {
+    color: var(--ink);
+    &:hover {
+      color: var(--method);
+    }
+  }
+  code {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--ink);
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    overflow-wrap: anywhere;
+  }
+  .w {
+    display: block;
+    color: var(--mute);
+    font-size: 0.78rem;
+  }
+  .n {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--mute);
+  }
+  &.nav-rail .toc {
+    border-top: 0;
+    padding-top: 0;
+  }
+  &.nav-rail section.map {
+    margin: 14px 0 0;
+  }
+  // Stock table of contents, made to match the other sections.
+  .toc {
+    border-top: 1px solid var(--line-2);
+    padding: 12px 0 16px;
+    button.toc-header {
+      h3 {
+        font-family: var(--sans);
+        font-size: 0.86rem;
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .fold {
+        width: 14px;
+        height: 14px;
+      }
+    }
+    ul.toc-content {
+      margin: 8px 0 0;
+      li {
+        border: 0;
+        padding: 3px 0;
+        display: block;
+        &::before {
+          display: none;
+        }
+        a {
+          color: var(--ink);
+          opacity: 0.55;
+          &.in-view {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}
+.tag {
+  display: inline-block;
+  font-size: 0.74rem;
+  padding: 1px 6px;
+  border: 1px solid var(--line-2);
+  color: var(--ink-2);
+  margin-left: 6px;
+  vertical-align: 1px;
+  white-space: nowrap;
+  &.k-method {
+    border-color: var(--method);
+    color: var(--method);
+  }
+  &.k-dataset {
+    border-color: var(--dataset);
+    color: var(--dataset);
+  }
+  &.k-organism {
+    border-color: var(--organism);
+    color: var(--organism);
+  }
+  &.k-compound {
+    border-color: var(--compound);
+    color: var(--compound);
+  }
+  &.k-gene {
+    border-color: var(--gene);
+    color: var(--gene);
+  }
+}
+
+// ---- graphs ----------------------------------------------------------------
+.edge {
+  stroke: var(--line-2);
+  stroke-opacity: 0.7;
+  stroke-width: 0.8;
+}
+.node {
+  fill: var(--c, var(--line-2));
+  stroke: var(--card);
+  stroke-width: 1;
+  &.me {
+    fill: var(--ink);
+    stroke-width: 1.5;
+  }
+}
+.tlabel {
+  font-family: var(--sans);
+  font-size: 10px;
+  fill: var(--ink);
+  paint-order: stroke;
+  stroke: var(--card);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+  &.me {
+    font-weight: 600;
+  }
+}
+svg a:hover .node {
+  stroke: var(--ink);
+}
+svg a:hover .tlabel {
+  text-decoration: underline;
+}
+// A wash behind each cluster, so a hub reads as a place before you read a
+// single label.
+.halo {
+  fill: var(--c);
+  opacity: 0.05;
+}
+.spoke {
+  stroke: var(--c);
+  stroke-opacity: 0.55;
+  stroke-width: 1;
+}
+// A concept no topic claims: it sits by the cluster it cites, on a loose
+// tether rather than a spoke, because it is not a member.
+.spoke.loose {
+  stroke: var(--line-2);
+  stroke-opacity: 0.9;
+  stroke-dasharray: 2 4;
+}
+// Every individual cross-topic wikilink, hidden until a point or a hub is
+// hovered. The rules that pair a hovered element with its own links are
+// generated into the SVG, since they depend on the corpus.
+.link {
+  fill: none;
+  stroke: var(--ink-2);
+  stroke-width: 1.1;
+  stroke-opacity: 0.8;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+}
+// A concept two topics both claim: a second spoke, in the other topic's hue.
+// Solid, because it is a membership like any other spoke. Dashes are reserved
+// for the opposite case, a concept no topic claims.
+.second {
+  fill: none;
+  stroke: var(--c, var(--line-2));
+  stroke-width: 1;
+  stroke-opacity: 0.55;
+}
+// One tie per pair of topics, weighted by how many links cross between them.
+.tie {
+  fill: none;
+  stroke: var(--line-2);
+  stroke-opacity: 0.55;
+  stroke-width: var(--w, 1);
+  stroke-linecap: round;
+  transition: opacity 0.12s ease;
+}
+.halo {
+  transition: opacity 0.12s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .link,
+  .tie,
+  .halo {
+    transition: none;
+  }
+}
+// A hit target wider than the dot, so a 3px point stays clickable.
+.hit {
+  fill: transparent;
+}
+// Concept titles are too many to show at once; hovering reveals one.
+.clabel {
+  font-family: var(--sans);
+  font-size: 13px;
+  fill: var(--ink);
+  paint-order: stroke;
+  stroke: var(--card);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  opacity: 0;
+  pointer-events: none;
+}
+svg a:hover .clabel,
+svg a:focus-visible .clabel {
+  opacity: 1;
+}
+
+// ---- home ------------------------------------------------------------------
+.home {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 52px 40px 30px;
+  // Prose left, the standing links right: the text gets a proper measure
+  // instead of a narrow ribbon in a wide box, and the links stop trailing off
+  // the bottom of the page.
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(200px, 264px);
+  column-gap: 64px;
+  align-items: start;
+  h1 {
+    font-size: 3.1rem;
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+  }
+  .standing {
+    font-size: 0.86rem;
+    color: var(--mute);
+    margin: 0 0 22px;
+    a {
+      color: var(--ink-2);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--line-2);
+    }
+  }
+  .lede {
+    font-size: 1.02rem;
+    color: var(--ink-2);
+    max-width: 68ch;
+    p:first-child {
+      font-size: 1.12rem;
+      color: var(--ink);
+    }
+    p {
+      margin: 0 0 16px;
+    }
+  }
+  .digests {
+    font-size: 0.92rem;
+    margin-top: 14px;
+    h2 {
+      font-family: var(--sans);
+      font-size: 0.86rem;
+      font-weight: 600;
+      margin: 0 0 2px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      padding: 8px 0;
+      border-top: 1px solid var(--line);
+      &:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+    }
+    a {
+      color: var(--ink);
+    }
+  }
+}
+.heat {
+  border: 1px solid var(--line-2);
+  background: var(--card);
+  overflow-x: auto;
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.86rem;
+  }
+  th {
+    font-weight: 500;
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-2);
+    &.c {
+      text-align: center;
+      padding: 10px 4px;
+      font-size: 0.78rem;
+    }
+  }
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+    &.name {
+      padding-left: 10px;
+      white-space: nowrap;
+      a {
+        color: var(--ink);
+        font-weight: 500;
+      }
+    }
+    &.cell {
+      text-align: center;
+      padding: 4px;
+      width: 58px;
+      span {
+        display: block;
+        height: 30px;
+        line-height: 30px;
+        color: var(--ink);
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        background: color-mix(in oklab, var(--heat) calc(var(--v) * 0.55%), var(--card));
+        &[data-v="0"] {
+          color: var(--line-2);
+        }
+      }
+    }
+  }
+  tr:last-child td {
+    border-bottom: 0;
+  }
+  caption {
+    caption-side: bottom;
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 0.8rem;
+    color: var(--mute);
+    border-top: 1px solid var(--line);
+  }
+}
+.corpusmap {
+  max-width: 1480px;
+  margin: 0 auto 46px;
+  padding: 0 40px;
+  // Heading and caption sit next to each other, as a block centred over the
+  // map. As a grid with a stretching first column they drifted to opposite
+  // edges of a wide panel; left-aligned they hung off one side of it.
+  .maphead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 24px;
+    max-width: 900px;
+    margin: 0 auto 12px;
+  }
+  h2 {
+    flex: none;
+    font-size: 1.6rem;
+    margin: 0;
+  }
+  .maphead p {
+    flex: 1 1 42ch;
+    max-width: 66ch;
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--ink-2);
+  }
+
+  .mapframe {
+    border: 1px solid var(--line-2);
+    background: var(--card);
+    overflow-x: auto;
+  }
+  svg {
+    display: block;
+    width: 100%;
+    min-width: 860px;
+    height: auto;
+  }
+  .node.hub {
+    stroke-width: 2;
+  }
+  .tlabel {
+    font-size: 15px;
+    font-weight: 600;
+  }
+}
+.heatwrap {
+  max-width: 1180px;
+  margin: 0 auto 48px;
+  padding: 0 40px;
+}
+// The topic list closes the page and doubles as the map's legend, so it keeps
+// the same measure as the prose and the table rather than running the full
+// width of the window.
+.topiclist {
+  max-width: 1180px;
+  margin: 0 auto 56px;
+  padding: 0 40px;
+  h2 {
+    font-size: 1.6rem;
+    margin: 0 0 4px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    columns: 2;
+    column-gap: 56px;
+  }
+  li {
+    break-inside: avoid;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+    font-size: 0.9rem;
+    color: var(--ink-2);
+  }
+  a {
+    display: block;
+    color: var(--ink);
+    font-weight: 500;
+  }
+}
+
+// ---- footer ----------------------------------------------------------------
+footer {
+  // The base layer gives the footer min-width:100% and content-box sizing on
+  // small screens, so its padding lands outside the viewport and scrolls the
+  // whole page sideways.
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 18px 40px 40px;
+  border-top: 1px solid var(--line);
+  font-size: 0.84rem;
+  color: var(--mute);
+  opacity: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  align-items: baseline;
+  p {
+    margin: 0;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  a {
+    color: var(--ink-2);
+  }
+}
+
+// ---- popovers, search results ---------------------------------------------
+.popover > .popover-inner {
+  border: 1px solid var(--line-2);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  font-size: 0.9rem;
+  sub.src {
+    display: none;
+  }
+}
+.search-container > .search-space {
+  & > .search-bar {
+    border-radius: 0;
+    border: 1px solid var(--line-2);
+    font-family: var(--sans);
+  }
+  & > .search-layout {
+    border-radius: 0;
+    border: 1px solid var(--line-2);
+  }
+}
+
+// ---- small screens ---------------------------------------------------------
+@media (max-width: 960px) {
+  .bar {
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    padding: 12px 20px;
+    .tools {
+      margin-left: 0;
+      width: 100%;
+    }
+    .search > .search-button {
+      width: 100%;
+    }
+  }
+  .page-grid,
+  .home,
+  .corpusmap,
+  .heatwrap {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .page-grid {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 32px;
+  }
+  .home {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 10px;
+  }
+  .rail {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+  .page-grid .nav-rail {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .page-grid .prose {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .page-grid .evidence-rail {
+    grid-column: 1;
+    grid-row: 4;
+  }
+  .record {
+    grid-template-columns: 8px 1fr;
+  }
+  .record .body {
+    padding: 18px 18px 16px;
+  }
+  .record h1 {
+    font-size: 1.9rem;
+  }
+  // Two columns leave the strip and the standing line too narrow to read.
+  .evid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+    dt {
+      margin-top: 10px;
+    }
+  }
+  .home h1 {
+    font-size: 2.3rem;
+  }
+  .corpusmap .maphead {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 6px;
+  }
+  .topiclist {
+    padding: 0 20px;
+    ul {
+      columns: 1;
+    }
+  }
+  footer {
+    padding: 18px 20px 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

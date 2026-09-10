@@ -11,6 +11,7 @@ on:
       - "wiki/**"
       - "wiki-extra/**"
       - "pipeline/**"
+      - "theme/**"
       - ".github/workflows/pages.yml"
   # Build on the PR too, without deploying. Everything here is untested on
   # Linux otherwise: the figure downscale falls back when `sips` is absent,
