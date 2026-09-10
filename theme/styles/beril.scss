@@ -294,6 +294,9 @@ h4 {
   &.kind-report .band {
     background: var(--mute);
   }
+  &.kind-author .band {
+    background: var(--ink-2);
+  }
   .body {
     padding: 22px 28px 20px;
     min-width: 0;

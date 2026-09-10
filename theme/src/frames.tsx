@@ -14,6 +14,7 @@ import {
   type Corpus,
   type File,
   RELS,
+  authorsOf,
   collectionOf,
   corpus,
   fm,
@@ -35,6 +36,7 @@ const NAV: [string, string][] = [
   ["Entities", "entities/index"],
   ["Conflicts", "conflicts/index"],
   ["Reports", "summaries/index"],
+  ["Authors", "authors/index"],
   ["About", "about"],
 ]
 
@@ -99,11 +101,12 @@ function Bar({ cd, header }: { cd: QuartzComponentProps; header: PageFrameProps[
   )
 }
 
-function Record({ file, c, terms, standing, cites, rels }: {
+function Record({ file, c, terms, standing, orcid, cites, rels }: {
   file: File
   c: Corpus
   terms: string | null
   standing: ElementContent[] | null
+  orcid: ElementContent[] | null
   cites: Cite[]
   rels: Record<(typeof RELS)[number], number>
 }) {
@@ -134,8 +137,14 @@ function Record({ file, c, terms, standing, cites, rels }: {
           )}
         </p>
         <h1>{titleOf(file)}</h1>
-        {(cites.length > 0 || total > 0 || line || standing) && (
+        {(cites.length > 0 || total > 0 || line || standing || orcid) && (
           <dl class="evid">
+            {orcid && (
+              <>
+                <dt>ORCID</dt>
+                <dd>{jsx(orcid)}</dd>
+              </>
+            )}
             {cites.length > 0 && (
               <>
                 <dt>Cited reports</dt>
@@ -226,18 +235,37 @@ function Rail({ cd, file, c, cites, left }: {
     for (const l of new Set(linksOf(k))) if (mine.has(l) && ++shared >= 2) return 1
     return 0
   }
+  // An author page cites its own reports, so shared sources would drag in
+  // every conflict those reports touch; that belongs on the report pages.
   const conflicts =
-    !knowledge || kind.cls === "conflict"
+    !knowledge || kind.cls === "conflict" || kind.cls === "author"
       ? []
       : c.conflicts
           .map((k) => [k, conflictScore(k)] as const)
           .filter(([, s]) => s > 0)
           .sort((a, b) => b[1] - a[1] || titleOf(a[0]).localeCompare(titleOf(b[0])))
           .map(([k]) => k)
+  // Authorship attaches to project reports, never to the wiki page, which is
+  // machine-written. A report page names its authors; every other page names
+  // the authors of the reports it cites, with how many of those reports each
+  // one wrote.
+  const isReport = kind.cls === "report"
+  const reportAuthors = isReport ? authorsOf(file, c) : []
+  const citedAuthors = new Map<File, number>()
+  if (!isReport && kind.cls !== "author") {
+    for (const k of cites) {
+      const report = c.bySlug.get(k.slug)
+      if (!report) continue
+      for (const a of authorsOf(report, c)) citedAuthors.set(a, (citedAuthors.get(a) ?? 0) + 1)
+    }
+  }
+  const authors = [...citedAuthors].sort((x, y) => y[1] - x[1] || titleOf(x[0]).localeCompare(titleOf(y[0])))
+  // Author pages link to every report they wrote; that is authorship, listed
+  // above, not citation.
   const citedBy = !knowledge
     ? []
     : (c.inbound.get(simple) ?? [])
-        .filter((f) => f !== file && !isIndex(slugOf(f)))
+        .filter((f) => f !== file && !isIndex(slugOf(f)) && collectionOf(slugOf(f)) !== "authors")
         .sort((a, b) => rank(a) - rank(b) || titleOf(a).localeCompare(titleOf(b)))
   const entities = !knowledge
     ? []
@@ -248,6 +276,18 @@ function Rail({ cd, file, c, cites, left }: {
 
   return (
     <aside class="rail evidence-rail">
+      {reportAuthors.length > 0 && (
+        <section>
+          <h3>Project authors</h3>
+          <ul>
+            {reportAuthors.map((a) => (
+              <li class="plain">
+                <a href={rel(slugOf(a))}>{titleOf(a)}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       {cites.length > 0 && (
         <section>
           <h3>Evidence on this page</h3>
@@ -269,6 +309,22 @@ function Rail({ cd, file, c, cites, left }: {
               )
             })}
             {cites.length > MAX_LIST && <li class="plain rest">and {cites.length - MAX_LIST} more</li>}
+          </ul>
+        </section>
+      )}
+      {authors.length > 0 && (
+        <section>
+          <h3>Authors of the cited reports</h3>
+          <ul>
+            {authors.slice(0, MAX_LIST).map(([a, n]) => (
+              <li class="plain">
+                <a href={rel(slugOf(a))}>{titleOf(a)}</a>
+                <span class="n" title={`wrote ${n} of the reports cited here`}>
+                  {n}
+                </span>
+              </li>
+            ))}
+            {authors.length > MAX_LIST && <li class="plain rest">and {authors.length - MAX_LIST} more</li>}
           </ul>
         </section>
       )}
@@ -451,7 +507,15 @@ export const BerilFrame: PageFrame = {
           <Home file={file} c={c} tree={tree} standing={w.standing} />
         ) : (
           <main class="page-grid">
-            <Record file={file} c={c} terms={w.terms} standing={w.standing} cites={w.cites} rels={w.rels} />
+            <Record
+              file={file}
+              c={c}
+              terms={w.terms}
+              standing={w.standing}
+              orcid={w.orcid}
+              cites={w.cites}
+              rels={w.rels}
+            />
             <NavRail cd={cd} file={file} c={c} right={right} />
             <div class="prose">
               {slot(beforeBody).map((B) => (

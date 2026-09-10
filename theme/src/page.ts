@@ -52,7 +52,7 @@ export function kindOf(f: File): Kind {
     case "entities":
       return ENTITY_KINDS[fm(f)?.type ?? ""] ?? { label: "Entity", cls: "entity" }
     case "authors":
-      return { label: "Author", cls: "plain" }
+      return { label: "Author", cls: "author" }
     case "data":
       return { label: "Data collection", cls: "plain" }
     default:
@@ -128,6 +128,8 @@ export interface Cite {
 export interface Walk {
   terms: string | null
   standing: ElementContent[] | null
+  /** The ORCID link an author page opens with, lifted into the header. */
+  orcid: ElementContent[] | null
   cites: Cite[]
   rels: Record<Rel, number>
 }
@@ -161,6 +163,7 @@ export function walk(root: Root): Walk {
   const out: Walk = {
     terms: null,
     standing: null,
+    orcid: null,
     cites: [],
     rels: { supports: 0, refines: 0, contradicts: 0 },
   }
@@ -184,6 +187,20 @@ export function walk(root: Root): Walk {
     const p = body && find(body, (e) => e.tagName === "p")
     out.standing = p ? p.children : (body?.children ?? null)
     root.children.splice(idx, 1)
+  }
+
+  // Author pages open with "ORCID: <link>", sometimes after a one-line note
+  // about the account. The header renders the link; the body drops the line.
+  const oi = root.children.findIndex(
+    (c, i) => i < 4 && isEl(c) && c.tagName === "p" && /^ORCID:/.test(text(c).trim()),
+  )
+  if (oi >= 0) {
+    const p = root.children[oi] as Element
+    const link = p.children.filter((x) => isEl(x) && x.tagName === "a")
+    if (link.length > 0) {
+      out.orcid = link
+      root.children.splice(oi, 1)
+    }
   }
 
   // Paragraph-level attribution: a relation word applies to the reports cited
@@ -263,3 +280,15 @@ export function sections(root: Root): { intro: ElementContent[]; byHeading: Map<
 }
 
 export const truncate = (s: string, n: number) => (s.length > n ? s.slice(0, n - 1).trimEnd() + "…" : s)
+
+// The people listed as authors of a project report: the author pages that
+// link to it. Authorship is parsed from each project's README by the
+// pipeline, so this is the one relation between people and pages the corpus
+// actually records. A raw report shares the authors of its summary.
+export function authorsOf(report: File, c: Corpus): File[] {
+  let slug = slugOf(report)
+  if (collectionOf(slug) === "sources") slug = slug.replace(/^sources\//, "summaries/")
+  return (c.inbound.get(simplifySlug(slug)) ?? [])
+    .filter((f) => collectionOf(slugOf(f)) === "authors" && !isIndex(slugOf(f)))
+    .sort((a, b) => titleOf(a).localeCompare(titleOf(b)))
+}
