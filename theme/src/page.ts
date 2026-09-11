@@ -37,8 +37,9 @@ export const titleOf = (f: File) => fm(f)?.title ?? slugOf(f)
 export const linksOf = (f: File) => (f.links ?? []) as string[]
 export const collectionOf = (slug: string) => slug.split("/")[0]
 export const isIndex = (slug: string) => slug === "index" || slug.endsWith("/index")
-/** A project report, as opposed to one of the cross-project digests. */
-export const isReport = (slug: string) => /__report$/i.test(slug)
+/** A project report, as opposed to one of the cross-project digests. The
+ *  publish step stamps this type on the summaries that have a raw report. */
+export const isReport = (f: File) => fm(f)?.type === "Project report"
 
 export function kindOf(f: File): Kind {
   const slug = slugOf(f)
@@ -51,13 +52,9 @@ export function kindOf(f: File): Kind {
     case "conflicts":
       return { label: "Conflict", cls: "conflict" }
     case "summaries":
-      // The pipeline stamps `type: "Summary"` on all 75 pages here, digests
-      // included, so the frontmatter cannot tell them apart. The filename can:
-      // a project report is <project_id>__REPORT, and the two cross-project
-      // digests are discoveries and pitfalls.
-      return isReport(slug)
+      return isReport(f)
         ? { label: "Project report", cls: "report" }
-        : { label: "Digest", cls: "report" }
+        : { label: "Cross-project digest", cls: "report" }
     case "sources":
       return { label: "Raw report", cls: "report" }
     case "entities":
@@ -138,6 +135,8 @@ export interface Cite {
   rels: Set<Rel>
   /** Citation number, assigned in order of first appearance in the prose. */
   num: number
+  /** The most-cited report on the page: what the rest of it mostly rests on. */
+  primary: boolean
 }
 
 export interface Walk {
@@ -259,7 +258,7 @@ export function walk(root: Root): Walk {
             if (!slug.startsWith("summaries/")) continue
             let cite = cites.get(slug)
             if (!cite) {
-              cite = { slug, target: raw, label: text(a).trim(), n: 0, rels: new Set(), num: cites.size + 1 }
+              cite = { slug, target: raw, label: text(a).trim(), n: 0, rels: new Set(), num: cites.size + 1, primary: false }
               cites.set(slug, cite)
             }
             cite.n++
@@ -291,7 +290,13 @@ export function walk(root: Root): Walk {
     }
   }
   visit(root)
-  out.cites = [...cites.values()].sort((a, b) => b.n - a.n || a.label.localeCompare(b.label))
+  // Citation order, everywhere. The header strip, the rail and the list under
+  // the prose used to sort three different ways over the same four reports,
+  // so no two of them could be read against each other or against the
+  // numbered marks in the text.
+  out.cites = [...cites.values()].sort((a, b) => a.num - b.num)
+  const top = out.cites.reduce<Cite | null>((best, k) => (!best || k.n > best.n ? k : best), null)
+  if (top && top.n > 1) top.primary = true
   return out
 }
 
@@ -375,7 +380,7 @@ export function counts(c: Corpus): Counts {
     if (isIndex(slug)) continue
     // "Project reports" means the projects. The two cross-project digests sit
     // in the same collection and are counted apart from them.
-    if (collectionOf(slug) === "summaries") isReport(slug) ? reports++ : digests++
+    if (collectionOf(slug) === "summaries") isReport(f) ? reports++ : digests++
     else if (collectionOf(slug) === "concepts") concepts++
     else if (collectionOf(slug) === "entities") entities++
   }

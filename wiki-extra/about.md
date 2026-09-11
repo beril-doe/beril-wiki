@@ -23,9 +23,18 @@ synthesis pages it belongs on, and rewrites those pages to absorb it. A claim
 therefore gathers evidence from every project that supports it, rather than
 appearing once per project.
 
-**Summaries.** One page per research project, linking to its raw report.
+Every page states which kind it is, on the line above its title. Where a page
+cites evidence, "Projects cited" lists the project reports it rests on, and
+the numbered marks in the prose point into that list.
 
-**Sources.** The raw reports themselves, unedited.
+**Project reports.** One page per research project, summarising it and linking
+to its raw report. These are the evidence: everything else on the site cites
+them, and nothing cites anything else.
+
+**Cross-project digests.** Two pages — discoveries and pitfalls — reading
+across the whole corpus rather than summarising one project.
+
+**Raw reports.** The reports themselves, unedited, behind each summary.
 
 **Concepts.** Recurring ideas, each gathering evidence from every project that
 speaks to it.

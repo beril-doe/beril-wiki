@@ -21,6 +21,7 @@ import {
   counts,
   fm,
   isIndex,
+  isReport,
   kindOf,
   linksOf,
   sections,
@@ -69,18 +70,27 @@ function sentence(terms: string | null): string | null {
   return s ? s[0].toUpperCase() + s.slice(1) + "." : null
 }
 
-function cell(cite: Cite, primary: boolean): string {
-  if (primary) return "p"
+function cell(cite: Cite): string {
+  if (cite.primary) return "p"
   if (cite.rels.has("contradicts")) return "c"
   if (cite.rels.has("supports")) return "s"
   if (cite.rels.has("refines")) return "r"
   return ""
 }
 
-function dotOf(cite: Cite, primary: boolean): string | undefined {
-  if (primary) return "var(--ink)"
+function dotOf(cite: Cite): string | undefined {
+  if (cite.primary) return "var(--ink)"
   for (const r of ["contradicts", "supports", "refines"] as const) if (cite.rels.has(r)) return `var(--${r})`
   return undefined
+}
+
+// What a citation row says about itself under the report's title: how often
+// the page leans on it, and which of the three relation words the prose used.
+function citeNote(cite: Cite): string {
+  const bits = [`cited ${cite.n}×`]
+  if (cite.primary) bits.push("primary source")
+  for (const r of cite.rels) bits.push(r)
+  return bits.join(" · ")
 }
 
 function Bar({ cd, header }: { cd: QuartzComponentProps; header: PageFrameProps["header"] }) {
@@ -219,15 +229,17 @@ function Record({ file, c, terms, standing, orcid, cites, rels, t, figures }: {
   const rows: [string, JSX.Element][] = []
   if (cites.length > 0)
     rows.push([
-      cites.length === 1 ? "Source" : "Sources",
+      "Projects cited",
       <>
         <span class="stripc">
-          {cites.slice(0, MAX_STRIP).map((k, i) => (
-            <i class={cell(k, i === 0)} title={`${k.label}: cited ${k.n} time${k.n === 1 ? "" : "s"}`} />
+          {cites.slice(0, MAX_STRIP).map((k) => (
+            <i class={cell(k)} title={`${k.label}: cited ${k.n} time${k.n === 1 ? "" : "s"}`} />
           ))}
           {cites.length > MAX_STRIP && <span class="more">+{cites.length - MAX_STRIP}</span>}
         </span>
-        <span class="sub">{cites.length} project reports</span>
+        <span class="sub">
+          {cites.length} project {cites.length === 1 ? "report" : "reports"}, listed in the margin
+        </span>
       </>,
     ])
   const stated = RELS.filter((r) => rels[r] > 0)
@@ -342,7 +354,10 @@ function NavRail({ cd, file, c, right }: {
         <section class="map">
           <h3>Where this page sits</h3>
           <LocalGraph file={file} c={c} />
-          <p class="more">Neighbours by wikilink, coloured by topic.</p>
+          <p class="more">
+            Neighbours by wikilink, coloured by topic. Round is a synthesis page — concept, topic or
+            conflict; square is a project report.
+          </p>
         </section>
       )}
     </aside>
@@ -395,28 +410,31 @@ function Rail({ cd, file, c, cites, t, left }: {
       )}
       {cites.length > 0 && (
         <section>
-          <h3>Evidence on this page</h3>
+          <h3>Projects cited</h3>
+          <p class="more lead">
+            Research projects this page draws on, one report each. The numbers are the marks in the
+            text.
+          </p>
           <Rows
-            rows={cites.map((k, i) => {
-              const dot = dotOf(k, i === 0)
-              const words = [...k.rels].join(", ")
-              const sub = i === 0 && k.n > 1 ? `primary source, ${k.n} citations` : words
+            rows={cites.map((k) => {
+              const dot = dotOf(k)
+              const report = c.bySlug.get(k.slug)
               return (
-                <li style={dot ? `--d:${dot}` : undefined}>
+                <li class="cite" style={dot ? `--d:${dot}` : undefined}>
+                  <span class="cnum">{k.num}</span>
                   <span>
-                    <a href={rel(k.target)}>
-                      <code>{k.label}</code>
-                    </a>
-                    {sub && <span class="w">{sub}</span>}
+                    <a href={rel(k.target)}>{report ? titleOf(report) : k.label}</a>
+                    <span class="w">
+                      <code>{k.label}</code> · {citeNote(k)}
+                    </span>
                   </span>
-                  {!(i === 0 && k.n > 1) && <span class="n">{k.n}</span>}
                 </li>
               )
             })}
           />
           <p class="more">
-            The dot is the relation the prose states; black is the primary source. The strip in the
-            header says the same, one block per report.
+            The number is tinted with the relation the prose states; black is the primary source.
+            The strip in the header says the same, one block per report.
           </p>
         </section>
       )}
@@ -451,12 +469,18 @@ function Rail({ cd, file, c, cites, t, left }: {
       {t.citedBy.length > 0 && (
         <section>
           <h3>Cited by</h3>
+          <p class="more lead">Pages on this site that rest on this one.</p>
           <Rows
             rows={t.citedBy.map((f) => {
               const hue = c.hueOf(f)
+              // A list mixing concepts, topics and reports under bare titles
+              // says nothing about what any row is; the kind goes with it.
               return (
                 <li style={hue ? `--d:${hue}` : undefined}>
-                  <a href={rel(slugOf(f))}>{titleOf(f)}</a>
+                  <span>
+                    <a href={rel(slugOf(f))}>{titleOf(f)}</a>
+                    <span class="w">{kindOf(f).label}</span>
+                  </span>
                 </li>
               )
             })}
@@ -488,23 +512,29 @@ function Rail({ cd, file, c, cites, t, left }: {
 
 // The reports a page cites, listed once under the prose in citation order.
 // The marks in the text are numbers; this is where a number gets its name.
-function Sources({ cites, from }: { cites: Cite[]; from: FullSlug }) {
+// Same heading as the rail section, because it is the same list: the rail is
+// the copy you read beside the prose, this the one you land on from a mark.
+function Sources({ cites, c, from }: { cites: Cite[]; c: Corpus; from: FullSlug }) {
   if (cites.length === 0) return null
-  const ordered = [...cites].sort((a, b) => a.num - b.num)
   return (
     <section class="sources">
-      <h2>Sources cited on this page</h2>
+      <h2>Projects cited</h2>
       <ol>
-        {ordered.map((k) => (
-          <li value={k.num}>
-            {/* A summary cites itself through its raw report, so the entry
-                points where the citation in the prose does. */}
-            <a href={resolveRelative(from, k.target as FullSlug)}>
-              <code>{k.label}</code>
-            </a>
-            {k.rels.size > 0 && <span class="w">{[...k.rels].join(", ")}</span>}
-          </li>
-        ))}
+        {cites.map((k) => {
+          const report = c.bySlug.get(k.slug)
+          return (
+            <li value={k.num}>
+              {/* A summary cites itself through its raw report, so the entry
+                  points where the citation in the prose does. */}
+              <a href={resolveRelative(from, k.target as FullSlug)}>
+                {report ? titleOf(report) : k.label}
+              </a>
+              <span class="w">
+                <code>{k.label}</code> · {citeNote(k)}
+              </span>
+            </li>
+          )
+        })}
       </ol>
     </section>
   )
@@ -548,9 +578,9 @@ function indexFigures(file: File, c: Corpus): [string, string][] {
       break
     }
     case "summaries": {
-      const reports = members.filter((f) => /__report$/i.test(slugOf(f))).length
+      const reports = members.filter(isReport).length
       out.push(["Project reports", String(reports)])
-      out.push(["Digests", String(n - reports)])
+      out.push(["Cross-project digests", String(n - reports)])
       break
     }
     case "conflicts":
@@ -882,7 +912,7 @@ export const BerilFrame: PageFrame = {
               {slot([Content]).map((C) => (
                 <C {...cd} />
               ))}
-              <Sources cites={w.cites} from={slug as FullSlug} />
+              <Sources cites={w.cites} c={c} from={slug as FullSlug} />
               {slot(afterBody).map((A) => (
                 <A {...cd} />
               ))}

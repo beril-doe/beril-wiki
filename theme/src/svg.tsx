@@ -23,8 +23,13 @@ const SLOTS: [number, number][] = [
   [262, 110],
 ]
 const ME: [number, number] = [138, 148]
-const GRAPH_COLLECTIONS = new Set(["concepts", "topics", "conflicts"])
+const GRAPH_COLLECTIONS = new Set(["concepts", "topics", "conflicts", "summaries"])
 const ORDER = ["topics", "concepts", "conflicts", "entities", "summaries"]
+// Two of the six slots are held for project reports. Synthesis pages link out
+// to far more concepts than reports, so ranking alone put the evidence off the
+// end of the graph on every page that had any.
+const REPORT_SLOTS = 2
+const isSummary = (f: File) => collectionOf(slugOf(f)) === "summaries"
 export const rank = (f: File) => {
   const i = ORDER.indexOf(collectionOf(slugOf(f)))
   return i < 0 ? ORDER.length : i
@@ -41,7 +46,11 @@ export function neighbours(file: File, c: Corpus): File[] {
   }
   for (const l of linksOf(file)) add(c.bySlug.get(l))
   for (const f of c.inbound.get(slug) ?? []) add(f)
-  return out.sort((a, b) => rank(a) - rank(b) || titleOf(a).localeCompare(titleOf(b)))
+  out.sort((a, b) => rank(a) - rank(b) || titleOf(a).localeCompare(titleOf(b)))
+  const reports = out.filter(isSummary)
+  const rest = out.filter((f) => !isSummary(f))
+  const head = SLOTS.length - Math.min(REPORT_SLOTS, reports.length)
+  return [...rest.slice(0, head), ...reports, ...rest.slice(head)]
 }
 
 export function LocalGraph({ file, c }: { file: File; c: Corpus }) {
@@ -57,9 +66,15 @@ export function LocalGraph({ file, c }: { file: File; c: Corpus }) {
       ))}
       {nodes.map((n) => {
         const right = n.x > ME[0]
+        // A project report is evidence, not another synthesis page, so it is
+        // marked apart from the round nodes rather than coloured the same.
         return (
           <a href={resolveRelative(slug, slugOf(n.file) as FullSlug)}>
-            <circle class="node" cx={n.x} cy={n.y} r={4.5} style={`--c:${n.hue}`} />
+            {isSummary(n.file) ? (
+              <rect class="node report" x={n.x - 4} y={n.y - 4} width={8} height={8} style={`--c:${n.hue}`} />
+            ) : (
+              <circle class="node" cx={n.x} cy={n.y} r={4.5} style={`--c:${n.hue}`} />
+            )}
             <text
               class="tlabel"
               x={n.x + (right ? -8 : 8)}

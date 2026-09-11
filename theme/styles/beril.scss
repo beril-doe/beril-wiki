@@ -704,8 +704,11 @@ h4 {
   }
   li {
     break-inside: avoid;
-    padding: 2px 0;
+    padding: 2px 0 6px;
     margin: 0;
+  }
+  a {
+    color: var(--ink);
   }
   code {
     font-family: var(--mono);
@@ -716,8 +719,8 @@ h4 {
     overflow-wrap: anywhere;
   }
   .w {
+    display: block;
     color: var(--mute);
-    margin-left: 6px;
   }
 }
 
@@ -807,14 +810,26 @@ h4 {
       background: var(--d, var(--line-2));
       transform: translateY(-1px);
     }
-    &.plain::before {
+    &.plain::before,
+    // A citation row carries its number where every other row carries its
+    // dot: same column, and the number still takes the relation's colour.
+    &.cite::before {
       display: none;
     }
     &.rest {
       color: var(--mute);
     }
-    & > span:first-child {
+    & > span {
       min-width: 0;
+    }
+    .cnum {
+      flex: none;
+      width: 8px;
+      text-align: right;
+      font-family: var(--mono);
+      font-size: var(--t-meta);
+      font-weight: 600;
+      color: var(--d, var(--mute));
     }
   }
   a {
@@ -847,6 +862,10 @@ h4 {
     font-size: var(--t-meta);
     color: var(--mute);
     margin: 7px 0 0;
+    // A deck sits above the rows it introduces rather than below them.
+    &.lead {
+      margin: -2px 0 8px;
+    }
   }
   // "and 31 more" opens the list it counts. It looked like a link before it
   // was one, which is the whole complaint it was answering.
