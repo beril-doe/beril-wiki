@@ -350,6 +350,12 @@ def main() -> None:
     if images.is_dir():
         shutil.copytree(images, dst / "sources" / "images", dirs_exist_ok=True)
 
+    # Site assets that are not figures: the KBase mark the About page carries,
+    # and anything else wiki-extra needs to ship alongside its prose.
+    assets = kb / "wiki-extra" / "assets"
+    if assets.is_dir():
+        shutil.copytree(assets, dst / "assets", dirs_exist_ok=True)
+
     print(f"wrote {n} pages -> {dst}")
 
 

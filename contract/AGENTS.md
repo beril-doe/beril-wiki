@@ -37,7 +37,7 @@ Operations: ingest, query, lint
 - Keep each page focused on a single topic
 
 ## Domain Rules (BERIL research corpus)
-This KB compiles research-project reports from a microbial-biology observatory (the BERIL Research Observatory over the KBase BER Data Lakehouse). Source files are named `<project_id>__REPORT.md`; two central cross-project digests (`discoveries.md`, `pitfalls.md`) are also sources.
+This KB compiles research-project reports from a microbial-biology observatory (the BERIL Research Observatory over the KBase Data Lakehouse). Source files are named `<project_id>__REPORT.md`; two central cross-project digests (`discoveries.md`, `pitfalls.md`) are also sources.
 
 - **Entity types for this KB**: organism, gene_or_pathway, compound, method, dataset, place, person, other. Metals (cobalt, copper, nickel...), media, and chemicals are `compound`. Assays and statistical approaches (e.g. RB-TnSeq, PGLS, db-RDA) are `method`. Databases and data collections (e.g. Fitness Browser, BacDive, MicrobeAtlas, GTDB, ENIGMA) are `dataset`.
 - **Canonical entity names**: one page per real-world entity. Merge aliases and abbreviations onto the canonical page (e.g. "E. coli" / "Escherichia coli"; "Cu" / "copper"; "RB-TnSeq" / "random barcode transposon sequencing"). List known aliases on the page. Where a stable external identifier exists, record it (NCBI taxid for organisms, gene symbol, CHEBI/KEGG id for compounds).

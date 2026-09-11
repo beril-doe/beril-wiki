@@ -620,6 +620,25 @@ h4 {
       color: var(--contradicts);
     }
   }
+  // An acknowledgement mark sits on the page, not in a framed box like a
+  // figure, and keeps its own colours in both themes.
+  .ack {
+    margin: 18px 0 20px;
+    img {
+      border: 0;
+      background: none;
+      max-width: 190px;
+      height: auto;
+    }
+  }
+  // The mark is drawn in near-black with brand colours beside it, so in dark
+  // mode it sits on its own white plaque rather than being inverted, which
+  // would hue-shift a logo that is not ours to alter.
+  :root[saved-theme="dark"] & .ack img {
+    background: #ffffff;
+    padding: 9px 12px;
+    box-sizing: content-box;
+  }
   // Folder listings (Quartz folder-page): the frame renders its own listing.
   .page-listing {
     display: none;

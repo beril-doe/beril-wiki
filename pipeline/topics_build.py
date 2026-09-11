@@ -214,7 +214,7 @@ def write_home(hubs: list[tuple], stats: str) -> None:
     home = llm(
         "Write the HOME page (markdown, H1 title 'BERIL Knowledge Wiki') for this research "
         "wiki: 2-3 paragraphs introducing the BERIL Research Observatory corpus (AI-conducted "
-        "microbial-biology research over the KBase BER Data Lakehouse) and how to read the wiki "
+        "microbial-biology research over the KBase Data Lakehouse) and how to read the wiki "
         "(topics are the entry points; concepts/entities/summaries are the reference layers), "
         f"then a '## Topics' section presenting each topic with its one-line hook as a wikilink "
         f"list, then a '## Corpus' line with these stats: {stats}, then a '## Browse' section "
