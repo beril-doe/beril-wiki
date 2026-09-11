@@ -761,40 +761,36 @@ function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree: Root; 
   const stats = mapStats(c)
   return (
     <>
+      {/* The introduction keeps one honest measure on the left; the corpus,
+          in figures, fills the right instead of a second column of prose. The
+          figures start level with the first paragraph, not with the title. */}
       <section class="band hero">
         <h1>{titleOf(file)}</h1>
         {standing && <p class="standing">{jsx(standing)}</p>}
-        {/* The opening paragraph leads at reading size; the rest sits beside
-            it rather than leaving half the masthead empty above a page whose
-            every other section runs the full measure. */}
         <div class="lede">
           <div class="lead">{jsx(lead)}</div>
           {after.length > 0 && <div class="after">{jsx(after)}</div>}
         </div>
-      </section>
-      <section class="band" aria-label="The corpus in figures">
-        <div class="stats">
-          <div>
-            <b>{n.reports}</b>
-            <span>project reports</span>
-          </div>
-          <div>
-            <b>{n.concepts}</b>
-            <span>concepts</span>
-          </div>
-          <div>
-            <b>{n.entities}</b>
-            <span>entities</span>
-          </div>
-          <div>
-            <b>{n.conflicts}</b>
-            <span>recorded conflicts</span>
-          </div>
-          <div>
-            <b>{n.topics}</b>
-            <span>topics</span>
-          </div>
-        </div>
+        <dl class="figures" aria-label="The corpus in figures">
+          <p class="lbl">The corpus</p>
+          {(
+            [
+              [n.reports, "Project reports", "the primary evidence", "summaries/index"],
+              [n.concepts, "Concepts", "synthesised across them", "concepts/index"],
+              [n.entities, "Entities", "organisms, genes, datasets, methods", "entities/index"],
+              [n.conflicts, "Recorded conflicts", "with the evidence on both sides", "conflicts/index"],
+              [n.topics, "Topics", "gathering the rest", "topics/index"],
+            ] as [number, string, string, string][]
+          ).map(([value, label, tail, target]) => (
+            <div class="frow">
+              <dt>{value}</dt>
+              <dd>
+                <a href={resolveRelative(slug, target as FullSlug)}>{label}</a> {tail}
+              </dd>
+            </div>
+          ))}
+          <p class="note">Every figure counts pages on this site, not a claim about the field.</p>
+        </dl>
       </section>
       {browse && (
         <section class="band">
