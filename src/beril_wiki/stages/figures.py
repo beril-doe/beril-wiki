@@ -15,7 +15,7 @@ Also emits figures-csv-queue.md: pages the model flags as needing a chart for
 tabular/CSV evidence that has no figure (review queue, nothing auto-generated).
 
     OPENAI_API_KEY=$CBORG_API_KEY OPENAI_BASE_URL=https://api.cborg.lbl.gov \
-        .venv/bin/python stages/figures.py
+        uv run python -m beril_wiki.stages.figures
 """
 
 from __future__ import annotations

@@ -57,9 +57,3 @@ def test_refresh_rewrites_a_stale_line_and_is_idempotent():
         assert "3 concepts" in text and "93 concepts" not in text, text
         assert "## Browse" in text, "must not clobber the rest of the page"
         assert tb.refresh_corpus_line(idx, tb.corpus_stats(root)) is False
-
-
-if __name__ == "__main__":
-    test_counts_published_entities_only()
-    test_refresh_rewrites_a_stale_line_and_is_idempotent()
-    print("ok")

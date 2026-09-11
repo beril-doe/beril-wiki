@@ -19,7 +19,7 @@ merged with contract/AGENTS.md, which is injected into every call and remains
 the runtime-editable rulebook.
 
     OPENAI_API_KEY=$CBORG_API_KEY OPENAI_BASE_URL=https://api.cborg.lbl.gov \
-        uv run python src/beril_wiki/compiler.py [--root DIR] [doc.md ...]
+        uv run python -m beril_wiki.compiler [--root DIR] [doc.md ...]
 
 # ponytail: full-page rewrite per touched page; sectioned append if >500 docs
 """

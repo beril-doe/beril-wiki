@@ -19,7 +19,7 @@ corpus sources. State: state/litcontext.json. Uses compiler.py's llm() so the
 COMPILE_BUDGET_USD tripwire covers this stage too.
 
     OPENAI_API_KEY=$CBORG_API_KEY OPENAI_BASE_URL=https://api.cborg.lbl.gov \
-        uv run python src/beril_wiki/stages/literature.py [--root DIR]
+        uv run python -m beril_wiki.stages.literature [--root DIR]
 """
 
 from __future__ import annotations

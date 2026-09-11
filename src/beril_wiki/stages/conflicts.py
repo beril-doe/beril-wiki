@@ -8,7 +8,7 @@ whose (sorted project set) was already promoted is skipped unless the source
 tension text changed (content hash in frontmatter).
 
     OPENAI_API_KEY=$CBORG_API_KEY OPENAI_BASE_URL=https://api.cborg.lbl.gov \
-        .venv/bin/python stages/conflicts.py
+        uv run python -m beril_wiki.stages.conflicts
 """
 
 from __future__ import annotations

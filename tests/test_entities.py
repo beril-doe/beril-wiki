@@ -105,10 +105,3 @@ def test_an_identifier_in_the_identity_section_does_match():
         }
     )
     assert ("copper", "cu-ion", "identifier") in got, got
-
-
-if __name__ == "__main__":
-    for name, fn in sorted(globals().items()):
-        if name.startswith("test_"):
-            fn()
-    print("ok")

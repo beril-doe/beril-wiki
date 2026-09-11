@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Self-check for stages/consolidate.py's deterministic logic (no LLM calls).
 
-uv run python tests/test_consolidate.py
+uv run pytest tests/test_consolidate.py
 """
 
 from __future__ import annotations
@@ -173,16 +173,3 @@ def test_padding_gate():
     assert "proj_b" in body_src_ids(real)  # accepted
     # and neither may drop the citation the page already had
     assert "proj_a" in body_src_ids(padded) and "proj_a" in body_src_ids(real)
-
-
-if __name__ == "__main__":
-    test_body_src_ids()
-    test_cosine()
-    test_merge_candidates()
-    test_both_mature()
-    test_same_source_candidates()
-    test_page_numbers()
-    test_backmerge_candidates()
-    test_rewrite_concept_links()
-    test_padding_gate()
-    print("test_consolidate: all checks passed")

@@ -13,7 +13,7 @@ Then runs check.py on both and prints which pages our compiler
 created/updated. Requires a populated staging/ (run stages/fetch.py first)
 and OPENAI_API_KEY/OPENAI_BASE_URL for the compile step.
 
-    uv run python src/beril_wiki/parity.py
+    uv run python -m beril_wiki.parity
 """
 
 from __future__ import annotations
@@ -41,11 +41,28 @@ def snapshot(root: pathlib.Path) -> dict[str, str]:
     }
 
 
+def copy_reference(ref: pathlib.Path, dest: pathlib.Path) -> None:
+    """Copy a reference corpus into dest/wiki in the current single-tree layout.
+
+    The v3 reference predates the merge of wiki-extra into wiki: its catalog
+    is wiki/index.md and its navigation layer, home page included, sits in
+    wiki-extra/. The catalog is renamed BEFORE the overlay, or the home page
+    would land on top of it and be renamed away in its turn.
+    """
+    wiki = dest / "wiki"
+    shutil.copytree(ref / "wiki", wiki)
+    catalog = wiki / "catalog.md"
+    if not catalog.exists() and (wiki / "index.md").exists():
+        (wiki / "index.md").rename(catalog)
+    if (ref / "wiki-extra").is_dir():
+        shutil.copytree(ref / "wiki-extra", wiki, dirs_exist_ok=True)
+
+
 def setup() -> None:
     shutil.rmtree(PARITY, ignore_errors=True)
     for name in ("ours", "ref"):
         dest = PARITY / name
-        shutil.copytree(REF / "wiki", dest / "wiki")
+        copy_reference(REF, dest)
         os.symlink(ROOT / "staging", dest / "staging")
 
     ours = PARITY / "ours"

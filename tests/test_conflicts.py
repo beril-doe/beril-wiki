@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Self-check for stages.conflicts's grouping and naming (no LLM calls).
 
-uv run python tests/test_conflicts.py
+uv run pytest tests/test_conflicts.py
 """
 
 from __future__ import annotations
@@ -43,9 +43,3 @@ def test_merge_similar_groups(monkeypatched=None):
         ("c", "d"): [{"text": shared, "projects": {"c", "d"}}],
     }
     assert len(CB.merge_similar_groups(apart, 1.1)) == 2
-
-
-if __name__ == "__main__":
-    test_conflict_slug()
-    test_merge_similar_groups()
-    print("test_conflicts: all checks passed")

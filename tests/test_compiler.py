@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Self-check for compiler.py's deterministic logic (no LLM calls).
 
-uv run python tests/test_compiler.py
+uv run pytest tests/test_compiler.py
 """
 
 from __future__ import annotations
@@ -125,12 +125,3 @@ def test_plan():
         assert [c["name"] for c in plan["concepts"]["update"]] == ["gene-essentiality"]
         assert sorted(c["name"] for c in plan["concepts"]["create"]) == ["new-idea", "phantom"]
         assert plan["entities"]["create"][0]["type"] == "other"
-
-
-if __name__ == "__main__":
-    test_json()
-    test_validate()
-    test_links_and_fm()
-    test_canonical_sources()
-    test_plan()
-    print("test_compile: all checks passed")

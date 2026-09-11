@@ -28,7 +28,7 @@ pages; back-merge therefore has an explicit "return UNCHANGED" path and a
 deterministic gate that discards any rewrite which does not add a real citation.
 
     OPENAI_API_KEY=$CBORG_API_KEY OPENAI_BASE_URL=https://api.cborg.lbl.gov \
-        uv run python src/beril_wiki/stages/consolidate.py [--dry-run] [--root DIR]
+        uv run python -m beril_wiki.stages.consolidate [--dry-run] [--root DIR]
 
 --dry-run costs $0 and writes nothing: it ranks and prints both candidate lists
 using only free embedding models, and makes no LLM calls.

@@ -28,8 +28,8 @@ the same retention gate as a concept one: no [src:] id and no figure present in
 either input may be missing from the merged page, or the merge is refused and
 both pages are kept.
 
-    uv run python src/beril_wiki/stages/entities.py              # report, change nothing
-    uv run python src/beril_wiki/stages/entities.py --apply      # merge the pairs found
+    uv run python -m beril_wiki.stages.entities              # report, change nothing
+    uv run python -m beril_wiki.stages.entities --apply      # merge the pairs found
 """
 
 from __future__ import annotations

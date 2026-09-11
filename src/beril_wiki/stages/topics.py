@@ -8,7 +8,7 @@ graph); an LLM names the topics and writes the hub prose, citing only what the
 member concept pages already cite.
 
     OPENAI_API_KEY=$CBORG_API_KEY OPENAI_BASE_URL=https://api.cborg.lbl.gov \
-        .venv/bin/python stages/topics.py
+        uv run python -m beril_wiki.stages.topics
 
 Model comes from HUB_MODEL below (hub pages are the showcase — Sonnet by decision).
 """

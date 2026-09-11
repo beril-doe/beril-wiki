@@ -9,7 +9,7 @@ Two backends behind one function, selected by ``FETCH_BACKEND``:
 Other stages import ``CHECKOUT`` from here for figure/README/collections
 paths, so the checkout location is configured in exactly one place.
 
-    uv run python src/beril_wiki/stages/fetch.py [staging-dir]
+    uv run python -m beril_wiki.stages.fetch [staging-dir]
 """
 
 from __future__ import annotations

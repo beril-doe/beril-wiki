@@ -12,7 +12,7 @@ index maintenance are identical to compile-time creates. Idempotent: existing
 concepts are never touched here (compile owns merges), so re-running is safe.
 
     OPENAI_API_KEY=$CBORG_API_KEY OPENAI_BASE_URL=https://api.cborg.lbl.gov \
-        uv run python src/beril_wiki/stages/enrich.py [--root DIR]
+        uv run python -m beril_wiki.stages.enrich [--root DIR]
 """
 
 from __future__ import annotations

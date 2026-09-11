@@ -23,7 +23,7 @@ Applies to synthesis pages (concepts, entities, topic hubs, conflicts), where
 "how much backs this" is a real question. Summaries and raw reports are 1:1
 with a single project by construction, so a label there would say nothing.
 
-    uv run python src/beril_wiki/evidence.py          # print the label for every page
+    uv run python -m beril_wiki.evidence          # print the label for every page
 """
 
 from __future__ import annotations

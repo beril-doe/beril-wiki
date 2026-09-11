@@ -100,7 +100,7 @@ Two backends behind one function, selected by config:
   stem minus `__REPORT` (digests: `discoveries`, `pitfalls`).
 - Cross-links: `[[wikilinks]]`, paths relative to corpus root
   (`[[concepts/x]]`, `[[summaries/x__REPORT]]`). `__REPORT` is a corpus-side
-  convention only: `quartz_ingest` publishes these as `summaries/x`, records
+  convention only: `publish.ingest` publishes these as `summaries/x`, records
   `type: "Project report"` on the way, and labels an unlabelled link with the
   report's title rather than its filename.
 - Frontmatter on wiki/ pages: `type`, `description`, `sources` (list of

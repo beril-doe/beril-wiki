@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Self-check for check's numeric machinery (no LLM calls, no network).
 
-uv run python tests/test_check.py
+uv run pytest tests/test_check.py
 """
 
 from __future__ import annotations
@@ -87,13 +87,3 @@ def test_derivable_numbers():
 
 def test_numbers_in():
     assert numbers_in("0.047 vs 0.038, d = 0.247") == {"0.047", "0.038", "0.247"}
-
-
-if __name__ == "__main__":
-    test_tokenizer()
-    test_unsupported_numbers()
-    test_link_targets_are_not_figures()
-    test_unit_suffixes_and_mantissas()
-    test_derivable_numbers()
-    test_numbers_in()
-    print("test_wiki_check: all checks passed")

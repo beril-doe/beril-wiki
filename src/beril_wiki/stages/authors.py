@@ -12,7 +12,7 @@ after one violation-quoting retry. The section is spliced before ## Projects,
 and stages.extras carries it across regenerations.
 
     OPENAI_API_KEY=$CBORG_API_KEY OPENAI_BASE_URL=https://api.cborg.lbl.gov \
-        uv run python src/beril_wiki/stages/authors.py
+        uv run python -m beril_wiki.stages.authors
 """
 
 from __future__ import annotations

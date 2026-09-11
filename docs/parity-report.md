@@ -10,7 +10,7 @@ Per docs/design.md: the held-out projects (`metal_specificity`,
 `bacdive_phenotype_metal_tolerance`, `prophage_amr_comobilization`) were
 compiled INTO a copy of the reference corpus (`parity/ours`); `parity/ref` is
 the pristine benchmark. Artifacts: `parity/`, `parity/wiki_check.{ours,ref}.txt`,
-`*_run.log`. Reproduce: `uv run python src/beril_wiki/parity.py`.
+`*_run.log`. Reproduce: `uv run python -m beril_wiki.parity`.
 
 ## Final results
 

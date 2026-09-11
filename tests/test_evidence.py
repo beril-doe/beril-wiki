@@ -96,25 +96,3 @@ def test_label_never_claims_review():
     line = labelled(text, "topics", CONFLICTS).lower()
     for word in ("confidence", "reviewed by", "verified", "approved", "accurate"):
         assert word not in line, f"label implies review: {word!r}"
-
-
-if __name__ == "__main__":
-    import tempfile
-
-    test_page_sources_dedupes_and_strips_report_suffix()
-    test_tiers()
-    test_conflict_flag_needs_two_shared_sources()
-    test_conflict_pages_do_not_flag_themselves()
-    test_literature_context_detected()
-    test_unlabelled_collections_and_uncited_pages()
-    test_label_never_claims_review()
-    import pathlib
-
-    for fn in (
-        test_conflict_sources_reads_the_body_not_the_filename,
-        test_page_overlapping_only_unnamed_projects_still_flags,
-        test_single_project_conflict_page_is_ignored,
-    ):
-        with tempfile.TemporaryDirectory() as d:
-            fn(pathlib.Path(d))
-    print("ok")

@@ -74,12 +74,3 @@ def test_strip_keeps_factual_sentences_and_headings():
     assert "research program" not in out
     assert "27,690 pangenome species" in out  # the factual half survives
     assert not subjective_hits(out)
-
-
-if __name__ == "__main__":
-    test_catches_characterising_sentences()
-    test_passes_factual_reporting()
-    test_passes_factual_prose_using_the_same_verbs()
-    test_still_catches_those_verbs_about_a_person()
-    test_strip_keeps_factual_sentences_and_headings()
-    print("ok")

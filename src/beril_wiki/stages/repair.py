@@ -14,9 +14,9 @@ cited sources, quoting the exact violations, through the same generate_page
 write-time validation and retry the compiler uses. Idempotent by construction —
 a page that already validates is a no-op, so it costs $0 in the steady state.
 
-    uv run python src/beril_wiki/stages/repair.py                 # every failing page
-    uv run python src/beril_wiki/stages/repair.py wiki/entities/foo.md
-    uv run python src/beril_wiki/stages/repair.py --dry-run       # report, change nothing
+    uv run python -m beril_wiki.stages.repair                 # every failing page
+    uv run python -m beril_wiki.stages.repair wiki/entities/foo.md
+    uv run python -m beril_wiki.stages.repair --dry-run       # report, change nothing
 """
 
 from __future__ import annotations
