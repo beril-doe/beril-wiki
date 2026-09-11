@@ -202,6 +202,37 @@ def refresh_corpus_line(path: pathlib.Path, stats: str) -> bool:
     return True
 
 
+# Where the data came from. This is a standing fact about the corpus, not a
+# sentence for a model to rephrase: a regenerated home page would otherwise
+# drop the credit and the link, which is how an acknowledgement quietly
+# disappears. Most projects analysed lakehouse data, not all of them, so the
+# wording does not claim every one.
+ACKNOWLEDGEMENT = (
+    "Most of these projects analysed data already in the "
+    "[KBase Data Lakehouse](https://hub.berdl.kbase.us); a few brought their own. "
+    "See [[about|About This Wiki]] for what that means for citing anything here."
+)
+
+
+def refresh_acknowledgement(path: pathlib.Path) -> bool:
+    """Put the standing acknowledgement under the H1. True if the file changed."""
+    text = path.read_text(encoding="utf-8")
+    body = re.sub(r"\n" + re.escape(ACKNOWLEDGEMENT) + r"\n", "\n", text)
+    lines = body.splitlines()
+    for i, line in enumerate(lines):
+        if line.startswith("# "):
+            lines.insert(i + 1, "")
+            lines.insert(i + 2, ACKNOWLEDGEMENT)
+            break
+    else:
+        return False
+    new = "\n".join(lines).rstrip() + "\n"
+    if new == text:
+        return False
+    path.write_text(new, encoding="utf-8")
+    return True
+
+
 def write_home(hubs: list[tuple], stats: str) -> None:
     hub_list = "\n".join(f"- [[topics/{slug}|{t}]] ({n} concepts): {lead}" for t, slug, lead, n in hubs)
     style = (
@@ -230,6 +261,7 @@ def write_home(hubs: list[tuple], stats: str) -> None:
     (OUT / "index.md").write_text(home.strip() + "\n", encoding="utf-8")
     # The model was given the stats, but it must not own them.
     refresh_corpus_line(OUT / "index.md", stats)
+    refresh_acknowledgement(OUT / "index.md")
     print(f"wrote index.md; {stats}")
 
 

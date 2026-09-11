@@ -13,9 +13,12 @@ cite anything here.
 ## What you are reading
 
 The BERIL Research Observatory's AI agents produced the 75 reports in this
-corpus by working over the [KBase Data Lakehouse](https://hub.berdl.kbase.us):
-pangenomes, RB-TnSeq fitness assays, biochemistry, and environmental metadata. No project here collected new data; every one of them
-analysed data that was already in the lakehouse. For each report the pipeline writes a summary, works out which
+corpus. Most of them worked over the
+[KBase Data Lakehouse](https://hub.berdl.kbase.us): pangenomes, RB-TnSeq
+fitness assays, biochemistry, and environmental metadata. A few analysed data
+brought from elsewhere, user-provided sequencing among it, and each report
+states what it used. None of them generated new laboratory measurements.
+For each report the pipeline writes a summary, works out which
 synthesis pages it belongs on, and rewrites those pages to absorb it. A claim
 therefore gathers evidence from every project that supports it, rather than
 appearing once per project.
@@ -99,12 +102,13 @@ in the repository are lower bounds.
 
 ## The data this rests on
 
-Every project in this corpus ran over the
+Most projects in this corpus ran over the
 [KBase Data Lakehouse](https://hub.berdl.kbase.us), the data platform of the
 [Department of Energy Systems Biology Knowledgebase (KBase)](https://www.kbase.us/).
 The pangenomes, fitness assays, genome annotations, amplicon surveys, metabolic
-models and metadata that the reports analyse are KBase's, not this project's.
-Nothing on this site would exist without it.
+models and metadata that those reports analyse are KBase's, not this project's.
+A few projects analysed data from elsewhere instead, and each one says so.
+Little on this site would exist without the lakehouse.
 
 <p class="ack"><a href="https://www.kbase.us/"><img src="assets/kbase-logo.svg" alt="KBase" width="190"></a></p>
 
