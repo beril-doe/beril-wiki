@@ -381,45 +381,101 @@ h4 {
   margin-right: 8px;
   vertical-align: 0;
 }
-// One row of countable facts: what the page rests on, what rests on it.
-.byline {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 20px;
+// The card is two columns: what the page is on the left, what it rests on in
+// a facts panel on the right. Every value in the panel is a nowrap chip in a
+// wrapping row, so a narrow card stacks whole chips instead of orphaning a
+// word above its number.
+.record .body.has-facts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 330px);
+  gap: 40px;
+}
+.record .ident {
+  min-width: 0;
+}
+.facts {
   margin: 0;
-  padding: 9px 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  font-size: 0.86rem;
-  color: var(--ink-2);
-  b {
-    font-weight: 600;
-    color: var(--ink);
+  min-width: 0;
+  border-left: 1px solid var(--line);
+  padding-left: 26px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 9px 16px;
+  align-items: baseline;
+  font-size: 0.84rem;
+  dt {
+    color: var(--mute);
+    font-size: 0.78rem;
+    white-space: nowrap;
   }
-  .rel-supports {
-    color: var(--supports);
+  dd {
+    margin: 0;
+    min-width: 0;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    align-items: center;
+  }
+  .chip {
+    white-space: nowrap;
+    border: 1px solid var(--line);
+    padding: 1px 8px;
+    color: var(--ink-2);
+    font-size: 0.8rem;
     b {
+      font-weight: 600;
+      color: var(--ink);
+    }
+    &.rel-supports {
       color: var(--supports);
+      border-color: color-mix(in oklab, var(--supports) 40%, var(--line));
+      b {
+        color: var(--supports);
+      }
     }
-  }
-  .rel-refines {
-    color: var(--refines);
-    b {
+    &.rel-refines {
       color: var(--refines);
+      border-color: color-mix(in oklab, var(--refines) 40%, var(--line));
+      b {
+        color: var(--refines);
+      }
     }
-  }
-  .rel-contradicts,
-  .warn {
-    color: var(--contradicts);
-    b {
+    &.rel-contradicts,
+    &.warn {
       color: var(--contradicts);
+      border-color: color-mix(in oklab, var(--contradicts) 40%, var(--line));
+      b {
+        color: var(--contradicts);
+      }
     }
   }
-  a {
+  a.chip:hover {
+    text-decoration: none;
+    border-color: var(--method);
+    color: var(--method);
+  }
+  a:not(.chip) {
     color: var(--ink-2);
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-color: var(--line-2);
+    overflow-wrap: anywhere;
+  }
+  .stripc {
+    margin: 0;
+    gap: 2px;
+    i {
+      width: 13px;
+      height: 12px;
+    }
+  }
+  .sub {
+    display: block;
+    color: var(--mute);
+    font-size: 0.76rem;
+    margin-top: 5px;
   }
 }
 .record .standing {
@@ -435,6 +491,21 @@ h4 {
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-color: var(--line-2);
+  }
+}
+
+// Below this the facts panel is narrower than its own chips, so it stops
+// being a column and becomes a block under the title.
+@media (max-width: 1180px) {
+  .record .body.has-facts {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .facts {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding: 14px 0 0;
+    grid-template-columns: 8ch minmax(0, 1fr);
   }
 }
 
@@ -798,7 +869,9 @@ h4 {
 
 // ---- collection index ------------------------------------------------------
 .index-page {
-  padding: 30px 0 70px;
+  // Keep the band's horizontal gutter; a bare `padding` shorthand here zeroed
+  // it, and below the measure the cards ran into both edges of the screen.
+  padding: 30px var(--gutter) 70px;
   .prose {
     max-width: 70ch;
     font-size: 0.98rem;
@@ -1367,11 +1440,21 @@ footer {
   }
   .stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    // The gutter is 20px here, so the desktop -22px pull would hang the band
+    // off the side of the screen.
+    margin-inline: 0;
     div {
+      padding: 14px 14px 15px;
       border-bottom: 1px solid var(--line);
       &:nth-child(2n) {
         border-right: 0;
       }
+    }
+    div:first-child {
+      padding-left: 0;
+    }
+    div:nth-child(2n + 1) {
+      padding-left: 0;
     }
   }
   .browse ul,

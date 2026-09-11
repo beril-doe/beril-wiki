@@ -44,7 +44,8 @@ const NAV: [string, string][] = [
   ["About", "about"],
 ]
 
-const MAX_STRIP = 16
+// Twelve blocks and a +N fit one row of the header's facts column.
+const MAX_STRIP = 12
 const MAX_LIST = 8
 
 // Quartz types slot components as returning unknown; JSX wants elements.
@@ -204,70 +205,121 @@ function Record({ file, c, terms, standing, orcid, cites, rels, t, figures }: {
   cites: Cite[]
   rels: Record<(typeof RELS)[number], number>
   t: Ties
-  /** Extra byline facts, for pages the citation counts say nothing about. */
-  figures?: string[]
+  /** Labelled rows for pages the citation counts say nothing about. */
+  figures?: [string, string][]
 }) {
   const slug = slugOf(file) as FullSlug
   const kind = kindOf(file)
   const topics = c.topicsOf(file)
   const line = sentence(terms)
-  const facts: JSX.Element[] = []
+
+  // The facts panel: one labelled row per countable thing the page rests on.
+  // Every value is a nowrap chip inside a wrapping row, so a narrow card
+  // stacks the chips instead of orphaning a word above its number.
+  const rows: [string, JSX.Element][] = []
   if (cites.length > 0)
-    facts.push(
-      <span>
-        <b>{cites.length}</b> source {cites.length === 1 ? "project" : "projects"}
+    rows.push([
+      cites.length === 1 ? "Source" : "Sources",
+      <>
+        <span class="stripc">
+          {cites.slice(0, MAX_STRIP).map((k, i) => (
+            <i class={cell(k, i === 0)} title={`${k.label}: cited ${k.n} time${k.n === 1 ? "" : "s"}`} />
+          ))}
+          {cites.length > MAX_STRIP && <span class="more">+{cites.length - MAX_STRIP}</span>}
+        </span>
+        <span class="sub">{cites.length} project reports</span>
+      </>,
+    ])
+  const stated = RELS.filter((r) => rels[r] > 0)
+  if (stated.length > 0)
+    rows.push([
+      "Relations",
+      <span class="chips">
+        {stated.map((r) => (
+          <span class={`chip rel-${r}`}>
+            {r} <b>{rels[r]}</b>
+          </span>
+        ))}
       </span>,
-    )
-  for (const r of RELS) if (rels[r] > 0) facts.push(<span class={`rel-${r}`}><b>{rels[r]}</b> {r}</span>)
-  if (t.citedBy.length > 0)
-    facts.push(
-      <span>
-        cited by <b>{t.citedBy.length}</b> {t.citedBy.length === 1 ? "page" : "pages"}
+    ])
+  if (t.citedBy.length > 0) {
+    const inTopics = new Set(t.citedBy.flatMap((f) => c.topicsOf(f).map(slugOf))).size
+    rows.push([
+      "Cited by",
+      <span class="chips">
+        <span class="chip">
+          {t.citedBy.length} {t.citedBy.length === 1 ? "page" : "pages"}
+        </span>
+        {inTopics > 0 && (
+          <span class="chip">
+            {inTopics} {inTopics === 1 ? "topic" : "topics"}
+          </span>
+        )}
       </span>,
-    )
+    ])
+  }
   if (t.named.length > 0)
-    facts.push(
-      <span class="warn">
-        <b>{t.named.length}</b> open {t.named.length === 1 ? "conflict" : "conflicts"}
+    rows.push([
+      t.named.length === 1 ? "Conflict" : "Conflicts",
+      <span class="chips">
+        <span class="chip warn">{t.named.length} open</span>
       </span>,
-    )
+    ])
   if (t.reportAuthors.length > 0)
-    facts.push(
-      <span>
-        <b>{t.reportAuthors.length}</b> {t.reportAuthors.length === 1 ? "author" : "authors"}
+    rows.push([
+      t.reportAuthors.length === 1 ? "Author" : "Authors",
+      <span class="chips">
+        {t.reportAuthors.map((a) => (
+          <a class="chip" href={resolveRelative(slug, slugOf(a) as FullSlug)}>
+            {titleOf(a)}
+          </a>
+        ))}
       </span>,
-    )
-  if (orcid) facts.push(<span>ORCID {jsx(orcid)}</span>)
-  for (const f of figures ?? []) facts.push(<span>{f}</span>)
+    ])
+  if (orcid) rows.push(["ORCID", <span class="chips">{jsx(orcid)}</span>])
+  for (const [label, value] of figures ?? [])
+    rows.push([label, <span class="chips"><span class="chip">{value}</span></span>])
+
   return (
     <div class={`record kind-${kind.cls}`}>
       <div class="kindband" aria-hidden="true" />
-      <div class="body">
-      <p class="kind">
-        <b>{kind.label}</b>
-        {topics.length > 0 && (
-          <>
-            {" in "}
-            {topics.map((t, i) => (
+      <div class={rows.length > 0 ? "body has-facts" : "body"}>
+        <div class="ident">
+          <p class="kind">
+            <b>{kind.label}</b>
+            {topics.length > 0 && (
               <>
-                {i > 0 && ", "}
-                <i class="dot" style={`--c:${c.hue(slugOf(t))}`} />
-                <a class="topic" href={resolveRelative(slug, slugOf(t) as FullSlug)}>
-                  {titleOf(t)}
-                </a>
+                {" in "}
+                {topics.map((t, i) => (
+                  <>
+                    {i > 0 && ", "}
+                    <i class="dot" style={`--c:${c.hue(slugOf(t))}`} />
+                    <a class="topic" href={resolveRelative(slug, slugOf(t) as FullSlug)}>
+                      {titleOf(t)}
+                    </a>
+                  </>
+                ))}
+              </>
+            )}
+          </p>
+          <h1>{titleOf(file)}</h1>
+          {(line || standing) && (
+            <p class="standing">
+              {line && <span>{line} </span>}
+              {standing && jsx(standing)}
+            </p>
+          )}
+        </div>
+        {rows.length > 0 && (
+          <dl class="facts">
+            {rows.map(([label, value]) => (
+              <>
+                <dt>{label}</dt>
+                <dd>{value}</dd>
               </>
             ))}
-          </>
+          </dl>
         )}
-      </p>
-      <h1>{titleOf(file)}</h1>
-      {facts.length > 0 && <p class="byline">{facts}</p>}
-      {(line || standing) && (
-        <p class="standing">
-          {line && <span>{line} </span>}
-          {standing && jsx(standing)}
-        </p>
-      )}
       </div>
     </div>
   )
@@ -344,15 +396,9 @@ function Rail({ cd, file, c, cites, t, left }: {
             })}
             {cites.length > MAX_LIST && <li class="plain rest">and {cites.length - MAX_LIST} more</li>}
           </ul>
-          <div class="stripc" aria-hidden="true">
-            {cites.slice(0, MAX_STRIP).map((k, i) => (
-              <i class={cell(k, i === 0)} title={`${k.label}: cited ${k.n} time${k.n === 1 ? "" : "s"}`} />
-            ))}
-            {cites.length > MAX_STRIP && <span class="more">+{cites.length - MAX_STRIP}</span>}
-          </div>
           <p class="more">
-            One block per cited report: black is the primary source, colour is the relation the prose
-            states.
+            The dot is the relation the prose states; black is the primary source. The strip in the
+            header says the same, one block per report.
           </p>
         </section>
       )}
@@ -455,7 +501,7 @@ function Sources({ cites, from }: { cites: Cite[]; from: FullSlug }) {
 // What a collection index can say about itself, in countable terms. Quartz
 // gives an index page no citations, so without this its byline is empty and
 // the page opens on a bare title.
-function indexFigures(file: File, c: Corpus): string[] {
+function indexFigures(file: File, c: Corpus): [string, string][] {
   const here = collectionOf(slugOf(file))
   const members = [...c.bySlug.values()].filter(
     (f) => collectionOf(slugOf(f)) === here && !isIndex(slugOf(f)),
@@ -463,40 +509,40 @@ function indexFigures(file: File, c: Corpus): string[] {
   const n = members.length
   if (n === 0) return []
   const plural = (k: number, unit: string) => `${k} ${unit}${k === 1 ? "" : "s"}`
-  const out: string[] = []
+  const out: [string, string][] = []
   switch (here) {
     case "entities": {
-      out.push(plural(n, "entity").replace("entitys", "entities"))
-      out.push(plural(new Set(members.map((f) => kindOf(f).label)).size, "kind"))
+      out.push(["Entities", String(n)])
+      out.push(["Kinds", plural(new Set(members.map((f) => kindOf(f).label)).size, "kind")])
       break
     }
     case "topics": {
-      out.push(plural(n, "topic"))
+      out.push(["Topics", String(n)])
       const gathered = new Set(
         members.flatMap((f) => linksOf(f).filter((l) => collectionOf(l) === "concepts")),
       )
-      out.push(`${gathered.size} concepts gathered`)
+      out.push(["Concepts", `${gathered.size} gathered`])
       break
     }
     case "authors": {
-      out.push(plural(n, "person").replace("persons", "people"))
+      out.push(["People", String(n)])
       const reports = new Set(
         members.flatMap((f) => linksOf(f).filter((l) => collectionOf(l) === "summaries")),
       )
-      out.push(`credited on ${plural(reports.size, "project report")}`)
+      out.push(["Credited on", plural(reports.size, "project report")])
       break
     }
     case "summaries":
-      out.push(plural(n, "report"))
+      out.push(["Reports", String(n)])
       break
     case "conflicts":
-      out.push(plural(n, "recorded conflict"))
+      out.push(["Conflicts", plural(n, "recorded conflict")])
       break
     case "concepts":
-      out.push(plural(n, "concept"))
+      out.push(["Concepts", String(n)])
       break
     default:
-      out.push(plural(n, "page"))
+      out.push(["Pages", String(n)])
   }
   return out
 }
