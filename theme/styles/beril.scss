@@ -833,6 +833,18 @@ h4 {
         height: 14px;
       }
     }
+    // The stock fold button toggles `.collapsed` on itself and leaves the
+    // list to CSS. This stylesheet is unlayered, so without this rule the
+    // chevron moved and nothing else did.
+    button.toc-header.collapsed + ul.toc-content {
+      display: none;
+    }
+    button.toc-header .fold {
+      transition: transform 0.15s ease;
+    }
+    button.toc-header.collapsed .fold {
+      transform: rotate(-90deg);
+    }
     ul.toc-content {
       margin: 8px 0 0;
       li {
