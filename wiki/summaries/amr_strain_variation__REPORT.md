@@ -8,7 +8,7 @@ full_text: "sources/amr_strain_variation__REPORT.md"
 
 ## Overview
 
-This report analyzes antimicrobial-resistance (AMR) gene variation across 1,305 species and 180,025 genomes using the KBase/BERDL pangenome resource. It finds that within-species AMR repertoires are extensive but structured by prevalence class, tightly co-inherited resistance islands, phylogeny, lineage-associated ecotypes, and environment. [src: amr_strain_variation]
+This report analyzes antimicrobial-resistance (AMR) gene variation across 1,305 species and 180,025 genomes using the KBase/KBase Data Lakehouse pangenome resource. It finds that within-species AMR repertoires are extensive but structured by prevalence class, tightly co-inherited resistance islands, phylogeny, lineage-associated ecotypes, and environment. [src: amr_strain_variation]
 
 ## Key Findings
 

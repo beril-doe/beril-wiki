@@ -11,7 +11,7 @@ sources: ["summaries/berdl_data_atlas__REPORT.md", "summaries/enigma_contaminati
 
 **Known aliases:** ENIGMA CORAL; `enigma_coral`. [src: berdl_data_atlas]
 
-ENIGMA CORAL is a BERDL field-sample data resource used for environmental and biological observations. [src: berdl_data_atlas] The atlas recommends it for field samples and places it within the broader [[concepts/multi-omics-integration]] and [[concepts/environmental-resistome]] integration landscape. [src: berdl_data_atlas] The contamination-gradient study **refines** this characterization by demonstrating a reproducible workflow linking ENIGMA geochemistry and community composition to [[entities/kbase-ke-pangenome]] clades and [[entities/eggnog]]-derived functional proxies across 108 samples. [src: enigma_contamination_functional_potential]
+ENIGMA CORAL is a KBase Data Lakehouse field-sample data resource used for environmental and biological observations. [src: berdl_data_atlas] The atlas recommends it for field samples and places it within the broader [[concepts/multi-omics-integration]] and [[concepts/environmental-resistome]] integration landscape. [src: berdl_data_atlas] The contamination-gradient study **refines** this characterization by demonstrating a reproducible workflow linking ENIGMA geochemistry and community composition to [[entities/kbase-ke-pangenome]] clades and [[entities/eggnog]]-derived functional proxies across 108 samples. [src: enigma_contamination_functional_potential]
 
 The SSO subsurface ecology analysis **supports** CORAL’s role as a field-sample resource by using its sediment and groundwater 16S amplicon sequence variant (ASV) observations to resolve community structure across a 3×3 well grid spanning approximately 6 m. [src: enigma_sso_asv_ecology] It also **refines** the integration picture: 221 SSO geochemistry sample tubes are registered in CORAL, but the associated metals, ion chromatography/total organic carbon, isotope, ammonia, and nitrite measurements were not loaded in the analyzed dataset. [src: enigma_sso_asv_ecology]
 
@@ -24,7 +24,7 @@ The Oak Ridge field-ecology study **supports** CORAL’s utility for directly co
 - The inventory contains 4,346 ENIGMA SDT samples. [src: berdl_data_atlas]
 - The inventory contains 579 ENIGMA DDT measurement bricks. [src: berdl_data_atlas]
 - The inventory contains 218,510 ENIGMA SDT amplicon sequence variants (ASVs). [src: berdl_data_atlas]
-- ENIGMA contains 36% of BERDL tables but appears in 6 of the 66 audited BERIL projects. [src: berdl_data_atlas]
+- ENIGMA contains 36% of the KBase Data Lakehouse tables but appears in 6 of the 66 audited BERIL projects. [src: berdl_data_atlas]
 - ENIGMA covers 5 biological topics and has a topic-coverage entropy of 0.43. [src: berdl_data_atlas]
 - The contamination-gradient analysis used a quality-controlled overlap of 108 samples, a geochemistry matrix with shape `(108, 49)`, 41,711 community taxon rows, 212 distinct communities, and 1,392 distinct genera. [src: enigma_contamination_functional_potential]
 - That analysis **supports** the atlas’s placement of ENIGMA in [[concepts/multi-omics-integration]]: it integrated geochemistry, community composition, pangenome clades, and eggNOG-derived functional features, while documenting incomplete cross-dataset coverage. [src: enigma_contamination_functional_potential]
@@ -48,7 +48,7 @@ The absence of DvH fitness data **refines** the cross-tenant roadmap: CORAL’s 
 
 ## Source
 
-- [[summaries/berdl_data_atlas__REPORT]] — BERDL inventory, topic map, cross-tenant bridges, and realized-use audit. [src: berdl_data_atlas]
+- [[summaries/berdl_data_atlas__REPORT]] — KBase Data Lakehouse inventory, topic map, cross-tenant bridges, and realized-use audit. [src: berdl_data_atlas]
 - [[summaries/enigma_contamination_functional_potential__REPORT]] — ENIGMA contamination-gradient analysis linking geochemistry, community composition, pangenome clades, and functional proxies. [src: enigma_contamination_functional_potential]
 - [[summaries/enigma_sso_asv_ecology__REPORT]] — SSO subsurface ASV ecology, spatial structure, hydrogeological gradients, and missing geochemical validation. [src: enigma_sso_asv_ecology]
 - [[summaries/field_vs_lab_fitness__REPORT]] — DvH field-versus-lab fitness analysis and ENIGMA CORAL data-availability survey. [src: field_vs_lab_fitness]

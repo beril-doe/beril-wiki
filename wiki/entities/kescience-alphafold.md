@@ -9,11 +9,11 @@ sources: ["summaries/alphafold_msa_annotation__REPORT.md", "summaries/berdl_data
 
 **Canonical name:** KEScience AlphaFold. [src: alphafold_msa_annotation]
 
-**Known aliases:** AlphaFold MSA-depth dataset; BERDL AlphaFold snapshot. [src: alphafold_msa_annotation]
+**Known aliases:** AlphaFold MSA-depth dataset; KBase Data Lakehouse AlphaFold snapshot. [src: alphafold_msa_annotation]
 
 **Stable external identifier:** No stable external identifier was reported in the source document. [src: alphafold_msa_annotation]
 
-KEScience AlphaFold is a dataset used to provide multiple-sequence-alignment (MSA) depths for gene-cluster representative sequences in the BERDL analysis. [src: alphafold_msa_annotation] The analysis joined it with [[entities/kbase-ke-pangenome]], Bakta annotations, and [[entities/interproscan]] domain annotations. [src: alphafold_msa_annotation]
+KEScience AlphaFold is a dataset used to provide multiple-sequence-alignment (MSA) depths for gene-cluster representative sequences in the KBase Data Lakehouse analysis. [src: alphafold_msa_annotation] The analysis joined it with [[entities/kbase-ke-pangenome]], Bakta annotations, and [[entities/interproscan]] domain annotations. [src: alphafold_msa_annotation]
 
 The BERDL Data Atlas inventories 241,070,489 AlphaFold predicted structures, establishing this dataset as a major structural reference layer in the data lakehouse. [src: berdl_data_atlas] This **supports** its use as a structural complement to pangenome and fitness data, while the atlas **refines** the earlier description by documenting a separate validated structural-fitness join through SwissProt best hits. [src: berdl_data_atlas]
 
@@ -31,7 +31,7 @@ The report identified 415,603 distinct core clusters with MSA depth below 10 acr
 
 These low-MSA-depth core clusters were interpreted as candidates for experimental structural characterisation because they are conserved by pangenome classification yet structurally isolated from characterised sequence space; this is a prioritisation hypothesis rather than direct experimental validation. [src: alphafold_msa_annotation]
 
-The dataset used a static version-6 BERDL AlphaFold snapshot. [src: alphafold_msa_annotation] MSA depth was looked up for each cluster's representative sequence, so within-cluster sequence diversity was not represented. [src: alphafold_msa_annotation]
+The dataset used a static version-6 KBase Data Lakehouse AlphaFold snapshot. [src: alphafold_msa_annotation] MSA depth was looked up for each cluster's representative sequence, so within-cluster sequence diversity was not represented. [src: alphafold_msa_annotation]
 
 ## Validated structural-fitness integration
 

@@ -17,7 +17,7 @@ Retron is treated in this analysis as an anti-phage defense-system category dete
 
 ## Evidence from the phage-defense arsenal
 
-Retron markers were assessed as one of seven anti-phage defense-system families across the BERDL pangenome. [src: phage_defense_arsenal]
+Retron markers were assessed as one of seven anti-phage defense-system families across the KBase Data Lakehouse pangenome. [src: phage_defense_arsenal]
 
 Retron had a species-level prevalence of **54.7%** in the analysis. [src: phage_defense_arsenal]
 

@@ -13,7 +13,7 @@ sources: ["summaries/pgp_pangenome_ecology__REPORT.md"]
 
 **Stable external identifier:** No stable external identifier was reported in this document. [src: pgp_pangenome_ecology]
 
-pqqC is a plant-growth-promoting gene marker analyzed across the BERDL pangenome. [src: pgp_pangenome_ecology]
+pqqC is a plant-growth-promoting gene marker analyzed across the KBase Data Lakehouse pangenome. [src: pgp_pangenome_ecology]
 
 ## Key facts
 

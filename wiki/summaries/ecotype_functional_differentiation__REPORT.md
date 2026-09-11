@@ -8,7 +8,7 @@ full_text: "sources/ecotype_functional_differentiation__REPORT.md"
 
 ## Overview
 
-This report tests whether within-species gene-content ecotypes differ functionally by clustering bacterial genomes from the BERDL pangenome database and comparing their COG (Clusters of Orthologous Groups) profiles. PCA followed by KMeans identified valid gene-content ecotypes in 12 of 15 sampled species (80%), assigning 1,820 genomes across 12 species spanning 6 phyla; species averaged 3.7 ecotypes, with a range of 2–6 and a mean silhouette score of 0.215 (median: 0.174). The results indicate that ecotype gene-content variation is systematically differentiated in function, especially in adaptive categories, although ecotype boundaries are overlapping and the analysis is limited by sampling, annotation coverage, clustering assumptions, and possible phylogenetic confounding. [src: ecotype_functional_differentiation]
+This report tests whether within-species gene-content ecotypes differ functionally by clustering bacterial genomes from the KBase Data Lakehouse pangenome database and comparing their COG (Clusters of Orthologous Groups) profiles. PCA followed by KMeans identified valid gene-content ecotypes in 12 of 15 sampled species (80%), assigning 1,820 genomes across 12 species spanning 6 phyla; species averaged 3.7 ecotypes, with a range of 2–6 and a mean silhouette score of 0.215 (median: 0.174). The results indicate that ecotype gene-content variation is systematically differentiated in function, especially in adaptive categories, although ecotype boundaries are overlapping and the analysis is limited by sampling, annotation coverage, clustering assumptions, and possible phylogenetic confounding. [src: ecotype_functional_differentiation]
 
 ## Key Findings
 
@@ -38,7 +38,7 @@ The remaining reported per-category results were E: 11/12 significant, rate 0.91
 
 ### Sampling and analysis
 
-From 27,702 species in the BERDL pangenome database, 457 had at least 50 genomes and 456 remained eligible after filtering for COG annotation coverage. A stratified random sample of 15 species was drawn, with 5 species per genome-count bin of 50–100, 100–200, and 200–300 genomes; two species experienced transient Spark S3 read errors, and *Limisoma* sp. had insufficient structure for valid clustering. [src: ecotype_functional_differentiation]
+From 27,702 species in the KBase Data Lakehouse pangenome database, 457 had at least 50 genomes and 456 remained eligible after filtering for COG annotation coverage. A stratified random sample of 15 species was drawn, with 5 species per genome-count bin of 50–100, 100–200, and 200–300 genomes; two species experienced transient Spark S3 read errors, and *Limisoma* sp. had insufficient structure for valid clustering. [src: ecotype_functional_differentiation]
 
 Clustering used PCA with up to 50 components followed by KMeans, searching k = 2–6 and selecting the best silhouette score. Differential enrichment used 257 chi-square/Fisher’s exact tests with BH-FDR correction at alpha = 0.05. The generated datasets included 456 eligible species, 1,820 genome-to-ecotype assignments, 12 clustering-statistics records, 894 ecotype COG profiles, and 257 COG differentiation-test results. [src: ecotype_functional_differentiation]
 
@@ -58,5 +58,5 @@ The report proposes scaling the analysis to all 456 eligible species, overlaying
 ## Slots Into
 
 - [[concepts/ecotype-environment-gene-content]] — adds multi-species evidence that within-species gene-content ecotypes are widespread and functionally differentiated, while identifying phylogenetic control and environment metadata as unresolved tests. [src: ecotype_functional_differentiation]
-- [[concepts/pangenome-integration]] — contributes a BERDL pangenome analysis linking auxiliary gene-content clustering to COG functional differentiation across 12 species. [src: ecotype_functional_differentiation]
+- [[concepts/pangenome-integration]] — contributes a KBase Data Lakehouse pangenome analysis linking auxiliary gene-content clustering to COG functional differentiation across 12 species. [src: ecotype_functional_differentiation]
 - [[concepts/multi-omics-integration]] — identifies unannotated ecotype-differentiating genes as a target for integrating functional annotation and protein-structure evidence. [src: ecotype_functional_differentiation]

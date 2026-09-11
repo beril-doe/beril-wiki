@@ -14,7 +14,7 @@ BREX is the canonical name used in this report for a bacterial anti-phage defens
 
 ## Evidence from phage_defense_arsenal
 
-BREX was detected as one of seven anti-phage defense-system families in the BERDL pangenome analysis. [src: phage_defense_arsenal]
+BREX was detected as one of seven anti-phage defense-system families in the KBase Data Lakehouse pangenome analysis. [src: phage_defense_arsenal]
 
 BREX occurred in 80.1% of species-level pangenomes in the prevalence analysis. [src: phage_defense_arsenal]
 

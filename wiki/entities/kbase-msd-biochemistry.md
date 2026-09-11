@@ -1,13 +1,13 @@
 ---
 type: "Dataset"
-description: "BERDL biochemistry dataset used to validate ADP1 reactions and compounds"
+description: "KBase Data Lakehouse biochemistry dataset used to validate ADP1 reactions and compounds"
 sources: ["summaries/acinetobacter_adp1_explorer__REPORT.md"]
 ---
 # KBase MSD Biochemistry
 
 ## What this entity is
 
-**KBase MSD Biochemistry** is a BERDL biochemistry dataset used to connect metabolic reactions and compounds from the ADP1 Data Explorer to reference biochemical records. [src: acinetobacter_adp1_explorer]
+**KBase MSD Biochemistry** is a KBase Data Lakehouse biochemistry dataset used to connect metabolic reactions and compounds from the ADP1 Data Explorer to reference biochemical records. [src: acinetobacter_adp1_explorer]
 
 - **Canonical name:** KBase MSD Biochemistry. [src: acinetobacter_adp1_explorer]
 - **Known alias:** `kbase_msd_biochemistry`. [src: acinetobacter_adp1_explorer]
@@ -15,7 +15,7 @@ sources: ["summaries/acinetobacter_adp1_explorer__REPORT.md"]
 
 ## Evidence from the ADP1 Data Explorer
 
-The ADP1 database connected to the `kbase_msd_biochemistry` collection as part of its BERDL integration. [src: acinetobacter_adp1_explorer]
+The ADP1 database connected to the `kbase_msd_biochemistry` collection as part of its KBase Data Lakehouse integration. [src: acinetobacter_adp1_explorer]
 
 Of 1,330 tested metabolic reactions, 1,210 matched the biochemistry collection. [src: acinetobacter_adp1_explorer]
 
@@ -33,7 +33,7 @@ Of 121,519 growth phenotype predictions across the 14 genomes, 105,376, or 87%, 
 
 The collection is linked to [[concepts/metabolic-model-gapfilling]], where reaction conservation, missing functions, and gapfilling dependence are interpreted across the ADP1 metabolic analysis. [src: acinetobacter_adp1_explorer]
 
-It is part of the BERDL integration used alongside [[entities/kbase-ke-pangenome]] and the ADP1 resource [[entities/acinetobacter-baylyi-adp1-data-explorer-database]]. [src: acinetobacter_adp1_explorer]
+It is part of the KBase Data Lakehouse integration used alongside [[entities/kbase-ke-pangenome]] and the ADP1 resource [[entities/acinetobacter-baylyi-adp1-data-explorer-database]]. [src: acinetobacter_adp1_explorer]
 
 Its reaction-level evidence supports interpretation of [[entities/flux-balance-analysis]] results in the source report. [src: acinetobacter_adp1_explorer]
 

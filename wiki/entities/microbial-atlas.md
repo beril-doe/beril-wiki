@@ -73,7 +73,7 @@ The soil-frontier report **reinforces** the need for provenance-aware interpreta
 - [[concepts/metal-cross-resistance]] — metal type diversity and inferred ecological breadth. [src: microbeatlas_metal_ecology]
 - [[concepts/genomic-under-representation]] — genomic under-representation in forest and cropland soils and the alkaline-soil sampling gap. [src: soil_frontier_genomics]
 - [[concepts/provenance-aware-resource-discovery]] — distinguishing database sampling gaps from assembly or annotation gaps. [src: soil_frontier_genomics]
-- [[concepts/cross-tenant-data-bridging]] — integration of environmental profiles with ENIGMA and BERDL data. [src: genotype_to_phenotype_enigma]
+- [[concepts/cross-tenant-data-bridging]] — integration of environmental profiles with ENIGMA and KBase Data Lakehouse data. [src: genotype_to_phenotype_enigma]
 - [[entities/gtdb]] — source of verified taxonomic assignments for species-level linkages. [src: genotype_to_phenotype_enigma]
 - [[entities/16s-amplicon-sequencing]] — sequencing approach underlying the environmental profiles. [src: genotype_to_phenotype_enigma]
 - [[summaries/genotype_to_phenotype_enigma__REPORT]] — source-project summary. [src: genotype_to_phenotype_enigma]

@@ -58,7 +58,7 @@ The pangenome result also may reflect general metabolic capacity: genome size, C
 - [[concepts/metabolic-model-gapfilling]] — Its complete GapMind pathway prediction agrees with the Fitness Browser growth result. [src: fw300_metabolic_consistency]
 - [[concepts/ecotype-environment-gene-content]] — Soil context reverses the otherwise positive association between tryptophan-pathway completeness and ipdC. [src: pgp_pangenome_ecology]
 - [[concepts/gene-function-acquisition-depth]] — The ipdC association and its rarity inform interpretation of pathway-linked gene distribution. [src: pgp_pangenome_ecology]
-- [[concepts/cross-tenant-data-bridging]] — Its interpretation depends on joining metabolite, fitness, phenotype, and pathway data across BERDL collections. [src: fw300_metabolic_consistency]
+- [[concepts/cross-tenant-data-bridging]] — Its interpretation depends on joining metabolite, fitness, phenotype, and pathway data across the KBase Data Lakehouse collections. [src: fw300_metabolic_consistency]
 - [[entities/pseudomonas-fw300-n2e3]] — Organism producing tryptophan and showing growth-associated fitness effects on it. [src: fw300_metabolic_consistency]
 - [[entities/web-of-microbes]] — Source of the tryptophan exometabolomics observation. [src: fw300_metabolic_consistency]
 - [[entities/kescience-fitnessbrowser]] — Source of the tryptophan fitness measurements. [src: fw300_metabolic_consistency]

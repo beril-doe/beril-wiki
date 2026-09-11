@@ -13,7 +13,7 @@ sources: ["summaries/phage_defense_arsenal__REPORT.md"]
 
 **Stable external identifier:** No stable external identifier was reported in the source document. [src: phage_defense_arsenal]
 
-DISARM is one of seven anti-phage defense-system families analyzed across the BERDL pangenome. [src: phage_defense_arsenal]
+DISARM is one of seven anti-phage defense-system families analyzed across the KBase Data Lakehouse pangenome. [src: phage_defense_arsenal]
 
 ## Key facts
 

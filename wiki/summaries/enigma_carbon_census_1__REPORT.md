@@ -8,7 +8,7 @@ full_text: "sources/enigma_carbon_census_1__REPORT.md"
 
 ## Overview
 
-The ENIGMA Carbon Census integrates compound identity resolution, pathway and enzyme linkage, ENIGMA-isolate utilization predictions, GTDB strain placement, SSO field occurrence, and global environmental abundance for 83 enrichment compounds: 59 from SSO groundwater and 24 from necromass. All 83 compounds resolved to structures with InChIKeys via PubChem, 54 linked to KEGG, and 9 were callable under the project definition: 8 through an ENIGMA-isolate utilizer call and 1 through a Tier-1 measured RB-TnSeq carbon-source fitness experiment. The central result is a resource-defined knowledge gap: 74/83 compounds (89%) were organism-dark, meaning their genetic determinants of utilization were not linkable through the queried BERDL and curated resources. [src: enigma_carbon_census_1]
+The ENIGMA Carbon Census integrates compound identity resolution, pathway and enzyme linkage, ENIGMA-isolate utilization predictions, GTDB strain placement, SSO field occurrence, and global environmental abundance for 83 enrichment compounds: 59 from SSO groundwater and 24 from necromass. All 83 compounds resolved to structures with InChIKeys via PubChem, 54 linked to KEGG, and 9 were callable under the project definition: 8 through an ENIGMA-isolate utilizer call and 1 through a Tier-1 measured RB-TnSeq carbon-source fitness experiment. The central result is a resource-defined knowledge gap: 74/83 compounds (89%) were organism-dark, meaning their genetic determinants of utilization were not linkable through the queried the KBase Data Lakehouse and curated resources. [src: enigma_carbon_census_1]
 
 ## Key Findings
 
@@ -62,7 +62,7 @@ With only 9 callable compounds, physicochemical comparisons were directional and
 
 ## Caveats and Limitations
 
-“Organism-dark” means not linkable through the queried BERDL and curated resources, not unknown to science. Class-level catabolic literature exists for compounds including monoterpenes and nicotine, while the project’s zero literature rescues resulted from a shallow PubMed-title-only screen. A PaperBLAST or abstract-level search could reclassify part of the dark set. [src: enigma_carbon_census_1]
+“Organism-dark” means not linkable through the queried the KBase Data Lakehouse and curated resources, not unknown to science. Class-level catabolic literature exists for compounds including monoterpenes and nicotine, while the project’s zero literature rescues resulted from a shallow PubMed-title-only screen. A PaperBLAST or abstract-level search could reclassify part of the dark set. [src: enigma_carbon_census_1]
 
 The dark fraction depends on the catabolic-direction filter: the 8 ENIGMA-isolate calls used a genome-prevalence-<10% signature-reaction filter retaining reactions that were catabolic according to KEGG degradation-map membership or a 3-reaction curated allowlist. A different filter could change the callable/dark boundary. Lauric acid was independently callable through measured fitness and was not subject to this filter. [src: enigma_carbon_census_1]
 

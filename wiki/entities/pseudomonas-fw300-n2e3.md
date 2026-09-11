@@ -1,6 +1,6 @@
 ---
 type: "Organism"
-description: "ENIGMA groundwater Pseudomonas isolate linked across BERDL fitness and metabolite resources"
+description: "ENIGMA groundwater Pseudomonas isolate linked across the KBase Data Lakehouse fitness and metabolite resources"
 sources: ["summaries/fw300_metabolic_consistency__REPORT.md", "summaries/webofmicrobes_explorer__REPORT.md"]
 ---
 # Pseudomonas FW300-N2E3

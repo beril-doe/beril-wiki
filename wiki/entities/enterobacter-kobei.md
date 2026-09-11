@@ -1,6 +1,6 @@
 ---
 type: "Organism"
-description: "Bacterial species represented by a two-ecotype BERDL analysis"
+description: "Bacterial species represented by a two-ecotype KBase Data Lakehouse analysis"
 sources: ["summaries/ecotype_functional_differentiation__REPORT.md"]
 ---
 # Enterobacter kobei

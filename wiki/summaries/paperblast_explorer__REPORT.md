@@ -8,7 +8,7 @@ full_text: "sources/paperblast_explorer__REPORT.md"
 
 ## Overview
 
-This analysis characterizes the BERDL `kescience_paperblast` collection, which contains 12.4 million rows across 14 tables linking protein sequences and genes to literature, curated annotations, structural data, and snippets from PubMed Central full-text articles. It combines database inventory, organism- and gene-level coverage analysis, Lorenz inequality curves, and MMseqs2 sequence clustering to quantify research concentration and identify poorly studied protein families. [src: paperblast_explorer]
+This analysis characterizes the KBase Data Lakehouse `kescience_paperblast` collection, which contains 12.4 million rows across 14 tables linking protein sequences and genes to literature, curated annotations, structural data, and snippets from PubMed Central full-text articles. It combines database inventory, organism- and gene-level coverage analysis, Lorenz inequality curves, and MMseqs2 sequence clustering to quantify research concentration and identify poorly studied protein families. [src: paperblast_explorer]
 
 ## Key Findings
 
@@ -60,7 +60,7 @@ A cross-database linkage analysis identified **129,823** VIMSS cross-references 
 
 The report interprets the concentration of research on a small number of genes and organisms as consistent with a self-reinforcing “rich-get-richer” dynamic previously described for gene attention. It connects the protein-family results to the dark proteome and functional unknomics, extending the literature-coverage perspective to **5,218** multi-member protein families with zero coverage at **50%** identity. [src: paperblast_explorer]
 
-The novel contribution is a collection-level and protein-family-level characterization of the BERDL-hosted PaperBLAST resource, including Lorenz analyses, per-domain coverage, sequence clustering, and presentation-ready figures quantifying the research coverage gap. [src: paperblast_explorer]
+The novel contribution is a collection-level and protein-family-level characterization of the KBase Data Lakehouse-hosted PaperBLAST resource, including Lorenz analyses, per-domain coverage, sequence clustering, and presentation-ready figures quantifying the research coverage gap. [src: paperblast_explorer]
 
 ## Caveats
 

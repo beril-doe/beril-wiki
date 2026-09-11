@@ -17,7 +17,7 @@ Principal component analysis (PCA) is a dimensional-reduction method used in thi
 
 ## Use in ecotype functional differentiation
 
-The analysis applied PCA with up to 50 components before KMeans clustering of bacterial genomes from the BERDL pangenome database. [src: ecotype_functional_differentiation]
+The analysis applied PCA with up to 50 components before KMeans clustering of bacterial genomes from the KBase Data Lakehouse pangenome database. [src: ecotype_functional_differentiation]
 
 The PCA–KMeans workflow searched cluster counts from k = 2 to k = 6 and selected the configuration with the best silhouette score. [src: ecotype_functional_differentiation]
 

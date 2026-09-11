@@ -25,13 +25,13 @@ The database documents 7 engineered ADP1 strains, including wild-type ADP1 and 6
 
 The new respiratory-chain analysis **extends** this multi-omic profile: ADP1 has 62 respiratory-chain genes across 8 subsystems, and condition-specific gene phenotypes, FBA, theoretical stoichiometry, cross-species fitness, and proteomics support substrate-dependent respiratory configurations. [src: respiratory_chain_wiring]
 
-## BERDL Integration
+## KBase Data Lakehouse Integration
 
-All 13 BERDL-format genomes belong to *s__Acinetobacter_baylyi* and the clade `s__Acinetobacter_baylyi--RS_GCF_000368685.1`. [src: acinetobacter_adp1_explorer]
+All 13 KBase Data Lakehouse-format genomes belong to *s__Acinetobacter_baylyi* and the clade `s__Acinetobacter_baylyi--RS_GCF_000368685.1`. [src: acinetobacter_adp1_explorer]
 
-The BERDL pangenome contains 3,207 core and 1,684 accessory gene clusters. [src: acinetobacter_adp1_explorer]
+The KBase Data Lakehouse pangenome contains 3,207 core and 1,684 accessory gene clusters. [src: acinetobacter_adp1_explorer]
 
-Four of five tested connection types matched BERDL at greater than 90%: 13 of 13 genome IDs matched the pangenome, 1,210 of 1,330 reactions matched [[entities/kbase-msd-biochemistry]], 230 of 230 compounds matched biochemistry, and 4,891 of 4,891 cluster IDs matched the pangenome through mapping. [src: acinetobacter_adp1_explorer]
+Four of five tested connection types matched KBase Data Lakehouse at greater than 90%: 13 of 13 genome IDs matched the pangenome, 1,210 of 1,330 reactions matched [[entities/kbase-msd-biochemistry]], 230 of 230 compounds matched biochemistry, and 4,891 of 4,891 cluster IDs matched the pangenome through mapping. [src: acinetobacter_adp1_explorer]
 
 ADP1 had 0 matches among 1 Fitness Browser organism query and was absent from [[entities/kescience-fitnessbrowser]]. [src: acinetobacter_adp1_explorer] The ADP1 database was connected to [[entities/kbase-ke-pangenome]], [[entities/kbase-msd-biochemistry]], and [[entities/kescience-fitnessbrowser]] collections. [src: acinetobacter_adp1_explorer]
 
@@ -79,7 +79,7 @@ The deletion analysis **refines** these correlations by identifying demanding co
 
 The triple-essentiality analysis **supports** condition-specific fitness: across eight carbon sources, 333 of 478 genes (70%) showed condition-specific growth defects, 10 genes (2%) showed defects across all eight, and 135 genes (28%) showed no defect on any condition; mean pairwise defect correlation was 0.38, ranging from -0.03 to 1.0. [src: adp1_triple_essentiality]
 
-Because ADP1 is absent from the Fitness Browser, its mutant growth fitness measurements for 8 carbon sources constitute a resource not otherwise available in BERDL. [src: acinetobacter_adp1_explorer] Condition-specific genes map to expected architecture, including the [[entities/urease-complex]] on urea, [[entities/quinate-degradation-pathway]] and [[entities/pqq-biosynthesis]] on quinate, the [[entities/glyoxylate-shunt]] on acetate, and the [[entities/entner-doudoroff-pathway]] on glucose. [src: adp1_deletion_phenotypes]
+Because ADP1 is absent from the Fitness Browser, its mutant growth fitness measurements for 8 carbon sources constitute a resource not otherwise available in the KBase Data Lakehouse. [src: acinetobacter_adp1_explorer] Condition-specific genes map to expected architecture, including the [[entities/urease-complex]] on urea, [[entities/quinate-degradation-pathway]] and [[entities/pqq-biosynthesis]] on quinate, the [[entities/glyoxylate-shunt]] on acetate, and the [[entities/entner-doudoroff-pathway]] on glucose. [src: adp1_deletion_phenotypes]
 
 Cross-species ortholog data **refine** quinate specificity: Complex I orthologs had mean fitness values of -1.35 on aromatic conditions versus -0.77 on comparison conditions (Mann-Whitney p < 0.0001), but the largest defects occurred on acetate (-1.55) and succinate (-1.39), while Complex I was dispensable on glucose and lactate. This suggests the hypothesis that dependence tracks high NADH flux rather than aromatic chemistry alone; the comparison is not definitive for ADP1 because respiratory architectures differ among organisms. [src: aromatic_catabolism_network]
 
@@ -111,9 +111,9 @@ The paired 16S/ITS lignin experiment **extends** the multi-omic context to commu
 
 ## Pangenome Cluster Bridge
 
-ADP1 uses mmseqs2-style cluster IDs such as `NHSXFYEX_mmseqsCluster_NNNN`, whereas BERDL uses centroid gene IDs such as `NC_005966.1_1024`; the two naming systems have 0% direct string match. [src: acinetobacter_adp1_explorer] A bridge through BERDL’s `gene_genecluster_junction` table links BERDL cluster IDs to member gene IDs, which match the `feature_id` column in ADP1’s `pan_genome_features` table and expose the ADP1-style `cluster_id`. [src: acinetobacter_adp1_explorer]
+ADP1 uses mmseqs2-style cluster IDs such as `NHSXFYEX_mmseqsCluster_NNNN`, whereas KBase Data Lakehouse uses centroid gene IDs such as `NC_005966.1_1024`; the two naming systems have 0% direct string match. [src: acinetobacter_adp1_explorer] A bridge through the KBase Data Lakehouse’s `gene_genecluster_junction` table links KBase Data Lakehouse cluster IDs to member gene IDs, which match the `feature_id` column in ADP1’s `pan_genome_features` table and expose the ADP1-style `cluster_id`. [src: acinetobacter_adp1_explorer]
 
-All 4,891 BERDL clusters mapped successfully to 4,081 unique ADP1 clusters, yielding a 100% gene-level match across 43,754 genes. [src: acinetobacter_adp1_explorer] The generated `data/cluster_id_mapping.csv` enables BERDL pangenome annotations, including eggNOG and functional predictions, to be joined to ADP1 genes. [src: acinetobacter_adp1_explorer]
+All 4,891 KBase Data Lakehouse clusters mapped successfully to 4,081 unique ADP1 clusters, yielding a 100% gene-level match across 43,754 genes. [src: acinetobacter_adp1_explorer] The generated `data/cluster_id_mapping.csv` enables KBase Data Lakehouse pangenome annotations, including eggNOG and functional predictions, to be joined to ADP1 genes. [src: acinetobacter_adp1_explorer]
 
 ## Limitations
 

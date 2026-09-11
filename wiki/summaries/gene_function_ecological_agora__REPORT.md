@@ -56,7 +56,7 @@ A multiple-testing correction pass enumerated 16 formal tests across four pre-re
 
 ## Caveats and limits
 
-The project did not identify donors at deep ranks because per-CDS sequence data were unavailable in queryable BERDL schemas. M26 tree-based donor inference is exploratory and algebraically counts potential family-mate donors, which biases toward Open-Innovator classifications; composition-based confirmation and full DTL reconciliation remain future work. [src: gene_function_ecological_agora]
+The project did not identify donors at deep ranks because per-CDS sequence data were unavailable in queryable KBase Data Lakehouse schemas. M26 tree-based donor inference is exploratory and algebraically counts potential family-mate donors, which biases toward Open-Innovator classifications; composition-based confirmation and full DTL reconciliation remain future work. [src: gene_function_ecological_agora]
 
 The PSII result is specifically a class-rank finding: the class-level sample had n = 21 PSII KOs, whereas genus, family, and order results were STABLE, and the phylum consumer statistic was unavailable because of insufficient reference data. The class-rank interpretation is consistent with PSII being a class-defining, ancient innovation, but it should not be generalized to all taxonomic ranks. [src: gene_function_ecological_agora]
 

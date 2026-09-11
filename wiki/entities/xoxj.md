@@ -29,4 +29,4 @@ The xoxJ results were generated as part of a 293,059-genome pangenome atlas stra
 
 xoxJ calls should not be interpreted alone as proof of lanthanide-dependent methanol oxidation because the eggNOG K02030 assignment is non-specific and the study did not perform sequence-level screening for pseudogenes, truncated open reading frames, or assembly fragmentation. [src: lanthanide_methylotrophy_atlas]
 
-The atlas recommends using Bakta product evidence preferentially for xoxJ in future BERDL analyses. [src: lanthanide_methylotrophy_atlas]
+The atlas recommends using Bakta product evidence preferentially for xoxJ in future KBase Data Lakehouse analyses. [src: lanthanide_methylotrophy_atlas]

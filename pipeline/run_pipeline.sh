@@ -14,6 +14,7 @@
 #   hubs     re-cluster + regenerate only topic hubs whose members changed
 #   figures  manifest + LLM figure placements (hash-skipped)
 #   extras   deterministic author/data pages
+#   names    rename the data platform to its current name (deterministic)
 #   repair   re-run any page failing write-time validation (no-op when clean)
 #   check    citation, numeric, uptake, and duplicate-concept audits (fails on errors)
 #   publish  Quartz static site (dead links stripped, evidence labels added)
@@ -72,6 +73,13 @@ echo "== extras" | tee -a "$LOG"
 
 echo "== authors" | tee -a "$LOG"
 "${PY[@]}" "$HERE/authors_build.py" | tee -a "$LOG" | tail -3
+
+# The platform is the KBase Data Lakehouse. Reports written while it was
+# called BERDL, or the BER Data Lakehouse, seed those names into every page
+# compiled from them, so the rename runs after everything that writes a page
+# and before the checks. Deterministic and idempotent; no LLM call.
+echo "== names" | tee -a "$LOG"
+"${PY[@]}" "$HERE/normalize_names.py" "$REPO" | tee -a "$LOG"
 
 # Compile's resume-skip is per document, so a page that mis-attributes one
 # number stays broken while the document that fixes it counts as integrated.

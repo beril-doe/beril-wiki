@@ -1,6 +1,6 @@
 ---
 type: "Summary"
-description: "BERDL atlas maps data depth, cross-tenant bridges, and validated synergy."
+description: "KBase Data Lakehouse atlas maps data depth, cross-tenant bridges, and validated synergy."
 doc_type: "short"
 full_text: "sources/berdl_data_atlas__REPORT.md"
 ---
@@ -20,7 +20,7 @@ The inventory also contains 97,334 BacDive strain phenotype profiles, 57,302 car
 
 ### Agency and topic coverage
 
-DOE accounts for approximately 78% of BERDL tables: DOE-BER contributes 63%, DOE BRaVE 14%, DOE/NSF 0.6%, and DOE-FE 0.4%; ARPA-H contributes 4% and NSF contributes 3.5%. DOE-BER is the only agency covering all 15 biological topics. Six topics are more than 75% single-owner, including mobile_phage at 96% PhageFoundry ownership and pangenome at 79% KBase ownership, while taxonomy spans 12 tenants and has the broadest cross-tenant surface. [src: berdl_data_atlas]
+DOE accounts for approximately 78% of the KBase Data Lakehouse tables: DOE-BER contributes 63%, DOE BRaVE 14%, DOE/NSF 0.6%, and DOE-FE 0.4%; ARPA-H contributes 4% and NSF contributes 3.5%. DOE-BER is the only agency covering all 15 biological topics. Six topics are more than 75% single-owner, including mobile_phage at 96% PhageFoundry ownership and pangenome at 79% KBase ownership, while taxonomy spans 12 tenants and has the broadest cross-tenant surface. [src: berdl_data_atlas]
 
 The field_observational topic represents 40% of tables, mobile_phage 14%, fitness_phenotype 11%, and genome 6.4%; all other primary topics represent less than 4% each. Sixteen tables, or 0.9%, remain unclassified and are personal scratch or one-off survey data. [src: berdl_data_atlas]
 

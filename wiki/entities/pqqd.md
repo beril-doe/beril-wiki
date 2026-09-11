@@ -9,7 +9,7 @@ sources: ["summaries/pgp_pangenome_ecology__REPORT.md"]
 
 **Canonical name:** pqqD. Known aliases and stable external identifiers were not provided in the report. [src: pgp_pangenome_ecology]
 
-pqqD is a gene associated with the plant-growth-promoting gene set analyzed across the BERDL pangenome. [src: pgp_pangenome_ecology] The analysis relates pqqD to [[entities/pqqc]] and the functional pqqB–pqqC unit, although pqqD can sometimes occur as a standalone gene. [src: pgp_pangenome_ecology]
+pqqD is a gene associated with the plant-growth-promoting gene set analyzed across the KBase Data Lakehouse pangenome. [src: pgp_pangenome_ecology] The analysis relates pqqD to [[entities/pqqc]] and the functional pqqB–pqqC unit, although pqqD can sometimes occur as a standalone gene. [src: pgp_pangenome_ecology]
 
 ## Evidence from PGP pangenome analysis
 
@@ -31,4 +31,4 @@ This evidence feeds the broader question of genome organization and inheritance 
 
 ## Source
 
-- [[summaries/pgp_pangenome_ecology__REPORT]] — PGP gene distribution, environmental enrichment, co-occurrence, and core/accessory status across the BERDL pangenome. [src: pgp_pangenome_ecology]
+- [[summaries/pgp_pangenome_ecology__REPORT]] — PGP gene distribution, environmental enrichment, co-occurrence, and core/accessory status across the KBase Data Lakehouse pangenome. [src: pgp_pangenome_ecology]

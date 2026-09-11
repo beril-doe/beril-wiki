@@ -15,7 +15,7 @@ sources: ["summaries/fitness_modules__REPORT.md", "summaries/nmdc_context_audit_
 
 Pfam is a domain-level annotation resource used to associate genes with protein-family domains and biological-process modules. [src: fitness_modules]
 
-The NMDC context audit identifies Pfam/InterPro as the authority for `nmdc.ref_data`, a Pfam re-host containing 27,481 terms in the `nmdc` tenant. This **refines** the existing description by distinguishing Pfam’s annotation role from its separately maintained BERDL reference-data copy. [src: nmdc_context_audit]
+The NMDC context audit identifies Pfam/InterPro as the authority for `nmdc.ref_data`, a Pfam re-host containing 27,481 terms in the `nmdc` tenant. This **refines** the existing description by distinguishing Pfam’s annotation role from its separately maintained KBase Data Lakehouse reference-data copy. [src: nmdc_context_audit]
 
 ## Annotation and module interpretation
 
@@ -39,7 +39,7 @@ This result **supports** treating Pfam as a high-value source for partial functi
 
 The SNIPE-defense analysis **refines** Pfam’s role as a domain-level resource by correcting the domain signatures used for a specific phage-defense family: PF13250 is the correct Pfam assignment for DUF4041, while PF13455 (Mug113) is the SNIPE nuclease family and is distinct from canonical GIY-YIG PF01541. [src: snipe_defense_system]
 
-In the surveyed BERDL annotations, zero gene clusters contained both DUF4041/PF13250 and canonical GIY-YIG PF01541. Of 4,572 DUF4041-containing gene clusters, 54 carried the description “Meiotically up-regulated gene 113,” consistent with full-length SNIPE proteins containing the Mug113 nuclease annotation. This **contradicts** using PF01541 as the SNIPE nuclease marker and supports searching PF13250, DUF4041, or T5orf172 together with PF13455. [src: snipe_defense_system]
+In the surveyed KBase Data Lakehouse annotations, zero gene clusters contained both DUF4041/PF13250 and canonical GIY-YIG PF01541. Of 4,572 DUF4041-containing gene clusters, 54 carried the description “Meiotically up-regulated gene 113,” consistent with full-length SNIPE proteins containing the Mug113 nuclease annotation. This **contradicts** using PF01541 as the SNIPE nuclease marker and supports searching PF13250, DUF4041, or T5orf172 together with PF13455. [src: snipe_defense_system]
 
 DUF4041/PF13250 occurred in 4,572 gene clusters across 1,696 species and 33 bacterial and archaeal phyla; 13.3% of these clusters were core, 30.7% accessory, and 56.1% singleton, making the accessory-plus-singleton fraction 86.7%. These results **support** interpreting SNIPE-associated Pfam domains as markers of a predominantly mobile defense-family distribution rather than stable core inheritance. [src: snipe_defense_system]
 
@@ -66,7 +66,7 @@ The truly-dark-gene analysis **supports** this complementary role: 96.2% of the 
 ## Related pages
 
 - [[summaries/fitness_modules__REPORT]] — source summary for the fitness-module analysis. [src: fitness_modules]
-- [[summaries/nmdc_context_audit__REPORT]] — audit of provenance, scale, currency, and naming for NMDC-labeled BERDL resources. [src: nmdc_context_audit]
+- [[summaries/nmdc_context_audit__REPORT]] — audit of provenance, scale, currency, and naming for NMDC-labeled KBase Data Lakehouse resources. [src: nmdc_context_audit]
 - [[summaries/phage_defense_arsenal__REPORT]] — pan-bacterial defense-system detection and Pfam-based marker analysis. [src: phage_defense_arsenal]
 - [[summaries/snipe_defense_system__REPORT]] — SNIPE domain architecture, prevalence, mobility, and phage-defense analysis. [src: snipe_defense_system]
 - [[summaries/truly_dark_genes__REPORT]] — residual unknown genes after Bakta reannotation and functional-database integration. [src: truly_dark_genes]

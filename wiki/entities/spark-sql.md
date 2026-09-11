@@ -1,19 +1,19 @@
 ---
 type: "Method"
-description: "Spark SQL is BERDL's preferred interface for large and complex queries."
+description: "Spark SQL is KBase Data Lakehouse's preferred interface for large and complex queries."
 sources: ["summaries/pitfalls.md"]
 ---
 # Spark SQL
 
 ## What it is
 
-Spark SQL is the canonical name for the distributed SQL query interface used to analyze BERDL data at scale. [src: pitfalls] Known aliases include `Spark SQL` and direct Spark SQL. [src: pitfalls] No stable external identifier is specified in `pitfalls`. [src: pitfalls]
+Spark SQL is the canonical name for the distributed SQL query interface used to analyze KBase Data Lakehouse data at scale. [src: pitfalls] Known aliases include `Spark SQL` and direct Spark SQL. [src: pitfalls] No stable external identifier is specified in `pitfalls`. [src: pitfalls]
 
 ## Key facts from pitfalls
 
-Direct Spark SQL is preferred over the BERDL REST API for complex or large queries because REST requests can return 504 Gateway Timeout, 524 Origin Timeout, 503 executor-restart errors, or empty responses. [src: pitfalls] The REST `/count` endpoint is particularly unreliable for loops over many tables, and `/schema` frequently times out on large tables. [src: pitfalls]
+Direct Spark SQL is preferred over the KBase Data Lakehouse REST API for complex or large queries because REST requests can return 504 Gateway Timeout, 524 Origin Timeout, 503 executor-restart errors, or empty responses. [src: pitfalls] The REST `/count` endpoint is particularly unreliable for loops over many tables, and `/schema` frequently times out on large tables. [src: pitfalls]
 
-Many BERDL numeric fields are stored as strings, including all Fitness Browser columns and relevant pangenome and genome metadata fields, so values must be explicitly cast before comparisons, ordering, arithmetic, or aggregation. [src: pitfalls] Spark `DECIMAL` values arrive in pandas as `decimal.Decimal`; using `CAST(... AS DOUBLE)` in SQL or `.astype(float)` after collection prevents mixed-type arithmetic failures. [src: pitfalls]
+Many KBase Data Lakehouse numeric fields are stored as strings, including all Fitness Browser columns and relevant pangenome and genome metadata fields, so values must be explicitly cast before comparisons, ordering, arithmetic, or aggregation. [src: pitfalls] Spark `DECIMAL` values arrive in pandas as `decimal.Decimal`; using `CAST(... AS DOUBLE)` in SQL or `.astype(float)` after collection prevents mixed-type arithmetic failures. [src: pitfalls]
 
 `SELECT DISTINCT col, COUNT(*)` without `GROUP BY` fails in Spark strict mode with `MISSING_GROUP_BY`; `GROUP BY col` alone is the correct replacement. [src: pitfalls] Spark Connect temporary views can disappear after a reconnect during a long-running query, so views should be re-registered immediately before use. [src: pitfalls]
 
@@ -25,7 +25,7 @@ Disabling `spark.sql.autoBroadcastJoinThreshold` with `-1` can harm performance:
 
 ## Related pages
 
-- [[summaries/pitfalls]] — source summary for the BERDL database pitfalls document. [src: pitfalls]
+- [[summaries/pitfalls]] — source summary for the KBase Data Lakehouse database pitfalls document. [src: pitfalls]
 - [[concepts/provenance-aware-resource-discovery]] — live catalog and schema discovery before querying. [src: pitfalls]
 - [[concepts/cross-tenant-data-bridging]] — tenant, namespace, and cross-resource query considerations. [src: pitfalls]
 - [[concepts/pangenome-integration]] — large pangenome tables and their join constraints. [src: pitfalls]

@@ -52,7 +52,7 @@ Ecotype count correlated with pangenome openness at raw Spearman rho=0.262, p=6.
 
 ### Relationship to fitness conservation
 
-The report connects its findings to prior BERDL results: 87.4% of metal-fitness genes were core, with OR=2.08 for enrichment; 28,017 genes were costly in laboratory conditions but conserved in nature; and field-important genes were 83.6% core compared with a 76.3% baseline. These comparisons frame Active Dependencies and accessory-dependent pathways as pathway-level extensions of broader fitness-conservation and condition-dependent-fitness patterns. [src: pathway_capability_dependency]
+The report connects its findings to prior KBase Data Lakehouse results: 87.4% of metal-fitness genes were core, with OR=2.08 for enrichment; 28,017 genes were costly in laboratory conditions but conserved in nature; and field-important genes were 83.6% core compared with a 76.3% baseline. These comparisons frame Active Dependencies and accessory-dependent pathways as pathway-level extensions of broader fitness-conservation and condition-dependent-fitness patterns. [src: pathway_capability_dependency]
 
 ## Caveats
 

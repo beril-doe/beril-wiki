@@ -49,7 +49,7 @@ Cyanobacteriia phenotype coverage in BacDive was too thin for interpretation, wi
 
 The PSII finding should not be generalized across all taxonomic ranks because it was supported at class rank while genus, family, and order results were STABLE. [src: gene_function_ecological_agora]
 
-The analysis did not identify donors at deep ranks because per-CDS sequence data were unavailable in queryable BERDL schemas, and the exploratory tree-based donor inference was not compositionally confirmed or fully reconciled with DTL methods. [src: gene_function_ecological_agora]
+The analysis did not identify donors at deep ranks because per-CDS sequence data were unavailable in queryable KBase Data Lakehouse schemas, and the exploratory tree-based donor inference was not compositionally confirmed or fully reconciled with DTL methods. [src: gene_function_ecological_agora]
 
 The environmental result establishes association or consistency with expected environments, not a causal effect of environment on PSII innovation. [src: gene_function_ecological_agora]
 

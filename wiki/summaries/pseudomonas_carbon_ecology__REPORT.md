@@ -8,7 +8,7 @@ full_text: "sources/pseudomonas_carbon_ecology__REPORT.md"
 
 ## Overview
 
-This report analyzes standardized GapMind carbon-pathway predictions from the BERDL `kbase_ke_pangenome` collection across 12,732 genomes and 433 *Pseudomonas* species clades (GTDB r214), testing whether carbon utilization profiles distinguish host-associated, free-living, and plant-associated lifestyles and environments. It finds strong pathway loss in the *Pseudomonas* s.s. (*P. aeruginosa* group) relative to *Pseudomonas_E* (*P. fluorescens/putida* group), while carbon profiles retain a statistically significant but modest ecological signal among free-living species. [src: pseudomonas_carbon_ecology]
+This report analyzes standardized GapMind carbon-pathway predictions from the KBase Data Lakehouse `kbase_ke_pangenome` collection across 12,732 genomes and 433 *Pseudomonas* species clades (GTDB r214), testing whether carbon utilization profiles distinguish host-associated, free-living, and plant-associated lifestyles and environments. It finds strong pathway loss in the *Pseudomonas* s.s. (*P. aeruginosa* group) relative to *Pseudomonas_E* (*P. fluorescens/putida* group), while carbon profiles retain a statistically significant but modest ecological signal among free-living species. [src: pseudomonas_carbon_ecology]
 
 ## Key Findings
 

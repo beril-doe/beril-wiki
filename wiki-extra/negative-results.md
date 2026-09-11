@@ -7,7 +7,7 @@ analyses — read before repeating an analysis.
 
 No gene has measurements across all 6 data modalities, and FBA flux data cover only 15% of genes; consequently, the FBA-TnSeq concordance analysis is limited to 866 genes. [src: acinetobacter_adp1_explorer]
 
-The pangenome cluster mapping is indirect and passes through 3 tables. Although it is 100% complete at the reported gene level, the indirection could introduce edge cases where clusters split or merge between the BERDL and ADP1 pangenome analyses. [src: acinetobacter_adp1_explorer]
+The pangenome cluster mapping is indirect and passes through 3 tables. Although it is 100% complete at the reported gene level, the indirection could introduce edge cases where clusters split or merge between the KBase Data Lakehouse and ADP1 pangenome analyses. [src: acinetobacter_adp1_explorer]
 
 The 87% dependence of growth phenotype predictions on gapfilled reactions limits interpretation of those predictions, and the 243 missing functions represent gaps in genomic evidence that affect prediction reliability. [src: acinetobacter_adp1_explorer]
 
@@ -20,7 +20,7 @@ The observed FBA-TnSeq discordance, urea-specific fitness pattern, core-metaboli
 - Growth ratios are single-timepoint measurements with unknown technical noise, so condition-specificity scores may reflect measurement error as well as biology. [src: adp1_deletion_phenotypes]
 - The complete matrix contains 2,034 genes and excludes 499 essential genes plus 316 genes with incomplete data, biasing the analysis toward dispensable genes with successful deletion mutants. [src: adp1_deletion_phenotypes]
 - Only 8 carbon sources were tested, so the approximately 5 independent dimensions may increase when additional conditions are measured. [src: adp1_deletion_phenotypes]
-- Pangenome core/accessory status comes from BERDL’s species-level pangenome for *A. baylyi* and may have limited resolution compared with a population-level analysis. [src: adp1_deletion_phenotypes]
+- Pangenome core/accessory status comes from the KBase Data Lakehouse’s species-level pangenome for *A. baylyi* and may have limited resolution compared with a population-level analysis. [src: adp1_deletion_phenotypes]
 - The low clustering silhouette score and absent FDR-significant enrichments support a gradient interpretation, but the report’s proposed independent component analysis (ICA) and expanded condition panel remain future work rather than completed analyses. [src: adp1_deletion_phenotypes]
 
 ## [[summaries/adp1_triple_essentiality__REPORT|Triple Essentiality Concordance Analysis for *Acinetobacter baylyi* ADP1]]
@@ -45,7 +45,7 @@ The report recommends condition-matched TnSeq and knockout experiments, domain- 
 - MSA depth was looked up for each gene cluster's representative sequence, so within-cluster sequence diversity was ignored and the representative may have higher or lower MSA depth than typical cluster members. [src: alphafold_msa_annotation]
 - The 293K genomes were not phylogenetically balanced; common taxa such as *Pseudomonas* and *E. coli* were over-represented, influencing core-gene counts and MSA-depth distributions. [src: alphafold_msa_annotation]
 - Spearman ρ = 0.7563 was computed on the full 38,051,842-pair dataset without subgroup stratification, so its value may differ among core, auxiliary, and singleton clusters and among organisms with different annotation gaps. [src: alphafold_msa_annotation]
-- The analysis used a static version-6 BERDL AlphaFold snapshot, and later UniProt deposits may change MSA depths. [src: alphafold_msa_annotation]
+- The analysis used a static version-6 KBase Data Lakehouse AlphaFold snapshot, and later UniProt deposits may change MSA depths. [src: alphafold_msa_annotation]
 
 ## [[summaries/amr_cofitness_networks__REPORT|AMR Co-Fitness Support Networks]]
 
@@ -340,7 +340,7 @@ Annotation proxies require source-specific validation. EggNOG `Preferred_name='l
 
 ## [[summaries/enigma_carbon_census_1__REPORT|ENIGMA Carbon Census — Tiered Knowledge Census of 83 Enrichment Compounds]]
 
-“Organism-dark” means not linkable through the queried BERDL and curated resources, not unknown to science. Class-level catabolic literature exists for compounds including monoterpenes and nicotine, while the project’s zero literature rescues resulted from a shallow PubMed-title-only screen. A PaperBLAST or abstract-level search could reclassify part of the dark set. [src: enigma_carbon_census_1]
+“Organism-dark” means not linkable through the queried the KBase Data Lakehouse and curated resources, not unknown to science. Class-level catabolic literature exists for compounds including monoterpenes and nicotine, while the project’s zero literature rescues resulted from a shallow PubMed-title-only screen. A PaperBLAST or abstract-level search could reclassify part of the dark set. [src: enigma_carbon_census_1]
 
 The dark fraction depends on the catabolic-direction filter: the 8 ENIGMA-isolate calls used a genome-prevalence-<10% signature-reaction filter retaining reactions that were catabolic according to KEGG degradation-map membership or a 3-reaction curated allowlist. A different filter could change the callable/dark boundary. Lauric acid was independently callable through measured fitness and was not subject to this filter. [src: enigma_carbon_census_1]
 
@@ -488,7 +488,7 @@ The prioritization weights are expert-assigned and exact ranks are sensitive to 
 
 The Fitness Browser’s 77% Pseudomonadota composition limits cross-phylum inference. The extended covering set improves coverage from 4 to 6 phyla, but non-Fitness-Browser ortholog-group coverage is estimated at the genus level and may overestimate individual-organism coverage; these organisms also lack Fitness Browser condition profiles and therefore support broad screens rather than condition-specific experiments. [src: functional_dark_matter]
 
-## [[summaries/fw300_metabolic_consistency__REPORT|Metabolic Consistency of Pseudomonas FW300-N2E3 Across Four BERDL Databases]]
+## [[summaries/fw300_metabolic_consistency__REPORT|Metabolic Consistency of Pseudomonas FW300-N2E3 Across Four KBase Data Lakehouse Databases]]
 
 - Only 21/58 WoM metabolites (36%) could be tested against any other database, and only 3 metabolites had four-way coverage. The untested 64% may contain additional discordances. [src: fw300_metabolic_consistency]
 - WoM exometabolomics was measured on R2A rich medium, whereas Fitness Browser fitness was measured on minimal medium with single carbon or nitrogen sources; condition-dependent metabolism limits direct comparison. [src: fw300_metabolic_consistency]
@@ -501,7 +501,7 @@ The Fitness Browser’s 77% Pseudomonadota composition limits cross-phylum infer
 
 ## [[summaries/gene_function_ecological_agora__REPORT|Gene Function Ecological Agora]]
 
-The project did not identify donors at deep ranks because per-CDS sequence data were unavailable in queryable BERDL schemas. M26 tree-based donor inference is exploratory and algebraically counts potential family-mate donors, which biases toward Open-Innovator classifications; composition-based confirmation and full DTL reconciliation remain future work. [src: gene_function_ecological_agora]
+The project did not identify donors at deep ranks because per-CDS sequence data were unavailable in queryable KBase Data Lakehouse schemas. M26 tree-based donor inference is exploratory and algebraically counts potential family-mate donors, which biases toward Open-Innovator classifications; composition-based confirmation and full DTL reconciliation remain future work. [src: gene_function_ecological_agora]
 
 The PSII result is specifically a class-rank finding: the class-level sample had n = 21 PSII KOs, whereas genus, family, and order results were STABLE, and the phylum consumer statistic was unavailable because of insufficient reference data. The class-rank interpretation is consistent with PSII being a class-defining, ancient innovation, but it should not be generalized to all taxonomic ranks. [src: gene_function_ecological_agora]
 
@@ -587,7 +587,7 @@ ITS findings are preliminary because replicate consistency was poor, within-grou
 
 PERMDISP was significant for both markers, so PERMANOVA results reflect both differences in group location and differences in dispersion. No technical metadata on extraction or library-preparation batches were available, preventing formal assessment of batch effects. The reported functional interpretation of lignin degradation is based on taxonomic associations and literature context; gene-level pathway enrichment was not directly measured. [src: lignin_community_enrichment]
 
-The planned Procrustes comparison of bacterial and fungal ordinations was not completed because near-random ITS replicate structure would make the fit difficult to interpret. Future work proposed by the document includes larger replication, DADA2 ASV analysis, UNITE-based ITS taxonomy, phylogenetic diversity and UniFrac analyses, BERDL cross-referencing of Pseudomonas, Acinetobacter, and Comamonas through [[entities/kbase-ke-pangenome|kbase_ke_pangenome]], functional inference of beta-ketoadipate and protocatechuate pathways, deeper ITS sequencing, and intermediate time points to resolve restructuring kinetics. [src: lignin_community_enrichment]
+The planned Procrustes comparison of bacterial and fungal ordinations was not completed because near-random ITS replicate structure would make the fit difficult to interpret. Future work proposed by the document includes larger replication, DADA2 ASV analysis, UNITE-based ITS taxonomy, phylogenetic diversity and UniFrac analyses, KBase Data Lakehouse cross-referencing of Pseudomonas, Acinetobacter, and Comamonas through [[entities/kbase-ke-pangenome|kbase_ke_pangenome]], functional inference of beta-ketoadipate and protocatechuate pathways, deeper ITS sequencing, and intermediate time points to resolve restructuring kinetics. [src: lignin_community_enrichment]
 
 ## [[summaries/metabolic_capability_dependency__REPORT|Metabolic Capability vs Metabolic Dependency]]
 
@@ -786,7 +786,7 @@ PHB presence is correlated with phylogeny and genome size, and the PHB–niche-b
 
 PHB has functions beyond carbon storage, including stress resistance, redox balance, and cryoprotection, so environmental variability is supported as a selective force but is not necessarily the sole driver of PHB distribution. The HGT inference is likewise based on phylogenetic discordance and core/accessory status; a directly reconstructed phaC gene tree is needed to identify incongruent branches. [src: phb_granule_ecology]
 
-## [[summaries/pitfalls|BERDL Database: Common Pitfalls & Gotchas]]
+## [[summaries/pitfalls|KBase Data Lakehouse: Common Pitfalls & Gotchas]]
 
 The document repeatedly warns that table schemas, namespace availability, access permissions, API behavior, database contents, and naming conventions can change. Queries should therefore begin with live catalog and schema discovery rather than copied historical SQL, and archived reports and notebooks should be treated as historical records rather than automatically valid executable instructions. [src: pitfalls]
 
@@ -865,7 +865,7 @@ The report further notes that the moderate classifier accuracy may reflect small
 - The planned pangenome KO co-occurrence analysis was not performed, leaving NDH-2/Complex I co-occurrence across Acinetobacter species untested. [src: respiratory_chain_wiring]
 - The proposed wiring model can be tested by constructing an NDH-2 deletion mutant, measuring NADH/NAD⁺ ratios on each carbon source, expanding the cross-species K03885 and K00330–K00343 analysis across 27K species, characterizing ACIAD3522, and reanalyzing quinate-versus-succinate proteomics for respiratory-chain proteins. [src: respiratory_chain_wiring]
 
-## [[summaries/snipe_defense_system__REPORT|SNIPE Defense System in the BERDL Pangenome]]
+## [[summaries/snipe_defense_system__REPORT|SNIPE Defense System in the KBase Data Lakehouse Pangenome]]
 
 The report states that eggNOG Pfam annotations may miss divergent SNIPE homologues, and that only 54/4,572 DUF4041 clusters showed Mug113 co-annotation, suggesting that many SNIPE nuclease domains may go undetected. DUF4041 is strongly associated with SNIPE but may also occur in non-SNIPE proteins. [src: snipe_defense_system]
 

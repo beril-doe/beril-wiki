@@ -46,7 +46,7 @@ The report resolves the apparent contradiction between lower overall hypothetica
 - MSA depth was looked up for each gene cluster's representative sequence, so within-cluster sequence diversity was ignored and the representative may have higher or lower MSA depth than typical cluster members. [src: alphafold_msa_annotation]
 - The 293K genomes were not phylogenetically balanced; common taxa such as *Pseudomonas* and *E. coli* were over-represented, influencing core-gene counts and MSA-depth distributions. [src: alphafold_msa_annotation]
 - Spearman ρ = 0.7563 was computed on the full 38,051,842-pair dataset without subgroup stratification, so its value may differ among core, auxiliary, and singleton clusters and among organisms with different annotation gaps. [src: alphafold_msa_annotation]
-- The analysis used a static version-6 BERDL AlphaFold snapshot, and later UniProt deposits may change MSA depths. [src: alphafold_msa_annotation]
+- The analysis used a static version-6 KBase Data Lakehouse AlphaFold snapshot, and later UniProt deposits may change MSA depths. [src: alphafold_msa_annotation]
 
 ## Slots Into
 

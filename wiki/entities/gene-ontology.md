@@ -1,6 +1,6 @@
 ---
 type: "Dataset"
-description: "Gene Ontology annotations and their provenance in BERDL and NMDC holdings"
+description: "Gene Ontology annotations and their provenance in the KBase Data Lakehouse and NMDC holdings"
 sources: ["summaries/amr_cofitness_networks__REPORT.md", "summaries/nmdc_context_audit__REPORT.md"]
 ---
 # Gene Ontology functional annotation resource
@@ -9,7 +9,7 @@ sources: ["summaries/amr_cofitness_networks__REPORT.md", "summaries/nmdc_context
 
 The canonical name is Gene Ontology functional annotation resource, with the known alias GO (Gene Ontology). [src: amr_cofitness_networks] The report does not specify a stable external identifier for this resource. [src: amr_cofitness_networks]
 
-The NMDC context audit **refines** the provenance description: the BERDL data atlas labels Gene Ontology and Rhea reference ontologies hosted under `kbase.nmdc_arkin` as “NMDC integrated,” although the audit identifies this labeling as provenance blur rather than proof that the resources are NMDC-native. [src: nmdc_context_audit] This distinction is relevant when interpreting GO annotations used in downstream analyses and supports retaining explicit authority and provenance metadata alongside the resource. [src: nmdc_context_audit]
+The NMDC context audit **refines** the provenance description: the KBase Data Lakehouse data atlas labels Gene Ontology and Rhea reference ontologies hosted under `kbase.nmdc_arkin` as “NMDC integrated,” although the audit identifies this labeling as provenance blur rather than proof that the resources are NMDC-native. [src: nmdc_context_audit] This distinction is relevant when interpreting GO annotations used in downstream analyses and supports retaining explicit authority and provenance metadata alongside the resource. [src: nmdc_context_audit]
 
 ## Key facts from AMR cofitness analysis
 
@@ -26,6 +26,6 @@ The report cautions that GO enrichment may reflect shared dispensability under l
 ## Related pages
 
 - [[summaries/amr_cofitness_networks__REPORT]] — source report describing the GO-based AMR cofitness analysis. [src: amr_cofitness_networks]
-- [[summaries/nmdc_context_audit__REPORT]] — audit of provenance labeling and resource placement for NMDC-named BERDL holdings. [src: nmdc_context_audit]
+- [[summaries/nmdc_context_audit__REPORT]] — audit of provenance labeling and resource placement for NMDC-named KBase Data Lakehouse holdings. [src: nmdc_context_audit]
 - [[concepts/pangenome-integration]] — annotation of pangenome cluster representatives improved functional coverage and enrichment detection. [src: amr_cofitness_networks]
 - [[concepts/condition-specific-fitness]] — GO enrichment requires distinguishing condition-specific shared dispensability from direct co-regulation. [src: amr_cofitness_networks]

@@ -15,7 +15,7 @@ sources: ["summaries/ecotype_functional_differentiation__REPORT.md"]
 
 ## Key facts from the document
 
-*Staphylococcus simulans* was one of the 12 species with valid gene-content ecotypes in a stratified 15-species analysis of the BERDL pangenome database. [src: ecotype_functional_differentiation]
+*Staphylococcus simulans* was one of the 12 species with valid gene-content ecotypes in a stratified 15-species analysis of the KBase Data Lakehouse pangenome database. [src: ecotype_functional_differentiation]
 
 The analysis included 78 *Staphylococcus simulans* genomes, identified 3 ecotypes, and assigned 63 genomes to ecotypes. [src: ecotype_functional_differentiation]
 
@@ -35,6 +35,6 @@ This entity is documented in [[summaries/ecotype_functional_differentiation__REP
 
 The findings contribute to [[concepts/ecotype-environment-gene-content]], which examines links between within-species gene-content variation, ecological differentiation, and functional profiles. [src: ecotype_functional_differentiation]
 
-The analysis also contributes to [[concepts/pangenome-integration]] through its use of BERDL pangenome data. [src: ecotype_functional_differentiation]
+The analysis also contributes to [[concepts/pangenome-integration]] through its use of the KBase Data Lakehouse pangenome data. [src: ecotype_functional_differentiation]
 
 Related analytical methods include [[entities/principal-component-analysis]], [[entities/kmeans-clustering]], and [[entities/cog-functional-categories]]. [src: ecotype_functional_differentiation]

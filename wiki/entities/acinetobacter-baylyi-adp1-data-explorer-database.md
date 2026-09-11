@@ -27,7 +27,7 @@ See the source summary at [[summaries/acinetobacter_adp1_explorer__REPORT]].
 - Proteomics data are available for all 7 strains, with protein abundance measured for 2,383 genes. [src: acinetobacter_adp1_explorer]
 - Cross-strain proteomic correlation was high, indicating targeted rather than global effects of the engineered modifications. [src: acinetobacter_adp1_explorer]
 
-## BERDL Connectivity
+## KBase Data Lakehouse Connectivity
 
 The database connects to the [[entities/kbase-ke-pangenome|KBase KE pangenome]], [[entities/kbase-msd-biochemistry|KBase MSD Biochemistry]], and [[entities/kescience-fitnessbrowser|KE Science Fitness Browser]] collections. [src: acinetobacter_adp1_explorer]
 
@@ -36,19 +36,19 @@ The database connects to the [[entities/kbase-ke-pangenome|KBase KE pangenome]],
 - 230 of 230 compounds matched biochemistry. [src: acinetobacter_adp1_explorer]
 - 4,891 of 4,891 cluster IDs matched the pangenome through mapping. [src: acinetobacter_adp1_explorer]
 - ADP1 had 0 matches among 1 Fitness Browser organism query and was absent from the Fitness Browser. [src: acinetobacter_adp1_explorer]
-- All 13 BERDL-format genomes belong to `s__Acinetobacter_baylyi` and the clade `s__Acinetobacter_baylyi--RS_GCF_000368685.1`. [src: acinetobacter_adp1_explorer]
-- The BERDL pangenome contains 3,207 core and 1,684 accessory gene clusters. [src: acinetobacter_adp1_explorer]
+- All 13 KBase Data Lakehouse-format genomes belong to `s__Acinetobacter_baylyi` and the clade `s__Acinetobacter_baylyi--RS_GCF_000368685.1`. [src: acinetobacter_adp1_explorer]
+- The KBase Data Lakehouse pangenome contains 3,207 core and 1,684 accessory gene clusters. [src: acinetobacter_adp1_explorer]
 - The 120 unmatched reactions represent 9% of the 1,330 reactions and may be custom or draft reactions not yet present in ModelSEED. [src: acinetobacter_adp1_explorer]
 
 ## Pangenome Cluster Bridge
 
-ADP1 uses mmseqs2-style cluster IDs such as `NHSXFYEX_mmseqsCluster_NNNN`, whereas BERDL uses centroid gene IDs such as `NC_005966.1_1024`; the two naming systems have 0% direct string match. [src: acinetobacter_adp1_explorer]
+ADP1 uses mmseqs2-style cluster IDs such as `NHSXFYEX_mmseqsCluster_NNNN`, whereas KBase Data Lakehouse uses centroid gene IDs such as `NC_005966.1_1024`; the two naming systems have 0% direct string match. [src: acinetobacter_adp1_explorer]
 
-A bridge through BERDL’s `gene_genecluster_junction` table links BERDL cluster IDs to member gene IDs, which match the `feature_id` column in the ADP1 `pan_genome_features` table and expose the ADP1-style `cluster_id`. [src: acinetobacter_adp1_explorer]
+A bridge through the KBase Data Lakehouse’s `gene_genecluster_junction` table links KBase Data Lakehouse cluster IDs to member gene IDs, which match the `feature_id` column in the ADP1 `pan_genome_features` table and expose the ADP1-style `cluster_id`. [src: acinetobacter_adp1_explorer]
 
-- All 4,891 BERDL clusters mapped successfully to 4,081 unique ADP1 clusters. [src: acinetobacter_adp1_explorer]
+- All 4,891 KBase Data Lakehouse clusters mapped successfully to 4,081 unique ADP1 clusters. [src: acinetobacter_adp1_explorer]
 - The mapping yielded a 100% gene-level match across 43,754 genes. [src: acinetobacter_adp1_explorer]
-- The generated `data/cluster_id_mapping.csv` file enables BERDL pangenome annotations, including eggNOG and functional predictions, to be joined to ADP1 genes. [src: acinetobacter_adp1_explorer]
+- The generated `data/cluster_id_mapping.csv` file enables KBase Data Lakehouse pangenome annotations, including eggNOG and functional predictions, to be joined to ADP1 genes. [src: acinetobacter_adp1_explorer]
 
 ## Essentiality and Metabolic Modeling
 
@@ -69,7 +69,7 @@ The database measures mutant growth fitness across 8 carbon sources and therefor
 - The mean pairwise correlation among carbon-source fitness profiles was 0.44. [src: acinetobacter_adp1_explorer]
 - Urea fitness was nearly uncorrelated with quinate, at r = 0.11, and was weakly correlated with all other conditions, at r = 0.12–0.28. [src: acinetobacter_adp1_explorer]
 - Butanediol-acetate and butanediol-lactate showed the strongest correlations, at r = 0.58 and r = 0.53, respectively. [src: acinetobacter_adp1_explorer]
-- Because ADP1 is absent from the Fitness Browser, the 8 carbon-source mutant growth fitness measurements provide a resource not otherwise available in BERDL. [src: acinetobacter_adp1_explorer]
+- Because ADP1 is absent from the Fitness Browser, the 8 carbon-source mutant growth fitness measurements provide a resource not otherwise available in the KBase Data Lakehouse. [src: acinetobacter_adp1_explorer]
 
 ## Reactions and Gapfilling
 
@@ -93,7 +93,7 @@ The database contributes evidence to [[concepts/metabolic-model-gapfilling]] thr
 - [[concepts/multi-omics-integration]] — incomplete overlap among six modalities and cross-strain proteomics. [src: acinetobacter_adp1_explorer]
 - [[concepts/gene-essentiality]] — FBA–TnSeq concordance, condition-specific essentiality, and essentiality–pangenome relationships. [src: acinetobacter_adp1_explorer]
 - [[concepts/condition-specific-fitness]] — carbon-source mutant fitness correlations. [src: acinetobacter_adp1_explorer]
-- [[concepts/pangenome-integration]] — the BERDL-to-ADP1 cluster bridge. [src: acinetobacter_adp1_explorer]
+- [[concepts/pangenome-integration]] — the KBase Data Lakehouse-to-ADP1 cluster bridge. [src: acinetobacter_adp1_explorer]
 - [[concepts/metabolic-model-gapfilling]] — reaction conservation and gapfilling-dependent growth predictions. [src: acinetobacter_adp1_explorer]
 - [[entities/acinetobacter-baylyi-adp1]] — the organism analyzed by the database. [src: acinetobacter_adp1_explorer]
 - [[entities/aromatic-amino-acid-biosynthesis]] — engineered ADP1 strains with aromatic amino acid pathway modifications. [src: acinetobacter_adp1_explorer]

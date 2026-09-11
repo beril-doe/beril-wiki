@@ -13,9 +13,8 @@ cite anything here.
 ## What you are reading
 
 The BERIL Research Observatory's AI agents produced the 75 reports in this
-corpus by working over the [KBase Data Lakehouse](https://hub.berdl.kbase.us),
-also called BERDL: pangenomes, RB-TnSeq fitness assays, biochemistry, and
-environmental metadata. No project here collected new data; every one of them
+corpus by working over the [KBase Data Lakehouse](https://hub.berdl.kbase.us):
+pangenomes, RB-TnSeq fitness assays, biochemistry, and environmental metadata. No project here collected new data; every one of them
 analysed data that was already in the lakehouse. For each report the pipeline writes a summary, works out which
 synthesis pages it belongs on, and rewrites those pages to absorb it. A claim
 therefore gathers evidence from every project that supports it, rather than

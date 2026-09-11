@@ -45,7 +45,7 @@ This comparison supports the existing environment-linked community-structure int
 
 The same analysis found that globally sampled Pseudomonas was 37.8% clinical, 12.9% soil/plant, and 9.4% aquatic, whereas all ENIGMA Pseudomonas belonged to the environmental Pseudomonas_E fluorescens/protegens clade. [[entities/rhodanobacter]] was 55% aquatic, 10% contaminated, and 0% clinical in the analyzed profiles. [src: genotype_to_phenotype_enigma]
 
-Genus-level environmental interpretation was also vulnerable to identifier errors: a strain-name collision caused 12 of 32 genus-level mismatches when ENIGMA strains were matched to the BERDL pangenome through short identifiers such as MT20. One collision matched Rhodanobacter glycinis to Streptococcus pneumoniae and introduced 1,751 spurious clinical genomes into environmental profiles; checking genus consistency reduced verified linkages from 32 to 20 and eliminated all false matches. [src: genotype_to_phenotype_enigma]
+Genus-level environmental interpretation was also vulnerable to identifier errors: a strain-name collision caused 12 of 32 genus-level mismatches when ENIGMA strains were matched to the KBase Data Lakehouse pangenome through short identifiers such as MT20. One collision matched Rhodanobacter glycinis to Streptococcus pneumoniae and introduced 1,751 spurious clinical genomes into environmental profiles; checking genus consistency reduced verified linkages from 32 to 20 and eliminated all false matches. [src: genotype_to_phenotype_enigma]
 
 In the Oak Ridge groundwater analysis, 26 unique genera represented in the [[entities/kescience-fitnessbrowser]] were considered and 14 were detected. *Sphingomonas* occurred at 93% of 108 sites, *Pseudomonas* at 91%, and *Caulobacter* at 82%; the ENIGMA model organism *Desulfovibrio* occurred at 34% of sites and reached a maximum relative abundance of 0.09%. [src: lab_field_ecology]
 
@@ -135,7 +135,7 @@ The SSO study's inferred functional limitations motivate the multi-omics validat
 
 Its Oak Ridge application **supports** linking community composition to field chemistry, but **refines** that link by motivating species- or strain-level matching, multivariate CCA or RDA controlling for pH, redox, and carbon sources, temporal sampling, and metal-specific fitness scores. [src: lab_field_ecology]
 
-The lignin study similarly proposed larger replication, DADA2 ASV analysis, UniFrac and phylogenetic-diversity analyses, deeper ITS sequencing, intermediate time points, and BERDL cross-referencing of Pseudomonas, Acinetobacter, and Comamonas through [[entities/kbase-ke-pangenome|kbase_ke_pangenome]]. [src: lignin_community_enrichment]
+The lignin study similarly proposed larger replication, DADA2 ASV analysis, UniFrac and phylogenetic-diversity analyses, deeper ITS sequencing, intermediate time points, and KBase Data Lakehouse cross-referencing of Pseudomonas, Acinetobacter, and Comamonas through [[entities/kbase-ke-pangenome|kbase_ke_pangenome]]. [src: lignin_community_enrichment]
 
 The MicrobeAtlas study **extends** these validation needs by recommending multi-primer, multi-region surveys, finer subdivision of aquatic environments, alternative phylogenetic models, and genus-to-genome coverage diagnostics before treating atlas-derived niche breadth as ecological range. [src: microbeatlas_metal_ecology]
 

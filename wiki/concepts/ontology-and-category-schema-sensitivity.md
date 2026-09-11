@@ -23,7 +23,7 @@ Composite assignments such as LV showed +0.34% enrichment and 76% consistency, i
 
 Bakta and eggNOG produced complementary functional coverage across 132.5M gene clusters. [src: discoveries] eggNOG had higher COG coverage, at 51% versus 8.2%; KEGG coverage, at 38.5% versus 17.3%; and Pfam coverage, at 63% versus 7.7%. [src: discoveries] Bakta had higher GO coverage, at 15% versus 7.4%; product descriptions, at 71.2% versus 70.4%; and unique UniRef50 links covering 79.2%. [src: discoveries]
 
-Their union increased any-functional-annotation coverage to 77.3%, and Bakta rescued 11.2M clusters among 39.2M missed by eggNOG. [src: discoveries] Only 33.3% of Bakta's 17.6M distinct UniRef50 IDs existed in the BERDL UniProt identifier table. [src: discoveries] These results **refine** [[concepts/evidence-triangulation-for-functional-annotation]]: apparent functional absence can reflect annotation-system coverage or identifier-table coverage rather than biological absence. [src: discoveries]
+Their union increased any-functional-annotation coverage to 77.3%, and Bakta rescued 11.2M clusters among 39.2M missed by eggNOG. [src: discoveries] Only 33.3% of Bakta's 17.6M distinct UniRef50 IDs existed in the KBase Data Lakehouse UniProt identifier table. [src: discoveries] These results **refine** [[concepts/evidence-triangulation-for-functional-annotation]]: apparent functional absence can reflect annotation-system coverage or identifier-table coverage rather than biological absence. [src: discoveries]
 
 ## Marker and ontology proxies require validation
 

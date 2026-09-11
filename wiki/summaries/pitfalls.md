@@ -1,24 +1,24 @@
 ---
 type: "Summary"
-description: "Operational guide to BERDL querying, analysis, reproducibility, and interpretation pitfalls."
+description: "Operational guide to the KBase Data Lakehouse querying, analysis, reproducibility, and interpretation pitfalls."
 doc_type: "short"
 full_text: "sources/pitfalls.md"
 ---
-# BERDL Database: Common Pitfalls & Gotchas
+# KBase Data Lakehouse: Common Pitfalls & Gotchas
 
 ## Overview
 
-This document is a practical reference for avoiding failures, silent misjoins, biased analyses, irreproducible workflows, and misleading interpretations when querying BERDL databases. It emphasizes live, access-aware catalog discovery, direct Spark SQL for large workloads, explicit schema and type inspection, provenance-preserving joins, and independent validation of analysis designs. [src: pitfalls]
+This document is a practical reference for avoiding failures, silent misjoins, biased analyses, irreproducible workflows, and misleading interpretations when querying KBase Data Lakehouse databases. It emphasizes live, access-aware catalog discovery, direct Spark SQL for large workloads, explicit schema and type inspection, provenance-preserving joins, and independent validation of analysis designs. [src: pitfalls]
 
 ## Key Findings
 
 ### Namespace migration and access
 
-BERDL is migrating collections from Delta to Iceberg. Migrated tables use `catalog.namespace.table`, such as `kbase.ke_pangenome.genome`, whereas the former Delta form flattened the namespace, such as `kbase_ke_pangenome.genome`. Underscore-form references occur in hundreds of archived files, which are intentionally not rewritten. Migration remains incomplete, so code must discover the live address and prefer the dotted form when available, falling back to the underscore form when the dotted collection is absent. [src: pitfalls]
+KBase Data Lakehouse is migrating collections from Delta to Iceberg. Migrated tables use `catalog.namespace.table`, such as `kbase.ke_pangenome.genome`, whereas the former Delta form flattened the namespace, such as `kbase_ke_pangenome.genome`. Underscore-form references occur in hundreds of archived files, which are intentionally not rewritten. Migration remains incomplete, so code must discover the live address and prefer the dotted form when available, falling back to the underscore form when the dotted collection is absent. [src: pitfalls]
 
 The `data_lakehouse_ingest` tenant is the MinIO governance-group name rather than the database prefix. The `kbase_ke_pangenome` database is under tenant `kbase`, with dataset `ke_pangenome`; using tenant `kbase_ke` causes access failure, while combining tenant `kbase` with dataset `kbase_ke_pangenome` incorrectly creates `kbase_kbase_ke_pangenome`. [src: pitfalls]
 
-Access failures should be translated to a plain permissions explanation identifying the unreachable table and tenant and directing the user to the BERDL Tenant Browser. User-facing messages must not expose internal strings such as “S3”, “token”, “403”, “access denied”, or internal service URLs. [src: pitfalls]
+Access failures should be translated to a plain permissions explanation identifying the unreachable table and tenant and directing the user to the KBase Data Lakehouse Tenant Browser. User-facing messages must not expose internal strings such as “S3”, “token”, “403”, “access denied”, or internal service URLs. [src: pitfalls]
 
 The REST API can return 504 Gateway Timeout, 524 Origin Timeout, 503 executor-restart errors, or empty responses. Direct Spark SQL is preferred for complex or large queries; the REST `/count` endpoint is particularly unreliable for loops over many tables, and `/schema` frequently times out on large tables. [src: pitfalls]
 
@@ -56,7 +56,7 @@ AlphaEarth geographic analyses can be diluted by human-associated samples. The p
 
 ### Scale, typing, and Spark behavior
 
-Many BERDL numeric fields are strings, including all Fitness Browser columns and relevant pangenome and genome metadata fields. Values must be explicitly cast before comparisons, ordering, arithmetic, or aggregation. Spark `DECIMAL` values arrive in pandas as `decimal.Decimal`; `CAST(... AS DOUBLE)` in SQL or `.astype(float)` after collection prevents mixed-type arithmetic failures. [src: pitfalls]
+Many KBase Data Lakehouse numeric fields are strings, including all Fitness Browser columns and relevant pangenome and genome metadata fields. Values must be explicitly cast before comparisons, ordering, arithmetic, or aggregation. Spark `DECIMAL` values arrive in pandas as `decimal.Decimal`; `CAST(... AS DOUBLE)` in SQL or `.astype(float)` after collection prevents mixed-type arithmetic failures. [src: pitfalls]
 
 `SELECT DISTINCT col, COUNT(*)` without `GROUP BY` fails in Spark strict mode with `MISSING_GROUP_BY`; `GROUP BY col` alone is the correct replacement. Spark Connect temporary views can disappear after a reconnect during a long-running query, so views should be re-registered immediately before use. [src: pitfalls]
 

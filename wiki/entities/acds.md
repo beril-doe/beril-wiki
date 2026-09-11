@@ -15,7 +15,7 @@ sources: ["summaries/pgp_pangenome_ecology__REPORT.md"]
 
 ## Key facts
 
-In the BERDL pangenome analysis, acdS was significantly enriched among 1,039 soil/rhizosphere species compared with 10,233 species from other environments. [src: pgp_pangenome_ecology]
+In the KBase Data Lakehouse pangenome analysis, acdS was significantly enriched among 1,039 soil/rhizosphere species compared with 10,233 species from other environments. [src: pgp_pangenome_ecology]
 
 acdS occurred in 15.8% of soil/rhizosphere species and 2.6% of other species, corresponding to an odds ratio of 7.02 and a Benjamini–Hochberg false-discovery-rate adjusted q-value of 5.1e-62. [src: pgp_pangenome_ecology]
 
