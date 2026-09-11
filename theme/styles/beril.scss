@@ -105,6 +105,10 @@ body {
 a {
   color: var(--method);
   text-decoration: none;
+  // The base layer sets every link to 600, which left rail headings and the
+  // rows under them in identical type, and made link-dense prose read as
+  // half-bold. Colour marks a link here; weight marks a heading.
+  font-weight: inherit;
   &:hover {
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -678,7 +682,8 @@ h4 {
       padding: 10px 12px 8px;
       margin-bottom: 14px;
       h3 {
-        margin-bottom: 4px;
+        margin-bottom: 6px;
+        color: var(--ink-2);
       }
       svg {
         width: 100%;
@@ -692,11 +697,15 @@ h4 {
       }
     }
   }
+  // A section label: smaller, spaced and quieter than the rows it heads.
   h3 {
     font-family: var(--sans);
-    font-size: 0.86rem;
+    font-size: 0.72rem;
     font-weight: 600;
-    margin: 0 0 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mute);
+    margin: 0 0 10px;
   }
   ul {
     list-style: none;
@@ -813,9 +822,11 @@ h4 {
     button.toc-header {
       h3 {
         font-family: var(--sans);
-        font-size: 0.86rem;
+        font-size: 0.72rem;
         font-weight: 600;
-        color: var(--ink);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--mute);
       }
       .fold {
         width: 14px;
