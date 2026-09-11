@@ -37,6 +37,8 @@ export const titleOf = (f: File) => fm(f)?.title ?? slugOf(f)
 export const linksOf = (f: File) => (f.links ?? []) as string[]
 export const collectionOf = (slug: string) => slug.split("/")[0]
 export const isIndex = (slug: string) => slug === "index" || slug.endsWith("/index")
+/** A project report, as opposed to one of the cross-project digests. */
+export const isReport = (slug: string) => /__report$/i.test(slug)
 
 export function kindOf(f: File): Kind {
   const slug = slugOf(f)
@@ -49,9 +51,13 @@ export function kindOf(f: File): Kind {
     case "conflicts":
       return { label: "Conflict", cls: "conflict" }
     case "summaries":
-      return fm(f)?.type === "Summary"
-        ? { label: "Digest", cls: "report" }
-        : { label: "Project report", cls: "report" }
+      // The pipeline stamps `type: "Summary"` on all 75 pages here, digests
+      // included, so the frontmatter cannot tell them apart. The filename can:
+      // a project report is <project_id>__REPORT, and the two cross-project
+      // digests are discoveries and pitfalls.
+      return isReport(slug)
+        ? { label: "Project report", cls: "report" }
+        : { label: "Digest", cls: "report" }
     case "sources":
       return { label: "Raw report", cls: "report" }
     case "entities":
@@ -242,7 +248,12 @@ export function walk(root: Root): Walk {
           for (const a of c.children) {
             if (!isEl(a) || a.tagName !== "a") continue
             // crawl-links writes the hyphenated key, not hast's camelCase.
-            const slug = String(a.properties?.["data-slug"] ?? a.properties?.dataSlug ?? "")
+            const raw = String(a.properties?.["data-slug"] ?? a.properties?.dataSlug ?? "")
+            // A summary page cites itself, and the publish step rewrites that
+            // self-citation to point at the raw report. Both forms name the
+            // same report, so they count as one source; the link keeps
+            // pointing where the page sent it.
+            const slug = raw.startsWith("sources/") ? raw.replace(/^sources\//, "summaries/") : raw
             if (!slug.startsWith("summaries/")) continue
             let cite = cites.get(slug)
             if (!cite) {
@@ -256,7 +267,9 @@ export function walk(root: Root): Walk {
             if (marks.length > 0) marks.push({ type: "text", value: "," })
             marks.push(a)
           }
-          c.children = marks
+          // Replacing the children with nothing would erase the citation
+          // itself, which is the one thing every page here promises.
+          if (marks.length > 0) c.children = marks
           continue
         }
         inner(c)
@@ -343,6 +356,7 @@ export function topicBlurbs(nodes: ElementContent[] | undefined): Map<string, El
 // than read out of a sentence in the markdown.
 export interface Counts {
   reports: number
+  digests: number
   concepts: number
   entities: number
   conflicts: number
@@ -351,16 +365,19 @@ export interface Counts {
 
 export function counts(c: Corpus): Counts {
   let reports = 0
+  let digests = 0
   let concepts = 0
   let entities = 0
   for (const f of c.bySlug.values()) {
     const slug = slugOf(f)
     if (isIndex(slug)) continue
-    if (collectionOf(slug) === "summaries") reports++
+    // "Project reports" means the projects. The two cross-project digests sit
+    // in the same collection and are counted apart from them.
+    if (collectionOf(slug) === "summaries") isReport(slug) ? reports++ : digests++
     else if (collectionOf(slug) === "concepts") concepts++
     else if (collectionOf(slug) === "entities") entities++
   }
-  return { reports, concepts, entities, conflicts: c.conflicts.length, topics: c.topics.length }
+  return { reports, digests, concepts, entities, conflicts: c.conflicts.length, topics: c.topics.length }
 }
 
 // Home page body, split at its h2s so the frame can lay the pieces out.
