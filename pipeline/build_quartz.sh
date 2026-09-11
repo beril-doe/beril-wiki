@@ -53,11 +53,14 @@ c = cfg["configuration"]
 c["pageTitle"] = "BERIL Knowledge Wiki"
 c["baseUrl"] = base_url
 c["analytics"] = None
-# Instrument Serif ships one weight; asking Google Fonts for 700 as well makes
-# the whole stylesheet request fail, so spell the weights out.
+# One superfamily in three roles: the serif carries display and reading prose
+# (its italic is what species names are set in), the sans carries the
+# interface, the mono carries identifiers and counts. Spell the weights out --
+# asking Google Fonts for a weight a family does not ship fails the whole
+# stylesheet request, which is how the site loses all three at once.
 TYPOGRAPHY = {
-    "header": {"name": "Instrument Serif", "weights": [400], "includeItalic": False},
-    "body": {"name": "Instrument Sans", "weights": [400, 500, 600], "includeItalic": True},
+    "header": {"name": "IBM Plex Serif", "weights": [400, 500, 600], "includeItalic": True},
+    "body": {"name": "IBM Plex Sans", "weights": [400, 500, 600], "includeItalic": True},
     "code": {"name": "IBM Plex Mono", "weights": [400, 500], "includeItalic": False},
 }
 c["theme"]["typography"] = TYPOGRAPHY

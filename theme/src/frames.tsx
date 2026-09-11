@@ -844,13 +844,16 @@ export const BerilFrame: PageFrame = {
     const home = slug === "index"
     const index = isIndex(slug)
     const t = ties(file, c, w.cites)
+    // The page's topic colour, handed to the stylesheet for the one place
+    // colour enters the chrome: the tick before each section label.
+    const accent = c.hueOf(file)
     return (
       <>
         <Bar cd={cd} header={header} />
         {home ? (
           <Home file={file} c={c} tree={tree} standing={w.standing} />
         ) : index ? (
-          <main class="band index-page">
+          <main class="band index-page" style={accent ? `--accent:${accent}` : undefined}>
             <Record file={file} c={c} terms={w.terms} standing={w.standing} orcid={w.orcid} cites={w.cites} rels={w.rels} t={t} figures={indexFigures(file, c)} />
             <div class="prose">
               {slot(beforeBody).map((B) => (
@@ -863,7 +866,7 @@ export const BerilFrame: PageFrame = {
             <Listing file={file} c={c} />
           </main>
         ) : (
-          <main class="page-grid">
+          <main class="page-grid" style={accent ? `--accent:${accent}` : undefined}>
             <Record file={file} c={c} terms={w.terms} standing={w.standing} orcid={w.orcid} cites={w.cites} rels={w.rels} t={t} />
             <NavRail cd={cd} file={file} c={c} right={right} />
             <div class="prose">
