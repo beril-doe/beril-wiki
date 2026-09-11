@@ -349,6 +349,25 @@ function NavRail({ cd, file, c, right }: {
   )
 }
 
+// A rail list longer than the rail: the first few rows, then the rest behind a
+// disclosure. "and 31 more" used to be a dead line of text that looked like a
+// link; now it opens the list it is counting, with no script involved.
+function Rows({ rows }: { rows: JSX.Element[] }) {
+  const head = rows.slice(0, MAX_LIST)
+  const rest = rows.slice(MAX_LIST)
+  return (
+    <>
+      <ul>{head}</ul>
+      {rest.length > 0 && (
+        <details class="rest">
+          <summary>and {rest.length} more</summary>
+          <ul>{rest}</ul>
+        </details>
+      )}
+    </>
+  )
+}
+
 // Right rail: what the page rests on and what rests on it.
 function Rail({ cd, file, c, cites, t, left }: {
   cd: QuartzComponentProps
@@ -377,8 +396,8 @@ function Rail({ cd, file, c, cites, t, left }: {
       {cites.length > 0 && (
         <section>
           <h3>Evidence on this page</h3>
-          <ul>
-            {cites.slice(0, MAX_LIST).map((k, i) => {
+          <Rows
+            rows={cites.map((k, i) => {
               const dot = dotOf(k, i === 0)
               const words = [...k.rels].join(", ")
               const sub = i === 0 && k.n > 1 ? `primary source, ${k.n} citations` : words
@@ -394,8 +413,7 @@ function Rail({ cd, file, c, cites, t, left }: {
                 </li>
               )
             })}
-            {cites.length > MAX_LIST && <li class="plain rest">and {cites.length - MAX_LIST} more</li>}
-          </ul>
+          />
           <p class="more">
             The dot is the relation the prose states; black is the primary source. The strip in the
             header says the same, one block per report.
@@ -405,8 +423,8 @@ function Rail({ cd, file, c, cites, t, left }: {
       {t.citedAuthors.length > 0 && (
         <section>
           <h3>Authors of the cited reports</h3>
-          <ul>
-            {t.citedAuthors.slice(0, MAX_LIST).map(([a, n]) => (
+          <Rows
+            rows={t.citedAuthors.map(([a, n]) => (
               <li class="plain">
                 <a href={rel(slugOf(a))}>{titleOf(a)}</a>
                 <span class="n" title={`wrote ${n} of the reports cited here`}>
@@ -414,10 +432,7 @@ function Rail({ cd, file, c, cites, t, left }: {
                 </span>
               </li>
             ))}
-            {t.citedAuthors.length > MAX_LIST && (
-              <li class="plain rest">and {t.citedAuthors.length - MAX_LIST} more</li>
-            )}
-          </ul>
+          />
         </section>
       )}
       {t.conflicts.length > 0 && (
@@ -436,8 +451,8 @@ function Rail({ cd, file, c, cites, t, left }: {
       {t.citedBy.length > 0 && (
         <section>
           <h3>Cited by</h3>
-          <ul>
-            {t.citedBy.slice(0, MAX_LIST).map((f) => {
+          <Rows
+            rows={t.citedBy.map((f) => {
               const hue = c.hueOf(f)
               return (
                 <li style={hue ? `--d:${hue}` : undefined}>
@@ -445,15 +460,14 @@ function Rail({ cd, file, c, cites, t, left }: {
                 </li>
               )
             })}
-            {t.citedBy.length > MAX_LIST && <li class="plain rest">and {t.citedBy.length - MAX_LIST} more</li>}
-          </ul>
+          />
         </section>
       )}
       {t.entities.length > 0 && (
         <section>
           <h3>Entities named</h3>
-          <ul>
-            {t.entities.slice(0, MAX_LIST).map((f) => {
+          <Rows
+            rows={t.entities.map((f) => {
               const k = kindOf(f)
               return (
                 <li class="plain">
@@ -462,8 +476,7 @@ function Rail({ cd, file, c, cites, t, left }: {
                 </li>
               )
             })}
-            {t.entities.length > MAX_LIST && <li class="plain rest">and {t.entities.length - MAX_LIST} more</li>}
-          </ul>
+          />
         </section>
       )}
       {slot(left).map((L) => (
@@ -739,6 +752,9 @@ function SecHead({ title, deck }: { title: string; deck: string }) {
 function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree: Root; standing: ElementContent[] | null }) {
   const slug = slugOf(file) as FullSlug
   const { intro, byHeading } = sections(tree)
+  const firstPara = intro.findIndex((n) => n.type === "element" && n.tagName === "p")
+  const lead = firstPara >= 0 ? [intro[firstPara]] : intro
+  const after = firstPara >= 0 ? intro.filter((_, i) => i !== firstPara) : []
   const browse = byHeading.get("browse")
   const blurbs = topicBlurbs(byHeading.get("topics"))
   const n = counts(c)
@@ -748,7 +764,13 @@ function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree: Root; 
       <section class="band hero">
         <h1>{titleOf(file)}</h1>
         {standing && <p class="standing">{jsx(standing)}</p>}
-        <div class="lede">{jsx(intro)}</div>
+        {/* The opening paragraph leads at reading size; the rest sits beside
+            it rather than leaving half the masthead empty above a page whose
+            every other section runs the full measure. */}
+        <div class="lede">
+          <div class="lead">{jsx(lead)}</div>
+          {after.length > 0 && <div class="after">{jsx(after)}</div>}
+        </div>
       </section>
       <section class="band" aria-label="The corpus in figures">
         <div class="stats">
