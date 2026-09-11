@@ -66,6 +66,11 @@ CITATION SYNTAX (strict): a [src: ...] tag contains ONLY project ids from the
 PROJECTS IN SCOPE list, comma-separated — never concept names, conflict-page
 paths, dashes, or prose. Conflict and concept pages are referenced only as
 [[conflicts/...]] / [[concepts/...]] wikilinks, never inside [src: ...].
+NAMING: the data platform is the KBase Data Lakehouse. Reports call it
+BERDL or the BER Data Lakehouse; those are earlier names for the same
+system and must not appear in a page you write. The project id
+`berdl_data_atlas` and that project's title "BERDL Data Atlas" are names
+of a project, not of the platform, and stay as they are.
 """
 
 

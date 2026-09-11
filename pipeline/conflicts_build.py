@@ -53,6 +53,11 @@ Write markdown with exactly these sections:
 
 Rules: copy numbers exactly; a claim you cannot attribute must not be written; 300-600 words.
 Link the source concept pages with [[concepts/<stem>]] wikilinks where given.
+NAMING: the data platform is the KBase Data Lakehouse. Reports call it
+BERDL or the BER Data Lakehouse; those are earlier names for the same
+system and must not appear in a page you write. The project id
+`berdl_data_atlas` and that project's title "BERDL Data Atlas" are names
+of a project, not of the platform, and stay as they are.
 """
 
 
