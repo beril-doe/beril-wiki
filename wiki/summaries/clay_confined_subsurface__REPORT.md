@@ -32,7 +32,7 @@ GapMind amino-acid pathway completeness was measured across an 18-pathway univer
 
 Anchor_shallow instead showed higher completeness than the baseline: mean 17.87/18 versus 16.66/18 unfiltered, p = 0.006 and d = +0.52; and 17.87/18 versus 17.14/18 after filtering, p = 0.029 and d = +0.43. The report interprets this as consistent with cultivation-quality selection among agricultural isolates, while noting that the 18-pathway metric saturates near 18 for many cultured bacteria. [src: clay_confined_subsurface]
 
-The negative deep-cohort result does not reject biosynthetic self-sufficiency as an adaptation in deep subsurface life; it indicates that the cultured BERDL cohort does not contain the extreme self-sufficient lineages emphasized in the literature, which are often represented by MAGs or single-cell genomes. [src: clay_confined_subsurface]
+The negative deep-cohort result does not reject biosynthetic self-sufficiency as an adaptation in deep subsurface life; it indicates that the cultured KBase Data Lakehouse cohort does not contain the extreme self-sufficient lineages emphasized in the literature, which are often represented by MAGs or single-cell genomes. [src: clay_confined_subsurface]
 
 ### Cohort composition and cultivation bias constrain interpretation
 

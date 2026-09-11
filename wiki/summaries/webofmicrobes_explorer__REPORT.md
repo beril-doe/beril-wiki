@@ -8,7 +8,7 @@ full_text: "sources/webofmicrobes_explorer__REPORT.md"
 
 ## Overview
 
-This project characterized a 2018 snapshot of the Web of Microbes (WoM) database in the BER data lakehouse and assessed links to the Fitness Browser, ModelSEED, GapMind, and pangenome resources. It found that WoM action codes distinguish metabolite amplification from de novo emergence, while cross-collection links support metabolite-to-gene analyses but are limited by absent consumption data, ambiguous compound matching, and a small organism set. [src: webofmicrobes_explorer]
+This project characterized a 2018 snapshot of the Web of Microbes (WoM) database in the KBase Data Lakehouse and assessed links to the Fitness Browser, ModelSEED, GapMind, and pangenome resources. It found that WoM action codes distinguish metabolite amplification from de novo emergence, while cross-collection links support metabolite-to-gene analyses but are limited by absent consumption data, ambiguous compound matching, and a small organism set. [src: webofmicrobes_explorer]
 
 ## Key Findings
 

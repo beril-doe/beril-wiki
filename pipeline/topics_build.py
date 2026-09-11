@@ -66,6 +66,11 @@ CITATION SYNTAX (strict): a [src: ...] tag contains ONLY project ids from the
 PROJECTS IN SCOPE list, comma-separated — never concept names, conflict-page
 paths, dashes, or prose. Conflict and concept pages are referenced only as
 [[conflicts/...]] / [[concepts/...]] wikilinks, never inside [src: ...].
+NAMING: the data platform is the KBase Data Lakehouse. Reports call it
+BERDL or the BER Data Lakehouse; those are earlier names for the same
+system and must not appear in a page you write. The project id
+`berdl_data_atlas` and that project's title "BERDL Data Atlas" are names
+of a project, not of the platform, and stay as they are.
 """
 
 
@@ -197,6 +202,37 @@ def refresh_corpus_line(path: pathlib.Path, stats: str) -> bool:
     return True
 
 
+# Where the data came from. This is a standing fact about the corpus, not a
+# sentence for a model to rephrase: a regenerated home page would otherwise
+# drop the credit and the link, which is how an acknowledgement quietly
+# disappears. Most projects analysed lakehouse data, not all of them, so the
+# wording does not claim every one.
+ACKNOWLEDGEMENT = (
+    "Most of these projects analysed data already in the "
+    "[KBase Data Lakehouse](https://hub.berdl.kbase.us); a few brought their own. "
+    "See [[about|About This Wiki]] for what that means for citing anything here."
+)
+
+
+def refresh_acknowledgement(path: pathlib.Path) -> bool:
+    """Put the standing acknowledgement under the H1. True if the file changed."""
+    text = path.read_text(encoding="utf-8")
+    body = re.sub(r"\n" + re.escape(ACKNOWLEDGEMENT) + r"\n", "\n", text)
+    lines = body.splitlines()
+    for i, line in enumerate(lines):
+        if line.startswith("# "):
+            lines.insert(i + 1, "")
+            lines.insert(i + 2, ACKNOWLEDGEMENT)
+            break
+    else:
+        return False
+    new = "\n".join(lines).rstrip() + "\n"
+    if new == text:
+        return False
+    path.write_text(new, encoding="utf-8")
+    return True
+
+
 def write_home(hubs: list[tuple], stats: str) -> None:
     hub_list = "\n".join(f"- [[topics/{slug}|{t}]] ({n} concepts): {lead}" for t, slug, lead, n in hubs)
     style = (
@@ -214,7 +250,7 @@ def write_home(hubs: list[tuple], stats: str) -> None:
     home = llm(
         "Write the HOME page (markdown, H1 title 'BERIL Knowledge Wiki') for this research "
         "wiki: 2-3 paragraphs introducing the BERIL Research Observatory corpus (AI-conducted "
-        "microbial-biology research over the KBase BER Data Lakehouse) and how to read the wiki "
+        "microbial-biology research over the KBase Data Lakehouse) and how to read the wiki "
         "(topics are the entry points; concepts/entities/summaries are the reference layers), "
         f"then a '## Topics' section presenting each topic with its one-line hook as a wikilink "
         f"list, then a '## Corpus' line with these stats: {stats}, then a '## Browse' section "
@@ -225,6 +261,7 @@ def write_home(hubs: list[tuple], stats: str) -> None:
     (OUT / "index.md").write_text(home.strip() + "\n", encoding="utf-8")
     # The model was given the stats, but it must not own them.
     refresh_corpus_line(OUT / "index.md", stats)
+    refresh_acknowledgement(OUT / "index.md")
     print(f"wrote index.md; {stats}")
 
 

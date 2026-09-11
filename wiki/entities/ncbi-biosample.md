@@ -33,8 +33,8 @@ The authoritative source for this resource is NCBI BioSample, whereas NMDC is th
 
 ## Access and scale inspection
 
-Row counts for BERDL tables, including this resource, can be retrieved through Iceberg metadata with `SELECT COUNT(*)`; the audit reports that these counts return instantly. [src: nmdc_context_audit] `get_databases()` returns both dotted Iceberg aliases and underscore Hive aliases, so consumers must de-duplicate the dotted form before iteration to avoid double-counting. [src: nmdc_context_audit]
+Row counts for KBase Data Lakehouse tables, including this resource, can be retrieved through Iceberg metadata with `SELECT COUNT(*)`; the audit reports that these counts return instantly. [src: nmdc_context_audit] `get_databases()` returns both dotted Iceberg aliases and underscore Hive aliases, so consumers must de-duplicate the dotted form before iteration to avoid double-counting. [src: nmdc_context_audit]
 
 ## Source
 
-- [[summaries/nmdc_context_audit__REPORT]] — audit of provenance, tenant placement, scale, currency, authority, and discovery risks for NMDC-labeled BERDL resources. [src: nmdc_context_audit]
+- [[summaries/nmdc_context_audit__REPORT]] — audit of provenance, tenant placement, scale, currency, authority, and discovery risks for NMDC-labeled KBase Data Lakehouse resources. [src: nmdc_context_audit]

@@ -15,7 +15,7 @@ No stable external identifier is reported for this entity in the source document
 
 ## Key facts
 
-Type I restriction-modification markers were analyzed as one of seven anti-phage defense-system families in the BERDL pangenome. [src: phage_defense_arsenal]
+Type I restriction-modification markers were analyzed as one of seven anti-phage defense-system families in the KBase Data Lakehouse pangenome. [src: phage_defense_arsenal]
 
 Type I restriction-modification systems occurred in **76.8%** of species-level pangenomes in the analysis. [src: phage_defense_arsenal]
 

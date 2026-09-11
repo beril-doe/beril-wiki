@@ -64,7 +64,7 @@ Among 65 plant-associated species with at least 20 genomes, only 18 had any phyl
 
 Three of those five species—Xanthomonas vasicola, Pseudomonas_E avellanae, and Xanthomonas campestris—also satisfied Cochran’s rule for chi-square validity. A host-by-subclade analysis found two species passing both within-species and across-species Bonferroni corrections: Xanthomonas campestris segregated toward Brassica hosts, with 46/47 genomes in one subclade and p = 2.7×10⁻¹² raw, 3.3×10⁻¹¹ after correction; Xanthomonas vasicola segregated toward Zea mays, with 47/52 genomes in one subclade and p = 1.4×10⁻¹¹ raw, 1.7×10⁻¹⁰ after correction. Ralstonia solanacearum passed BH-FDR but not across-species Bonferroni. [src: plant_microbiome_ecotypes]
 
-The report attributes the original null subclade result to a genome-ID mismatch: phylogenetic tables used bare NCBI accessions, while environmental metadata used GTDB-prefixed identifiers. Adding GB_ to GCA_ accessions and RS_ to GCF_ accessions recovered 1,306/1,306 genomes and 599 plant-associated genomes. The final interpretation is weak support for within-species plant-association segregation in 5/17 testable species, with strongest evidence in Xanthomonas and Pseudomonas, but the true effect across all 65 candidates cannot be estimated until BERDL phylogenetic-tree coverage improves. [src: plant_microbiome_ecotypes]
+The report attributes the original null subclade result to a genome-ID mismatch: phylogenetic tables used bare NCBI accessions, while environmental metadata used GTDB-prefixed identifiers. Adding GB_ to GCA_ accessions and RS_ to GCF_ accessions recovered 1,306/1,306 genomes and 599 plant-associated genomes. The final interpretation is weak support for within-species plant-association segregation in 5/17 testable species, with strongest evidence in Xanthomonas and Pseudomonas, but the true effect across all 65 candidates cannot be estimated until KBase Data Lakehouse phylogenetic-tree coverage improves. [src: plant_microbiome_ecotypes]
 
 ### Annotation-table limitations were identified and operationally resolved
 
@@ -90,7 +90,7 @@ The MGnify and pangenome classifications have only 11.7% Jaccard overlap because
 
 ## Future Directions
 
-The report prioritizes a sparse or subsampled full PGLMM using GTDB-tree covariance; transcriptomic validation of dual-nature organisms; AlphaFold and pathway-based mechanistic analysis of COG3569, COG1845, COG0843, and COG0316; oxygen-tolerance experiments targeting high-affinity cytochrome oxidases; accessory-genome and gene-content-tree analyses of subclade adaptation; expanded BERDL phylogenetic-tree coverage; finer-grained compartment sampling; reaction-level complementarity; GeNomad integration; SynCom design; and crop-specific biocontrol studies focused on host-specialized lineages. [src: plant_microbiome_ecotypes]
+The report prioritizes a sparse or subsampled full PGLMM using GTDB-tree covariance; transcriptomic validation of dual-nature organisms; AlphaFold and pathway-based mechanistic analysis of COG3569, COG1845, COG0843, and COG0316; oxygen-tolerance experiments targeting high-affinity cytochrome oxidases; accessory-genome and gene-content-tree analyses of subclade adaptation; expanded KBase Data Lakehouse phylogenetic-tree coverage; finer-grained compartment sampling; reaction-level complementarity; GeNomad integration; SynCom design; and crop-specific biocontrol studies focused on host-specialized lineages. [src: plant_microbiome_ecotypes]
 
 ## Slots Into
 

@@ -34,7 +34,7 @@ Of 201 gapfilled reactions, 50 (24.9%) lacked an EC number in ModelSEED and were
 
 ### 6. GapMind and gapfilling showed partial concordance
 
-Among 104 GapMind-gapfill pathway pairings, GapMind frequently identified incomplete pathways (`not_present` or `steps_missing`) for carbon sources where ModelSEED required gapfilling. Exact concordance was limited because GapMind reports pathway-level step counts rather than individual step identities in the available BERDL data. [src: annotation_gap_discovery]
+Among 104 GapMind-gapfill pathway pairings, GapMind frequently identified incomplete pathways (`not_present` or `steps_missing`) for carbon sources where ModelSEED required gapfilling. Exact concordance was limited because GapMind reports pathway-level step counts rather than individual step identities in the available KBase Data Lakehouse data. [src: annotation_gap_discovery]
 
 ### 7. Resolved BLAST cases clustered at high identity
 

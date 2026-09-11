@@ -65,7 +65,7 @@ The authority context is heterogeneous: NMDC is the National Microbiome Data Col
 
 `kbase.nmdc_neon` represents NEON rather than NMDC, so interpreting the namesake as NMDC would create an agency-attribution error. [src: nmdc_context_audit]
 
-The audit also found provenance blur in the BERDL data atlas, which labels Rhea and Gene Ontology reference ontologies under `nmdc_arkin` as “NMDC integrated.” [src: nmdc_context_audit]
+The audit also found provenance blur in the KBase Data Lakehouse data atlas, which labels Rhea and Gene Ontology reference ontologies under `nmdc_arkin` as “NMDC integrated.” [src: nmdc_context_audit]
 
 Provenance should describe both origin and transformation. The NCBI mirror adds an attribute-harmonization layer to 51,711,888 raw NCBI samples, while the Arkin derivative adds embeddings and traits that do not exist upstream. [src: nmdc_context_audit]
 
@@ -117,7 +117,7 @@ The soil-frontier result introduces a related interpretive tension: all clay-shi
 - Add provenance, authority, tenant, object-count, and `max(committed_at)` fields to inventory output, then test whether users can identify the appropriate NMDC-related resource without opening separate documentation. [src: nmdc_context_audit]
 - De-duplicate dotted and underscore database aliases before inventory iteration, then verify whether reported resource counts and cross-tenant links become consistent. [src: nmdc_context_audit]
 - Apply the proposed documentation and tooling fixes and measure subsequent NMDC project resource selection time and reuse patterns to test whether better context reduces selection errors. [src: nmdc_context_audit]
-- Extend the provenance-audit method to other overloaded BERDL labels and ask whether the same combination of name collisions, tenant separation, scale traps, and hidden currency recurs. [src: nmdc_context_audit]
+- Extend the provenance-audit method to other overloaded KBase Data Lakehouse labels and ask whether the same combination of name collisions, tenant separation, scale traps, and hidden currency recurs. [src: nmdc_context_audit]
 - Join the 129,823 PaperBLAST–Fitness Browser cross-references to resource cards, then test whether exposing source, text-mining coverage, and phenotype linkage changes selection of literature-to-fitness resources. [src: paperblast_explorer]
 - Compare PaperBLAST’s PMC-derived coverage with curatedgene, GeneRIF, and SwissProt-only annotations to quantify which missing-literature patterns reflect access limitations versus genuinely unstudied proteins. [src: paperblast_explorer]
 - Build live resource cards that record dotted and fallback namespace, tenant, access surface, schema-discovery time, row/object counts, and `max(committed_at)`, then test whether the cards prevent duplicate aliases and invalid historical references. [src: pitfalls]

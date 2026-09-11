@@ -8,7 +8,7 @@ full_text: "sources/pgp_pangenome_ecology__REPORT.md"
 
 ## Overview
 
-This report analyzes plant-growth-promoting (PGP) gene distribution, co-occurrence, environmental enrichment, and core/accessory status across the BERDL pangenome. Among 27,702 total species, 11,272 carried at least one of 13 PGP gene markers; the analysis included 32,736 PGP gene clusters, 27,690 species with GapMind pathway scores, and 291,279 genomes with isolation-source metadata. [src: pgp_pangenome_ecology]
+This report analyzes plant-growth-promoting (PGP) gene distribution, co-occurrence, environmental enrichment, and core/accessory status across the KBase Data Lakehouse pangenome. Among 27,702 total species, 11,272 carried at least one of 13 PGP gene markers; the analysis included 32,736 PGP gene clusters, 27,690 species with GapMind pathway scores, and 291,279 genomes with isolation-source metadata. [src: pgp_pangenome_ecology]
 
 ## Key Findings
 

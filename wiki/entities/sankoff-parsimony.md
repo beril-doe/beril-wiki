@@ -59,7 +59,7 @@ The qualitative TCS-HK architectural result remained supported by consumer-side 
 
 Sankoff results were not comprehensively cross-validated against DTLOR or other modern reconciliation methods, and bootstrap confidence intervals for individual M22 events were deferred. [src: gene_function_ecological_agora]
 
-Deep-rank donor identities were not resolved because per-CDS sequence data were unavailable in queryable BERDL schemas. [src: gene_function_ecological_agora]
+Deep-rank donor identities were not resolved because per-CDS sequence data were unavailable in queryable KBase Data Lakehouse schemas. [src: gene_function_ecological_agora]
 
 M26 tree-based donor inference remained exploratory and algebraically counted potential family-mate donors, which biased classifications toward Open-Innovator assignments. [src: gene_function_ecological_agora]
 

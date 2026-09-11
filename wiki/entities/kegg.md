@@ -15,7 +15,7 @@ KEGG is also used as a genome, pathway, and functional-annotation dataset in gen
 
 KEGG links were part of the census workflow connecting compound identities from [[entities/pubchem]] to reactions, pathways, and genome annotations. [src: enigma_carbon_census_1] Of the 83 enrichment compounds examined, 54 were linked to KEGG. [src: enigma_carbon_census_1]
 
-The census identified 74/83 compounds (89%) as organism-dark, meaning that their genetic determinants of utilization were not linkable through the queried BERDL and curated resources. [src: enigma_carbon_census_1] Within that dark set, 33 compounds were KEGG-linked but had no reaction in the queried genomes, while 29 were fully orphan compounds with no KEGG link. [src: enigma_carbon_census_1]
+The census identified 74/83 compounds (89%) as organism-dark, meaning that their genetic determinants of utilization were not linkable through the queried the KBase Data Lakehouse and curated resources. [src: enigma_carbon_census_1] Within that dark set, 33 compounds were KEGG-linked but had no reaction in the queried genomes, while 29 were fully orphan compounds with no KEGG link. [src: enigma_carbon_census_1]
 
 The KEGG-linked evidence contributed to a tiered compound-to-organism workflow that also used [[entities/modelseed]], [[entities/gtdb]], ENIGMA genome-depot data, and measured fitness data. [src: enigma_carbon_census_1] The workflow resolved all 83 compounds to structures with InChIKeys, linked 54 to KEGG, and produced 9 callable compounds under the project definition before the xanthine carbon-catabolism correction. [src: enigma_carbon_census_1]
 

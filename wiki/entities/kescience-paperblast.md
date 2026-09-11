@@ -1,6 +1,6 @@
 ---
 type: "Dataset"
-description: "BERDL dataset linking protein sequences, genes, annotations, and literature."
+description: "KBase Data Lakehouse dataset linking protein sequences, genes, annotations, and literature."
 sources: ["summaries/berdl_data_atlas__REPORT.md", "summaries/caulobacter_fur_lipida_loss__REPORT.md", "summaries/paperblast_explorer__REPORT.md"]
 ---
 # KEScience PaperBLAST
@@ -23,7 +23,7 @@ The BERDL Data Atlas inventory contains **255,096 PaperBLAST curated gene assign
 
 The atlas lists `kescience_paperblast` among the literature resources recommended for data-use planning, alongside [[entities/kescience-pubmed]]. [src: berdl_data_atlas]
 
-PaperBLAST is part of the broader BERDL inventory of **1,740 deduplicated tables across 119 databases, 17 tenants, and 10 funding agencies or programs**. [src: berdl_data_atlas]
+PaperBLAST is part of the broader KBase Data Lakehouse inventory of **1,740 deduplicated tables across 119 databases, 17 tenants, and 10 funding agencies or programs**. [src: berdl_data_atlas]
 
 The explorer **refines** expectations about coverage: **551K (65.6%)** of **841K** genes with any text-mined paper link have exactly one paper, and at **50%** sequence identity, **31,653** protein families have zero papers while **159,046** have exactly one. [src: paperblast_explorer] It also identifies **5,218** multi-member families representing **14,534** sequences with no literature. [src: paperblast_explorer]
 

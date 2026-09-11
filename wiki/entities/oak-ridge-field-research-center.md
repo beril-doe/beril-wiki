@@ -32,4 +32,4 @@ The new field study **refines** this cross-feeding and fitness context by showin
 * [[entities/pseudomonas-fw300-n2e3]] — organism isolated from Oak Ridge Field Research Center groundwater.
 * [[entities/enigma-coral]] — ENIGMA-related research context.
 * [[concepts/multi-omics-integration]] — cross-database integration used to interpret the FW300-N2E3 data.
-* [[concepts/cross-tenant-data-bridging]] — joining evidence across BERDL databases.
+* [[concepts/cross-tenant-data-bridging]] — joining evidence across the KBase Data Lakehouse databases.

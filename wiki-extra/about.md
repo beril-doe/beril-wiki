@@ -12,9 +12,13 @@ cite anything here.
 
 ## What you are reading
 
-AI agents produced the 75 reports in this corpus by working over BERDL (KBase)
-data: pangenomes, RB-TnSeq fitness assays, biochemistry, and environmental
-metadata. For each report the pipeline writes a summary, works out which
+The BERIL Research Observatory's AI agents produced the 75 reports in this
+corpus. Most of them worked over the
+[KBase Data Lakehouse](https://hub.berdl.kbase.us): pangenomes, RB-TnSeq
+fitness assays, biochemistry, and environmental metadata. A few analysed data
+brought from elsewhere, user-provided sequencing among it, and each report
+states what it used. None of them generated new laboratory measurements.
+For each report the pipeline writes a summary, works out which
 synthesis pages it belongs on, and rewrites those pages to absorb it. A claim
 therefore gathers evidence from every project that supports it, rather than
 appearing once per project.
@@ -95,6 +99,27 @@ here at all.
 
 Reported budget figures undercount what a run actually spends, so the cost notes
 in the repository are lower bounds.
+
+## The data this rests on
+
+Most projects in this corpus ran over the
+[KBase Data Lakehouse](https://hub.berdl.kbase.us), the data platform of the
+[Department of Energy Systems Biology Knowledgebase (KBase)](https://www.kbase.us/).
+The pangenomes, fitness assays, genome annotations, amplicon surveys, metabolic
+models and metadata that those reports analyse are KBase's, not this project's.
+A few projects analysed data from elsewhere instead, and each one says so.
+Little on this site would exist without the lakehouse.
+
+<p class="ack"><a href="https://www.kbase.us/"><img src="assets/kbase-logo.svg" alt="KBase" width="190"></a></p>
+
+KBase asks to be cited as:
+
+> Arkin AP, Cottingham RW, Henry CS, et al. KBase: The United States Department
+> of Energy Systems Biology Knowledgebase. *Nature Biotechnology*. 2018;36:566.
+> [doi:10.1038/nbt.4163](https://doi.org/10.1038/nbt.4163)
+
+Cite that alongside anything you take from this wiki that rests on lakehouse
+data, which is all of it.
 
 ## How to cite
 

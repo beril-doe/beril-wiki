@@ -11,7 +11,7 @@ sources: ["summaries/pgp_pangenome_ecology__REPORT.md"]
 **Known aliases:** None reported in this document.  
 **Stable external identifier:** None reported in this document.  
 
-hcnC is a gene marker analyzed as part of plant-growth-promoting (PGP) gene distribution across the BERDL pangenome. [src: pgp_pangenome_ecology]
+hcnC is a gene marker analyzed as part of plant-growth-promoting (PGP) gene distribution across the KBase Data Lakehouse pangenome. [src: pgp_pangenome_ecology]
 
 ## Key facts
 

@@ -8,7 +8,7 @@ full_text: "sources/phage_defense_arsenal__REPORT.md"
 
 ## Overview
 
-This report analyzes seven anti-phage defense-system families across the BERDL pangenome. Markers were detected in 27,626 of 27,690 species-level pangenomes (99.8%), producing 930,573 marker hits across 825,476 unique gene clusters. The ≥5-genome quality-filtered analysis set contains 7,323 species and is used for arms-race and syndrome tests. [src: phage_defense_arsenal]
+This report analyzes seven anti-phage defense-system families across the KBase Data Lakehouse pangenome. Markers were detected in 27,626 of 27,690 species-level pangenomes (99.8%), producing 930,573 marker hits across 825,476 unique gene clusters. The ≥5-genome quality-filtered analysis set contains 7,323 species and is used for arms-race and syndrome tests. [src: phage_defense_arsenal]
 
 ## Key Findings
 

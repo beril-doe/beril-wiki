@@ -35,7 +35,7 @@ The source cautioned that certainty was calculated from the raw number of carrie
 
 The new study **refines** the Depot’s cross-resource role by placing its genome and annotation records in a combined modeling corpus of 46,389 genome-by-condition pairs spanning 727 genomes, 363 conditions, and 4,293 shared [[entities/kegg]] orthologs (KOs). [src: genotype_to_phenotype_enigma]
 
-It also identifies a data-integration hazard: matching ENIGMA strains to the BERDL pangenome through short identifiers such as MT20 caused 12 of 32 genus-level mismatches, including a Rhodanobacter glycinis–[[entities/streptococcus-pneumoniae]] collision that introduced 1,751 spurious clinical genomes into environmental profiles. [src: genotype_to_phenotype_enigma] Using CORAL brick 522 GTDB-Tk assignments and genus-consistency checks reduced verified linkages from 32 to 20 and eliminated all false matches, **supporting** stricter identity validation for Depot-linked analyses. [src: genotype_to_phenotype_enigma]
+It also identifies a data-integration hazard: matching ENIGMA strains to the KBase Data Lakehouse pangenome through short identifiers such as MT20 caused 12 of 32 genus-level mismatches, including a Rhodanobacter glycinis–[[entities/streptococcus-pneumoniae]] collision that introduced 1,751 spurious clinical genomes into environmental profiles. [src: genotype_to_phenotype_enigma] Using CORAL brick 522 GTDB-Tk assignments and genus-consistency checks reduced verified linkages from 32 to 20 and eliminated all false matches, **supporting** stricter identity validation for Depot-linked analyses. [src: genotype_to_phenotype_enigma]
 
 ## Related pages
 

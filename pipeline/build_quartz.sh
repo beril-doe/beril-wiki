@@ -53,11 +53,14 @@ c = cfg["configuration"]
 c["pageTitle"] = "BERIL Knowledge Wiki"
 c["baseUrl"] = base_url
 c["analytics"] = None
-# Instrument Serif ships one weight; asking Google Fonts for 700 as well makes
-# the whole stylesheet request fail, so spell the weights out.
+# One superfamily in three roles: the serif carries display and reading prose
+# (its italic is what species names are set in), the sans carries the
+# interface, the mono carries identifiers and counts. Spell the weights out --
+# asking Google Fonts for a weight a family does not ship fails the whole
+# stylesheet request, which is how the site loses all three at once.
 TYPOGRAPHY = {
-    "header": {"name": "Instrument Serif", "weights": [400], "includeItalic": False},
-    "body": {"name": "Instrument Sans", "weights": [400, 500, 600], "includeItalic": True},
+    "header": {"name": "IBM Plex Serif", "weights": [400, 500, 600], "includeItalic": True},
+    "body": {"name": "IBM Plex Sans", "weights": [400, 500, 600], "includeItalic": True},
     "code": {"name": "IBM Plex Mono", "weights": [400, 500], "includeItalic": False},
 }
 c["theme"]["typography"] = TYPOGRAPHY
@@ -72,16 +75,19 @@ c["theme"]["colors"]["lightMode"] = {
     "highlight": "rgba(44, 99, 199, 0.08)",
     "textHighlight": "rgba(176, 122, 18, 0.3)",
 }
+# Dark mode is a warm neutral rather than a blue-black, so the two themes read
+# as one site, and the surfaces are far enough apart to be seen: the page and
+# the cards used to sit four percent apart with rules darker than both.
 c["theme"]["colors"]["darkMode"] = {
-    "light": "#15181b",
-    "lightgray": "#2c3237",
-    "gray": "#8a929a",
-    "darkgray": "#b5bcc3",
-    "dark": "#e8eaec",
-    "secondary": "#7fa6f0",
-    "tertiary": "#a9c3f5",
-    "highlight": "rgba(127, 166, 240, 0.12)",
-    "textHighlight": "rgba(224, 169, 58, 0.3)",
+    "light": "#17181a",        # page background
+    "lightgray": "#2f3235",    # rules, lighter than the surfaces they divide
+    "gray": "#8f8b84",         # muted text
+    "darkgray": "#b8b4ac",     # secondary text
+    "dark": "#e6e3dd",         # ink, off pure white for long reading
+    "secondary": "#86aaf5",    # links
+    "tertiary": "#a8c3fa",     # link hover
+    "highlight": "rgba(134, 170, 245, 0.12)",
+    "textHighlight": "rgba(226, 169, 74, 0.3)",
 }
 # The frame renders its own title, navigation, neighbours and backlinks, so
 # the stock components for those are switched off rather than hidden.

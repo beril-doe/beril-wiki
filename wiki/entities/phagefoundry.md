@@ -13,13 +13,13 @@ sources: ["summaries/berdl_data_atlas__REPORT.md", "summaries/discoveries.md", "
 
 **Stable external identifier:** No stable external identifier is specified in the source document. [src: berdl_data_atlas]
 
-PhageFoundry is a BERDL dataset and tenant containing phage, mobile-element, and strain-modelling records. [src: berdl_data_atlas]
+PhageFoundry is a KBase Data Lakehouse dataset and tenant containing phage, mobile-element, and strain-modelling records. [src: berdl_data_atlas]
 
 ## Key Facts
 
-PhageFoundry accounts for 14% of BERDL tables, and the `mobile_phage` topic is 96% owned by PhageFoundry. [src: berdl_data_atlas] The inventory contains 15,677,623 IMG/VR viral sequence records and 933,103 PhageFoundry strain-modelling gene records. [src: berdl_data_atlas]
+PhageFoundry accounts for 14% of the KBase Data Lakehouse tables, and the `mobile_phage` topic is 96% owned by PhageFoundry. [src: berdl_data_atlas] The inventory contains 15,677,623 IMG/VR viral sequence records and 933,103 PhageFoundry strain-modelling gene records. [src: berdl_data_atlas]
 
-Among 66 audited BERIL projects, PhageFoundry appears in 5 projects, despite containing 14% of BERDL tables. [src: berdl_data_atlas] The atlas recommends PhageFoundry catalogs for phage and mobile-element data. [src: berdl_data_atlas]
+Among 66 audited BERIL projects, PhageFoundry appears in 5 projects, despite containing 14% of the KBase Data Lakehouse tables. [src: berdl_data_atlas] The atlas recommends PhageFoundry catalogs for phage and mobile-element data. [src: berdl_data_atlas]
 
 The discoveries log refines the strain-modelling inventory with a database-level example: PhageFoundry contained 17,672 binary infection outcomes from 188 *Escherichia coli* strains and 96 phages, supporting its use for strain–phage susceptibility modelling; an ML model achieved AUC=0.883. [src: discoveries] Lambda infected 1/188 strains (0.5%), compared with 43.4% for Myoviridae, illustrating strong phage-specific variation in the recorded outcomes. [src: discoveries]
 

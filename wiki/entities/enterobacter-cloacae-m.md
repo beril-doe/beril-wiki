@@ -13,7 +13,7 @@ sources: ["summaries/ecotype_functional_differentiation__REPORT.md"]
 
 **Stable external identifier:** None reported in the source document. [src: ecotype_functional_differentiation]
 
-Enterobacter cloacae M was one of the bacterial species analyzed for within-species gene-content ecotypes in the BERDL pangenome database. [src: ecotype_functional_differentiation]
+Enterobacter cloacae M was one of the bacterial species analyzed for within-species gene-content ecotypes in the KBase Data Lakehouse pangenome database. [src: ecotype_functional_differentiation]
 
 ## Findings in ecotype functional differentiation
 
@@ -41,7 +41,7 @@ Approximately 38% of gene clusters had COG annotations, leaving 62% unannotated,
 
 - [[summaries/ecotype_functional_differentiation__REPORT]] — source-document summary.
 - [[concepts/ecotype-environment-gene-content]] — cross-species synthesis of gene-content ecotypes and their environmental or functional interpretation.
-- [[concepts/pangenome-integration]] — integration of BERDL pangenome gene-content profiles with functional categories.
+- [[concepts/pangenome-integration]] — integration of the KBase Data Lakehouse pangenome gene-content profiles with functional categories.
 - [[concepts/multi-omics-integration]] — proposed follow-up integration of unannotated genes with functional and structural evidence.
 - [[entities/kmeans-clustering]] — clustering method used in the analysis.
 - [[entities/principal-component-analysis]] — dimensionality-reduction method used before clustering.

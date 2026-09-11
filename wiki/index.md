@@ -6,20 +6,20 @@
 - [[summaries/t4ss_cazy_environmental_hgt__REPORT]] (short) — Environmental T4SS–CAZy co-localization and cross-phylum HGT analysis
 - [[summaries/soil_metal_functional_genomics__REPORT]] (short) — Soil metals explain functional gene shifts but require confounder validation
 - [[summaries/soil_frontier_genomics__REPORT]] (short) — Tests the clay shield hypothesis and identifies alkaline-soil genomic sampling gaps.
-- [[summaries/snipe_defense_system__REPORT]] (short) — BERDL-wide analysis of SNIPE prevalence, ecology, and phage-defense trade-offs
+- [[summaries/snipe_defense_system__REPORT]] (short) — KBase Data Lakehouse-wide analysis of SNIPE prevalence, ecology, and phage-defense trade-offs
 - [[summaries/respiratory_chain_wiring__REPORT]] (short) — Condition-specific respiratory-chain wiring in Acinetobacter baylyi ADP1
 - [[summaries/pseudomonas_carbon_ecology__REPORT]] (short) — Genus-scale analysis links Pseudomonas carbon pathways to ecology and lifestyle.
 - [[summaries/prophage_ecology__REPORT]] (short) — Module-level prophage ecology analysis across bacterial phylogeny and environments
 - [[summaries/prophage_amr_comobilization__REPORT]] (short) — Pangenome-scale analysis links prophage density to AMR repertoire breadth.
 - [[summaries/plant_microbiome_ecotypes__REPORT]] (short) — Genome-scale analysis of plant microbiome compartments, markers, and ecotype structure
-- [[summaries/pitfalls]] (short) — Operational guide to BERDL querying, analysis, reproducibility, and interpretation pitfalls.
+- [[summaries/pitfalls]] (short) — Operational guide to the KBase Data Lakehouse querying, analysis, reproducibility, and interpretation pitfalls.
 - [[summaries/phb_granule_ecology__REPORT]] (short) — Pangenome-scale analysis of PHB ecology, distribution, and horizontal transfer
 - [[summaries/phage_defense_arsenal__REPORT]] (short) — Pan-bacterial analysis of anti-phage defense prevalence, syndromes, and arms-race patterns
 - [[summaries/pgp_pangenome_ecology__REPORT]] (short) — Pangenome-scale analysis of PGP gene ecology, co-occurrence, and inheritance
 - [[summaries/pathway_capability_dependency__REPORT]] (short) — Links metabolic pathway capability, fitness dependency, and pangenome openness.
 - [[summaries/paperblast_explorer__REPORT]] (short) — Quantifies severe literature bias and dark protein-family coverage in PaperBLAST
 - [[summaries/pangenome_openness__REPORT]] (short) — Tests whether pangenome openness predicts ecological or phylogenetic gene-content effects.
-- [[summaries/nmdc_context_audit__REPORT]] (short) — Audit of NMDC-labeled BERDL resources, provenance, scale, and currency
+- [[summaries/nmdc_context_audit__REPORT]] (short) — Audit of NMDC-labeled KBase Data Lakehouse resources, provenance, scale, and currency
 - [[summaries/nmdc_community_metabolic_ecology__REPORT]] (short) — NMDC–pangenome integration reveals community metabolic and Black Queen signals
 - [[summaries/module_conservation__REPORT]] (short) — Shows fitness modules are enriched in conserved core genes.
 - [[summaries/microbeatlas_metal_ecology__REPORT]] (short) — Global PGLS links metal-resistance diversity to bacterial niche breadth.
@@ -61,7 +61,7 @@
 - [[summaries/clay_confined_subsurface__REPORT]] (short) — Tests clay-subsurface cultivation bias, anaerobic traits, and biosynthetic self-sufficiency.
 - [[summaries/cf_formulation_design__REPORT]] (short) — Rational microbiome formulation design for excluding Pseudomonas aeruginosa
 - [[summaries/caulobacter_fur_lipida_loss__REPORT]] (short) — Multi-layer analysis of Fur, ChvI, Lpt, and peptidoglycan responses enabling lipid A loss
-- [[summaries/berdl_data_atlas__REPORT]] (short) — BERDL atlas maps data depth, cross-tenant bridges, and validated synergy.
+- [[summaries/berdl_data_atlas__REPORT]] (short) — KBase Data Lakehouse atlas maps data depth, cross-tenant bridges, and validated synergy.
 - [[summaries/bacillota_b_subsurface_accessory__REPORT]] (short) — Deep-clay Bacillota_B show gene-content expansion and corrected IR comparisons
 - [[summaries/bacdive_phenotype_metal_tolerance__REPORT]] (short) — BacDive phenotypes add no predictive power beyond taxonomy for metal tolerance
 - [[summaries/bacdive_metal_validation__REPORT]] (short) — BacDive validation links environmental metal isolation to genomic tolerance scores.
@@ -75,7 +75,7 @@
 - [[summaries/alphafold_msa_annotation__REPORT]] (short) — AlphaFold MSA depth reveals pangenome-linked annotation gaps and conserved paradox proteins.
 - [[summaries/adp1_triple_essentiality__REPORT]] (short) — Integrated comparison of FBA, TnSeq, knockout, growth, and proteomics essentiality.
 - [[summaries/adp1_deletion_phenotypes__REPORT]] (short) — ADP1 deletion phenotypes reveal continuous, condition-specific fitness architecture.
-- [[summaries/acinetobacter_adp1_explorer__REPORT]] (short) — Multi-omics, BERDL connectivity, and metabolic analysis of Acinetobacter baylyi ADP1
+- [[summaries/acinetobacter_adp1_explorer__REPORT]] (short) — Multi-omics, KBase Data Lakehouse connectivity, and metabolic analysis of Acinetobacter baylyi ADP1
 
 ## Concepts
 - [[concepts/adaptive-versus-housekeeping-functional-differentiation]] — Ecotype functions differ mainly in adaptive effect magnitude, not significance alone.
@@ -210,7 +210,7 @@
 - [[entities/bacillota-b]] (organism) — Bacillota_B lineages compared across deep-clay and soil habitats
 - [[entities/bacillus-safensis]] (organism) — Bacterial species represented by a three-ecotype pangenome analysis.
 - [[entities/bacteroides-thetaiotaomicron]] (organism) — Bacteroidetes organism with low gapfilling resolution and distinctive co-inheritance patterns
-- [[entities/bacteroides-xylanisolvens]] (organism) — Bacteroides species with six gene-content ecotypes in the BERDL analysis
+- [[entities/bacteroides-xylanisolvens]] (organism) — Bacteroides species with six gene-content ecotypes in the KBase Data Lakehouse analysis
 - [[entities/bacteroides]] (organism) — Bacteroides genus detected in Oak Ridge groundwater and positively associated with uranium.
 - [[entities/bacteroidota]] (organism) — Bacteroidota is a bacterial phylum with diverse ecological and functional profiles.
 - [[entities/bakta]] (method) — Bacterial genome annotation method used for AMR and functional discovery.
@@ -263,7 +263,7 @@
 - [[entities/enigma-growth-curves]] (dataset) — ENIGMA growth curves linking bacterial strains, conditions, and kinetics
 - [[entities/enterobacter-cloacae-m]] (organism) — Enterobacter cloacae M represented by four gene-content ecotypes.
 - [[entities/enterobacter-cloacae]] (organism) — Bacterium analyzed for gene-content ecotype differentiation
-- [[entities/enterobacter-kobei]] (organism) — Bacterial species represented by a two-ecotype BERDL analysis
+- [[entities/enterobacter-kobei]] (organism) — Bacterial species represented by a two-ecotype KBase Data Lakehouse analysis
 - [[entities/enterocloster-bolteae]] (organism) — Enterocloster bolteae, an IBD-associated Tier-A pathobiont
 - [[entities/enterococcus-d-gallinarum]] (organism) — Organism represented by 95 genomes in the ecotype analysis.
 - [[entities/entner-doudoroff-pathway]] (gene_or_pathway) — Glucose-associated pathway supporting condition-specific metabolism in ADP1
@@ -284,7 +284,7 @@
 - [[entities/gemella-sanguinis]] (organism) — Candidate commensal inhibitor of Pseudomonas aeruginosa
 - [[entities/gemmatimonadota]] (organism) — Bacterial phylum with high xoxF prevalence in the atlas
 - [[entities/gene-knockout]] (method) — Complete-gene deletion method for testing essentiality and growth defects
-- [[entities/gene-ontology]] (dataset) — Gene Ontology annotations and their provenance in BERDL and NMDC holdings
+- [[entities/gene-ontology]] (dataset) — Gene Ontology annotations and their provenance in the KBase Data Lakehouse and NMDC holdings
 - [[entities/genomic-discovery-index]] (method) — Index for identifying spatial gaps in soil genomic representation
 - [[entities/gh23]] (gene_or_pathway) — GH23 is a CAZy family associated with GT2–T4SS neighborhoods.
 - [[entities/glucarate]] (compound) — Glucarate, a robust carbon source in ADP1 deletion phenotyping
@@ -311,12 +311,12 @@
 - [[entities/iron]] (compound) — Iron (Fe), a metal condition associated with conserved fitness responses.
 - [[entities/its-amplicon-sequencing]] (method) — ITS amplicon sequencing method for profiling fungal communities
 - [[entities/jaccard-distance]] (method) — A method for measuring gene-content dissimilarity between genomes
-- [[entities/kbase-ke-pangenome]] (dataset) — BERDL pangenome dataset linking genomes, gene clusters, annotations, and phenotypes
-- [[entities/kbase-msd-biochemistry]] (dataset) — BERDL biochemistry dataset used to validate ADP1 reactions and compounds
+- [[entities/kbase-ke-pangenome]] (dataset) — KBase Data Lakehouse pangenome dataset linking genomes, gene clusters, annotations, and phenotypes
+- [[entities/kbase-msd-biochemistry]] (dataset) — KBase Data Lakehouse biochemistry dataset used to validate ADP1 reactions and compounds
 - [[entities/kegg]] (dataset) — Dataset for genes, pathways, and functional annotations
 - [[entities/kescience-alphafold]] (dataset) — Structural-protein dataset connecting AlphaFold models, MSA depth, and fitness data.
-- [[entities/kescience-fitnessbrowser]] (dataset) — BERDL dataset of comparative microbial mutant-growth fitness measurements
-- [[entities/kescience-paperblast]] (dataset) — BERDL dataset linking protein sequences, genes, annotations, and literature.
+- [[entities/kescience-fitnessbrowser]] (dataset) — KBase Data Lakehouse dataset of comparative microbial mutant-growth fitness measurements
+- [[entities/kescience-paperblast]] (dataset) — KBase Data Lakehouse dataset linking protein sequences, genes, annotations, and literature.
 - [[entities/kescience-pubmed]] (dataset) — KEScience PubMed is a literature-record dataset in the BERDL Data Atlas.
 - [[entities/klebsiella-michiganensis]] (organism) — Klebsiella michiganensis, an organism with high annotation-gap resolution and latent capability.
 - [[entities/klebsiella-oxytoca]] (organism) — Klebsiella oxytoca studied for co-fitness, pangenome co-inheritance, and essential dark genes
@@ -358,7 +358,7 @@
 - [[entities/microbial-atlas]] (dataset) — Global environmental 16S dataset for habitat and genomic-representation analysis
 - [[entities/micrococcus-luteus]] (organism) — Commensal with broad substrate coverage but no observed lung engraftability.
 - [[entities/mmseqs2]] (method) — Sequence-search and clustering method used for protein-family and TerL lineage analysis
-- [[entities/modelseed]] (dataset) — Metabolic reconstruction, reaction, and compound resource used in BERDL workflows.
+- [[entities/modelseed]] (dataset) — Metabolic reconstruction, reaction, and compound resource used in the KBase Data Lakehouse workflows.
 - [[entities/molybdenum]] (compound) — Molybdenum (Mo), an essential metal with conserved stress-associated fitness determinants.
 - [[entities/mont-terri]] (place) — Mont Terri site for deep-clay borehole and rock-porewater sampling.
 - [[entities/moraxella-catarrhalis]] (organism) — Moraxella catarrhalis comparator in Caulobacter lipid A-loss analysis
@@ -419,7 +419,7 @@
 - [[entities/prescottella]] (organism) — Prescottella genus prioritized for low-growth active-learning experiments
 - [[entities/principal-component-analysis]] (method) — Dimensionality-reduction method for detecting ecosystem-associated pathway structure
 - [[entities/prochlorococcus-a]] (organism) — Prochlorococcus A sp., a marine organism with a metabolic ecotype profile
-- [[entities/protect-genomedepot]] (dataset) — Pathogen-genome data collection supporting PROTECT and BERDL analyses
+- [[entities/protect-genomedepot]] (dataset) — Pathogen-genome data collection supporting PROTECT and KBase Data Lakehouse analyses
 - [[entities/proteomics]] (method) — Protein-expression measurement used to interpret essentiality and respiratory-chain wiring
 - [[entities/protocatechuate]] (compound) — Aromatic intermediate cleaved during ADP1 quinate catabolism
 - [[entities/pseudomonadota]] (organism) — Bacterial phylum with high xoxF and PHB pathway prevalence
@@ -427,7 +427,7 @@
 - [[entities/pseudomonas-e-avellanae]] (organism) — Plant-associated species with significant subclade structure
 - [[entities/pseudomonas-e]] (organism) — GTDB Pseudomonas_E clade retaining broad carbon-use pathways
 - [[entities/pseudomonas-fluorescens]] (organism) — Pseudomonas fluorescens utilization phenotypes and carbon-ecology context
-- [[entities/pseudomonas-fw300-n2e3]] (organism) — ENIGMA groundwater Pseudomonas isolate linked across BERDL fitness and metabolite resources
+- [[entities/pseudomonas-fw300-n2e3]] (organism) — ENIGMA groundwater Pseudomonas isolate linked across the KBase Data Lakehouse fitness and metabolite resources
 - [[entities/pseudomonas-gw456-l13]] (organism) — ENIGMA groundwater isolate with direct Fitness Browser overlap
 - [[entities/pseudomonas-putida]] (organism) — Pseudomonas putida evidence spans co-fitness, metabolism, and ecological carbon use
 - [[entities/pseudomonas-stutzeri-rch2]] (organism) — Pseudomonas stutzeri RCH2 strain and its fitness–pangenome outlier profile
@@ -459,7 +459,7 @@
 - [[entities/sinorhizobium-meliloti]] (organism) — Rhizobial model organism used in fitness, pathway, and pangenome analyses.
 - [[entities/snipe-defense-system]] (gene_or_pathway) — Mobile SNIPE phage-defense system with PF13250 and PF13455 domains
 - [[entities/sodium-chloride]] (compound) — Sodium chloride used as a stress comparator in metal-fitness analysis
-- [[entities/spark-sql]] (method) — Spark SQL is BERDL's preferred interface for large and complex queries.
+- [[entities/spark-sql]] (method) — Spark SQL is KBase Data Lakehouse's preferred interface for large and complex queries.
 - [[entities/spearman-correlation]] (method) — Rank-based method used to test metal–gene associations
 - [[entities/sphingolipid-biosynthesis]] (gene_or_pathway) — Caulobacter pathway substituting sphingolipids for lipid A
 - [[entities/sphingomonas]] (organism) — Environmental bacterial genus associated with Oak Ridge and plant-associated ecology

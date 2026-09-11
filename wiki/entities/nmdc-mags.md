@@ -33,4 +33,4 @@ The catalog contributes to [[concepts/multi-omics-integration]] and [[concepts/p
 
 ## Source
 
-- [[summaries/nmdc_context_audit__REPORT]] — audit of NMDC-labeled BERDL resources, including provenance, tenant placement, scale, currency, and authority. [src: nmdc_context_audit]
+- [[summaries/nmdc_context_audit__REPORT]] — audit of NMDC-labeled KBase Data Lakehouse resources, including provenance, tenant placement, scale, currency, and authority. [src: nmdc_context_audit]

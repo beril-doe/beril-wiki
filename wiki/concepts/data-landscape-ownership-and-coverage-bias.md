@@ -5,11 +5,11 @@ sources: ["summaries/berdl_data_atlas__REPORT.md", "summaries/pitfalls.md"]
 ---
 # Agency and Tenant Ownership Shape Biological Data Coverage
 
-The [[summaries/berdl_data_atlas__REPORT]] shows that biological data availability in BERDL is structured not only by scientific topic but also by ownership, tenant boundaries, and the uneven reuse of cross-tenant links. [src: berdl_data_atlas] The atlas inventories 1,740 deduplicated tables across 119 databases, 17 tenants, and 10 funding agencies or programs, covering 17 biological topics. [src: berdl_data_atlas]
+The [[summaries/berdl_data_atlas__REPORT]] shows that biological data availability in the KBase Data Lakehouse is structured not only by scientific topic but also by ownership, tenant boundaries, and the uneven reuse of cross-tenant links. [src: berdl_data_atlas] The atlas inventories 1,740 deduplicated tables across 119 databases, 17 tenants, and 10 funding agencies or programs, covering 17 biological topics. [src: berdl_data_atlas]
 
 ## Ownership concentration produces coverage bias
 
-DOE accounts for approximately 78% of BERDL tables: DOE-BER contributes 63%, DOE BRaVE 14%, DOE/NSF 0.6%, and DOE-FE 0.4%; ARPA-H contributes 4% and NSF contributes 3.5%. [src: berdl_data_atlas] DOE-BER is the only agency covering all 15 biological topics recorded in the agency-coverage analysis. [src: berdl_data_atlas] Six topics are more than 75% single-owner, including mobile_phage at 96% PhageFoundry ownership and pangenome at 79% KBase ownership. [src: berdl_data_atlas]
+DOE accounts for approximately 78% of the KBase Data Lakehouse tables: DOE-BER contributes 63%, DOE BRaVE 14%, DOE/NSF 0.6%, and DOE-FE 0.4%; ARPA-H contributes 4% and NSF contributes 3.5%. [src: berdl_data_atlas] DOE-BER is the only agency covering all 15 biological topics recorded in the agency-coverage analysis. [src: berdl_data_atlas] Six topics are more than 75% single-owner, including mobile_phage at 96% PhageFoundry ownership and pangenome at 79% KBase ownership. [src: berdl_data_atlas]
 
 This ownership pattern means that apparent topic availability can reflect the location and funding history of data rather than a balanced distribution of independent observations. [src: berdl_data_atlas] The field_observational topic represents 40% of tables, mobile_phage 14%, fitness_phenotype 11%, and genome 6.4%, while all other primary topics represent less than 4% each. [src: berdl_data_atlas] Sixteen tables, or 0.9%, remain unclassified and consist of personal scratch or one-off survey data. [src: berdl_data_atlas]
 
@@ -21,7 +21,7 @@ Taxonomy spans 12 tenants and has the broadest cross-tenant surface, whereas sev
 
 These distributions support a distinction between data volume and portfolio breadth: a tenant may contain many tables while still being concentrated in a small number of topics. [src: berdl_data_atlas] ENIGMA contains 36% of tables but appears in 6 audited projects, while PhageFoundry contains 14% of tables but appears in 5 projects and PROTECT contains 4% but appears in 2 projects. [src: berdl_data_atlas]
 
-The pitfalls evidence **refines** this distinction by showing that tenant ownership is also operational: BERDL’s migration between Delta and Iceberg changes live table addresses, and the `data_lakehouse_ingest` name is a governance-group tenant rather than a database prefix. [src: pitfalls] Queries must therefore discover the live catalog and resolve tenant and database names before comparing apparent breadth or concluding that a resource is unavailable. [src: pitfalls]
+The pitfalls evidence **refines** this distinction by showing that tenant ownership is also operational: KBase Data Lakehouse’s migration between Delta and Iceberg changes live table addresses, and the `data_lakehouse_ingest` name is a governance-group tenant rather than a database prefix. [src: pitfalls] Queries must therefore discover the live catalog and resolve tenant and database names before comparing apparent breadth or concluding that a resource is unavailable. [src: pitfalls]
 
 ## Ownership affects realized integration
 

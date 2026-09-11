@@ -28,6 +28,6 @@ This entity is documented in [[summaries/ecotype_functional_differentiation__REP
 
 The result contributes to [[concepts/ecotype-environment-gene-content]], which examines relationships among within-species gene content, ecotypes, and environmental differentiation. [src: ecotype_functional_differentiation]
 
-It also contributes to [[concepts/pangenome-integration]], because the ecotypes were derived from BERDL pangenome data. [src: ecotype_functional_differentiation]
+It also contributes to [[concepts/pangenome-integration]], because the ecotypes were derived from the KBase Data Lakehouse pangenome data. [src: ecotype_functional_differentiation]
 
 The functional comparison used COG (Clusters of Orthologous Groups) profiles and relates to [[entities/cog-functional-categories]]. [src: ecotype_functional_differentiation]

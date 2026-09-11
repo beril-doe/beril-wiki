@@ -194,7 +194,7 @@ automatically invalidates and rebuilds its review (the cache hashes the page
 | Compiled wiki + navigation layer | `wiki/`, `wiki-extra/` | yes |
 | Stage caches | `state/*.json` | yes |
 | Figures referenced by reports | `wiki/figures/<id>/` (synced by fetch; ~80MB) | **yes** — the site renders fully from a clone |
-| Underlying analysis data | KBase BER Data Lakehouse (queried by the original projects) | no — the wiki compiles reports, not raw data |
+| Underlying analysis data | KBase Data Lakehouse (queried by the original projects) | no — the wiki compiles reports, not raw data |
 | `staging/` | derived scratch (fetch output) | no |
 
 So: viewing and verifying the wiki needs only this repo. The observatory

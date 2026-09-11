@@ -1,6 +1,6 @@
 ---
 type: "Dataset"
-description: "Metabolic reconstruction, reaction, and compound resource used in BERDL workflows."
+description: "Metabolic reconstruction, reaction, and compound resource used in the KBase Data Lakehouse workflows."
 sources: ["summaries/annotation_gap_discovery__REPORT.md", "summaries/berdl_data_atlas__REPORT.md", "summaries/enigma_carbon_census_1__REPORT.md", "summaries/webofmicrobes_explorer__REPORT.md"]
 ---
 # ModelSEED

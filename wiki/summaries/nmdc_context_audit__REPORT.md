@@ -1,6 +1,6 @@
 ---
 type: "Summary"
-description: "Audit of NMDC-labeled BERDL resources, provenance, scale, and currency"
+description: "Audit of NMDC-labeled KBase Data Lakehouse resources, provenance, scale, and currency"
 doc_type: "short"
 full_text: "sources/nmdc_context_audit__REPORT.md"
 ---
@@ -8,7 +8,7 @@ full_text: "sources/nmdc_context_audit__REPORT.md"
 
 ## Overview
 
-This audit evaluates BERDL resources whose names contain `nmdc`, distinguishing provenance, tenant placement, scale, currency, and authority. It finds that 20 database names resolve to 7 real, maintained resources across three tenants and six provenance classes, demonstrating that the `nmdc` label is systematically overloaded rather than a reliable dataset boundary. [src: nmdc_context_audit]
+This audit evaluates KBase Data Lakehouse resources whose names contain `nmdc`, distinguishing provenance, tenant placement, scale, currency, and authority. It finds that 20 database names resolve to 7 real, maintained resources across three tenants and six provenance classes, demonstrating that the `nmdc` label is systematically overloaded rather than a reliable dataset boundary. [src: nmdc_context_audit]
 
 ## Key Findings
 
@@ -76,7 +76,7 @@ The audit enumerates 7 real, maintained resources among 20 NMDC-named database e
 
 ## Future Directions
 
-The report proposes applying the documentation and tooling fixes, measuring whether subsequent NMDC projects reach the appropriate resource faster, adding lightweight provenance and currency annotations to inventory output, extending the provenance-audit method to other overloaded BERDL labels, and comparing `nmdc.metadata` and `nmdc.ncbi_biosamples` with live upstream record counts to quantify completeness lag. [src: nmdc_context_audit]
+The report proposes applying the documentation and tooling fixes, measuring whether subsequent NMDC projects reach the appropriate resource faster, adding lightweight provenance and currency annotations to inventory output, extending the provenance-audit method to other overloaded KBase Data Lakehouse labels, and comparing `nmdc.metadata` and `nmdc.ncbi_biosamples` with live upstream record counts to quantify completeness lag. [src: nmdc_context_audit]
 
 ## Slots Into
 

@@ -33,7 +33,7 @@ The report found 505 eggNOG-only lanmodulin calls and 62 Bakta-only calls in a 1
 
 The 505 eggNOG `Preferred_name = lanM` calls were concentrated in unrelated gut Bacillota, including *Streptococcus pneumoniae* (10), *Blautia_A wexlerae* (9), *Enterococcus faecalis* (8), *Ruminococcus_B gnavus* (8), and *Streptococcus pyogenes* (7). [src: lanthanide_methylotrophy_atlas]
 
-Because Bakta product = Lanmodulin identified 62 genomes, all in canonical α-Proteobacterial methylotroph clades, the report recommends using Bakta product annotations exclusively for future BERDL lanmodulin analyses. [src: lanthanide_methylotrophy_atlas]
+Because Bakta product = Lanmodulin identified 62 genomes, all in canonical α-Proteobacterial methylotroph clades, the report recommends using Bakta product annotations exclusively for future KBase Data Lakehouse lanmodulin analyses. [src: lanthanide_methylotrophy_atlas]
 
 ## Interpretation and limitations
 

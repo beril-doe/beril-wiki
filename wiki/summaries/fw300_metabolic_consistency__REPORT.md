@@ -4,7 +4,7 @@ description: "Cross-database metabolic consistency analysis of Pseudomonas FW300
 doc_type: "short"
 full_text: "sources/fw300_metabolic_consistency__REPORT.md"
 ---
-# Metabolic Consistency of Pseudomonas FW300-N2E3 Across Four BERDL Databases
+# Metabolic Consistency of Pseudomonas FW300-N2E3 Across Four KBase Data Lakehouse Databases
 
 ## Overview
 
@@ -80,4 +80,4 @@ The report proposes mapping fitness genes to GapMind pathway steps; repeating th
 - [[concepts/multi-omics-integration]] — Cross-database integration of WoM exometabolomics, Fitness Browser gene fitness, BacDive phenotypes, and GapMind pathway predictions establishes a 94% mean concordance while exposing coverage and interpretation limits. [src: fw300_metabolic_consistency]
 - [[concepts/condition-specific-fitness]] — The 4,764 significant gene-condition hits, 601 unique genes, and separation of pleiotropic housekeeping from substrate-specific fitness effects extend interpretation of condition-dependent gene fitness. [src: fw300_metabolic_consistency]
 - [[concepts/metabolic-model-gapfilling]] — The 13/13 complete GapMind predictions concordant with Fitness Browser growth and WoM production provide organism-level evidence for pathway-gap assessment. [src: fw300_metabolic_consistency]
-- [[concepts/cross-tenant-data-bridging]] — The report demonstrates a cross-database metabolite crosswalk spanning four BERDL collections and quantifies how nomenclature and scope constrain evidence joining. [src: fw300_metabolic_consistency]
+- [[concepts/cross-tenant-data-bridging]] — The report demonstrates a cross-database metabolite crosswalk spanning four KBase Data Lakehouse collections and quantifies how nomenclature and scope constrain evidence joining. [src: fw300_metabolic_consistency]

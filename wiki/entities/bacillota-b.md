@@ -17,7 +17,7 @@ This entity represents Bacillota_B lineages compared between deep-clay subsurfac
 
 ## Evidence from deep-clay comparisons
 
-The BERDL Bacillota_B pangenome contained 334 genomes, substantially fewer than the v1.1 planning estimate of 6,700 genomes. [src: bacillota_b_subsurface_accessory]
+The KBase Data Lakehouse Bacillota_B pangenome contained 334 genomes, substantially fewer than the v1.1 planning estimate of 6,700 genomes. [src: bacillota_b_subsurface_accessory]
 
 The earlier deep-clay anchor cohort contained 10 genomes from [[entities/mont-terri]] Opalinus borehole and rock-porewater samples plus 2 Russian [[entities/beyelii-yar]] borehole genomes, while its soil-baseline cohort contained 62 phylum-matched soil or sediment genomes. [src: bacillota_b_subsurface_accessory]
 

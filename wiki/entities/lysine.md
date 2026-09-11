@@ -37,4 +37,4 @@ The newer pathway-capability analysis **refines** the earlier complete GapMind i
 - [[concepts/condition-specific-fitness]] — the lysine result contributes to condition-specific Fitness Browser interpretation. [src: fw300_metabolic_consistency]
 - [[concepts/metabolic-model-gapfilling]] — complete GapMind prediction for lysine was concordant with Fitness Browser growth. [src: fw300_metabolic_consistency]
 - [[concepts/gene-function-acquisition-depth]] — lysine biosynthetic completeness differed between all-gene and core-only analyses by 0.140. [src: pathway_capability_dependency]
-- [[concepts/cross-tenant-data-bridging]] — the result required matching lysine across multiple BERDL databases. [src: fw300_metabolic_consistency]
+- [[concepts/cross-tenant-data-bridging]] — the result required matching lysine across multiple KBase Data Lakehouse databases. [src: fw300_metabolic_consistency]

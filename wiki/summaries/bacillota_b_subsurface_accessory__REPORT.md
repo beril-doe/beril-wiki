@@ -42,7 +42,7 @@ The clay project’s sulfite-reduction-side finding remains supported: 5/9 deep-
 
 ### 4. Cohort, pangenome, and marker-availability context
 
-The Bacillota_B universe contained 334 genomes in the BERDL pangenome, substantially fewer than the v1.1 plan’s estimate of 6,700. The anchor_deep_clay cohort comprised 10 genomes from Mont Terri Opalinus borehole and rock-porewater samples plus two Russian Beyelii Yar borehole genomes; the soil_baseline cohort comprised 62 phylum-matched soil or sediment genomes spanning Syntrophomonadales, Desulfitobacteriales, Moorellales, Thermacetogeniales, Ammonifexales, Carboxydocellales, Desulfotomaculales, Heliobacteriales, and Thermincolales. [src: bacillota_b_subsurface_accessory]
+The Bacillota_B universe contained 334 genomes in the KBase Data Lakehouse pangenome, substantially fewer than the v1.1 plan’s estimate of 6,700. The anchor_deep_clay cohort comprised 10 genomes from Mont Terri Opalinus borehole and rock-porewater samples plus two Russian Beyelii Yar borehole genomes; the soil_baseline cohort comprised 62 phylum-matched soil or sediment genomes spanning Syntrophomonadales, Desulfitobacteriales, Moorellales, Thermacetogeniales, Ammonifexales, Carboxydocellales, Desulfotomaculales, Heliobacteriales, and Thermincolales. [src: bacillota_b_subsurface_accessory]
 
 Within Bacillota_B, PF02085 had 4 hits in 4 clusters, PF00034 had 1 hit in 1 cluster, PF13442 had 1 hit in 1 cluster, PF22678 had 1 hit in 1 cluster, and PF14537 had 0 hits in 0 clusters. The report states that CXXCH motif counting carried most of the corrected iron-reduction signal because multi-heme cytochrome PFAMs were sparse. [src: bacillota_b_subsurface_accessory]
 

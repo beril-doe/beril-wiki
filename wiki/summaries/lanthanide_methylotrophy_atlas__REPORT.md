@@ -8,7 +8,7 @@ full_text: "sources/lanthanide_methylotrophy_atlas__REPORT.md"
 
 ## Overview
 
-This report presents a 293,059-genome atlas of lanthanide-dependent methanol oxidation across the BERDL pangenome, testing the distribution of xoxF (REE-dependent methanol dehydrogenase), mxaF (Ca-dependent methanol dehydrogenase), lanmodulin, PQQ-biosynthesis markers, and environmental associations using GTDB-r214 taxonomy, eggNOG, Bakta, and environmental metadata. The study finds strong global dominance of xoxF over mxaF, high xoxF rates in Acidobacteriota and Gemmatimonadota, strict clade restriction of Bakta-validated lanmodulin, strongest enrichment in soil/sediment, and substantial marker-source disagreement attributable partly to annotation gaps. [src: lanthanide_methylotrophy_atlas]
+This report presents a 293,059-genome atlas of lanthanide-dependent methanol oxidation across the KBase Data Lakehouse pangenome, testing the distribution of xoxF (REE-dependent methanol dehydrogenase), mxaF (Ca-dependent methanol dehydrogenase), lanmodulin, PQQ-biosynthesis markers, and environmental associations using GTDB-r214 taxonomy, eggNOG, Bakta, and environmental metadata. The study finds strong global dominance of xoxF over mxaF, high xoxF rates in Acidobacteriota and Gemmatimonadota, strict clade restriction of Bakta-validated lanmodulin, strongest enrichment in soil/sediment, and substantial marker-source disagreement attributable partly to annotation gaps. [src: lanthanide_methylotrophy_atlas]
 
 ## Key Findings
 
@@ -60,7 +60,7 @@ Of 2,185 genomes with no eggNOG pqq annotation, 1,288 (59 %) have at least 1 Bak
 
 In a 134,578-row hit-bearing matrix, lanmodulin has 0 calls in both sources, 505 eggNOG-only calls, and 62 Bakta-only calls; Bakta is therefore the trustworthy source for lanmodulin. xoxJ has 41 calls in both sources, 46,369 eggNOG-only calls, and 20 Bakta-only calls; Bakta is preferred because eggNOG KO K02030 is non-specific. xoxF has 418 calls in both sources, 3,272 eggNOG-only calls, and 1,402 Bakta-only calls; eggNOG K00114 is primary and Bakta is used as a union source. mxaF has 4 calls in both sources, 191 eggNOG-only calls, and 8 Bakta-only calls; eggNOG K14028 is primary. [src: lanthanide_methylotrophy_atlas]
 
-The 505 eggNOG Preferred_name = lanM false positives are concentrated in unrelated gut Bacillota, including Streptococcus pneumoniae (10), Blautia_A wexlerae (9), Enterococcus faecalis (8), Ruminococcus_B gnavus (8), and Streptococcus pyogenes (7). Bakta product = Lanmodulin identifies 62 genomes, all in canonical α-Proteobacterial methylotroph clades, so future BERDL lanmodulin analyses should use Bakta product exclusively. [src: lanthanide_methylotrophy_atlas]
+The 505 eggNOG Preferred_name = lanM false positives are concentrated in unrelated gut Bacillota, including Streptococcus pneumoniae (10), Blautia_A wexlerae (9), Enterococcus faecalis (8), Ruminococcus_B gnavus (8), and Streptococcus pyogenes (7). Bakta product = Lanmodulin identifies 62 genomes, all in canonical α-Proteobacterial methylotroph clades, so future KBase Data Lakehouse lanmodulin analyses should use Bakta product exclusively. [src: lanthanide_methylotrophy_atlas]
 
 ## Caveats and Future Work
 

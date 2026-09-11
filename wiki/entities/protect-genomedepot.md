@@ -1,6 +1,6 @@
 ---
 type: "Dataset"
-description: "Pathogen-genome data collection supporting PROTECT and BERDL analyses"
+description: "Pathogen-genome data collection supporting PROTECT and KBase Data Lakehouse analyses"
 sources: ["summaries/berdl_data_atlas__REPORT.md", "summaries/cf_formulation_design__REPORT.md"]
 ---
 # PROTECT Genome Depot
@@ -13,7 +13,7 @@ sources: ["summaries/berdl_data_atlas__REPORT.md", "summaries/cf_formulation_des
 
 **Stable external identifier:** No stable external identifier is specified in the source document. [src: berdl_data_atlas]
 
-PROTECT Genome Depot is a dataset catalog used for pathogen-genome data within the BERDL inventory. [src: berdl_data_atlas]
+PROTECT Genome Depot is a dataset catalog used for pathogen-genome data within the KBase Data Lakehouse inventory. [src: berdl_data_atlas]
 
 ## Key facts
 

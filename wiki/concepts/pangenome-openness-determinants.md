@@ -5,7 +5,7 @@ sources: ["summaries/discoveries.md", "summaries/pangenome_openness__REPORT.md",
 ---
 # Metabolic and Sampling Determinants of Pangenome Openness
 
-Pangenome openness describes the propensity of a species' gene repertoire to remain expandable as additional genomes are sampled. In the BERDL analyses, its apparent determinants differed depending on whether openness was tested against environmental or phylogenetic effects, variable metabolic pathways, or ecological sampling breadth. [src: discoveries]
+Pangenome openness describes the propensity of a species' gene repertoire to remain expandable as additional genomes are sampled. In the KBase Data Lakehouse analyses, its apparent determinants differed depending on whether openness was tested against environmental or phylogenetic effects, variable metabolic pathways, or ecological sampling breadth. [src: discoveries]
 
 ## Core Evidence
 

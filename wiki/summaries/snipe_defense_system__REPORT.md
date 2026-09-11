@@ -1,14 +1,14 @@
 ---
 type: "Summary"
-description: "BERDL-wide analysis of SNIPE prevalence, ecology, and phage-defense trade-offs"
+description: "KBase Data Lakehouse-wide analysis of SNIPE prevalence, ecology, and phage-defense trade-offs"
 doc_type: "short"
 full_text: "sources/snipe_defense_system__REPORT.md"
 ---
-# SNIPE Defense System in the BERDL Pangenome
+# SNIPE Defense System in the KBase Data Lakehouse Pangenome
 
 ## Overview
 
-This report evaluates [[entities/snipe-defense-system]] across the BERDL pangenome, connecting its phage-defense mechanism to the metabolic cost of losing the ManYZ transporter, correcting the Pfam assignment of its nuclease domain, and surveying its prevalence, pangenome status, environmental association, and occurrence in phage-therapy targets. The analysis supports the hypothesis that SNIPE homologues are widespread, predominantly mobile, and associated with particular ecological contexts. [src: snipe_defense_system]
+This report evaluates [[entities/snipe-defense-system]] across the KBase Data Lakehouse pangenome, connecting its phage-defense mechanism to the metabolic cost of losing the ManYZ transporter, correcting the Pfam assignment of its nuclease domain, and surveying its prevalence, pangenome status, environmental association, and occurrence in phage-therapy targets. The analysis supports the hypothesis that SNIPE homologues are widespread, predominantly mobile, and associated with particular ecological contexts. [src: snipe_defense_system]
 
 ## Key Findings
 
@@ -26,7 +26,7 @@ The Fitness Browser contradicts the UniProt “fructose-specific” annotation f
 
 The report identifies PF13250 as the correct Pfam assignment for DUF4041, also called the SNIPE-associated domain and associated with InterPro IPR025280. It identifies PF13455, or Mug113, as the SNIPE nuclease family; PF13455 belongs to the GIY-YIG clan CL0418 but is distinct from canonical GIY-YIG PF01541. The *E. coli* SNIPE protein A0A0A1A5Z2 is 558 aa long, with PF13250 at positions 232–333 and PF13455 at positions 443–520. [src: snipe_defense_system]
 
-Among the surveyed BERDL annotations, zero gene clusters contained both DUF4041/PF13250 and canonical GIY-YIG PF01541. The analysis found 4,572 DUF4041-containing gene clusters, of which 54 carried the description “Meiotically up-regulated gene 113,” consistent with full-length SNIPE proteins containing the Mug113 nuclease annotation. The report therefore recommends searching PF13250, DUF4041, or T5orf172 together with PF13455 rather than using PF01541 as the SNIPE nuclease marker. [src: snipe_defense_system]
+Among the surveyed KBase Data Lakehouse annotations, zero gene clusters contained both DUF4041/PF13250 and canonical GIY-YIG PF01541. The analysis found 4,572 DUF4041-containing gene clusters, of which 54 carried the description “Meiotically up-regulated gene 113,” consistent with full-length SNIPE proteins containing the Mug113 nuclease annotation. The report therefore recommends searching PF13250, DUF4041, or T5orf172 together with PF13455 rather than using PF01541 as the SNIPE nuclease marker. [src: snipe_defense_system]
 
 ### Pangenome prevalence and mobility
 

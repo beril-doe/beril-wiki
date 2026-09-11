@@ -78,7 +78,7 @@ BacDive–GTDB and cross-database analyses should therefore use live schema and 
 
 - [[summaries/bacdive_metal_validation__REPORT]] — summary of the BacDive isolation-environment and metal-tolerance validation study. [src: bacdive_metal_validation]
 - [[summaries/bacdive_phenotype_metal_tolerance__REPORT]] — summary of the BacDive phenotype-signature and phylogenetic-confounding study. [src: bacdive_phenotype_metal_tolerance]
-- [[summaries/berdl_data_atlas__REPORT]] — inventory and cross-reference analysis placing BacDive among BERDL phenotype resources. [src: berdl_data_atlas]
+- [[summaries/berdl_data_atlas__REPORT]] — inventory and cross-reference analysis placing BacDive among KBase Data Lakehouse phenotype resources. [src: berdl_data_atlas]
 - [[summaries/fw300_metabolic_consistency__REPORT]] — cross-database metabolic consistency analysis for *Pseudomonas* FW300-N2E3. [src: fw300_metabolic_consistency]
 - [[summaries/gene_function_ecological_agora__REPORT]] — GTDB-scale integration of BacDive phenotype profiles with clade-function and ecological analyses. [src: gene_function_ecological_agora]
 - [[summaries/metal_cross_resistance__REPORT]] — gene-resolution cross-resistance study and its underpowered BacDive isolation-environment validation. [src: metal_cross_resistance]

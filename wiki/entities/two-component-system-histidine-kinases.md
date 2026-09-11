@@ -31,7 +31,7 @@ The project’s exploratory interpretation associates greater architectural dive
 
 The 10.3× recent-to-ancient ratio is an acquisition-depth signature, not proof that all TCS histidine-kinase gains were horizontally transferred or that a particular donor lineage was identified. [src: gene_function_ecological_agora]
 
-Deep-rank donors were not identified because per-CDS sequence data were unavailable in queryable BERDL schemas, and the project’s tree-based donor inference was exploratory rather than a definitive donor reconstruction. [src: gene_function_ecological_agora]
+Deep-rank donors were not identified because per-CDS sequence data were unavailable in queryable KBase Data Lakehouse schemas, and the project’s tree-based donor inference was exploratory rather than a definitive donor reconstruction. [src: gene_function_ecological_agora]
 
 The acquisition-depth result contributes to [[concepts/gene-function-acquisition-depth]], while the architecture result relates to [[concepts/cofitness-network-architecture]] and the broader cross-source synthesis in [[concepts/multi-omics-integration]]. [src: gene_function_ecological_agora]
 

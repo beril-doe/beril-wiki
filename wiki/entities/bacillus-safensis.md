@@ -23,7 +23,7 @@ The functional comparison used COG profiles, where COG means Clusters of Ortholo
 
 ## Interpretation and limitations
 
-The inclusion of *Bacillus safensis* among the 12 species with valid ecotypes contributes to the report’s multi-species evidence that within-species gene-content ecotypes can be functionally differentiated; this evidence feeds [[concepts/ecotype-environment-gene-content]]. [src: ecotype_functional_differentiation] The result also contributes to [[concepts/pangenome-integration]] because the ecotypes were derived from BERDL pangenome gene-content data and compared through COG profiles. [src: ecotype_functional_differentiation]
+The inclusion of *Bacillus safensis* among the 12 species with valid ecotypes contributes to the report’s multi-species evidence that within-species gene-content ecotypes can be functionally differentiated; this evidence feeds [[concepts/ecotype-environment-gene-content]]. [src: ecotype_functional_differentiation] The result also contributes to [[concepts/pangenome-integration]] because the ecotypes were derived from the KBase Data Lakehouse pangenome gene-content data and compared through COG profiles. [src: ecotype_functional_differentiation]
 
 Interpretation for *Bacillus safensis* remains limited because the sampled species set contained 15 species drawn from 456 eligible species, approximately 38% of gene clusters had COG annotations, and the analysis lacked within-species phylogenetic controls. [src: ecotype_functional_differentiation] KMeans was used because HDBSCAN was unavailable on the cluster, so the inferred ecotype structure depends on KMeans assumptions about cluster shape and the selected number of clusters. [src: ecotype_functional_differentiation]
 

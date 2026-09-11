@@ -36,7 +36,7 @@ The species-level result is consistent with two non-exclusive mechanisms: propha
 
 ### Fitness-cost comparison
 
-The proposed fitness comparison could not be tested because the BERDL fitness browser contains RB-TnSeq (random barcode transposon sequencing) data for only 48 model organisms, with poor overlap with the GTDB pangenome species analyzed here. Whether prophage-proximal AMR genes have distinct fitness costs therefore remains an open question. [src: prophage_amr_comobilization]
+The proposed fitness comparison could not be tested because the KBase Data Lakehouse fitness browser contains RB-TnSeq (random barcode transposon sequencing) data for only 48 model organisms, with poor overlap with the GTDB pangenome species analyzed here. Whether prophage-proximal AMR genes have distinct fitness costs therefore remains an open question. [src: prophage_amr_comobilization]
 
 ## Caveats and Limitations
 
@@ -54,7 +54,7 @@ The H2 association between prophage density and AMR breadth is correlational and
 
 ## Future Directions
 
-The report proposes applying dedicated prophage predictors such as geNomad or PHASTER to BERDL genomes, using scaffold sequences for base-pair-resolution distances, revisiting fitness costs as fitness-browser coverage expands, separating phage from plasmid and ICE mobilization, and analyzing all available genomes from Klebsiella pneumoniae, Acinetobacter baumannii, Pseudomonas aeruginosa, and Escherichia coli. [src: prophage_amr_comobilization]
+The report proposes applying dedicated prophage predictors such as geNomad or PHASTER to the KBase Data Lakehouse genomes, using scaffold sequences for base-pair-resolution distances, revisiting fitness costs as fitness-browser coverage expands, separating phage from plasmid and ICE mobilization, and analyzing all available genomes from Klebsiella pneumoniae, Acinetobacter baumannii, Pseudomonas aeruginosa, and Escherichia coli. [src: prophage_amr_comobilization]
 
 ## Slots Into
 

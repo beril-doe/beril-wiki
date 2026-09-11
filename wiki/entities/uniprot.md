@@ -35,7 +35,7 @@ Across all 132,531,501 gene clusters, 111,035,431 (83.8%) had at least one Inter
 
 The report used a non-UPI UniProt accession as a requirement for AlphaFold MSA-depth lookup, which contributed to the limited bridge coverage. [src: alphafold_msa_annotation]
 
-The UniProt-to-AlphaFold bridge was based on a static version-6 BERDL AlphaFold snapshot, and later UniProt deposits may change MSA depths. [src: alphafold_msa_annotation]
+The UniProt-to-AlphaFold bridge was based on a static version-6 KBase Data Lakehouse AlphaFold snapshot, and later UniProt deposits may change MSA depths. [src: alphafold_msa_annotation]
 
 ## Evidence from annotation_gap_discovery
 

@@ -66,7 +66,7 @@ The analysis classifies **6,804 experiments**: **2,868** carbon/nitrogen, **1,86
 - Subclassify efflux pumps into narrow-spectrum drug pumps and general RND systems such as AcrAB-TolC, and test whether constitutively expressed systems have lower costs. [src: amr_fitness_cost]
 - Replace averages across non-antibiotic experiments with condition-specific analyses of metal, osmotic, and carbon-limitation stresses. [src: amr_fitness_cost]
 - Cross-reference the **144** metal-resistance genes with fitness data against the metal fitness atlas to test whether genes costly under standard conditions are protective under metal stress. [src: amr_fitness_cost]
-- Extend the analysis from **25** Fitness Browser organisms to all **293K** BERDL genomes by predicting AMR cost from gene-cluster conservation patterns. [src: amr_fitness_cost]
+- Extend the analysis from **25** Fitness Browser organisms to all **293K** KBase Data Lakehouse genomes by predicting AMR cost from gene-cluster conservation patterns. [src: amr_fitness_cost]
 
 ## Slots Into
 

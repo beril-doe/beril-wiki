@@ -13,13 +13,13 @@ sources: ["summaries/berdl_data_atlas__REPORT.md", "summaries/enigma_carbon_cens
 
 **Stable external identifier:** No stable external identifier is specified in the source. [src: berdl_data_atlas]
 
-NMDC ARKin is a dataset layer in the BERDL inventory providing environmental abundance, multi-omics, taxonomy, and biosample records for cross-tenant biological analyses. [src: berdl_data_atlas] The NMDC Context Audit **refines** this description by identifying `kbase.nmdc_arkin` as an Arkin Lab derivative located in the `kbase` tenant, rather than a native resource in the `nmdc` tenant; the derivative adds embeddings and traits that do not exist upstream. [src: nmdc_context_audit]
+NMDC ARKin is a dataset layer in the KBase Data Lakehouse inventory providing environmental abundance, multi-omics, taxonomy, and biosample records for cross-tenant biological analyses. [src: berdl_data_atlas] The NMDC Context Audit **refines** this description by identifying `kbase.nmdc_arkin` as an Arkin Lab derivative located in the `kbase` tenant, rather than a native resource in the `nmdc` tenant; the derivative adds embeddings and traits that do not exist upstream. [src: nmdc_context_audit]
 
 The audit also **refines** the provenance context: NMDC ARKin is one of 7 maintained resources represented by 20 `nmdc`-named database entries across three tenants and six provenance classes, alongside genuine NMDC resources, external re-hosts, an NMDC-derived MAG resource, and the NEON namesake collision. [src: nmdc_context_audit] Consequently, the `nmdc` label alone is not a reliable dataset boundary or authority indicator. [src: nmdc_context_audit]
 
 ## Key facts
 
-The BERDL inventory contains 16,640 NMDC biosamples and 75,119,498 metatranscriptomic abundance rows. [src: berdl_data_atlas] NMDC covers 11 biological topics and has a topic-distribution entropy of 2.61. [src: berdl_data_atlas] Its metabolomics, proteomics, and lipidomics layers contain 3.1M, 346K, and 1.4M records, respectively, and are described as largely untapped resources. [src: berdl_data_atlas]
+The KBase Data Lakehouse inventory contains 16,640 NMDC biosamples and 75,119,498 metatranscriptomic abundance rows. [src: berdl_data_atlas] NMDC covers 11 biological topics and has a topic-distribution entropy of 2.61. [src: berdl_data_atlas] Its metabolomics, proteomics, and lipidomics layers contain 3.1M, 346K, and 1.4M records, respectively, and are described as largely untapped resources. [src: berdl_data_atlas]
 
 The atlas identifies NMDC as a cross-validation resource for UC4, environmental distributions of clinically relevant pathogens and associated biogeochemistry, and UC5, ENVO ontology completeness in NMDC biosamples. [src: berdl_data_atlas] The proposed UC4 bridge connects NMDC with PROTECT through 10 shared keys, while the proposed UC5 bridge connects NMDC with refdata through 9 shared keys; neither bridge had realized use at audit time. [src: berdl_data_atlas] Join-key presence demonstrates schema-level compatibility but not valid value-space overlap, and UC4 and UC5 require live-cluster execution. [src: berdl_data_atlas]
 

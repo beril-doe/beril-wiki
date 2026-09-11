@@ -33,7 +33,7 @@ The source interprets the overall evidence as weak support for within-species pl
 
 The Xanthomonas vasicola result is limited by incomplete phylogenetic-tree coverage: only 18 of 65 candidate species were represented by any tree-distance data, so the prevalence of comparable segregation across the full candidate set cannot be estimated. [src: plant_microbiome_ecotypes]
 
-The report recommends accessory-genome profiling, gene-content-tree analysis, expanded BERDL phylogenetic-tree coverage, and crop-specific validation to test whether the Zea mays-associated subclade carries genomic adaptations to that host. [src: plant_microbiome_ecotypes]
+The report recommends accessory-genome profiling, gene-content-tree analysis, expanded KBase Data Lakehouse phylogenetic-tree coverage, and crop-specific validation to test whether the Zea mays-associated subclade carries genomic adaptations to that host. [src: plant_microbiome_ecotypes]
 
 ## Related Pages
 

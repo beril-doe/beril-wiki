@@ -1,6 +1,6 @@
 ---
 type: "Organism"
-description: "Bacteroides species with six gene-content ecotypes in the BERDL analysis"
+description: "Bacteroides species with six gene-content ecotypes in the KBase Data Lakehouse analysis"
 sources: ["summaries/ecotype_functional_differentiation__REPORT.md"]
 ---
 # Bacteroides xylanisolvens

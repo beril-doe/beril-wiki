@@ -14,7 +14,7 @@ CBASS is the canonical name used for a bacterial anti-phage defense-system famil
 
 ## Evidence from the Pan-Bacterial Defense Arsenal
 
-CBASS markers were included among seven anti-phage defense-system families surveyed across the BERDL pangenome. [src: phage_defense_arsenal]
+CBASS markers were included among seven anti-phage defense-system families surveyed across the KBase Data Lakehouse pangenome. [src: phage_defense_arsenal]
 
 CBASS was detected in 7.2% of species-level pangenomes, the lowest prevalence among the seven surveyed defense-system families. [src: phage_defense_arsenal]
 

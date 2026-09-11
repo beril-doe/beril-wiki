@@ -17,7 +17,7 @@ No stable external identifier for this clade was reported in the document. [src:
 
 ## Key facts
 
-The analysis included 398 *Pseudomonas_E* species and 5,687 genomes from the BERDL `kbase_ke_pangenome` collection. [src: pseudomonas_carbon_ecology]
+The analysis included 398 *Pseudomonas_E* species and 5,687 genomes from the KBase Data Lakehouse `kbase_ke_pangenome` collection. [src: pseudomonas_carbon_ecology]
 
 Among species with at least 5 genomes, *Pseudomonas_E* was compared with 7 *Pseudomonas* s.s. species using standardized [[entities/gapmind]] predictions for 62 carbon pathways. [src: pseudomonas_carbon_ecology]
 

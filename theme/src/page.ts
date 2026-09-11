@@ -37,6 +37,8 @@ export const titleOf = (f: File) => fm(f)?.title ?? slugOf(f)
 export const linksOf = (f: File) => (f.links ?? []) as string[]
 export const collectionOf = (slug: string) => slug.split("/")[0]
 export const isIndex = (slug: string) => slug === "index" || slug.endsWith("/index")
+/** A project report, as opposed to one of the cross-project digests. */
+export const isReport = (slug: string) => /__report$/i.test(slug)
 
 export function kindOf(f: File): Kind {
   const slug = slugOf(f)
@@ -49,9 +51,13 @@ export function kindOf(f: File): Kind {
     case "conflicts":
       return { label: "Conflict", cls: "conflict" }
     case "summaries":
-      return fm(f)?.type === "Summary"
-        ? { label: "Digest", cls: "report" }
-        : { label: "Project report", cls: "report" }
+      // The pipeline stamps `type: "Summary"` on all 75 pages here, digests
+      // included, so the frontmatter cannot tell them apart. The filename can:
+      // a project report is <project_id>__REPORT, and the two cross-project
+      // digests are discoveries and pitfalls.
+      return isReport(slug)
+        ? { label: "Project report", cls: "report" }
+        : { label: "Digest", cls: "report" }
     case "sources":
       return { label: "Raw report", cls: "report" }
     case "entities":
@@ -125,9 +131,13 @@ export function corpus(allFiles: File[]): Corpus {
 // classes the stylesheet can colour, and tallies both.
 export interface Cite {
   slug: string
+  /** Where this citation points: the raw report when the prose links there. */
+  target: string
   label: string
   n: number
   rels: Set<Rel>
+  /** Citation number, assigned in order of first appearance in the prose. */
+  num: number
 }
 
 export interface Walk {
@@ -231,25 +241,37 @@ export function walk(root: Root): Walk {
           }
         }
         if (c.tagName === "sub" && /^src:/.test(text(c).trimStart())) {
+          // A citation becomes a numbered mark rather than a row of report ids:
+          // a paragraph resting on a dozen reports was rendering as a wall of
+          // grey chips wider than the sentence it belonged to. The ids stay,
+          // listed once under the prose and again in the evidence rail.
           addClass(c, "src")
-          const first = c.children[0]
-          if (first?.type === "text") {
-            first.value = first.value.replace(/^\s*src:\s*/, "")
-            if (!first.value) c.children.shift()
-          }
+          const marks: ElementContent[] = []
           for (const a of c.children) {
             if (!isEl(a) || a.tagName !== "a") continue
             // crawl-links writes the hyphenated key, not hast's camelCase.
-            const slug = String(a.properties?.["data-slug"] ?? a.properties?.dataSlug ?? "")
+            const raw = String(a.properties?.["data-slug"] ?? a.properties?.dataSlug ?? "")
+            // A summary page cites itself, and the publish step rewrites that
+            // self-citation to point at the raw report. Both forms name the
+            // same report, so they count as one source; the link keeps
+            // pointing where the page sent it.
+            const slug = raw.startsWith("sources/") ? raw.replace(/^sources\//, "summaries/") : raw
             if (!slug.startsWith("summaries/")) continue
             let cite = cites.get(slug)
             if (!cite) {
-              cite = { slug, label: text(a).trim(), n: 0, rels: new Set() }
+              cite = { slug, target: raw, label: text(a).trim(), n: 0, rels: new Set(), num: cites.size + 1 }
               cites.set(slug, cite)
             }
             cite.n++
             cited.push(cite)
+            a.properties = { ...a.properties, title: cite.label }
+            a.children = [{ type: "text", value: String(cite.num) }]
+            if (marks.length > 0) marks.push({ type: "text", value: "," })
+            marks.push(a)
           }
+          // Replacing the children with nothing would erase the citation
+          // itself, which is the one thing every page here promises.
+          if (marks.length > 0) c.children = marks
           continue
         }
         inner(c)
@@ -271,6 +293,93 @@ export function walk(root: Root): Walk {
   visit(root)
   out.cites = [...cites.values()].sort((a, b) => b.n - a.n || a.label.localeCompare(b.label))
   return out
+}
+
+// A collection index page whose body hand-lists the same pages the frame
+// lists below it (authors/index and data/index both do) would otherwise show
+// the collection twice. Drop a top-level list when every link in it points
+// inside this page's own collection; keep the prose around it.
+export function stripIndexLists(root: Root, slug: string) {
+  if (!isIndex(slug)) return
+  const here = collectionOf(slug)
+  root.children = root.children.filter((c) => {
+    if (!isEl(c) || (c.tagName !== "ul" && c.tagName !== "ol")) return true
+    const links: string[] = []
+    const scan = (n: Element) => {
+      for (const k of n.children) {
+        if (!isEl(k)) continue
+        if (k.tagName === "a") {
+          const s = String(k.properties?.["data-slug"] ?? k.properties?.dataSlug ?? "")
+          if (s) links.push(s)
+        }
+        scan(k)
+      }
+    }
+    scan(c)
+    return links.length === 0 || !links.every((l) => collectionOf(l) === here)
+  })
+}
+
+// The home page's topic list carries one blurb per topic, written as
+// "[[topics/x|Title]] (12 concepts): what it covers". The frame lays those
+// blurbs out beside the counts it computes, so pull each list item apart
+// into the topic it names and the sentence describing it.
+export function topicBlurbs(nodes: ElementContent[] | undefined): Map<string, ElementContent[]> {
+  const out = new Map<string, ElementContent[]>()
+  if (!nodes) return out
+  for (const list of nodes) {
+    if (!isEl(list) || (list.tagName !== "ul" && list.tagName !== "ol")) continue
+    for (const li of list.children) {
+      if (!isEl(li) || li.tagName !== "li") continue
+      const kids = [...li.children]
+      const first = kids.find((k) => isEl(k) && k.tagName === "a") as Element | undefined
+      if (!first) continue
+      const slug = String(first.properties?.["data-slug"] ?? first.properties?.dataSlug ?? "")
+      if (!slug) continue
+      const rest = kids.slice(kids.indexOf(first) + 1)
+      // "(12 concepts): the disciplined combination…" — the count is rendered
+      // as a figure beside the row, so only the sentence is wanted here.
+      const head = rest[0]
+      if (head?.type === "text") {
+        // "(12 concepts): the disciplined combination…" reads as a sentence
+        // once the count is gone, so it starts one.
+        const value = head.value
+          .replace(/^\s*\(\d+\s+concepts?\)\s*:?\s*/, "")
+          .replace(/^\s*:\s*/, "")
+        rest[0] = { type: "text", value: value.charAt(0).toUpperCase() + value.slice(1) }
+      }
+      out.set(simplifySlug(slug), rest)
+    }
+  }
+  return out
+}
+
+// What the corpus holds, counted off the pages that actually rendered rather
+// than read out of a sentence in the markdown.
+export interface Counts {
+  reports: number
+  digests: number
+  concepts: number
+  entities: number
+  conflicts: number
+  topics: number
+}
+
+export function counts(c: Corpus): Counts {
+  let reports = 0
+  let digests = 0
+  let concepts = 0
+  let entities = 0
+  for (const f of c.bySlug.values()) {
+    const slug = slugOf(f)
+    if (isIndex(slug)) continue
+    // "Project reports" means the projects. The two cross-project digests sit
+    // in the same collection and are counted apart from them.
+    if (collectionOf(slug) === "summaries") isReport(slug) ? reports++ : digests++
+    else if (collectionOf(slug) === "concepts") concepts++
+    else if (collectionOf(slug) === "entities") entities++
+  }
+  return { reports, digests, concepts, entities, conflicts: c.conflicts.length, topics: c.topics.length }
 }
 
 // Home page body, split at its h2s so the frame can lay the pieces out.
