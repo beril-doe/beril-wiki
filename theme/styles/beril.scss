@@ -296,55 +296,59 @@ h4 {
   }
 }
 
-// The header is a title block on the page, not a card around it: a card sized
-// to the page left its right half empty on every record in the corpus. The
-// page kind keeps its colour as a short rule above the kind line.
+// The header is a card banded in the colour of the page kind. What emptied
+// the old one was its contents, not its border: a two-column definition list
+// that filled a third of the card. The byline below fills the width.
 .record {
   grid-column: 1 / -1;
-  margin-bottom: 28px;
-  max-width: 76ch;
-  .kindrule {
-    width: 54px;
-    height: 3px;
+  background: var(--card);
+  border: 1px solid var(--line-2);
+  display: grid;
+  grid-template-columns: 12px 1fr;
+  margin-bottom: 30px;
+  .kindband {
     background: var(--line-2);
-    margin-bottom: 14px;
   }
-  &.kind-concept .kindrule {
+  &.kind-concept .kindband {
     background: var(--concept);
   }
-  &.kind-topic .kindrule {
+  &.kind-topic .kindband {
     background: var(--ink);
   }
-  &.kind-conflict .kindrule {
+  &.kind-conflict .kindband {
     background: var(--conflict);
   }
-  &.kind-organism .kindrule {
+  &.kind-organism .kindband {
     background: var(--organism);
   }
-  &.kind-compound .kindrule {
+  &.kind-compound .kindband {
     background: var(--compound);
   }
-  &.kind-method .kindrule {
+  &.kind-method .kindband {
     background: var(--method);
   }
-  &.kind-dataset .kindrule {
+  &.kind-dataset .kindband {
     background: var(--dataset);
   }
-  &.kind-gene .kindrule {
+  &.kind-gene .kindband {
     background: var(--gene);
   }
-  &.kind-report .kindrule {
+  &.kind-report .kindband {
     background: var(--mute);
   }
-  &.kind-author .kindrule {
+  &.kind-author .kindband {
     background: var(--ink-2);
+  }
+  .body {
+    padding: 20px 28px 20px;
+    min-width: 0;
   }
   h1 {
     font-size: 2.4rem;
     line-height: 1.06;
     letter-spacing: -0.012em;
     margin: 0 0 14px;
-    max-width: 24ch;
+    max-width: 26ch;
     overflow-wrap: anywhere;
   }
 }
@@ -422,8 +426,11 @@ h4 {
   margin: 10px 0 0;
   font-size: 0.82rem;
   color: var(--mute);
-  max-width: 70ch;
+  // Long enough for the provenance sentence to sit on one line; the link at
+  // the end of it never breaks across two.
+  max-width: none;
   a {
+    white-space: nowrap;
     color: var(--ink-2);
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -792,9 +799,6 @@ h4 {
 // ---- collection index ------------------------------------------------------
 .index-page {
   padding: 30px 0 70px;
-  .record {
-    max-width: 70ch;
-  }
   .prose {
     max-width: 70ch;
     font-size: 0.98rem;
@@ -829,14 +833,49 @@ h4 {
     flex-direction: column;
     gap: 5px;
     color: var(--ink);
+    border-top: 2px solid transparent;
+    position: relative;
     &:hover {
       text-decoration: none;
       background: color-mix(in oklab, var(--line) 35%, var(--card));
+      border-top-color: var(--d, var(--line-2));
+      b {
+        color: var(--method);
+      }
+      &::after {
+        color: var(--method);
+        transform: translateX(3px);
+      }
+    }
+    // The arrow is what makes a card read as somewhere to go rather than a
+    // panel of text.
+    &::after {
+      content: "→";
+      position: absolute;
+      right: 14px;
+      bottom: 12px;
+      font-size: 0.9rem;
+      color: var(--line-2);
+      transition: transform 0.12s ease, color 0.12s ease;
     }
     b {
       font-weight: 600;
       font-size: 0.94rem;
       line-height: 1.3;
+      // Room for the arrow in the corner.
+      padding-right: 22px;
+      transition: color 0.12s ease;
+      // The dot says which topic claims the page, or what kind of thing it is.
+      &::before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--d, var(--line-2));
+        margin-right: 8px;
+        vertical-align: 1px;
+      }
     }
     .desc {
       font-size: 0.84rem;
@@ -845,7 +884,8 @@ h4 {
     }
     .meta {
       margin-top: auto;
-      padding-top: 6px;
+      padding-top: 8px;
+      padding-right: 26px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -903,9 +943,11 @@ h4 {
   grid-template-columns: repeat(5, minmax(0, 1fr));
   border-top: 1px solid var(--ink);
   border-bottom: 1px solid var(--line);
-  margin-top: 14px;
+  // Pulled out by the cell padding so the first figure still lines up with
+  // the prose above it, while none of them sits against a rule.
+  margin: 18px -22px 0;
   div {
-    padding: 14px 0 15px;
+    padding: 18px 22px 20px;
     border-right: 1px solid var(--line);
     &:last-child {
       border-right: 0;
@@ -914,14 +956,15 @@ h4 {
   b {
     display: block;
     font-family: var(--serif);
-    font-size: 1.9rem;
+    font-size: 2.1rem;
     font-weight: 400;
     line-height: 1;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
   }
   span {
     font-size: 0.78rem;
     color: var(--mute);
+    letter-spacing: 0.02em;
   }
 }
 // Browse: a row across the page, not a rail floating beside the prose with
@@ -942,14 +985,31 @@ h4 {
     margin: 0;
   }
   a {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
     padding: 15px 16px 16px;
-    color: var(--ink);
+    color: var(--method);
     font-weight: 500;
     font-size: 0.94rem;
+    border-top: 2px solid transparent;
+    // A row of bordered boxes read as a table until the arrow and the link
+    // colour said otherwise.
+    &::after {
+      content: "→";
+      font-size: 0.95rem;
+      color: var(--line-2);
+      transition: transform 0.12s ease, color 0.12s ease;
+    }
     &:hover {
       text-decoration: none;
       background: color-mix(in oklab, var(--line) 35%, var(--card));
+      border-top-color: var(--method);
+      &::after {
+        color: var(--method);
+        transform: translateX(3px);
+      }
     }
   }
 }
@@ -1021,7 +1081,7 @@ h4 {
     }
   }
   .trow {
-    padding: 14px 0;
+    padding: 10px 0;
     border-bottom: 1px solid var(--line);
     align-items: center;
     .name {
@@ -1044,11 +1104,24 @@ h4 {
       font-size: 0.86rem;
       color: var(--ink-2);
     }
+    // The counts are shaded against the largest value in their own column, so
+    // the table reads as a heat map at a glance and as numbers up close.
     .c {
       text-align: center;
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      color: var(--ink);
+      padding: 2px;
+      & > span {
+        display: block;
+        height: 30px;
+        line-height: 30px;
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        color: var(--ink);
+        background: color-mix(in oklab, var(--heat) calc(var(--v) * 0.5%), var(--card));
+        &[data-v="0"] {
+          color: var(--line-2);
+          background: none;
+        }
+      }
     }
   }
 }

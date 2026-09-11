@@ -191,10 +191,11 @@ function ties(file: File, c: Corpus, cites: Cite[]): Ties {
   return { conflicts, named, citedBy, entities, citedAuthors, reportAuthors }
 }
 
-// The record header. No card: a coloured rule for the page kind, the title,
-// then one byline row of countable facts. A card sized to the page left its
-// right half empty on every record in the corpus.
-function Record({ file, c, terms, standing, orcid, cites, rels, t }: {
+// The record header: a card banded in the colour of the page kind, carrying
+// the title and one byline row of countable facts. The byline is what keeps
+// the card honest — the dl it replaced filled a third of the card and left
+// the rest empty on every record in the corpus.
+function Record({ file, c, terms, standing, orcid, cites, rels, t, figures }: {
   file: File
   c: Corpus
   terms: string | null
@@ -203,6 +204,8 @@ function Record({ file, c, terms, standing, orcid, cites, rels, t }: {
   cites: Cite[]
   rels: Record<(typeof RELS)[number], number>
   t: Ties
+  /** Extra byline facts, for pages the citation counts say nothing about. */
+  figures?: string[]
 }) {
   const slug = slugOf(file) as FullSlug
   const kind = kindOf(file)
@@ -235,9 +238,11 @@ function Record({ file, c, terms, standing, orcid, cites, rels, t }: {
       </span>,
     )
   if (orcid) facts.push(<span>ORCID {jsx(orcid)}</span>)
+  for (const f of figures ?? []) facts.push(<span>{f}</span>)
   return (
     <div class={`record kind-${kind.cls}`}>
-      <div class="kindrule" aria-hidden="true" />
+      <div class="kindband" aria-hidden="true" />
+      <div class="body">
       <p class="kind">
         <b>{kind.label}</b>
         {topics.length > 0 && (
@@ -263,6 +268,7 @@ function Record({ file, c, terms, standing, orcid, cites, rels, t }: {
           {standing && jsx(standing)}
         </p>
       )}
+      </div>
     </div>
   )
 }
@@ -446,6 +452,55 @@ function Sources({ cites, from }: { cites: Cite[]; from: FullSlug }) {
 // A collection index lists what the collection holds. Quartz's folder listing
 // prints bare titles down the middle of an otherwise empty page; every one of
 // these pages already carries a description and a type, so use them.
+// What a collection index can say about itself, in countable terms. Quartz
+// gives an index page no citations, so without this its byline is empty and
+// the page opens on a bare title.
+function indexFigures(file: File, c: Corpus): string[] {
+  const here = collectionOf(slugOf(file))
+  const members = [...c.bySlug.values()].filter(
+    (f) => collectionOf(slugOf(f)) === here && !isIndex(slugOf(f)),
+  )
+  const n = members.length
+  if (n === 0) return []
+  const plural = (k: number, unit: string) => `${k} ${unit}${k === 1 ? "" : "s"}`
+  const out: string[] = []
+  switch (here) {
+    case "entities": {
+      out.push(plural(n, "entity").replace("entitys", "entities"))
+      out.push(plural(new Set(members.map((f) => kindOf(f).label)).size, "kind"))
+      break
+    }
+    case "topics": {
+      out.push(plural(n, "topic"))
+      const gathered = new Set(
+        members.flatMap((f) => linksOf(f).filter((l) => collectionOf(l) === "concepts")),
+      )
+      out.push(`${gathered.size} concepts gathered`)
+      break
+    }
+    case "authors": {
+      out.push(plural(n, "person").replace("persons", "people"))
+      const reports = new Set(
+        members.flatMap((f) => linksOf(f).filter((l) => collectionOf(l) === "summaries")),
+      )
+      out.push(`credited on ${plural(reports.size, "project report")}`)
+      break
+    }
+    case "summaries":
+      out.push(plural(n, "report"))
+      break
+    case "conflicts":
+      out.push(plural(n, "recorded conflict"))
+      break
+    case "concepts":
+      out.push(plural(n, "concept"))
+      break
+    default:
+      out.push(plural(n, "page"))
+  }
+  return out
+}
+
 const PLURAL: Record<string, string> = {
   organism: "Organisms",
   method: "Methods",
@@ -485,16 +540,39 @@ function Listing({ file, c }: { file: File; c: Corpus }) {
       const r = out(f, "summaries")
       return c > 0 || r > 0 ? `${plural(c, "concept")} · ${plural(r, "report")}` : null
     }
+    // A conflict page carries no description, and how many pages link to it
+    // says nothing about it; the projects that disagree do.
+    if (here === "conflicts") {
+      const n = out(f, "summaries")
+      return n > 0 ? `${plural(n, "source project")} disagree` : null
+    }
     const n = inbound(f)
     return n > 0 ? `linked from ${plural(n, "page")}` : null
   }
+
+  // An entity is coloured by what kind of thing it is; everything else by the
+  // topic that claims it. A wall of identical cards was the complaint.
+  const ENTITY_HUE: Record<string, string> = {
+    organism: "var(--organism)",
+    method: "var(--method)",
+    dataset: "var(--dataset)",
+    gene: "var(--gene)",
+    compound: "var(--compound)",
+  }
+  const accent = (f: File) =>
+    here === "entities" ? ENTITY_HUE[kindOf(f).cls] : (c.hueOf(f) ?? undefined)
 
   const Card = ({ f }: { f: File }) => {
     const k = kindOf(f)
     const line = meta(f)
     const desc = fm(f)?.description
+    const hue = accent(f)
     return (
-      <a class="card" href={resolveRelative(slug, slugOf(f) as FullSlug)}>
+      <a
+        class="card"
+        href={resolveRelative(slug, slugOf(f) as FullSlug)}
+        style={hue ? `--d:${hue}` : undefined}
+      >
         <b>{titleOf(f)}</b>
         {desc && <span class="desc">{desc}</span>}
         {(line || here === "entities") && (
@@ -563,6 +641,14 @@ function Topics({ c, from, blurbs }: {
   from: FullSlug
   blurbs: Map<string, ElementContent[]>
 }) {
+  const counts = c.topics.map((t) => {
+    const links = [...new Set(linksOf(t))]
+    return COLUMNS.map(([, test]) => links.filter((l) => test(l, c.bySlug.get(l))).length)
+  })
+  // Shade each column against its own largest value: reports outnumber
+  // conflicts several times over, and one ramp across both would flatten the
+  // column that varies least.
+  const max = COLUMNS.map((_, j) => Math.max(1, ...counts.map((row) => row[j])))
   return (
     <div class="topictable">
       <div class="thead">
@@ -572,8 +658,7 @@ function Topics({ c, from, blurbs }: {
           <span class="c">{name}</span>
         ))}
       </div>
-      {c.topics.map((t) => {
-        const links = [...new Set(linksOf(t))]
+      {c.topics.map((t, i) => {
         const blurb = blurbs.get(simplifySlug(slugOf(t)))
         return (
           <div class="trow">
@@ -582,8 +667,12 @@ function Topics({ c, from, blurbs }: {
               <a href={resolveRelative(from, slugOf(t) as FullSlug)}>{titleOf(t)}</a>
             </span>
             <p>{blurb ? jsx(blurb) : null}</p>
-            {COLUMNS.map(([, test]) => (
-              <span class="c">{links.filter((l) => test(l, c.bySlug.get(l))).length}</span>
+            {counts[i].map((n, j) => (
+              <span class="c">
+                <span style={`--v:${Math.round((n / max[j]) * 100)}`} data-v={n === 0 ? "0" : undefined}>
+                  {n}
+                </span>
+              </span>
             ))}
           </div>
         )
@@ -698,7 +787,7 @@ export const BerilFrame: PageFrame = {
           <Home file={file} c={c} tree={tree} standing={w.standing} />
         ) : index ? (
           <main class="band index-page">
-            <Record file={file} c={c} terms={w.terms} standing={w.standing} orcid={w.orcid} cites={w.cites} rels={w.rels} t={t} />
+            <Record file={file} c={c} terms={w.terms} standing={w.standing} orcid={w.orcid} cites={w.cites} rels={w.rels} t={t} figures={indexFigures(file, c)} />
             <div class="prose">
               {slot(beforeBody).map((B) => (
                 <B {...cd} />
