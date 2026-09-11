@@ -72,16 +72,19 @@ c["theme"]["colors"]["lightMode"] = {
     "highlight": "rgba(44, 99, 199, 0.08)",
     "textHighlight": "rgba(176, 122, 18, 0.3)",
 }
+# Dark mode is a warm neutral rather than a blue-black, so the two themes read
+# as one site, and the surfaces are far enough apart to be seen: the page and
+# the cards used to sit four percent apart with rules darker than both.
 c["theme"]["colors"]["darkMode"] = {
-    "light": "#15181b",
-    "lightgray": "#2c3237",
-    "gray": "#8a929a",
-    "darkgray": "#b5bcc3",
-    "dark": "#e8eaec",
-    "secondary": "#7fa6f0",
-    "tertiary": "#a9c3f5",
-    "highlight": "rgba(127, 166, 240, 0.12)",
-    "textHighlight": "rgba(224, 169, 58, 0.3)",
+    "light": "#17181a",        # page background
+    "lightgray": "#2f3235",    # rules, lighter than the surfaces they divide
+    "gray": "#8f8b84",         # muted text
+    "darkgray": "#b8b4ac",     # secondary text
+    "dark": "#e6e3dd",         # ink, off pure white for long reading
+    "secondary": "#86aaf5",    # links
+    "tertiary": "#a8c3fa",     # link hover
+    "highlight": "rgba(134, 170, 245, 0.12)",
+    "textHighlight": "rgba(226, 169, 74, 0.3)",
 }
 # The frame renders its own title, navigation, neighbours and backlinks, so
 # the stock components for those are switched off rather than hidden.

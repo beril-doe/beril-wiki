@@ -2,9 +2,14 @@
 // pipeline/build_quartz.sh, where Quartz compiles it unlayered so it wins
 // over the base styles. Markup comes from theme/src (the page frame).
 //
-// Colour rules, kept deliberately narrow so each hue means one thing:
-//   topic hues (--t1..--t9)   graph nodes, topic dots, heatmap rows only
-//   page-type colours         record band and entity tags only
+// Layout rules, kept deliberately narrow so the eye learns one rhythm:
+//   .band                every full-width section: one measure, one gutter
+//   .sechead             every section header: serif title, deck beside it
+//   one rule per section, never a box inside a box
+//
+// Colour rules, kept equally narrow so each hue means one thing:
+//   topic hues (--t1..--t9)   graph nodes, topic dots, topic rows only
+//   page-type colours         the record's kind rule and entity tags only
 //   relation colours          evidence strip, relation words, evidence list
 
 :root {
@@ -40,31 +45,39 @@
   --serif: var(--headerFont);
   --sans: var(--bodyFont);
   --mono: var(--codeFont);
+  // One measure and one gutter for every section on every page type.
+  --measure: 1140px;
+  --gutter: 40px;
 }
 
+// Dark mode is a warm neutral, not a blue-black: light mode is paper, and a
+// cold dark read as a different site. Surfaces are far enough apart to be
+// seen (page → card is a real step), rules are LIGHTER than the surfaces they
+// divide rather than darker, and ink stops short of pure white, which glares
+// on pages this long.
 :root[saved-theme="dark"] {
-  --card: #1b1f23;
-  --line-2: #3e464d;
-  --heat: #4fb3c9;
-  --concept: #e8eaec;
-  --organism: #5fbf85;
-  --compound: #e0a93a;
-  --method: #7fa6f0;
-  --dataset: #b98ae0;
+  --card: #1e2023;
+  --line-2: #4a4e52;
+  --heat: #57a8ba;
+  --concept: #e6e3dd;
+  --organism: #52c48f;
+  --compound: #e2a94a;
+  --method: #86aaf5;
+  --dataset: #bb85d4;
   --gene: #f08a6e;
   --conflict: #f07167;
-  --supports: #5fbf85;
-  --refines: #e0a93a;
+  --supports: #52c48f;
+  --refines: #e2a94a;
   --contradicts: #f07167;
-  --t1: #8585f0;
-  --t2: #3fb596;
-  --t3: #e9a23b;
-  --t4: #e56c85;
-  --t5: #6a9bf2;
-  --t6: #93c64a;
-  --t7: #b47acf;
-  --t8: #ee8c4a;
-  --t9: #3dc2c2;
+  --t1: #8b8bf2;
+  --t2: #52c48f;
+  --t3: #e2a94a;
+  --t4: #e8798d;
+  --t5: #77a4f4;
+  --t6: #9ec95a;
+  --t7: #bb85d4;
+  --t8: #ef955c;
+  --t9: #4ec6c2;
 }
 
 // Base-layer neutralisation: the default frame's grid and link pills.
@@ -206,6 +219,31 @@ h4 {
   }
 }
 
+// ---- the shared section rhythm --------------------------------------------
+// Every full-width section on every page type: same measure, same gutter.
+.band {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.sechead {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  padding: 40px 0 14px;
+  h2 {
+    flex: none;
+    font-size: 1.6rem;
+    margin: 0;
+  }
+  p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 0.86rem;
+    max-width: 70ch;
+  }
+}
+
 // ---- record page -----------------------------------------------------------
 // Three widths. Wide: contents and graph left, prose, evidence right.
 // Middle: both rails share the right column, contents first. Narrow (see the
@@ -214,7 +252,7 @@ h4 {
 .page-grid {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 36px 40px 80px;
+  padding: 30px 40px 80px;
   display: grid;
   grid-template-columns: minmax(0, 68ch) 300px;
   column-gap: 56px;
@@ -257,63 +295,63 @@ h4 {
     }
   }
 }
+
+// The header is a title block on the page, not a card around it: a card sized
+// to the page left its right half empty on every record in the corpus. The
+// page kind keeps its colour as a short rule above the kind line.
 .record {
   grid-column: 1 / -1;
-  background: var(--card);
-  border: 1px solid var(--line-2);
-  display: grid;
-  grid-template-columns: 14px 1fr;
-  margin-bottom: 34px;
-  .band {
+  margin-bottom: 28px;
+  max-width: 76ch;
+  .kindrule {
+    width: 54px;
+    height: 3px;
     background: var(--line-2);
+    margin-bottom: 14px;
   }
-  &.kind-concept .band {
+  &.kind-concept .kindrule {
     background: var(--concept);
   }
-  &.kind-topic .band {
+  &.kind-topic .kindrule {
     background: var(--ink);
   }
-  &.kind-conflict .band {
+  &.kind-conflict .kindrule {
     background: var(--conflict);
   }
-  &.kind-organism .band {
+  &.kind-organism .kindrule {
     background: var(--organism);
   }
-  &.kind-compound .band {
+  &.kind-compound .kindrule {
     background: var(--compound);
   }
-  &.kind-method .band {
+  &.kind-method .kindrule {
     background: var(--method);
   }
-  &.kind-dataset .band {
+  &.kind-dataset .kindrule {
     background: var(--dataset);
   }
-  &.kind-gene .band {
+  &.kind-gene .kindrule {
     background: var(--gene);
   }
-  &.kind-report .band {
+  &.kind-report .kindrule {
     background: var(--mute);
   }
-  &.kind-author .band {
+  &.kind-author .kindrule {
     background: var(--ink-2);
   }
-  .body {
-    padding: 22px 28px 20px;
-    min-width: 0;
-  }
   h1 {
-    font-size: 2.5rem;
-    line-height: 1.05;
-    letter-spacing: -0.01em;
-    margin: 0 0 16px;
-    max-width: 34ch;
+    font-size: 2.4rem;
+    line-height: 1.06;
+    letter-spacing: -0.012em;
+    margin: 0 0 14px;
+    max-width: 24ch;
     overflow-wrap: anywhere;
   }
 }
 .kind {
   font-size: 0.88rem;
   color: var(--ink-2);
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   b {
     font-weight: 600;
     color: var(--ink);
@@ -339,20 +377,39 @@ h4 {
   margin-right: 8px;
   vertical-align: 0;
 }
-.evid {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 6px 18px;
-  align-items: center;
+// One row of countable facts: what the page rests on, what rests on it.
+.byline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  margin: 0;
+  padding: 9px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
   font-size: 0.86rem;
   color: var(--ink-2);
-  margin: 0;
-  dt {
-    color: var(--mute);
+  b {
+    font-weight: 600;
+    color: var(--ink);
   }
-  dd {
-    margin: 0;
-    min-width: 0;
+  .rel-supports {
+    color: var(--supports);
+    b {
+      color: var(--supports);
+    }
+  }
+  .rel-refines {
+    color: var(--refines);
+    b {
+      color: var(--refines);
+    }
+  }
+  .rel-contradicts,
+  .warn {
+    color: var(--contradicts);
+    b {
+      color: var(--contradicts);
+    }
   }
   a {
     color: var(--ink-2);
@@ -361,57 +418,16 @@ h4 {
     text-decoration-color: var(--line-2);
   }
 }
-.stripc {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3px;
-  align-items: center;
-  i {
-    display: block;
-    width: 34px;
-    height: 14px;
-    background: var(--line);
-    &.p {
-      background: var(--ink);
-    }
-    &.s {
-      background: var(--supports);
-    }
-    &.r {
-      background: var(--refines);
-    }
-    &.c {
-      background: var(--contradicts);
-    }
-  }
-  .more {
-    font-family: var(--mono);
-    font-size: 0.76rem;
-    color: var(--mute);
-    margin-left: 4px;
-  }
-}
-.rels {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  span::before {
-    content: "";
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    margin-right: 6px;
-    vertical-align: -1px;
-    background: var(--line-2);
-  }
-  .rel-supports::before {
-    background: var(--supports);
-  }
-  .rel-refines::before {
-    background: var(--refines);
-  }
-  .rel-contradicts::before {
-    background: var(--contradicts);
+.record .standing {
+  margin: 10px 0 0;
+  font-size: 0.82rem;
+  color: var(--mute);
+  max-width: 70ch;
+  a {
+    color: var(--ink-2);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--line-2);
   }
 }
 
@@ -490,22 +506,21 @@ h4 {
     border-top: 1px solid var(--line);
     margin: 28px 0;
   }
-  // Citation chips: <sub class="src"> with one link per report.
+  // Citations are numbered marks, not a row of report ids: a paragraph
+  // resting on a dozen reports used to render as a block of grey chips wider
+  // than the sentence. The numbers are named under the prose and in the rail.
   sub.src {
     font-family: var(--mono);
-    font-size: 0.72rem;
-    color: var(--mute);
-    vertical-align: baseline;
-    line-height: 1;
-    margin-left: 4px;
+    font-size: 0.68rem;
+    vertical-align: super;
+    line-height: 0;
     white-space: nowrap;
+    color: var(--mute);
     a {
-      color: var(--mute);
-      border: 1px solid var(--line);
-      padding: 0 5px;
+      color: var(--ink-2);
+      padding: 0 1px;
       &:hover {
-        color: var(--ink);
-        border-color: var(--line-2);
+        color: var(--method);
         text-decoration: none;
       }
     }
@@ -523,40 +538,48 @@ h4 {
       color: var(--contradicts);
     }
   }
-  // Folder listings (Quartz folder-page).
+  // Folder listings (Quartz folder-page): the frame renders its own listing.
   .page-listing {
-    margin-top: 32px;
-    & > p {
-      color: var(--mute);
-      font-size: 0.9rem;
-    }
-    ul.section-ul {
-      margin-top: 0;
-    }
-    li.section-li {
-      border-top: 1px solid var(--line);
-      padding: 10px 0;
-      margin: 0;
-      & > .section {
-        grid-template-columns: 1fr;
-        gap: 2px;
-      }
-      .meta {
-        display: none;
-      }
-      .desc h3 {
-        font-family: var(--sans);
-        font-size: 1rem;
-        font-weight: 500;
-        margin: 0;
-        a {
-          color: var(--ink);
-        }
-      }
-      .tags {
-        display: none;
-      }
-    }
+    display: none;
+  }
+}
+// The numbered marks, named once under the prose.
+.sources {
+  border-top: 1px solid var(--line-2);
+  margin-top: 34px;
+  padding-top: 12px;
+  h2 {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+  ol {
+    margin: 0;
+    padding-left: 1.6em;
+    columns: 2;
+    column-gap: 36px;
+    font-size: 0.82rem;
+    color: var(--mute);
+  }
+  li {
+    break-inside: avoid;
+    padding: 2px 0;
+    margin: 0;
+  }
+  code {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    background: none;
+    padding: 0;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+  .w {
+    color: var(--mute);
+    margin-left: 6px;
   }
 }
 
@@ -655,6 +678,11 @@ h4 {
     font-size: 0.76rem;
     color: var(--mute);
   }
+  .more {
+    font-size: 0.78rem;
+    color: var(--mute);
+    margin: 7px 0 0;
+  }
   &.nav-rail .toc {
     border-top: 0;
     padding-top: 0;
@@ -698,6 +726,38 @@ h4 {
     }
   }
 }
+// The evidence strip sits with the list it belongs to, where its legend is.
+.stripc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  align-items: center;
+  margin-top: 12px;
+  i {
+    display: block;
+    width: 15px;
+    height: 13px;
+    background: var(--line);
+    &.p {
+      background: var(--ink);
+    }
+    &.s {
+      background: var(--supports);
+    }
+    &.r {
+      background: var(--refines);
+    }
+    &.c {
+      background: var(--contradicts);
+    }
+  }
+  .more {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--mute);
+    margin-left: 4px;
+  }
+}
 .tag {
   display: inline-block;
   font-size: 0.74rem;
@@ -729,6 +789,270 @@ h4 {
   }
 }
 
+// ---- collection index ------------------------------------------------------
+.index-page {
+  padding: 30px 0 70px;
+  .record {
+    max-width: 70ch;
+  }
+  .prose {
+    max-width: 70ch;
+    font-size: 0.98rem;
+    color: var(--ink-2);
+  }
+  .sechead {
+    padding-top: 30px;
+  }
+}
+.listing {
+  margin-top: 26px;
+  & > section > .sechead {
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 7px;
+    margin-bottom: 0;
+    h2 {
+      font-size: 1.25rem;
+    }
+  }
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-bottom: 30px;
+  .card {
+    background: var(--card);
+    padding: 14px 16px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: var(--ink);
+    &:hover {
+      text-decoration: none;
+      background: color-mix(in oklab, var(--line) 35%, var(--card));
+    }
+    b {
+      font-weight: 600;
+      font-size: 0.94rem;
+      line-height: 1.3;
+    }
+    .desc {
+      font-size: 0.84rem;
+      color: var(--ink-2);
+      line-height: 1.4;
+    }
+    .meta {
+      margin-top: auto;
+      padding-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--mute);
+      .tag {
+        margin-left: 0;
+        font-family: var(--sans);
+      }
+    }
+  }
+}
+
+// ---- home ------------------------------------------------------------------
+.hero {
+  padding-top: 52px;
+  h1 {
+    font-size: 3rem;
+    line-height: 1.03;
+    letter-spacing: -0.012em;
+    margin: 0 0 12px;
+  }
+  .standing {
+    font-size: 0.84rem;
+    color: var(--mute);
+    margin: 0 0 20px;
+    a {
+      color: var(--ink-2);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--line-2);
+    }
+  }
+  .lede {
+    font-size: 1rem;
+    color: var(--ink-2);
+    max-width: 68ch;
+    p:first-child {
+      font-size: 1.14rem;
+      line-height: 1.45;
+      color: var(--ink);
+      max-width: 62ch;
+    }
+    p {
+      margin: 0 0 16px;
+    }
+  }
+}
+// The corpus, stated once, as figures. It used to appear only as the caption
+// under a table.
+.stats {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+  margin-top: 14px;
+  div {
+    padding: 14px 0 15px;
+    border-right: 1px solid var(--line);
+    &:last-child {
+      border-right: 0;
+    }
+  }
+  b {
+    display: block;
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    font-weight: 400;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  span {
+    font-size: 0.78rem;
+    color: var(--mute);
+  }
+}
+// Browse: a row across the page, not a rail floating beside the prose with
+// nothing under it.
+.browse {
+  ul {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    background: var(--card);
+    margin: 0;
+  }
+  a {
+    display: block;
+    padding: 15px 16px 16px;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 0.94rem;
+    &:hover {
+      text-decoration: none;
+      background: color-mix(in oklab, var(--line) 35%, var(--card));
+    }
+  }
+}
+.mapframe {
+  border: 1px solid var(--line-2);
+  background: var(--card);
+  overflow-x: auto;
+  svg {
+    display: block;
+    width: 100%;
+    min-width: 860px;
+    height: auto;
+  }
+  .node.hub {
+    stroke-width: 2;
+  }
+  .tlabel {
+    font-size: 15px;
+    font-weight: 600;
+  }
+}
+.maplegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 26px;
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: var(--ink-2);
+  .key {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--t1);
+    flex: none;
+    &.grey {
+      background: var(--line-2);
+    }
+  }
+  .tie {
+    width: 24px;
+    height: 3px;
+    background: var(--line-2);
+    flex: none;
+  }
+}
+// The nine topics: one row each, carrying the blurb and the counts that used
+// to sit in two separate renderings of the same list.
+.topictable {
+  .thead,
+  .trow {
+    display: grid;
+    grid-template-columns: 21ch minmax(0, 1fr) repeat(4, 62px);
+    gap: 22px;
+  }
+  .thead {
+    padding: 10px 0 8px;
+    border-bottom: 1px solid var(--ink);
+    font-size: 0.72rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--mute);
+    .c {
+      text-align: center;
+    }
+  }
+  .trow {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+    .name {
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+      a {
+        color: var(--ink);
+        font-weight: 600;
+        font-size: 0.92rem;
+        line-height: 1.32;
+      }
+      .dot {
+        margin: 0;
+        flex: none;
+      }
+    }
+    p {
+      margin: 0;
+      font-size: 0.86rem;
+      color: var(--ink-2);
+    }
+    .c {
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--ink);
+    }
+  }
+}
+
 // ---- graphs ----------------------------------------------------------------
 .edge {
   stroke: var(--line-2);
@@ -756,21 +1080,24 @@ h4 {
     font-weight: 600;
   }
 }
+.tcount {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  fill: var(--mute);
+  paint-order: stroke;
+  stroke: var(--card);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
 svg a:hover .node {
   stroke: var(--ink);
 }
 svg a:hover .tlabel {
   text-decoration: underline;
 }
-// A wash behind each cluster, so a hub reads as a place before you read a
-// single label.
-.halo {
-  fill: var(--c);
-  opacity: 0.05;
-}
 .spoke {
   stroke: var(--c);
-  stroke-opacity: 0.55;
+  stroke-opacity: 0.5;
   stroke-width: 1;
 }
 // A concept no topic claims: it sits by the cluster it cites, on a loose
@@ -799,24 +1126,20 @@ svg a:hover .tlabel {
   fill: none;
   stroke: var(--c, var(--line-2));
   stroke-width: 1;
-  stroke-opacity: 0.55;
+  stroke-opacity: 0.5;
 }
 // One tie per pair of topics, weighted by how many links cross between them.
 .tie {
   fill: none;
   stroke: var(--line-2);
-  stroke-opacity: 0.55;
+  stroke-opacity: 0.45;
   stroke-width: var(--w, 1);
   stroke-linecap: round;
   transition: opacity 0.12s ease;
 }
-.halo {
-  transition: opacity 0.12s ease;
-}
 @media (prefers-reduced-motion: reduce) {
   .link,
-  .tie,
-  .halo {
+  .tie {
     transition: none;
   }
 }
@@ -841,220 +1164,6 @@ svg a:focus-visible .clabel {
   opacity: 1;
 }
 
-// ---- home ------------------------------------------------------------------
-.home {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 52px 40px 30px;
-  // Prose left, the standing links right: the text gets a proper measure
-  // instead of a narrow ribbon in a wide box, and the links stop trailing off
-  // the bottom of the page.
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(200px, 264px);
-  column-gap: 64px;
-  align-items: start;
-  h1 {
-    font-size: 3.1rem;
-    line-height: 1.02;
-    letter-spacing: -0.01em;
-    margin: 0 0 14px;
-  }
-  .standing {
-    font-size: 0.86rem;
-    color: var(--mute);
-    margin: 0 0 22px;
-    a {
-      color: var(--ink-2);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-color: var(--line-2);
-    }
-  }
-  .lede {
-    font-size: 1.02rem;
-    color: var(--ink-2);
-    max-width: 68ch;
-    p:first-child {
-      font-size: 1.12rem;
-      color: var(--ink);
-    }
-    p {
-      margin: 0 0 16px;
-    }
-  }
-  .digests {
-    font-size: 0.92rem;
-    margin-top: 14px;
-    h2 {
-      font-family: var(--sans);
-      font-size: 0.86rem;
-      font-weight: 600;
-      margin: 0 0 2px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    li {
-      padding: 8px 0;
-      border-top: 1px solid var(--line);
-      &:last-child {
-        border-bottom: 1px solid var(--line);
-      }
-    }
-    a {
-      color: var(--ink);
-    }
-  }
-}
-.heat {
-  border: 1px solid var(--line-2);
-  background: var(--card);
-  overflow-x: auto;
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    font-size: 0.86rem;
-  }
-  th {
-    font-weight: 500;
-    text-align: left;
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--line);
-    color: var(--ink-2);
-    &.c {
-      text-align: center;
-      padding: 10px 4px;
-      font-size: 0.78rem;
-    }
-  }
-  td {
-    padding: 8px 12px;
-    border-bottom: 1px solid var(--line);
-    vertical-align: middle;
-    &.name {
-      padding-left: 10px;
-      white-space: nowrap;
-      a {
-        color: var(--ink);
-        font-weight: 500;
-      }
-    }
-    &.cell {
-      text-align: center;
-      padding: 4px;
-      width: 58px;
-      span {
-        display: block;
-        height: 30px;
-        line-height: 30px;
-        color: var(--ink);
-        font-family: var(--mono);
-        font-size: 0.78rem;
-        background: color-mix(in oklab, var(--heat) calc(var(--v) * 0.55%), var(--card));
-        &[data-v="0"] {
-          color: var(--line-2);
-        }
-      }
-    }
-  }
-  tr:last-child td {
-    border-bottom: 0;
-  }
-  caption {
-    caption-side: bottom;
-    text-align: left;
-    padding: 10px 12px;
-    font-size: 0.8rem;
-    color: var(--mute);
-    border-top: 1px solid var(--line);
-  }
-}
-.corpusmap {
-  max-width: 1480px;
-  margin: 0 auto 46px;
-  padding: 0 40px;
-  // Heading and caption sit next to each other, as a block centred over the
-  // map. As a grid with a stretching first column they drifted to opposite
-  // edges of a wide panel; left-aligned they hung off one side of it.
-  .maphead {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 4px 24px;
-    max-width: 900px;
-    margin: 0 auto 12px;
-  }
-  h2 {
-    flex: none;
-    font-size: 1.6rem;
-    margin: 0;
-  }
-  .maphead p {
-    flex: 1 1 42ch;
-    max-width: 66ch;
-    margin: 0;
-    font-size: 0.9rem;
-    color: var(--ink-2);
-  }
-
-  .mapframe {
-    border: 1px solid var(--line-2);
-    background: var(--card);
-    overflow-x: auto;
-  }
-  svg {
-    display: block;
-    width: 100%;
-    min-width: 860px;
-    height: auto;
-  }
-  .node.hub {
-    stroke-width: 2;
-  }
-  .tlabel {
-    font-size: 15px;
-    font-weight: 600;
-  }
-}
-.heatwrap {
-  max-width: 1180px;
-  margin: 0 auto 48px;
-  padding: 0 40px;
-}
-// The topic list closes the page and doubles as the map's legend, so it keeps
-// the same measure as the prose and the table rather than running the full
-// width of the window.
-.topiclist {
-  max-width: 1180px;
-  margin: 0 auto 56px;
-  padding: 0 40px;
-  h2 {
-    font-size: 1.6rem;
-    margin: 0 0 4px;
-  }
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    columns: 2;
-    column-gap: 56px;
-  }
-  li {
-    break-inside: avoid;
-    padding: 14px 0;
-    border-top: 1px solid var(--line);
-    font-size: 0.9rem;
-    color: var(--ink-2);
-  }
-  a {
-    display: block;
-    color: var(--ink);
-    font-weight: 500;
-  }
-}
-
 // ---- footer ----------------------------------------------------------------
 footer {
   // The base layer gives the footer min-width:100% and content-box sizing on
@@ -1062,9 +1171,9 @@ footer {
   // whole page sideways.
   box-sizing: border-box;
   min-width: 0;
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 18px 40px 40px;
+  max-width: var(--measure);
+  margin: 48px auto 0;
+  padding: 18px var(--gutter) 40px;
   border-top: 1px solid var(--line);
   font-size: 0.84rem;
   color: var(--mute);
@@ -1112,8 +1221,28 @@ footer {
   }
 }
 
+// ---- medium screens --------------------------------------------------------
+@media (max-width: 1100px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .browse ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .topictable {
+    .thead,
+    .trow {
+      grid-template-columns: 18ch minmax(0, 1fr) repeat(4, 52px);
+      gap: 14px;
+    }
+  }
+}
+
 // ---- small screens ---------------------------------------------------------
 @media (max-width: 960px) {
+  :root {
+    --gutter: 20px;
+  }
   .bar {
     flex-wrap: wrap;
     gap: 12px 20px;
@@ -1126,20 +1255,16 @@ footer {
       width: 100%;
     }
   }
-  .page-grid,
-  .home,
-  .corpusmap,
-  .heatwrap {
+  .page-grid {
     padding-left: 20px;
     padding-right: 20px;
-  }
-  .page-grid {
     grid-template-columns: minmax(0, 1fr);
     row-gap: 32px;
   }
-  .home {
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: 10px;
+  .sechead {
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 30px;
   }
   .rail {
     position: static;
@@ -1158,38 +1283,43 @@ footer {
     grid-column: 1;
     grid-row: 4;
   }
-  .record {
-    grid-template-columns: 8px 1fr;
-  }
-  .record .body {
-    padding: 18px 18px 16px;
-  }
   .record h1 {
     font-size: 1.9rem;
   }
-  // Two columns leave the strip and the standing line too narrow to read.
-  .evid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2px;
-    dt {
-      margin-top: 10px;
+  .hero {
+    padding-top: 34px;
+    h1 {
+      font-size: 2.2rem;
     }
   }
-  .home h1 {
-    font-size: 2.3rem;
-  }
-  .corpusmap .maphead {
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: 6px;
-  }
-  .topiclist {
-    padding: 0 20px;
-    ul {
-      columns: 1;
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    div {
+      border-bottom: 1px solid var(--line);
+      &:nth-child(2n) {
+        border-right: 0;
+      }
     }
   }
-  footer {
-    padding: 18px 20px 40px;
+  .browse ul,
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sources ol {
+    columns: 1;
+  }
+  // The counts stop fitting beside the blurb; stack the row instead.
+  .topictable {
+    .thead {
+      display: none;
+    }
+    .trow {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 4px;
+      .c {
+        display: none;
+      }
+    }
   }
 }
 

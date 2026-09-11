@@ -1,6 +1,11 @@
 // The corpus map: nine topic hubs, each ringed by the concepts that belong to
 // it, with the wikilinks that cross between them drawn faintly underneath.
 //
+// No wash behind a cluster and one quiet arc per pair of topics: the coloured
+// halos and the full link set together filled the frame, and the hubs stopped
+// reading as hubs. Every hub is named and counted on the page; hovering still
+// reveals a point's own links.
+//
 // The shape is deliberate rather than simulated. A spring layout drew truer
 // distances but dissolved the one thing the map is for: showing that the
 // corpus has hubs and that pages hang off them. Fixed positions also mean the
@@ -12,10 +17,10 @@ import type { FullSlug } from "@quartz-community/types"
 import { type Corpus, type File, collectionOf, isIndex, linksOf, slugOf, titleOf, truncate } from "./page"
 
 const W = 1200
-const H = 790
+const H = 900
 const COLS = [190, 600, 1010]
-// Room above the first row for a two-line hub label.
-const ROWS = [165, 410, 655]
+// Room above each row for a two-line hub label and its count.
+const ROWS = [175, 445, 715]
 // Concepts occupy 300 degrees of the ring; the gap at the top is where the
 // hub's own label goes.
 const ARC = 300
@@ -203,6 +208,10 @@ export function mapStats(c: Corpus) {
   return { topics: g.clusters.length, concepts: g.concepts, crossings: g.links.length, ties: g.ties.length }
 }
 
+// Hub labels carry no count: a concept two topics both claim is drawn in one
+// ring and spoked to the other, so a per-ring number would disagree with the
+// topic table on the same page. The table is where the counts live.
+//
 // Hub labels sit above the cluster, not in it: a title long enough to matter
 // is wider than the gap at the top of the ring. Two lines, wrapped on a word.
 function labelLines(title: string): string[] {
@@ -230,8 +239,7 @@ export function CorpusMap({ c, from }: { c: Corpus; from: FullSlug }) {
   const on = (sel: string, body: string) =>
     `svg:has(${sel}:hover) ${body},svg:has(${sel}:focus-visible) ${body}`
   const reveal = [
-    `${on("a.pt", ".tie")}{opacity:.1}`,
-    `${on("a.pt", ".halo")}{opacity:.03}`,
+    `${on("a.pt", ".tie")}{opacity:.08}`,
     ...clusters.flatMap((cl) => [
       `${on(`a.hub.c${cl.id}`, `.link.c${cl.id}`)}{opacity:.8}`,
       ...cl.points.map((p) => `${on(`a.n${p.id}`, `.link.n${p.id}`)}{opacity:1}`),
@@ -263,7 +271,7 @@ export function CorpusMap({ c, from }: { c: Corpus; from: FullSlug }) {
     <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Map of every topic and concept in the corpus">
       <g class="ties">
         {ties.map((t) => (
-          <path class="tie" d={tieArc(t)} style={`--w:${(0.7 + (t.count / heaviest) * 4).toFixed(2)}`}>
+          <path class="tie" d={tieArc(t)} style={`--w:${(0.6 + (t.count / heaviest) * 3).toFixed(2)}`}>
             <title>
               {titleOf(t.a.topic)} and {titleOf(t.b.topic)}: {t.count} wikilinks between their
               concepts
@@ -271,9 +279,6 @@ export function CorpusMap({ c, from }: { c: Corpus; from: FullSlug }) {
           </path>
         ))}
       </g>
-      {clusters.map((cl) => (
-        <circle class="halo" cx={cl.x} cy={cl.y} r={cl.radius + 20} style={`--c:${cl.hue}`} />
-      ))}
       <style dangerouslySetInnerHTML={{ __html: reveal }} />
       <g class="links">
         {links.map(([a, b]) => (
@@ -318,15 +323,17 @@ export function CorpusMap({ c, from }: { c: Corpus; from: FullSlug }) {
             <circle class="node hub" cx={cl.x} cy={cl.y} r={11} style={`--c:${cl.hue}`} />
             {(() => {
               const lines = labelLines(titleOf(cl.topic))
-              const top = cl.y - cl.radius - 24 - (lines.length - 1) * 17
+              const top = cl.y - cl.radius - 30 - (lines.length - 1) * 18
               return (
-                <text class="tlabel" x={cl.x} y={top} text-anchor="middle">
-                  {lines.map((l, i) => (
-                    <tspan x={cl.x} dy={i === 0 ? 0 : 17}>
-                      {l}
-                    </tspan>
-                  ))}
-                </text>
+                <>
+                  <text class="tlabel" x={cl.x} y={top} text-anchor="middle">
+                    {lines.map((l, i) => (
+                      <tspan x={cl.x} dy={i === 0 ? 0 : 18}>
+                        {l}
+                      </tspan>
+                    ))}
+                  </text>
+                </>
               )
             })()}
           </a>
