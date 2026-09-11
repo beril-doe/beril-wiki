@@ -131,6 +131,8 @@ interface Ties {
   /** Conflicts that name this page, rather than merely sharing its sources. */
   named: File[]
   citedBy: File[]
+  /** Concepts this page links out to — what a topic gathers. */
+  concepts: File[]
   entities: File[]
   /** Authors of the reports this page cites, and how many each wrote. */
   citedAuthors: [File, number][]
@@ -192,14 +194,22 @@ function ties(file: File, c: Corpus, cites: Cite[]): Ties {
         .filter((f) => f !== file && !isIndex(slugOf(f)) && collectionOf(slugOf(f)) !== "authors")
         .sort((a, b) => rank(a) - rank(b) || titleOf(a).localeCompare(titleOf(b)))
 
-  const entities = !knowledge
-    ? []
-    : [...new Set(linksOf(file))]
-        .map((l) => c.bySlug.get(l))
-        .filter((f): f is File => !!f && collectionOf(slugOf(f)) === "entities" && !isIndex(slugOf(f)))
-        .sort((a, b) => titleOf(a).localeCompare(titleOf(b)))
+  // Forward links, by collection. Reports have their own section, conflicts
+  // and entities theirs, and a page's topics are in the header byline — which
+  // left the concepts a page points at with nowhere to appear at all. On a
+  // topic page those are the whole point of the page.
+  const outTo = (collection: string) =>
+    !knowledge
+      ? []
+      : [...new Set(linksOf(file))]
+          .map((l) => c.bySlug.get(l))
+          .filter(
+            (f): f is File =>
+              !!f && f !== file && collectionOf(slugOf(f)) === collection && !isIndex(slugOf(f)),
+          )
+          .sort((a, b) => titleOf(a).localeCompare(titleOf(b)))
 
-  return { conflicts, named, citedBy, entities, citedAuthors, reportAuthors }
+  return { conflicts, named, citedBy, concepts: outTo("concepts"), entities: outTo("entities"), citedAuthors, reportAuthors }
 }
 
 // The record header: a card banded in the colour of the page kind, carrying
@@ -241,6 +251,15 @@ function Record({ file, c, terms, standing, orcid, cites, rels, t, figures }: {
           {cites.length} project {cites.length === 1 ? "report" : "reports"}, listed in the margin
         </span>
       </>,
+    ])
+  // What a topic gathers is the measure of a topic, the way citations are the
+  // measure of a concept. Every other kind states this in the rail only.
+  if (kind.cls === "topic" && t.concepts.length > 0)
+    rows.push([
+      "Concepts",
+      <span class="chips">
+        <span class="chip">{t.concepts.length} gathered</span>
+      </span>,
     ])
   const stated = RELS.filter((r) => rels[r] > 0)
   if (stated.length > 0)
@@ -394,6 +413,7 @@ function Rail({ cd, file, c, cites, t, left }: {
 }) {
   const slug = slugOf(file) as FullSlug
   const rel = (x: string) => resolveRelative(slug, x as FullSlug)
+  const topic = kindOf(file).cls === "topic"
   return (
     <aside class="rail evidence-rail">
       {t.reportAuthors.length > 0 && (
@@ -436,6 +456,26 @@ function Rail({ cd, file, c, cites, t, left }: {
             The number is tinted with the relation the prose states; black is the primary source.
             The strip in the header says the same, one block per report.
           </p>
+        </section>
+      )}
+      {t.concepts.length > 0 && (
+        <section>
+          <h3>{topic ? "Concepts in this topic" : "Concepts linked"}</h3>
+          <p class="more lead">
+            {topic
+              ? "The synthesis pages this topic gathers."
+              : "Other synthesis pages this one points at."}
+          </p>
+          <Rows
+            rows={t.concepts.map((f) => {
+              const hue = c.hueOf(f)
+              return (
+                <li style={hue ? `--d:${hue}` : undefined}>
+                  <a href={rel(slugOf(f))}>{titleOf(f)}</a>
+                </li>
+              )
+            })}
+          />
         </section>
       )}
       {t.citedAuthors.length > 0 && (

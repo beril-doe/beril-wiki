@@ -287,6 +287,13 @@ h4 {
   padding: 30px 40px 80px;
   display: grid;
   grid-template-columns: minmax(0, 68ch) 300px;
+  // Two columns: the prose on the left spanning rows 2-3, the two rails
+  // stacked on the right. Row 3 is flexible so the prose's height lands
+  // there whole. Left to `auto`, grid splits a spanning item's height
+  // evenly between the rows it covers, which sized row 2 to half the
+  // article and dropped the evidence rail level with nothing, a screen
+  // below the map it is supposed to sit under.
+  grid-template-rows: auto auto 1fr;
   column-gap: 56px;
   justify-content: center;
   .nav-rail {
@@ -309,6 +316,8 @@ h4 {
   .page-grid {
     max-width: 1480px;
     grid-template-columns: 260px minmax(0, 66ch) 300px;
+    // Three columns, everything on one row: no third row to keep flexible.
+    grid-template-rows: auto auto;
     column-gap: 48px;
     .nav-rail {
       grid-column: 1;
