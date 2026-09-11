@@ -1,0 +1,269 @@
+// ---- home ------------------------------------------------------------------
+.hero {
+  padding-top: 52px;
+  // Title and standing line stay in the first column; the figures start on
+  // the same row as the opening paragraph, not level with the title.
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  column-gap: 64px;
+  align-items: start;
+  h1 {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: var(--t-hero);
+    line-height: 1.04;
+    letter-spacing: -0.012em;
+    margin: 0 0 12px;
+  }
+  .standing {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: var(--t-meta);
+    color: var(--mute);
+    margin: 0 0 20px;
+    a {
+      color: var(--ink-2);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--line-2);
+      white-space: nowrap;
+    }
+  }
+  .lede {
+    grid-column: 1;
+    grid-row: 3;
+    font-family: var(--serif);
+    color: var(--ink-2);
+    max-width: 66ch;
+    p {
+      margin: 0 0 16px;
+    }
+    .lead p {
+      font-size: var(--t-lead);
+      line-height: 1.5;
+      color: var(--ink);
+    }
+    .after p {
+      font-size: var(--t-read);
+    }
+  }
+  // The corpus, as figures, in the column the prose does not need.
+  .figures {
+    grid-column: 2;
+    grid-row: 3;
+    margin: 4px 0 0;
+    // Ledger: the numerals separate the rows, so nothing is ruled. A tick
+    // marks the start, as it does on every rail section.
+    .lbl {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: var(--t-label);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mute);
+      margin: 0 0 10px;
+      &::before {
+        content: "";
+        width: 14px;
+        height: 2px;
+        background: var(--accent, var(--ink));
+        flex: none;
+      }
+    }
+    .frow {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: baseline;
+      gap: 14px;
+      padding: 8px 8px;
+      margin: 0 -8px;
+    }
+    .frow:hover {
+      background: color-mix(in oklab, var(--line) 45%, transparent);
+    }
+    dt {
+      font-family: var(--serif);
+      font-size: var(--t-figure);
+      line-height: 1;
+      min-width: 2.4ch;
+    }
+    dd {
+      margin: 0;
+      font-size: var(--t-ui);
+      color: var(--ink-2);
+    }
+    dd a {
+      color: var(--ink);
+    }
+    .note {
+      font-size: var(--t-meta);
+      color: var(--mute);
+      margin: 12px 0 0;
+    }
+  }
+}
+// Browse: a row across the page, not a rail floating beside the prose with
+// nothing under it.
+.browse {
+  ul {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    background: var(--card);
+    margin: 0;
+  }
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 15px 16px 16px;
+    color: var(--method);
+    font-weight: 500;
+    font-size: var(--t-ui-lg);
+    border-top: 2px solid transparent;
+    // A row of bordered boxes read as a table until the arrow and the link
+    // colour said otherwise.
+    &::after {
+      content: "→";
+      font-size: 0.95rem;
+      color: var(--line-2);
+      transition: transform 0.12s ease, color 0.12s ease;
+    }
+    &:hover {
+      text-decoration: none;
+      background: color-mix(in oklab, var(--line) 35%, var(--card));
+      border-top-color: var(--method);
+      &::after {
+        color: var(--method);
+        transform: translateX(3px);
+      }
+    }
+  }
+}
+.mapframe {
+  border: 1px solid var(--line-2);
+  background: var(--card);
+  overflow-x: auto;
+  svg {
+    display: block;
+    width: 100%;
+    min-width: 860px;
+    height: auto;
+  }
+  .node.hub {
+    stroke-width: 2;
+  }
+  .tlabel {
+    font-size: 15px;
+    font-weight: 600;
+  }
+}
+.maplegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 26px;
+  margin-top: 12px;
+  font-size: var(--t-ui);
+  color: var(--ink-2);
+  .key {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--t1);
+    flex: none;
+    &.grey {
+      background: var(--line-2);
+    }
+  }
+  .tie {
+    width: 24px;
+    height: 3px;
+    background: var(--line-2);
+    flex: none;
+  }
+}
+// The nine topics: one row each, carrying the blurb and the counts that used
+// to sit in two separate renderings of the same list.
+.topictable {
+  .thead,
+  .trow {
+    display: grid;
+    grid-template-columns: 21ch minmax(0, 1fr) repeat(4, 62px);
+    gap: 22px;
+  }
+  .thead {
+    padding: 10px 0 8px;
+    border-bottom: 1px solid var(--ink);
+    font-size: var(--t-label);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--mute);
+    .c {
+      text-align: center;
+    }
+  }
+  // Ledger: the heat blocks line the columns up, so the rows need no rules.
+  // The row under the pointer fills instead.
+  .trow {
+    padding: 10px 8px;
+    margin: 0 -8px;
+    align-items: center;
+    &:hover {
+      background: color-mix(in oklab, var(--line) 40%, transparent);
+    }
+    .name {
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+      a {
+        color: var(--ink);
+        font-weight: 600;
+        font-size: var(--t-ui-lg);
+        line-height: 1.32;
+      }
+      .dot {
+        margin: 0;
+        flex: none;
+      }
+    }
+    p {
+      margin: 0;
+      font-size: var(--t-ui);
+      color: var(--ink-2);
+    }
+    // The counts are shaded against the largest value in their own column, so
+    // the table reads as a heat map at a glance and as numbers up close.
+    .c {
+      text-align: center;
+      padding: 2px;
+      & > span {
+        display: block;
+        height: 30px;
+        line-height: 30px;
+        font-family: var(--mono);
+        font-size: var(--t-meta);
+        color: var(--ink);
+        background: color-mix(in oklab, var(--heat) calc(var(--v) * 0.5%), var(--card));
+        &[data-v="0"] {
+          color: var(--line-2);
+          background: none;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+// ---- top bar ---------------------------------------------------------------
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding: 12px 40px;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  .wordmark {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    color: var(--ink);
+    white-space: nowrap;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  nav {
+    display: flex;
+    gap: 18px;
+    font-size: var(--t-ui);
+    overflow-x: auto;
+    // Without this the nav refuses to shrink below its content and pushes the
+    // whole page sideways on a narrow screen instead of scrolling itself.
+    min-width: 0;
+    a {
+      color: var(--ink-2);
+      white-space: nowrap;
+      padding: 4px 0;
+      border-bottom: 1px solid transparent;
+      &[aria-current="page"] {
+        color: var(--ink);
+        border-bottom-color: var(--ink);
+      }
+      &:hover {
+        text-decoration: none;
+        color: var(--ink);
+      }
+    }
+  }
+  .tools {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  // Stock search button, restyled as a quiet field.
+  .search {
+    max-width: 300px;
+    & > .search-button {
+      background: var(--bg);
+      border: 1px solid var(--line-2);
+      border-radius: 0;
+      color: var(--mute);
+      padding: 5px 10px;
+      width: 240px;
+      justify-content: flex-start;
+      gap: 8px;
+      font-size: var(--t-ui);
+      font-family: var(--sans);
+      svg {
+        width: 15px;
+        height: 15px;
+        margin: 0;
+        .search-path {
+          stroke: var(--mute);
+        }
+      }
+      p {
+        margin: 0;
+        color: var(--mute);
+      }
+    }
+  }
+}

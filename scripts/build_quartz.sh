@@ -46,9 +46,11 @@ npm --prefix "$THEME" run --silent build
 uv run --project "$REPO" python -m beril_wiki.publish.quartz_config "$QP" "$BASE_URL"
 
 # Stylesheet: Quartz compiles quartz/styles/custom.scss unlayered, after its
-# own base layer, so this is where the theme's CSS goes. Copied every build
-# because quartz/ is a gitignored clone.
-cp "$THEME/styles/beril.scss" "$QP/quartz/styles/custom.scss"
+# own base layer, so this is where the theme's CSS goes. The theme's partials
+# are copied in beside it every build because quartz/ is a gitignored clone.
+rm -rf "$QP/quartz/styles/beril"
+cp -R "$THEME/styles" "$QP/quartz/styles/beril"
+printf '@use "beril/beril";\n' > "$QP/quartz/styles/custom.scss"
 
 # Publish is render-only: wiki/ is committed, so no stage
 # regeneration here (run_pipeline.sh owns that). Figures come from the

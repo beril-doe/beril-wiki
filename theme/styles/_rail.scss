@@ -1,0 +1,301 @@
+// ---- rail ------------------------------------------------------------------
+.rail {
+  position: sticky;
+  top: 20px;
+  align-self: start;
+  font-size: var(--t-ui);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  // The rows bleed 8px outwards so a hover fill is wider than the text. This
+  // is a scroll container, so that bleed has to live inside its own padding
+  // or it is clipped, which is what cropped the contents list.
+  box-sizing: border-box;
+  padding: 0 8px;
+  margin: 0 -8px;
+  section {
+    padding: 0 0 26px;
+    // The neighbourhood graph is a rail section like any other: a labelled
+    // block on the page, not a framed panel in a column that has no other
+    // frames in it.
+    &.map {
+      svg {
+        width: 100%;
+        height: 172px;
+        display: block;
+        // The labels knock out against whatever they sit on, and here that is
+        // the page rather than a card.
+        .tlabel,
+        .node {
+          stroke: var(--bg);
+        }
+      }
+      .more {
+        font-size: var(--t-meta);
+        color: var(--mute);
+        margin: 8px 0 0;
+      }
+    }
+  }
+  // A section label: smaller, spaced and quieter than the rows it heads, with
+  // a tick in place of the rule that used to fence every row beneath it.
+  h3 {
+    font-family: var(--sans);
+    font-size: var(--t-label);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mute);
+    margin: 0 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    // The tick carries the topic's colour where the page has one, which is
+    // the only place colour enters the rail.
+    &::before {
+      content: "";
+      width: 14px;
+      height: 2px;
+      background: var(--accent, var(--ink));
+      flex: none;
+    }
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  // No rules between rows: the row you point at fills instead of being fenced.
+  li {
+    padding: 5px 8px;
+    margin: 0 -8px;
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    line-height: 1.32;
+    &:hover {
+      background: color-mix(in oklab, var(--line) 45%, transparent);
+    }
+    &::before {
+      content: "";
+      flex: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--d, var(--line-2));
+      transform: translateY(-1px);
+    }
+    &.plain::before,
+    // A citation row carries its number where every other row carries its
+    // dot: same column, and the number still takes the relation's colour.
+    &.cite::before {
+      display: none;
+    }
+    &.rest {
+      color: var(--mute);
+    }
+    & > span {
+      min-width: 0;
+    }
+    .cnum {
+      flex: none;
+      width: 8px;
+      text-align: right;
+      font-family: var(--mono);
+      font-size: var(--t-meta);
+      font-weight: 600;
+      color: var(--d, var(--mute));
+    }
+  }
+  a {
+    color: var(--ink);
+    &:hover {
+      color: var(--method);
+    }
+  }
+  code {
+    font-family: var(--mono);
+    font-size: var(--t-meta);
+    color: var(--ink);
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    overflow-wrap: anywhere;
+  }
+  .w {
+    display: block;
+    color: var(--mute);
+    font-size: var(--t-meta);
+  }
+  .n {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: var(--t-meta);
+    color: var(--mute);
+  }
+  .more {
+    font-size: var(--t-meta);
+    color: var(--mute);
+    margin: 7px 0 0;
+    // A deck sits above the rows it introduces rather than below them.
+    &.lead {
+      margin: -2px 0 8px;
+    }
+  }
+  // "and 31 more" opens the list it counts. It looked like a link before it
+  // was one, which is the whole complaint it was answering.
+  details.rest {
+    summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 7px 0 2px;
+      color: var(--ink-2);
+      font-size: var(--t-ui);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      &::-webkit-details-marker {
+        display: none;
+      }
+      &::before {
+        content: "";
+        width: 0;
+        height: 0;
+        border: 4px solid transparent;
+        border-left-color: currentColor;
+        transition: transform 0.12s ease;
+      }
+      &:hover {
+        color: var(--method);
+      }
+    }
+    &[open] > summary {
+      color: var(--ink);
+      &::before {
+        transform: rotate(90deg) translateX(1px);
+      }
+    }
+    &[open] > summary + ul {
+      margin-top: 2px;
+    }
+  }
+  &.nav-rail section.map {
+    margin: 0;
+  }
+
+  // Stock table of contents, made to match the other sections.
+  .toc {
+    padding: 0 0 26px;
+    button.toc-header {
+      h3 {
+        font-family: var(--sans);
+        font-size: var(--t-label);
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+      .fold {
+        width: 14px;
+        height: 14px;
+      }
+    }
+    // The stock fold button toggles `.collapsed` on itself and leaves the
+    // list to CSS. This stylesheet is unlayered, so without this rule the
+    // chevron moved and nothing else did.
+    button.toc-header.collapsed + ul.toc-content {
+      display: none;
+    }
+    button.toc-header .fold {
+      transition: transform 0.15s ease;
+    }
+    button.toc-header.collapsed .fold {
+      transform: rotate(-90deg);
+    }
+    ul.toc-content {
+      margin: 8px 0 0;
+      li {
+        border: 0;
+        // The stock component hides this list's overflow for its collapse, so
+        // rows here cannot bleed outwards the way the other rails' rows do.
+        margin: 0;
+        padding: 3px 0;
+        display: block;
+        &:hover {
+          background: none;
+        }
+        &::before {
+          display: none;
+        }
+        a {
+          color: var(--ink);
+          opacity: 0.55;
+          &.in-view {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}
+// The evidence strip sits with the list it belongs to, where its legend is.
+.stripc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  align-items: center;
+  margin-top: 12px;
+  i {
+    display: block;
+    width: 15px;
+    height: 13px;
+    background: var(--line);
+    &.p {
+      background: var(--ink);
+    }
+    &.s {
+      background: var(--supports);
+    }
+    &.r {
+      background: var(--refines);
+    }
+    &.c {
+      background: var(--contradicts);
+    }
+  }
+  .more {
+    font-family: var(--mono);
+    font-size: var(--t-meta);
+    color: var(--mute);
+    margin-left: 4px;
+  }
+}
+.tag {
+  display: inline-block;
+  font-size: var(--t-label);
+  padding: 1px 6px;
+  border: 1px solid var(--line-2);
+  color: var(--ink-2);
+  margin-left: 6px;
+  vertical-align: 1px;
+  white-space: nowrap;
+  &.k-method {
+    border-color: var(--method);
+    color: var(--method);
+  }
+  &.k-dataset {
+    border-color: var(--dataset);
+    color: var(--dataset);
+  }
+  &.k-organism {
+    border-color: var(--organism);
+    color: var(--organism);
+  }
+  &.k-compound {
+    border-color: var(--compound);
+    color: var(--compound);
+  }
+  &.k-gene {
+    border-color: var(--gene);
+    color: var(--gene);
+  }
+}

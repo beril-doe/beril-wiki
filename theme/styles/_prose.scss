@@ -1,0 +1,178 @@
+// ---- prose -----------------------------------------------------------------
+.prose {
+  min-width: 0;
+  // Reading prose is set in the serif; the interface around it is not.
+  font-family: var(--serif);
+  font-size: var(--t-read);
+  line-height: 1.6;
+  article {
+    // Quartz's popover-hint article; the record above carries the heading.
+    & > h1:first-child {
+      display: none;
+    }
+  }
+  h2 {
+    font-size: var(--t-section);
+    margin: 34px 0 10px;
+  }
+  h3 {
+    font-size: var(--t-sub);
+    margin: 26px 0 8px;
+  }
+  p,
+  ul,
+  ol {
+    margin: 0 0 18px;
+  }
+  li {
+    margin-bottom: 4px;
+  }
+  img {
+    max-width: 100%;
+    border: 1px solid var(--line);
+    background: var(--card);
+  }
+  em {
+    color: var(--ink-2);
+  }
+  table {
+    border-collapse: collapse;
+    font-family: var(--sans);
+    font-size: var(--t-ui);
+    display: block;
+    overflow-x: auto;
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 6px 10px;
+      text-align: left;
+    }
+    th {
+      font-weight: 600;
+    }
+  }
+  blockquote {
+    margin: 0 0 18px;
+    padding: 2px 0 2px 16px;
+    border-left: 3px solid var(--line-2);
+    color: var(--ink-2);
+    p {
+      margin-bottom: 6px;
+    }
+  }
+  code {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    background: color-mix(in oklab, var(--line) 50%, transparent);
+    padding: 0 4px;
+  }
+  pre {
+    border: 1px solid var(--line);
+    padding: 12px 14px;
+    overflow-x: auto;
+    font-size: var(--t-meta);
+  }
+  hr {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 28px 0;
+  }
+  // Citations are numbered marks, not a row of report ids: a paragraph
+  // resting on a dozen reports used to render as a block of grey chips wider
+  // than the sentence. The numbers are named under the prose and in the rail.
+  sub.src {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    vertical-align: super;
+    line-height: 0;
+    white-space: nowrap;
+    color: var(--mute);
+    a {
+      color: var(--ink-2);
+      padding: 0 1px;
+      &:hover {
+        color: var(--method);
+        text-decoration: none;
+      }
+    }
+  }
+  // Relation words: the pipeline bolds them; colour says which.
+  strong.rel {
+    font-weight: 600;
+    &.rel-supports {
+      color: var(--supports);
+    }
+    &.rel-refines {
+      color: var(--refines);
+    }
+    &.rel-contradicts {
+      color: var(--contradicts);
+    }
+  }
+  // An acknowledgement mark sits on the page, not in a framed box like a
+  // figure, and keeps its own colours in both themes.
+  .ack {
+    margin: 18px 0 20px;
+    img {
+      border: 0;
+      background: none;
+      max-width: 190px;
+      height: auto;
+    }
+  }
+  // The mark is drawn in near-black with brand colours beside it, so in dark
+  // mode it sits on its own white plaque rather than being inverted, which
+  // would hue-shift a logo that is not ours to alter.
+  :root[saved-theme="dark"] & .ack img {
+    background: #ffffff;
+    padding: 9px 12px;
+    box-sizing: content-box;
+  }
+  // Folder listings (Quartz folder-page): the frame renders its own listing.
+  .page-listing {
+    display: none;
+  }
+}
+// The numbered marks, named once under the prose.
+.sources {
+  border-top: 1px solid var(--line-2);
+  margin-top: 34px;
+  padding-top: 12px;
+  h2 {
+    font-family: var(--sans);
+    font-size: var(--t-label);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+  ol {
+    margin: 0;
+    font-family: var(--sans);
+    padding-left: 1.6em;
+    columns: 2;
+    column-gap: 36px;
+    font-size: var(--t-meta);
+    color: var(--mute);
+  }
+  li {
+    break-inside: avoid;
+    padding: 2px 0 6px;
+    margin: 0;
+  }
+  a {
+    color: var(--ink);
+  }
+  code {
+    font-family: var(--mono);
+    font-size: var(--t-meta);
+    background: none;
+    padding: 0;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+  .w {
+    display: block;
+    color: var(--mute);
+  }
+}

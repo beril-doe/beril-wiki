@@ -1,0 +1,110 @@
+// ---- graphs ----------------------------------------------------------------
+.edge {
+  stroke: var(--line-2);
+  stroke-opacity: 0.7;
+  stroke-width: 0.8;
+}
+.node {
+  fill: var(--c, var(--line-2));
+  stroke: var(--card);
+  stroke-width: 1;
+  &.me {
+    fill: var(--ink);
+    stroke-width: 1.5;
+  }
+}
+.tlabel {
+  font-family: var(--sans);
+  font-size: 10px;
+  fill: var(--ink);
+  paint-order: stroke;
+  stroke: var(--card);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+  &.me {
+    font-weight: 600;
+  }
+}
+.tcount {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  fill: var(--mute);
+  paint-order: stroke;
+  stroke: var(--card);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+svg a:hover .node {
+  stroke: var(--ink);
+}
+svg a:hover .tlabel {
+  text-decoration: underline;
+}
+.spoke {
+  stroke: var(--c);
+  stroke-opacity: 0.5;
+  stroke-width: 1;
+}
+// A concept no topic claims: it sits by the cluster it cites, on a loose
+// tether rather than a spoke, because it is not a member.
+.spoke.loose {
+  stroke: var(--line-2);
+  stroke-opacity: 0.9;
+  stroke-dasharray: 2 4;
+}
+// Every individual cross-topic wikilink, hidden until a point or a hub is
+// hovered. The rules that pair a hovered element with its own links are
+// generated into the SVG, since they depend on the corpus.
+.link {
+  fill: none;
+  stroke: var(--ink-2);
+  stroke-width: 1.1;
+  stroke-opacity: 0.8;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+}
+// A concept two topics both claim: a second spoke, in the other topic's hue.
+// Solid, because it is a membership like any other spoke. Dashes are reserved
+// for the opposite case, a concept no topic claims.
+.second {
+  fill: none;
+  stroke: var(--c, var(--line-2));
+  stroke-width: 1;
+  stroke-opacity: 0.5;
+}
+// One tie per pair of topics, weighted by how many links cross between them.
+.tie {
+  fill: none;
+  stroke: var(--line-2);
+  stroke-opacity: 0.45;
+  stroke-width: var(--w, 1);
+  stroke-linecap: round;
+  transition: opacity 0.12s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .link,
+  .tie {
+    transition: none;
+  }
+}
+// A hit target wider than the dot, so a 3px point stays clickable.
+.hit {
+  fill: transparent;
+}
+// Concept titles are too many to show at once; hovering reveals one.
+.clabel {
+  font-family: var(--sans);
+  font-size: 13px;
+  fill: var(--ink);
+  paint-order: stroke;
+  stroke: var(--card);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  opacity: 0;
+  pointer-events: none;
+}
+svg a:hover .clabel,
+svg a:focus-visible .clabel {
+  opacity: 1;
+}

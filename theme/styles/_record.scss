@@ -1,0 +1,288 @@
+// ---- record page -----------------------------------------------------------
+// Three widths. Wide: contents and graph left, prose, evidence right.
+// Middle: both rails share the right column, contents first. Narrow (see the
+// media query at the end): one column, contents above the prose, evidence
+// below it.
+.page-grid {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 30px 40px 80px;
+  display: grid;
+  grid-template-columns: minmax(0, var(--read-measure)) 300px;
+  // Two columns: the prose on the left spanning rows 2-3, the two rails
+  // stacked on the right. Row 3 is flexible so the prose's height lands
+  // there whole. Left to `auto`, grid splits a spanning item's height
+  // evenly between the rows it covers, which sized row 2 to half the
+  // article and dropped the evidence rail level with nothing, a screen
+  // below the map it is supposed to sit under.
+  grid-template-rows: auto auto 1fr;
+  column-gap: 56px;
+  justify-content: center;
+  .nav-rail {
+    grid-column: 2;
+    grid-row: 2;
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+  .prose {
+    grid-column: 1;
+    grid-row: 2 / span 2;
+  }
+  .evidence-rail {
+    grid-column: 2;
+    grid-row: 3;
+  }
+}
+// Three columns only once all three fit at the full measure: 260 + 695 + 300
+// plus two gaps and the gutter. Opening the third column any earlier bought a
+// left rail by taking the width out of the prose, so widening the window made
+// the reading column narrower.
+@media (min-width: 1440px) {
+  .page-grid {
+    max-width: 1480px;
+    grid-template-columns: 260px minmax(0, var(--read-measure)) 300px;
+    // Three columns, everything on one row: no third row to keep flexible.
+    grid-template-rows: auto auto;
+    column-gap: 48px;
+    .nav-rail {
+      grid-column: 1;
+      grid-row: 2;
+      position: sticky;
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+    }
+    .prose {
+      grid-column: 2;
+      grid-row: 2;
+    }
+    .evidence-rail {
+      grid-column: 3;
+      grid-row: 2;
+    }
+  }
+}
+
+// The header is a card banded in the colour of the page kind. What emptied
+// the old one was its contents, not its border: a two-column definition list
+// that filled a third of the card. The byline below fills the width.
+.record {
+  grid-column: 1 / -1;
+  background: var(--card);
+  border: 1px solid var(--line-2);
+  display: grid;
+  grid-template-columns: 12px 1fr;
+  margin-bottom: 30px;
+  .kindband {
+    background: var(--line-2);
+  }
+  &.kind-concept .kindband {
+    background: var(--concept);
+  }
+  &.kind-topic .kindband {
+    background: var(--ink);
+  }
+  &.kind-conflict .kindband {
+    background: var(--conflict);
+  }
+  &.kind-organism .kindband {
+    background: var(--organism);
+  }
+  &.kind-compound .kindband {
+    background: var(--compound);
+  }
+  &.kind-method .kindband {
+    background: var(--method);
+  }
+  &.kind-dataset .kindband {
+    background: var(--dataset);
+  }
+  &.kind-gene .kindband {
+    background: var(--gene);
+  }
+  &.kind-report .kindband {
+    background: var(--mute);
+  }
+  &.kind-author .kindband {
+    background: var(--ink-2);
+  }
+  .body {
+    padding: 20px 28px 20px;
+    min-width: 0;
+  }
+  h1 {
+    font-size: var(--t-display);
+    line-height: 1.1;
+    letter-spacing: -0.012em;
+    margin: 0 0 14px;
+    // Wide enough that the title simply fills the column it is in: the ident
+    // column tops out at 911px, a shade under this. At 26ch the longest title
+    // in the corpus broke over six lines of display type inside a card with
+    // 318px of empty space beside it. The cap is kept, rather than dropped,
+    // for the fifteen records that carry no facts column -- About and the
+    // data collections -- where the ident spans the whole card and the title
+    // would otherwise set 63 characters to the line.
+    max-width: 40ch;
+    overflow-wrap: anywhere;
+  }
+}
+.kind {
+  font-size: var(--t-ui);
+  color: var(--ink-2);
+  margin: 0 0 8px;
+  b {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .topic {
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-2);
+    &:hover {
+      text-decoration: none;
+      border-bottom-color: var(--ink);
+    }
+  }
+  .dot {
+    margin: 0 6px 0 2px;
+  }
+}
+.dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--c, var(--line-2));
+  margin-right: 8px;
+  vertical-align: 0;
+}
+// The card is two columns: what the page is on the left, what it rests on in
+// a facts panel on the right. Every value in the panel is a nowrap chip in a
+// wrapping row, so a narrow card stacks whole chips instead of orphaning a
+// word above its number.
+.record .body.has-facts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 330px);
+  gap: 40px;
+}
+.record .ident {
+  min-width: 0;
+}
+.facts {
+  margin: 0;
+  min-width: 0;
+  border-left: 1px solid var(--line);
+  padding-left: 26px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 9px 16px;
+  align-items: baseline;
+  font-size: var(--t-ui);
+  // Same label role as the rail's section heads, so the two read as one thing.
+  dt {
+    color: var(--mute);
+    font-size: var(--t-label);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  dd {
+    margin: 0;
+    min-width: 0;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    align-items: center;
+  }
+  .chip {
+    white-space: nowrap;
+    border: 1px solid var(--line);
+    padding: 1px 8px;
+    color: var(--ink-2);
+    font-size: var(--t-meta);
+    b {
+      font-weight: 600;
+      color: var(--ink);
+    }
+    &.rel-supports {
+      color: var(--supports);
+      border-color: color-mix(in oklab, var(--supports) 40%, var(--line));
+      b {
+        color: var(--supports);
+      }
+    }
+    &.rel-refines {
+      color: var(--refines);
+      border-color: color-mix(in oklab, var(--refines) 40%, var(--line));
+      b {
+        color: var(--refines);
+      }
+    }
+    &.rel-contradicts,
+    &.warn {
+      color: var(--contradicts);
+      border-color: color-mix(in oklab, var(--contradicts) 40%, var(--line));
+      b {
+        color: var(--contradicts);
+      }
+    }
+  }
+  a.chip:hover {
+    text-decoration: none;
+    border-color: var(--method);
+    color: var(--method);
+  }
+  a:not(.chip) {
+    color: var(--ink-2);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--line-2);
+    overflow-wrap: anywhere;
+  }
+  .stripc {
+    margin: 0;
+    gap: 2px;
+    i {
+      width: 13px;
+      height: 12px;
+    }
+  }
+  .sub {
+    display: block;
+    color: var(--mute);
+    font-size: var(--t-meta);
+    margin-top: 5px;
+  }
+}
+.record .standing {
+  margin: 10px 0 0;
+  font-size: var(--t-meta);
+  color: var(--mute);
+  // Long enough for the provenance sentence to sit on one line; the link at
+  // the end of it never breaks across two.
+  max-width: none;
+  a {
+    white-space: nowrap;
+    color: var(--ink-2);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--line-2);
+  }
+}
+
+// Below this the facts panel is narrower than its own chips, so it stops
+// being a column and becomes a block under the title.
+@media (max-width: 1180px) {
+  .record .body.has-facts {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .facts {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding: 14px 0 0;
+    grid-template-columns: 8ch minmax(0, 1fr);
+  }
+}
