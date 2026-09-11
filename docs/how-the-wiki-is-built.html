@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How the BERIL wiki is built</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400..700&display=swap">
+<style>
+/* Faces: Google Fonts only, so a page needs one stylesheet host and nothing is bundled.
+   Manrope stands in for SN Pro; IBM Plex Mono is what iA Writer Duo is derived from, and it
+   already carries the mono role, so body and code share one family at different sizes. */
+/* Tokens: Catppuccin Mocha (dark, primary on :root) and Latte (light); light applies on system preference or the toggle. Do not edit. */
+:root {
+  --ground: #1e1e2e; --surface: #181825; --surface-2: #313244;
+  --line: #313244; --line-strong: #6c7086;
+  --ink: #cdd6f4; --ink-2: #bac2de; --ink-3: #9399b2;
+  --accent: #cba6f7; --accent-ink: #b4befe; --accent-soft: #cba6f71f;
+  --good: #a6e3a1; --warn: #f9e2af; --bad: #f38ba8;
+  --chart-cat: #89b4fa #fab387 #a6e3a1 #f9e2af #f5c2e7 #94e2d5 #cba6f7 #f38ba8;
+  --tint: #2c3150; --tint-line: #585b8c;
+  --blue: #89b4fa; --peach: #fab387; --green: #a6e3a1; --red: #f38ba8; --yellow: #f9e2af; --teal: #94e2d5; --pink: #f5c2e7;
+  --blue-soft: #89b4fa26; --peach-soft: #fab38726; --green-soft: #a6e3a126; --red-soft: #f38ba826; --teal-soft: #94e2d526;
+  --font-display: Manrope, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-text: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --measure: 860px;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --ground: #eff1f5; --surface: #e6e9ef; --surface-2: #ccd0da;
+    --line: #ccd0da; --line-strong: #7c7f93;
+    --ink: #4c4f69; --ink-2: #5c5f77; --ink-3: #6c6f85;
+    --accent: #8839ef; --accent-ink: #8839ef; --accent-soft: #8839ef1a;
+    --good: #40a02b; --warn: #df8e1d; --bad: #d20f39;
+    --chart-cat: #1e66f5 #fe640b #40a02b #df8e1d #ea76cb #179299 #8839ef #d20f39;
+    --tint: #dfe4f7; --tint-line: #9aa3d6;
+    --blue: #1e66f5; --peach: #fe640b; --green: #40a02b; --red: #d20f39; --yellow: #df8e1d; --teal: #179299; --pink: #ea76cb;
+    --blue-soft: #1e66f51a; --peach-soft: #fe640b1f; --green-soft: #40a02b1f; --red-soft: #d20f391a; --teal-soft: #1792991f;
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+--ground: #eff1f5; --surface: #e6e9ef; --surface-2: #ccd0da;
+  --line: #ccd0da; --line-strong: #7c7f93;
+  --ink: #4c4f69; --ink-2: #5c5f77; --ink-3: #6c6f85;
+  --accent: #8839ef; --accent-ink: #8839ef; --accent-soft: #8839ef1a;
+  --good: #40a02b; --warn: #df8e1d; --bad: #d20f39;
+  --chart-cat: #1e66f5 #fe640b #40a02b #df8e1d #ea76cb #179299 #8839ef #d20f39;
+  --tint: #dfe4f7; --tint-line: #9aa3d6;
+  --blue: #1e66f5; --peach: #fe640b; --green: #40a02b; --red: #d20f39; --yellow: #df8e1d; --teal: #179299; --pink: #ea76cb;
+  --blue-soft: #1e66f51a; --peach-soft: #fe640b1f; --green-soft: #40a02b1f; --red-soft: #d20f391a; --teal-soft: #1792991f;
+  color-scheme: light;
+}
+
+/* Layout */
+* { box-sizing: border-box; }
+html { font-size: 17px; }
+body { margin: 0; color: var(--ink); font: 400 0.9rem/1.6 var(--font-text); background: var(--ground); }
+.page { max-width: 1520px; margin: 0 auto; padding: 32px 40px 64px; display: grid; gap: 48px;
+        grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 1000px) { .page { grid-template-columns: 200px minmax(0, 1120px); column-gap: 72px; justify-content: center; } }
+nav.toc { position: sticky; top: 24px; align-self: start; max-height: calc(100dvh - 48px); overflow: auto; }
+nav.toc::before { content: "Index"; display: block; font: 500 11px/1 var(--font-mono); letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+nav.toc li { display: flex; gap: 10px; align-items: baseline; font: 400 0.85rem/1.35 var(--font-display); }
+nav.toc li.h3 { padding-left: 24px; font-size: 0.8rem; }
+nav.toc li .n { font: 400 12px/1 var(--font-mono); color: var(--accent); flex: none; }
+nav.toc a { color: var(--ink-3); text-decoration: none; border-bottom: 1px solid transparent;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+nav.toc a.active { color: var(--ink); border-bottom-color: var(--accent); }
+@media (max-width: 999px) {
+  nav.toc { top: 0; max-height: none; background: var(--ground); z-index: 2; padding: 8px 0; }
+  nav.toc::before { display: none; }
+  nav.toc ol { flex-direction: row; gap: 16px; overflow-x: auto; }
+  nav.toc li.h3 { display: none; }
+  nav.toc a { white-space: nowrap; display: block; }
+}
+main { min-width: 0; counter-reset: sec fig tbl; display: flex; flex-direction: column; gap: 22px; }
+main > * { margin: 0; }
+/* Running text only. 860px is ~80 characters of IBM Plex Mono at 0.9rem, measured on real prose.
+   Figures, tables, tiles and headings stay full width -- they are looked at, not read line by line. */
+main > p:not(.meta), main > ul, main > ol, main > .callout, main > .timeline, main > .not-doing { max-width: var(--measure); }
+
+/* Type */
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h1 { font-size: 2.35rem; font-weight: 600; line-height: 1.1; }
+h2 { font-size: 1.5rem; font-weight: 600; line-height: 1.2; margin-top: 30px;
+  display: flex; gap: 12px; align-items: baseline; }
+h2::before { counter-increment: sec; content: counter(sec, decimal-leading-zero);
+  font: 400 12px/1 var(--font-mono); color: var(--accent); flex: none; }
+h3 { font-size: 1.1rem; font-weight: 600; line-height: 1.25; margin-top: 12px; }
+h2, h3 { scroll-margin-top: 72px; }
+p { margin: 0; }
+p.lead { font-size: 1.12em; line-height: 1.5; color: var(--ink-2); }
+.meta { font: 400 12px/1.5 var(--font-mono); color: var(--ink-3); letter-spacing: 0.04em; }
+a { color: var(--accent-ink); }
+ul, ol { padding-left: 1.2rem; margin: 0; } li { margin: 4px 0; }
+code, pre, .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+td.num, th.num { font-variant-numeric: tabular-nums; }
+code { font-size: 0.78em; background: var(--surface-2); padding: 1px 5px; }
+pre { background: var(--surface); border: 1px solid var(--line); padding: 12px 16px; overflow-x: auto; font-size: 0.86rem; line-height: 1.55; }
+pre code { background: none; padding: 0; }
+/* highlight.js tokens, mapped onto the page tokens so they follow the theme. No CDN theme sheet:
+   the artifact CSP allows no external style-src, and these colours are the Catppuccin mapping anyway. */
+.hljs-comment, .hljs-quote { color: var(--ink-3); font-style: italic; }
+.hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-doctag { color: var(--accent); }
+.hljs-string, .hljs-addition { color: var(--green); }
+.hljs-number, .hljs-symbol, .hljs-bullet { color: var(--peach); }
+.hljs-title, .hljs-title.function_, .hljs-section, .hljs-name { color: var(--blue); }
+.hljs-type, .hljs-title.class_, .hljs-attribute, .hljs-selector-attr { color: var(--yellow); }
+.hljs-built_in, .hljs-deletion { color: var(--red); }
+.hljs-attr, .hljs-variable, .hljs-template-variable, .hljs-selector-class { color: var(--teal); }
+.hljs-meta, .hljs-regexp, .hljs-link { color: var(--pink); }
+.hljs-operator, .hljs-punctuation { color: var(--ink-2); }
+.hljs-emphasis { font-style: italic; } .hljs-strong { font-weight: 600; }
+strong { font-weight: 600; }
+
+/* Figures: framed, stamped, numbered by CSS counters. Captions go below figures and above tables. */
+figure { margin: 0; padding: 18px 20px 14px; border: 1px solid var(--line-strong); background: var(--surface);
+  display: flex; flex-direction: column; gap: 12px; counter-increment: fig; }
+figure::before { content: "Fig. " counter(fig); font: 400 11px/1 var(--font-mono); letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--accent); }
+figcaption { font-size: 0.84rem; line-height: 1.45; color: var(--ink-2); }
+figcaption::before { content: "Figure " counter(fig) ". "; font-weight: 600; color: var(--accent); }
+figcaption b, figcaption strong { font-weight: 500; font-style: italic; color: var(--ink); }
+figure svg { max-width: 100%; height: auto; display: block; color: var(--ink); }
+figure.table { counter-increment: tbl; gap: 10px; }
+figure.table::before { content: "Table " counter(tbl); order: -2; }
+figure.table figcaption { order: -1; }
+figure.table figcaption::before { content: "Table " counter(tbl) ". "; }
+figure.table .fn { font-size: 0.74rem; color: var(--ink-3); line-height: 1.4; }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+thead tr { border-bottom: 1px solid var(--line-strong); }
+th { text-align: left; padding: 6px 8px; font-weight: 400; font-style: italic; color: var(--ink-2); font-size: 0.92em; }
+td { padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+td.num, th.num { text-align: right; }
+.hot { color: var(--accent); }
+.good { color: var(--good); } .bad { color: var(--bad); }
+.tag { display: inline-block; font: 400 11px/1.6 var(--font-mono); letter-spacing: 0.04em; padding: 1px 8px;
+  border: 1px solid currentColor; border-radius: 2px; color: var(--ink-2); }
+.tag.blue { color: var(--blue); background: var(--blue-soft); } .tag.peach { color: var(--peach); background: var(--peach-soft); }
+.tag.green { color: var(--green); background: var(--green-soft); } .tag.red { color: var(--red); background: var(--red-soft); }
+.tag.teal { color: var(--teal); background: var(--teal-soft); } .tag.mauve { color: var(--accent); background: var(--accent-soft); }
+
+/* Components */
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 24px; }
+.tile { display: flex; flex-direction: column; gap: 4px; border-bottom: 1px solid var(--tint-line); padding-bottom: 6px; }
+.tile .n { font: 500 1.9rem/1 var(--font-display); letter-spacing: -0.01em; }
+.tile .k { font: 400 11px/1.3 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+.callout { display: block; padding: 12px 16px; background: var(--tint);
+  border-top: 1px solid var(--accent); border-bottom: 1px solid var(--accent); }
+.callout::before { content: "Note"; display: inline-block; margin-right: 14px; font: 400 11px/1.6 var(--font-mono);
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); vertical-align: baseline; }
+.callout[data-label]::before { content: attr(data-label); }
+.callout.good, .callout.bad { color: var(--ink); }
+.callout.good { background: var(--green-soft); border-color: var(--green); } .callout.good::before { color: var(--green); }
+.callout.warn { background: var(--peach-soft); border-color: var(--peach); } .callout.warn::before { color: var(--peach); }
+.callout.bad { background: var(--red-soft); border-color: var(--red); } .callout.bad::before { color: var(--red); }
+.timeline { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px 16px; }
+.timeline .when { font: 400 12px/1.7 var(--font-mono); color: var(--accent-ink); }
+.not-doing { border: 1px dashed var(--line-strong); padding: 10px 14px 10px 32px; }
+pre.mermaid { background: none; border: 0; padding: 0; overflow-x: auto; font-size: 1rem; }
+.mermaid svg { max-width: 100%; height: auto; }
+.status { display: inline-flex; gap: 6px; align-items: center; }
+.status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.status.good { color: var(--green); } .status.warn { color: var(--yellow); } .status.bad { color: var(--red); }
+button.theme { position: fixed; right: 16px; top: 16px; z-index: 3; font: 400 11px/1 var(--font-mono); letter-spacing: 0.1em;
+  text-transform: uppercase; background: var(--surface); color: var(--ink-2); border: 1px solid var(--line-strong); padding: 6px 10px; cursor: pointer; }
+.vega-embed summary { background: var(--surface) !important; border: 1px solid var(--line-strong) !important;
+  box-shadow: none !important; color: var(--ink-2); opacity: 0; transition: opacity 0.15s; }
+.vega-embed:hover summary, .vega-embed[open] summary { opacity: 0.8; }
+.vega-embed .vega-actions { background: var(--surface) !important; border: 1px solid var(--line-strong) !important; box-shadow: none !important; }
+.vega-embed .vega-actions a { color: var(--ink) !important; font-family: var(--font-mono) !important; font-size: 12px !important; }
+#vg-tooltip-element { background: var(--surface) !important; color: var(--ink) !important; border: 1px solid var(--line-strong) !important;
+  box-shadow: none !important; font-family: var(--font-mono) !important; font-size: 12px !important; }
+#vg-tooltip-element td.key { color: var(--ink-3) !important; }
+@media print {
+  :root { --ground: #ffffff; --surface: #ffffff; --surface-2: #e6e9ef; --line: #ccd0da; --line-strong: #6c6f85;
+    --ink: #4c4f69; --ink-2: #5c5f77; --ink-3: #6c6f85; --accent: #8839ef; --accent-ink: #8839ef; --accent-soft: #8839ef1a;
+    --chart-cat: #1e66f5 #fe640b #40a02b #df8e1d #ea76cb #179299 #8839ef #d20f39; color-scheme: light; }
+  nav.toc, button.theme { display: none; }
+  .page { grid-template-columns: 1fr; }
+  h2 { break-after: avoid; }
+  figure, .tile, table { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<button class="theme" type="button" aria-label="Toggle colour theme">Theme</button>
+<div class="page">
+  <nav class="toc" aria-label="Contents"><ol></ol></nav>
+  <main>
+    <p class="meta">2026-09-10 · sources: pipeline/*.py, run_pipeline.sh, DESIGN.md, docs/pipeline.md, PARITY_REPORT.md, the observatory's compendium docs of June 2026, live counts from the working tree · walkthrough for the weekly meeting</p>
+    <h1>How the BERIL wiki is built</h1>
+    <p class="lead">Seventy-five research reports from the observatory become a wiki of 667 pages through one command that runs fourteen stages. Each report is summarised, then merged into every concept and entity page it changes, and each page is checked against the sources it cites before it is written. The knowledge graph is no longer built first. It is read out of the finished pages, from their citations and links, and used to cluster concepts into topic hubs. That inversion is what makes the pipeline incremental rather than byte-reproducible.</p>
+    <div class="tiles">
+  <div class="tile"><span class="n">75</span><span class="k">source reports</span></div>
+  <div class="tile"><span class="n">92</span><span class="k">concept pages</span></div>
+  <div class="tile"><span class="n">9</span><span class="k">topic hubs</span></div>
+  <div class="tile"><span class="n">41</span><span class="k">conflict pages</span></div>
+  <div class="tile"><span class="n">667</span><span class="k">corpus pages</span></div>
+  <div class="tile"><span class="n hot">$0</span><span class="k">rerun on an unchanged corpus</span></div>
+</div>
+
+<h2 id="stages" data-toc="Fourteen stages, one command">One command runs fourteen stages, and every stage skips what has not changed</h2>
+<p>The first build and every later addition use the same command. Each stage hashes its inputs and does nothing when they are unchanged, so an interrupted run resumes where it stopped and a rerun on a finished corpus makes no model call. The stages fall into six phases.</p>
+<figure>
+  <pre class="mermaid">
+flowchart TD
+  A["Fetch"] -->|"staged reports + figures"| B["Compile"]
+  B -->|"summaries, concepts, entities"| C["Grow and consolidate concepts"]
+  C -->|"the synthesis layer"| D["Derive navigation"]
+  D -->|"hubs, conflicts, figures, authors"| E["Repair and check"]
+  E -->|"0 errors"| F["Publish"]
+  classDef hot fill:#cba6f733,stroke:#cba6f7;
+  class B hot;
+  </pre>
+  <figcaption><b>The six phases of the pipeline.</b> Boxes are phases of <code>run_pipeline.sh</code>; arrow labels name what each phase hands on. Compile is highlighted because it is where knowledge enters the wiki; everything after it reads the pages compile wrote.</figcaption>
+</figure>
+<figure class="table wide">
+  <figcaption><b>The fourteen stages in run order.</b> Model means the stage calls a language model through the CBORG gateway; code means plain Python with no model call. The skip rule is what lets an unchanged input cost nothing. Counts are from the working tree on 2026-09-10.</figcaption>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Stage</th><th>What it does</th><th>Kind</th><th>Skip rule</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>fetch</td><td>Copies each project's report, the observatory's two cross-project digests, and every embedded figure out of the observatory checkout into this repo. The reports live there, not here; copying gives the pipeline one input directory to hash and lets the corpus render without that checkout.</td><td><span class="tag teal">code</span></td><td>always runs, copies are cheap</td></tr>
+      <tr><td class="num">2</td><td>compile</td><td>Per report: summarise, plan which pages change, merge-rewrite each one, validate before writing.</td><td><span class="tag peach">model</span></td><td>content hash per report</td></tr>
+      <tr><td class="num">3</td><td>enrich</td><td>Per summary, asks which recurring ideas still have no concept page; justified creates only.</td><td><span class="tag peach">model</span></td><td>hash per summary</td></tr>
+      <tr><td class="num">4</td><td>consolidate</td><td>Merges concept pages that restate the same evidence; back-fills thin concepts with evidence from other projects.</td><td><span class="tag peach">model</span></td><td>only negative verdicts are cached; a merge is a missing file</td></tr>
+      <tr><td class="num">5</td><td>entities</td><td>Merges entity pages that share a name, a declared alias, or an external identifier. Never similarity.</td><td><span class="tag teal">code</span></td><td>no duplicates, no call</td></tr>
+      <tr><td class="num">6</td><td>conflicts</td><td>Promotes Tensions sections that span several projects to their own pages with evidence sides and resolving work.</td><td><span class="tag peach">model</span></td><td>hash of the tension text</td></tr>
+      <tr><td class="num">7</td><td>hubs</td><td>Builds the concept graph, clusters it, and writes one narrative hub per cluster plus the home page.</td><td><span class="tag peach">model</span></td><td>hash of each cluster's member pages</td></tr>
+      <tr><td class="num">8</td><td>literature</td><td>Adds a PubMed-backed literature review under each hub's lead; every cited PMID is verified in code.</td><td><span class="tag peach">model</span></td><td>hash of the hub without its review</td></tr>
+      <tr><td class="num">9</td><td>figures</td><td>Chooses which report figures to place on summaries, hubs, and conflicts; the model returns positions only.</td><td><span class="tag peach">model</span></td><td>hash per page</td></tr>
+      <tr><td class="num">10</td><td>extras</td><td>Author, data-collection, opportunities, and negative-results pages, aggregated from the corpus.</td><td><span class="tag teal">code</span></td><td>always runs, deterministic</td></tr>
+      <tr><td class="num">11</td><td>authors</td><td>Adds a Contributions section per author, restricted to what their projects did and found.</td><td><span class="tag peach">model</span></td><td>hash of name, projects, prompt</td></tr>
+      <tr><td class="num">12</td><td>repair</td><td>Re-runs any single page that fails validation against its own cited sources.</td><td><span class="tag peach">model</span></td><td>a page that validates is a no-op</td></tr>
+      <tr><td class="num">13</td><td>check</td><td>Audits citations, numbers, links, uptake, and duplicate concepts across every publishable collection. Errors stop the run.</td><td><span class="tag teal">code</span></td><td>always runs</td></tr>
+      <tr><td class="num">14</td><td>publish</td><td>Turns the committed markdown into a Quartz static site.</td><td><span class="tag teal">code</span></td><td>always runs</td></tr>
+    </tbody>
+  </table></div>
+</figure>
+
+<h2 id="compile" data-toc="Step one: compile">Step one turns a report into a summary, then rewrites the pages it touches</h2>
+<p>Reports are processed one at a time, oldest first. Nothing is filed under the report. Instead the report changes the wiki: a few concept pages gain evidence, a few entity pages gain facts, and each of those pages is rewritten in full so the new evidence sits next to the old with its relation stated in words.</p>
+<figure>
+  <pre class="mermaid">
+flowchart TD
+  R["changed report"] -->|"full text"| S["1 · summarise&lt;br/&gt;exact numbers, citation tags,&lt;br/&gt;ends with Slots Into"]
+  S -->|"summary + live page index"| P["2 · plan&lt;br/&gt;which pages change;&lt;br/&gt;new concepts need a justification"]
+  P -->|"2 to 6 concepts, 5 to 15 entities"| M["3 · merge-rewrite&lt;br/&gt;supports / contradicts / refines,&lt;br/&gt;at most 25% longer"]
+  M -->|"candidate page"| V{"4 · validate"}
+  V -->|"violations quoted"| T["one retry"]
+  T -->|"second attempt"| V
+  V -->|"clean"| W["write page,&lt;br/&gt;update index and log in code"]
+  V -->|"fails twice"| X["keep old page,&lt;br/&gt;report stays dirty"]
+  classDef hot fill:#cba6f733,stroke:#cba6f7;
+  classDef bad fill:#f38ba833,stroke:#f38ba8;
+  class V hot;
+  class X bad;
+  </pre>
+  <figcaption><b>The compile loop for one report.</b> Boxes are steps inside <code>compile.py</code>; arrow labels name what passes between them. The plan step sees every existing concept and entity with its one-line description, plus the current duplicate-concept audit, so it can extend a page instead of creating a near copy. Validation is the step that distinguishes this compiler from its predecessor.</figcaption>
+</figure>
+<p>The summary is dense and keeps every number exactly as the report states it. Its closing Slots Into section names the concepts the findings feed. The plan is one model call. Code builds its input from frontmatter: one line per existing concept and entity with its one-sentence description, plus the duplicate audit. The model returns JSON naming which concepts and entities to create, update, or merely link, and code performs every write. Concept and entity pages are first created here, not in a later stage. A create must argue why no existing page covers the idea, and the plan is told to prefer updating. A merge-rewrite must preserve every existing claim, number, and citation, must say whether new evidence supports, contradicts, or refines what is already there, and must record a disagreement under a Tensions heading rather than resolve it. A page that already lists the report among its sources is skipped, so a run interrupted mid-report resumes at page granularity.</p>
+
+<h2 id="validation" data-toc="Write-time validation">A page is checked against its sources before it is written, not after</h2>
+<p>The previous compiler wrote pages and then warned. This one refuses the page. Three checks run on every generated page, and the same checks now also cover hubs, conflicts, and author pages, which used to be written unchecked.</p>
+<figure class="table">
+  <figcaption><b>The write-time checks and what happens when one fails.</b> Numbers worth checking are decimals, percentages, thousands-separated figures, scientific notation, and integers of four or more digits; small integers are skipped as noise. A number passes when it appears, as text, in a source the same paragraph cites.</figcaption>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Check</th><th>Passes when</th><th>On failure</th></tr></thead>
+    <tbody>
+      <tr><td>Citation ids</td><td>every <code>[src: id]</code> names a staged report or digest</td><td rowspan="4">the violations are quoted back and the model rewrites the whole page once; a second failure keeps the old page, leaves the report marked dirty for the next run, and makes the run exit non-zero</td></tr>
+      <tr><td>Numbers</td><td>every flagged number in a paragraph appears in one of that paragraph's cited sources, and no paragraph carries numbers without a citation</td></tr>
+      <tr><td>Links</td><td>every wikilink target exists or is planned for creation in this run</td></tr>
+      <tr><td>Shape</td><td>a summary ends with Slots Into; a reply parses as JSON; the page was not truncated at the token cap</td></tr>
+    </tbody>
+  </table></div>
+</figure>
+<p class="callout warn" data-label="Caution">The numeric check is narrow. It confirms that a figure occurs in a cited source as text. It cannot see a flipped sign, a changed unit, a wrong denominator, or a figure attached to the wrong claim, and nothing in the pipeline checks whether a finding is correct. The About page on the site says this in the same words.</p>
+
+<h2 id="concepts" data-toc="Growing the concept layer">The concept layer is grown, then consolidated, so pages argue across projects</h2>
+<p>Compile alone under-built the synthesis layer: the bulk model created nineteen concepts where the reference corpus had eighty-one. Two stages fix that from opposite directions. Enrichment adds concepts with a deliberately pro-creation prompt, one summary at a time; it only creates and never compares pages to each other. Consolidation is the first stage that does compare, and it merges the near-duplicates that per-document creation produces and back-fills evidence from other projects into thin pages.</p>
+<figure>
+  <div class="vega"><script type="application/json">
+  {"$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+   "width": "container", "height": 260,
+   "data": {"values": [
+     {"measure": "Concept pages", "when": "before", "n": 153},
+     {"measure": "Concept pages", "when": "after", "n": 99},
+     {"measure": "Citing one project", "when": "before", "n": 136},
+     {"measure": "Citing one project", "when": "after", "n": 15},
+     {"measure": "Citing 2+ projects", "when": "before", "n": 17},
+     {"measure": "Citing 2+ projects", "when": "after", "n": 84},
+     {"measure": "Conflict pages", "when": "before", "n": 13},
+     {"measure": "Conflict pages", "when": "after", "n": 51}
+   ]},
+   "mark": {"type": "bar", "tooltip": true},
+   "encoding": {
+     "x": {"field": "measure", "type": "nominal", "title": null,
+           "sort": ["Concept pages", "Citing one project", "Citing 2+ projects", "Conflict pages"]},
+     "xOffset": {"field": "when", "sort": ["before", "after"]},
+     "y": {"field": "n", "type": "quantitative", "title": "pages"},
+     "color": {"field": "when", "type": "nominal", "title": null, "sort": ["before", "after"]}
+   }}
+  </script></div>
+  <figcaption><b>The concept layer before and after consolidation.</b> Bars count pages; a project is counted only when a real citation tag in the page body names it, never from frontmatter. Before and after are the corpus on 2026-09-02 and 2026-09-03, over five consolidation passes. The single-project wall moved into the middle, and conflict pages quadrupled because multi-source concepts expose disagreements that single-source pages cannot.</figcaption>
+</figure>
+<p>Consolidation finds candidate pairs three ways, most precise first: pages that restate the same figures from a shared project, pages built from an identical set of cited projects, and finally an embedding ranking as a recall net for paraphrases that share no numbers. One model call judges each pair on the evidence it rests on rather than its framing. A merge rewrites the survivor through the same validated path compile uses, deletes the loser, and repoints every inbound link in code. Two gates hold after the model replies: no citation and no figure present in either input may be missing from the output, and a page's source list may only grow together with a real citation in its prose. Pairs where both sides are already mature are refused by design; those need a person, and the answer is recorded in <code>contract/concept-decisions.yaml</code> and reapplied on every run. Today 12 of the 92 concepts still cite one project, and some are single-project ideas that should stay that way.</p>
+
+<h2 id="graph" data-toc="The graph is derived">The knowledge graph is read out of the pages, and it is what makes the topics</h2>
+<p>There is no graph file. The pages carry the graph: every citation tag is an edge from a page to a project, and every wikilink is an edge from a page to a page. The hubs stage materialises that graph over the concept pages only, as an in-memory networkx object, clusters it, hands each cluster to the model as the context for one topic hub, and discards it. Summaries, entities, and hubs are not nodes.</p>
+<figure>
+  <pre class="mermaid">
+flowchart TD
+  P["92 concept pages"] -->|"citation tags"| S["shared cited projects&lt;br/&gt;weight 1 per project"]
+  P -->|"wikilinks"| L["links between concepts&lt;br/&gt;weight 2 per link"]
+  S --> G["weighted graph&lt;br/&gt;92 nodes · 1,365 edges"]
+  L --> G
+  G -->|"Louvain, resolution 2.0, fixed seed"| T["9 communities&lt;br/&gt;clusters under 3 folded into a neighbour"]
+  T -->|"member pages as the only context"| H["hub prose&lt;br/&gt;cites only what members cite"]
+  H -->|"2 PubMed queries, PMIDs verified"| C["Literature Context&lt;br/&gt;spliced under the lead"]
+  classDef hot fill:#cba6f733,stroke:#cba6f7;
+  class G hot;
+  </pre>
+  <figcaption><b>From concept pages to topic hubs.</b> Boxes are data; arrow labels are the operation or the signal. Edge weight between two concepts is the number of projects both cite plus two for each wikilink between them. The graph is rebuilt from the pages on every run; it is never stored, so it can never drift from what the pages say.</figcaption>
+</figure>
+<figure class="table">
+  <figcaption><b>The nine topic hubs the clustering produced.</b> Concepts linked counts distinct concept pages the hub links to; projects cited counts distinct project ids in its citation tags. Counted from the working tree on 2026-09-10. Cluster names are cached so a rerun that changes membership keeps its slugs.</figcaption>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Hub</th><th class="num">Concepts linked</th><th class="num">Projects cited</th></tr></thead>
+    <tbody>
+      <tr><td>Biological Evidence Integration</td><td class="num">12</td><td class="num">19</td></tr>
+      <tr><td>Ecological Genomic Inference Biases</td><td class="num">12</td><td class="num">16</td></tr>
+      <tr><td>Gene Fitness-Conservation Dynamics</td><td class="num">12</td><td class="num">14</td></tr>
+      <tr><td>Resistance Ecology and Mobility</td><td class="num">9</td><td class="num">14</td></tr>
+      <tr><td>Functional Annotation Gaps</td><td class="num">8</td><td class="num">12</td></tr>
+      <tr><td>Cofitness Network Modules</td><td class="num">8</td><td class="num">11</td></tr>
+      <tr><td>Metabolic Capability Inference</td><td class="num">8</td><td class="num">11</td></tr>
+      <tr><td>Schema-Dependent Functional Inference</td><td class="num">4</td><td class="num">7</td></tr>
+      <tr><td>Subsurface Ecological Genomics</td><td class="num">3</td><td class="num">6</td></tr>
+    </tbody>
+  </table></div>
+</figure>
+<p>The hub prompt receives the member concept pages and nothing else, and may cite only project ids those pages already cite. Only hubs whose member set changed regenerate. The home page is one call to a stronger model, since it is the page every reader lands on. The same page-level graph is read three more times downstream.</p>
+<figure class="table">
+  <figcaption><b>Other readouts of the same graph.</b> Each row is a deterministic derivation from citation tags and wikilinks in the pages; none stores a graph and none calls a model except the conflicts stage, which writes prose for groups the code has already formed.</figcaption>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Readout</th><th>Derived from</th><th>Produces</th></tr></thead>
+    <tbody>
+      <tr><td>Conflict pages</td><td>Tensions sections that compile wrote on concept pages, grouped by the set of projects they cite; a group earns a page only when that set spans several projects, which is knowable only after every report is in</td><td>41 pages with Evidence Sides and Resolving Work</td></tr>
+      <tr><td>Uptake line</td><td>every concept whose citations name a project</td><td>a "Feeds into" list on each summary page at publish</td></tr>
+      <tr><td>Evidence label</td><td>distinct citing projects per synthesis page, plus whether a conflict spans them</td><td>the callout title on every concept, entity, hub, and conflict page</td></tr>
+      <tr><td>Entity visibility</td><td>number of projects an entity page cites</td><td>139 of 335 entities published; the rest appear once a second project cites them</td></tr>
+    </tbody>
+  </table></div>
+</figure>
+
+<h2 id="publish" data-toc="Publishing and the CI gate">Publishing renders committed pages, and the deploy repeats the checks</h2>
+<p>The corpus, its source reports, and all 654 figure files are committed, so the site is a rendering of the repository and needs no gateway key. Refreshing content is still a maintainer running the pipeline locally and committing the result.</p>
+<figure>
+  <pre class="mermaid">
+flowchart TD
+  A["push to main"] -->|"committed wiki/ and wiki-extra/"| B["wiki_check --strict"]
+  B -->|"0 errors, warnings promoted"| C["ingest and build&lt;br/&gt;citation tags become links,&lt;br/&gt;figures spliced, provenance callout added"]
+  C -->|"static site"| D{"at least 400 pages,&lt;br/&gt;every page states provenance"}
+  D -->|"pass"| E["beril-doe.org/beril-wiki"]
+  classDef hot fill:#cba6f733,stroke:#cba6f7;
+  class B hot;
+  </pre>
+  <figcaption><b>The GitHub Pages deploy.</b> Boxes are jobs in <code>pages.yml</code>; arrow labels are what each must produce to continue. Pull requests run the same build without deploying, which is how Linux-only rendering differences are caught before they reach the site. The checker runs again here because committed pages can be pushed without the pipeline.</figcaption>
+</figure>
+<p>Ingest is where the reader's view diverges from the corpus. Citation tags turn into links to summary pages, and summaries link their raw reports. Entity pages that cite one project are omitted and their inbound links become plain text. Figure placements chosen by the figures stage are spliced in, with 227 placements across summaries, hubs, and conflicts. A placement is a paragraph position and a file name in a state file, so no placeholder is ever written into the corpus and no page is rewritten to receive a figure. Every page gets a callout under its title saying the wiki is AI-generated and partially reviewed, with the computed evidence terms where the page has any.</p>
+
+<h2 id="compendium" data-toc="What changed since the compendium">The compendium built the graph first; the wiki builds pages first and derives the graph</h2>
+<p>The compendium of June 2026 extracted statement cards from each report, reconciled their topic and entity slugs into one registry, planned pages deterministically from cards plus registry, and had a model write each page from its plan. The registry was the knowledge graph, and it was the backbone. The current pipeline reverses the order.</p>
+<figure>
+  <pre class="mermaid">
+flowchart LR
+  subgraph now["Wiki, September 2026"]
+    direction LR
+    R2["reports"] -->|"summarise, plan, merge"| W2["concept and entity pages&lt;br/&gt;cited prose"]
+    W2 -->|"citations + wikilinks"| G2["graph, derived each run"]
+    G2 -->|"cluster"| H2["topic hubs"]
+  end
+  subgraph then["Compendium, June 2026"]
+    direction LR
+    R1["reports"] -->|"extract"| C1["statement cards&lt;br/&gt;one sentence, exact quoted span"]
+    C1 -->|"reconcile, once, global"| G1["registry&lt;br/&gt;12 canonical topics + aliases"]
+    G1 -->|"plan, deterministic"| P1["page plans"]
+    P1 -->|"write"| W1["topic, data, author pages"]
+  end
+  classDef kg fill:#89b4fa33,stroke:#89b4fa;
+  class G1,G2 kg;
+  </pre>
+  <figcaption><b>Where the graph sits in each design.</b> Both rows run left to right from the same reports; the tinted box is the knowledge graph. In the compendium it is an input to page planning and a file in git. In the wiki it is an output of the pages, recomputed on every run and never stored.</figcaption>
+</figure>
+<figure class="table wide">
+  <figcaption><b>The two designs compared.</b> Compendium facts are from its README and methodology document at the 2026-06-15 capstone commit and the lessons recorded in <code>DESIGN.md</code>; wiki facts are from the current pipeline and the 2026-09-01 parity report.</figcaption>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Criterion</th><th>Compendium</th><th>Wiki now</th></tr></thead>
+    <tbody>
+      <tr><td>Unit of knowledge</td><td>a statement card: one sentence in YAML with kind, confidence, typed links, and the exact quoted span it came from</td><td>a paragraph of prose ending in citation tags, with the relation to neighbouring claims stated in words</td></tr>
+      <tr><td>Where the graph lives</td><td>explicit files, built before any page and read by the planner</td><td>implicit in the pages; rebuilt from citations and links after the pages exist</td></tr>
+      <tr><td>Topics</td><td>about twelve canonical themes chosen by one global reconcile pass; aliases merged projects into them</td><td>nine communities discovered by clustering; membership follows the evidence and can change when the corpus does</td></tr>
+      <tr><td>Adding a report</td><td>re-extract, re-reconcile, re-plan, then rewrite pages from their plans; incrementality relied on prose instructions and fell eight projects behind</td><td>the same command; only the pages the plan touches are rewritten, and unchanged inputs are skipped by hash</td></tr>
+      <tr><td>Reproducibility</td><td>same cards and registry gave byte-identical plans and pages</td><td>same reports give the same guarantees, not the same prose; see the next section</td></tr>
+      <tr><td>Enforcement</td><td>link and citation integrity checked after writing, at the sentence level</td><td>source ids, numbers, and links checked before a page is written, with one retry; checked again in CI</td></tr>
+      <tr><td>Conflicts</td><td>contradicts edges on cards, shown as sections inside topic pages</td><td>Tensions in prose, promoted to 41 standalone pages with evidence sides and resolving work</td></tr>
+      <tr><td>Synthesis pages</td><td>topic, data, author, and home pages; entities lived in the registry, not as pages</td><td>92 concept pages and 335 entity pages under the hubs, each accumulating evidence from every project that speaks to it</td></tr>
+      <tr><td>Literature</td><td>a deterministic PMID and DOI list per topic</td><td>a written review at the top of every hub, each PMID verified against the PubMed results it came from</td></tr>
+      <tr><td>Prose quality</td><td>needed continual prompt work</td><td>the accumulate-by-rewrite architecture was ranked first by two independent reviews before the compiler was replaced</td></tr>
+    </tbody>
+  </table></div>
+</figure>
+<p>Three ideas from the compendium survived the change. Typed relations became the supports, contradicts, and refines vocabulary the merge prompt requires. Write-time citation whitelists became the validator. The deterministic connectors for authors and shared data became the extras stage, still without a model. What was given up is the exact quoted span per statement, byte-level reproducibility, and a graph that could be exported as triples. The evaluation of an external graph framework in early September reached the same verdict: if a queryable graph is ever needed, derive it from the pages rather than compile the pages from it.</p>
+<div class="timeline">
+  <span class="when">2026-02</span><span>Atlas: an agent with prompts and no pipeline. Coverage stalled at 55 of 73 projects. Its page types survive in the editorial contract.</span>
+  <span class="when">2026-06-15</span><span>Compendium: statement cards, a reconciled registry, deterministic page plans. Reproducible, but topics were fixed in advance and additions froze behind.</span>
+  <span class="when">2026-08-31</span><span>OpenKB v3: accumulate-by-rewrite through a third-party compiler. Ranked first by two reviews; enforcement was still after the fact.</span>
+  <span class="when">2026-09-01</span><span>First-party compiler with write-time validation passes the parity test against v3 and replaces it.</span>
+  <span class="when">2026-09-03</span><span>Consolidation stage turns single-source shards into cross-project synthesis.</span>
+  <span class="when">2026-09-09</span><span>Repository public; site live at beril-doe.org/beril-wiki.</span>
+</div>
+
+<h2 id="reproducible" data-toc="What reproducible means now">What is reproducible now is the set of guarantees, not the bytes</h2>
+<p>Model calls run at low temperature but are not deterministic, and reports are merged in order, each into the wiki as it stood at that moment. A rebuild from an empty wiki therefore yields the same kind of wiki with different sentences. What a rerun does depends on what changed.</p>
+<figure class="table wide">
+  <figcaption><b>What a rerun guarantees in each situation.</b> The invariants are the things the validator and checker enforce: every citation resolves, every checked number appears in its source, every link resolves, and every recorded human decision is applied. Prose is anything the model wrote.</figcaption>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Situation</th><th>What the pipeline does</th><th>Structure and invariants</th><th>Prose</th></tr></thead>
+    <tbody>
+      <tr><td>Nothing changed</td><td>every stage is a no-op; no model call</td><td class="good">identical</td><td class="good">identical</td></tr>
+      <tr><td>One new report</td><td>compile integrates it; only the pages its plan touches are rewritten; only hubs, conflicts, and figures whose inputs changed regenerate</td><td class="good">held</td><td>touched pages change, the rest identical</td></tr>
+      <tr><td>A prompt or rule changed</td><td><code>--force</code> rebuilds the derived stages while keeping topic names so slugs do not churn</td><td class="good">held</td><td>derived pages change</td></tr>
+      <tr><td>Rebuild from nothing</td><td>the same command from an empty wiki</td><td class="good">held, including every decision in <code>concept-decisions.yaml</code></td><td class="bad">different: order-dependent merges</td></tr>
+      <tr><td>Reader wants the published wiki</td><td>clone and render; no key, no pipeline</td><td class="good">identical</td><td class="good">identical</td></tr>
+    </tbody>
+  </table></div>
+</figure>
+<p>That last row is the practical answer. Because the compiled corpus is committed, the artifact anyone sees is reproducible by checkout rather than by regeneration, and the CI gate verifies the invariants on every push. The price of incrementality is that two people rebuilding from scratch would get two different wikis that pass the same checks. The compendium paid the opposite price: identical bytes, and eight projects it never integrated.</p>
+
+<h2 id="backbone" data-toc="Backbone and context budgets">The backbone is the page set on disk, and no model call sees more than a slice of it</h2>
+<p>The compendium's backbone was its registry, an explicit graph file that page planning read. Now the backbone is the concept and entity pages themselves. Each carries frontmatter naming its type, its description, and the summaries it integrates, and its body carries the citation tags. "Which projects feed which concepts" is answered by scanning those, an inverted index rebuilt in code on every run rather than stored. Everything is committed: the pages, a code-generated index page listing every page with its description, the source reports, the figures, and the state directory of hashes, cached verdicts, placements, and topic names. Nothing graph-shaped is stored, and nothing lives outside the repository.</p>
+<figure class="table wide">
+  <figcaption><b>The largest input each model call sees today, against a 1M-token window.</b> Token counts are estimated at four characters per token from the working tree on 2026-09-11; the window is what litellm's model map reports for Luna and Anthropic's table for Sonnet 5, both about 1M input and 128K output. No call sees the corpus. The one that grows with corpus size is the plan call's page index.</figcaption>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Call</th><th>Sees</th><th class="num">Largest input</th><th class="num">Share of window</th><th>Grows with</th></tr></thead>
+    <tbody>
+      <tr><td>Summarise</td><td>one report</td><td class="num">74k</td><td class="num">7%</td><td>report length only</td></tr>
+      <tr><td>Plan</td><td>one summary plus the one-line index of every concept and entity</td><td class="num">22k</td><td class="num">2%</td><td>number of pages, about 17k tokens per hundred reports</td></tr>
+      <tr><td>Merge-rewrite</td><td>one page, one summary, the list of valid link targets</td><td class="num">31k in, 15k out</td><td class="num hot">output is 47% of the pipeline's own 32k cap</td><td>page size</td></tr>
+      <tr><td>Hub</td><td>its member concept pages, each cut at a fixed length</td><td class="num">21k</td><td class="num">2%</td><td>bounded by design</td></tr>
+    </tbody>
+  </table></div>
+</figure>
+<p>The limit that binds first is not the model's window. Merges re-emit whole pages, and the pipeline refuses a reply that hits its own output cap as truncated. That cap is a constant and can rise toward the models' 128K, but the underlying cost is the whole-page rewrite, which is the sectioned-append ceiling already marked for around five hundred reports. The plan index reaches a 1M window only past several thousand reports; well before that its quality is the concern, since a planner choosing from thousands of one-line briefs chooses worse. The fix when it is needed is retrieval, embedding the briefs and passing the relevant few dozen, and the embedding machinery already exists in consolidation. Neither is a problem today.</p>
+
+<h2 id="limits" data-toc="Known limits">Known limits, stated as the site states them</h2>
+<ul>
+  <li>No one has reviewed the pages themselves. Scientists have checked some of the underlying research; the site does not mark which claims fall on which side, and every page says so.</li>
+  <li>The numeric check confirms presence in a source as text. Units, signs, denominators, and whether a figure attaches to the right claim are unchecked.</li>
+  <li>The spend tripwire undercounts by about half, because reasoning tokens are billed but not reported. Real spend is read from the gateway.</li>
+  <li>Merging two mature concepts needs a person. Four such pairs were read and decided by hand; the decisions are in the repository and reapply on every run.</li>
+  <li>The conflicts stage never retires a page whose tension has disappeared, and the checker does not scan that collection.</li>
+  <li>Hot pages are rewritten in full on every merge, so per-report cost grows with page size. Sectioned appends are the marked upgrade past about five hundred reports.</li>
+</ul>
+
+<h2 id="demo" data-toc="Demo path">Every claim on the site is three hops from its evidence, which is the path to demonstrate</h2>
+<figure>
+  <pre class="mermaid">
+flowchart TD
+  H["Home"] -->|"nine hubs"| T["Topic hub&lt;br/&gt;Literature Context · What the Corpus Shows"]
+  T -->|"Where to Go Deeper"| C["Concept page&lt;br/&gt;typed relations · Tensions · Open Directions"]
+  T -->|"recorded disagreement"| X["Conflict page&lt;br/&gt;Evidence Sides · Resolving Work"]
+  C -->|"citation tag"| S["Summary page&lt;br/&gt;exact numbers · Feeds into"]
+  X -->|"citation tag"| S
+  S -->|"Raw report"| R["Source report"]
+  classDef hot fill:#cba6f733,stroke:#cba6f7;
+  class S hot;
+  </pre>
+  <figcaption><b>The reading path through the published site.</b> Boxes are page types; arrow labels are the link that carries the reader down. The summary is highlighted because it is where synthesis meets evidence: every citation on a concept, hub, or conflict page lands here, and each summary links its raw report.</figcaption>
+</figure>
+<ol>
+  <li>Open <code>beril-doe.org/beril-wiki</code> and show the home page and the provenance callout every page carries.</li>
+  <li>Open one hub, for example Gene Fitness-Conservation Dynamics. Point at the Literature Context and its PubMed links, then at a citation tag in What the Corpus Shows.</li>
+  <li>Follow the tag to a concept page. Show a bolded supports or refines, the Tensions section, and Open Directions.</li>
+  <li>Open a conflict page from the hub and show Evidence Sides and Resolving Work.</li>
+  <li>Follow any citation to a summary, show the Feeds into line, and click through to the raw report.</li>
+  <li>Open About, then return to this page to walk the build from the first figure down.</li>
+</ol>
+  </main>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  try { var saved = localStorage.getItem('theme'); if (saved) root.dataset.theme = saved; } catch (e) {}
+  function effective() {
+    if (root.dataset.theme) return root.dataset.theme;
+    return matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  }
+  document.querySelector('button.theme').addEventListener('click', function () {
+    var next = effective() === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    document.dispatchEvent(new CustomEvent('themechange'));
+  });
+
+  // Index from h2/h3: h2 entries numbered, the entry in view highlighted.
+  var list = document.querySelector('nav.toc ol');
+  var heads = Array.prototype.slice.call(document.querySelectorAll('main h2, main h3'));
+  var n = 0;
+  heads.forEach(function (h) {
+    if (!h.id) h.id = h.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    var li = document.createElement('li'); li.className = h.tagName.toLowerCase();
+    if (li.className === 'h2') { n += 1; var num = document.createElement('span'); num.className = 'n';
+      num.textContent = (n < 10 ? '0' : '') + n; li.appendChild(num); }
+    var a = document.createElement('a'); a.href = '#' + h.id; a.textContent = h.dataset.toc || h.textContent;
+    li.appendChild(a); list.appendChild(li);
+  });
+  var links = list.querySelectorAll('a');
+  var ticking = false;
+  function markActive() {
+    ticking = false;
+    var atEnd = innerHeight + scrollY >= document.documentElement.scrollHeight - 2;
+    var current = 0;
+    heads.forEach(function (h, i) { if (h.getBoundingClientRect().top <= 96) current = i; });
+    if (atEnd) current = heads.length - 1;
+    links.forEach(function (a, i) { a.classList.toggle('active', i === current); });
+  }
+  addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(markActive); } });
+  addEventListener('resize', markActive);
+  if (heads.length) markActive();
+
+  var css = getComputedStyle(root);
+  function tok(name) { return css.getPropertyValue(name).trim(); }
+  function loadScript(src) {
+    return new Promise(function (res, rej) {
+      var s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  // Mermaid, themed from the tokens and re-rendered on toggle. Loaded only when used.
+  if (document.querySelector('.mermaid')) {
+    import('https://cdn.jsdelivr.net/npm/mermaid@11.17.2/dist/mermaid.esm.min.mjs').then(function (m) {
+      var mermaid = m.default;
+      var nodes = document.querySelectorAll('.mermaid');
+      nodes.forEach(function (el) { el.dataset.src = el.textContent; });
+      function render() {
+        css = getComputedStyle(root);
+        mermaid.initialize({
+          startOnLoad: false, securityLevel: 'strict', theme: 'base', fontFamily: tok('--font-display'),
+          gantt: { fontSize: 14, barHeight: 26, barGap: 8, topPadding: 44, leftPadding: 110, sectionFontSize: 14, numberSectionStyles: 2 },
+          sequence: { actorFontFamily: tok('--font-display'), messageFontFamily: tok('--font-display'), noteFontFamily: tok('--font-display'), actorFontSize: 15, messageFontSize: 14, noteFontSize: 14 },
+          themeVariables: {
+            background: tok('--surface'), primaryColor: tok('--tint'), primaryTextColor: tok('--ink'),
+            primaryBorderColor: tok('--tint-line'), lineColor: tok('--ink-2'), secondaryColor: tok('--surface'),
+            tertiaryColor: tok('--ground'), edgeLabelBackground: tok('--surface'), fontSize: '15px',
+            noteBkgColor: tok('--surface-2'), noteTextColor: tok('--ink'), noteBorderColor: tok('--line-strong'),
+            actorBkg: tok('--surface-2'), actorBorder: tok('--ink-2'), actorTextColor: tok('--ink'),
+            signalColor: tok('--ink-2'), signalTextColor: tok('--ink'), labelBoxBkgColor: tok('--surface-2'),
+            labelTextColor: tok('--ink'), loopTextColor: tok('--ink'),
+            taskBkgColor: tok('--tint'), taskBorderColor: tok('--tint-line'), taskTextColor: tok('--ink'), taskTextOutsideColor: tok('--ink'),
+            taskTextLightColor: tok('--ink'), taskTextDarkColor: tok('--ink'),
+            activeTaskBkgColor: tok('--accent-soft'), activeTaskBorderColor: tok('--accent'),
+            doneTaskBkgColor: tok('--surface-2'), doneTaskBorderColor: tok('--line-strong'),
+            critBkgColor: tok('--red-soft'), critBorderColor: tok('--red'),
+            sectionBkgColor: 'transparent', sectionBkgColor2: 'transparent', altSectionBkgColor: 'transparent',
+            gridColor: tok('--line'), todayLineColor: tok('--peach'), titleColor: tok('--ink'),
+            transitionColor: tok('--ink-2'), transitionLabelColor: tok('--ink'), stateLabelColor: tok('--ink'), stateBkg: tok('--tint')
+          }
+        });
+        nodes.forEach(function (el) { el.textContent = el.dataset.src; el.removeAttribute('data-processed'); });
+        mermaid.run({ nodes: nodes });
+      }
+      render();
+      document.addEventListener('themechange', render);
+    });
+  }
+
+  // Vega-Lite through vega-embed, one shared config, SVG renderer. Loaded only when used.
+  if (document.querySelector('.vega')) {
+    loadScript('https://cdn.jsdelivr.net/npm/vega@6.4.0/build/vega.min.js')
+      .then(function () { return loadScript('https://cdn.jsdelivr.net/npm/vega-lite@6.4.3/build/vega-lite.min.js'); })
+      .then(function () { return loadScript('https://cdn.jsdelivr.net/npm/vega-embed@7.2.0/build/vega-embed.min.js'); })
+      .then(function () {
+        function config() {
+          css = getComputedStyle(root);
+          var cat = tok('--chart-cat').split(/\s+/);
+          return {
+            background: 'transparent', font: tok('--font-text'),
+            mark: { color: cat[0] },
+            point: { filled: true, size: 60 },
+            axis: { labelColor: tok('--ink-3'), titleColor: tok('--ink-2'), gridColor: tok('--line'),
+                    domainColor: tok('--ink-2'), tickColor: tok('--ink-2'),
+                    labelFont: tok('--font-mono'), labelFontSize: 11, titleFont: tok('--font-text'), titleFontSize: 14, titleFontWeight: 400 },
+            axisX: { labelAngle: 0 },
+            axisDiscrete: { labelOverlap: false },
+            axisQuantitative: { labelOverlap: 'parity' },
+            header: { labelColor: tok('--ink-2'), titleColor: tok('--ink-2'), labelFont: tok('--font-mono'), labelFontSize: 12,
+                      titleFont: tok('--font-text'), titleFontSize: 14, titleFontWeight: 400, labelPadding: 6 },
+            legend: { labelColor: tok('--ink-2'), titleColor: tok('--ink-2'), labelFont: tok('--font-mono'), labelFontSize: 11,
+                      titleFont: tok('--font-text'), titleFontSize: 14, titleFontWeight: 400,
+                      symbolFillColor: tok('--ink-2'), symbolStrokeColor: tok('--ink-2') },
+            title: { color: tok('--ink'), fontSize: 16, fontWeight: 400, anchor: 'start' },
+            view: { stroke: null },
+            range: { category: cat }
+          };
+        }
+        function render() {
+          document.querySelectorAll('.vega').forEach(function (el) {
+            var spec = JSON.parse(el.querySelector('script[type="application/json"]').textContent);
+            var view = el.querySelector('.vega-view');
+            if (!view) { view = document.createElement('div'); view.className = 'vega-view'; el.appendChild(view); }
+            vegaEmbed(view, spec, { config: config(), renderer: 'svg',
+              actions: { export: true, source: false, compiled: false, editor: false } });
+          });
+        }
+        render();
+        document.addEventListener('themechange', render);
+      });
+  }
+
+  // Syntax highlighting. Loaded only when a code block declares a language; the colours are in the CSS
+  // above, so nothing is fetched from a style host. pre.mermaid has no <code> child and is never touched.
+  if (document.querySelector('pre code[class*="language-"]')) {
+    loadScript('https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.11.1/highlight.min.js')
+      .then(function () { hljs.highlightAll(); })
+      .catch(function () {});
+  }
+})();
+</script>
+</body>
+</html>
