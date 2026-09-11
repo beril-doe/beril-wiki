@@ -404,7 +404,7 @@ function Rail({ cd, file, c, cites, t, left }: {
               return (
                 <li style={dot ? `--d:${dot}` : undefined}>
                   <span>
-                    <a href={rel(k.slug)}>
+                    <a href={rel(k.target)}>
                       <code>{k.label}</code>
                     </a>
                     {sub && <span class="w">{sub}</span>}
@@ -497,7 +497,9 @@ function Sources({ cites, from }: { cites: Cite[]; from: FullSlug }) {
       <ol>
         {ordered.map((k) => (
           <li value={k.num}>
-            <a href={resolveRelative(from, k.slug as FullSlug)}>
+            {/* A summary cites itself through its raw report, so the entry
+                points where the citation in the prose does. */}
+            <a href={resolveRelative(from, k.target as FullSlug)}>
               <code>{k.label}</code>
             </a>
             {k.rels.size > 0 && <span class="w">{[...k.rels].join(", ")}</span>}

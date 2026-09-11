@@ -131,6 +131,8 @@ export function corpus(allFiles: File[]): Corpus {
 // classes the stylesheet can colour, and tallies both.
 export interface Cite {
   slug: string
+  /** Where this citation points: the raw report when the prose links there. */
+  target: string
   label: string
   n: number
   rels: Set<Rel>
@@ -257,7 +259,7 @@ export function walk(root: Root): Walk {
             if (!slug.startsWith("summaries/")) continue
             let cite = cites.get(slug)
             if (!cite) {
-              cite = { slug, label: text(a).trim(), n: 0, rels: new Set(), num: cites.size + 1 }
+              cite = { slug, target: raw, label: text(a).trim(), n: 0, rels: new Set(), num: cites.size + 1 }
               cites.set(slug, cite)
             }
             cite.n++
