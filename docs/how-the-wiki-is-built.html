@@ -195,7 +195,7 @@ button.theme { position: fixed; right: 16px; top: 16px; z-index: 3; font: 400 11
 <div class="page">
   <nav class="toc" aria-label="Contents"><ol></ol></nav>
   <main>
-    <p class="meta">2026-09-10 · sources: pipeline/*.py, run_pipeline.sh, DESIGN.md, docs/pipeline.md, PARITY_REPORT.md, the observatory's compendium docs of June 2026, live counts from the working tree · walkthrough for the weekly meeting</p>
+    <p class="meta">2026-09-10 · sources: src/beril_wiki/**/*.py, scripts/run_pipeline.sh, docs/design.md, docs/pipeline.md, docs/parity-report.md, the observatory's compendium docs of June 2026, live counts from the working tree · walkthrough for the weekly meeting</p>
     <h1>How the BERIL wiki is built</h1>
     <p class="lead">Seventy-five research reports from the observatory become a wiki of 667 pages through one command that runs fourteen stages. Each report is summarised, then merged into every concept and entity page it changes, and each page is checked against the sources it cites before it is written. The knowledge graph is no longer built first. It is read out of the finished pages, from their citations and links, and used to cluster concepts into topic hubs. That inversion is what makes the pipeline incremental rather than byte-reproducible.</p>
     <div class="tiles">
@@ -263,7 +263,7 @@ flowchart TD
   class V hot;
   class X bad;
   </pre>
-  <figcaption><b>The compile loop for one report.</b> Boxes are steps inside <code>compile.py</code>; arrow labels name what passes between them. The plan step sees every existing concept and entity with its one-line description, plus the current duplicate-concept audit, so it can extend a page instead of creating a near copy. Validation is the step that distinguishes this compiler from its predecessor.</figcaption>
+  <figcaption><b>The compile loop for one report.</b> Boxes are steps inside <code>compiler.py</code>; arrow labels name what passes between them. The plan step sees every existing concept and entity with its one-line description, plus the current duplicate-concept audit, so it can extend a page instead of creating a near copy. Validation is the step that distinguishes this compiler from its predecessor.</figcaption>
 </figure>
 <p>The summary is dense and keeps every number exactly as the report states it. Its closing Slots Into section names the concepts the findings feed. The plan is one model call. Code builds its input from frontmatter: one line per existing concept and entity with its one-sentence description, plus the duplicate audit. The model returns JSON naming which concepts and entities to create, update, or merely link, and code performs every write. Concept and entity pages are first created here, not in a later stage. A create must argue why no existing page covers the idea, and the plan is told to prefer updating. A merge-rewrite must preserve every existing claim, number, and citation, must say whether new evidence supports, contradicts, or refines what is already there, and must record a disagreement under a Tensions heading rather than resolve it. A page that already lists the report among its sources is skipped, so a run interrupted mid-report resumes at page granularity.</p>
 
@@ -365,7 +365,7 @@ flowchart TD
 <figure>
   <pre class="mermaid">
 flowchart TD
-  A["push to main"] -->|"committed wiki/ and wiki-extra/"| B["wiki_check --strict"]
+  A["push to main"] -->|"committed wiki/ and wiki/"| B["wiki_check --strict"]
   B -->|"0 errors, warnings promoted"| C["ingest and build&lt;br/&gt;citation tags become links,&lt;br/&gt;figures spliced, provenance callout added"]
   C -->|"static site"| D{"at least 400 pages,&lt;br/&gt;every page states provenance"}
   D -->|"pass"| E["beril-doe.org/beril-wiki"]
@@ -400,7 +400,7 @@ flowchart LR
   <figcaption><b>Where the graph sits in each design.</b> Both rows run left to right from the same reports; the tinted box is the knowledge graph. In the compendium it is an input to page planning and a file in git. In the wiki it is an output of the pages, recomputed on every run and never stored.</figcaption>
 </figure>
 <figure class="table wide">
-  <figcaption><b>The two designs compared.</b> Compendium facts are from its README and methodology document at the 2026-06-15 capstone commit and the lessons recorded in <code>DESIGN.md</code>; wiki facts are from the current pipeline and the 2026-09-01 parity report.</figcaption>
+  <figcaption><b>The two designs compared.</b> Compendium facts are from its README and methodology document at the 2026-06-15 capstone commit and the lessons recorded in <code>docs/design.md</code>; wiki facts are from the current pipeline and the 2026-09-01 parity report.</figcaption>
   <div class="table-wrap"><table>
     <thead><tr><th>Criterion</th><th>Compendium</th><th>Wiki now</th></tr></thead>
     <tbody>

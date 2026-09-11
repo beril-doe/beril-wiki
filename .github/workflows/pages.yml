@@ -1,17 +1,19 @@
 name: Publish wiki
 
-# Render-only: wiki/, wiki-extra/ and every figure are committed, so this needs
-# no CBORG key and no observatory checkout. Refreshing the *content* is still a
-# maintainer running pipeline/run_pipeline.sh and committing the result; this
+# Render-only: wiki/ and every figure are committed, so this needs no CBORG
+# key and no observatory checkout. Refreshing the *content* is still a
+# maintainer running scripts/run_pipeline.sh and committing the result; this
 # job only turns what is committed into the published site.
 on:
   push:
     branches: [main]
     paths: &build_paths
       - "wiki/**"
-      - "wiki-extra/**"
-      - "pipeline/**"
+      - "src/**"
+      - "scripts/**"
       - "theme/**"
+      - "pyproject.toml"
+      - "uv.lock"
       - ".github/workflows/pages.yml"
   # Build on the PR too, without deploying. Everything here is untested on
   # Linux otherwise: the figure downscale falls back when `sips` is absent,
@@ -48,18 +50,18 @@ jobs:
 
       # The About page tells readers these checks run on every build and block
       # publication. That has to be true of the deploy too, not just of a
-      # maintainer's local pipeline run: wiki/ and wiki-extra/ are committed
+      # maintainer's local pipeline run: wiki/ is a set of committed
       # files, so a direct push can carry an unknown [src:] id, a number in no
       # cited source, or a dead link straight to the site. wiki_check is
       # stdlib-only and reads the committed wiki/sources/, so it needs no key
       # and no observatory checkout.
       - name: Validate the corpus
-        run: uv run --project . python pipeline/wiki_check.py --strict
+        run: uv run --project . python -m beril_wiki.check --strict
 
       - name: Build site
         env:
           WIKI_BASE_URL: beril-doe.org/beril-wiki
-        run: ./pipeline/build_quartz.sh
+        run: scripts/build_quartz.sh
 
       # A build that silently dropped the corpus would still deploy green.
       - name: Check the site is not empty
@@ -91,8 +93,7 @@ jobs:
         run: |
           uv run --project . python - <<'PY'
           import pathlib, sys
-          sys.path.insert(0, "pipeline")
-          from quartz_ingest import PROVENANCE
+          from beril_wiki.publish.ingest import PROVENANCE
           marker = PROVENANCE.split(".")[0].strip()   # first sentence, rendered verbatim
           assert len(marker) > 20, marker
           missing, checked = [], 0

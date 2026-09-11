@@ -3,13 +3,13 @@
 # The consolidation stage refuses to merge two concepts that are both mature,
 # by design — that call needs a person. This file is where the person's answer
 # lives, so it is reproducible from the repository rather than from whoever
-# happened to type the command. consolidate_concepts applies it idempotently at
+# happened to type the command. stages.consolidate applies it idempotently at
 # the start of every run: a decision already applied is a silent no-op, so a
 # fresh clone rebuilding the corpus reaches the same concept set.
 #
 # Record a new decision with the CLI, which appends here and then applies it:
-#   uv run python pipeline/consolidate_concepts.py --rename OLD:NEW
-#   uv run python pipeline/consolidate_concepts.py --force-merge LOSER:SURVIVOR
+#   uv run python -m beril_wiki.stages.consolidate --rename OLD:NEW
+#   uv run python -m beril_wiki.stages.consolidate --force-merge LOSER:SURVIVOR
 
 renames:
   - from: functional-dark-matter

@@ -24,7 +24,7 @@ a reproducible pipeline.
 
 ```sh
 git clone git@github.com:beril-doe/beril-wiki.git && cd beril-wiki
-./setup.sh                              # installs deps, builds the site
+scripts/setup.sh                              # installs deps, builds the site
 cd quartz && npx quartz build --serve   # http://localhost:8080
 ```
 
@@ -36,12 +36,39 @@ rendering them.
 ## Run the pipeline (maintainers)
 
 ```sh
-CBORG_API_KEY=... ./pipeline/run_pipeline.sh    # incremental: same command every time
+CBORG_API_KEY=... scripts/run_pipeline.sh    # incremental: same command every time
 ```
 
 Requires a BERIL observatory checkout (`BERIL_CHECKOUT`, for source reports
 and figures) and CBORG access. Every stage is hash-cached and idempotent, so an
 unchanged corpus re-runs for $0.
+
+## Repository layout
+
+| Path | What it holds |
+| --- | --- |
+| `wiki/` | the compiled wiki: every collection, the home page, figures and assets. Generated; never hand-edit |
+| `src/beril_wiki/` | the compiler (`compiler.py`), the corpus checks (`check.py`), one module per pipeline stage under `stages/`, and the Quartz publish step under `publish/` |
+| `scripts/` | `setup.sh`, `run_pipeline.sh` and `build_quartz.sh` |
+| `tests/` | pytest suite for the deterministic parts of the pipeline |
+| `theme/` | the Quartz page frame (one component per page region) and the stylesheet (one partial per region) |
+| `contract/` | the editorial contract injected into every compile, and the concept decisions manifest |
+| `state/` | per-stage caches that make the pipeline incremental |
+| `docs/` | design notes, the parity report, and walkthroughs |
+
+## Development
+
+```sh
+uv sync                      # installs the package (editable) and the dev tools
+uv run pytest                # tests
+uv run ruff check            # lint
+uv run ruff format           # format
+uv run ty check              # type check
+```
+
+Stages run as modules, for example `uv run python -m beril_wiki.stages.topics --force`;
+`scripts/run_pipeline.sh` strings them together in order. The theme type-checks
+with `npm --prefix theme run typecheck` once `scripts/build_quartz.sh` has installed it.
 
 ## Learn more
 
@@ -50,7 +77,7 @@ unchanged corpus re-runs for $0.
 - [`docs/wiki.md`](docs/wiki.md), how the wiki itself is structured and how
   to read it
 - [`TODO.md`](TODO.md), status and open items, and
-  [`PARITY_REPORT.md`](PARITY_REPORT.md), how the compiler was validated
+  [`docs/parity-report.md`](docs/parity-report.md), how the compiler was validated
 - `contract/AGENTS.md`, the editorial contract injected into every compile
 
 ## Publishing
@@ -61,11 +88,11 @@ Pushing to `main` rebuilds and deploys the site to
 build without deploying, so the Linux-only parts of the render are checked
 before they reach the live site.
 
-The job is render-only. It needs no API key, because `wiki/`, `wiki-extra/`
-and every figure are committed. Refreshing the *content* is still a maintainer
+The job is render-only. It needs no API key, because `wiki/` and every
+figure are committed. Refreshing the *content* is still a maintainer
 running `run_pipeline.sh` and committing the result.
 
-Before it deploys, the workflow runs `wiki_check --strict` over the corpus and
+Before it deploys, the workflow runs `beril_wiki.check --strict` over the corpus and
 asserts that every content page carries its provenance callout; either failing
 blocks publication.
 

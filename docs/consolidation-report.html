@@ -190,7 +190,7 @@
 <div class="page">
 
 <header class="mast">
-  <p class="kicker">BERIL wiki · pipeline stage · <code style="background:none;border:0;padding:0">consolidate_concepts.py</code></p>
+  <p class="kicker">BERIL wiki · pipeline stage · <code style="background:none;border:0;padding:0">stages/consolidate.py</code></p>
   <h1>Concept Consolidation</h1>
   <p class="standfirst">The wiki claimed to be synthesis, but 136 of its 153 concept pages cited a single
   project — a restated summary wearing a concept title. This stage merges the duplicates and
@@ -225,8 +225,8 @@
   <div class="col">
     <p class="eyebrow">The problem</p>
     <h2>A concept page that cites one project is just a summary with a different title</h2>
-    <p>The defect was structural, not a bug. <code>enrich_concepts.py</code> creates concepts one
-    document at a time and hard-codes a single-element <code>sources</code> list. <code>compile.py</code>
+    <p>The defect was structural, not a bug. <code>stages/enrich.py</code> creates concepts one
+    document at a time and hard-codes a single-element <code>sources</code> list. <code>compiler.py</code>
     merges a document into pages only when <em>that document</em> changes. So a concept created from
     document&nbsp;#60 was never revisited against documents #1–59 — nothing in the pipeline ever looked
     backwards.</p>
@@ -318,7 +318,7 @@
   <div class="col">
     <p class="eyebrow">What was built</p>
     <h2>One new stage, slotted between enrich and conflicts</h2>
-    <p><code>pipeline/consolidate_concepts.py</code> reuses <code>compile.py</code>'s machinery — the same
+    <p><code>src/beril_wiki/stages/consolidate.py</code> reuses <code>compiler.py</code>'s machinery — the same
     <code>generate_page</code> call, so write-time validation, the one-retry path, frontmatter handling and
     index maintenance are identical to every other page write in the wiki. No new dependency.</p>
   </div>
@@ -380,7 +380,7 @@
             pages kept</li>
         <li>Write survivor with the union of both <code>sources</code>; delete the loser; repoint every
             <code>[[concepts/loser]]</code> and <code>[[concepts/loser|alias]]</code> across
-            <code>wiki/</code> and <code>wiki-extra/</code></li>
+            <code>wiki/</code> and <code>wiki/</code></li>
       </ol>
     </div>
     <p class="marrow">re-embed if anything merged — page content changed, so similarity did too</p>
@@ -542,20 +542,20 @@
   <div class="col">
     <p class="eyebrow">Reproducibility</p>
     <h2>Yes — it is a stage, not a one-off script</h2>
-    <p>It is wired into <code>pipeline/run_pipeline.sh</code> and obeys the same contract as every other
+    <p>It is wired into <code>scripts/run_pipeline.sh</code> and obeys the same contract as every other
     stage: hash-cached, idempotent, resumable, and a no-op when nothing changed. Running the pipeline on an
     unchanged corpus still costs $0.</p>
   </div>
 
   <pre><span class="cm"># the whole pipeline — consolidation runs in its normal slot</span>
-CBORG_API_KEY=... ./pipeline/run_pipeline.sh
+CBORG_API_KEY=... scripts/run_pipeline.sh
 
 <span class="cm"># just this stage, and see the candidates before spending anything</span>
-uv run python pipeline/consolidate_concepts.py --dry-run     <span class="ok"># $0 — no LLM calls, no writes</span>
-uv run python pipeline/consolidate_concepts.py               <span class="cm"># the real run</span>
+uv run python src/beril_wiki/stages/consolidate.py --dry-run     <span class="ok"># $0 — no LLM calls, no writes</span>
+uv run python src/beril_wiki/stages/consolidate.py               <span class="cm"># the real run</span>
 
 <span class="cm"># the runnable check that ships with it</span>
-uv run python pipeline/test_consolidate.py</pre>
+uv run python tests/test_consolidate.py</pre>
 
   <div class="col">
     <ul class="plain">
@@ -605,8 +605,8 @@ uv run python pipeline/test_consolidate.py</pre>
 
 <footer>
   <span>7 commits on <code>concept-consolidation</code></span>
-  <span>Stage: <code>pipeline/consolidate_concepts.py</code></span>
-  <span>Check: <code>pipeline/test_consolidate.py</code></span>
+  <span>Stage: <code>src/beril_wiki/stages/consolidate.py</code></span>
+  <span>Check: <code>tests/test_consolidate.py</code></span>
   <span>Model: <code>openai/gpt-5.6-luna</code> via CBORG</span>
 </footer>
 

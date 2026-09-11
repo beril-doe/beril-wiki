@@ -15,3 +15,5 @@ parity/
 # in LICENSE requires. Restore from the previous generation's checkout to
 # re-run the parity protocol in DESIGN.md.
 reference/
+.ruff_cache/
+.pytest_cache/

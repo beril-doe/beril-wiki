@@ -8,7 +8,7 @@ wishlist are tagged [P]; platform-dependent items are deferred at the bottom.
 ## P0 — the wiki must be openable and navigable
 
 - [x] **Concept-enrichment pass** (DONE, all-Luna ~$1.5): now a permanent
-      pipeline stage (`enrich_concepts.py`, hash-cached per summary) rather
+      pipeline stage (`stages/enrich.py`, hash-cached per summary) rather
       than a one-off; grew the synthesis layer 19 → 153 concepts. Calibrated
       prompt requires cross-project recurrence per create.
 - [x] **Run downstream stages** (DONE, all-Luna ~$1): conflicts (13), topic
@@ -16,21 +16,21 @@ wishlist are tagged [P]; platform-dependent items are deferred at the bottom.
       pipeline re-run is a $0 no-op. [P: adoption]
 - [ ] **Host the site** — ON HOLD pending Paramvir's approval for a public
       GitHub Pages deploy; local Quartz build works meanwhile
-      (`pipeline/build_quartz.sh`, serves at localhost:8080).
+      (`scripts/build_quartz.sh`, serves at localhost:8080).
       [P: adoption, multi-user readership]
 
 ## P1 — reader value on top of the compiled corpus
 
-- [x] **Open Directions browse page** (DONE): `wiki-extra/opportunities.md`,
+- [x] **Open Directions browse page** (DONE): `wiki/opportunities.md`,
       deterministic aggregation of all 153 concepts' Open Directions.
       [P: surface hypotheses, recommend next steps]
-- [x] **Literature-context stage** (DONE, ~$0.2): `lit_context.py` — detailed
+- [x] **Literature-context stage** (DONE, ~$0.2): `stages/literature.py` — detailed
       literature review spliced at the TOP of every topic hub (per Paramvir's
       intent): model-proposed PubMed queries, NCBI eutils candidates, every
       cited PMID verified in code. All 15 hubs reviewed. Extending the same
       stage to major concept pages is a config change when wanted.
       [P: place BERIL work in the context of existing literature]
-- [x] **Negative-results digest** (DONE): `wiki-extra/negative-results.md`
+- [x] **Negative-results digest** (DONE): `wiki/negative-results.md`
       aggregates all 75 projects' caveat/null sections; summary prompt now
       demands null results explicitly. [P: don't repeat what didn't work]
 - [x] **Entity hygiene** (DONE): single-source entity pages (197/336) are
@@ -47,7 +47,7 @@ wishlist are tagged [P]; platform-dependent items are deferred at the bottom.
 
 ## Known draft-stage debts
 
-- Concept consolidation (`consolidate_concepts.py`) closed the two debts that
+- Concept consolidation (`stages/consolidate.py`) closed the two debts that
   used to live here: 153 -> 99 concepts, single-source 136 -> 15.
 - Embeddings are a WEAK detector for this defect and should not be trusted alone.
   Measured against pairs whose bodies restate near-identical numbers, whole-page
@@ -58,7 +58,7 @@ wishlist are tagged [P]; platform-dependent items are deferred at the bottom.
   If this ever regresses, suspect the REPRESENTATION before the model: embedding
   only the lead paragraph scored median rank 2214 and recall@45 of 0%.
 - CLOSED: hub/conflict/author pages now get the same numeric and wikilink
-  validation compile pages get, and `wiki_check` scans all five publishable
+  validation compile pages get, and `check` scans all five publishable
   collections. Dead concept links went 34 -> 0.
 - The numeric check verifies that a figure APPEARS in a cited source. It cannot
   verify units, denominators, direction, that a figure attaches to the right
@@ -71,9 +71,9 @@ wishlist are tagged [P]; platform-dependent items are deferred at the bottom.
   elsewhere, and `wiki/` is generated so it must not be hand-edited. It needs a
   targeted page-repair path, which does not exist yet.
 - 4 duplicate-concept warnings are pairs where BOTH sides are mature (>= 4 cited
-  projects), which `consolidate_concepts.py` declines by design. They need a
+  projects), which `stages/consolidate.py` declines by design. They need a
   human call, not a threshold change.
-- Entity deduplication is DONE, as `pipeline/entity_dedup.py`, a stage in
+- Entity deduplication is DONE, as `src/beril_wiki/stages/entities.py`, a stage in
   `run_pipeline.sh`. Identity resolution on three deterministic signals --
   normalised canonical name, a declared alias, a shared external id -- and
   never similarity, which over these pages ranks `aciad2176`/`aciad3137`
@@ -93,12 +93,12 @@ wishlist are tagged [P]; platform-dependent items are deferred at the bottom.
 - The budget tripwire UNDERCOUNTS. A consolidation pass self-reported `~$0.80`
   while the gateway billed $1.29 (~2x), so `COMPILE_BUDGET_USD` is not a hard
   ceiling; reasoning tokens appear to be billed but absent from
-  `usage.completion_tokens`. `topics_build`, `conflicts_build` and
-  `figures_build` have no tripwire at all. Real spend is readable from
+  `usage.completion_tokens`. `stages.topics`, `stages.conflicts` and
+  `stages.figures` have no tripwire at all. Real spend is readable from
   `GET https://api.cborg.lbl.gov/user/info` (`user_info.spend`).
-- `conflicts_build.py` never deletes stale conflict pages (`topics_build` does
-  reap stale hubs), so a concept merge can strand a conflict page. `wiki_check`
-  does not scan `wiki-extra/conflicts`, so it will not flag one.
+- `stages/conflicts.py` never deletes stale conflict pages (`stages.topics` does
+  reap stale hubs), so a concept merge can strand a conflict page. `check`
+  does not scan `wiki/conflicts`, so it will not flag one.
 - One second-run lit/hub churn cycle observed (a few hubs regenerate once
   after their reviews land); converges, costs cents.
 
@@ -106,7 +106,7 @@ wishlist are tagged [P]; platform-dependent items are deferred at the bottom.
 
 - Multi-user/agent knowledge aggregation, session & transcript preservation,
   LangFuse tagging/access control, transcript search: belong to the BERIL
-  hub/observatory; the wiki consumes them via fetch_reports' hub backend
+  hub/observatory; the wiki consumes them via stages.fetch' hub backend
   when they exist.
 - Autonomous dataset-analysis agents + per-dataset decision wikis: observatory
   side; the wiki already ingests their reports incrementally.

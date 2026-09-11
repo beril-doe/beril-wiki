@@ -5,14 +5,14 @@ Licensed under AGPL-3.0-or-later; see LICENSE for the full terms.
 
 Scope
 -----
-The same terms cover the compiler in pipeline/, the editorial contract in
-contract/, and the compiled wiki in wiki/ and wiki-extra/ including its figures.
+The same terms cover the compiler in src/, the editorial contract in
+contract/, and the compiled wiki in wiki/ including its figures.
 This wiki is compiled from the BERIL Research Observatory's research corpus,
 which carries AGPL-3.0, so the derived work carries it too.
 
 Third-party
 -----------
-Portions of the compiler prompts in pipeline/compile.py are derived from OpenKB
+Portions of the compiler prompts in src/beril_wiki/compiler.py are derived from OpenKB
 (github.com/VectifyAI/OpenKB):
 
     Copyright (c) Vectify AI
@@ -27,4 +27,4 @@ On correctness
 --------------
 The wiki's pages are AI-generated and only partially reviewed. The licence
 grants the rights in LICENSE; it makes no claim about scientific correctness.
-See wiki-extra/about.md for what is and is not checked before publication.
+See wiki/about.md for what is and is not checked before publication.

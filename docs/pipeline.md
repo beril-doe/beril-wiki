@@ -1,6 +1,6 @@
 # Pipeline architecture
 
-One command — `pipeline/run_pipeline.sh` — runs the whole workflow, bootstrap
+One command — `scripts/run_pipeline.sh` — runs the whole workflow, bootstrap
 and incremental alike. Every stage is a plain Python script, hash-cached and
 idempotent: a stage whose inputs are unchanged is a no-op, so re-running the
 pipeline on an unchanged corpus costs $0, and an interrupted run resumes
@@ -9,28 +9,28 @@ where it stopped.
 ```mermaid
 flowchart TD
     OBS[("observatory checkout<br/>projects/*/REPORT.md<br/>+ discoveries/pitfalls digests")]
-    OBS -->|fetch_reports.py| STG[staging/]
+    OBS -->|stages/fetch.py| STG[staging/]
 
-    STG -->|"compile.py<br/>(per changed doc)"| WIKI
+    STG -->|"compiler.py<br/>(per changed doc)"| WIKI
 
     subgraph WIKI["wiki/ — the compiled corpus"]
         SUM[summaries/] --- CON[concepts/] --- ENT[entities/]
     end
 
-    WIKI -->|enrich_concepts.py| CON2[new synthesis concepts]
+    WIKI -->|stages/enrich.py| CON2[new synthesis concepts]
     CON2 --> WIKI
 
-    WIKI -->|"consolidate_concepts.py<br/>(free embeddings)"| CON3[merges + back-merged evidence]
+    WIKI -->|"stages/consolidate.py<br/>(free embeddings)"| CON3[merges + back-merged evidence]
     CON3 --> WIKI
 
-    WIKI -->|conflicts_build.py| CFL[wiki-extra/conflicts/]
-    WIKI -->|"topics_build.py<br/>(Louvain clustering)"| HUB[wiki-extra/topics/]
-    HUB -->|"lit_context.py<br/>(PubMed eutils)"| HUB
+    WIKI -->|stages/conflicts.py| CFL[wiki/conflicts/]
+    WIKI -->|"stages/topics.py<br/>(Louvain clustering)"| HUB[wiki/topics/]
+    HUB -->|"stages/literature.py<br/>(PubMed eutils)"| HUB
     CFL --> FIG
-    HUB -->|figures_build.py| FIG[figure placements]
-    WIKI -->|extra_pages.py| XTR["wiki-extra/<br/>authors · data · opportunities<br/>negative-results · home"]
+    HUB -->|stages/figures.py| FIG[figure placements]
+    WIKI -->|stages/extras.py| XTR["wiki/<br/>authors · data · opportunities<br/>negative-results · home"]
 
-    WIKI --> CHK{{"wiki_check.py<br/>0 errors required"}}
+    WIKI --> CHK{{"check.py<br/>0 errors required"}}
     XTR --> CHK
     CHK -->|build_quartz.sh| SITE[("Quartz static site<br/>localhost:8080")]
 ```
@@ -39,16 +39,16 @@ flowchart TD
 
 | Stage | Script | What it does | State cache |
 |---|---|---|---|
-| fetch | `fetch_reports.py` | sync `REPORT.md` per project + digests into `staging/`; backend-switchable (local checkout now, BERIL hub later) | — |
-| compile | `compile.py` | per changed doc: summarize → plan against the live concept/entity index → merge-rewrite each touched page | `state/hashes.json` |
-| enrich | `enrich_concepts.py` | per summary: audit the concept layer for *missing* synthesis concepts; justified creates only | `state/enrich.json` |
-| consolidate | `consolidate_concepts.py` | embedding-ranked candidates: merge near-duplicate concepts, back-merge evidence into thin ones (see below) | `state/consolidate.json` |
-| conflicts | `conflicts_build.py` | promote multi-project `## Tensions` to conflict pages (Evidence Sides / Resolving Work); folds together groups describing one disagreement, retires groups that disappear | in-page hash |
-| hubs | `topics_build.py` | Louvain-cluster the concept graph; one narrative hub per topic + the home page | `state/topics-state.json` |
-| literature | `lit_context.py` | splice a PMID-verified literature review under each hub's lead (see below) | `state/litcontext.json` |
-| figures | `figures_build.py` | choose flagship report figures for summary/hub/conflict pages | `state/figures-*.json` |
-| extras | `extra_pages.py` | deterministic pages: authors, data collections, Research Opportunities, Negative Results | — (pure code) |
-| check | `wiki_check.py` | citation, numeric-fidelity, dead-link, uptake and duplicate-concept audits over all five publishable collections; **errors block publish**; `--strict` promotes numeric and link warnings to errors | — |
+| fetch | `stages/fetch.py` | sync `REPORT.md` per project + digests into `staging/`; backend-switchable (local checkout now, BERIL hub later) | — |
+| compile | `compiler.py` | per changed doc: summarize → plan against the live concept/entity index → merge-rewrite each touched page | `state/hashes.json` |
+| enrich | `stages/enrich.py` | per summary: audit the concept layer for *missing* synthesis concepts; justified creates only | `state/enrich.json` |
+| consolidate | `stages/consolidate.py` | embedding-ranked candidates: merge near-duplicate concepts, back-merge evidence into thin ones (see below) | `state/consolidate.json` |
+| conflicts | `stages/conflicts.py` | promote multi-project `## Tensions` to conflict pages (Evidence Sides / Resolving Work); folds together groups describing one disagreement, retires groups that disappear | in-page hash |
+| hubs | `stages/topics.py` | Louvain-cluster the concept graph; one narrative hub per topic + the home page | `state/topics-state.json` |
+| literature | `stages/literature.py` | splice a PMID-verified literature review under each hub's lead (see below) | `state/litcontext.json` |
+| figures | `stages/figures.py` | choose flagship report figures for summary/hub/conflict pages | `state/figures-*.json` |
+| extras | `stages/extras.py` | deterministic pages: authors, data collections, Research Opportunities, Negative Results | — (pure code) |
+| check | `check.py` | citation, numeric-fidelity, dead-link, uptake and duplicate-concept audits over all five publishable collections; **errors block publish**; `--strict` promotes numeric and link warnings to errors | — |
 | publish | `build_quartz.sh` | Quartz v5 site build (see [publish-time transforms](wiki.md#publish-time-transforms)) | — |
 
 ## The compile loop (accumulate-by-rewrite)
@@ -132,12 +132,12 @@ writes, free embedding models only. Use it to pick thresholds before spending.
 ## Forcing a rebuild
 
 Content hashes cannot see a change to a stage's prompt or grouping rule, so
-`./pipeline/run_pipeline.sh --force` rebuilds every derived stage instead of
-trusting its cache (`conflicts_build`, `topics_build`, `lit_context` and
-`figures_build` each take `--force` individually too). Reach for that rather
+`scripts/run_pipeline.sh --force` rebuilds every derived stage instead of
+trusting its cache (`stages.conflicts`, `stages.topics`, `stages.literature` and
+`stages.figures` each take `--force` individually too). Reach for that rather
 than deleting `state/*.json` or generated pages by hand: a rebuild anyone can
 reproduce is the point, and hand-deletion leaves no record of what was rebuilt
-or why. `topics_build --force` deliberately keeps its topic-name cache so page
+or why. `stages.topics --force` deliberately keeps its topic-name cache so page
 slugs do not churn.
 
 ## Consolidation applies to concepts and conflicts, and only there
@@ -145,9 +145,9 @@ slugs do not churn.
 Duplication is possible only where an LLM decides how many pages to make.
 
 - **concepts** — one page per idea, so the same idea can be written twice. This
-  is what `consolidate_concepts.py` fixes.
+  is what `stages/consolidate.py` fixes.
 - **conflicts** — grouped by their exact project set, so one disagreement
-  reaching two different sets became two pages. `conflicts_build` now folds
+  reaching two different sets became two pages. `stages.conflicts` now folds
   groups together when they share a project AND either restate the same figures
   or read near-identically (cosine ≥ `CONFLICT_SIM`, default 0.93 — above the
   99th percentile of 0.900, because these pages share a template and the median
@@ -191,7 +191,7 @@ automatically invalidates and rebuilds its review (the cache hashes the page
 | What | Where | Committed here? |
 |---|---|---|
 | Source reports (`REPORT.md` + digests) | `wiki/sources/` (in-corpus copy) and the [observatory repo](https://github.com/beril-doe/BERIL-research-observatory) (`projects/<id>/REPORT.md`, source of truth) | **yes** — a fresh clone can render raw reports and run every check |
-| Compiled wiki + navigation layer | `wiki/`, `wiki-extra/` | yes |
+| Compiled wiki + navigation layer | `wiki/` | yes |
 | Stage caches | `state/*.json` | yes |
 | Figures referenced by reports | `wiki/figures/<id>/` (synced by fetch; ~80MB) | **yes** — the site renders fully from a clone |
 | Underlying analysis data | KBase Data Lakehouse (queried by the original projects) | no — the wiki compiles reports, not raw data |
@@ -205,7 +205,7 @@ for recompilation.
 ## Adding new content
 
 Drop a new `projects/<id>/REPORT.md` into the observatory checkout and run
-`./pipeline/run_pipeline.sh`. Fetch stages it, compile integrates it
+`scripts/run_pipeline.sh`. Fetch stages it, compile integrates it
 (unchanged docs are hash-skipped), enrichment considers new concepts, and
 only the hubs/conflicts/figures whose inputs changed regenerate. There is no
 separate bootstrap mode — the first run and the five-hundredth are the same
