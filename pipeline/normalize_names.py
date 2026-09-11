@@ -30,6 +30,8 @@ Run it as often as you like; it is idempotent.
 
 from __future__ import annotations
 
+import hashlib
+import json
 import pathlib
 import re
 import sys
@@ -106,9 +108,43 @@ def fix(text: str) -> tuple[str, int]:
     return "".join(out), n
 
 
+# A page's figure placements are cached against a hash of the page. Rewriting a
+# word inside a line does not move a paragraph, so the placements stay valid,
+# but the hash no longer matches and quartz_ingest drops every figure on that
+# page at publish. Re-stamp the hash for the pages this stage rewrote.
+PLACEMENTS = pathlib.Path("state") / "figures-placements.json"
+
+
+def placement_key(root: pathlib.Path, path: pathlib.Path) -> str:
+    """The key figures_build stores: <collection>/<name>.md, wiki or wiki-extra."""
+    rel = path.relative_to(root)
+    return "/".join(rel.parts[1:])
+
+
+def restamp(root: pathlib.Path, rewritten: dict[str, str]) -> int:
+    """Point each rewritten page's cached hash at its new text. Count updated."""
+    path = root / PLACEMENTS
+    if not path.is_file() or not rewritten:
+        return 0
+    cache = json.loads(path.read_text(encoding="utf-8"))
+    n = 0
+    for key, text in rewritten.items():
+        entry = cache.get(key)
+        if entry is None:
+            continue
+        fresh = hashlib.sha256(text.encode()).hexdigest()[:16]
+        if entry.get("page_hash") != fresh:
+            entry["page_hash"] = fresh
+            n += 1
+    if n:
+        path.write_text(json.dumps(cache, indent=1), encoding="utf-8")
+    return n
+
+
 def main() -> int:
     root = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else ".")
     changed = touched = 0
+    rewritten: dict[str, str] = {}
     for sub, glob in TARGETS:
         for path in sorted((root / sub).glob(glob)):
             if not path.is_file():
@@ -119,7 +155,10 @@ def main() -> int:
                 path.write_text(new, encoding="utf-8")
                 changed += n
                 touched += 1
-    print(f"normalize_names: {changed} line(s) renamed across {touched} file(s)")
+                rewritten[placement_key(root, path)] = new
+    stamped = restamp(root, rewritten)
+    print(f"normalize_names: {changed} line(s) renamed across {touched} file(s); "
+          f"{stamped} figure placement(s) re-stamped")
     return 0
 
 
