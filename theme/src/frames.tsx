@@ -545,9 +545,12 @@ function indexFigures(file: File, c: Corpus): [string, string][] {
       out.push(["Credited on", plural(reports.size, "project report")])
       break
     }
-    case "summaries":
-      out.push(["Reports", String(n)])
+    case "summaries": {
+      const reports = members.filter((f) => /__report$/i.test(slugOf(f))).length
+      out.push(["Project reports", String(reports)])
+      out.push(["Digests", String(n - reports)])
       break
+    }
     case "conflicts":
       out.push(["Conflicts", plural(n, "recorded conflict")])
       break
@@ -776,6 +779,7 @@ function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree: Root; 
           {(
             [
               [n.reports, "Project reports", "the primary evidence", "summaries/index"],
+              [n.digests, "Cross-project digests", "discoveries and pitfalls", "summaries/index"],
               [n.concepts, "Concepts", "synthesised across them", "concepts/index"],
               [n.entities, "Entities", "organisms, genes, datasets, methods", "entities/index"],
               [n.conflicts, "Recorded conflicts", "with the evidence on both sides", "conflicts/index"],
