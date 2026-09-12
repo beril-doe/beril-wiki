@@ -62,9 +62,11 @@ COLLECTION_INDEX = {
     "conflicts": ("Conflicts",
                   "Places where projects in the corpus disagree, with the evidence "
                   "on each side and the work that would settle it."),
-    "summaries": ("Summaries",
-                  "One page per research project, linking to its raw report."),
-    "sources": ("Sources",
+    "summaries": ("Project reports",
+                  "One page per research project, summarising it and linking to "
+                  "its raw report. These are the evidence every other page on "
+                  "the site cites. Two cross-project digests sit here too."),
+    "sources": ("Raw reports",
                 "The raw research reports this wiki is compiled from, unedited."),
 }
 
@@ -196,18 +198,56 @@ def rewrite_source_figures(text: str, project: str, kb: pathlib.Path, dst_root: 
     return re.sub(r"!\[([^\]]*)\]\((figures/[^)]+)\)", repl, text)
 
 
-def linkify_src(text: str, summary_pages: dict[str, str]) -> str:
+def linkify_src(text: str, summary_pages: set[str]) -> str:
     def repl(m: re.Match) -> str:
         links = []
         for part in re.split(r"[,;]", m.group(1)):
             sid = re.sub(r"__REPORT$", "", part.strip())
             if not sid:
                 continue
-            page = summary_pages.get(sid)
-            links.append(f"[[summaries/{page}|{sid}]]" if page else sid)
+            links.append(f"[[summaries/{sid}|{sid}]]" if sid in summary_pages else sid)
         return "<sub>src: " + ", ".join(links) + "</sub>"
 
     return SRC_TAG.sub(repl, text)
+
+
+def published(rel: pathlib.Path) -> pathlib.Path:
+    """Where a page is published. `__REPORT` is a staging-filename convention
+    that tells a project report apart from a cross-project digest; it is not
+    something a reader should meet in a URL or in link text."""
+    return rel.with_name(re.sub(r"__REPORT$", "", rel.stem) + rel.suffix)
+
+
+REPORT_LINK = re.compile(r"\[\[(summaries|sources)/([\w.-]+?)__REPORT(?:\|([^\]]*))?\]\]")
+# The same id written as bare prose. The hub pages are told to link project
+# reports as [[summaries/<id>__REPORT]] and mostly do, but a few rows in their
+# "Project reports:" line lost the brackets and published as raw filenames.
+BARE_REPORT = re.compile(r"(?<![\[/\w.-])([\w.-]+)__REPORT\b")
+
+
+def relabel_report_links(text: str, titles: dict[str, str], known: set[str]) -> str:
+    """Drop `__REPORT` from report references, and give an unlabelled one the
+    report's title. Written bare, `[[summaries/amr_fitness_cost__REPORT]]`
+    renders as its own slug: a project id plus a suffix no reader can place."""
+    def link(m: re.Match) -> str:
+        collection, sid, label = m.group(1), m.group(2), m.group(3)
+        return f"[[{collection}/{sid}|{label or titles.get(sid, sid)}]]"
+
+    def bare(m: re.Match) -> str:
+        sid = m.group(1)
+        return f"[[summaries/{sid}|{titles.get(sid, sid)}]]" if sid in known else sid
+
+    return BARE_REPORT.sub(bare, REPORT_LINK.sub(link, text))
+
+
+def report_titles(kb: pathlib.Path) -> dict[str, str]:
+    """project id -> the H1 its summary page carries."""
+    out = {}
+    for f in (kb / "wiki" / "summaries").glob("*__REPORT.md"):
+        m = re.search(r"^# +(.+?)[ \t]*$", f.read_text(encoding="utf-8", errors="replace"), re.M)
+        if m:
+            out[re.sub(r"__REPORT$", "", f.stem)] = m.group(1).strip()
+    return out
 
 
 def _slug(s: str) -> str:
@@ -265,14 +305,12 @@ def concept_uptake(kb: pathlib.Path) -> dict[str, list[str]]:
 
 def main() -> None:
     kb, dst = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
-    known = {
-        re.sub(r"__REPORT$", "", f.stem): f.stem
-        for f in (kb / "wiki" / "summaries").glob("*.md")
-    }
+    known = {re.sub(r"__REPORT$", "", f.stem) for f in (kb / "wiki" / "summaries").glob("*.md")}
+    titles = report_titles(kb)
     skip_entities = single_source_entities(kb)
     uptake = concept_uptake(kb)
     targets = {
-        _slug(str(f.relative_to(root)).removesuffix(".md"))
+        _slug(str(published(f.relative_to(root))).removesuffix(".md"))
         for root in (kb / "wiki", kb / "wiki-extra") if root.is_dir()
         for f in root.rglob("*.md")
         if not (root.name == "wiki" and f.parent.name == "entities" and f.stem in skip_entities)
@@ -297,7 +335,8 @@ def main() -> None:
             # OpenKB's catalog index steps aside for the narrative home in wiki-extra/.
             if root.name == "wiki" and rel == pathlib.Path("index.md"):
                 rel = pathlib.Path("catalog.md")
-            out = dst / rel
+            pub = published(rel)
+            out = dst / pub
             out.parent.mkdir(parents=True, exist_ok=True)
             text = src.read_text(encoding="utf-8", errors="replace")
             if rel.parts[0] == "sources" and rel.stem.endswith("__REPORT"):
@@ -305,7 +344,7 @@ def main() -> None:
             # Report prose carries links into the observatory checkout and
             # rank notation Obsidian reads as tags; neither survives publishing.
             if rel.parts[0] in ("sources", "summaries"):
-                text = strip_dead_markdown_links(text, (dst / rel).parent, dst)
+                text = strip_dead_markdown_links(text, out.parent, dst)
                 text = PSEUDO_TAG.sub(r"\\#", text)
             entry = placements.get(str(rel))
             if entry and entry.get("placements"):
@@ -313,6 +352,7 @@ def main() -> None:
             # Count the evidence before linkify_src rewrites [src:] tags into
             # <sub> links — after it there is nothing left to count.
             ev = evidence.label(text, rel.parts[0], conflict_srcs)
+            text = relabel_report_links(text, titles, known)
             text = linkify_src(strip_dead_wikilinks(text, targets), known)
             # Blocks that render directly under the title, in this order.
             # Provenance on every page, plus — on synthesis pages — how much of
@@ -326,11 +366,19 @@ def main() -> None:
             # reviewers need).
             if rel.parts[0] == "summaries":
                 nav = []
+                # The pipeline stamps every page here `type: "Summary"`, the
+                # two cross-project digests included, so only the staging
+                # filename tells a project report apart from a digest — and
+                # that suffix is about to come off. Record it while it is
+                # still there, for the frame to read.
+                if rel.stem.endswith("__REPORT"):
+                    text = re.sub(r'^type: "Summary"$', 'type: "Project report"',
+                                  text, count=1, flags=re.M)
                 if (root / "sources" / src.name).exists():
-                    raw = f"sources/{rel.stem}"
-                    text = text.replace(f"[[summaries/{rel.stem}|", f"[[{raw}|")
-                    nav.append(f"> Raw report: [[{raw}|{rel.stem}]]")
-                feeds = uptake.get(re.sub(r"__REPORT$", "", rel.stem), [])
+                    raw = f"sources/{pub.stem}"
+                    text = text.replace(f"[[summaries/{pub.stem}|", f"[[{raw}|")
+                    nav.append(f"> Raw report: [[{raw}|{pub.stem}]]")
+                feeds = uptake.get(pub.stem, [])
                 if feeds:
                     links = ", ".join(f"[[concepts/{c}]]" for c in feeds)
                     nav.append(f"> Feeds into: {links}")

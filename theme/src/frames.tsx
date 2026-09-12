@@ -21,6 +21,7 @@ import {
   counts,
   fm,
   isIndex,
+  isReport,
   kindOf,
   linksOf,
   sections,
@@ -69,18 +70,57 @@ function sentence(terms: string | null): string | null {
   return s ? s[0].toUpperCase() + s.slice(1) + "." : null
 }
 
-function cell(cite: Cite, primary: boolean): string {
-  if (primary) return "p"
+function cell(cite: Cite): string {
+  if (cite.primary) return "p"
   if (cite.rels.has("contradicts")) return "c"
   if (cite.rels.has("supports")) return "s"
   if (cite.rels.has("refines")) return "r"
   return ""
 }
 
-function dotOf(cite: Cite, primary: boolean): string | undefined {
-  if (primary) return "var(--ink)"
+function dotOf(cite: Cite): string | undefined {
+  if (cite.primary) return "var(--ink)"
   for (const r of ["contradicts", "supports", "refines"] as const) if (cite.rels.has(r)) return `var(--${r})`
   return undefined
+}
+
+// What a citation row says about itself under the report's title: how often
+// the page leans on it, and which of the three relation words the prose used.
+function citeNote(cite: Cite, digest: boolean): string {
+  const bits = [`cited ${cite.n}×`]
+  if (digest) bits.push("cross-project digest")
+  if (cite.primary) bits.push("primary source")
+  for (const r of cite.rels) bits.push(r)
+  return bits.join(" · ")
+}
+
+// A page cites a cross-project digest exactly as it cites a project report:
+// both live in summaries/, and [src: discoveries] is as ordinary a tag as any
+// project id. Counting them together made 61 pages state a false figure —
+// concepts/adversarial-research-quality-assurance cites the Discoveries Log 38
+// times and nothing else, and called that "1 project report".
+interface Cited {
+  digests: number
+  reports: number
+  /** True where every citation really is a project report. */
+  projectsOnly: boolean
+  isDigest: (k: Cite) => boolean
+  /** "3 project reports and 1 digest", for the byline. */
+  summary: string
+}
+
+function cited(cites: Cite[], c: Corpus): Cited {
+  const isDigest = (k: Cite) => {
+    const f = c.bySlug.get(k.slug)
+    return !!f && !isReport(f)
+  }
+  const digests = cites.filter(isDigest).length
+  const reports = cites.length - digests
+  const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`
+  const parts = []
+  if (reports > 0) parts.push(plural(reports, "project report", "project reports"))
+  if (digests > 0) parts.push(plural(digests, "cross-project digest", "cross-project digests"))
+  return { digests, reports, projectsOnly: digests === 0, isDigest, summary: parts.join(" and ") }
 }
 
 function Bar({ cd, header }: { cd: QuartzComponentProps; header: PageFrameProps["header"] }) {
@@ -121,6 +161,8 @@ interface Ties {
   /** Conflicts that name this page, rather than merely sharing its sources. */
   named: File[]
   citedBy: File[]
+  /** Concepts this page links out to — what a topic gathers. */
+  concepts: File[]
   entities: File[]
   /** Authors of the reports this page cites, and how many each wrote. */
   citedAuthors: [File, number][]
@@ -182,14 +224,22 @@ function ties(file: File, c: Corpus, cites: Cite[]): Ties {
         .filter((f) => f !== file && !isIndex(slugOf(f)) && collectionOf(slugOf(f)) !== "authors")
         .sort((a, b) => rank(a) - rank(b) || titleOf(a).localeCompare(titleOf(b)))
 
-  const entities = !knowledge
-    ? []
-    : [...new Set(linksOf(file))]
-        .map((l) => c.bySlug.get(l))
-        .filter((f): f is File => !!f && collectionOf(slugOf(f)) === "entities" && !isIndex(slugOf(f)))
-        .sort((a, b) => titleOf(a).localeCompare(titleOf(b)))
+  // Forward links, by collection. Reports have their own section, conflicts
+  // and entities theirs, and a page's topics are in the header byline — which
+  // left the concepts a page points at with nowhere to appear at all. On a
+  // topic page those are the whole point of the page.
+  const outTo = (collection: string) =>
+    !knowledge
+      ? []
+      : [...new Set(linksOf(file))]
+          .map((l) => c.bySlug.get(l))
+          .filter(
+            (f): f is File =>
+              !!f && f !== file && collectionOf(slugOf(f)) === collection && !isIndex(slugOf(f)),
+          )
+          .sort((a, b) => titleOf(a).localeCompare(titleOf(b)))
 
-  return { conflicts, named, citedBy, entities, citedAuthors, reportAuthors }
+  return { conflicts, named, citedBy, concepts: outTo("concepts"), entities: outTo("entities"), citedAuthors, reportAuthors }
 }
 
 // The record header: a card banded in the colour of the page kind, carrying
@@ -217,18 +267,28 @@ function Record({ file, c, terms, standing, orcid, cites, rels, t, figures }: {
   // Every value is a nowrap chip inside a wrapping row, so a narrow card
   // stacks the chips instead of orphaning a word above its number.
   const rows: [string, JSX.Element][] = []
+  const src = cited(cites, c)
   if (cites.length > 0)
     rows.push([
-      cites.length === 1 ? "Source" : "Sources",
+      src.projectsOnly ? "Projects cited" : "Sources cited",
       <>
         <span class="stripc">
-          {cites.slice(0, MAX_STRIP).map((k, i) => (
-            <i class={cell(k, i === 0)} title={`${k.label}: cited ${k.n} time${k.n === 1 ? "" : "s"}`} />
+          {cites.slice(0, MAX_STRIP).map((k) => (
+            <i class={cell(k)} title={`${k.label}: cited ${k.n} time${k.n === 1 ? "" : "s"}`} />
           ))}
           {cites.length > MAX_STRIP && <span class="more">+{cites.length - MAX_STRIP}</span>}
         </span>
-        <span class="sub">{cites.length} project reports</span>
+        <span class="sub">{src.summary}, listed in the margin</span>
       </>,
+    ])
+  // What a topic gathers is the measure of a topic, the way citations are the
+  // measure of a concept. Every other kind states this in the rail only.
+  if (kind.cls === "topic" && t.concepts.length > 0)
+    rows.push([
+      "Concepts",
+      <span class="chips">
+        <span class="chip">{t.concepts.length} gathered</span>
+      </span>,
     ])
   const stated = RELS.filter((r) => rels[r] > 0)
   if (stated.length > 0)
@@ -245,7 +305,7 @@ function Record({ file, c, terms, standing, orcid, cites, rels, t, figures }: {
   if (t.citedBy.length > 0) {
     const inTopics = new Set(t.citedBy.flatMap((f) => c.topicsOf(f).map(slugOf))).size
     rows.push([
-      "Cited by",
+      "Linked from",
       <span class="chips">
         <span class="chip">
           {t.citedBy.length} {t.citedBy.length === 1 ? "page" : "pages"}
@@ -342,7 +402,10 @@ function NavRail({ cd, file, c, right }: {
         <section class="map">
           <h3>Where this page sits</h3>
           <LocalGraph file={file} c={c} />
-          <p class="more">Neighbours by wikilink, coloured by topic.</p>
+          <p class="more">
+            Neighbours by wikilink, coloured by topic. Round is a synthesis page — concept, topic,
+            conflict or cross-project digest; square is a project report.
+          </p>
         </section>
       )}
     </aside>
@@ -379,6 +442,8 @@ function Rail({ cd, file, c, cites, t, left }: {
 }) {
   const slug = slugOf(file) as FullSlug
   const rel = (x: string) => resolveRelative(slug, x as FullSlug)
+  const topic = kindOf(file).cls === "topic"
+  const src = cited(cites, c)
   return (
     <aside class="rail evidence-rail">
       {t.reportAuthors.length > 0 && (
@@ -395,29 +460,51 @@ function Rail({ cd, file, c, cites, t, left }: {
       )}
       {cites.length > 0 && (
         <section>
-          <h3>Evidence on this page</h3>
+          <h3>{src.projectsOnly ? "Projects cited" : "Sources cited"}</h3>
+          <p class="more lead">
+            What this page draws on: {src.summary}. The numbers are the marks in the text.
+          </p>
           <Rows
-            rows={cites.map((k, i) => {
-              const dot = dotOf(k, i === 0)
-              const words = [...k.rels].join(", ")
-              const sub = i === 0 && k.n > 1 ? `primary source, ${k.n} citations` : words
+            rows={cites.map((k) => {
+              const dot = dotOf(k)
+              const report = c.bySlug.get(k.slug)
               return (
-                <li style={dot ? `--d:${dot}` : undefined}>
+                <li class="cite" style={dot ? `--d:${dot}` : undefined}>
+                  <span class="cnum">{k.num}</span>
                   <span>
-                    <a href={rel(k.target)}>
-                      <code>{k.label}</code>
-                    </a>
-                    {sub && <span class="w">{sub}</span>}
+                    <a href={rel(k.target)}>{report ? titleOf(report) : k.label}</a>
+                    <span class="w">
+                      <code>{k.label}</code> · {citeNote(k, src.isDigest(k))}
+                    </span>
                   </span>
-                  {!(i === 0 && k.n > 1) && <span class="n">{k.n}</span>}
                 </li>
               )
             })}
           />
           <p class="more">
-            The dot is the relation the prose states; black is the primary source. The strip in the
-            header says the same, one block per report.
+            The number is tinted with the relation the prose states; black is the primary source.
+            The strip in the header says the same, one block per report.
           </p>
+        </section>
+      )}
+      {t.concepts.length > 0 && (
+        <section>
+          <h3>{topic ? "Concepts in this topic" : "Concepts linked"}</h3>
+          <p class="more lead">
+            {topic
+              ? "The synthesis pages this topic gathers."
+              : "Other synthesis pages this one points at."}
+          </p>
+          <Rows
+            rows={t.concepts.map((f) => {
+              const hue = c.hueOf(f)
+              return (
+                <li style={hue ? `--d:${hue}` : undefined}>
+                  <a href={rel(slugOf(f))}>{titleOf(f)}</a>
+                </li>
+              )
+            })}
+          />
         </section>
       )}
       {t.citedAuthors.length > 0 && (
@@ -450,13 +537,25 @@ function Rail({ cd, file, c, cites, t, left }: {
       )}
       {t.citedBy.length > 0 && (
         <section>
-          <h3>Cited by</h3>
+          <h3>Linked from</h3>
+          {/* Not "pages that rest on this one": the publish step writes a
+              "Feeds into" line onto every summary, so a report this page cites
+              links back to it and lands here. Naming a direction would have
+              every concept page claim the four reports it rests on rest on it
+              instead. The link is the fact; which way the evidence runs is
+              what "Projects cited" above says. */}
+          <p class="more lead">Pages that link to this one.</p>
           <Rows
             rows={t.citedBy.map((f) => {
               const hue = c.hueOf(f)
+              // A list mixing concepts, topics and reports under bare titles
+              // says nothing about what any row is; the kind goes with it.
               return (
                 <li style={hue ? `--d:${hue}` : undefined}>
-                  <a href={rel(slugOf(f))}>{titleOf(f)}</a>
+                  <span>
+                    <a href={rel(slugOf(f))}>{titleOf(f)}</a>
+                    <span class="w">{kindOf(f).label}</span>
+                  </span>
                 </li>
               )
             })}
@@ -488,23 +587,30 @@ function Rail({ cd, file, c, cites, t, left }: {
 
 // The reports a page cites, listed once under the prose in citation order.
 // The marks in the text are numbers; this is where a number gets its name.
-function Sources({ cites, from }: { cites: Cite[]; from: FullSlug }) {
+// Same heading as the rail section, because it is the same list: the rail is
+// the copy you read beside the prose, this the one you land on from a mark.
+function Sources({ cites, c, from }: { cites: Cite[]; c: Corpus; from: FullSlug }) {
   if (cites.length === 0) return null
-  const ordered = [...cites].sort((a, b) => a.num - b.num)
+  const src = cited(cites, c)
   return (
     <section class="sources">
-      <h2>Sources cited on this page</h2>
+      <h2>{src.projectsOnly ? "Projects cited" : "Sources cited"}</h2>
       <ol>
-        {ordered.map((k) => (
-          <li value={k.num}>
-            {/* A summary cites itself through its raw report, so the entry
-                points where the citation in the prose does. */}
-            <a href={resolveRelative(from, k.target as FullSlug)}>
-              <code>{k.label}</code>
-            </a>
-            {k.rels.size > 0 && <span class="w">{[...k.rels].join(", ")}</span>}
-          </li>
-        ))}
+        {cites.map((k) => {
+          const report = c.bySlug.get(k.slug)
+          return (
+            <li value={k.num}>
+              {/* A summary cites itself through its raw report, so the entry
+                  points where the citation in the prose does. */}
+              <a href={resolveRelative(from, k.target as FullSlug)}>
+                {report ? titleOf(report) : k.label}
+              </a>
+              <span class="w">
+                <code>{k.label}</code> · {citeNote(k, src.isDigest(k))}
+              </span>
+            </li>
+          )
+        })}
       </ol>
     </section>
   )
@@ -548,9 +654,9 @@ function indexFigures(file: File, c: Corpus): [string, string][] {
       break
     }
     case "summaries": {
-      const reports = members.filter((f) => /__report$/i.test(slugOf(f))).length
+      const reports = members.filter(isReport).length
       out.push(["Project reports", String(reports)])
-      out.push(["Digests", String(n - reports)])
+      out.push(["Cross-project digests", String(n - reports)])
       break
     }
     case "conflicts":
@@ -882,7 +988,7 @@ export const BerilFrame: PageFrame = {
               {slot([Content]).map((C) => (
                 <C {...cd} />
               ))}
-              <Sources cites={w.cites} from={slug as FullSlug} />
+              <Sources cites={w.cites} c={c} from={slug as FullSlug} />
               {slot(afterBody).map((A) => (
                 <A {...cd} />
               ))}

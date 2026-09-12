@@ -64,6 +64,14 @@
   // One measure and one gutter for every section on every page type.
   --measure: 1140px;
   --gutter: 40px;
+  // The reading column on a content page, distinct from --measure above,
+  // which is the width of a full-bleed section. Set in px rather than `ch`
+  // because `ch` resolves against the font of the element it is written on --
+  // the grid, in Plex Sans 16px -- while the prose renders in Plex Serif at
+  // 17px. Measured on a 20-paragraph concept page, this holds 75 characters
+  // a line: the top of the comfortable band, and the one number every layout
+  // below aims at so the measure does not change as the window does.
+  --read-measure: 695px;
 }
 
 // Dark mode is a warm neutral, not a blue-black: light mode is paper, and a
@@ -286,7 +294,14 @@ h4 {
   margin: 0 auto;
   padding: 30px 40px 80px;
   display: grid;
-  grid-template-columns: minmax(0, 68ch) 300px;
+  grid-template-columns: minmax(0, var(--read-measure)) 300px;
+  // Two columns: the prose on the left spanning rows 2-3, the two rails
+  // stacked on the right. Row 3 is flexible so the prose's height lands
+  // there whole. Left to `auto`, grid splits a spanning item's height
+  // evenly between the rows it covers, which sized row 2 to half the
+  // article and dropped the evidence rail level with nothing, a screen
+  // below the map it is supposed to sit under.
+  grid-template-rows: auto auto 1fr;
   column-gap: 56px;
   justify-content: center;
   .nav-rail {
@@ -305,10 +320,16 @@ h4 {
     grid-row: 3;
   }
 }
-@media (min-width: 1360px) {
+// Three columns only once all three fit at the full measure: 260 + 695 + 300
+// plus two gaps and the gutter. Opening the third column any earlier bought a
+// left rail by taking the width out of the prose, so widening the window made
+// the reading column narrower.
+@media (min-width: 1440px) {
   .page-grid {
     max-width: 1480px;
-    grid-template-columns: 260px minmax(0, 66ch) 300px;
+    grid-template-columns: 260px minmax(0, var(--read-measure)) 300px;
+    // Three columns, everything on one row: no third row to keep flexible.
+    grid-template-rows: auto auto;
     column-gap: 48px;
     .nav-rail {
       grid-column: 1;
@@ -380,7 +401,14 @@ h4 {
     line-height: 1.1;
     letter-spacing: -0.012em;
     margin: 0 0 14px;
-    max-width: 26ch;
+    // Wide enough that the title simply fills the column it is in: the ident
+    // column tops out at 911px, a shade under this. At 26ch the longest title
+    // in the corpus broke over six lines of display type inside a card with
+    // 318px of empty space beside it. The cap is kept, rather than dropped,
+    // for the fifteen records that carry no facts column -- About and the
+    // data collections -- where the ident spans the whole card and the title
+    // would otherwise set 63 characters to the line.
+    max-width: 40ch;
     overflow-wrap: anywhere;
   }
 }
@@ -704,8 +732,11 @@ h4 {
   }
   li {
     break-inside: avoid;
-    padding: 2px 0;
+    padding: 2px 0 6px;
     margin: 0;
+  }
+  a {
+    color: var(--ink);
   }
   code {
     font-family: var(--mono);
@@ -716,8 +747,8 @@ h4 {
     overflow-wrap: anywhere;
   }
   .w {
+    display: block;
     color: var(--mute);
-    margin-left: 6px;
   }
 }
 
@@ -807,14 +838,26 @@ h4 {
       background: var(--d, var(--line-2));
       transform: translateY(-1px);
     }
-    &.plain::before {
+    &.plain::before,
+    // A citation row carries its number where every other row carries its
+    // dot: same column, and the number still takes the relation's colour.
+    &.cite::before {
       display: none;
     }
     &.rest {
       color: var(--mute);
     }
-    & > span:first-child {
+    & > span {
       min-width: 0;
+    }
+    .cnum {
+      flex: none;
+      width: 8px;
+      text-align: right;
+      font-family: var(--mono);
+      font-size: var(--t-meta);
+      font-weight: 600;
+      color: var(--d, var(--mute));
     }
   }
   a {
@@ -847,6 +890,10 @@ h4 {
     font-size: var(--t-meta);
     color: var(--mute);
     margin: 7px 0 0;
+    // A deck sits above the rows it introduces rather than below them.
+    &.lead {
+      margin: -2px 0 8px;
+    }
   }
   // "and 31 more" opens the list it counts. It looked like a link before it
   // was one, which is the whole complaint it was answering.
@@ -1569,6 +1616,42 @@ footer {
 }
 
 // ---- small screens ---------------------------------------------------------
+// One column below this. Narrower than 695 + 300 + the gap and the gutter, the
+// two-column layout has to pay for the rail out of the prose: it read 60
+// characters a line at 1000px, against the 75 the wider layouts hold and the
+// 75 the stacked layout gives directly below it. Widening the window made the
+// line shorter. Stacking earlier keeps one measure across every size.
+// Only the grid moves here; the gutter, the top bar and the type sizes stay
+// at 960, where they are about a small screen rather than about column fit.
+@media (max-width: 1131px) {
+  .page-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto;
+    row-gap: 32px;
+  }
+  .rail {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+  .page-grid .nav-rail {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .page-grid .prose {
+    grid-column: 1;
+    grid-row: 3;
+    // The prose has the column to itself here and would otherwise take all of
+    // it — 97 characters a line at 960px. Hold it to the measure the
+    // side-by-side layouts set. Left-aligned rather than centred, so it keeps
+    // the left edge it shares with the record header and the rails below it.
+    max-width: var(--read-measure);
+  }
+  .page-grid .evidence-rail {
+    grid-column: 1;
+    grid-row: 4;
+  }
+}
 @media (max-width: 960px) {
   :root {
     --gutter: 20px;
@@ -1588,30 +1671,11 @@ footer {
   .page-grid {
     padding-left: 20px;
     padding-right: 20px;
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: 32px;
   }
   .sechead {
     flex-direction: column;
     gap: 4px;
     padding-top: 30px;
-  }
-  .rail {
-    position: static;
-    max-height: none;
-    overflow: visible;
-  }
-  .page-grid .nav-rail {
-    grid-column: 1;
-    grid-row: 2;
-  }
-  .page-grid .prose {
-    grid-column: 1;
-    grid-row: 3;
-  }
-  .page-grid .evidence-rail {
-    grid-column: 1;
-    grid-row: 4;
   }
   .record h1 {
     font-size: 1.9rem;
