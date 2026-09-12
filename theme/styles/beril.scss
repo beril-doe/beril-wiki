@@ -401,7 +401,14 @@ h4 {
     line-height: 1.1;
     letter-spacing: -0.012em;
     margin: 0 0 14px;
-    max-width: 26ch;
+    // Wide enough that the title simply fills the column it is in: the ident
+    // column tops out at 911px, a shade under this. At 26ch the longest title
+    // in the corpus broke over six lines of display type inside a card with
+    // 318px of empty space beside it. The cap is kept, rather than dropped,
+    // for the fifteen records that carry no facts column -- About and the
+    // data collections -- where the ident spans the whole card and the title
+    // would otherwise set 63 characters to the line.
+    max-width: 40ch;
     overflow-wrap: anywhere;
   }
 }
