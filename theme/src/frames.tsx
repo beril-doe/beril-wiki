@@ -305,7 +305,7 @@ function Record({ file, c, terms, standing, orcid, cites, rels, t, figures }: {
   if (t.citedBy.length > 0) {
     const inTopics = new Set(t.citedBy.flatMap((f) => c.topicsOf(f).map(slugOf))).size
     rows.push([
-      "Cited by",
+      "Linked from",
       <span class="chips">
         <span class="chip">
           {t.citedBy.length} {t.citedBy.length === 1 ? "page" : "pages"}
@@ -403,8 +403,8 @@ function NavRail({ cd, file, c, right }: {
           <h3>Where this page sits</h3>
           <LocalGraph file={file} c={c} />
           <p class="more">
-            Neighbours by wikilink, coloured by topic. Round is a synthesis page — concept, topic or
-            conflict; square is a project report.
+            Neighbours by wikilink, coloured by topic. Round is a synthesis page — concept, topic,
+            conflict or cross-project digest; square is a project report.
           </p>
         </section>
       )}
@@ -537,8 +537,14 @@ function Rail({ cd, file, c, cites, t, left }: {
       )}
       {t.citedBy.length > 0 && (
         <section>
-          <h3>Cited by</h3>
-          <p class="more lead">Pages on this site that rest on this one.</p>
+          <h3>Linked from</h3>
+          {/* Not "pages that rest on this one": the publish step writes a
+              "Feeds into" line onto every summary, so a report this page cites
+              links back to it and lands here. Naming a direction would have
+              every concept page claim the four reports it rests on rest on it
+              instead. The link is the fact; which way the evidence runs is
+              what "Projects cited" above says. */}
+          <p class="more lead">Pages that link to this one.</p>
           <Rows
             rows={t.citedBy.map((f) => {
               const hue = c.hueOf(f)

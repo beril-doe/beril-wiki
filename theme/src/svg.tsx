@@ -3,7 +3,7 @@
 // not change between builds.
 import { resolveRelative } from "@quartz-community/utils"
 import type { FullSlug } from "@quartz-community/types"
-import { type Corpus, type File, collectionOf, linksOf, slugOf, titleOf, truncate } from "./page"
+import { type Corpus, type File, collectionOf, isReport, linksOf, slugOf, titleOf, truncate } from "./page"
 
 interface Node {
   file: File
@@ -67,10 +67,13 @@ export function LocalGraph({ file, c }: { file: File; c: Corpus }) {
       {nodes.map((n) => {
         const right = n.x > ME[0]
         // A project report is evidence, not another synthesis page, so it is
-        // marked apart from the round nodes rather than coloured the same.
+        // marked apart from the round nodes rather than coloured the same. The
+        // test is `isReport`, not the collection: a cross-project digest sits
+        // in summaries/ beside the reports but reads across the corpus rather
+        // than reporting one project, so it is round like the other syntheses.
         return (
           <a href={resolveRelative(slug, slugOf(n.file) as FullSlug)}>
-            {isSummary(n.file) ? (
+            {isReport(n.file) ? (
               <rect class="node report" x={n.x - 4} y={n.y - 4} width={8} height={8} style={`--c:${n.hue}`} />
             ) : (
               <circle class="node" cx={n.x} cy={n.y} r={4.5} style={`--c:${n.hue}`} />
