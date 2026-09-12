@@ -1,0 +1,33 @@
+// ---- footer ----------------------------------------------------------------
+footer {
+  // The base layer gives the footer min-width:100% and content-box sizing on
+  // small screens, so its padding lands outside the viewport and scrolls the
+  // whole page sideways.
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: var(--measure);
+  margin: 48px auto 0;
+  padding: 18px var(--gutter) 40px;
+  border-top: 1px solid var(--line);
+  font-size: var(--t-ui);
+  color: var(--mute);
+  opacity: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  align-items: baseline;
+  p {
+    margin: 0;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  a {
+    color: var(--ink-2);
+  }
+}

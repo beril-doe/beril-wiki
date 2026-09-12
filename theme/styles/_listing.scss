@@ -1,0 +1,105 @@
+// ---- collection index ------------------------------------------------------
+.index-page {
+  // Keep the band's horizontal gutter; a bare `padding` shorthand here zeroed
+  // it, and below the measure the cards ran into both edges of the screen.
+  padding: 30px var(--gutter) 70px;
+  .prose {
+    max-width: 70ch;
+    color: var(--ink-2);
+  }
+  .sechead {
+    padding-top: 30px;
+  }
+}
+.listing {
+  margin-top: 26px;
+  & > section > .sechead {
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 7px;
+    margin-bottom: 0;
+    h2 {
+      font-size: var(--t-sub);
+    }
+  }
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-bottom: 30px;
+  .card {
+    background: var(--card);
+    padding: 14px 16px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: var(--ink);
+    border-top: 2px solid transparent;
+    position: relative;
+    &:hover {
+      text-decoration: none;
+      background: color-mix(in oklab, var(--line) 35%, var(--card));
+      border-top-color: var(--d, var(--line-2));
+      b {
+        color: var(--method);
+      }
+      &::after {
+        color: var(--method);
+        transform: translateX(3px);
+      }
+    }
+    // The arrow is what makes a card read as somewhere to go rather than a
+    // panel of text.
+    &::after {
+      content: "→";
+      position: absolute;
+      right: 14px;
+      bottom: 12px;
+      font-size: 0.9rem;
+      color: var(--line-2);
+      transition: transform 0.12s ease, color 0.12s ease;
+    }
+    b {
+      font-weight: 600;
+      font-size: var(--t-ui-lg);
+      line-height: 1.3;
+      // Room for the arrow in the corner.
+      padding-right: 22px;
+      transition: color 0.12s ease;
+      // The dot says which topic claims the page, or what kind of thing it is.
+      &::before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--d, var(--line-2));
+        margin-right: 8px;
+        vertical-align: 1px;
+      }
+    }
+    .desc {
+      font-size: var(--t-ui);
+      color: var(--ink-2);
+      line-height: 1.4;
+    }
+    .meta {
+      margin-top: auto;
+      padding-top: 8px;
+      padding-right: 26px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-family: var(--mono);
+      font-size: var(--t-label);
+      color: var(--mute);
+      .tag {
+        margin-left: 0;
+        font-family: var(--sans);
+      }
+    }
+  }
+}

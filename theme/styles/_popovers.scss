@@ -1,0 +1,22 @@
+// ---- popovers, search results ---------------------------------------------
+.popover > .popover-inner {
+  border: 1px solid var(--line-2);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  font-size: var(--t-ui);
+  sub.src {
+    display: none;
+  }
+}
+.search-container > .search-space {
+  & > .search-bar {
+    border-radius: 0;
+    border: 1px solid var(--line-2);
+    font-family: var(--sans);
+  }
+  & > .search-layout {
+    border-radius: 0;
+    border: 1px solid var(--line-2);
+  }
+}
