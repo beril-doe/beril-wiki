@@ -170,9 +170,10 @@ def validate_candidate(
     if violations:
         raise CandidateError(f"{path}: {violations}")
     retained = "\n\n".join(par for page in [old, *absorbed] for par in paragraphs(page))
-    # Unchanged-source evidence must survive. Revised-source corrections need review.
+    # A co-cited paragraph may contain unchanged evidence. Retain its quantities
+    # conservatively; only exclusively revised-source paragraphs are exempt.
     unchanged_evidence = "\n\n".join(
-        par for par in paragraphs(retained) if not set(cited_ids(par)) & revised
+        par for par in paragraphs(retained) if not cited_ids(par) or set(cited_ids(par)) - revised
     )
     if not body_src_ids(retained) - revised <= body_src_ids(body) or not page_numbers(
         unchanged_evidence

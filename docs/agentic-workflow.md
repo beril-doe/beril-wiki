@@ -78,7 +78,9 @@ offsets, including null results and caveats. Coverage spans the entire source.
 Planning batches cover every evidence record; the host combines edits to each
 page. Writers use base hashes and anchored patches or justified rewrites.
 Deterministic checks retain citations and quantities from unchanged sources,
-including absorbed pages; separate scientific review assesses support and lost
+including absorbed pages and paragraphs citing both revised and unchanged sources.
+Quantities in those mixed-source paragraphs are retained conservatively; separate
+scientific review assesses support and lost
 meaning. Review is useful evidence, not a guarantee of scientific correctness.
 
 SDK tools expose bounded `read_evidence`. Curator, planner and writer jobs also

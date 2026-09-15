@@ -275,3 +275,46 @@ def test_source_decoding_matches_tools_and_preserves_original_bytes(tmp_path, mo
     read = ReadTools(tmp_path).read("staging/a__REPORT.md", 0, len(extracted))
     assert extracted == read["text"] == raw.decode("utf-8", errors="replace")
     assert (tmp_path / "wiki/sources/a__REPORT.md").read_bytes() == raw
+
+
+@pytest.mark.parametrize("absorbed", [False, True])
+def test_cocited_unchanged_measurement_survives_revision(tmp_path, monkeypatch, absorbed):
+    _, _, _, job = setup_batch(tmp_path, monkeypatch)
+    original = OLD.replace("[src: a]", "[src: a, b]")
+    (tmp_path / "staging/a__REPORT.md").write_text("Yield was 56%.")
+    (tmp_path / "staging/b__REPORT.md").write_text("Yield was 42%.")
+    if absorbed:
+        (tmp_path / "wiki/concepts/absorbed.md").write_text(original)
+        job.merge_from = ["concepts/absorbed.md"]
+        original = "# Yield\n\n## Open Directions\n\nRepeat measurements."
+    (tmp_path / "wiki/concepts/yield.md").write_text(original)
+    body = "# Yield\n\nYield was 56%. [src: a]\n\nEarlier measurements exist. [src: b]"
+    body += "\n\n## Open Directions\n\nRepeat measurements."
+    candidate = {
+        "base_hash": digest(original),
+        "description": "Revised yield",
+        "content": body,
+        "rewrite_reason": "Correct revised source",
+    }
+    with pytest.raises(CandidateError, match="unchanged citations or quantities"):
+        batch.validate_candidate(tmp_path, job.path, job, candidate, {"a"}, {"concepts/yield"})
+    candidate["content"] = body.replace("Earlier measurements exist.", "Earlier yield was 42%.")
+    assert (
+        batch.validate_candidate(tmp_path, job.path, job, candidate, {"a"}, {"concepts/yield"})
+        == candidate["content"]
+    )
+
+
+def test_quantity_cited_only_to_revised_source_can_change(tmp_path, monkeypatch):
+    _, _, _, job = setup_batch(tmp_path, monkeypatch)
+    (tmp_path / "staging/a__REPORT.md").write_text("Yield was 56%.")
+    candidate = {
+        "base_hash": digest(OLD),
+        "description": "Revised yield",
+        "content": OLD.replace("42%", "56%"),
+        "rewrite_reason": "Correct revised source",
+    }
+    assert (
+        batch.validate_candidate(tmp_path, job.path, job, candidate, {"a"}, {"concepts/yield"})
+        == candidate["content"]
+    )
