@@ -46,9 +46,14 @@ Write markdown with exactly these sections:
 (hypotheses that could make both sides right — measurement differences, scope
  differences, definitional differences — clearly labeled as hypotheses)
 ## Resolving Work
-(3-5 bullets: the specific analyses or data that would settle it — data + method + question)
+(3-5 bullets per disagreement: the specific analyses or data that would settle it —
+ data + method + question)
 
-Rules: copy numbers exactly; a claim you cannot attribute must not be written; 300-600 words.
+Rules: copy numbers exactly and keep each claim's [src: project] tags as the input gives
+them; a claim you cannot attribute must not be written; define jargon at first use.
+Cover every distinct disagreement in the input, or state in the lead which ones this
+page leaves out. Aim for 300-600 words per disagreement; a block carrying several may
+run proportionally longer.
 Link the source concept pages with [[concepts/<stem>]] wikilinks where given.
 NAMING: the data platform is the KBase Data Lakehouse. Reports call it
 BERDL or the BER Data Lakehouse; those are earlier names for the same
