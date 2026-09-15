@@ -18,10 +18,9 @@ each SDK job verifies subscription authentication. There is no API fallback.
 # Inspect staged changes, without fetching or inference.
 uv run python -m beril_wiki.agentic plan
 
-# Choose a model available to your login and budgets appropriate to the update.
+# Use the committed model policy and explicit budgets appropriate to the update.
 uv run python -m beril_wiki.agentic run \
-  --model MODEL_ID --max-tokens 500000 --max-jobs 40 --max-actions 16 \
-  --step-model curator=LIGHT_MODEL_ID --step-model queries=LIGHT_MODEL_ID \
+  --max-tokens 500000 --max-jobs 40 --max-actions 16 \
   --checkout /path/to/BERIL-research-observatory
 
 # Search accepted wiki Markdown without inference.
@@ -46,19 +45,48 @@ the runner does not purchase credits.
 
 ### Per-step models
 
-`--model` is the required default. Repeat `--step-model ROLE=MODEL_ID` to
-override any of these roles; unknown or duplicate roles and empty model IDs
-are rejected before execution.
+Runs automatically load [`agentic.yaml`](../agentic.yaml) from the repository
+selected by `--root`. The committed policy explicitly assigns every role:
 
-| Role | Jobs |
-| --- | --- |
-| `curator` | Choose the next editorial action. |
-| `extraction` | Extract source evidence. |
-| `planning` | Plan evidence integration and propose topic groups. |
-| `writing` | Write and revise pages, derived prose, home and entity merges; default for other generation jobs. |
-| `review` | All separate scientific reviews, including extraction and repaired candidates. |
-| `queries` | Construct literature search queries. |
-| `figures` | Select figure placements. |
+| Role | Model | Jobs |
+| --- | --- | --- |
+| `extraction` | Opus 5 | Extract source evidence, retaining scientific qualifiers. |
+| `planning` | Opus 5 | Plan evidence integration and propose topic groups. |
+| `writing` | Opus 5 | Write and revise pages, derived prose, home and entity merges; default for other generation jobs. |
+| `review` | Opus 5 | All separate scientific reviews, including extraction and repaired candidates. |
+| `curator` | Sonnet 5 | Choose the next editorial action within enforced dependencies. |
+| `queries` | Sonnet 5 | Construct literature search queries. |
+| `figures` | Sonnet 5 | Select figure placements. |
+
+This is a deliberate starting policy, not a measured optimum: protect scientific
+fidelity and avoid costly rewrites, while using Sonnet for bounded coordination
+and selection. Haiku is not the default because a cheaper call is not a saving
+if it causes missed evidence or repeat work. No model comparison run is required.
+The full IDs are `claude-opus-5` and `claude-sonnet-5`, matching Anthropic's
+[model catalog](https://platform.claude.com/docs/en/models/overview).
+[Claude Code requires](https://code.claude.com/docs/en/model-config) version
+2.1.219 or later for Opus 5 (Sonnet 5 requires 2.1.197). Availability still depends
+on the authenticated account. Fable is not selected because SDK usage can draw
+on additional usage credits, depending on the plan.
+
+`--model-config PATH` loads a replacement YAML file (relative to `--root`, or
+absolute). The file accepts only `model` and `step_models`, using the same shape
+as the committed policy. `model` is required and supplies any omitted role.
+`--model MODEL_ID` replaces the entire file policy with one model for all roles;
+then repeat `--step-model ROLE=MODEL_ID` for individual overrides. Without
+`--model`, individual overrides modify the loaded policy. For example:
+
+```sh
+# Keep the repository policy, changing only scientific review.
+uv run python -m beril_wiki.agentic run --step-model review=MODEL_ID \
+  --max-tokens 500000 --max-jobs 40 --checkout /path/to/BERIL-research-observatory
+```
+
+The CLI prints the resolved policy before execution. Invalid file shapes,
+unknown roles, duplicate CLI role overrides and empty model IDs are rejected
+before the runner starts. An explicitly named file must exist and validate even
+when `--model` replaces its policy. A checkout
+without the default file requires `--model`. Budgets remain required CLI flags.
 
 Repairs keep the original role's model. A literature-writing job ending in
 `/review` still uses `writing`; only `/science-review` jobs use `review`.

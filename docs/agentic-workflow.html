@@ -277,7 +277,8 @@ flowchart LR
 
 <details>
 <summary>Choose models by job role</summary>
-<p><code>--model STRONG_MODEL_ID</code> sets the default. Repeat <code>--step-model ROLE=MODEL_ID</code> for <code>curator</code>, <code>extraction</code>, <code>planning</code>, <code>writing</code>, <code>review</code>, <code>queries</code> or <code>figures</code>. For example, <code>--step-model curator=LIGHT_MODEL_ID</code> changes action selection while scientific work keeps the default.</p>
+<p>The committed <a href="../agentic.yaml"><code>agentic.yaml</code></a> is loaded automatically. <b>Opus 5</b> handles extraction, planning, writing and scientific review. <b>Sonnet 5</b> handles curator decisions, literature queries and figure selection. This policy protects scientific fidelity while assigning bounded selection tasks to Sonnet; it has not yet been benchmarked on the corpus.</p>
+<p>Use <code>--model-config PATH</code> for a replacement policy or <code>--step-model ROLE=MODEL_ID</code> for an individual override. <code>--model MODEL_ID</code> replaces the whole policy with one model before individual overrides apply. The CLI prints the resolved policy; token and job ceilings remain explicit run flags.</p>
 <p>Repairs retain their role's model; separate scientific reviews use the review model. Every role shares the ledger and budget, and changing models on the same interrupted input snapshot preserves earlier charges. Jobs record their configured model, and accepted state records the complete policy. Cache invalidation follows the affected roles. See the <a href="agentic-workflow.md#per-step-models">model-routing guide</a> for details.</p>
 </details>
 

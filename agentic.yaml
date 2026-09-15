@@ -1,0 +1,13 @@
+# Versioned model IDs keep paid caches tied to a specific model release.
+# Scientific work gets Opus; bounded coordination and selection get Sonnet.
+# Budgets remain explicit run flags, never implicit permission to spend.
+# Every role below is pinned; model is only the fallback for omitted roles.
+model: claude-opus-5
+step_models:
+  curator: claude-sonnet-5
+  extraction: claude-opus-5
+  planning: claude-opus-5
+  writing: claude-opus-5
+  review: claude-opus-5
+  queries: claude-sonnet-5
+  figures: claude-sonnet-5

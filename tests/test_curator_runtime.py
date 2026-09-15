@@ -402,11 +402,14 @@ def test_cli_rejects_invalid_model_overrides(tmp_path, monkeypatch, overrides):
     assert cli.main() == 1
 
 
-def test_cli_passes_explicit_model_policy(tmp_path, monkeypatch):
+@pytest.mark.parametrize("use_yaml", [False, True])
+def test_cli_passes_explicit_model_policy(tmp_path, monkeypatch, use_yaml):
     import sys
 
     from beril_wiki.agentic import __main__ as cli
 
+    if use_yaml:
+        (tmp_path / "agentic.yaml").write_text("model: old\nstep_models: {writing: old-writer}")
     monkeypatch.setattr(
         sys,
         "argv",
@@ -433,6 +436,80 @@ def test_cli_passes_explicit_model_policy(tmp_path, monkeypatch):
     monkeypatch.setattr(cli, "run", lambda root, checkout, config, staged: configs.append(config))
     assert cli.main() == 0
     assert configs[0]["step_models"] == {"curator": "small", "review": "reviewer"}
+    assert configs[0]["model"] == "strong"
+
+
+def test_cli_loads_committed_policy_without_model_flag(tmp_path, monkeypatch):
+    import sys
+    from pathlib import Path
+
+    from beril_wiki.agentic import __main__ as cli
+
+    policy = (Path(__file__).parents[1] / "agentic.yaml").read_text()
+    (tmp_path / "agentic.yaml").write_text(policy)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "agentic",
+            "--root",
+            str(tmp_path),
+            "run",
+            "--max-tokens",
+            "100",
+            "--max-jobs",
+            "3",
+            "--cli",
+            "unused",
+        ],
+    )
+    configs = []
+    monkeypatch.setattr(cli, "run", lambda root, checkout, config, staged: configs.append(config))
+    assert cli.main() == 0
+    assert R.model_policy(configs[0]) == {
+        role: "claude-opus-5" if role in R.CORE_MODEL_ROLES else "claude-sonnet-5"
+        for role in R.MODEL_ROLES
+    }
+    # Replacement file paths resolve against the chosen root, and a role flag wins.
+    (tmp_path / "custom.yaml").write_text("model: alternate\nstep_models: {review: specialist}")
+    for path in (Path("custom.yaml"), tmp_path / "custom.yaml"):
+        selected = R.model_policy(cli.load_models(tmp_path, path, None, ["review=override"]))
+        assert selected["review"] == "override"
+        assert selected["writing"] == "alternate"
+
+
+@pytest.mark.parametrize(
+    "contents",
+    [
+        "",
+        "[]",
+        "model: [",
+        "model: 123",
+        "model: ''",
+        "model: valid\nmodels: {}",
+        "model: valid\nstep_models: null",
+        "model: valid\nstep_models: {typo: valid}",
+        "model: valid\nstep_models: {review: 123}",
+    ],
+)
+def test_invalid_yaml_model_policy_stops(tmp_path, contents):
+    from beril_wiki.agentic.__main__ import load_models
+
+    (tmp_path / "agentic.yaml").write_text(contents)
+    with pytest.raises(R.WorkflowError):
+        load_models(tmp_path, None, None, [])
+
+
+def test_missing_policy_requires_explicit_model(tmp_path):
+    from pathlib import Path
+
+    from beril_wiki.agentic.__main__ import load_models
+
+    with pytest.raises(R.WorkflowError, match="model must"):
+        load_models(tmp_path, None, None, [])
+    assert load_models(tmp_path, None, "explicit", []) == {"model": "explicit", "step_models": {}}
+    with pytest.raises(FileNotFoundError):
+        load_models(tmp_path, Path("missing.yaml"), "explicit", [])
 
 
 @pytest.mark.parametrize("legacy", [False, True])

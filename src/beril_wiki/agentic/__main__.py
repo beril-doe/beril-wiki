@@ -5,11 +5,46 @@ import json
 import shutil
 from pathlib import Path
 
+import yaml
+
 from beril_wiki.agentic.batch import changed_sources
 from beril_wiki.agentic.runner import locked, recover, run
-from beril_wiki.agentic.runtime import MODEL_ROLES, EvidenceTools, Runtime, WorkflowError
+from beril_wiki.agentic.runtime import (
+    MODEL_ROLES,
+    EvidenceTools,
+    Runtime,
+    WorkflowError,
+    model_policy,
+)
 from beril_wiki.paths import ROOT
 from beril_wiki.stages.fetch import CHECKOUT
+
+
+def load_models(root: Path, path: Path | None, model: str | None, overrides: list[str]) -> dict:
+    """Load repository policy, then apply an all-role override and individual overrides."""
+    source = root / (path or "agentic.yaml")
+    config: dict = {}
+    if source.exists() or path is not None:
+        try:
+            config = yaml.safe_load(source.read_text(encoding="utf-8"))
+        except yaml.YAMLError as exc:
+            raise WorkflowError(f"invalid model config {source}: {exc}") from exc
+        if not isinstance(config, dict) or set(config) - {"model", "step_models"}:
+            raise WorkflowError("model config must contain only model and step_models")
+        model_policy(config)
+    if model is not None:
+        config = {"model": model}
+    roles = {}
+    for value in overrides:
+        role, separator, selected = value.partition("=")
+        if not separator or role not in MODEL_ROLES or not selected.strip():
+            raise WorkflowError(f"invalid step-model {value!r}; use ROLE=MODEL")
+        if role in roles:
+            raise WorkflowError(f"duplicate step-model role: {role}")
+        roles[role] = selected.strip()
+    config["step_models"] = config.get("step_models", {}) | roles
+    model_policy(config)
+    return config
 
 
 def main() -> int:
@@ -25,7 +60,12 @@ def main() -> int:
     execute = commands.add_parser(
         "run", help="compile in isolation, validate, then promote locally"
     )
-    execute.add_argument("--model", required=True)
+    execute.add_argument("--model", help="replace the YAML policy with this model for every role")
+    execute.add_argument(
+        "--model-config",
+        type=Path,
+        help="model YAML path relative to --root (default: agentic.yaml)",
+    )
     execute.add_argument(
         "--step-model",
         action="append",
@@ -108,7 +148,6 @@ def main() -> int:
             config = {
                 key: getattr(args, key)
                 for key in (
-                    "model",
                     "max_tokens",
                     "max_jobs",
                     "reserve_tokens",
@@ -119,15 +158,8 @@ def main() -> int:
                     "cli",
                 )
             }
-            overrides = {}
-            for value in args.step_model:
-                role, separator, model = value.partition("=")
-                if not separator or role not in MODEL_ROLES or not model.strip():
-                    raise WorkflowError(f"invalid step-model {value!r}; use ROLE=MODEL")
-                if role in overrides:
-                    raise WorkflowError(f"duplicate step-model role: {role}")
-                overrides[role] = model.strip()
-            config["step_models"] = overrides
+            config.update(load_models(root, args.model_config, args.model, args.step_model))
+            print(json.dumps({"models": model_policy(config)}, indent=2))
             run(root, args.checkout.resolve(), config, args.staged)
     except (WorkflowError, OSError, ValueError) as exc:
         print(f"agentic stopped: {exc}")
