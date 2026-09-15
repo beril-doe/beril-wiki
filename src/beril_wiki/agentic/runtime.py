@@ -482,7 +482,11 @@ class Runtime:
 
         @tool(
             "read_evidence",
-            "Read an exact character range from staging or wiki Markdown.",
+            "Read an exact character range from a snapshot file. Paths are relative to the "
+            "snapshot root: staging/<project>__REPORT.md or staging/discoveries.md for "
+            "source reports; wiki/<collection>/<page>.md for pages, such as "
+            "wiki/concepts/<stem>.md or wiki/summaries/<project>__REPORT.md. Ranges past "
+            "the end are clamped; the reply reports the length.",
             {"path": str, "start": int, "end": int},
         )
         async def read_evidence(args):
