@@ -35,6 +35,10 @@ rendering them.
 
 ## Run the pipeline (maintainers)
 
+For the subscription-backed Claude Agent SDK workflow, see
+[curator workflow, search, budgets, and recovery](docs/agentic-workflow.md).
+The command below continues to use the API-backed pipeline.
+
 ```sh
 CBORG_API_KEY=... scripts/run_pipeline.sh    # incremental: same command every time
 ```

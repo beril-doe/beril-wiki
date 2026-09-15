@@ -16,6 +16,7 @@ Exit code 1 if any ERROR, else 0. WARNs are reported but do not fail.
 
 from __future__ import annotations
 
+import hashlib
 import pathlib
 import re
 import sys
@@ -56,7 +57,7 @@ NUMBER = re.compile(
 # trailing one also rejects unit suffixes: sources write "+7.8pp" and "18.8M", so
 # it made those figures invisible and every page quoting them looked unsupported.
 
-_SRC_NUMS: dict[tuple[str, int], set[str]] = {}
+_SRC_NUMS: dict[tuple[str, str], set[str]] = {}
 
 
 def norm_num(tok: str) -> str:
@@ -102,7 +103,7 @@ def numbers_in(text: str) -> set[str]:
 
 def source_numbers(sid: str, text: str) -> set[str]:
     """Tokenized figures of one source, memoized — validate_page runs per paragraph."""
-    key = (sid, len(text))
+    key = (sid, hashlib.sha256(text.encode("utf-8")).hexdigest())
     if key not in _SRC_NUMS:
         _SRC_NUMS[key] = numbers_in(text)
     return _SRC_NUMS[key]

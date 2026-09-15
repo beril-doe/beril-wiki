@@ -23,6 +23,7 @@ import re
 import sys
 
 from beril_wiki import compiler as C
+from beril_wiki.agentic.runtime import configured, page_contexts
 from beril_wiki.paths import ROOT
 from beril_wiki.stages.topics import bad_src_ids, strip_bad_src
 
@@ -167,9 +168,8 @@ def main() -> int:
         for pid in projects:
             sp = ROOT / "wiki" / "summaries" / f"{pid}__REPORT.md"
             if sp.exists():
-                summaries[pid] = C.parse_fm(sp.read_text(encoding="utf-8", errors="replace"))[1][
-                    :PER_SUMMARY_CHARS
-                ]
+                text = sp.read_text(encoding="utf-8", errors="replace")
+                summaries[pid] = text if configured() else C.parse_fm(text)[1][:PER_SUMMARY_CHARS]
         if not summaries:
             continue
         digest = hashlib.sha256(
@@ -181,7 +181,18 @@ def main() -> int:
             skipped += 1
             continue
         print(f"  writing contributions for {name} ({len(summaries)} project(s))")
-        ctx = "\n\n---\n\n".join(f"[summary: {pid}]\n{text}" for pid, text in summaries.items())
+        previews = (
+            page_contexts(
+                {f"wiki/summaries/{pid}__REPORT.md": text for pid, text in summaries.items()}
+            )
+            if configured()
+            else {}
+        )
+        ctx = "\n\n---\n\n".join(
+            f"[summary: {pid}]\n"
+            + (previews[f"wiki/summaries/{pid}__REPORT.md"] if configured() else text)
+            for pid, text in summaries.items()
+        )
         msgs = [
             {"role": "system", "content": system},
             {"role": "user", "content": f"SUMMARIES OF THIS AUTHOR'S PROJECTS:\n\n{ctx}"},
@@ -236,9 +247,13 @@ def main() -> int:
         done += 1
 
     est = C._usage["in"] * C.PRICE_IN + C._usage["out"] * C.PRICE_OUT
+    usage = (
+        "usage recorded in the shared agentic ledger"
+        if configured()
+        else f"tokens in={C._usage['in']} out={C._usage['out']} (~${est:.2f} est)"
+    )
     print(
-        f"stages.authors: {done} section(s) written, {skipped} unchanged, {failed} failed; "
-        f"tokens in={C._usage['in']} out={C._usage['out']} (~${est:.2f} est)"
+        f"stages.authors: {done} section(s) written, {skipped} unchanged, {failed} failed; " + usage
     )
     return 1 if failed else 0
 

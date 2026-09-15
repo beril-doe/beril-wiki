@@ -18,9 +18,8 @@ import os
 import re
 import sys
 
-from litellm import completion
-
 from beril_wiki import compiler as C
+from beril_wiki.agentic.runtime import completion
 from beril_wiki.check import numbers_in, source_ids
 from beril_wiki.paths import ROOT
 from beril_wiki.stages.consolidate import cosine, embed
@@ -186,8 +185,9 @@ def main() -> None:
         )
         resp = (
             completion(
+                step=f"conflicts/{slug}",
                 model=MODEL,
-                api_key=os.environ["OPENAI_API_KEY"],
+                api_key=os.environ.get("OPENAI_API_KEY"),
                 base_url=os.environ.get("OPENAI_BASE_URL", "https://api.cborg.lbl.gov"),
                 messages=[
                     {"role": "system", "content": PROMPT},
@@ -211,8 +211,9 @@ def main() -> None:
             print(f"  ! conflicts/{slug}: {len(nv)} unsupported figure(s) — retrying")
             resp = (
                 completion(
+                    step=f"conflicts/{slug}/retry",
                     model=MODEL,
-                    api_key=os.environ["OPENAI_API_KEY"],
+                    api_key=os.environ.get("OPENAI_API_KEY"),
                     base_url=os.environ.get("OPENAI_BASE_URL", "https://api.cborg.lbl.gov"),
                     messages=[
                         {"role": "system", "content": PROMPT},

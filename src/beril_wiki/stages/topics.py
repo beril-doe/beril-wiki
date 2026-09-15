@@ -3,9 +3,9 @@
 
 Sits ON TOP of the compiled wiki (reads wiki/concepts + wiki/entities), writes
 wiki/topics/ and the home page wiki/index.md; the compiler never touches either.
-Topic membership is deterministic (Louvain over the concept co-source/wikilink
-graph); an LLM names the topics and writes the hub prose, citing only what the
-member concept pages already cite.
+The agentic curator selects topic membership and names. API mode uses Louvain
+over the concept co-source/wikilink graph and model-generated names. Both write
+hub prose citing only what the member concept pages already cite.
 
     OPENAI_API_KEY=$CBORG_API_KEY OPENAI_BASE_URL=https://api.cborg.lbl.gov \
         uv run python -m beril_wiki.stages.topics
@@ -23,9 +23,9 @@ import re
 import sys
 
 import networkx as nx
-from litellm import completion
 
 from beril_wiki import compiler as C
+from beril_wiki.agentic.runtime import completion, configured, page_contexts
 from beril_wiki.check import source_ids
 from beril_wiki.paths import ROOT
 from beril_wiki.publish import ingest
@@ -118,12 +118,16 @@ def cluster_concepts(concepts: dict[str, dict]) -> list[list[str]]:
             if w:
                 g.add_edge(a, b, weight=w)
     # resolution=2.0 -> ~14 topics of 3-9 concepts on this corpus (default 1.0 gave 4 mega-hubs)
+    if not g.edges:
+        return [sorted(g)] if g else []
     comms = [
         set(c)
         for c in nx.community.louvain_communities(g, weight="weight", seed=42, resolution=2.0)
     ]
     # Fold tiny clusters into the neighbor cluster with the strongest total edge weight.
     big = [c for c in comms if len(c) >= MIN_CLUSTER]
+    if not big:
+        return [sorted(g)]
     for small in (c for c in comms if len(c) < MIN_CLUSTER):
 
         def pull(target: set, small: set = small) -> float:
@@ -134,10 +138,19 @@ def cluster_concepts(concepts: dict[str, dict]) -> list[list[str]]:
     return [sorted(c) for c in sorted(big, key=len, reverse=True)]
 
 
-def llm(prompt: str, system: str = "", model: str | None = None) -> str:
+def llm(
+    prompt: str,
+    system: str = "",
+    model: str | None = None,
+    *,
+    step: str = "topics",
+    review: bool = True,
+) -> str:
     resp = completion(
+        step=step,
+        review=review,
         model=model or HUB_MODEL,
-        api_key=os.environ["OPENAI_API_KEY"],
+        api_key=os.environ.get("OPENAI_API_KEY"),
         base_url=os.environ.get("OPENAI_BASE_URL", "https://api.cborg.lbl.gov"),
         messages=([{"role": "system", "content": system}] if system else [])
         + [{"role": "user", "content": prompt}],
@@ -285,6 +298,7 @@ def write_home(hubs: list[tuple], stats: str) -> None:
         f"Base every topic description on these leads, do not invent findings:\n\n{hub_list}"
         + style,
         model=HOME_MODEL,
+        step="home",
     )
     (OUT / "index.md").write_text(home.strip() + "\n", encoding="utf-8")
     # The model was given the stats, but it must not own them.
@@ -335,7 +349,16 @@ def main() -> int:
     targets = C.wikilink_targets(ROOT)
     concepts = {p.stem: parse_page(p) for p in sorted((ROOT / "wiki/concepts").glob("*.md"))}
     entities = {p.stem: parse_page(p) for p in sorted((ROOT / "wiki/entities").glob("*.md"))}
-    clusters = cluster_concepts(concepts)
+    groups = None
+    if configured():
+        from beril_wiki.agentic.topics import load_groups
+
+        groups = load_groups(ROOT)
+    clusters = (
+        [group["concepts"] for group in groups]
+        if groups is not None
+        else cluster_concepts(concepts)
+    )
     print(f"{len(concepts)} concepts -> {len(clusters)} clusters: {[len(c) for c in clusters]}")
 
     (OUT / "topics").mkdir(parents=True, exist_ok=True)
@@ -352,7 +375,7 @@ def main() -> int:
     # renamed (renames churn page identity and force needless hub regens).
     name_cache: dict[str, str] = state.setdefault("__names__", {})
     keys = [hashlib.sha256(",".join(c).encode()).hexdigest()[:12] for c in clusters]
-    unnamed = [i for i, k in enumerate(keys) if k not in name_cache]
+    unnamed = [i for i, k in enumerate(keys) if k not in name_cache] if groups is None else []
     if unnamed:
         listing = "\n".join(
             f"CLUSTER {i}:\n"
@@ -362,7 +385,9 @@ def main() -> int:
         reply = llm(
             "Name each cluster of research-wiki concepts as a scientific TOPIC (2-4 words, "
             "noun phrase, distinctive). Reply with ONLY a JSON object mapping cluster number "
-            f"(string) to topic name.\n\n{listing}"
+            f"(string) to topic name.\n\n{listing}",
+            step="topics/names",
+            review=False,
         )
         m = re.search(r"\{.*\}", reply, re.S)
         if not m:
@@ -371,7 +396,11 @@ def main() -> int:
         for i in unnamed:
             if str(i) in fresh:
                 name_cache[keys[i]] = fresh[str(i)]
-    names = {str(i): name_cache.get(k, f"Topic {i}") for i, k in enumerate(keys)}
+    names = (
+        {str(i): group["title"] for i, group in enumerate(groups)}
+        if groups is not None
+        else {str(i): name_cache.get(k, f"Topic {i}") for i, k in enumerate(keys)}
+    )
     conflicts = (
         {
             p.stem: p.read_text(encoding="utf-8", errors="replace")
@@ -390,7 +419,9 @@ def main() -> int:
         rel_conflicts = [c for c, t in conflicts.items() if len({p for p in srcs if p in t}) >= 2]
         digest = hashlib.sha256(
             (
-                "\n".join(concepts[s]["text"] for s in members)
+                topic
+                + "\n"
+                + "\n".join(concepts[s]["text"] for s in members)
                 + "".join(conflicts[c] for c in rel_conflicts)
             ).encode()
         ).hexdigest()[:16]
@@ -401,11 +432,27 @@ def main() -> int:
             hubs.append((topic, slug, (lead.group(1).strip() if lead else "")[:400], len(members)))
             print(f"  unchanged topics/{slug}.md")
             continue
+        previews = (
+            page_contexts(
+                {f"wiki/concepts/{s}.md": concepts[s]["text"] for s in members}
+                | {f"wiki/conflicts/{c}.md": conflicts[c] for c in rel_conflicts}
+            )
+            if configured()
+            else {}
+        )
         member_text = "\n\n---\n\n".join(
-            f"[file: concepts/{s}]\n{concepts[s]['text'][:PER_PAGE_CHARS]}" for s in members
+            f"[file: concepts/{s}]\n"
+            + (
+                previews[f"wiki/concepts/{s}.md"]
+                if configured()
+                else concepts[s]["text"][:PER_PAGE_CHARS]
+            )
+            for s in members
         )
         conflict_text = "\n\n".join(
-            f"[conflict page: conflicts/{c}]\n{conflicts[c][:3000]}" for c in rel_conflicts
+            f"[conflict page: conflicts/{c}]\n"
+            + (previews[f"wiki/conflicts/{c}.md"] if configured() else conflicts[c][:3000])
+            for c in rel_conflicts
         )
         ents = sorted(entities, key=lambda e: -len(entities[e]["sources"] & srcs))[:10]
         prompt = (
@@ -421,7 +468,7 @@ def main() -> int:
             "PROJECTS IN SCOPE (for [src:] tags and [[summaries/<id>__REPORT]] links): "
             f"{', '.join(sorted(srcs))}"
         )
-        page = llm(prompt, system=TEMPLATE)
+        page = llm(prompt, system=TEMPLATE, step=f"topics/{slug}")
         bad = bad_src_ids(page, srcs)
         if bad:  # one violation-quoting retry, then deterministic repair
             print(f"  ! topics/{slug}: invalid [src:] ids {bad} — retrying")
@@ -431,6 +478,7 @@ def main() -> int:
                 "concept or conflict pages are referenced as [[wikilinks]], never inside [src:]. "
                 "Rewrite the full page fixing every such tag.",
                 system=TEMPLATE,
+                step=f"topics/{slug}/retry-citations",
             )
             if bad_src_ids(page, srcs):
                 print(f"  ! topics/{slug}: still invalid — stripping bad [src:] ids")
@@ -448,6 +496,7 @@ def main() -> int:
                 + "\nRewrite the full page. Every number must be copied exactly from a source "
                 "you cite in the same paragraph; drop any figure you cannot attribute.",
                 system=TEMPLATE,
+                step=f"topics/{slug}/retry-numbers",
             )
             page = strip_bad_src(page, srcs)
             # Revalidate the retry before accepting it. Writing the second
@@ -478,7 +527,7 @@ def main() -> int:
             stale.unlink()
             any_changed = True
             print(f"  removed stale topics/{stale.stem}.md")
-    if not any_changed and (OUT / "index.md").exists():
+    if not any_changed and (OUT / "index.md").exists() and "--refresh-home" not in sys.argv:
         if refresh_corpus_line(OUT / "index.md", corpus_stats(ROOT)):
             print("home unchanged; corpus counts refreshed")
         else:

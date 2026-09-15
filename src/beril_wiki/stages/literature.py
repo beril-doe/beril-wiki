@@ -33,14 +33,22 @@ import sys
 import time
 import urllib.parse
 import urllib.request
+import xml.etree.ElementTree as ET
 
 from beril_wiki import compiler as C
+from beril_wiki.agentic.runtime import WorkflowError, configured, digest, runtime
 from beril_wiki.paths import ROOT
 
 EUTILS = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
 SECTION = re.compile(r"^## Literature Context\s*\n.*?(?=\n## |\Z)", re.M | re.S)
 PMID_LINK = re.compile(r"\[PMID (\d+)\]")
 MAX_PAPERS = 20
+
+
+def topic_core(text: str) -> str:
+    """Canonical hub input, excluding this stage's section and splice whitespace."""
+    return re.sub(r"\s+", " ", SECTION.sub("", text)).strip()
+
 
 QUERY_USER = """\
 Below is a topic-hub page from a microbial-biology research wiki. Propose two
@@ -88,6 +96,8 @@ def eutils(endpoint: str, **params) -> dict:
 
 def fetch_candidates(queries: list[str]) -> dict[str, str]:
     """PMID -> one-line citation for up to MAX_PAPERS deduped results."""
+    if configured():
+        return fetch_abstracts(queries)
     ids: list[str] = []
     for q in queries[:2]:
         try:
@@ -115,10 +125,53 @@ def fetch_candidates(queries: list[str]) -> dict[str, str]:
     return out
 
 
+def fetch_abstracts(queries: list[str]) -> dict[str, str]:
+    """Cache PubMed abstract evidence, propagating network failures for retry."""
+    cache = runtime().store / "papers"
+    cache.mkdir(exist_ok=True)
+    path = cache / f"{digest(queries[:2])}.json"
+    if path.exists():
+        return json.loads(path.read_text())
+    ids = []
+    for query_text in queries[:2]:
+        result = eutils("esearch", term=query_text, retmax=MAX_PAPERS // 2, sort="relevance")
+        ids.extend(i for i in result["esearchresult"].get("idlist", []) if i not in ids)
+    if not ids:
+        path.write_text("{}")
+        return {}
+    if any(not re.fullmatch(r"\d+", pid) for pid in ids):
+        raise WorkflowError("PubMed returned an invalid identifier")
+    url = f"{EUTILS}/efetch.fcgi?" + urllib.parse.urlencode(
+        {"db": "pubmed", "id": ",".join(ids[:MAX_PAPERS]), "retmode": "xml", "tool": "beril-wiki"}
+    )
+    time.sleep(0.4)
+    with urllib.request.urlopen(url, timeout=30) as response:
+        raw = response.read(2_000_001)
+    if len(raw) > 2_000_000:
+        raise WorkflowError("PubMed response exceeds 2MB")
+    result = abstracts_from_xml(raw, set(ids))
+    path.write_text(json.dumps(result, indent=2))
+    return result
+
+
+def abstracts_from_xml(raw: bytes, allowed: set[str]) -> dict[str, str]:
+    result = {}
+    for article in ET.fromstring(raw).findall(".//PubmedArticle"):
+        pid = article.findtext(".//MedlineCitation/PMID", "")
+        title_node = article.find(".//ArticleTitle")
+        title = "".join(title_node.itertext()) if title_node is not None else ""
+        abstract = "\n".join(
+            "".join(node.itertext()) for node in article.findall(".//AbstractText")
+        )
+        if pid in allowed and abstract.strip():
+            result[pid] = f"{title}\nABSTRACT (not full text):\n{abstract}"
+    return result
+
+
 def review_hub(page: pathlib.Path, system: str) -> bool:
     body = page.read_text(encoding="utf-8", errors="replace")
     stripped = SECTION.sub("", body)
-    hub_text = stripped[:12000]
+    hub_text = stripped[: None if configured() else 12000]
 
     q_raw = C.llm(
         [
@@ -193,10 +246,10 @@ def main(root: pathlib.Path) -> int:
 
     done = skipped = 0
     for page in sorted(topics.glob("*.md")):
-        digest = hashlib.sha256(
-            SECTION.sub("", page.read_text(encoding="utf-8", errors="replace")).encode()
+        page_digest = hashlib.sha256(
+            topic_core(page.read_text(encoding="utf-8", errors="replace")).encode()
         ).hexdigest()[:16]
-        if state.get(page.name) == digest:
+        if state.get(page.name) == page_digest:
             skipped += 1
             continue
         print(f"  reviewing {page.name}")
@@ -209,15 +262,19 @@ def main(root: pathlib.Path) -> int:
             continue
         if len(C._failures) > n_fail:
             continue  # failed review stays dirty for the next run
-        state[page.name] = digest
+        state[page.name] = page_digest
         state_path.write_text(json.dumps(state, indent=1, sort_keys=True))
         done += 1
 
     est = C._usage["in"] * C.PRICE_IN + C._usage["out"] * C.PRICE_OUT
+    usage = (
+        "usage recorded in the shared agentic ledger"
+        if configured()
+        else f"tokens in={C._usage['in']} out={C._usage['out']} (~${est:.2f} est)"
+    )
     print(
         f"stages.literature: {done} hub(s) reviewed, {skipped} unchanged, "
-        f"{len(C._failures)} failure(s); "
-        f"tokens in={C._usage['in']} out={C._usage['out']} (~${est:.2f} est)"
+        f"{len(C._failures)} failure(s); " + usage
     )
     return 1 if C._failures else 0
 
