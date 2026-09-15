@@ -324,7 +324,7 @@ def main() -> int:
                         msg = f"{rel} ¶{i}: number {tok!r} not found in cited source(s) {ids}"
                         (errors if strict else warns).append(msg)
 
-    # Corpus-format contract (docs/design.md): `sources` must never list a project
+    # Corpus-format contract (docs/wiki.md): `sources` must never list a project
     # the body does not cite. Nothing checked it, so six pages drifted — one
     # entity listed 47 sources against 31 real citations. A padded list reads as
     # synthesis without being it, and it also drives compile's resume-skip, so a

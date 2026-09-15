@@ -196,11 +196,9 @@ def strip_bad_src(page: str, valid: set[str]) -> str:
 def corpus_stats(root: pathlib.Path) -> str:
     """The corpus line, counted from the files, in code.
 
-    Counts PUBLISHED pages: publish.ingest hides entities cited by only one
-    project, so the raw 336 was a number no reader could reach. docs/design.md keeps
-    the catalog and log deterministic "in code, not by LLM" for the same reason
-    this line now is — a model transcribing a figure onto the home page is a
-    figure nothing verifies."""
+    Count published pages, excluding the single-source entities hidden by
+    publish.ingest. Compute these counts directly so the home page does not
+    rely on a model to transcribe them."""
     summaries = list((root / "wiki" / "summaries").glob("*.md"))
     digests = sum(
         (root / "wiki" / "summaries" / f"{d}.md").exists() for d in ("discoveries", "pitfalls")

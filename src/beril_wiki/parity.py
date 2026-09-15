@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Parity acceptance test for the first-party compiler (docs/design.md protocol).
+"""Historical parity acceptance test for the API-backed compiler.
 
 Compiles the held-out projects INTO a copy of the reference corpus
 (reference/wiki-v3) and compares the resulting merges against how the

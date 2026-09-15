@@ -5,6 +5,9 @@ topic organization. Python enforces source coverage, dependencies, validation,
 usage accounting and recoverable promotion. Existing stage writers remain domain
 operations. `scripts/run_pipeline.sh` remains the API-backed entry point.
 
+See the [HTML walkthrough](agentic-workflow.html) for the control flow and the
+[wiki-format reference](wiki.md) for page types, citations and rendering.
+
 ## Commands and limits
 
 Install with `uv sync` and sign in using `claude auth login` with a direct Claude
@@ -84,8 +87,6 @@ get literal `search_evidence`; page writers additionally get a host-bound
 the same host checks and independent scientific review before it is written.
 Extraction and retrieval both decode UTF-8 with replacement for invalid bytes;
 offsets refer to that decoded text. Original report bytes remain unchanged.
-This decoder change rotates the evidence-tool cache identity once. Subsequent
-unchanged reads reuse their cached results.
 No shell, general filesystem writes, skill discovery or unrelated tools are
 exposed. Source text is evidence, never an instruction authority.
 
@@ -177,11 +178,9 @@ promotion.
 Offline tests exercise the actual subprocess pipeline with recorded model and
 PubMed replies, alternate action order, dependency enforcement, bounded repair,
 topic decisions, cache invalidation, subscription setup and promotion recovery.
-They do not establish model quality or real subscription savings. The earlier
-SDK smoke used only a tiny synthetic source and reported 2,854 tokens through a
-Claude Max login; it did not compile this wiki. The curator changes have not been
-accepted through a real source update. MCP remains below version 2 for the SDK's
-current in-process tool compatibility.
+They do not establish model quality or real subscription savings. The curator
+has not yet been accepted through a real source update. MCP remains below
+version 2 for the SDK's in-process tool compatibility.
 
 Specs, plans and review dispositions are local gitignored files under
 `docs/superpowers/`. Independent Claude Code reports are retained outside the
