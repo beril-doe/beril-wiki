@@ -49,8 +49,10 @@ Write markdown with exactly these sections:
 (3-5 bullets per disagreement: the specific analyses or data that would settle it —
  data + method + question)
 
-Rules: copy numbers exactly and keep each claim's [src: project] tags as the input gives
-them; a claim you cannot attribute must not be written; define jargon at first use.
+Rules: use only the figures and citations present in the input tension text, copied
+exactly and with each claim's [src: project] tags as the input gives them; read sources
+for context, never to import further numbers; a claim you cannot attribute must not be
+written; define jargon at first use.
 Cover every distinct disagreement in the input, or state in the lead which ones this
 page leaves out. Aim for 300-600 words per disagreement; a block carrying several may
 run proportionally longer.
