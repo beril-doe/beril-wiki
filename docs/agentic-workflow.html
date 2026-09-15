@@ -204,7 +204,7 @@ button.theme { position: fixed; right: 16px; top: 16px; z-index: 3; font: 400 11
 <div class="page">
   <nav class="toc" aria-label="Contents"><ol></ol></nav>
   <main>
-    <p class="meta">2026-09-15 · BERIL wiki / f614be9 · Implementation walkthrough</p>
+    <p class="meta">2026-09-15 · BERIL wiki · Workflow and model routing</p>
     <h1>The agentic wiki workflow</h1>
     <p class="lead">A subscription-backed curator chooses how to update and organize the wiki. Python makes that work bounded, reviewable and recoverable. The design optimizes token spend by reusing accepted inference and retrieving evidence only when needed.</p>
     <h2 id="control" data-toc="The control loop">The curator chooses work; Python controls acceptance</h2>
@@ -221,7 +221,7 @@ flowchart LR
   class C hot;
 </pre>
 </div>
-<figcaption><b>The editorial control loop.</b> Arrows show control passing through the implementation at commit <code>f614be9</code>. The purple node selects the next action; Python checks prerequisites and completion throughout.</figcaption>
+<figcaption><b>The editorial control loop.</b> Arrows show control passing through the curator implementation. The purple node selects the next action; Python checks prerequisites and completion throughout.</figcaption>
 </figure>
 <p>The Claude Agent SDK uses the maintainer's subscription for model jobs. Each decision receives pending obligations, available actions, collection counts and the latest receipt. Existing Python writers execute the chosen operation inside an isolated candidate workspace.</p>
 <p>The agent also chooses page integration and topic membership. Python retains the action vocabulary and acceptance rules. This gives editorial autonomy within a defined workflow; arbitrary shell commands and changes to those rules are outside the agent's tools.</p>
@@ -275,6 +275,12 @@ flowchart LR
 </ul>
 </details>
 
+<details>
+<summary>Choose models by job role</summary>
+<p><code>--model STRONG_MODEL_ID</code> sets the default. Repeat <code>--step-model ROLE=MODEL_ID</code> for <code>curator</code>, <code>extraction</code>, <code>planning</code>, <code>writing</code>, <code>review</code>, <code>queries</code> or <code>figures</code>. For example, <code>--step-model curator=LIGHT_MODEL_ID</code> changes action selection while scientific work keeps the default.</p>
+<p>Repairs retain their role's model; separate scientific reviews use the review model. Every role shares the ledger and budget, and changing models on the same interrupted input snapshot preserves earlier charges. Jobs record their configured model, and accepted state records the complete policy. Cache invalidation follows the affected roles. See the <a href="agentic-workflow.md#per-step-models">model-routing guide</a> for details.</p>
+</details>
+
 <h2 id="failure" data-toc="Failure and recovery">Failed work stays inspectable without replacing the wiki</h2>
 <figure class="table">
 <figcaption><b>Failure handling before and during promotion.</b> Rows distinguish correction, stopped runs and filesystem recovery. Keep the ignored <code>.agentic/</code> folder to preserve raw results and prior charges.</figcaption>
@@ -295,7 +301,7 @@ flowchart LR
 <div class="callout warn" data-label="Validation boundary">Recorded-response tests exercise the pipeline, cache reuse, dependencies, corrections and recovery. They do not establish scientific quality or real subscription savings. The curator has not yet been accepted through a real source update.</div>
 <p>The implementation supports the agent choosing editorial work and organizing knowledge. Its fixed domain operations and mandatory checks remain deliberate boundaries. Read-only wiki search is available as a CLI; BERIL or OpenViking integration has not been installed.</p>
 <p>Start with <code>uv run python -m beril_wiki.agentic plan</code> to inspect staged changes without inference. Use the <a href="agentic-workflow.md">operating guide</a> for run budgets, status, retry and recovery commands. Local promotion leaves committing, pushing and publishing as separate actions.</p>
-<p class="meta">Implementation sources at f614be9: <a href="../src/beril_wiki/agentic/curator.py">curator</a> · <a href="../src/beril_wiki/agentic/batch.py">integration</a> · <a href="../src/beril_wiki/agentic/runtime.py">runtime and ledger</a> · <a href="../src/beril_wiki/agentic/runner.py">runner and promotion</a> · <a href="../src/beril_wiki/agentic/topics.py">topic decisions</a></p>
+<p class="meta">Implementation sources: <a href="../src/beril_wiki/agentic/curator.py">curator</a> · <a href="../src/beril_wiki/agentic/batch.py">integration</a> · <a href="../src/beril_wiki/agentic/runtime.py">runtime and ledger</a> · <a href="../src/beril_wiki/agentic/runner.py">runner and promotion</a> · <a href="../src/beril_wiki/agentic/topics.py">topic decisions</a></p>
   </main>
 </div>
 <script>

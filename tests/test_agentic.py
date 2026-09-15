@@ -449,6 +449,14 @@ def test_actual_pipeline_with_recorded_replies(tmp_path, monkeypatch):
     assert placements
     assert all(p["caption"] == "Yield" for page in placements.values() for p in page["placements"])
     assert run(root, checkout, config) == {"unchanged": True}
+    config = config | {"step_models": {"figures": "figure-model"}}
+    steps.clear()
+    run(root, checkout, config)
+    assert steps == []  # figure routing does not repeat extraction or curator decisions
+    assert (
+        json.loads((root / "state/agentic.json").read_text())["models"]["figures"] == "figure-model"
+    )
+    assert run(root, checkout, config) == {"unchanged": True}
     placement_path.unlink()
     steps.clear()
     run(root, checkout, config)

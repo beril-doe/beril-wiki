@@ -20,6 +20,7 @@ from beril_wiki.agentic.runtime import (
     WorkflowError,
     digest,
     manifest,
+    model_signature,
     page_context,
     page_contexts,
     text_completion,
@@ -80,9 +81,14 @@ def owned_manifest(root: Path, folders: tuple, *, part: str = "") -> dict[str, s
 
 def stage_revision(root: Path, name: str, config: dict) -> str:
     package = Path(__file__).resolve().parents[1]
+    roles = {
+        "topics": ("planning", "writing", "review"),
+        "literature": ("queries", "writing", "review"),
+        "figures": ("figures",),
+    }.get(name, ("writing", "review"))
     return digest(
         [
-            config["model"],
+            model_signature(config, roles),
             manifest(root, ("contract",)),
             SYSTEM,
             *[

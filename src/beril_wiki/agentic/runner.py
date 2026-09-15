@@ -20,11 +20,14 @@ from beril_wiki.agentic.batch import changed_sources
 from beril_wiki.agentic.curator import EDITORIAL, curate, stage_revision, stage_snapshot
 from beril_wiki.agentic.runtime import (
     AUTH_ENV,
+    CORE_MODEL_ROLES,
     Runtime,
     WorkflowError,
     digest,
     file_hash,
     manifest,
+    model_policy,
+    model_signature,
 )
 
 TREES = ("wiki", "state", "staging")
@@ -218,7 +221,22 @@ def fingerprint(root: Path) -> dict[str, str]:
     }
 
 
+def budget_run(root: Path, base: dict, external: dict, staged: bool) -> str:
+    """Changing models on the same input snapshot must not reset prior charges."""
+    identity = digest([base, external, staged])
+    previous = root / ".agentic/config.json"
+    if previous.exists():
+        config = json.loads(previous.read_text(encoding="utf-8"))
+        legacy = digest([base, external, config.get("model"), staged])
+        if config.get("run") in (identity, legacy):
+            return config["run"]
+        if config.get("run_inputs") == identity:
+            return config["run"]
+    return identity
+
+
 def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
+    models = model_signature(config)
     with locked(root):
         recover(root)
         original = manifest(root, TREES)
@@ -237,7 +255,7 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
                 config.get("max_turns", 6),
             ]
         )
-        identity = digest([base, external, rev, config["model"], staged])
+        identity = digest([base, external, rev, models, staged])
         accepted_path = root / "state/agentic.json"
         accepted = (
             json.loads(accepted_path.read_text(encoding="utf-8")) if accepted_path.exists() else {}
@@ -266,7 +284,8 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
             "root": str(work),
             "store": str(store),
             "revision": rev,
-            "run": digest([base, external, config["model"], staged]),
+            "run": budget_run(root, base, external, staged),
+            "run_inputs": digest([base, external, staged]),
         }
         config_path = store / "config.json"
         atomic_json(config_path, config)
@@ -276,7 +295,11 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
             run_stage(work, config_path, "fetch", "stages.fetch", [])
         changed = changed_sources(work)
         scientific_revision = digest(
-            [compiler_revision(), config["model"], manifest(work, ("contract",))]
+            [
+                compiler_revision(),
+                model_signature(config, CORE_MODEL_ROLES),
+                manifest(work, ("contract",)),
+            ]
         )
         # Compiler/config edits invalidate previous accepted core outputs.
         if accepted and accepted.get("revision") != scientific_revision:
@@ -318,7 +341,8 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
             )
         next_state = {
             "revision": scientific_revision,
-            "fingerprint": digest([fingerprint(work), external, rev, config["model"], staged]),
+            "fingerprint": digest([fingerprint(work), external, rev, models, staged]),
+            "models": model_policy(config),
             "core_outputs": manifest(work, ("wiki/concepts", "wiki/entities", "wiki/summaries")),
             "version": 2,
             "figure_revision": figure_revision,

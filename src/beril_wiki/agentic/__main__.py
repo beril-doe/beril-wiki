@@ -7,7 +7,7 @@ from pathlib import Path
 
 from beril_wiki.agentic.batch import changed_sources
 from beril_wiki.agentic.runner import locked, recover, run
-from beril_wiki.agentic.runtime import EvidenceTools, Runtime, WorkflowError
+from beril_wiki.agentic.runtime import MODEL_ROLES, EvidenceTools, Runtime, WorkflowError
 from beril_wiki.paths import ROOT
 from beril_wiki.stages.fetch import CHECKOUT
 
@@ -26,6 +26,13 @@ def main() -> int:
         "run", help="compile in isolation, validate, then promote locally"
     )
     execute.add_argument("--model", required=True)
+    execute.add_argument(
+        "--step-model",
+        action="append",
+        default=[],
+        metavar="ROLE=MODEL",
+        help=f"override a role's model; repeat for roles: {', '.join(MODEL_ROLES)}",
+    )
     execute.add_argument("--max-tokens", type=int, required=True)
     execute.add_argument("--max-jobs", type=int, required=True)
     execute.add_argument("--reserve-tokens", type=int, default=50_000)
@@ -70,7 +77,7 @@ def main() -> int:
                 agent = Runtime(json.loads((root / ".agentic/config.json").read_text()))
                 if args.command == "status":
                     rows = agent.ledger.db.execute(
-                        "SELECT key,step,status,tokens,error FROM jobs ORDER BY rowid"
+                        "SELECT key,step,status,tokens,error,model FROM jobs ORDER BY rowid"
                     ).fetchall()
                     print(json.dumps({"totals": agent.ledger.totals(), "jobs": rows}, indent=2))
                 elif args.command == "account":
@@ -112,6 +119,15 @@ def main() -> int:
                     "cli",
                 )
             }
+            overrides = {}
+            for value in args.step_model:
+                role, separator, model = value.partition("=")
+                if not separator or role not in MODEL_ROLES or not model.strip():
+                    raise WorkflowError(f"invalid step-model {value!r}; use ROLE=MODEL")
+                if role in overrides:
+                    raise WorkflowError(f"duplicate step-model role: {role}")
+                overrides[role] = model.strip()
+            config["step_models"] = overrides
             run(root, args.checkout.resolve(), config, args.staged)
     except (WorkflowError, OSError, ValueError) as exc:
         print(f"agentic stopped: {exc}")

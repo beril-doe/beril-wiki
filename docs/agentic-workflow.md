@@ -21,6 +21,7 @@ uv run python -m beril_wiki.agentic plan
 # Choose a model available to your login and budgets appropriate to the update.
 uv run python -m beril_wiki.agentic run \
   --model MODEL_ID --max-tokens 500000 --max-jobs 40 --max-actions 16 \
+  --step-model curator=LIGHT_MODEL_ID --step-model queries=LIGHT_MODEL_ID \
   --checkout /path/to/BERIL-research-observatory
 
 # Search accepted wiki Markdown without inference.
@@ -42,6 +43,40 @@ Accounting includes input, output, cache-write and cache-read tokens from
 generation, review and repair. These counts and API-price estimates do not measure
 remaining subscription allowance. Account billing settings remain provider-owned;
 the runner does not purchase credits.
+
+### Per-step models
+
+`--model` is the required default. Repeat `--step-model ROLE=MODEL_ID` to
+override any of these roles; unknown or duplicate roles and empty model IDs
+are rejected before execution.
+
+| Role | Jobs |
+| --- | --- |
+| `curator` | Choose the next editorial action. |
+| `extraction` | Extract source evidence. |
+| `planning` | Plan evidence integration and propose topic groups. |
+| `writing` | Write and revise pages, derived prose, home and entity merges; default for other generation jobs. |
+| `review` | All separate scientific reviews, including extraction and repaired candidates. |
+| `queries` | Construct literature search queries. |
+| `figures` | Select figure placements. |
+
+Repairs keep the original role's model. A literature-writing job ending in
+`/review` still uses `writing`; only `/science-review` jobs use `review`.
+Unspecified roles use the default, with no automatic fallback or escalation.
+Use explicit model IDs available to the authenticated subscription; moving
+aliases may change their underlying model without changing a cache key.
+
+The ledger records each new job's configured model. `status` returns job rows
+as `[key, step, status, tokens, error, model]`; older rows may have a null model.
+Accepted `state/agentic.json` records the effective role-to-model policy.
+Every role shares the same token and job ceilings. Changing the policy during
+an interrupted run preserves charges for the same input snapshot, including
+runs created before model overrides were added.
+
+Job caches use the selected model, so an unrelated override does not invalidate
+them. Stage fingerprints include only their relevant roles: figure changes
+refresh figures; query changes refresh literature. Extraction, planning,
+writing or review changes conservatively recheck core integration as well.
 
 ## Editorial control and required work
 

@@ -291,3 +291,187 @@ def test_legacy_retry_gets_review_without_another_repair(tmp_path, monkeypatch, 
     with pytest.raises(R.CandidateError):
         R.text_completion([], step)
     assert calls == [step, step + "/science-review"]
+
+
+@pytest.mark.parametrize(
+    ("step", "role"),
+    [
+        ("curator/decision/0", "curator"),
+        ("curator/topics/repair", "planning"),
+        ("extract/a/0", "extraction"),
+        ("batch/plan/0/repair", "planning"),
+        ("write/concepts/a.md/repair", "writing"),
+        ("lit/a/review", "writing"),
+        ("lit/a/queries/repair", "queries"),
+        ("figures/topics/a.md", "figures"),
+        ("write/concepts/a.md/repair/science-review", "review"),
+        ("authors/queries/retry", "writing"),
+    ],
+)
+def test_model_routes_cover_repairs_and_reviews(step, role):
+    config = {"model": "default", "step_models": {role: "selected"}}
+    assert R.model_for(config, step) == "selected"
+    assert R.model_for({"model": "default"}, step) == "default"
+
+
+def test_model_cache_and_sdk_selection_share_one_budget(tmp_path, monkeypatch):
+    from claude_agent_sdk import ResultMessage, SystemMessage
+
+    agent = runtime(tmp_path)
+    monkeypatch.setattr(R, "check_auth", lambda cli: None)
+    models = []
+
+    async def query(**kwargs):
+        models.append(kwargs["options"].model)
+        yield SystemMessage(subtype="init", data={"apiKeySource": "none"})
+        yield ResultMessage(
+            subtype="success",
+            duration_ms=0,
+            duration_api_ms=0,
+            is_error=False,
+            num_turns=1,
+            session_id="recorded",
+            result="answer",
+            usage={"input_tokens": 3, "output_tokens": 5},
+            stop_reason="end_turn",
+        )
+
+    monkeypatch.setattr(R, "query", query)
+    messages = [{"role": "user", "content": "check"}]
+    agent.ask(messages, "write/concepts/a.md")
+    routed = R.Runtime(agent.config | {"step_models": {"review": "reviewer"}})
+    routed.ask(messages, "write/concepts/a.md")  # unchanged writer is cached
+    routed.ask(messages, "write/concepts/a.md/science-review")
+    routed.ask(messages, "write/concepts/a.md/repair")
+    assert models == ["test", "reviewer", "test"]
+    assert routed.ledger.totals()["tokens"] == 24
+    assert [
+        r[0] for r in routed.ledger.db.execute("SELECT model FROM jobs ORDER BY rowid")
+    ] == models
+    limited = R.Runtime(routed.config | {"max_tokens": 30, "step_models": {"review": "another"}})
+    with pytest.raises(R.WorkflowError, match="budget admission refused"):
+        limited.ask(messages, "write/concepts/a.md/science-review")
+    assert len(models) == 3
+
+
+def test_model_changes_invalidate_only_relevant_stage_policy(tmp_path):
+    from beril_wiki.agentic.curator import stage_revision
+
+    config = {"model": "strong"}
+    figure = config | {"step_models": {"figures": "small"}}
+    query = config | {"step_models": {"queries": "small"}}
+    review = config | {"step_models": {"review": "other"}}
+    baseline = {
+        s: stage_revision(tmp_path, s, config)
+        for s in ("topics", "literature", "authors", "conflicts", "figures")
+    }
+    for stage, rev in baseline.items():
+        assert (stage_revision(tmp_path, stage, figure) != rev) == (stage == "figures")
+        assert (stage_revision(tmp_path, stage, query) != rev) == (stage == "literature")
+        assert (stage_revision(tmp_path, stage, review) != rev) == (stage != "figures")
+    assert R.model_signature(config) == "strong"
+    assert R.model_signature(config | {"step_models": {"writing": "strong"}}) == "strong"
+
+
+@pytest.mark.parametrize(
+    "overrides", [["unknown=x"], ["review="], ["review"], ["review=a", "review=b"]]
+)
+def test_cli_rejects_invalid_model_overrides(tmp_path, monkeypatch, overrides):
+    import sys
+
+    from beril_wiki.agentic import __main__ as cli
+
+    args = [
+        "agentic",
+        "--root",
+        str(tmp_path),
+        "run",
+        "--model",
+        "default",
+        "--max-tokens",
+        "100",
+        "--max-jobs",
+        "3",
+        "--cli",
+        "unused",
+    ]
+    for value in overrides:
+        args += ["--step-model", value]
+    monkeypatch.setattr(sys, "argv", args)
+    monkeypatch.setattr(cli, "run", lambda *a: pytest.fail("invalid config reached runner"))
+    assert cli.main() == 1
+
+
+def test_cli_passes_explicit_model_policy(tmp_path, monkeypatch):
+    import sys
+
+    from beril_wiki.agentic import __main__ as cli
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "agentic",
+            "--root",
+            str(tmp_path),
+            "run",
+            "--model",
+            "strong",
+            "--max-tokens",
+            "100",
+            "--max-jobs",
+            "3",
+            "--cli",
+            "unused",
+            "--step-model",
+            "curator=small",
+            "--step-model",
+            "review=reviewer",
+        ],
+    )
+    configs = []
+    monkeypatch.setattr(cli, "run", lambda root, checkout, config, staged: configs.append(config))
+    assert cli.main() == 0
+    assert configs[0]["step_models"] == {"curator": "small", "review": "reviewer"}
+
+
+@pytest.mark.parametrize("legacy", [False, True])
+def test_model_change_preserves_interrupted_run_charges(tmp_path, monkeypatch, legacy):
+    from types import SimpleNamespace
+
+    from beril_wiki.agentic import runner
+
+    root, checkout = tmp_path / "repo", tmp_path / "observatory"
+    for folder in (*runner.TREES, "contract"):
+        (root / folder).mkdir(parents=True)
+    (checkout / "ui/config").mkdir(parents=True)
+    (checkout / "ui/config/collections.yaml").write_text("collections: []")
+    config = dict(cli="unused", model="first", max_tokens=40, max_jobs=5, reserve_tokens=30)
+    monkeypatch.setattr(runner.subprocess, "run", lambda *a, **k: SimpleNamespace(stdout="test"))
+    if legacy:
+        store = root / ".agentic"
+        store.mkdir()
+        run_id = R.digest(
+            [runner.fingerprint(root), runner.checkout_inputs(checkout), "first", False]
+        )
+        (store / "config.json").write_text(json.dumps(config | {"run": run_id}))
+    runs = []
+
+    def stopped_stage(work, config_path, name, module, args):
+        saved = json.loads(config_path.read_text())
+        agent = R.Runtime(saved)
+        runs.append(saved["run"])
+        agent.ledger.reserve(saved["model"], "extract/a/0", saved["model"])
+        agent.ledger.finish(
+            saved["model"], "saved extraction", {"input_tokens": 10, "output_tokens": 10}
+        )
+        raise R.WorkflowError("interrupted after paid work")
+
+    monkeypatch.setattr(runner, "run_stage", stopped_stage)
+    with pytest.raises(R.WorkflowError, match="interrupted"):
+        runner.run(root, checkout, config)
+    with pytest.raises(R.WorkflowError, match="budget admission refused"):
+        runner.run(root, checkout, config | {"model": "second", "step_models": {"review": "third"}})
+    assert len(runs) == 2 and runs[0] == runs[1]
+    saved = json.loads((root / ".agentic/config.json").read_text())
+    assert R.Runtime(saved).ledger.totals()["tokens"] == 20

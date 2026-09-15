@@ -35,6 +35,49 @@ class CandidateError(WorkflowError):
     """Repairable model output, distinct from operational or budget failures."""
 
 
+MODEL_ROLES = ("curator", "extraction", "planning", "writing", "review", "queries", "figures")
+CORE_MODEL_ROLES = ("extraction", "planning", "writing", "review")
+
+
+def model_policy(config: dict) -> dict[str, str]:
+    default = config.get("model")
+    overrides = config.get("step_models", {})
+    if not isinstance(default, str) or not default.strip():
+        raise WorkflowError("model must be a nonempty model ID")
+    if not isinstance(overrides, dict) or set(overrides) - set(MODEL_ROLES):
+        raise WorkflowError(f"step-model roles must be one of: {', '.join(MODEL_ROLES)}")
+    if any(not isinstance(m, str) or not m.strip() for m in overrides.values()):
+        raise WorkflowError("step-model values must be nonempty model IDs")
+    return {role: overrides.get(role, default).strip() for role in MODEL_ROLES}
+
+
+def model_for(config: dict, step: str) -> str:
+    """Route by job role; a repair retains its role and scientific review is separate."""
+    step = step.removesuffix("/repair")
+    if step.endswith("/science-review"):
+        role = "review"
+    elif step.startswith("curator/decision/"):
+        role = "curator"
+    elif step.startswith("extract/"):
+        role = "extraction"
+    elif step.startswith("batch/plan/") or step == "curator/topics":
+        role = "planning"
+    elif step.startswith("lit/") and step.endswith("/queries"):
+        role = "queries"
+    elif step.startswith("figures/"):
+        role = "figures"
+    else:
+        role = "writing"
+    return model_policy(config)[role]
+
+
+def model_signature(config: dict, roles: tuple[str, ...] = MODEL_ROLES) -> str | dict:
+    """Retain the single-model cache identity when the effective models are identical."""
+    policy = model_policy(config)
+    selected = {role: policy[role] for role in roles}
+    return next(iter(selected.values())) if len(set(selected.values())) == 1 else selected
+
+
 T = TypeVar("T")
 
 
@@ -81,11 +124,13 @@ class Ledger:
         self.db.execute("""CREATE TABLE IF NOT EXISTS jobs (
             key TEXT PRIMARY KEY, run TEXT NOT NULL, status TEXT NOT NULL,
             output TEXT, usage TEXT, tokens INTEGER, error TEXT, dependencies TEXT)""")
-        if "step" not in {row[1] for row in self.db.execute("PRAGMA table_info(jobs)")}:
-            self.db.execute("ALTER TABLE jobs ADD COLUMN step TEXT")
+        columns = {row[1] for row in self.db.execute("PRAGMA table_info(jobs)")}
+        for column in ("step", "model"):
+            if column not in columns:
+                self.db.execute(f"ALTER TABLE jobs ADD COLUMN {column} TEXT")
         self.db.commit()
 
-    def reserve(self, key: str, step: str = "") -> str | None:
+    def reserve(self, key: str, step: str = "", model: str | None = None) -> str | None:
         self.db.execute("BEGIN IMMEDIATE")
         try:
             row = self.db.execute("SELECT status,output FROM jobs WHERE key=?", (key,)).fetchone()
@@ -105,8 +150,8 @@ class Ledger:
             if count >= self.max_jobs or spent + self.headroom > self.budget:
                 raise WorkflowError(f"budget admission refused: jobs={count}, tokens={spent}")
             self.db.execute(
-                "INSERT INTO jobs(key,run,status,step) VALUES(?,?,'pending',?)",
-                (key, self.run, step),
+                "INSERT INTO jobs(key,run,status,step,model) VALUES(?,?,'pending',?,?)",
+                (key, self.run, step, model),
             )
             self.db.commit()
             return None
@@ -398,7 +443,8 @@ class Runtime:
                     self._validation_context,
                 ]
             )
-        key = digest([messages, self.config["model"], tool_revision, inputs, step])
+        model = model_for(self.config, step)
+        key = digest([messages, model, tool_revision, inputs, step])
         # Cached answers remain useful across CLI updates; changed tool reads invalidate them.
         while row := self.ledger.db.execute(
             "SELECT status,dependencies,output FROM jobs WHERE key=?", (key,)
@@ -414,10 +460,10 @@ class Runtime:
                 return row[2]
             key = digest([key, current])
         check_auth(self.config["cli"])
-        cached = self.ledger.reserve(key, step)
+        cached = self.ledger.reserve(key, step, model)
         if cached is not None:
             return cached
-        print(f"agentic: {step} [{key[:12]}]", flush=True)
+        print(f"agentic: {step} model={model} [{key[:12]}]", flush=True)
         self._step = step
         try:
             return asyncio.run(self._query(payload, key))
@@ -497,7 +543,7 @@ class Runtime:
         contract = (self.root / "contract/AGENTS.md").read_text()
         opts = ClaudeAgentOptions(
             cli_path=cli,
-            model=self.config["model"],
+            model=model_for(self.config, self._step),
             system_prompt=system + contract,
             tools=[],
             allowed_tools=[f"mcp__evidence__{t.name}" for t in available],
