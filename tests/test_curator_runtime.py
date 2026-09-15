@@ -552,3 +552,40 @@ def test_model_change_preserves_interrupted_run_charges(tmp_path, monkeypatch, l
     assert len(runs) == 2 and runs[0] == runs[1]
     saved = json.loads((root / ".agentic/config.json").read_text())
     assert R.Runtime(saved).ledger.totals()["tokens"] == 20
+
+
+def test_read_clamps_end_to_document_length(tmp_path):
+    (tmp_path / "staging").mkdir()
+    (tmp_path / "staging/a.md").write_text("short text")
+    reader = R.ReadTools(tmp_path)
+    piece = reader.read("staging/a.md", 0, 99_999)
+    assert piece["text"] == "short text" and piece["end"] == piece["length"] == 10
+    with pytest.raises(R.WorkflowError, match="beyond document length"):
+        reader.read("staging/a.md", 10, 11)
+
+
+def test_error_result_usage_is_recorded_when_cli_exits_nonzero(tmp_path, monkeypatch):
+    from claude_agent_sdk import ProcessError, ResultMessage, SystemMessage
+
+    agent = runtime(tmp_path)
+    monkeypatch.setattr(R, "check_auth", lambda cli: None)
+
+    async def query(**kwargs):
+        yield SystemMessage(subtype="init", data={"apiKeySource": "none"})
+        yield ResultMessage(
+            subtype="error_max_turns",
+            duration_ms=0,
+            duration_api_ms=0,
+            is_error=True,
+            num_turns=13,
+            session_id="recorded",
+            result="",
+            usage={"input_tokens": 3, "output_tokens": 5, "cache_read_input_tokens": 40},
+            stop_reason="tool_use",
+        )
+        raise ProcessError("Claude Code returned an error result: max turns", exit_code=1)
+
+    monkeypatch.setattr(R, "query", query)
+    with pytest.raises(R.WorkflowError, match="error_max_turns"):
+        agent.ask([{"role": "user", "content": "check"}], "write/concepts/a.md/science-review")
+    assert agent.ledger.db.execute("SELECT status, tokens FROM jobs").fetchall() == [("failed", 48)]
