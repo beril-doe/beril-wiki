@@ -76,7 +76,12 @@ code.
 Changed reports are extracted in bounded overlapping ranges with exact quotes and
 offsets, including null results and caveats. Coverage spans the entire source.
 Planning batches cover every evidence record; the host combines edits to each
-page. Writers use base hashes and anchored patches or justified rewrites.
+page and passes each concept's assignments to its writer. Summaries receive
+all assignments from their own source. Candidates map every assigned ID to an
+exact paragraph citing that source; both tool and final validation check this
+mapping. The scientific reviewer checks that the mapped text preserves each
+claim, caveat and null result. Writers use base hashes and anchored patches or
+justified rewrites.
 Deterministic checks retain citations and quantities from unchanged sources,
 including absorbed pages and paragraphs citing both revised and unchanged sources.
 Quantities in those mixed-source paragraphs are retained conservatively; separate

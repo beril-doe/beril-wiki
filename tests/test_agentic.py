@@ -221,7 +221,14 @@ def test_recorded_batch_groups_pages_and_preserves_failed_review(tmp_path, monke
         else:
             body += "## Open Directions\n\nTest reproducibility."
         return json.dumps(
-            {"base_hash": digest(""), "content": body, "description": "Yield evidence"}
+            {
+                "base_hash": digest(""),
+                "content": body,
+                "description": "Yield evidence",
+                "accounted_evidence": {
+                    c["evidence"]: body.split("\n\n")[1] for c in payload["coverage"]
+                },
+            }
         )
 
     monkeypatch.setattr(agent, "ask", recorded)

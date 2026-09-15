@@ -75,6 +75,9 @@ def setup_batch(tmp_path, monkeypatch, *, bad_writes=0, bad_plan=False):
                 "description": "Yield evidence",
                 "content": body,
                 "rewrite_reason": "Recheck evidence",
+                "accounted_evidence": {
+                    c["evidence"]: body.split("\n\n")[1] for c in payload["coverage"]
+                },
             }
         )
 
@@ -225,6 +228,7 @@ def test_tool_success_does_not_skip_final_validation(tmp_path, monkeypatch):
                 "description": "Yield",
                 "edits": [],
                 "no_change_reason": "Evidence retained",
+                "accounted_evidence": {"a:0:0": "Yield was 42%. [src: a]"},
             }
             assert validator(json.dumps(candidate)) == OLD
             assert reviews == before
@@ -318,3 +322,146 @@ def test_quantity_cited_only_to_revised_source_can_change(tmp_path, monkeypatch)
         batch.validate_candidate(tmp_path, job.path, job, candidate, {"a"}, {"concepts/yield"})
         == candidate["content"]
     )
+
+
+@pytest.mark.parametrize("failure", ["missing", "unknown", "absent", "wrong-source"])
+def test_assigned_evidence_requires_cited_candidate_passages(tmp_path, monkeypatch, failure):
+    _, _, _, job = setup_batch(tmp_path, monkeypatch)
+    passage = "Yield was 42%. [src: a]"
+    body = OLD + "\n\nNo benefit was observed. [src: b]"
+    (tmp_path / "staging/b__REPORT.md").write_text("No benefit was observed.")
+    candidate = {
+        "base_hash": digest(OLD),
+        "description": "Yield",
+        "content": body,
+        "rewrite_reason": "Integrate",
+        "accounted_evidence": {"a:0:0": passage},
+    }
+    assigned = [{"id": "a:0:0", "source": "a", "claim": "Yield was 42%.", "kind": "finding"}]
+    if failure == "missing":
+        candidate.pop("accounted_evidence")
+    elif failure == "unknown":
+        candidate["accounted_evidence"]["a:0:1"] = passage
+    elif failure == "absent":
+        candidate["accounted_evidence"]["a:0:0"] = "A missing caveat. [src: a]"
+    else:
+        candidate["accounted_evidence"]["a:0:0"] = "No benefit was observed. [src: b]"
+    with pytest.raises(CandidateError, match="assigned evidence"):
+        batch.validate_candidate(
+            tmp_path, job.path, job, candidate, set(), {"concepts/yield"}, assigned=assigned
+        )
+
+
+@pytest.mark.parametrize("failure", ["omitted", "misrepresented"])
+def test_concept_assignments_survive_writing_validation_and_review(tmp_path, monkeypatch, failure):
+    agent, calls, _, job = setup_batch(tmp_path, monkeypatch)
+    text = "Yield was 42%. No benefit was observed. Conditions were uncontrolled."
+    (tmp_path / "staging/a__REPORT.md").write_text(text)
+    (tmp_path / "staging/b__REPORT.md").write_text("An unrelated study.")
+    claims = ["Yield was 42%.", "No benefit was observed.", "Conditions were uncontrolled."]
+    assignments = [job.path, "concepts/limits.md", "concepts/limits.md"]
+    inspected = []
+
+    def replies(messages, step):
+        if step.startswith("extract/"):
+            return json.dumps(
+                {
+                    "findings": [
+                        {
+                            "quote": claim,
+                            "claim": claim,
+                            "start": text.index(claim),
+                            "end": text.index(claim) + len(claim),
+                            "kind": kind,
+                        }
+                        for claim, kind in zip(claims, ["finding", "null", "caveat"], strict=True)
+                    ],
+                    "empty_reason": "",
+                }
+            )
+        if step.startswith("batch/plan/"):
+            return json.dumps(
+                {
+                    "pages": [
+                        job.model_dump(),
+                        job.model_dump() | {"path": assignments[1], "sources": ["b"]},
+                    ],
+                    "coverage": [
+                        {"evidence": f"a:0:{i}", "concepts": [path], "summary_only": ""}
+                        for i, path in enumerate(assignments)
+                    ],
+                }
+            )
+        payload = json.loads(messages[0]["content"].split("\n")[-1])
+        calls.append((step, messages))
+        path = payload["job"]["path"]
+        ids = [
+            f"a:0:{i}"
+            for i, dest in enumerate(assignments)
+            if dest == path or path.startswith("summaries/")
+        ]
+        assert [entry["evidence"] for entry in payload["coverage"]] == ids
+        evidence = {e["id"]: e for e in payload["evidence"]}
+        assert set(ids) <= evidence.keys()
+        account = {eid: evidence[eid]["claim"] + " [src: a]" for eid in ids}
+        body = "# Evidence\n\n" + "\n\n".join(account.values())
+        body += (
+            "\n\n## Slots Into\n\n[[concepts/yield]]"
+            if path.startswith("summaries/")
+            else "\n\n## Open Directions\n\nRepeat measurements."
+        )
+        # The null result must not disappear even if the caveat cites the same source.
+        if path == assignments[1] and not step.endswith("/repair"):
+            body = body.replace(account.pop("a:0:1") + "\n\n", "")
+            if failure == "misrepresented":
+                account["a:0:1"] = account["a:0:2"]
+        return json.dumps(
+            {
+                "base_hash": payload["base_hash"],
+                "description": "Evidence",
+                "content": body,
+                "rewrite_reason": "Integrate",
+                "accounted_evidence": account,
+            }
+        )
+
+    def review(task, body, step):
+        if not step.startswith("write/"):
+            return
+        payload = json.loads(task[0]["content"].split("\n")[-1])
+        expected = {c["evidence"] for c in payload["coverage"]}
+        account = json.loads(task[-1]["content"].split("\n")[-1])
+        assert set(account) == expected
+        assert all(passage in body for passage in account.values())
+        inspected.append(step)
+        if "a:0:1" in account and claims[1] not in account["a:0:1"]:
+            raise CandidateError("assigned null result is missing from its mapped paragraph")
+
+    generate = agent.generate
+
+    def check_bound_tool(messages, step, accept, *, validator=None, context=None):
+        if step == "write/concepts/limits.md":
+            assert context is not None and validator is not None
+            assert {f["id"] for f in context["assigned"]} == {"a:0:1", "a:0:2"}
+            payload = json.loads(messages[0]["content"].split("\n")[-1])
+            assert payload["job"]["sources"] == ["a", "b"]
+            with pytest.raises(CandidateError, match="assigned evidence"):
+                validator(
+                    json.dumps(
+                        {
+                            "base_hash": digest(""),
+                            "description": "Limits",
+                            "content": "# Limits\n\nConditions were uncontrolled. [src: a]\n\n"
+                            "## Open Directions\n\nRepeat measurements.",
+                        }
+                    )
+                )
+        return generate(messages, step, accept, validator=validator, context=context)
+
+    monkeypatch.setattr(agent, "ask", replies)
+    monkeypatch.setattr(agent, "review", review)
+    monkeypatch.setattr(agent, "generate", check_bound_tool)
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    assert sum(step.startswith("write/concepts/limits.md") for step, _ in calls) == 2
+    assert inspected.count("write/concepts/limits.md") == (2 if failure == "misrepresented" else 1)
+    assert all(claim in (tmp_path / "wiki/concepts/limits.md").read_text() for claim in claims[1:])

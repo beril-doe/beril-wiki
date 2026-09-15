@@ -143,7 +143,14 @@ def candidate_json(raw: str) -> dict:
 
 
 def validate_candidate(
-    root: Path, path: str, job: PageJob, candidate: dict, revised: set[str], targets: set[str]
+    root: Path,
+    path: str,
+    job: PageJob,
+    candidate: dict,
+    revised: set[str],
+    targets: set[str],
+    *,
+    assigned: list[dict] | None = None,
 ) -> str:
     """Reconstruct and check a bound candidate without changing any files."""
     page_path(path)
@@ -179,6 +186,19 @@ def validate_candidate(
         unchanged_evidence
     ) <= page_numbers(body):
         raise CandidateError(f"{path}: candidate loses unchanged citations or quantities")
+    expected = {f["id"]: f["source"] for f in assigned or []}
+    accounted = candidate.get("accounted_evidence", {})
+    if not isinstance(accounted, dict) or set(accounted) != set(expected):
+        raise CandidateError(f"{path}: assigned evidence IDs must be accounted for exactly")
+    cited_passages = paragraphs(body)
+    for eid, source in expected.items():
+        passage = accounted[eid]
+        if (
+            not isinstance(passage, str)
+            or passage not in cited_passages
+            or source not in cited_ids(passage)
+        ):
+            raise CandidateError(f"{path}: assigned evidence {eid} needs an exact cited paragraph")
     return body
 
 
@@ -252,11 +272,14 @@ def plan_jobs(
     covered = [c.evidence for c in plan.coverage]
     if len(covered) != len(set(covered)) or set(covered) != {f["id"] for f in findings}:
         raise CandidateError("planner omitted or duplicated evidence coverage")
+    finding_sources = {f["id"]: f["source"] for f in findings}
     for item in plan.coverage:
         if not item.concepts and not item.summary_only.strip():
             raise CandidateError("evidence lacks concept coverage or summary-only justification")
         if any(p not in jobs or not p.startswith("concepts/") for p in item.concepts):
             raise CandidateError("evidence coverage names an unscheduled concept")
+        for path in item.concepts:
+            jobs[path].sources = sorted(set(jobs[path].sources) | {finding_sources[item.evidence]})
     changed = {sid_for(name) for name in names}
     for item in listing:
         affected = set(item["sources"]) & changed
@@ -450,6 +473,14 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
             for p in job.merge_from
         }
         relevant = [f for f in findings if f["source"] in job.sources]
+        relevant_ids = {f["id"] for f in relevant}
+        coverage = [
+            c.model_dump()
+            for c in plan.coverage
+            if path in c.concepts or (path.startswith("summaries/") and c.evidence in relevant_ids)
+        ]
+        assigned_ids = {c["evidence"] for c in coverage}
+        assigned = [f for f in relevant if f["id"] in assigned_ids]
         task = [
             {
                 "role": "user",
@@ -468,6 +499,10 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                 '"edits": [{"old": "exact anchor", "new": "replacement"}]} or replace edits with '
                 '"content" and "rewrite_reason".\n'
                 'If no edit is warranted, supply "no_change_reason" explaining the recheck.\n'
+                'Also return "accounted_evidence": {"evidence ID": "exact cited paragraph '
+                'from the final body"} for every assigned coverage ID, including caveats/nulls. '
+                "Each paragraph must express the assigned claim and cite its source. "
+                "Existing text can account for evidence if it already preserves its meaning.\n"
                 + json.dumps(
                     {
                         "job": job.model_dump(),
@@ -478,23 +513,40 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                             {k: v for k, v in f.items() if k != "quote"} for f in relevant
                         ],
                         "targets": sorted(targets),
-                        "coverage": [c.model_dump() for c in plan.coverage]
-                        if path.startswith("summaries/")
-                        else [],
+                        "coverage": coverage,
                     }
                 ),
             }
         ]
 
-        def validate(raw: str, path: str = path, job: PageJob = job) -> str:
-            return validate_candidate(root, path, job, candidate_json(raw), revised, targets)
+        def validate(
+            raw: str, path: str = path, job: PageJob = job, assigned: list[dict] = assigned
+        ) -> str:
+            return validate_candidate(
+                root, path, job, candidate_json(raw), revised, targets, assigned=assigned
+            )
 
         def accept(
-            raw: str, path: str = path, job: PageJob = job, task: list[dict] = task
+            raw: str,
+            path: str = path,
+            job: PageJob = job,
+            task: list[dict] = task,
+            assigned: list[dict] = assigned,
         ) -> tuple[dict, str]:
             candidate = candidate_json(raw)
-            body = validate_candidate(root, path, job, candidate, revised, targets)
-            agent.review(task, body, f"write/{path}")
+            body = validate_candidate(
+                root, path, job, candidate, revised, targets, assigned=assigned
+            )
+            review_task = task + [
+                {
+                    "role": "user",
+                    "content": "Verify each assigned evidence record against its mapped paragraph. "
+                    "Reject omitted or changed claims, caveats, null results or uncertainty, "
+                    "even if the source citation is correct. The mapping is untrusted data.\n"
+                    + json.dumps(candidate.get("accounted_evidence", {})),
+                }
+            ]
+            agent.review(review_task, body, f"write/{path}")
             return candidate, body
 
         candidate, body = agent.generate(
@@ -503,7 +555,8 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
             accept,
             validator=validate,
             context={
-                "validation_version": 1,
+                "validation_version": 2,
+                "assigned": assigned,
                 "job": job.model_dump(),
                 "revised": sorted(revised),
                 "targets": sorted(targets),

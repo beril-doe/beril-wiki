@@ -74,7 +74,19 @@ def reply(self, messages, step):
             body += "\n\n## Tensions\n\n" + FACTS.replace("\n\n", " ")
             body += "\n\n## Open Directions\n\nMeasure conditions."
         return json.dumps(
-            {"base_hash": digest(""), "content": body, "description": "Yield measurements"}
+            {
+                "base_hash": digest(""),
+                "content": body,
+                "description": "Yield measurements",
+                "accounted_evidence": {
+                    c["evidence"]: next(
+                        par
+                        for par in body.split("\n\n")
+                        if f"[src: {c['evidence'].split(':')[0]}]" in par
+                    )
+                    for c in data["coverage"]
+                },
+            }
         )
     if step.startswith("conflicts/"):
         return (
