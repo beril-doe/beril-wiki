@@ -265,3 +265,131 @@ def test_clean_strips_fences_and_legacy_names():
     text = P.clean("```markdown\n# T\n\nData in BERDL and [[concepts/x]].\n```", {"concepts/y"})
     assert text == "# T\n\nData in the KBase Data Lakehouse and x."
     assert SimpleNamespace  # keep the import honest for the stub type
+
+
+def _patch_reply(messages, edits):
+    base = messages[0]["content"].split("base_hash ")[1].split(")")[0]
+    return json.dumps({"base_hash": base, "paragraphs": edits})
+
+
+def test_unresolved_and_unreviewed_paragraphs_stay_in_scope(monkeypatch, tmp_path):
+    """A patch that fixes one of two objections must not retire the other one."""
+    first = {
+        "accepted": False,
+        "issues": [
+            {"paragraph": 1, "category": "unsupported", "quote": "Lead"},
+            {"paragraph": 4, "category": "direction", "quote": "56%"},
+        ],
+    }
+    verdicts = iter(
+        [
+            first,
+            {
+                "accepted": False,
+                "issues": [{"paragraph": 4, "category": "direction", "quote": "56%"}],
+            },
+            {"accepted": True, "issues": []},
+        ]
+    )
+    stub = configure(
+        monkeypatch,
+        tmp_path,
+        {
+            "x": GOOD,
+            "x/review": lambda m: json.dumps(next(verdicts)),
+            "x/patch/1": lambda m: _patch_reply(m, {"1": "A lead that is supported."}),
+            "x/patch/1/review": lambda m: json.dumps(next(verdicts)),
+            "x/patch/2": lambda m: _patch_reply(m, {"4": "Yield rose to 56%. [src: b]"}),
+            "x/patch/2/review": lambda m: json.dumps(next(verdicts)),
+        },
+    )
+    out = run("x")
+    assert "Yield rose to 56%." in out and "A lead that is supported." in out
+    assert "Review only paragraphs [1, 4]" in stub.prompts[3][1]  # the unfixed objection follows
+    assert "Review only paragraphs [4]" in stub.prompts[5][1]
+
+
+def test_patch_that_fails_a_gate_keeps_its_changes_unreviewed(monkeypatch, tmp_path):
+    reject = json.dumps(
+        {
+            "accepted": False,
+            "issues": [{"paragraph": 1, "category": "unsupported", "quote": "Lead"}],
+        }
+    )
+    stub = configure(
+        monkeypatch,
+        tmp_path,
+        {
+            "x": GOOD,
+            "x/review": reject,
+            # Fixes paragraph 1 but imports a figure into paragraph 3: the gate rejects it.
+            "x/patch/1": lambda m: _patch_reply(
+                m, {"1": "Supported lead.", "3": "Yield was 42% of 8,314 loci. [src: a]"}
+            ),
+            "x/patch/2": lambda m: _patch_reply(m, {"3": "Yield was 42%. [src: a]"}),
+            "x/patch/2/review": '{"accepted": true, "issues": []}',
+        },
+    )
+    run("x")
+    assert "Review only paragraphs [1, 3]" in stub.prompts[-1][1]
+
+
+def test_invalid_patch_index_is_a_page_failure(monkeypatch, tmp_path):
+    reject = json.dumps(
+        {
+            "accepted": False,
+            "issues": [{"paragraph": 1, "category": "unsupported", "quote": "Lead"}],
+        }
+    )
+    configure(
+        monkeypatch,
+        tmp_path,
+        {"x": GOOD, "x/review": reject, "x/patch/1": lambda m: _patch_reply(m, {"999": "x"})},
+    )
+    with pytest.raises(P.PageFailure, match="do not exist"):
+        run("x")
+
+
+def test_contradictory_or_malformed_verdict_is_asked_again_then_fails(monkeypatch, tmp_path):
+    stub = configure(
+        monkeypatch,
+        tmp_path,
+        {"x": GOOD, "x/review": '{"accepted": false, "issues": []}', "x/review/again": "nonsense"},
+    )
+    with pytest.raises(P.PageFailure, match="no usable verdict"):
+        run("x")
+    assert [s for s, _ in stub.prompts] == ["x", "x/review", "x/review/again"]
+    configure(
+        monkeypatch,
+        tmp_path,
+        {
+            "x": GOOD,
+            "x/review": "nonsense",
+            "x/review/again": json.dumps(
+                {
+                    "accepted": False,
+                    "issues": [{"paragraph": None, "category": "length", "quote": "too long"}],
+                }
+            ),
+        },
+    )
+    assert run("x") == GOOD  # a reviewer word count is code-owned and never patched
+
+
+def test_normalize_runs_before_gates_and_review(monkeypatch, tmp_path):
+    draft = GOOD.replace("## Sides", "## Sides\n\nSee [[concepts/missing]].")
+    stub = configure(
+        monkeypatch, tmp_path, {"x": draft, "x/review": '{"accepted": true, "issues": []}'}
+    )
+    out = P.derived_page(
+        "x",
+        CONTRACT,
+        "t",
+        "pack",
+        allowed=GOOD,
+        sources=SOURCES,
+        valid_ids={"a", "b"},
+        targets=set(),
+        normalize=lambda t: t.replace("See missing.", "See [[concepts/a]]."),
+    )
+    assert "See [[concepts/a]]." in out and "[[concepts/a]]" in stub.prompts[-1][1]

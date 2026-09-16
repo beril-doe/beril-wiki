@@ -252,7 +252,8 @@ def review(
     scope: list[int] | None,
     step: str,
     call: Ask = ask,
-):
+) -> list[Issue] | None:
+    """The reviewer's in-scope issues; None when it returned no usable verdict."""
     scope_line = (
         "Review every paragraph."
         if scope is None
@@ -277,11 +278,15 @@ def review(
     )
     try:
         verdict = Verdict.model_validate(C.parse_json_reply(raw))
-    except (ValueError, ValidationError) as exc:
-        return [Issue(category="format", note=f"reviewer returned no valid verdict: {exc}"[:800])]
+    except (ValueError, ValidationError):
+        return None
+    if not verdict.accepted and not verdict.issues:
+        return None  # a rejection with nothing to fix is not a verdict; fail closed
+    # Length is code-owned; a reviewer word count must never cost a prose patch.
+    issues = [i for i in verdict.issues if i.category != "length"]
     if scope is not None:
-        verdict.issues = [i for i in verdict.issues if i.paragraph is None or i.paragraph in scope]
-    return verdict.issues
+        issues = [i for i in issues if i.paragraph is None or i.paragraph in scope]
+    return issues
 
 
 def patch(
@@ -291,8 +296,11 @@ def patch(
     issues: list[Issue],
     step: str,
     call: Ask = ask,
-) -> tuple[list[str], list[int]]:
-    """Replace only the paragraphs the issues name; return the new blocks and their indices."""
+) -> tuple[list[str], list[int], dict[int, list[int]]]:
+    """Replace only the paragraphs the issues name.
+
+    Returns the new blocks, the indices the patch wrote, and a map from every old
+    index to its new indices so unresolved issues can follow their paragraphs."""
     base = digest(parts)
     budget = ""
     if contract.words:
@@ -326,18 +334,24 @@ def patch(
     edits = reply.get("paragraphs")
     if reply.get("base_hash") != base or not isinstance(edits, dict) or not edits:
         raise PageFailure(step, [Issue(category="format", note="patch is stale or empty")], [])
-    result, changed = [], []
+    if set(edits) - {str(i) for i in range(len(parts))}:
+        note = "patch names paragraphs that do not exist"
+        raise PageFailure(step, [Issue(category="format", note=note)], [])
+    result, changed, remap = [], [], {}
     for index, part in enumerate(parts):
         if str(index) in edits:
             replacement = edits[str(index)]
             if not isinstance(replacement, str):
                 raise PageFailure(step, [Issue(category="format", note="replacement not text")], [])
+            remap[index] = []
             for piece in blocks(replacement):
+                remap[index].append(len(result))
                 changed.append(len(result))
                 result.append(piece)
         else:
+            remap[index] = [len(result)]
             result.append(part)
-    return result, changed
+    return result, changed, remap
 
 
 def derived_page(
@@ -351,20 +365,29 @@ def derived_page(
     valid_ids: set[str],
     targets: set[str] | None = None,
     extra: Callable[[list[str]], list[Issue]] | None = None,
+    normalize: Callable[[str], str] | None = None,
 ) -> str:
-    """Draft, gate, review and patch one page; raise PageFailure after two patch rounds."""
+    """Draft, gate, review and patch one page; raise PageFailure after two patch rounds.
+
+    `extra` adds stage-specific gate issues; `normalize` is a deterministic repair
+    applied before the gates so code-owned fixes never cost a patch round."""
     # One runtime for the whole page, so every job key lands in the failure record.
     agent = runtime() if configured() else None
     call: Ask = agent.ask if agent is not None else ask
     jobs: list[str] = agent.jobs if agent else []
     first = len(jobs)
+
+    def prepare(raw: str) -> list[str]:
+        text = clean(raw, targets)
+        return blocks(normalize(text) if normalize else text)
+
     body = f"TASK:\n{task}\n\nReturn only the page Markdown, beginning with {contract.first!r}."
-    text = clean(call(prompt(contract, pack, body), step), targets)
-    if contract.empty is not None and text == contract.empty:
-        return text
-    parts = blocks(text)
-    scope: list[int] | None = None
-    reviewed = False
+    draft = clean(call(prompt(contract, pack, body), step), targets)
+    if contract.empty is not None and draft == contract.empty:
+        return draft
+    parts = prepare(draft)
+    # Paragraphs not yet covered by a review verdict; None means the whole page.
+    unreviewed: set[int] | None = None
     for round_index in range(3):
         text = "\n\n".join(parts)
         issues = gate(text, contract, allowed=allowed, sources=sources, valid_ids=valid_ids)
@@ -372,21 +395,35 @@ def derived_page(
             issues += extra(parts)
         if not issues and agent is not None:
             name = f"{step}/patch/{round_index}/review" if round_index else f"{step}/review"
-            issues = review(contract, pack, parts, None if not reviewed else scope, name, call)
-            reviewed = True
+            scope = None if unreviewed is None else sorted(unreviewed)
+            verdict = review(contract, pack, parts, scope, name, call)
+            if verdict is None:  # malformed or contradictory: ask once more, never patch prose
+                verdict = review(contract, pack, parts, scope, f"{name}/again", call)
+            if verdict is None:
+                note = "reviewer returned no usable verdict twice"
+                raise PageFailure(step, [Issue(category="format", note=note)], jobs[first:])
+            issues, unreviewed = verdict, set()
         if not issues:
             return text
         if round_index == 2:
             raise PageFailure(step, issues, jobs[first:])
         try:
-            parts, scope = patch(
+            parts, changed, remap = patch(
                 contract, pack, parts, issues, f"{step}/patch/{round_index + 1}", call
             )
         except PageFailure as exc:
             # Keep the issues the patch was meant to fix beside the reason it could not.
             remaining = issues + [Issue(**i) for i in exc.issues]
             raise PageFailure(step, remaining, jobs[first:]) from exc
-        parts = blocks(clean("\n\n".join(parts), targets))
+        if unreviewed is not None:
+            # Everything changed since the last verdict, plus any objection the patch
+            # did not address, follows its paragraph to the next scoped review.
+            carried = unreviewed | {i.paragraph for i in issues if i.paragraph is not None}
+            unreviewed = set(changed) | {n for old in carried for n in remap.get(old, [])}
+        patched = parts
+        parts = prepare("\n\n".join(patched))
+        if unreviewed is not None and len(parts) != len(patched):
+            unreviewed = None  # normalization reshaped the page; review it whole
     raise AssertionError("unreachable")
 
 

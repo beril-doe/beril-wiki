@@ -508,7 +508,7 @@ def main() -> int:
             "PROJECTS IN SCOPE (for [src:] tags and [[summaries/<id>__REPORT]] links): "
             f"{', '.join(sorted(srcs))}"
         )
-        page = derived_page(
+        return derived_page(
             f"topics/{slug}",
             CONTRACT,
             TASK,
@@ -517,8 +517,9 @@ def main() -> int:
             sources=src_texts,
             valid_ids=set(srcs),
             targets=targets | {f"topics/{slug}"},
+            # Code guarantees member links; run it before gates so it never costs a round.
+            normalize=lambda page: link_missing_members(page, members, concepts),
         )
-        return link_missing_members(page, members, concepts)
 
     cap = limit(sys.argv)
     if cap is not None:
