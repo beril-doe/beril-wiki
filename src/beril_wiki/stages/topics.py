@@ -3,14 +3,13 @@
 
 Sits ON TOP of the compiled wiki (reads wiki/concepts + wiki/entities), writes
 wiki/topics/ and the home page wiki/index.md; the compiler never touches either.
-Topic membership is deterministic (Louvain over the concept co-source/wikilink
-graph); an LLM names the topics and writes the hub prose, citing only what the
-member concept pages already cite.
+The agentic runner selects topic membership and names. API mode uses Louvain
+over the concept co-source/wikilink graph and model-generated names. Both write
+hub prose citing only what the member concept pages already cite, from a
+packed evidence prompt that agentic.prose gates, reviews and patches.
 
     OPENAI_API_KEY=$CBORG_API_KEY OPENAI_BASE_URL=https://api.cborg.lbl.gov \
         uv run python -m beril_wiki.stages.topics
-
-Model comes from HUB_MODEL below (hub pages are the showcase — Sonnet by decision).
 """
 
 from __future__ import annotations
@@ -23,54 +22,93 @@ import re
 import sys
 
 import networkx as nx
-from litellm import completion
 
 from beril_wiki import compiler as C
+from beril_wiki.agentic.prose import (
+    NO_PREAMBLE,
+    PLATFORM,
+    Contract,
+    PageFailure,
+    derived_page,
+    excerpts,
+    failed_pages,
+    limit,
+    parallel,
+    prune_failures,
+    record_failure,
+    strict_pages,
+    workers,
+)
+from beril_wiki.agentic.runtime import atomic_json, completion, configured
 from beril_wiki.check import source_ids
 from beril_wiki.paths import ROOT
 from beril_wiki.publish import ingest
 
 OUT = ROOT / "wiki"
 HUB_MODEL = os.environ.get("HUB_MODEL", os.environ.get("WIKI_MODEL", "openai/gpt-5.6-luna"))
-# The home page is one call, and it is the page every reader lands on first, so
-# it is worth a stronger model than the bulk stages: a few cents against prose
-# that frames the whole site. Override like any other stage.
-HOME_MODEL = os.environ.get("HOME_MODEL", "openai/claude-opus-5")
 MIN_CLUSTER = 3
 FORCE = "--force" in sys.argv
-PER_PAGE_CHARS = 7000  # truncate very long concept pages in hub context
+PACK_CHARS = 110_000  # member pages packed into one hub prompt
+MAX_CONFLICTS = 40
 
-TEMPLATE = """You are writing a TOPIC HUB page for the BERIL Research Observatory wiki — the
-entry point a scientist reads first to learn what the corpus says about this topic,
-before drilling into the finer-grained concept pages.
-
-Write markdown with exactly these sections:
-# <Topic Title>
-(one-paragraph lead: what this topic is and why this corpus speaks to it)
-## What the Corpus Shows
-(the heart of the page: argue ACROSS the member concepts/projects as one narrative,
- organized into 3-6 bold-led sub-themes; cite every factual claim with [src: project_id]
- tags COPIED from the member pages — never invent numbers or citations; link liberally
- to member pages with [[concepts/<file-stem>]] wikilinks where a claim is elaborated)
-## Tensions and Caveats
-(real disagreements between projects and the load-bearing limitations, cited)
-## Where to Go Deeper
-(a guided reading path: 4-8 bullets, each "[[concepts/x]] — why you'd read it next";
- then a short list of key entities [[entities/y]] and project reports [[summaries/z__REPORT]])
-
-Rules: numbers must be copied exactly from the member pages; a claim you cannot
-attribute must not be written; define specialist terms at first use; write for a
-scientist-engineer who knows biology but not this corpus. 900-1400 words.
-CITATION SYNTAX (strict): a [src: ...] tag contains ONLY project ids from the
-PROJECTS IN SCOPE list, comma-separated — never concept names, conflict-page
-paths, dashes, or prose. Conflict and concept pages are referenced only as
-[[conflicts/...]] / [[concepts/...]] wikilinks, never inside [src: ...].
-NAMING: the data platform is the KBase Data Lakehouse. Reports call it
-BERDL or the BER Data Lakehouse; those are earlier names for the same
-system and must not appear in a page you write. The project id
-`berdl_data_atlas` and that project's title "BERDL Data Atlas" are names
-of a project, not of the platform, and stay as they are.
-"""
+CONTRACT = Contract(
+    rules=(
+        "Write 900-1400 words in total (the code gate allows 10% either way).",
+        "Sections in this order: an H1 topic title; one lead paragraph saying what the topic "
+        "is and why this corpus speaks to it; ## What the Corpus Shows, arguing across the "
+        "member concepts as one narrative in 3-6 bold-led sub-themes; ## Tensions and Caveats, "
+        "the real disagreements between projects and the load-bearing limitations, cited; "
+        "## Where to Go Deeper, a reading path of 4-8 bullets '[[concepts/<stem>]] — why you "
+        "would read it next', then key entities [[entities/<stem>]] and reports "
+        "[[summaries/<id>__REPORT]].",
+        "Use only figures that appear in the MEMBER CONCEPT PAGES or CONFLICT PAGES, copied "
+        "exactly; never round, compute or import one.",
+        "Cite every factual claim with [src: <project id>] tags copied from the member pages; "
+        "a tag holds only project ids from PROJECTS IN SCOPE, comma-separated, never concept "
+        "names or page paths.",
+        "Figures in the lead must carry their [src:] tags or be counts of this page's own "
+        "sections.",
+        "Link every member concept at least once as [[concepts/<stem>]]; reference conflict "
+        "pages only as [[conflicts/<stem>]] wikilinks.",
+        "Keep each claim's direction, denominator, threshold and caveat as the member page "
+        "states it; a null result stays null.",
+        "Define specialist terms and abbreviations at first use; write for a scientist-engineer "
+        "who knows biology but not this corpus.",
+        NO_PREAMBLE.format(first="the H1"),
+        PLATFORM,
+    ),
+    words=(900, 1400),
+    headings=("## What the Corpus Shows", "## Tensions and Caveats", "## Where to Go Deeper"),
+)
+TASK = (
+    "Write the TOPIC HUB page for the TOPIC named below: the entry point a scientist reads "
+    "first to learn what the corpus says about this topic before opening the finer-grained "
+    "concept pages."
+)
+HOME = Contract(
+    rules=(
+        "Sections in this order: the H1 'BERIL Knowledge Wiki'; 2-3 paragraphs introducing the "
+        "BERIL Research Observatory corpus (AI-conducted microbial-biology research over the "
+        "KBase Data Lakehouse) and how to read the wiki (topics are the entry points; "
+        "concepts, entities and summaries are the reference layers); ## Topics, presenting "
+        "each topic as a '- [[topics/<slug>|<title>]] (<n> concepts): <hook>' list item; "
+        "## Corpus, one line with the given counts; ## Browse, linking "
+        "[[catalog|Full page catalog]], [[summaries/discoveries|Discoveries digest]], "
+        "[[summaries/pitfalls|Pitfalls digest]], [[authors/index|Authors]] and "
+        "[[data/index|Data collections]].",
+        "Base every topic hook on the given hub leads; invent no findings and no figures.",
+        "Plain, concrete English in the active voice with a clear subject. No em dashes or en "
+        "dashes. No inflated framing ('serves as', 'stands as', 'plays a key role', "
+        "'underscores', 'highlights', 'showcases', 'reflects a broader'), no sales words "
+        "(vibrant, rich, powerful, comprehensive, seamless, robust), no forced groups of "
+        "three, no closing flourish about the future: end on the last real fact.",
+        NO_PREAMBLE.format(first="the H1"),
+        PLATFORM,
+    ),
+    headings=("## Topics", "## Corpus", "## Browse"),
+    first="# BERIL Knowledge Wiki",
+    cite=False,
+)
 
 
 def src_id(entry: str) -> str:
@@ -118,12 +156,16 @@ def cluster_concepts(concepts: dict[str, dict]) -> list[list[str]]:
             if w:
                 g.add_edge(a, b, weight=w)
     # resolution=2.0 -> ~14 topics of 3-9 concepts on this corpus (default 1.0 gave 4 mega-hubs)
+    if not g.edges:
+        return [sorted(g)] if g else []
     comms = [
         set(c)
         for c in nx.community.louvain_communities(g, weight="weight", seed=42, resolution=2.0)
     ]
     # Fold tiny clusters into the neighbor cluster with the strongest total edge weight.
     big = [c for c in comms if len(c) >= MIN_CLUSTER]
+    if not big:
+        return [sorted(g)]
     for small in (c for c in comms if len(c) < MIN_CLUSTER):
 
         def pull(target: set, small: set = small) -> float:
@@ -134,13 +176,15 @@ def cluster_concepts(concepts: dict[str, dict]) -> list[list[str]]:
     return [sorted(c) for c in sorted(big, key=len, reverse=True)]
 
 
-def llm(prompt: str, system: str = "", model: str | None = None) -> str:
+def llm(prompt: str, *, step: str) -> str:
+    """A mechanical (unreviewed) call; hub prose goes through agentic.prose instead."""
     resp = completion(
-        model=model or HUB_MODEL,
-        api_key=os.environ["OPENAI_API_KEY"],
+        step=step,
+        review=False,
+        model=HUB_MODEL,
+        api_key=os.environ.get("OPENAI_API_KEY"),
         base_url=os.environ.get("OPENAI_BASE_URL", "https://api.cborg.lbl.gov"),
-        messages=([{"role": "system", "content": system}] if system else [])
-        + [{"role": "user", "content": prompt}],
+        messages=[{"role": "user", "content": prompt}],
         temperature=0.3,
         timeout=600,
     )
@@ -180,14 +224,45 @@ def strip_bad_src(page: str, valid: set[str]) -> str:
     return SRC_TAG.sub(repl, page)
 
 
+def uncited_figures(page: str) -> list[str]:
+    """Paragraphs stating figures without a [src:] tag; the contract requires both."""
+    from beril_wiki.check import NUMBER, cited_ids, paragraphs, prose_only
+
+    # The reading path names pages, not claims; check already treats it as a warning.
+    body = re.sub(r"^## Where to Go Deeper\s*\n.*?(?=\n## |\Z)", "", page, flags=re.M | re.S)
+    return [
+        f"no [src:] tag beside figures: {par[:120]!r}"
+        for par in paragraphs(body)
+        if NUMBER.findall(prose_only(par)) and not cited_ids(par)
+    ]
+
+
+def link_missing_members(page: str, members: list[str], concepts: dict) -> str:
+    """Append assigned concepts the writer left unlinked, so every member stays reachable."""
+    missing = [m for m in members if f"[[concepts/{m}" not in page]
+    if not missing:
+        return page
+    bullets = "\n".join(
+        f"- [[concepts/{m}]] — {concepts[m].get('desc') or concepts[m]['title']}" for m in missing
+    )
+    section = re.search(r"^## Where to Go Deeper[^\n]*\n.*?(?=^## |\Z)", page, re.M | re.S)
+    if section:
+        return (
+            page[: section.end()].rstrip("\n")
+            + "\n"
+            + bullets
+            + "\n\n"
+            + page[section.end() :].lstrip("\n")
+        )
+    return page.rstrip("\n") + "\n\n## Where to Go Deeper\n\n" + bullets + "\n"
+
+
 def corpus_stats(root: pathlib.Path) -> str:
     """The corpus line, counted from the files, in code.
 
-    Counts PUBLISHED pages: publish.ingest hides entities cited by only one
-    project, so the raw 336 was a number no reader could reach. docs/design.md keeps
-    the catalog and log deterministic "in code, not by LLM" for the same reason
-    this line now is — a model transcribing a figure onto the home page is a
-    figure nothing verifies."""
+    Count published pages, excluding the single-source entities hidden by
+    publish.ingest. Compute these counts directly so the home page does not
+    rely on a model to transcribe them."""
     summaries = list((root / "wiki" / "summaries").glob("*.md"))
     digests = sum(
         (root / "wiki" / "summaries" / f"{d}.md").exists() for d in ("discoveries", "pitfalls")
@@ -255,42 +330,49 @@ def refresh_acknowledgement(path: pathlib.Path) -> bool:
     return True
 
 
-def write_home(hubs: list[tuple], stats: str) -> None:
+def write_home(hubs: list[tuple], stats: str) -> bool:
     hub_list = "\n".join(
         f"- [[topics/{slug}|{t}]] ({n} concepts): {lead}" for t, slug, lead, n in hubs
     )
-    style = (
-        "\n\nSTYLE, follow exactly:\n"
-        "- Plain, concrete English. Active voice with a clear subject: 'the pipeline "
-        "compiles X', never 'X is compiled'.\n"
-        "- No em dashes or en dashes anywhere. Use a comma, colon, or a second sentence.\n"
-        "- No inflated framing: nothing 'serves as', 'stands as', 'plays a key role', "
-        "'underscores', 'highlights', 'showcases', or 'reflects a broader' anything.\n"
-        "- No sales words: vibrant, rich, powerful, comprehensive, seamless, robust.\n"
-        "- Do not force ideas into groups of three.\n"
-        "- Say what a thing is, not what it represents. Prefer 'is' and 'has' over "
-        "'serves as' and 'boasts'.\n"
-        "- No closing flourish about what the future holds. End on the last real fact."
-    )
-    home = llm(
-        "Write the HOME page (markdown, H1 title 'BERIL Knowledge Wiki') for this research "
-        "wiki: 2-3 paragraphs introducing the BERIL Research Observatory corpus (AI-conducted "
-        "microbial-biology research over the KBase Data Lakehouse) and how to read the wiki "
-        "(topics are the entry points; concepts/entities/summaries are the reference layers), "
-        f"then a '## Topics' section presenting each topic with its one-line hook as a wikilink "
-        f"list, then a '## Corpus' line with these stats: {stats}, then a '## Browse' section "
-        "linking [[catalog|Full page catalog]], [[summaries/discoveries|Discoveries digest]], "
-        "[[summaries/pitfalls|Pitfalls digest]], [[authors/index|Authors]], and "
-        "[[data/index|Data collections]]. "
-        f"Base every topic description on these leads, do not invent findings:\n\n{hub_list}"
-        + style,
-        model=HOME_MODEL,
-    )
+    pack = f"TOPIC HUBS (title, slug, lead, concept count):\n{hub_list}\n\nCORPUS COUNTS:\n{stats}"
+    try:
+        home = derived_page(
+            "home",
+            HOME,
+            "Write the HOME page of this research wiki.",
+            pack,
+            allowed=pack,
+            sources={},
+            valid_ids=set(),
+            targets=C.wikilink_targets(ROOT) | {"about"},
+        )
+    except PageFailure as exc:
+        record_failure("index.md", exc)
+        print(f"  [FAILED] home: {exc}")
+        return False
     (OUT / "index.md").write_text(home.strip() + "\n", encoding="utf-8")
     # The model was given the stats, but it must not own them.
     refresh_corpus_line(OUT / "index.md", stats)
     refresh_acknowledgement(OUT / "index.md")
+    record_failure("index.md", None)
     print(f"wrote index.md; {stats}")
+    return True
+
+
+def conflict_lead(text: str) -> str:
+    """Title and lead paragraph only: enough to anchor and link a hub's Tensions section.
+
+    The evidence itself already reaches the hub through its member concepts, so
+    packing Evidence Sides again only inflates every draft, patch and review."""
+    body = re.sub(r"^<!--.*?-->\n?", "", text, flags=re.M)
+    m = re.search(r"^(# .+?)\n+(.+?)(?:\n\n|\n#|\Z)", body, re.S)
+    return f"{m.group(1)}\n{m.group(2).strip()}"[:1500] if m else body[:600]
+
+
+def hub_entry(topic: str, slug: str, members: list[str]) -> tuple:
+    page = (OUT / "topics" / f"{slug}.md").read_text(encoding="utf-8")
+    lead = re.search(r"^# .+?\n+(.+?)(?:\n\n|\n#)", page, re.S)
+    return (topic, slug, (lead.group(1).strip() if lead else "")[:400], len(members))
 
 
 def hubs_from_disk(out: pathlib.Path) -> list[tuple]:
@@ -306,21 +388,12 @@ def hubs_from_disk(out: pathlib.Path) -> list[tuple]:
             continue
         text = f.read_text(encoding="utf-8", errors="replace")
         title = re.search(r"^# (.+)$", text, re.M)
-        lead = re.search(r"^# .+?\n+(.+?)(?:\n\n|\n#)", text, re.S)
         members = len(set(re.findall(r"\[\[concepts/([\w.-]+)", text)))
-        hubs.append(
-            (
-                title.group(1).strip() if title else f.stem,
-                f.stem,
-                (lead.group(1).strip() if lead else "")[:400],
-                members,
-            )
-        )
+        hubs.append(hub_entry(title.group(1).strip() if title else f.stem, f.stem, [""] * members))
     return hubs
 
 
 def main() -> int:
-    failures: list[str] = []
     # --home-only rewrites index.md from the hubs already published and touches
     # nothing else. Used to refresh the landing page's prose without letting a
     # re-clustering run churn every hub.
@@ -329,13 +402,21 @@ def main() -> int:
         if not hubs:
             print("stages.topics: no hubs on disk; run the full stage first")
             return 1
-        write_home(hubs, corpus_stats(ROOT))
-        return 0
+        return 0 if write_home(hubs, corpus_stats(ROOT)) or not strict_pages() else 1
     src_texts = source_ids(ROOT)
     targets = C.wikilink_targets(ROOT)
     concepts = {p.stem: parse_page(p) for p in sorted((ROOT / "wiki/concepts").glob("*.md"))}
     entities = {p.stem: parse_page(p) for p in sorted((ROOT / "wiki/entities").glob("*.md"))}
-    clusters = cluster_concepts(concepts)
+    groups = None
+    if configured():
+        from beril_wiki.agentic.topics import load_groups
+
+        groups = load_groups(ROOT)
+    clusters = (
+        [group["concepts"] for group in groups]
+        if groups is not None
+        else cluster_concepts(concepts)
+    )
     print(f"{len(concepts)} concepts -> {len(clusters)} clusters: {[len(c) for c in clusters]}")
 
     (OUT / "topics").mkdir(parents=True, exist_ok=True)
@@ -352,7 +433,7 @@ def main() -> int:
     # renamed (renames churn page identity and force needless hub regens).
     name_cache: dict[str, str] = state.setdefault("__names__", {})
     keys = [hashlib.sha256(",".join(c).encode()).hexdigest()[:12] for c in clusters]
-    unnamed = [i for i, k in enumerate(keys) if k not in name_cache]
+    unnamed = [i for i, k in enumerate(keys) if k not in name_cache] if groups is None else []
     if unnamed:
         listing = "\n".join(
             f"CLUSTER {i}:\n"
@@ -362,7 +443,8 @@ def main() -> int:
         reply = llm(
             "Name each cluster of research-wiki concepts as a scientific TOPIC (2-4 words, "
             "noun phrase, distinctive). Reply with ONLY a JSON object mapping cluster number "
-            f"(string) to topic name.\n\n{listing}"
+            f"(string) to topic name.\n\n{listing}",
+            step="topics/names",
         )
         m = re.search(r"\{.*\}", reply, re.S)
         if not m:
@@ -371,7 +453,11 @@ def main() -> int:
         for i in unnamed:
             if str(i) in fresh:
                 name_cache[keys[i]] = fresh[str(i)]
-    names = {str(i): name_cache.get(k, f"Topic {i}") for i, k in enumerate(keys)}
+    names = (
+        {str(i): group["title"] for i, group in enumerate(groups)}
+        if groups is not None
+        else {str(i): name_cache.get(k, f"Topic {i}") for i, k in enumerate(keys)}
+    )
     conflicts = (
         {
             p.stem: p.read_text(encoding="utf-8", errors="replace")
@@ -381,39 +467,44 @@ def main() -> int:
         else {}
     )
 
-    hubs = []
-    any_changed = False
+    todo, planned = [], []
     for i, members in enumerate(clusters):
         topic = names.get(str(i), f"Topic {i}")
         slug = slugify(topic)
+        planned.append((topic, slug, list(members)))
         srcs = set().union(*(concepts[s]["sources"] for s in members))
-        rel_conflicts = [c for c, t in conflicts.items() if len({p for p in srcs if p in t}) >= 2]
+        # A conflict page belongs to a hub when it links one of the hub's concepts.
+        rel_conflicts = [
+            c
+            for c, t in conflicts.items()
+            if any(f"[[concepts/{s}]]" in t or f"[[concepts/{s}|" in t for s in members)
+        ][:MAX_CONFLICTS]
         digest = hashlib.sha256(
             (
-                "\n".join(concepts[s]["text"] for s in members)
+                topic
+                + "\n"
+                + "\n".join(concepts[s]["text"] for s in members)
                 + "".join(conflicts[c] for c in rel_conflicts)
             ).encode()
         ).hexdigest()[:16]
-        out_path = OUT / "topics" / f"{slug}.md"
-        if state.get(slug) == digest and out_path.exists():
-            page = out_path.read_text(encoding="utf-8")
-            lead = re.search(r"^# .+?\n+(.+?)(?:\n\n|\n#)", page, re.S)
-            hubs.append((topic, slug, (lead.group(1).strip() if lead else "")[:400], len(members)))
+        if state.get(slug) == digest and (OUT / "topics" / f"{slug}.md").exists():
             print(f"  unchanged topics/{slug}.md")
             continue
-        member_text = "\n\n---\n\n".join(
-            f"[file: concepts/{s}]\n{concepts[s]['text'][:PER_PAGE_CHARS]}" for s in members
-        )
-        conflict_text = "\n\n".join(
-            f"[conflict page: conflicts/{c}]\n{conflicts[c][:3000]}" for c in rel_conflicts
+        todo.append((topic, slug, list(members), srcs, rel_conflicts, digest))
+
+    def write(item: tuple) -> str:
+        topic, slug, members, srcs, rel_conflicts, _ = item
+        bodies = {f"concepts/{s}": C.parse_fm(concepts[s]["text"])[1] for s in members}
+        leads = "\n\n".join(
+            f"[conflicts/{c}]\n{conflict_lead(conflicts[c])}" for c in rel_conflicts
         )
         ents = sorted(entities, key=lambda e: -len(entities[e]["sources"] & srcs))[:10]
-        prompt = (
-            f"TOPIC: {topic}\n\nMEMBER CONCEPT PAGES:\n\n{member_text}\n\n"
+        pack = (
+            f"TOPIC: {topic}\n\nMEMBER CONCEPT PAGES:\n\n{excerpts(bodies, PACK_CHARS)}\n\n"
             + (
-                "PROMOTED CONFLICT PAGES (anchor the Tensions section on these; "
-                f"link them as [[conflicts/<stem>]]):\n{conflict_text}\n\n"
-                if conflict_text
+                "CONFLICT PAGES (anchor the Tensions section on these; link them as "
+                f"[[conflicts/<stem>]]):\n{leads}\n\n"
+                if leads
                 else ""
             )
             + "RELATED ENTITY PAGES (link candidates): "
@@ -421,74 +512,65 @@ def main() -> int:
             "PROJECTS IN SCOPE (for [src:] tags and [[summaries/<id>__REPORT]] links): "
             f"{', '.join(sorted(srcs))}"
         )
-        page = llm(prompt, system=TEMPLATE)
-        bad = bad_src_ids(page, srcs)
-        if bad:  # one violation-quoting retry, then deterministic repair
-            print(f"  ! topics/{slug}: invalid [src:] ids {bad} — retrying")
-            page = llm(
-                prompt + f"\n\nYOUR PREVIOUS ATTEMPT cited invalid [src:] ids: {bad}. "
-                "[src:] tags may contain ONLY project ids from PROJECTS IN SCOPE — "
-                "concept or conflict pages are referenced as [[wikilinks]], never inside [src:]. "
-                "Rewrite the full page fixing every such tag.",
-                system=TEMPLATE,
-            )
-            if bad_src_ids(page, srcs):
-                print(f"  ! topics/{slug}: still invalid — stripping bad [src:] ids")
-                page = strip_bad_src(page, srcs)
-        # Same two guarantees generate_page gives every compile-written page:
-        # figures traceable to a cited source, and no link to a page that does
-        # not exist. One retry for numbers, then deterministic link repair.
-        nv = C.prose_violations(page, src_texts)
-        if nv:
-            print(f"  ! topics/{slug}: {len(nv)} unsupported figure(s) — retrying")
-            page = llm(
-                prompt + "\n\nYOUR PREVIOUS ATTEMPT contained figures that appear in none "
-                "of the cited sources:\n"
-                + "\n".join(f"- {x}" for x in nv[:12])
-                + "\nRewrite the full page. Every number must be copied exactly from a source "
-                "you cite in the same paragraph; drop any figure you cannot attribute.",
-                system=TEMPLATE,
-            )
-            page = strip_bad_src(page, srcs)
-            # Revalidate the retry before accepting it. Writing the second
-            # response unchecked meant a retry that fixed nothing was cached as
-            # the current page, and the next pipeline check saw it only as a
-            # warning.
-            if C.prose_violations(page, src_texts):
-                print(
-                    f"  ! topics/{slug}: retry still unsupported — page rejected, keeping previous"
-                )
-                failures.append(f"topics/{slug}")
-                continue
-        page = C.downgrade_dead_links(page, targets | {f"topics/{slug}"})
-        out_path.write_text(page.strip() + "\n", encoding="utf-8")
+        return derived_page(
+            f"topics/{slug}",
+            CONTRACT,
+            TASK,
+            pack,
+            allowed="\n".join(bodies.values()) + "\n".join(conflicts[c] for c in rel_conflicts),
+            sources=src_texts,
+            valid_ids=set(srcs),
+            targets=targets | {f"topics/{slug}"},
+            # Code guarantees member links; run it before gates so it never costs a round.
+            normalize=lambda page: link_missing_members(page, members, concepts),
+        )
+
+    cap = limit(sys.argv)
+    if cap is not None:
+        print(f"  --limit {cap}: writing at most {cap} hub(s), retiring none")
+        todo = todo[:cap]
+    any_changed = False
+    failed = 0
+    for (_, slug, members, _, rel_conflicts, digest), result in parallel(todo, write, workers()):
+        if isinstance(result, PageFailure):
+            failed += 1
+            record_failure(f"topics/{slug}", result)
+            print(f"  [FAILED] topics/{slug}: {result}")
+            continue
+        (OUT / "topics" / f"{slug}.md").write_text(result.strip() + "\n", encoding="utf-8")
         state[slug] = digest
         any_changed = True
-        lead = re.search(r"^# .+?\n+(.+?)(?:\n\n|\n#)", page, re.S)
-        hubs.append((topic, slug, (lead.group(1).strip() if lead else "")[:400], len(members)))
-        print(
-            f"  wrote topics/{slug}.md ({len(members)} concepts, {len(srcs)} projects, "
-            f"{len(rel_conflicts)} conflicts)"
-        )
-    state_path.write_text(json.dumps(state, indent=1))
-    # Retire hub pages for topics that no longer exist after re-clustering.
-    live = {slugify(names.get(str(i), f"Topic {i}")) for i in range(len(clusters))}
-    for stale in (OUT / "topics").glob("*.md"):
+        record_failure(f"topics/{slug}", None)
+        print(f"  wrote topics/{slug}.md ({len(members)} concepts, {len(rel_conflicts)} conflicts)")
+    atomic_json(state_path, state)
+    # Retire hub pages for topics that no longer exist after re-clustering, unless a
+    # hub failed this pass: its predecessor under an old title is the kept version.
+    live = {slug for _, slug, _ in planned}
+    if failed:
+        print(f"  {failed} hub(s) failed: retiring nothing this pass")
+    for stale in [] if cap is not None or failed else (OUT / "topics").glob("*.md"):
         if stale.stem not in live:
             stale.unlink()
             any_changed = True
             print(f"  removed stale topics/{stale.stem}.md")
-    if not any_changed and (OUT / "index.md").exists():
+    prune_failures("topics/", {f"topics/{slug}" for slug in live})
+    # A retried home failure must reach write_home even when no hub changed.
+    refresh_home = "--refresh-home" in sys.argv or "index.md" in failed_pages()
+    if not any_changed and (OUT / "index.md").exists() and not refresh_home:
         if refresh_corpus_line(OUT / "index.md", corpus_stats(ROOT)):
             print("home unchanged; corpus counts refreshed")
         else:
             print("home unchanged; done")
-        return 1 if failures else 0
+        return 1 if failed and strict_pages() else 0
 
-    write_home(hubs, corpus_stats(ROOT))
-    for f in failures:
-        print(f"  [ERROR] rejected: {f}")
-    return 1 if failures else 0
+    hubs = [
+        hub_entry(topic, slug, members)
+        for topic, slug, members in planned
+        if (OUT / "topics" / f"{slug}.md").exists()
+    ]
+    if not write_home(hubs, corpus_stats(ROOT)):
+        failed += 1
+    return 1 if failed and strict_pages() else 0
 
 
 if __name__ == "__main__":

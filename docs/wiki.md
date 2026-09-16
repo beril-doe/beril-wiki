@@ -1,91 +1,74 @@
-# Wiki architecture
+# Wiki format and reading guide
 
-The wiki is a layered synthesis over the BERIL Research Observatory's project
-reports. Each layer answers a different reader question, and every factual
-claim in the reader-facing layers carries a per-claim citation back to its
-source project.
+The wiki synthesizes BERIL Research Observatory reports into linked scientific
+pages. The [curator operating guide](agentic-workflow.md) describes how those
+pages are generated; the [HTML walkthrough](agentic-workflow.html) shows how
+the schedule runs and what validates each page.
 
-```mermaid
-flowchart TD
-    subgraph ENTRY["Entry layer — wiki/ (start here)"]
-        HOME[index.md — home] --> TOPICS["topics/ — 15 narrative hubs,<br/>each opening with a<br/>PMID-cited Literature Context"]
-        HOME --> OPP[opportunities.md —<br/>every Open Direction, one page]
-        HOME --> NEG[negative-results.md —<br/>what did not work, per project]
-    end
+## Collections
 
-    subgraph SYNTH["Synthesis layer — wiki/"]
-        TOPICS --> CONCEPTS["concepts/ — cross-project<br/>ideas, mechanisms, caveats"]
-        TOPICS --> CONFLICTS["conflicts/ — recorded disagreements:<br/>Evidence Sides · Resolving Work"]
-        CONCEPTS --> ENTITIES["entities/ — organisms, methods,<br/>datasets, compounds…"]
-    end
+| Path | Purpose and required content |
+| --- | --- |
+| `wiki/index.md` and `wiki/topics/` | Home and narrative topic hubs. A model proposal chooses titles and assigns every concept to exactly one group; each hub is written from its member pages, reviewed and patched by paragraph. Literature Context adds external context with verified PubMed citations. |
+| `wiki/concepts/` | Cross-project synthesis with cited evidence, supports/contradicts/refines relations, Tensions, and Open Directions. |
+| `wiki/conflicts/` | One page per disagreement: every Tensions paragraph that cites two or more projects, with cited Evidence Sides, Possible Reconciliations and Resolving Work. Paragraphs restating the same figures share a page. Slugs are `conflict--<concept>--<digest of the paragraph>`, so an unchanged disagreement keeps its page and a changed one is retired. |
+| `wiki/entities/` | Named organisms, genes, methods, datasets and other entities, with canonical names and aliases. Publishing hides pages with only one source. |
+| `wiki/summaries/` | Faithful report summaries with exact quantities, caveats, negative results and Slots Into links. |
+| `wiki/sources/` | Copied source reports, preserving the original report bytes. |
+| `wiki/authors/` | Attribution and project lists from observatory metadata, plus model-written, reviewed Contributions sections. |
+| `wiki/data/` | Data-collection metadata joined to the projects that mention each collection. |
+| `wiki/opportunities.md` and `wiki/negative-results.md` | Deterministic digests of Open Directions and report caveats or null results. |
 
-    subgraph EVIDENCE["Evidence layer"]
-        CONCEPTS -->|"[src: project]"| SUMMARIES["summaries/ — one dense,<br/>faithful page per report"]
-        SUMMARIES --> RAW[sources/ — the raw reports]
-    end
+Topic membership is saved in `state/curator-topics.json`. The host rejects
+unknown or duplicated concepts, missing memberships, unsafe titles and stale
+concept fingerprints. The number of hubs follows the accepted grouping.
 
-    subgraph SIDE["Deterministic reference — wiki/"]
-        AUTH[authors/]
-        DATA[data/ — collections used]
-    end
-```
+## Citations and provenance
 
-## Page types and their contracts
+`[src: project_id]` identifies evidence supporting a paragraph. IDs resolve to
+source report stems, with `discoveries` and `pitfalls` identifying the
+cross-project digests. `[[wikilinks]]` connect concepts, entities, summaries
+and other pages. Literature Context sections cite external papers with
+`[PMID nnnn](PubMed URL)` links checked against retrieved PubMed results.
 
-| Layer | Page type | Contract |
-|---|---|---|
-| `wiki/summaries/` | one per report | dense and faithful, exact numbers, every paragraph `[src:]`-tagged; ends with `## Slots Into` naming the concepts it feeds; includes null/negative results |
-| `wiki/concepts/` | cross-project synthesis | argues *across* projects; typed relations in prose (**supports / contradicts / refines**); disagreements under `## Tensions`; ends with `## Open Directions` (data + method + question) |
-| `wiki/entities/` | one per named thing | organisms, genes/pathways, compounds, methods, datasets, places, people; canonical name + aliases; single-source entities are hidden at publish until a second project cites them |
-| `wiki/topics/` | narrative hubs | the corpus argued as one story per topic; opens with `## Literature Context` (external, PMID-verified) |
-| `wiki/conflicts/` | promoted disagreements | `## Evidence Sides` (each side cited) and `## Resolving Work` (what would settle it) — never averaged away |
-| `wiki/` digests | opportunities, negative-results, authors, data | generated deterministically by code, no LLM |
+Compiled scientific pages carry `type`, `description` and `sources`
+frontmatter. A `sources` entry must correspond to a citation in the body;
+metadata alone does not establish that a report's evidence was integrated.
+The curator uses content hashes, accepted coverage and cached job results for
+resume decisions. Metadata pages and raw reports have their own formats.
 
-## The citation grammar
+Deterministic checks verify citation IDs, selected quantities, links and
+retention of unchanged evidence. Separate model review assesses scientific
+support and lost meaning. Neither establishes that the underlying research is
+correct; a number appearing in a cited report does not establish its units,
+denominator or interpretation.
 
-- `[src: project_id]` ends every factual claim in summaries, concepts,
-  entities, and hubs; ids are report filename stems (plus `discoveries` /
-  `pitfalls` for the cross-project digests). `check.py` verifies every
-  id resolves and every flagged number appears in a cited source.
-- `[[wikilinks]]` connect pages (`[[concepts/x]]`, `[[summaries/y__REPORT]]`);
-  targets are validated at write time, and links the corpus can't resolve are
-  downgraded to plain text at publish, never shown broken.
-- `## Literature Context` sections are the one exception to corpus-only
-  citation: they cite external papers as `[PMID nnnn](pubmed url)`, verified
-  against the actual PubMed query results at build time.
+## Rendering the accepted corpus
 
-## Frontmatter (managed by code, never hand-edited)
+[`publish/ingest.py`](../src/beril_wiki/publish/ingest.py) derives Quartz content
+from the accepted wiki without editing it:
 
-Every `wiki/` page carries `type` (`Summary` / `Concept` / entity subtype),
-`description` (one line, drives the index and plan prompts), and `sources`
-(the summary pages whose evidence the page integrates — this list also powers
-resume-skipping and the publish-time filters below).
+- Source tags become links to summary pages, which link to raw reports and
+  gain a computed Feeds into list of concepts that cite the project.
+- Single-source entities are omitted from the site. Links to omitted pages
+  become plain text; those entities remain in the source corpus.
+- Saved figure placements use committed files under `wiki/figures/`.
+- Pages receive provenance callouts and evidence counts. These counts do not
+  represent human review or confidence ratings.
 
-## Publish-time transforms
+Run [`scripts/build_quartz.sh`](../scripts/build_quartz.sh) after local
+acceptance to render the site. Publishing committed content is separate from
+curation; the curator does not build or deploy the site. See the
+[README publishing instructions](../README.md#publishing).
 
-`publish/ingest.py` derives the reader site from the corpus without touching
-it:
+## Reading and editing
 
-- `[src:]` tags become links to the summary pages; summaries link their raw
-  reports ("Raw report:") and gain a deterministic **"Feeds into:"** line
-  listing every concept that cites the project — a first, honest impact view.
-- Entity pages citing only one source are omitted (they return automatically
-  once a second project cites them); their links downgrade to plain text.
-- Flagship figures chosen by the figures stage are spliced in from the
-  observatory checkout; dead wikilinks are stripped.
+Start at home, open a topic hub, then follow concepts to summaries and raw
+reports. Literature Context connects the synthesis to external papers;
+opportunities and negative results help readers find follow-up questions and
+avoid repeating unsuccessful analyses.
 
-## Reading model
-
-Start at the **home page → a topic hub**: the Literature Context says where
-the field stands, "What the Corpus Shows" argues the corpus's answer, and
-"Where to Go Deeper" hands you concepts → summaries → raw reports, so every
-claim is at most three hops from its evidence. `opportunities.md` is the
-what-to-do-next surface; `negative-results.md` is what to check before
-repeating an analysis.
-
-## Ground rules
-
-`wiki/` is **generated output — never hand-edit content**.
-Editorial behavior is changed in `contract/AGENTS.md` (injected into every
-compile call) or in the stage prompts; content changes flow from source
-reports through the pipeline.
+`wiki/` is generated output. Change source reports, the
+[editorial contract](../contract/AGENTS.md), recorded human concept decisions
+or generation prompts, then run the curator. Preserve `.agentic/` when
+resuming so accepted model results and prior token charges remain available.

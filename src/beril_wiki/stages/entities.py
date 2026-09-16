@@ -41,6 +41,7 @@ import re
 import sys
 
 from beril_wiki import compiler as C
+from beril_wiki.agentic.runtime import configured
 from beril_wiki.paths import ROOT
 from beril_wiki.stages.consolidate import apply_merge
 
@@ -199,7 +200,10 @@ def main() -> int:
     state.setdefault("pending", {})
 
     failed = []
-    for signal, a, b in pairs:
+    merged = 0
+    refused = set()
+    while pairs:
+        signal, a, b = pairs[0]
         keep, drop = (
             (a, b) if (a["sources"], -len(a["stem"])) >= (b["sources"], -len(b["stem"])) else (b, a)
         )
@@ -218,12 +222,19 @@ def main() -> int:
             page_type=drop["type"].title() or "Other",
         ):
             failed.append(f"{drop['stem']}->{keep['stem']}")
+            refused.add(frozenset((drop["stem"], keep["stem"])))
+        else:
+            merged += 1
+        # Recompute identity after each accepted merge; an alias can be transitive.
+        pairs = [
+            p
+            for p in duplicate_pairs(load(args.root))
+            if frozenset((p[1]["stem"], p[2]["stem"])) not in refused
+        ]
     C.rebuild_index(args.root)
     est = C._usage["in"] * C.PRICE_IN + C._usage["out"] * C.PRICE_OUT
-    print(
-        f"stages.entities: {len(pairs) - len(failed)} merged, {len(failed)} refused "
-        f"(~${est:.2f} est)"
-    )
+    usage = "usage recorded in the shared agentic ledger" if configured() else f"~${est:.2f} est"
+    print(f"stages.entities: {merged} merged, {len(failed)} refused; {usage}")
     for f in failed:
         print(f"  [ERROR] merge refused by the retention gate: {f}")
     return 1 if failed else 0
