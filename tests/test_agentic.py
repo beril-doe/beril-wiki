@@ -18,12 +18,59 @@ def test_ledger_resume_and_global_budget(tmp_path):
         first.reserve("three")
 
 
-def test_unknown_usage_blocks_even_after_restart(tmp_path):
+def test_inflight_jobs_hold_headroom_and_stale_ones_reconcile(tmp_path):
+    import json
+
     db = tmp_path / "jobs.sqlite"
-    ledger = Ledger(db, "batch", 100, 3, 20)
+    ledger = Ledger(db, "batch", 100, 9, 20)
     ledger.reserve("crash")
-    with pytest.raises(WorkflowError, match="unknown|pending"):
-        Ledger(db, "batch", 100, 3, 20).reserve("next")
+    ledger.reserve("worker")  # a second worker's job is admitted while one is in flight
+    with pytest.raises(WorkflowError, match="inflight=2"):
+        Ledger(db, "batch", 50, 9, 20).reserve("third")
+    ledger.finish("worker", "ok", {"input_tokens": 5, "output_tokens": 5})
+    transcripts = tmp_path / "transcripts"
+    transcripts.mkdir()
+    lines = [
+        {"model": "m", "content": [], "usage": {"input_tokens": 4, "output_tokens": 1}},
+        {"model": "m", "content": [], "usage": {"input_tokens": 4, "output_tokens": 1}},
+        {"model": "m", "content": [], "usage": {"input_tokens": 6, "output_tokens": 2}},
+    ]
+    (transcripts / "crash.jsonl").write_text("\n".join(json.dumps(x) for x in lines))
+    ledger.reserve("silent")
+    assert sorted(Ledger(db, "batch", 100, 9, 20).reconcile_stale(transcripts)) == [
+        "crash",
+        "silent",
+    ]
+    rows = dict(ledger.db.execute("SELECT key,tokens FROM jobs").fetchall())
+    assert rows == {"crash": 13, "worker": 10, "silent": 20}  # repeated turn counted once
+    ledger.reserve("unknown")
+    with pytest.raises(WorkflowError, match="unknown token usage"):
+        ledger.finish("unknown", "", None)
+    with pytest.raises(WorkflowError, match="unknown usage"):
+        ledger.reserve("blocked")
+
+
+def test_effective_tokens_drive_admission_and_stage_ceiling(tmp_path, monkeypatch):
+    db = tmp_path / "jobs.sqlite"
+    ledger = Ledger(db, "batch", 1000, 9, 100, stage_budget=300)
+    usage = {
+        "input_tokens": 100,
+        "output_tokens": 100,
+        "cache_creation_input_tokens": 400,
+        "cache_read_input_tokens": 3000,
+    }
+    monkeypatch.setenv("BERIL_AGENTIC_STAGE", "conflicts")
+    ledger.reserve("one", "conflicts/a")
+    ledger.finish("one", "ok", usage, cost=0.5)
+    totals = ledger.totals()
+    assert totals["tokens"] == 3600 and totals["effective"] == 1000 and totals["cost_usd"] == 0.5
+    with pytest.raises(WorkflowError, match="budget admission refused"):
+        ledger.reserve("two", "conflicts/b")
+    ledger = Ledger(db, "batch", 5000, 9, 100, stage_budget=1050)
+    with pytest.raises(WorkflowError, match="stage budget"):
+        ledger.reserve("two", "conflicts/b")
+    monkeypatch.setenv("BERIL_AGENTIC_STAGE", "topics")
+    assert ledger.reserve("two", "topics/b") is None
 
 
 def test_read_tools_bound_ranges_and_reject_escape(tmp_path):

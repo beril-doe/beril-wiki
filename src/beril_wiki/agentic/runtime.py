@@ -8,6 +8,7 @@ import dataclasses
 import hashlib
 import inspect
 import json
+import math
 import os
 import sqlite3
 import subprocess
@@ -15,9 +16,10 @@ import textwrap
 from collections.abc import Callable
 from pathlib import Path
 from types import SimpleNamespace
-from typing import Any, TypeVar
+from typing import Any, TypeGuard, TypeVar
 
 from claude_agent_sdk import (
+    AssistantMessage,
     ClaudeAgentOptions,
     ProcessError,
     ResultMessage,
@@ -110,28 +112,94 @@ TOKEN_FIELDS = (
     "cache_creation_input_tokens",
     "cache_read_input_tokens",
 )
+# Admission weights: a cache read costs a tenth of a fresh input token and a
+# cache write a quarter more, so the effective figure tracks spend while the raw
+# ledger count remains the audit record.
+EFFECTIVE_WEIGHTS = {
+    "input_tokens": 1.0,
+    "output_tokens": 1.0,
+    "cache_creation_input_tokens": 1.25,
+    "cache_read_input_tokens": 0.1,
+}
+
+
+def valid_usage(usage: object) -> TypeGuard[dict]:
+    return (
+        isinstance(usage, dict)
+        and all(type(usage.get(k, 0)) is int and usage.get(k, 0) >= 0 for k in TOKEN_FIELDS)
+        and all(k in usage for k in ("input_tokens", "output_tokens"))
+    )
+
+
+def effective_tokens(usage: dict) -> int:
+    return math.ceil(sum(usage.get(k, 0) * w for k, w in EFFECTIVE_WEIGHTS.items()))
+
+
+def transcript_usage(path: Path) -> tuple[dict, float | None] | None:
+    """Usage from a saved job stream: the terminal result, else the summed turns."""
+    if not path.is_file():
+        return None
+    turns: list[dict] = []
+    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        try:
+            message = json.loads(line)
+        except ValueError:
+            continue
+        usage = message.get("usage") if isinstance(message, dict) else None
+        if not valid_usage(usage):
+            continue
+        if "total_cost_usd" in message:
+            return usage, message.get("total_cost_usd")
+        if "model" in message and usage != (turns[-1] if turns else None):
+            turns.append(usage)  # streamed blocks repeat one turn's usage; count it once
+    if not turns:
+        return None
+    return {k: sum(t.get(k, 0) for t in turns) for k in TOKEN_FIELDS}, None
 
 
 class Ledger:
     """SQLite serializes admission across all stage subprocesses in a batch."""
 
-    def __init__(self, path: Path, run: str, budget: int, max_jobs: int, reserve: int):
-        if min(budget, max_jobs, reserve) <= 0:
+    def __init__(
+        self,
+        path: Path,
+        run: str,
+        budget: int,
+        max_jobs: int,
+        reserve: int,
+        stage_budget: int = 0,
+    ):
+        if min(budget, max_jobs, reserve) <= 0 or stage_budget < 0:
             raise ValueError("budgets must be positive")
         path.parent.mkdir(parents=True, exist_ok=True)
         self.db = sqlite3.connect(path, timeout=30)
         self.run, self.budget, self.max_jobs, self.headroom = run, budget, max_jobs, reserve
+        self.stage_budget = stage_budget
         self.db.execute("PRAGMA journal_mode=WAL")
         self.db.execute("""CREATE TABLE IF NOT EXISTS jobs (
             key TEXT PRIMARY KEY, run TEXT NOT NULL, status TEXT NOT NULL,
             output TEXT, usage TEXT, tokens INTEGER, error TEXT, dependencies TEXT)""")
         columns = {row[1] for row in self.db.execute("PRAGMA table_info(jobs)")}
-        for column in ("step", "model"):
+        for column, kind in (
+            ("step", "TEXT"),
+            ("model", "TEXT"),
+            ("stage", "TEXT"),
+            ("effective", "INTEGER"),
+            ("cost", "REAL"),
+        ):
             if column not in columns:
-                self.db.execute(f"ALTER TABLE jobs ADD COLUMN {column} TEXT")
+                self.db.execute(f"ALTER TABLE jobs ADD COLUMN {column} {kind}")
+        # Older rows carry raw counts only; weight them so admission sees them.
+        for key, usage, tokens in self.db.execute(
+            "SELECT key,usage,tokens FROM jobs WHERE effective IS NULL AND tokens IS NOT NULL"
+        ).fetchall():
+            parsed = json.loads(usage) if usage else None
+            value = effective_tokens(parsed) if valid_usage(parsed) else tokens
+            self.db.execute("UPDATE jobs SET effective=? WHERE key=?", (value, key))
         self.db.commit()
 
     def reserve(self, key: str, step: str = "", model: str | None = None) -> str | None:
+        stage = os.environ.get("BERIL_AGENTIC_STAGE", "")
         self.db.execute("BEGIN IMMEDIATE")
         try:
             row = self.db.execute("SELECT status,output FROM jobs WHERE key=?", (key,)).fetchone()
@@ -141,18 +209,34 @@ class Ledger:
             if row:
                 raise WorkflowError(f"job {key}: {row[0]}; inspect saved job before retrying")
             unknown = self.db.execute(
-                "SELECT key FROM jobs WHERE status IN ('pending','unknown') LIMIT 1"
+                "SELECT key FROM jobs WHERE status='unknown' LIMIT 1"
             ).fetchone()
             if unknown:
-                raise WorkflowError(f"unknown/pending usage for {unknown[0]}; reconcile first")
-            count, spent = self.db.execute(
-                "SELECT count(*),coalesce(sum(tokens),0) FROM jobs WHERE run=?", (self.run,)
+                raise WorkflowError(f"unknown usage for {unknown[0]}; reconcile first")
+            # Pending rows are jobs in flight in a worker; each holds its own headroom.
+            count, spent, inflight = self.db.execute(
+                "SELECT count(*),coalesce(sum(effective),0),coalesce(sum(status='pending'),0) "
+                "FROM jobs WHERE run=?",
+                (self.run,),
             ).fetchone()
-            if count >= self.max_jobs or spent + self.headroom > self.budget:
-                raise WorkflowError(f"budget admission refused: jobs={count}, tokens={spent}")
+            if count >= self.max_jobs or spent + self.headroom * (inflight + 1) > self.budget:
+                raise WorkflowError(
+                    f"budget admission refused: jobs={count}, effective={spent}, "
+                    f"inflight={inflight}"
+                )
+            if self.stage_budget and stage:
+                stage_spent, stage_inflight = self.db.execute(
+                    "SELECT coalesce(sum(effective),0),coalesce(sum(status='pending'),0) "
+                    "FROM jobs WHERE run=? AND stage=?",
+                    (self.run, stage),
+                ).fetchone()
+                if stage_spent + self.headroom * (stage_inflight + 1) > self.stage_budget:
+                    raise WorkflowError(
+                        f"stage budget admission refused: {stage} effective={stage_spent}"
+                    )
             self.db.execute(
-                "INSERT INTO jobs(key,run,status,step,model) VALUES(?,?,'pending',?,?)",
-                (key, self.run, step, model),
+                "INSERT INTO jobs(key,run,status,step,model,stage) VALUES(?,?,'pending',?,?,?)",
+                (key, self.run, step, model, stage),
             )
             self.db.commit()
             return None
@@ -167,23 +251,25 @@ class Ledger:
         usage: dict | None,
         error: str = "",
         dependencies: dict | None = None,
+        cost: float | None = None,
     ) -> None:
-        valid = (
-            isinstance(usage, dict)
-            and all(type(usage.get(k, 0)) is int and usage.get(k, 0) >= 0 for k in TOKEN_FIELDS)
-            and all(k in usage for k in ("input_tokens", "output_tokens"))
-        )
-        tokens = sum(usage.get(k, 0) for k in TOKEN_FIELDS) if valid else None
+        valid = valid_usage(usage)
+        tokens = effective = None
+        if valid_usage(usage):
+            tokens = sum(usage.get(k, 0) for k in TOKEN_FIELDS)
+            effective = effective_tokens(usage)
         status = ("failed" if error else "done") if valid else "unknown"
         with self.db:
             self.db.execute(
-                "UPDATE jobs SET status=?,output=?,usage=?,tokens=?,error=?,dependencies=? "
-                "WHERE key=?",
+                "UPDATE jobs SET status=?,output=?,usage=?,tokens=?,effective=?,cost=?,error=?,"
+                "dependencies=? WHERE key=?",
                 (
                     status,
                     output,
                     json.dumps(usage),
                     tokens,
+                    effective,
+                    cost,
                     error,
                     json.dumps(dependencies or {}),
                     key,
@@ -197,23 +283,36 @@ class Ledger:
             raise WorkflowError("reconciliation requires a positive conservative token charge")
         with self.db:
             changed = self.db.execute(
-                "UPDATE jobs SET status='failed',tokens=?,error='manually reconciled' "
+                "UPDATE jobs SET status='failed',tokens=?,effective=?,error='manually reconciled' "
                 "WHERE key=? AND status IN ('pending','unknown')",
-                (tokens, key),
+                (tokens, tokens, key),
             ).rowcount
         if not changed:
             raise WorkflowError("job is not pending/unknown")
 
+    def reconcile_stale(self, transcripts: Path) -> list[str]:
+        """Charge jobs left pending by a killed worker from their saved streams."""
+        reconciled = []
+        for (key,) in self.db.execute("SELECT key FROM jobs WHERE status='pending'").fetchall():
+            found = transcript_usage(transcripts / f"{key}.jsonl")
+            if found:
+                self.finish(key, "", found[0], "reconciled from transcript", cost=found[1])
+            else:
+                self.account(key, self.headroom)
+            reconciled.append(key)
+        return reconciled
+
     def totals(self) -> dict:
+        tokens, effective, cost = self.db.execute(
+            "SELECT coalesce(sum(tokens),0),coalesce(sum(effective),0),coalesce(sum(cost),0) "
+            "FROM jobs WHERE run=?",
+            (self.run,),
+        ).fetchone()
         return dict(
             self.db.execute(
                 "SELECT status,count(*) FROM jobs WHERE run=? GROUP BY status", (self.run,)
             ).fetchall()
-        ) | {
-            "tokens": self.db.execute(
-                "SELECT coalesce(sum(tokens),0) FROM jobs WHERE run=?", (self.run,)
-            ).fetchone()[0]
-        }
+        ) | {"tokens": tokens, "effective": effective, "cost_usd": round(cost, 2)}
 
 
 class ReadTools:
@@ -421,6 +520,7 @@ class Runtime:
             config["max_tokens"],
             config["max_jobs"],
             config.get("reserve_tokens", 50_000),
+            config.get("stage_max_tokens", 0),
         )
 
     def ask(self, messages: list[dict], step: str) -> str:
@@ -570,6 +670,7 @@ class Runtime:
         transcript.parent.mkdir(exist_ok=True)
         terminal = None
         auth_ok = False
+        turns: list[dict] = []
 
         async def prompt():
             yield {"type": "user", "message": {"role": "user", "content": payload}}
@@ -588,18 +689,28 @@ class Runtime:
                     raise WorkflowError("SDK initialized with an API credential")
             if isinstance(message, ResultMessage):
                 terminal = message
+            elif isinstance(message, AssistantMessage) and valid_usage(message.usage):
+                if message.usage != (turns[-1] if turns else None):
+                    turns.append(message.usage)
 
-        async with asyncio.timeout(self.config.get("timeout", 600)):
-            with transcript.open("w", encoding="utf-8") as out:
-                stream = query(prompt=prompt(), options=opts)
-                try:
-                    async for message in stream:
-                        await handle(message, out)
-                except ProcessError:
-                    # The CLI exits non-zero after an is_error result (max turns and the
-                    # like); that result already carried usage, so account for it.
-                    if terminal is None:
-                        raise
+        try:
+            async with asyncio.timeout(self.config.get("timeout", 600)):
+                with transcript.open("w", encoding="utf-8") as out:
+                    stream = query(prompt=prompt(), options=opts)
+                    try:
+                        async for message in stream:
+                            await handle(message, out)
+                    except ProcessError:
+                        # The CLI exits non-zero after an is_error result (max turns and the
+                        # like); that result already carried usage, so account for it.
+                        if terminal is None:
+                            raise
+        except BaseException as exc:
+            # A timeout or transport failure after model turns still consumed tokens.
+            if terminal is None and turns:
+                usage = {k: sum(t.get(k, 0) for t in turns) for k in TOKEN_FIELDS}
+                self.ledger.finish(key, "", usage, f"interrupted: {exc}"[:500])
+            raise
         if terminal is None:
             raise WorkflowError("SDK ended without a usage-bearing result")
         error = ""
@@ -614,7 +725,9 @@ class Runtime:
         output = terminal.result or ""
         if not output.strip():
             error = error or "empty SDK output"
-        self.ledger.finish(key, output, terminal.usage, error, reader.dependencies)
+        self.ledger.finish(
+            key, output, terminal.usage, error, reader.dependencies, cost=terminal.total_cost_usd
+        )
         if error:
             raise WorkflowError(error)
         return output.strip()

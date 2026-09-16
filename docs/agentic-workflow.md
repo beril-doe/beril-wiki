@@ -34,18 +34,25 @@ observatory checkout is still required for metadata and figure context.
 it does not replace the shared job/token limits. Individual jobs have
 `--max-turns` (default 12), `--timeout` (600 seconds), and
 `--max-output-tokens` (32,768). An action can require multiple specialist jobs.
-Each stage subprocess is bounded by `--stage-timeout` (default 1,800 seconds);
-a first adoption that writes and reviews dozens of pages in one stage needs
-more, since every reviewed page takes minutes and a killed stage loses the
-job in flight.
+Each stage subprocess is bounded by `--stage-timeout` (default 14,400 seconds,
+four hours). A job killed by either clock is charged automatically from its
+saved transcript (the terminal result if one arrived, otherwise the summed
+model turns, otherwise the reservation) before the next stage starts, so a
+kill never leaves a pending row that needs manual reconciliation.
 
-`--max-tokens` is an admission ceiling, **not a hard provider token cap**. The
-shared ledger reserves headroom before each job (`--reserve-tokens`, default
-50,000). An in-flight job can exceed its reservation; subsequent jobs stop.
-Accounting includes input, output, cache-write and cache-read tokens from
-generation, review and repair. These counts and API-price estimates do not measure
-remaining subscription allowance. Account billing settings remain provider-owned;
-the runner does not purchase credits.
+`--max-tokens` is an admission ceiling in **effective tokens**, not a hard
+provider token cap. The ledger records raw input, output, cache-write and
+cache-read counts for every job, and admits on a weighted figure: input and
+output count once, cache writes 1.25 times, cache reads 0.1 times. The weights
+follow the provider's relative prices, so the effective figure tracks spend
+while the raw count stays the audit record. Before each job the ledger reserves
+headroom (`--reserve-tokens`, default 50,000) for every job still in flight; an
+in-flight job can exceed its reservation, and subsequent jobs stop.
+`--stage-max-tokens` adds a per-stage effective ceiling (0, the default, applies
+only the run ceiling). `status` and the run summary print the raw total, the
+effective total and the sum of the SDK's own `total_cost_usd` estimates. None of
+these measure remaining subscription allowance. Account billing settings remain
+provider-owned; the runner does not purchase credits.
 
 ### Per-step models
 
@@ -99,7 +106,8 @@ Use explicit model IDs available to the authenticated subscription; moving
 aliases may change their underlying model without changing a cache key.
 
 The ledger records each new job's configured model. `status` returns job rows
-as `[key, step, status, tokens, error, model]`; older rows may have a null model.
+as `[key, step, status, tokens, effective, error, model]`; older rows may have a
+null model.
 Accepted `state/agentic.json` records the effective role-to-model policy.
 Every role shares the same token and job ceilings. Changing the policy during
 an interrupted run preserves charges for the same input snapshot, including
@@ -218,8 +226,10 @@ candidates stop the run and need inspection before explicitly retrying the
 affected author job, reviewer job, or both. Excess valid figure placements
 are trimmed to the page's cap. Completed editorial results remain cached; stopping
 promotion does not discard their paid model outputs. A crash can consume
-allowance without returning usage. Pending/unknown usage blocks new calls until
-conservatively reconciled; prior charges and outputs remain saved:
+allowance without returning usage. Jobs interrupted by a timeout or a killed
+stage are charged from their transcripts automatically; only a job whose result
+carried no usable usage is left `unknown`, which blocks new calls until
+conservatively reconciled by hand. Prior charges and outputs remain saved:
 
 ```sh
 uv run python -m beril_wiki.agentic account --job FULL_JOB_ID --tokens 50000

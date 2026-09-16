@@ -163,12 +163,13 @@ def run_stage(work: Path, config_path: Path, name: str, module: str, args: list[
     env.update(
         BERIL_WIKI_ROOT=str(work),
         BERIL_AGENTIC_CONFIG=str(config_path),
+        BERIL_AGENTIC_STAGE=name,
         BERIL_CHECKOUT=str(work / "reference"),
         CONFLICT_SIM="1.01",
         FETCH_BACKEND="local",
     )
     logfile = config_path.parent / f"stage-{name}.log"
-    limit = json.loads(config_path.read_text(encoding="utf-8")).get("stage_timeout", 1800)
+    limit = json.loads(config_path.read_text(encoding="utf-8")).get("stage_timeout", 14400)
     command = [sys.executable, "-m", f"beril_wiki.{module}", *args]
     print(f"agentic stage: {name}", flush=True)
     with logfile.open("w") as output:
@@ -312,25 +313,28 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
                 # Conservative: manual edits need integration review, never silently adopted.
                 changed = sorted(p.name for p in (work / "staging").glob("*.md"))
         agent = Runtime(config)
+        agent.ledger.reconcile_stale(store / "transcripts")
         # Apply existing human decisions before planning without entering embeddings.
         run_stage(work, config_path, "decisions", "stages.consolidate", ["--decisions-only"])
 
         def refresh(name: str, args: list[str]) -> None:
             module = "names" if name == "names-core" else name
-            run_stage(work, config_path, name, f"stages.{module}", args)
+            try:
+                run_stage(work, config_path, name, f"stages.{module}", args)
+            finally:
+                # A killed stage leaves its in-flight jobs pending; charge them now.
+                agent.ledger.reconcile_stale(store / "transcripts")
 
         prior = accepted.get("editorial", {}) if accepted.get("version") == 2 else {}
         # Accepted snapshots are recomputed after final naming and figure postprocessing.
         curate(work, agent, changed, refresh, prior)
-        run_stage(work, config_path, "names", "stages.names", [str(work)])
+        refresh("names", [str(work)])
         figure_state = ("state/figures-placements.json", "state/figures-state.json")
         figure_revision = stage_revision(work, "figures", config)
         force_figures = accepted.get("figure_revision") != figure_revision or accepted.get(
             "figure_outputs"
         ) != manifest(work, figure_state)
-        run_stage(
-            work, config_path, "figures", "stages.figures", ["--force"] if force_figures else []
-        )
+        refresh("figures", ["--force"] if force_figures else [])
         run_stage(work, config_path, "check", "check", [str(work), "--strict"])
         if (
             fingerprint(root) != base

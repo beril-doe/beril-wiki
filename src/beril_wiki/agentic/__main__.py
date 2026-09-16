@@ -81,7 +81,13 @@ def main() -> int:
     execute.add_argument("--max-output-tokens", type=int, default=32768)
     execute.add_argument("--timeout", type=int, default=600)
     execute.add_argument(
-        "--stage-timeout", type=int, default=1800, help="seconds allowed per stage subprocess"
+        "--stage-timeout", type=int, default=14400, help="seconds allowed per stage subprocess"
+    )
+    execute.add_argument(
+        "--stage-max-tokens",
+        type=int,
+        default=0,
+        help="effective-token admission ceiling per stage (0: only the run ceiling)",
     )
     execute.add_argument("--checkout", type=Path, default=CHECKOUT)
     execute.add_argument(
@@ -120,7 +126,8 @@ def main() -> int:
                 agent = Runtime(json.loads((root / ".agentic/config.json").read_text()))
                 if args.command == "status":
                     rows = agent.ledger.db.execute(
-                        "SELECT key,step,status,tokens,error,model FROM jobs ORDER BY rowid"
+                        "SELECT key,step,status,tokens,effective,error,model FROM jobs "
+                        "ORDER BY rowid"
                     ).fetchall()
                     print(json.dumps({"totals": agent.ledger.totals(), "jobs": rows}, indent=2))
                 elif args.command == "account":
@@ -149,6 +156,8 @@ def main() -> int:
             ):
                 if getattr(args, field) <= 0:
                     raise WorkflowError(f"{field} must be positive")
+            if args.stage_max_tokens < 0:
+                raise WorkflowError("stage_max_tokens must not be negative")
             config = {
                 key: getattr(args, key)
                 for key in (
@@ -160,6 +169,7 @@ def main() -> int:
                     "max_output_tokens",
                     "timeout",
                     "stage_timeout",
+                    "stage_max_tokens",
                     "cli",
                 )
             }

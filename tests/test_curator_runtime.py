@@ -589,3 +589,26 @@ def test_error_result_usage_is_recorded_when_cli_exits_nonzero(tmp_path, monkeyp
     with pytest.raises(R.WorkflowError, match="error_max_turns"):
         agent.ask([{"role": "user", "content": "check"}], "write/concepts/a.md/science-review")
     assert agent.ledger.db.execute("SELECT status, tokens FROM jobs").fetchall() == [("failed", 48)]
+
+
+def test_timed_out_job_is_charged_from_its_turns(tmp_path, monkeypatch):
+    from claude_agent_sdk import AssistantMessage, SystemMessage
+
+    agent = runtime(tmp_path)
+    monkeypatch.setattr(R, "check_auth", lambda cli: None)
+
+    async def query(**kwargs):
+        yield SystemMessage(subtype="init", data={"apiKeySource": "none"})
+        usage = {"input_tokens": 7, "output_tokens": 2, "cache_read_input_tokens": 30}
+        yield AssistantMessage(content=[], model="test", usage=usage)
+        yield AssistantMessage(content=[], model="test", usage=usage)
+        raise TimeoutError("job clock")
+
+    monkeypatch.setattr(R, "query", query)
+    with pytest.raises(R.WorkflowError, match="job clock"):
+        agent.ask([{"role": "user", "content": "check"}], "topics/a")
+    status, tokens, effective, error = agent.ledger.db.execute(
+        "SELECT status, tokens, effective, error FROM jobs"
+    ).fetchone()
+    assert (status, tokens, effective) == ("failed", 39, 12) and "interrupted" in error
+    assert agent.ledger.reserve("next") is None
