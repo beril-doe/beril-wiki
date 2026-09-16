@@ -35,7 +35,8 @@ class Stub:
 def configure(monkeypatch, tmp_path, script, workers=1):
     stub = Stub(script)
     monkeypatch.setattr(P, "configured", lambda: True)
-    monkeypatch.setattr(P, "runtime", lambda: stub)
+    # Every runtime() call is a fresh connection in production; the page must keep one.
+    monkeypatch.setattr(P, "runtime", lambda: stub if stub.prompts == [] else Stub(script))
     monkeypatch.setattr(P, "runtime_config", lambda: {"store": str(tmp_path), "workers": workers})
     return stub
 
@@ -123,6 +124,7 @@ def test_review_rejection_patches_and_rereviews_only_changed_paragraphs(monkeypa
     )
     assert "Yield fell to 56%. [src: b]" in run("x")
     assert "Review only paragraphs [4]" in stub.prompts[-1][1]
+    assert "the rules allow 20-60; keep the patched page inside" in stub.prompts[-2][1]
 
 
 def test_page_fails_after_two_rounds_and_keeps_its_job_keys(monkeypatch, tmp_path):

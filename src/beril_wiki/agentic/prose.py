@@ -242,13 +242,23 @@ def prompt(contract: Contract, pack: str, body: str) -> list[dict]:
     ]
 
 
-def review(contract: Contract, pack: str, parts: list[str], scope: list[int] | None, step: str):
+Ask = Callable[[list[dict], str], str]
+
+
+def review(
+    contract: Contract,
+    pack: str,
+    parts: list[str],
+    scope: list[int] | None,
+    step: str,
+    call: Ask = ask,
+):
     scope_line = (
         "Review every paragraph."
         if scope is None
         else f"Review only paragraphs {scope}; the others were accepted earlier."
     )
-    raw = ask(
+    raw = call(
         prompt(
             contract,
             pack,
@@ -275,11 +285,26 @@ def review(contract: Contract, pack: str, parts: list[str], scope: list[int] | N
 
 
 def patch(
-    contract: Contract, pack: str, parts: list[str], issues: list[Issue], step: str
+    contract: Contract,
+    pack: str,
+    parts: list[str],
+    issues: list[Issue],
+    step: str,
+    call: Ask = ask,
 ) -> tuple[list[str], list[int]]:
     """Replace only the paragraphs the issues name; return the new blocks and their indices."""
     base = digest(parts)
-    raw = ask(
+    budget = ""
+    if contract.words:
+        # A content fix that adds definitions can push a page past its range and cost the
+        # last round on a length-only rewrite; give the patcher the budget it must stay in.
+        count = len(SRC_TAG.sub("", "\n\n".join(parts)).split())
+        budget = (
+            f" The candidate has {count} words and the rules allow "
+            f"{contract.words[0]}-{contract.words[1]}; keep the patched page inside that "
+            "range by tightening elsewhere in the paragraphs you replace."
+        )
+    raw = call(
         prompt(
             contract,
             pack,
@@ -289,7 +314,7 @@ def patch(
             '"<replacement>"}}. Replace only the paragraphs the issues name (a length or '
             "heading issue may touch several); a replacement may be empty to delete the "
             "paragraph or hold several paragraphs separated by blank lines. Keep every rule "
-            "and every supported claim.",
+            "and every supported claim." + budget,
         ),
         step,
     )
@@ -328,11 +353,13 @@ def derived_page(
     extra: Callable[[list[str]], list[Issue]] | None = None,
 ) -> str:
     """Draft, gate, review and patch one page; raise PageFailure after two patch rounds."""
+    # One runtime for the whole page, so every job key lands in the failure record.
     agent = runtime() if configured() else None
+    call: Ask = agent.ask if agent is not None else ask
     jobs: list[str] = agent.jobs if agent else []
     first = len(jobs)
     body = f"TASK:\n{task}\n\nReturn only the page Markdown, beginning with {contract.first!r}."
-    text = clean(ask(prompt(contract, pack, body), step), targets)
+    text = clean(call(prompt(contract, pack, body), step), targets)
     if contract.empty is not None and text == contract.empty:
         return text
     parts = blocks(text)
@@ -345,14 +372,16 @@ def derived_page(
             issues += extra(parts)
         if not issues and agent is not None:
             name = f"{step}/patch/{round_index}/review" if round_index else f"{step}/review"
-            issues = review(contract, pack, parts, None if not reviewed else scope, name)
+            issues = review(contract, pack, parts, None if not reviewed else scope, name, call)
             reviewed = True
         if not issues:
             return text
         if round_index == 2:
             raise PageFailure(step, issues, jobs[first:])
         try:
-            parts, scope = patch(contract, pack, parts, issues, f"{step}/patch/{round_index + 1}")
+            parts, scope = patch(
+                contract, pack, parts, issues, f"{step}/patch/{round_index + 1}", call
+            )
         except PageFailure as exc:
             # Keep the issues the patch was meant to fix beside the reason it could not.
             remaining = issues + [Issue(**i) for i in exc.issues]
