@@ -270,7 +270,7 @@ flowchart LR
 <tbody>
 <tr><td>Unchanged-run check</td><td class="hot">Zero model calls when the accepted run fingerprint matches.</td><td>First adoption of a changed contract refreshes derived prose once.</td></tr>
 <tr><td>Durable job and page caches</td><td>Reuse saved outputs during resume; refresh affected work.</td><td>Source, model, scientific contract or relevant code changes invalidate results.</td></tr>
-<tr><td>Packed evidence, one-turn jobs</td><td>No tool loop re-reads context every turn; writer and reviewer share one pack, and a cache keys on the prompt alone.</td><td>Packs are bounded (hub member pages under 110KB with explicit truncation marks); requests and transcripts have size limits.</td></tr>
+<tr><td>Packed evidence, one-turn jobs</td><td>No tool loop re-reads context every turn; writer and reviewer share one pack, and a cache keys on the prompt alone.</td><td>Packs are bounded (hub member pages under 110KB with explicit truncation marks) and travel in the cached system prompt, so a page's review and patch jobs read the pack instead of re-sending it; requests and transcripts have size limits.</td></tr>
 <tr><td>Paragraph patches and scoped re-review</td><td>A correction replaces named paragraphs and only those are reviewed again.</td><td>Two patch rounds per page; a page that does not converge is recorded, not retried automatically.</td></tr>
 <tr><td>Edits grouped by page</td><td>Combine evidence before writing a destination.</td><td>Validation and separate scientific review still consume resources.</td></tr>
 </tbody></table></div>

@@ -192,8 +192,11 @@ own figures for a conflict page; member concept pages (truncated with an explici
 marker under a 110KB budget) and the leads of the conflict pages linking those
 concepts for a hub; hub text and PubMed abstracts for a literature section; the
 author's project summaries for a contributions section. A job runs in one turn,
-so its cache keys on the packed prompt alone and no dependency on a file read can
-invalidate it later.
+so its cache keys on the packed prompt alone and no dependency on a
+file read can invalidate it later. The rules and the pack travel as the job's
+system prompt, which the CLI caches: a page's writer writes that prefix once and
+its review and patch jobs read it, so only the task, candidate or issues are
+fresh input.
 
 Each stage defines one rule list (`Contract` in `agentic/prose.py`, instantiated
 in the stage module) that is injected verbatim into the writer, the patcher and

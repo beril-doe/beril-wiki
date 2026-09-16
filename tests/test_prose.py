@@ -26,7 +26,7 @@ class Stub:
         self.script, self.prompts, self.jobs = script, [], []
 
     def ask(self, messages, step):
-        self.prompts.append((step, messages[0]["content"]))
+        self.prompts.append((step, "\n".join(m["content"] for m in messages)))
         self.jobs.append(f"key:{step}")
         answer = self.script[step]
         return answer(messages) if callable(answer) else answer
@@ -76,8 +76,8 @@ def test_gate_failure_is_patched_before_any_review(monkeypatch, tmp_path):
     draft = GOOD.replace("Yield was 42%. [src: a]", "Yield was 42% of 8,314 loci. [src: a]")
 
     def fix(messages):
-        assert '"quote": "8,314"' in messages[0]["content"]
-        base = messages[0]["content"].split("base_hash ")[1].split(")")[0]
+        assert '"quote": "8,314"' in messages[1]["content"]
+        base = messages[1]["content"].split("base_hash ")[1].split(")")[0]
         return json.dumps({"base_hash": base, "paragraphs": {"3": "Yield was 42%. [src: a]"}})
 
     stub = configure(
@@ -109,7 +109,7 @@ def test_review_rejection_patches_and_rereviews_only_changed_paragraphs(monkeypa
     )
 
     def patch(messages):
-        base = messages[0]["content"].split("base_hash ")[1].split(")")[0]
+        base = messages[1]["content"].split("base_hash ")[1].split(")")[0]
         return json.dumps({"base_hash": base, "paragraphs": {"4": "Yield fell to 56%. [src: b]"}})
 
     stub = configure(
@@ -143,7 +143,7 @@ def test_page_fails_after_two_rounds_and_keeps_its_job_keys(monkeypatch, tmp_pat
     )
 
     def patch(messages):
-        base = messages[0]["content"].split("base_hash ")[1].split(")")[0]
+        base = messages[1]["content"].split("base_hash ")[1].split(")")[0]
         return json.dumps({"base_hash": base, "paragraphs": {"1": "Another lead sentence."}})
 
     stub = configure(
@@ -228,7 +228,7 @@ def test_conflicts_stage_continues_past_a_failed_page(monkeypatch, tmp_path):
             if "/patch/" in step:
                 return lambda m: json.dumps(
                     {
-                        "base_hash": m[0]["content"].split("base_hash ")[1].split(")")[0],
+                        "base_hash": m[1]["content"].split("base_hash ")[1].split(")")[0],
                         "paragraphs": {"1": "Lead again, see [[concepts/two]]."},
                     }
                 )
@@ -271,7 +271,7 @@ def test_clean_strips_fences_and_legacy_names():
 
 
 def _patch_reply(messages, edits):
-    base = messages[0]["content"].split("base_hash ")[1].split(")")[0]
+    base = messages[1]["content"].split("base_hash ")[1].split(")")[0]
     return json.dumps({"base_hash": base, "paragraphs": edits})
 
 

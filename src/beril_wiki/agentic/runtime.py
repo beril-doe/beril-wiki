@@ -556,12 +556,14 @@ class Runtime:
         payload = json.dumps(messages, ensure_ascii=False)
         if len(payload.encode()) > 500_000:
             raise WorkflowError(f"{step}: input exceeds 500KB; reduce batch or retrieve evidence")
-        # Source/tool changes cannot reuse answers grounded in an older snapshot.
-        inputs = manifest(self.root, ("contract",))
-        for path in (self.root / "staging").glob("*.md"):
-            if path.stem.removesuffix("__REPORT") in payload:
-                inputs[f"staging/{path.name}"] = file_hash(path)
+        # Source/tool changes cannot reuse answers grounded in an older snapshot. A
+        # tool-free job saw only its packed prompt, so only that prompt keys its cache.
         profile = tool_profile(step)
+        inputs = manifest(self.root, ("contract",))
+        if profile != "none":
+            for path in (self.root / "staging").glob("*.md"):
+                if path.stem.removesuffix("__REPORT") in payload:
+                    inputs[f"staging/{path.name}"] = file_hash(path)
         tool_revision = (
             digest([SYSTEM])
             if profile == "none"
@@ -679,10 +681,16 @@ class Runtime:
         )
         cli = self.config["cli"]
         contract = (self.root / "contract/AGENTS.md").read_text()
+        # System-role messages become part of the system prompt: the CLI caches that
+        # prefix, so a page's packed evidence is written once and read by its review
+        # and patch jobs instead of being re-sent inside a changing user block.
+        messages = json.loads(payload)
+        system_parts = [m["content"] for m in messages if m.get("role") == "system"]
+        payload = json.dumps([m for m in messages if m.get("role") != "system"], ensure_ascii=False)
         opts = ClaudeAgentOptions(
             cli_path=cli,
             model=model_for(self.config, self._step),
-            system_prompt=system + contract,
+            system_prompt="\n\n".join([system + contract, *system_parts]),
             tools=[],
             allowed_tools=[f"mcp__evidence__{t.name}" for t in available],
             mcp_servers=(

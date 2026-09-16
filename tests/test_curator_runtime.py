@@ -588,3 +588,61 @@ def test_timed_out_job_is_charged_from_its_turns(tmp_path, monkeypatch):
     ).fetchone()
     assert (status, tokens, effective) == ("failed", 39, 12) and "interrupted" in error
     assert agent.ledger.reserve("next") is None
+
+
+def test_system_messages_join_the_cached_system_prompt(tmp_path, monkeypatch):
+    from claude_agent_sdk import ResultMessage, SystemMessage
+
+    agent = runtime(tmp_path)
+    monkeypatch.setattr(R, "check_auth", lambda cli: None)
+    seen = {}
+
+    async def query(**kwargs):
+        seen["system"] = kwargs["options"].system_prompt
+        async for message in kwargs["prompt"]:
+            seen["user"] = message["message"]["content"]
+        yield SystemMessage(subtype="init", data={"apiKeySource": "none"})
+        yield ResultMessage(
+            subtype="success",
+            duration_ms=0,
+            duration_api_ms=0,
+            is_error=False,
+            num_turns=1,
+            session_id="recorded",
+            result="answer",
+            usage={"input_tokens": 3, "output_tokens": 5},
+            stop_reason="end_turn",
+        )
+
+    monkeypatch.setattr(R, "query", query)
+    messages = [
+        {"role": "system", "content": "EVIDENCE PACK"},
+        {"role": "user", "content": "TASK ONLY"},
+    ]
+    assert agent.ask(messages, "conflicts/a") == "answer"
+    assert seen["system"].endswith("Preserve source evidence.\n\nEVIDENCE PACK")
+    assert "EVIDENCE PACK" not in seen["user"] and "TASK ONLY" in seen["user"]
+
+
+def test_tool_free_jobs_key_on_their_prompt_only(tmp_path, monkeypatch):
+    agent = runtime(tmp_path)
+    (tmp_path / "staging").mkdir()
+    source = tmp_path / "staging/report__REPORT.md"
+    source.write_text("old")
+    monkeypatch.setattr(R, "check_auth", lambda cli: None)
+    calls = []
+
+    async def answer(payload, key):
+        calls.append(key)
+        agent.ledger.finish(key, "ok", {"input_tokens": 1, "output_tokens": 1})
+        return "ok"
+
+    monkeypatch.setattr(agent, "_query", answer)
+    task = [{"role": "user", "content": "about report"}]
+    agent.ask(task, "conflicts/a")
+    source.write_text("revised")
+    agent.ask(task, "conflicts/a")  # packed job: the source text was never in its prompt
+    agent.ask(task, "extract/report/0")
+    source.write_text("revised again")
+    agent.ask(task, "extract/report/0")  # tool-using job: the source is its evidence
+    assert len(calls) == 3
