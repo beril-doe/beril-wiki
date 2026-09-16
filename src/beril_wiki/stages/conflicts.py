@@ -23,7 +23,7 @@ from beril_wiki.agentic.runtime import completion
 from beril_wiki.check import numbers_in, source_ids
 from beril_wiki.paths import ROOT
 from beril_wiki.stages.consolidate import cosine, embed
-from beril_wiki.stages.topics import bad_src_ids, strip_bad_src
+from beril_wiki.stages.topics import bad_src_ids, strip_bad_src, uncited_figures
 
 OUT = ROOT / "wiki" / "conflicts"
 # Above the 99th percentile of pair similarity (0.900) on this corpus: conflict
@@ -213,7 +213,7 @@ def main() -> None:
         if bad:
             print(f"  ! conflicts/{slug}: invalid [src:] ids {bad[:4]} — stripping")
             resp = strip_bad_src(resp, set(src_texts))
-        nv = C.prose_violations(resp, src_texts)
+        nv = C.prose_violations(resp, src_texts) + uncited_figures(resp)
         if nv:
             print(f"  ! conflicts/{slug}: {len(nv)} unsupported figure(s) — retrying")
             resp = (
@@ -229,7 +229,7 @@ def main() -> None:
                         {
                             "role": "user",
                             "content": "Figures in your page appear in none of the sources "
-                            "cited beside them:\n"
+                            "cited beside them, or sit in a paragraph with no [src:] tag:\n"
                             + "\n".join(f"- {x}" for x in nv[:12])
                             + "\nRewrite the full page. Copy every number exactly from a "
                             "source cited in the same paragraph, or drop the claim.",
@@ -241,6 +241,9 @@ def main() -> None:
                 .choices[0]
                 .message.content.strip()
             )
+            if C.prose_violations(resp, src_texts) or uncited_figures(resp):
+                print(f"    [ERROR] conflicts/{slug}: retry still unsupported — page rejected")
+                continue
         resp = C.downgrade_dead_links(resp, targets)
         (OUT / f"{slug}.md").write_text(
             f"<!-- tension-hash: {digest} -->\n{resp}\n", encoding="utf-8"

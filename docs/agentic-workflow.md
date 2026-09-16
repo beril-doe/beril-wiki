@@ -169,7 +169,7 @@ A repaired scientific candidate receives a fresh review. Derived scientific
 completion uses the same bound. Extraction rejection, malformed reviewer output,
 unknown usage, authentication failures and other operational errors stop the run.
 There is no unbounded correction loop. Legacy topic, conflict, literature and
-author validators retain their bounded stage retries for invalid numbers,
+author validators retain their bounded stage retries for invalid or uncited numbers,
 citations or author characterizations. Each reissued generation is separately
 accounted and scientifically reviewed, but legacy retry steps receive no additional
 repair allowance. Worst-case ceilings, including scientific reviews, are ten SDK

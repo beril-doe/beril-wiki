@@ -193,6 +193,37 @@ def strip_bad_src(page: str, valid: set[str]) -> str:
     return SRC_TAG.sub(repl, page)
 
 
+def uncited_figures(page: str) -> list[str]:
+    """Paragraphs stating figures without a [src:] tag; the contract requires both."""
+    from beril_wiki.check import NUMBER, cited_ids, paragraphs, prose_only
+
+    return [
+        f"no [src:] tag beside figures: {par[:120]!r}"
+        for par in paragraphs(page)
+        if NUMBER.findall(prose_only(par)) and not cited_ids(par)
+    ]
+
+
+def link_missing_members(page: str, members: list[str], concepts: dict) -> str:
+    """Append assigned concepts the writer left unlinked, so every member stays reachable."""
+    missing = [m for m in members if f"[[concepts/{m}" not in page]
+    if not missing:
+        return page
+    bullets = "\n".join(
+        f"- [[concepts/{m}]] — {concepts[m].get('desc') or concepts[m]['title']}" for m in missing
+    )
+    section = re.search(r"^## Where to Go Deeper[^\n]*\n.*?(?=^## |\Z)", page, re.M | re.S)
+    if section:
+        return (
+            page[: section.end()].rstrip("\n")
+            + "\n"
+            + bullets
+            + "\n\n"
+            + page[section.end() :].lstrip("\n")
+        )
+    return page.rstrip("\n") + "\n\n## Where to Go Deeper\n\n" + bullets + "\n"
+
+
 def corpus_stats(root: pathlib.Path) -> str:
     """The corpus line, counted from the files, in code.
 
@@ -484,12 +515,12 @@ def main() -> int:
         # Same two guarantees generate_page gives every compile-written page:
         # figures traceable to a cited source, and no link to a page that does
         # not exist. One retry for numbers, then deterministic link repair.
-        nv = C.prose_violations(page, src_texts)
+        nv = C.prose_violations(page, src_texts) + uncited_figures(page)
         if nv:
             print(f"  ! topics/{slug}: {len(nv)} unsupported figure(s) — retrying")
             page = llm(
                 prompt + "\n\nYOUR PREVIOUS ATTEMPT contained figures that appear in none "
-                "of the cited sources:\n"
+                "of the cited sources, or paragraphs stating figures with no [src:] tag:\n"
                 + "\n".join(f"- {x}" for x in nv[:12])
                 + "\nRewrite the full page. Every number must be copied exactly from a source "
                 "you cite in the same paragraph; drop any figure you cannot attribute.",
@@ -501,13 +532,14 @@ def main() -> int:
             # response unchecked meant a retry that fixed nothing was cached as
             # the current page, and the next pipeline check saw it only as a
             # warning.
-            if C.prose_violations(page, src_texts):
+            if C.prose_violations(page, src_texts) or uncited_figures(page):
                 print(
                     f"  ! topics/{slug}: retry still unsupported — page rejected, keeping previous"
                 )
                 failures.append(f"topics/{slug}")
                 continue
         page = C.downgrade_dead_links(page, targets | {f"topics/{slug}"})
+        page = link_missing_members(page, list(members), concepts)
         out_path.write_text(page.strip() + "\n", encoding="utf-8")
         state[slug] = digest
         any_changed = True

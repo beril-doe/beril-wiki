@@ -57,3 +57,27 @@ def test_refresh_rewrites_a_stale_line_and_is_idempotent():
         assert "3 concepts" in text and "93 concepts" not in text, text
         assert "## Browse" in text, "must not clobber the rest of the page"
         assert tb.refresh_corpus_line(idx, tb.corpus_stats(root)) is False
+
+
+def test_uncited_figures_flags_only_numeric_paragraphs_without_a_tag():
+    page = (
+        "# T\n\nAbout 200,000 genes were scored.\n\nYield was 42%. [src: a]\n\nNo numbers here.\n"
+    )
+    flagged = tb.uncited_figures(page)
+    assert len(flagged) == 1 and "200,000" in flagged[0]
+
+
+def test_link_missing_members_appends_unlinked_concepts():
+    concepts = {
+        "a": {"title": "A", "desc": "What A argues."},
+        "b": {"title": "B", "desc": ""},
+    }
+    page = "# T\n\nBody [[concepts/a]].\n\n## Where to Go Deeper\n\n- [[concepts/a]] — read.\n"
+    fixed = tb.link_missing_members(page, ["a", "b"], concepts)
+    assert fixed.count("[[concepts/b]]") == 1 and "— B" in fixed
+    assert fixed.index("[[concepts/b]]") > fixed.index("## Where to Go Deeper")
+    assert tb.link_missing_members(fixed, ["a", "b"], concepts) == fixed
+    no_section = "# T\n\nBody.\n"
+    assert "## Where to Go Deeper\n\n- [[concepts/a]] — What A argues." in tb.link_missing_members(
+        no_section, ["a"], concepts
+    )
