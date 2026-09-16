@@ -340,5 +340,20 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
         atomic_json(work / "state/agentic.json", next_state)
         promote(root, work, original)
         totals = agent.ledger.totals()
+        failures_path = store / "failures.json"
+        failures = (
+            json.loads(failures_path.read_text(encoding="utf-8")) if failures_path.exists() else {}
+        )
         print(f"agentic: accepted; {json.dumps(totals)}")
-        return totals
+        for page, entry in sorted(failures.items()):
+            issues = "; ".join(
+                f"{i.get('category')}: {i.get('quote') or i.get('note')}"[:120]
+                for i in entry["issues"][:4]
+            )
+            print(f"agentic: failed page {page} ({entry['step']}): {issues}")
+        if failures:
+            print(
+                f"agentic: {len(failures)} page(s) kept their previous version; "
+                "inspect .agentic/failures.json, then `retry --page PAGE` or `retry --all-failed`"
+            )
+        return totals | {"failures": sorted(failures)}

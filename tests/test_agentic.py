@@ -784,7 +784,18 @@ def test_reconcile_and_explicit_retry_keep_prior_charge(tmp_path, monkeypatch):
         sys, "argv", ["agentic", "--root", str(tmp_path), "account", "--job", key, "--tokens", "50"]
     )
     assert cli.main() == 0
-    monkeypatch.setattr(sys, "argv", ["agentic", "--root", str(tmp_path), "retry", "--job", key])
+    monkeypatch.setattr(sys, "argv", ["agentic", "--root", str(tmp_path), "retry"])
+    assert cli.main() == 1  # nothing named
+    (tmp_path / ".agentic/failures.json").write_text(
+        json.dumps({"conflicts/x": {"step": "conflicts/x", "issues": [], "jobs": [key]}})
+    )
+    monkeypatch.setattr(
+        sys, "argv", ["agentic", "--root", str(tmp_path), "retry", "--page", "conflicts/y"]
+    )
+    assert cli.main() == 1  # unknown page
+    monkeypatch.setattr(sys, "argv", ["agentic", "--root", str(tmp_path), "retry", "--all-failed"])
+    assert cli.main() == 0
+    monkeypatch.setattr(sys, "argv", ["agentic", "--root", str(tmp_path), "status"])
     assert cli.main() == 0
     restarted = module.Runtime(config)
 

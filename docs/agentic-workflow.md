@@ -259,7 +259,14 @@ to reconstruct the candidate from cached results.
 ```sh
 uv run python -m beril_wiki.agentic status
 uv run python -m beril_wiki.agentic retry --job FULL_JOB_ID
+uv run python -m beril_wiki.agentic retry --page conflicts/conflict--stem--1a2b3c4d
+uv run python -m beril_wiki.agentic retry --all-failed
 ```
+
+`status` lists the failed pages beside the totals. `retry --page` and
+`retry --all-failed` mark every job a failed page used as rejected, so the next
+run drafts that page afresh (fresh drafts converged where repeated repairs did
+not in the first live run) and leaves every other cached page untouched.
 
 Use `retry` only after inspecting a saved failed/rejected job. Malformed figure
 JSON/indices and entity retention-gate refusals stop the run and need inspection

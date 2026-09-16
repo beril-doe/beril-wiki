@@ -47,6 +47,11 @@ def load_models(root: Path, path: Path | None, model: str | None, overrides: lis
     return config
 
 
+def load_failures(root: Path) -> dict:
+    path = root / ".agentic/failures.json"
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=ROOT)
@@ -104,8 +109,14 @@ def main() -> int:
     account = commands.add_parser("account", help="reconcile unknown usage; does not retry")
     account.add_argument("--job", required=True)
     account.add_argument("--tokens", type=int, required=True)
-    retry = commands.add_parser("retry", help="explicitly retry one saved failed/rejected job")
-    retry.add_argument("--job", required=True)
+    retry = commands.add_parser(
+        "retry", help="re-issue saved jobs: by key, by failed page, or every failed page"
+    )
+    retry.add_argument("--job", action="append", default=[], help="full job key; repeatable")
+    retry.add_argument(
+        "--page", action="append", default=[], help="page key from failures.json; repeatable"
+    )
+    retry.add_argument("--all-failed", action="store_true", help="every page in failures.json")
     commands.add_parser("recover", help="finish an interrupted promotion without model calls")
     commands.add_parser("status", help="show durable job IDs, states and usage")
     args = parser.parse_args()
@@ -131,23 +142,39 @@ def main() -> int:
         elif args.command in ("account", "retry", "status"):
             with locked(root):
                 agent = Runtime(json.loads((root / ".agentic/config.json").read_text()))
+                failures = load_failures(root)
                 if args.command == "status":
                     rows = agent.ledger.db.execute(
                         "SELECT key,step,status,tokens,effective,error,model FROM jobs "
                         "ORDER BY rowid"
                     ).fetchall()
-                    print(json.dumps({"totals": agent.ledger.totals(), "jobs": rows}, indent=2))
+                    print(
+                        json.dumps(
+                            {"totals": agent.ledger.totals(), "failures": failures, "jobs": rows},
+                            indent=2,
+                        )
+                    )
                 elif args.command == "account":
                     agent.ledger.account(args.job, args.tokens)
                 else:
+                    pages = list(failures) if args.all_failed else args.page
+                    if unknown := [p for p in pages if p not in failures]:
+                        raise WorkflowError(f"not in failures.json: {unknown}")
+                    keys = args.job + [k for p in pages for k in failures[p]["jobs"]]
+                    if not keys:
+                        raise WorkflowError("retry needs --job, --page or --all-failed")
                     with agent.ledger.db:
-                        changed = agent.ledger.db.execute(
-                            "UPDATE jobs SET status='rejected' WHERE key=? "
-                            "AND status IN ('done','failed')",
-                            (args.job,),
-                        ).rowcount
+                        changed = sum(
+                            agent.ledger.db.execute(
+                                "UPDATE jobs SET status='rejected' WHERE key=? "
+                                "AND status IN ('done','failed')",
+                                (key,),
+                            ).rowcount
+                            for key in keys
+                        )
                     if not changed:
                         raise WorkflowError("job must be completed or reconciled before retry")
+                    print(f"retry: {changed} job(s) will be re-issued on the next run")
         else:
             if not args.cli:
                 raise WorkflowError("install Claude Code and log in with a subscription first")
