@@ -10,6 +10,7 @@ import inspect
 import json
 import math
 import os
+import re
 import sqlite3
 import subprocess
 import textwrap
@@ -55,9 +56,9 @@ def model_policy(config: dict) -> dict[str, str]:
 
 
 def model_for(config: dict, step: str) -> str:
-    """Route by job role; a repair retains its role and scientific review is separate."""
-    step = step.removesuffix("/repair")
-    if step.endswith("/science-review"):
+    """Route by job role; a repair or patch retains its role and review is separate."""
+    step = re.sub(r"/patch/\d+$", "", step.removesuffix("/repair"))
+    if step.endswith(("/science-review", "/review")):
         role = "review"
     elif step.startswith("extract/"):
         role = "extraction"
@@ -102,6 +103,26 @@ def manifest(root: Path, folders: tuple[str, ...]) -> dict[str, str]:
             if path.is_file() and "__pycache__" not in path.parts:
                 result[path.relative_to(root).as_posix()] = file_hash(path)
     return result
+
+
+def atomic_json(path: Path, value: dict) -> None:
+    """Write-then-rename so a killed worker cannot leave a truncated state file."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(f".{os.getpid()}.tmp")
+    with temporary.open("w", encoding="utf-8") as out:
+        json.dump(value, out, indent=2, sort_keys=True)
+        out.flush()
+        os.fsync(out.fileno())
+    os.replace(temporary, path)
+    fsync_dir(path.parent)
+
+
+def fsync_dir(path: Path) -> None:
+    fd = os.open(path, os.O_RDONLY)
+    try:
+        os.fsync(fd)
+    finally:
+        os.close(fd)
 
 
 TOKEN_FIELDS = (
@@ -456,6 +477,15 @@ def current_dependencies(root: Path, dependencies: dict[str, str]) -> dict:
     return current
 
 
+def tool_profile(step: str) -> str:
+    """Integration jobs read and search evidence; derived prose gets its evidence packed."""
+    if step.endswith("/science-review") or step.startswith("extract/"):
+        return "read"
+    if step.startswith(("curator/", "batch/plan", "write/")):
+        return "extended"
+    return "none"
+
+
 AUTH_ENV = (
     "ANTHROPIC_API_KEY",
     "ANTHROPIC_AUTH_TOKEN",
@@ -512,6 +542,7 @@ class Runtime:
         self._validator: Callable[[str], Any] | None = None
         self._validation_context: Any = None
         self._step = ""
+        self.jobs: list[str] = []  # every key this runtime touched, cached or fresh
         self.ledger = Ledger(
             self.store / "jobs.sqlite",
             config["run"],
@@ -530,11 +561,13 @@ class Runtime:
         for path in (self.root / "staging").glob("*.md"):
             if path.stem.removesuffix("__REPORT") in payload:
                 inputs[f"staging/{path.name}"] = file_hash(path)
-        tool_revision = digest([SYSTEM, ast.dump(ast.parse(inspect.getsource(ReadTools)))])
-        extended = step.startswith(("curator/", "batch/plan", "write/")) and not step.endswith(
-            "/science-review"
+        profile = tool_profile(step)
+        tool_revision = (
+            digest([SYSTEM])
+            if profile == "none"
+            else digest([SYSTEM, ast.dump(ast.parse(inspect.getsource(ReadTools)))])
         )
-        if extended:
+        if profile == "extended":
             tool_revision = digest(
                 [
                     tool_revision,
@@ -558,9 +591,11 @@ class Runtime:
             dependencies = json.loads(row[1] or "{}")
             current = current_dependencies(self.root, dependencies)
             if current == dependencies:
+                self.jobs.append(key)
                 return row[2]
             key = digest([key, current])
         check_auth(self.config["cli"])
+        self.jobs.append(key)
         cached = self.ledger.reserve(key, step, model)
         if cached is not None:
             return cached
@@ -573,9 +608,8 @@ class Runtime:
             raise WorkflowError(f"{step} failed; inspect job {key}: {exc}") from exc
 
     async def _query(self, payload: str, key: str) -> str:
-        extended = self._step.startswith(
-            ("curator/", "batch/plan", "write/")
-        ) and not self._step.endswith("/science-review")
+        profile = tool_profile(self._step)
+        extended = profile == "extended"
         reader = EvidenceTools(self.root) if extended else ReadTools(self.root)
 
         @tool(
@@ -629,21 +663,20 @@ class Runtime:
             reader.remaining -= size
             return {"content": [{"type": "text", "text": json.dumps(value)}]}
 
-        available = [read_evidence]
+        available = [] if profile == "none" else [read_evidence]
         if extended:
             available.append(search_evidence)
             if self._validator is not None:
                 available.append(validate_candidate)
-        system = (
-            SYSTEM
-            if not extended
-            else SYSTEM.replace(
-                "Use only the supplied evidence read tool.",
-                "Use only the supplied read-only evidence, search and candidate-check tools.",
-            )
+        system = SYSTEM.replace(
+            "Use only the supplied evidence read tool.",
+            {
+                "none": "All evidence is supplied in the prompt; there are no tools.",
+                "read": "Use only the supplied evidence read tool.",
+                "extended": "Use only the supplied read-only evidence, search and "
+                "candidate-check tools.",
+            }[profile],
         )
-        if extended and system == SYSTEM:
-            raise WorkflowError("extended tool instructions were not configured")
         cli = self.config["cli"]
         contract = (self.root / "contract/AGENTS.md").read_text()
         opts = ClaudeAgentOptions(
@@ -652,7 +685,11 @@ class Runtime:
             system_prompt=system + contract,
             tools=[],
             allowed_tools=[f"mcp__evidence__{t.name}" for t in available],
-            mcp_servers={"evidence": create_sdk_mcp_server("evidence", tools=available)},
+            mcp_servers=(
+                {"evidence": create_sdk_mcp_server("evidence", tools=available)}
+                if available
+                else {}
+            ),
             strict_mcp_config=True,
             setting_sources=[],
             skills=[],
@@ -660,7 +697,7 @@ class Runtime:
             cwd=self.store,
             env=subscription_env(self.config.get("max_output_tokens", 32768)),
             permission_mode="dontAsk",
-            max_turns=self.config.get("max_turns", 6),
+            max_turns=1 if profile == "none" else self.config.get("max_turns", 6),
             fallback_model=None,
             extra_args={"no-session-persistence": None, "disable-slash-commands": None},
         )
@@ -797,13 +834,12 @@ def configured() -> bool:
 
 
 def page_context(path: str, text: str, limit: int = 7000) -> str:
-    """An explicitly incomplete preview with exact offsets for expansion."""
+    """An explicitly marked truncation; nothing beyond it may be cited."""
     if len(text) <= limit:
         return text
     return (
-        text[:limit] + f"\n[PREVIEW ONLY: {path} has {len(text)} characters. "
-        f"The preview ends at offset {limit}. Use read_evidence with this exact path "
-        "to retrieve omitted findings and caveats before making claims about the full page.]"
+        text[:limit] + f"\n[TRUNCATED: {path} has {len(text)} characters and this excerpt "
+        f"ends at offset {limit}. Cite nothing beyond it.]"
     )
 
 
@@ -819,33 +855,26 @@ def page_contexts(pages: dict[str, str], budget: int = 160_000) -> dict[str, str
         limit //= 2
 
 
+def runtime_config() -> dict:
+    return json.loads(Path(os.environ["BERIL_AGENTIC_CONFIG"]).read_text())
+
+
 def runtime() -> Runtime:
-    return Runtime(json.loads(Path(os.environ["BERIL_AGENTIC_CONFIG"]).read_text()))
+    return Runtime(runtime_config())
 
 
-def text_completion(messages: list[dict], step: str, review: bool = True) -> str:
-    agent = runtime()
-    if not review:
-        return agent.ask(messages, step)
-
-    def accept(result: str) -> str:
-        agent.review(messages, result, step)
-        return result
-
-    # Legacy validators own these correction calls; do not multiply their retry ladders.
-    parts = step.split("/")
-    if len(parts) >= 3 and parts[-1] in {"retry", "retention", "retry-citations", "retry-numbers"}:
-        return accept(agent.ask(messages, step))
-    return agent.generate(messages, step, accept)
+def text_completion(messages: list[dict], step: str) -> str:
+    """One accounted job; derived prose review lives in agentic.prose, not here."""
+    return runtime().ask(messages, step)
 
 
-def completion(*, step: str = "derived", review: bool = True, **kwargs) -> Any:
+def completion(*, step: str = "derived", **kwargs) -> Any:
     """Compatibility boundary for downstream stages; API mode stays unchanged."""
     if not configured():
         from litellm import completion as api_completion
 
         return api_completion(**kwargs)
-    value = text_completion(kwargs["messages"], step, review=review)
+    value = text_completion(kwargs["messages"], step)
     return SimpleNamespace(
         choices=[SimpleNamespace(message=SimpleNamespace(content=value), finish_reason="stop")],
         usage=SimpleNamespace(prompt_tokens=0, completion_tokens=0),

@@ -5,11 +5,21 @@ import json
 from beril_wiki.agentic.runtime import digest
 
 FACTS = "Yield was 42%. [src: a]\n\nYield was 56%. [src: b]"
+PAD = "Growth conditions were compared across the two projects without new figures. "
+
+
+def pad(text: str, words: int) -> str:
+    """Bring a recorded page to the word range its stage contract requires."""
+    while len(text.split()) < words:
+        text += "\n\n" + PAD * 12
+    return text
 
 
 def reply(self, messages, step):
-    if step.endswith("/science-review"):
+    if step.endswith(("/science-review", "/review")):
         return '{"accepted": true, "issues": []}'
+    if "/patch/" in step:
+        raise AssertionError(f"recorded pages must pass their gates: {step}")
     if step == "curator/topics":
         data = json.loads(messages[0]["content"].split("\n")[-1])
         return json.dumps(
@@ -85,26 +95,37 @@ def reply(self, messages, step):
             }
         )
     if step.startswith("conflicts/"):
-        return (
-            "# Yield tension\n\n## Evidence Sides\n\n"
-            + FACTS
-            + "\n\n## Resolving Work\n\nMeasure conditions."
+        sides = FACTS.split("\n\n")
+        return pad(
+            "# Yield tension\n\nTwo projects disagree on yield; see [[concepts/yield]].\n\n"
+            f"## Evidence Sides\n\n**Project a.** {sides[0]}\n\n**Project b.** {sides[1]}\n\n"
+            "## Possible Reconciliations\n\nHypothesis: conditions differed.\n\n"
+            "## Resolving Work\n\n- Repeat both measurements under one protocol.",
+            300,
         )
     if step == "topics/names":
         return '{"0": "Yield studies"}'
     if step.startswith("topics/"):
-        return "# Yield studies\n\n" + FACTS + "\n\nSee [[concepts/yield]]."
+        return pad(
+            "# Yield studies\n\nWhat the corpus says about yield.\n\n## What the Corpus Shows\n\n"
+            "**Yield.** " + FACTS + " See [[concepts/yield]].\n\n## Tensions and Caveats\n\n"
+            "The projects disagree. [src: a, b]\n\n## Where to Go Deeper\n\n"
+            "- [[concepts/yield]] — the comparison.",
+            900,
+        )
     if step == "home":
         return (
-            "# BERIL Knowledge Wiki\n\n## Topics\n\n- [[topics/yield-studies]]"
-            "\n\n## Corpus\n\nReports."
+            "# BERIL Knowledge Wiki\n\nAn AI-conducted corpus.\n\nTopics are the entry points.\n\n"
+            "## Topics\n\n- [[topics/yield-studies|Yield studies]] (1 concepts): yield.\n\n"
+            "## Corpus\n\nReports.\n\n## Browse\n\n- [[catalog|Full page catalog]]"
         )
     if step.endswith("/queries"):
         return '{"queries": ["yield measurement"]}'
     if step.startswith("lit/"):
-        return (
+        return pad(
             "## Literature Context\n\nConditions affect yield. "
-            "[PMID 1](https://pubmed.ncbi.nlm.nih.gov/1/)"
+            "[PMID 1](https://pubmed.ncbi.nlm.nih.gov/1/)",
+            300,
         )
     if step.startswith("authors/"):
         return "## Contributions\n\n" + FACTS

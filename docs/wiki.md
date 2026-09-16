@@ -11,7 +11,7 @@ chooses the work and who validates it.
 | --- | --- |
 | `wiki/index.md` and `wiki/topics/` | Home and narrative topic hubs. The curator chooses titles and assigns every concept to exactly one group. Literature Context adds external context with verified PubMed citations. |
 | `wiki/concepts/` | Cross-project synthesis with cited evidence, supports/contradicts/refines relations, Tensions, and Open Directions. |
-| `wiki/conflicts/` | Disagreements with cited Evidence Sides and Resolving Work; conflicting findings remain explicit. |
+| `wiki/conflicts/` | One page per disagreement: every Tensions paragraph that cites two or more projects, with cited Evidence Sides, Possible Reconciliations and Resolving Work. Paragraphs restating the same figures share a page. Slugs are `conflict--<concept>--<digest of the paragraph>`, so an unchanged disagreement keeps its page and a changed one is retired. |
 | `wiki/entities/` | Named organisms, genes, methods, datasets and other entities, with canonical names and aliases. Publishing hides pages with only one source. |
 | `wiki/summaries/` | Faithful report summaries with exact quantities, caveats, negative results and Slots Into links. |
 | `wiki/sources/` | Copied source reports, preserving the original report bytes. |

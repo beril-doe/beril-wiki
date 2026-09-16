@@ -721,7 +721,7 @@ def test_large_hub_previews_keep_retrieval_references():
 
     context = "\n".join(page_context(f"wiki/concepts/page-{i}.md", "x" * 62000) for i in range(9))
     assert len(context.encode()) < 100000
-    assert context.count("PREVIEW ONLY") == 9
+    assert context.count("TRUNCATED") == 9
     assert "wiki/concepts/page-8.md has 62000 characters" in context
 
 
@@ -739,14 +739,14 @@ def test_downstream_sdk_routing_skips_api_and_mechanical_review(monkeypatch):
     monkeypatch.setattr(litellm, "completion", no_api)
     calls = []
 
-    def sdk(messages, step, review=True):
-        calls.append((step, review))
+    def sdk(messages, step):
+        calls.append(step)
         return "{}"
 
     monkeypatch.setattr(module, "text_completion", sdk)
-    module.completion(messages=[], step="figures/test", review=False)
+    module.completion(messages=[], step="figures/test")
     compiler.llm([], "test/queries")
-    assert calls == [("figures/test", False), ("test/queries", False)]
+    assert calls == ["figures/test", "test/queries"]
 
 
 def test_reconcile_and_explicit_retry_keep_prior_charge(tmp_path, monkeypatch):
@@ -859,7 +859,7 @@ def test_figure_cache_tracks_candidates_and_missing_results(tmp_path, monkeypatc
 
     def completion(**kwargs):
         assert '"caption"' not in kwargs["messages"][0]["content"]
-        assert "Incomplete paragraph previews" in kwargs["messages"][1]["content"]
+        assert "read_evidence" not in kwargs["messages"][1]["content"]
         calls.append(kwargs)
         return SimpleNamespace(
             choices=[

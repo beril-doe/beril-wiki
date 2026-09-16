@@ -191,14 +191,15 @@ def test_literature_page_cache_converges_after_real_splice(tmp_path, monkeypatch
 
     def reply(messages, step):
         calls.append(step)
-        return (
-            '{"queries": ["yield"]}'
-            if step.endswith("queries")
-            else "## Literature Context\n\nExternal context. [PMID 1](https://pubmed.ncbi.nlm.nih.gov/1/)"
+        if step.endswith("queries"):
+            return '{"queries": ["yield"]}'
+        return "## Literature Context\n\nExternal context. " + (
+            "[PMID 1](https://pubmed.ncbi.nlm.nih.gov/1/) " + "Evidence is cited. " * 100
         )
 
     monkeypatch.setattr(L.C, "llm", reply)
+    monkeypatch.setattr("beril_wiki.agentic.prose.ask", reply)
     assert L.main(tmp_path) == 0
     assert "Literature Context" in page.read_text()
     assert L.main(tmp_path) == 0
-    assert calls == ["lit/a/queries", "lit/a/review"]
+    assert calls == ["lit/a/queries", "lit/a/section"]

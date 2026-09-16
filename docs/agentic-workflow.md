@@ -99,8 +99,8 @@ before the runner starts. An explicitly named file must exist and validate even
 when `--model` replaces its policy. A checkout
 without the default file requires `--model`. Budgets remain required CLI flags.
 
-Repairs keep the original role's model. A literature-writing job ending in
-`/review` still uses `writing`; only `/science-review` jobs use `review`.
+Repairs and paragraph patches keep the original role's model; every job ending
+in `/review` or `/science-review` uses `review`.
 Unspecified roles use the default, with no automatic fallback or escalation.
 Use explicit model IDs available to the authenticated subscription; moving
 aliases may change their underlying model without changing a cache key.
@@ -167,27 +167,60 @@ Quantities in those mixed-source paragraphs are retained conservatively; separat
 scientific review assesses support and lost
 meaning. Review is useful evidence, not a guarantee of scientific correctness.
 
-SDK tools expose bounded `read_evidence`. Curator, planner and writer jobs also
-get literal `search_evidence`; page writers additionally get a host-bound
-`validate_candidate`. Tool validation is advisory: the final candidate must pass
-the same host checks and independent scientific review before it is written.
-Extraction and retrieval both decode UTF-8 with replacement for invalid bytes;
-offsets refer to that decoded text. Original report bytes remain unchanged.
-No shell, general filesystem writes, skill discovery or unrelated tools are
-exposed. Source text is evidence, never an instruction authority.
+Only the integration path uses tools. Extraction and its review get bounded
+`read_evidence`; planner and page-writer jobs also get literal `search_evidence`,
+and page writers a host-bound `validate_candidate`. Tool validation is advisory:
+the final candidate must pass the same host checks and independent scientific
+review before it is written. Extraction and retrieval both decode UTF-8 with
+replacement for invalid bytes; offsets refer to that decoded text. Original
+report bytes remain unchanged. No shell, general filesystem writes, skill
+discovery or unrelated tools are exposed. Source text is evidence, never an
+instruction authority.
 
-Invalid plans, topic proposals and page candidates get **at most one correction**.
-A repaired scientific candidate receives a fresh review. Derived scientific
-completion uses the same bound. Extraction rejection, malformed reviewer output,
-unknown usage, authentication failures and other operational errors stop the run.
-There is no unbounded correction loop. Legacy topic, conflict, literature and
-author validators retain their bounded stage retries for invalid or uncited numbers,
-citations or author characterizations. Each reissued generation is separately
-accounted and scientifically reviewed, but legacy retry steps receive no additional
-repair allowance. Worst-case ceilings, including scientific reviews, are ten SDK
-jobs per entity merge, eight per topic hub and six per conflict, author or
-literature update. Mechanical requests and unrelated pages have separate costs;
-the shared job/token limits still apply.
+### Derived prose: packed evidence, one-turn review, paragraph patches
+
+Conflict pages, topic hubs, the home page, literature sections, author
+contributions and figure placements are written without tools. Code packs each
+job's complete evidence into the prompt: the tension paragraph(s) with their
+`[src:]` tags, concept leads and the source paragraphs that state the tension's
+own figures for a conflict page; member concept pages (truncated with an explicit
+marker under a 110KB budget) and the leads of the conflict pages linking those
+concepts for a hub; hub text and PubMed abstracts for a literature section; the
+author's project summaries for a contributions section. A job runs in one turn,
+so its cache keys on the packed prompt alone and no dependency on a file read can
+invalidate it later.
+
+Each stage defines one rule list (`Contract` in `agentic/prose.py`, instantiated
+in the stage module) that is injected verbatim into the writer, the patcher and
+the reviewer: word range, required sections, figures only from the input,
+`[src:]` tags as the input gives them, directions and denominators as stated,
+jargon defined at first use, lead figures cited, no preamble, no legacy platform
+names. Deterministic gates run before any review and report issues by paragraph
+index and category: length (with 10% slack), missing headings, preamble, figures
+absent from the input, invalid `[src:]` ids, figures without a tag, and figures
+absent from their cited sources. Dead wikilinks and legacy platform names are
+repaired in code. Only a candidate that passes every gate reaches the reviewer,
+which receives exactly the writer's evidence pack and rules plus the numbered
+candidate and returns one JSON verdict listing issues with a paragraph index, a
+category (number, direction, denominator, caveat, citation, length, format,
+unsupported) and a quote.
+
+A rejected candidate is patched, not rewritten: the writer receives the numbered
+candidate, the same pack and the latest issues, and returns replacement paragraphs
+keyed by index against the candidate's base hash. Gates run again, and only the
+replaced paragraphs are reviewed again. Two patch rounds are allowed, each seeing
+the latest verdict; a page that has not converged raises a page failure. The
+stage records it (the run summary and `.agentic/failures.json`, with its issues
+and job keys), keeps the previously accepted page or skips a new one, and
+continues. Promotion proceeds with failures reported unless `--strict-pages` is
+set, in which case a stage with failures stops the run. The API pipeline shares
+the same gates and patch rounds but has no model reviewer.
+
+Invalid plans, topic proposals and integration candidates get **at most one
+correction**, and a repaired candidate receives a fresh review. Extraction
+rejection, unknown usage, authentication failures and other operational errors
+still stop the run. The worst case for a derived page is six jobs: a draft, a
+review, and two patch rounds each with its own review.
 
 Durable raw job results and evidence avoid repeating accepted inference. Tool
 reads track file hashes; searches track searchable inventories, so negative
@@ -204,12 +237,12 @@ Scientific compiler/model changes and manual edits to core pages conservatively
 revisit staged sources. Deleted sources require a separate scientific retraction;
 they are never silently accepted. Evidence read limits are 24,000 characters per
 read and 100KB total tool output per job; requests are limited to 500KB and
-transcripts/stage logs to 4MB. Author/topic previews share a 160KB serialized context budget with explicit
-retrieval paths. Oversized inventories still stop with saved results. Figure
-selection retains the existing candidate caps. Malformed placement JSON or indices
-stop the agentic run; per-page chart-review flags survive cached updates and are
-removed when their pages are retired. No embedding API is used in this
-path; PubMed remains an external data retrieval operation.
+transcripts/stage logs to 4MB. Oversized inventories still stop with saved
+results. Figure selection retains the existing candidate caps. Malformed
+placement JSON or indices stop the agentic run; per-page chart-review flags
+survive cached updates and are removed when their pages are retired. No
+embedding API is used in this path; PubMed remains an external data retrieval
+operation.
 
 ## Resume and recovery
 
@@ -224,10 +257,11 @@ uv run python -m beril_wiki.agentic retry --job FULL_JOB_ID
 ```
 
 Use `retry` only after inspecting a saved failed/rejected job. Malformed figure
-JSON/indices, entity retention-gate refusals and twice-rejected scientific
-candidates stop the run and need inspection before explicitly retrying the
-affected author job, reviewer job, or both. Excess valid figure placements
-are trimmed to the page's cap. Completed editorial results remain cached; stopping
+JSON/indices and entity retention-gate refusals stop the run and need inspection
+before explicitly retrying the affected job. A derived page that failed its patch
+rounds does not stop the run; its issues and job keys are in
+`.agentic/failures.json`, and rerunning the same command replays the cached
+verdict for free. Excess valid figure placements are trimmed to the page's cap. Completed editorial results remain cached; stopping
 promotion does not discard their paid model outputs. A crash can consume
 allowance without returning usage. Jobs interrupted by a timeout or a killed
 stage are charged from their transcripts automatically; only a job whose result
@@ -261,7 +295,8 @@ promotion.
 ## Development verification
 
 Offline tests exercise the actual subprocess pipeline with recorded model and
-PubMed replies, the stage schedule, dependency enforcement, bounded repair,
+PubMed replies, the stage schedule, dependency enforcement, gates, paragraph
+patches, scoped re-review, recorded page failures,
 topic decisions, cache invalidation, subscription setup and promotion recovery.
 They do not establish model quality or real subscription savings. The curator
 has not yet been accepted through a real source update. MCP remains below

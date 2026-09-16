@@ -109,27 +109,6 @@ def test_generation_repairs_once_and_never_retries_operational_error(tmp_path, m
     assert calls == ["write/test"]
 
 
-def test_derived_prose_repair_gets_independent_review(tmp_path, monkeypatch):
-    agent = runtime(tmp_path)
-    monkeypatch.setattr(R, "runtime", lambda: agent)
-    calls = []
-
-    def ask(task, step):
-        calls.append(step)
-        if step.endswith("/science-review"):
-            return json.dumps(
-                {
-                    "accepted": "bad" not in str(task),
-                    "issues": ["unsupported claim"] if "bad" in str(task) else [],
-                }
-            )
-        return "good" if step.endswith("/repair") else "bad"
-
-    monkeypatch.setattr(agent, "ask", ask)
-    assert R.text_completion([], "topics/test") == "good"
-    assert len(calls) == 4
-
-
 def test_sdk_validation_tool_is_bound_only_to_writer(tmp_path, monkeypatch):
     from claude_agent_sdk import ResultMessage, SystemMessage
 
@@ -207,27 +186,6 @@ def test_sdk_validation_tool_is_bound_only_to_writer(tmp_path, monkeypatch):
     assert agent._validator is None
 
 
-def test_scientific_review_routing_ignores_words_inside_slugs(monkeypatch):
-    from beril_wiki import compiler
-
-    monkeypatch.setenv("BERIL_AGENTIC_CONFIG", "configured")
-    calls = []
-    monkeypatch.setattr(
-        R, "text_completion", lambda messages, step, review=True: calls.append(review) or "{}"
-    )
-    for step in (
-        "lit/plant-x/review",
-        "merge/plant-cell",
-        "authors/alex-judge",
-        "a/plan",
-        "lit/plant-x/queries",
-        "a/enrich-plan",
-        "merge-judge/a+b",
-    ):
-        compiler.llm([], step)
-    assert calls == [True, True, True, False, False, False, False]
-
-
 def test_search_ignores_unsearched_assets_and_bounds_long_snippets(tmp_path):
     (tmp_path / "wiki/concepts").mkdir(parents=True)
     (tmp_path / "wiki/concepts/a.md").write_text("z" * 100 + "x" * 200 + "z" * 100)
@@ -241,16 +199,6 @@ def test_search_ignores_unsearched_assets_and_bounds_long_snippets(tmp_path):
     assert R.current_dependencies(tmp_path, reader.dependencies) == before
 
 
-def test_malformed_review_does_not_spend_author_repair(tmp_path, monkeypatch):
-    agent = runtime(tmp_path)
-    monkeypatch.setattr(R, "runtime", lambda: agent)
-    calls = []
-    monkeypatch.setattr(agent, "ask", lambda messages, step: calls.append(step) or "not JSON")
-    with pytest.raises(R.WorkflowError, match="verdict"):
-        R.text_completion([], "topics/test")
-    assert calls == ["topics/test", "topics/test/science-review"]
-
-
 def test_large_collection_context_is_bounded_and_retrievable():
     pages: dict[str, str] = {
         f"wiki/summaries/project-{i}__REPORT.md": "μ yield and caveats. " * 1000 for i in range(100)
@@ -259,38 +207,9 @@ def test_large_collection_context_is_bounded_and_retrievable():
     assert len(json.dumps(previews).encode("utf-8")) <= 160_000
     assert set(previews) == set(pages)
     for path, preview in previews.items():
-        prefix = preview.split("\n[PREVIEW ONLY:")[0]
+        prefix = preview.split("\n[TRUNCATED:")[0]
         assert pages[path].startswith(prefix)
         assert path in preview and f"offset {len(prefix)}" in preview
-
-
-@pytest.mark.parametrize(
-    "step",
-    [
-        "merge/a/retry",
-        "merge/a/retention",
-        "merge/a/retention/retry",
-        "topics/a/retry-citations",
-        "topics/a/retry-numbers",
-    ],
-)
-def test_legacy_retry_gets_review_without_another_repair(tmp_path, monkeypatch, step):
-    agent = runtime(tmp_path)
-    monkeypatch.setattr(R, "runtime", lambda: agent)
-    calls = []
-
-    def ask(task, name):
-        calls.append(name)
-        return (
-            '{"accepted": false, "issues": ["unsupported"]}'
-            if name.endswith("science-review")
-            else "candidate"
-        )
-
-    monkeypatch.setattr(agent, "ask", ask)
-    with pytest.raises(R.CandidateError):
-        R.text_completion([], step)
-    assert calls == [step, step + "/science-review"]
 
 
 @pytest.mark.parametrize(
@@ -300,7 +219,10 @@ def test_legacy_retry_gets_review_without_another_repair(tmp_path, monkeypatch, 
         ("extract/a/0", "extraction"),
         ("batch/plan/0/repair", "planning"),
         ("write/concepts/a.md/repair", "writing"),
-        ("lit/a/review", "writing"),
+        ("lit/a/section", "writing"),
+        ("conflicts/a/review", "review"),
+        ("topics/a/patch/2", "writing"),
+        ("topics/a/patch/2/review", "review"),
         ("lit/a/queries/repair", "queries"),
         ("figures/topics/a.md", "figures"),
         ("write/concepts/a.md/repair/science-review", "review"),

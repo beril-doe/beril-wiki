@@ -23,33 +23,16 @@ from beril_wiki.agentic.runtime import (
     CORE_MODEL_ROLES,
     Runtime,
     WorkflowError,
+    atomic_json,
     digest,
     file_hash,
+    fsync_dir,
     manifest,
     model_policy,
     model_signature,
 )
 
 TREES = ("wiki", "state", "staging")
-
-
-def atomic_json(path: Path, value: dict) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_suffix(".tmp")
-    with temporary.open("w", encoding="utf-8") as out:
-        json.dump(value, out, indent=2, sort_keys=True)
-        out.flush()
-        os.fsync(out.fileno())
-    os.replace(temporary, path)
-    fsync_dir(path.parent)
-
-
-def fsync_dir(path: Path) -> None:
-    fd = os.open(path, os.O_RDONLY)
-    try:
-        os.fsync(fd)
-    finally:
-        os.close(fd)
 
 
 @contextmanager

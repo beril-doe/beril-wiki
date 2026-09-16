@@ -168,13 +168,19 @@ def test_actual_writer_uses_selected_groups_names_cache_and_home_refresh(tmp_pat
     monkeypatch.setattr(stage, "cluster_concepts", forbidden)
     calls = []
 
-    def llm(prompt, system="", **kwargs):
-        assert kwargs.get("step") != "topics/names"
+    def ask(messages, step):
+        assert step != "topics/names"
+        prompt = messages[0]["content"]
         calls.append(prompt)
-        title = prompt.splitlines()[0].removeprefix("TOPIC: ")
-        return f"# {title}\n\nA lead.\n\n## Where to Go Deeper\n"
+        title = prompt.split("TOPIC: ")[1].splitlines()[0]
+        return (
+            f"# {title}\n\nA lead.\n\n## What the Corpus Shows\n\n"
+            + "Evidence without figures is stated here. " * 150
+            + "\n\n## Tensions and Caveats\n\nNone.\n\n## Where to Go Deeper\n"
+        )
 
-    monkeypatch.setattr(stage, "llm", llm)
+    monkeypatch.setattr(stage, "llm", lambda *a, **k: pytest.fail("no naming call"))
+    monkeypatch.setattr("beril_wiki.agentic.prose.ask", ask)
     homes = []
 
     def home(hubs, stats):
@@ -184,8 +190,8 @@ def test_actual_writer_uses_selected_groups_names_cache_and_home_refresh(tmp_pat
     monkeypatch.setattr(stage, "write_home", home)
     assert stage.main() == 0
     assert len(calls) == 2
-    assert "[file: concepts/a]" in calls[0] and "[file: concepts/c]" in calls[0]
-    assert "[file: concepts/b]" not in calls[0]
+    assert "[concepts/a]" in calls[0] and "[concepts/c]" in calls[0]
+    assert "[concepts/b]" not in calls[0]
     assert (tmp_path / "wiki/topics/chosen-pair.md").exists()
     assert stage.main() == 0
     assert len(calls) == 2 and len(homes) == 1

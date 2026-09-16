@@ -142,11 +142,6 @@ def main() -> None:
         pars = paragraphs(text)
         limit = min(300, 80_000 // max(1, len(pars)))
         par_block = "\n".join(f"[{i}] {p[:limit]}" for i, p in enumerate(pars))
-        if configured():
-            par_block += (
-                f"\n[Incomplete paragraph previews. Full page: wiki/{rel}, {len(text)} characters. "
-                "Use read_evidence to read omitted context before choosing placements.]"
-            )
         cand_block = "\n".join(
             f"[{i}] {c['project']}/{c['file']} — caption: {c['caption'][:300]!r} — "
             f"context: {c['context'][:200]!r}"
@@ -165,7 +160,6 @@ def main() -> None:
         resp = (
             completion(
                 step=f"figures/{rel}",
-                review=False,
                 model=MODEL,
                 api_key=os.environ.get("OPENAI_API_KEY"),
                 base_url=os.environ.get("OPENAI_BASE_URL", "https://api.cborg.lbl.gov"),

@@ -20,7 +20,6 @@ from beril_wiki.agentic.runtime import (
     model_signature,
     page_context,
     page_contexts,
-    text_completion,
 )
 from beril_wiki.agentic.topics import load_groups, propose_topics
 from beril_wiki.stages.literature import SECTION, topic_core
@@ -83,18 +82,13 @@ def stage_revision(root: Path, name: str, config: dict) -> str:
             SYSTEM,
             *[
                 ast.dump(ast.parse(textwrap.dedent(inspect.getsource(helper))))
-                for helper in (
-                    Runtime.review,
-                    Runtime.generate,
-                    text_completion,
-                    page_context,
-                    page_contexts,
-                )
+                for helper in (page_context, page_contexts)
             ],
             *[
                 ast.dump(ast.parse((package / file).read_text(encoding="utf-8")))
                 for file in (
                     f"stages/{name}.py",
+                    "agentic/prose.py",
                     "compiler.py",
                 )
             ],
