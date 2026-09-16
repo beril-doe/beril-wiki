@@ -358,6 +358,7 @@ def test_cli_passes_explicit_model_policy(tmp_path, monkeypatch, use_yaml):
     assert cli.main() == 0
     assert configs[0]["step_models"] == {"figures": "small", "review": "reviewer"}
     assert configs[0]["model"] == "strong"
+    assert configs[0]["workers"] == 4 and configs[0]["strict_pages"] is False
 
 
 def test_cli_loads_committed_policy_without_model_flag(tmp_path, monkeypatch):

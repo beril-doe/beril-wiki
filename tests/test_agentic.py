@@ -949,3 +949,40 @@ def test_figure_failures_and_queue_preservation(tmp_path, monkeypatch):
         with pytest.raises(WorkflowError):
             F.main()
         assert placements.read_text() == before
+
+
+def test_figure_pages_place_in_parallel_workers(tmp_path, monkeypatch):
+    import json
+    import threading
+    import time
+    from types import SimpleNamespace
+
+    from beril_wiki.stages import figures as F
+
+    (tmp_path / "wiki/topics").mkdir(parents=True)
+    (tmp_path / "state").mkdir()
+    for name in ("a", "b", "c", "d"):
+        (tmp_path / f"wiki/topics/{name}.md").write_text("# Yield\n\nYield. [src: a]")
+    monkeypatch.setattr(F, "ROOT", tmp_path)
+    monkeypatch.setattr(F, "STATE", tmp_path / "state")
+    monkeypatch.setattr(F, "workers", lambda: 3)
+    monkeypatch.setattr(
+        F,
+        "build_manifest",
+        lambda: {"a": [{"file": "figures/a.png", "caption": "Yield", "context": "Yield"}]},
+    )
+    monkeypatch.setattr(F.sys, "argv", ["figures"])
+    threads = []
+
+    def answer(**kwargs):
+        threads.append(threading.current_thread().name)
+        time.sleep(0.05)
+        text = json.dumps({"placements": [{"figure": 0, "after_paragraph": 0}]})
+        return SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content=text))])
+
+    monkeypatch.setattr(F, "completion", answer)
+    F.main()
+    assert len(threads) == 4 and len(set(threads)) > 1
+    placements = json.loads((F.STATE / "figures-placements.json").read_text())
+    assert sorted(placements) == ["topics/a.md", "topics/b.md", "topics/c.md", "topics/d.md"]
+    assert not list(F.STATE.glob("*.tmp"))

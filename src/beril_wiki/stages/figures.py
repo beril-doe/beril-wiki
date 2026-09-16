@@ -5,10 +5,10 @@ Phase A (deterministic): parse every project report's ![caption](figures/...)
 embeds into figures-manifest.json, keeping the caption and the report paragraph
 around each embed (what the figure evidences).
 
-Phase B (LLM, cached by page-content hash): for each summary / topic hub /
-conflict page, ask the model WHERE figures from the page's cited projects
-support the text. The model returns structured placements only — it never
-rewrites prose. Results go to figures-placements.json; publish/ingest.py splices
+Phase B (LLM, cached by page-content hash, pages placed in a worker pool): for
+each summary / topic hub / conflict page, ask the model WHERE figures from the
+page's cited projects support the text. The model returns structured placements
+only — it never rewrites prose. Results go to figures-placements.json; publish/ingest.py splices
 them at publish time. Pages whose content hash is unchanged are skipped.
 
 Also emits figures-csv-queue.md: pages the model flags as needing a chart for
@@ -27,7 +27,8 @@ import pathlib
 import re
 import sys
 
-from beril_wiki.agentic.runtime import WorkflowError, completion, configured
+from beril_wiki.agentic.prose import PageFailure, parallel, workers
+from beril_wiki.agentic.runtime import WorkflowError, atomic_json, completion, configured
 from beril_wiki.paths import ROOT, STATE
 
 MODEL = os.environ.get("WIKI_MODEL", "openai/gpt-5.6-luna")
@@ -114,12 +115,11 @@ def main() -> None:
     live = {f"{kind}/{path.name}" for kind, path in target_pages()}
     placements = {key: value for key, value in placements.items() if key in live}
     state = {key: value for key, value in state.items() if key in live}
-    calls = skipped = 0
-
+    todo = []
+    skipped = 0
     for kind, page in target_pages():
         rel = f"{page.parent.name}/{page.name}" if kind == "summaries" else f"{kind}/{page.name}"
         text = page.read_text(encoding="utf-8", errors="replace")
-        page_hash = hashlib.sha256(text.encode()).hexdigest()[:16]
         if kind == "summaries":
             projs = [re.sub(r"__REPORT$", "", page.stem)]
         else:
@@ -139,6 +139,11 @@ def main() -> None:
             state[rel] = digest
             placements.pop(rel, None)
             continue
+        todo.append((kind, rel, text, cands, digest))
+
+    def place(item: tuple) -> dict | None:
+        """One placement job; None when an API-mode reply is unparseable."""
+        kind, rel, text, cands, _ = item
         pars = paragraphs(text)
         limit = min(300, 80_000 // max(1, len(pars)))
         par_block = "\n".join(f"[{i}] {p[:limit]}" for i, p in enumerate(pars))
@@ -186,7 +191,7 @@ def main() -> None:
             if configured():
                 raise WorkflowError(f"figures/{rel}: invalid placement JSON") from exc
             print(f"  ! unparseable response for {rel}, skipping")
-            continue
+            return None
         if configured():
             valid = (
                 isinstance(data, dict)
@@ -227,20 +232,26 @@ def main() -> None:
                         ),
                     }
                 )
-        placements[rel] = {
-            "page_hash": page_hash,
+        return {
+            "page_hash": hashlib.sha256(text.encode()).hexdigest()[:16],
             "placements": placed,
             "csv_flags": [str(x)[:300] for x in data.get("csv_flags", [])[:3]],
         }
+
+    calls = 0
+    for (_, rel, _, _, digest), result in parallel(todo, place, workers()):
+        if result is None or isinstance(result, PageFailure):
+            continue
+        placements[rel] = result
         state[rel] = digest
         calls += 1
         print(
-            f"  {rel}: {len(placed)} placement(s)"
-            + (f", {len(data['csv_flags'])} csv flag(s)" if data.get("csv_flags") else "")
+            f"  {rel}: {len(result['placements'])} placement(s)"
+            + (f", {len(result['csv_flags'])} csv flag(s)" if result["csv_flags"] else "")
         )
 
-    placements_path.write_text(json.dumps(placements, indent=1))
-    state_path.write_text(json.dumps(state, indent=1))
+    atomic_json(placements_path, placements)
+    atomic_json(state_path, state)
     csv_flags = {
         rel: item["csv_flags"] for rel, item in placements.items() if item.get("csv_flags")
     }

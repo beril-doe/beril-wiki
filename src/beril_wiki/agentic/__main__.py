@@ -88,6 +88,14 @@ def main() -> int:
         default=0,
         help="effective-token admission ceiling per stage (0: only the run ceiling)",
     )
+    execute.add_argument(
+        "--workers", type=int, default=4, help="page jobs run concurrently inside each stage"
+    )
+    execute.add_argument(
+        "--strict-pages",
+        action="store_true",
+        help="stop the run when a page fails its patch rounds instead of recording it",
+    )
     execute.add_argument("--checkout", type=Path, default=CHECKOUT)
     execute.add_argument(
         "--staged", action="store_true", help="use current staging instead of fetching"
@@ -151,6 +159,7 @@ def main() -> int:
                 "max_output_tokens",
                 "timeout",
                 "stage_timeout",
+                "workers",
             ):
                 if getattr(args, field) <= 0:
                     raise WorkflowError(f"{field} must be positive")
@@ -167,6 +176,8 @@ def main() -> int:
                     "timeout",
                     "stage_timeout",
                     "stage_max_tokens",
+                    "workers",
+                    "strict_pages",
                     "cli",
                 )
             }

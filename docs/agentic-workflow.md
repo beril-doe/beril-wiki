@@ -33,7 +33,12 @@ These budgets illustrate syntax, not measured requirements for this corpus.
 observatory checkout is still required for metadata and figure context.
 Individual jobs have `--max-turns` (default 12, applying to the tool-using
 integration path), `--timeout` (600 seconds), and `--max-output-tokens`
-(32,768). A stage can require multiple specialist jobs per page.
+(32,768). A stage can require multiple specialist jobs per page. Inside each
+stage, page jobs run in a worker pool (`--workers`, default 4); the ledger's
+serialized admission holds headroom for every job in flight, and per-page state
+files are written atomically so a killed worker cannot leave a truncated
+`state/*.json`. `--strict-pages` turns a page that fails its patch rounds into a
+run stop instead of a recorded failure.
 Each stage subprocess is bounded by `--stage-timeout` (default 14,400 seconds,
 four hours). A job killed by either clock is charged automatically from its
 saved transcript (the terminal result if one arrived, otherwise the summed
