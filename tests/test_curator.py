@@ -203,3 +203,22 @@ def test_literature_page_cache_converges_after_real_splice(tmp_path, monkeypatch
     assert "Literature Context" in page.read_text()
     assert L.main(tmp_path) == 0
     assert calls == ["lit/a/queries", "lit/a/section"]
+
+
+def test_pubmed_pacing_spaces_starts_without_holding_the_lock(monkeypatch):
+    import threading
+
+    from beril_wiki.stages import literature as L
+
+    clock = [100.0]
+    monkeypatch.setattr(L.time, "monotonic", lambda: clock[0])
+    slept = []
+    monkeypatch.setattr(L.time, "sleep", lambda s: slept.append(round(s, 2)))
+    L._next_request[0] = 0.0
+    L.pace()
+    L.pace()
+    assert slept == [0.0, 0.4] and not L.NCBI.locked()
+    held = threading.Event()
+    with L.NCBI:
+        held.set()
+    assert held.is_set()

@@ -82,3 +82,13 @@ def test_link_missing_members_appends_unlinked_concepts():
     assert "## Where to Go Deeper\n\n- [[concepts/a]] — What A argues." in tb.link_missing_members(
         no_section, ["a"], concepts
     )
+
+
+def test_conflict_lead_is_title_and_lead_only():
+    page = (
+        "<!-- tension-hash: 9514b16e -->\n# A tension\n\nThe lead paragraph. [src: a]\n\n"
+        "## Evidence Sides\n\n**Side.** Yield was 42%. [src: a]\n"
+    )
+    lead = tb.conflict_lead(page)
+    assert lead == "# A tension\nThe lead paragraph. [src: a]"
+    assert "Evidence Sides" not in lead and "tension-hash" not in lead

@@ -242,10 +242,13 @@ def test_conflicts_stage_continues_past_a_failed_page(monkeypatch, tmp_path):
     assert len(list((tmp_path / "wiki/conflicts").glob("conflict--one--*.md"))) == 1
     for stale in (tmp_path / "wiki/conflicts").glob("*.md"):
         stale.unlink()
+    (tmp_path / "wiki/conflicts/conflict--old--00000000.md").write_text("predecessor")
     monkeypatch.setattr(CB.sys, "argv", ["conflicts"])
     assert CB.main() == 0
     written = sorted(p.name for p in (tmp_path / "wiki/conflicts").glob("*.md"))
-    assert len(written) == 1 and written[0].startswith("conflict--one--")
+    # The failed page's predecessor (under its old slug) survives a pass with failures.
+    assert written[0] == "conflict--old--00000000.md" and written[1].startswith("conflict--one--")
+    assert len(written) == 2
     failures = json.loads((tmp_path / "failures.json").read_text())
     assert list(failures) and list(failures)[0].startswith("conflicts/conflict--two--")
     monkeypatch.setattr(P, "runtime_config", lambda: {"store": str(tmp_path), "strict_pages": 1})

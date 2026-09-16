@@ -58,6 +58,16 @@ SECTION = re.compile(r"^## Literature Context\s*\n.*?(?=\n## |\Z)", re.M | re.S)
 PMID_LINK = re.compile(r"\[PMID (\d+)\]")
 MAX_PAPERS = 20
 NCBI = threading.Lock()  # parallel hubs must still respect NCBI's request rate
+_next_request = [0.0]
+
+
+def pace() -> None:
+    """Space request starts 0.4 s apart without holding the lock through the response."""
+    with NCBI:
+        start = max(time.monotonic(), _next_request[0])
+        _next_request[0] = start + 0.4
+    time.sleep(max(0.0, start - time.monotonic()))
+
 
 CONTRACT = Contract(
     rules=(
@@ -106,10 +116,9 @@ Return ONLY valid JSON: {{"queries": ["...", "..."]}}
 def eutils(endpoint: str, **params) -> dict:
     params |= {"db": "pubmed", "retmode": "json", "tool": "beril-wiki"}
     url = f"{EUTILS}/{endpoint}.fcgi?{urllib.parse.urlencode(params)}"
-    with NCBI:
-        time.sleep(0.4)  # NCBI courtesy limit without an API key
-        with urllib.request.urlopen(url, timeout=30) as r:
-            return json.loads(r.read())
+    pace()  # NCBI courtesy limit without an API key
+    with urllib.request.urlopen(url, timeout=30) as r:
+        return json.loads(r.read())
 
 
 def fetch_candidates(queries: list[str]) -> dict[str, str]:
@@ -162,10 +171,9 @@ def fetch_abstracts(queries: list[str]) -> dict[str, str]:
     url = f"{EUTILS}/efetch.fcgi?" + urllib.parse.urlencode(
         {"db": "pubmed", "id": ",".join(ids[:MAX_PAPERS]), "retmode": "xml", "tool": "beril-wiki"}
     )
-    with NCBI:
-        time.sleep(0.4)
-        with urllib.request.urlopen(url, timeout=30) as response:
-            raw = response.read(2_000_001)
+    pace()
+    with urllib.request.urlopen(url, timeout=30) as response:
+        raw = response.read(2_000_001)
     if len(raw) > 2_000_000:
         raise WorkflowError("PubMed response exceeds 2MB")
     result = abstracts_from_xml(raw, set(ids))

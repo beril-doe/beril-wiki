@@ -210,9 +210,13 @@ def main() -> int:
         record_failure(f"conflicts/{slug}", None)
         written += 1
         print(f"  wrote conflicts/{slug}.md ({len(group)} paragraph(s))")
-    # Retire pages whose disagreement no longer exists; a failed new page never existed.
+    # Retire pages whose disagreement no longer exists. Slugs follow the paragraph text,
+    # so a failed replacement's predecessor lives under another slug: retire nothing in a
+    # pass with failures, or the "keep the previous version" promise is empty.
     reaped = 0
-    for stale in [] if cap is not None else sorted(OUT.glob("*.md")):
+    if failed:
+        print(f"  {failed} page(s) failed: retiring nothing this pass")
+    for stale in [] if cap is not None or failed else sorted(OUT.glob("*.md")):
         if stale.stem not in live:
             stale.unlink()
             reaped += 1

@@ -358,9 +358,13 @@ def write_home(hubs: list[tuple], stats: str) -> bool:
 
 
 def conflict_lead(text: str) -> str:
-    """Title and lead paragraph: enough to anchor and link a hub's Tensions section."""
+    """Title and lead paragraph only: enough to anchor and link a hub's Tensions section.
+
+    The evidence itself already reaches the hub through its member concepts, so
+    packing Evidence Sides again only inflates every draft, patch and review."""
     body = re.sub(r"^<!--.*?-->\n?", "", text, flags=re.M)
-    return "\n\n".join(p for p in re.split(r"\n\s*\n", body) if p.strip())[:1500]
+    m = re.search(r"^(# .+?)\n+(.+?)(?:\n\n|\n#|\Z)", body, re.S)
+    return f"{m.group(1)}\n{m.group(2).strip()}"[:1500] if m else body[:600]
 
 
 def hub_entry(topic: str, slug: str, members: list[str]) -> tuple:
@@ -490,9 +494,7 @@ def main() -> int:
         topic, slug, members, srcs, rel_conflicts, _ = item
         bodies = {f"concepts/{s}": C.parse_fm(concepts[s]["text"])[1] for s in members}
         leads = "\n\n".join(
-            f"[conflicts/{c}]\n"
-            + "\n\n".join(p for p in conflicts[c].split("\n\n") if p.strip())[:1500]
-            for c in rel_conflicts
+            f"[conflicts/{c}]\n{conflict_lead(conflicts[c])}" for c in rel_conflicts
         )
         ents = sorted(entities, key=lambda e: -len(entities[e]["sources"] & srcs))[:10]
         pack = (
@@ -539,9 +541,12 @@ def main() -> int:
         record_failure(f"topics/{slug}", None)
         print(f"  wrote topics/{slug}.md ({len(members)} concepts, {len(rel_conflicts)} conflicts)")
     atomic_json(state_path, state)
-    # Retire hub pages for topics that no longer exist after re-clustering.
+    # Retire hub pages for topics that no longer exist after re-clustering, unless a
+    # hub failed this pass: its predecessor under an old title is the kept version.
     live = {slug for _, slug, _ in planned}
-    for stale in [] if cap is not None else (OUT / "topics").glob("*.md"):
+    if failed:
+        print(f"  {failed} hub(s) failed: retiring nothing this pass")
+    for stale in [] if cap is not None or failed else (OUT / "topics").glob("*.md"):
         if stale.stem not in live:
             stale.unlink()
             any_changed = True
