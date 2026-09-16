@@ -408,3 +408,53 @@ def test_owning_stage_maps_failed_pages():
         "literature",
         "authors",
     ]
+
+
+def test_paced_get_retries_a_truncated_pubmed_read(monkeypatch):
+    """One IncompleteRead must not kill a stage that has hours of accepted pages behind it."""
+    import http.client
+    from contextlib import contextmanager
+
+    from beril_wiki.stages import literature
+
+    attempts = []
+
+    @contextmanager
+    def flaky(url, timeout=None):
+        attempts.append(url)
+        if len(attempts) < 3:
+            raise http.client.IncompleteRead(b"partial")
+
+        class Response:
+            def read(self, cap=None):
+                return b"<PubmedArticleSet/>"
+
+        yield Response()
+
+    monkeypatch.setattr(literature.urllib.request, "urlopen", flaky)
+    monkeypatch.setattr(literature, "pace", lambda: None)
+    monkeypatch.setattr(literature.time, "sleep", lambda _: None)
+
+    assert literature.paced_get("http://example/efetch", 2_000_001) == b"<PubmedArticleSet/>"
+    assert len(attempts) == 3
+
+
+def test_paced_get_gives_up_after_its_last_try(monkeypatch):
+    import http.client
+    from contextlib import contextmanager
+
+    import pytest
+
+    from beril_wiki.stages import literature
+
+    @contextmanager
+    def always_truncated(url, timeout=None):
+        raise http.client.IncompleteRead(b"partial")
+        yield  # pragma: no cover
+
+    monkeypatch.setattr(literature.urllib.request, "urlopen", always_truncated)
+    monkeypatch.setattr(literature, "pace", lambda: None)
+    monkeypatch.setattr(literature.time, "sleep", lambda _: None)
+
+    with pytest.raises(http.client.IncompleteRead):
+        literature.paced_get("http://example/efetch")

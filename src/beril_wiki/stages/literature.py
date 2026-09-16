@@ -26,12 +26,14 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import http.client
 import json
 import pathlib
 import re
 import sys
 import threading
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -113,12 +115,30 @@ Return ONLY valid JSON: {{"queries": ["...", "..."]}}
 """
 
 
+# A truncated chunked response or a reset connection is NCBI being NCBI, not a
+# reason to discard hours of accepted pages; the API path already skips these.
+TRANSIENT = (http.client.IncompleteRead, urllib.error.URLError, TimeoutError, ConnectionError)
+
+
+def paced_get(url: str, cap: int | None = None, tries: int = 3) -> bytes:
+    """One paced GET, retrying transient network faults before giving up."""
+    for attempt in range(1, tries + 1):
+        pace()  # NCBI courtesy limit without an API key
+        try:
+            with urllib.request.urlopen(url, timeout=30) as response:
+                return response.read() if cap is None else response.read(cap)
+        except TRANSIENT as exc:
+            if attempt == tries:
+                raise
+            print(f"    [WARN] PubMed read failed ({exc}); retry {attempt}/{tries - 1}")
+            time.sleep(2 * attempt)
+    raise AssertionError("unreachable")
+
+
 def eutils(endpoint: str, **params) -> dict:
     params |= {"db": "pubmed", "retmode": "json", "tool": "beril-wiki"}
     url = f"{EUTILS}/{endpoint}.fcgi?{urllib.parse.urlencode(params)}"
-    pace()  # NCBI courtesy limit without an API key
-    with urllib.request.urlopen(url, timeout=30) as r:
-        return json.loads(r.read())
+    return json.loads(paced_get(url))
 
 
 def fetch_candidates(queries: list[str]) -> dict[str, str]:
@@ -153,7 +173,7 @@ def fetch_candidates(queries: list[str]) -> dict[str, str]:
 
 
 def fetch_abstracts(queries: list[str]) -> dict[str, str]:
-    """Cache PubMed abstract evidence, propagating network failures for retry."""
+    """Cache PubMed abstract evidence; transient network faults are retried in paced_get."""
     cache = runtime().store / "papers"
     cache.mkdir(exist_ok=True)
     path = cache / f"{digest(queries[:2])}.json"
@@ -171,9 +191,7 @@ def fetch_abstracts(queries: list[str]) -> dict[str, str]:
     url = f"{EUTILS}/efetch.fcgi?" + urllib.parse.urlencode(
         {"db": "pubmed", "id": ",".join(ids[:MAX_PAPERS]), "retmode": "xml", "tool": "beril-wiki"}
     )
-    pace()
-    with urllib.request.urlopen(url, timeout=30) as response:
-        raw = response.read(2_000_001)
+    raw = paced_get(url, 2_000_001)
     if len(raw) > 2_000_000:
         raise WorkflowError("PubMed response exceeds 2MB")
     result = abstracts_from_xml(raw, set(ids))
