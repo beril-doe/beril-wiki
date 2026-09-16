@@ -197,9 +197,11 @@ def uncited_figures(page: str) -> list[str]:
     """Paragraphs stating figures without a [src:] tag; the contract requires both."""
     from beril_wiki.check import NUMBER, cited_ids, paragraphs, prose_only
 
+    # The reading path names pages, not claims; check already treats it as a warning.
+    body = re.sub(r"^## Where to Go Deeper\s*\n.*?(?=\n## |\Z)", "", page, flags=re.M | re.S)
     return [
         f"no [src:] tag beside figures: {par[:120]!r}"
-        for par in paragraphs(page)
+        for par in paragraphs(body)
         if NUMBER.findall(prose_only(par)) and not cited_ids(par)
     ]
 
