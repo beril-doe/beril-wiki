@@ -2,14 +2,14 @@
 
 The wiki synthesizes BERIL Research Observatory reports into linked scientific
 pages. The [curator operating guide](agentic-workflow.md) describes how those
-pages are generated; the [HTML walkthrough](agentic-workflow.html) shows who
-chooses the work and who validates it.
+pages are generated; the [HTML walkthrough](agentic-workflow.html) shows how
+the schedule runs and what validates each page.
 
 ## Collections
 
 | Path | Purpose and required content |
 | --- | --- |
-| `wiki/index.md` and `wiki/topics/` | Home and narrative topic hubs. The curator chooses titles and assigns every concept to exactly one group. Literature Context adds external context with verified PubMed citations. |
+| `wiki/index.md` and `wiki/topics/` | Home and narrative topic hubs. A model proposal chooses titles and assigns every concept to exactly one group; each hub is written from its member pages, reviewed and patched by paragraph. Literature Context adds external context with verified PubMed citations. |
 | `wiki/concepts/` | Cross-project synthesis with cited evidence, supports/contradicts/refines relations, Tensions, and Open Directions. |
 | `wiki/conflicts/` | One page per disagreement: every Tensions paragraph that cites two or more projects, with cited Evidence Sides, Possible Reconciliations and Resolving Work. Paragraphs restating the same figures share a page. Slugs are `conflict--<concept>--<digest of the paragraph>`, so an unchanged disagreement keeps its page and a changed one is retired. |
 | `wiki/entities/` | Named organisms, genes, methods, datasets and other entities, with canonical names and aliases. Publishing hides pages with only one source. |

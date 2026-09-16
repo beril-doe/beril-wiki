@@ -204,40 +204,39 @@ button.theme { position: fixed; right: 16px; top: 16px; z-index: 3; font: 400 11
 <div class="page">
   <nav class="toc" aria-label="Contents"><ol></ol></nav>
   <main>
-    <p class="meta">2026-09-15 · BERIL wiki · Workflow and model routing</p>
+    <p class="meta">2026-09-16 · BERIL wiki · Workflow and model routing</p>
     <h1>The agentic wiki workflow</h1>
-    <p class="lead">A subscription-backed curator chooses how to update and organize the wiki. Python makes that work bounded, reviewable and recoverable. The design optimizes token spend by reusing accepted inference and retrieving evidence only when needed.</p>
-    <h2 id="control" data-toc="The control loop">The curator chooses work; Python controls acceptance</h2>
+    <p class="lead">A fixed Python schedule drives subscription-backed writer and reviewer jobs that update the wiki. Every derived page receives its complete evidence in one prompt, is checked by code before a one-turn review, and is corrected by paragraph patches. Python keeps the work bounded, reviewable and recoverable.</p>
+    <h2 id="control" data-toc="The schedule">A fixed schedule runs stale stages; Python controls acceptance</h2>
 <figure>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Workflow diagram, scroll horizontally on narrow screens">
 <pre class="mermaid" style="min-width: 700px">
 flowchart LR
-  S[Snapshot inputs] -->|pending work| C[Curator]
-  C -->|legal action| W[Domain operation]
+  S[Snapshot inputs] -->|stale fingerprints| C[Schedule]
+  C -->|next stale stage| W[Page jobs in a worker pool]
   W -->|receipt + new state| C
-  C -->|valid finish| G[Final checks]
+  C -->|nothing stale| G[Final checks]
   G -->|all pass| P[Promote locally]
   classDef hot fill:#cba6f733,stroke:#cba6f7;
-  class C hot;
+  class W hot;
 </pre>
 </div>
-<figcaption><b>The editorial control loop.</b> Arrows show control passing through the curator implementation. The purple node selects the next action; Python checks prerequisites and completion throughout.</figcaption>
+<figcaption><b>The editorial schedule.</b> Arrows show control passing through the runner. The purple node is where model jobs run, four pages at a time; the schedule itself is code that walks the dependency table.</figcaption>
 </figure>
-<p>The Claude Agent SDK uses the maintainer's subscription for model jobs. Each decision receives pending obligations, available actions, collection counts and the latest receipt. Existing Python writers execute the chosen operation inside an isolated candidate workspace.</p>
-<p>The agent also chooses page integration and topic membership. Python retains the action vocabulary and acceptance rules. This gives editorial autonomy within a defined workflow; arbitrary shell commands and changes to those rules are outside the agent's tools.</p>
+<p>The Claude Agent SDK uses the maintainer's subscription for model jobs. The runner integrates changed sources first, then runs conflicts, topics, literature and authors whenever their input or output fingerprints are stale, writing a receipt of changed paths per stage inside an isolated candidate workspace. No model chooses the order.</p>
+<p>The model still plans page integration and proposes topic membership. Python retains the acceptance rules; arbitrary shell commands and changes to those rules are outside any job's tools.</p>
 
-<h2 id="actions" data-toc="Actions and dependencies">Required dependencies constrain the agent's choices</h2>
+<h2 id="actions" data-toc="Stages and dependencies">The dependency table is the schedule</h2>
 <figure class="table">
-<figcaption><b>Available editorial actions.</b> Rows describe the implemented actions and their prerequisites. Authors can run independently of the conflicts, topics and literature sequence once integration is current.</figcaption>
+<figcaption><b>Editorial stages.</b> Rows describe the stages in the order they run and their prerequisites. Authors depends only on integration.</figcaption>
 <div class="table-wrap" tabindex="0"><table style="min-width: 640px">
-<thead><tr><th scope="col">Action</th><th scope="col">What the agent directs</th><th scope="col">What Python requires</th></tr></thead>
+<thead><tr><th scope="col">Stage</th><th scope="col">What the model writes</th><th scope="col">What Python requires</th></tr></thead>
 <tbody>
 <tr><td>Integrate</td><td>Map changed-source evidence to page edits and merges.</td><td>Changed sources integrated before derived work; complete evidence coverage.</td></tr>
-<tr><td>Conflicts</td><td>Reconcile scientific tensions.</td><td>Integration current.</td></tr>
-<tr><td>Topics</td><td>Choose groups and titles, then write hubs and home.</td><td>Conflicts current; every concept assigned exactly once; safe, unique titles.</td></tr>
+<tr><td>Conflicts</td><td>One page per Tensions paragraph that cites two or more projects.</td><td>Integration current; figures and tags only from the tension text.</td></tr>
+<tr><td>Topics</td><td>Propose groups and titles (the one structural model call), then write hubs and home.</td><td>Conflicts current; every concept assigned exactly once; safe, unique titles.</td></tr>
 <tr><td>Literature</td><td>Add supported external context using retrieved papers.</td><td>Topics current; citation checks and scientific review.</td></tr>
 <tr><td>Authors</td><td>Update contributions from summaries and concepts.</td><td>Integration current; contribution claims validated.</td></tr>
-<tr><td>Finish</td><td>Declare the editorial work complete.</td><td>Every required input/output fingerprint current.</td></tr>
 </tbody></table></div>
 </figure>
 <details>
@@ -245,41 +244,53 @@ flowchart LR
 <ol>
 <li>Extract exact quotes and offsets from overlapping ranges across the whole report, including caveats and null results.</li>
 <li>Plan coverage for every evidence record and combine changes by destination page.</li>
-<li>Write anchored patches or justified rewrites. Retrieve source passages as needed.</li>
+<li>Write anchored patches or justified rewrites. Integration writers may retrieve source passages; derived-page writers get their evidence packed instead.</li>
 <li>Check structure, links, citations, quantities and retained evidence, including evidence from absorbed pages.</li>
 <li>Run a separate scientific review for support and lost meaning, then resolve entities and refresh metadata.</li>
 </ol>
 </details>
-<p>Python applies existing human concept decisions before the loop, then handles final naming, figure placement and strict validation afterward. Figure selection still uses accounted model jobs. Quartz builds from the accepted output in a separate step.</p>
+<p>Python applies existing human concept decisions before the schedule, then handles final naming, figure placement and strict validation afterward. Figure selection still uses accounted model jobs. Quartz builds from the accepted output in a separate step.</p>
+<details>
+<summary>Follow one derived page from evidence pack to acceptance</summary>
+<ol>
+<li>Code packs the evidence: the tension paragraph with its tags, concept leads and the source paragraphs stating its figures for a conflict; member concept pages and linked conflict leads for a hub; abstracts for a literature section; summaries for an author.</li>
+<li>The writer receives the stage's rule list and the pack, and answers in one turn with no tools.</li>
+<li>Gates run in code: length, required headings, preamble, figures absent from the input, invalid tags, uncited or unsupported figures. Dead links and legacy platform names are repaired in code.</li>
+<li>The reviewer receives the same rules and pack plus the numbered candidate and returns one JSON verdict of paragraph-indexed issues.</li>
+<li>A rejection is patched by paragraph index against a base hash; only the replaced paragraphs are reviewed again. Two rounds, each seeing the latest verdict.</li>
+<li>A page that has not converged keeps its previous version and is listed in the run summary and <code>.agentic/failures.json</code>; the stage continues.</li>
+</ol>
+</details>
 
 <h2 id="tokens" data-toc="Token spend">Cached work and targeted context limit repeat inference</h2>
 <figure class="table">
-<figcaption><b>Where the workflow avoids repeated token spend.</b> Each row pairs a mechanism with its limit. Savings depend on input changes and cache reuse; subscription savings have not been measured on a real wiki update.</figcaption>
+<figcaption><b>Where the workflow avoids repeated token spend.</b> Each row pairs a mechanism with its limit. The first live run (2026-09-15/16, tool-based reviews and whole-page repairs) cost 63.5M ledger tokens; the packed-evidence design replaces the two largest items in that breakdown.</figcaption>
 <div class="table-wrap" tabindex="0"><table style="min-width: 640px">
 <thead><tr><th scope="col">Mechanism</th><th scope="col">Spend avoided</th><th scope="col">Limit</th></tr></thead>
 <tbody>
-<tr><td>Unchanged-run check</td><td class="hot">Zero model calls when the accepted run fingerprint matches.</td><td>First curator adoption refreshes derived prose once.</td></tr>
+<tr><td>Unchanged-run check</td><td class="hot">Zero model calls when the accepted run fingerprint matches.</td><td>First adoption of a changed contract refreshes derived prose once.</td></tr>
 <tr><td>Durable job and page caches</td><td>Reuse saved outputs during resume; refresh affected work.</td><td>Source, model, scientific contract or relevant code changes invalidate results.</td></tr>
-<tr><td>Compact decisions and retrieval</td><td>Send brief inventories; read exact passages on demand.</td><td>Reads, shared previews, requests and transcripts have size limits.</td></tr>
+<tr><td>Packed evidence, one-turn jobs</td><td>No tool loop re-reads context every turn; writer and reviewer share one pack, and a cache keys on the prompt alone.</td><td>Packs are bounded (hub member pages under 110KB with explicit truncation marks); requests and transcripts have size limits.</td></tr>
+<tr><td>Paragraph patches and scoped re-review</td><td>A correction replaces named paragraphs and only those are reviewed again.</td><td>Two patch rounds per page; a page that does not converge is recorded, not retried automatically.</td></tr>
 <tr><td>Edits grouped by page</td><td>Combine evidence before writing a destination.</td><td>Validation and separate scientific review still consume resources.</td></tr>
 </tbody></table></div>
 </figure>
-<p>The shared ledger counts generation, review, repair and provider cache tokens. It reserves headroom before starting a job. The configured token budget controls admission; an in-flight job can exceed its reservation, after which new jobs stop. These counts do not report remaining subscription allowance.</p>
+<p>The shared ledger records raw generation, review, patch and provider cache tokens and admits on an effective figure (cache writes at 1.25, cache reads at 0.1). It reserves headroom for every job in flight. The configured token budget and an optional per-stage ceiling control admission; an in-flight job can exceed its reservation, after which new jobs stop. Killed jobs are charged from their transcripts automatically. These counts do not report remaining subscription allowance.</p>
 <details>
 <summary>Tools and limits available to model jobs</summary>
 <ul>
-<li><code>read_evidence</code> supplies bounded source text. Curator, planner and writer jobs also receive literal <code>search_evidence</code>.</li>
-<li>Page writers receive <code>validate_candidate</code>. Its feedback does not replace final host validation or scientific review.</li>
-<li>Default limits are 16 curator actions, 12 turns per job and 600 seconds per job. A single action may require multiple jobs.</li>
+<li>Only integration jobs have tools: <code>read_evidence</code> for extraction and its review; planners and page writers also get literal <code>search_evidence</code>, and page writers <code>validate_candidate</code>. Its feedback does not replace final host validation or scientific review.</li>
+<li>Derived-page writers, patchers and reviewers have no tools and one turn; their evidence arrives packed in the prompt.</li>
+<li>Default limits are 12 turns per tool-using job, 600 seconds per job, four hours per stage and four page workers. A page needs at most six jobs.</li>
 <li>The runtime checks direct subscription authentication and removes inherited API routing. This path uses no embedding API. PubMed remains an external data source.</li>
 </ul>
 </details>
 
 <details>
 <summary>Choose models by job role</summary>
-<p>The committed <a href="../agentic.yaml"><code>agentic.yaml</code></a> is loaded automatically. <b>Opus 5</b> handles extraction, planning, writing and scientific review. <b>Sonnet 5</b> handles curator decisions, literature queries and figure selection. This policy protects scientific fidelity while assigning bounded selection tasks to Sonnet; it has not yet been benchmarked on the corpus.</p>
+<p>The committed <a href="../agentic.yaml"><code>agentic.yaml</code></a> is loaded automatically. <b>Opus 5</b> handles extraction, planning, writing and scientific review. <b>Sonnet 5</b> handles literature queries and figure selection. This policy protects scientific fidelity while assigning bounded selection tasks to Sonnet; it has not yet been benchmarked on the corpus.</p>
 <p>Use <code>--model-config PATH</code> for a replacement policy or <code>--step-model ROLE=MODEL_ID</code> for an individual override. <code>--model MODEL_ID</code> replaces the whole policy with one model before individual overrides apply. The CLI prints the resolved policy; token and job ceilings remain explicit run flags.</p>
-<p>Repairs retain their role's model; separate scientific reviews use the review model. Every role shares the ledger and budget, and changing models on the same interrupted input snapshot preserves earlier charges. Jobs record their configured model, and accepted state records the complete policy. Cache invalidation follows the affected roles. See the <a href="agentic-workflow.md#per-step-models">model-routing guide</a> for details.</p>
+<p>Repairs and paragraph patches retain their role's model; separate reviews use the review model. Every role shares the ledger and budget, and changing models on the same interrupted input snapshot preserves earlier charges. Jobs record their configured model, and accepted state records the complete policy. Cache invalidation follows the affected roles. See the <a href="agentic-workflow.md#per-step-models">model-routing guide</a> for details.</p>
 </details>
 
 <h2 id="failure" data-toc="Failure and recovery">Failed work stays inspectable without replacing the wiki</h2>
@@ -288,21 +299,21 @@ flowchart LR
 <div class="table-wrap" tabindex="0"><table style="min-width: 640px">
 <thead><tr><th scope="col">Trigger</th><th scope="col">Response</th></tr></thead>
 <tbody>
-<tr><td>Invalid integration plan, topic proposal or page candidate</td><td>At most one targeted correction in the shared generation helper; corrected scientific prose gets another review.<sup>a</sup></td></tr>
-<tr><td>Premature finish or unavailable action</td><td>Reject the decision and return diagnostics. Repeating current work produces an unchanged receipt. All decisions count toward the action limit.</td></tr>
-<tr><td>Budget exhaustion, authentication failure, rejected extraction or malformed reviewer output</td><td>Stop before promotion; retain completed results. Inspect the failed job before an explicit retry.</td></tr>
-<tr><td>Unknown usage after a crash</td><td>Block new calls until usage is conservatively reconciled in the ledger.</td></tr>
+<tr><td>Invalid integration plan, topic proposal or integration candidate</td><td>At most one targeted correction in the shared generation helper; corrected scientific prose gets another review.</td></tr>
+<tr><td>Derived page fails a gate or its review</td><td>Up to two paragraph patches, each seeing the latest verdict, with only the changed paragraphs reviewed again. A page that does not converge keeps its previous version, is recorded in the run summary and <code>.agentic/failures.json</code>, and the stage continues (<code>--strict-pages</code> stops instead). <code>retry --page</code> or <code>--all-failed</code> re-issues those pages.<sup>a</sup></td></tr>
+<tr><td>Budget exhaustion, authentication failure or rejected extraction</td><td>Stop before promotion; retain completed results. Inspect the failed job before an explicit retry.</td></tr>
+<tr><td>Job killed by a clock or a crash</td><td>Charge it from its transcript automatically; only a result without usable usage blocks new calls until reconciled by hand.</td></tr>
 <tr><td>Changed inputs or failed final validation</td><td>Refuse promotion and keep the candidate for inspection.</td></tr>
 <tr><td>Interrupted promotion</td><td>Recover from the journal and retained originals. Moving wiki, state and staging is recoverable, not a single atomic operation.</td></tr>
 </tbody></table></div>
-<p class="fn"><sup>a</sup> Existing domain validators retain bounded stage retries. Those retries get scientific review but no additional automatic correction allowance; the shared job/token limits still apply.</p>
+<p class="fn"><sup>a</sup> Rerunning the same command replays cached verdicts for free; only an explicit retry spends new inference on a failed page. The shared job/token limits still apply.</p>
 </figure>
 
 <h2 id="readiness" data-toc="Evidence and use">A capped real-source update remains the acceptance step</h2>
-<div class="callout warn" data-label="Validation boundary">Recorded-response tests exercise the pipeline, cache reuse, dependencies, corrections and recovery. They do not establish scientific quality or real subscription savings. The curator has not yet been accepted through a real source update.</div>
-<p>The implementation supports the agent choosing editorial work and organizing knowledge. Its fixed domain operations and mandatory checks remain deliberate boundaries. Read-only wiki search is available as a CLI; BERIL or OpenViking integration has not been installed.</p>
+<div class="callout warn" data-label="Validation boundary">Recorded-response tests exercise the pipeline, cache reuse, dependencies, gates, patches, recorded failures and recovery. They do not establish scientific quality. The first derived-prose adoption ran live on 2026-09-15/16 with zero changed sources; a real source update has not yet been accepted.</div>
+<p>The implementation lets the model write, review and organize knowledge under a fixed schedule. Its domain operations and mandatory checks remain deliberate boundaries. Read-only wiki search is available as a CLI; BERIL or OpenViking integration has not been installed.</p>
 <p>Start with <code>uv run python -m beril_wiki.agentic plan</code> to inspect staged changes without inference. Use the <a href="agentic-workflow.md">operating guide</a> for run budgets, status, retry and recovery commands. Local promotion leaves committing, pushing and publishing as separate actions.</p>
-<p class="meta">Implementation sources: <a href="../src/beril_wiki/agentic/curator.py">curator</a> · <a href="../src/beril_wiki/agentic/batch.py">integration</a> · <a href="../src/beril_wiki/agentic/runtime.py">runtime and ledger</a> · <a href="../src/beril_wiki/agentic/runner.py">runner and promotion</a> · <a href="../src/beril_wiki/agentic/topics.py">topic decisions</a></p>
+<p class="meta">Implementation sources: <a href="../src/beril_wiki/agentic/curator.py">schedule</a> · <a href="../src/beril_wiki/agentic/prose.py">derived prose</a> · <a href="../src/beril_wiki/agentic/batch.py">integration</a> · <a href="../src/beril_wiki/agentic/runtime.py">runtime and ledger</a> · <a href="../src/beril_wiki/agentic/runner.py">runner and promotion</a> · <a href="../src/beril_wiki/agentic/topics.py">topic decisions</a></p>
   </main>
 </div>
 <script>

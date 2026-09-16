@@ -46,8 +46,12 @@ uv run python -m beril_wiki.agentic plan
 
 Runs load the committed [model policy](agentic.yaml): Opus 5 for scientific
 work and Sonnet 5 for queries and figure selection.
-See the [operating guide](docs/agentic-workflow.md) for subscription login,
-the observatory checkout, run budgets, search, and recovery, or open the
+Derived pages (conflicts, hubs, home, literature, authors) are written from
+evidence packed into one prompt, checked by code, reviewed in one turn and
+corrected by paragraph patches; a page that does not converge is recorded, not
+a run stop. See the [operating guide](docs/agentic-workflow.md) for
+subscription login, the observatory checkout, run budgets, workers, failed-page
+retry, search, and recovery, or open the
 [HTML walkthrough](docs/agentic-workflow.html) for the control flow. A capped
 real-source update remains the acceptance step before a large compilation.
 The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
