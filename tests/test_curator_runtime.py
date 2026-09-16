@@ -109,6 +109,60 @@ def test_generation_repairs_once_and_never_retries_operational_error(tmp_path, m
     assert calls == ["write/test"]
 
 
+def test_merge_candidates_keep_independent_review_and_one_repair(tmp_path, monkeypatch):
+    agent = runtime(tmp_path)
+    monkeypatch.setattr(R, "runtime", lambda: agent)
+    calls = []
+
+    def ask(task, step):
+        calls.append(step)
+        if step.endswith("/science-review"):
+            return json.dumps(
+                {
+                    "accepted": "bad" not in str(task),
+                    "issues": ["unsupported claim"] if "bad" in str(task) else [],
+                }
+            )
+        return "good" if step.endswith("/repair") else "bad"
+
+    monkeypatch.setattr(agent, "ask", ask)
+    assert R.text_completion([], "merge/entity") == "good"
+    assert calls == [
+        "merge/entity",
+        "merge/entity/science-review",
+        "merge/entity/repair",
+        "merge/entity/science-review",
+    ]
+    calls.clear()
+    monkeypatch.setattr(agent, "ask", lambda messages, step: calls.append(step) or "not JSON")
+    with pytest.raises(R.WorkflowError, match="verdict"):
+        R.text_completion([], "merge/entity")
+    assert calls == ["merge/entity", "merge/entity/science-review"]
+    calls.clear()
+    assert R.text_completion([], "figures/x", review=False) == "not JSON"
+    assert calls == ["figures/x"]
+
+
+@pytest.mark.parametrize("step", ["merge/a/retry", "merge/a/retention", "merge/a/retention/retry"])
+def test_legacy_retry_gets_review_without_another_repair(tmp_path, monkeypatch, step):
+    agent = runtime(tmp_path)
+    monkeypatch.setattr(R, "runtime", lambda: agent)
+    calls = []
+
+    def ask(task, name):
+        calls.append(name)
+        return (
+            '{"accepted": false, "issues": ["unsupported"]}'
+            if name.endswith("science-review")
+            else "candidate"
+        )
+
+    monkeypatch.setattr(agent, "ask", ask)
+    with pytest.raises(R.CandidateError):
+        R.text_completion([], step)
+    assert calls == [step, step + "/science-review"]
+
+
 def test_sdk_validation_tool_is_bound_only_to_writer(tmp_path, monkeypatch):
     from claude_agent_sdk import ResultMessage, SystemMessage
 

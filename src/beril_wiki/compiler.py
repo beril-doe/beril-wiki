@@ -300,7 +300,10 @@ def llm(messages: list[dict], step: str) -> str:
     from beril_wiki.agentic.runtime import configured, text_completion
 
     if configured():
-        return text_completion(messages, step)
+        mechanical = step.rsplit("/", 1)[-1] in ("plan", "queries", "enrich-plan") or (
+            step.startswith("merge-judge/")
+        )
+        return text_completion(messages, step, review=not mechanical)
     est = _usage["in"] * PRICE_IN + _usage["out"] * PRICE_OUT
     if est > BUDGET_USD:
         raise SystemExit(

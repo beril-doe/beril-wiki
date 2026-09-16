@@ -179,6 +179,7 @@ def llm(prompt: str, *, step: str) -> str:
     """A mechanical (unreviewed) call; hub prose goes through agentic.prose instead."""
     resp = completion(
         step=step,
+        review=False,
         model=HUB_MODEL,
         api_key=os.environ.get("OPENAI_API_KEY"),
         base_url=os.environ.get("OPENAI_BASE_URL", "https://api.cborg.lbl.gov"),

@@ -739,14 +739,15 @@ def test_downstream_sdk_routing_skips_api_and_mechanical_review(monkeypatch):
     monkeypatch.setattr(litellm, "completion", no_api)
     calls = []
 
-    def sdk(messages, step):
-        calls.append(step)
+    def sdk(messages, step, review=True):
+        calls.append((step, review))
         return "{}"
 
     monkeypatch.setattr(module, "text_completion", sdk)
-    module.completion(messages=[], step="figures/test")
+    module.completion(messages=[], step="figures/test", review=False)
     compiler.llm([], "test/queries")
-    assert calls == ["figures/test", "test/queries"]
+    compiler.llm([], "merge/entity")
+    assert calls == [("figures/test", False), ("test/queries", False), ("merge/entity", True)]
 
 
 def test_reconcile_and_explicit_retry_keep_prior_charge(tmp_path, monkeypatch):

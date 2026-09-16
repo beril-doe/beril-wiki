@@ -165,6 +165,7 @@ def main() -> None:
         resp = (
             completion(
                 step=f"figures/{rel}",
+                review=False,
                 model=MODEL,
                 api_key=os.environ.get("OPENAI_API_KEY"),
                 base_url=os.environ.get("OPENAI_BASE_URL", "https://api.cborg.lbl.gov"),

@@ -863,18 +863,33 @@ def runtime() -> Runtime:
     return Runtime(runtime_config())
 
 
-def text_completion(messages: list[dict], step: str) -> str:
-    """One accounted job; derived prose review lives in agentic.prose, not here."""
-    return runtime().ask(messages, step)
+def text_completion(messages: list[dict], step: str, review: bool = True) -> str:
+    """One accounted job with the tool-based scientific review for merge candidates.
+
+    Derived pages review through agentic.prose; this path serves the entity merge
+    and human concept-decision writers, which still rewrite whole pages."""
+    agent = runtime()
+    if not review:
+        return agent.ask(messages, step)
+
+    def accept(result: str) -> str:
+        agent.review(messages, result, step)
+        return result
+
+    # Legacy validators own these correction calls; do not multiply their retry ladders.
+    parts = step.split("/")
+    if len(parts) >= 3 and parts[-1] in {"retry", "retention"}:
+        return accept(agent.ask(messages, step))
+    return agent.generate(messages, step, accept)
 
 
-def completion(*, step: str = "derived", **kwargs) -> Any:
+def completion(*, step: str = "derived", review: bool = True, **kwargs) -> Any:
     """Compatibility boundary for downstream stages; API mode stays unchanged."""
     if not configured():
         from litellm import completion as api_completion
 
         return api_completion(**kwargs)
-    value = text_completion(kwargs["messages"], step)
+    value = text_completion(kwargs["messages"], step, review=review)
     return SimpleNamespace(
         choices=[SimpleNamespace(message=SimpleNamespace(content=value), finish_reason="stop")],
         usage=SimpleNamespace(prompt_tokens=0, completion_tokens=0),
