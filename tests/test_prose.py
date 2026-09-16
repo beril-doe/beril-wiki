@@ -396,3 +396,15 @@ def test_normalize_runs_before_gates_and_review(monkeypatch, tmp_path):
         normalize=lambda t: t.replace("See missing.", "See [[concepts/a]]."),
     )
     assert "See [[concepts/a]]." in out and "[[concepts/a]]" in stub.prompts[-1][1]
+
+
+def test_owning_stage_maps_failed_pages():
+    assert [
+        P.owning_stage(p) for p in ("conflicts/x", "topics/y", "index.md", "lit/z", "authors/w")
+    ] == [
+        "conflicts",
+        "topics",
+        "topics",
+        "literature",
+        "authors",
+    ]

@@ -95,6 +95,36 @@ def test_schedule_integrates_changed_sources_first(tmp_path, monkeypatch):
     assert calls[6:] == ["conflicts", "topics", "literature", "authors"]
 
 
+def test_stage_made_stale_by_integration_still_runs(tmp_path, monkeypatch):
+    from beril_wiki.agentic import curator as C
+
+    (tmp_path / "wiki/summaries").mkdir(parents=True)
+    (tmp_path / "wiki/concepts").mkdir()
+    (tmp_path / "jobs").mkdir()
+    (tmp_path / "wiki/summaries/a__REPORT.md").write_text("old summary")
+    calls = []
+
+    class Agent:
+        root = tmp_path
+        store = tmp_path / "jobs"
+        config = {"model": "fixture"}
+
+    monkeypatch.setattr(C, "load_groups", lambda root: [])
+    monkeypatch.setattr(C, "propose_topics", lambda root, agent: None)
+    prior = {name: C.stage_snapshot(tmp_path, name, Agent.config) for name in C.EDITORIAL}
+    assert C.pending_actions(tmp_path, prior, Agent.config, integrated=True) == []
+
+    def integrate(root, agent, names):
+        (tmp_path / "wiki/summaries/a__REPORT.md").write_text("revised summary")
+
+    monkeypatch.setattr(C, "compile_batch", integrate)
+    state = C.curate(
+        tmp_path, cast(Runtime, Agent()), ["a__REPORT.md"], lambda n, a: calls.append(n), prior
+    )
+    assert "authors" in calls and "conflicts" not in calls
+    assert C.pending_actions(tmp_path, state, Agent.config, integrated=True) == []
+
+
 def test_literature_changes_only_its_owned_fingerprint(tmp_path):
     from beril_wiki.agentic import curator as C
 

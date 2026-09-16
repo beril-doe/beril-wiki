@@ -178,12 +178,13 @@ def curate(
     receipts: list[dict] = []
     refresh("extras", [])
     refresh("names-core", [str(root)])
-    schedule = (["integrate"] if changed else []) + [
-        name
-        for name in EDITORIAL
-        if name in pending_actions(root, state, agent.config, integrated=True)
-    ]
-    for action in schedule:
+    # Freshness is judged when each stage is reached: integration can make a stage
+    # stale that was current before it ran (authors reads summaries, for instance).
+    for action in (["integrate"] if changed else []) + list(EDITORIAL):
+        if action != "integrate" and action not in pending_actions(
+            root, state, agent.config, integrated=True
+        ):
+            continue
         receipt: dict = {"action": action, "result": "failed"}
         before = manifest(root, ("wiki", "state"))
         try:
@@ -192,7 +193,7 @@ def curate(
                 refresh("entities", ["--apply"])
                 refresh("names-core", [str(root)])
                 refresh("extras", [])
-            elif action in pending_actions(root, state, agent.config, integrated=True):
+            else:
                 previous = state.get(action, {})
                 now = stage_snapshot(root, action, agent.config)
                 args = invalidate_outputs(root, action, previous, now)
@@ -200,9 +201,6 @@ def curate(
                     propose_topics(root, agent)
                 refresh(action, args)
                 state[action] = stage_snapshot(root, action, agent.config)
-            else:
-                receipt["result"] = "unchanged"
-                continue
             after = manifest(root, ("wiki", "state"))
             paths = sorted(p for p in before.keys() | after.keys() if before.get(p) != after.get(p))
             receipt.update(result="completed", changed_paths=paths, changed_count=len(paths))

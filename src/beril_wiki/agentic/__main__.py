@@ -8,12 +8,14 @@ from pathlib import Path
 import yaml
 
 from beril_wiki.agentic.batch import changed_sources
+from beril_wiki.agentic.prose import owning_stage
 from beril_wiki.agentic.runner import locked, recover, run
 from beril_wiki.agentic.runtime import (
     MODEL_ROLES,
     EvidenceTools,
     Runtime,
     WorkflowError,
+    atomic_json,
     model_policy,
 )
 from beril_wiki.paths import ROOT
@@ -174,6 +176,15 @@ def main() -> int:
                         )
                     if not changed:
                         raise WorkflowError("job must be completed or reconciled before retry")
+                    # An accepted run's fingerprint would otherwise short-circuit the next
+                    # run before it looks at the ledger; make the owning stages stale.
+                    accepted = root / "state/agentic.json"
+                    if accepted.exists():
+                        state = json.loads(accepted.read_text(encoding="utf-8"))
+                        state.pop("fingerprint", None)
+                        for stage in {owning_stage(p) for p in pages}:
+                            state.get("editorial", {}).pop(stage, None)
+                        atomic_json(accepted, state)
                     print(f"retry: {changed} job(s) will be re-issued on the next run")
         else:
             if not args.cli:

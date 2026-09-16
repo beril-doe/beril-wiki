@@ -501,6 +501,22 @@ def failures_path() -> Path | None:
     return Path(runtime_config()["store"]) / "failures.json" if configured() else None
 
 
+def failed_pages() -> set[str]:
+    path = failures_path()
+    if path is None or not path.exists():
+        return set()
+    return set(json.loads(path.read_text(encoding="utf-8")))
+
+
+def owning_stage(page: str) -> str:
+    """The editorial stage that regenerates a recorded failed page."""
+    if page == "index.md":
+        return "topics"
+    return {"conflicts": "conflicts", "topics": "topics", "lit": "literature"}.get(
+        page.split("/", 1)[0], page.split("/", 1)[0]
+    )
+
+
 def record_failure(page: str, failure: PageFailure | None) -> None:
     """Keep the run's failure list current: record a miss, clear a page that converged."""
     path = failures_path()

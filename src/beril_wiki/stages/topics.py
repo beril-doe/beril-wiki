@@ -31,6 +31,7 @@ from beril_wiki.agentic.prose import (
     PageFailure,
     derived_page,
     excerpts,
+    failed_pages,
     limit,
     parallel,
     prune_failures,
@@ -553,7 +554,9 @@ def main() -> int:
             any_changed = True
             print(f"  removed stale topics/{stale.stem}.md")
     prune_failures("topics/", {f"topics/{slug}" for slug in live})
-    if not any_changed and (OUT / "index.md").exists() and "--refresh-home" not in sys.argv:
+    # A retried home failure must reach write_home even when no hub changed.
+    refresh_home = "--refresh-home" in sys.argv or "index.md" in failed_pages()
+    if not any_changed and (OUT / "index.md").exists() and not refresh_home:
         if refresh_corpus_line(OUT / "index.md", corpus_stats(ROOT)):
             print("home unchanged; corpus counts refreshed")
         else:

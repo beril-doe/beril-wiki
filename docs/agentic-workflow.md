@@ -269,9 +269,12 @@ partial pass never reaps pages it did not get to. Direct stage invocations are
 maintenance tools; they do not promote.
 
 `status` lists the failed pages beside the totals. `retry --page` and
-`retry --all-failed` mark every job a failed page used as rejected, so the next
-run drafts that page afresh (fresh drafts converged where repeated repairs did
-not in the first live run) and leaves every other cached page untouched.
+`retry --all-failed` mark every job a failed page used as rejected and drop the
+owning stage from the accepted state, so the next run (which would otherwise
+report "unchanged") re-runs that stage, drafts the page afresh (fresh drafts
+converged where repeated repairs did not in the first live run) and leaves every
+other cached page untouched. A pass that records any failure retires no pages,
+so a failed replacement's predecessor stays published under its old slug.
 
 Use `retry` only after inspecting a saved failed/rejected job. Malformed figure
 JSON/indices and entity retention-gate refusals stop the run and need inspection
