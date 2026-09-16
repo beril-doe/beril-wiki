@@ -35,16 +35,17 @@ rendering them.
 
 ## Update the wiki (maintainers)
 
-The Claude Agent SDK curator chooses editorial actions and topic groups.
-Python enforces coverage, scientific review, token budgets, and recoverable
-promotion. Start by inspecting staged changes without inference:
+A fixed Python schedule drives Claude Agent SDK writer and reviewer jobs; the
+only structural model call chooses topic groups. Python enforces coverage,
+scientific review, token budgets, and recoverable promotion. Start by inspecting
+staged changes without inference:
 
 ```sh
 uv run python -m beril_wiki.agentic plan
 ```
 
 Runs load the committed [model policy](agentic.yaml): Opus 5 for scientific
-work and Sonnet 5 for coordination, queries and figure selection.
+work and Sonnet 5 for queries and figure selection.
 See the [operating guide](docs/agentic-workflow.md) for subscription login,
 the observatory checkout, run budgets, search, and recovery, or open the
 [HTML walkthrough](docs/agentic-workflow.html) for the control flow. A capped

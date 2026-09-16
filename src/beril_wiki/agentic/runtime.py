@@ -38,7 +38,7 @@ class CandidateError(WorkflowError):
     """Repairable model output, distinct from operational or budget failures."""
 
 
-MODEL_ROLES = ("curator", "extraction", "planning", "writing", "review", "queries", "figures")
+MODEL_ROLES = ("extraction", "planning", "writing", "review", "queries", "figures")
 CORE_MODEL_ROLES = ("extraction", "planning", "writing", "review")
 
 
@@ -59,8 +59,6 @@ def model_for(config: dict, step: str) -> str:
     step = step.removesuffix("/repair")
     if step.endswith("/science-review"):
         role = "review"
-    elif step.startswith("curator/decision/"):
-        role = "curator"
     elif step.startswith("extract/"):
         role = "extraction"
     elif step.startswith("batch/plan/") or step == "curator/topics":

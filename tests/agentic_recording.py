@@ -10,10 +10,6 @@ FACTS = "Yield was 42%. [src: a]\n\nYield was 56%. [src: b]"
 def reply(self, messages, step):
     if step.endswith("/science-review"):
         return '{"accepted": true, "issues": []}'
-    if step.startswith("curator/decision/"):
-        data = json.loads(messages[0]["content"].split("\n")[-1])
-        action = next((a for a in data["available"] if a in data["pending"]), "finish")
-        return json.dumps({"action": action, "reason": "Refresh required knowledge"})
     if step == "curator/topics":
         data = json.loads(messages[0]["content"].split("\n")[-1])
         return json.dumps(

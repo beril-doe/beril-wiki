@@ -1,9 +1,10 @@
 # Subscription-backed wiki curator
 
-The Claude Agent SDK runs a bounded curator that chooses editorial actions and
-topic organization. Python enforces source coverage, dependencies, validation,
-usage accounting and recoverable promotion. Existing stage writers remain domain
-operations. `scripts/run_pipeline.sh` remains the API-backed entry point.
+The Claude Agent SDK runs bounded writer, reviewer and topic-proposal jobs
+under a fixed Python schedule. Python enforces source coverage, dependencies,
+validation, usage accounting and recoverable promotion. Existing stage writers
+remain domain operations. `scripts/run_pipeline.sh` remains the API-backed
+entry point.
 
 See the [HTML walkthrough](agentic-workflow.html) for the control flow and the
 [wiki-format reference](wiki.md) for page types, citations and rendering.
@@ -20,7 +21,7 @@ uv run python -m beril_wiki.agentic plan
 
 # Use the committed model policy and explicit budgets appropriate to the update.
 uv run python -m beril_wiki.agentic run \
-  --max-tokens 500000 --max-jobs 40 --max-actions 16 \
+  --max-tokens 500000 --max-jobs 40 \
   --checkout /path/to/BERIL-research-observatory
 
 # Search accepted wiki Markdown without inference.
@@ -30,10 +31,9 @@ uv run python -m beril_wiki.agentic search 'carbon yield'
 These budgets illustrate syntax, not measured requirements for this corpus.
 `--root PATH` precedes the subcommand. `--staged` uses current staging; an
 observatory checkout is still required for metadata and figure context.
-`--max-actions` bounds curator decisions, including rejected and repeated actions;
-it does not replace the shared job/token limits. Individual jobs have
-`--max-turns` (default 12), `--timeout` (600 seconds), and
-`--max-output-tokens` (32,768). An action can require multiple specialist jobs.
+Individual jobs have `--max-turns` (default 12, applying to the tool-using
+integration path), `--timeout` (600 seconds), and `--max-output-tokens`
+(32,768). A stage can require multiple specialist jobs per page.
 Each stage subprocess is bounded by `--stage-timeout` (default 14,400 seconds,
 four hours). A job killed by either clock is charged automatically from its
 saved transcript (the terminal result if one arrived, otherwise the summed
@@ -65,14 +65,14 @@ selected by `--root`. The committed policy explicitly assigns every role:
 | `planning` | Opus 5 | Plan evidence integration and propose topic groups. |
 | `writing` | Opus 5 | Write and revise pages, derived prose, home and entity merges; default for other generation jobs. |
 | `review` | Opus 5 | All separate scientific reviews, including extraction and repaired candidates. |
-| `curator` | Sonnet 5 | Choose the next editorial action within enforced dependencies. |
 | `queries` | Sonnet 5 | Construct literature search queries. |
 | `figures` | Sonnet 5 | Select figure placements. |
 
 This is a deliberate starting policy, not a measured optimum: protect scientific
-fidelity and avoid costly rewrites, while using Sonnet for bounded coordination
-and selection. Haiku is not the default because a cheaper call is not a saving
-if it causes missed evidence or repeat work. No model comparison run is required.
+fidelity and avoid costly rewrites, while using Sonnet for bounded selection
+tasks. The former `curator` role is gone: the schedule below is fixed code, so
+no model chooses actions any more. Haiku is not the default because a cheaper
+call is not a saving if it causes missed evidence or repeat work. No model comparison run is required.
 The full IDs are `claude-opus-5` and `claude-sonnet-5`, matching Anthropic's
 [model catalog](https://platform.claude.com/docs/en/models/overview).
 [Claude Code requires](https://code.claude.com/docs/en/model-config) version
@@ -118,19 +118,23 @@ them. Stage fingerprints include only their relevant roles: figure changes
 refresh figures; query changes refresh literature. Extraction, planning,
 writing or review changes conservatively recheck core integration as well.
 
-## Editorial control and required work
+## Editorial schedule and required work
 
-The curator receives compact obligations, available actions, collection counts
-and its latest receipt. It chooses the next action within these dependencies:
+The runner executes a fixed schedule over the stage dependency table. Each stage
+runs only when its input or output fingerprint is stale, and a stale stage makes
+every stage that depends on it stale as well:
 
-| Action | Work and completion condition |
+| Stage | Work and completion condition |
 |---|---|
-| Integrate | Extract changed reports, plan complete evidence coverage, group edits by destination, validate and review pages; resolve entities and refresh deterministic metadata. |
+| Integrate | Runs first when sources changed: extract changed reports, plan complete evidence coverage, group edits by destination, validate and review pages; resolve entities and refresh deterministic metadata. |
 | Conflicts | Reconcile tensions after integration. |
 | Topics | Choose concept groups and titles, then write hubs/home after conflicts are current. Every concept must occur exactly once. |
 | Literature | Add supported external context after topics are current. |
 | Authors | Update contributions from current summaries and metadata; independent of topics. |
-| Finish | Allowed only when all required input/output fingerprints are current. |
+
+Every stage writes a receipt (`.agentic/curator-receipts.json`) with the paths
+it changed, so the audit trail of the earlier action loop survives without a
+model choosing the order. The only structural model call is the topic proposal.
 
 A separate compact topic proposal receives concept identities/descriptions and
 existing membership. The accepted decision lives in versioned
@@ -212,8 +216,7 @@ path; PubMed remains an external data retrieval operation.
 Ignored `.agentic/` stores the SQLite ledger, raw results, evidence, plans, paper
 snapshots, logs, curator receipts and isolated candidate output. Keep this folder
 when retrying so completed work and prior charges survive. Rerun the same command
-to reconstruct the candidate from cached results. Changing only `--max-actions`
-does not invalidate cached decisions or reset accounting.
+to reconstruct the candidate from cached results.
 
 ```sh
 uv run python -m beril_wiki.agentic status
@@ -236,8 +239,6 @@ uv run python -m beril_wiki.agentic account --job FULL_JOB_ID --tokens 50000
 uv run python -m beril_wiki.agentic retry --job FULL_JOB_ID
 ```
 
-Premature finish is rejected with remaining obligations; action exhaustion stops
-without promotion. A repeated current action returns an unchanged receipt.
 Promotion starts only after the strict gate and concurrent-input checks pass.
 It journals and renames **wiki, state and staging**, retaining originals in
 `.agentic/previous`. This is recoverable, not one atomic filesystem operation.
@@ -260,7 +261,7 @@ promotion.
 ## Development verification
 
 Offline tests exercise the actual subprocess pipeline with recorded model and
-PubMed replies, alternate action order, dependency enforcement, bounded repair,
+PubMed replies, the stage schedule, dependency enforcement, bounded repair,
 topic decisions, cache invalidation, subscription setup and promotion recovery.
 They do not establish model quality or real subscription savings. The curator
 has not yet been accepted through a real source update. MCP remains below

@@ -1,4 +1,4 @@
-"""The curator chooses actions; the host enforces completion and replay bounds."""
+"""The schedule runs stale stages in dependency order; the host enforces completion."""
 
 import json
 from typing import cast
@@ -8,32 +8,23 @@ import pytest
 from beril_wiki.agentic.runtime import Runtime, WorkflowError
 
 
-@pytest.mark.parametrize(
-    "order",
-    [
-        ["authors", "conflicts", "topics", "literature", "finish"],
-        ["conflicts", "topics", "literature", "authors", "finish"],
-    ],
-)
-def test_curator_accepts_independent_action_orders(tmp_path, monkeypatch, order):
+def test_schedule_runs_stale_stages_in_table_order(tmp_path, monkeypatch):
     from beril_wiki.agentic import curator as C
 
     (tmp_path / "wiki/concepts").mkdir(parents=True)
     (tmp_path / "state").mkdir()
     (tmp_path / "jobs").mkdir()
-    actions = iter(order)
     calls = []
 
     class Agent:
         root = tmp_path
         store = tmp_path / "jobs"
-        config = {"max_actions": 8, "model": "fixture"}
+        config = {"model": "fixture"}
 
         def ask(self, task, step):
-            assert len(json.dumps(task)) < 10000
-            return json.dumps({"action": next(actions), "reason": "Maintain changed knowledge"})
+            raise AssertionError("the schedule makes no decision calls")
 
-    monkeypatch.setattr(C, "propose_topics", lambda root, agent: None)
+    monkeypatch.setattr(C, "propose_topics", lambda root, agent: calls.append("propose"))
     monkeypatch.setattr(C, "load_groups", lambda root: [])
 
     def refresh(name, args):
@@ -46,34 +37,62 @@ def test_curator_accepts_independent_action_orders(tmp_path, monkeypatch, order)
             path.write_text(path.read_text() + "\n## Literature Context\n\nPaper evidence.\n")
 
     state = C.curate(tmp_path, cast(Runtime, Agent()), [], refresh, {})
-    assert [x for x in calls if x in C.EDITORIAL] == order[:-1]
+    assert calls == [
+        "extras",
+        "names-core",
+        "conflicts",
+        "propose",
+        "topics",
+        "literature",
+        "authors",
+    ]
     assert set(state) == set(C.EDITORIAL)
     # Literature owns its section; its insertion must not dirty topic synthesis.
     assert C.pending_actions(tmp_path, state, Agent.config, integrated=True) == []
+    receipts = json.loads((tmp_path / "jobs/curator-receipts.json").read_text())
+    assert [r["action"] for r in receipts] == ["conflicts", "topics", "literature", "authors"]
+    assert all(r["result"] == "completed" for r in receipts)
+    calls.clear()
+    # Only stale stages and their dependents run again.
+    (tmp_path / "wiki/concepts/new.md").write_text("# New\n")
+    C.curate(tmp_path, cast(Runtime, Agent()), [], refresh, state)
+    assert calls == [
+        "extras",
+        "names-core",
+        "conflicts",
+        "propose",
+        "topics",
+        "literature",
+        "authors",
+    ]
 
 
-def test_curator_premature_finish_exhausts_without_promotion(tmp_path, monkeypatch):
+def test_schedule_integrates_changed_sources_first(tmp_path, monkeypatch):
     from beril_wiki.agentic import curator as C
 
     (tmp_path / "jobs").mkdir()
-    prompts = []
+    calls = []
 
     class Agent:
         root = tmp_path
         store = tmp_path / "jobs"
-        config = {"max_actions": 2, "model": "fixture"}
-
-        def ask(self, task, step):
-            prompts.append(task)
-            return '{"action": "finish", "reason": "Attempt early completion"}'
+        config = {"model": "fixture"}
 
     monkeypatch.setattr(C, "load_groups", lambda root: [])
-    with pytest.raises(WorkflowError, match="action limit"):
-        C.curate(tmp_path, cast(Runtime, Agent()), ["a__REPORT.md"], lambda *args: None, {})
-    assert len(prompts) == 2
-    assert "integrate" in json.dumps(prompts[-1])
-    receipts = json.loads((tmp_path / "jobs/curator-receipts.json").read_text())
-    assert len(receipts) == 2 and receipts[-1]["result"] == "rejected"
+    monkeypatch.setattr(C, "propose_topics", lambda root, agent: None)
+    monkeypatch.setattr(
+        C, "compile_batch", lambda root, agent, names: calls.append(("integrate", names))
+    )
+    C.curate(tmp_path, cast(Runtime, Agent()), ["a__REPORT.md"], lambda n, a: calls.append(n), {})
+    assert calls[:6] == [
+        "extras",
+        "names-core",
+        ("integrate", ["a__REPORT.md"]),
+        "entities",
+        "names-core",
+        "extras",
+    ]
+    assert calls[6:] == ["conflicts", "topics", "literature", "authors"]
 
 
 def test_literature_changes_only_its_owned_fingerprint(tmp_path):
@@ -90,31 +109,6 @@ def test_literature_changes_only_its_owned_fingerprint(tmp_path):
     after = {n: C.stage_snapshot(tmp_path, n, {"model": "fixture"}) for n in C.EDITORIAL}
     assert before["topics"] == after["topics"]
     assert before["literature"] != after["literature"]
-
-
-def test_curator_blocks_dependencies_and_reuses_current_action(tmp_path, monkeypatch):
-    from beril_wiki.agentic import curator as C
-
-    (tmp_path / "jobs").mkdir()
-    actions = iter(
-        ["topics", "conflicts", "conflicts", "topics", "literature", "authors", "finish"]
-    )
-    calls = []
-
-    class Agent:
-        store = tmp_path / "jobs"
-        config = {"max_actions": 8, "model": "fixture"}
-
-        def ask(self, task, step):
-            return json.dumps({"action": next(actions), "reason": "Maintain wiki"})
-
-    monkeypatch.setattr(C, "load_groups", lambda root: [])
-    monkeypatch.setattr(C, "propose_topics", lambda root, agent: None)
-    C.curate(tmp_path, cast(Runtime, Agent()), [], lambda name, args: calls.append(name), {})
-    assert calls.count("conflicts") == 1 and calls.count("topics") == 1
-    receipts = json.loads((tmp_path / "jobs/curator-receipts.json").read_text())
-    assert receipts[0]["result"] == "rejected"
-    assert receipts[2]["result"] == "unchanged"
 
 
 def test_dirty_output_invalidates_only_its_page_cache(tmp_path):
@@ -158,45 +152,6 @@ def test_search_cli_reads_accepted_wiki_and_refuses_pending_promotion(
     assert "promotion pending" in capsys.readouterr().out
 
 
-def test_action_limit_resume_reuses_paid_decisions(tmp_path, monkeypatch):
-    from beril_wiki.agentic import curator as C
-    from beril_wiki.agentic import runtime as R
-
-    config = dict(
-        root=str(tmp_path),
-        store=str(tmp_path / "jobs"),
-        run="same-update",
-        model="fixture",
-        cli="unused",
-        max_actions=2,
-        max_tokens=1000,
-        max_jobs=20,
-        reserve_tokens=10,
-    )
-    agent = R.Runtime(config)
-    calls = []
-    monkeypatch.setattr(R, "check_auth", lambda cli: None)
-    monkeypatch.setattr(C, "load_groups", lambda root: [])
-    monkeypatch.setattr(C, "propose_topics", lambda root, agent: None)
-
-    async def answer(payload, key):
-        data = json.loads(json.loads(payload)[0]["content"].split("\n")[-1])
-        action = next((a for a in data["available"] if a in data["pending"]), "finish")
-        result = json.dumps({"action": action, "reason": "Refresh required work"})
-        agent.ledger.finish(key, result, {"input_tokens": 2, "output_tokens": 3})
-        calls.append(key)
-        return result
-
-    monkeypatch.setattr(agent, "_query", answer)
-    with pytest.raises(WorkflowError, match="action limit"):
-        C.curate(tmp_path, agent, [], lambda *args: None, {})
-    assert len(calls) == 2
-    config["max_actions"] = 8
-    state = C.curate(tmp_path, agent, [], lambda *args: None, {})
-    assert set(state) == set(C.EDITORIAL)
-    assert len(calls) == 5 and agent.ledger.totals()["tokens"] == 25
-
-
 def test_failed_editorial_action_keeps_receipt(tmp_path, monkeypatch):
     from beril_wiki.agentic import curator as C
 
@@ -204,10 +159,7 @@ def test_failed_editorial_action_keeps_receipt(tmp_path, monkeypatch):
 
     class Agent:
         store = tmp_path / "jobs"
-        config = {"max_actions": 8, "model": "fixture"}
-
-        def ask(self, task, step):
-            return '{"action": "conflicts", "reason": "Refresh tensions"}'
+        config = {"model": "fixture"}
 
     monkeypatch.setattr(C, "load_groups", lambda root: [])
 

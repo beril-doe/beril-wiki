@@ -77,7 +77,6 @@ def main() -> int:
     execute.add_argument("--max-jobs", type=int, required=True)
     execute.add_argument("--reserve-tokens", type=int, default=50_000)
     execute.add_argument("--max-turns", type=int, default=12)
-    execute.add_argument("--max-actions", type=int, default=16)
     execute.add_argument("--max-output-tokens", type=int, default=32768)
     execute.add_argument("--timeout", type=int, default=600)
     execute.add_argument(
@@ -149,7 +148,6 @@ def main() -> int:
                 "max_jobs",
                 "reserve_tokens",
                 "max_turns",
-                "max_actions",
                 "max_output_tokens",
                 "timeout",
                 "stage_timeout",
@@ -165,7 +163,6 @@ def main() -> int:
                     "max_jobs",
                     "reserve_tokens",
                     "max_turns",
-                    "max_actions",
                     "max_output_tokens",
                     "timeout",
                     "stage_timeout",

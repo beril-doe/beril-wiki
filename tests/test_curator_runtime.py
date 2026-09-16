@@ -62,13 +62,13 @@ def test_search_job_reuses_cache_and_invalidates_added_deleted_files(tmp_path, m
 
     monkeypatch.setattr(agent, "_query", answer)
     task = [{"role": "user", "content": "Find quartz"}]
-    assert agent.ask(task, "curator/decision/0") == agent.ask(task, "curator/decision/0")
+    assert agent.ask(task, "curator/topics") == agent.ask(task, "curator/topics")
     assert len(calls) == 1
     path = tmp_path / "wiki/concepts/quartz.md"
     path.write_text("quartz")
-    assert json.loads(agent.ask(task, "curator/decision/0"))["matches"]
+    assert json.loads(agent.ask(task, "curator/topics"))["matches"]
     path.unlink()
-    assert json.loads(agent.ask(task, "curator/decision/0"))["matches"] == []
+    assert json.loads(agent.ask(task, "curator/topics"))["matches"] == []
     # Restoring a previously seen exact inventory can reuse its negative result.
     assert len(calls) == 2 and agent.ledger.totals()["tokens"] == 10
 
@@ -296,7 +296,6 @@ def test_legacy_retry_gets_review_without_another_repair(tmp_path, monkeypatch, 
 @pytest.mark.parametrize(
     ("step", "role"),
     [
-        ("curator/decision/0", "curator"),
         ("curator/topics/repair", "planning"),
         ("extract/a/0", "extraction"),
         ("batch/plan/0/repair", "planning"),
@@ -427,7 +426,7 @@ def test_cli_passes_explicit_model_policy(tmp_path, monkeypatch, use_yaml):
             "--cli",
             "unused",
             "--step-model",
-            "curator=small",
+            "figures=small",
             "--step-model",
             "review=reviewer",
         ],
@@ -435,7 +434,7 @@ def test_cli_passes_explicit_model_policy(tmp_path, monkeypatch, use_yaml):
     configs = []
     monkeypatch.setattr(cli, "run", lambda root, checkout, config, staged: configs.append(config))
     assert cli.main() == 0
-    assert configs[0]["step_models"] == {"curator": "small", "review": "reviewer"}
+    assert configs[0]["step_models"] == {"figures": "small", "review": "reviewer"}
     assert configs[0]["model"] == "strong"
 
 
