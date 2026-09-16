@@ -31,6 +31,7 @@ from beril_wiki.agentic.prose import (
     PageFailure,
     derived_page,
     excerpts,
+    limit,
     parallel,
     prune_failures,
     record_failure,
@@ -519,6 +520,10 @@ def main() -> int:
         )
         return link_missing_members(page, members, concepts)
 
+    cap = limit(sys.argv)
+    if cap is not None:
+        print(f"  --limit {cap}: writing at most {cap} hub(s), retiring none")
+        todo = todo[:cap]
     any_changed = False
     failed = 0
     for (_, slug, members, _, rel_conflicts, digest), result in parallel(todo, write, workers()):
@@ -535,7 +540,7 @@ def main() -> int:
     atomic_json(state_path, state)
     # Retire hub pages for topics that no longer exist after re-clustering.
     live = {slug for _, slug, _ in planned}
-    for stale in (OUT / "topics").glob("*.md"):
+    for stale in [] if cap is not None else (OUT / "topics").glob("*.md"):
         if stale.stem not in live:
             stale.unlink()
             any_changed = True

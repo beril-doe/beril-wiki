@@ -397,6 +397,13 @@ def source_excerpts(
     return "\n\n".join(out)
 
 
+def limit(argv: list[str]) -> int | None:
+    """`--limit N` caps a direct stage invocation at N new pages; pages are then never retired."""
+    if "--limit" in argv:
+        return int(argv[argv.index("--limit") + 1])
+    return None
+
+
 def workers() -> int:
     return int(runtime_config().get("workers", 1)) if configured() else 1
 

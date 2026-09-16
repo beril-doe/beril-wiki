@@ -263,6 +263,11 @@ uv run python -m beril_wiki.agentic retry --page conflicts/conflict--stem--1a2b3
 uv run python -m beril_wiki.agentic retry --all-failed
 ```
 
+For a capped acceptance pass, invoke a stage directly with `--limit N`
+(conflicts and topics): it writes at most N new pages and retires none, so a
+partial pass never reaps pages it did not get to. Direct stage invocations are
+maintenance tools; they do not promote.
+
 `status` lists the failed pages beside the totals. `retry --page` and
 `retry --all-failed` mark every job a failed page used as rejected, so the next
 run drafts that page afresh (fresh drafts converged where repeated repairs did

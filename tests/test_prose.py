@@ -233,6 +233,14 @@ def test_conflicts_stage_continues_past_a_failed_page(monkeypatch, tmp_path):
             return page
 
     configure(monkeypatch, tmp_path, Script(), workers=2)
+    (tmp_path / "wiki/conflicts/conflict--old--00000000.md").write_text("stale")
+    monkeypatch.setattr(CB.sys, "argv", ["conflicts", "--limit", "1"])
+    assert CB.main() == 0
+    assert (tmp_path / "wiki/conflicts/conflict--old--00000000.md").exists()  # capped: no reaping
+    assert len(list((tmp_path / "wiki/conflicts").glob("conflict--one--*.md"))) == 1
+    for stale in (tmp_path / "wiki/conflicts").glob("*.md"):
+        stale.unlink()
+    monkeypatch.setattr(CB.sys, "argv", ["conflicts"])
     assert CB.main() == 0
     written = sorted(p.name for p in (tmp_path / "wiki/conflicts").glob("*.md"))
     assert len(written) == 1 and written[0].startswith("conflict--one--")

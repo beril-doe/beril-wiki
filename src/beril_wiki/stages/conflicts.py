@@ -27,6 +27,7 @@ from beril_wiki.agentic.prose import (
     Contract,
     PageFailure,
     derived_page,
+    limit,
     parallel,
     prune_failures,
     record_failure,
@@ -192,6 +193,10 @@ def main() -> int:
             targets=targets,
         )
 
+    cap = limit(sys.argv)
+    if cap is not None:
+        print(f"  --limit {cap}: writing at most {cap} page(s), retiring none")
+        todo = todo[:cap]
     written = failed = 0
     for (slug, group, digest), result in parallel(todo, write, workers()):
         if isinstance(result, PageFailure):
@@ -207,7 +212,7 @@ def main() -> int:
         print(f"  wrote conflicts/{slug}.md ({len(group)} paragraph(s))")
     # Retire pages whose disagreement no longer exists; a failed new page never existed.
     reaped = 0
-    for stale in sorted(OUT.glob("*.md")):
+    for stale in [] if cap is not None else sorted(OUT.glob("*.md")):
         if stale.stem not in live:
             stale.unlink()
             reaped += 1
