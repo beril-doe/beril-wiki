@@ -1,7 +1,7 @@
 ---
 type: "Concept"
-description: "Pooled runs complicate statistical units and can add metadata label noise."
-sources: ["summaries/euk_in_prok_correlates__REPORT.md"]
+description: "How pooled sequencing runs, aggregated replicates and repeated samples from one subject change the correct statistical unit, and how inherited or inferred metadata labels add predictor noise in microbiome association analyses."
+sources: ["summaries/euk_in_prok_correlates__REPORT.md", "summaries/clay_confined_subsurface__REPORT.md", "summaries/enigma_carbon_census_1__REPORT.md", "summaries/ibd_phage_targeting__REPORT.md", "summaries/lab_field_ecology__REPORT.md", "summaries/pitfalls.md"]
 ---
 # Pooled sequencing runs complicate the statistical unit and metadata assignment
 
@@ -25,9 +25,26 @@ This issue is directly relevant to [[concepts/cross-tenant-data-bridging]], beca
 
 The accompanying analysis used run-level observations for hypothesis testing and treated the inherited metadata as potentially noisy, rather than expanding pooled runs into independent biosample records. [src: euk_in_prok_correlates] This design is preferable to biosample-level pseudo-replication, but it does not replace explicit information about pooling composition, relative biosample contributions, or biosample-specific environmental metadata. [src: euk_in_prok_correlates]
 
+## Related non-independence and label-noise problems in other projects
+
+The soil–freshwater comparison in the carbon census shows what happens when non-independent samples are counted as independent, which **supports** the run-level choice above. Each metagenome was treated as an independent observation in a rank test over compositional, zero-inflated relative abundances. With thousands of non-independent samples, the report states that this inflates significance massively: all 83 genera reach q<0.05, many at q~1e-70. Here q is a false-discovery-rate (FDR) adjusted p-value, where FDR is the expected share of false positives among significant calls. These significance values should therefore be read as uncalibrated rather than as strong evidence. [src: enigma_carbon_census_1] The same inflation also bears on [[concepts/study-batch-confounding-of-environmental-associations]]. [src: enigma_carbon_census_1]
+
+A lab–field ecology analysis took the opposite route and aggregated before testing. Its community data included multiple communities per sample, from different filter sizes and replicates, and these were aggregated within samples. [src: lab_field_ecology] This is analogous to collapsing pooled material to one run-level observation. It avoids counting replicates as independent samples, but it gives up any within-sample variation between filter fractions and replicates. [src: lab_field_ecology]
+
+The IBD phage-targeting project **refines** the trade-off by showing that aggregation also has a cost. Its analysis aggregated at the subject level even though each subject contributed multiple serology and metagenomics visits, so longitudinal information was lost. The report notes that mixed-effects regression would have had more power, but unbalanced visit counts complicate interpretation. [src: ibd_phage_targeting] Choosing the subject as the unit avoids pseudoreplication, while a hierarchical model could keep the repeated visits without treating them as independent. [src: ibd_phage_targeting]
+
+The same project also separates technical replication from biological replication. Patient 6967 is the only multi-timepoint UC Davis Crohn's-disease (CD) patient with biological-replicate samples. As a result, the state-dependent dosing rule is n=1, and the report says prospective validation requires expanded longitudinal sampling; it should be treated as a single-patient hypothesis rather than an established rule. [src: ibd_phage_targeting] Patient 1112 instead has 2 reseq replicates of the same biological sample. These gave Spearman ρ = 1.000 (p < 0.001) on 6 Tier-A targets, meaning perfect rank concordance that validates Kaiju reliability and sets the technical-noise floor. The report is explicit that this Spearman ρ=1.000 replicate is not a biological-replicate longitudinal trajectory. It therefore cannot add an independent biological observation to the n=1 longitudinal contrast. [src: ibd_phage_targeting]
+
+Predictor-label noise can also come from text inference rather than pooling, which **extends** the representative-biosample problem above. In the clay-confined subsurface project, the `compartment` field was keyword-inferred from `isolation_source` strings. A small number of bentonite or "rock" entries could plausibly be either porewater or rock-attached. The report states that H3 results were robust to two stricter compartment definitions in sensitivity testing. [src: clay_confined_subsurface] That sensitivity analysis is a model for checking whether the `MIN(biosample_id)` labels change pooled-run conclusions. [src: clay_confined_subsurface, euk_in_prok_correlates]
+
+Cluster-aware models need correct grouping labels, and the central pitfalls digest shows that recovering them depends on the method. In [[entities/curatedmetagenomicdata]] (cMD), the sub-study for IBD samples is encoded in the middle colon-separated token of `participant_id`, for example `CMD:HallAB_2017:SKST006`. For healthy-control (HC) samples, the sub-study sits in `dim_samples.external_ids` as a JSON blob with key `"study"`. Together these cover ≈ 80 % of cMD samples, whereas short-prefix regex on sample IDs covers < 20 % and produces mostly noise categories. [src: pitfalls]
+
 ## Open Directions
 
 - Recover the complete set of biosamples and their contribution weights for the 1,067 pooled runs, then fit weighted or hierarchical models to test whether representative-biosample assignment changes effect estimates. [src: euk_in_prok_correlates]
 - Compare `MIN(biosample_id)` labels with alternative pooled labels, such as majority environment or contribution-weighted environment, and quantify how much metadata-label noise changes association strength. [src: euk_in_prok_correlates]
 - Reanalyze the eukaryotic-fraction models at the run level with cluster-robust or hierarchical uncertainty, using pooling structure as a grouping variable, to determine whether conclusions remain stable without biosample pseudo-replication. [src: euk_in_prok_correlates]
 - Validate the run-to-biosample-to-study joins against explicit parent-child key audits and unresolved-record counts, asking whether the reported 99%+ linkage rate hides systematic failures among pooled or unusually structured records. [src: euk_in_prok_correlates]
+- Rerun the soil–freshwater genus contrasts with study- or site-level blocking, or with cluster-aware compositional models, to test how many of the 83 genera stay significant once non-independence is modelled. [src: enigma_carbon_census_1]
+- Refit the IBD serology–metagenomics associations with mixed-effects models across visits, and report how unbalanced visit counts affect estimates compared with subject-level aggregation. [src: ibd_phage_targeting]
+- Apply a sensitivity analysis like the clay-compartment one to pooled NMDC runs: drop runs whose constituent biosamples have discordant metadata and test whether eukaryotic-fraction associations hold. [src: clay_confined_subsurface, euk_in_prok_correlates]

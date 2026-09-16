@@ -1,6 +1,6 @@
 ---
 type: "Summary"
-description: "BacDive validation links environmental metal isolation to genomic tolerance scores."
+description: "Summary of the bacdive_metal_validation project, which tested whether BacDive isolation environments independently support genome-based metal-tolerance scores from GTDB pangenome species."
 doc_type: "short"
 full_text: "sources/bacdive_metal_validation__REPORT.md"
 ---
@@ -18,11 +18,11 @@ Heavy-metal contamination isolates had a median metal score of 0.240, mean of 0.
 
 The reported contamination gradient was heavy metal (+1.00) > waste/sludge (+0.57) > all contamination (+0.43) > industrial (+0.20). Waste/sludge isolates had n=305, median 0.219, mean 0.218, median delta +0.032, d=+0.57, and p<0.0001; all-contamination isolates had n=176, median 0.215, mean 0.211, median delta +0.028, d=+0.43, and p<0.0001; industrial isolates had n=796, median 0.199, mean 0.202, median delta +0.012, d=+0.20, and p<0.0001; host-associated isolates had n=12,086, median 0.194, mean 0.201, median delta +0.007, d=+0.14, and p<0.0001. [src: bacdive_metal_validation]
 
-The report interprets the heavy-metal result and the dose-dependent pattern as validation that the genome-based Metal Fitness Atlas score captures real ecological metal-adaptation signal. This interpretation is supported by direct environment-group comparisons, but the heavy-metal estimate is at the detection limit and should be treated as imprecise. [src: bacdive_metal_validation]
+The genome-based metal tolerance score was derived from cross-species RB-TnSeq (random barcode transposon sequencing, a pooled mutant-fitness assay) fitness data and projected onto 27,702 pangenome species via KEGG functional annotations. The report interprets the heavy-metal result and the dose-dependent pattern as validation that the genome-based Metal Fitness Atlas score captures real ecological metal-adaptation signal. This interpretation is supported by direct environment-group comparisons, but the heavy-metal estimate is at the detection limit and should be treated as imprecise. [src: bacdive_metal_validation]
 
 ### Phylum-stratified analysis
 
-Within Pseudomonadota, contamination isolates had metal scores delta=+0.040 above environmental isolates (p<0.001; n=85 contamination and n=5,655 environmental), and within Actinomycetota the delta was +0.035 (p<0.001; n=62 and n=772, respectively). The contamination signal was not significant within Bacillota (delta=-0.012, p=0.285; n=19 and n=492) or Bacteroidota (delta=-0.008, p=0.456; n=5 and n=156). [src: bacdive_metal_validation]
+Within Pseudomonadota, contamination isolates had metal scores delta=+0.040 above environmental isolates (p<0.001; n=85 contamination and n=5,655 environmental), and within Actinomycetota the delta was +0.035 (p<0.001; n=62 and n=772, respectively). The contamination signal was not significant within Bacillota (delta=-0.012, p=0.285; n=19 and n=492) or Bacteroidota (delta=-0.008, p=0.456; n=5 and n=156), although contamination-isolate sample sizes in these two phyla were small. [src: bacdive_metal_validation]
 
 These results support a metal-adaptation signal beyond broad phylum composition within the two most-sampled phyla, while the null results for Bacillota and Bacteroidota are consistent with either biological differences or limited statistical power because contamination isolates were scarce. [src: bacdive_metal_validation]
 
@@ -30,7 +30,7 @@ These results support a metal-adaptation signal beyond broad phylum composition 
 
 Species-name matching linked 42,227 of 97,334 BacDive strains (43.4%) to metal tolerance scores across 6,426 unique GTDB species. Exact species-name agreement accounted for 33,535 strains (34.5%), and GTDB suffix removal provided 8,692 additional matches (8.9%), such as matching BacDive “Pseudomonas fluorescens” to GTDB “Pseudomonas fluorescens A”. A total of 55,107 strains (56.6%) were unmatched, and 25,089 matched strains had isolation-source metadata. [src: bacdive_metal_validation]
 
-Only 24 matched strains had metal-utilization records covering iron, manganese, arsenate, chromate, cobalt, or zinc; 8 results were positive and 16 negative. Positive utilizers had lower metal scores in the exploratory comparison, but the result was inconclusive because Mann-Whitney p=0.14 and Cohen's d=-0.57 with only 24 records. [src: bacdive_metal_validation]
+Only 24 BacDive metal-utilization test records, covering iron, manganese, arsenate, chromate, cobalt, or zinc, matched to strains with metal tolerance scores; 8 results were positive and 16 negative. Positive utilizers had lower metal scores in the exploratory comparison, but the result was inconclusive because Mann-Whitney p=0.14 and Cohen's d=-0.57 with only 24 records. [src: bacdive_metal_validation]
 
 ### Power and interpretation
 
@@ -38,9 +38,9 @@ For n=10 heavy-metal isolates versus approximately 5,000 environmental-baseline 
 
 The report reconciles the environmental signal with the finding from the metal-specificity project that metal tolerance genes are 88% core by distinguishing within-species conservation from between-species variation in the total number of metal-tolerance genes. It proposes that species with larger core genomes encoding more metal-tolerance functions can score higher and be more likely to occur in contaminated environments; this is an interpretation rather than a direct causal test. [src: bacdive_metal_validation]
 
-Compared with the lab_field_ecology result of a suggestive but non-significant correlation between laboratory metal tolerance and field abundance at Oak Ridge (rho=0.50, p=0.095, n=11 genera), the BacDive analysis provides stronger large-scale support for the same hypothesis, with d=+0.43 to +1.00 across contamination categories. The heavy-metal comparison itself still uses only n=10 isolates. [src: bacdive_metal_validation]
+Compared with the lab_field_ecology result of a suggestive but non-significant correlation between laboratory metal tolerance (from the Fitness Browser) and field abundance at Oak Ridge (rho=0.50, p=0.095, n=11 genera), the BacDive analysis provides stronger large-scale support for the same hypothesis, with d=+0.43 to +1.00 across contamination categories. The heavy-metal comparison itself still uses only n=10 isolates. [src: bacdive_metal_validation]
 
-Host-associated bacteria scored slightly higher than expected rather than lower: d=+0.14 and p<0.0001. The report attributes this likely to genome-size confounding, because host-associated BacDive records are dominated by Pseudomonadota pathogens such as Pseudomonas, Klebsiella, and Acinetobacter with large genomes and more KEGG-annotated gene clusters; genome-size normalization reduces but does not eliminate this possible effect. The host-associated signal was smaller than the contamination signals of d=+0.43 to +1.00. [src: bacdive_metal_validation]
+Hypothesis H1d predicted that host-associated bacteria would have lower metal scores than environmental bacteria, reflecting reduced metal exposure in host niches. The data showed the opposite: host-associated bacteria scored slightly but significantly higher, with d=+0.14 and p<0.0001. The report attributes this likely to genome-size confounding, because host-associated BacDive records are dominated by Pseudomonadota pathogens such as Pseudomonas, Klebsiella, and Acinetobacter with large genomes and more KEGG-annotated gene clusters; genome-size normalization reduces but does not eliminate this possible effect. The host-associated signal was smaller than the contamination signals of d=+0.43 to +1.00. [src: bacdive_metal_validation]
 
 ## Caveats
 
@@ -50,7 +50,7 @@ BacDive represents culturable, described strains rather than the full diversity 
 
 Species-level matching is lossy: 56.6% of BacDive strains did not match a GTDB species, primarily because GTDB uses different species boundaries from LPSN/DSMZ. Genome-accession matching through GCA→pangenome genome_id could improve coverage but requires a Spark query. [src: bacdive_metal_validation]
 
-The metal tolerance score is genome-size-normalized as metal clusters divided by annotated clusters. This controls for genome size, which is important because Pseudomonadota tend to have larger genomes, but normalization does not eliminate the possibility that metal-tolerance functions correlate with total metabolic complexity. [src: bacdive_metal_validation]
+The metal tolerance score is genome-size-normalized as metal clusters divided by annotated clusters. This controls for genome size, which is important because Pseudomonadota tend to have larger genomes, but normalization does not eliminate the possibility that metal-tolerance functions correlate with total metabolic complexity. Without normalization, the environmental signal could partly reflect genome size rather than metal gene content. [src: bacdive_metal_validation]
 
 The metal-utilization validation is underpowered because only 24 records matched strains with metal scores; the negative direction for positive utilizers should not be over-interpreted. [src: bacdive_metal_validation]
 
@@ -63,8 +63,19 @@ The absence of a significant signal in Bacillota and Bacteroidota cannot disting
 - Test whether specific metal-tolerance gene families predict specific contamination environments for metals with sufficient BacDive representation, including iron and manganese. [src: bacdive_metal_validation]
 - Expand BacDive metal-phenotype extraction beyond the current `metabolite_utilization` table to include possible MIC and growth-inhibition data. [src: bacdive_metal_validation]
 
+## Figures
+
+- `bridge_summary.png` shows BacDive→pangenome match rates and the metal score distribution; `metal_score_by_environment.png` is a boxplot and violin display of metal scores by isolation environment; `utilization_vs_score.png` compares metal-utilization test results with metal scores. [src: bacdive_metal_validation]
+
 ## Slots Into
 
+- [[concepts/lab-field-fitness-concordance]] — The contamination gradient (heavy metal d=+1.00 down to industrial d=+0.20), the within-phylum results and the cited Oak Ridge comparison (rho=0.50, p=0.095) test whether lab-derived fitness predictions match field ecology. The heavy-metal group sits at the detection limit. [src: bacdive_metal_validation]
+- [[concepts/composite-resistance-score-limitations]] — The RB-TnSeq-derived, KEGG-projected, genome-size-normalized score shows an unexpected host-associated elevation (d=+0.14), which the report attributes to possible genome-size or metabolic-complexity confounding. [src: bacdive_metal_validation]
+- [[concepts/phylogenetic-confounding-of-pangenome-associations]] — Phylum-stratified tests kept the signal in Pseudomonadota and Actinomycetota but not in Bacillota or Bacteroidota, where contamination samples were small. [src: bacdive_metal_validation]
+- [[concepts/taxonomic-nomenclature-reconciliation]] — Exact-name and GTDB-suffix-removal matching linked 43.4% of strains and left 56.6% unmatched, mainly because GTDB and LPSN/DSMZ draw species boundaries differently. [src: bacdive_metal_validation]
+- [[concepts/phenotype-database-coverage-bias]] — Only 24 metal-utilization records matched scored strains, and only 10 of the 31 heavy-metal isolates in the plan were usable after matching. [src: bacdive_metal_validation]
+- [[concepts/cultivation-collection-bias-in-ecological-genomics]] — BacDive covers culturable, described strains, so metal-tolerant extremophiles may be under-represented. [src: bacdive_metal_validation]
+- [[concepts/within-species-conservation-between-species-functional-divergence]] — The report reconciles the secondhand 88% core estimate with between-species differences in total metal-tolerance gene content. This is an interpretation, not a direct test. [src: bacdive_metal_validation]
 - [[concepts/environmental-resistome]] — The BacDive isolation-environment comparisons provide ecological validation of genome-based metal-tolerance predictions and identify contamination-associated tolerance signals. [src: bacdive_metal_validation]
 - [[concepts/pangenome-integration]] — The BacDive–GTDB pangenome bridge quantifies species-level matching coverage, suffix-based matching, and the remaining 56.6% unmatched strains. [src: bacdive_metal_validation]
 - [[concepts/multi-omics-integration]] — The project connects genome-derived metal-tolerance scores with curated isolation and utilization phenotypes, while documenting that the utilization comparison remains underpowered. [src: bacdive_metal_validation]
