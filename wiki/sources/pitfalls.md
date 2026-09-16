@@ -35,7 +35,7 @@ See [schemas/](schemas/) for per-collection documentation.
 ```python
 # After matching via ncbi_strain_identifiers, verify genus consistency
 depot_genus = depot_taxon.split()[0]  # e.g., "Rhodanobacter" from "Rhodanobacter glycinis"
-gtdb_genus = gtdb_taxonomy.split(";g__")[1].split(";")[0]  # from GTDB taxonomy string
+gtdb_genus = gtdb_taxonomy.split(';g__')[1].split(';')[0]  # from GTDB taxonomy string
 if depot_genus.lower() not in gtdb_genus.lower():
     # REJECT this linkage — strain name collision
     pass
@@ -128,9 +128,9 @@ A pooled `log_abundance ~ diagnosis + (1 | substudy)` linear mixed-effects model
 
 ```python
 # After parsing substudy from dim_samples.external_ids.study + participant_id 2nd token:
-tbl = sample_meta.groupby("substudy").diagnosis.value_counts().unstack(fill_value=0)
-hc_studies = set(tbl[tbl.get("HC", 0) >= 10].index)
-cd_studies = set(tbl[tbl.get("CD", 0) >= 10].index)
+tbl = sample_meta.groupby('substudy').diagnosis.value_counts().unstack(fill_value=0)
+hc_studies = set(tbl[tbl.get('HC', 0) >= 10].index)
+cd_studies = set(tbl[tbl.get('CD', 0) >= 10].index)
 assert len(hc_studies & cd_studies) > 0, "cMD pooled CD-vs-HC is substudy-confounded"
 ```
 
@@ -144,22 +144,17 @@ assert len(hc_studies & cd_studies) > 0, "cMD pooled CD-vs-HC is substudy-confou
 
 ```python
 import json
-
-
 def resolve_substudy(row):
-    ext = row["external_ids"]
+    ext = row['external_ids']
     if isinstance(ext, str):
         try:
             d = json.loads(ext)
-            if isinstance(d.get("study"), str):
-                return d["study"]
-        except Exception:
-            pass
-    pid = row["participant_id"]
+            if isinstance(d.get('study'), str): return d['study']
+        except Exception: pass
+    pid = row['participant_id']
     if isinstance(pid, str):
-        parts = pid.split(":")
-        if len(parts) >= 3 and parts[0] in ("CMD", "HMP2"):
-            return parts[1]
+        parts = pid.split(':')
+        if len(parts) >= 3 and parts[0] in ('CMD', 'HMP2'): return parts[1]
     return None
 ```
 
@@ -221,8 +216,8 @@ The `kbase_ke_pangenome` database lives under the `kbase` tenant (not `kbase_ke`
 
 # CORRECT:
 config = {
-    "tenant": "kbase",  # MinIO group name (check with get_group_sql_warehouse)
-    "dataset": "ke_pangenome",  # tenant + "_" + dataset = "kbase_ke_pangenome"
+    "tenant": "kbase",           # MinIO group name (check with get_group_sql_warehouse)
+    "dataset": "ke_pangenome",   # tenant + "_" + dataset = "kbase_ke_pangenome"
 }
 ```
 
@@ -230,9 +225,8 @@ config = {
 
 ```python
 from berdl_notebook_utils.spark.database import get_group_sql_warehouse
-
-print(get_group_sql_warehouse("kbase"))  # OK → GroupSqlWarehousePrefixResponse
-print(get_group_sql_warehouse("kbase_ke"))  # FAIL → ErrorResponse (no such group)
+print(get_group_sql_warehouse('kbase'))      # OK → GroupSqlWarehousePrefixResponse
+print(get_group_sql_warehouse('kbase_ke'))   # FAIL → ErrorResponse (no such group)
 ```
 
 **How to find the right tenant**: Check the database's physical location:
@@ -250,11 +244,11 @@ spark.sql("DESCRIBE NAMESPACE EXTENDED kbase_ke_pangenome").show()
 ```python
 # WRONG: numpy str_ types
 genome_ids = list(np.random.choice(all_genome_ids, 300, replace=False))
-spark.createDataFrame([(g,) for g in genome_ids], ["genome_id"])  # FAILS
+spark.createDataFrame([(g,) for g in genome_ids], ['genome_id'])  # FAILS
 
 # CORRECT: explicit str() cast
 genome_ids = [str(g) for g in np.random.choice(all_genome_ids, 300, replace=False)]
-spark.createDataFrame([(g,) for g in genome_ids], ["genome_id"])  # OK
+spark.createDataFrame([(g,) for g in genome_ids], ['genome_id'])  # OK
 ```
 
 ### Access Denied Errors Mean Tenant Permissions, Not a Technical Fault
@@ -318,7 +312,6 @@ AUTH_TOKEN=$(grep "KB_AUTH_TOKEN" .env | cut -d'"' -f2)
 **Solution**: On JupyterHub, a fresh token is always available at `~/.berdl_kbase_session`, synced every 30 seconds by the IPython startup script (`~/.ipython/profile_default/startup/05-token-sync.py`). Read the token from there:
 ```python
 from pathlib import Path
-
 token = (Path.home() / ".berdl_kbase_session").read_text().strip()
 ```
 
@@ -355,7 +348,7 @@ for row in cur:  # OperationalError raised here
 
 # CORRECT: Permissive UTF-8 with replacement characters
 conn = sqlite3.connect(db_path)
-conn.text_factory = lambda b: b.decode("utf-8", errors="replace")  # Set this first
+conn.text_factory = lambda b: b.decode('utf-8', errors='replace')  # Set this first
 cur = conn.cursor()
 cur.execute("SELECT * FROM table_with_bad_bytes")
 for row in cur:  # Succeeds; invalid bytes become U+FFFD
@@ -375,20 +368,19 @@ def parse_sql_schema(sql_path):
         line = line.strip().rstrip(",")
         if not line:
             continue
-        tokens = re.split(r"\s+", line, maxsplit=2)
+        tokens = re.split(r'\s+', line, maxsplit=2)
         col_name = tokens[0]  # BUG: May be "/*" if line starts with comment
         # ...
-
 
 # CORRECT: Strip comments before tokenizing
 def parse_sql_schema(sql_path):
     for line in m.group(2).splitlines():
-        line = re.sub(r"/\*.*?\*/", "", line).strip()  # strip /* ... */ comments
-        line = re.sub(r"--.*$", "", line).strip()  # strip -- comments
+        line = re.sub(r'/\*.*?\*/', '', line).strip()  # strip /* ... */ comments
+        line = re.sub(r'--.*$', '', line).strip()       # strip -- comments
         if not line:
             continue
-        tokens = re.split(r"\s+", line, maxsplit=2)
-        col_name = re.sub(r'[`"\[\]]', "", tokens[0])
+        tokens = re.split(r'\s+', line, maxsplit=2)
+        col_name = re.sub(r'[`"\[\]]', '', tokens[0])
         # ...
 ```
 
@@ -404,7 +396,7 @@ def parse_sql_schema(sql_path):
 spark.sql("SELECT CAST(abundance AS DOUBLE) AS abundance FROM ...")
 
 # Option 2: Cast after .toPandas()
-df["abundance"] = df["abundance"].astype(float)
+df['abundance'] = df['abundance'].astype(float)
 ```
 
 **Second manifestation**: `AVG(CASE WHEN condition THEN 1.0 ELSE 0.0 END)` also returns `DECIMAL` because Spark treats the literal `1.0` as `DECIMAL(2,1)`, not `DOUBLE`. Use `CAST(AVG(...) AS DOUBLE)` on aggregated columns too:
@@ -526,7 +518,7 @@ query = "SELECT * FROM ... WHERE species_id = 's__E_coli--RS_GCF_000005845.2'"
 
 # CORRECT via REST API: query unfiltered, filter locally
 df_all = query_berdl("SELECT * FROM kbase.ke_pangenome.gtdb_taxonomy_r214v1")
-df_filtered = df_all[df_all["species_id"] == target_species]
+df_filtered = df_all[df_all['species_id'] == target_species]
 ```
 
 ### ID Format Reference
@@ -549,9 +541,7 @@ returns 0 rows even when the taxids should match, because the stored values are 
 
 **Solution**: Inspect the column values before joining:
 ```python
-spark.sql(
-    "SELECT ncbi_taxid, COUNT(*) FROM kbase.ke_pangenome.gtdb_metadata GROUP BY ncbi_taxid LIMIT 10"
-).show()
+spark.sql("SELECT ncbi_taxid, COUNT(*) FROM kbase.ke_pangenome.gtdb_metadata GROUP BY ncbi_taxid LIMIT 10").show()
 ```
 Use an alternative join key (e.g., organism name string matching or `orgId`-based lookup) or look for a different taxonomy column. In `metabolic_capability_dependency`, the fallback was to match organisms directly by `orgId` without a clade-level link.
 
@@ -566,10 +556,10 @@ Use an alternative join key (e.g., organism name string matching or `orgId`-base
 ```python
 # WRONG — uses GTDB_species format (s__Genus_species) which doesn't match clade_name
 gtdb_meta = spark.sql("SELECT GTDB_species FROM kbase.ke_pangenome.gtdb_species_clade").toPandas()
-clade_names_df = pd.DataFrame({"clade_name": gtdb_meta["GTDB_species"].tolist()})
+clade_names_df = pd.DataFrame({'clade_name': gtdb_meta['GTDB_species'].tolist()})
 
 # CORRECT — use gtdb_species_clade_id directly (matches clade_name in gapmind_pathways)
-clade_names_df = pd.DataFrame({"clade_name": mapped_clade_ids})  # from taxon_bridge
+clade_names_df = pd.DataFrame({'clade_name': mapped_clade_ids})  # from taxon_bridge
 ```
 
 ### [nmdc_community_metabolic_ecology] `gapmind_pathways.metabolic_category` Values Are `'aa'` and `'carbon'`, Not `'amino_acid'`
@@ -578,10 +568,10 @@ clade_names_df = pd.DataFrame({"clade_name": mapped_clade_ids})  # from taxon_br
 
 ```python
 # WRONG
-aa_mask = df["metabolic_category"] == "amino_acid"  # always False
+aa_mask = df['metabolic_category'] == 'amino_acid'  # always False
 
 # CORRECT
-aa_mask = df["metabolic_category"] == "aa"
+aa_mask = df['metabolic_category'] == 'aa'
 ```
 
 ### [nmdc_community_metabolic_ecology] Spark Connect Temp Views Lost After Long-Running Cell
@@ -594,9 +584,9 @@ aa_mask = df["metabolic_category"] == "aa"
 
 ```python
 # At the top of any cell that JOINs against a temp view:
-spark.createDataFrame(pd.DataFrame({"clade_name": mapped_clade_names})).createOrReplaceTempView(
-    "mapped_clade_names_tmp"
-)
+spark.createDataFrame(
+    pd.DataFrame({'clade_name': mapped_clade_names})
+).createOrReplaceTempView('mapped_clade_names_tmp')
 ```
 
 **Prevention**: Avoid expensive full-table scans in cells between temp view registration and temp view use. Use `LIMIT` or `TABLESAMPLE` for schema verification queries rather than full `GROUP BY` counts on large tables.
@@ -770,7 +760,6 @@ WHERE PFAMs LIKE '%DUF4041%'   -- returns 2,962
 ```python
 # Verify via InterPro API
 import requests
-
 r = requests.get("https://www.ebi.ac.uk/interpro/api/entry/pfam/PF13250/")
 # Check the name matches your expected domain
 ```
@@ -1000,7 +989,7 @@ See `~/data/genome_depot_enigma/preprocess.py` for a reference implementation (h
 ```python
 # BAD: Pull 132M rows to driver, then filter locally
 df = spark.sql("SELECT * FROM kbase.ke_pangenome.gene_cluster").toPandas()
-core = df[df["is_core"] == 1]
+core = df[df['is_core'] == 1]
 
 # GOOD: Keep as Spark DataFrame, filter in Spark
 df = spark.sql("""
@@ -1024,13 +1013,13 @@ See [performance.md](performance.md) for detailed PySpark-first patterns.
 ```python
 # Dictionary only has single-letter COGs
 COG_DESCRIPTIONS = {
-    "J": "Translation, ribosomal structure",
-    "L": "Replication, recombination, repair",
+    'J': 'Translation, ribosomal structure',
+    'L': 'Replication, recombination, repair',
     # ... but no "LV", "EGP", etc.
 }
 
 # This will introduce NaN values for composite COGs
-df["description"] = df["COG_category"].map(COG_DESCRIPTIONS)
+df['description'] = df['COG_category'].map(COG_DESCRIPTIONS)
 
 # BAD: This will fail with TypeError on NaN values
 labels = [f"{row['COG_category']}: {row['description'][:40]}" for _, row in df.iterrows()]
@@ -1038,7 +1027,7 @@ labels = [f"{row['COG_category']}: {row['description'][:40]}" for _, row in df.i
 # GOOD: Check for NaN before string operations
 labels = []
 for _, row in df.iterrows():
-    desc = row["description"][:40] if pd.notna(row["description"]) else "Unknown"
+    desc = row['description'][:40] if pd.notna(row['description']) else 'Unknown'
     labels.append(f"{row['COG_category']}: {desc}")
 ```
 
@@ -1052,12 +1041,12 @@ Numeric columns from Spark can come through as strings when using `.toPandas()`:
 df = spark.sql("SELECT no_genomes, no_core FROM pangenome").toPandas()
 
 # BAD: Might fail with type error if columns are strings
-filtered = df[df["no_genomes"] <= 500]  # TypeError: '<=' not supported for str
+filtered = df[df['no_genomes'] <= 500]  # TypeError: '<=' not supported for str
 
 # GOOD: Explicitly convert to numeric
-numeric_cols = ["no_genomes", "no_core", "no_aux_genome"]
+numeric_cols = ['no_genomes', 'no_core', 'no_aux_genome']
 for col in numeric_cols:
-    df[col] = pd.to_numeric(df[col], errors="coerce")
+    df[col] = pd.to_numeric(df[col], errors='coerce')
 ```
 
 ---
@@ -1102,7 +1091,7 @@ Use direct `spark.sql()` on the cluster when:
 **Solution**: Strip the `GB_` or `RS_` prefix (first 3 characters) from GTDB genome IDs before joining with phylo distance data:
 ```python
 def strip_gtdb_prefix(genome_id):
-    if genome_id.startswith(("GB_", "RS_")):
+    if genome_id.startswith(('GB_', 'RS_')):
         return genome_id[3:]
     return genome_id
 ```
@@ -1262,13 +1251,13 @@ When using `merge(..., how='left')` to create a boolean flag column, the unmatch
 
 ```python
 # BAD: creates object dtype, ~ gives garbage
-df = left.merge(right_with_flag, how="left")
-df["flag"] = df["flag"].fillna(False)
-not_flagged = df[~df["flag"]]  # WRONG — may include all rows
+df = left.merge(right_with_flag, how='left')
+df['flag'] = df['flag'].fillna(False)
+not_flagged = df[~df['flag']]  # WRONG — may include all rows
 
 # GOOD: cast to bool after fillna
-df["flag"] = df["flag"].fillna(False).astype(bool)
-not_flagged = df[~df["flag"]]  # Correct boolean negation
+df['flag'] = df['flag'].fillna(False).astype(bool)
+not_flagged = df[~df['flag']]  # Correct boolean negation
 ```
 
 This caused an orphan essential gene count of 41,059 (total essentials) instead of 7,084 (actual orphans) — a silently incorrect result with no error message.
@@ -1466,14 +1455,13 @@ GROUP BY clade_name
 **Solution**: After using `NotebookEdit` on code cells, verify the notebook JSON is valid. Fix missing fields with:
 ```python
 import json
-
-with open("notebook.ipynb") as f:
+with open('notebook.ipynb') as f:
     nb = json.load(f)
-for cell in nb["cells"]:
-    if cell["cell_type"] == "code":
-        cell.setdefault("outputs", [])
-        cell.setdefault("execution_count", None)
-with open("notebook.ipynb", "w") as f:
+for cell in nb['cells']:
+    if cell['cell_type'] == 'code':
+        cell.setdefault('outputs', [])
+        cell.setdefault('execution_count', None)
+with open('notebook.ipynb', 'w') as f:
     json.dump(nb, f, indent=1)
 ```
 
@@ -1503,8 +1491,8 @@ Do NOT use `wait` on the PID — this triggers the same output suppression.
 
 **Solution**: Filter to explicit +/- tests before computing utilization percentages:
 ```python
-n_tested = (utilization == "+").sum() + (utilization == "-").sum()
-pct_positive = (utilization == "+").sum() / n_tested  # exclude 'produced' and '+/-'
+n_tested = (utilization == '+').sum() + (utilization == '-').sum()
+pct_positive = (utilization == '+').sum() / n_tested  # exclude 'produced' and '+/-'
 ```
 Track all four categories separately (`n_positive`, `n_negative`, `n_produced`, `n_ambiguous`) for full transparency.
 
@@ -1515,13 +1503,13 @@ Track all four categories separately (`n_positive`, `n_negative`, `n_produced`, 
 **Solution**: Strip the `RS_` or `GB_` prefix before matching, or use a fallback chain:
 ```python
 # Try original ID first, then stripped, then partial match
-gapmind_match = df[df["genome_id"] == pangenome_id]
+gapmind_match = df[df['genome_id'] == pangenome_id]
 if len(gapmind_match) == 0:
-    alt_id = pangenome_id.replace("RS_", "").replace("GB_", "")
-    gapmind_match = df[df["genome_id"] == alt_id]
+    alt_id = pangenome_id.replace('RS_', '').replace('GB_', '')
+    gapmind_match = df[df['genome_id'] == alt_id]
 if len(gapmind_match) == 0:
-    accession = pangenome_id.split("_", 1)[-1]  # e.g., GCF_001307155.1
-    gapmind_match = df[df["genome_id"].str.contains(accession)]
+    accession = pangenome_id.split('_', 1)[-1]  # e.g., GCF_001307155.1
+    gapmind_match = df[df['genome_id'].str.contains(accession)]
 ```
 
 ---
@@ -1591,8 +1579,8 @@ all_tables = get_tables("nmdc_arkin")
 for tbl in all_tables:
     schema = get_table_schema("nmdc_arkin", tbl)
     cols = {col["name"] for col in schema}
-    if "file_id" in cols and "sample_id" in cols:
-        print(f"Bridge candidate: {tbl}")
+    if 'file_id' in cols and 'sample_id' in cols:
+        print(f'Bridge candidate: {tbl}')
 ```
 
 The bridge table is `kbase.nmdc_arkin.omics_files_table` (385,562 rows, confirmed). It has
@@ -1616,9 +1604,7 @@ name directly in SQL rather than materializing the bridge to a temp view:
 
 ```python
 # WRONG — fails with ChunkedArray error
-bridge_df = spark.sql(
-    "SELECT file_id, sample_id FROM kbase.nmdc_arkin.omics_files_table"
-).toPandas()
+bridge_df = spark.sql("SELECT file_id, sample_id FROM kbase.nmdc_arkin.omics_files_table").toPandas()
 bridge_spark = spark.createDataFrame(bridge_df)  # TypeError
 
 # CORRECT — join using the table name directly in SQL
