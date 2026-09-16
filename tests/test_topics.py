@@ -62,6 +62,7 @@ def test_refresh_rewrites_a_stale_line_and_is_idempotent():
 def test_uncited_figures_flags_only_numeric_paragraphs_without_a_tag():
     page = (
         "# T\n\nAbout 200,000 genes were scored.\n\nYield was 42%. [src: a]\n\nNo numbers here.\n"
+        "\n## Where to Go Deeper\n\n- [[concepts/a]] — the 14-metal table.\n"
     )
     flagged = tb.uncited_figures(page)
     assert len(flagged) == 1 and "200,000" in flagged[0]
