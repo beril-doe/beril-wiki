@@ -34,6 +34,10 @@ observatory checkout is still required for metadata and figure context.
 it does not replace the shared job/token limits. Individual jobs have
 `--max-turns` (default 12), `--timeout` (600 seconds), and
 `--max-output-tokens` (32,768). An action can require multiple specialist jobs.
+Each stage subprocess is bounded by `--stage-timeout` (default 1,800 seconds);
+a first adoption that writes and reviews dozens of pages in one stage needs
+more, since every reviewed page takes minutes and a killed stage loses the
+job in flight.
 
 `--max-tokens` is an admission ceiling, **not a hard provider token cap**. The
 shared ledger reserves headroom before each job (`--reserve-tokens`, default

@@ -80,6 +80,9 @@ def main() -> int:
     execute.add_argument("--max-actions", type=int, default=16)
     execute.add_argument("--max-output-tokens", type=int, default=32768)
     execute.add_argument("--timeout", type=int, default=600)
+    execute.add_argument(
+        "--stage-timeout", type=int, default=1800, help="seconds allowed per stage subprocess"
+    )
     execute.add_argument("--checkout", type=Path, default=CHECKOUT)
     execute.add_argument(
         "--staged", action="store_true", help="use current staging instead of fetching"
@@ -142,6 +145,7 @@ def main() -> int:
                 "max_actions",
                 "max_output_tokens",
                 "timeout",
+                "stage_timeout",
             ):
                 if getattr(args, field) <= 0:
                     raise WorkflowError(f"{field} must be positive")
@@ -155,6 +159,7 @@ def main() -> int:
                     "max_actions",
                     "max_output_tokens",
                     "timeout",
+                    "stage_timeout",
                     "cli",
                 )
             }

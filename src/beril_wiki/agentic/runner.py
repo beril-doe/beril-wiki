@@ -168,6 +168,7 @@ def run_stage(work: Path, config_path: Path, name: str, module: str, args: list[
         FETCH_BACKEND="local",
     )
     logfile = config_path.parent / f"stage-{name}.log"
+    limit = json.loads(config_path.read_text(encoding="utf-8")).get("stage_timeout", 1800)
     command = [sys.executable, "-m", f"beril_wiki.{module}", *args]
     print(f"agentic stage: {name}", flush=True)
     with logfile.open("w") as output:
@@ -182,7 +183,7 @@ def run_stage(work: Path, config_path: Path, name: str, module: str, args: list[
         started = time.monotonic()
         try:
             while process.poll() is None:
-                if time.monotonic() - started > 1800 or logfile.stat().st_size > 4_000_000:
+                if time.monotonic() - started > limit or logfile.stat().st_size > 4_000_000:
                     raise WorkflowError(f"stage {name} exceeded time/output limit")
                 time.sleep(0.2)
         finally:
