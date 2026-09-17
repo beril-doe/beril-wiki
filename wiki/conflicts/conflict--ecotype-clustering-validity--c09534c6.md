@@ -1,0 +1,23 @@
+<!-- tension-hash: c09534c6dbea31a9 -->
+# Magnitude of the environment–gene-content correlation is disputed between downsampled and full-genome analyses, while both agree the environmental-group comparison is null
+
+The original ecotype analysis and the reanalysis each report a median partial correlation — a correlation computed with the contribution of another variable held constant — between environmental and gene-content similarity, but the medians are 0.003 and 0.081, characterized as a 27x difference [src: ecotype_env_reanalysis]. The reanalysis holds that these absolute values are not comparable across methodologies, leaving it unsettled whether the two numbers estimate one quantity or two method-bound quantities [src: ecotype_env_reanalysis]. The disagreement matters because the cautionary reading on [[concepts/ecotype-clustering-validity]] rests partly on environment explaining very little gene content; whether "very little" means near-zero or merely small changes how much residual environmental signal an ecotype account must explain. The two projects do *not* disagree about the null environmental-group comparison — only about the magnitude of the correlations.
+
+## Evidence Sides
+
+**Downsampled original analysis (low magnitude).** The original ecotype analysis reported a median partial correlation of 0.003 across its analysis; the reanalysis reported 0.081, and characterized the gap as a 27x difference [src: ecotype_env_reanalysis]. The original value was obtained under diversity-maximizing downsampling with a maximum of 250 genomes [src: ecotype_env_reanalysis]. Its coarse classification of environmental versus host-associated species yielded p=0.66, whereas the genome-level harmonized reanalysis yielded p=0.83; both support a null environmental-group comparison, but the methodological discrepancy leaves the magnitude of the correlations unresolved [src: ecotype_analysis, ecotype_env_reanalysis].
+
+**Full-embedding reanalysis (higher magnitude).** The reanalysis reported 0.081 [src: ecotype_env_reanalysis]. It used all genomes with embeddings, including up to 3,505 genomes per species, rather than diversity-maximizing downsampling with a maximum of 250 genomes, and used different genome sets and distance distributions [src: ecotype_env_reanalysis]. The reanalysis itself holds that these absolute values are not comparable across methodologies, although the Environmental versus Human-associated comparison remains valid because it was performed within one consistent method [src: ecotype_env_reanalysis].
+
+## Possible Reconciliations
+
+- *Hypothesis (distance distributions):* the two medians reflect different genome sets and distance distributions rather than different biology — the reanalysis states that, without downsampling, the genome sets and distance distributions change [src: ecotype_env_reanalysis] — but whether that shift alone produces the gap is untested in the admissible evidence.
+- *Hypothesis (genome cap):* the cap on genomes retained per species — up to 3,505 genomes per species in the reanalysis versus a maximum of 250 genomes under diversity-maximizing downsampling [src: ecotype_env_reanalysis] — may itself set the size of the median, in which case neither value transfers to the other's sampling scheme and neither is the corrected version of the other.
+- *Hypothesis (incommensurability):* neither value is an estimate of a shared parameter, exactly as the reanalysis asserts in stating that these absolute values are not comparable across methodologies, and only within-method contrasts — such as the Environmental versus Human-associated comparison, which remains valid because it was performed within one consistent method — carry meaning [src: ecotype_env_reanalysis].
+
+## Resolving Work
+
+- Re-run the reanalysis pipeline on the original's downsampled genome sets (max 250 per species) with all other steps unchanged: does the median return toward 0.003, isolating downsampling as the sole cause?
+- Compute the partial correlation as a function of genome cap (250 to 3,505 per species) on a fixed species set: is the difference a monotone power effect or a discontinuity at the downsampling rule?
+- Compare the within-species genetic and environmental distance distributions under both genome sets: do the changed distance distributions alone account for the 27x gap?
+- Re-test the environmental versus human-associated comparison under the original's coarse classification and the harmonized genome-level classification on identical genome sets: does the null (p=0.66, p=0.83) hold when classification and sampling vary independently?
