@@ -281,6 +281,9 @@ def test_large_collection_context_is_bounded_and_retrievable():
         ("figures/topics/a.md", "figures"),
         ("write/concepts/a.md/repair/science-review", "review"),
         ("authors/queries/retry", "writing"),
+        # A reviewer retry must stay on the reviewer, not fall through to writing.
+        ("conflicts/a/review/again", "review"),
+        ("topics/a/patch/1/review/again", "review"),
     ],
 )
 def test_model_routes_cover_repairs_and_reviews(step, role):
