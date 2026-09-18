@@ -128,6 +128,18 @@ def numbered(parts: list[str]) -> str:
     return "\n\n".join(f"[{i}] {part}" for i, part in enumerate(parts))
 
 
+def scoped(parts: list[str], scope: list[int]) -> str:
+    """The paragraphs under review with their neighbours and every heading, keeping the
+    original indices so a verdict still names the right paragraph.
+
+    A scoped re-review used to receive the whole candidate and differ from a full
+    review only in its instructions, so it cost as much as the review it replaced.
+    Headings are cheap and tell the reviewer which section a paragraph sits in."""
+    wanted = {i + d for i in scope for d in (-1, 0, 1)}
+    shown = [f"[{i}] {part}" for i, part in enumerate(parts) if i in wanted or part.startswith("#")]
+    return "\n\n".join(shown)
+
+
 def clean(raw: str, targets: set[str] | None) -> str:
     """Strip fences and frontmatter, retire dead links and legacy platform names."""
     text = raw.strip()
@@ -274,13 +286,17 @@ def review(
     scope_line = (
         "Review every paragraph."
         if scope is None
-        else f"Review only paragraphs {scope}; the others were accepted earlier."
+        else (
+            f"Review only paragraphs {scope}; their neighbours are shown for context and "
+            "every paragraph not shown was accepted in an earlier round."
+        )
     )
+    candidate = numbered(parts) if scope is None else scoped(parts, scope)
     raw = call(
         prompt(
             contract,
             pack,
-            f"CANDIDATE (numbered paragraphs):\n{numbered(parts)}\n\n"
+            f"CANDIDATE (numbered paragraphs):\n{candidate}\n\n"
             "You are the independent scientific reviewer. Check the candidate against the "
             f"RULES using only the EVIDENCE. {scope_line} Length, required headings, "
             "citation ids and figure provenance were already checked by code; report what "

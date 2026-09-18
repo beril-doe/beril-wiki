@@ -510,3 +510,41 @@ def test_substantive_objections_still_withhold_the_page(monkeypatch, tmp_path):
     )
     with pytest.raises(P.PageFailure):
         run("x")
+
+
+def test_scoped_review_shows_only_the_scope_its_neighbours_and_headings():
+    parts = P.blocks(GOOD)  # [0] # Title, [1] lead, [2] ## Sides, [3] 42%, [4] 56%, [5] closing
+    shown = P.scoped(parts, [4])
+    assert "[3] Yield was 42%" in shown and "[4] Yield was 56%" in shown  # scope + neighbour
+    assert "[5] Closing words" in shown  # neighbour
+    assert "[0] # Title" in shown and "[2] ## Sides" in shown  # headings always
+    assert "Lead sentence" not in shown  # accepted earlier, not a neighbour: omitted
+    assert "[4]" in shown  # original index preserved
+
+
+def test_scoped_re_review_omits_paragraphs_accepted_earlier(monkeypatch, tmp_path):
+    verdicts = iter(
+        [
+            {
+                "accepted": False,
+                "issues": [{"paragraph": 4, "category": "direction", "quote": "56%"}],
+            },
+            {"accepted": True, "issues": []},
+        ]
+    )
+    stub = configure(
+        monkeypatch,
+        tmp_path,
+        {
+            "x": GOOD,
+            "x/review": lambda m: json.dumps(next(verdicts)),
+            "x/patch/1": lambda m: _patch_reply(m, {"4": "Yield rose to 56%. [src: b]"}),
+            "x/patch/1/review": lambda m: json.dumps(next(verdicts)),
+        },
+    )
+    run("x")
+    full, scoped_prompt = stub.prompts[1][1], stub.prompts[3][1]
+    assert "Lead sentence" in full  # the first review sees everything
+    assert "Review only paragraphs [4]" in scoped_prompt
+    assert "Lead sentence" not in scoped_prompt  # accepted, not adjacent: dropped
+    assert "Yield rose to 56%" in scoped_prompt and "[4]" in scoped_prompt
