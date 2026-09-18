@@ -121,8 +121,6 @@ function build(c: Corpus): Graph {
     }
   }
 
-  const H = heightFor(c.topics.length)
-
   const degree = (f: File) =>
     new Set([...linksOf(f), ...(c.inbound.get(slugOf(f)) ?? []).map(slugOf)]).size
 
@@ -236,6 +234,7 @@ function labelLines(title: string): string[] {
 export function CorpusMap({ c, from }: { c: Corpus; from: FullSlug }) {
   const { clusters, ties, links, shared } = graph(c)
   if (clusters.length === 0) return null
+  const H = heightFor(clusters.length)
   const href = (f: File) => resolveRelative(from, slugOf(f) as FullSlug)
   const radius = (p: Point) => 3.4 + Math.min(3.4, Math.sqrt(p.deg))
   const heaviest = Math.max(1, ...ties.map((t) => t.count))
