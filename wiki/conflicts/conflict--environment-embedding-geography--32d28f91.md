@@ -7,7 +7,7 @@ Two projects in this corpus report metal–microbiome associations of very diffe
 
 **Strong conditional multivariate association, uncertain attribution.** The soil-metal study reports distance-based redundancy analysis (db-RDA — a multivariate ordination that regresses community composition on predictors) with conditional R² = 0.799, p = 0.005, but the unconditional metal-only R² was not reported; chromium, copper, lead, and zinc co-vary, the 60% discovery rate may be inflated by correlated tests, and proximity within 10 km does not guarantee co-location. [src: soil_metal_functional_genomics] The R² is therefore a share of residual, not total, variance, and the discovery rate is a proportion of tests called significant, not an independent replication count.
 
-**Small phylogenetically controlled effect that is threshold-sensitive and null in one stratum.** MicrobeAtlas produced β = +0.021 (a per-unit regression slope), p = 1.5×10⁻⁴, but strict prevalence gave p = 0.092 and groundwater-specific fold enrichment was null (rho = +0.042, p = 0.242). [src: microbeatlas_metal_ecology] Rho here is a rank (Spearman) correlation coefficient. The strict-prevalence result is not a weaker positive: at that threshold the effect is not significant, and the groundwater result is a null.
+**Small phylogenetically controlled effect that is threshold-sensitive and null in one stratum.** MicrobeAtlas produced β = +0.021 (a per-unit regression slope), p = 1.5×10⁻⁴, but strict prevalence gave p = 0.092 and groundwater-specific fold enrichment was null: rho (a rank correlation coefficient) = +0.042, p = 0.242. [src: microbeatlas_metal_ecology] At the strict threshold the effect is not significant, and the groundwater result is a null, not a small positive.
 
 ## Possible Reconciliations
 
@@ -18,7 +18,7 @@ Two projects in this corpus report metal–microbiome associations of very diffe
 ## Resolving Work
 
 - Report the unconditional metal-only db-RDA R² alongside the conditional R² = 0.799 on the same soil samples, to state what share of total community variance metals explain. [src: soil_metal_functional_genomics]
-- Refit the COG–metal tests — COG being clusters of orthologous groups, i.e. functional gene categories — under a partial-correlation or joint model that admits chromium/copper/lead/zinc co-variation, and ask whether the 60% discovery rate persists when tests are not treated as independent. [src: soil_metal_functional_genomics]
+- Refit the metal tests on COGs (clusters of orthologous groups — functional gene categories) under a partial-correlation or joint model that admits chromium/copper/lead/zinc co-variation, and ask whether the 60% discovery rate persists when tests are not treated as independent. [src: soil_metal_functional_genomics]
 - Re-run the metal-type predictor across a sweep of prevalence thresholds, reporting β and p at each, to show whether p = 1.5×10⁻⁴ versus p = 0.092 is a filter artefact or a genuine boundary. [src: microbeatlas_metal_ecology]
 - Test whether the groundwater null (rho = +0.042, p = 0.242) reflects low power or true absence by comparing habitat-stratified sample counts and effect estimates. [src: microbeatlas_metal_ecology]
 - Restrict the soil analysis to samples with genome co-location tighter than 10 km and ask whether the association strengthens, weakens, or holds. [src: soil_metal_functional_genomics]

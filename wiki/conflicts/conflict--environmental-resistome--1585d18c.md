@@ -1,7 +1,7 @@
 <!-- tension-hash: 1585d18c67fe9e3f -->
 # Does genomic compartment mark resistance origin, or only mode of maintenance?
 
-Two projects in this corpus describe the same core/accessory split in bacterial antimicrobial-resistance (AMR) genes — genes present in essentially every genome of a species (core) versus genes present in only some (accessory) — but draw different amounts of inference from it, a tension recorded on [[concepts/environmental-resistome]]. One reads the split as a signature of intrinsic versus acquired resistance, an origin claim; the other compares fitness across the two compartments and reports no difference between them. The disagreement matters because the properties at stake — resistance origin, mobility and cost — would each be read off the same partition. If the compartment split licenses only a claim about how a gene is maintained, every downstream claim built on it inherits the weaker warrant.
+Two projects in this corpus describe the same core/accessory split in bacterial antimicrobial-resistance (AMR) genes — genes present in essentially every genome of a species (core) versus genes present in only some (accessory) — but draw different amounts of inference from it, a tension recorded on [[concepts/environmental-resistome]]. One reads the split as a signature of intrinsic versus acquired resistance, an origin claim; the other finds no fitness difference between the two compartments. The disagreement matters because "intrinsic" and "acquired" carry implications about mobility, horizontal transfer, and reversibility under stewardship. If genomic compartment licenses only a weaker conclusion, every downstream claim built on it inherits the weaker warrant.
 
 ## Evidence Sides
 

@@ -13,7 +13,7 @@ Two projects in this corpus disagree about whether a gene's conservation across 
 
 - *Hypothesis: the measure, not the biology, differs.* The null may hold for baseline fitness while the gradient arises only once breadth of effect and condition-specific phenotypes are counted, so the two results could describe non-overlapping quantities [src: amr_fitness_cost, fitness_effects_conservation].
 - *Hypothesis: the resistance subset is unrepresentative.* AMR genes may occupy a narrow band of the genome-wide fitness spectrum, leaving too little variation for a weak gradient to register [src: amr_fitness_cost].
-- *Hypothesis: the gradient is real but too weak to detect at subset scale.* A difference of 82% core for essential or broadly fitness-affecting genes versus 66% core for always-neutral genes [src: fitness_effects_conservation] may not be recoverable within the analyzed resistance subset and its baseline measure [src: amr_fitness_cost].
+- *Hypothesis: the gradient is real but too weak to detect at subset scale.* A 82%-versus-66% difference across the genome-wide analysis may not be recoverable within the analyzed resistance subset [src: fitness_effects_conservation].
 
 ## Resolving Work
 

@@ -11,9 +11,10 @@ Two projects in this corpus disagree about whether **pangenome openness** — th
 
 ## Possible Reconciliations
 
-- *Hypothesis (predictor breadth):* the two analyses may not be testing the same quantity — openness could track a narrow, metabolism-specific axis of gene-content variability while remaining uninformative about the broader environment-versus-phylogeny partition; the corpus itself treats the pathway-variability result as one that **refines rather than resolves** the conflict for exactly this reason, pathway variability being the narrower predictor. [src: pathway_capability_dependency; pangenome_openness]
-- *Hypothesis (phylogenetic non-independence):* the positive partial correlation may be inflated by shared ancestry among species, since the new analysis did not compute full phylogenetic independent contrasts — a correction that removes the shared-ancestry component of cross-species correlations; under this hypothesis the two results could converge toward the null. [src: pathway_capability_dependency; pangenome_openness]
-- *Hypothesis (magnitude, not direction):* openness may index how much of a gene repertoire turns over without indicating which force drives that turnover, in which case a positive association with pathway variability and a null against environment- and phylogeny-effect sizes are both expected rather than contradictory. [src: pathway_capability_dependency; pangenome_openness]
+The corpus itself treats the pathway-variability result as one that **refines rather than resolves** the conflict, because pathway variability is a narrower predictor than environment or phylogeny effect size, and because the new analysis did not compute full phylogenetic independent contrasts — a correction that removes the shared-ancestry component of cross-species correlations. [src: pathway_capability_dependency; pangenome_openness]
+
+- *Hypothesis (predictor breadth):* the two analyses may not be testing the same quantity — openness could track a narrow, metabolism-specific axis of gene-content variability while remaining uninformative about the broader environment-versus-phylogeny partition. [src: pathway_capability_dependency; pangenome_openness]
+- *Hypothesis (phylogenetic non-independence):* the positive partial correlation may be inflated by shared ancestry among species, since full phylogenetic independent contrasts were not computed; under this hypothesis the two results could converge toward the null. [src: pathway_capability_dependency; pangenome_openness]
 
 ## Resolving Work
 

@@ -1,7 +1,7 @@
 <!-- tension-hash: 175dc8a641dff50d -->
 # Tension: are environment–resistome percentages a property of ecology, or of the entity sets and denominators used to count them?
 
-Two counting problems sit unresolved inside [[concepts/environmental-resistome]]. First, soil associations between metal concentrations and COG categories (Clusters of Orthologous Groups — broad functional classes assigned to genes) cannot yet be attributed to any one metal, because chromium, copper, lead, and zinc co-vary in many industrial soils. [src: soil_metal_functional_genomics] Second, two central analyses of the same phenomenon report different magnitudes for the share of AMR (antimicrobial resistance) attributed to efflux — active export of compounds out of the cell by membrane pumps: 21% versus 7.0% in human-gut species. Those values are stated to require harmonized entity sets, filters, annotations, and denominators, so no ecological reading of the environment–mechanism pattern can yet be given a settled magnitude. [src: discoveries, amr_environmental_resistome, amr_fitness_cost]
+Two counting problems sit unresolved inside [[concepts/environmental-resistome]]. First, soil associations between metal concentrations and COG categories (Clusters of Orthologous Groups — broad functional classes assigned to genes) cannot yet be attributed to any one metal. [src: soil_metal_functional_genomics] Second, two central analyses of the same phenomenon report different magnitudes for the efflux share — efflux being the active export of compounds from the cell by membrane pumps — of AMR (antimicrobial resistance) across environments: 21% versus 7.0% in human-gut species. [src: discoveries, amr_environmental_resistome, amr_fitness_cost] This matters because the divergent values are described as requiring harmonized entity sets, filters, annotations, and denominators before either magnitude can support an ecological interpretation. [src: discoveries, amr_environmental_resistome, amr_fitness_cost]
 
 ## Evidence Sides
 
@@ -11,7 +11,7 @@ Two counting problems sit unresolved inside [[concepts/environmental-resistome]]
 
 **The environmental-resistome analysis's efflux contrast.** The same comparison is reported as 7.0% and 1.1%. The direction (human gut above aquatic) agrees; the magnitudes do not. [src: discoveries, amr_environmental_resistome, amr_fitness_cost]
 
-Listed alongside these, and assigned to neither side, are related core/accessory values of 13% versus 44% — core genes being those present in essentially all genomes of a species, accessory genes those present in only some. Both the 21% versus 7.0% pair and the 13% versus 44% core/accessory values are stated to require harmonized entity sets, filters, annotations, and denominators. [src: discoveries, amr_environmental_resistome, amr_fitness_cost]
+Stated jointly, and assigned to neither side: the 21% versus 7.0% contrast and the related 13% versus 44% core/accessory values — core meaning genes present in essentially all genomes of a species, accessory those present in only some — together require harmonized entity sets, filters, annotations, and denominators. [src: discoveries, amr_environmental_resistome, amr_fitness_cost]
 
 ## Possible Reconciliations
 
@@ -25,6 +25,5 @@ No averaging of 21% and 7.0% is admissible, and neither side is preferred here; 
 
 - Re-derive both efflux shares from a single fixed species list and gene-cluster set, reporting numerator and denominator explicitly: do the figures converge, or is the gap intrinsic to the entity sets?
 - Recompute the mechanism shares under a common annotation catalog and a single filter threshold: how much of the 21%-versus-7.0% gap is annotation scope?
-- Restate the 13% and 44% core/accessory values under the harmonized definitions: do they change when entity sets and denominators are fixed?
-- For soil, apply partial/conditioned analyses that hold chromium, copper, lead, and zinc mutually constant: does any COG association remain attributable to a single metal?
-- Take the efflux gene membership lists each pipeline produces over the shared species set and compare them by set difference: which genes enter one pipeline's efflux class but not the other's?
+- Restate the 13% and 44% core/accessory values under the harmonized definitions and denominators: do both values hold unchanged?
+- For soil, apply partial or conditioned analyses to the soil sample set that hold chromium, copper, lead, and zinc mutually constant: does any COG association remain attributable to a single metal?

@@ -1,7 +1,7 @@
 <!-- tension-hash: 1f2162673aeeba2f -->
 # Environment partial-correlation medians that differ between the original ecotype analysis and its reanalysis
 
-Both projects summarize how strongly environment tracks microbial genomic variation as a median partial correlation — a partial correlation being the association between two variables once the influence of other variables has been removed. The two reported medians are not the same number, and the reanalysis attributes the difference to methodological choices rather than to an error in either result [src: ecotype_env_reanalysis]. The disagreement matters because [[concepts/environment-embedding-geography]] leans on effect sizes to judge whether satellite-derived embeddings and environmental metadata resolve ecology at genome-relevant scale; if a median moves with pipeline choices, cross-project effect-size comparison in this concept is not currently licensed.
+Both projects summarize how strongly environment tracks microbial genomic variation as a median partial correlation — the correlation between two variables after the influence of a third has been removed. The two medians reported are not the same number, and the reanalysis explicitly says they should not be read against each other. The disagreement matters because [[concepts/environment-embedding-geography]] leans on effect sizes to judge whether satellite-derived embeddings and environmental metadata resolve ecology at genome-relevant scale; if a median moves with pipeline choices, cross-project effect-size comparison in this concept is not currently licensed.
 
 ## Evidence Sides
 
@@ -9,7 +9,7 @@ Both projects summarize how strongly environment tracks microbial genomic variat
 
 **Reanalysis — median 0.081 across all 183 species.** The reanalysis reports a median partial correlation of 0.081 across all 183 species [src: ecotype_env_reanalysis]. Taken side by side, 0.0025 for the original environment measure versus 0.081 in the reanalysis **contradicts** any direct comparison of their absolute effect sizes [src: ecotype_analysis; ecotype_env_reanalysis].
 
-**Reanalysis's own account of the gap.** The reanalysis does not claim the original median is wrong; it attributes the discrepancy to different genome sets, full-genome extraction, and downsampling procedures [src: ecotype_env_reanalysis].
+**Reanalysis's own account of the gap.** The reanalysis does not claim the original median is wrong; it attributes the discrepancy to different genome sets, full-genome extraction, and downsampling procedures — downsampling being the reduction of a dataset to a smaller subset before the reported statistics are computed [src: ecotype_env_reanalysis].
 
 ## Possible Reconciliations
 

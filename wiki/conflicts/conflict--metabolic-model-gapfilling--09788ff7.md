@@ -1,7 +1,7 @@
 <!-- tension-hash: 09788ff7935b3c40 -->
 # Does Pangenome Dynamics Explain Latent Metabolic Capability When Conservation Does Not?
 
-Two analyses of the same phenomenon — genomically complete pathways that show no fitness importance under tested conditions ("latent capabilities") — point in different directions about what predicts them. A gene-conservation test failed to detect any difference between active and latent pathways, while species-level pangenome openness (the fraction of a species' gene clusters that are accessory rather than core) tracked latency strongly. Compounding this, different analyses report three different latent fractions that must not be averaged. The disagreement matters for [[concepts/metabolic-model-gapfilling]]: if latency is an evolutionary property visible in pangenome structure but invisible in conservation, then gapfilled models — models completed by adding inferred reactions so growth can be simulated — and completeness-based models cannot be validated by conservation arguments alone, and the fraction of model content that is fitness-inert depends on which classification one adopts.
+Two analyses of the same phenomenon — genomically complete pathways that show no fitness importance under tested conditions ("latent capabilities") — point in different directions about what predicts them. A gene-conservation comparison of active versus latent pathways was non-significant, failing to detect a difference, while species-level pangenome openness (the fraction of a species' gene clusters that are accessory rather than core) tracked latency strongly. Compounding this, different analyses report different latent fractions that must not be averaged. The disagreement matters for [[concepts/metabolic-model-gapfilling]]: if latency is an evolutionary property visible in pangenome structure but not detected by conservation, then gapfilled or completeness-based models cannot be validated by conservation arguments alone, and the fraction of model content that is fitness-inert depends on which classification one adopts.
 
 ## Evidence Sides
 
@@ -9,7 +9,7 @@ Two analyses of the same phenomenon — genomically complete pathways that show 
 
 **Pangenome openness does track latency (positive correlations).** Latent rate correlated with openness at Spearman ρ = 0.69, p = 0.0004, n = 22, where Spearman ρ is a rank correlation and n counts species clades, not organisms. [src: metabolic_capability_dependency, pathway_capability_dependency] Separately, variable pathway count correlated with openness at partial rho = 0.530, p = 2.83e-203 — a partial correlation, i.e. one computed after controlling for a covariate. [src: metabolic_capability_dependency, pathway_capability_dependency]
 
-**The latent fractions are not interchangeable.** Latent fractions of 41.0%, 35.4%, and 15.8% come from different analyses and must not be averaged. [src: discoveries, pathway_capability_dependency, metabolic_capability_dependency]
+**The latent fractions are not interchangeable.** Different analyses report latent fractions of 41.0%, 35.4%, and 15.8%; these must not be averaged. [src: discoveries, pathway_capability_dependency, metabolic_capability_dependency]
 
 ## Possible Reconciliations
 

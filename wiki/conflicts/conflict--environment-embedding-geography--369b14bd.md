@@ -5,7 +5,7 @@ Environment metadata for genomes in the [[concepts/environment-embedding-geograp
 
 ## Evidence Sides
 
-**Structured ontology field: cleaner labels, smaller denominator.** The `env_broad_scale` field is cleaner but covers only 42% [src: env_embedding_explorer]. The disagreement here is about which error dominates: restricting analysis to the well-defined labelled subset buys label precision at the cost of the genomes the field does not cover, and the 42% is a coverage figure, not an accuracy figure.
+**Structured ontology field: cleaner labels, smaller denominator.** The `env_broad_scale` field is cleaner but covers only 42% [src: env_embedding_explorer]. The disagreement here is about which error dominates: restricting analysis to the genomes this field covers buys label precision at the cost of the genomes it does not cover, and the 42% is a coverage figure, not an accuracy figure.
 
 **Keyword-harmonized free text: broader denominator, residual unlabeled mass.** Keyword harmonization of `isolation_source` covers 71% of genomes with a label but leaves 17% Other and 12.5% Unknown [src: env_embedding_explorer]. The residual is not a rounding error to be ignored: "Other" and "Unknown" are distinct failure modes — a label that exists but escapes the keyword map, versus no label at all — and both remain as stated, uncollapsed.
 

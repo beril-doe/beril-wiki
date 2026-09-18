@@ -1,5 +1,5 @@
 <!-- tension-hash: c50aa829e1d71f9c -->
-# Cross-Organism Growth-Prediction Accuracy vs. ADP1 Gene-Level Concordance: Two Endpoints, Two Verdicts on Draft Models
+# Cross-Organism Growth-Prediction Accuracy vs. ADP1 Gene-Level Concordance: How Reliable Are Draft Metabolic Models?
 
 Two projects in this corpus report opposite-feeling verdicts on whether flux balance analysis (FBA) — a constraint-based method that predicts feasible metabolic flux distributions from a genome-scale model — tracks experimental phenotype data. A cross-organism benchmark reports 42.5% baseline FBA accuracy driven by 330 false positives [src: annotation_gap_discovery], while an *Acinetobacter baylyi* ADP1 analysis reports that FBA often agrees with TnSeq (transposon-sequencing mutant fitness, used here to call gene essentiality), with 73.8% concordance [src: acinetobacter_adp1_explorer]. The disagreement matters because it decides whether a draft model is usable evidence on its own or only a hypothesis generator needing condition-specific validation — the core question of [[concepts/metabolic-model-gapfilling]]. Crucially, the two results are not measured against the same denominator or the same endpoint, so neither number licenses a general claim about the other's domain.
 
@@ -15,7 +15,7 @@ Two projects in this corpus report opposite-feeling verdicts on whether flux bal
 - *Hypothesis (organism selection):* ADP1 may be better annotated and better curated than the average organism in the cross-organism panel, so its agreement rate may not generalize.
 - *Hypothesis (media mapping):* differing carbon-source-to-exchange-reaction mappings may inflate false positives in the cross-organism setting while leaving ADP1's richer curation unaffected.
 
-- *Hypothesis (protocol artifact):* the organisms, media mappings, and endpoints differ between the two analyses, so the gap may reflect protocol rather than model quality; harmonized simulations are required to tell these apart.
+Carried without attribution to either project, exactly as the tension states it: the organisms, media mappings, and endpoints differ; harmonized simulations are required.
 
 ## Resolving Work
 

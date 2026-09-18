@@ -13,7 +13,7 @@ Two projects in this corpus disagree about whether finer taxonomic resolution re
 
 ## Possible Reconciliations
 
-- **Hypothesis — aggregation masking:** genus-level aggregation averages over ecotypes with opposing functional content, so the within-species differentiation is real and the genus-resolution null is a resolution artifact of coarse taxonomy.
+- **Hypothesis — aggregation masking:** genus-level aggregation averages over ecotypes with opposing functional content, so the within-species differentiation is real and the genus-resolution null is a resolution artifact.
 - **Hypothesis — phylogenetic confounding:** the within-species differentiation tracks shared ancestry rather than environment, in which case the genus-resolution null and the ecotype result are consistent and no contamination-linked function is implied. This is exactly the alternative the missing within-species phylogenetic controls leave open. [src: ecotype_functional_differentiation]
 - **Hypothesis — scope mismatch:** the ecotype species and the ENIGMA community taxa may not overlap, so the two results would describe different organisms and never contradict each other in the first place.
 

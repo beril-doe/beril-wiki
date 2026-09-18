@@ -20,7 +20,7 @@ Thus genomic co-inheritance can coexist with a null cofitness-size–cost relati
 ## Resolving Work
 
 - Restrict cofitness computation to antibiotic-exposure conditions versus standard growth and ask whether a size–cost relationship appears only under selection, testing the condition-mismatch hypothesis. [src: amr_cofitness_networks]
-- Run a permutation test — re-computing the statistic over randomly redrawn comparison sets to build a null distribution — using non-AMR genes matched on mean fitness level, and ask whether AMR cofitness neighbourhoods are distinguishable from a shared-dispensability baseline, the pattern expected when two genes look coupled only because both are dispensable under the assayed conditions. [src: amr_cofitness_networks]
+- Run a permutation test — recomputing a statistic over randomly redrawn comparison sets to build a null distribution — on non-AMR genes matched for mean fitness level, asking whether AMR cofitness neighbourhoods are distinguishable from a shared-dispensability baseline, i.e. genes appearing co-fit merely because both are dispensable under the assayed conditions. [src: amr_cofitness_networks]
 - Intersect island membership with cofitness neighbourhoods gene-by-gene, asking whether genes inside high-phi islands are cofit with their island partners at all. [src: amr_strain_variation] [src: amr_cofitness_networks]
 - Stratify islands by mechanism composition and ask whether multi-mechanism islands differ from single-mechanism ones in measured fitness cost. [src: amr_strain_variation]
 - Extend the cofitness test to other dispensable gene classes to establish whether any null result is AMR-specific or general. [src: amr_cofitness_networks]

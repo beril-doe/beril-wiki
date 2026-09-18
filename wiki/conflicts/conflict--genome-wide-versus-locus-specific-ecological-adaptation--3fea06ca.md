@@ -1,7 +1,7 @@
 <!-- tension-hash: 3fea06ca438a69c6 -->
 # Locus-Specific Adaptation or Measurement Artifact? Reading a Weak Genome-Wide Environmental Signal
 
-Across the corpus, genome-wide gene-content similarity tracks phylogeny more consistently than it tracks environment. Two incompatible readings of that weak environmental signal circulate and neither has been retired. One treats it as a biological result: ecological adaptation is real but concentrated at particular loci, so it does not show up when gene content is averaged genome-wide. The other treats it as a measurement result: the signal is weak because the environmental side of the comparison is poorly resolved — incomplete coverage in the AlphaEarth environmental embeddings (the environmental descriptors that supply the environment term in these comparisons), imprecise metadata, or embeddings that do not capture biologically relevant variation. The distinction matters because the two readings point analysis in opposite directions: one says look harder at individual genes, the other says fix the environmental variables first. This page records the disagreement carried on [[concepts/genome-wide-versus-locus-specific-ecological-adaptation]].
+Across the corpus, genome-wide gene-content similarity tracks phylogeny more consistently than it tracks environment. Two incompatible readings of that weak environmental signal circulate and neither has been retired. One reading treats it as a biological result: ecological adaptation is real but concentrated at particular loci, so it does not show up when gene content is averaged genome-wide. The other treats it as a measurement result: the signal is weak because the environmental side of the comparison is poorly resolved — coverage of the AlphaEarth environmental embeddings (the environmental variables used on the environmental side of these comparisons) may be incomplete, the metadata imprecise, or the embeddings may not capture biologically relevant variation. The distinction matters because the two readings point analysis in opposite directions: one says look harder at genes, the other says fix the environment variables first. This page records the disagreement carried on [[concepts/genome-wide-versus-locus-specific-ecological-adaptation]].
 
 ## Evidence Sides
 
@@ -13,7 +13,7 @@ Across the corpus, genome-wide gene-content similarity tracks phylogeny more con
 
 - *Hypothesis:* both are partly true — adaptation is concentrated at a minority of loci **and** the environmental variables are too coarse to detect even that concentrated signal, so the genome-wide null is jointly produced.
 - *Hypothesis:* the ecotype functional differentiation reflects ancestry or population structure rather than environment, in which case the locus-specific reading loses its main support without the measurement critique being needed.
-- *Hypothesis:* the two readings are not currently separable — because the ecotype study supplies functional differentiation without environmental assignment or phylogenetic control [src: ecotype_functional_differentiation], the same observation stays compatible with either reading, making the disagreement presently untestable rather than merely unresolved.
+- *Hypothesis:* the genome-wide average and a locus-level test are measuring different quantities, so a weak genome-wide signal and genuine locus-level adaptation could coexist without either reading being wrong.
 
 ## Resolving Work
 

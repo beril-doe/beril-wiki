@@ -1,8 +1,15 @@
 {
-  "data-infrastructure-provenance-and-research-practice.md": "b9f96ea9e8f95767",
-  "gene-essentiality-and-perturbation-assay-validity.md": "798b84bb6c866416",
-  "metabolic-traits-auxotrophy-and-community-dependence.md": "550e5a4217c141a9",
-  "sampling-coverage-and-statistical-confounding.md": "b82bedb5d60f2991",
-  "subsurface-community-ecology.md": "36270c8f2d238900",
-  "translational-microbiome-and-phage-therapeutics.md": "5709fd8465b74ed1"
+  "data-infrastructure-provenance-and-research-practice.md": "277b4873c5038cad",
+  "ecotypes-and-environmental-gene-content-differentiation.md": "aad2f457f95c3535",
+  "functional-dark-matter-and-annotation-resolution.md": "9252a88692b438b7",
+  "gene-essentiality-and-perturbation-assay-validity.md": "238ef9ccececdfc0",
+  "gene-fitness-landscapes-and-cofitness-modules.md": "f3207c12fd15f4ba",
+  "laboratory-fitness-versus-natural-selection-and-gene-conservation.md": "a51469f41f6d01bb",
+  "metabolic-models-and-pathway-level-evidence.md": "43ef0cc920532467",
+  "metabolic-traits-auxotrophy-and-community-dependence.md": "474548e256e55a23",
+  "pangenome-structure-and-genome-evolution.md": "f6da1986dd57f23e",
+  "resistance-defense-systems-and-mobile-elements.md": "508a777bf8c86139",
+  "sampling-coverage-and-statistical-confounding.md": "ac7849defe20f02f",
+  "subsurface-community-ecology.md": "b552c95c8689973e",
+  "translational-microbiome-and-phage-therapeutics.md": "069716ccd35ac494"
 }

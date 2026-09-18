@@ -1,7 +1,7 @@
 <!-- tension-hash: d462367f5db0cebf -->
 # Conflict: Essential-Gene Core Fraction — 82% or 86.1%?
 
-Two projects in this corpus integrated gene-level fitness data with pangenome conservation (the fraction of genomes in a species' gene repertoire that carry a given gene; "core" genes are present in nearly all of them) and arrived at different core fractions for essential genes — genes for which no viable transposon-insertion mutants are recovered. One reports 82% core across approximately 194,000 genes from 43 bacteria [src: fitness_effects_conservation]; the other reports 86.1% core among 148,826 genes from 33 organisms [src: conservation_vs_fitness]. The gap matters because the essential-gene core fraction anchors the conservation-as-essentiality-predictor argument developed on [[concepts/gene-essentiality]]: it sets how strongly conservation can be used to nominate essential genes in organisms that have never been transposon-mutagenized. The disagreement is methodological rather than biological, and the two estimates must not be averaged into a single headline figure. [src: fitness_effects_conservation] [src: conservation_vs_fitness]
+Two projects in this corpus integrated gene-level fitness data with pangenome conservation (the fraction of genomes in a species' gene repertoire that carry a given gene; "core" genes are present in nearly all of them) and arrived at different core fractions for essential genes — genes for which no viable transposon-insertion mutants are recovered. One reports 82% core across approximately 194,000 genes from 43 bacteria [src: fitness_effects_conservation]; the other reports 86.1% core among 148,826 genes from 33 organisms [src: conservation_vs_fitness]. The gap matters because the essential-gene core fraction is the anchor point of the conservation-as-essentiality-predictor argument developed on [[concepts/gene-essentiality]]: it sets how strongly conservation can be used to nominate essential genes in organisms that have never been transposon-mutagenized. The disagreement is methodological rather than biological, and the two numbers must not be averaged into a single headline figure.
 
 ## Evidence Sides
 
@@ -9,12 +9,14 @@ Two projects in this corpus integrated gene-level fitness data with pangenome co
 
 **Side B — 86.1% core among 148,826 genes from 33 organisms.** This integration reports that essential genes are 86.1% core, computed over 148,826 genes from 33 organisms. [src: conservation_vs_fitness]
 
+Neither side reports a null result; both report a positive, quantified core enrichment for essential genes, and they differ in magnitude, denominator, and organism panel.
+
 ## Possible Reconciliations
 
 - *Hypothesis: denominator composition drives the gap.* The two analyses divide by different gene sets (approximately 194,000 [src: fitness_effects_conservation] versus 148,826 [src: conservation_vs_fitness]); if the larger set admits genes with weaker or absent pangenome mappings, its core fraction would be depressed without any underlying biological difference.
 - *Hypothesis: organism panel drives the gap.* The panels differ (43 bacteria [src: fitness_effects_conservation] versus 33 organisms [src: conservation_vs_fitness]), and per-organism core fractions may be heterogeneous enough that panel membership alone moves the aggregate.
 - *Hypothesis: pangenome mapping and core-threshold definitions differ.* "Core" is a threshold on genome presence; two projects applying different thresholds or different orthology-to-pangenome mappings would report different fractions from identical fitness calls.
-- *Hypothesis: dataset version and organism filters differ.* The tension is described as involving datasets, organism filters, pangenome mappings, and denominators [src: fitness_effects_conservation] [src: conservation_vs_fitness]; a different release of the underlying fitness data, or a different inclusion filter on which organisms enter the aggregate, could shift the reported fraction with no change in biology.
+- *Hypothesis: essentiality calling differs.* If one project's essential set is defined more strictly, the resulting set would be enriched for deeply conserved genes and score higher.
 
 ## Resolving Work
 

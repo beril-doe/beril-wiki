@@ -9,13 +9,12 @@ Satellite-derived environment embeddings behave as ecology should — similarity
 
 **Phylogeny, not environment, tracks gene content.** The ecotype analysis found environmental median 0.0025 and phylogenetic median 0.0143 [src: ecotype_env_reanalysis; ecotype_analysis]. Environment is not merely weak here; it is weaker than relatedness on the same pairs, so any environment-first account of gene content has to explain why the phylogenetic term outranks it.
 
-**Restricting to environmental species does not produce the expected signal, and shifts the estimate.** The environmental-only reanalysis found median 0.051 versus 0.084 for human-associated species, U=1536, p=0.83 (Mann-Whitney U, a rank-based test of whether one group's values exceed another's) [src: ecotype_env_reanalysis; ecotype_analysis]. This is a null result, and it points opposite to the prediction that environmental species would score higher. It also places the environmental median at 0.051, where the ecotype analysis reports 0.0025 for nominally the same quantity [src: ecotype_env_reanalysis; ecotype_analysis].
+**Restricting to environmental species does not produce the expected signal, and shifts the estimate.** The environmental-only reanalysis found median 0.051 versus 0.084 for human-associated species, U=1536, p=0.83 (Mann-Whitney U, a rank-based test of whether one group's values exceed another's) [src: ecotype_env_reanalysis; ecotype_analysis]. This is a null result, and it points opposite to the prediction that environmental species would score higher. It also places the environmental median at 0.051, while the ecotype analysis reports an environmental median of 0.0025 for the nominally same quantity [src: ecotype_env_reanalysis; ecotype_analysis].
 
 ## Possible Reconciliations
 
 - *Hypothesis:* the two environmental medians differ because of analysis construction rather than biology — the studies used different genome sets, species filters, and downsampling, so the estimates cannot be reconciled by averaging [src: ecotype_env_reanalysis; env_embedding_explorer].
-- *Hypothesis:* the geographic structure in the embeddings and their near-zero partial correlation with gene content are measuring different things, so both observations could hold at once; no project in this corpus states a mechanism for this, and it remains an untested proposition.
-- *Hypothesis:* filtering to environmental species removes dilution but simultaneously removes statistical power, leaving a test that is null for sampling reasons rather than ecological ones. Only the null itself is sourced — median 0.051 versus 0.084, U=1536, p=0.83 [src: ecotype_env_reanalysis; ecotype_analysis]; neither the dilution premise nor the power premise is asserted by any project here, so this hypothesis is untested.
+- *Hypothesis:* filtering to environmental species removes dilution but simultaneously removes power, leaving a test that is null for sampling reasons rather than ecological ones [src: ecotype_env_reanalysis; ecotype_analysis].
 
 ## Resolving Work
 

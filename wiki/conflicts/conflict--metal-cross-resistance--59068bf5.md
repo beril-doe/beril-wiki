@@ -1,7 +1,7 @@
 <!-- tension-hash: 59068bf500948962 -->
 # Metal-specific cross-resistance or a general-stress response: what the universal positivity measures
 
-Gene-level metal cross-resistance — the tendency for a gene's fitness response to one metal to predict its response to another — is reported as uniformly positive across the tested metal pairs, but the corpus disagrees about what that uniformity measures. One report records the positivity while noting that no non-metal stress controls were included, leaving it unable to separate metal-specific cross-resistance from a general-stress response [src: metal_cross_resistance]. A separate specificity analysis supplies a non-metal comparison and supports a substantial metal-specific component, yet its 38.0% general-sick and 7.2% metal+stress records leave the causal ambiguity in place [src: metal_specificity]. The distinction matters because it determines whether cross-resistance matrices can predict metal-specific vulnerabilities, or whether they mostly re-describe which genes are fragile under any insult.
+Gene-level metal cross-resistance — the tendency for a gene's fitness response to one metal to predict its response to another — is reported as uniformly positive across the tested metal pairs, but the corpus does not agree that this uniformity has been shown to be metal-specific. The project reporting the universal positivity included no non-metal stress controls and states that it cannot independently separate metal-specific cross-resistance from a general-stress response [src: metal_cross_resistance]. A separate specificity analysis supplies a non-metal comparison and supports a substantial metal-specific component, yet still classifies sizeable fractions of the same gene records as sick outside metal conditions, so the causal ambiguity is narrowed rather than closed [src: metal_specificity]. The distinction matters because it decides whether cross-resistance matrices can be read as predicting metal-specific vulnerabilities, or whether they largely re-describe which genes are fragile under any insult.
 
 ## Evidence Sides
 
@@ -11,9 +11,8 @@ Gene-level metal cross-resistance — the tendency for a gene's fitness response
 
 ## Possible Reconciliations
 
-- *Hypothesis:* the two results are compatible if cross-resistance is a mixture — a metal-specific core plus a general-stress background — in which case the universal positivity would aggregate both components rather than evidence either alone.
-- *Hypothesis:* the general-sick and metal+stress fractions may be concentrated in a subset of organisms or metals, so that per-pair correlations differ in how much general-stress signal they carry.
-- *Hypothesis:* part of the shared positive signal may arise from the effects that the counter_ion_effects project is identified as partially addressing, rather than from a shared metal mechanism [src: metal_cross_resistance].
+- *Hypothesis:* the two results are compatible if cross-resistance is a mixture — a metal-specific core plus a general-stress background — in which case the observed universal positivity would be an aggregate of both components rather than evidence for either alone.
+- *Hypothesis:* the general-sick and metal+stress fractions may be concentrated in a subset of organisms or metals, so that per-pair correlations vary in how much general-stress signal they carry.
 
 ## Resolving Work
 

@@ -1,7 +1,7 @@
 <!-- tension-hash: f152c7da164dd392 -->
 # Functional Coupling or Shared Ancestry: What Cross-Genome Fitness Similarity Measures
 
-Two projects in this corpus report cross-genome signal that could reflect genuine functional coupling between genes or organisms, or could reflect nothing more than phylogenetic relatedness — and neither project has, on its own evidence, separated the two. The unresolved question is what the available strata and control structures permit the signal to be attributed to, and it matters because the architecture claims collected on [[concepts/cofitness-network-architecture]] rest on the answer. Each project names a different obstacle to the separation — an incomplete distance stratification in one case, a missing phylogenetic model together with uneven sampling in the other — and neither obstacle has been cleared here.
+Two projects in this corpus report cross-genome signal that could reflect genuine functional coupling between genes or organisms, or could reflect nothing more than phylogenetic relatedness — and neither project has, on its own evidence, separated the two. What is at stake is whether the architecture claims collected on [[concepts/cofitness-network-architecture]] describe function or ancestry: both projects flag ancestry as an unresolved confound in their own comparisons, but they reach that position through different sampling gaps, so no single control settles both.
 
 ## Evidence Sides
 
@@ -11,7 +11,7 @@ Two projects in this corpus report cross-genome signal that could reflect genuin
 
 ## Possible Reconciliations
 
-- *Hypothesis:* the two projects are confounded through different designs — a distance-stratified comparison of genomes in one case, a comparison across organisms that were not phylogenetically independent in the other — so a single correction strategy cannot serve both, and each requires its own null.
+- *Hypothesis:* the two projects face different sampling gaps — an incomplete distance stratification in one, non-independent organisms in the other — so each requires its own null rather than a shared correction.
 - *Hypothesis:* functional coupling and ancestry are not separable in this corpus at all, because the strata and organism sets that would separate them (a populated far stratum; phylogenetically independent organisms) are absent by sampling rather than by biology.
 - *Hypothesis:* the unequal matrix sizes (3 to 112 metal experiments) and differing metal concentrations, not phylogeny, drive most of the apparent organism-level structure. [src: metal_cross_resistance]
 

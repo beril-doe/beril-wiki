@@ -7,7 +7,7 @@ Two analyses of the same question — whether laboratory cofitness predicts that
 
 **Modules are the stronger unit.** Pairwise cofit pairs had a mean delta phi (phi is the binary co-occurrence correlation coefficient; delta phi is the cofit-minus-random difference) of +0.011 across organisms, but an aggregate delta of only +0.003 and a Wilcoxon signed-rank test (a paired non-parametric test, here across organisms) p=0.13 — a null result at the across-organism level. ICA modules, by contrast, showed delta phi=+0.053 overall and accessory modules +0.108. [src: cofitness_coinheritance] On this reading the module is the coherent unit and pairwise measurement dilutes it.
 
-**The module advantage does not generalize.** The same project reports that Korea had no significant modules because all its modules were >90% core with prevalence near 1.0, and that the accessory-versus-core difference was only near significant (p=0.051) — a trend, not a crossed threshold. [src: cofitness_coinheritance] Independently, only 5% of mapped modules were accessory, so accessory-module advantages cannot be generalized. [src: module_conservation]
+**The module advantage does not generalize.** The same project reports that Korea had no significant modules, because all were >90% core with prevalence near 1.0, and that the accessory-versus-core difference was only near significant (p=0.051) — a result sitting at the threshold rather than clearly on either side of it. [src: cofitness_coinheritance] Independently, only 5% of mapped modules were accessory, so accessory-module advantages cannot be generalized. [src: module_conservation]
 
 ## Possible Reconciliations
 

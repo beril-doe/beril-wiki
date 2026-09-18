@@ -11,9 +11,9 @@ Two lines of work in this corpus agree on the same category of gene — genes th
 
 ## Possible Reconciliations
 
-- *Hypothesis:* the two sides differ in claim strength rather than in content — the category is a well-supported prioritization of candidates for selection, and the disagreement dissolves once the claim is stated as a hypothesis rather than as a measured natural fitness effect.
-- *Hypothesis:* assay-modality dependence affects which genes enter the "costly" column without disturbing how the category is read, so its membership is uncertain while its interpretation survives.
-- *Hypothesis:* the burden term alone is laboratory-derived, and a category resting on it needs an external, non-laboratory fitness measurement before any selection claim is admissible.
+- *Hypothesis:* the two sides differ in claim strength rather than in content — the category is a prioritization of candidates for selection, and the disagreement dissolves once the claim is stated as a hypothesis rather than as a measured natural fitness effect.
+- *Hypothesis:* because laboratory measurements can depend on perturbation modality and condition [src: core_gene_tradeoffs], those choices determine which genes enter the "costly" column, so what the discordance puts at risk is the category's membership rather than the reading placed on it.
+- *Hypothesis:* the ecological validation that the trade-off side itself calls for [src: core_gene_tradeoffs] is the step that would convert the category from a selection signature into a statement about natural fitness, in which case the two sides describe successive stages of one argument rather than rival conclusions.
 
 ## Resolving Work
 

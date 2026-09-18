@@ -9,7 +9,7 @@ Two projects report different headline values for how often essential genes fall
 
 **33-organism linkage: 86.1% essential-core.** The linkage analysis, run over 33 organisms, reports 86.1% essential-core. [src: conservation_vs_fitness] The tension is described as an unresolved *scope* tension: the two cohorts and the two essentiality definitions differ, so the numbers are not competing estimates of a single quantity.
 
-**DvH, length-adjusted: CV-AUC rises to 0.645.** In *Desulfovibrio vulgaris* Hildenborough (DvH), adding gene length raised CV-AUC — cross-validated area under the receiver-operating-characteristic curve, a measure of how well a model ranks genes by class — to 0.645, whereas fitness alone reached 0.517–0.548. [src: field_vs_lab_fitness] This is a single-organism result.
+**DvH, length-adjusted: CV-AUC rises to 0.645.** In *Desulfovibrio vulgaris* Hildenborough (DvH), adding gene length raised CV-AUC — cross-validated area under the receiver-operating-characteristic curve, a measure of how well a model ranks positives above negatives — to 0.645, whereas fitness alone reached only 0.517–0.548. [src: field_vs_lab_fitness] This is a single-organism result.
 
 **Broad analyses, unadjusted: a real but weak gradient.** Broader analyses report a real but weak gradient without any length adjustment. [src: fitness_effects_conservation, conservation_fitness_synthesis] They therefore neither confirm nor refute the DvH length effect; they simply did not test for it.
 

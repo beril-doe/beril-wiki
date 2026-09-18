@@ -7,7 +7,7 @@ Evidence that a metabolic model is right can be counted two ways: by how often t
 
 **The coverage side: matches exist, but not at the needed endpoint.** Nineteen production-to-Fitness-Browser matches lacked consumption actions in the 2018 snapshot. [src: webofmicrobes_explorer, discoveries, fw300_metabolic_consistency] The Fitness Browser is a collection of mutant fitness phenotypes; a production action records that a metabolite appeared or rose, not that an organism consumed it. On this reading the matched set cannot speak to utilization or dependency at all, however many matches are counted, and the shortfall is structural rather than statistical — a null result for the consumption endpoint, not a weak one.
 
-**The concordance side: agreement is high, and reference-dependent.** FW300-N2E3 showed GapMind 13/13 and Fitness Browser 21/21 concordance but BacDive only 3/7. [src: webofmicrobes_explorer, discoveries, fw300_metabolic_consistency] GapMind is a computational pathway-completeness annotator; BacDive is a curated bacterial phenotype database. Full agreement against two references alongside 3/7 against a third means the concordance reported for this organism depends on which reference is consulted; the evidence here reports the three counts and does not establish what drives the spread.
+**The concordance side: agreement is high, and reference-dependent.** FW300-N2E3 showed GapMind 13/13 and Fitness Browser 21/21 concordance but BacDive only 3/7. [src: webofmicrobes_explorer, discoveries, fw300_metabolic_consistency] GapMind is a computational pathway-completeness annotator; BacDive is a curated bacterial phenotype database. All three counts are reported for the same organism, so on this side agreement is complete against two references and 3/7 against the third; the evidence here does not say which reference a model should be scored against, or what drives the spread between them.
 
 Both sides converge on one statement and diverge on its consequence: production, capability, utilization, dependency, and flux remain distinct endpoints. [src: webofmicrobes_explorer, discoveries, fw300_metabolic_consistency]
 
@@ -21,6 +21,6 @@ Both sides converge on one statement and diverge on its consequence: production,
 
 - Re-run the production-to-Fitness-Browser matching against a snapshot that includes consumption actions; ask whether any of the nineteen matches gains a utilization endpoint.
 - Repeat the GapMind/Fitness Browser/BacDive comparison across additional organisms; ask whether the per-reference spread seen for FW300-N2E3 is organism-specific or reference-specific.
-- Audit the BacDive comparisons for absent versus contradicting records; ask whether the comparisons falling outside the 3/7 concordance fail through missing curation.
+- Audit the BacDive comparison record by record; ask whether the cases falling outside the 3/7 concordance are absent records or records that contradict the model.
 - Build the pathway-to-metabolite lookup table the matching currently lacks; ask how many matches are recovered by name resolution alone.
 - Score model predictions separately per endpoint — capability, utilization, dependency, flux — and ask whether agreement rates differ systematically by endpoint.

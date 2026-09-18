@@ -12,7 +12,7 @@ Two lines of analysis in this corpus reach different verdicts on how deeply envi
 ## Possible Reconciliations
 
 - *Hypothesis: scale separation.* Environment may structure which lineages occupy which habitats without restructuring AMR content inside a lineage, so a cross-taxon signal and mostly absent within-species effects are both true at their own scale.
-- *Hypothesis: power, not absence.* The absence of an environmental effect in 156 species (90.7%) may reflect few genomes per species rather than genuinely unstructured resistomes. [src: amr_environmental_resistome, ecotype_analysis] On the same logic, only 2 species passing strict testing criteria may reflect sparse metadata rather than absent structure. [src: amr_strain_variation]
+- *Hypothesis: power, not absence.* The 156 species (90.7%) with no detectable effect may reflect thin per-genome metadata and few genomes per species rather than genuinely unstructured resistomes. [src: amr_environmental_resistome, ecotype_analysis] Likewise, that only 2 species passed strict testing criteria may index metadata sparsity rather than absent within-species structure. [src: amr_strain_variation]
 - *Hypothesis: testability filter.* Families and species that span enough environments to be testable may be an unrepresentative subset, so the 14% figure could understate or overstate the true within-family rate.
 
 None of these is resolved by the present data, and averaging the cross-taxon and within-taxon rates would not be meaningful.

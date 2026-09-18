@@ -13,7 +13,7 @@ Two projects in this corpus use gene and taxon co-occurrence to argue about ecol
 
 - **Hypothesis: the two results measure different objects.** Gene-pair co-occurrence within genomes may index shared habitat filtering, while genus-pair complementarity across communities indexes between-organism provisioning; neither need constrain the other [src: pgp_pangenome_ecology, plant_microbiome_ecotypes].
 - **Hypothesis: shared selection produces redundancy as a by-product.** If a habitat selects one trait set, co-occurring taxa converge on it, which would generate both the *pqqC*–*acdS* pairing and a slightly negative complementarity score [src: pgp_pangenome_ecology, plant_microbiome_ecotypes].
-- **Hypothesis: the guild label is being applied at the wrong level.** Complementary metabolic provisioning may operate at the pathway or activity level even where the genus-pair comparison returns a small negative effect, which is why the tension should not be resolved without pathway- and activity-level tests [src: pgp_pangenome_ecology, plant_microbiome_ecotypes].
+- **Hypothesis: the guild label is being applied at the wrong level.** Complementarity may exist at the pathway or activity level, which neither analysis has yet tested [src: pgp_pangenome_ecology, plant_microbiome_ecotypes].
 
 These findings are not mutually exclusive, and the tension should not be resolved without pathway- and activity-level tests [src: pgp_pangenome_ecology, plant_microbiome_ecotypes].
 

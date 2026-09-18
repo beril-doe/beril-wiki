@@ -7,7 +7,7 @@ Two analyses of the same organism place aromatic degradation genes in different 
 
 **Aromatic degradation as a substrate-dependent biological module.** The deletion-phenotype analysis identifies aromatic degradation as a concentrated quinate-specific module — a pathway-specific requirement expressed on one carbon source rather than spread across conditions. [src: adp1_deletion_phenotypes] Under this reading the enrichment is real substrate dependence: the genes are needed because quinate catabolism needs them, and the module's discreteness is a property of the organism's metabolism.
 
-**Aromatic degradation as a locus of directional model failure.** The triple-essentiality analysis finds aromatic degradation strongly enriched among FBA-discordant genes and reports directional FBA under-prediction. [src: adp1_triple_essentiality] Under this reading the same gene set marks where model and experiment part company, and the direction of the discrepancy — under-prediction rather than scattered disagreement — is a feature any explanation must account for. Whether it points to missing model inputs, to substrate-dependent biology, or to both is left open. [src: adp1_triple_essentiality]
+**Aromatic degradation as a locus of directional model failure.** The triple-essentiality analysis finds aromatic degradation strongly enriched among FBA-discordant genes and reports directional FBA under-prediction. [src: adp1_triple_essentiality] Under this reading the same gene set marks where model and experiment part company, and the direction of the discrepancy — under-prediction rather than scattered disagreement — is the feature any explanation of the module has to account for. [src: adp1_triple_essentiality]
 
 ## Possible Reconciliations
 
@@ -21,6 +21,5 @@ Two analyses of the same organism place aromatic degradation genes in different 
 
 - Analytically profile the assayed media (e.g. by chromatography) for aromatic compounds, and ask whether trace aromatics are present at all — converting Hypothesis 2 from a proposed explanation into a measured presence or absence. [src: adp1_triple_essentiality]
 - Re-run FBA with the media composition as actually measured rather than as declared, and ask whether the directional under-prediction on aromatic degradation genes persists. [src: adp1_triple_essentiality]
-- Re-examine the deletion panel's growth measurements for the aromatic-degradation gene set on the carbon sources other than quinate, and ask whether the module's quinate specificity is sharp or graded. [src: adp1_deletion_phenotypes]
-- Compare the aromatic-degradation gene set defined by phenotype against the set defined by FBA discordance, and ask how far the two overlap — a partial overlap would support Hypothesis 1's additive account. [src: adp1_deletion_phenotypes] [src: adp1_triple_essentiality]
+- Compare the aromatic-degradation gene set defined by deletion phenotype against the set defined by FBA discordance, and ask how far the two overlap — a partial overlap would support Hypothesis 1's additive account. [src: adp1_deletion_phenotypes] [src: adp1_triple_essentiality]
 - Check whether other functional categories also show directional FBA under-prediction, and ask whether the directionality is specific to aromatic degradation or a global property of the model. [src: adp1_triple_essentiality]

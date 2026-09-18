@@ -1,12 +1,16 @@
 {
   "__names__": {},
-  "data-infrastructure-provenance-and-research-practice": "fcc12c872c3ef7bc",
-  "functional-dark-matter-and-annotation-resolution": "ae2bfc7408684b6e",
-  "gene-essentiality-and-perturbation-assay-validity": "0278ec3db908932d",
-  "gene-fitness-landscapes-and-cofitness-modules": "1d5b8cc3acaf0fd1",
-  "metabolic-models-and-pathway-level-evidence": "bb06a643de6df028",
-  "metabolic-traits-auxotrophy-and-community-dependence": "3e4ea81fe0283c88",
-  "pangenome-structure-and-genome-evolution": "a6e45629ec9151f0",
+  "data-infrastructure-provenance-and-research-practice": "31af9289ce800371",
+  "ecotypes-and-environmental-gene-content-differentiation": "0fdac7f8aeed98ff",
+  "functional-dark-matter-and-annotation-resolution": "abe6668e907e4e19",
+  "gene-essentiality-and-perturbation-assay-validity": "79d9481b824698d3",
+  "gene-fitness-landscapes-and-cofitness-modules": "4394312450b59241",
+  "laboratory-fitness-versus-natural-selection-and-gene-conservation": "d971b5a343009021",
+  "metabolic-models-and-pathway-level-evidence": "62b1ccdc7950ddbe",
+  "metabolic-traits-auxotrophy-and-community-dependence": "b851fbc0b3773bce",
+  "pangenome-structure-and-genome-evolution": "b9851c5cc07297a0",
+  "resistance-defense-systems-and-mobile-elements": "02adfc8a8f04b4d3",
+  "sampling-coverage-and-statistical-confounding": "9e1afd67edd1a758",
   "subsurface-community-ecology": "bb0db1e1ccb1f839",
   "translational-microbiome-and-phage-therapeutics": "b8ceb822efc6a490"
 }

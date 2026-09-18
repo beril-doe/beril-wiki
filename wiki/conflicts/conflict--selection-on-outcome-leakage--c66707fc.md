@@ -5,11 +5,9 @@ Two projects in this corpus characterise the same question — how strongly envi
 
 ## Evidence Sides
 
-**The original ecotype analysis: a weak environmental signal overall.** The original ecotype analysis reports a weak environmental signal overall. [src: ecotype_analysis, ecotype_env_reanalysis] That verdict is a statement about the environmental signal taken as a whole, and the tension records it as such rather than converting it into a magnitude that could be set against the reanalysis figure. [src: ecotype_analysis, ecotype_env_reanalysis]
+**The original ecotype analysis: a weak environmental signal overall.** The original ecotype analysis reports a weak environmental signal overall. [src: ecotype_analysis, ecotype_env_reanalysis]
 
-**The reanalysis: a median partial correlation of 0.081.** Under a different pipeline, the reanalysis reports a median partial correlation of 0.081. [src: ecotype_analysis, ecotype_env_reanalysis] The value is reported as a median — the middle value across the species that pipeline analysed — and is recorded here as a magnitude, with no accompanying claim about direction of dominance. [src: ecotype_analysis, ecotype_env_reanalysis]
-
-Neither side is offered as evidence that selection-on-outcome leakage produced the other's result: the cross-pipeline magnitude comparison is treated as a tension in measurement and sampling. [src: ecotype_analysis, ecotype_env_reanalysis]
+**The reanalysis: a median partial correlation of 0.081.** Under a different pipeline, the reanalysis reports a median partial correlation of 0.081. [src: ecotype_analysis, ecotype_env_reanalysis] Neither side is offered as evidence that selection-on-outcome leakage produced the other's result; the cross-pipeline magnitude comparison is treated as a tension in measurement and sampling. [src: ecotype_analysis, ecotype_env_reanalysis]
 
 ## Possible Reconciliations
 

@@ -3,19 +3,25 @@
 Pages the placement pass flagged as needing a chart for evidence with no figure.
 
 ## conflicts/conflict--biosynthetic-self-sufficiency-and-cultivation--6f70a5cd.md
-- A per-genome scatter of orthologous-group (OG) count vs GapMind amino-acid pathway completeness score, colored by cohort (deep-clay vs clay-confined) and by quality-filter status, would let readers see directly whether genome expansion and biosynthetic completeness co-occur or diverge — the exact te
+- No figure shows the distribution of genome size and orthologous-group (OG) content across the Bacillota_B cohorts underlying the genome-expansion claim in paragraph 3 — a boxplot/violin of genome size and OG counts by cohort would let readers compare it directly against the self-sufficiency violin s
 
-## conflicts/conflict--cofitness-network-architecture--05940aec.md
-- The FBA-predicted essentiality (0%) versus 1.76× higher Complex I flux and the 30/51 unmapped-reaction count discussed on the model side lack any figure showing per-gene FBA essentiality/flux distribution for the 51 quinate-specific genes — a scatter or bar chart of predicted essentiality vs. flux r
+## conflicts/conflict--classifier-database-compatibility-in-taxonomic-quantification--8df7057b.md
+- A side-by-side table/plot comparing effect sizes (e.g., variance explained or R²) for phylogeny vs. environment across the ecotype_analysis and euk_in_prok_correlates studies would help readers see the magnitude of the methodological incommensurability described in prose, rather than just the qualit
+
+## conflicts/conflict--cofitness-network-architecture--2d1b0ad4.md
+- A bar chart or table comparing the counter-ion study's shared NaCl-metal record counts (4,304/10,821) against the zinc sulfate discriminating result (44.6%) would help readers weigh Side B's quantitative evidence, which is currently only described in prose.
 
 ## conflicts/conflict--cofitness-network-architecture--52cc7c49.md
-- A bar or forest plot comparing the per-organism delta phi values (pairwise vs. module-aggregate, including Korea's near-significant p=0.051 accessory-vs-core split) would make the core numeric disagreement driving this tension visible, since no candidate figure directly contrasts pairwise (+0.011) v
+- Per-organism delta phi (pairwise vs module-aggregate) across the organism set, since the tension hinges on a distributional comparison (+0.011 vs +0.003 vs Wilcoxon significance) not captured by any candidate figure
 
 ## conflicts/conflict--cofitness-network-architecture--7a75ec8a.md
-- Essential-fraction comparison between truly dark genes and annotation-lag genes (18.0% vs 13.4%) — a bar chart with these two percentages would let readers directly assess the size of the gap discussed in the 'Dark genes are enriched for essentiality' evidence side.
+- Comparison of essential-gene fractions across the three evidentiary sides (0 essential genes in ICA modules; count of universally vs. variably essential families; 18.0% vs 13.4% essential-fraction for truly dark vs annotation-lag genes) as a single grouped bar chart, since no candidate figure direct
 
 ## conflicts/conflict--cofitness-network-architecture--874d5ba8.md
 - Cross-tabulation of the 17,479 unlinked truly-dark genes by source organism/phylum against the 37/48 Pseudomonadota composition to test whether the linkage gap concentrates in under-sampled lineages — no candidate figure shows this joint breakdown
+
+## conflicts/conflict--cofitness-network-architecture--f152c7da.md
+- The metal_cross_resistance evidence side (paragraph 4) describes PGLS vs independent-contrasts modeling requirements but no candidate figure shows the underlying phylogenetic distance vs. resistance-correlation data (e.g., Mantel correlogram or PGLS coefficient table); a plot of that relationship wo
 
 ## conflicts/conflict--comparative-conservation-metric-calibration--84eb9535.md
 - A cross-tabulation or scatter of species-clade core membership vs. GTDB taxonomic-breadth level per gene (as proposed under Resolving Work) has no supporting figure and would directly visualize how far the two conservation rankings diverge.
@@ -27,103 +33,94 @@ Pages the placement pass flagged as needing a chart for evidence with no figure.
 - A scatter or rank plot of Fitness Browser species-scale metal-tolerance score vs. BacDive metal-environment isolation status (underlying the Spearman rho ≈ -0.02, p > 0.8 null result) would let readers see the lack of relationship directly, contrasting visually with the positive BacDive/pangenome as
 
 ## conflicts/conflict--composite-resistance-score-limitations--ba02b0ad.md
-- A bar chart comparing the three core-fraction estimates (87.4% broad metal-important genes [metal_fitness_atlas], 84.8% pooled metal-specific genes [metal_specificity], and the 92.0%/91.0%/89.8% tiered cross-resistance gradient [metal_cross_resistance]) side by side would visualize the discrepancy t
+- A simple bar/table comparing the three core-fraction estimates side by side (87.4% atlas; 84.8% pooled specificity; 92.0%/91.0%/89.8% cross-resistance tiers) would make the numeric disagreement immediately visible — no candidate figure spans all three sources.
 
 ## conflicts/conflict--condition-specific-fitness--0f004ed3.md
-- A funnel/bar chart showing the shrinkage from raw significant OG counts (94.2% of 5,671 OGs; 78.7% dual-nature) down to the 50 OGs retaining significance after phylum-level confounder control would visualize the core raw-vs-controlled tension quantitatively; no candidate figure shows this comparison
+- Distribution of Cohen's d effect sizes across the 22 AlphaEarth dimensions tested, contrasted with which (if any) survive phylum-level control — no candidate figure covers this quantitative comparison referenced in the Resolving Work section.
 
 ## conflicts/conflict--condition-specific-fitness--1a717775.md
-- A grouped bar chart comparing the four core-genome-fraction estimates across the four analyses (atlas broad: 87.4% vs baseline 76.9%; DvH heavy-metal: 71.2%, ns; metal-specificity tiers: 84.8% metal-specific / 90.2% general sick / 94.3% metal+stress; three-tier cross-resistance metal-specific: 89.8%
+- A grouped bar chart comparing the four reported core-fraction estimates for metal-important genes across projects/definitions (atlas 87.4% vs 76.9% baseline [metal_fitness_atlas]; DvH heavy-metal 71.2% not significant [field_vs_lab_fitness]; metal-specific 84.8%, general sick 90.2%, metal+stress 94.
 
 ## conflicts/conflict--condition-specific-fitness--478c939d.md
-- A side-by-side bar or scatter comparing the within-pilot CCA correlation (r=0.964) against the leave-one-cohort-out ARI (mean 0.113, low/0.000 cases) for the IBD ecotype clustering — the core numeric contrast in Side B has no supporting figure among candidates (K-selection curves show cross-method A
+- A distribution/table of leave-one-cohort-out (and leave-one-organism-out) ARI values would help visualize the contrast between the reported r=0.964 within-pilot association, the ARI=0.000 cross-cohort result, and the 0.113 mean threshold discussed in Resolving Work, since no candidate figure covers 
 
 ## conflicts/conflict--condition-specific-fitness--519f4089.md
 - The matched 7-organism comparison (mean core gene completeness 0.986 Active Dependencies vs 0.975 Latent Capabilities, paragraph 5) has no dedicated figure among candidates — a small paired bar/box chart of this specific comparison would let readers see how compressed the gap is relative to the path
 
 ## conflicts/conflict--condition-specific-fitness--8a1793da.md
-- Side A's key statistic (partial Spearman rho=0.530, p=2.83e-203 between variable pathway count and pangenome openness, genome-count controlled) has no scatter/correlation plot among the candidates — the closest figure (fig4_ecotype_openness.png) plots ecotype count, not pathway count, against openne
+- No candidate figure plots variable pathway count against pangenome openness (Side A's rho=0.530, p=2.83e-203 correlation); a scatter of these two variables per species would let readers see the correlation strength directly rather than relying on the reported statistic.
 
 ## conflicts/conflict--confirmatory-exploratory-ecological-association-discordance--c1d44874.md
-- A side-by-side comparison of the original ecotype_analysis and ecotype_env_reanalysis partial-correlation distributions (with medians 0.0025/0.003 vs 0.081 marked) is not shown in any candidate figure — this is the core quantitative disagreement the page describes and would benefit from a paired his
+- A single plot overlaying the original ecotype_analysis distribution of partial correlations (median 0.0025, n=172 species) against the ecotype_env_reanalysis distribution (median 0.081, n=183 species) on the same axis — no existing figure shows both magnitudes together, which is the core numeric con
 
 ## conflicts/conflict--core-genome-burden-paradox--52b853b5.md
-- A side-by-side bar or dot comparison of the two reported core-genome percentages (82% vs 66% for essential/always-neutral across 43 organisms; 86.1% vs 81.2% for essential/non-essential across 33 organisms) would make the size and comparison-class mismatch of the gap directly visible, which no singl
-
-## conflicts/conflict--cross-condition-metabolic-comparability--c3fb4a47.md
-- A side-by-side table comparing the matched-subset concordance counts (21 Fitness Browser comparisons, 13 GapMind comparisons, 100% agreement for FW300-N2E3) against the pathway-census class counts (e.g., 57/35.4% Active Dependent and the other class counts/percentages) would let readers directly com
-
-## conflicts/conflict--cross-condition-metabolic-comparability--e6421a5b.md
-- A table/heatmap of the 17/18 amino-acid pathway completeness calls across the 7 mapped organisms (essential_metabolome), to let readers see which organism/pathway combinations are complete vs. incomplete rather than only the aggregate ratio.
-- A count breakdown of the 19 metabolites in the Web of Microbes production-to-Fitness-Browser bridge, showing which have production records only vs. any consumption evidence, to visualize the scope gap discussed in the tension.
+- A grouped bar chart comparing the two core-genome percentages (82% vs 66% for essential/always-neutral, 43 organisms) and (86.1% vs 81.2% for essential/non-essential, 33 organisms) side by side would make the magnitude and comparison-class mismatch visually explicit, which no single candidate figure
 
 ## conflicts/conflict--cross-tenant-data-bridging--34478c5a.md
 - A table/bar chart of sub-study sample-size counts by diagnosis arm (45 sub-studies with ≥10 HC, 5 with ≥10 CD, 0 with ≥10 of both) would make the structural-unidentifiability claim visually concrete — no candidate figure shows this breakdown.
 - A side-by-side comparison of the two disputed statistics (CCA r=0.964 vs. cross-cohort LOSO ARI=0.000) across sub-studies/cohorts would visualize the core tension directly; none of the candidate figures juxtapose these two metrics.
 
 ## conflicts/conflict--cross-tenant-data-bridging--8325c1f4.md
-- A side-by-side comparison of AUC values (co-fitness/module-level correlation strength vs field-vs-lab AUCs: 0.548 combined, 0.517 field-only, 0.531 lab-only) across the two projects' bridges would clarify the disputed effect size at module level, which no single candidate figure directly contrasts.
-- The module-level correlation coefficients driving the disagreement (e.g. rho=0.071, p=0.62 null vs the co-fitness project's module-level effect) are stated only in prose/tension text; a paired bar or scatter comparing both projects' module-level statistics would visualize the core disagreement witho
+- A side-by-side comparison of the two studies' module-level statistics (co-fitness bridge's module effect size vs the field-vs-lab study's module core-fraction rho=0.071, p=0.62 null) would make the disagreement directly visible; no single candidate figure covers both sides together.
+- The field-vs-lab AUC values (condition-only 0.548, field-only 0.517, lab-only 0.531) are reported only in prose here — the source ROC figure exists but shows curves, not this specific bar-comparable AUC trio, which would help readers see how weak the pairwise/gene-level signal is before the module d
 
 ## conflicts/conflict--cross-tenant-data-bridging--d89b8efa.md
-- Class balance and positive/negative counts behind the tryptophan AUC 0.933 prediction (genotype_to_phenotype_enigma), needed to assess whether the AUC reflects true growers or correct negatives
-
-## conflicts/conflict--ecotype-clustering-validity--c09534c6.md
-- A table/bar comparison of the two median partial-correlation values (0.003 downsampled vs 0.081 full-embedding) alongside their genome-cap conditions (max 250 vs up to 3,505 genomes per species) would make the disputed 27x magnitude gap directly visible; no candidate figure shows both analyses' medi
+- A side-by-side visualization of the specific tryptophan evidence (WoM production status, 231 significant Fitness Browser genes, GapMind pathway presence, and the 0/50 P. fluorescens growth outcome) versus the cross-condition AUC 0.933 classification result and its underlying class balance/positive-c
 
 ## conflicts/conflict--ecotype-clustering-validity--f884063a.md
-- A side-by-side table/plot comparing effect sizes (e.g., R² or variance explained) for environment–gene-content relationships across the whole-genome comparisons versus the prophage-module analysis would help readers see the magnitude of the discrepancy the tension describes, rather than inferring it
-
-## conflicts/conflict--ecotype-environment-gene-content--66537c9c.md
-- The page turns on comparing two different quantities across sides — Side A's 3.4x environmental geographic gradient (embedding distance vs geographic distance) and Side B's null partial-correlation result (median partial correlation 0.0025, embedding distance vs gene-content distance). No single can
-
-## conflicts/conflict--ecotype-environment-gene-content--744fe541.md
-- The metal-associated gene-family/soil-metal COG profile result (paragraph 8: conditional-R² and non-independence issues) is discussed only in prose with no supporting figure among candidates — a plot of environment vs. phylogeny variance explained for metal-associated COG profiles would visualize th
+- A table/count of how many whole-genome environment–gene-content comparisons were significant vs nonsignificant (the 'weak or usually nonsignificant' claim in paragraph 3 is described only in prose, with no figure showing the distribution of correlation strengths or p-values across genomes/families).
 
 ## conflicts/conflict--ecotype-environment-gene-content--751c5f9a.md
-- Paragraph 5 describes strong metal–COG associations from the soil-metal study (soil_metal_functional_genomics) but no candidate figure visualizes these associations (e.g., per-metal correlation strengths for chromium, copper, lead, zinc against COG categories) — a bar or heatmap of these association
-
-## conflicts/conflict--ecotype-environment-gene-content--80c3f5a3.md
-- No candidate figure shows the core quantitative contrast underlying this tension: a variance-partition figure (e.g., bar chart of % variance explained by treatment × horizon in Harvard Forest genus-level data, showing the 41% figure) set alongside the null result statistic from the ecotype species-l
+- The soil-metal–COG association evidence (paragraph 5, src: soil_metal_functional_genomics) is described only in prose with no supporting figure among candidates; a table/heatmap of COG-category association strengths per metal (chromium, copper, lead, zinc) would let readers assess the co-varying-met
 
 ## conflicts/conflict--ecotype-environment-gene-content--aa91ad15.md
 - A bar/box comparison of mobilome burden (median mobile elements per genome: plant-associated genera 3.7 vs 2.8) is described only in prose in paragraph 4; the closest candidate (mobility_proxies.png) has too vague a caption to confirm it shows this specific genus-level contrast, so a dedicated chart
 
 ## conflicts/conflict--ecotype-environment-gene-content--bea0acfc.md
-- A table or bar chart comparing PERMANOVA/db-RDA R² values before vs after genome-rich species removal (0.071/0.060 vs 0.072) would help readers see the magnitude of the reported shift discussed in Sides A and B [src: plant_microbiome_ecotypes; ecotype_env_reanalysis].
+- A bar/comparison chart of PERMANOVA R² and db-RDA R² for the plant-marker compartment analysis before vs. after removing genome-rich species would help readers see the disputed variance-partitioning numbers (Side A: R²=0.071/0.060; Side B: R²=0.072 post-removal) that no candidate figure currently vi
+
+## conflicts/conflict--environment-embedding-geography--1f216267.md
+- A side-by-side comparison of the two median partial-correlation distributions (original ecotype analysis's environment-measure distribution vs. the reanalysis's 183-species distribution) is not visualized anywhere — only the reanalysis's own distribution has a candidate figure, so the 0.0025-vs-0.08
 
 ## conflicts/conflict--environment-embedding-geography--32d28f91.md
-- A table/bar chart comparing conditional db-RDA R² (0.799) vs unconditional metal-only db-RDA R² for the soil metal study would visualize the attribution gap discussed in paragraph 3 and the Resolving Work section — no candidate figure covers the soil_metal_functional_genomics side of this conflict.
+- A simple bar/table comparing the two studies' contested statistics (db-RDA conditional R²=0.799 vs unconditional metal-only R²; PGLS β=+0.021 at p=1.5×10⁻⁴ vs strict-prevalence p=0.092 vs groundwater rho) would make the attribution tension concretely comparable, since no candidate figure juxtaposes 
 
 ## conflicts/conflict--environment-embedding-geography--369b14bd.md
-- A bar/table comparing label coverage across the two candidate environment fields (env_broad_scale: 42% coverage; isolation_source keyword-harmonized: 71% labeled, 17% Other, 12.5% Unknown) — the core quantitative disagreement this tension page argues over is stated only in prose, with no figure show
+- A bar chart comparing label coverage across the two candidate environment fields (env_broad_scale: 42% covered; keyword-harmonized isolation_source: 71% labeled, 17% Other, 12.5% Unknown) would make the core coverage/precision tradeoff driving this tension visible at a glance — no candidate figure s
 
 ## conflicts/conflict--environment-embedding-geography--57ec5817.md
 - A table/bar chart comparing the four reported median partial correlations (0.0025 environment, 0.0143 phylogeny from ecotype_analysis/ecotype_env_reanalysis; 0.051 environmental-only vs 0.084 human-associated from the reanalysis) side by side, since no candidate figure shows these conflicting cross-
 
+## conflicts/conflict--environment-embedding-geography--b4822dc2.md
+- A summary table of the five paired lab/field or scale-crossing results (e.g., cluster-alignment r, warming interaction term % variance, metal-tolerance field p-value, REE-AMD MAG count/FDR outcome) would let readers compare which pairs are null vs. significant at a glance, rather than reconstructing
+
 ## conflicts/conflict--environment-embedding-geography--b918209f.md
-- A summary table comparing raw vs. partial-correlation/controlled statistics for both projects (Pseudomonas: p=0.006 raw vs. balanced accuracy after RF classification; PHB: rho=0.106/p=1.77e-06 raw vs. genome-size-controlled partial correlation) would make the parallel 'significant-then-weakened' str
+- A side-by-side bar/forest plot comparing the raw vs. controlled association strengths across the two projects (Pseudomonas p=0.006 raw association and balanced-accuracy drop vs. PHB raw rho=0.106/p=1.77e-06 vs. genome-size-partialled rho) would make the core tension of this conflict page visually ex
 
 ## conflicts/conflict--environmental-resistome--175dc8a6.md
-- A side-by-side bar chart comparing the discoveries digest's efflux/core-accessory percentages (21% efflux, 13%/44% core/accessory) against the environmental-resistome analysis's figures (7.0% efflux, and its own core/accessory split) would make the numeric discrepancy at the heart of this tension di
+- A comparison table/bar chart of the two reported efflux percentages by environment (discoveries: 21% human-gut vs 1% aquatic; environmental-resistome: 7.0% vs 1.1%) would make the magnitude discrepancy underlying this tension directly visible.
+- The 13% vs 44% core/accessory AMR percentage contrast referenced in paragraph 6 has no figure comparing the two values side by side.
 
 ## conflicts/conflict--environmental-resistome--86566e6b.md
-- A distribution or bar chart of per-family within-taxon FDR-corrected significance results (20 of 141 testable families, 14%) is described only in prose — a table/plot of family-level effect sizes and significance would let readers see whether the 14% rate is concentrated in a few families or spread 
+- A table or bar chart of the 141 testable families showing which of the 20 significant (14%) after FDR correction, ideally with effect size and genome-count balance per family, would let readers assess Side B's within-family test directly rather than only the summary rate.
 
 ## conflicts/conflict--environmental-resistome--9415d508.md
 - A scatter/correlation plot of species-level multi-metal tolerance vs. metal-associated isolation frequency (the Spearman rho ≈ -0.02, p > 0.8, n=20 species null result) is described only in prose and has no supporting figure among the candidates.
 
 ## conflicts/conflict--environmental-resistome--e8ac0fe1.md
-- A bar/scatter of the T4SS–CAZy side's accumulation evidence (92 elevated co-occurrences, 77 GT2 HGT events, plasmid-vehicle detection status) has no candidate figure — a simple counts chart would let readers compare its evidentiary weight against the prophage side's rho=0.572 regression.
+- The T4SS–CAZy side's event/co-occurrence counts (92 elevated co-occurrences, 77 GT2 HGT events, 32 normalized high-confidence cross-species transfers, plus the plasmid null) have no supplied figure and would benefit from a bar chart comparing these counts against the plasmid-control baseline.
 
 ## conflicts/conflict--environmental-resistome--ecbc42fd.md
-- A per-determinant-class breakdown (antibiotic vs. metal vs. general stress) of the AMRFinderPlus-detected gene set is discussed as the key unresolved partition (Hypothesis 3) but no candidate figure shows this split; a stacked bar of gene counts by determinant class would visualize the crux of the t
+- A side-by-side breakdown of the unclassified/unassigned gene fractions under each vocabulary (22.2% Other/Unclassified vs. 15,550 clusters / 18.7% unassigned) would help readers see whether these are the same or different objects, as debated in the tension.
+
+## conflicts/conflict--essentiality-assay-discordance--54c7d2e0.md
+- Distribution of laboratory fitness cost vs. pangenome conservation frequency for the 28,017 costly-and-conserved genes, to visually support the Costly+Conserved category definition underlying both sides of this tension
 
 ## conflicts/conflict--experimental-prioritization-of-functional-dark-matter--9f5d14d3.md
 - A table/bar chart comparing precision and coverage across the different dark-gene evidence methods (ortholog transfer: 95.8% precision/91.2% coverage; Module-ICA; genomic-neighborhood 97.2% rate; annotation baseline 75%) would make the core tension — gene-level vs process-level, and raw rate vs base
 
 ## conflicts/conflict--experimental-prioritization-of-functional-dark-matter--bda92edd.md
-- A side-by-side bar chart comparing strong-phenotype condition-class shares for annotation-lag vs truly-dark gene subsets (from the truly_dark_genes project) would directly visualize the contested claim, but no such split figure exists among candidates.
+- A side-by-side bar chart comparing the truly-dark vs annotation-lag gene condition-class breakdown (from truly_dark_genes) alongside the pooled dark-gene condition breakdown (fig04) would directly visualize the stratification question raised in the tension
 
 ## conflicts/conflict--fitness-module-detection-sensitivity--485af690.md
 - Scatter or distribution comparing the module-conservation core-fraction gap (86.0% vs 81.5%) against the genome-wide fitness-conservation association across ~194,000 genes, so readers can visually gauge whether the two estimands diverge or overlap
@@ -134,14 +131,21 @@ Pages the placement pass flagged as needing a chart for evidence with no figure.
 ## conflicts/conflict--gene-cooccurrence-ecological-guilds--47e6a7b4.md
 - Distribution of complementarity scores for co-occurring vs random genus pairs (the Cohen's d ≈ -0.4, permutation p < 0.001 result from plant_microbiome_ecotypes) has no supporting figure among the candidates and would clarify the magnitude/overlap of the negative effect.
 
+## conflicts/conflict--gene-essentiality--14f53e8b.md
+- A table/bar chart showing core-genome enrichment percentages split by gene category (always-neutral genes at 66% core vs. condition-specific/important genes) and by functional direction of the reversal described in paragraph 5, since the 66% figure and its functional-category reversal are stated onl
+
+## conflicts/conflict--gene-essentiality--1a13b45e.md
+- The 42.5% baseline FBA accuracy figure is aggregated across 574 organism–carbon-source combinations [src: annotation_gap_discovery]; no candidate figure shows the underlying per-combination distribution, so a reader cannot tell whether 42.5% reflects a uniform middling accuracy or a bimodal mix of n
+- A side-by-side bar chart comparing the three headline numbers directly in tension (ADP1 moderate FBA–knockout concordance, annotation_gap's 42.5% baseline accuracy across 574 combos, and module-ICA's <1% strict precision vs ortholog transfer's 95.8%) would visualize the corpus-scale-vs-single-organi
+
 ## conflicts/conflict--gene-essentiality--1ce33d4d.md
-- A bar/line chart directly comparing the two overlap estimates (39.8% counter-ion vs 14.7% metal-specificity) with their respective sickness thresholds and organism-set sizes annotated, since no candidate figure juxtaposes the two studies' numbers on one axis.
+- A side-by-side comparison table of the two analyses' methodology (sickness threshold value, organism set, denominator, resulting overlap %) would help readers see whether 39.8% and 14.7% are genuinely incompatible or explained by differing thresholds/organism sets — no current figure covers this dir
 
 ## conflicts/conflict--gene-essentiality--bfe2a15f.md
-- A bar chart of the 17,222 ortholog family essentiality distribution (859 universally essential, 4,799 variably essential, 11,564 never essential) would visualize the conditional-vs-universal essentiality claim that currently rests only on prose numbers [src: discoveries].
+- Bar chart of ortholog family essentiality distribution (859 universally essential, 4,799 variably essential, 11,564 never essential out of 17,222 families) to visualize how predominantly conditional measured essentiality is [src: discoveries]
 
 ## conflicts/conflict--gene-essentiality--d462367f.md
-- A side-by-side bar or table comparing the two core-fraction estimates (82%/82.2% over ~194,000 genes/43 bacteria vs 86.1% over 148,826 genes/33 organisms) alongside denominator sizes and organism-panel overlap would make the reconciliation hypothesis in paragraph 6 visually checkable.
+- A side-by-side bar chart comparing the two core-fraction estimates (82% over ~194,000 genes/43 bacteria vs 86.1% over 148,826 genes/33 organisms) with denominators labeled, to make the magnitude and panel-size gap visually explicit.
 
 ## conflicts/conflict--genetic-perturbation-coverage-bias--0037f318.md
 - A per-gene cross-tabulation of core/non-core status against recoverability outcome (recovered vs. failed construction) in the ADP1 collection would directly visualize the coverage-enrichment claim and its ambiguity, which is central to the tension but not covered by any candidate figure.
@@ -150,54 +154,50 @@ Pages the placement pass flagged as needing a chart for evidence with no figure.
 - Distribution of COG differentiation effect sizes for adaptive vs housekeeping categories referenced in the resolving-work section — a summary plot would help readers judge whether category-level signal is plausible.
 
 ## conflicts/conflict--genome-wide-versus-locus-specific-ecological-adaptation--3fea06ca.md
-- No figure shows the genome-wide phylogeny-vs-environment correlation strength itself (the weak signal both sides are interpreting); a scatter or distribution of per-genome environmental vs phylogenetic distance correlations would let readers judge the magnitude directly.
+- Per-locus genome-wide phylogeny-vs-environment correlation strengths (or a distribution of environmental-signal effect sizes across loci) would help readers judge whether the weak genome-wide signal is truly near-null or concentrated in a minority of loci, as this conflict page hypothesizes.
 
 ## conflicts/conflict--laboratory-fitness-versus-natural-selection--239d08e3.md
-- A side-by-side bar/table comparing the two cohorts' essential-core percentages (82% broad synthesis vs 86.1% linkage analysis) alongside cohort size and essentiality definition, since no figure directly visualizes this headline discrepancy.
-- A comparison of CV-AUC values (fitness-only vs fitness+length) across the DvH model and any available broad-cohort equivalent, to visualize how much of the gradient's predictive power is attributable to gene length versus fitness.
+- A table/bar-chart comparing essential-core percentage estimates and CV-AUC values across the different cohorts/organisms (82% broad synthesis vs 86.1% 33-organism linkage, DvH fitness-only vs fitness+length CV-AUC) would help readers see the scope/definition differences driving the discrepancy, whic
 
 ## conflicts/conflict--metabolic-model-gapfilling--09788ff7.md
-- A simple bar chart comparing the three non-interchangeable latent fractions (41.0%, 35.4%, 15.8%) across their source analyses would help readers see how divergent these estimates are; no candidate figure covers this comparison.
+- A bar/dot chart comparing the three distinct latent-fraction estimates (41.0%, 35.4%, 15.8%) side by side with their source projects, since the page explicitly warns these must not be averaged and no candidate figure visualizes this discrepancy.
 
 ## conflicts/conflict--metabolic-model-gapfilling--9cf52c50.md
 - A table/bar chart of the nineteen production-to-Fitness-Browser matches lacking consumption actions (coverage side) is not visualized by any candidate figure; a per-match table of endpoint availability (production/consumption/utilization) would clarify the coverage gap discussed in paragraph 3.
 
 ## conflicts/conflict--metabolic-model-gapfilling--c50aa829.md
-- A per-organism/carbon-source breakdown of the cross-organism FBA benchmark (42.5% accuracy, 330 false positives) would visualize the asymmetric over-prediction pattern discussed in paragraph 3; no candidate figure shows this distribution.
+- A side-by-side bar chart comparing the two accuracy metrics directly (42.5% cross-organism FBA accuracy with 330 false positives vs. 73.8% ADP1 FBA-TnSeq concordance) would make the endpoint-mismatch tension visually concrete, but no single candidate figure spans both projects' data.
 
-## conflicts/conflict--metal-cross-resistance--59068bf5.md
-- A table/plot combining the 38.0% general-sick fraction from the specificity analysis with the per-metal-pair cross-resistance correlation strengths would let readers see whether universal positivity survives exclusion of general-sick records — no candidate figure directly overlays these two quantiti
+## conflicts/conflict--metabolic-model-gapfilling--cf98e361.md
+- The NMDC correlational claim (negative completeness–metabolite associations across pathways, with the stated caveat about lacking flux/causality) is a quantitative, pathway-by-pathway result described only in prose on this page — a table or plot of the association direction/effect size per pathway w
+- The Carbon Census occurrence-breadth claim ('83/86 genera across 1,719 NMDC metagenomes') is a dense denominator/numerator statistic that would benefit from a simple occurrence-rate visualization distinguishing 'occurs' from 'measured activity', reinforcing the page's core distinction [src: enigma_c
 
 ## conflicts/conflict--pangenome-conservation-fitness-decoupling--e470a03a.md
 - A bar chart comparing % core genome membership across fitness-effect categories (82% core for essential/broad-effect genes vs 66% core for always-neutral genes) would visualize the genome-wide association claim in paragraph 4, which is currently only described numerically.
 
+## conflicts/conflict--pangenome-conservation-fitness-decoupling--e503d1e4.md
+- A side-by-side comparison table or forest plot of the three effect sizes discussed (AMR-specific null, 86.1%/81.2% genome-wide odds ratio 1.56, and module-level 86.0%/81.5%) would let readers directly compare magnitudes and confidence across the three studies, which no single candidate figure curren
+
 ## conflicts/conflict--pangenome-openness-determinants--0ec0a9e1.md
-- A table/plot comparing the reported correlation strengths (or R²/effect sizes) for each candidate determinant of openness — metabolic variability, environment (AlphaEarth), phylogeny, and conservation — across the different projects, since the page describes these as differing in strength and robust
-- A visualization of the AlphaEarth species-coverage distribution (the 6.8% coverage-eligible fraction vs. excluded species) to make the coverage-limitation caveat on environmental associations concrete rather than stated only as a percentage.
+- No figure shows the coverage-eligibility distribution behind the AlphaEarth environmental association (only 6.8% of species had sufficient coverage) — a histogram or bar chart of species coverage vs. eligibility threshold would let readers judge how coverage-limited that correlation is.
 
 ## conflicts/conflict--phage-defense-syndromes-and-arms-race--d33388e9.md
-- A paired bar chart comparing prevalence estimates for each defense system (CRISPR-Cas, DISARM, SNIPE, etc.) under description-level annotation versus diagnostic-marker detection (e.g., 96% vs ~55% for CRISPR-Cas via Cas1 PF01867) would directly visualize the core tension this page documents, but no 
+- A bar chart or table comparing description-level annotation prevalence (e.g., 96% CRISPR-Cas via EggNOG description match) versus diagnostic-marker prevalence (e.g., ~55% via Cas1 PF01867, 54 for SNIPE) side by side per defense system would directly visualize the core tension this page describes; no
 
 ## conflicts/conflict--phylogenetic-confounding-of-pangenome-associations--782017fa.md
-- A table/bar chart of family-level test outcomes (tested vs untestable vs significant, with the 20-of-141 significant families and the untestable-due-to-limited-environmental-breadth families) would visualize the core disputed statistic, which is currently described only in prose.
-
-## conflicts/conflict--phylogenetic-confounding-of-pangenome-associations--7b9c5a6c.md
-- A table/plot of the phylum-by-phylum regression coefficients (prophage density vs AMR breadth) with and without the genome-count control would help readers verify Side A's claim that the association 'survives' across all five phyla — no candidate figure shows the per-phylum coefficients or the contr
+- Family-level and phylum-level testability/significance breakdown (5 of 6 phyla significant; 20 of 141 families significant vs. untestable) has no figure — a bar chart or table of tested/significant/untestable counts per taxonomic level would visualize this dense numeric result.
 
 ## conflicts/conflict--provenance-aware-resource-discovery--f0c8f1e3.md
-- A per-table comparison of Iceberg metadata counts vs REST /count results (and /schema latency/timeout outcomes) across the audited NMDC tables and larger tables, to visualize whether disagreement tracks the interface or the table size — no candidate figure covers this cross-surface reliability compa
+- A table comparing per-table outcomes (success/failure/timeout) for Iceberg metadata counts vs REST /count and /schema across the audited NMDC tables would visualize the access-surface reliability contrast this tension page discusses.
 
 ## conflicts/conflict--sampling-depth-and-downsampling-effects--8542320b.md
-- No candidate figure visualizes the core missingness-rate comparison itself (21% NaN for Environmental species vs 7% for Human-associated species, [src: ecotype_env_reanalysis]) or the composition of the 3,838 NaN-bearing records added by env_embedding_explorer (metadata coverage breakdown) — a simpl
+- A bar/table comparing NaN rates by ecological group (21% Environmental vs 7% Human-associated, plus the explorer's 3,838 NaN-bearing records with per-dimension breakdown) is described only in prose and has no supporting figure among candidates.
 
 ## conflicts/conflict--sampling-depth-and-downsampling-effects--cd13abd8.md
-- A scatter or correlation-scale comparison across the ecotype_analysis, ecotype_env_reanalysis, and pangenome_openness projects showing effect-size/correlation magnitude side-by-side would visualize the unattributed correlation-scale difference discussed in paragraph 5, but no single candidate figure
-
-## conflicts/conflict--sampling-depth-and-downsampling-effects--e2e1ad79.md
-- No figure shows the power analysis referenced in Resolving Work (paragraph 8) — a plot of minimum detectable skew effect vs. sample size would clarify how underpowered the reported null comparison actually is.
+- A scatter or comparison plot of pangenome-openness metric vs. cross-species effect-size correlations (the null result discussed in paragraph 3) alongside the ecotype/env-reanalysis correlation-scale estimates, to visually show whether the two lines of evidence diverge as claimed — no candidate figur
 
 ## conflicts/conflict--selection-on-outcome-leakage--c66707fc.md
-- No candidate figure directly compares the two pipelines' partial-correlation values on a matched species list — a paired plot (per-species or per-group) of ecotype_analysis vs ecotype_env_reanalysis partial correlations would visualize the magnitude gap that is the core of this conflict.
+- A side-by-side comparison of the two pipelines' partial-correlation distributions (or medians) on a common species set would let a reader see whether the 'weak overall' characterization and the 0.081 median actually describe different magnitudes or just different denominators — no current figure ove
 
 ## conflicts/conflict--shared-stress-versus-stressor-specific-fitness--09b51730.md
 - A full table of metal–NaCl correlation coefficients across all tested metals (only iron r=0.086 and zinc r=0.715 are quoted in prose) would let readers see the full spread the 'stressor-dependent overlap' claim rests on.
@@ -206,7 +206,7 @@ Pages the placement pass flagged as needing a chart for evidence with no figure.
 - A grouped bar chart comparing the two projects' conservation deltas for manganese, zinc, and iron side-by-side (counter_ion_effects: +0.182/+0.115/+0.182 vs metal_fitness_atlas: +0.198/+0.151/+0.116) would make the magnitude and ordering disagreement described in prose immediately visible; no candid
 
 ## conflicts/conflict--taxonomic-resolution-dependent-functional-inference--4b4aa6ed.md
-- The Side A claim of consistent core-vs-novel COG functional partitioning across 32 species (cog_analysis) is described only in prose/aggregate terms — a heatmap or grouped-bar chart of COG category enrichment (core vs. novel genes) across the 32 species would let readers see the partitioning pattern
+- A scatter or summary showing the COG-category-level breakdown (which categories concentrate in core vs. novel genes) across the 32 species in the pangenome comparison, since the page describes consistent partitioning only in prose without a supporting distribution
 
 ## summaries/acinetobacter_adp1_explorer__REPORT.md
 - Metabolic reaction conservation breakdown (1,248 core, 62 variable, 20 unique out of 1,330 reactions across 14 genomes) and gapfilling rate (7.7% average, 243 missing functions) — described only in prose with no distribution chart
@@ -394,41 +394,49 @@ Pages the placement pass flagged as needing a chart for evidence with no figure.
 - The pangenome species-clade coverage table (species and genome counts per genus, e.g. Bacillus 5/2557, Rhizobium 5/449, etc.) is a dense numeric list with no visual support.
 
 ## topics/data-infrastructure-provenance-and-research-practice.md
-- Table of taxonomic/identifier mismatches across databases (e.g. ENIGMA vs GTDB name-to-genome disagreements, genome counts affected) referenced in paragraph 9 has no visual — a bar chart of mismatch counts by database pair would help.
-- Adversarial-vs-standard review issue counts (paragraph 12: 0 vs 5 critical, 0 vs 6 important issues) are only in prose — a small grouped bar chart comparing review methods would visualize this distribution.
+- A breakdown of the 536 cross-tenant table pairs by their four evidence states (shared schema keys, overlapping values, executable join, interpretable result) would visualize how few bridges reach the strongest evidence tier — no candidate figure covers this distribution.
+
+## topics/ecotypes-and-environmental-gene-content-differentiation.md
+- Per-species breakdown of phylogeny-dominant vs environment-dominant gene-content similarity (60.5% vs 39.5% across 172 species, paragraph 9) has no bar/scatter figure showing the species-level split.
 
 ## topics/functional-dark-matter-and-annotation-resolution.md
-- Organism-level literature-coverage distribution (para 7): Homo sapiens 46.7% of gene–paper records, top five 72.8%, plus the Gini coefficient — no candidate figure visualizes this concentration curve/histogram across organisms.
-- PaperBLAST absence-claim validation rates (para 6): per-gene hit counts (0/11 for LpxA, 0/15 for LpxC, 0/15 for LpxD) and the resulting ~80% false-negative rate are reported only as numbers; a bar/table figure of hits-found vs hits-expected per gene would support this claim.
+- A scatter/binned trend of MSA depth vs domain-hit count across the 38,051,842 gene cluster–UniProt pairs (Spearman ρ=0.7563, mean domain hits rising from 0.59 at depth<10 upward) is described only in prose in paragraph 7 and has no dedicated figure among candidates — fig0 covers pangenome class, not
 
 ## topics/gene-essentiality-and-perturbation-assay-validity.md
-- A contingency matrix of RB-TnSeq vs. complete-knockout essentiality calls in ADP1 (18 essential-essential, 1,411 of 1,933 genes in other discordant/concordant cells) is described only in prose in paragraph 7 and would benefit from a visual contingency heatmap.
-- The AUC comparison between continuous fitness scores and binary essentiality labels for predicting knockout lethality (0.700 rich medium, 0.725 minimal medium) in paragraph 8 has no ROC-curve or bar-chart visualization among the candidates.
-- Condition coverage across the Fitness Browser's 48 organisms (e.g., MR-1 at 121 historical conditions vs. others) in paragraph 11 is a skewed distribution described only numerically; a per-organism condition-count bar chart would make the coverage-bias claim visible.
+- Paragraph 7's core discordance claim (RB-TnSeq vs. complete-deletion essentiality contingency: 18 genes/0.9% called essential by both, 1,411/73.0% dispensable by both, 211 discordant genes) is a 2x2 table with no matching candidate figure — a contingency heatmap or bar breakdown would make the near-
+- Paragraph 8's AUC comparison (inverted RB-TnSeq continuous fitness predicting knockout lethality: AUC 0.700 rich medium, 0.725 minimal medium, vs. degraded binary-threshold performance) has no ROC-curve or AUC-by-method figure among candidates to show why continuity outperforms binarization.
 
 ## topics/gene-fitness-landscapes-and-cofitness-modules.md
-- Distribution/count of the 1,116 stable ICA modules across the 32 organisms (module size, stability threshold) referenced in paragraph 3 has no supporting figure in the candidate set.
-- Breakdown of the 769/801 (96%) AMR genes with an extra-operon cofitness partner by mechanism/organism, to accompany the load-bearing caveat in paragraph 8 about what a cofitness edge does and doesn't license.
+- Metabolic capability-vs-dependence breakdown (267 latent [15.8%], 547 intermediate [32.3%], and remaining pathway-organism pairs among 1,695 total) has no supporting figure — a stacked bar or pie chart by dependence class would visualize this classification.
+- The Module-ICA vs ortholog-transfer benchmark (<1% strict precision at 23.3% coverage for Module-ICA versus 95.8% precision for ortholog transfer, para 13) is dense quantitative comparison with no matching candidate figure — a precision-coverage scatter/bar comparison would clarify the tradeoff.
+- Enrichment results across organisms (flagellar OR 4.7-5.3 across 5 organisms; energy metabolism enriched in 0/25 organisms with permutation fold 0.91, para 16) are reported only in prose per-organism — a forest plot or per-organism odds-ratio bar chart would make this null/positive contrast visible.
+
+## topics/laboratory-fitness-versus-natural-selection-and-gene-conservation.md
+- Para 13 (Tensions) contrasts headline conservation percentages across projects (86.1% vs 81.2%; 82% vs 66%) with different comparison classes and organism sets — no candidate figure juxtaposes these cross-project magnitude discrepancies; a small grouped bar chart per project/comparison-class would m
 
 ## topics/metabolic-models-and-pathway-level-evidence.md
-- A bar chart comparing candidate-assignment success rates for EC-missing ('dark') vs EC-present gapfilled reactions (8/50, 16% vs 88/151, 58.3%, per para 6) has no corresponding candidate figure.
+- A precision/recall breakdown for the cross-organism FBA benchmark (86.5% recall = 244/282, 42.5% precision = 244/574, 330 false positives) has no dedicated figure among the candidates and would benefit from a confusion-matrix or precision-recall bar chart.
 
 ## topics/metabolic-traits-auxotrophy-and-community-dependence.md
-- Paragraph 9 reports a direct numeric conflict between two studies on latency prevalence (161-pair study: 100% of Latent Capability pairs conditionally required; 1,695-pair study: 15.8% latent, with a stated threshold-sensitivity range of 4.7%-21.1%) — no candidate figure contrasts these two studies'
+- Binary-growth AUC by macronutrient category (para 9: overall 0.620, amino acids 0.775 across 7,765 pairs, plus other category values) has no chart candidate and would benefit from a bar/forest plot of AUC by category with holdout counts.
+- Community-weighted GapMind completeness vs. ambient metabolite intensity correlation (para 10: 11 of 13 amino-acid pathways, binomial sign test p=0.011, 220 samples x 80 pathways) is described only in prose on this page; no per-pathway correlation figure is placed here.
 
 ## topics/pangenome-structure-and-genome-evolution.md
-- COG-category enrichment among core vs. accessory vs. novel/singleton genes (COG L overrepresentation in singletons across 32 species/9 phyla, 357,623 genes) — no candidate figure shows this functional-category breakdown that underlies the 'two-speed' claim in paragraph 3.
-- Openness correlation plot: openness vs. environment effect (Spearman rho=-0.05, p=0.54) and vs. phylogeny effect (rho=0.03, p=0.73), contrasted with openness vs. metabolic variability — no scatter/correlation figure available to visualize this null-vs-positive contrast from paragraph 6.
-- Core-fraction sampling bias: core-cluster fraction (82.0% core / 18.0% auxiliary overall) plotted against clade size/genome count, showing how small clades (e.g. n=2) inflate apparent core fraction — no figure covers this sampling-bias relationship discussed in paragraph 7.
+- Scatter/correlation plot of variable-metabolic-pathway score vs pangenome openness (rho=0.327, p=7.2e-71 raw; partial rho=0.530, p=2.83e-203 controlling for genome count) across 2,810 GTDB species — the page's one reproducible openness correlate has no supporting figure among candidates.
+- Bar chart of COG category enrichment (COG L replication/recombination/mobile-element genes, +10.88%) in novel/singleton vs core genes across the 32-species, 9-phylum, 357,623-gene cog_analysis corpus — this flagship functional-signature claim (para 7) has no corresponding candidate figure.
+
+## topics/resistance-defense-systems-and-mobile-elements.md
+- Distribution of the 311/317 organism–metal-pair fitness correlations (and the 15 metal-pair comparisons across ≥5 organisms) described in para 9 — no figure visualizes this correlation spread.
+- Pairwise co-occurrence matrix for the 28 anti-phage defense-system pairs (27 co-occurring) and per-system prevalence (7.2%–96.1%) described in para 10 — no candidate figure covers phage_defense_arsenal data.
 
 ## topics/sampling-coverage-and-statistical-confounding.md
-- BacDive-to-GTDB species match-rate breakdown (42,227 matched vs 55,107 unmatched of 97,334 strains; 25,089 with isolation-source metadata) has no chart on this hub page despite being a headline quantified shortfall.
-- NMDC biome-by-study nesting (each biome ~80-100% nested within a single study) is described only in prose; a biome x study contingency/heatmap would make the confounding concrete.
+- A coverage funnel/table for the AlphaEarth genome-embedding join (paragraph 7: 28.4% of 13,381 genomes across 224 species covered, yielding correlation results for a shrinking subset) has no matching candidate figure — the existing coverage_waterfall.png belongs to a different project (bacdive_pheno
+- The compartment R² collapse after excluding genome-rich species (paragraph 11: R²=0.527 → 0.072, an 86% loss, across 607 root/rhizosphere/phyllosphere species) is a striking before/after quantitative result with no corresponding chart among the candidates.
 
 ## topics/subsurface-community-ecology.md
-- Distribution of genome sizes for deep-clay anchors (n=9-10) vs soil-baseline Bacillota_B genomes (n=62/140) — the reported means (4,110,038 bp vs 3,046,124 bp, Cohen's d=+1.39) and CheckM-rescaled counterparts are described only in prose and would benefit from a violin/box comparison.
-- Cross-validation R² comparison for the soil clay-shield test (low-clay R²=-0.268 vs high-clay R²=-0.292, 95% CI -0.423 to 0.161 across 5,441 samples) has no figure — a forest-plot or bar-with-CI would make the null result and its uncertainty legible.
+- No figure visualizes the deep-clay vs soil-baseline Bacillota_B genome-size comparison (mean 4,110,038 bp vs 3,046,124 bp, Cohen's d = +1.39; CheckM-rescaled 4,323,230 bp vs 3,233,715 bp, d = +1.37) — a box/violin plot of genome size by cohort would support this claim directly.
 
 ## topics/translational-microbiome-and-phage-therapeutics.md
-- Bootstrap 95% CI overlap across consortium size k=2 to k=5 (para 14: [0.514,0.588], [0.551,0.562], [0.534,0.578], [0.520,0.587]) — a distribution/interval plot would show visually that the optimum k=3 is not well separated from neighboring k values, which no candidate figure covers.
-- Host-range coverage matrix underlying the 22% of 17,672 phage-strain pairs susceptible and 26/188 (14%) resistant E. coli at ≤5% susceptibility (para 4) — this dense pairwise susceptibility matrix is described only in prose/summary statistics with no heatmap or matrix figure among candidates.
+- Scatter/correlation plot of metabolic overlap with PA14 vs planktonic inhibition across 142 CF sputum isolates (r=0.384, p=2.3×10⁻⁶) — no candidate figure shows this correlation, only isolate/genome-level distributions.
+- Bootstrap resampling interval plot for consortium size k=2..5 showing overlapping 95% CIs on the composite objective ([0.514,0.588], [0.551,0.562], [0.534,0.578], [0.520,0.587]) — the k-selection instability behind the k=3 optimum has no visual support among candidates.
+- Table/heatmap of the six Tier-A Crohn's target species against their phage-evidence tiers (clinical-trial-stage, lytic-literature, etc.) — dense categorical comparison referenced in prose with no matching figure.
