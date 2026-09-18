@@ -53,6 +53,11 @@ CATEGORIES = (
     "format",
     "unsupported",
 )
+# Objections that touch what the page claims. A page still carrying one of these
+# after its patch rounds is withheld; one carrying only presentational objections
+# is published, because a subject can otherwise lose its last page over an
+# undefined acronym. The deterministic gates are unaffected and still block.
+SUBSTANTIVE = frozenset({"number", "direction", "denominator", "caveat", "citation", "unsupported"})
 # Sections whose figures are plans or external citations, matching check.paragraphs
 # and the hub reading-path exemption of the uncited-figure gate.
 UNCITED_SECTIONS = {
@@ -401,6 +406,7 @@ def derived_page(
     # Paragraphs not yet covered by a review verdict; None means the whole page.
     unreviewed: set[int] | None = None
     for round_index in range(3):
+        reviewed = False  # gate issues are code-owned and never publish
         text = "\n\n".join(parts)
         issues = gate(text, contract, allowed=allowed, sources=sources, valid_ids=valid_ids)
         if extra is not None:
@@ -415,9 +421,14 @@ def derived_page(
                 note = "reviewer returned no usable verdict twice"
                 raise PageFailure(step, [Issue(category="format", note=note)], jobs[first:])
             issues, unreviewed = verdict, set()
+            reviewed = True
         if not issues:
             return text
         if round_index == 2:
+            if reviewed and not any(i.category in SUBSTANTIVE for i in issues):
+                summary = "; ".join(f"{i.category}: {i.note or i.quote}"[:120] for i in issues[:3])
+                print(f"  [PRESENTATION] {step} published with unresolved: {summary}", flush=True)
+                return text
             raise PageFailure(step, issues, jobs[first:])
         try:
             parts, changed, remap = patch(

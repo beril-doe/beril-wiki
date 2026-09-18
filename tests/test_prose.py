@@ -458,3 +458,55 @@ def test_paced_get_gives_up_after_its_last_try(monkeypatch):
 
     with pytest.raises(http.client.IncompleteRead):
         literature.paced_get("http://example/efetch")
+
+
+def test_presentation_only_objections_publish_after_the_patch_rounds(monkeypatch, tmp_path):
+    """A subject must not lose its last page over an undefined acronym."""
+    reject = json.dumps(
+        {
+            "accepted": False,
+            "issues": [
+                {"paragraph": 1, "category": "format", "quote": "SNIPE", "note": "undefined"}
+            ],
+        }
+    )
+    configure(
+        monkeypatch,
+        tmp_path,
+        {
+            "x": GOOD,
+            "x/review": reject,
+            "x/patch/1": lambda m: _patch_reply(m, {"1": "A lead that is supported."}),
+            "x/patch/1/review": reject,
+            "x/patch/2": lambda m: _patch_reply(m, {"1": "A lead that is still supported."}),
+            "x/patch/2/review": reject,
+        },
+    )
+    out = run("x")
+    assert "still supported" in out
+
+
+def test_substantive_objections_still_withhold_the_page(monkeypatch, tmp_path):
+    reject = json.dumps(
+        {
+            "accepted": False,
+            "issues": [
+                {"paragraph": 1, "category": "format", "quote": "SNIPE", "note": "undefined"},
+                {"paragraph": 1, "category": "unsupported", "quote": "claim", "note": "no support"},
+            ],
+        }
+    )
+    configure(
+        monkeypatch,
+        tmp_path,
+        {
+            "x": GOOD,
+            "x/review": reject,
+            "x/patch/1": lambda m: _patch_reply(m, {"1": "A lead that is supported."}),
+            "x/patch/1/review": reject,
+            "x/patch/2": lambda m: _patch_reply(m, {"1": "A lead that is still supported."}),
+            "x/patch/2/review": reject,
+        },
+    )
+    with pytest.raises(P.PageFailure):
+        run("x")
