@@ -277,6 +277,8 @@ def test_large_collection_context_is_bounded_and_retrievable():
         ("conflicts/a/review", "review"),
         ("topics/a/patch/2", "writing"),
         ("topics/a/patch/2/review", "review"),
+        ("topics/a/patch/2/verify", "review"),
+        ("topics/a/patch/2/verify/again", "review"),
         ("lit/a/queries/repair", "queries"),
         ("figures/topics/a.md", "figures"),
         ("write/concepts/a.md/repair/science-review", "review"),

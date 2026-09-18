@@ -215,20 +215,33 @@ unsupported) and a quote.
 
 A rejected candidate is patched, not rewritten: the writer receives the numbered
 candidate, the same pack and the latest issues, and returns replacement paragraphs
-keyed by index against the candidate's base hash. Gates run again, and only the
-replaced paragraphs are reviewed again. Two patch rounds are allowed, each seeing
-the latest verdict; a page that has not converged raises a page failure. The
-stage records it (the run summary and `.agentic/failures.json`, with its issues
-and job keys), keeps the previously accepted page or skips a new one, and
-continues. Promotion proceeds with failures reported unless `--strict-pages` is
+keyed by index against the candidate's base hash. An issue saying the evidence does
+not support a claim is an instruction to delete it, not to reword it.
+
+Only the first review is open-ended. Every round after it is a **verification**, not
+a second review: the reviewer receives the issues it raised and the revised
+paragraphs, and answers whether each is closed and whether the revision introduced a
+factual error. An objection it already raised stays open whatever its category; a
+newly introduced one counts only when it touches what the page claims. The open list
+can therefore shrink or hold but never grow on settled text, which is what lets the
+budget rise to five patch rounds.
+
+A page that still carries an objection after its rounds is **salvaged, not dropped**:
+the paragraphs still objected to are removed, an editorial note naming the categories
+takes their place, and the rest of the page publishes. Headings are never removed, and
+a removal that would break a gate other than length, or leave no prose behind, is
+refused; only then does the page fail. Salvages are listed in
+`.agentic/salvaged.json`, failures in `.agentic/failures.json`, both with issues and
+job keys. A failed page keeps the previously accepted version or is skipped, and the
+stage continues. Promotion proceeds with failures reported unless `--strict-pages` is
 set, in which case a stage with failures stops the run. The API pipeline shares
 the same gates and patch rounds but has no model reviewer.
 
 Invalid plans, topic proposals and integration candidates get **at most one
 correction**, and a repaired candidate receives a fresh review. Extraction
 rejection, unknown usage, authentication failures and other operational errors
-still stop the run. The worst case for a derived page is six jobs: a draft, a
-review, and two patch rounds each with its own review.
+still stop the run. The worst case for a derived page is twelve jobs: a draft, one
+open review, and five patch rounds each with its own verification.
 
 Durable raw job results and evidence avoid repeating accepted inference. Tool
 reads track file hashes; searches track searchable inventories, so negative

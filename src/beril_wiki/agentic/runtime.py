@@ -56,9 +56,10 @@ def model_policy(config: dict) -> dict[str, str]:
 
 
 def model_for(config: dict, step: str) -> str:
-    """Route by job role; a repair, retry or patch retains its role and review is separate."""
+    """Route by job role; a repair, retry or patch keeps its role. Review and verify
+    are the reviewer's own jobs and route to it."""
     step = re.sub(r"/patch/\d+$", "", step.removesuffix("/again").removesuffix("/repair"))
-    if step.endswith(("/science-review", "/review")):
+    if step.endswith(("/science-review", "/review", "/verify")):
         role = "review"
     elif step.startswith("extract/"):
         role = "extraction"
