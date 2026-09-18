@@ -37,6 +37,18 @@
       }
     ]
   },
+  "conflicts/conflict--classifier-database-compatibility-in-taxonomic-quantification--8df7057b.md": {
+    "csv_flags": [],
+    "page_hash": "e1aa66cd28fd17a1",
+    "placements": [
+      {
+        "after_paragraph": 4,
+        "caption": "Variance partition and predictor importance",
+        "file": "figures/fig03_variance_partition.png",
+        "project": "euk_in_prok_correlates"
+      }
+    ]
+  },
   "conflicts/conflict--cofitness-network-architecture--05940aec.md": {
     "csv_flags": [
       "The FBA-predicted essentiality (0%) versus 1.76\u00d7 higher Complex I flux and the 30/51 unmapped-reaction count discussed on the model side lack any figure showing per-gene FBA essentiality/flux distribution for the 51 quinate-specific genes \u2014 a scatter or bar chart of predicted essentiality vs. flux r"
@@ -896,6 +908,13 @@
         "project": "pangenome_openness"
       }
     ]
+  },
+  "conflicts/conflict--phage-defense-syndromes-and-arms-race--d33388e9.md": {
+    "csv_flags": [
+      "A paired bar chart comparing prevalence estimates for each defense system (CRISPR-Cas, DISARM, SNIPE, etc.) under description-level annotation versus diagnostic-marker detection (e.g., 96% vs ~55% for CRISPR-Cas via Cas1 PF01867) would directly visualize the core tension this page documents, but no "
+    ],
+    "page_hash": "38ba1b4a1e9ddce2",
+    "placements": []
   },
   "conflicts/conflict--phenotype-database-coverage-bias--539e6d8e.md": {
     "csv_flags": [],

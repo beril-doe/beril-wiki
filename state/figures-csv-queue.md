@@ -175,6 +175,9 @@ Pages the placement pass flagged as needing a chart for evidence with no figure.
 - A table/plot comparing the reported correlation strengths (or R²/effect sizes) for each candidate determinant of openness — metabolic variability, environment (AlphaEarth), phylogeny, and conservation — across the different projects, since the page describes these as differing in strength and robust
 - A visualization of the AlphaEarth species-coverage distribution (the 6.8% coverage-eligible fraction vs. excluded species) to make the coverage-limitation caveat on environmental associations concrete rather than stated only as a percentage.
 
+## conflicts/conflict--phage-defense-syndromes-and-arms-race--d33388e9.md
+- A paired bar chart comparing prevalence estimates for each defense system (CRISPR-Cas, DISARM, SNIPE, etc.) under description-level annotation versus diagnostic-marker detection (e.g., 96% vs ~55% for CRISPR-Cas via Cas1 PF01867) would directly visualize the core tension this page documents, but no 
+
 ## conflicts/conflict--phylogenetic-confounding-of-pangenome-associations--782017fa.md
 - A table/bar chart of family-level test outcomes (tested vs untestable vs significant, with the 20-of-141 significant families and the untestable-due-to-limited-environmental-breadth families) would visualize the core disputed statistic, which is currently described only in prose.
 

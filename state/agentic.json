@@ -527,7 +527,7 @@
         "wiki/authors/priya-ranjan.md": "9ed06abc18b0ee21ec261fc8b99a044caaa55469381978be623eca51cc919c96",
         "wiki/authors/sierra-moxon.md": "5e2201cab1b07edd509136ca1b0e67a9db1eb964875eac75aa46fc5979def176"
       },
-      "semantic": "7fa78dc7840f597fefdc7ed42260d55bf04c4f8dd5e35a6985ab2d8d002439d6"
+      "semantic": "48b838bee1c03a7b080382aa964f9115aa15736832605c30dfd299139e5067be"
     },
     "conflicts": {
       "inputs": "470fe50294833e56495995a195582784d8b9fc5c7e7835a689292b2b3641de0f",
@@ -535,6 +535,7 @@
         "wiki/conflicts/conflict--antimicrobial-resistance-fitness-cost--3139de09.md": "f9877fa6e5376a4f8d2828d51e372d0b09b0811b61bbb1ee2dd30f332b39349f",
         "wiki/conflicts/conflict--antimicrobial-resistance-fitness-cost--cded18a3.md": "56453ec222618ee12692dc8d54f618fc80a249e9e0f0c81395399ced2935ac93",
         "wiki/conflicts/conflict--biosynthetic-self-sufficiency-and-cultivation--6f70a5cd.md": "8741980a837665f86668dcc3a39b341af89eda941ffe3c243b49529614010b88",
+        "wiki/conflicts/conflict--classifier-database-compatibility-in-taxonomic-quantification--8df7057b.md": "e1aa66cd28fd17a1b7263a07d580302761c455f6435ef9ec32282772e75a2fe6",
         "wiki/conflicts/conflict--cofitness-network-architecture--05940aec.md": "0101647131fb4673e0ad1f3bdf887e3181b3f1d82871218d3f0a05753074a26a",
         "wiki/conflicts/conflict--cofitness-network-architecture--268ee500.md": "41e4984591329065f2f892b5c8f8e31a1aa95e32ba51d1272655233a621b125f",
         "wiki/conflicts/conflict--cofitness-network-architecture--2d1b0ad4.md": "9eb1d34698acedf840ca02fd8055d37eb117adbb348758b525cda5af1de3e262",
@@ -607,6 +608,7 @@
         "wiki/conflicts/conflict--pangenome-core-boundary-and-clade-size-bias--f5ff24c2.md": "81d6a6ee3c864d08f6f4d44c3f91c8efbe02343c96d038c0ec69685dcff2186c",
         "wiki/conflicts/conflict--pangenome-openness-determinants--0ec0a9e1.md": "eff246dd6506bb97816c039dcca30323c0be5d63e34b4cc42c204a5ffd8a1d4c",
         "wiki/conflicts/conflict--pangenome-openness-determinants--813fc4ab.md": "f07b85b5d6ca94350cca15d44ef3400625f3d7372bdb35b602804554d7b8e8d5",
+        "wiki/conflicts/conflict--phage-defense-syndromes-and-arms-race--d33388e9.md": "38ba1b4a1e9ddce223c8ce81b97a322ab8f66406067a475f3d021a1b04c0b9d2",
         "wiki/conflicts/conflict--phenotype-database-coverage-bias--539e6d8e.md": "90de98b27272483348ae3bd7366721e77e0bebef4aab259c177162c426b86fa9",
         "wiki/conflicts/conflict--phylogenetic-confounding-of-pangenome-associations--5a54a7b7.md": "f82100d7389b7a083fb9fb4fb41fc807d1744d411836a4c098ec6bba29938d88",
         "wiki/conflicts/conflict--phylogenetic-confounding-of-pangenome-associations--782017fa.md": "892bc4a19b11a43d0cc0e3e4a3d08dd5e74dcc1e1393734325966b0971910850",
@@ -621,7 +623,7 @@
         "wiki/conflicts/conflict--taxonomic-resolution-dependent-functional-inference--326d40ea.md": "ace20d9df1b6b16e38a40152e9658419e4afb6c078c56b691d525d3eb01f3ff9",
         "wiki/conflicts/conflict--taxonomic-resolution-dependent-functional-inference--4b4aa6ed.md": "cf244b017481f683563cc597346edf9a33b6da1cfda42868c34cbea20c37abf6"
       },
-      "semantic": "7a8b1e434aa140b01cf204a89a68a05ec9a384cfa214de257bd906b4975345f0"
+      "semantic": "5b9cb47fb31fceee793a7461e509d250018a6be446b75a3560f19df27421f653"
     },
     "literature": {
       "inputs": "3feb4a192c46a16a5764303fecc8a59dd329a9f03e5497e0f1e4f010c32cd325",
@@ -637,10 +639,10 @@
         "wiki/topics/subsurface-community-ecology.md": "1f156b8353caa61bdf2ad6fb56ad4d49454dfc87a3b79465edf1a60bd2d1beab",
         "wiki/topics/translational-microbiome-and-phage-therapeutics.md": "aee3c7a2215c68c692ebdd66dde7f941de145dbcf42283a6f1955f0a9dcf9bb5"
       },
-      "semantic": "1594a7f35bbb354d0169d3542e13f043beacaa038993a83fce36e377e1144ba5"
+      "semantic": "27a368b97cda0fc9668c736fb910168cd9d55638bff48de71f6658a2625ae932"
     },
     "topics": {
-      "inputs": "4128d1c094635062f2ded3003d247be7fbb332eac89075ace00f8225f4d1c357",
+      "inputs": "ce7b0d6e8675f385f008753e144833b8abfdb7e86198c0f06eb412118cc409b2",
       "outputs": {
         "wiki/index.md": "597a9c87882f5feacf08c484c153ac9d801d013887b27c8e645a91a97c7739a1",
         "wiki/topics/data-infrastructure-provenance-and-research-practice.md": "48d0dcd8c453c010745eb227dafde737acd91a62d7ff64d80d8ef46637ce1f81",
@@ -654,15 +656,15 @@
         "wiki/topics/subsurface-community-ecology.md": "6b685b65ef9c30e94f08849eb89f4d52b9999cf449ccbec84f539c2393c32b23",
         "wiki/topics/translational-microbiome-and-phage-therapeutics.md": "b483f2ee3fb861d235b884e55eb3385bf1c7c799aebd12756c9d61e28e08c31c"
       },
-      "semantic": "99f6feb079c4c15e01d66d7500696646879c0a0e00debfb35bf792bdffa93b59"
+      "semantic": "5e6c1d91a46f047ae2dfa6097d5c36f9b151fd4a27bc1c30c3ff160491ca7619"
     }
   },
   "figure_outputs": {
-    "state/figures-placements.json": "28bb19feef73009e78128e885b59c10f4fd0049b3fee585efdbf4677aee43c66",
-    "state/figures-state.json": "589336b4eaafdc8a2afe0efa02ea7d5ddacf59e8ff097986e95f61a772f18af0"
+    "state/figures-placements.json": "115acaa50d91249520d548d407430c0ea75fe4b237606f6143cdbbf7b00977c9",
+    "state/figures-state.json": "cb342a69983092b62cc93764333600ed171cb7eeabc8c87b3934dde255e31000"
   },
-  "figure_revision": "8903efb0456dde5738bb14b77327b8a981581abbe7bef3b23fcdd9608edcf985",
-  "fingerprint": "15616aa079e49ba996729c653e2b6d68e1851c8db514c0fea19f7e97aa55e1f5",
+  "figure_revision": "c29a490e99cf20cbe2e5f14cd65e29d314c95b9015f0fdb12695b45025907cf0",
+  "fingerprint": "54395fd9c921f65e70ceb3616331f5ae0f82dfa67f1c2f64fc7326c2da31b3ad",
   "models": {
     "extraction": "claude-opus-5",
     "figures": "claude-sonnet-5",
