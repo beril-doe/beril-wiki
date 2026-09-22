@@ -70,14 +70,14 @@
     "wiki/concepts/phage-defense-syndromes-and-arms-race.md": "7df482fb4ef3286ae325acef90be1dc63c23d1f84e1d85d202e8ebda342f2e0d",
     "wiki/concepts/phage-therapy-evidence-translation.md": "9e3ed5ceeb97ce3cf32cec07df641a179a886bd5202826970dd5b51a075ec49a",
     "wiki/concepts/phb-granule-ecology.md": "c551d5ebb75deddbd1da709b7a972ddd5a2df3fe3dc00779f7dddc7a15675049",
-    "wiki/concepts/phenotype-database-coverage-bias.md": "6e1c210974625acc13397b37f612ef732880ee172e46e7e1c2394998e42c97db",
+    "wiki/concepts/phenotype-database-coverage-bias.md": "8c85c254f12d4d9d2795f039dc9d6c5cf8748f2e6674e10deb752017801abd14",
     "wiki/concepts/phylogenetic-confounding-of-pangenome-associations.md": "1efa09bd3aea08187e92ab370de09a45ed2aff5b1444cdac73b4655a624c6406",
     "wiki/concepts/pooled-run-pseudoreplication-and-metadata-label-noise.md": "274ecc96c743f67d011c020deaad271940081eef080145ac51ab15dc894d5de1",
     "wiki/concepts/provenance-aware-resource-discovery.md": "440d59ebcc4366f87705b0b02ae8b897e2effcd5fd9d49f3d32aff39dc629869",
     "wiki/concepts/research-attention-inequality.md": "ff8b2f193373c47983e8f818658ab741c697592d6ba53582e12e447bb58fec7f",
     "wiki/concepts/resistance-island-coinheritance.md": "ff2fab7df18fc60da6e7d4b1b50ec4927f25114cec7c6d2c1443cff31d0da9cc",
     "wiki/concepts/respiratory-capacity-and-nadh-load.md": "979b621f74f45688a234a87188b054fcd6e8231f882784657bff0bfbda15d159",
-    "wiki/concepts/sample-size-aware-phenotype-consensus.md": "0741f9b2a62cac5fcdd471b56404ce18da5015c40550b1042b9d36bec973fc3c",
+    "wiki/concepts/sample-size-aware-phenotype-consensus.md": "bd273d8c8a217a4f18d92e9f7cfb2eaf7af284ceb1a3330c60506d611ddbc43e",
     "wiki/concepts/sampling-depth-and-downsampling-effects.md": "cf81f1b5d0d97df45caf94b3945976133213572060455fbdec254bfef39e148d",
     "wiki/concepts/scale-dependent-mobile-element-associations.md": "30a297328958a46e771226cfc346a0cddafc1b20f282e65dd233e2e252c98afa",
     "wiki/concepts/selection-on-outcome-leakage.md": "0de06090c5cc45784fed97357790cd1a0c75b58ce53df547092a2af0a87f8cd9",
@@ -266,7 +266,7 @@
     "wiki/entities/mediterraneibacter-gnavus.md": "dd492b55a31c18c52f996e77feed16e1ecb7830fe23ccfc265e329b9b66774c4",
     "wiki/entities/mercury.md": "a759c7f35d7b41755b4707e9ae2ccb343e05962dbac48a8fd9ebeaac9fd59a15",
     "wiki/entities/mesorhizobium.md": "84b5c58b5ecb1bb6f871cd5e5a3e54b6e53e8e34b6a23135fd51e67f4e269cb3",
-    "wiki/entities/metal-fitness-atlas.md": "88b501287ec25692ffa2ea86652fe0bac31383597912c4a10fdae4bff2337c2f",
+    "wiki/entities/metal-fitness-atlas.md": "9ade841ebca93fbc1396b127780d461e9e4ed7ce89ab47b128dcb9b51eb9d88d",
     "wiki/entities/metaphlan3.md": "a6ecd65039ca0cf5d4224e494c6ad482d7876a0506257f599a363e7845511768",
     "wiki/entities/methanococcus-maripaludis.md": "00935773b3ff893f39146e509c4b46e9b4299f5db089b0d681d62051d4e1d3d8",
     "wiki/entities/methanoperedens.md": "8567f7a53f1ac9589cc5abae5b4a420d269df54868aa565ee4c72887c0c6a60b",
@@ -439,7 +439,7 @@
     "wiki/summaries/annotation_gap_discovery__REPORT.md": "d2126acf30967e8e757dd9879c86c34057da8b09596caf3b73fe832bfdd0e783",
     "wiki/summaries/aromatic_catabolism_network__REPORT.md": "1ec8fa6c76bfcddfe88e095a9dfb42aa1f06c782d647d1501805f3a0481d5697",
     "wiki/summaries/bacdive_metal_validation__REPORT.md": "6c79ec9ca42e756fb2d69fe89a742d50f68c10c6af1fc1915efaf7c5d1aacc96",
-    "wiki/summaries/bacdive_phenotype_metal_tolerance__REPORT.md": "6d5c545b80db35763cc20aa20b6da921867d76dfe5d9b765f1468de8e76a0607",
+    "wiki/summaries/bacdive_phenotype_metal_tolerance__REPORT.md": "694fb6f4d0164f9bc6cbf467d3ccc2c82d7d59fb42e87a5911622e14cb6349d4",
     "wiki/summaries/bacillota_b_subsurface_accessory__REPORT.md": "d28733b8207904f2d56e5b0d8ff3114bb5de7f39f5933e1df1c71d4c8291275f",
     "wiki/summaries/berdl_data_atlas__REPORT.md": "8a3b6d28e132b86aaad91504cf7acd3fabc029efd47a2dc54c650fdddd5515eb",
     "wiki/summaries/caulobacter_fur_lipida_loss__REPORT.md": "1e61a5ca939c38c0e32bc1a5791914f2e7ee7566ccd8cf6b9c68dcf37503f586",
@@ -505,7 +505,7 @@
   },
   "editorial": {
     "authors": {
-      "inputs": "c9788b330702a1a27113e1c1dbbf158ea3377b98a40cd06febcd4e0355c97b0f",
+      "inputs": "5a89bc897002a6e6e2b31bb73e554e7e6d9972b601b05b59d0229ae6060d5711",
       "outputs": {
         "wiki/authors/adam-deutschbauer.md": "8a77393fd2d5e6c94c30b0b17cfcd19a94f43bcc1dc05bc600292c0c934a7749",
         "wiki/authors/adam-p-arkin.md": "eaa4133e7c93b467179ecd477ac0d704a7229c047ba61c38a7ab4fd911f8992d",
@@ -530,7 +530,7 @@
       "semantic": "76995ea49e25982beee5a9137d0320099a11faf5f9f755a299893175fb915448"
     },
     "conflicts": {
-      "inputs": "470fe50294833e56495995a195582784d8b9fc5c7e7835a689292b2b3641de0f",
+      "inputs": "12110c751654ad4f28c65456ada53e75386ecfe00f5a9aebd25800e95e85a653",
       "outputs": {
         "wiki/conflicts/conflict--antimicrobial-resistance-fitness-cost--3139de09.md": "f9877fa6e5376a4f8d2828d51e372d0b09b0811b61bbb1ee2dd30f332b39349f",
         "wiki/conflicts/conflict--antimicrobial-resistance-fitness-cost--cded18a3.md": "ad9e72c217eafc2ab16e4dbf6096500a4fbcdfb20ac13acb75a246ad1734c838",
@@ -651,7 +651,7 @@
       "semantic": "c41f8094ae1ff32923a3ec0778a0f79a71a97abd923c60b5006a41f148219569"
     },
     "topics": {
-      "inputs": "f5691dd92ec1499ce59d30055257978d9fcf3aef232a8f21a686997c957efbbf",
+      "inputs": "0b1875b00fc3dbe2c83d5644539ddb9f2de55144630b9e65fa92e2f65effdcd5",
       "outputs": {
         "wiki/index.md": "2c38b7d61694c6886b01e1dc8b72bb6a2dd1074f2cb80eb76c72299d00d931e7",
         "wiki/topics/data-infrastructure-provenance-and-research-practice.md": "6974c77144753b57236b1417790818fd1bb2072b93729f35bdae1eadddcc2172",
@@ -672,11 +672,11 @@
     }
   },
   "figure_outputs": {
-    "state/figures-placements.json": "43eeff7cda4c6d8733cec0198b2b2ebe82e705e5016e099a00e9af0770d316b0",
-    "state/figures-state.json": "e5ec328ece6335e1c30ff0e1003ba3ed6c49932dadb29f3802b20a25dd3d4f8d"
+    "state/figures-placements.json": "2e91fda11b6ca3084c85d0b4a2304296d28c287fe3d8e11a6f24eb5950c4d720",
+    "state/figures-state.json": "2960d91ffd59db542b5072cd85cdce7bdb166276b42008e5d834201eca3bc9da"
   },
   "figure_revision": "1d44b5592deeabe40f693d512ad83013875c5c0161e4a574f3946a145d367c31",
-  "fingerprint": "9826809b30e526370e9b3ddc33dc53529ba78966af1199fcfa0b8635d97892b9",
+  "fingerprint": "ebf84aa7d366a36d53f22279c2625da43cfa7ef2b79b5bd5c137b0b3b2a687e1",
   "models": {
     "extraction": "claude-opus-5",
     "figures": "claude-sonnet-5",

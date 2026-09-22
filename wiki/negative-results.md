@@ -146,6 +146,8 @@ The Metal Fitness Atlas scores are genome-based predictions rather than direct m
 
 Species-name matching recovered 5,647 of 27,702 GTDB species (38.4%); GCA accession matching was not implemented and could recover additional links. [src: bacdive_phenotype_metal_tolerance]
 
+> **Erratum.** The report gives 38.4% for two different denominators. 37,368 of 97,334 matched strains is 38.4%; 5,647 of 27,702 GTDB species, the figure this sentence uses, is about one fifth, roughly half what the percentage suggests. [src: bacdive_phenotype_metal_tolerance]
+
 The 12-organism direct validation was underpowered: all Gram-typed organisms were Gram-negative, preventing within-set testing of H1a. [src: bacdive_phenotype_metal_tolerance]
 
 BacDive testing is biased toward well-studied organisms, including Pseudomonas and Escherichia coli, which have many phenotype tests, whereas poorly studied species have sparse data. [src: bacdive_phenotype_metal_tolerance]
@@ -934,4 +936,5 @@ The snapshot is frozen in 2018 and was accessed through the Wayback Machine, so 
 GapMind pathway matching failed because pathway names did not contain simple metabolite names; a dedicated pathway-to-metabolite mapping table is needed. WoM coverage of *E. coli* BW25113 is especially limited despite the richness of its Keio Fitness Browser data, with only 12 WoM observations focused on sulfur and cysteine. [src: webofmicrobes_explorer]
 
 The report proposes obtaining the current WoM dataset from GNPS2 or the Northen laboratory; building a GapMind pathway-to-metabolite lookup table; testing gene fitness against metabolites produced by `pseudo3_N2E3` and `pseudo13_GW456_L13`; testing whether higher `E/(E+I)` ratios associate with more open pangenomes or accessory genes; and re-ingesting WoM when consumption data become available. [src: webofmicrobes_explorer]
+
 

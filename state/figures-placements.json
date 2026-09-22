@@ -1367,10 +1367,10 @@
   },
   "summaries/bacdive_phenotype_metal_tolerance__REPORT.md": {
     "csv_flags": [],
-    "page_hash": "6d5c545b80db3576",
+    "page_hash": "694fb6f4d0164f9b",
     "placements": [
       {
-        "after_paragraph": 9,
+        "after_paragraph": 6,
         "caption": "Univariate effect sizes",
         "file": "figures/univariate_effect_sizes.png",
         "project": "bacdive_phenotype_metal_tolerance"
