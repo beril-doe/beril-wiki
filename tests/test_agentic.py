@@ -420,6 +420,7 @@ def test_runner_stage_order_noop_and_failed_gate(tmp_path, monkeypatch, failed_s
         "literature",
         "authors",
         "names",
+        "errata",
         "figures",
         "check",
     ]

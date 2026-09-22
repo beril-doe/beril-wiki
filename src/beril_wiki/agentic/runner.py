@@ -283,7 +283,13 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
             [
                 compiler_revision(),
                 model_signature(config, CORE_MODEL_ROLES),
-                manifest(work, ("contract",)),
+                # An erratum corrects a figure beside the claim; it never changes what
+                # the integration wrote, so recording one must not re-integrate 75 reports.
+                {
+                    p: h
+                    for p, h in manifest(work, ("contract",)).items()
+                    if p != "contract/errata.yaml"
+                },
             ]
         )
         # Compiler/config edits invalidate previous accepted core outputs.
@@ -312,6 +318,7 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
         # Accepted snapshots are recomputed after final naming and figure postprocessing.
         curate(work, agent, changed, refresh, prior)
         refresh("names", [str(work)])
+        refresh("errata", [str(work)])
         figure_state = ("state/figures-placements.json", "state/figures-state.json")
         figure_revision = stage_revision(work, "figures", config)
         force_figures = accepted.get("figure_revision") != figure_revision or accepted.get(

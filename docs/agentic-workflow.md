@@ -147,8 +147,9 @@ existing membership. The accepted decision lives in versioned
 members and colliding title slugs are rejected. Agentic generation uses these
 chosen groups directly. The API pipeline retains graph clustering.
 
-The host handles human concept decisions, metadata joins, naming, figure
-placement and the final strict check. Figure selection and entity merge prose
+The host handles human concept decisions, metadata joins, naming, errata
+(`contract/errata.yaml`, shown beside every claim that repeats a figure a report
+got wrong), figure placement and the final strict check. Figure selection and entity merge prose
 still use accounted SDK jobs. The old enrichment/consolidation and blanket repair
 sweeps are replaced by integration planning and candidate correction. Outputs
 remain compatible with existing provenance and Quartz tools. This is bounded

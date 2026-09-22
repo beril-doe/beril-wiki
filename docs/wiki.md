@@ -55,6 +55,10 @@ from the accepted wiki without editing it:
 - Saved figure placements use committed files under `wiki/figures/`.
 - Pages receive provenance callouts and evidence counts. These counts do not
   represent human review or confidence ratings.
+- A `> **Erratum.**` callout under a paragraph means the cited report states
+  that figure wrongly. The reports are archived unedited, so the correction is
+  recorded in `contract/errata.yaml` and placed beside every claim that repeats
+  the figure; the paragraph above it copies the report faithfully.
 
 Run [`scripts/build_quartz.sh`](../scripts/build_quartz.sh) after local
 acceptance to render the site. Publishing committed content is separate from

@@ -1,0 +1,33 @@
+# Known errors in the source reports, shown beside every figure they reach.
+#
+# wiki/sources are archived unedited: the About page promises it, and stages.names
+# leaves them alone for the same reason. So an error a report makes about its
+# own numbers cannot be fixed at the source. The compiler copies a report's
+# figures faithfully, and the checker verifies only that a figure appears in the
+# source it cites, so a report's own arithmetic slip passes every gate and
+# reaches every page that cites it. Codex found one such slip on the first full
+# compilation: a percentage stated for one denominator and reused for another.
+#
+# This file is where a person records the error. stages.errata runs after every
+# compile and appends a visible erratum under each paragraph that cites the
+# source and states the figures listed in `contains`, all of them, so a figure a
+# report uses correctly elsewhere is left alone. It strips and re-adds its own
+# callouts each pass, so editing a note here takes effect on the next compile.
+#
+# A note may only use figures the report itself states: the checker verifies
+# every figure on a page against its cited source, and the erratum is cited to
+# the source it corrects. Give the correction in the report's own numbers, or in
+# words ("about one fifth"); stages.errata refuses a note that introduces a
+# figure the source lacks. Editing this file re-runs only the cheap post-passes
+# (names, errata, figures, check), never source integration.
+#
+# Match on enough tokens to single out the wrong statement. Figures are compared
+# as numbers, so "38.4%" and "38.4" agree; anything else is matched as text.
+
+- source: bacdive_phenotype_metal_tolerance
+  contains: ["38.4%", "27,702"]
+  note: >-
+    The report gives 38.4% for two different denominators. 37,368 of 97,334
+    matched strains is 38.4%; 5,647 of 27,702 GTDB species, the figure this
+    sentence uses, is about one fifth, roughly half what the percentage
+    suggests.

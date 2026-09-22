@@ -81,6 +81,12 @@ echo "== authors" | tee -a "$LOG"
 echo "== names" | tee -a "$LOG"
 "${PY[@]}" -m beril_wiki.stages.names "$REPO" | tee -a "$LOG"
 
+# A report's own arithmetic error passes every gate, because the checker only
+# asks whether a figure appears in the source. contract/errata.yaml is where a
+# person records one; this places it beside every claim that repeats it.
+echo "== errata" | tee -a "$LOG"
+"${PY[@]}" -m beril_wiki.stages.errata "$REPO" | tee -a "$LOG"
+
 # Compile's resume-skip is per document, so a page that mis-attributes one
 # number stays broken while the document that fixes it counts as integrated.
 # This runs before check so those pages are repaired rather than merely

@@ -65,7 +65,7 @@ The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 | `scripts/` | `setup.sh`, `run_pipeline.sh` and `build_quartz.sh` |
 | `tests/` | deterministic checks and recorded-response workflow tests |
 | `theme/` | the Quartz page frame (one component per page region) and the stylesheet (one partial per region) |
-| `contract/` | the editorial contract injected into every compile, and the concept decisions manifest |
+| `contract/` | the editorial contract injected into every compile, the concept decisions manifest, and the errata a person has recorded against the source reports |
 | `state/` | per-stage caches that make the pipeline incremental |
 | `.agentic/` | ignored runtime ledger, raw results, receipts, and candidate workspace; preserve when resuming |
 | `docs/` | curator operating guide, HTML walkthrough, and wiki-format reference |
