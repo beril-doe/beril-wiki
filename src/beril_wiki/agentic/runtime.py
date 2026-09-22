@@ -445,6 +445,19 @@ class EvidenceTools(ReadTools):
         return result
 
 
+def contract_manifest(root: Path) -> dict[str, str]:
+    """The contract files that define what accepted prose means.
+
+    Every hash that decides whether accepted work is reusable takes this: job
+    cache keys, each stage's semantic revision and the scientific revision. It
+    excludes contract/errata.yaml, because an erratum corrects a figure beside a
+    claim and changes nothing a writer or reviewer was told; recording one must
+    not miss every cached job, redraft every page or re-integrate every report.
+    The run fingerprint keeps the file, so editing it still triggers a run in
+    which only the cheap post-passes see it."""
+    return {p: h for p, h in manifest(root, ("contract",)).items() if p != "contract/errata.yaml"}
+
+
 def search_inventory(root: Path, scope: str) -> dict[str, str]:
     """Hash only searchable Markdown; never read figure binaries or source copies."""
     if scope not in ("wiki", "staging"):
@@ -560,7 +573,7 @@ class Runtime:
         # Source/tool changes cannot reuse answers grounded in an older snapshot. A
         # tool-free job saw only its packed prompt, so only that prompt keys its cache.
         profile = tool_profile(step)
-        inputs = manifest(self.root, ("contract",))
+        inputs = contract_manifest(self.root)
         if profile != "none":
             for path in (self.root / "staging").glob("*.md"):
                 if path.stem.removesuffix("__REPORT") in payload:

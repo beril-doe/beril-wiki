@@ -15,6 +15,7 @@ from beril_wiki.agentic.runtime import (
     SYSTEM,
     Runtime,
     WorkflowError,
+    contract_manifest,
     digest,
     manifest,
     model_signature,
@@ -78,7 +79,7 @@ def stage_revision(root: Path, name: str, config: dict) -> str:
     return digest(
         [
             model_signature(config, roles),
-            manifest(root, ("contract",)),
+            contract_manifest(root),
             SYSTEM,
             *[
                 ast.dump(ast.parse(textwrap.dedent(inspect.getsource(helper))))

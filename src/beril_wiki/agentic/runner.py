@@ -24,6 +24,7 @@ from beril_wiki.agentic.runtime import (
     Runtime,
     WorkflowError,
     atomic_json,
+    contract_manifest,
     digest,
     file_hash,
     fsync_dir,
@@ -283,13 +284,7 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
             [
                 compiler_revision(),
                 model_signature(config, CORE_MODEL_ROLES),
-                # An erratum corrects a figure beside the claim; it never changes what
-                # the integration wrote, so recording one must not re-integrate 75 reports.
-                {
-                    p: h
-                    for p, h in manifest(work, ("contract",)).items()
-                    if p != "contract/errata.yaml"
-                },
+                contract_manifest(work),
             ]
         )
         # Compiler/config edits invalidate previous accepted core outputs.
