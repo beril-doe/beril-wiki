@@ -358,7 +358,10 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                 "character offsets, preserving numbers, units, denominators and uncertainty. "
                 "Quotes must start in the ownership range and may end in the supplied overlap. "
                 "Retrieve an intact passage if a sentence extends beyond the overlap. "
-                "Do not silently omit evidence. "
+                "Do not silently omit evidence. The supplied text already carries exact "
+                "offsets, so do not spend reads re-checking it. You have at most "
+                f"{max(1, agent.config.get('max_turns', 6) - 1)} tool turns and 100KB of "
+                "reads in total; always finish with the JSON. "
                 f"Return JSON matching {json.dumps(Evidence.model_json_schema())}.\n"
                 + json.dumps(
                     {
