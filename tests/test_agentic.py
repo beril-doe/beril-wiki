@@ -104,6 +104,18 @@ def test_chunks_and_exact_quote_validation():
             "empty_reason": "",
         },
     )
+    snapped = validate_evidence(
+        text,
+        0,
+        13,
+        {
+            "findings": [
+                {"quote": "βγ\n", "start": 0, "end": 3, "claim": "test", "kind": "finding"}
+            ],
+            "empty_reason": "",
+        },
+    )
+    assert (snapped.findings[0].start, snapped.findings[0].end) == (1, 4)
     with pytest.raises(WorkflowError, match="quote"):
         validate_evidence(
             text,

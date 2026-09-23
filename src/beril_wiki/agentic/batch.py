@@ -67,12 +67,19 @@ def validate_evidence(text: str, start: int, end: int, obj: dict) -> Evidence:
     evidence = Evidence.model_validate(obj)
     if not evidence.findings and not evidence.empty_reason.strip():
         raise CandidateError("empty extraction must explain why no scientific evidence exists")
-    for finding in evidence.findings:
-        if not (
-            start <= finding.start < finding.end <= end
-            and text[finding.start : finding.end] == finding.quote
-        ):
-            raise CandidateError("evidence quote does not match exact source offsets")
+    for index, finding in enumerate(evidence.findings):
+        if text[finding.start : finding.end] != finding.quote:
+            # Offsets are advisory: the quote is located verbatim, nearest the model's guess.
+            pattern = re.escape(finding.quote)
+            hits = [m.start() + start for m in re.finditer(pattern, text[start:end])]
+            if not hits:
+                raise CandidateError(
+                    f"finding {index} quote is not verbatim source text: {finding.quote[:160]!r}"
+                )
+            finding.start = min(hits, key=lambda hit: abs(hit - finding.start))
+            finding.end = finding.start + len(finding.quote)
+        if not (start <= finding.start < finding.end <= end):
+            raise CandidateError(f"finding {index} quote lies outside offsets {start}-{end}")
     return evidence
 
 
@@ -354,12 +361,13 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
             context_end = min(end + 1000, len(text))
             instruction = (
                 "Extract reusable scientific findings, caveats, null/negative results, named "
-                "entities, and figure references. Include exact supporting quotes with GLOBAL "
-                "character offsets, preserving numbers, units, denominators and uncertainty. "
+                "entities, and figure references. Include exact verbatim supporting quotes, "
+                "preserving numbers, units, denominators and uncertainty, with your best GLOBAL "
+                "character offsets; the host locates each quote exactly and rejects only "
+                "quotes that are not verbatim source text, so never omit evidence over offsets. "
                 "Quotes must start in the ownership range and may end in the supplied overlap. "
                 "Retrieve an intact passage if a sentence extends beyond the overlap. "
-                "Do not silently omit evidence. The supplied text already carries exact "
-                "offsets, so do not spend reads re-checking it. You have at most "
+                "Do not silently omit evidence. You have at most "
                 f"{max(1, agent.config.get('max_turns', 6) - 1)} tool turns and 100KB of "
                 "reads in total; always finish with the JSON. "
                 f"Return JSON matching {json.dumps(Evidence.model_json_schema())}.\n"
