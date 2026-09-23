@@ -80,9 +80,12 @@ uv run ruff format           # format
 uv run ty check              # type check
 ```
 
-Use `uv run python -m beril_wiki.agentic` for curator operations. Direct stage
-invocations are maintenance tools and do not establish the curator's shared
-budget or isolated promotion context. The theme type-checks
+The same four commands run in CI on every pull request and on `main`
+([`.github/workflows/tests.yml`](.github/workflows/tests.yml)); the publish
+workflow separately validates the committed wiki, renders it, and type-checks
+the theme. Use `uv run python -m beril_wiki.agentic` for curator operations.
+Direct stage invocations are maintenance tools and do not establish the
+curator's shared budget or isolated promotion context. The theme type-checks
 with `npm --prefix theme run typecheck` once `scripts/build_quartz.sh` has installed it.
 
 ## Learn more

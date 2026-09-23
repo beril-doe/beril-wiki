@@ -332,11 +332,14 @@ promotion.
 ## Development verification
 
 Offline tests exercise the actual subprocess pipeline with recorded model and
-PubMed replies, the stage schedule, dependency enforcement, gates, paragraph
-patches, scoped re-review, recorded page failures,
-topic decisions, cache invalidation, subscription setup and promotion recovery.
-They do not establish model quality or real subscription savings. The curator
-has not yet been accepted through a real source update. MCP remains below
+PubMed replies: the stage schedule, dependency enforcement, gates, paragraph
+patches, closed verification, salvage, recorded page failures, errata
+placement, topic decisions, cache invalidation, subscription setup and
+promotion recovery. They do not establish model quality or real subscription
+savings. The tests workflow runs them, with ruff and ty, on every pull request
+and on `main`; the publish workflow validates the committed wiki, renders it and
+type-checks the theme, and neither needs a key or an observatory checkout. The
+curator has not yet been accepted through a real source update. MCP remains below
 version 2 for the SDK's in-process tool compatibility.
 
 Specs, plans and review dispositions are local gitignored files under
