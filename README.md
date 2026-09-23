@@ -44,7 +44,7 @@ staged changes without inference:
 uv run python -m beril_wiki.agentic plan
 ```
 
-Runs load the committed [model policy](agentic.yaml): Opus 5 for scientific
+Runs load the committed [model policy](agentic.yaml): Opus 5.5 for scientific
 work and Sonnet 5 for queries and figure selection.
 Derived pages (conflicts, hubs, home, literature, authors) are written from
 evidence packed into one prompt, checked by code, reviewed in one turn and

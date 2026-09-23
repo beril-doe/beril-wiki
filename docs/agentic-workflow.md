@@ -66,10 +66,10 @@ selected by `--root`. The committed policy explicitly assigns every role:
 
 | Role | Model | Jobs |
 | --- | --- | --- |
-| `extraction` | Opus 5 | Extract source evidence, retaining scientific qualifiers. |
-| `planning` | Opus 5 | Plan evidence integration and propose topic groups. |
-| `writing` | Opus 5 | Write and revise pages, derived prose, home and entity merges; default for other generation jobs. |
-| `review` | Opus 5 | All separate scientific reviews, including extraction and repaired candidates. |
+| `extraction` | Opus 5.5 | Extract source evidence, retaining scientific qualifiers. |
+| `planning` | Opus 5.5 | Plan evidence integration and propose topic groups. |
+| `writing` | Opus 5.5 | Write and revise pages, derived prose, home and entity merges; default for other generation jobs. |
+| `review` | Opus 5.5 | All separate scientific reviews, including extraction and repaired candidates. |
 | `queries` | Sonnet 5 | Construct literature search queries. |
 | `figures` | Sonnet 5 | Select figure placements. |
 
@@ -78,10 +78,10 @@ fidelity and avoid costly rewrites, while using Sonnet for bounded selection
 tasks. The former `curator` role is gone: the schedule below is fixed code, so
 no model chooses actions any more. Haiku is not the default because a cheaper
 call is not a saving if it causes missed evidence or repeat work. No model comparison run is required.
-The full IDs are `claude-opus-5` and `claude-sonnet-5`, matching Anthropic's
+The full IDs are `claude-opus-5-5` and `claude-sonnet-5`, matching Anthropic's
 [model catalog](https://platform.claude.com/docs/en/models/overview).
-[Claude Code requires](https://code.claude.com/docs/en/model-config) version
-2.1.219 or later for Opus 5 (Sonnet 5 requires 2.1.197). Availability still depends
+Opus 5.5 was verified on
+[Claude Code](https://code.claude.com/docs/en/model-config) 2.1.280; Sonnet 5 requires 2.1.197. Availability still depends
 on the authenticated account. Fable is not selected because SDK usage can draw
 on additional usage credits, depending on the plan.
 

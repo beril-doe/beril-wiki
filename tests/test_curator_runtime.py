@@ -448,7 +448,7 @@ def test_cli_loads_committed_policy_without_model_flag(tmp_path, monkeypatch):
     monkeypatch.setattr(cli, "run", lambda root, checkout, config, staged: configs.append(config))
     assert cli.main() == 0
     assert R.model_policy(configs[0]) == {
-        role: "claude-opus-5" if role in R.CORE_MODEL_ROLES else "claude-sonnet-5"
+        role: "claude-opus-5-5" if role in R.CORE_MODEL_ROLES else "claude-sonnet-5"
         for role in R.MODEL_ROLES
     }
     # Replacement file paths resolve against the chosen root, and a role flag wins.
