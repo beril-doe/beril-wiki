@@ -204,9 +204,9 @@ button.theme { position: fixed; right: 16px; top: 16px; z-index: 3; font: 400 11
 <div class="page">
   <nav class="toc" aria-label="Contents"><ol></ol></nav>
   <main>
-    <p class="meta">2026-09-17 · .agentic/jobs.sqlite runs 8571a9c0 and e4689686; wiki/ at cf578a7; two independent reviewer reports · Dileep Kishore</p>
+    <p class="meta">2026-09-23 · .agentic/jobs.sqlite runs 8571a9c0, e4689686, c1992bb9 and ffa97c45; wiki/ at 1984779; two independent reviewer reports · Dileep Kishore</p>
     <h1>Compiling the BERIL wiki with an agentic workflow</h1>
-    <p class="lead">Replacing the Python pipeline's single model call with packed-evidence drafting and an independent scientific reviewer produced a wiki two reviewers judged more trustworthy than the Python build, for 18.6M tokens and about four hours. The reviewer is what earns that verdict, and the reviewer is also why 15 pages are missing.</p>
+    <p class="lead">Replacing the Python pipeline's single model call with packed-evidence drafting and an independent scientific reviewer produced a wiki two reviewers judged more trustworthy than the Python build. The reviewer is what earns that verdict, and its loop was also why the first compilation left 15 pages unwritten; rewriting the loop so it converges closed every one. The wiki is complete, and a compilation from scratch is estimated at $80&ndash;100 of API-equivalent spend.</p>
     <h2 id="the-python-pipeline-became-a-fixed-schedule-of-packed-evidence-jobs" data-toc="How it was adapted">The Python pipeline became a fixed schedule of packed-evidence jobs</h2>
 <p>The original pipeline was Python end to end: it clustered concepts into topics with a graph algorithm, called a model once per page to write prose, and checked the result with deterministic gates. Nothing judged whether a page was scientifically faithful.</p>
 <p>The agentic rework keeps every one of those gates and changes three things. A model proposes the topic groups once, and the accepted decision is versioned on disk so later runs reuse it. Each derived page is written from evidence packed into a single prompt with no tools, so a job caches on its prompt alone. And a separate reviewer reads the same evidence and can reject the page, which the Python path could never do.</p>
@@ -227,28 +227,28 @@ flowchart TD
     W2 --> C2[Same deterministic gates]
     C2 --> R[Scientific reviewer&lt;br/&gt;one JSON verdict]
     R -->|accepted| Pub2[Page published]
-    R -->|rejected| PA[Paragraph patch&lt;br/&gt;two rounds max]
+    R -->|rejected| PA[Patch, then closed verification&lt;br/&gt;five rounds max]
     PA --> C2
-    PA -->|still rejected| F[Page withheld&lt;br/&gt;recorded, run continues]
+    PA -->|still open after five rounds| F[Paragraph removed, page kept&lt;br/&gt;never fired in production]
   end
   classDef hot fill:#cba6f733,stroke:#cba6f7;
   classDef bad fill:#f38ba833,stroke:#f38ba8;
   class R hot;
   class F bad;
   </pre>
-  <figcaption><b>The two compilations of the same corpus.</b> Boxes are stages; both consume the identical 75 source reports and share the deterministic gates. The reviewer and the withheld-page outcome are the only structural additions, and they are what the rest of this page measures.</figcaption>
+  <figcaption><b>The two compilations of the same corpus.</b> Boxes are stages; both consume the identical 75 source reports and share the deterministic gates. The reviewer and its patch loop are the only structural additions; the loop is what the first compilation got wrong and what the rest of this page measures.</figcaption>
 </figure>
 
-<h2 id="one-full-compilation-cost-18-6m-tokens-and-four-hours" data-toc="What it cost">One full compilation cost 18.6M tokens and four hours</h2>
+<h2 id="a-complete-compilation-costs-about-80-to-100-dollars" data-toc="What it costs">A complete compilation costs about $80 to $100</h2>
 <div class="tiles">
-  <div class="tile"><div class="n">18.6M</div><div class="k">raw tokens</div></div>
-  <div class="tile"><div class="n hot">$152</div><div class="k">API-equivalent estimate</div></div>
-  <div class="tile"><div class="n">~4 h</div><div class="k">wall clock, 4 workers</div></div>
-  <div class="tile"><div class="n good">3</div><div class="k">operator interventions</div></div>
+  <div class="tile"><div class="n">$64</div><div class="k">measured: the rebuild that completed the wiki</div></div>
+  <div class="tile"><div class="n hot">$80&ndash;100</div><div class="k">estimated: from scratch, one pass</div></div>
+  <div class="tile"><div class="n good">$0.04</div><div class="k">record an erratum</div></div>
+  <div class="tile"><div class="n good">0</div><div class="k">pages missing</div></div>
 </div>
-<p>The run is subscription-backed, so no money changed hands; the dollar figure is what identical work would cost at API prices, and it is the only number that compares pipelines fairly. What was actually consumed was session quota, which has no published formula and which the run exhausted once, mid-compilation.</p>
+<p>Every run is subscription-backed, so no money changes hands; the dollar figures are what identical work would cost at API prices, and they are the only fair way to compare pipelines. What is actually consumed is session quota, which has no published formula and which one full compilation exhausted once. The first compilation cost $152 across two passes and left 15 pages unwritten; the rebuild after the loop fix cost $64 with most drafts replayed from cache, and adding back the draft cost gives the from-scratch estimate. A compilation with nothing changed costs nothing and takes three seconds.</p>
 <figure class="table wide">
-  <figcaption><b>Cost by stage across both passes of the adoption.</b> Raw tokens are the audit record; effective tokens weight cache reads at a tenth, matching provider prices. Ledger runs 8571a9c0 and e4689686, 1,098 jobs. Conflicts and topic hubs are three quarters of the bill.</figcaption>
+  <figcaption><b>Cost by stage across the first two passes, before the loop fix.</b> Raw tokens are the audit record; effective tokens weight cache reads at a tenth, matching provider prices. Ledger runs 8571a9c0 and e4689686, 1,098 jobs. Conflicts and topic hubs are three quarters of the bill.</figcaption>
   <div class="table-wrap"><table>
     <thead><tr><th>Stage</th><th>Pages</th><th>Jobs</th><th>Raw tokens</th><th>Effective</th><th>API-equiv.</th></tr></thead>
     <tbody>
@@ -307,21 +307,23 @@ flowchart TD
 </figure>
 <p>No topic hub converged on its first draft. The reviewer's objections were mostly substantive — a conflated correlation statistic, a claim of reversed gene essentiality where the evidence showed only reversed fitness burden — but a meaningful share were presentation defects that the objection text already knew how to fix.</p>
 
-<h2 id="redrafting-recovers-what-repeated-repair-cannot" data-toc="Redrafting beats repair">Redrafting recovers what repeated repair cannot</h2>
-<figure class="table">
-  <figcaption><b>Withheld pages before and after a redraft pass.</b> Counts of pages absent from the compiled wiki; the second pass discarded the failed drafts and started each page fresh rather than patching further. Redrafting recovered 16 conflict pages, three hubs and the home page for 6.17M tokens.</figcaption>
+<h2 id="the-loop-now-converges-and-no-page-is-withheld" data-toc="The loop converges">The loop now converges, and no page is withheld</h2>
+<p>Pages were not failing because the prose was bad. They were failing because the loop could not close an issue: the patcher reworded claims it should have deleted, every round invited the reviewer to find something new, and after two rounds the whole page was discarded. Three changes fixed all three, and the fourth, a salvage that removes only the objected paragraph, was built as the fallback and never fired.</p>
+<figure class="table wide">
+  <figcaption><b>Pages written, by compilation.</b> Counts of pages present in the compiled wiki after each pass; the schedule calls for 96 conflicts, 13 hubs, the home page, 13 literature sections and 18 author sections. The first pass discarded 35 pages, a redraft pass recovered 20, and the loop fix closed the remaining 15 with zero paragraphs removed.</figcaption>
   <div class="table-wrap"><table>
-    <thead><tr><th>Collection</th><th>After repair passes</th><th>After a fresh redraft</th></tr></thead>
+    <thead><tr><th>Collection</th><th>First pass</th><th>After redraft</th><th>After the loop fix</th></tr></thead>
     <tbody>
-      <tr><td>Conflict pages</td><td>24</td><td class="good">8</td></tr>
-      <tr><td>Topic hubs</td><td>6</td><td class="good">3</td></tr>
-      <tr><td>Home page</td><td>1</td><td class="good">0</td></tr>
-      <tr><td>Literature sections</td><td>2</td><td class="bad">4</td></tr>
-      <tr><td>Author contributions</td><td>2</td><td>2<sup>a</sup></td></tr>
+      <tr><td>Conflict pages</td><td>72 of 96</td><td>90</td><td class="good">96</td></tr>
+      <tr><td>Topic hubs</td><td>7 of 13</td><td>10</td><td class="good">13</td></tr>
+      <tr><td>Home page</td><td>absent</td><td>present</td><td class="good">present</td></tr>
+      <tr><td>Literature sections</td><td>3 of 13</td><td>5</td><td class="good">13</td></tr>
+      <tr><td>Author contributions</td><td>16 of 18</td><td>16</td><td class="good">18</td></tr>
+      <tr><td>Paragraphs removed by salvage</td><td>&mdash;</td><td>&mdash;</td><td class="hot">0</td></tr>
     </tbody>
   </table></div>
-  <p class="fn"><sup>a</sup> Both retain contributions written by the earlier tool-based run, so they are stale rather than absent. Literature rose because three more hubs existed to write sections into.</p>
 </figure>
+<p>The delete rule tells the patcher that an unsupported claim has no correct rewrite. The closed verification hands the reviewer its own issues and the revised paragraphs and asks only whether each is closed and whether the revision broke anything, so the open list shrinks or holds but never grows on settled text; that is what makes a five-round budget safe. Literature is the cleanest proof: its failures were <code>denominator</code> and <code>number</code> objections, exactly the class the delete rule targets, and it went from 5 of 13 sections to 13 of 13 with none failing.</p>
 
 <h2 id="the-agentic-build-is-more-trustworthy-the-python-build-reads-easier" data-toc="Quality comparison">The agentic build is more trustworthy, the Python build reads easier</h2>
 <p>Two reviewers with no history of the work — Codex and a separate Claude reviewer — graded both builds against the same rubric, reading the pages and tracing claims back to source reports. Both recommended publishing the agentic build; neither would publish either build unchanged.</p>
@@ -341,13 +343,12 @@ flowchart TD
   </table></div>
 </figure>
 <div class="callout bad" data-label="Risk">Both reviewers independently found the same fabrication in the Python build: a Cohen's d of +1.00 measured in ten isolates, republished as a second finding &ldquo;across 42K strains&rdquo;. The cited source contains no such analysis. The agentic reviewer rejected pages for exactly this defect class.</div>
-<div class="callout warn" data-label="Caution">The agentic build withholds 15 pages, and three subjects vanish entirely because no sibling page covers them. One was killed for two undefined acronyms, with the replacement gloss written in the objection itself.</div>
+<div class="callout warn" data-label="Caution">One class of error no gate can catch: a source report's own arithmetic slip. One report states 38.4% for 37,368 of 97,334 strains and reuses it for 5,647 of 27,702 species, which is a fifth, and the figure reached five pages. Reports are archived unedited, so <code>contract/errata.yaml</code> now records the error and a visible erratum is placed under every paragraph that repeats it, without touching the four pages that use the figure correctly.</div>
 
 <h2 id="next">Next</h2>
-<p>The largest remaining saving is not a cheaper model. A re-review after a patch costs 18.1K tokens against 18.7K for a full review, because scope changes the reviewer's instructions but not the text it receives. Sending only the changed paragraphs with their neighbouring context is worth roughly a sixth of the run at no cost to fidelity, and it has to happen between compilations because it invalidates every cached review.</p>
-<div class="callout good" data-label="Result">Split the reviewer's verdict by category. Blocking a page on an unsupported claim is the reviewer earning its cost; blocking one on a missing acronym gloss is not, and the fix is already written in the objection.</div>
-
-  </main>
+<p>The code on <code>feat/agentic-workflow</code> has tests for every change but no second reader; the original rework had an independent review that found five defects, and these ten commits should get the same before merge. The CI workflow renders the wiki and runs the strict check but no tests, so nothing on GitHub exercises the loop. And the one routine operation still unmeasured is a single changed report: a no-op compilation costs nothing and an erratum costs four cents, but the cost of one new source through extraction and the pages that cite it has not been run.</p>
+<div class="callout good" data-label="Result">The wiki is complete: 96 conflict pages, 13 hubs, the home page, 13 literature sections and 18 author sections, zero pages withheld, zero paragraphs removed, strict check clean. A recorded erratum re-runs only the four cheap post-passes.</div>
+</main>
 </div>
 <script>
 (function () {
