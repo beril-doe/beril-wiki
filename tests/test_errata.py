@@ -83,3 +83,27 @@ def test_load_rejects_a_bad_entry(tmp_path: pathlib.Path):
     )
     with pytest.raises(ValueError, match="does not"):
         E.load(tmp_path)
+
+
+def test_errata_never_restamps_figure_placements(tmp_path: pathlib.Path, monkeypatch):
+    """A callout is a new paragraph, so placement indices after it moved: the stage must
+    leave the cached hash stale for the figures stage to recompute, not certify it."""
+    import json
+    import sys
+
+    from beril_wiki.stages import errata as E
+
+    for d in ("wiki/concepts", "wiki/summaries", "wiki/sources", "contract", "state"):
+        (tmp_path / d).mkdir(parents=True)
+    (tmp_path / "wiki/summaries/bacdive__REPORT.md").write_text("# s\n")
+    (tmp_path / "wiki/sources/bacdive__REPORT.md").write_text("5,647 of 27,702 (38.4%)\n")
+    (tmp_path / "contract/errata.yaml").write_text(
+        "- source: bacdive\n  contains: ['38.4%', '27,702']\n  note: one fifth\n"
+    )
+    (tmp_path / "wiki/concepts/x.md").write_text(f"# X\n\n{WRONG}\n")
+    placements = tmp_path / "state/figures-placements.json"
+    placements.write_text(json.dumps({"concepts/x.md": {"page_hash": "stale", "index": 1}}))
+    monkeypatch.setattr(sys, "argv", ["errata", str(tmp_path)])
+    assert E.main() == 0
+    assert E.MARK in (tmp_path / "wiki/concepts/x.md").read_text()
+    assert json.loads(placements.read_text())["concepts/x.md"]["page_hash"] == "stale"

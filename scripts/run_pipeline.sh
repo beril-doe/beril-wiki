@@ -65,9 +65,6 @@ echo "== hubs" | tee -a "$LOG"
 echo "== literature" | tee -a "$LOG"
 "${PY[@]}" -m beril_wiki.stages.literature ${FORCE} | tee -a "$LOG" | tail -3
 
-echo "== figures" | tee -a "$LOG"
-"${PY[@]}" -m beril_wiki.stages.figures ${FORCE} | tee -a "$LOG" | tail -3
-
 echo "== extras" | tee -a "$LOG"
 "${PY[@]}" -m beril_wiki.stages.extras | tee -a "$LOG"
 
@@ -86,6 +83,12 @@ echo "== names" | tee -a "$LOG"
 # person records one; this places it beside every claim that repeats it.
 echo "== errata" | tee -a "$LOG"
 "${PY[@]}" -m beril_wiki.stages.errata "$REPO" | tee -a "$LOG"
+
+# After names and errata, which are the last stages to change a page's text:
+# an erratum is a new paragraph, so every placement index after it moves, and
+# the figures stage recomputes a page whose text changed.
+echo "== figures" | tee -a "$LOG"
+"${PY[@]}" -m beril_wiki.stages.figures ${FORCE} | tee -a "$LOG" | tail -3
 
 # Compile's resume-skip is per document, so a page that mis-attributes one
 # number stays broken while the document that fixes it counts as integrated.

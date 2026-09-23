@@ -219,7 +219,8 @@ candidate, the same pack and the latest issues, and returns replacement paragrap
 keyed by index against the candidate's base hash. An issue saying the evidence does
 not support a claim is an instruction to delete it, not to reword it.
 
-Only the first review is open-ended. Every round after it is a **verification**, not
+The first review reads the whole page, at whichever round the gates first pass, and
+no page publishes without one. Every round after it is a **verification**, not
 a second review: the reviewer receives the issues it raised and the revised
 paragraphs, and answers whether each is closed and whether the revision introduced a
 factual error. An objection it already raised stays open whatever its category; a

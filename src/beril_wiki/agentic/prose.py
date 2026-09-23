@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import re
+import threading
 from collections.abc import Callable, Iterable, Iterator
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
@@ -105,8 +106,8 @@ class Check(BaseModel):
     """A verification of a patch: which issues it closed, and what is still open."""
 
     model_config = ConfigDict(extra="ignore")
-    resolved: list[int] = Field(default_factory=list)
-    open: list[Issue] = Field(default_factory=list)
+    resolved: list[int]
+    open: list[Issue]
 
 
 @dataclass(frozen=True)
@@ -369,7 +370,13 @@ def verify(
     )
     listed = json.dumps(
         [
-            {"id": n, "paragraph": i.paragraph, "category": i.category, "quote": i.quote}
+            {
+                "id": n,
+                "paragraph": i.paragraph,
+                "category": i.category,
+                "quote": i.quote,
+                "note": i.note,
+            }
             for n, i in enumerate(pending)
         ]
     )
@@ -400,15 +407,22 @@ def verify(
         checked = Check.model_validate(C.parse_json_reply(raw))
     except (ValueError, ValidationError):
         return None
-    # An issue it already raised stays open whatever its category; a newly introduced
-    # one counts only when it touches what the page claims, so a late note about
-    # wording cannot extend the loop.
+    # An objection stays open until the verifier names it resolved: silence is not
+    # closure. A newly introduced one counts only against a paragraph in scope and
+    # only when it touches what the page claims, so a late note about wording, or
+    # a fresh opinion about text that was already accepted, cannot extend the loop.
+    unresolved = [i for n, i in enumerate(pending) if n not in set(checked.resolved)]
+    seen = {(i.paragraph, i.category, i.quote) for i in unresolved}
     raised = {i.category for i in pending}
-    return [
+    new = [
         i
         for i in checked.open
-        if i.category != "length" and (i.category in raised or i.category in SUBSTANTIVE)
+        if i.category != "length"
+        and (i.category in raised or i.category in SUBSTANTIVE)
+        and (scope is None or i.paragraph is None or i.paragraph in scope)
+        and (i.paragraph, i.category, i.quote) not in seen
     ]
+    return unresolved + new
 
 
 def salvage(
@@ -420,8 +434,9 @@ def salvage(
     sources: dict[str, str],
     valid_ids: set[str],
     extra: Callable[[list[str]], list[Issue]] | None,
-) -> str | None:
-    """The page without the paragraphs still objected to, or None if that cannot stand.
+) -> tuple[str, list[str]] | None:
+    """The page without the paragraphs still objected to, and those paragraphs, or
+    None if that cannot stand.
 
     Losing a whole topic hub because three of its fifteen paragraphs would not converge
     costs a reader more than those paragraphs were worth, and the reader cannot see
@@ -437,6 +452,11 @@ def salvage(
     }
     if not drop:
         return None
+    # Every substantive objection must be discharged by an actual removal. One
+    # against a heading, or with no paragraph, would otherwise publish unresolved,
+    # and no mechanical gate can see a scientific objection.
+    if any(i.category in SUBSTANTIVE and i.paragraph not in drop for i in issues):
+        return None
     cats = ", ".join(sorted({i.category for i in issues if i.paragraph in drop}))
     note = (
         "> **Editorial note.** Text was removed here after scientific review "
@@ -444,8 +464,10 @@ def salvage(
         "salvage ledger."
     )
     kept: list[str] = []
+    removed: list[str] = []
     for index, part in enumerate(parts):
         if index in drop:
+            removed.append(part)
             if note not in kept:
                 kept.append(note)
             continue
@@ -460,7 +482,7 @@ def salvage(
         left += extra(kept)
     # Length is code-owned and a shortened page is still a page; anything else means
     # the removal broke the page's structure and it should not be published.
-    return None if [i for i in left if i.category != "length"] else text
+    return None if [i for i in left if i.category != "length"] else (text, removed)
 
 
 def patch(
@@ -565,7 +587,8 @@ def derived_page(
     parts = prepare(draft)
     # Paragraphs not yet covered by a verdict; None means the whole page.
     unreviewed: set[int] | None = None
-    pending: list[Issue] = []  # what the last patch was told to close
+    pending: list[Issue] = []  # the reviewer's objections still open
+    reviewed_fully = False  # no page publishes before one open review of all of it
     for round_index in range(PATCH_ROUNDS + 1):
         reviewed = False  # gate issues are code-owned and never publish
         text = "\n\n".join(parts)
@@ -574,11 +597,15 @@ def derived_page(
             issues += extra(parts)
         if not issues and agent is not None:
             scope = None if unreviewed is None else sorted(unreviewed)
-            if round_index == 0:
-                name = f"{step}/review"
+            if not reviewed_fully:
+                # The first review reads the whole page, however many gate-only
+                # rounds came before it: a repair of one figure is no verdict on the rest.
+                name = f"{step}/patch/{round_index}/review" if round_index else f"{step}/review"
                 verdict = review(contract, pack, parts, None, name, call)
                 if verdict is None:  # malformed: ask once more, never patch prose on a guess
                     verdict = review(contract, pack, parts, None, f"{name}/again", call)
+                if verdict is not None:
+                    reviewed_fully = True
             else:
                 name = f"{step}/patch/{round_index}/verify"
                 verdict = verify(contract, pack, parts, pending, scope, name, call)
@@ -592,6 +619,9 @@ def derived_page(
         if not issues:
             return text
         if round_index == PATCH_ROUNDS:
+            if not reviewed_fully:
+                # Gates failed every round; nothing here was ever reviewed.
+                raise PageFailure(step, issues, jobs[first:])
             if reviewed and not any(i.category in SUBSTANTIVE for i in issues):
                 summary = "; ".join(f"{i.category}: {i.note or i.quote}"[:120] for i in issues[:3])
                 print(f"  [PRESENTATION] {step} published with unresolved: {summary}", flush=True)
@@ -608,11 +638,14 @@ def derived_page(
                 extra=extra,
             )
             if rescued is not None:
+                text, removed = rescued
                 summary = "; ".join(f"{i.category}: {i.note or i.quote}"[:120] for i in issues[:3])
-                dropped = len({i.paragraph for i in issues if i.paragraph is not None})
-                print(f"  [SALVAGED] {step} dropped {dropped} paragraph(s): {summary}", flush=True)
-                record_salvage(step, issues, dropped)
-                return rescued
+                print(
+                    f"  [SALVAGED] {step} dropped {len(removed)} paragraph(s): {summary}",
+                    flush=True,
+                )
+                record_salvage(step, issues, removed, jobs[first:])
+                return text
             raise PageFailure(step, issues, jobs[first:])
         try:
             parts, changed, remap = patch(
@@ -623,7 +656,9 @@ def derived_page(
             remaining = issues + [Issue(**i) for i in exc.issues]
             raise PageFailure(step, remaining, jobs[first:]) from exc
 
-        pending = [moved(i, remap) for i in issues]
+        # A gate-only round patches mechanics; the reviewer's objections are not
+        # discharged by it and follow their paragraphs into the next verification.
+        pending = [moved(i, remap) for i in (issues if reviewed else pending)]
         if unreviewed is not None:
             # Everything changed since the last verdict, plus any objection the patch
             # did not address, follows its paragraph into the next scope.
@@ -741,15 +776,25 @@ def record_failure(page: str, failure: PageFailure | None) -> None:
     atomic_json(path, data)
 
 
-def record_salvage(step: str, issues: list[Issue], dropped: int) -> None:
+# Page workers write this ledger concurrently and atomic_json names its temporary
+# file by process id, which every thread shares; one lock per process is enough.
+_SALVAGE_LOCK = threading.Lock()
+
+
+def record_salvage(step: str, issues: list[Issue], removed: list[str], jobs: list[str]) -> None:
     """A published page carries a note; this is where a human finds what it dropped."""
     store = failures_path()
     if store is None:
         return
     path = store.parent / "salvaged.json"
-    data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
-    data[step] = {"dropped": dropped, "issues": [i.model_dump() for i in issues]}
-    atomic_json(path, data)
+    with _SALVAGE_LOCK:
+        data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+        data[step] = {
+            "removed": removed,
+            "issues": [i.model_dump() for i in issues],
+            "jobs": jobs,
+        }
+        atomic_json(path, data)
 
 
 def prune_failures(prefix: str, live: set[str]) -> None:

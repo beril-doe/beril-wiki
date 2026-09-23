@@ -7,8 +7,9 @@ it cites. The reports themselves are archived unedited, so the correction has
 to live beside the claim on the compiled page. contract/errata.yaml records
 each error as a person judged it; this stage appends the erratum under every
 paragraph that cites the source and states all of the listed figures, on every
-compile, idempotently. It runs after stages.names and before stages.figures so
-placements are computed on the page the reader sees. A note may only use
+compile, idempotently. It runs after stages.names and before stages.figures in
+both pipelines, because a callout is a new paragraph: every figure placement
+after it moves, so placements must be computed on the page the reader sees. A note may only use
 figures its source states, so the callout passes the same checks as the claim
 above it; the correction is given in the report's numbers or in words.
 
@@ -33,7 +34,7 @@ from beril_wiki.check import (
     unsupported_numbers,
 )
 from beril_wiki.paths import ROOT
-from beril_wiki.stages.names import TARGETS, placement_key, restamp
+from beril_wiki.stages.names import TARGETS
 
 ERRATA = pathlib.Path("contract") / "errata.yaml"
 MARK = "> **Erratum.**"
@@ -118,7 +119,6 @@ def main() -> int:
     root = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT
     entries = load(root)
     touched = added = 0
-    rewritten: dict[str, str] = {}
     for sub, glob in TARGETS:
         for path in sorted((root / sub).glob(glob)):
             if not path.is_file():
@@ -129,12 +129,13 @@ def main() -> int:
             if new != text:
                 path.write_text(new, encoding="utf-8")
                 touched += 1
-                rewritten[placement_key(root, path)] = new
             added += new.count(MARK)
-    stamped = restamp(root, rewritten)
+    # No placement re-stamping: a callout is a new paragraph, so every placement
+    # index after it moved. Both pipelines run figures after this stage, and the
+    # figures stage recomputes a page whose text changed.
     print(
         f"stages.errata: {len(entries)} erratum(s) placed {added} time(s); "
-        f"{touched} file(s) rewritten, {stamped} figure placement(s) re-stamped"
+        f"{touched} file(s) rewritten"
     )
     return 0
 

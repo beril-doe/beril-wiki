@@ -83,11 +83,11 @@ def test_gate_failure_is_patched_before_any_review(monkeypatch, tmp_path):
     stub = configure(
         monkeypatch,
         tmp_path,
-        {"x": draft, "x/patch/1": fix, "x/patch/1/verify": _ok()},
+        {"x": draft, "x/patch/1": fix, "x/patch/1/review": '{"accepted": true, "issues": []}'},
     )
     assert run("x") == GOOD
-    assert [s for s, _ in stub.prompts] == ["x", "x/patch/1", "x/patch/1/verify"]
-    assert "verifying that revision" in stub.prompts[-1][1]
+    assert [s for s, _ in stub.prompts] == ["x", "x/patch/1", "x/patch/1/review"]
+    assert "Review every paragraph." in stub.prompts[-1][1]  # a repair is no verdict on the rest
 
 
 def test_review_rejection_patches_and_rereviews_only_changed_paragraphs(monkeypatch, tmp_path):
@@ -164,8 +164,9 @@ def test_unresolved_paragraph_is_dropped_and_the_page_still_publishes(monkeypatc
     assert "Editorial note" in out and "unsupported" in out
     assert "# Title" in out and "## Sides" in out  # headings are never dropped
     ledger = json.loads((tmp_path / "salvaged.json").read_text())
-    assert ledger["x"]["dropped"] == 1
+    assert ledger["x"]["removed"] == ["Yield was 56%. [src: b]"]  # the material, not a count
     assert ledger["x"]["issues"][0]["category"] == "unsupported"
+    assert ledger["x"]["jobs"] and all(j.startswith("key:") for j in ledger["x"]["jobs"])
 
 
 def test_salvage_refuses_when_removal_would_break_a_gate(monkeypatch, tmp_path):
@@ -313,7 +314,12 @@ def test_unresolved_and_unreviewed_paragraphs_stay_in_scope(monkeypatch, tmp_pat
     }
     checks = iter(
         [
-            _still([{"paragraph": 4, "category": "direction", "quote": "56%"}]),
+            json.dumps(
+                {
+                    "resolved": [0],  # the unsupported lead was fixed
+                    "open": [{"paragraph": 4, "category": "direction", "quote": "56%"}],
+                }
+            ),
             _ok(),
         ]
     )
@@ -543,3 +549,175 @@ def test_scoped_verification_omits_paragraphs_accepted_earlier(monkeypatch, tmp_
     assert "Review only paragraphs [4]" in scoped_prompt
     assert "Lead sentence" not in scoped_prompt  # accepted, not adjacent: dropped
     assert "Yield rose to 56%" in scoped_prompt and "[4]" in scoped_prompt
+
+
+# --- findings of the independent review of cf12b31..f62839f -------------------
+
+
+def test_gates_failing_every_round_never_publish(monkeypatch, tmp_path):
+    """A page nobody reviewed cannot publish, however many repairs it had."""
+    draft = GOOD.replace("Yield was 42%. [src: a]", "Yield was 42% of 8,314 loci. [src: a]")
+    script = {"x": draft}
+    for n in range(1, P.PATCH_ROUNDS + 1):  # every repair leaves the imported figure in place
+        script[f"x/patch/{n}"] = lambda m: _patch_reply(
+            m, {"3": "Yield was 42% of 8,314 loci. [src: a]"}
+        )
+    stub = configure(monkeypatch, tmp_path, script)
+    with pytest.raises(P.PageFailure):
+        run("x")
+    assert not any("review" in st or "verify" in st for st, _ in stub.prompts)
+
+
+def test_empty_verification_is_not_a_verdict(monkeypatch, tmp_path):
+    reject = json.dumps(
+        {"accepted": False, "issues": [{"paragraph": 4, "category": "direction", "quote": "56%"}]}
+    )
+    configure(
+        monkeypatch,
+        tmp_path,
+        {
+            "x": GOOD,
+            "x/review": reject,
+            "x/patch/1": lambda m: _patch_reply(m, {"4": "Yield fell to 56%. [src: b]"}),
+            "x/patch/1/verify": "{}",
+            "x/patch/1/verify/again": '{"accepted": false, "issues": []}',  # the old shape
+        },
+    )
+    with pytest.raises(P.PageFailure, match="no usable verdict"):
+        run("x")
+
+
+def test_an_objection_stays_open_until_the_verifier_names_it_resolved(monkeypatch, tmp_path):
+    reject = json.dumps(
+        {"accepted": False, "issues": [{"paragraph": 4, "category": "direction", "quote": "56%"}]}
+    )
+    stub = configure(
+        monkeypatch,
+        tmp_path,
+        {
+            "x": GOOD,
+            "x/review": reject,
+            "x/patch/1": lambda m: _patch_reply(m, {"4": "Yield fell to 56%. [src: b]"}),
+            "x/patch/1/verify": '{"resolved": [], "open": []}',  # silent on the objection
+            "x/patch/2": lambda m: _patch_reply(m, {"4": "Yield rose to 56%. [src: b]"}),
+            "x/patch/2/verify": _ok(),
+        },
+    )
+    assert "Yield rose to 56%" in run("x")
+    steps = [st for st, _ in stub.prompts]
+    assert "x/patch/2" in steps  # silence cost another round rather than publishing
+    assert '"category": "direction"' in stub.prompts[steps.index("x/patch/2/verify")][1]
+
+
+def test_a_gate_only_round_keeps_the_reviewers_objections(monkeypatch, tmp_path):
+    reject = json.dumps(
+        {"accepted": False, "issues": [{"paragraph": 4, "category": "direction", "quote": "56%"}]}
+    )
+    stub = configure(
+        monkeypatch,
+        tmp_path,
+        {
+            "x": GOOD,
+            "x/review": reject,
+            # Ignores the objection and imports a figure into paragraph 3: a gate round follows.
+            "x/patch/1": lambda m: _patch_reply(m, {"3": "Yield was 42% of 8,314 loci. [src: a]"}),
+            "x/patch/2": lambda m: _patch_reply(m, {"3": "Yield was 42%. [src: a]"}),
+            "x/patch/2/verify": _ok(),
+        },
+    )
+    run("x")
+    verify = stub.prompts[-1]
+    assert verify[0] == "x/patch/2/verify"
+    assert '"category": "direction"' in verify[1]  # survived the gate-only round
+    assert '"paragraph": 4' in verify[1]
+
+
+def test_verifier_receives_the_objections_note(monkeypatch, tmp_path):
+    reject = json.dumps(
+        {
+            "accepted": False,
+            "issues": [
+                {
+                    "paragraph": 4,
+                    "category": "direction",
+                    "quote": "56%",
+                    "note": "the sign is inverted",
+                }
+            ],
+        }
+    )
+    stub = configure(
+        monkeypatch,
+        tmp_path,
+        {
+            "x": GOOD,
+            "x/review": reject,
+            "x/patch/1": lambda m: _patch_reply(m, {"4": "Yield fell to 56%. [src: b]"}),
+            "x/patch/1/verify": _ok(),
+        },
+    )
+    run("x")
+    assert '"note": "the sign is inverted"' in stub.prompts[-1][1]
+
+
+def test_verification_drops_a_new_objection_outside_its_scope(monkeypatch, tmp_path):
+    reject = json.dumps(
+        {"accepted": False, "issues": [{"paragraph": 4, "category": "direction", "quote": "56%"}]}
+    )
+    stub = configure(
+        monkeypatch,
+        tmp_path,
+        {
+            "x": GOOD,
+            "x/review": reject,
+            "x/patch/1": lambda m: _patch_reply(m, {"4": "Yield fell to 56%. [src: b]"}),
+            "x/patch/1/verify": json.dumps(
+                {
+                    "resolved": [0],
+                    "open": [{"paragraph": 1, "category": "unsupported", "quote": "Lead"}],
+                }
+            ),
+        },
+    )
+    out = run("x")
+    assert "Yield fell to 56%" in out and "Lead sentence" in out  # accepted text untouched
+    assert "x/patch/2" not in [st for st, _ in stub.prompts]
+
+
+def test_salvage_refuses_an_undischarged_substantive_objection():
+    parts = P.blocks(GOOD)
+    body = P.Issue(paragraph=4, category="unsupported", quote="56%")
+    heading = P.Issue(paragraph=2, category="unsupported", quote="Sides")
+    nowhere = P.Issue(paragraph=None, category="caveat", quote="somewhere")
+
+    def salvage(issues: list[P.Issue]) -> tuple[str, list[str]] | None:
+        return P.salvage(
+            parts, issues, CONTRACT, allowed=GOOD, sources=SOURCES, valid_ids={"a", "b"}, extra=None
+        )
+
+    assert salvage([body, heading]) is None
+    assert salvage([body, nowhere]) is None
+    result = salvage([body])
+    assert result is not None
+    text, removed = result
+    assert removed == ["Yield was 56%. [src: b]"] and "Yield was 56%" not in text
+
+
+def test_salvage_ledger_survives_concurrent_writers(monkeypatch, tmp_path):
+    from concurrent.futures import ThreadPoolExecutor
+
+    configure(monkeypatch, tmp_path, {})
+    issue = P.Issue(category="unsupported", quote="q")
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        list(
+            pool.map(
+                lambda n: P.record_salvage(f"p{n}", [issue], [f"para {n}"], [f"key:{n}"]), range(16)
+            )
+        )
+    ledger = json.loads((tmp_path / "salvaged.json").read_text())
+    assert sorted(ledger) == sorted(f"p{n}" for n in range(16))
+    assert ledger["p7"] == {
+        "removed": ["para 7"],
+        "issues": [issue.model_dump()],
+        "jobs": ["key:7"],
+    }
