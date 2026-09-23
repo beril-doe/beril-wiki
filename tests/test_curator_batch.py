@@ -131,6 +131,40 @@ def test_rejected_extraction_receives_one_correction(tmp_path, monkeypatch):
     assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
 
 
+def test_overlap_findings_are_left_to_the_next_chunk():
+    reviews = []
+    text = "Owned sentence. Overlap sentence."
+    raw = json.dumps(
+        {
+            "findings": [
+                {
+                    "quote": "Owned sentence.",
+                    "start": 0,
+                    "end": 15,
+                    "claim": "a",
+                    "kind": "finding",
+                },
+                {
+                    "quote": "Overlap sentence.",
+                    "start": 10,
+                    "end": 27,
+                    "claim": "b",
+                    "kind": "null",
+                },
+            ],
+            "empty_reason": "",
+        }
+    )
+
+    class Agent:
+        def review(self, task, candidate, step):
+            reviews.append(step)
+
+    evidence = batch.accept_evidence(Agent(), [], "extract/x/0", text, 0, 16, raw)
+    assert [f.quote for f in evidence.findings] == ["Owned sentence."]
+    assert reviews == ["extract/x/0"]
+
+
 def test_twice_rejected_extraction_stops(tmp_path, monkeypatch):
     agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
 

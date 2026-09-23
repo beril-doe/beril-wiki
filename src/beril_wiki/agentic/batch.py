@@ -88,8 +88,8 @@ def accept_evidence(
 ) -> Evidence:
     """Validate one extraction chunk and have it reviewed; defects earn one correction."""
     evidence = validate_evidence(text, start, len(text), C.parse_json_reply(raw))
-    if any(f.start >= end for f in evidence.findings):
-        raise CandidateError("quote starts outside chunk ownership range")
+    # A quote located in the overlap belongs to the next chunk, which starts there.
+    evidence.findings = [f for f in evidence.findings if f.start < end]
     agent.review(messages, raw, step)
     return evidence
 
