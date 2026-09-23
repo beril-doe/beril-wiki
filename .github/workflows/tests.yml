@@ -1,0 +1,39 @@
+name: Tests
+
+# The publish workflow verifies the committed wiki and renders it; nothing there
+# exercises the pipeline code. This runs the project's own verification commands
+# (README, Development) on every pull request and on main, so a change to the
+# curator, the gates or the review loop cannot merge on a green render alone.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync
+      - name: Lint
+        run: uv run ruff check
+      # Scoped to code: ruff also reformats the Python inside an archived
+      # report's fenced blocks under wiki/sources, which is not ours to change.
+      - name: Format
+        run: uv run ruff format --check src tests
+      - name: Types
+        run: uv run ty check
+      # Recorded-response tests: no model calls, no network, no keys.
+      - name: Tests
+        run: uv run pytest -q
