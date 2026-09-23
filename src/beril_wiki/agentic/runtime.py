@@ -797,18 +797,19 @@ class Runtime:
         *,
         validator: Callable[[str], Any] | None = None,
         context: Any = None,
+        attempts: int = 2,
     ) -> T:
-        """Try one targeted correction; never retry operational failures."""
+        """Try targeted corrections, one per extra attempt; never retry operational failures."""
         previous = self._validator, self._validation_context
         self._validator, self._validation_context = validator, context
         task = messages
         try:
-            for attempt in range(2):
+            for attempt in range(attempts):
                 raw = self.ask(task, step if attempt == 0 else step + "/repair")
                 try:
                     return accept(raw)
                 except CandidateError as exc:
-                    if attempt:
+                    if attempt == attempts - 1:
                         raise
                     task = messages + [
                         {

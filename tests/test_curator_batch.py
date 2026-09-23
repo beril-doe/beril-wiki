@@ -165,7 +165,7 @@ def test_overlap_findings_are_left_to_the_next_chunk():
     assert reviews == ["extract/x/0"]
 
 
-def test_twice_rejected_extraction_stops(tmp_path, monkeypatch):
+def test_extraction_stops_after_its_corrections_are_exhausted(tmp_path, monkeypatch):
     agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
 
     def reject(task, raw, step):
@@ -175,7 +175,8 @@ def test_twice_rejected_extraction_stops(tmp_path, monkeypatch):
     monkeypatch.setattr(agent, "review", reject)
     with pytest.raises(CandidateError, match="scientific review rejected"):
         batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
-    assert sum(s.startswith("extract/") for s, _ in calls) == 2
+    assert sum(s.startswith("extract/") for s, _ in calls) == batch.EXTRACTION_ATTEMPTS
+    assert sum(s.endswith("/repair") for s, _ in calls) == batch.EXTRACTION_ATTEMPTS - 1
     assert not any(s.startswith("batch/plan/") for s, _ in calls)
 
 
@@ -287,7 +288,7 @@ def test_tool_success_does_not_skip_final_validation(tmp_path, monkeypatch):
     agent, calls, reviews, _ = setup_batch(tmp_path, monkeypatch, bad_writes=2)
     generate = agent.generate
 
-    def generate_with_tool(messages, step, accept, *, validator=None, context=None):
+    def generate_with_tool(messages, step, accept, *, validator=None, context=None, attempts=2):
         if step == "write/concepts/yield.md":
             before = list(reviews)
             assert validator is not None and context is not None
@@ -303,7 +304,9 @@ def test_tool_success_does_not_skip_final_validation(tmp_path, monkeypatch):
             assert context["job"]["path"] == "concepts/yield.md"
             assert context["revised"] == []
             assert context["baselines"]["concepts/yield.md"] == digest(OLD)
-        return generate(messages, step, accept, validator=validator, context=context)
+        return generate(
+            messages, step, accept, validator=validator, context=context, attempts=attempts
+        )
 
     monkeypatch.setattr(agent, "generate", generate_with_tool)
     with pytest.raises(CandidateError, match="unchanged citations or quantities"):
@@ -316,14 +319,18 @@ def test_source_read_failure_is_not_repaired(tmp_path, monkeypatch):
     agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
     generate = agent.generate
 
-    def generate_with_failed_read(messages, step, accept, *, validator=None, context=None):
+    def generate_with_failed_read(
+        messages, step, accept, *, validator=None, context=None, attempts=2
+    ):
         if step.startswith("write/"):
 
             def failed_read(root):
                 raise OSError("source unavailable")
 
             monkeypatch.setattr(batch.C, "load_sources", failed_read)
-        return generate(messages, step, accept, validator=validator, context=context)
+        return generate(
+            messages, step, accept, validator=validator, context=context, attempts=attempts
+        )
 
     monkeypatch.setattr(agent, "generate", generate_with_failed_read)
     with pytest.raises(OSError, match="source unavailable"):
@@ -507,7 +514,7 @@ def test_concept_assignments_survive_writing_validation_and_review(tmp_path, mon
 
     generate = agent.generate
 
-    def check_bound_tool(messages, step, accept, *, validator=None, context=None):
+    def check_bound_tool(messages, step, accept, *, validator=None, context=None, attempts=2):
         if step == "write/concepts/limits.md":
             assert context is not None and validator is not None
             assert {f["id"] for f in context["assigned"]} == {"a:0:1", "a:0:2"}
@@ -524,7 +531,9 @@ def test_concept_assignments_survive_writing_validation_and_review(tmp_path, mon
                         }
                     )
                 )
-        return generate(messages, step, accept, validator=validator, context=context)
+        return generate(
+            messages, step, accept, validator=validator, context=context, attempts=attempts
+        )
 
     monkeypatch.setattr(agent, "ask", replies)
     monkeypatch.setattr(agent, "review", review)

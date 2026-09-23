@@ -56,6 +56,11 @@ class Plan(BaseModel):
     coverage: list[Coverage]
 
 
+# Extraction answers are structured (quote, claim), so each review narrows the objections;
+# three corrections are the same allowance derived pages get before salvage.
+EXTRACTION_ATTEMPTS = 4
+
+
 def chunks(text: str, size: int = 16_000) -> Iterator[tuple[int, int]]:
     if size <= 0:
         raise ValueError("chunk size must be positive")
@@ -388,6 +393,7 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                 messages,
                 step,
                 functools.partial(accept_evidence, agent, messages, step, text, start, end),
+                attempts=EXTRACTION_ATTEMPTS,
             )
             ids = []
             for index, item in enumerate(evidence.findings):
