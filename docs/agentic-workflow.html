@@ -271,7 +271,7 @@ flowchart LR
 <tr><td>Unchanged-run check</td><td class="hot">Zero model calls when the accepted run fingerprint matches.</td><td>First adoption of a changed contract refreshes derived prose once.</td></tr>
 <tr><td>Durable job and page caches</td><td>Reuse saved outputs during resume; refresh affected work.</td><td>Source, model, scientific contract or relevant code changes invalidate results.</td></tr>
 <tr><td>Packed evidence, one-turn jobs</td><td>No tool loop re-reads context every turn; writer and reviewer share one pack, and a cache keys on the prompt alone.</td><td>Packs are bounded (hub member pages under 110KB with explicit truncation marks) and travel in the cached system prompt, so a page's review and patch jobs read the pack instead of re-sending it; requests and transcripts have size limits.</td></tr>
-<tr><td>Paragraph patches and scoped re-review</td><td>A correction replaces named paragraphs and only those are reviewed again.</td><td>Two patch rounds per page; a page that does not converge is recorded, not retried automatically.</td></tr>
+<tr><td>Paragraph patches and closed verification</td><td>A correction replaces named paragraphs; an unsupported claim is deleted, not reworded. The reviewer then verifies its own issues against the revised paragraphs instead of reviewing the page again, so the open list can shrink but never grow.</td><td>Five patch rounds per page; a page still carrying an objection is salvaged (the paragraph removed, an editorial note left) rather than dropped.</td></tr>
 <tr><td>Edits grouped by page</td><td>Combine evidence before writing a destination.</td><td>Validation and separate scientific review still consume resources.</td></tr>
 </tbody></table></div>
 </figure>
@@ -281,7 +281,7 @@ flowchart LR
 <ul>
 <li>Only integration jobs have tools: <code>read_evidence</code> for extraction and its review; planners and page writers also get literal <code>search_evidence</code>, and page writers <code>validate_candidate</code>. Its feedback does not replace final host validation or scientific review.</li>
 <li>Derived-page writers, patchers and reviewers have no tools and one turn; their evidence arrives packed in the prompt.</li>
-<li>Default limits are 12 turns per tool-using job, 600 seconds per job, four hours per stage and four page workers. A page needs at most six jobs.</li>
+<li>Default limits are 12 turns per tool-using job, 600 seconds per job, four hours per stage and four page workers. A page needs at most twelve jobs: a draft, one open review, and five patch rounds each with its own verification.</li>
 <li>The runtime checks direct subscription authentication and removes inherited API routing. This path uses no embedding API. PubMed remains an external data source.</li>
 </ul>
 </details>
