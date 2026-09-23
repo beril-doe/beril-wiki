@@ -731,13 +731,14 @@ class Runtime:
         transcript.parent.mkdir(exist_ok=True)
         terminal = None
         auth_ok = False
+        fallback = None
         turns: list[dict] = []
 
         async def prompt():
             yield {"type": "user", "message": {"role": "user", "content": payload}}
 
         async def handle(message, out) -> None:
-            nonlocal terminal, auth_ok
+            nonlocal terminal, auth_ok, fallback
             serialized = dataclasses.asdict(message) if dataclasses.is_dataclass(message) else {}
             out.write(json.dumps(serialized, default=str) + "\n")
             out.flush()
@@ -748,6 +749,8 @@ class Runtime:
                 auth_ok = source in ("none", None)  # check_auth verifies subscription first
                 if not auth_ok:
                     raise WorkflowError("SDK initialized with an API credential")
+            if isinstance(message, SystemMessage) and message.subtype == "model_refusal_fallback":
+                fallback = message.data
             if isinstance(message, ResultMessage):
                 terminal = message
             elif isinstance(message, AssistantMessage) and valid_usage(message.usage):
@@ -783,6 +786,16 @@ class Runtime:
             or terminal.stop_reason in ("max_tokens", "refusal")
         ):
             error = f"SDK unsuccessful: {terminal.subtype} {terminal.errors or ''}"
+        if fallback:
+            # The CLI retries a refused request on another model for the rest of the
+            # session. The ledger and this job's cache key name the configured model,
+            # so accepting that answer would attribute the work to a model that did
+            # not do it. Fail instead and leave the model choice to the operator.
+            error = (
+                f"request refused on {fallback.get('original_model')} "
+                f"[{fallback.get('api_refusal_category')}]; the CLI fell back to "
+                f"{fallback.get('fallback_model')} for the session"
+            )
         output = terminal.result or ""
         if not output.strip():
             error = error or "empty SDK output"

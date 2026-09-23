@@ -109,6 +109,43 @@ def test_generation_repairs_once_and_never_retries_operational_error(tmp_path, m
     assert calls == ["write/test"]
 
 
+def test_model_fallback_after_a_refusal_fails_instead_of_misattributing_work(tmp_path, monkeypatch):
+    from claude_agent_sdk import ResultMessage, SystemMessage
+
+    agent = runtime(tmp_path)
+
+    def query(*, prompt, options):
+        async def stream():
+            yield SystemMessage(subtype="init", data={"apiKeySource": "none"})
+            yield SystemMessage(
+                subtype="model_refusal_fallback",
+                data={
+                    "original_model": "claude-opus-5-5",
+                    "fallback_model": "claude-opus-5",
+                    "api_refusal_category": "bio",
+                },
+            )
+            yield ResultMessage(
+                subtype="success",
+                duration_ms=1,
+                duration_api_ms=1,
+                is_error=False,
+                num_turns=1,
+                session_id="s",
+                total_cost_usd=0.1,
+                usage={"input_tokens": 1, "output_tokens": 1},
+                result="findings from the other model",
+            )
+
+        return stream()
+
+    monkeypatch.setattr(R, "query", query)
+    with pytest.raises(R.WorkflowError, match=r"refused on claude-opus-5-5 \[bio\]"):
+        agent.ask([{"role": "user", "content": "extract"}], "extract/a/0")
+    row = agent.ledger.db.execute("SELECT status, error FROM jobs").fetchone()
+    assert row[0] == "failed" and "fell back to claude-opus-5" in row[1]
+
+
 def test_verification_keeps_unresolved_objections_and_adds_only_new_defects(tmp_path, monkeypatch):
     agent = runtime(tmp_path)
     asked = []
