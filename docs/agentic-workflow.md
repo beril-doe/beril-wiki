@@ -241,8 +241,11 @@ the same gates and patch rounds but has no model reviewer.
 
 Invalid plans, topic proposals and integration candidates get **at most one
 correction**, and a repaired candidate receives a fresh review. An extraction
-chunk gets three, because its structured findings let each review narrow the
-objections. A rejection past that, unknown usage, authentication failures and
+chunk gets three, and after its one open review each repair is only verified
+against the objections it was meant to close, the same closed question derived
+pages get, so the reviewer cannot object to something new each round. The
+reviewer sees the host-located findings the chunk owns, so offsets and the
+next chunk's overlap are never objections. A rejection past that, unknown usage, authentication failures and
 other operational errors still stop the run. The worst case for a derived page is twelve jobs: a draft, one
 open review, and five patch rounds each with its own verification.
 

@@ -38,6 +38,10 @@ class WorkflowError(RuntimeError):
 class CandidateError(WorkflowError):
     """Repairable model output, distinct from operational or budget failures."""
 
+    def __init__(self, message: str, objections: list[str] | None = None) -> None:
+        super().__init__(message)
+        self.objections = objections or []
+
 
 MODEL_ROLES = ("extraction", "planning", "writing", "review", "queries", "figures")
 CORE_MODEL_ROLES = ("extraction", "planning", "writing", "review")
@@ -849,7 +853,50 @@ class Runtime:
         except ValueError as exc:
             raise WorkflowError(f"invalid scientific review verdict: {exc}") from exc
         if verdict.get("accepted") is not True or verdict.get("issues") != []:
-            raise CandidateError(f"scientific review rejected {step}: {verdict}")
+            issues = verdict.get("issues")
+            raise CandidateError(
+                f"scientific review rejected {step}: {verdict}",
+                [str(i) for i in issues] if isinstance(issues, list) else [],
+            )
+
+    def verify(
+        self, messages: list[dict], candidate: str, issues: list[str], step: str
+    ) -> list[str]:
+        """Check a repair against the objections it was meant to close; return what is open.
+
+        A closed question, not a second review: re-reviewing every repair let the
+        reviewer object to something new each round, so the loop could not converge."""
+        from beril_wiki.compiler import parse_json_reply
+
+        listed = json.dumps([{"id": n, "issue": i} for n, i in enumerate(issues)])
+        result = self.ask(
+            [
+                {
+                    "role": "user",
+                    "content": "The candidate was revised to close the issues you raised. Verify "
+                    "that revision against the task and source evidence; do not review it "
+                    "again. Decide for each issue whether it is now closed, then check only "
+                    "what the revision changed for a defect it introduced: a wrong number, "
+                    "unit or denominator, a claim beyond its quote, or a dropped caveat. "
+                    "Raise nothing new about unchanged content and nothing about wording. "
+                    f"You have at most {max(1, self.config.get('max_turns', 6) - 1)} tool "
+                    "turns and 100KB of reads in total; always finish with the JSON. "
+                    'Return JSON {"resolved": [<id>, ...], "open": ["specific issue", ...]}; '
+                    "open holds only issues still unresolved or newly introduced.\n"
+                    + json.dumps(
+                        {"task": messages, "candidate": candidate, "issues_raised": listed}
+                    ),
+                }
+            ],
+            step + "/verify",
+        )
+        try:
+            verdict = parse_json_reply(result)
+            resolved = {int(i) for i in verdict["resolved"]}
+            still_open = [str(i) for i in verdict["open"]]
+        except (ValueError, KeyError, TypeError) as exc:
+            raise WorkflowError(f"invalid verification verdict: {exc}") from exc
+        return [i for n, i in enumerate(issues) if n not in resolved] + still_open
 
 
 def configured() -> bool:

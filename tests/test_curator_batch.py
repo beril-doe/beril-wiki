@@ -111,16 +111,25 @@ def test_repeated_quantity_loss_stops_without_acceptance(tmp_path, monkeypatch):
     assert not any(s.startswith("write/") for s, _ in reviews)
 
 
-def test_rejected_extraction_receives_one_correction(tmp_path, monkeypatch):
+def test_rejected_extraction_is_repaired_then_verified_not_re_reviewed(tmp_path, monkeypatch):
     agent, calls, reviews, _ = setup_batch(tmp_path, monkeypatch)
     original = agent.review
+    verified = []
 
     def strict(task, raw, step):
         original(task, raw, step)
-        if step.startswith("extract/") and sum(s == step for s, _ in reviews) == 1:
-            raise CandidateError("claim includes text outside its quoted span")
+        if step.startswith("extract/"):
+            raise CandidateError(
+                "rejected: claim includes text outside its quoted span",
+                ["claim includes text outside its quoted span"],
+            )
+
+    def verify(task, candidate, issues, step):
+        verified.append((step, issues, json.loads(candidate)["findings"][0]["quote"]))
+        return []
 
     monkeypatch.setattr(agent, "review", strict)
+    monkeypatch.setattr(agent, "verify", verify)
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
     assert [s for s, _ in calls if s.startswith("extract/")] == [
         "extract/a__REPORT.md/0",
@@ -128,6 +137,14 @@ def test_rejected_extraction_receives_one_correction(tmp_path, monkeypatch):
     ]
     repair = next(m for s, m in calls if s == "extract/a__REPORT.md/0/repair")
     assert "outside its quoted span" in repair[-1]["content"]
+    assert [s for s, _ in reviews if s.startswith("extract/")] == ["extract/a__REPORT.md/0"]
+    assert verified == [
+        (
+            "extract/a__REPORT.md/0",
+            ["claim includes text outside its quoted span"],
+            "Yield was 42%.",
+        )
+    ]
     assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
 
 
@@ -160,7 +177,7 @@ def test_overlap_findings_are_left_to_the_next_chunk():
         def review(self, task, candidate, step):
             reviews.append(step)
 
-    evidence = batch.accept_evidence(Agent(), [], "extract/x/0", text, 0, 16, raw)
+    evidence = batch.EvidenceAcceptor(Agent(), [], "extract/x/0", text, 0, 16)(raw)
     assert [f.quote for f in evidence.findings] == ["Owned sentence."]
     assert reviews == ["extract/x/0"]
 
@@ -170,10 +187,11 @@ def test_extraction_stops_after_its_corrections_are_exhausted(tmp_path, monkeypa
 
     def reject(task, raw, step):
         if step.startswith("extract/"):
-            raise CandidateError("scientific review rejected " + step)
+            raise CandidateError("scientific review rejected " + step, ["denominator wrong"])
 
     monkeypatch.setattr(agent, "review", reject)
-    with pytest.raises(CandidateError, match="scientific review rejected"):
+    monkeypatch.setattr(agent, "verify", lambda task, candidate, issues, step: issues)
+    with pytest.raises(CandidateError, match="still open.*denominator wrong"):
         batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
     assert sum(s.startswith("extract/") for s, _ in calls) == batch.EXTRACTION_ATTEMPTS
     assert sum(s.endswith("/repair") for s, _ in calls) == batch.EXTRACTION_ATTEMPTS - 1

@@ -109,6 +109,21 @@ def test_generation_repairs_once_and_never_retries_operational_error(tmp_path, m
     assert calls == ["write/test"]
 
 
+def test_verification_keeps_unresolved_objections_and_adds_only_new_defects(tmp_path, monkeypatch):
+    agent = runtime(tmp_path)
+    asked = []
+
+    def reply(messages, step):
+        asked.append((step, messages[0]["content"]))
+        return '{"resolved": [1], "open": ["repair inverted the direction"]}'
+
+    monkeypatch.setattr(agent, "ask", reply)
+    still = agent.verify([{"role": "user", "content": "task"}], "cand", ["a", "b"], "extract/r/0")
+    assert still == ["a", "repair inverted the direction"]
+    assert asked[0][0] == "extract/r/0/verify"
+    assert '"issues_raised"' in asked[0][1] and "do not review it again" in asked[0][1]
+
+
 def test_merge_candidates_keep_independent_review_and_one_repair(tmp_path, monkeypatch):
     agent = runtime(tmp_path)
     monkeypatch.setattr(R, "runtime", lambda: agent)

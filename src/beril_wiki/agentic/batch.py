@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import functools
 import json
 import re
 import shutil
@@ -88,15 +87,39 @@ def validate_evidence(text: str, start: int, end: int, obj: dict) -> Evidence:
     return evidence
 
 
-def accept_evidence(
-    agent: Runtime, messages: list[dict], step: str, text: str, start: int, end: int, raw: str
-) -> Evidence:
-    """Validate one extraction chunk and have it reviewed; defects earn one correction."""
-    evidence = validate_evidence(text, start, len(text), C.parse_json_reply(raw))
-    # A quote located in the overlap belongs to the next chunk, which starts there.
-    evidence.findings = [f for f in evidence.findings if f.start < end]
-    agent.review(messages, raw, step)
-    return evidence
+class EvidenceAcceptor:
+    """Validate one extraction chunk; review it once, then verify each repair.
+
+    The reviewer sees the host-located findings the chunk owns, so offsets and
+    overlap are never objections. Its first verdict is the open review; after a
+    repair it is only asked whether those objections are closed."""
+
+    def __init__(
+        self, agent: Runtime, messages: list[dict], step: str, text: str, start: int, end: int
+    ) -> None:
+        self.agent, self.messages, self.step = agent, messages, step
+        self.text, self.start, self.end = text, start, end
+        self.pending: list[str] = []
+
+    def __call__(self, raw: str) -> Evidence:
+        evidence = validate_evidence(self.text, self.start, len(self.text), C.parse_json_reply(raw))
+        # A quote located in the overlap belongs to the next chunk, which starts there.
+        evidence.findings = [f for f in evidence.findings if f.start < self.end]
+        candidate = evidence.model_dump_json()
+        if not self.pending:
+            try:
+                self.agent.review(self.messages, candidate, self.step)
+            except CandidateError as exc:
+                self.pending = exc.objections
+                raise
+        else:
+            self.pending = self.agent.verify(self.messages, candidate, self.pending, self.step)
+            if self.pending:
+                raise CandidateError(
+                    f"objections still open on {self.step}: {json.dumps(self.pending)}",
+                    self.pending,
+                )
+        return evidence
 
 
 def changed_sources(root: Path) -> list[str]:
@@ -392,7 +415,7 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
             evidence = agent.generate(
                 messages,
                 step,
-                functools.partial(accept_evidence, agent, messages, step, text, start, end),
+                EvidenceAcceptor(agent, messages, step, text, start, end),
                 attempts=EXTRACTION_ATTEMPTS,
             )
             ids = []
