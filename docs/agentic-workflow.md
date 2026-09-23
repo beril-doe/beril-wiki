@@ -239,10 +239,10 @@ stage continues. Promotion proceeds with failures reported unless `--strict-page
 set, in which case a stage with failures stops the run. The API pipeline shares
 the same gates and patch rounds but has no model reviewer.
 
-Invalid plans, topic proposals and integration candidates get **at most one
-correction**, and a repaired candidate receives a fresh review. Extraction
-rejection, unknown usage, authentication failures and other operational errors
-still stop the run. The worst case for a derived page is twelve jobs: a draft, one
+Invalid plans, topic proposals, extraction chunks and integration candidates get
+**at most one correction**, and a repaired candidate receives a fresh review. A
+second rejection, unknown usage, authentication failures and other operational
+errors still stop the run. The worst case for a derived page is twelve jobs: a draft, one
 open review, and five patch rounds each with its own verification.
 
 Durable raw job results and evidence avoid repeating accepted inference. Tool

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import functools
 import json
 import re
 import shutil
@@ -65,13 +66,24 @@ def chunks(text: str, size: int = 16_000) -> Iterator[tuple[int, int]]:
 def validate_evidence(text: str, start: int, end: int, obj: dict) -> Evidence:
     evidence = Evidence.model_validate(obj)
     if not evidence.findings and not evidence.empty_reason.strip():
-        raise WorkflowError("empty extraction must explain why no scientific evidence exists")
+        raise CandidateError("empty extraction must explain why no scientific evidence exists")
     for finding in evidence.findings:
         if not (
             start <= finding.start < finding.end <= end
             and text[finding.start : finding.end] == finding.quote
         ):
-            raise WorkflowError("evidence quote does not match exact source offsets")
+            raise CandidateError("evidence quote does not match exact source offsets")
+    return evidence
+
+
+def accept_evidence(
+    agent: Runtime, messages: list[dict], step: str, text: str, start: int, end: int, raw: str
+) -> Evidence:
+    """Validate one extraction chunk and have it reviewed; defects earn one correction."""
+    evidence = validate_evidence(text, start, len(text), C.parse_json_reply(raw))
+    if any(f.start >= end for f in evidence.findings):
+        raise CandidateError("quote starts outside chunk ownership range")
+    agent.review(messages, raw, step)
     return evidence
 
 
@@ -360,11 +372,12 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                 )
             )
             messages = [{"role": "user", "content": instruction}]
-            raw = agent.ask(messages, f"extract/{name}/{start}")
-            evidence = validate_evidence(text, start, len(text), C.parse_json_reply(raw))
-            if any(f.start >= end for f in evidence.findings):
-                raise WorkflowError("quote starts outside chunk ownership range")
-            agent.review(messages, raw, f"extract/{name}/{start}")
+            step = f"extract/{name}/{start}"
+            evidence = agent.generate(
+                messages,
+                step,
+                functools.partial(accept_evidence, agent, messages, step, text, start, end),
+            )
             ids = []
             for index, item in enumerate(evidence.findings):
                 eid = f"{sid_for(name)}:{start}:{index}"

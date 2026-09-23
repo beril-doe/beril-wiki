@@ -111,6 +111,40 @@ def test_repeated_quantity_loss_stops_without_acceptance(tmp_path, monkeypatch):
     assert not any(s.startswith("write/") for s, _ in reviews)
 
 
+def test_rejected_extraction_receives_one_correction(tmp_path, monkeypatch):
+    agent, calls, reviews, _ = setup_batch(tmp_path, monkeypatch)
+    original = agent.review
+
+    def strict(task, raw, step):
+        original(task, raw, step)
+        if step.startswith("extract/") and sum(s == step for s, _ in reviews) == 1:
+            raise CandidateError("claim includes text outside its quoted span")
+
+    monkeypatch.setattr(agent, "review", strict)
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    assert [s for s, _ in calls if s.startswith("extract/")] == [
+        "extract/a__REPORT.md/0",
+        "extract/a__REPORT.md/0/repair",
+    ]
+    repair = next(m for s, m in calls if s == "extract/a__REPORT.md/0/repair")
+    assert "outside its quoted span" in repair[-1]["content"]
+    assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
+
+
+def test_twice_rejected_extraction_stops(tmp_path, monkeypatch):
+    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
+
+    def reject(task, raw, step):
+        if step.startswith("extract/"):
+            raise CandidateError("scientific review rejected " + step)
+
+    monkeypatch.setattr(agent, "review", reject)
+    with pytest.raises(CandidateError, match="scientific review rejected"):
+        batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    assert sum(s.startswith("extract/") for s, _ in calls) == 2
+    assert not any(s.startswith("batch/plan/") for s, _ in calls)
+
+
 def test_missing_plan_coverage_receives_one_correction(tmp_path, monkeypatch):
     agent, calls, _, _ = setup_batch(tmp_path, monkeypatch, bad_plan=True)
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
