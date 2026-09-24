@@ -284,6 +284,16 @@ def briefs(root: Path) -> list[dict]:
     return result
 
 
+def retire_merged(listing: list[dict], pages: list[PageJob]) -> list[dict]:
+    """Drop pages a batch merged away, which later batches must not name.
+
+    The inventory was only ever appended to, so a page one batch merged stayed
+    visible to every batch after it. They named it, and the gate rejected them in
+    cascade: on this corpus one merged concept rejected three batches in a row."""
+    merged = {loser for job in pages for loser in job.merge_from}
+    return [item for item in listing if item["path"] not in merged]
+
+
 def planning_batches(findings: list[dict], limit: int = 40_000) -> list[list[dict]]:
     """Partition compact evidence; quotes stay in saved records and original sources.
 
@@ -575,6 +585,7 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
         )
         plan.pages.extend(partial.pages)
         plan.coverage.extend(partial.coverage)
+        listing[:] = retire_merged(listing, partial.pages)
         known_paths = {item["path"] for item in listing}
         listing.extend(
             {

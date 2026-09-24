@@ -172,6 +172,27 @@ def test_extraction_fans_out_with_a_runtime_per_worker(tmp_path, monkeypatch):
     assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
 
 
+def test_merged_pages_leave_the_planner_inventory():
+    listing = [
+        {"path": "concepts/keep.md"},
+        {"path": "concepts/absorbed.md"},
+        {"path": "entities/other.md"},
+    ]
+    page = batch.PageJob(
+        path="concepts/keep.md",
+        title="Keep",
+        type="Concept",
+        sources=["a"],
+        reason="Absorb the thin page",
+        merge_from=["concepts/absorbed.md"],
+    )
+    # A merged page is retired; a later batch that names it is rejected by the gate.
+    assert [p["path"] for p in batch.retire_merged(listing, [page])] == [
+        "concepts/keep.md",
+        "entities/other.md",
+    ]
+
+
 def test_evidence_is_assembled_in_task_order_not_completion_order(tmp_path):
     (tmp_path / "staging").mkdir()
     (tmp_path / "staging/a__REPORT.md").write_text("Yield was 42%.")
