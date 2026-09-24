@@ -142,6 +142,7 @@ def test_truncated_reply_names_the_output_cap(tmp_path, monkeypatch):
     from claude_agent_sdk import ResultMessage, SystemMessage
 
     agent = runtime(tmp_path)
+    monkeypatch.setattr(R, "check_auth", lambda cli: None)  # no CLI on CI
     monkeypatch.setitem(agent.config, "max_output_tokens", 1000)
 
     def query(*, prompt, options):
@@ -174,6 +175,7 @@ def test_refused_job_is_reissued_on_the_model_that_answers_it(tmp_path, monkeypa
     from claude_agent_sdk import ResultMessage, SystemMessage
 
     agent = runtime(tmp_path)
+    monkeypatch.setattr(R, "check_auth", lambda cli: None)  # no CLI on CI
     models = []
     welcomed = "extract/a/32000"
 
