@@ -6,13 +6,20 @@ import json
 import re
 import shutil
 from collections.abc import Iterator
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from beril_wiki import compiler as C
-from beril_wiki.agentic.runtime import CandidateError, Runtime, WorkflowError, digest, file_hash
+from beril_wiki.agentic.runtime import (
+    CandidateError,
+    Runtime,
+    WorkflowError,
+    digest,
+    file_hash,
+)
 from beril_wiki.check import cited_ids, paragraphs
 from beril_wiki.stages.consolidate import body_src_ids, load_decisions, page_numbers, repoint_links
 
@@ -374,6 +381,36 @@ def plan_jobs(
     return jobs, losers
 
 
+def assemble_evidence(
+    root: Path, tasks: list[tuple[str, str, int, int]], extracted: dict[int, Evidence]
+) -> tuple[list[dict], list[dict]]:
+    """Findings and coverage in task order, never completion order.
+
+    Evidence ids and the manifest digest key the work that follows, so a parallel
+    stage must produce exactly what the sequential one did."""
+    findings: list[dict] = []
+    manifest: list[dict] = []
+    for index, (name, text, start, end) in enumerate(tasks):
+        evidence = extracted[index]
+        ids = []
+        for position, item in enumerate(evidence.findings):
+            eid = f"{sid_for(name)}:{start}:{position}"
+            ids.append(eid)
+            findings.append(item.model_dump() | {"id": eid, "source": sid_for(name)})
+        manifest.append(
+            {
+                "source": name,
+                "sha256": file_hash(root / "staging" / name),
+                "start": start,
+                "end": end,
+                "context_end": min(end + 1000, len(text)),
+                "evidence": ids,
+                "empty_reason": evidence.empty_reason,
+            }
+        )
+    return findings, manifest
+
+
 def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
     if not names:
         return
@@ -384,61 +421,68 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
         if (root / "wiki/sources" / name).exists()
         and file_hash(root / "staging" / name) != file_hash(root / "wiki/sources" / name)
     }
-    findings = []
-    extraction_manifest = []
+    tasks: list[tuple[str, str, int, int]] = []
     for name in names:
         text = (root / "staging" / name).read_text(encoding="utf-8", errors="replace")
         if not text.strip():
             raise WorkflowError(f"empty source {name}")
-        for start, end in chunks(text):
-            context_end = min(end + 1000, len(text))
-            instruction = (
-                "Extract reusable scientific findings, caveats, null/negative results, named "
-                "entities, and figure references. Include exact verbatim supporting quotes, "
-                "preserving numbers, units, denominators and uncertainty, with your best GLOBAL "
-                "character offsets; the host locates each quote exactly and rejects only "
-                "quotes that are not verbatim source text, so never omit evidence over offsets. "
-                "Quotes must start in the ownership range and may end in the supplied overlap. "
-                "Retrieve an intact passage if a sentence extends beyond the overlap. "
-                "Do not silently omit evidence. You have at most "
-                f"{max(1, agent.config.get('max_turns', 6) - 1)} tool turns and 100KB of "
-                "reads in total; always finish with the JSON. "
-                f"Return JSON matching {json.dumps(Evidence.model_json_schema())}.\n"
-                + json.dumps(
-                    {
-                        "source": name,
-                        "start": start,
-                        "end": end,
-                        "context_end": context_end,
-                        "length": len(text),
-                        "text": text[start:context_end],
-                    }
-                )
-            )
-            messages = [{"role": "user", "content": instruction}]
-            step = f"extract/{name}/{start}"
-            evidence = agent.generate(
-                messages,
-                step,
-                EvidenceAcceptor(agent, messages, step, text, start, end),
-                attempts=EXTRACTION_ATTEMPTS,
-            )
-            ids = []
-            for index, item in enumerate(evidence.findings):
-                eid = f"{sid_for(name)}:{start}:{index}"
-                ids.append(eid)
-                findings.append(item.model_dump() | {"id": eid, "source": sid_for(name)})
-            extraction_manifest.append(
+        tasks.extend((name, text, start, end) for start, end in chunks(text))
+
+    def extract_chunk(agent: Runtime, task: tuple[str, str, int, int]) -> Evidence:
+        name, text, start, end = task
+        context_end = min(end + 1000, len(text))
+        instruction = (
+            "Extract reusable scientific findings, caveats, null/negative results, named "
+            "entities, and figure references. Include exact verbatim supporting quotes, "
+            "preserving numbers, units, denominators and uncertainty, with your best GLOBAL "
+            "character offsets; the host locates each quote exactly and rejects only "
+            "quotes that are not verbatim source text, so never omit evidence over offsets. "
+            "Quotes must start in the ownership range and may end in the supplied overlap. "
+            "Retrieve an intact passage if a sentence extends beyond the overlap. "
+            "Do not silently omit evidence. You have at most "
+            f"{max(1, agent.config.get('max_turns', 6) - 1)} tool turns and 100KB of "
+            "reads in total; always finish with the JSON. "
+            f"Return JSON matching {json.dumps(Evidence.model_json_schema())}.\n"
+            + json.dumps(
                 {
                     "source": name,
-                    "sha256": file_hash(root / "staging" / name),
                     "start": start,
                     "end": end,
                     "context_end": context_end,
-                    "evidence": ids,
-                    "empty_reason": evidence.empty_reason,
+                    "length": len(text),
+                    "text": text[start:context_end],
                 }
             )
+        )
+        messages = [{"role": "user", "content": instruction}]
+        step = f"extract/{name}/{start}"
+        return agent.generate(
+            messages,
+            step,
+            EvidenceAcceptor(agent, messages, step, text, start, end),
+            attempts=EXTRACTION_ATTEMPTS,
+        )
+
+    # Chunks are independent, so they fan out; each worker needs its own Runtime because
+    # a ledger connection belongs to one thread. Results are assembled in task order, so
+    # evidence ids and the manifest digest do not depend on which chunk finished first.
+    # The agent's own config, not the environment: integration runs in the parent
+    # process, where BERIL_AGENTIC_CONFIG is set only for the stage subprocesses.
+    count = int(agent.config.get("workers", 1))
+    if count > 1:
+
+        def extract_in_worker(task: tuple[str, str, int, int]) -> Evidence:
+            # Built here, not at submit time: a ledger connection may only be used by
+            # the thread that opened it, and submitting from the main thread opens it there.
+            return extract_chunk(Runtime(agent.config), task)
+
+        with ThreadPoolExecutor(max_workers=count) as pool:
+            pending = {pool.submit(extract_in_worker, task): i for i, task in enumerate(tasks)}
+            extracted = {pending[done]: done.result() for done in as_completed(pending)}
+    else:
+        extracted = {i: extract_chunk(agent, task) for i, task in enumerate(tasks)}
+
+    findings, extraction_manifest = assemble_evidence(root, tasks, extracted)
     evidence_dir = agent.store / "evidence"
     evidence_dir.mkdir(exist_ok=True)
     (evidence_dir / f"{digest(extraction_manifest)}.json").write_text(

@@ -34,7 +34,10 @@ observatory checkout is still required for metadata and figure context.
 Individual jobs have `--max-turns` (default 12, applying to the tool-using
 integration path), `--timeout` (600 seconds), and `--max-output-tokens`
 (32,768). A stage can require multiple specialist jobs per page. Inside each
-stage, page jobs run in a worker pool (`--workers`, default 4); the ledger's
+stage, page jobs and extraction chunks run in a worker pool (`--workers`, default
+4), each worker holding its own runtime because a ledger connection belongs to one
+thread, and evidence is assembled in source order so a chunk finishing first never
+changes an id or a digest; the ledger's
 serialized admission holds headroom for every job in flight, and per-page state
 files are written atomically so a killed worker cannot leave a truncated
 `state/*.json`. `--strict-pages` turns a page that fails its patch rounds into a

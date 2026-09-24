@@ -1,6 +1,7 @@
 """Offline checks for bounded batch repairs and authoritative candidate validation."""
 
 import json
+import threading
 
 import pytest
 
@@ -146,6 +147,67 @@ def test_rejected_extraction_is_repaired_then_verified_not_re_reviewed(tmp_path,
         )
     ]
     assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
+
+
+def test_extraction_fans_out_with_a_runtime_per_worker(tmp_path, monkeypatch):
+    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
+    built = []
+    monkeypatch.setitem(agent.config, "workers", 4)
+    monkeypatch.setattr(
+        batch,
+        "Runtime",
+        lambda config: built.append((config, threading.current_thread())) or agent,
+    )
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    # A ledger connection may only be used by the thread that opened it, so each chunk
+    # builds its own Runtime inside its worker, from the agent's config rather than the
+    # environment, which is not set in this process.
+    assert [config for config, _ in built] == [agent.config]
+    assert [thread is threading.main_thread() for _, thread in built] == [False]
+    assert [s for s, _ in calls if s.startswith("extract/")] == ["extract/a__REPORT.md/0"]
+    assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
+
+
+def test_evidence_is_assembled_in_task_order_not_completion_order(tmp_path):
+    (tmp_path / "staging").mkdir()
+    (tmp_path / "staging/a__REPORT.md").write_text("Yield was 42%.")
+    (tmp_path / "staging/b__REPORT.md").write_text("Yield was 56%.")
+
+    def evidence(quote, start):
+        return batch.Evidence.model_validate(
+            {
+                "findings": [
+                    {
+                        "quote": quote,
+                        "start": start,
+                        "end": start + len(quote),
+                        "claim": quote,
+                        "kind": "finding",
+                    }
+                ],
+                "empty_reason": "",
+            }
+        )
+
+    tasks = [
+        ("a__REPORT.md", "Yield was 42%.", 0, 14),
+        ("a__REPORT.md", "Yield was 42%.", 16000, 16014),
+        ("b__REPORT.md", "Yield was 56%.", 0, 14),
+    ]
+    # Workers finish in whatever order the models answer; assembly must not notice.
+    finished = {2: evidence("last", 0), 0: evidence("first", 0), 1: evidence("middle", 16000)}
+    findings, manifest = batch.assemble_evidence(tmp_path, tasks, finished)
+    assert [f["claim"] for f in findings] == ["first", "middle", "last"]
+    assert [f["id"] for f in findings] == [
+        f"{batch.sid_for('a__REPORT.md')}:0:0",
+        f"{batch.sid_for('a__REPORT.md')}:16000:0",
+        f"{batch.sid_for('b__REPORT.md')}:0:0",
+    ]
+    assert [(m["source"], m["start"]) for m in manifest] == [
+        ("a__REPORT.md", 0),
+        ("a__REPORT.md", 16000),
+        ("b__REPORT.md", 0),
+    ]
 
 
 def test_overlap_findings_are_left_to_the_next_chunk():
