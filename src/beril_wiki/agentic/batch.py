@@ -285,13 +285,15 @@ def briefs(root: Path) -> list[dict]:
 
 
 def retire_merged(listing: list[dict], pages: list[PageJob]) -> list[dict]:
-    """Drop pages a batch merged away, which later batches must not name.
+    """Mark pages a batch merged away, which later batches must neither name nor recreate.
 
     The inventory was only ever appended to, so a page one batch merged stayed
-    visible to every batch after it. They named it, and the gate rejected them in
-    cascade: on this corpus one merged concept rejected three batches in a row."""
+    visible as a live destination and the gate rejected every later batch that named
+    it. Hiding it instead is worse: the rule is never to recreate a retired identity,
+    and a planner that cannot see one recreates it, which collides with the merge that
+    retired it. So it stays visible and says what it is."""
     merged = {loser for job in pages for loser in job.merge_from}
-    return [item for item in listing if item["path"] not in merged]
+    return [item | {"retired": True} if item["path"] in merged else item for item in listing]
 
 
 def planning_batches(findings: list[dict], limit: int = 40_000) -> list[list[dict]]:

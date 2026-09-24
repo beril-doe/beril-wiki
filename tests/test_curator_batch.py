@@ -186,11 +186,15 @@ def test_merged_pages_leave_the_planner_inventory():
         reason="Absorb the thin page",
         merge_from=["concepts/absorbed.md"],
     )
-    # A merged page is retired; a later batch that names it is rejected by the gate.
-    assert [p["path"] for p in batch.retire_merged(listing, [page])] == [
+    # A merged page is retired: it stays visible, marked, because a planner that
+    # cannot see it recreates it and collides with the merge that retired it.
+    after = batch.retire_merged(listing, [page])
+    assert [p["path"] for p in after] == [
         "concepts/keep.md",
+        "concepts/absorbed.md",
         "entities/other.md",
     ]
+    assert [p.get("retired", False) for p in after] == [False, True, False]
 
 
 def test_evidence_is_assembled_in_task_order_not_completion_order(tmp_path):
