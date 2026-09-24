@@ -172,6 +172,27 @@ def test_extraction_fans_out_with_a_runtime_per_worker(tmp_path, monkeypatch):
     assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
 
 
+def test_coverage_gate_names_what_is_missing_or_repeated(tmp_path):
+    (tmp_path / "wiki/concepts").mkdir(parents=True)
+    (tmp_path / "staging").mkdir()
+    page = batch.PageJob(
+        path="concepts/kept.md", title="Kept", type="Concept", sources=["a"], reason="Hold"
+    )
+    plan = batch.Plan(
+        pages=[page],
+        coverage=[
+            batch.Coverage(evidence="a:0:0", concepts=["concepts/kept.md"], summary_only=""),
+            batch.Coverage(evidence="a:0:0", concepts=["concepts/kept.md"], summary_only=""),
+        ],
+    )
+    findings = [{"id": "a:0:0", "source": "a"}, {"id": "a:0:1", "source": "a"}]
+    with pytest.raises(CandidateError) as caught:
+        batch.plan_jobs(tmp_path, plan, findings, {"a": "text"}, [], ["a__REPORT.md"])
+    # One row per evidence id, and the gate says which ids broke the rule.
+    assert "a:0:1" in str(caught.value)
+    assert "a:0:0" in str(caught.value)
+
+
 def test_path_fields_describe_their_form_in_the_schema():
     schema = batch.Plan.model_json_schema()["$defs"]
     # The prompt carries this schema, so a rule stated here reaches the planner before

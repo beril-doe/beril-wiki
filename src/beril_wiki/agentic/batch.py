@@ -362,8 +362,23 @@ def plan_jobs(
         else:
             jobs[job.path] = job.model_copy(deep=True)
     covered = [c.evidence for c in plan.coverage]
-    if len(covered) != len(set(covered)) or set(covered) != {f["id"] for f in findings}:
-        raise CandidateError("planner omitted or duplicated evidence coverage")
+    wanted = {f["id"] for f in findings}
+    missing = sorted(wanted - set(covered))
+    extra = sorted(set(covered) - wanted)
+    repeated = sorted({item for item in covered if covered.count(item) > 1})
+    if missing or extra or repeated:
+        # Name them: the planner writes one row per evidence id and a slip of one in a
+        # hundred is invisible unless the gate says which.
+        parts = []
+        if missing:
+            parts.append(f"{len(missing)} uncovered, first: {', '.join(missing[:8])}")
+        if repeated:
+            parts.append(f"{len(repeated)} covered twice: {', '.join(repeated[:8])}")
+        if extra:
+            parts.append(f"{len(extra)} not in this batch: {', '.join(extra[:8])}")
+        raise CandidateError(
+            "coverage must hold exactly one row per evidence id; " + "; ".join(parts)
+        )
     finding_sources = {f["id"]: f["source"] for f in findings}
     for item in plan.coverage:
         if not item.concepts and not item.summary_only.strip():
