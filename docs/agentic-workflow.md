@@ -134,7 +134,8 @@ every stage that depends on it stale as well:
 
 | Stage | Work and completion condition |
 |---|---|
-Planning is shown the pages that cite a batch's own sources, not the whole wiki.
+Planning is shown every concept plus the entities and summaries citing a batch's
+own sources, not the whole wiki.
 The inventory is re-read for every batch, so passing all of it made the planner's
 deliberation grow with the wiki instead of with the work, and on this corpus that
 passed the model's output ceiling by the eighth of 49 batches.

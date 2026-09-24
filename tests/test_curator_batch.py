@@ -175,18 +175,25 @@ def test_extraction_fans_out_with_a_runtime_per_worker(tmp_path, monkeypatch):
 def test_planner_sees_only_pages_that_cite_its_evidence():
     listing = [
         {"path": "concepts/yield.md", "sources": ["a"]},
-        {"path": "concepts/other.md", "sources": ["z"]},
-        {"path": "concepts/both.md", "sources": ["z", "a"]},
-        {"path": "concepts/new.md", "sources": []},
+        {"path": "concepts/elsewhere.md", "sources": ["z"]},
+        {"path": "entities/mine.md", "sources": ["a"]},
+        {"path": "entities/theirs.md", "sources": ["z"]},
+        {"path": "summaries/new.md", "sources": []},
     ]
     # The inventory is re-read for every batch, so showing all of it makes the
-    # planner's deliberation grow with the wiki instead of with the work.
+    # planner's deliberation grow with the wiki instead of with the work. Concepts
+    # stay visible because coverage names them and the gate checks every one.
     assert [p["path"] for p in batch.visible_pages(listing, {"a"})] == [
         "concepts/yield.md",
-        "concepts/both.md",
-        "concepts/new.md",
+        "concepts/elsewhere.md",
+        "entities/mine.md",
+        "summaries/new.md",
     ]
-    assert [p["path"] for p in batch.visible_pages(listing, {"q"})] == ["concepts/new.md"]
+    assert [p["path"] for p in batch.visible_pages(listing, {"q"})] == [
+        "concepts/yield.md",
+        "concepts/elsewhere.md",
+        "summaries/new.md",
+    ]
 
 
 def test_evidence_is_assembled_in_task_order_not_completion_order(tmp_path):
