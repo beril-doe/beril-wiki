@@ -163,7 +163,12 @@ def sid_for(name: str) -> str:
 
 def page_path(value: str) -> str:
     if not re.fullmatch(r"(?:concepts|entities|summaries)/[a-zA-Z0-9_-]+\.md", value):
-        raise CandidateError(f"invalid page destination {value!r}")
+        # Say the shape, not just the verdict: the usual miss is a dropped .md.
+        raise CandidateError(
+            f"invalid page destination {value!r}: a path is concepts/, entities/ or "
+            "summaries/ followed by a slug of letters, digits, hyphens or underscores "
+            "and ending in .md, as in concepts/gene-essentiality.md"
+        )
     return value
 
 

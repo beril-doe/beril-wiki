@@ -172,6 +172,14 @@ def test_extraction_fans_out_with_a_runtime_per_worker(tmp_path, monkeypatch):
     assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
 
 
+def test_invalid_destination_states_the_shape_required():
+    with pytest.raises(CandidateError) as caught:
+        batch.page_path("concepts/composite-functional-annotation")
+    # A correction round needs the rule, not only the verdict; the usual miss is .md.
+    assert ".md" in str(caught.value)
+    assert "concepts/" in str(caught.value)
+
+
 def test_unscheduled_coverage_names_the_offending_concept(tmp_path):
     (tmp_path / "wiki/concepts").mkdir(parents=True)
     (tmp_path / "staging").mkdir()
