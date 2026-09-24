@@ -244,6 +244,26 @@ def test_overlap_findings_are_left_to_the_next_chunk():
     assert reviews == ["extract/x/0"]
 
 
+def test_malformed_extraction_reply_earns_a_correction(tmp_path, monkeypatch):
+    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
+    recorded = agent.ask
+
+    def truncated(messages, step):
+        raw = recorded(messages, step)
+        if step == "extract/a__REPORT.md/0":
+            return raw[: len(raw) // 2]
+        return raw
+
+    monkeypatch.setattr(agent, "ask", truncated)
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    # A reply that is not valid JSON is the model's mistake, not the run's.
+    assert [s for s, _ in calls if s.startswith("extract/")] == [
+        "extract/a__REPORT.md/0",
+        "extract/a__REPORT.md/0/repair",
+    ]
+    assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
+
+
 def test_exhausted_extraction_keeps_its_evidence_and_records_the_gap(tmp_path, monkeypatch):
     agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
 

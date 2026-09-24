@@ -117,7 +117,7 @@ class EvidenceAcceptor:
         self.evidence: Evidence | None = None
 
     def __call__(self, raw: str) -> Evidence:
-        evidence = validate_evidence(self.text, self.start, len(self.text), C.parse_json_reply(raw))
+        evidence = validate_evidence(self.text, self.start, len(self.text), candidate_json(raw))
         # A quote located in the overlap belongs to the next chunk, which starts there.
         evidence.findings = [f for f in evidence.findings if f.start < self.end]
         self.evidence = evidence
