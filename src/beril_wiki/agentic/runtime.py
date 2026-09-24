@@ -35,6 +35,14 @@ class WorkflowError(RuntimeError):
     """Stop without accepting partial work or silently spending more tokens."""
 
 
+class Refused(WorkflowError):
+    """The configured model refused; the CLI would answer on another model."""
+
+    def __init__(self, message: str, fallback_model: str) -> None:
+        super().__init__(message)
+        self.fallback_model = fallback_model
+
+
 class CandidateError(WorkflowError):
     """Repairable model output, distinct from operational or budget failures."""
 
@@ -570,7 +578,7 @@ class Runtime:
             config.get("stage_max_tokens", 0),
         )
 
-    def ask(self, messages: list[dict], step: str) -> str:
+    def ask(self, messages: list[dict], step: str, *, model: str | None = None) -> str:
         payload = json.dumps(messages, ensure_ascii=False)
         if len(payload.encode()) > 500_000:
             raise WorkflowError(f"{step}: input exceeds 500KB; reduce batch or retrieve evidence")
@@ -597,7 +605,7 @@ class Runtime:
                     self._validation_context,
                 ]
             )
-        model = model_for(self.config, step)
+        model = model or model_for(self.config, step)
         key = digest([messages, model, tool_revision, inputs, step])
         # Cached answers remain useful across CLI updates; changed tool reads invalidate them.
         while row := self.ledger.db.execute(
@@ -622,12 +630,20 @@ class Runtime:
         print(f"agentic: {step} model={model} [{key[:12]}]", flush=True)
         self._step = step
         try:
-            return asyncio.run(self._query(payload, key))
+            return asyncio.run(self._query(payload, key, model))
+        except Refused as exc:
+            if exc.fallback_model == model:
+                raise
+            print(
+                f"agentic: {step} refused on {model}; re-issuing on {exc.fallback_model}",
+                flush=True,
+            )
+            return self.ask(messages, step, model=exc.fallback_model)
         except BaseException as exc:
             # A transport crash may have consumed tokens: leave pending charge intact.
             raise WorkflowError(f"{step} failed; inspect job {key}: {exc}") from exc
 
-    async def _query(self, payload: str, key: str) -> str:
+    async def _query(self, payload: str, key: str, model: str) -> str:
         profile = tool_profile(self._step)
         extended = profile == "extended"
         reader = EvidenceTools(self.root) if extended else ReadTools(self.root)
@@ -707,7 +723,7 @@ class Runtime:
         payload = json.dumps([m for m in messages if m.get("role") != "system"], ensure_ascii=False)
         opts = ClaudeAgentOptions(
             cli_path=cli,
-            model=model_for(self.config, self._step),
+            model=model,
             system_prompt="\n\n".join([system + contract, *system_parts]),
             tools=[],
             allowed_tools=[f"mcp__evidence__{t.name}" for t in available],
@@ -787,15 +803,18 @@ class Runtime:
         ):
             error = f"SDK unsuccessful: {terminal.subtype} {terminal.errors or ''}"
         if fallback:
-            # The CLI retries a refused request on another model for the rest of the
-            # session. The ledger and this job's cache key name the configured model,
-            # so accepting that answer would attribute the work to a model that did
-            # not do it. Fail instead and leave the model choice to the operator.
-            error = (
-                f"request refused on {fallback.get('original_model')} "
-                f"[{fallback.get('api_refusal_category')}]; the CLI fell back to "
-                f"{fallback.get('fallback_model')} for the session"
+            # The CLI answers a refused request on another model for the rest of the
+            # session, but the ledger row and this job's cache key name the configured
+            # model, so accepting that answer here would credit the work, and every
+            # cached reuse of it, to a model that did not do it. Record the refusal and
+            # let ask re-issue the job on that model, where it is keyed to it.
+            refused = (
+                f"refused on {fallback.get('original_model')} "
+                f"[{fallback.get('api_refusal_category')}]; the CLI answers on "
+                f"{fallback.get('fallback_model')}"
             )
+            self.ledger.finish(key, "", terminal.usage, refused, cost=terminal.total_cost_usd)
+            raise Refused(refused, str(fallback.get("fallback_model")))
         output = terminal.result or ""
         if not output.strip():
             error = error or "empty SDK output"

@@ -246,10 +246,13 @@ against the objections it was meant to close, the same closed question derived
 pages get, so the reviewer cannot object to something new each round. The
 reviewer sees the host-located findings the chunk owns, so offsets and the
 next chunk's overlap are never objections. A rejection past that, unknown usage, authentication failures and
-other operational errors still stop the run. So does a refusal the CLI
-retries on another model: that fallback lasts the rest of the session, and
-the ledger and the job's cache key name the configured model, so accepting
-the answer would credit work to a model that did not do it. The worst case for a derived page is twelve jobs: a draft, one
+other operational errors still stop the run. A refusal is different: the CLI
+would answer on another model for the rest of the session, and the ledger row
+and the job's cache key name the configured model, so accepting that answer
+would credit the work, and every cached reuse of it, to a model that did not
+do it. The refusal is recorded against the configured model and the job is
+re-issued on the model the CLI named, keyed and billed to it, so the ledger
+always says which model wrote what. The worst case for a derived page is twelve jobs: a draft, one
 open review, and five patch rounds each with its own verification.
 
 Durable raw job results and evidence avoid repeating accepted inference. Tool

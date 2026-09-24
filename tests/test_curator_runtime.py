@@ -51,7 +51,7 @@ def test_search_job_reuses_cache_and_invalidates_added_deleted_files(tmp_path, m
     monkeypatch.setattr(R, "check_auth", lambda cli: None)
     calls = []
 
-    async def answer(payload, key):
+    async def answer(payload, key, model):
         reader = R.EvidenceTools(tmp_path)
         result = json.dumps(reader.search("quartz", "wiki", 0))
         calls.append(key)
@@ -109,41 +109,57 @@ def test_generation_repairs_once_and_never_retries_operational_error(tmp_path, m
     assert calls == ["write/test"]
 
 
-def test_model_fallback_after_a_refusal_fails_instead_of_misattributing_work(tmp_path, monkeypatch):
+def test_refused_job_is_reissued_on_the_model_that_answers_it(tmp_path, monkeypatch):
     from claude_agent_sdk import ResultMessage, SystemMessage
 
     agent = runtime(tmp_path)
+    models = []
+
+    def result(text):
+        return ResultMessage(
+            subtype="success",
+            duration_ms=1,
+            duration_api_ms=1,
+            is_error=False,
+            num_turns=1,
+            session_id="s",
+            total_cost_usd=0.1,
+            usage={"input_tokens": 1, "output_tokens": 1},
+            result=text,
+        )
 
     def query(*, prompt, options):
+        models.append(options.model)
+
         async def stream():
             yield SystemMessage(subtype="init", data={"apiKeySource": "none"})
-            yield SystemMessage(
-                subtype="model_refusal_fallback",
-                data={
-                    "original_model": "claude-opus-5-5",
-                    "fallback_model": "claude-opus-5",
-                    "api_refusal_category": "bio",
-                },
-            )
-            yield ResultMessage(
-                subtype="success",
-                duration_ms=1,
-                duration_api_ms=1,
-                is_error=False,
-                num_turns=1,
-                session_id="s",
-                total_cost_usd=0.1,
-                usage={"input_tokens": 1, "output_tokens": 1},
-                result="findings from the other model",
-            )
+            if options.model == "claude-opus-5-5":
+                yield SystemMessage(
+                    subtype="model_refusal_fallback",
+                    data={
+                        "original_model": "claude-opus-5-5",
+                        "fallback_model": "claude-opus-5",
+                        "api_refusal_category": "bio",
+                    },
+                )
+                yield result("")
+            else:
+                yield result("findings")
 
         return stream()
 
     monkeypatch.setattr(R, "query", query)
-    with pytest.raises(R.WorkflowError, match=r"refused on claude-opus-5-5 \[bio\]"):
-        agent.ask([{"role": "user", "content": "extract"}], "extract/a/0")
-    row = agent.ledger.db.execute("SELECT status, error FROM jobs").fetchone()
-    assert row[0] == "failed" and "fell back to claude-opus-5" in row[1]
+    monkeypatch.setitem(agent.config, "model", "claude-opus-5-5")
+    assert agent.ask([{"role": "user", "content": "extract"}], "extract/a/0") == "findings"
+    assert models == ["claude-opus-5-5", "claude-opus-5"]
+    rows = agent.ledger.db.execute(
+        "SELECT model, status, error FROM jobs ORDER BY rowid"
+    ).fetchall()
+    assert [(m, st) for m, st, _ in rows] == [
+        ("claude-opus-5-5", "failed"),
+        ("claude-opus-5", "done"),
+    ]
+    assert "refused on claude-opus-5-5 [bio]" in rows[0][2]
 
 
 def test_verification_keeps_unresolved_objections_and_adds_only_new_defects(tmp_path, monkeypatch):
@@ -689,7 +705,7 @@ def test_tool_free_jobs_key_on_their_prompt_only(tmp_path, monkeypatch):
     monkeypatch.setattr(R, "check_auth", lambda cli: None)
     calls = []
 
-    async def answer(payload, key):
+    async def answer(payload, key, model):
         calls.append(key)
         agent.ledger.finish(key, "ok", {"input_tokens": 1, "output_tokens": 1})
         return "ok"

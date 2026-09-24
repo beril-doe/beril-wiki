@@ -699,7 +699,7 @@ def test_auth_failure_does_not_reserve_and_cached_output_survives_cli_update(tmp
     assert agent.ledger.db.execute("SELECT count(*) FROM jobs").fetchone()[0] == 0
     monkeypatch.setattr(module, "check_auth", lambda cli: None)
 
-    async def answer(payload, key):
+    async def answer(payload, key, model):
         agent.ledger.finish(key, "saved", {"input_tokens": 3, "output_tokens": 5})
         return "saved"
 
@@ -819,7 +819,7 @@ def test_reconcile_and_explicit_retry_keep_prior_charge(tmp_path, monkeypatch):
     assert cli.main() == 0
     restarted = module.Runtime(config)
 
-    async def answer(payload, new_key):
+    async def answer(payload, new_key, model):
         assert new_key != key
         restarted.ledger.finish(new_key, "answer", {"input_tokens": 3, "output_tokens": 5})
         return "answer"
