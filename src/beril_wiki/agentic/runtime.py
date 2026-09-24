@@ -55,6 +55,14 @@ MODEL_ROLES = ("extraction", "planning", "writing", "review", "queries", "figure
 CORE_MODEL_ROLES = ("extraction", "planning", "writing", "review")
 
 
+def refusal_target(output: str | None) -> str:
+    """The model a recorded refusal was answered on, if this row is one."""
+    try:
+        return str(json.loads(output or "")["refused_to"])
+    except (ValueError, KeyError, TypeError):
+        return ""
+
+
 def model_policy(config: dict) -> dict[str, str]:
     default = config.get("model")
     overrides = config.get("step_models", {})
@@ -284,13 +292,14 @@ class Ledger:
         error: str = "",
         dependencies: dict | None = None,
         cost: float | None = None,
+        status: str = "",
     ) -> None:
         valid = valid_usage(usage)
         tokens = effective = None
         if valid_usage(usage):
             tokens = sum(usage.get(k, 0) for k in TOKEN_FIELDS)
             effective = effective_tokens(usage)
-        status = ("failed" if error else "done") if valid else "unknown"
+        status = status or (("failed" if error else "done") if valid else "unknown")
         with self.db:
             self.db.execute(
                 "UPDATE jobs SET status=?,output=?,usage=?,tokens=?,effective=?,cost=?,error=?,"
@@ -612,6 +621,9 @@ class Runtime:
             "SELECT status,dependencies,output FROM jobs WHERE key=?", (key,)
         ).fetchone():
             if row[0] == "rejected":
+                answers = refusal_target(row[2])
+                if answers and answers != model:
+                    return self.ask(messages, step, model=answers)
                 key = digest([key, "explicit-retry"])
                 continue
             if row[0] != "done":
@@ -813,8 +825,19 @@ class Runtime:
                 f"[{fallback.get('api_refusal_category')}]; the CLI answers on "
                 f"{fallback.get('fallback_model')}"
             )
-            self.ledger.finish(key, "", terminal.usage, refused, cost=terminal.total_cost_usd)
-            raise Refused(refused, str(fallback.get("fallback_model")))
+            answers = str(fallback.get("fallback_model"))
+            # Rejected, not failed: the work is legitimately done under the other
+            # model's key, so this row must never block a later run. It remembers
+            # which model answered so a relaunch skips the refusal it would repeat.
+            self.ledger.finish(
+                key,
+                json.dumps({"refused_to": answers}),
+                terminal.usage,
+                refused,
+                cost=terminal.total_cost_usd,
+                status="rejected",
+            )
+            raise Refused(refused, answers)
         output = terminal.result or ""
         if not output.strip():
             error = error or "empty SDK output"

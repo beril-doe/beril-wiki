@@ -156,10 +156,15 @@ def test_refused_job_is_reissued_on_the_model_that_answers_it(tmp_path, monkeypa
         "SELECT model, status, error FROM jobs ORDER BY rowid"
     ).fetchall()
     assert [(m, st) for m, st, _ in rows] == [
-        ("claude-opus-5-5", "failed"),
+        ("claude-opus-5-5", "rejected"),
         ("claude-opus-5", "done"),
     ]
     assert "refused on claude-opus-5-5 [bio]" in rows[0][2]
+
+    # A refusal must never block a later run, nor be paid for a second time.
+    models.clear()
+    assert agent.ask([{"role": "user", "content": "extract"}], "extract/a/0") == "findings"
+    assert models == []
 
 
 def test_verification_keeps_unresolved_objections_and_adds_only_new_defects(tmp_path, monkeypatch):

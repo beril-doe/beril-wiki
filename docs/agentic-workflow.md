@@ -252,7 +252,10 @@ and the job's cache key name the configured model, so accepting that answer
 would credit the work, and every cached reuse of it, to a model that did not
 do it. The refusal is recorded against the configured model and the job is
 re-issued on the model the CLI named, keyed and billed to it, so the ledger
-always says which model wrote what. The worst case for a derived page is twelve jobs: a draft, one
+always says which model wrote what. That record is a rejected candidate, not
+a failure, so it never blocks a later run, and it remembers which model
+answered so a relaunch goes straight there instead of paying for the refusal
+again. The worst case for a derived page is twelve jobs: a draft, one
 open review, and five patch rounds each with its own verification.
 
 Durable raw job results and evidence avoid repeating accepted inference. Tool
