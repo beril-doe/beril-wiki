@@ -15,7 +15,7 @@ def pad(text: str, words: int) -> str:
     return text
 
 
-def reply(self, messages, step):
+def reply(self, messages, step, *, model=None):
     if step.endswith(("/science-review", "/review")):
         return '{"accepted": true, "issues": []}'
     if "/patch/" in step:

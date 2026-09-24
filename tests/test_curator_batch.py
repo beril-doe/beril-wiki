@@ -2,6 +2,7 @@
 
 import json
 import threading
+from typing import cast
 
 import pytest
 
@@ -259,7 +260,7 @@ def test_overlap_findings_are_left_to_the_next_chunk():
         def review(self, task, candidate, step):
             reviews.append(step)
 
-    evidence = batch.EvidenceAcceptor(Agent(), [], "extract/x/0", text, 0, 16)(raw)
+    evidence = batch.EvidenceAcceptor(cast(Runtime, Agent()), [], "extract/x/0", text, 0, 16)(raw)
     assert [f.quote for f in evidence.findings] == ["Owned sentence."]
     assert reviews == ["extract/x/0"]
 
