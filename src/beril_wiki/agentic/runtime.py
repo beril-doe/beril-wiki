@@ -861,6 +861,15 @@ class Runtime:
             )
             raise Refused(refused, answers)
         output = terminal.result or ""
+        cap = int(self.config.get("max_output_tokens", 32768))
+        if valid_usage(terminal.usage) and terminal.usage.get("output_tokens", 0) >= cap:
+            # The CLI returns the tail of an answer that ran past the cap, with a
+            # successful stop reason, so the only symptom downstream is text that
+            # begins mid-sentence. Name it here instead.
+            error = error or (
+                f"reply reached the {cap}-token output cap and was truncated; raise "
+                "--max-output-tokens or ask for less in one job"
+            )
         if not output.strip():
             error = error or "empty SDK output"
         self.ledger.finish(

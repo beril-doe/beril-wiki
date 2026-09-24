@@ -109,6 +109,38 @@ def test_generation_repairs_once_and_never_retries_operational_error(tmp_path, m
     assert calls == ["write/test"]
 
 
+def test_truncated_reply_names_the_output_cap(tmp_path, monkeypatch):
+    from claude_agent_sdk import ResultMessage, SystemMessage
+
+    agent = runtime(tmp_path)
+    monkeypatch.setitem(agent.config, "max_output_tokens", 1000)
+
+    def query(*, prompt, options):
+        async def stream():
+            yield SystemMessage(subtype="init", data={"apiKeySource": "none"})
+            yield ResultMessage(
+                subtype="success",
+                duration_ms=1,
+                duration_api_ms=1,
+                is_error=False,
+                num_turns=1,
+                session_id="s",
+                total_cost_usd=0.1,
+                usage={"input_tokens": 1, "output_tokens": 1000},
+                result='"coverage": [{"evidence": "a:0:1"}]}',
+            )
+
+        return stream()
+
+    monkeypatch.setattr(R, "query", query)
+    # A truncated reply arrives as a success whose text begins mid-object; without
+    # this check the only symptom is a JSON error far from the cause.
+    with pytest.raises(R.WorkflowError, match="1000-token output cap"):
+        agent.ask([{"role": "user", "content": "plan"}], "batch/plan/0")
+    status, error = agent.ledger.db.execute("SELECT status, error FROM jobs").fetchone()
+    assert status == "failed" and "truncated" in error
+
+
 def test_refused_job_is_reissued_on_the_model_that_answers_it(tmp_path, monkeypatch):
     from claude_agent_sdk import ResultMessage, SystemMessage
 

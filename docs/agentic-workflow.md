@@ -253,7 +253,11 @@ supply, since those quotes are valid and what the reviewer still wants is
 evidence the model would not add; the objections are written to
 `.agentic/extraction-gaps.json` and the run continues, as a salvaged page
 does. A chunk that validated no evidence at all, unknown usage,
-authentication failures and other operational errors still stop the run. A refusal is different: the CLI
+authentication failures, a reply that reached the output cap and other
+operational errors still stop the run. The CLI returns the tail of an answer
+that ran past `--max-output-tokens` with a successful stop reason, so the cap
+is checked against reported usage; otherwise the only symptom is text that
+begins mid-sentence and fails to parse far from its cause. A refusal is different: the CLI
 would answer on another model for the rest of the session, and the ledger row
 and the job's cache key name the configured model, so accepting that answer
 would credit the work, and every cached reuse of it, to a model that did not
