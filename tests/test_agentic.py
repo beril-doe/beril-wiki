@@ -88,6 +88,7 @@ def test_read_tools_bound_ranges_and_reject_escape(tmp_path):
 
 def test_chunks_and_exact_quote_validation():
     from beril_wiki.agentic.batch import chunks, validate_evidence
+    from beril_wiki.agentic.runtime import CandidateError
 
     text = "αβγ\n" * 20
     pieces = list(chunks(text, 13))
@@ -116,6 +117,24 @@ def test_chunks_and_exact_quote_validation():
         },
     )
     assert (snapped.findings[0].start, snapped.findings[0].end) == (1, 4)
+    with pytest.raises(CandidateError, match="kind"):
+        validate_evidence(
+            text,
+            0,
+            13,
+            {
+                "findings": [
+                    {
+                        "quote": "\u03b1\u03b2\u03b3",
+                        "start": 0,
+                        "end": 3,
+                        "claim": "t",
+                        "kind": "dataset",
+                    }
+                ],
+                "empty_reason": "",
+            },
+        )
     with pytest.raises(WorkflowError, match="quote"):
         validate_evidence(
             text,

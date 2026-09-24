@@ -68,7 +68,12 @@ def chunks(text: str, size: int = 16_000) -> Iterator[tuple[int, int]]:
 
 
 def validate_evidence(text: str, start: int, end: int, obj: dict) -> Evidence:
-    evidence = Evidence.model_validate(obj)
+    try:
+        evidence = Evidence.model_validate(obj)
+    except ValidationError as exc:
+        # A schema violation is the model's mistake, not the run's: name it and let the
+        # correction round fix it, as an invalid plan or page candidate already does.
+        raise CandidateError(str(exc)) from exc
     if not evidence.findings and not evidence.empty_reason.strip():
         raise CandidateError("empty extraction must explain why no scientific evidence exists")
     for index, finding in enumerate(evidence.findings):
