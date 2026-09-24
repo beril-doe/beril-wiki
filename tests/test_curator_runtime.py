@@ -115,8 +115,9 @@ def test_refusal_scope_covers_the_text_a_job_carries():
     assert R.refusal_scope("extract/report.md/16000/science-review") == "extract/report.md"
     # A planning batch carries its own evidence, so a refusal must not speak for the
     # other batches, and a page's rounds are the same page seen again.
-    assert R.refusal_scope("batch/plan/1") == "batch/plan/1"
-    assert R.refusal_scope("batch/plan/1/repair") == "batch/plan/1"
+    # Planning batches all draw on the whole corpus, so a refusal covers the stage.
+    assert R.refusal_scope("batch/plan/1") == "batch/plan"
+    assert R.refusal_scope("batch/plan/1/repair") == "batch/plan"
     assert R.refusal_scope("conflicts/slug/patch/2/review") == "conflicts/slug"
     assert R.refusal_scope("write/concepts/yield.md/repair") == "write/concepts/yield.md"
 
@@ -132,9 +133,9 @@ def test_a_refusal_is_found_for_the_step_that_recorded_it(tmp_path):
         "refused on claude-opus-5-5 [bio]; the CLI answers on claude-opus-5",
         status="rejected",
     )
-    # A planning batch has no rounds below it, so its own step is the scope.
+    # A scope that is a step in its own right still finds its refusal.
     assert agent.ledger.refused_model("batch/plan/1") == "claude-opus-5"
-    assert agent.ledger.refused_model("batch/plan/2") == ""
+    assert agent.ledger.refused_model("conflicts/other") == ""
 
 
 def test_truncated_reply_names_the_output_cap(tmp_path, monkeypatch):
