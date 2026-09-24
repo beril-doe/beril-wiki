@@ -539,6 +539,9 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                 "Sources may include older projects when actual evidence supports a back-merge. "
                 "Entries marked planned are upcoming destinations, not files yet; extend them "
                 "rather than creating aliases. "
+                f"You have at most {max(1, agent.config.get('max_turns', 6) - 1)} tool turns; "
+                "read only what the briefs leave genuinely unclear and always finish with "
+                "the JSON. "
                 f"Return JSON matching {json.dumps(Plan.model_json_schema())}.\n"
                 + json.dumps(
                     {
