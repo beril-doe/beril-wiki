@@ -248,8 +248,12 @@ chunk gets three, and after its one open review each repair is only verified
 against the objections it was meant to close, the same closed question derived
 pages get, so the reviewer cannot object to something new each round. The
 reviewer sees the host-located findings the chunk owns, so offsets and the
-next chunk's overlap are never objections. A rejection past that, unknown usage, authentication failures and
-other operational errors still stop the run. A refusal is different: the CLI
+next chunk's overlap are never objections. A chunk whose corrections run out keeps the evidence it did
+supply, since those quotes are valid and what the reviewer still wants is
+evidence the model would not add; the objections are written to
+`.agentic/extraction-gaps.json` and the run continues, as a salvaged page
+does. A chunk that validated no evidence at all, unknown usage,
+authentication failures and other operational errors still stop the run. A refusal is different: the CLI
 would answer on another model for the rest of the session, and the ledger row
 and the job's cache key name the configured model, so accepting that answer
 would credit the work, and every cached reuse of it, to a model that did not

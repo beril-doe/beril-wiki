@@ -244,20 +244,31 @@ def test_overlap_findings_are_left_to_the_next_chunk():
     assert reviews == ["extract/x/0"]
 
 
-def test_extraction_stops_after_its_corrections_are_exhausted(tmp_path, monkeypatch):
+def test_exhausted_extraction_keeps_its_evidence_and_records_the_gap(tmp_path, monkeypatch):
     agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
 
     def reject(task, raw, step):
         if step.startswith("extract/"):
-            raise CandidateError("scientific review rejected " + step, ["denominator wrong"])
+            raise CandidateError("scientific review rejected " + step, ["a caveat is missing"])
 
     monkeypatch.setattr(agent, "review", reject)
     monkeypatch.setattr(agent, "verify", lambda task, candidate, issues, step: issues)
-    with pytest.raises(CandidateError, match="still open.*denominator wrong"):
-        batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
     assert sum(s.startswith("extract/") for s, _ in calls) == batch.EXTRACTION_ATTEMPTS
     assert sum(s.endswith("/repair") for s, _ in calls) == batch.EXTRACTION_ATTEMPTS - 1
-    assert not any(s.startswith("batch/plan/") for s, _ in calls)
+    # One chunk the model would not complete must not end the compilation; the
+    # evidence it did supply stands and the gap is written down for a human.
+    gaps = json.loads((agent.store / "extraction-gaps.json").read_text())
+    assert gaps == {"extract/a__REPORT.md/0": ["a caveat is missing"]}
+    assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
+
+
+def test_extraction_still_stops_when_no_evidence_validated(tmp_path, monkeypatch):
+    agent, _, _, _ = setup_batch(tmp_path, monkeypatch)
+    monkeypatch.setattr(agent, "ask", lambda messages, step: '{"findings": [], "empty_reason": ""}')
+    with pytest.raises(CandidateError, match="empty extraction"):
+        batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    assert not (agent.store / "extraction-gaps.json").exists()
 
 
 def test_missing_plan_coverage_receives_one_correction(tmp_path, monkeypatch):

@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import re
 import shutil
+import threading
 from collections.abc import Iterator
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -17,6 +18,7 @@ from beril_wiki.agentic.runtime import (
     CandidateError,
     Runtime,
     WorkflowError,
+    atomic_json,
     digest,
     file_hash,
 )
@@ -112,11 +114,13 @@ class EvidenceAcceptor:
         self.agent, self.messages, self.step = agent, messages, step
         self.text, self.start, self.end = text, start, end
         self.pending: list[str] = []
+        self.evidence: Evidence | None = None
 
     def __call__(self, raw: str) -> Evidence:
         evidence = validate_evidence(self.text, self.start, len(self.text), C.parse_json_reply(raw))
         # A quote located in the overlap belongs to the next chunk, which starts there.
         evidence.findings = [f for f in evidence.findings if f.start < self.end]
+        self.evidence = evidence
         candidate = evidence.model_dump_json()
         if not self.pending:
             try:
@@ -381,6 +385,18 @@ def plan_jobs(
     return jobs, losers
 
 
+_GAP_LOCK = threading.Lock()
+
+
+def record_extraction_gap(store: Path, step: str, objections: list[str]) -> None:
+    """Evidence a chunk never captured; this is where a human finds what is missing."""
+    path = store / "extraction-gaps.json"
+    with _GAP_LOCK:
+        data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+        data[step] = objections
+        atomic_json(path, data)
+
+
 def assemble_evidence(
     root: Path, tasks: list[tuple[str, str, int, int]], extracted: dict[int, Evidence]
 ) -> tuple[list[dict], list[dict]]:
@@ -456,12 +472,18 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
         )
         messages = [{"role": "user", "content": instruction}]
         step = f"extract/{name}/{start}"
-        return agent.generate(
-            messages,
-            step,
-            EvidenceAcceptor(agent, messages, step, text, start, end),
-            attempts=EXTRACTION_ATTEMPTS,
-        )
+        acceptor = EvidenceAcceptor(agent, messages, step, text, start, end)
+        try:
+            return agent.generate(messages, step, acceptor, attempts=EXTRACTION_ATTEMPTS)
+        except CandidateError as exc:
+            # Corrections are spent and the quotes that are here are valid; what the
+            # reviewer still wants is evidence the model would not add. Keep the chunk
+            # and record the gap, rather than ending a compilation over one chunk of
+            # many. A page failure is recorded the same way and the stage continues.
+            if acceptor.evidence is None or not acceptor.evidence.findings:
+                raise
+            record_extraction_gap(agent.store, step, acceptor.pending or [str(exc)])
+            return acceptor.evidence
 
     # Chunks are independent, so they fan out; each worker needs its own Runtime because
     # a ledger connection belongs to one thread. Results are assembled in task order, so
