@@ -172,6 +172,14 @@ def test_extraction_fans_out_with_a_runtime_per_worker(tmp_path, monkeypatch):
     assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
 
 
+def test_path_fields_describe_their_form_in_the_schema():
+    schema = batch.Plan.model_json_schema()["$defs"]
+    # The prompt carries this schema, so a rule stated here reaches the planner before
+    # it writes rather than only in the gate that rejects it afterwards.
+    for model, field in (("PageJob", "path"), ("PageJob", "merge_from"), ("Coverage", "concepts")):
+        assert ".md" in schema[model]["properties"][field]["description"]
+
+
 def test_invalid_destination_states_the_shape_required():
     with pytest.raises(CandidateError) as caught:
         batch.page_path("concepts/composite-functional-annotation")

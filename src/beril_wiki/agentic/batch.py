@@ -41,20 +41,25 @@ class Evidence(BaseModel):
     empty_reason: str
 
 
+PATH_FORM = "full page path ending in .md, as in concepts/gene-essentiality.md"
+
+
 class PageJob(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
-    path: str
+    path: str = Field(description=PATH_FORM)
     title: str = Field(min_length=1)
     type: str
     sources: list[str]
     reason: str = Field(min_length=1)
-    merge_from: list[str] = Field(default_factory=list)
+    merge_from: list[str] = Field(
+        default_factory=list, description=f"concept paths, each a {PATH_FORM}"
+    )
 
 
 class Coverage(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
     evidence: str
-    concepts: list[str]
+    concepts: list[str] = Field(description=f"concept paths, each a {PATH_FORM}")
     summary_only: str
 
 
@@ -561,8 +566,9 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                 "one coverage entry, naming scheduled concept paths or a concrete reason it "
                 "belongs only in its summary. A concept named in coverage must also appear "
                 "in pages, including one that already exists: routing evidence to a page is "
-                "scheduling it for update. Every page needs sources and a concrete "
-                "change rationale. "
+                "scheduling it for update. Every path, in pages, in merge_from and in "
+                "coverage concepts alike, is the full file path ending in .md. "
+                "Every page needs sources and a concrete change rationale. "
                 "Sources may include older projects when actual evidence supports a back-merge. "
                 "Entries marked planned are upcoming destinations, not files yet; extend them "
                 "rather than creating aliases. "
