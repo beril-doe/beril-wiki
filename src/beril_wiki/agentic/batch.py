@@ -358,8 +358,16 @@ def plan_jobs(
     for item in plan.coverage:
         if not item.concepts and not item.summary_only.strip():
             raise CandidateError("evidence lacks concept coverage or summary-only justification")
-        if any(p not in jobs or not p.startswith("concepts/") for p in item.concepts):
-            raise CandidateError("evidence coverage names an unscheduled concept")
+        stray = [p for p in item.concepts if p not in jobs or not p.startswith("concepts/")]
+        if stray:
+            # Name them: a correction round cannot fix a defect it cannot locate, and
+            # the usual cause is routing evidence to a page that exists without also
+            # scheduling it, which the writer needs in order to update it.
+            raise CandidateError(
+                f"coverage for {item.evidence} names concepts that no page schedules: "
+                f"{', '.join(stray)}. Add each to pages as an update, or route the "
+                "evidence elsewhere."
+            )
         for path in item.concepts:
             jobs[path].sources = sorted(set(jobs[path].sources) | {finding_sources[item.evidence]})
     changed = {sid_for(name) for name in names}
@@ -546,7 +554,9 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                 "can have merge_from; code resolves entity identity separately. "
                 "Never recreate retired identities in the manifest. Give every evidence ID "
                 "one coverage entry, naming scheduled concept paths or a concrete reason it "
-                "belongs only in its summary. Every page needs sources and a concrete "
+                "belongs only in its summary. A concept named in coverage must also appear "
+                "in pages, including one that already exists: routing evidence to a page is "
+                "scheduling it for update. Every page needs sources and a concrete "
                 "change rationale. "
                 "Sources may include older projects when actual evidence supports a back-merge. "
                 "Entries marked planned are upcoming destinations, not files yet; extend them "

@@ -172,6 +172,31 @@ def test_extraction_fans_out_with_a_runtime_per_worker(tmp_path, monkeypatch):
     assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
 
 
+def test_unscheduled_coverage_names_the_offending_concept(tmp_path):
+    (tmp_path / "wiki/concepts").mkdir(parents=True)
+    (tmp_path / "staging").mkdir()
+    plan = batch.Plan(
+        pages=[
+            batch.PageJob(
+                path="concepts/kept.md",
+                title="Kept",
+                type="Concept",
+                sources=["a"],
+                reason="Hold the evidence",
+            )
+        ],
+        coverage=[
+            batch.Coverage(evidence="a:0:0", concepts=["concepts/elsewhere.md"], summary_only="")
+        ],
+    )
+    findings = [{"id": "a:0:0", "source": "a"}]
+    with pytest.raises(CandidateError) as caught:
+        batch.plan_jobs(tmp_path, plan, findings, {"a": "text"}, [], ["a__REPORT.md"])
+    # A correction round can only fix a defect it can locate.
+    assert "concepts/elsewhere.md" in str(caught.value)
+    assert "a:0:0" in str(caught.value)
+
+
 def test_merged_pages_leave_the_planner_inventory():
     listing = [
         {"path": "concepts/keep.md"},
