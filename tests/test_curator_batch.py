@@ -172,30 +172,6 @@ def test_extraction_fans_out_with_a_runtime_per_worker(tmp_path, monkeypatch):
     assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
 
 
-def test_planner_sees_only_pages_that_cite_its_evidence():
-    listing = [
-        {"path": "concepts/yield.md", "sources": ["a"]},
-        {"path": "concepts/elsewhere.md", "sources": ["z"]},
-        {"path": "entities/mine.md", "sources": ["a"]},
-        {"path": "entities/theirs.md", "sources": ["z"]},
-        {"path": "summaries/new.md", "sources": []},
-    ]
-    # The inventory is re-read for every batch, so showing all of it makes the
-    # planner's deliberation grow with the wiki instead of with the work. Concepts
-    # stay visible because coverage names them and the gate checks every one.
-    assert [p["path"] for p in batch.visible_pages(listing, {"a"})] == [
-        "concepts/yield.md",
-        "concepts/elsewhere.md",
-        "entities/mine.md",
-        "summaries/new.md",
-    ]
-    assert [p["path"] for p in batch.visible_pages(listing, {"q"})] == [
-        "concepts/yield.md",
-        "concepts/elsewhere.md",
-        "summaries/new.md",
-    ]
-
-
 def test_evidence_is_assembled_in_task_order_not_completion_order(tmp_path):
     (tmp_path / "staging").mkdir()
     (tmp_path / "staging/a__REPORT.md").write_text("Yield was 42%.")

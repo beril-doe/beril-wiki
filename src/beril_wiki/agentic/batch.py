@@ -284,25 +284,6 @@ def briefs(root: Path) -> list[dict]:
     return result
 
 
-def visible_pages(listing: list[dict], sources: set[str]) -> list[dict]:
-    """What a batch may name: every concept, plus entities and summaries it cites.
-
-    A planner shown the whole wiki re-reads it for every batch, so its deliberation
-    grows with the inventory rather than with the work: on this corpus that reached
-    40,000 thinking tokens by the eighth of 49 batches, past the model's output
-    ceiling. Entities and summaries are most of the inventory and a batch can only
-    route evidence to those carrying its sources. Concepts are different: coverage
-    names concept paths and only concepts may be merged, so hiding one invites a
-    plan that names a page the gate can see and the planner could not."""
-    return [
-        page
-        for page in listing
-        if page.get("path", "").startswith("concepts/")
-        or not page.get("sources")
-        or set(page["sources"]) & sources
-    ]
-
-
 def planning_batches(findings: list[dict], limit: int = 40_000) -> list[list[dict]]:
     """Partition compact evidence; quotes stay in saved records and original sources.
 
@@ -563,9 +544,7 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                     {
                         "changed": names,
                         "findings": findings,
-                        "existing": visible_pages(
-                            listing, {str(item.get("source", "")) for item in findings}
-                        ),
+                        "existing": listing,
                         "identity_decisions": (root / "contract/concept-decisions.yaml").read_text(
                             encoding="utf-8"
                         )
