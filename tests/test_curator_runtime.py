@@ -109,6 +109,34 @@ def test_generation_repairs_once_and_never_retries_operational_error(tmp_path, m
     assert calls == ["write/test"]
 
 
+def test_refusal_scope_covers_the_text_a_job_carries():
+    # Every chunk of a source quotes that source, so one refusal speaks for all of them.
+    assert R.refusal_scope("extract/report.md/16000") == "extract/report.md"
+    assert R.refusal_scope("extract/report.md/16000/science-review") == "extract/report.md"
+    # A planning batch carries its own evidence, so a refusal must not speak for the
+    # other batches, and a page's rounds are the same page seen again.
+    assert R.refusal_scope("batch/plan/1") == "batch/plan/1"
+    assert R.refusal_scope("batch/plan/1/repair") == "batch/plan/1"
+    assert R.refusal_scope("conflicts/slug/patch/2/review") == "conflicts/slug"
+    assert R.refusal_scope("write/concepts/yield.md/repair") == "write/concepts/yield.md"
+
+
+def test_a_refusal_is_found_for_the_step_that_recorded_it(tmp_path):
+    agent = runtime(tmp_path)
+    key = "k"
+    agent.ledger.reserve(key, "batch/plan/1", "claude-opus-5-5")
+    agent.ledger.finish(
+        key,
+        '{"refused_to": "claude-opus-5"}',
+        {"input_tokens": 1, "output_tokens": 1},
+        "refused on claude-opus-5-5 [bio]; the CLI answers on claude-opus-5",
+        status="rejected",
+    )
+    # A planning batch has no rounds below it, so its own step is the scope.
+    assert agent.ledger.refused_model("batch/plan/1") == "claude-opus-5"
+    assert agent.ledger.refused_model("batch/plan/2") == ""
+
+
 def test_truncated_reply_names_the_output_cap(tmp_path, monkeypatch):
     from claude_agent_sdk import ResultMessage, SystemMessage
 

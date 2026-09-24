@@ -56,11 +56,20 @@ CORE_MODEL_ROLES = ("extraction", "planning", "writing", "review")
 
 
 def refusal_scope(step: str) -> str:
-    """The work a refusal generalises to: one source for extraction, one page otherwise.
+    """The work a refusal generalises to: the text every job in it carries.
 
-    A safeguard refuses a body of text, not a single prompt, so every job that carries
-    the same text is refused too."""
-    return "/".join(step.split("/")[:2])
+    A safeguard refuses a body of text, not a single prompt. Every chunk of a source
+    quotes that source, so extraction generalises to the source; elsewhere only one
+    page or one planning batch shares its text, and the rounds spent on it are the
+    same job seen again."""
+    if step.startswith("extract/"):
+        return "/".join(step.split("/")[:2])
+    scope = step
+    while True:
+        trimmed = re.sub(r"/(patch/\d+|repair|science-review|review|verify|again)$", "", scope)
+        if trimmed == scope:
+            return scope
+        scope = trimmed
 
 
 def refusal_target(output: str | None) -> str:
@@ -341,10 +350,11 @@ class Ledger:
 
     def refused_model(self, scope: str) -> str:
         """The model that answered a refusal recorded anywhere in this scope."""
+        # The scope is a step in its own right when a job has no rounds below it.
         row = self.db.execute(
-            "SELECT output FROM jobs WHERE status='rejected' AND step LIKE ? "
+            "SELECT output FROM jobs WHERE status='rejected' AND (step = ? OR step LIKE ?) "
             "AND error LIKE 'refused on %' ORDER BY rowid DESC LIMIT 1",
-            (scope + "/%",),
+            (scope, scope + "/%"),
         ).fetchone()
         return refusal_target(row[0]) if row else ""
 
