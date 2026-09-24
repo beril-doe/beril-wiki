@@ -284,6 +284,17 @@ def briefs(root: Path) -> list[dict]:
     return result
 
 
+def visible_pages(listing: list[dict], sources: set[str]) -> list[dict]:
+    """The pages a batch could plausibly extend: those citing evidence it also carries.
+
+    A planner shown the whole wiki re-reads it for every batch, and its deliberation
+    grows with the inventory rather than with the work: on this corpus that reached
+    40,000 thinking tokens by the eighth of 49 batches, past the model's output
+    ceiling. A page citing none of a batch's sources is not a destination for its
+    evidence, so it is not shown. Pages citing nothing yet always are."""
+    return [page for page in listing if not page.get("sources") or set(page["sources"]) & sources]
+
+
 def planning_batches(findings: list[dict], limit: int = 40_000) -> list[list[dict]]:
     """Partition compact evidence; quotes stay in saved records and original sources.
 
@@ -544,7 +555,9 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                     {
                         "changed": names,
                         "findings": findings,
-                        "existing": listing,
+                        "existing": visible_pages(
+                            listing, {str(item.get("source", "")) for item in findings}
+                        ),
                         "identity_decisions": (root / "contract/concept-decisions.yaml").read_text(
                             encoding="utf-8"
                         )
