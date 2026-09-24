@@ -64,9 +64,10 @@ class Plan(BaseModel):
     coverage: list[Coverage]
 
 
-# Extraction answers are structured (quote, claim), so each review narrows the objections;
-# three corrections are the same allowance derived pages get before salvage.
-EXTRACTION_ATTEMPTS = 4
+# Three corrections, the same allowance derived pages get before salvage. A candidate
+# carries its own defects back to the model rather than being repaired by host code,
+# so the budget is how many times the model may answer for one job.
+CORRECTION_ATTEMPTS = 4
 
 
 def chunks(text: str, size: int = 16_000) -> Iterator[tuple[int, int]]:
@@ -480,7 +481,7 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
         step = f"extract/{name}/{start}"
         acceptor = EvidenceAcceptor(agent, messages, step, text, start, end)
         try:
-            return agent.generate(messages, step, acceptor, attempts=EXTRACTION_ATTEMPTS)
+            return agent.generate(messages, step, acceptor, attempts=CORRECTION_ATTEMPTS)
         except CandidateError as exc:
             # Corrections are spent and the quotes that are here are valid; what the
             # reviewer still wants is evidence the model would not add. Keep the chunk
@@ -566,7 +567,9 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
             plan_jobs(root, combined, planned_findings, sources, listing, names)
             return partial
 
-        partial = agent.generate(planning, f"batch/plan/{index}", accept_plan)
+        partial = agent.generate(
+            planning, f"batch/plan/{index}", accept_plan, attempts=CORRECTION_ATTEMPTS
+        )
         plan.pages.extend(partial.pages)
         plan.coverage.extend(partial.coverage)
         known_paths = {item["path"] for item in listing}

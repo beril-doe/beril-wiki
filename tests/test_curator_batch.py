@@ -274,8 +274,8 @@ def test_exhausted_extraction_keeps_its_evidence_and_records_the_gap(tmp_path, m
     monkeypatch.setattr(agent, "review", reject)
     monkeypatch.setattr(agent, "verify", lambda task, candidate, issues, step: issues)
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
-    assert sum(s.startswith("extract/") for s, _ in calls) == batch.EXTRACTION_ATTEMPTS
-    assert sum(s.endswith("/repair") for s, _ in calls) == batch.EXTRACTION_ATTEMPTS - 1
+    assert sum(s.startswith("extract/") for s, _ in calls) == batch.CORRECTION_ATTEMPTS
+    assert sum(s.endswith("/repair") for s, _ in calls) == batch.CORRECTION_ATTEMPTS - 1
     # One chunk the model would not complete must not end the compilation; the
     # evidence it did supply stands and the gap is written down for a human.
     gaps = json.loads((agent.store / "extraction-gaps.json").read_text())
@@ -291,9 +291,11 @@ def test_extraction_still_stops_when_no_evidence_validated(tmp_path, monkeypatch
     assert not (agent.store / "extraction-gaps.json").exists()
 
 
-def test_missing_plan_coverage_receives_one_correction(tmp_path, monkeypatch):
+def test_invalid_plan_is_corrected_by_the_model_not_the_host(tmp_path, monkeypatch):
     agent, calls, _, _ = setup_batch(tmp_path, monkeypatch, bad_plan=True)
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    # The gate states the defect; the model answers again. A plan gets the same
+    # correction budget as extraction, so one miss cannot end a compilation.
     assert [s for s, _ in calls if s.startswith("batch/plan/")] == [
         "batch/plan/0",
         "batch/plan/0/repair",

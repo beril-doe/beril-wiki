@@ -242,9 +242,9 @@ stage continues. Promotion proceeds with failures reported unless `--strict-page
 set, in which case a stage with failures stops the run. The API pipeline shares
 the same gates and patch rounds but has no model reviewer.
 
-Invalid plans, topic proposals and integration candidates get **at most one
-correction**, and a repaired candidate receives a fresh review. An extraction
-chunk gets three, and after its one open review each repair is only verified
+Topic proposals and integration candidates get **at most one correction**, and a
+repaired candidate receives a fresh review. An invalid plan and an extraction
+chunk get three, and after its one open review each repair is only verified
 against the objections it was meant to close, the same closed question derived
 pages get, so the reviewer cannot object to something new each round. The
 reviewer sees the host-located findings the chunk owns, so offsets and the
