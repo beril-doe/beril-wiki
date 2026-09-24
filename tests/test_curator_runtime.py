@@ -268,7 +268,7 @@ def test_verification_keeps_unresolved_objections_and_adds_only_new_defects(tmp_
     assert '"issues_raised"' in asked[0][1] and "do not review it again" in asked[0][1]
 
 
-def test_merge_candidates_keep_independent_review_and_one_repair(tmp_path, monkeypatch):
+def test_merge_candidates_verify_the_repair_instead_of_reviewing_it_again(tmp_path, monkeypatch):
     agent = runtime(tmp_path)
     monkeypatch.setattr(R, "runtime", lambda: agent)
     calls = []
@@ -282,15 +282,20 @@ def test_merge_candidates_keep_independent_review_and_one_repair(tmp_path, monke
                     "issues": ["unsupported claim"] if "bad" in str(task) else [],
                 }
             )
+        if step.endswith("/verify"):
+            assert "unsupported claim" in str(task)
+            return json.dumps({"resolved": [0], "open": []})
         return "good" if step.endswith("/repair") else "bad"
 
     monkeypatch.setattr(agent, "ask", ask)
     assert R.text_completion([], "merge/entity") == "good"
+    # The rewrite is asked whether the stated objection is closed, not reviewed afresh,
+    # so a reviewer cannot keep raising new minor objections round after round.
     assert calls == [
         "merge/entity",
         "merge/entity/science-review",
         "merge/entity/repair",
-        "merge/entity/science-review",
+        "merge/entity/verify",
     ]
     calls.clear()
     monkeypatch.setattr(agent, "ask", lambda messages, step: calls.append(step) or "not JSON")

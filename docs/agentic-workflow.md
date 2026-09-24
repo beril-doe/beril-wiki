@@ -242,8 +242,10 @@ stage continues. Promotion proceeds with failures reported unless `--strict-page
 set, in which case a stage with failures stops the run. The API pipeline shares
 the same gates and patch rounds but has no model reviewer.
 
-Topic proposals and integration candidates get **at most one correction**, and a
-repaired candidate receives a fresh review. An invalid plan and an extraction
+Topic proposals get **at most one correction**. Every other model job states its
+objections once and then only verifies them: a rewrite is asked whether those
+objections are closed, never invited to find something new, because a reviewer
+asked twice will answer twice and the page never converges. An invalid plan and an extraction
 chunk get three, and after its one open review each repair is only verified
 against the objections it was meant to close, the same closed question derived
 pages get, so the reviewer cannot object to something new each round. The

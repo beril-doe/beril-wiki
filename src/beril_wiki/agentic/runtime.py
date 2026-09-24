@@ -1074,8 +1074,23 @@ def text_completion(messages: list[dict], step: str, review: bool = True) -> str
     if not review:
         return agent.ask(messages, step)
 
+    # One open verdict, then closed verification: a rewrite is asked only whether the
+    # stated objections are closed, never invited to raise fresh ones, so the loop
+    # cannot run on minor new opinions.
+    pending: list[str] = []
+
     def accept(result: str) -> str:
-        agent.review(messages, result, step)
+        if not pending:
+            try:
+                agent.review(messages, result, step)
+            except CandidateError as exc:
+                pending.extend(exc.objections)
+                raise
+            return result
+        still = agent.verify(messages, result, list(pending), step)
+        pending[:] = still
+        if still:
+            raise CandidateError(f"objections still open on {step}: {json.dumps(still)}", still)
         return result
 
     # Legacy validators own these correction calls; do not multiply their retry ladders.

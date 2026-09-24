@@ -659,12 +659,18 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                 root, path, job, candidate_json(raw), revised, targets, assigned=assigned
             )
 
+        # The reviewer states its objections once. A rewrite is then only asked whether
+        # those are closed, never invited to find something new, or the page could be
+        # rewritten indefinitely over fresh minor opinions and never converge.
+        pending: list[str] = []
+
         def accept(
             raw: str,
             path: str = path,
             job: PageJob = job,
             task: list[dict] = task,
             assigned: list[dict] = assigned,
+            pending: list[str] = pending,
         ) -> tuple[dict, str]:
             candidate = candidate_json(raw)
             body = validate_candidate(
@@ -679,13 +685,26 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                     + json.dumps(candidate.get("accounted_evidence", {})),
                 }
             ]
-            agent.review(review_task, body, f"write/{path}")
+            if not pending:
+                try:
+                    agent.review(review_task, body, f"write/{path}")
+                except CandidateError as exc:
+                    pending.extend(exc.objections)
+                    raise
+            else:
+                still = agent.verify(review_task, body, list(pending), f"write/{path}")
+                pending[:] = still
+                if still:
+                    raise CandidateError(
+                        f"objections still open on write/{path}: {json.dumps(still)}", still
+                    )
             return candidate, body
 
         candidate, body = agent.generate(
             task,
             f"write/{path}",
             accept,
+            attempts=CORRECTION_ATTEMPTS,
             validator=validate,
             context={
                 "validation_version": 2,

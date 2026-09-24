@@ -103,10 +103,13 @@ def test_writer_repairs_lost_quantity_once(tmp_path, monkeypatch):
 
 
 def test_repeated_quantity_loss_stops_without_acceptance(tmp_path, monkeypatch):
-    agent, calls, reviews, _ = setup_batch(tmp_path, monkeypatch, bad_writes=2)
+    agent, calls, reviews, _ = setup_batch(
+        tmp_path, monkeypatch, bad_writes=batch.CORRECTION_ATTEMPTS
+    )
     with pytest.raises(WorkflowError, match="unchanged citations or quantities"):
         batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
-    assert sum(s.startswith("write/concepts/") for s, _ in calls) == 2
+    # The budget is finite: a writer that keeps dropping a quantity is not published.
+    assert sum(s.startswith("write/concepts/") for s, _ in calls) == batch.CORRECTION_ATTEMPTS
     assert (tmp_path / "wiki/concepts/yield.md").read_text() == OLD
     assert not (tmp_path / "state/hashes.json").exists()
     assert not any(s.startswith("write/") for s, _ in reviews)
@@ -398,7 +401,9 @@ def test_scientific_rejection_uses_same_single_correction(tmp_path, monkeypatch)
 
 
 def test_tool_success_does_not_skip_final_validation(tmp_path, monkeypatch):
-    agent, calls, reviews, _ = setup_batch(tmp_path, monkeypatch, bad_writes=2)
+    agent, calls, reviews, _ = setup_batch(
+        tmp_path, monkeypatch, bad_writes=batch.CORRECTION_ATTEMPTS
+    )
     generate = agent.generate
 
     def generate_with_tool(messages, step, accept, *, validator=None, context=None, attempts=2):
@@ -424,7 +429,7 @@ def test_tool_success_does_not_skip_final_validation(tmp_path, monkeypatch):
     monkeypatch.setattr(agent, "generate", generate_with_tool)
     with pytest.raises(CandidateError, match="unchanged citations or quantities"):
         batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
-    assert sum(s.startswith("write/concepts/") for s, _ in calls) == 2
+    assert sum(s.startswith("write/concepts/") for s, _ in calls) == batch.CORRECTION_ATTEMPTS
     assert (tmp_path / "wiki/concepts/yield.md").read_text() == OLD
 
 
