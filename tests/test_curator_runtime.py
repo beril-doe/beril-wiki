@@ -115,9 +115,10 @@ def test_refusal_scope_covers_the_text_a_job_carries():
     assert R.refusal_scope("extract/report.md/16000/science-review") == "extract/report.md"
     # A planning batch carries its own evidence, so a refusal must not speak for the
     # other batches, and a page's rounds are the same page seen again.
-    # Planning batches all draw on the whole corpus, so a refusal covers the stage.
-    assert R.refusal_scope("batch/plan/1") == "batch/plan"
-    assert R.refusal_scope("batch/plan/1/repair") == "batch/plan"
+    # A refused planning batch speaks for itself only: most batches are accepted, and
+    # the configured model is worth one wasted attempt on the few that are not.
+    assert R.refusal_scope("batch/plan/1") == "batch/plan/1"
+    assert R.refusal_scope("batch/plan/1/repair") == "batch/plan/1"
     assert R.refusal_scope("conflicts/slug/patch/2/review") == "conflicts/slug"
     assert R.refusal_scope("write/concepts/yield.md/repair") == "write/concepts/yield.md"
 

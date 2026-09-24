@@ -64,11 +64,6 @@ def refusal_scope(step: str) -> str:
     same job seen again."""
     if step.startswith("extract/"):
         return "/".join(step.split("/")[:2])
-    if step.startswith("batch/plan/"):
-        # Every planning batch draws its evidence from the whole corpus, so text that
-        # one batch is refused for is in all of them: on this corpus every batch that
-        # tried the configured model was refused. A page carries only its own text.
-        return "batch/plan"
     scope = step
     while True:
         trimmed = re.sub(r"/(patch/\d+|repair|science-review|review|verify|again)$", "", scope)
