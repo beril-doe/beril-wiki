@@ -55,6 +55,14 @@ MODEL_ROLES = ("extraction", "planning", "writing", "review", "queries", "figure
 CORE_MODEL_ROLES = ("extraction", "planning", "writing", "review")
 
 
+def refusal_scope(step: str) -> str:
+    """The work a refusal generalises to: one source for extraction, one page otherwise.
+
+    A safeguard refuses a body of text, not a single prompt, so every job that carries
+    the same text is refused too."""
+    return "/".join(step.split("/")[:2])
+
+
 def refusal_target(output: str | None) -> str:
     """The model a recorded refusal was answered on, if this row is one."""
     try:
@@ -330,6 +338,15 @@ class Ledger:
             ).rowcount
         if not changed:
             raise WorkflowError("job is not pending/unknown")
+
+    def refused_model(self, scope: str) -> str:
+        """The model that answered a refusal recorded anywhere in this scope."""
+        row = self.db.execute(
+            "SELECT output FROM jobs WHERE status='rejected' AND step LIKE ? "
+            "AND error LIKE 'refused on %' ORDER BY rowid DESC LIMIT 1",
+            (scope + "/%",),
+        ).fetchone()
+        return refusal_target(row[0]) if row else ""
 
     def reconcile_stale(self, transcripts: Path) -> list[str]:
         """Charge jobs left pending by a killed worker from their saved streams."""
@@ -614,26 +631,31 @@ class Runtime:
                     self._validation_context,
                 ]
             )
+        requested = model
         model = model or model_for(self.config, step)
-        key = digest([messages, model, tool_revision, inputs, step])
-        # Cached answers remain useful across CLI updates; changed tool reads invalidate them.
-        while row := self.ledger.db.execute(
-            "SELECT status,dependencies,output FROM jobs WHERE key=?", (key,)
-        ).fetchone():
-            if row[0] == "rejected":
-                answers = refusal_target(row[2])
-                if answers and answers != model:
-                    return self.ask(messages, step, model=answers)
-                key = digest([key, "explicit-retry"])
-                continue
-            if row[0] != "done":
-                break
-            dependencies = json.loads(row[1] or "{}")
-            current = current_dependencies(self.root, dependencies)
-            if current == dependencies:
-                self.jobs.append(key)
-                return row[2]
-            key = digest([key, current])
+        key, cached, answers = self.resolve(messages, step, model, tool_revision, inputs)
+        if cached is not None:
+            self.jobs.append(key)
+            return cached
+        if answers:
+            return self.ask(messages, step, model=answers)
+        if not requested:
+            # This text was refused before, so do not buy the same refusal again: a
+            # refused attempt is billed in full and answers nothing. Only once the
+            # configured model has nothing cached, or an answer it gave would have to
+            # be thrown away and bought again on the other model.
+            answers = self.ledger.refused_model(refusal_scope(step))
+            if answers and answers != model:
+                print(
+                    f"agentic: {step} on {answers}; {refusal_scope(step)} was refused", flush=True
+                )
+                model = answers
+                key, cached, redirect = self.resolve(messages, step, model, tool_revision, inputs)
+                if cached is not None:
+                    self.jobs.append(key)
+                    return cached
+                if redirect:
+                    return self.ask(messages, step, model=redirect)
         check_auth(self.config["cli"])
         self.jobs.append(key)
         cached = self.ledger.reserve(key, step, model)
@@ -847,6 +869,37 @@ class Runtime:
         if error:
             raise WorkflowError(error)
         return output.strip()
+
+    def resolve(
+        self,
+        messages: list[dict],
+        step: str,
+        model: str,
+        tool_revision: str,
+        inputs: dict,
+    ) -> tuple[str, str | None, str]:
+        """This model's job key, its cached answer, and the model a refusal names.
+
+        Cached answers remain useful across CLI updates; changed tool reads invalidate
+        them."""
+        key = digest([messages, model, tool_revision, inputs, step])
+        while row := self.ledger.db.execute(
+            "SELECT status,dependencies,output FROM jobs WHERE key=?", (key,)
+        ).fetchone():
+            if row[0] == "rejected":
+                answers = refusal_target(row[2])
+                if answers and answers != model:
+                    return key, None, answers
+                key = digest([key, "explicit-retry"])
+                continue
+            if row[0] != "done":
+                break
+            dependencies = json.loads(row[1] or "{}")
+            current = current_dependencies(self.root, dependencies)
+            if current == dependencies:
+                return key, row[2], ""
+            key = digest([key, current])
+        return key, None, ""
 
     def generate(
         self,

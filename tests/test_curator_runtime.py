@@ -114,6 +114,7 @@ def test_refused_job_is_reissued_on_the_model_that_answers_it(tmp_path, monkeypa
 
     agent = runtime(tmp_path)
     models = []
+    welcomed = "extract/a/32000"
 
     def result(text):
         return ResultMessage(
@@ -130,10 +131,11 @@ def test_refused_job_is_reissued_on_the_model_that_answers_it(tmp_path, monkeypa
 
     def query(*, prompt, options):
         models.append(options.model)
+        refusing = options.model == "claude-opus-5-5" and agent._step != welcomed
 
         async def stream():
             yield SystemMessage(subtype="init", data={"apiKeySource": "none"})
-            if options.model == "claude-opus-5-5":
+            if refusing:
                 yield SystemMessage(
                     subtype="model_refusal_fallback",
                     data={
@@ -144,16 +146,23 @@ def test_refused_job_is_reissued_on_the_model_that_answers_it(tmp_path, monkeypa
                 )
                 yield result("")
             else:
-                yield result("findings")
+                yield result("on 5.5" if agent._step == welcomed else "findings")
 
         return stream()
 
     monkeypatch.setattr(R, "query", query)
     monkeypatch.setitem(agent.config, "model", "claude-opus-5-5")
+
+    # One chunk of this source is written by the configured model before anything is
+    # refused, so there is work worth keeping when the source is later flagged.
+    assert agent.ask([{"role": "user", "content": "welcome"}], welcomed) == "on 5.5"
+    assert models == ["claude-opus-5-5"]
+
+    models.clear()
     assert agent.ask([{"role": "user", "content": "extract"}], "extract/a/0") == "findings"
     assert models == ["claude-opus-5-5", "claude-opus-5"]
     rows = agent.ledger.db.execute(
-        "SELECT model, status, error FROM jobs ORDER BY rowid"
+        "SELECT model, status, error FROM jobs WHERE step='extract/a/0' ORDER BY rowid"
     ).fetchall()
     assert [(m, st) for m, st, _ in rows] == [
         ("claude-opus-5-5", "rejected"),
@@ -164,6 +173,22 @@ def test_refused_job_is_reissued_on_the_model_that_answers_it(tmp_path, monkeypa
     # A refusal must never block a later run, nor be paid for a second time.
     models.clear()
     assert agent.ask([{"role": "user", "content": "extract"}], "extract/a/0") == "findings"
+    assert models == []
+
+    # A safeguard refuses the text, not the prompt, so the source's other jobs skip
+    # the attempt that is already known to be refused.
+    assert agent.ask([{"role": "user", "content": "more"}], "extract/a/16000") == "findings"
+    assert models == ["claude-opus-5"]
+
+    # A different source is untouched and still gets the configured model first.
+    models.clear()
+    assert agent.ask([{"role": "user", "content": "other"}], "extract/b/0") == "findings"
+    assert models[0] == "claude-opus-5-5"
+
+    # Work the configured model already did is never discarded to buy it again on the
+    # other one, even though its source is now flagged: no job is issued at all.
+    models.clear()
+    assert agent.ask([{"role": "user", "content": "welcome"}], welcomed) == "on 5.5"
     assert models == []
 
 
