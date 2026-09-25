@@ -690,7 +690,14 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
             indent=2,
         )
     )
+    # A pilot writes a few named pages to measure cost and acceptance, then stops
+    # before the bookkeeping below: a partial run must never record every source as
+    # integrated, or the next run would believe the work was done.
+    pilot = {p for p in str(agent.config.get("write_only", "")).split(",") if p}
+    written = 0
     for path, job in sorted(jobs.items()):
+        if pilot and path not in pilot:
+            continue
         target = root / "wiki" / path
         fm, old = C.parse_fm(target.read_text(encoding="utf-8")) if target.exists() else ({}, "")
         absorbed = {
@@ -850,6 +857,12 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
             fields["sources"] = C.canonical_sources(body, fm.get("sources"))
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(C.fm_block(fields) + body + "\n", encoding="utf-8")
+        written += 1
+    if pilot:
+        raise WorkflowError(
+            f"pilot complete: {written} of {len(pilot)} named page(s) written to "
+            f"{root / 'wiki'}; integration was not recorded"
+        )
     for loser, survivor in losers.items():
         (root / "wiki" / loser).unlink()
         repoint_links(root, Path(loser).stem, Path(survivor).stem)

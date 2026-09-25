@@ -99,6 +99,12 @@ def main() -> int:
         "--workers", type=int, default=4, help="page jobs run concurrently inside each stage"
     )
     execute.add_argument(
+        "--write-only",
+        default="",
+        help="pilot: write only these comma-separated page paths, then stop before any "
+        "source is recorded as integrated",
+    )
+    execute.add_argument(
         "--strict-pages",
         action="store_true",
         help="stop the run when a page fails its patch rounds instead of recording it",
@@ -215,6 +221,7 @@ def main() -> int:
                     "stage_timeout",
                     "stage_max_tokens",
                     "workers",
+                    "write_only",
                     "strict_pages",
                     "cli",
                 )

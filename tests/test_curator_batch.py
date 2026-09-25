@@ -316,6 +316,21 @@ def test_existing_entity_with_nothing_assigned_is_left_alone(tmp_path, monkeypat
     assert (tmp_path / "wiki/entities/strain.md").read_text() == "# Strain\n\nGrows. [src: a]"
 
 
+def test_pilot_writes_named_pages_and_records_nothing(tmp_path, monkeypatch):
+    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
+    monkeypatch.setitem(agent.config, "write_only", "concepts/yield.md")
+    with pytest.raises(WorkflowError, match="pilot complete: 1 of 1"):
+        batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    assert (tmp_path / "wiki/concepts/yield.md").read_text() != OLD
+    assert not any(s.startswith("write/summaries/") for s, _ in calls)
+    # Stopping before the bookkeeping is the point: no source is marked integrated.
+    assert not (tmp_path / "state/hashes.json").exists()
+    assert (
+        not (tmp_path / "wiki/sources/a__REPORT.md").exists()
+        or (tmp_path / "wiki/sources/a__REPORT.md").read_text() == "Yield was 42%."
+    )
+
+
 def test_merged_pages_leave_the_planner_inventory():
     listing = [
         {"path": "concepts/keep.md"},
