@@ -616,8 +616,14 @@ class Runtime:
 
     def ask(self, messages: list[dict], step: str, *, model: str | None = None) -> str:
         payload = json.dumps(messages, ensure_ascii=False)
-        if len(payload.encode()) > 500_000:
-            raise WorkflowError(f"{step}: input exceeds 500KB; reduce batch or retrieve evidence")
+        # A guard against runaway prompts, not a context limit: the models in use hold
+        # a million tokens, and 500KB is roughly an eighth of that. A concept can be
+        # assigned 300 evidence records here, whose packed quotes exceed it honestly.
+        if len(payload.encode()) > 2_000_000:
+            raise WorkflowError(
+                f"{step}: input is {len(payload.encode()) // 1000}KB, over the 2MB ceiling; "
+                "split the destination or retrieve evidence instead of packing it"
+            )
         # Source/tool changes cannot reuse answers grounded in an older snapshot. A
         # tool-free job saw only its packed prompt, so only that prompt keys its cache.
         profile = tool_profile(step)
