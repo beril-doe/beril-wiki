@@ -627,26 +627,6 @@ See the source summaries: [[summaries/annotation_gap_discovery__REPORT]], [[summ
 - Replicate the field-versus-lab comparison across organisms with Fitness Browser data and unequal ecological condition panels, testing whether the weak field/lab AUCs and the stronger gene-length-inclusive model persist after matched condition depth and callability controls. [src: field_vs_lab_fitness]
 - Partition the coverage-adjusted analysis by functional category, testing whether the core-gene burden advantage in Protein Metabolism, Motility, and RNA Metabolism and the Cell Wall reversal persist after matched condition depth. [src: core_gene_tradeoffs]
 
-## [[concepts/laboratory-fitness-versus-natural-selection|Fitness importance predicts genome conservation more strongly than field-versus-lab context]]
-
-- Use `gene_fitness_conservation.csv` for the 2,725 analyzed genes, together with insertion counts or other transposon-callability measures, in nested cross-validated models to test how much of gene length's CV-AUC 0.645 contribution remains after measurement quality is modeled explicitly. [src: field_vs_lab_fitness]
-- Add the 678 essential genes through an essentiality-aware missing-fitness or two-stage model, and test whether gene length predicts core status similarly among essential genes and genes with recovered transposon mutants. [src: field_vs_lab_fitness]
-- Replace binary core/auxiliary labels with quantitative gene-cluster prevalence and fit length-adjusted models to ask whether gene length primarily predicts the core boundary or also intermediate prevalence across the pangenome. [src: field_vs_lab_fitness]
-- Reanalyze thresholds from -1 to -3 with gene length, insertion coverage, and fitness uncertainty as covariates to test whether length confounding changes condition-specific conservation patterns. [src: field_vs_lab_fitness]
-- Extend length- and callability-adjusted analysis across the 194,216-gene, 43-bacterium comparison to test whether the weak fitness–conservation gradient persists after measurement quality and lineage are controlled. [src: fitness_effects_conservation]
-- Reanalyze the 33-organism conservation_vs_fitness dataset with gene length, insertion coverage, pangenome clade size, and quantitative cluster prevalence to determine whether the median odds ratio of 1.56 persists after callability and pangenome-coverage confounding are controlled. [src: conservation_vs_fitness]
-- Test whether the 28,017 costly-and-conserved and 5,526 costly-and-dispensable genes show different length, insertion-callability, mobile-element, or prevalence profiles before interpreting them as signatures of natural selection. [src: conservation_fitness_synthesis]
-- Stratify the 25,271 trade-off genes and the Costly + Conserved and Costly + Dispensable groups by gene length, insertion callability, functional category, and pangenome prevalence to test whether core enrichment persists after structural and measurement adjustment. [src: core_gene_tradeoffs]
-- Use Fitness Browser experiments and quantitative gene-cluster prevalence across additional environmentally relevant organisms to test whether the weak field-versus-lab effect generalizes beyond DvH. [src: field_vs_lab_fitness]
-- Combine genomic-context analyses with resistance-gene calls to test whether the 73.4% core fraction for lab-antibiotic genes and 71.2% for heavy-metal genes is associated with mobile genetic elements. [src: field_vs_lab_fitness]
-- Reanalyze the 52 ICA modules using functional annotation and environmental metadata to test whether the 52 unannotated genes in ecological modules mediate adaptation rather than merely co-varying with conserved genes. [src: field_vs_lab_fitness]
-- Link the 4,346 ENIGMA CORAL field samples with geochemistry and 213,044 ASVs to test ecological associations for DvH or other organisms with both environmental data and gene-level fitness measurements. [src: field_vs_lab_fitness]
-
-[[summaries/fitness_effects_conservation__REPORT]]
-[[summaries/conservation_vs_fitness__REPORT]]
-[[summaries/conservation_fitness_synthesis__REPORT]]
-[[summaries/core_gene_tradeoffs__REPORT]]
-
 ## [[concepts/fitness-matched-null-models|Fitness-Matched Null Models for Functional Enrichment]]
 
 - Use the existing AMR and non-AMR fitness matrices, conservation classes, and mean-fitness values to run conservation- and fitness-matched permutations; test whether flagellar and amino acid-biosynthesis enrichment remains significant. [src: amr_cofitness_networks]
@@ -677,18 +657,6 @@ See the source summaries: [[summaries/annotation_gap_discovery__REPORT]], [[summ
 - Use condition-diverse assays and targeted perturbations for singleton and ephemeral-niche genes to distinguish true laboratory neutrality from poor transposon coverage and to test whether condition-specific module effects are core-enriched outside standard laboratory conditions. [src: fitness_effects_conservation]
 - Partition the 28,017 costly-and-conserved and 5,526 costly-and-dispensable genes by module membership, mobile-element evidence, and environmental breadth; test whether the two classes differ in callability, recent acquisition, or loss signatures. [src: conservation_fitness_synthesis]
 - Reassess the 86% versus 81.5% module-core enrichment after matching organisms on experiment count, condition diversity, pangenome coverage, and essential-gene missingness to determine how much of the signal is biological versus ascertainment. [src: conservation_fitness_synthesis]
-
-## [[concepts/genomic-under-representation|Genomic under-representation limits inference about microbial functional potential]]
-
-- Re-run the BERIL Observatory 16S tables and [[entities/kbase-ke-pangenome]] completeness data with rarefaction or uniform 16S sequencing-depth correction, then ask whether forest and cropland remain the highest-GDI biomes after sampling effort is equalized. [src: soil_frontier_genomics]
-- Compute bootstrap 95% confidence intervals for biome-level GDI values and explicitly compare Forest GDI = 902.36 with Cropland GDI = 890.82, asking whether their apparent difference is distinguishable from resampling uncertainty. [src: soil_frontier_genomics]
-- Control GDI for the number of 16S samples in each pH bin, asking whether the +0.8 pH unit gap between frontier and mapped areas persists after sampling intensity is accounted for. [src: soil_frontier_genomics]
-- Use spatial blocking and decomposition of test-fold error to separate distributional shift, high-leverage outliers, and genuine unpredictability in the negative out-of-sample R² results, asking which mechanism explains the prediction failure. [src: soil_frontier_genomics]
-- Report OTU richness and mean genome completeness as separate dimensions alongside GDI, asking whether the same locations are identified as underrepresented when the ratio-based index is not used. [src: soil_frontier_genomics]
-- Extend pangenome linkage to the 17,479 unlinked dark genes and compare their Bakta, Pfam, KEGG, eggNOG, and orthology coverage with the 6,427 linked truly dark genes, asking how much of the residual functional gap is a linkage artifact. [src: truly_dark_genes]
-- Link the 3,683 essential-auxiliary and 1,259 essential-unmapped genes to broader pangenomes and condition-specific Fitness Browser measurements, asking whether poor annotation reflects strain-specific compensation, divergent core functions, or growth-condition dependence. [src: conservation_vs_fitness]
-- Reweight the functional-dark-matter prioritization across taxonomic strata and condition depth, then test whether the top candidates and covering set change when Pseudomonadota and heavily assayed organisms no longer dominate. [src: functional_dark_matter]
-- Apply sample-label permutations and annotated-accessory-gene controls to the NMDC and lab–field analyses, asking whether the observed environmental concordance survives compositional coupling and baseline annotation controls. [src: functional_dark_matter]
 
 ## [[concepts/functional-marker-validation|Validating Functional Markers Before Ecological Inference]]
 
@@ -797,6 +765,18 @@ See the source summaries: [[summaries/annotation_gap_discovery__REPORT]], [[summ
 - Restrict co-inheritance comparisons to auxiliary-only pairs below 95% prevalence, restore Ralstonia with raw Fitness Browser genefitness data, and use broader phylogenetic strata to distinguish functional coupling from shared ancestry. [src: cofitness_coinheritance]
 - Combine COG L, V, and S enrichment with gene-neighborhood, co-fitness, and habitat metadata across additional taxa to test whether mobile, defense, and unknown-function novelty forms distributed ecological modules or remains primarily an annotation-level partition. [src: cog_analysis]
 
+## [[concepts/genomic-under-representation|Genomic under-representation limits inference about microbial functional potential]]
+
+- Re-run the BERIL Observatory 16S tables and [[entities/kbase-ke-pangenome]] completeness data with rarefaction or uniform 16S sequencing-depth correction, then ask whether forest and cropland remain the highest-GDI biomes after sampling effort is equalized. [src: soil_frontier_genomics]
+- Compute bootstrap 95% confidence intervals for biome-level GDI values and explicitly compare Forest GDI = 902.36 with Cropland GDI = 890.82, asking whether their apparent difference is distinguishable from resampling uncertainty. [src: soil_frontier_genomics]
+- Control GDI for the number of 16S samples in each pH bin, asking whether the +0.8 pH unit gap between frontier and mapped areas persists after sampling intensity is accounted for. [src: soil_frontier_genomics]
+- Use spatial blocking and decomposition of test-fold error to separate distributional shift, high-leverage outliers, and genuine unpredictability in the negative out-of-sample R² results, asking which mechanism explains the prediction failure. [src: soil_frontier_genomics]
+- Report OTU richness and mean genome completeness as separate dimensions alongside GDI, asking whether the same locations are identified as underrepresented when the ratio-based index is not used. [src: soil_frontier_genomics]
+- Extend pangenome linkage to the 17,479 unlinked dark genes and compare their Bakta, Pfam, KEGG, eggNOG, and orthology coverage with the 6,427 linked truly dark genes, asking how much of the residual functional gap is a linkage artifact. [src: truly_dark_genes]
+- Link the 3,683 essential-auxiliary and 1,259 essential-unmapped genes to broader pangenomes and condition-specific Fitness Browser measurements, asking whether poor annotation reflects strain-specific compensation, divergent core functions, or growth-condition dependence. [src: conservation_vs_fitness]
+- Reweight the functional-dark-matter prioritization across taxonomic strata and condition depth, then test whether the top candidates and covering set change when Pseudomonadota and heavily assayed organisms no longer dominate. [src: functional_dark_matter]
+- Apply sample-label permutations and annotated-accessory-gene controls to the NMDC and lab–field analyses, asking whether the observed environmental concordance survives compositional coupling and baseline annotation controls. [src: functional_dark_matter]
+
 ## [[concepts/homology-search-negative-evidence|Negative homology-search results require sensitivity validation]]
 
 - Search named RefSeq proteomes with Pfam HMMs and other profile-based or sequence-based homology methods to determine whether unannotated paralogs explain or undermine the reported absence of LpxA, LpxC, LpxD, LpxB, LpxK, *spt*, *cerR*, ChvG, and ChvI in comparator species. [src: caulobacter_fur_lipida_loss]
@@ -835,16 +815,26 @@ See [[summaries/field_vs_lab_fitness__REPORT]] for the DvH analysis details, [[s
 
 ## [[concepts/laboratory-fitness-versus-natural-selection|Laboratory Fitness as an Imperfect Proxy for Natural Selection]]
 
-- Combine the 5,526 costly-and-dispensable genes with mobile-element annotations and genome-loss histories, then test whether they show signatures of recent acquisition or ongoing loss. [src: conservation_fitness_synthesis]
+- Use `gene_fitness_conservation.csv` for the 2,725 analysed genes, with insertion counts or other callability measures, in nested cross-validated models to test how much of gene length's CV-AUC 0.645 contribution remains after measurement quality is modelled. [src: field_vs_lab_fitness]
+- Add the 678 essential genes through an essentiality-aware missing-fitness or two-stage model, testing whether gene length predicts core status similarly among essential genes and genes with recovered transposon mutants. [src: field_vs_lab_fitness]
+- Replace binary core/auxiliary labels with quantitative gene-cluster prevalence and fit length-adjusted models to ask whether length predicts the core boundary or intermediate prevalence. [src: field_vs_lab_fitness]
+- Reanalyse thresholds from -1 to -3 with gene length, insertion coverage, and fitness uncertainty as covariates. [src: field_vs_lab_fitness]
+- Extend length- and callability-adjusted analysis across the 194,216-gene, 43-bacterium comparison and test whether the weak gradient persists after measurement quality and lineage are controlled. [src: fitness_effects_conservation]
+- Reanalyse the 33-organism essential-core enrichment with gene length, insertion coverage, pangenome clade size, and quantitative cluster prevalence to test whether the median odds ratio of 1.56 persists. [src: conservation_vs_fitness]
+- Test whether the 28,017 costly-and-conserved and 5,526 costly-and-dispensable genes differ in length, callability, mobile-element association, or prevalence before interpreting them as natural-selection signatures. [src: conservation_fitness_synthesis] [src: core_gene_tradeoffs]
+- Stratify the 25,271 trade-off genes and both costly groups by length, callability, functional category, and pangenome prevalence to test whether core enrichment persists. [src: core_gene_tradeoffs]
+- Combine the 5,526 costly-and-dispensable genes with mobile-element annotations and genome-loss histories to test recent acquisition or ongoing loss. [src: conservation_fitness_synthesis]
 - Link core trade-off genes to AlphaEarth environmental data and use comparative analysis to ask whether organisms from more variable environments have more trade-off genes in their core. [src: conservation_fitness_synthesis]
-- Compare RB-TnSeq results across the 43 organisms and identify gene families that are essential in every organism, then test whether their conservation persists across additional environmental conditions. [src: conservation_fitness_synthesis]
-- Characterize the 48 accessory modules containing co-regulated functions exclusively in the flexible genome, then test their fitness across environmental conditions and genetic backgrounds. [src: conservation_fitness_synthesis]
-- Pair direct fitness assays in soil, biofilms, or host-associated conditions with pangenome conservation to determine which laboratory-burdened core genes provide context-dependent natural-environment benefits. [src: conservation_fitness_synthesis]
-- Reassess apparently neutral singleton genes with improved transposon coverage and environmental fitness assays to distinguish assay missingness from genuine dispensability. [src: fitness_effects_conservation]
-- For DvH, add organisms and quantitative gene-cluster prevalence to the field/lab comparison, then test whether the weak fitness-only prediction persists after accounting for gene length and transposon callability. [src: field_vs_lab_fitness]
-- Link DvH resistance-gene genomic context to environmental geochemistry and acquisition histories to test whether the heavy-metal versus field-stress contrast reflects accessory acquisition or distinct physiological requirements. [src: field_vs_lab_fitness]
-- Reanalyze the 33-organism essential-core enrichment with matched pangenome clade sizes, explicit gene-length and transposon-callability covariates, and additional conditions to determine whether the 1.56 median odds ratio persists beyond the current cohort. [src: conservation_vs_fitness]
+- Compare RB-TnSeq results across the 43 organisms, identify gene families essential in every organism, and test whether conservation persists across additional environmental conditions. [src: conservation_fitness_synthesis]
+- Characterize the 48 accessory modules containing co-regulated functions exclusively in the flexible genome across environmental conditions and genetic backgrounds. [src: conservation_fitness_synthesis]
+- Pair direct fitness assays in soil, biofilms, or host-associated conditions with pangenome conservation to identify laboratory-burdened core genes with context-dependent natural-environment benefits. [src: conservation_fitness_synthesis]
+- Reassess apparently neutral singleton genes with improved transposon coverage and environmental assays. [src: fitness_effects_conservation]
+- Use Fitness Browser experiments and quantitative gene-cluster prevalence across additional environmentally relevant organisms to test whether the weak field-versus-lab effect generalizes beyond DvH. [src: field_vs_lab_fitness]
+- Link DvH resistance-gene genomic context to environmental geochemistry and acquisition histories, testing whether the heavy-metal versus field-stress contrast reflects accessory acquisition or distinct physiological requirements. [src: field_vs_lab_fitness]
+- Combine genomic-context analyses with resistance-gene calls to test whether the 73.4% core fraction for lab-antibiotic genes and 71.2% for heavy-metal genes is associated with mobile genetic elements. [src: field_vs_lab_fitness]
+- Reanalyse the 52 ICA modules with functional annotation and environmental metadata to test whether the 52 unannotated genes among 239 ecological-module members mediate adaptation. [src: field_vs_lab_fitness]
 - Characterize the 3,683 essential-auxiliary and 1,259 essential-unmapped genes with orthology, gene-context, and multi-condition fitness data to test whether they are strain-specific replacements for core functions or poorly annotated mobile and divergent genes. [src: conservation_vs_fitness]
+- Link the 4,346 ENIGMA CORAL field samples with geochemistry and 213,044 ASVs to test ecological associations for DvH or other organisms with environmental data and gene-level fitness measurements. [src: field_vs_lab_fitness]
 
 ## [[concepts/metabolic-capacity-specialization|Utilization capacities are phylogenetically concentrated and specialist-dominated]]
 
