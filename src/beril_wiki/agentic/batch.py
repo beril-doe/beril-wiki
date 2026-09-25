@@ -706,6 +706,18 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
         ]
         assigned_ids = {c["evidence"] for c in coverage}
         assigned = [f for f in relevant if f["id"] in assigned_ids]
+        # Coverage names concepts and summaries, never entities, so an entity job
+        # carries no assignment. An existing entity whose sources have not changed
+        # has nothing to integrate: on this corpus that was 335 of 619 jobs,
+        # scheduled only because a model change had marked every source stale.
+        if not assigned and old and not (set(job.sources) & revised):
+            print(f"agentic: skip {path}: nothing assigned and no source revised", flush=True)
+            continue
+        # A writer gets what it must integrate, not every finding its sources ever
+        # yielded: for one concept that was 1,324 records sent against 33 assigned,
+        # 711KB in place of 19KB, and 141MB across the plan. A new entity has no
+        # assignment and is written from its sources' findings.
+        evidence = assigned or relevant
         task = [
             {
                 "role": "user",
@@ -736,12 +748,9 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                         "base_hash": digest(old),
                         "existing": old,
                         "absorbed": absorbed,
-                        # Quotes travel with the evidence. Withholding them saved prompt
-                        # bytes and cost far more: the writer spent twelve tool turns
-                        # retrieving them against a 450KB prompt, 3.6M tokens, and timed
-                        # out with nothing written. Packed evidence is what the derived
-                        # prose path already does.
-                        "evidence": relevant,
+                        # Quotes travel with the evidence, as the derived-prose path
+                        # already does, so the writer never re-fetches a source.
+                        "evidence": evidence,
                         "targets": sorted(targets),
                         "coverage": coverage,
                     }

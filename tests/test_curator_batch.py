@@ -261,6 +261,61 @@ def test_unscheduled_coverage_names_the_offending_concept(tmp_path):
     assert "a:0:0" in str(caught.value)
 
 
+def test_writer_receives_its_assignments_not_every_finding(tmp_path, monkeypatch):
+    agent, calls, _, job = setup_batch(tmp_path, monkeypatch)
+    recorded = agent.ask
+
+    def two_findings_one_assigned(messages, step):
+        raw = recorded(messages, step)
+        data = json.loads(raw)
+        if step.startswith("extract/"):
+            data["findings"] *= 2
+        if step.startswith("batch/plan/"):
+            # The second finding belongs only in its summary, so the concept page is
+            # assigned one of the source's two findings.
+            data["coverage"].append(
+                {"evidence": "a:0:1", "concepts": [], "summary_only": "Duplicate quote."}
+            )
+        return json.dumps(data)
+
+    monkeypatch.setattr(agent, "ask", two_findings_one_assigned)
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    prompt = next(m for s, m in calls if s == "write/concepts/yield.md")
+    payload = json.loads(prompt[0]["content"].split("\n")[-1])
+    # Every finding a source ever yielded is not what the writer integrates.
+    assert [f["id"] for f in payload["evidence"]] == ["a:0:0"]
+
+
+def test_existing_entity_with_nothing_assigned_is_left_alone(tmp_path, monkeypatch):
+    agent, calls, _, job = setup_batch(tmp_path, monkeypatch)
+    (tmp_path / "wiki/entities").mkdir(exist_ok=True)
+    (tmp_path / "wiki/entities/strain.md").write_text("# Strain\n\nGrows. [src: a]")
+    recorded = agent.ask
+
+    def also_schedule_the_entity(messages, step):
+        raw = recorded(messages, step)
+        data = json.loads(raw)
+        if step.startswith("batch/plan/"):
+            data["pages"].append(
+                {
+                    "path": "entities/strain.md",
+                    "title": "Strain",
+                    "type": "Organism",
+                    "sources": ["a"],
+                    "reason": "Source marked changed",
+                    "merge_from": [],
+                }
+            )
+        return json.dumps(data)
+
+    monkeypatch.setattr(agent, "ask", also_schedule_the_entity)
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    # Coverage never names an entity, and its source did not change, so there is
+    # nothing to integrate: no writer is spent on it and the page is untouched.
+    assert not any(s.startswith("write/entities/") for s, _ in calls)
+    assert (tmp_path / "wiki/entities/strain.md").read_text() == "# Strain\n\nGrows. [src: a]"
+
+
 def test_merged_pages_leave_the_planner_inventory():
     listing = [
         {"path": "concepts/keep.md"},
