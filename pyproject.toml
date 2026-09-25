@@ -5,7 +5,10 @@ description = "Compiler + pipeline for the BERIL knowledge wiki"
 license = "AGPL-3.0-or-later"
 requires-python = ">=3.11"
 dependencies = [
+    "claude-agent-sdk==0.1.81",
     "litellm>=1.40",
+    # SDK 0.1.81 requires the MCP 1.x in-process list_tools interface.
+    "mcp>=1.0,<2",
     "networkx>=3.2",
     "pyyaml>=6.0",
 ]

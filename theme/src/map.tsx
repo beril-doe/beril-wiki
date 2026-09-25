@@ -17,10 +17,16 @@ import type { FullSlug } from "@quartz-community/types"
 import { type Corpus, type File, collectionOf, isIndex, linksOf, slugOf, titleOf, truncate } from "./page"
 
 const W = 1200
-const H = 900
+// Three columns, because 410px between centres is what a 24-character label
+// line needs to clear its neighbour. Rows are derived from the topic count so
+// the grid grows downward instead of wrapping a cluster onto an earlier one.
 const COLS = [190, 600, 1010]
 // Room above each row for a two-line hub label and its count.
-const ROWS = [175, 445, 715]
+const ROW_TOP = 175
+const ROW_PITCH = 270
+const ROW_BOTTOM = 185
+const rowsFor = (topics: number) => Math.max(1, Math.ceil(topics / COLS.length))
+const heightFor = (topics: number) => ROW_TOP + ROW_PITCH * (rowsFor(topics) - 1) + ROW_BOTTOM
 // Concepts occupy 300 degrees of the ring; the gap at the top is where the
 // hub's own label goes.
 const ARC = 300
@@ -122,7 +128,7 @@ function build(c: Corpus): Graph {
   let id = 0
   const clusters: Cluster[] = c.topics.map((t, i) => {
     const cx = COLS[i % COLS.length]
-    const cy = ROWS[Math.floor(i / COLS.length) % ROWS.length]
+    const cy = ROW_TOP + ROW_PITCH * Math.floor(i / COLS.length)
     const hue = c.hue(slugOf(t))
     // Members first, then the unclaimed, so the grey points form one arc
     // rather than speckling the ring.
@@ -228,6 +234,7 @@ function labelLines(title: string): string[] {
 export function CorpusMap({ c, from }: { c: Corpus; from: FullSlug }) {
   const { clusters, ties, links, shared } = graph(c)
   if (clusters.length === 0) return null
+  const H = heightFor(clusters.length)
   const href = (f: File) => resolveRelative(from, slugOf(f) as FullSlug)
   const radius = (p: Point) => 3.4 + Math.min(3.4, Math.sqrt(p.deg))
   const heaviest = Math.max(1, ...ties.map((t) => t.count))

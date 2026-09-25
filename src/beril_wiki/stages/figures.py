@@ -5,10 +5,10 @@ Phase A (deterministic): parse every project report's ![caption](figures/...)
 embeds into figures-manifest.json, keeping the caption and the report paragraph
 around each embed (what the figure evidences).
 
-Phase B (LLM, cached by page-content hash): for each summary / topic hub /
-conflict page, ask the model WHERE figures from the page's cited projects
-support the text. The model returns structured placements only — it never
-rewrites prose. Results go to figures-placements.json; publish/ingest.py splices
+Phase B (LLM, cached by page-content hash, pages placed in a worker pool): for
+each summary / topic hub / conflict page, ask the model WHERE figures from the
+page's cited projects support the text. The model returns structured placements
+only — it never rewrites prose. Results go to figures-placements.json; publish/ingest.py splices
 them at publish time. Pages whose content hash is unchanged are skipped.
 
 Also emits figures-csv-queue.md: pages the model flags as needing a chart for
@@ -27,8 +27,8 @@ import pathlib
 import re
 import sys
 
-from litellm import completion
-
+from beril_wiki.agentic.prose import PageFailure, parallel, workers
+from beril_wiki.agentic.runtime import WorkflowError, atomic_json, completion, configured
 from beril_wiki.paths import ROOT, STATE
 
 MODEL = os.environ.get("WIKI_MODEL", "openai/gpt-5.6-luna")
@@ -112,17 +112,14 @@ def main() -> None:
         print("  --force: ignoring cached digests")
     placements_path = STATE / "figures-placements.json"
     placements = json.loads(placements_path.read_text()) if placements_path.exists() else {}
-    csv_flags: dict[str, list[str]] = {}
-    calls = skipped = 0
-
+    live = {f"{kind}/{path.name}" for kind, path in target_pages()}
+    placements = {key: value for key, value in placements.items() if key in live}
+    state = {key: value for key, value in state.items() if key in live}
+    todo = []
+    skipped = 0
     for kind, page in target_pages():
         rel = f"{page.parent.name}/{page.name}" if kind == "summaries" else f"{kind}/{page.name}"
         text = page.read_text(encoding="utf-8", errors="replace")
-        page_hash = hashlib.sha256(text.encode()).hexdigest()[:16]
-        digest = hashlib.sha256((PROMPT_V + text).encode()).hexdigest()[:16]
-        if state.get(rel) == digest:
-            skipped += 1
-            continue
         if kind == "summaries":
             projs = [re.sub(r"__REPORT$", "", page.stem)]
         else:
@@ -132,24 +129,48 @@ def main() -> None:
             for fig in manifest.get(p, [])[:6]:
                 cands.append({"project": p, **fig})
         cands = cands[:MAX_CANDIDATES]
+        digest = hashlib.sha256(
+            json.dumps([PROMPT_V, text, cands, configured()], sort_keys=True).encode()
+        ).hexdigest()[:16]
+        if state.get(rel) == digest and (not cands or rel in placements):
+            skipped += 1
+            continue
         if not cands:
             state[rel] = digest
             placements.pop(rel, None)
             continue
+        todo.append((kind, rel, text, cands, digest))
+
+    def place(item: tuple) -> dict | None:
+        """One placement job; None when an API-mode reply is unparseable."""
+        kind, rel, text, cands, _ = item
         pars = paragraphs(text)
-        par_block = "\n".join(f"[{i}] {p[:300]}" for i, p in enumerate(pars))
+        limit = min(300, 80_000 // max(1, len(pars)))
+        par_block = "\n".join(f"[{i}] {p[:limit]}" for i, p in enumerate(pars))
         cand_block = "\n".join(
-            f"[{i}] {c['project']}/{c['file']} — caption: {c['caption']!r} — "
+            f"[{i}] {c['project']}/{c['file']} — caption: {c['caption'][:300]!r} — "
             f"context: {c['context'][:200]!r}"
             for i, c in enumerate(cands)
         )
+        prompt = PROMPT
+        if configured():
+            prompt = (
+                prompt.replace(
+                    ',\n                  "caption": '
+                    '"<one-sentence caption, may refine the original>"',
+                    "",
+                )
+                + "\nCaptions are copied from source reports; return only placement indices."
+            )
         resp = (
             completion(
+                step=f"figures/{rel}",
+                review=False,
                 model=MODEL,
-                api_key=os.environ["OPENAI_API_KEY"],
+                api_key=os.environ.get("OPENAI_API_KEY"),
                 base_url=os.environ.get("OPENAI_BASE_URL", "https://api.cborg.lbl.gov"),
                 messages=[
-                    {"role": "system", "content": PROMPT.format(max_place=MAX_PLACE[kind])},
+                    {"role": "system", "content": prompt.format(max_place=MAX_PLACE[kind])},
                     {
                         "role": "user",
                         "content": f"PAGE PARAGRAPHS:\n{par_block}\n\n"
@@ -167,13 +188,35 @@ def main() -> None:
             if not m:
                 raise json.JSONDecodeError("no JSON object in reply", resp or "", 0)
             data = json.loads(m.group(0))
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as exc:
+            if configured():
+                raise WorkflowError(f"figures/{rel}: invalid placement JSON") from exc
             print(f"  ! unparseable response for {rel}, skipping")
-            continue
+            return None
+        if configured():
+            valid = (
+                isinstance(data, dict)
+                and isinstance(data.get("placements"), list)
+                and isinstance(data.get("csv_flags", []), list)
+                and all(isinstance(flag, str) for flag in data.get("csv_flags", []))
+                and all(
+                    isinstance(item, dict)
+                    and type(item.get("figure")) is int
+                    and 0 <= item["figure"] < len(cands)
+                    and type(item.get("after_paragraph")) is int
+                    and 0 <= item["after_paragraph"] < len(pars)
+                    for item in data["placements"]
+                )
+            )
+            if not valid:
+                raise WorkflowError(f"figures/{rel}: invalid placement schema or indices")
         placed = []
         for pl in data.get("placements", [])[: MAX_PLACE[kind]]:
             try:
-                c = cands[int(pl["figure"])]
+                figure = int(pl["figure"])
+                if not 0 <= figure < len(cands):
+                    continue
+                c = cands[figure]
                 idx = int(pl["after_paragraph"])
             except (KeyError, ValueError, IndexError, TypeError):
                 continue
@@ -183,21 +226,36 @@ def main() -> None:
                         "after_paragraph": idx,
                         "project": c["project"],
                         "file": c["file"],
-                        "caption": str(pl.get("caption") or c["caption"])[:300],
+                        "caption": (
+                            str(c["caption"])[:300]
+                            if configured()
+                            else str(pl.get("caption") or c["caption"])[:300]
+                        ),
                     }
                 )
-        placements[rel] = {"page_hash": page_hash, "placements": placed}
-        if data.get("csv_flags"):
-            csv_flags[rel] = [str(x)[:300] for x in data["csv_flags"][:3]]
+        return {
+            "page_hash": hashlib.sha256(text.encode()).hexdigest()[:16],
+            "placements": placed,
+            "csv_flags": [str(x)[:300] for x in data.get("csv_flags", [])[:3]],
+        }
+
+    calls = 0
+    for (_, rel, _, _, digest), result in parallel(todo, place, workers()):
+        if result is None or isinstance(result, PageFailure):
+            continue
+        placements[rel] = result
         state[rel] = digest
         calls += 1
         print(
-            f"  {rel}: {len(placed)} placement(s)"
-            + (f", {len(data['csv_flags'])} csv flag(s)" if data.get("csv_flags") else "")
+            f"  {rel}: {len(result['placements'])} placement(s)"
+            + (f", {len(result['csv_flags'])} csv flag(s)" if result["csv_flags"] else "")
         )
 
-    placements_path.write_text(json.dumps(placements, indent=1))
-    state_path.write_text(json.dumps(state, indent=1))
+    atomic_json(placements_path, placements)
+    atomic_json(state_path, state)
+    csv_flags = {
+        rel: item["csv_flags"] for rel, item in placements.items() if item.get("csv_flags")
+    }
     if csv_flags:
         lines = [
             "# CSV / visualization review queue",
@@ -209,7 +267,9 @@ def main() -> None:
             lines.append(f"## {rel}")
             lines += [f"- {f}" for f in flags]
             lines.append("")
-        (STATE / "figures-csv-queue.md").write_text("\n".join(lines))
+        (STATE / "figures-csv-queue.md").write_text("\n".join(lines), encoding="utf-8")
+    else:
+        (STATE / "figures-csv-queue.md").unlink(missing_ok=True)
     total = sum(len(v["placements"]) for v in placements.values())
     print(
         f"figures: {calls} pages placed, {skipped} unchanged, {total} total placements"
