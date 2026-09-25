@@ -74,8 +74,10 @@ class Plan(BaseModel):
 # so the budget is how many times the model may answer for one job.
 CORRECTION_ATTEMPTS = 4
 
-# A packed writer checks its candidate and answers; it does not need to browse.
-WRITE_TURNS = 4
+# A packed writer reads a little, validates once and answers. Four turns was too
+# few: a merge page spent two searches, a read and a validation, then was cut off
+# making its fifth call, with the answer never returned.
+WRITE_TURNS = 8
 
 
 def chunks(text: str, size: int = 16_000) -> Iterator[tuple[int, int]]:
@@ -762,7 +764,9 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                 "separated block that is not a heading and skipping frontmatter. Do not repeat "
                 "the paragraph text. Each such paragraph must express the assigned claim and "
                 "cite its source. Existing text can account for evidence if it already "
-                "preserves its meaning.\n"
+                "preserves its meaning. "
+                f"You have at most {WRITE_TURNS - 1} tool turns: read only what a retained "
+                "claim needs, validate once, and always finish by returning the JSON.\n"
                 + json.dumps(
                     {
                         "job": job.model_dump(),
