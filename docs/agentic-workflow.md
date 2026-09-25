@@ -134,7 +134,13 @@ every stage that depends on it stale as well:
 
 | Stage | Work and completion condition |
 |---|---|
-| Integrate | Runs first when sources changed: extract changed reports, plan complete evidence coverage, group edits by destination, validate and review pages; resolve entities and refresh deterministic metadata. |
+| Integrate | Runs first when sources changed: extract changed reports, plan complete evidence coverage, group edits by destination, validate and review pages; resolve entities and refresh deterministic metadata. A writer receives the evidence assigned to its page with quotes packed, not every finding its sources yielded; an existing entity with nothing assigned and no revised source is skipped. |
+
+Before writing hundreds of planned pages, measure a few: `--write-only
+concepts/a.md,summaries/b.md` writes only those pages and then stops before any
+source is recorded as integrated, so the ledger shows what an accepted page
+costs and the work tree holds the pages for inspection. A partial run must never
+mark the corpus integrated, or the next run would believe the work done.
 | Conflicts | Reconcile tensions after integration. |
 | Topics | Choose concept groups and titles, then write hubs/home after conflicts are current. Every concept must occur exactly once. |
 | Literature | Add supported external context after topics are current. |
