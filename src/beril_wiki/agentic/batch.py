@@ -701,8 +701,9 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                 "content": "Apply the planned scientific change once, "
                 "integrating assigned evidence. "
                 "Preserve claims, citation IDs, exact quantities, caveats and contradictions; "
-                "correct claims invalidated by a revised source. Retrieve original evidence "
-                "for old sources and whenever support is unclear. Call validate_candidate "
+                "correct claims invalidated by a revised source. Every assigned record "
+                "carries its quote, so retrieve only for old sources or when support is "
+                "genuinely unclear. Call validate_candidate "
                 "on your JSON before returning it. A source ID maps to "
                 "staging/<id>__REPORT.md "
                 "except discoveries.md and pitfalls.md. No YAML. Use unique exact anchored patches "
@@ -723,9 +724,12 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                         "base_hash": digest(old),
                         "existing": old,
                         "absorbed": absorbed,
-                        "evidence": [
-                            {k: v for k, v in f.items() if k != "quote"} for f in relevant
-                        ],
+                        # Quotes travel with the evidence. Withholding them saved prompt
+                        # bytes and cost far more: the writer spent twelve tool turns
+                        # retrieving them against a 450KB prompt, 3.6M tokens, and timed
+                        # out with nothing written. Packed evidence is what the derived
+                        # prose path already does.
+                        "evidence": relevant,
                         "targets": sorted(targets),
                         "coverage": coverage,
                     }
