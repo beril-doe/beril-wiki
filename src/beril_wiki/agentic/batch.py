@@ -179,7 +179,10 @@ def page_path(value: str) -> str:
 
 def reconstruct(old: str, candidate: dict) -> str:
     if candidate.get("base_hash") != digest(old):
-        raise CandidateError("candidate base hash is stale")
+        raise CandidateError(
+            "candidate base hash is stale: the page changed since it was read; "
+            "re-read it and rebase the edit"
+        )
     full = candidate.get("content")
     edits = candidate.get("edits", [])
     if full is not None:
@@ -196,7 +199,10 @@ def reconstruct(old: str, candidate: dict) -> str:
             raise CandidateError("patch must be an object")
         anchor, replacement = edit.get("old"), edit.get("new")
         if not isinstance(anchor, str) or not anchor or old.count(anchor) != 1:
-            raise CandidateError("patch anchor is missing or ambiguous")
+            raise CandidateError(
+                "patch anchor is missing or ambiguous: it must appear exactly once in the "
+                "page; quote more surrounding text to make it unique"
+            )
         if not isinstance(replacement, str):
             raise CandidateError("replacement must be text")
         at = old.index(anchor)
@@ -229,7 +235,10 @@ def validate_candidate(
     """Reconstruct and check a bound candidate without changing any files."""
     page_path(path)
     if path != job.path or path.removesuffix(".md") not in targets:
-        raise CandidateError("candidate destination is not in the bound plan")
+        raise CandidateError(
+            f"candidate destination {path!r} is not in the bound plan; write only the "
+            "page this job was given"
+        )
     target = root / "wiki" / path
     old = C.parse_fm(target.read_text(encoding="utf-8"))[1] if target.exists() else ""
     absorbed = [
@@ -347,7 +356,10 @@ def plan_jobs(
         if job.path in retired:
             raise CandidateError(f"planner recreated a retired concept: {job.path}")
         if not set(job.sources) <= sources.keys() or not job.sources:
-            raise CandidateError(f"unknown or missing planned sources: {job.path}")
+            raise CandidateError(
+                f"{job.path} names sources that are not in this batch: "
+                f"{', '.join(sorted(set(job.sources) - set(sources)))[:200]}"
+            )
         if job.path.startswith("entities/") and job.type.lower() not in C.ENTITY_TYPES:
             raise CandidateError(f"invalid entity type: {job.type}")
         if job.merge_from and not job.path.startswith("concepts/"):
@@ -424,15 +436,20 @@ def plan_jobs(
     for job in jobs.values():
         for loser in job.merge_from:
             page_path(loser)
-            if (
-                not loser.startswith("concepts/")
-                or not job.path.startswith("concepts/")
-                or loser == job.path
-                or loser in losers
-                or loser in jobs
-                or not (root / "wiki" / loser).is_file()
-            ):
-                raise CandidateError(f"conflicting or invalid merge loser: {loser}")
+            # Six ways to be invalid; say which, so a correction has somewhere to go.
+            why = ""
+            if not loser.startswith("concepts/") or not job.path.startswith("concepts/"):
+                why = "only a concept may merge into another concept"
+            elif loser == job.path:
+                why = "a page cannot merge into itself"
+            elif loser in losers:
+                why = f"it is already merged into {losers[loser]}"
+            elif loser in jobs:
+                why = "it is also scheduled as a destination in this plan"
+            elif not (root / "wiki" / loser).is_file():
+                why = "no such page exists; a planned page is not a file yet"
+            if why:
+                raise CandidateError(f"cannot merge {loser} into {job.path}: {why}")
             losers[loser] = job.path
     return jobs, losers
 

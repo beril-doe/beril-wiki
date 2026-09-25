@@ -172,6 +172,33 @@ def test_extraction_fans_out_with_a_runtime_per_worker(tmp_path, monkeypatch):
     assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
 
 
+def test_merge_gate_says_which_rule_a_loser_broke(tmp_path):
+    (tmp_path / "wiki/concepts").mkdir(parents=True)
+    (tmp_path / "staging").mkdir()
+
+    def plan_with(loser):
+        page = batch.PageJob(
+            path="concepts/kept.md",
+            title="Kept",
+            type="Concept",
+            sources=["a"],
+            reason="Absorb",
+            merge_from=[loser],
+        )
+        return batch.Plan(
+            pages=[page],
+            coverage=[
+                batch.Coverage(evidence="a:0:0", concepts=["concepts/kept.md"], summary_only="")
+            ],
+        )
+
+    findings = [{"id": "a:0:0", "source": "a"}]
+    with pytest.raises(CandidateError, match="no such page exists"):
+        batch.plan_jobs(tmp_path, plan_with("concepts/ghost.md"), findings, {"a": "t"}, [], ["a"])
+    with pytest.raises(CandidateError, match="cannot merge into itself"):
+        batch.plan_jobs(tmp_path, plan_with("concepts/kept.md"), findings, {"a": "t"}, [], ["a"])
+
+
 def test_coverage_gate_names_what_is_missing_or_repeated(tmp_path):
     (tmp_path / "wiki/concepts").mkdir(parents=True)
     (tmp_path / "staging").mkdir()
