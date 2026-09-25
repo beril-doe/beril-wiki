@@ -8,6 +8,7 @@ import pytest
 
 from beril_wiki.agentic import batch
 from beril_wiki.agentic.runtime import CandidateError, Runtime, WorkflowError, digest
+from beril_wiki.check import all_paragraphs
 
 OLD = "# Yield\n\nYield was 42%. [src: a]\n\n## Open Directions\n\nRepeat measurements."
 LOSS = OLD.replace("42%", "measured")
@@ -78,7 +79,8 @@ def setup_batch(tmp_path, monkeypatch, *, bad_writes=0, bad_plan=False):
                 "content": body,
                 "rewrite_reason": "Recheck evidence",
                 "accounted_evidence": {
-                    c["evidence"]: body.split("\n\n")[1] for c in payload["coverage"]
+                    c["evidence"]: all_paragraphs(body).index(body.split("\n\n")[1])
+                    for c in payload["coverage"]
                 },
             }
         )
@@ -600,7 +602,7 @@ def test_tool_success_does_not_skip_final_validation(tmp_path, monkeypatch):
                 "description": "Yield",
                 "edits": [],
                 "no_change_reason": "Evidence retained",
-                "accounted_evidence": {"a:0:0": "Yield was 42%. [src: a]"},
+                "accounted_evidence": {"a:0:0": 0},
             }
             assert validator(json.dumps(candidate)) == OLD
             assert reviews == before
@@ -705,25 +707,25 @@ def test_quantity_cited_only_to_revised_source_can_change(tmp_path, monkeypatch)
 @pytest.mark.parametrize("failure", ["missing", "unknown", "absent", "wrong-source"])
 def test_assigned_evidence_requires_cited_candidate_passages(tmp_path, monkeypatch, failure):
     _, _, _, job = setup_batch(tmp_path, monkeypatch)
-    passage = "Yield was 42%. [src: a]"
     body = OLD + "\n\nNo benefit was observed. [src: b]"
     (tmp_path / "staging/b__REPORT.md").write_text("No benefit was observed.")
+    # Paragraph indices into the body: 0 cites a, 2 cites b, 99 does not exist.
     candidate = {
         "base_hash": digest(OLD),
         "description": "Yield",
         "content": body,
         "rewrite_reason": "Integrate",
-        "accounted_evidence": {"a:0:0": passage},
+        "accounted_evidence": {"a:0:0": 0},
     }
     assigned = [{"id": "a:0:0", "source": "a", "claim": "Yield was 42%.", "kind": "finding"}]
     if failure == "missing":
         candidate.pop("accounted_evidence")
     elif failure == "unknown":
-        candidate["accounted_evidence"]["a:0:1"] = passage
+        candidate["accounted_evidence"]["a:0:1"] = 0
     elif failure == "absent":
-        candidate["accounted_evidence"]["a:0:0"] = "A missing caveat. [src: a]"
+        candidate["accounted_evidence"]["a:0:0"] = 99
     else:
-        candidate["accounted_evidence"]["a:0:0"] = "No benefit was observed. [src: b]"
+        candidate["accounted_evidence"]["a:0:0"] = 2
     # A set mismatch and an unmappable paragraph are different defects, and the
     # message has to say which so a correction knows what to change.
     expected = "accounted for exactly" if failure in ("missing", "unknown") else "not accounted for"
@@ -802,7 +804,9 @@ def test_concept_assignments_survive_writing_validation_and_review(tmp_path, mon
                 "description": "Evidence",
                 "content": body,
                 "rewrite_reason": "Integrate",
-                "accounted_evidence": account,
+                "accounted_evidence": {
+                    eid: all_paragraphs(body).index(text) for eid, text in account.items()
+                },
             }
         )
 

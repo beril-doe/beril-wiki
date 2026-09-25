@@ -3,6 +3,7 @@
 import pytest
 
 from beril_wiki.agentic.runtime import Ledger, ReadTools, WorkflowError
+from beril_wiki.check import all_paragraphs
 
 
 def test_ledger_resume_and_global_budget(tmp_path):
@@ -304,7 +305,8 @@ def test_recorded_batch_groups_pages_and_preserves_failed_review(tmp_path, monke
                 "content": body,
                 "description": "Yield evidence",
                 "accounted_evidence": {
-                    c["evidence"]: body.split("\n\n")[1] for c in payload["coverage"]
+                    c["evidence"]: all_paragraphs(body).index(body.split("\n\n")[1])
+                    for c in payload["coverage"]
                 },
             }
         )

@@ -3,6 +3,7 @@
 import json
 
 from beril_wiki.agentic.runtime import digest
+from beril_wiki.check import all_paragraphs
 
 FACTS = "Yield was 42%. [src: a]\n\nYield was 56%. [src: b]"
 PAD = "Growth conditions were compared across the two projects without new figures. "
@@ -86,8 +87,8 @@ def reply(self, messages, step, *, model=None):
                 "description": "Yield measurements",
                 "accounted_evidence": {
                     c["evidence"]: next(
-                        par
-                        for par in body.split("\n\n")
+                        i
+                        for i, par in enumerate(all_paragraphs(body))
                         if f"[src: {c['evidence'].split(':')[0]}]" in par
                     )
                     for c in data["coverage"]

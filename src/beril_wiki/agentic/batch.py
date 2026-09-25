@@ -278,21 +278,32 @@ def validate_candidate(
         raise CandidateError(f"{path}: assigned evidence IDs must be accounted for exactly")
     # Coverage sees every section. paragraphs() drops Open Directions and its kin
     # because a proposal has no figure to cite, but a plan may route evidence there,
-    # and then no candidate could ever satisfy this check.
+    # and then no candidate could ever satisfy this check. The map holds paragraph
+    # indices: repeating the text once per record made a 311-record page's answer
+    # too long to finish in its turns, and an index is checked just as exactly.
     cited_passages = all_paragraphs(body)
     unmapped = []
     for eid, source in expected.items():
-        passage = accounted[eid]
-        if not isinstance(passage, str) or passage not in cited_passages:
-            unmapped.append(f"{eid}: mapped text is not a paragraph of the page verbatim")
-        elif source not in cited_ids(passage):
-            unmapped.append(f"{eid}: its paragraph does not cite [src: {source}]")
+        index = accounted[eid]
+        if (
+            isinstance(index, bool)
+            or not isinstance(index, int)
+            or not (0 <= index < len(cited_passages))
+        ):
+            unmapped.append(
+                f"{eid}: {index!r} is not a paragraph index; the body has "
+                f"{len(cited_passages)} paragraphs, 0 to {len(cited_passages) - 1}"
+            )
+        elif source not in cited_ids(cited_passages[index]):
+            unmapped.append(f"{eid}: paragraph {index} does not cite [src: {source}]")
     if unmapped:
         # All of them, not the first: each round otherwise fixes one and finds the next.
         raise CandidateError(
-            f"{path}: evidence not accounted for. A paragraph is the text between blank "
-            f"lines, so map a whole list, not one bullet. " + "; ".join(unmapped[:8])
+            f"{path}: evidence not accounted for. A paragraph is one blank-line separated "
+            f"block, so a whole list is one index. " + "; ".join(unmapped[:8])
         )
+    # The reviewer verifies text, not numbers: resolve the map for it.
+    candidate["accounted_evidence"] = {eid: cited_passages[accounted[eid]] for eid in expected}
     return body
 
 
@@ -745,10 +756,13 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                 '"edits": [{"old": "exact anchor", "new": "replacement"}]} or replace edits with '
                 '"content" and "rewrite_reason".\n'
                 'If no edit is warranted, supply "no_change_reason" explaining the recheck.\n'
-                'Also return "accounted_evidence": {"evidence ID": "exact cited paragraph '
-                'from the final body"} for every assigned coverage ID, including caveats/nulls. '
-                "Each paragraph must express the assigned claim and cite its source. "
-                "Existing text can account for evidence if it already preserves its meaning.\n"
+                'Also return "accounted_evidence": {"evidence ID": <index>} for every assigned '
+                "coverage ID, including caveats/nulls, where <index> is the 0-based position of "
+                "the paragraph in the final body that carries it, counting every blank-line "
+                "separated block that is not a heading and skipping frontmatter. Do not repeat "
+                "the paragraph text. Each such paragraph must express the assigned claim and "
+                "cite its source. Existing text can account for evidence if it already "
+                "preserves its meaning.\n"
                 + json.dumps(
                     {
                         "job": job.model_dump(),
