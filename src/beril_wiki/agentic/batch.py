@@ -74,6 +74,9 @@ class Plan(BaseModel):
 # so the budget is how many times the model may answer for one job.
 CORRECTION_ATTEMPTS = 4
 
+# A packed writer checks its candidate and answers; it does not need to browse.
+WRITE_TURNS = 4
+
 
 def chunks(text: str, size: int = 16_000) -> Iterator[tuple[int, int]]:
     if size <= 0:
@@ -702,8 +705,9 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                 "integrating assigned evidence. "
                 "Preserve claims, citation IDs, exact quantities, caveats and contradictions; "
                 "correct claims invalidated by a revised source. Every assigned record "
-                "carries its quote, so retrieve only for old sources or when support is "
-                "genuinely unclear. Call validate_candidate "
+                "carries its quote, which is the evidence you write from: do not retrieve "
+                "it again, and read a source only when an existing claim you must keep "
+                "cites one not assigned here. Call validate_candidate "
                 "on your JSON before returning it. A source ID maps to "
                 "staging/<id>__REPORT.md "
                 "except discoveries.md and pitfalls.md. No YAML. Use unique exact anchored patches "
@@ -785,22 +789,35 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                     )
             return candidate, body
 
-        candidate, body = agent.generate(
-            task,
-            f"write/{path}",
-            accept,
-            attempts=CORRECTION_ATTEMPTS,
-            validator=validate,
-            context={
-                "validation_version": 2,
-                "assigned": assigned,
-                "job": job.model_dump(),
-                "revised": sorted(revised),
-                "targets": sorted(targets),
-                "baselines": {path: digest(old)} | {p: digest(b) for p, b in absorbed.items()},
-                "sources": {sid: digest(text) for sid, text in sources.items()},
-            },
-        )
+        # A page's evidence is packed, so its writer needs a turn to check its candidate
+        # and one to answer, not a dozen to browse: unbounded, it re-read sources until
+        # one page cost 3.5M tokens and timed out. The cap is not in any prompt, so it
+        # does not disturb work already cached.
+        had_turns = "max_turns" in agent.config
+        turns = agent.config.get("max_turns")
+        agent.config["max_turns"] = WRITE_TURNS
+        try:
+            candidate, body = agent.generate(
+                task,
+                f"write/{path}",
+                accept,
+                attempts=CORRECTION_ATTEMPTS,
+                validator=validate,
+                context={
+                    "validation_version": 2,
+                    "assigned": assigned,
+                    "job": job.model_dump(),
+                    "revised": sorted(revised),
+                    "targets": sorted(targets),
+                    "baselines": {path: digest(old)} | {p: digest(b) for p, b in absorbed.items()},
+                    "sources": {sid: digest(text) for sid, text in sources.items()},
+                },
+            )
+        finally:
+            if had_turns:
+                agent.config["max_turns"] = turns
+            else:
+                agent.config.pop("max_turns", None)
         page_type = (
             "Concept"
             if path.startswith("concepts/")
