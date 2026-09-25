@@ -140,7 +140,7 @@ def test_a_refusal_is_found_for_the_step_that_recorded_it(tmp_path):
 
 
 def test_truncated_reply_names_the_output_cap(tmp_path, monkeypatch):
-    from claude_agent_sdk import ResultMessage, SystemMessage
+    from claude_agent_sdk import AssistantMessage, ResultMessage, SystemMessage
 
     agent = runtime(tmp_path)
     monkeypatch.setattr(R, "check_auth", lambda cli: None)  # no CLI on CI
@@ -149,6 +149,10 @@ def test_truncated_reply_names_the_output_cap(tmp_path, monkeypatch):
     def query(*, prompt, options):
         async def stream():
             yield SystemMessage(subtype="init", data={"apiKeySource": "none"})
+            # One turn produced a reply as long as the cap: that turn was cut off.
+            yield AssistantMessage(
+                content=[], model="m", usage={"input_tokens": 1, "output_tokens": 1000}
+            )
             yield ResultMessage(
                 subtype="success",
                 duration_ms=1,
@@ -170,6 +174,41 @@ def test_truncated_reply_names_the_output_cap(tmp_path, monkeypatch):
         agent.ask([{"role": "user", "content": "plan"}], "batch/plan/0")
     status, error = agent.ledger.db.execute("SELECT status, error FROM jobs").fetchone()
     assert status == "failed" and "truncated" in error
+
+
+def test_a_long_session_of_short_turns_is_not_truncation(tmp_path, monkeypatch):
+    from claude_agent_sdk import AssistantMessage, ResultMessage, SystemMessage
+
+    agent = runtime(tmp_path)
+    monkeypatch.setitem(agent.config, "max_output_tokens", 1000)
+
+    def query(*, prompt, options):
+        async def stream():
+            yield SystemMessage(subtype="init", data={"apiKeySource": "none"})
+            # Four turns of 400 sum past the cap; none of them was cut off.
+            for _ in range(4):
+                yield AssistantMessage(
+                    content=[], model="m", usage={"input_tokens": 1, "output_tokens": 400}
+                )
+            yield ResultMessage(
+                subtype="success",
+                duration_ms=1,
+                duration_api_ms=1,
+                is_error=False,
+                num_turns=4,
+                session_id="s",
+                total_cost_usd=0.1,
+                usage={"input_tokens": 4, "output_tokens": 1600},
+                result='{"pages": [], "coverage": []}',
+            )
+
+        return stream()
+
+    monkeypatch.setattr(R, "query", query)
+    # The cap bounds one reply; a session total is not one reply.
+    assert agent.ask([{"role": "user", "content": "plan"}], "batch/plan/0") == (
+        '{"pages": [], "coverage": []}'
+    )
 
 
 def test_refused_job_is_reissued_on_the_model_that_answers_it(tmp_path, monkeypatch):
