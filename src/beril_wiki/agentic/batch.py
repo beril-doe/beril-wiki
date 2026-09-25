@@ -643,6 +643,13 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
         plan.pages.extend(partial.pages)
         plan.coverage.extend(partial.coverage)
         listing[:] = retire_merged(listing, partial.pages)
+        # A page an earlier batch scheduled is a destination whether or not it already
+        # existed. Unmarked, an existing one looks ordinary and a later batch merges it
+        # away, which the gate refuses because a page cannot both receive and be absorbed.
+        scheduled = {job.path for job in partial.pages}
+        for item in listing:
+            if item["path"] in scheduled:
+                item["planned"] = True
         known_paths = {item["path"] for item in listing}
         listing.extend(
             {
