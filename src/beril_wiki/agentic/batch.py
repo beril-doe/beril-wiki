@@ -315,14 +315,17 @@ def retire_merged(listing: list[dict], pages: list[PageJob]) -> list[dict]:
     return [item | {"retired": True} if item["path"] in merged else item for item in listing]
 
 
-def planning_batches(findings: list[dict], limit: int = 40_000) -> list[list[dict]]:
+def planning_batches(findings: list[dict], limit: int = 24_000) -> list[list[dict]]:
     """Partition compact evidence; quotes stay in saved records and original sources.
 
     The limit bounds the reply a batch induces, not just its prompt: the planner
     answers with a coverage row per finding, so a batch that fits comfortably in
     context can still overrun the model's output cap and come back truncated. At
     100_000 one batch of this corpus asked for 326 rows and ran past 64,000 output
-    tokens, which is the whole ceiling on some models."""
+    tokens, which is the whole ceiling on some models. The budget must also leave room
+    for deliberation, which is not content and varies by model: the fallback model
+    spends 20,000 to 40,000 tokens thinking where the configured one spends 5,000, so
+    a batch sized for the latter overruns on the former."""
     batches: list[list[dict]] = [[]]
     size = 0
     for finding in findings:
