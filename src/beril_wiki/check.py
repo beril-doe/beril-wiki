@@ -183,6 +183,21 @@ def source_ids(kb: pathlib.Path) -> dict[str, str]:
     return texts
 
 
+def all_paragraphs(body: str) -> list[str]:
+    """Every paragraph, including the forward-looking sections paragraphs() drops.
+
+    Evidence coverage needs these: a plan may route a finding to Open Directions,
+    and the writer that does so must still be able to show the paragraph carrying
+    it. Numeric and citation checks keep using paragraphs(), which excludes those
+    sections because a proposal has nothing to cite."""
+    body = re.sub(r"^---\n.*?\n---\n", "", body, flags=re.S)
+    return [
+        p.strip()
+        for p in re.split(r"\n\s*\n", body)
+        if p.strip() and not p.lstrip().startswith("#")
+    ]
+
+
 def paragraphs(body: str) -> list[str]:
     # Fold bullet lists into their own paragraphs; skip headings and frontmatter.
     # Literature Context sections cite external papers (PMID-verified by

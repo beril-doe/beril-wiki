@@ -654,7 +654,10 @@ def test_assigned_evidence_requires_cited_candidate_passages(tmp_path, monkeypat
         candidate["accounted_evidence"]["a:0:0"] = "A missing caveat. [src: a]"
     else:
         candidate["accounted_evidence"]["a:0:0"] = "No benefit was observed. [src: b]"
-    with pytest.raises(CandidateError, match="assigned evidence"):
+    # A set mismatch and an unmappable paragraph are different defects, and the
+    # message has to say which so a correction knows what to change.
+    expected = "accounted for exactly" if failure in ("missing", "unknown") else "not accounted for"
+    with pytest.raises(CandidateError, match=expected):
         batch.validate_candidate(
             tmp_path, job.path, job, candidate, set(), {"concepts/yield"}, assigned=assigned
         )
@@ -753,7 +756,8 @@ def test_concept_assignments_survive_writing_validation_and_review(tmp_path, mon
             assert {f["id"] for f in context["assigned"]} == {"a:0:1", "a:0:2"}
             payload = json.loads(messages[0]["content"].split("\n")[-1])
             assert payload["job"]["sources"] == ["a", "b"]
-            with pytest.raises(CandidateError, match="assigned evidence"):
+            # No accounted_evidence at all: the set mismatch, not a mapping defect.
+            with pytest.raises(CandidateError, match="accounted for exactly"):
                 validator(
                     json.dumps(
                         {

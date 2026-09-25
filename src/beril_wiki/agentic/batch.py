@@ -22,7 +22,7 @@ from beril_wiki.agentic.runtime import (
     digest,
     file_hash,
 )
-from beril_wiki.check import cited_ids, paragraphs
+from beril_wiki.check import all_paragraphs, cited_ids, paragraphs
 from beril_wiki.stages.consolidate import body_src_ids, load_decisions, page_numbers, repoint_links
 
 
@@ -276,15 +276,23 @@ def validate_candidate(
     accounted = candidate.get("accounted_evidence", {})
     if not isinstance(accounted, dict) or set(accounted) != set(expected):
         raise CandidateError(f"{path}: assigned evidence IDs must be accounted for exactly")
-    cited_passages = paragraphs(body)
+    # Coverage sees every section. paragraphs() drops Open Directions and its kin
+    # because a proposal has no figure to cite, but a plan may route evidence there,
+    # and then no candidate could ever satisfy this check.
+    cited_passages = all_paragraphs(body)
+    unmapped = []
     for eid, source in expected.items():
         passage = accounted[eid]
-        if (
-            not isinstance(passage, str)
-            or passage not in cited_passages
-            or source not in cited_ids(passage)
-        ):
-            raise CandidateError(f"{path}: assigned evidence {eid} needs an exact cited paragraph")
+        if not isinstance(passage, str) or passage not in cited_passages:
+            unmapped.append(f"{eid}: mapped text is not a paragraph of the page verbatim")
+        elif source not in cited_ids(passage):
+            unmapped.append(f"{eid}: its paragraph does not cite [src: {source}]")
+    if unmapped:
+        # All of them, not the first: each round otherwise fixes one and finds the next.
+        raise CandidateError(
+            f"{path}: evidence not accounted for. A paragraph is the text between blank "
+            f"lines, so map a whole list, not one bullet. " + "; ".join(unmapped[:8])
+        )
     return body
 
 
