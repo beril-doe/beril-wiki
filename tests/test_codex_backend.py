@@ -215,7 +215,7 @@ def test_failed_turn_keeps_usage_and_fails_the_job(tmp_path, monkeypatch):
 
 def test_timeout_interrupts_the_turn_and_charges_what_arrived(tmp_path, monkeypatch):
     agent = agent_for(tmp_path, timeout=0.2)
-    turn = FakeTurn(completed("late")[:1], block=threading.Event())
+    turn = FakeTurn(completed("late")[1:2], block=threading.Event())
     fake_session(monkeypatch, turn)
     agent.ledger.reserve("k3", agent._step, "gpt-6-astra")
     with pytest.raises(R.WorkflowError, match="timed out"):
