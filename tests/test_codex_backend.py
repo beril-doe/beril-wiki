@@ -77,7 +77,8 @@ def test_host_serves_bound_reader_and_refuses_tools_outside_the_profile(tmp_path
     assert "staging/a__REPORT.md" in reader.dependencies
     denied = call(host.url, "search_evidence", {"query": "Q10", "scope": "staging", "offset": 0})
     assert denied.isError and "not available" in denied.content[0].text
-    call(host.url, "read_evidence", args)  # the last allowed turn
+    call(host.url, "read_evidence", args)  # turns are charged per batch by consume()
+    host.binding.turns = 0
     over = call(host.url, "read_evidence", args)
     assert over.isError and "turn budget" in over.content[0].text
     assert "return the final answer now" in over.content[0].text
@@ -226,40 +227,54 @@ def test_timeout_interrupts_the_turn_and_charges_what_arrived(tmp_path, monkeypa
     assert row == ("failed", 140)
 
 
-def test_refused_calls_past_the_budget_are_tolerated_until_they_loop(tmp_path, monkeypatch):
+def tool_batch(count):
+    """One model turn issuing `count` parallel tool calls, then their completions."""
+    call_item = SimpleNamespace(root=SimpleNamespace(type="mcpToolCall", tool="read_evidence"))
+    started = [notification("item/started", turn_id="t1", item=call_item) for _ in range(count)]
+    done = [notification("item/completed", turn_id="t1", item=call_item) for _ in range(count)]
+    thinking = SimpleNamespace(root=SimpleNamespace(type="reasoning"))
+    return [*started, *done, notification("item/started", turn_id="t1", item=thinking)]
+
+
+class SpyHost:
+    url = "http://h"
+
+    def __init__(self):
+        self._binding, self.seen = None, None
+
+    @property
+    def binding(self):
+        return self._binding
+
+    @binding.setter
+    def binding(self, value):
+        if value is not None:
+            self.seen = value
+        self._binding = value
+
+
+def test_parallel_tool_calls_spend_one_turn_per_batch_and_a_loop_is_interrupted(
+    tmp_path, monkeypatch
+):
     agent = agent_for(tmp_path)  # max_turns 4 -> budget 3
-    fake = fake_session(monkeypatch, FakeTurn(completed("answer")))
-
-    class RefusingHost:
-        # Stands in for a model that made some calls after the budget ran out.
-        url = "http://h"
-
-        def __init__(self, refused):
-            self._binding, self.refused = None, refused
-
-        @property
-        def binding(self):
-            return self._binding
-
-        @binding.setter
-        def binding(self, value):
-            if value is not None:
-                value.refused = self.refused
-            self._binding = value
-
-    fake.host = RefusingHost(refused=3)
+    events = tool_batch(5) + tool_batch(3) + tool_batch(1) + completed("answer")
+    fake = fake_session(monkeypatch, FakeTurn(events))
+    fake.host = SpyHost()
     agent.ledger.reserve("k4", agent._step, "gpt-6-astra")
     payload = json.dumps([{"role": "user", "content": "x"}])
     assert C.run_job(agent, payload, "k4", "gpt-6-astra") == "answer"
+    assert fake.host.seen.batches == 3 and fake.host.seen.turns == 0
 
-    # Beyond that the turn is interrupted at the next completed item and the job fails.
-    turn = FakeTurn(completed("late"))
+    # Seven tool-calling turns against a budget of three: interrupted, charged, failed.
+    turn = FakeTurn([e for _ in range(7) for e in tool_batch(2)] + completed("late"))
     fake = fake_session(monkeypatch, turn)
-    fake.host = RefusingHost(refused=4)
+    fake.host = SpyHost()
     agent.ledger.reserve("k5", agent._step, "gpt-6-astra")
     with pytest.raises(R.WorkflowError, match="overrun"):
         C.run_job(agent, payload, "k5", "gpt-6-astra")
     assert turn.interrupted
+    row = agent.ledger.db.execute("SELECT status,tokens FROM jobs WHERE key='k5'").fetchone()
+    assert row == ("failed", 140)
 
 
 def test_one_session_per_thread(tmp_path, monkeypatch):

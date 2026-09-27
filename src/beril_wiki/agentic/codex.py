@@ -83,7 +83,11 @@ def final_response(items: list) -> str:
 
 class Binding:
     """What the host serves for the job in flight: reader, allowed tools, validator,
-    remaining tool turns."""
+    remaining tool turns.
+
+    A turn is one model turn, as it is for Claude's max_turns: Codex issues several
+    tool calls in parallel from one turn, and consume() charges the batch, not the
+    call, by watching the event stream."""
 
     def __init__(
         self,
@@ -93,6 +97,8 @@ class Binding:
         turns: int,
     ) -> None:
         self.reader, self.tools, self.validator, self.turns = reader, tools, validator, turns
+        self.budget = turns
+        self.batches = 0  # model turns that called tools; consume() counts them
         self.refused = 0  # calls made after the turn budget ran out
 
 
@@ -161,7 +167,6 @@ class EvidenceHost:
                 "tool turn budget exhausted; make no more tool calls and return the final "
                 "answer now from what you have"
             )
-        bound.turns -= 1
         return bound
 
     def _read(self, path: str, start: int, end: int) -> str:
@@ -266,9 +271,12 @@ def _close_sessions() -> None:
             pass
 
 
-def consume(turn: Any, out: Any, timeout: float, abort: Callable[[], bool] = lambda: False) -> dict:
+def consume(turn: Any, out: Any, timeout: float, binding: Binding | None = None) -> dict:
     """Drain a turn's notifications on a worker thread; interrupt at the deadline or
-    as soon as abort() says the model is looping on refused tool calls.
+    once the model keeps calling tools well past its turn budget.
+
+    Consecutive tool-call starts with nothing in between are one model turn; each
+    such batch spends one turn of the binding.
 
     Usage is kept from the last token-usage notification whatever happens next, so a
     failed or interrupted turn is still charged."""
@@ -281,10 +289,26 @@ def consume(turn: Any, out: Any, timeout: float, abort: Callable[[], bool] = lam
         "aborted": False,
     }
 
+    in_batch = False
+
     def pump() -> None:
+        nonlocal in_batch
         try:
             for event in turn.stream():
                 payload = event.payload
+                if event.method == "item/started" and binding is not None:
+                    root = getattr(payload.item, "root", payload.item)
+                    if getattr(root, "type", None) != "mcpToolCall":
+                        in_batch = False
+                    elif not in_batch:
+                        in_batch = True
+                        binding.batches += 1
+                        binding.turns = binding.budget - binding.batches
+                        # A few extra batches are a model finishing badly; three past
+                        # the budget is a loop, and only interrupting bounds it.
+                        if binding.batches > binding.budget + 3 and not state["aborted"]:
+                            state["aborted"] = True
+                            turn.interrupt()
                 # Streamed deltas repeat the text a token at a time; the completed
                 # items carry it once, so only those and the turn events are kept.
                 if not event.method.endswith(("/delta", "Delta")):
@@ -297,9 +321,6 @@ def consume(turn: Any, out: Any, timeout: float, abort: Callable[[], bool] = lam
                         raise WorkflowError("transcript output limit reached")
                 if event.method == "item/completed" and payload.turn_id == turn.id:
                     state["items"].append(payload.item)
-                    if not state["aborted"] and abort():
-                        state["aborted"] = True
-                        turn.interrupt()
                 elif event.method == "thread/tokenUsage/updated" and payload.turn_id == turn.id:
                     state["usage"] = payload.token_usage
                 elif event.method == "turn/completed" and payload.turn.id == turn.id:
@@ -364,7 +385,7 @@ def run_job(agent: Runtime, payload: str, key: str, model: str) -> str:
             turn = thread.turn(TextInput(user_payload), model=model, effort=ReasoningEffort(EFFORT))
             # A few refused calls are a model finishing badly; as many again as the
             # budget is a loop, and only interrupting it bounds the spend.
-            state = consume(turn, out, timeout, abort=lambda: binding.refused > max(3, budget))
+            state = consume(turn, out, timeout, binding)
             usage = map_usage(state["usage"])
             if usage is not None:
                 line = {"model": model, "usage": usage, "total_cost_usd": None}
@@ -392,8 +413,8 @@ def run_job(agent: Runtime, payload: str, key: str, model: str) -> str:
         error = f"timed out after {timeout:g}s; the turn was interrupted"
     elif state["aborted"]:
         error = (
-            f"tool turn budget overrun: {binding.refused} calls refused past the budget of "
-            f"{budget}; the turn was interrupted"
+            f"tool turn budget overrun: {binding.batches} tool-calling turns against a "
+            f"budget of {budget}; the turn was interrupted"
         )
     elif state["error"] is not None:
         error = f"Codex transport failed: {state['error']}"[:500]
