@@ -80,7 +80,8 @@ def test_host_serves_bound_reader_and_refuses_tools_outside_the_profile(tmp_path
     call(host.url, "read_evidence", args)  # the last allowed turn
     over = call(host.url, "read_evidence", args)
     assert over.isError and "turn budget" in over.content[0].text
-    assert host.binding.overrun is True
+    assert "return the final answer now" in over.content[0].text
+    assert host.binding.refused == 1
     host.binding = None
     unbound = call(host.url, "read_evidence", args)
     assert unbound.isError and "no job" in unbound.content[0].text
@@ -225,16 +226,16 @@ def test_timeout_interrupts_the_turn_and_charges_what_arrived(tmp_path, monkeypa
     assert row == ("failed", 140)
 
 
-def test_turn_budget_overrun_fails_the_job(tmp_path, monkeypatch):
-    agent = agent_for(tmp_path)
+def test_refused_calls_past_the_budget_are_tolerated_until_they_loop(tmp_path, monkeypatch):
+    agent = agent_for(tmp_path)  # max_turns 4 -> budget 3
     fake = fake_session(monkeypatch, FakeTurn(completed("answer")))
 
-    class OverrunHost:
-        # Stands in for a model that kept calling tools past the budget.
+    class RefusingHost:
+        # Stands in for a model that made some calls after the budget ran out.
         url = "http://h"
 
-        def __init__(self):
-            self._binding = None
+        def __init__(self, refused):
+            self._binding, self.refused = None, refused
 
         @property
         def binding(self):
@@ -243,13 +244,22 @@ def test_turn_budget_overrun_fails_the_job(tmp_path, monkeypatch):
         @binding.setter
         def binding(self, value):
             if value is not None:
-                value.overrun = True
+                value.refused = self.refused
             self._binding = value
 
-    fake.host = OverrunHost()
+    fake.host = RefusingHost(refused=3)
     agent.ledger.reserve("k4", agent._step, "gpt-6-astra")
-    with pytest.raises(R.WorkflowError, match="turn budget"):
-        C.run_job(agent, json.dumps([{"role": "user", "content": "x"}]), "k4", "gpt-6-astra")
+    payload = json.dumps([{"role": "user", "content": "x"}])
+    assert C.run_job(agent, payload, "k4", "gpt-6-astra") == "answer"
+
+    # Beyond that the turn is interrupted at the next completed item and the job fails.
+    turn = FakeTurn(completed("late"))
+    fake = fake_session(monkeypatch, turn)
+    fake.host = RefusingHost(refused=4)
+    agent.ledger.reserve("k5", agent._step, "gpt-6-astra")
+    with pytest.raises(R.WorkflowError, match="overrun"):
+        C.run_job(agent, payload, "k5", "gpt-6-astra")
+    assert turn.interrupted
 
 
 def test_one_session_per_thread(tmp_path, monkeypatch):

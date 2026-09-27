@@ -93,7 +93,7 @@ class Binding:
         turns: int,
     ) -> None:
         self.reader, self.tools, self.validator, self.turns = reader, tools, validator, turns
-        self.overrun = False
+        self.refused = 0  # calls made after the turn budget ran out
 
 
 class EvidenceHost:
@@ -156,8 +156,11 @@ class EvidenceHost:
         if name not in bound.tools:
             raise WorkflowError(f"{name} is not available for this job")
         if bound.turns <= 0:
-            bound.overrun = True
-            raise WorkflowError("tool turn budget exhausted")
+            bound.refused += 1
+            raise WorkflowError(
+                "tool turn budget exhausted; make no more tool calls and return the final "
+                "answer now from what you have"
+            )
         bound.turns -= 1
         return bound
 
@@ -263,12 +266,20 @@ def _close_sessions() -> None:
             pass
 
 
-def consume(turn: Any, out: Any, timeout: float) -> dict:
-    """Drain a turn's notifications on a worker thread; interrupt at the deadline.
+def consume(turn: Any, out: Any, timeout: float, abort: Callable[[], bool] = lambda: False) -> dict:
+    """Drain a turn's notifications on a worker thread; interrupt at the deadline or
+    as soon as abort() says the model is looping on refused tool calls.
 
     Usage is kept from the last token-usage notification whatever happens next, so a
     failed or interrupted turn is still charged."""
-    state: dict = {"items": [], "usage": None, "turn": None, "error": None, "timed_out": False}
+    state: dict = {
+        "items": [],
+        "usage": None,
+        "turn": None,
+        "error": None,
+        "timed_out": False,
+        "aborted": False,
+    }
 
     def pump() -> None:
         try:
@@ -286,6 +297,9 @@ def consume(turn: Any, out: Any, timeout: float) -> dict:
                         raise WorkflowError("transcript output limit reached")
                 if event.method == "item/completed" and payload.turn_id == turn.id:
                     state["items"].append(payload.item)
+                    if not state["aborted"] and abort():
+                        state["aborted"] = True
+                        turn.interrupt()
                 elif event.method == "thread/tokenUsage/updated" and payload.turn_id == turn.id:
                     state["usage"] = payload.token_usage
                 elif event.method == "turn/completed" and payload.turn.id == turn.id:
@@ -329,7 +343,8 @@ def run_job(agent: Runtime, payload: str, key: str, model: str) -> str:
     instructions = "\n\n".join([system + contract, *system_parts])
     turns = 1 if profile == "none" else int(agent.config.get("max_turns", 6))
     current = session(agent.store)
-    binding = Binding(reader, tools, agent._validator, max(0, turns - 1))
+    budget = max(0, turns - 1)
+    binding = Binding(reader, tools, agent._validator, budget)
     current.host.binding = binding
     scratch = agent.store / "codex-scratch"
     scratch.mkdir(parents=True, exist_ok=True)
@@ -347,7 +362,9 @@ def run_job(agent: Runtime, payload: str, key: str, model: str) -> str:
                 base_instructions=instructions,
             )
             turn = thread.turn(TextInput(user_payload), model=model, effort=ReasoningEffort(EFFORT))
-            state = consume(turn, out, timeout)
+            # A few refused calls are a model finishing badly; as many again as the
+            # budget is a loop, and only interrupting it bounds the spend.
+            state = consume(turn, out, timeout, abort=lambda: binding.refused > max(3, budget))
             usage = map_usage(state["usage"])
             if usage is not None:
                 line = {"model": model, "usage": usage, "total_cost_usd": None}
@@ -365,8 +382,19 @@ def run_job(agent: Runtime, payload: str, key: str, model: str) -> str:
     )
     if commands:
         print(f"agentic: {agent._step} ran {commands} shell command(s) on Codex", flush=True)
+    if binding.refused and not state["aborted"]:
+        print(
+            f"agentic: {agent._step} finished after {binding.refused} tool call(s) refused "
+            "past the turn budget",
+            flush=True,
+        )
     if state["timed_out"]:
         error = f"timed out after {timeout:g}s; the turn was interrupted"
+    elif state["aborted"]:
+        error = (
+            f"tool turn budget overrun: {binding.refused} calls refused past the budget of "
+            f"{budget}; the turn was interrupted"
+        )
     elif state["error"] is not None:
         error = f"Codex transport failed: {state['error']}"[:500]
     elif finished is None:
@@ -374,8 +402,6 @@ def run_job(agent: Runtime, payload: str, key: str, model: str) -> str:
     elif status != "completed":
         detail = getattr(getattr(finished, "error", None), "message", "") or ""
         error = f"Codex turn {status}: {detail}"[:500]
-    elif binding.overrun:
-        error = "tool turn budget exhausted; the job kept calling tools past its budget"
     elif not output.strip():
         error = "empty Codex output"
     else:
