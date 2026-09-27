@@ -111,6 +111,11 @@ def model_for(config: dict, step: str) -> str:
     return model_policy(config)[role]
 
 
+def backend_for(model: str) -> str:
+    """Which client answers a model: the Codex app server for GPT, else the Claude SDK."""
+    return "codex" if model.startswith("gpt-") else "claude"
+
+
 def model_signature(config: dict, roles: tuple[str, ...] = MODEL_ROLES) -> str | dict:
     """Retain the single-model cache identity when the effective models are identical."""
     policy = model_policy(config)
@@ -649,13 +654,20 @@ class Runtime:
             )
         requested = model
         model = model or model_for(self.config, step)
+        backend = backend_for(model)
+        if backend == "codex":
+            from beril_wiki.agentic import codex
+
+            # The adapter and its effort shape a Codex answer as the SDK tools shape a
+            # Claude one; Claude keys stay byte-identical.
+            tool_revision = digest([tool_revision, codex.REVISION])
         key, cached, answers = self.resolve(messages, step, model, tool_revision, inputs)
         if cached is not None:
             self.jobs.append(key)
             return cached
         if answers:
             return self.ask(messages, step, model=answers)
-        if not requested:
+        if not requested and backend == "claude":
             # This text was refused before, so do not buy the same refusal again: a
             # refused attempt is billed in full and answers nothing. Only once the
             # configured model has nothing cached, or an answer it gave would have to
@@ -672,7 +684,10 @@ class Runtime:
                     return cached
                 if redirect:
                     return self.ask(messages, step, model=redirect)
-        check_auth(self.config["cli"])
+        if backend == "codex":
+            codex.check_auth(codex.session(self.store).client)
+        else:
+            check_auth(self.config["cli"])
         self.jobs.append(key)
         cached = self.ledger.reserve(key, step, model)
         if cached is not None:
@@ -680,6 +695,8 @@ class Runtime:
         print(f"agentic: {step} model={model} [{key[:12]}]", flush=True)
         self._step = step
         try:
+            if backend == "codex":
+                return codex.run_job(self, payload, key, model)
             return asyncio.run(self._query(payload, key, model))
         except Refused as exc:
             if exc.fallback_model == model:
