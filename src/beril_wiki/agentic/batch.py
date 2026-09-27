@@ -227,6 +227,15 @@ def candidate_json(raw: str) -> dict:
         raise CandidateError(str(exc)) from exc
 
 
+# A description opening with one of these is an edit log, the defect a GPT writer
+# produced on two of five pilot pages and a scientific reviewer does not look for.
+EDIT_VERBS = frozenset(
+    "add adds added complete completes consolidate consolidates create creates expand "
+    "expands integrate integrates merge merges refine refines revise revises rewrite "
+    "rewrites update updates write writes".split()
+)
+
+
 def validate_candidate(
     root: Path,
     path: str,
@@ -255,6 +264,11 @@ def validate_candidate(
     description = candidate.get("description")
     if not isinstance(description, str) or not description.strip():
         raise CandidateError("candidate needs a nonempty description")
+    if description.split()[0].rstrip(":,").lower() in EDIT_VERBS:
+        raise CandidateError(
+            f"description describes the edit ({description[:60]!r}); it is the page's "
+            "frontmatter one-liner and must say what the page is about"
+        )
     if body.startswith("---"):
         raise CandidateError("agent emitted host-owned frontmatter")
     violations = C.validate_page(
@@ -754,7 +768,9 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                 "for existing pages; full content is allowed for new pages or justified "
                 "restructuring. "
                 "Keep summaries complete and end with Slots Into linking planned concepts. "
-                'Return JSON {"base_hash": "...", "description": "one sentence", '
+                'Return JSON {"base_hash": "...", "description": "one sentence saying what '
+                "the page is about, used as its frontmatter one-liner; never what this edit "
+                'does", '
                 '"edits": [{"old": "exact anchor", "new": "replacement"}]} or replace edits with '
                 '"content" and "rewrite_reason".\n'
                 'If no edit is warranted, supply "no_change_reason" explaining the recheck.\n'

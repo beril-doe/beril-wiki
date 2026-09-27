@@ -510,6 +510,13 @@ def test_validator_checks_authoritative_merge_inputs_and_description(tmp_path, m
     candidate["description"] = " "
     with pytest.raises(WorkflowError, match="description"):
         batch.validate_candidate(tmp_path, job.path, job, candidate, set(), {"concepts/yield"})
+    # The description becomes the page's frontmatter one-liner, so an edit log is wrong.
+    candidate["description"] = "Create the canonical yield page with its caveats."
+    with pytest.raises(WorkflowError, match="describes the edit"):
+        batch.validate_candidate(tmp_path, job.path, job, candidate, set(), {"concepts/yield"})
+    candidate["description"] = "Yield of the reference strain across the measured conditions."
+    with pytest.raises(WorkflowError, match="unchanged citations"):  # past the description gate
+        batch.validate_candidate(tmp_path, job.path, job, candidate, set(), {"concepts/yield"})
     assert (tmp_path / "wiki/concepts/yield.md").read_text() == OLD
 
 
