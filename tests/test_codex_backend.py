@@ -267,6 +267,16 @@ def test_one_session_per_thread(tmp_path, monkeypatch):
     assert built == [tmp_path]
 
 
+def test_each_session_gets_its_own_home_with_the_shared_login(tmp_path, monkeypatch):
+    monkeypatch.setenv("CODEX_HOME", str(tmp_path / "user"))
+    (tmp_path / "user").mkdir()
+    (tmp_path / "user/auth.json").write_text("{}")
+    first, second = C.prepare_home(tmp_path / "store", "a"), C.prepare_home(tmp_path / "store", "b")
+    assert first != second and first.is_dir() and second.is_dir()
+    assert (first / "auth.json").resolve() == (tmp_path / "user/auth.json").resolve()
+    assert C.prepare_home(tmp_path / "store", "a") == first
+
+
 def account_of(kind):
     account = None if kind is None else SimpleNamespace(root=SimpleNamespace(type=kind))
     return SimpleNamespace(account=lambda: SimpleNamespace(account=account))

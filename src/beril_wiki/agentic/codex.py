@@ -186,10 +186,13 @@ class EvidenceHost:
         return text
 
 
-def prepare_home(store: Path) -> Path:
+def prepare_home(store: Path, name: str) -> Path:
     """An isolated CODEX_HOME so the user's MCP servers, plugins and skills stay out of
-    pipeline threads; auth.json is a symlink so the ChatGPT login stays shared."""
-    home = store / "codex-home"
+    pipeline threads; auth.json is a symlink so the ChatGPT login stays shared.
+
+    One home per session: app servers sharing a home share its sqlite state, and a
+    fifth server failed to initialize after four extraction workers had used one."""
+    home = store / "codex-home" / name
     home.mkdir(parents=True, exist_ok=True)
     source = Path(os.environ.get("CODEX_HOME", "~/.codex")).expanduser() / "auth.json"
     link = home / "auth.json"
@@ -217,7 +220,7 @@ class CodexSession:
         self.store = store
         self.host = EvidenceHost()
         env = {k: v for k, v in os.environ.items() if not k.startswith(ENV_PREFIXES)}
-        env["CODEX_HOME"] = str(prepare_home(store))
+        env["CODEX_HOME"] = str(prepare_home(store, f"{os.getpid()}-{threading.get_ident()}"))
         self.client = Codex(
             CodexConfig(
                 env=env,
