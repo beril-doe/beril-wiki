@@ -76,6 +76,21 @@ selected by `--root`. The committed policy explicitly assigns every role:
 | `queries` | Sonnet 5 | Construct literature search queries. |
 | `figures` | Sonnet 5 | Select figure placements. |
 
+Models whose name starts with `gpt-` run on the OpenAI Codex app server
+through the `openai-codex` SDK (which bundles its own pinned `codex` binary)
+instead of the Claude SDK; the backend follows the model name, so
+`--step-model writing=gpt-6-astra` is the whole switch. Codex jobs use the same
+evidence tools, served to the app server over a local MCP endpoint, the same
+ledger and cache, and the same turn and byte budgets. They run with the shell
+tool disabled, an isolated `CODEX_HOME` under the store (its `auth.json` is a
+symlink to the user's ChatGPT login; no API key is accepted), no web search,
+and the evidence tools pre-approved under a never-ask approval policy. Usage is
+recorded in tokens only (`cost` is null) and reasoning tokens are counted
+inside output tokens; Codex has no per-turn output cap. Claude refusal memory
+applies to Claude jobs only; a Codex refusal fails validation and exhausts the
+correction attempts. Upgrade `codex` and `openai-codex` together: the SDK pins
+the app-server protocol version.
+
 This is a deliberate starting policy, not a measured optimum: protect scientific
 fidelity and avoid costly rewrites, while using Sonnet for bounded selection
 tasks. The former `curator` role is gone: the schedule below is fixed code, so
