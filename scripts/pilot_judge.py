@@ -28,6 +28,8 @@ RUBRIC = (
 
 
 def assigned_evidence(page: str) -> list[dict]:
+    """The plan's evidence quotes for a concept; a summary or entity page gets its
+    sources' report text instead, since the plan assigns them by source."""
     plan = json.loads(Path(".agentic/last-plan.json").read_text())
     ids = {c["evidence"] for c in plan["coverage"] if page in c.get("concepts", [])}
     quotes = []
@@ -35,7 +37,14 @@ def assigned_evidence(page: str) -> list[dict]:
         for finding in json.loads(path.read_text())["findings"]:
             if finding["id"] in ids:
                 quotes.append({k: finding[k] for k in ("id", "source", "claim", "quote")})
-    return sorted(quotes, key=lambda f: f["id"])
+    if quotes:
+        return sorted(quotes, key=lambda f: f["id"])
+    job = next((p for p in plan["pages"] if p["path"] == page), {})
+    for sid in job.get("sources", []):
+        report = Path(".agentic/work/staging") / f"{sid}__REPORT.md"
+        if report.is_file():
+            quotes.append({"source": sid, "report_text": report.read_text()[:60_000]})
+    return quotes
 
 
 def main() -> None:
