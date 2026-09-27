@@ -16,7 +16,10 @@ def tool_calls(key: str) -> int:
         return 0
     text = path.read_text(errors="replace")
     # Claude transcripts serialize tool_use blocks by tool name; Codex ones by item type.
-    return text.count('"name": "mcp__evidence__') + text.count("McpToolCallThreadItem(")
+    codex = sum(
+        1 for line in text.splitlines() if '"item/completed"' in line and '"mcpToolCall"' in line
+    )
+    return text.count('"name": "mcp__evidence__') + codex
 
 
 def verdict_of(step: str, output: str) -> str | None:

@@ -270,12 +270,17 @@ def consume(turn: Any, out: Any, timeout: float) -> dict:
     def pump() -> None:
         try:
             for event in turn.stream():
-                record = event.model_dump(mode="json") if hasattr(event, "model_dump") else None
-                out.write(json.dumps({"event": record or str(event)}, default=str) + "\n")
-                out.flush()
-                if out.tell() > TRANSCRIPT_LIMIT:
-                    raise WorkflowError("transcript output limit reached")
                 payload = event.payload
+                # Streamed deltas repeat the text a token at a time; the completed
+                # items carry it once, so only those and the turn events are kept.
+                if not event.method.endswith(("/delta", "Delta")):
+                    dump = getattr(payload, "model_dump", None)
+                    body = dump(mode="json") if dump else str(payload)
+                    record = {"method": event.method, "payload": body}
+                    out.write(json.dumps(record, default=str) + "\n")
+                    out.flush()
+                    if out.tell() > TRANSCRIPT_LIMIT:
+                        raise WorkflowError("transcript output limit reached")
                 if event.method == "item/completed" and payload.turn_id == turn.id:
                     state["items"].append(payload.item)
                 elif event.method == "thread/tokenUsage/updated" and payload.turn_id == turn.id:

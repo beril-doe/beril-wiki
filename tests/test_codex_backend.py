@@ -170,6 +170,7 @@ def fake_session(monkeypatch, turn):
 def completed(text, status="completed", error=None):
     message = SimpleNamespace(type="agentMessage", phase="final_answer", text=text)
     return [
+        notification("item/agentMessage/delta", turn_id="t1", delta="DELTA-TEXT"),
         notification("thread/tokenUsage/updated", turn_id="t1", token_usage=usage()),
         notification("item/completed", turn_id="t1", item=SimpleNamespace(root=message)),
         notification("turn/completed", turn=SimpleNamespace(id="t1", status=status, error=error)),
@@ -195,8 +196,10 @@ def test_run_job_records_usage_transcript_and_clears_binding(tmp_path, monkeypat
     assert fake.host.binding is None
     row = agent.ledger.db.execute("SELECT status,tokens,cost FROM jobs WHERE key='k1'").fetchone()
     assert row == ("done", 140, None)
-    found = R.transcript_usage(Path(agent.store) / "transcripts/k1.jsonl")
-    assert found == (C.map_usage(usage()), None)
+    path = Path(agent.store) / "transcripts/k1.jsonl"
+    assert R.transcript_usage(path) == (C.map_usage(usage()), None)
+    transcript = path.read_text()
+    assert "DELTA-TEXT" not in transcript and '"method": "item/completed"' in transcript
 
 
 def test_failed_turn_keeps_usage_and_fails_the_job(tmp_path, monkeypatch):
