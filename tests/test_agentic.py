@@ -629,9 +629,11 @@ def test_reprocessing_unchanged_sources_keeps_retention_guard(tmp_path, monkeypa
 
     monkeypatch.setattr(agent, "ask", drop_old_number)
     monkeypatch.setattr(agent, "review", lambda *args: None)
-    with pytest.raises(WorkflowError, match="unchanged citations or quantities"):
-        compile_batch(tmp_path, agent, ["a__REPORT.md", "b__REPORT.md"])
+    compile_batch(tmp_path, agent, ["a__REPORT.md", "b__REPORT.md"])
+    # The guard holds: the page keeps its number, the failure is recorded, the run goes on.
     assert "1234" in path.read_text()
+    failures = json.loads((agent.store / "failures.json").read_text())
+    assert "unchanged citations or quantities" in failures["concepts/cells.md"]["issues"][0]["note"]
 
 
 @pytest.mark.parametrize(

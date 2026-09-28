@@ -19,11 +19,13 @@ from typing import Any
 from beril_wiki.agentic.runtime import (
     SYSTEM,
     EvidenceTools,
+    JobFailed,
     ReadTools,
     Runtime,
     WorkflowError,
     digest,
     tool_profile,
+    turn_budget_sentence,
 )
 
 EFFORT = "high"
@@ -361,8 +363,10 @@ def run_job(agent: Runtime, payload: str, key: str, model: str) -> str:
     )
     contract = (agent.root / "contract/AGENTS.md").read_text()
     system = SYSTEM.replace("Use only the supplied evidence read tool.", PROFILE_SENTENCE[profile])
-    instructions = "\n\n".join([system + contract, *system_parts])
     turns = 1 if profile == "none" else int(agent.config.get("max_turns", 6))
+    if profile != "none":
+        system += turn_budget_sentence(agent.config)
+    instructions = "\n\n".join([system + contract, *system_parts])
     current = session(agent.store)
     budget = max(0, turns - 1)
     binding = Binding(reader, tools, agent._validator, budget)
@@ -429,5 +433,5 @@ def run_job(agent: Runtime, payload: str, key: str, model: str) -> str:
         error = ""
     agent.ledger.finish(key, output, usage, error, reader.dependencies, cost=None)
     if error:
-        raise WorkflowError(error)
+        raise JobFailed(error)
     return output.strip()

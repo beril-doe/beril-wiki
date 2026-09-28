@@ -193,6 +193,25 @@ claim, caveat and null result. Writers use base hashes and anchored patches or
 justified rewrites.
 Deterministic checks retain citations and quantities from unchanged sources,
 including absorbed pages and paragraphs citing both revised and unchanged sources.
+
+The bulk of a job's context is sent as a system message so the CLI caches it as a
+prefix and the jobs that follow read it instead of writing it again at full price:
+a page's existing text, absorbed pages and assigned evidence are shared by its
+write, review, repair and verify jobs, and the planner's inventory of existing
+pages is shared by every planning batch, each of which sends only the entries the
+plan has changed. Review and verify nest only a task's user messages, and the
+reviewer receives each cited paragraph once, indexed by the evidence map. The
+tool-turn budget is stated by the runtime in the system prompt, not in any job's
+text, so changing `--max-turns` does not re-key cached work. Measured before this
+on the heaviest pilot page: review and verify each rewrote 400K tokens of context,
+three times the write prompt, and the evidence map alone repeated 53 paragraphs
+311 times.
+
+Page writes fan out across `--workers` threads, each with its own runtime. A page
+that fails its correction rounds, or whose own job times out or is cut off, is
+recorded in `.agentic/failures.json` and the batch goes on; its sources are not
+recorded as integrated, so the next run schedules them again. `--strict-pages`
+stops the run instead.
 Quantities in those mixed-source paragraphs are retained conservatively; separate
 scientific review assesses support and lost
 meaning. Review is useful evidence, not a guarantee of scientific correctness.
