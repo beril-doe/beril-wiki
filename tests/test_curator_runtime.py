@@ -172,6 +172,37 @@ def test_truncated_reply_names_the_output_cap(tmp_path, monkeypatch):
     assert status == "failed" and "truncated" in error
 
 
+def test_output_cap_is_judged_per_turn_not_per_session(tmp_path, monkeypatch):
+    from claude_agent_sdk import ResultMessage, SystemMessage
+
+    agent = runtime(tmp_path)
+    monkeypatch.setattr(R, "check_auth", lambda cli: None)
+    monkeypatch.setitem(agent.config, "max_output_tokens", 1000)
+
+    def query(*, prompt, options):
+        async def stream():
+            yield SystemMessage(subtype="init", data={"apiKeySource": "none"})
+            # Six tool turns of deliberation: 3,500 output tokens in all, none cut.
+            yield ResultMessage(
+                subtype="success",
+                duration_ms=1,
+                duration_api_ms=1,
+                is_error=False,
+                num_turns=6,
+                session_id="s",
+                total_cost_usd=0.1,
+                usage={"input_tokens": 1, "output_tokens": 3500},
+                result='{"pages": [], "coverage": []}',
+            )
+
+        return stream()
+
+    monkeypatch.setattr(R, "query", query)
+    assert agent.ask([{"role": "user", "content": "plan"}], "batch/plan/0") == (
+        '{"pages": [], "coverage": []}'
+    )
+
+
 def test_refused_job_is_reissued_on_the_model_that_answers_it(tmp_path, monkeypatch):
     from claude_agent_sdk import ResultMessage, SystemMessage
 

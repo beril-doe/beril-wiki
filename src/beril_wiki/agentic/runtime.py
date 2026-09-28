@@ -922,7 +922,15 @@ class Runtime:
             raise Refused(refused, answers)
         output = terminal.result or ""
         cap = int(self.config.get("max_output_tokens", 32768))
-        if valid_usage(terminal.usage) and terminal.usage.get("output_tokens", 0) >= cap:
+        # The cap applies to one turn, but the result carries the session's output, and
+        # a model that thinks 25K tokens a turn over six tool turns exceeds any cap in
+        # aggregate without a single reply being cut. Judge the average turn instead;
+        # a cut JSON reply still fails its parse and is corrected.
+        turns_taken = max(1, int(getattr(terminal, "num_turns", 1) or 1))
+        if (
+            valid_usage(terminal.usage)
+            and terminal.usage.get("output_tokens", 0) / turns_taken >= cap
+        ):
             # The CLI returns the tail of an answer that ran past the cap, with a
             # successful stop reason, so the only symptom downstream is text that
             # begins mid-sentence. Name it here instead.
