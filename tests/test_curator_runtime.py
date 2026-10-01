@@ -854,3 +854,24 @@ def test_tool_free_jobs_key_on_their_prompt_only(tmp_path, monkeypatch):
     source.write_text("revised again")
     agent.ask(task, "extract/report/0")  # tool-using job: the source is its evidence
     assert len(calls) == 3
+
+
+def test_review_embeds_json_candidates_as_objects_and_explains_encoding(tmp_path, monkeypatch):
+    agent = runtime(tmp_path)
+    asked = []
+
+    def reply(messages, step):
+        asked.append(messages[0]["content"])
+        return '{"accepted": true, "issues": []}'
+
+    monkeypatch.setattr(agent, "ask", reply)
+    task = [{"role": "user", "content": "t"}, {"role": "system", "content": "PACK"}]
+    agent.review(task, '{"findings": [{"quote": "He said \\"yes\\"\\n"}]}', "extract/r/0")
+    payload = json.loads(asked[0].split("\n")[-1])
+    # Encoded once as an object, not as an escaped string inside the JSON.
+    assert payload["candidate"]["findings"][0]["quote"] == 'He said "yes"\n'
+    assert payload["task"] == [{"role": "user", "content": "t"}]
+    assert "backslash escapes are encoding" in asked[0]
+    # Prose candidates stay text.
+    agent.review(task, "# A page\n\nProse.", "conflicts/a")
+    assert json.loads(asked[1].split("\n")[-1])["candidate"] == "# A page\n\nProse."
