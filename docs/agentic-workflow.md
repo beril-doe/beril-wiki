@@ -69,34 +69,23 @@ selected by `--root`. The committed policy explicitly assigns every role:
 
 | Role | Model | Jobs |
 | --- | --- | --- |
-| `extraction` | Opus 5.5 | Extract source evidence, retaining scientific qualifiers. |
+| `extraction` | GPT-6 Sol (Codex) | Extract source evidence, retaining scientific qualifiers. |
 | `planning` | Opus 5.5 | Plan evidence integration and propose topic groups. |
 | `writing` | Opus 5.5 | Write and revise pages, derived prose, home and entity merges; default for other generation jobs. |
-| `review` | Opus 5.5 | All separate scientific reviews, including extraction and repaired candidates. |
-| `queries` | Sonnet 5 | Construct literature search queries. |
-| `figures` | Sonnet 5 | Select figure placements. |
+| `review` | GPT-6.1 Sol (Codex) | All separate scientific reviews and verifications, including extraction and repaired candidates. |
+| `queries` | GPT-6.1 Sol (Codex) | Construct literature search queries. |
+| `figures` | GPT-6.1 Sol (Codex) | Select figure placements. |
 
-Models whose name starts with `gpt-` run on the OpenAI Codex app server
-through the `openai-codex` SDK (which bundles its own pinned `codex` binary)
-instead of the Claude SDK; the backend follows the model name, so
-`--step-model writing=gpt-6-astra` is the whole switch. Codex jobs use the same
-evidence tools, served to the app server over a local MCP endpoint, the same
-ledger and cache, and the same turn and byte budgets. They run with the shell
-tool disabled, an isolated `CODEX_HOME` under the store (its `auth.json` is a
-symlink to the user's ChatGPT login; no API key is accepted), no web search,
-and the evidence tools pre-approved under a never-ask approval policy. Usage is
-recorded in tokens only (`cost` is null) and reasoning tokens are counted
-inside output tokens; Codex has no per-turn output cap. Claude refusal memory
-applies to Claude jobs only; a Codex refusal fails validation and exhausts the
-correction attempts. Upgrade `codex` and `openai-codex` together: the SDK pins
-the app-server protocol version.
-
-This is a deliberate starting policy, not a measured optimum: protect scientific
-fidelity and avoid costly rewrites, while using Sonnet for bounded selection
-tasks. The former `curator` role is gone: the schedule below is fixed code, so
+This is a deliberate hybrid, not a measured optimum: Claude plans and writes,
+a GPT model extracts and reviews, so no page is checked by the family that wrote
+it. Two pilots (September 2026) measured GPT writing at a third to a tenth of
+Claude's tokens but preferred Claude's prose four pages to one, and GPT
+extraction at a higher finding yield with fewer review repairs. The bounded
+selection tasks, queries and figures, run on the same GPT reviewer model. The
+former `curator` role is gone: the schedule below is fixed code, so
 no model chooses actions any more. Haiku is not the default because a cheaper
 call is not a saving if it causes missed evidence or repeat work. No model comparison run is required.
-The full IDs are `claude-opus-5-5` and `claude-sonnet-5`, matching Anthropic's
+The full IDs are `claude-opus-5-5`, `gpt-6-sol` and `gpt-6.1-sol`; the Claude ID matches Anthropic's
 [model catalog](https://platform.claude.com/docs/en/models/overview).
 Opus 5.5 was verified on
 [Claude Code](https://code.claude.com/docs/en/model-config) 2.1.280; Sonnet 5 requires 2.1.197. Availability still depends
