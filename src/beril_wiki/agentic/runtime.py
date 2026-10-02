@@ -79,6 +79,29 @@ def refusal_scope(step: str) -> str:
         scope = trimmed
 
 
+# A safeguard sometimes stops a reply partway and the model says so in prose instead
+# of the CLI signalling a refusal. The reply is short, is not the JSON asked for, and
+# names the stop; the job is then answered on the model the CLI itself falls back to.
+REFUSAL_FALLBACK = {"claude-opus-5-5": "claude-opus-5"}
+REFUSAL_PHRASES = (
+    "stopped partway",
+    "safety check",
+    "i can't finish",
+    "i cannot finish",
+    "i'm not going to rewrite",
+    "i can't help with",
+    "i cannot help with",
+)
+
+
+def looks_refused(output: str) -> bool:
+    text = output.strip()
+    if len(text) > 3000 or text[:1] in "{[":
+        return False
+    lowered = text.lower()
+    return any(phrase in lowered for phrase in REFUSAL_PHRASES)
+
+
 def refusal_target(output: str | None) -> str:
     """The model a recorded refusal was answered on, if this row is one."""
     try:
@@ -347,6 +370,14 @@ class Ledger:
             )
         if not valid:
             raise WorkflowError(f"unknown token usage for {key}; saved output, stopped scheduling")
+
+    def reject(self, key: str, answers: str, note: str) -> None:
+        """Turn a finished row into a remembered refusal answered on another model."""
+        with self.db:
+            self.db.execute(
+                "UPDATE jobs SET status='rejected', output=?, error=? WHERE key=?",
+                (json.dumps({"refused_to": answers}), note, key),
+            )
 
     def account(self, key: str, tokens: int) -> None:
         if tokens <= 0:
@@ -705,7 +736,7 @@ class Runtime:
         key, cached, answers = self.resolve(messages, step, model, tool_revision, inputs)
         if cached is not None:
             self.jobs.append(key)
-            return cached
+            return self._screened(messages, step, model, key, cached)
         if answers:
             return self.ask(messages, step, model=answers)
         if not requested and backend == "claude":
@@ -722,7 +753,7 @@ class Runtime:
                 key, cached, redirect = self.resolve(messages, step, model, tool_revision, inputs)
                 if cached is not None:
                     self.jobs.append(key)
-                    return cached
+                    return self._screened(messages, step, model, key, cached)
                 if redirect:
                     return self.ask(messages, step, model=redirect)
         if backend == "codex":
@@ -732,13 +763,14 @@ class Runtime:
         self.jobs.append(key)
         cached = self.ledger.reserve(key, step, model)
         if cached is not None:
-            return cached
+            return self._screened(messages, step, model, key, cached)
         print(f"agentic: {step} model={model} [{key[:12]}]", flush=True)
         self._step = step
         try:
             if backend == "codex":
                 return codex.run_job(self, payload, key, model)
-            return asyncio.run(self._query(payload, key, model))
+            output = asyncio.run(self._query(payload, key, model))
+            return self._screened(messages, step, model, key, output)
         except Refused as exc:
             if exc.fallback_model == model:
                 raise
@@ -752,6 +784,16 @@ class Runtime:
         except BaseException as exc:
             # A transport crash may have consumed tokens: leave pending charge intact.
             raise WorkflowError(f"{step} failed; inspect job {key}: {exc}") from exc
+
+    def _screened(self, messages: list[dict], step: str, model: str, key: str, output: str) -> str:
+        """A reply that is a refusal in prose is recorded as one and answered on the
+        model the CLI itself would fall back to, as a signalled refusal is."""
+        answers = REFUSAL_FALLBACK.get(model)
+        if not answers or not looks_refused(output):
+            return output
+        self.ledger.reject(key, answers, f"refused in the reply on {model}; answered on {answers}")
+        print(f"agentic: {step} refused in text on {model}; re-issuing on {answers}", flush=True)
+        return self.ask(messages, step, model=answers)
 
     async def _query(self, payload: str, key: str, model: str) -> str:
         profile = tool_profile(self._step)

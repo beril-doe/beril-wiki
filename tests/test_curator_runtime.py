@@ -875,3 +875,37 @@ def test_review_embeds_json_candidates_as_objects_and_explains_encoding(tmp_path
     # Prose candidates stay text.
     agent.review(task, "# A page\n\nProse.", "conflicts/a")
     assert json.loads(asked[1].split("\n")[-1])["candidate"] == "# A page\n\nProse."
+
+
+def test_a_refusal_stated_in_prose_is_answered_on_the_fallback_model(tmp_path, monkeypatch):
+    agent = runtime(tmp_path)
+    monkeypatch.setattr(R, "check_auth", lambda cli: None)
+    monkeypatch.setitem(agent.config, "model", "claude-opus-5-5")
+    calls = []
+
+    async def fake_query(payload, key, model):
+        calls.append(model)
+        text = (
+            "I can't finish this edit in this session. My earlier response was stopped "
+            "partway, so no candidate was validated."
+            if model == "claude-opus-5-5"
+            else '{"pages": []}'
+        )
+        agent.ledger.finish(key, text, {"input_tokens": 1, "output_tokens": 1})
+        return text
+
+    monkeypatch.setattr(agent, "_query", fake_query)
+    assert agent.ask([{"role": "user", "content": "plan"}], "batch/plan/7") == '{"pages": []}'
+    assert calls == ["claude-opus-5-5", "claude-opus-5"]
+    rows = agent.ledger.db.execute(
+        "SELECT model, status, output FROM jobs WHERE step='batch/plan/7' ORDER BY rowid"
+    ).fetchall()
+    assert rows[0][:2] == ("claude-opus-5-5", "rejected") and R.refusal_target(rows[0][2])
+    assert rows[1][:2] == ("claude-opus-5", "done")
+    # The memory holds: a sibling job in the scope goes straight to the fallback.
+    calls.clear()
+    assert agent.ask([{"role": "user", "content": "plan"}], "batch/plan/7") == '{"pages": []}'
+    assert calls == []
+    # A long page that merely mentions a safety check is not a refusal.
+    assert not R.looks_refused("# Page\n\n" + "A safety check was run on the samples. " * 200)
+    assert not R.looks_refused('{"accepted": false, "issues": ["safety check stopped nothing"]}')
