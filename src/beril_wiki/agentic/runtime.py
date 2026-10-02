@@ -736,7 +736,7 @@ class Runtime:
         key, cached, answers = self.resolve(messages, step, model, tool_revision, inputs)
         if cached is not None:
             self.jobs.append(key)
-            return self._screened(messages, step, model, key, cached)
+            return cached
         if answers:
             return self.ask(messages, step, model=answers)
         if not requested and backend == "claude":
@@ -753,7 +753,7 @@ class Runtime:
                 key, cached, redirect = self.resolve(messages, step, model, tool_revision, inputs)
                 if cached is not None:
                     self.jobs.append(key)
-                    return self._screened(messages, step, model, key, cached)
+                    return cached
                 if redirect:
                     return self.ask(messages, step, model=redirect)
         if backend == "codex":
@@ -763,7 +763,7 @@ class Runtime:
         self.jobs.append(key)
         cached = self.ledger.reserve(key, step, model)
         if cached is not None:
-            return self._screened(messages, step, model, key, cached)
+            return cached
         print(f"agentic: {step} model={model} [{key[:12]}]", flush=True)
         self._step = step
         try:
@@ -786,8 +786,12 @@ class Runtime:
             raise WorkflowError(f"{step} failed; inspect job {key}: {exc}") from exc
 
     def _screened(self, messages: list[dict], step: str, model: str, key: str, output: str) -> str:
-        """A reply that is a refusal in prose is recorded as one and answered on the
-        model the CLI itself would fall back to, as a signalled refusal is."""
+        """A fresh reply that is a refusal in prose is recorded as one and answered on
+        the model the CLI itself would fall back to, as a signalled refusal is.
+
+        Only fresh replies: a cached one already had its correction chain run, and a
+        planning batch whose repair succeeded must not be re-answered on another
+        model, or every batch after it re-keys."""
         answers = REFUSAL_FALLBACK.get(model)
         if not answers or not looks_refused(output):
             return output
