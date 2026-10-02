@@ -722,6 +722,8 @@ def test_leftovers_become_new_concepts_and_entities_their_own_pages(tmp_path, mo
                 entity | {"evidence": ["a:0:0", "a:0:1"]},
                 entity | {"path": "entities/once.md", "title": "Once", "evidence": ["a:0:2"]},
             ]
+        if step == "write/entities/strain.md":
+            data["accounted_evidence"] = {"a:0:0": 0, "a:0:1": 7}  # as the live writer did
         return json.dumps(data)
 
     monkeypatch.setattr(agent, "ask", leftovers)
@@ -735,6 +737,8 @@ def test_leftovers_become_new_concepts_and_entities_their_own_pages(tmp_path, mo
     assert [c["summary_only"] for c in saved["coverage"]] == ["", "", "Setup detail."]
     prompt = next(m for s, m in calls if s == "write/entities/strain.md")
     assert [f["id"] for f in system_payload(prompt)["evidence"]] == ["a:0:0", "a:0:1"]
+    # It accounted for the records it was given, which nothing asked of it; still accepted.
+    assert (tmp_path / "wiki/entities/strain.md").exists()
 
 
 def test_scientific_rejection_uses_same_single_correction(tmp_path, monkeypatch):

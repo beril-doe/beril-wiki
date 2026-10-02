@@ -374,7 +374,10 @@ def validate_candidate(
         raise CandidateError(f"{path}: candidate loses unchanged citations or quantities")
     expected = {f["id"]: f["source"] for f in assigned or []}
     accounted = candidate.get("accounted_evidence", {})
-    if not isinstance(accounted, dict) or set(accounted) != set(expected):
+    # A page with nothing assigned, such as a new entity written from the records that
+    # name it, has nothing to account for; a writer that maps those records anyway is
+    # not wrong, and rejecting it failed both entities of the first router pilot.
+    if expected and (not isinstance(accounted, dict) or set(accounted) != set(expected)):
         raise CandidateError(f"{path}: assigned evidence IDs must be accounted for exactly")
     # Coverage sees every section. paragraphs() drops Open Directions and its kin
     # because a proposal has no figure to cite, but a plan may route evidence there,
@@ -1035,7 +1038,12 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
             # Each cited paragraph once: resolved per record, a 311-record page repeated
             # 53 paragraphs 394,000 characters' worth into every review and verify.
             cited = all_paragraphs(body)
-            indices = sorted({i for i in candidate.get("accounted_evidence", {}).values()})
+            accounted = {
+                eid: i
+                for eid, i in (candidate.get("accounted_evidence") or {}).items()
+                if eid in ids
+            }
+            indices = sorted(set(accounted.values()))
             review_task = task + [
                 {
                     "role": "user",
@@ -1047,7 +1055,7 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                     "recomputed.\n"
                     + json.dumps(
                         {
-                            "accounted_evidence": candidate.get("accounted_evidence", {}),
+                            "accounted_evidence": accounted,
                             "paragraphs": {str(i): cited[i] for i in indices},
                         }
                     ),
