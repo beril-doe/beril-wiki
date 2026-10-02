@@ -725,7 +725,7 @@ def test_leftovers_become_new_concepts_and_entities_their_own_pages(tmp_path, mo
         return json.dumps(data)
 
     monkeypatch.setattr(agent, "ask", leftovers)
-    monkeypatch.setattr(batch, "ENTITY_MIN_SOURCES", 1)  # this fixture has one source
+    # One report in this update, so two projects cannot be asked of an entity.
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
     saved = json.loads((agent.store / "last-plan.json").read_text())
     pages = {p["path"]: p for p in saved["pages"]}

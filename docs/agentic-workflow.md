@@ -185,7 +185,8 @@ dictionary lacks, and lists new entities with the records that describe them.
 The `new_topic` leftovers go to a few proposal jobs (`plan/propose/N`) in
 sequence, each told what the earlier ones proposed, which turn them into new
 concept pages or summary-only rows. An entity named by fewer than two records,
-or by records from a single project, gets no page, and an existing entity is only rechecked when its sources change.
+or, when the update spans several projects, by records from only one of them,
+gets no page, and an existing entity is only rechecked when its sources change.
 The router proposes no merges; concept identity decisions stay in
 `contract/concept-decisions.yaml`. The planner this replaced read the inventory
 of every page planned so far, so 103 batches ran one after another for 10 to 14

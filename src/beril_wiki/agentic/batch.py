@@ -755,6 +755,8 @@ def route_plan(root: Path, agent: Runtime, findings: list[dict]) -> Plan:
                 raise CandidateError(str(exc)) from exc
             placed = [e for c in proposal.concepts for e in c.evidence]
             exact_ids(placed + [u.evidence for u in proposal.unplaced], ids, "record placement")
+            if blank := [u.evidence for u in proposal.unplaced if not u.summary_only.strip()]:
+                raise CandidateError(f"unplaced records need a summary_only reason: {blank[:8]}")
             paths = [c.path for c in proposal.concepts]
             if len(set(paths)) != len(paths):
                 raise CandidateError(
@@ -791,6 +793,7 @@ def route_plan(root: Path, agent: Runtime, findings: list[dict]) -> Plan:
         coverage.append(Coverage(evidence=finding["id"], concepts=paths, summary_only=reason))
 
     source_of = {f["id"]: f["source"] for f in findings}
+    by_source = set(source_of.values())
     routed: dict[str, list[str]] = {}
     for row in coverage:
         for path in row.concepts:
@@ -829,7 +832,9 @@ def route_plan(root: Path, agent: Runtime, findings: list[dict]) -> Plan:
         )
         for e in found.values()
         if len(e.evidence) >= ENTITY_MIN_RECORDS
-        and len({source_of[i] for i in e.evidence}) >= ENTITY_MIN_SOURCES
+        # Projects outside this batch are invisible here, so a one-report update needs
+        # only the record minimum, or it could never create an entity page.
+        and len({source_of[i] for i in e.evidence}) >= min(ENTITY_MIN_SOURCES, len(by_source))
     )
     return Plan(pages=pages, coverage=coverage)
 

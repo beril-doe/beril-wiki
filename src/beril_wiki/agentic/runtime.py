@@ -179,7 +179,8 @@ TOOLS_REVISION = {"none": "none@1", "read": "read@1", "extended": "extended@1"}
 CODEX_REVISION = "codex@1"
 
 # Instruction texts by tag. A key holds the tag, not the wording, so a wording fix
-# keeps cached work; bump the tag when the change should re-key it.
+# keeps cached work; bump the tag when the change should re-key it, including a change
+# to a JSON schema the text embeds, which a cached answer may no longer satisfy.
 PROMPTS: dict[str, str] = {}
 
 
@@ -893,8 +894,11 @@ class Runtime:
             raise WorkflowError(f"{step} failed; inspect job {key}: {exc}") from exc
 
     def effort(self, step: str) -> Literal["low", "medium", "high", "xhigh", "max"] | None:
-        """The writer's reasoning effort, when a run sets one; the CLI default otherwise."""
-        return self.config.get("write_effort") if role_for(step) == "writing" else None
+        """The page writer's reasoning effort, when a run sets one; the CLI default
+        otherwise. Only the writer of a write/ job: the writing role also covers every
+        derived page, and a write/ job's review belongs to the reviewer."""
+        writer = step.startswith("write/") and role_for(step) == "writing"
+        return self.config.get("write_effort") if writer else None
 
     def _screened(self, messages: list[dict], step: str, model: str, key: str, output: str) -> str:
         """A fresh reply that is a refusal in prose is recorded as one and answered on

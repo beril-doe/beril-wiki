@@ -936,14 +936,16 @@ def test_writer_effort_rekeys_writers_only_and_page_writes_use_no_tools(tmp_path
 
     monkeypatch.setattr(agent, "_query", answer)
     task = [{"role": "user", "content": "x"}]
-    for step in ("write/concepts/a.md", "write/concepts/a.md/science-review"):
+    steps = ("write/concepts/a.md", "write/concepts/a.md/science-review", "conflicts/b")
+    for step in steps:
         agent.ask(task, step)
     monkeypatch.setitem(agent.config, "write_effort", "medium")
-    for step in ("write/concepts/a.md", "write/concepts/a.md/science-review"):
+    for step in steps:  # a derived page is in the writing role too, and stays cached
         agent.ask(task, step)
     assert calls == [
         ("write/concepts/a.md", None),
         ("write/concepts/a.md/science-review", None),
+        ("conflicts/b", None),
         ("write/concepts/a.md", "medium"),
     ]
     assert R.tool_profile("write/concepts/a.md") == "none"

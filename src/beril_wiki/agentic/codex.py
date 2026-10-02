@@ -1,8 +1,8 @@
 """Codex app-server backend: GPT models through the same tools, ledger and budgets.
 
-The Claude branch lives in Runtime._query and must not change (its source is part
-of the planning cache key), so everything Codex-specific lives here and Runtime.ask
-dispatches on the model name."""
+The Claude branch lives in Runtime._query; everything Codex-specific lives here and
+Runtime.ask dispatches on the model name. Job keys hold CODEX_REVISION in runtime.py,
+not this file's source, so bump that when a change here should re-key Codex work."""
 
 from __future__ import annotations
 
