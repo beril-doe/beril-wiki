@@ -17,3 +17,5 @@ parity/
 reference/
 .ruff_cache/
 .pytest_cache/
+/docs/superpowers/
+/.agentic/

@@ -16,6 +16,7 @@ Exit code 1 if any ERROR, else 0. WARNs are reported but do not fail.
 
 from __future__ import annotations
 
+import hashlib
 import pathlib
 import re
 import sys
@@ -56,7 +57,7 @@ NUMBER = re.compile(
 # trailing one also rejects unit suffixes: sources write "+7.8pp" and "18.8M", so
 # it made those figures invisible and every page quoting them looked unsupported.
 
-_SRC_NUMS: dict[tuple[str, int], set[str]] = {}
+_SRC_NUMS: dict[tuple[str, str], set[str]] = {}
 
 
 def norm_num(tok: str) -> str:
@@ -102,7 +103,7 @@ def numbers_in(text: str) -> set[str]:
 
 def source_numbers(sid: str, text: str) -> set[str]:
     """Tokenized figures of one source, memoized — validate_page runs per paragraph."""
-    key = (sid, len(text))
+    key = (sid, hashlib.sha256(text.encode("utf-8")).hexdigest())
     if key not in _SRC_NUMS:
         _SRC_NUMS[key] = numbers_in(text)
     return _SRC_NUMS[key]
@@ -180,6 +181,21 @@ def source_ids(kb: pathlib.Path) -> dict[str, str]:
             sid = re.sub(r"__REPORT$", "", f.stem)
             texts.setdefault(sid, f.read_text(encoding="utf-8", errors="replace"))
     return texts
+
+
+def all_paragraphs(body: str) -> list[str]:
+    """Every paragraph, including the forward-looking sections paragraphs() drops.
+
+    Evidence coverage needs these: a plan may route a finding to Open Directions,
+    and the writer that does so must still be able to show the paragraph carrying
+    it. Numeric and citation checks keep using paragraphs(), which excludes those
+    sections because a proposal has nothing to cite."""
+    body = re.sub(r"^---\n.*?\n---\n", "", body, flags=re.S)
+    return [
+        p.strip()
+        for p in re.split(r"\n\s*\n", body)
+        if p.strip() and not p.lstrip().startswith("#")
+    ]
 
 
 def paragraphs(body: str) -> list[str]:
@@ -323,7 +339,7 @@ def main() -> int:
                         msg = f"{rel} ¶{i}: number {tok!r} not found in cited source(s) {ids}"
                         (errors if strict else warns).append(msg)
 
-    # Corpus-format contract (docs/design.md): `sources` must never list a project
+    # Corpus-format contract (docs/wiki.md): `sources` must never list a project
     # the body does not cite. Nothing checked it, so six pages drifted — one
     # entity listed 47 sources against 31 real citations. A padded list reads as
     # synthesis without being it, and it also drives compile's resume-skip, so a

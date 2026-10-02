@@ -61,7 +61,7 @@ def page_violations(
 def canonicalise_sources(path: pathlib.Path, dry_run: bool) -> bool:
     """Drop `sources` entries the page body does not cite. True if it changed.
 
-    Deterministic and free — no model call. docs/design.md's corpus contract says
+    Deterministic and free — no model call. docs/wiki.md's corpus contract says
     `sources` must never list a project the body does not cite, but nothing
     enforced it, so pages drifted: one entity listed 47 sources against 31 real
     citations. A padded list reads as synthesis without being it, and it drives

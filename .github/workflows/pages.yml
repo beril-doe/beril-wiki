@@ -63,6 +63,11 @@ jobs:
           WIKI_BASE_URL: beril-doe.org/beril-wiki
         run: scripts/build_quartz.sh
 
+      # The theme is compiled by build_quartz.sh but never type-checked by it;
+      # a map or frame change that breaks the types would still render.
+      - name: Type-check the theme
+        run: npm --prefix theme run typecheck
+
       # A build that silently dropped the corpus would still deploy green.
       - name: Check the site is not empty
         run: |

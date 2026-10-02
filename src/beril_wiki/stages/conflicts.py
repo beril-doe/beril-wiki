@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
-"""Promote cross-project tensions to dedicated conflict pages (v1's best idea).
+"""Promote cross-project tensions to dedicated conflict pages, one per disagreement.
 
-Scans every concept page's `## Tensions` section, groups tensions that span
-multiple projects, and writes one conflict page each to wiki/conflicts/
-with the v1 structure: Evidence Sides + Resolving Work. Idempotent: a tension
-whose (sorted project set) was already promoted is skipped unless the source
-tension text changed (content hash in frontmatter).
+Every paragraph of a concept page's `## Tensions` section that cites two or
+more projects is one disagreement and becomes one conflict page under
+wiki/conflicts/ (Evidence Sides + Resolving Work). Paragraphs restating the
+same figures are folded onto one page. A page is written from a packed
+evidence prompt, gated, reviewed and patched by agentic.prose; one that does
+not converge keeps its previous version and is recorded as a failure while
+the stage continues. Idempotent: an unchanged paragraph (content hash in a
+leading comment) is skipped.
 
     OPENAI_API_KEY=$CBORG_API_KEY OPENAI_BASE_URL=https://api.cborg.lbl.gov \
         uv run python -m beril_wiki.stages.conflicts
@@ -14,149 +17,137 @@ tension text changed (content hash in frontmatter).
 from __future__ import annotations
 
 import hashlib
-import os
 import re
 import sys
 
-from litellm import completion
-
 from beril_wiki import compiler as C
-from beril_wiki.check import numbers_in, source_ids
+from beril_wiki.agentic.prose import (
+    NO_PREAMBLE,
+    PLATFORM,
+    Contract,
+    PageFailure,
+    derived_page,
+    limit,
+    parallel,
+    prune_failures,
+    record_failure,
+    source_excerpts,
+    strict_pages,
+    workers,
+)
+from beril_wiki.check import SRC_TAG, numbers_in, source_ids
 from beril_wiki.paths import ROOT
-from beril_wiki.stages.consolidate import cosine, embed
-from beril_wiki.stages.topics import bad_src_ids, strip_bad_src
 
 OUT = ROOT / "wiki" / "conflicts"
-# Above the 99th percentile of pair similarity (0.900) on this corpus: conflict
-# pages share a template, so the median pair is already 0.79.
-CONFLICT_SIM = float(os.environ.get("CONFLICT_SIM", "0.93"))
 FORCE = "--force" in sys.argv
-MODEL = os.environ.get("WIKI_MODEL", "openai/gpt-5.6-luna")
 
-PROMPT = """You are writing a CONFLICT page for a research wiki: a first-class record of a
-real disagreement between projects in the corpus. Input: the tension text as written on
-one or more concept pages, with its [src: project] citations.
-
-Write markdown with exactly these sections:
-# <Short conflict title — the disagreement, phrased as a tension>
-(one-paragraph lead: what the disagreement is and why it matters)
-## Evidence Sides
-(one bolded subsection per side; each side's claim with its exact numbers and
- [src: project] tags copied from the input — never invent numbers or citations)
-## Possible Reconciliations
-(hypotheses that could make both sides right — measurement differences, scope
- differences, definitional differences — clearly labeled as hypotheses)
-## Resolving Work
-(3-5 bullets: the specific analyses or data that would settle it — data + method + question)
-
-Rules: copy numbers exactly; a claim you cannot attribute must not be written; 300-600 words.
-Link the source concept pages with [[concepts/<stem>]] wikilinks where given.
-NAMING: the data platform is the KBase Data Lakehouse. Reports call it
-BERDL or the BER Data Lakehouse; those are earlier names for the same
-system and must not appear in a page you write. The project id
-`berdl_data_atlas` and that project's title "BERDL Data Atlas" are names
-of a project, not of the platform, and stay as they are.
-"""
+CONTRACT = Contract(
+    rules=(
+        "Write 300-600 words in total (the code gate allows 10% either way).",
+        "Sections in this order: an H1 title phrasing the disagreement as a tension without "
+        "taking a side; one lead paragraph saying what the disagreement is and why it matters; "
+        "## Evidence Sides with one bolded subsection per side; ## Possible Reconciliations, "
+        "each labelled as a hypothesis; ## Resolving Work with 3-5 bullets of data + method + "
+        "question.",
+        "Use only figures (numbers, percentages, counts, statistics) that appear in the TENSION "
+        "text; never import a figure from the source excerpts, never compute or round one.",
+        "Keep every [src: ...] tag exactly as the TENSION text gives it, beside the claim it "
+        "supports; never re-tag a claim to another project and never invent a citation.",
+        "State each side's direction, denominator and threshold exactly as the TENSION text "
+        "does: a null result stays null, a threshold stays a threshold, a hypothesis stays a "
+        "hypothesis; never resolve the tension by averaging or preferring one side.",
+        "Any figure in the lead must also appear, cited, in Evidence Sides.",
+        "Define jargon (abbreviations, method names, statistics) at first use.",
+        "Link the concept page(s) the tension comes from as [[concepts/<stem>]]; link no other "
+        "page.",
+        NO_PREAMBLE.format(first="the H1"),
+        PLATFORM,
+    ),
+    words=(300, 600),
+    headings=("## Evidence Sides", "## Possible Reconciliations", "## Resolving Work"),
+)
+TASK = (
+    "Write the CONFLICT page for the disagreement in the TENSION text: a first-class record "
+    "of a real disagreement between projects in the corpus."
+)
 
 
 def tension_blocks() -> list[dict]:
+    """One block per Tensions paragraph that cites two or more projects."""
     blocks = []
     for page in sorted((ROOT / "wiki/concepts").glob("*.md")):
         text = page.read_text(encoding="utf-8", errors="replace")
         m = re.search(r"^## Tensions?\s*\n(.*?)(?=\n## |\Z)", text, re.M | re.S)
         if not m:
             continue
-        body = m.group(1).strip()
-        projects = set()
-        for t in re.finditer(r"\[src:\s*([^\]]+)\]", body):
-            for p in re.split(r"[,;]", t.group(1)):
-                projects.add(re.sub(r"__REPORT$", "", p.strip()))
-        if len(projects) >= 2:
-            blocks.append({"concept": page.stem, "text": body, "projects": projects})
+        for index, par in enumerate(
+            p.strip() for p in re.split(r"\n\s*\n", m.group(1)) if p.strip()
+        ):
+            projects = {
+                re.sub(r"__REPORT$", "", p.strip())
+                for tag in SRC_TAG.finditer(par)
+                for p in re.split(r"[,;]", tag.group(1))
+            }
+            if len(projects) >= 2:
+                blocks.append(
+                    {"concept": page.stem, "index": index, "text": par, "projects": projects}
+                )
     return blocks
 
 
-def merge_similar_groups(
-    groups: dict[tuple, list[dict]], threshold: float
-) -> dict[tuple, list[dict]]:
-    """Fold together tension groups that describe ONE disagreement.
+def merge_similar_groups(blocks: list[dict]) -> list[list[dict]]:
+    """Fold paragraphs that restate ONE disagreement onto one page.
 
-    Groups are keyed by their exact project set, so the same argument reaching a
-    different set of projects becomes a second page. Two pages on this corpus
-    said the same thing that way: "Species-Scale Null Versus Positive
-    Metal-Conservation Associations" and "Species-Scale Nulls Versus Broad
-    Environmental and Fitness Signals", cosine 0.954.
+    A merge needs a shared project and the same evidence: at least three shared
+    figures making up at least half of their union. Text similarity is not
+    used, since these paragraphs share a template and the old embedding path
+    merged pages that were alike in shape rather than in claim."""
+    figures = [numbers_in(b["text"]) for b in blocks]
+    parent = list(range(len(blocks)))
 
-    A merge needs BOTH a shared project and near-identical text. Similarity
-    alone is unsafe here: conflict pages share a rigid template, so the corpus
-    median pair already sits at 0.79 and the 99th percentile at 0.90 — the
-    default cutoff is deliberately above that, and over-merging would put two
-    genuinely different disagreements on one page. Evidence overlap (the same
-    figures restated) merges regardless of similarity, matching the concept
-    stage's more precise detector."""
-    keys = sorted(groups)
-    if len(keys) < 2:
-        return groups
-    texts = ["\n".join(b["text"] for b in groups[k]) for k in keys]
-    # Cosine never exceeds 1, so a threshold above it is "evidence overlap
-    # only" and the embeddings would be paid for and never consulted.
-    vecs = embed(texts) if threshold <= 1 else None
-    figs = [numbers_in(t) for t in texts]
-    parent = {k: k for k in keys}
+    def find(i: int) -> int:
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
 
-    def find(k):
-        while parent[k] != k:
-            parent[k] = parent[parent[k]]
-            k = parent[k]
-        return k
-
-    for i, a in enumerate(keys):
-        for j in range(i + 1, len(keys)):
-            b = keys[j]
-            if not (set(a) & set(b)):
+    for i in range(len(blocks)):
+        for j in range(i + 1, len(blocks)):
+            if not (blocks[i]["projects"] & blocks[j]["projects"]):
                 continue
-            shared = figs[i] & figs[j]
-            same_evidence = len(shared) >= 3 and len(shared) / max(1, len(figs[i] | figs[j])) >= 0.5
-            sim = cosine(vecs[i], vecs[j]) if vecs is not None else 0.0
-            if same_evidence or sim >= threshold:
-                ra, rb = find(a), find(b)
-                if ra != rb:
-                    parent[rb] = ra
-                    print(
-                        f"  merging tension groups {sorted(set(b))[:3]} into {sorted(set(a))[:3]}"
-                        f" ({'shared figures' if same_evidence else f'cosine {sim:.3f}'})"
-                    )
-
-    merged: dict[tuple, list[dict]] = {}
-    for k in keys:
-        merged.setdefault(find(k), []).extend(groups[k])
-    # the surviving key must cover every project the folded groups carried
-    out = {}
-    for blocks in merged.values():
-        out[tuple(sorted({p for b in blocks for p in b["projects"]}))] = blocks
-    return out
+            shared = figures[i] & figures[j]
+            if len(shared) >= 3 and len(shared) / max(1, len(figures[i] | figures[j])) >= 0.5:
+                parent[find(j)] = find(i)
+    groups: dict[int, list[dict]] = {}
+    for i, block in enumerate(blocks):
+        groups.setdefault(find(i), []).append(block)
+    return [sorted(g, key=lambda b: (b["concept"], b["index"])) for g in groups.values()]
 
 
-def conflict_slug(projects: tuple[str, ...]) -> str:
-    """Filename for a tension group, unique to its COMPLETE project set.
+def conflict_slug(group: list[dict]) -> str:
+    """conflict--<concept>--<digest>: identity follows the paragraph, not the project set.
 
-    The slug used to be the first three ids only, so two groups sharing those
-    three overwrote one file — three such collisions existed on this corpus, and
-    because `existing` is read once, the collided file flipped between the two
-    groups on every otherwise-unchanged run. Groups of three or fewer keep the
-    readable name; longer ones carry a short digest of the full set so identity
-    is exact without unbounded filenames."""
-    head = "conflict--" + "--".join(projects[:3])
-    if len(projects) <= 3:
-        return head
-    tail = hashlib.sha256("|".join(projects).encode()).hexdigest()[:8]
-    return f"{head}--{tail}"
+    Naming by project set let two disagreements on one concept overwrite each
+    other; a short digest of the tension text keeps every disagreement distinct
+    and retires the page when its paragraph changes."""
+    tail = hashlib.sha256("\n".join(b["text"] for b in group).encode()).hexdigest()[:8]
+    return f"conflict--{group[0]['concept']}--{tail}"
 
 
-def main() -> None:
+def concept_lead(text: str) -> str:
+    body = C.parse_fm(text)[1]
+    m = re.search(r"^(# .+?)\n+(.+?)(?:\n\n|\n#|\Z)", body, re.S)
+    return f"{m.group(1)}\n{m.group(2).strip()}" if m else body[:600]
+
+
+def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     src_texts = source_ids(ROOT)
     targets = C.wikilink_targets(ROOT)
+    concepts = {
+        p.stem: p.read_text(encoding="utf-8", errors="replace")
+        for p in (ROOT / "wiki/concepts").glob("*.md")
+    }
     existing = {}
     if FORCE:
         print("  --force: ignoring cached tension hashes")
@@ -165,96 +156,78 @@ def main() -> None:
         if m:
             existing[f.stem] = m.group(1)
 
-    # Group tensions that share their project set (same disagreement seen from
-    # multiple concept pages).
-    groups: dict[tuple, list[dict]] = {}
-    for b in tension_blocks():
-        groups.setdefault(tuple(sorted(b["projects"])), []).append(b)
-    groups = merge_similar_groups(groups, CONFLICT_SIM)
-
-    written = skipped = 0
-    live: set[str] = set()
-    for projects, blocks in sorted(groups.items()):
-        slug = conflict_slug(projects)
+    todo, live, skipped = [], set(), 0
+    for group in merge_similar_groups(tension_blocks()):
+        slug = conflict_slug(group)
         live.add(slug)
-        digest = hashlib.sha256("\n".join(b["text"] for b in blocks).encode()).hexdigest()[:16]
+        digest = hashlib.sha256("\n".join(b["text"] for b in group).encode()).hexdigest()[:16]
         if existing.get(slug) == digest:
             skipped += 1
             continue
-        payload = "\n\n---\n\n".join(
-            f"[from concept page: concepts/{b['concept']}]\n{b['text']}" for b in blocks
+        todo.append((slug, group, digest))
+
+    def write(item: tuple) -> str:
+        slug, group, _ = item
+        projects = set().union(*(b["projects"] for b in group))
+        tension = "\n\n".join(
+            f"[from wiki/concepts/{b['concept']}.md, Tensions paragraph {b['index']}]\n{b['text']}"
+            for b in group
         )
-        resp = (
-            completion(
-                model=MODEL,
-                api_key=os.environ["OPENAI_API_KEY"],
-                base_url=os.environ.get("OPENAI_BASE_URL", "https://api.cborg.lbl.gov"),
-                messages=[
-                    {"role": "system", "content": PROMPT},
-                    {"role": "user", "content": payload},
-                ],
-                temperature=0.3,
-                timeout=600,
-            )
-            .choices[0]
-            .message.content.strip()
+        leads = "\n\n".join(
+            f"[concepts/{stem}]\n{concept_lead(concepts[stem])}"
+            for stem in sorted({b["concept"] for b in group})
         )
-        # Concept names must never end up inside [src:]; stages.topics has always
-        # stripped them, stages.conflicts never did, and check could not see
-        # it because it did not scan this directory.
-        bad = bad_src_ids(resp, set(src_texts))
-        if bad:
-            print(f"  ! conflicts/{slug}: invalid [src:] ids {bad[:4]} — stripping")
-            resp = strip_bad_src(resp, set(src_texts))
-        nv = C.prose_violations(resp, src_texts)
-        if nv:
-            print(f"  ! conflicts/{slug}: {len(nv)} unsupported figure(s) — retrying")
-            resp = (
-                completion(
-                    model=MODEL,
-                    api_key=os.environ["OPENAI_API_KEY"],
-                    base_url=os.environ.get("OPENAI_BASE_URL", "https://api.cborg.lbl.gov"),
-                    messages=[
-                        {"role": "system", "content": PROMPT},
-                        {"role": "user", "content": payload},
-                        {"role": "assistant", "content": resp},
-                        {
-                            "role": "user",
-                            "content": "Figures in your page appear in none of the sources "
-                            "cited beside them:\n"
-                            + "\n".join(f"- {x}" for x in nv[:12])
-                            + "\nRewrite the full page. Copy every number exactly from a "
-                            "source cited in the same paragraph, or drop the claim.",
-                        },
-                    ],
-                    temperature=0.3,
-                    timeout=600,
-                )
-                .choices[0]
-                .message.content.strip()
-            )
-        resp = C.downgrade_dead_links(resp, targets)
+        pack = (
+            f"TENSION:\n{tension}\n\nCONCEPT CONTEXT (framing only):\n{leads}\n\n"
+            "SOURCE EXCERPTS (verification only; a figure here that is absent from the "
+            f"TENSION text must not be used):\n{source_excerpts(tension, projects, src_texts)}"
+        )
+        return derived_page(
+            f"conflicts/{slug}",
+            CONTRACT,
+            TASK,
+            pack,
+            allowed="\n".join(b["text"] for b in group),
+            sources=src_texts,
+            valid_ids=projects,
+            targets=targets,
+        )
+
+    cap = limit(sys.argv)
+    if cap is not None:
+        print(f"  --limit {cap}: writing at most {cap} page(s), retiring none")
+        todo = todo[:cap]
+    written = failed = 0
+    for (slug, group, digest), result in parallel(todo, write, workers()):
+        if isinstance(result, PageFailure):
+            failed += 1
+            record_failure(f"conflicts/{slug}", result)
+            print(f"  [FAILED] conflicts/{slug}: {result}")
+            continue
         (OUT / f"{slug}.md").write_text(
-            f"<!-- tension-hash: {digest} -->\n{resp}\n", encoding="utf-8"
+            f"<!-- tension-hash: {digest} -->\n{result}\n", encoding="utf-8"
         )
+        record_failure(f"conflicts/{slug}", None)
         written += 1
-        print(
-            f"  wrote conflicts/{slug}.md "
-            f"({len(blocks)} tension block(s), {len(projects)} projects)"
-        )
-    # Retire conflict pages whose tension group no longer exists. stages.topics
-    # has always reaped its stale hubs; this stage never did, so every concept
-    # merge stranded a page. Only reap after a clean pass, so an interrupted run
-    # cannot delete pages it simply did not get to.
+        print(f"  wrote conflicts/{slug}.md ({len(group)} paragraph(s))")
+    # Retire pages whose disagreement no longer exists. Slugs follow the paragraph text,
+    # so a failed replacement's predecessor lives under another slug: retire nothing in a
+    # pass with failures, or the "keep the previous version" promise is empty.
     reaped = 0
-    if written or skipped:
-        for stale in sorted(OUT.glob("*.md")):
-            if stale.stem not in live:
-                stale.unlink()
-                reaped += 1
-                print(f"  removed stale conflicts/{stale.stem}.md")
-    print(f"conflicts: {written} written, {skipped} unchanged, {reaped} retired, {len(live)} live")
+    if failed:
+        print(f"  {failed} page(s) failed: retiring nothing this pass")
+    for stale in [] if cap is not None or failed else sorted(OUT.glob("*.md")):
+        if stale.stem not in live:
+            stale.unlink()
+            reaped += 1
+            print(f"  removed stale conflicts/{stale.stem}.md")
+    prune_failures("conflicts/", {f"conflicts/{slug}" for slug in live})
+    print(
+        f"conflicts: {written} written, {skipped} unchanged, {failed} failed, "
+        f"{reaped} retired, {len(live)} live"
+    )
+    return 1 if failed and strict_pages() else 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
