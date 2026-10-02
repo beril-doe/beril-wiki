@@ -83,11 +83,17 @@ def refusal_scope(step: str) -> str:
 # of the CLI signalling a refusal. The reply is short, is not the JSON asked for, and
 # names the stop; the job is then answered on the model the CLI itself falls back to.
 REFUSAL_FALLBACK = {"claude-opus-5-5": "claude-opus-5"}
+# Wordings seen so far; each is a short prose reply in place of the JSON asked for.
 REFUSAL_PHRASES = (
     "stopped partway",
     "safety check",
+    "safety classifier",
+    "stopped by a safety",
     "i can't finish",
     "i cannot finish",
+    "i couldn't finish",
+    "i didn't produce",
+    "i won't regenerate",
     "i'm not going to rewrite",
     "i can't help with",
     "i cannot help with",

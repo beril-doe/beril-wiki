@@ -911,6 +911,12 @@ def test_a_refusal_stated_in_prose_is_answered_on_the_fallback_model(tmp_path, m
         '{"pages": []}'
     )
     assert calls == ["claude-opus-5"]
+    for wording in (
+        "I couldn't finish the requested correction. My earlier response was stopped by "
+        "a safety classifier, so no candidate exists.",
+        "I didn't produce the corrected revision in this turn either.",
+    ):
+        assert R.looks_refused(wording)
     # A long page that merely mentions a safety check is not a refusal.
     assert not R.looks_refused("# Page\n\n" + "A safety check was run on the samples. " * 200)
     assert not R.looks_refused('{"accepted": false, "issues": ["safety check stopped nothing"]}')
