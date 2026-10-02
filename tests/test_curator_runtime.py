@@ -856,6 +856,70 @@ def test_tool_free_jobs_key_on_their_prompt_only(tmp_path, monkeypatch):
     assert len(calls) == 3
 
 
+def test_keys_hold_prompt_tags_and_find_work_cached_under_legacy_keys(tmp_path, monkeypatch):
+    agent = runtime(tmp_path)
+    monkeypatch.setattr(R, "check_auth", lambda cli: None)
+    calls = []
+
+    async def answer(payload, key, model):
+        calls.append(key)
+        agent.ledger.finish(key, "ok", {"input_tokens": 1, "output_tokens": 1})
+        return "ok"
+
+    monkeypatch.setattr(agent, "_query", answer)
+
+    def task(text):
+        return [{"role": "user", "content": text + json.dumps({"report": "a"})}]
+
+    monkeypatch.setitem(R.PROMPTS, "task@1", "Summarise the report.\n")
+    agent.ask(task("Summarise the report.\n"), "conflicts/a")
+    # A wording fix under the same tag keeps the cached answer, nested in a review too.
+    monkeypatch.setitem(R.PROMPTS, "task@1", "Summarise this report.\n")
+    agent.ask(task("Summarise this report.\n"), "conflicts/a")
+    nested = [
+        {
+            "role": "user",
+            "content": "Check.\n" + json.dumps({"task": task("Summarise this report.\n")}),
+        }
+    ]
+    agent.ask(nested, "conflicts/b")
+    monkeypatch.setitem(R.PROMPTS, "task@1", "Summarise the report.\n")
+    agent.ask(
+        [
+            {
+                "role": "user",
+                "content": "Check.\n" + json.dumps({"task": task("Summarise the report.\n")}),
+            }
+        ],
+        "conflicts/b",
+    )
+    assert len(calls) == 2
+    # Bumping the tag re-keys deliberately.
+    monkeypatch.delitem(R.PROMPTS, "task@1")
+    monkeypatch.setitem(R.PROMPTS, "task@2", "Summarise the report.\n")
+    agent.ask(task("Summarise the report.\n"), "conflicts/a")
+    assert len(calls) == 3
+    # Work cached under the legacy formula is found once and aliased, not copied.
+    legacy = R.digest(
+        [
+            task("Legacy.\n"),
+            "test",
+            R.digest([R.SYSTEM]),
+            R.contract_manifest(tmp_path),
+            "conflicts/c",
+        ]
+    )
+    agent.ledger.reserve(legacy, "conflicts/c", "test")
+    agent.ledger.finish(legacy, "cached", {"input_tokens": 5, "output_tokens": 5})
+    assert agent.ask(task("Legacy.\n"), "conflicts/c") == "cached"
+    assert agent.ledger.db.execute(
+        "SELECT count(*) FROM aliases WHERE target=?", (legacy,)
+    ).fetchone() == (1,)
+    monkeypatch.setattr(R, "SYSTEM", "changed system")  # the legacy key moves; the alias holds
+    assert agent.ask(task("Legacy.\n"), "conflicts/c") == "cached"
+    assert len(calls) == 3 and agent.ledger.totals()["tokens"] == 16
+
+
 def test_review_embeds_json_candidates_as_objects_and_explains_encoding(tmp_path, monkeypatch):
     agent = runtime(tmp_path)
     asked = []

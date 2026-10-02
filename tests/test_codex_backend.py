@@ -346,7 +346,7 @@ def test_gpt_models_dispatch_to_codex_and_claude_keys_ignore_the_codex_revision(
     assert seen[1][0] == "codex" and seen[1][2] == "gpt-6-astra"
 
     # A new adapter revision re-keys Codex jobs only.
-    monkeypatch.setattr(C, "REVISION", "changed")
+    monkeypatch.setattr(R, "CODEX_REVISION", "codex@changed")
     assert agent.ask(messages, "write/concepts/x.md") == "codex answer"
     assert seen[2][1] != key_codex
     monkeypatch.setitem(agent.config, "model", "claude-opus-5-5")

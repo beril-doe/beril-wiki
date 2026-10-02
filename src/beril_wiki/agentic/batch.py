@@ -22,6 +22,7 @@ from beril_wiki.agentic.runtime import (
     atomic_json,
     digest,
     file_hash,
+    prompt,
 )
 from beril_wiki.check import all_paragraphs, cited_ids, paragraphs
 from beril_wiki.stages.consolidate import body_src_ids, load_decisions, page_numbers, repoint_links
@@ -86,6 +87,21 @@ def chunks(text: str, size: int = 16_000) -> Iterator[tuple[int, int]]:
         raise ValueError("chunk size must be positive")
     for start in range(0, len(text), size):
         yield start, min(start + size, len(text))
+
+
+EXTRACT_PROMPT = prompt(
+    "extract@1",
+    "Extract reusable scientific findings, caveats, null/negative results, named "
+    "entities, and figure references. Include exact verbatim supporting quotes, "
+    "preserving numbers, units, denominators and uncertainty, with your best GLOBAL "
+    "character offsets; the host locates each quote exactly and rejects only "
+    "quotes that are not verbatim source text, so never omit evidence over offsets. "
+    "Quotes must start in the ownership range and may end in the supplied overlap. "
+    "Retrieve an intact passage if a sentence extends beyond the overlap. "
+    "Do not silently omit evidence. You have 100KB of reads in total; always "
+    "finish with the JSON. "
+    f"Return JSON matching {json.dumps(Evidence.model_json_schema())}.\n",
+)
 
 
 def validate_evidence(text: str, start: int, end: int, obj: dict) -> Evidence:
@@ -556,27 +572,15 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
     def extract_chunk(agent: Runtime, task: tuple[str, str, int, int]) -> Evidence:
         name, text, start, end = task
         context_end = min(end + 1000, len(text))
-        instruction = (
-            "Extract reusable scientific findings, caveats, null/negative results, named "
-            "entities, and figure references. Include exact verbatim supporting quotes, "
-            "preserving numbers, units, denominators and uncertainty, with your best GLOBAL "
-            "character offsets; the host locates each quote exactly and rejects only "
-            "quotes that are not verbatim source text, so never omit evidence over offsets. "
-            "Quotes must start in the ownership range and may end in the supplied overlap. "
-            "Retrieve an intact passage if a sentence extends beyond the overlap. "
-            "Do not silently omit evidence. You have 100KB of reads in total; always "
-            "finish with the JSON. "
-            f"Return JSON matching {json.dumps(Evidence.model_json_schema())}.\n"
-            + json.dumps(
-                {
-                    "source": name,
-                    "start": start,
-                    "end": end,
-                    "context_end": context_end,
-                    "length": len(text),
-                    "text": text[start:context_end],
-                }
-            )
+        instruction = EXTRACT_PROMPT + json.dumps(
+            {
+                "source": name,
+                "start": start,
+                "end": end,
+                "context_end": context_end,
+                "length": len(text),
+                "text": text[start:context_end],
+            }
         )
         messages = [{"role": "user", "content": instruction}]
         step = f"extract/{name}/{start}"

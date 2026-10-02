@@ -315,6 +315,19 @@ run, or migration from accepted state without version 2, refreshes all derived
 prose once because there is no accepted semantic revision for it yet. Runtime
 bookkeeping and authentication edits do not by themselves invalidate stage prose.
 
+A job key holds explicit revisions, not source code or wording. The instructions
+for extraction, review, verification and repair are registered under a tag
+(`extract@1`, `review@1`, ...), and the key replaces each with its tag at every
+JSON escape depth, so a review that quotes the task it checks keys the same way.
+A wording fix that keeps the tag keeps cached work. Bump the tag, or
+`TOOLS_REVISION` or `CODEX_REVISION` in `agentic/runtime.py` for a tool profile or
+the Codex adapter, when a change should re-key what it shaped. Keys used to hash
+`Runtime._query` and the whole Codex adapter, so an edit to either re-bought
+every planning batch or every Codex job, extraction included. Work cached under
+that older formula is still found: a versioned key with no row falls back to the
+legacy key, and a hit is recorded in the ledger's `aliases` table, so one replay
+carries the cache over with no duplicated rows or charges.
+
 Scientific compiler/model changes and manual edits to core pages conservatively
 revisit staged sources. Deleted sources require a separate scientific retraction;
 they are never silently accepted. Evidence read limits are 24,000 characters per
