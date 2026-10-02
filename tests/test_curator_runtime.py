@@ -902,10 +902,15 @@ def test_a_refusal_stated_in_prose_is_answered_on_the_fallback_model(tmp_path, m
     ).fetchall()
     assert rows[0][:2] == ("claude-opus-5-5", "rejected") and R.refusal_target(rows[0][2])
     assert rows[1][:2] == ("claude-opus-5", "done")
+    assert agent.ledger.refused_model("batch/plan/7") == "claude-opus-5"
     # The memory holds: a sibling job in the scope goes straight to the fallback.
     calls.clear()
     assert agent.ask([{"role": "user", "content": "plan"}], "batch/plan/7") == '{"pages": []}'
     assert calls == []
+    assert agent.ask([{"role": "user", "content": "again"}], "batch/plan/7/repair") == (
+        '{"pages": []}'
+    )
+    assert calls == ["claude-opus-5"]
     # A long page that merely mentions a safety check is not a refusal.
     assert not R.looks_refused("# Page\n\n" + "A safety check was run on the samples. " * 200)
     assert not R.looks_refused('{"accepted": false, "issues": ["safety check stopped nothing"]}')

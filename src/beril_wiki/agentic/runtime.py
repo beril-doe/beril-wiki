@@ -795,7 +795,10 @@ class Runtime:
         answers = REFUSAL_FALLBACK.get(model)
         if not answers or not looks_refused(output):
             return output
-        self.ledger.reject(key, answers, f"refused in the reply on {model}; answered on {answers}")
+        # The memory lookup keys on this prefix; see Ledger.refused_model.
+        self.ledger.reject(
+            key, answers, f"refused on {model} [stated in the reply]; answered on {answers}"
+        )
         print(f"agentic: {step} refused in text on {model}; re-issuing on {answers}", flush=True)
         return self.ask(messages, step, model=answers)
 
