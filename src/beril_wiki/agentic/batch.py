@@ -575,12 +575,12 @@ def plan_jobs(
 _GAP_LOCK = threading.Lock()
 
 
-def record_extraction_gap(store: Path, step: str, objections: list[str]) -> None:
-    """Evidence a chunk never captured; this is where a human finds what is missing."""
-    path = store / "extraction-gaps.json"
+def record_gap(store: Path, name: str, step: str, value: object) -> None:
+    """Evidence a job could not place; this is where a human finds what is missing."""
+    path = store / name
     with _GAP_LOCK:
         data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
-        data[step] = objections
+        data[step] = value
         atomic_json(path, data)
 
 
@@ -656,7 +656,7 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
             # many. A page failure is recorded the same way and the stage continues.
             if acceptor.evidence is None or not acceptor.evidence.findings:
                 raise
-            record_extraction_gap(agent.store, step, acceptor.pending or [str(exc)])
+            record_gap(agent.store, "extraction-gaps.json", step, acceptor.pending or [str(exc)])
             return acceptor.evidence
 
     # Chunks are independent, so they fan out; each worker needs its own Runtime because
@@ -933,9 +933,32 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
         # 711KB in place of 19KB, and 141MB across the plan. A new entity has no
         # assignment and is written from its sources' findings.
         slices = passes(assigned, int(agent.config.get("pass_records", PASS_RECORDS)))
+        dropped = 0
         try:
             for index, part in enumerate(slices):
-                write_pass(worker, path, job, part, part or relevant, (index, len(slices)))
+                before = len(worker.jobs)
+                try:
+                    write_pass(worker, path, job, part, part or relevant, (index, len(slices)))
+                except (CandidateError, Unconverged) as exc:
+                    # A pass that will not converge is dropped, not the page: at nine in ten
+                    # passes accepted, a seven-pass page failing whole would publish under
+                    # half the time. The page keeps every accepted pass; the dropped
+                    # records are listed, as a salvaged derived page's paragraphs are.
+                    dropped += 1
+                    if len(slices) == 1 or dropped == len(slices):
+                        raise
+                    step = f"write/{path}/pass/{index}"
+                    record_gap(
+                        agent.store,
+                        "salvaged.json",
+                        step,
+                        {
+                            "removed": [f["id"] for f in part],
+                            "issues": [{"category": "write", "note": str(exc)[:1000]}],
+                            "jobs": worker.jobs[before:],
+                        },
+                    )
+                    print(f"agentic: dropped {step}: {str(exc)[:200]}", flush=True)
         except BaseException:
             # A pass that fails leaves the page as it was, not half integrated.
             if original is None:

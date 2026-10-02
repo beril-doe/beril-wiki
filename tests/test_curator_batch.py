@@ -171,13 +171,24 @@ def test_heavy_page_is_written_in_passes_each_with_its_own_records(tmp_path, mon
     assert [p["pass"] for p in payloads] == ["1 of 2", "2 of 2"]
 
 
-def test_a_failed_pass_leaves_the_page_as_it_was(tmp_path, monkeypatch):
+def test_a_pass_that_will_not_converge_is_dropped_and_the_page_kept(tmp_path, monkeypatch):
     def rewrite(step, body):
         if "/pass/0" in step:
             return body.replace("[src: a]", "[src: a]\n\nYield held. [src: a]", 1)
         return LOSS  # every attempt at the second pass drops the earlier figure
 
     agent, calls = heavy_batch(tmp_path, monkeypatch, rewrite)
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    assert "Yield held. [src: a]" in (tmp_path / "wiki/concepts/yield.md").read_text()
+    assert not (tmp_path / "jobs/failures.json").exists()
+    salvaged = json.loads((tmp_path / "jobs/salvaged.json").read_text())
+    entry = salvaged["write/concepts/yield.md/pass/1"]
+    assert entry["removed"] == ["a:0:1"] and "jobs" in entry
+    assert "unchanged citations or quantities" in entry["issues"][0]["note"]
+
+
+def test_a_page_whose_every_pass_fails_is_left_as_it_was(tmp_path, monkeypatch):
+    agent, calls = heavy_batch(tmp_path, monkeypatch, lambda step, body: LOSS)
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
     assert (tmp_path / "wiki/concepts/yield.md").read_text() == OLD
     failures = json.loads((tmp_path / "jobs/failures.json").read_text())
