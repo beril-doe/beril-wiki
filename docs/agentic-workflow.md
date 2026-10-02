@@ -41,7 +41,9 @@ changes an id or a digest; the ledger's
 serialized admission holds headroom for every job in flight, and per-page state
 files are written atomically so a killed worker cannot leave a truncated
 `state/*.json`. `--strict-pages` turns a page that fails its patch rounds into a
-run stop instead of a recorded failure.
+run stop instead of a recorded failure. `--pass-records` (default 60, 0 for one
+write) bounds the records a page writer integrates at once, and `--write-effort`
+sets the page writers' reasoning effort (default: the model's own).
 Each stage subprocess is bounded by `--stage-timeout` (default 14,400 seconds,
 four hours). A job killed by either clock is charged automatically from its
 saved transcript (the terminal result if one arrived, otherwise the summed
@@ -138,7 +140,7 @@ every stage that depends on it stale as well:
 
 | Stage | Work and completion condition |
 |---|---|
-| Integrate | Runs first when sources changed: extract changed reports, plan complete evidence coverage, group edits by destination, validate and review pages; resolve entities and refresh deterministic metadata. A writer receives the evidence assigned to its page with quotes packed, not every finding its sources yielded; an existing entity with nothing assigned and no revised source is skipped. It accounts for each assigned record by the index of the paragraph carrying it, not by repeating the paragraph, since a page assigned three hundred records could not otherwise finish its answer; the validator resolves the index against every paragraph of the body, including Open Directions, and the reviewer sees the resolved text. The writer has eight turns and is told so: read what a retained claim needs, validate once, answer. |
+| Integrate | Runs first when sources changed: extract changed reports, plan complete evidence coverage, group edits by destination, validate and review pages; resolve entities and refresh deterministic metadata. A writer receives the evidence assigned to its page with quotes packed, not every finding its sources yielded; an existing entity with nothing assigned and no revised source is skipped. It accounts for each assigned record by the index of the paragraph carrying it, not by repeating the paragraph, since a page assigned three hundred records could not otherwise finish its answer; the validator resolves the index against every paragraph of the body, including Open Directions, and the reviewer sees the resolved text. The writer has no tools and answers in one turn: the page, absorbed pages and quotes are packed, and the prompt states the host gates it will meet. A page assigned more than `--pass-records` records is written in near-equal passes in evidence-id order, each a full write, review and repair of its slice against the page the previous pass left, so no single job integrates hundreds of records; the retention gate keeps every earlier pass's citations and figures, and a pass that fails restores the page as it was. |
 
 Before writing hundreds of planned pages, measure a few: `--write-only
 concepts/a.md,summaries/b.md` writes only those pages and then stops before any
@@ -197,6 +199,10 @@ three times the write prompt, and the evidence map alone repeated 53 paragraphs
 311 times.
 
 Page writes fan out across `--workers` threads, each with its own runtime. A page
+write gets three attempts: the draft and at most two repairs, of which only one
+answers the review. The reviewer states its objections once and then verifies
+that one repair; objections still open end the page rather than buying more
+rounds, which the heaviest page spent USD 25 on without converging. A page
 that fails its correction rounds, or whose own job times out or is cut off, is
 recorded in `.agentic/failures.json` and the batch goes on; its sources are not
 recorded as integrated, so the next run schedules them again. `--strict-pages`
@@ -206,10 +212,12 @@ scientific review assesses support and lost
 meaning. Review is useful evidence, not a guarantee of scientific correctness.
 
 Only the integration path uses tools. Extraction and its review get bounded
-`read_evidence`; planner and page-writer jobs also get literal `search_evidence`,
-and page writers a host-bound `validate_candidate`. Tool validation is advisory:
-the final candidate must pass the same host checks and independent scientific
-review before it is written. Extraction and retrieval both decode UTF-8 with
+`read_evidence`, as do the reviewer's checks of a page repair; planner jobs also
+get literal `search_evidence`. Page writers have no tools: a validation tool made
+the writer emit its whole candidate twice, once to check and once to answer, and
+the host checks the answer anyway, sending any defect to the repair. The final
+candidate must pass the host checks and independent scientific review before it
+is written. Extraction and retrieval both decode UTF-8 with
 replacement for invalid bytes; offsets refer to that decoded text. Original
 report bytes remain unchanged. No shell, general filesystem writes, skill
 discovery or unrelated tools are exposed. Source text is evidence, never an

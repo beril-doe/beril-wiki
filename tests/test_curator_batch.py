@@ -112,13 +112,11 @@ def system_payload(messages):
 
 
 def test_repeated_quantity_loss_is_recorded_and_the_batch_goes_on(tmp_path, monkeypatch):
-    agent, calls, reviews, _ = setup_batch(
-        tmp_path, monkeypatch, bad_writes=batch.CORRECTION_ATTEMPTS
-    )
+    agent, calls, reviews, _ = setup_batch(tmp_path, monkeypatch, bad_writes=batch.WRITE_ATTEMPTS)
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
     # The budget is finite: a writer that keeps dropping a quantity is not published,
     # the page is recorded as failed, and its source is not recorded as integrated.
-    assert sum(s.startswith("write/concepts/") for s, _ in calls) == batch.CORRECTION_ATTEMPTS
+    assert sum(s.startswith("write/concepts/") for s, _ in calls) == batch.WRITE_ATTEMPTS
     assert (tmp_path / "wiki/concepts/yield.md").read_text() == OLD
     assert not any(s == "write/concepts/yield.md" for s, _ in reviews)
     failures = json.loads((tmp_path / "jobs/failures.json").read_text())
@@ -129,8 +127,86 @@ def test_repeated_quantity_loss_is_recorded_and_the_batch_goes_on(tmp_path, monk
     assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
 
 
+def test_passes_are_near_equal_slices_in_evidence_order():
+    records = [{"id": f"a:0:{i}"} for i in (3, 0, 6, 1, 4, 2, 5)]
+    slices = batch.passes(records, 3)
+    assert [len(s) for s in slices] == [2, 2, 3]
+    assert [f["id"] for s in slices for f in s] == sorted(f["id"] for f in records)
+    assert batch.passes(records, 0) == [records] and batch.passes(records, 7) == [records]
+
+
+def heavy_batch(tmp_path, monkeypatch, rewrite):
+    """Two records to the concept and a cap of one, so the page takes two passes."""
+    agent, calls, reviews, job = setup_batch(tmp_path, monkeypatch)
+    monkeypatch.setitem(agent.config, "pass_records", 1)
+    reply = agent.ask
+
+    def two_records(messages, step):
+        data = json.loads(reply(messages, step))
+        if step.startswith("extract/"):
+            data["findings"] *= 2
+        elif step.startswith("batch/plan/"):
+            data["coverage"] = [
+                {"evidence": f"a:0:{i}", "concepts": [job.path], "summary_only": ""}
+                for i in range(2)
+            ]
+        elif step.startswith("write/concepts/"):
+            data["content"] = rewrite(step, data["content"])
+        return json.dumps(data)
+
+    monkeypatch.setattr(agent, "ask", two_records)
+    return agent, calls
+
+
+def test_heavy_page_is_written_in_passes_each_with_its_own_records(tmp_path, monkeypatch):
+    agent, calls = heavy_batch(tmp_path, monkeypatch, lambda step, body: body)
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    writes = [(s, m) for s, m in calls if s.startswith("write/concepts/")]
+    assert [s for s, _ in writes] == [
+        "write/concepts/yield.md/pass/0",
+        "write/concepts/yield.md/pass/1",
+    ]
+    payloads = [json.loads(m[0]["content"].split("\n")[-1]) for _, m in writes]
+    assert [[c["evidence"] for c in p["coverage"]] for p in payloads] == [["a:0:0"], ["a:0:1"]]
+    assert [p["pass"] for p in payloads] == ["1 of 2", "2 of 2"]
+
+
+def test_a_failed_pass_leaves_the_page_as_it_was(tmp_path, monkeypatch):
+    def rewrite(step, body):
+        if "/pass/0" in step:
+            return body.replace("[src: a]", "[src: a]\n\nYield held. [src: a]", 1)
+        return LOSS  # every attempt at the second pass drops the earlier figure
+
+    agent, calls = heavy_batch(tmp_path, monkeypatch, rewrite)
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    assert (tmp_path / "wiki/concepts/yield.md").read_text() == OLD
+    failures = json.loads((tmp_path / "jobs/failures.json").read_text())
+    assert list(failures) == ["concepts/yield.md"]
+
+
+def test_a_repair_the_reviewer_still_rejects_ends_the_page(tmp_path, monkeypatch):
+    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
+
+    def review(task, raw, step):
+        if step.startswith("write/concepts/"):
+            raise CandidateError("rejected", ["denominator is wrong"])
+
+    monkeypatch.setattr(agent, "review", review)
+    monkeypatch.setattr(agent, "verify", lambda task, raw, issues, step: issues)
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    # One repair answers the review; a verify that leaves it open fails the page
+    # instead of buying the third attempt.
+    assert [s for s, _ in calls if s.startswith("write/concepts/")] == [
+        "write/concepts/yield.md",
+        "write/concepts/yield.md/repair",
+    ]
+    failures = json.loads((tmp_path / "jobs/failures.json").read_text())
+    assert "denominator is wrong" in failures["concepts/yield.md"]["issues"][0]["note"]
+    assert (tmp_path / "wiki/concepts/yield.md").read_text() == OLD
+
+
 def test_strict_pages_stops_on_the_first_failed_page(tmp_path, monkeypatch):
-    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch, bad_writes=batch.CORRECTION_ATTEMPTS)
+    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch, bad_writes=batch.WRITE_ATTEMPTS)
     monkeypatch.setitem(agent.config, "strict_pages", True)
     with pytest.raises(WorkflowError, match="unchanged citations or quantities"):
         batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
@@ -186,10 +262,8 @@ def test_extraction_fans_out_with_a_runtime_per_worker(tmp_path, monkeypatch):
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
     # A ledger connection may only be used by the thread that opened it, so each chunk
     # builds its own Runtime inside its worker, from the agent's config rather than the
-    # environment, which is not set in this process. Page writes fan out the same way,
-    # each worker carrying the writer's turn budget.
-    assert built[0][0] == agent.config
-    assert all(config == agent.config | {"max_turns": batch.WRITE_TURNS} for config, _ in built[1:])
+    # environment, which is not set in this process. Page writes fan out the same way.
+    assert all(config == agent.config for config, _ in built)
     assert built[1:] and not any(thread is threading.main_thread() for _, thread in built)
     assert [s for s, _ in calls if s.startswith("extract/")] == ["extract/a__REPORT.md/0"]
     assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
@@ -614,40 +688,6 @@ def test_scientific_rejection_uses_same_single_correction(tmp_path, monkeypatch)
     assert sum(s == "write/concepts/yield.md" for s, _ in reviews) == 2
 
 
-def test_tool_success_does_not_skip_final_validation(tmp_path, monkeypatch):
-    agent, calls, reviews, _ = setup_batch(
-        tmp_path, monkeypatch, bad_writes=batch.CORRECTION_ATTEMPTS
-    )
-    generate = agent.generate
-
-    def generate_with_tool(messages, step, accept, *, validator=None, context=None, attempts=2):
-        if step == "write/concepts/yield.md":
-            before = list(reviews)
-            assert validator is not None and context is not None
-            candidate = {
-                "base_hash": digest(OLD),
-                "description": "Yield",
-                "edits": [],
-                "no_change_reason": "Evidence retained",
-                "accounted_evidence": {"a:0:0": 0},
-            }
-            assert validator(json.dumps(candidate)) == OLD
-            assert reviews == before
-            assert context["job"]["path"] == "concepts/yield.md"
-            assert context["revised"] == []
-            assert context["baselines"]["concepts/yield.md"] == digest(OLD)
-        return generate(
-            messages, step, accept, validator=validator, context=context, attempts=attempts
-        )
-
-    monkeypatch.setattr(agent, "generate", generate_with_tool)
-    monkeypatch.setitem(agent.config, "strict_pages", True)
-    with pytest.raises(CandidateError, match="unchanged citations or quantities"):
-        batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
-    assert sum(s.startswith("write/concepts/") for s, _ in calls) == batch.CORRECTION_ATTEMPTS
-    assert (tmp_path / "wiki/concepts/yield.md").read_text() == OLD
-
-
 def test_source_read_failure_is_not_repaired(tmp_path, monkeypatch):
     agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
     generate = agent.generate
@@ -856,31 +896,18 @@ def test_concept_assignments_survive_writing_validation_and_review(tmp_path, mon
 
     generate = agent.generate
 
-    def check_bound_tool(messages, step, accept, *, validator=None, context=None, attempts=2):
+    def check_assignment(messages, step, accept, *, validator=None, context=None, attempts=2):
         if step == "write/concepts/limits.md":
-            assert context is not None and validator is not None
-            assert {f["id"] for f in context["assigned"]} == {"a:0:1", "a:0:2"}
             payload = json.loads(messages[0]["content"].split("\n")[-1])
+            assert {c["evidence"] for c in payload["coverage"]} == {"a:0:1", "a:0:2"}
             assert payload["job"]["sources"] == ["a", "b"]
-            # No accounted_evidence at all: the set mismatch, not a mapping defect.
-            with pytest.raises(CandidateError, match="accounted for exactly"):
-                validator(
-                    json.dumps(
-                        {
-                            "base_hash": digest(""),
-                            "description": "Limits",
-                            "content": "# Limits\n\nConditions were uncontrolled. [src: a]\n\n"
-                            "## Open Directions\n\nRepeat measurements.",
-                        }
-                    )
-                )
         return generate(
             messages, step, accept, validator=validator, context=context, attempts=attempts
         )
 
     monkeypatch.setattr(agent, "ask", replies)
     monkeypatch.setattr(agent, "review", review)
-    monkeypatch.setattr(agent, "generate", check_bound_tool)
+    monkeypatch.setattr(agent, "generate", check_assignment)
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
     assert sum(step.startswith("write/concepts/limits.md") for step, _ in calls) == 2
     assert inspected.count("write/concepts/limits.md") == (2 if failure == "misrepresented" else 1)

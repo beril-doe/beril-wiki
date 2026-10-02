@@ -105,6 +105,18 @@ def main() -> int:
         "source is recorded as integrated",
     )
     execute.add_argument(
+        "--pass-records",
+        type=int,
+        default=60,
+        help="write a page assigned more records than this in passes of at most this many "
+        "(0: one write)",
+    )
+    execute.add_argument(
+        "--write-effort",
+        choices=("low", "medium", "high", "xhigh", "max"),
+        help="reasoning effort for page writers (default: the model's own)",
+    )
+    execute.add_argument(
         "--strict-pages",
         action="store_true",
         help="stop the run when a page fails its patch rounds instead of recording it",
@@ -207,6 +219,8 @@ def main() -> int:
             ):
                 if getattr(args, field) <= 0:
                     raise WorkflowError(f"{field} must be positive")
+            if args.pass_records < 0:
+                raise WorkflowError("pass_records must not be negative")
             if args.stage_max_tokens < 0:
                 raise WorkflowError("stage_max_tokens must not be negative")
             config = {
@@ -222,6 +236,8 @@ def main() -> int:
                     "stage_max_tokens",
                     "workers",
                     "write_only",
+                    "pass_records",
+                    "write_effort",
                     "strict_pages",
                     "cli",
                 )

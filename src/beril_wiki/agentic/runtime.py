@@ -17,7 +17,7 @@ import textwrap
 from collections.abc import Callable
 from pathlib import Path
 from types import SimpleNamespace
-from typing import Any, TypeGuard, TypeVar
+from typing import Any, Literal, TypeGuard, TypeVar
 
 from claude_agent_sdk import (
     AssistantMessage,
@@ -73,7 +73,9 @@ def refusal_scope(step: str) -> str:
         return "/".join(step.split("/")[:2])
     scope = step
     while True:
-        trimmed = re.sub(r"/(patch/\d+|repair|science-review|review|verify|again)$", "", scope)
+        trimmed = re.sub(
+            r"/(patch/\d+|pass/\d+|repair|science-review|review|verify|again)$", "", scope
+        )
         if trimmed == scope:
             return scope
         scope = trimmed
@@ -128,7 +130,7 @@ def model_policy(config: dict) -> dict[str, str]:
     return {role: overrides.get(role, default).strip() for role in MODEL_ROLES}
 
 
-def model_for(config: dict, step: str) -> str:
+def role_for(step: str) -> str:
     """Route by job role; a repair, retry or patch keeps its role. Review and verify
     are the reviewer's own jobs and route to it."""
     step = re.sub(r"/patch/\d+$", "", step.removesuffix("/again").removesuffix("/repair"))
@@ -144,7 +146,11 @@ def model_for(config: dict, step: str) -> str:
         role = "figures"
     else:
         role = "writing"
-    return model_policy(config)[role]
+    return role
+
+
+def model_for(config: dict, step: str) -> str:
+    return model_policy(config)[role_for(step)]
 
 
 def backend_for(model: str) -> str:
@@ -643,7 +649,11 @@ def tool_profile(step: str) -> str:
     """Integration jobs read and search evidence; derived prose gets its evidence packed."""
     if step.endswith("/science-review") or step.startswith("extract/"):
         return "read"
-    if step.startswith(("curator/", "batch/plan", "write/")):
+    # A page writer gets everything packed and answers in one turn; checking its
+    # repair may still read originals, as the review it continues did.
+    if step.startswith("write/") and step.endswith("/verify"):
+        return "read"
+    if step.startswith(("curator/", "batch/plan")):
         return "extended"
     return "none"
 
@@ -824,6 +834,9 @@ class Runtime:
             # Claude one; Claude keys stay byte-identical.
             legacy = digest([legacy, codex.REVISION])
             revision = digest([revision, CODEX_REVISION, codex.EFFORT])
+        effort = self.effort(step) if backend == "claude" else None
+        if effort:
+            revision = digest([revision, effort])
         tool_revision = (revision, legacy)
         key, cached, answers = self.resolve(messages, step, model, tool_revision, inputs)
         if cached is not None:
@@ -876,6 +889,10 @@ class Runtime:
         except BaseException as exc:
             # A transport crash may have consumed tokens: leave pending charge intact.
             raise WorkflowError(f"{step} failed; inspect job {key}: {exc}") from exc
+
+    def effort(self, step: str) -> Literal["low", "medium", "high", "xhigh", "max"] | None:
+        """The writer's reasoning effort, when a run sets one; the CLI default otherwise."""
+        return self.config.get("write_effort") if role_for(step) == "writing" else None
 
     def _screened(self, messages: list[dict], step: str, model: str, key: str, output: str) -> str:
         """A fresh reply that is a refusal in prose is recorded as one and answered on
@@ -996,6 +1013,7 @@ class Runtime:
             permission_mode="dontAsk",
             max_turns=1 if profile == "none" else self.config.get("max_turns", 6),
             fallback_model=None,
+            effort=self.effort(self._step),
             extra_args={"no-session-persistence": None, "disable-slash-commands": None},
         )
         transcript = self.store / "transcripts" / f"{key}.jsonl"

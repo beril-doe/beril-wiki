@@ -119,7 +119,7 @@ def agent_for(tmp_path, **extra):
         | extra
     )
     agent = R.Runtime(config)
-    agent._step = "write/concepts/x.md"
+    agent._step = "curator/topics"
     return agent
 
 

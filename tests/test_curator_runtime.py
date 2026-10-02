@@ -361,7 +361,7 @@ def test_legacy_retry_gets_review_without_another_repair(tmp_path, monkeypatch, 
     assert calls == [step, step + "/science-review"]
 
 
-def test_sdk_validation_tool_is_bound_only_to_writer(tmp_path, monkeypatch):
+def test_sdk_validation_tool_is_bound_only_to_a_bound_job(tmp_path, monkeypatch):
     from claude_agent_sdk import ResultMessage, SystemMessage
 
     agent = runtime(tmp_path)
@@ -388,7 +388,7 @@ def test_sdk_validation_tool_is_bound_only_to_writer(tmp_path, monkeypatch):
             {"path": "wiki/\0.md", "start": 0, "end": 1}
         )
         assert invalid["is_error"]
-        if agent._step.startswith("write/"):
+        if agent._step.startswith("curator/"):
             found = await exposed["search_evidence"].handler(
                 {"query": "value", "scope": "staging", "offset": 0}
             )
@@ -430,7 +430,11 @@ def test_sdk_validation_tool_is_bound_only_to_writer(tmp_path, monkeypatch):
     monkeypatch.setattr(R, "query", query)
     assert (
         agent.generate(
-            [], "write/test", lambda raw: raw, validator=validate, context={"base": "authoritative"}
+            [],
+            "curator/test",
+            lambda raw: raw,
+            validator=validate,
+            context={"base": "authoritative"},
         )
         == "good"
     )
@@ -918,6 +922,34 @@ def test_keys_hold_prompt_tags_and_find_work_cached_under_legacy_keys(tmp_path, 
     monkeypatch.setattr(R, "SYSTEM", "changed system")  # the legacy key moves; the alias holds
     assert agent.ask(task("Legacy.\n"), "conflicts/c") == "cached"
     assert len(calls) == 3 and agent.ledger.totals()["tokens"] == 16
+
+
+def test_writer_effort_rekeys_writers_only_and_page_writes_use_no_tools(tmp_path, monkeypatch):
+    agent = runtime(tmp_path)
+    monkeypatch.setattr(R, "check_auth", lambda cli: None)
+    calls = []
+
+    async def answer(payload, key, model):
+        calls.append((agent._step, agent.effort(agent._step)))
+        agent.ledger.finish(key, "ok", {"input_tokens": 1, "output_tokens": 1})
+        return "ok"
+
+    monkeypatch.setattr(agent, "_query", answer)
+    task = [{"role": "user", "content": "x"}]
+    for step in ("write/concepts/a.md", "write/concepts/a.md/science-review"):
+        agent.ask(task, step)
+    monkeypatch.setitem(agent.config, "write_effort", "medium")
+    for step in ("write/concepts/a.md", "write/concepts/a.md/science-review"):
+        agent.ask(task, step)
+    assert calls == [
+        ("write/concepts/a.md", None),
+        ("write/concepts/a.md/science-review", None),
+        ("write/concepts/a.md", "medium"),
+    ]
+    assert R.tool_profile("write/concepts/a.md") == "none"
+    assert R.tool_profile("write/concepts/a.md/pass/1/repair") == "none"
+    assert R.tool_profile("write/concepts/a.md/verify") == "read"
+    assert R.refusal_scope("write/concepts/a.md/pass/2/repair") == "write/concepts/a.md"
 
 
 def test_review_embeds_json_candidates_as_objects_and_explains_encoding(tmp_path, monkeypatch):
