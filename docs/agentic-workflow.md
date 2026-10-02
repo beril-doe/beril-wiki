@@ -140,7 +140,7 @@ every stage that depends on it stale as well:
 
 | Stage | Work and completion condition |
 |---|---|
-| Integrate | Runs first when sources changed: extract changed reports, plan complete evidence coverage, group edits by destination, validate and review pages; resolve entities and refresh deterministic metadata. A writer receives the evidence assigned to its page with quotes packed, not every finding its sources yielded; an existing entity with nothing assigned and no revised source is skipped. It accounts for each assigned record by the index of the paragraph carrying it, not by repeating the paragraph, since a page assigned three hundred records could not otherwise finish its answer; the validator resolves the index against every paragraph of the body, including Open Directions, and the reviewer sees the resolved text. The writer drafts with no tools, in one turn: the page, absorbed pages and quotes are packed, and the prompt states the host gates it will meet. A repair may read and search the sources, as the review it answers did; drafted and repaired without them, pages scored about a point lower on fidelity in a blind judge. A page assigned more than `--pass-records` records is written in near-equal passes in evidence-id order, each a full write, review and repair of its slice against the page the previous pass left, so no single job integrates hundreds of records; the retention gate keeps every earlier pass's citations and figures. A pass that will not converge is dropped rather than the page, which keeps every accepted pass; its records, objections and job keys go to `.agentic/salvaged.json`, as a salvaged derived page's paragraphs do. At nine passes in ten accepted in the pilot, a seven-pass page failing whole would publish under half the time. Only a page whose every pass fails keeps its previous version. |
+| Integrate | Runs first when sources changed: extract changed reports, route every evidence record to concept pages, group edits by destination, validate and review pages; resolve entities and refresh deterministic metadata. A writer receives the evidence assigned to its page with quotes packed, not every finding its sources yielded; an existing entity with nothing assigned and no revised source is skipped. It accounts for each assigned record by the index of the paragraph carrying it, not by repeating the paragraph, since a page assigned three hundred records could not otherwise finish its answer; the validator resolves the index against every paragraph of the body, including Open Directions, and the reviewer sees the resolved text. The writer drafts with no tools, in one turn: the page, absorbed pages and quotes are packed, and the prompt states the host gates it will meet. A repair may read and search the sources, as the review it answers did; drafted and repaired without them, pages scored about a point lower on fidelity in a blind judge. A page assigned more than `--pass-records` records is written in near-equal passes in evidence-id order, each a full write, review and repair of its slice against the page the previous pass left, so no single job integrates hundreds of records; the retention gate keeps every earlier pass's citations and figures. A pass that will not converge is dropped rather than the page, which keeps every accepted pass; its records, objections and job keys go to `.agentic/salvaged.json`, as a salvaged derived page's paragraphs do. At nine passes in ten accepted in the pilot, a seven-pass page failing whole would publish under half the time. Only a page whose every pass fails keeps its previous version. |
 
 Before writing hundreds of planned pages, measure a few: `--write-only
 concepts/a.md,summaries/b.md` writes only those pages and then stops before any
@@ -175,11 +175,25 @@ code.
 
 Changed reports are extracted in bounded overlapping ranges with exact quotes and
 offsets, including null results and caveats. Coverage spans the entire source.
-Planning batches cover every evidence record; the host combines edits to each
-page and passes each concept's assignments to its writer. Summaries receive
-all assignments from their own source. Candidates map every assigned ID to an
-exact paragraph citing that source; both tool and final validation check this
-mapping. The scientific reviewer checks that the mapped text preserves each
+Routing places every evidence record. Routing jobs (`plan/route/N`, 120 records
+each, one turn, no tools) run in parallel, each with the concept and entity
+dictionary as its cached system prefix. A lexical shortlist of concepts per
+record was measured and dropped: TF-IDF over the existing pages ranked the
+previous planner's concept first for 31% of records and within five for 59%. A job gives every
+record its concepts, a summary-only reason, or a `new_topic` naming a concept the
+dictionary lacks, and lists new entities with the records that describe them.
+The `new_topic` leftovers go to a few proposal jobs (`plan/propose/N`) in
+sequence, each told what the earlier ones proposed, which turn them into new
+concept pages or summary-only rows. An entity named by fewer than two records,
+or by records from a single project, gets no page, and an existing entity is only rechecked when its sources change.
+The router proposes no merges; concept identity decisions stay in
+`contract/concept-decisions.yaml`. The planner this replaced read the inventory
+of every page planned so far, so 103 batches ran one after another for 10 to 14
+hours. The host combines the routes into one plan, validates it as before and
+passes each concept's assignments to its writer. Summaries receive all
+assignments from their own source, and a new entity the records naming it.
+Candidates map every assigned ID to an exact paragraph citing that source; the
+host validates this mapping. The scientific reviewer checks that the mapped text preserves each
 claim, caveat and null result. Writers use base hashes and anchored patches or
 justified rewrites.
 Deterministic checks retain citations and quantities from unchanged sources,
@@ -188,9 +202,8 @@ including absorbed pages and paragraphs citing both revised and unchanged source
 The bulk of a job's context is sent as a system message so the CLI caches it as a
 prefix and the jobs that follow read it instead of writing it again at full price:
 a page's existing text, absorbed pages and assigned evidence are shared by its
-write, review, repair and verify jobs, and the planner's inventory of existing
-pages is shared by every planning batch, each of which sends only the entries the
-plan has changed. Review and verify nest only a task's user messages, and the
+write, review, repair and verify jobs, and the concept and entity dictionary is
+shared by every routing and proposal job. Review and verify nest only a task's user messages, and the
 reviewer receives each cited paragraph once, indexed by the evidence map. The
 tool-turn budget is stated by the runtime in the system prompt, not in any job's
 text, so changing `--max-turns` does not re-key cached work. Measured before this
@@ -213,8 +226,8 @@ scientific review assesses support and lost
 meaning. Review is useful evidence, not a guarantee of scientific correctness.
 
 Only the integration path uses tools. Extraction and its review get bounded
-`read_evidence`, as do the reviewer's checks of a page repair; planner jobs also
-get literal `search_evidence`, as does a page repair. Page drafts have no tools: a
+`read_evidence`, as do the reviewer's checks of a page repair; the topic proposal
+and a page repair also get literal `search_evidence`; routing jobs have none. Page drafts have no tools: a
 validation tool made the writer emit its whole candidate twice, once to check and
 once to answer, and the host checks the answer anyway, sending any defect to the
 repair. The final

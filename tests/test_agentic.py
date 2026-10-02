@@ -232,7 +232,8 @@ def test_abstracts_require_evidence_and_requested_ids():
 def test_recorded_batch_groups_pages_and_preserves_failed_review(tmp_path, monkeypatch):
     import json
 
-    from beril_wiki.agentic.batch import changed_sources, compile_batch
+    from beril_wiki.agentic import batch
+    from beril_wiki.agentic.batch import Coverage, PageJob, Plan, changed_sources, compile_batch
     from beril_wiki.agentic.runtime import Runtime, digest
 
     for directory in ("staging", "wiki", "state", "contract", "jobs"):
@@ -269,29 +270,6 @@ def test_recorded_batch_groups_pages_and_preserves_failed_review(tmp_path, monke
                     "empty_reason": "",
                 }
             )
-        if step.startswith("batch/plan"):
-            return json.dumps(
-                {
-                    "pages": [
-                        {
-                            "path": "concepts/yield.md",
-                            "title": "Yield",
-                            "type": "Concept",
-                            "sources": [sid],
-                            "reason": "Integrate yield evidence",
-                        }
-                        for sid in ("a", "b")
-                    ],
-                    "coverage": [
-                        {
-                            "evidence": f"{sid}:0:0",
-                            "concepts": ["concepts/yield.md"],
-                            "summary_only": "",
-                        }
-                        for sid in ("a", "b")
-                    ],
-                }
-            )
         payload = json.loads(messages[0]["content"].split("\n")[-1])
         sources = payload["job"]["sources"]
         body = "# Yield\n\nThe observed yield was 42%. [src: " + ", ".join(sources) + "]\n\n"
@@ -312,6 +290,24 @@ def test_recorded_batch_groups_pages_and_preserves_failed_review(tmp_path, monke
         )
 
     monkeypatch.setattr(agent, "ask", recorded)
+    plan = Plan(
+        pages=[
+            PageJob(
+                path="concepts/yield.md",
+                title="Yield",
+                type="Concept",
+                sources=[sid],
+                reason="Integrate yield evidence",
+            )
+            for sid in ("a", "b")
+        ],
+        coverage=[
+            Coverage(evidence=f"{sid}:0:0", concepts=["concepts/yield.md"], summary_only="")
+            for sid in ("a", "b")
+        ],
+    )
+    # Routing has its own tests; this one is about grouping and failed reviews.
+    monkeypatch.setattr(batch, "route_plan", lambda root, agent, findings: plan)
     monkeypatch.setattr(agent, "review", lambda *args: None)
     compile_batch(tmp_path, agent, ["a__REPORT.md", "b__REPORT.md"])
     assert calls.count("write/concepts/yield.md") == 1
@@ -549,7 +545,8 @@ def test_actual_pipeline_with_recorded_replies(tmp_path, monkeypatch):
 def test_reprocessing_unchanged_sources_keeps_retention_guard(tmp_path, monkeypatch, merge):
     import json
 
-    from beril_wiki.agentic.batch import compile_batch
+    from beril_wiki.agentic import batch
+    from beril_wiki.agentic.batch import Coverage, PageJob, Plan, compile_batch
     from beril_wiki.agentic.runtime import Runtime, digest
 
     for folder in ("staging", "wiki/sources", "wiki/concepts", "state", "jobs", "contract"):
@@ -594,29 +591,6 @@ def test_reprocessing_unchanged_sources_keeps_retention_guard(tmp_path, monkeypa
                     "empty_reason": "",
                 }
             )
-        if step.startswith("batch/plan"):
-            return json.dumps(
-                {
-                    "pages": [
-                        {
-                            "path": "concepts/cells.md",
-                            "title": "Cells",
-                            "type": "Concept",
-                            "sources": ["a", "b"],
-                            "reason": "Reprocess",
-                            "merge_from": ["concepts/other.md"] if merge else [],
-                        }
-                    ],
-                    "coverage": [
-                        {
-                            "evidence": f"{sid}:0:0",
-                            "concepts": ["concepts/cells.md"],
-                            "summary_only": "",
-                        }
-                        for sid in texts
-                    ],
-                }
-            )
         return json.dumps(
             {
                 "base_hash": digest(path.read_text()),
@@ -628,6 +602,24 @@ def test_reprocessing_unchanged_sources_keeps_retention_guard(tmp_path, monkeypa
         )
 
     monkeypatch.setattr(agent, "ask", drop_old_number)
+    plan = Plan(
+        pages=[
+            PageJob(
+                path="concepts/cells.md",
+                title="Cells",
+                type="Concept",
+                sources=["a", "b"],
+                reason="Reprocess",
+                merge_from=["concepts/other.md"] if merge else [],
+            )
+        ],
+        coverage=[
+            Coverage(evidence=f"{sid}:0:0", concepts=["concepts/cells.md"], summary_only="")
+            for sid in texts
+        ],
+    )
+    # The router proposes no merges; a merge plan reaches the writer this way only.
+    monkeypatch.setattr(batch, "route_plan", lambda root, agent, findings: plan)
     monkeypatch.setattr(agent, "review", lambda *args: None)
     compile_batch(tmp_path, agent, ["a__REPORT.md", "b__REPORT.md"])
     # The guard holds: the page keeps its number, the failure is recorded, the run goes on.
@@ -733,15 +725,10 @@ def test_auth_failure_does_not_reserve_and_cached_output_survives_cli_update(tmp
     assert restarted.ask(messages, "test") == "saved"
 
 
-def test_planning_batches_and_overlapping_anchors():
-    from beril_wiki.agentic.batch import planning_batches, reconstruct
+def test_overlapping_anchors_are_rejected():
+    from beril_wiki.agentic.batch import reconstruct
     from beril_wiki.agentic.runtime import digest
 
-    findings = [{"id": str(i), "claim": "evidence", "quote": "q" * 1000} for i in range(10)]
-    batches = planning_batches(findings, 100)
-    assert len(batches) > 1
-    assert [f["id"] for batch in batches for f in batch] == [str(i) for i in range(10)]
-    assert all("quote" not in f for batch in batches for f in batch)
     with pytest.raises(WorkflowError, match="overlap"):
         reconstruct(
             "abcdef",

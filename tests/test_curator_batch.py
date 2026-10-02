@@ -14,6 +14,15 @@ OLD = "# Yield\n\nYield was 42%. [src: a]\n\n## Open Directions\n\nRepeat measur
 LOSS = OLD.replace("42%", "measured")
 
 
+def route(evidence, *concepts, summary_only="", new_topic=""):
+    return {
+        "evidence": evidence,
+        "concepts": list(concepts),
+        "summary_only": summary_only,
+        "new_topic": new_topic,
+    }
+
+
 def setup_batch(tmp_path, monkeypatch, *, bad_writes=0, bad_plan=False):
     for folder in ("staging", "wiki/sources", "wiki/concepts", "jobs", "contract"):
         (tmp_path / folder).mkdir(parents=True)
@@ -56,12 +65,12 @@ def setup_batch(tmp_path, monkeypatch, *, bad_writes=0, bad_plan=False):
                     "empty_reason": "",
                 }
             )
-        if step.startswith("batch/plan/"):
-            coverage = [{"evidence": "a:0:0", "concepts": [job.path], "summary_only": ""}]
+        if step.startswith("plan/route/"):
+            routes = [route("a:0:0", job.path)]
             return json.dumps(
                 {
-                    "pages": [job.model_dump()],
-                    "coverage": [] if bad_plan and not step.endswith("/repair") else coverage,
+                    "routes": [] if bad_plan and not step.endswith("/repair") else routes,
+                    "entities": [],
                 }
             )
         payload = json.loads(messages[0]["content"].split("\n")[-1])
@@ -145,11 +154,8 @@ def heavy_batch(tmp_path, monkeypatch, rewrite):
         data = json.loads(reply(messages, step))
         if step.startswith("extract/"):
             data["findings"] *= 2
-        elif step.startswith("batch/plan/"):
-            data["coverage"] = [
-                {"evidence": f"a:0:{i}", "concepts": [job.path], "summary_only": ""}
-                for i in range(2)
-            ]
+        elif step.startswith("plan/route/"):
+            data["routes"] = [route(f"a:0:{i}", job.path) for i in range(2)]
         elif step.startswith("write/concepts/"):
             data["content"] = rewrite(step, data["content"])
         return json.dumps(data)
@@ -346,11 +352,17 @@ def test_coverage_gate_names_what_is_missing_or_repeated(tmp_path):
 
 
 def test_path_fields_describe_their_form_in_the_schema():
-    schema = batch.Plan.model_json_schema()["$defs"]
-    # The prompt carries this schema, so a rule stated here reaches the planner before
-    # it writes rather than only in the gate that rejects it afterwards.
-    for model, field in (("PageJob", "path"), ("PageJob", "merge_from"), ("Coverage", "concepts")):
-        assert ".md" in schema[model]["properties"][field]["description"]
+    # The prompts carry these schemas, so a rule stated here reaches the router before
+    # it answers rather than only in the gate that rejects it afterwards.
+    for schema, model, field in (
+        (batch.Routing, "Route", "concepts"),
+        (batch.Routing, "EntityPage", "path"),
+        (batch.Proposal, "NewConcept", "path"),
+    ):
+        assert (
+            ".md" in schema.model_json_schema()["$defs"][model]["properties"][field]["description"]
+        )
+    assert json.dumps(batch.Routing.model_json_schema()) in batch.ROUTE_PROMPT
 
 
 def test_invalid_destination_states_the_shape_required():
@@ -395,12 +407,10 @@ def test_writer_receives_its_assignments_not_every_finding(tmp_path, monkeypatch
         data = json.loads(raw)
         if step.startswith("extract/"):
             data["findings"] *= 2
-        if step.startswith("batch/plan/"):
+        if step.startswith("plan/route/"):
             # The second finding belongs only in its summary, so the concept page is
             # assigned one of the source's two findings.
-            data["coverage"].append(
-                {"evidence": "a:0:1", "concepts": [], "summary_only": "Duplicate quote."}
-            )
+            data["routes"].append(route("a:0:1", summary_only="Duplicate quote."))
         return json.dumps(data)
 
     monkeypatch.setattr(agent, "ask", two_findings_one_assigned)
@@ -416,26 +426,25 @@ def test_existing_entity_with_nothing_assigned_is_left_alone(tmp_path, monkeypat
     (tmp_path / "wiki/entities/strain.md").write_text("# Strain\n\nGrows. [src: a]")
     recorded = agent.ask
 
-    def also_schedule_the_entity(messages, step):
+    def also_name_the_entity(messages, step):
         raw = recorded(messages, step)
         data = json.loads(raw)
-        if step.startswith("batch/plan/"):
-            data["pages"].append(
+        if step.startswith("plan/route/"):
+            data["entities"].append(
                 {
                     "path": "entities/strain.md",
                     "title": "Strain",
-                    "type": "Organism",
-                    "sources": ["a"],
-                    "reason": "Source marked changed",
-                    "merge_from": [],
+                    "type": "organism",
+                    "evidence": ["a:0:0"],
                 }
             )
         return json.dumps(data)
 
-    monkeypatch.setattr(agent, "ask", also_schedule_the_entity)
+    monkeypatch.setattr(agent, "ask", also_name_the_entity)
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
-    # Coverage never names an entity, and its source did not change, so there is
-    # nothing to integrate: no writer is spent on it and the page is untouched.
+    # It is scheduled because it cites the source, and a router naming it proposes
+    # nothing new; coverage never names an entity and its source did not change, so
+    # there is nothing to integrate: no writer is spent on it and the page is untouched.
     assert not any(s.startswith("write/entities/") for s, _ in calls)
     assert (tmp_path / "wiki/entities/strain.md").read_text() == "# Strain\n\nGrows. [src: a]"
 
@@ -453,31 +462,6 @@ def test_pilot_writes_named_pages_and_records_nothing(tmp_path, monkeypatch):
         not (tmp_path / "wiki/sources/a__REPORT.md").exists()
         or (tmp_path / "wiki/sources/a__REPORT.md").read_text() == "Yield was 42%."
     )
-
-
-def test_merged_pages_leave_the_planner_inventory():
-    listing = [
-        {"path": "concepts/keep.md"},
-        {"path": "concepts/absorbed.md"},
-        {"path": "entities/other.md"},
-    ]
-    page = batch.PageJob(
-        path="concepts/keep.md",
-        title="Keep",
-        type="Concept",
-        sources=["a"],
-        reason="Absorb the thin page",
-        merge_from=["concepts/absorbed.md"],
-    )
-    # A merged page is retired: it stays visible, marked, because a planner that
-    # cannot see it recreates it and collides with the merge that retired it.
-    after = batch.retire_merged(listing, [page])
-    assert [p["path"] for p in after] == [
-        "concepts/keep.md",
-        "concepts/absorbed.md",
-        "entities/other.md",
-    ]
-    assert [p.get("retired", False) for p in after] == [False, True, False]
 
 
 def test_evidence_is_assembled_in_task_order_not_completion_order(tmp_path):
@@ -606,11 +590,11 @@ def test_extraction_still_stops_when_no_evidence_validated(tmp_path, monkeypatch
 def test_invalid_plan_is_corrected_by_the_model_not_the_host(tmp_path, monkeypatch):
     agent, calls, _, _ = setup_batch(tmp_path, monkeypatch, bad_plan=True)
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
-    # The gate states the defect; the model answers again. A plan gets the same
-    # correction budget as extraction, so one miss cannot end a compilation.
-    assert [s for s, _ in calls if s.startswith("batch/plan/")] == [
-        "batch/plan/0",
-        "batch/plan/0/repair",
+    # The gate states the defect; the model answers again. A routing job gets the
+    # same correction budget as extraction, so one miss cannot end a compilation.
+    assert [s for s, _ in calls if s.startswith("plan/")] == [
+        "plan/route/0",
+        "plan/route/0/repair",
     ]
     assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
 
@@ -642,64 +626,115 @@ def test_validator_checks_authoritative_merge_inputs_and_description(tmp_path, m
     assert (tmp_path / "wiki/concepts/yield.md").read_text() == OLD
 
 
-@pytest.mark.parametrize("failure", ["malformed", "unknown", "retired", "merge", "summary-merge"])
-def test_invalid_plan_is_corrected_before_writing(tmp_path, monkeypatch, failure):
+@pytest.mark.parametrize(
+    "failure", ["malformed", "unknown", "empty", "repeated", "entity-type", "entity-records"]
+)
+def test_invalid_routing_is_corrected_before_writing(tmp_path, monkeypatch, failure):
     agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
     recorded = agent.ask
-    if failure == "retired":
-        (tmp_path / "contract/concept-decisions.yaml").write_text(
-            "renames:\n  - from: retired\n    to: yield\n"
-        )
 
     def invalid_first(messages, step):
         raw = recorded(messages, step)
-        if step != "batch/plan/0":
+        if step != "plan/route/0":
             return raw
         if failure == "malformed":
             return "not JSON"
-        plan = json.loads(raw)
+        data = json.loads(raw)
         if failure == "unknown":
-            plan["coverage"][0]["concepts"] = ["concepts/unknown.md"]
-        elif failure == "retired":
-            plan["pages"][0]["path"] = "concepts/retired.md"
-        elif failure == "summary-merge":
-            plan["pages"][0]["path"] = "summaries/a__REPORT.md"
-            plan["pages"][0]["merge_from"] = ["concepts/yield.md"]
+            data["routes"][0]["concepts"] = ["concepts/unknown.md"]
+        elif failure == "empty":
+            data["routes"][0]["concepts"] = []
+        elif failure == "repeated":
+            data["routes"] *= 2
         else:
-            plan["pages"][0]["merge_from"] = ["concepts/yield.md"]
-        return json.dumps(plan)
+            entity = {"path": "entities/strain.md", "title": "Strain", "type": "organism"}
+            if failure == "entity-type":
+                data["entities"] = [entity | {"type": "bacterium", "evidence": ["a:0:0"]}]
+            else:
+                data["entities"] = [entity | {"evidence": ["b:0:0"]}]
+        return json.dumps(data)
 
     monkeypatch.setattr(agent, "ask", invalid_first)
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
-    assert [s for s, _ in calls if s.startswith("batch/plan/")] == [
-        "batch/plan/0",
-        "batch/plan/0/repair",
+    assert [s for s, _ in calls if s.startswith("plan/")] == [
+        "plan/route/0",
+        "plan/route/0/repair",
     ]
     assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
 
 
-def test_multiple_planning_batches_group_destination_once(tmp_path, monkeypatch):
-    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
+def test_routing_batches_run_apart_and_a_destination_is_written_once(tmp_path, monkeypatch):
+    agent, calls, _, job = setup_batch(tmp_path, monkeypatch)
     recorded = agent.ask
-    original_batches = batch.planning_batches
 
     def two_findings(messages, step):
-        raw = recorded(messages, step)
-        data = json.loads(raw)
+        data = json.loads(recorded(messages, step))
         if step.startswith("extract/"):
             data["findings"] *= 2
-        if step.startswith("batch/plan/"):
-            data["coverage"][0]["evidence"] = "a:0:" + step.rsplit("/", 1)[1]
+        if step.startswith("plan/route/"):
+            data["routes"] = [route("a:0:" + step.rsplit("/", 1)[1], job.path)]
         return json.dumps(data)
 
     monkeypatch.setattr(agent, "ask", two_findings)
-    monkeypatch.setattr(batch, "planning_batches", lambda items: original_batches(items, 160))
+    monkeypatch.setattr(batch, "ROUTE_RECORDS", 1)
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
-    assert [s for s, _ in calls if s.startswith("batch/plan/")] == ["batch/plan/0", "batch/plan/1"]
+    assert [s for s, _ in calls if s.startswith("plan/")] == ["plan/route/0", "plan/route/1"]
     assert sum(s.startswith("write/concepts/") for s, _ in calls) == 1
     saved = json.loads((agent.store / "last-plan.json").read_text())
-    assert len(saved["coverage"]) == 2
-    assert saved["pages"][0]["reason"] == "Recheck yield; Recheck yield"
+    assert [c["concepts"] for c in saved["coverage"]] == [[job.path], [job.path]]
+
+
+def test_leftovers_become_new_concepts_and_entities_their_own_pages(tmp_path, monkeypatch):
+    agent, calls, _, job = setup_batch(tmp_path, monkeypatch)
+    recorded = agent.ask
+    entity = {"path": "entities/strain.md", "title": "Strain", "type": "organism"}
+
+    def leftovers(messages, step):
+        if step.startswith("plan/propose/"):
+            records = json.loads(messages[0]["content"].split("\n")[-1])["records"]
+            assert [(r["id"], r["topic"]) for r in records] == [("a:0:1", "yield stability")]
+            return json.dumps(
+                {
+                    "concepts": [
+                        {
+                            "path": "concepts/yield-stability.md",
+                            "title": "Yield stability",
+                            "reason": "Yield held across repeats",
+                            "evidence": ["a:0:1"],
+                        }
+                    ],
+                    "unplaced": [{"evidence": "a:0:2", "summary_only": "Setup detail."}]
+                    if len(records) > 1
+                    else [],
+                }
+            )
+        data = json.loads(recorded(messages, step))
+        if step.startswith("extract/"):
+            data["findings"] *= 3
+        if step.startswith("plan/route/"):
+            data["routes"] = [
+                route("a:0:0", job.path),
+                route("a:0:1", new_topic="yield stability"),
+                route("a:0:2", summary_only="Setup detail."),
+            ]
+            # Two records about the strain earn it a page; a name met once does not.
+            data["entities"] = [
+                entity | {"evidence": ["a:0:0", "a:0:1"]},
+                entity | {"path": "entities/once.md", "title": "Once", "evidence": ["a:0:2"]},
+            ]
+        return json.dumps(data)
+
+    monkeypatch.setattr(agent, "ask", leftovers)
+    monkeypatch.setattr(batch, "ENTITY_MIN_SOURCES", 1)  # this fixture has one source
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    saved = json.loads((agent.store / "last-plan.json").read_text())
+    pages = {p["path"]: p for p in saved["pages"]}
+    assert pages["concepts/yield-stability.md"]["reason"] == "Yield held across repeats"
+    assert pages["entities/strain.md"]["evidence"] == ["a:0:0", "a:0:1"]
+    assert "entities/once.md" not in pages
+    assert [c["summary_only"] for c in saved["coverage"]] == ["", "", "Setup detail."]
+    prompt = next(m for s, m in calls if s == "write/entities/strain.md")
+    assert [f["id"] for f in system_payload(prompt)["evidence"]] == ["a:0:0", "a:0:1"]
 
 
 def test_scientific_rejection_uses_same_single_correction(tmp_path, monkeypatch):
@@ -858,19 +893,6 @@ def test_concept_assignments_survive_writing_validation_and_review(tmp_path, mon
                     "empty_reason": "",
                 }
             )
-        if step.startswith("batch/plan/"):
-            return json.dumps(
-                {
-                    "pages": [
-                        job.model_dump(),
-                        job.model_dump() | {"path": assignments[1], "sources": ["b"]},
-                    ],
-                    "coverage": [
-                        {"evidence": f"a:0:{i}", "concepts": [path], "summary_only": ""}
-                        for i, path in enumerate(assignments)
-                    ],
-                }
-            )
         payload = json.loads(messages[0]["content"].split("\n")[-1])
         calls.append((step, messages))
         path = payload["job"]["path"]
@@ -933,6 +955,14 @@ def test_concept_assignments_survive_writing_validation_and_review(tmp_path, mon
             messages, step, accept, validator=validator, context=context, attempts=attempts
         )
 
+    plan = batch.Plan(
+        pages=[job, job.model_copy(update={"path": assignments[1], "sources": ["b"]})],
+        coverage=[
+            batch.Coverage(evidence=f"a:0:{i}", concepts=[path], summary_only="")
+            for i, path in enumerate(assignments)
+        ],
+    )
+    monkeypatch.setattr(batch, "route_plan", lambda root, agent, findings: plan)
     monkeypatch.setattr(agent, "ask", replies)
     monkeypatch.setattr(agent, "review", review)
     monkeypatch.setattr(agent, "generate", check_assignment)

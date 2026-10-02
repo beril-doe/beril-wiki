@@ -7,10 +7,11 @@ import math
 import re
 import shutil
 import threading
-from collections.abc import Iterator
+from collections import Counter
+from collections.abc import Callable, Iterator
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import Literal
+from typing import Literal, TypeVar
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
@@ -57,6 +58,9 @@ class PageJob(BaseModel):
     merge_from: list[str] = Field(
         default_factory=list, description=f"concept paths, each a {PATH_FORM}"
     )
+    # A new entity is written from the records naming it, not every finding of its
+    # sources: that was a median of 274 records for a page about one organism.
+    evidence: list[str] = Field(default_factory=list)
 
 
 class Coverage(BaseModel):
@@ -419,42 +423,40 @@ def briefs(root: Path) -> list[dict]:
     return result
 
 
-def retire_merged(listing: list[dict], pages: list[PageJob]) -> list[dict]:
-    """Mark pages a batch merged away, which later batches must neither name nor recreate.
+def exact_ids(given: list[str], wanted: set[str], what: str) -> None:
+    """One entry per evidence id, naming any slip: one in a hundred is otherwise
+    invisible and the correction rewrites the whole answer blind."""
+    seen = Counter(given)
+    missing = sorted(wanted - set(seen))
+    extra = sorted(set(seen) - wanted)
+    repeated = sorted(item for item, n in seen.items() if n > 1)
+    if missing or extra or repeated:
+        parts = []
+        if missing:
+            parts.append(f"{len(missing)} uncovered, first: {', '.join(missing[:8])}")
+        if repeated:
+            parts.append(f"{len(repeated)} covered twice: {', '.join(repeated[:8])}")
+        if extra:
+            parts.append(f"{len(extra)} not in this batch: {', '.join(extra[:8])}")
+        raise CandidateError(
+            f"{what} must hold exactly one entry per evidence id; " + "; ".join(parts)
+        )
 
-    The inventory was only ever appended to, so a page one batch merged stayed
-    visible as a live destination and the gate rejected every later batch that named
-    it. Hiding it instead is worse: the rule is never to recreate a retired identity,
-    and a planner that cannot see one recreates it, which collides with the merge that
-    retired it. So it stays visible and says what it is."""
-    merged = {loser for job in pages for loser in job.merge_from}
-    return [item | {"retired": True} if item["path"] in merged else item for item in listing]
+
+Item = TypeVar("Item")
+Result = TypeVar("Result")
 
 
-def planning_batches(findings: list[dict], limit: int = 24_000) -> list[list[dict]]:
-    """Partition compact evidence; quotes stay in saved records and original sources.
-
-    The limit bounds the reply a batch induces, not just its prompt: the planner
-    answers with a coverage row per finding, so a batch that fits comfortably in
-    context can still overrun the model's output cap and come back truncated. At
-    100_000 one batch of this corpus asked for 326 rows and ran past 64,000 output
-    tokens, which is the whole ceiling on some models. The budget must also leave room
-    for deliberation, which is not content and varies by model: the fallback model
-    spends 20,000 to 40,000 tokens thinking where the configured one spends 5,000, so
-    a batch sized for the latter overruns on the former."""
-    batches: list[list[dict]] = [[]]
-    size = 0
-    for finding in findings:
-        item = {k: v for k, v in finding.items() if k != "quote"}
-        weight = len(json.dumps(item).encode())
-        if weight > limit:
-            raise WorkflowError("one evidence record exceeds the planning budget")
-        if batches[-1] and size + weight > limit:
-            batches.append([])
-            size = 0
-        batches[-1].append(item)
-        size += weight
-    return batches
+def fan_out(
+    agent: Runtime, work: Callable[[Runtime, Item], Result], items: list[Item]
+) -> list[Result]:
+    """Results in item order from --workers threads, each with its own Runtime because
+    a ledger connection belongs to the thread that opened it."""
+    count = int(agent.config.get("workers", 1))
+    if count <= 1 or len(items) <= 1:
+        return [work(agent, item) for item in items]
+    with ThreadPoolExecutor(max_workers=count) as pool:
+        return list(pool.map(lambda item: work(Runtime(agent.config), item), items))
 
 
 def plan_jobs(
@@ -492,24 +494,7 @@ def plan_jobs(
             previous.reason += "; " + job.reason
         else:
             jobs[job.path] = job.model_copy(deep=True)
-    covered = [c.evidence for c in plan.coverage]
-    wanted = {f["id"] for f in findings}
-    missing = sorted(wanted - set(covered))
-    extra = sorted(set(covered) - wanted)
-    repeated = sorted({item for item in covered if covered.count(item) > 1})
-    if missing or extra or repeated:
-        # Name them: the planner writes one row per evidence id and a slip of one in a
-        # hundred is invisible unless the gate says which.
-        parts = []
-        if missing:
-            parts.append(f"{len(missing)} uncovered, first: {', '.join(missing[:8])}")
-        if repeated:
-            parts.append(f"{len(repeated)} covered twice: {', '.join(repeated[:8])}")
-        if extra:
-            parts.append(f"{len(extra)} not in this batch: {', '.join(extra[:8])}")
-        raise CandidateError(
-            "coverage must hold exactly one row per evidence id; " + "; ".join(parts)
-        )
+    exact_ids([c.evidence for c in plan.coverage], {f["id"] for f in findings}, "coverage")
     finding_sources = {f["id"]: f["source"] for f in findings}
     for item in plan.coverage:
         if not item.concepts and not item.summary_only.strip():
@@ -571,6 +556,282 @@ def plan_jobs(
                 raise CandidateError(f"cannot merge {loser} into {job.path}: {why}")
             losers[loser] = job.path
     return jobs, losers
+
+
+class Route(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    evidence: str
+    concepts: list[str] = Field(description=f"existing concept paths, each a {PATH_FORM}")
+    summary_only: str = Field(description="why the record belongs only in its summary, else empty")
+    new_topic: str = Field(
+        description="a few words naming a concept the dictionary lacks, else empty"
+    )
+
+
+class EntityPage(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    path: str = Field(description="entities/<slug>.md")
+    title: str = Field(min_length=1)
+    type: str = Field(description="one of " + ", ".join(C.ENTITY_TYPES))
+    evidence: list[str] = Field(description="ids of the records describing it")
+
+
+class Routing(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    routes: list[Route]
+    entities: list[EntityPage]
+
+
+class NewConcept(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    path: str = Field(description=PATH_FORM)
+    title: str = Field(min_length=1)
+    reason: str = Field(min_length=1)
+    evidence: list[str]
+
+
+class Unplaced(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    evidence: str
+    summary_only: str = Field(min_length=1)
+
+
+class Proposal(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    concepts: list[NewConcept]
+    unplaced: list[Unplaced]
+
+
+# Records per routing job: about 45KB of claims and candidates, a reply well inside
+# any output cap, and enough jobs to keep every worker busy.
+ROUTE_RECORDS = 120
+PROPOSE_RECORDS = 200
+# A new entity page needs this many records about it from this many projects: a page
+# gathers what several projects say about one thing, and a name from one project is
+# its summary's business. Without the second rule the router proposed 38 entities for
+# 16 sources, where the planner it replaced had proposed 4.
+ENTITY_MIN_RECORDS = 2
+ENTITY_MIN_SOURCES = 2
+
+ROUTE_PROMPT = prompt(
+    "route@1",
+    "Route each evidence record to the wiki concept pages it informs. The system prompt "
+    "lists every existing concept page and entity page. Give every record exactly one "
+    "route. concepts lists the existing concept paths whose subject the record "
+    "informs, usually one or two. If none fits, leave concepts empty and either name in "
+    "new_topic, in a few words, the concept the record needs that the dictionary lacks, or "
+    "give summary_only a concrete reason the record matters only to its own project "
+    "summary (a setup detail, a count with no meaning beyond the project). Prefer an "
+    "existing concept that genuinely fits over a new topic. Also list entities: a named "
+    "organism, gene or pathway, compound, method, dataset or place that is a subject of "
+    "these records and has no page in the entity list, with its path entities/<slug>.md, "
+    "title, type and the ids of the records describing it. Paths are full file paths "
+    f"ending in .md. Return JSON matching {json.dumps(Routing.model_json_schema())}.\n",
+)
+PROPOSE_PROMPT = prompt(
+    "propose@1",
+    "These evidence records fit no existing concept page; each carries the topic its "
+    "router named. Group them into new concept pages: a concept is a reusable scientific "
+    "idea that several records inform, ideally from more than one project. Give each a "
+    "path concepts/<slug>.md, a title, a one-sentence reason and its record ids. A path "
+    "in proposed may take more records; an existing concept path from the system prompt "
+    "may too, if a record fits it after all. A record that does not justify a page goes "
+    "in unplaced with a concrete summary_only reason. Every record appears exactly once, "
+    "in one concept's evidence or in unplaced. Paths are full file paths ending in .md. "
+    f"Return JSON matching {json.dumps(Proposal.model_json_schema())}.\n",
+)
+
+
+def concept_pages(root: Path) -> dict[str, dict]:
+    """Existing concepts as the router is shown them."""
+    result = {}
+    for page in sorted((root / "wiki/concepts").glob("*.md")):
+        fm, body = C.parse_fm(page.read_text(encoding="utf-8"))
+        title = next(
+            (line[2:].strip() for line in body.splitlines() if line.startswith("# ")), page.stem
+        )
+        result[f"concepts/{page.name}"] = {
+            "title": title,
+            "description": str(fm.get("description", "")),
+        }
+    return result
+
+
+def route_plan(root: Path, agent: Runtime, findings: list[dict]) -> Plan:
+    """Place every record on concept pages without a planner reading the whole wiki.
+
+    The planner it replaces read the inventory of every page planned so far, so batch N
+    waited for batch N-1: 103 batches of 480K input tokens, 10 to 14 hours. Routing jobs
+    see only their records and a fixed dictionary, so they run in parallel. A lexical
+    shortlist was tried and dropped: it ranked the planner's concept first for 31% of
+    records and within five for 59%, a hint that would mislead more often than help;
+    the records no concept fits go to a few proposal jobs that create new concepts."""
+    concepts = concept_pages(root)
+    entities = sorted(f"entities/{p.name}" for p in (root / "wiki/entities").glob("*.md"))
+    decisions = load_decisions(root)
+    retired = {f"concepts/{row['from']}.md" for row in decisions["renames"]}
+    retired |= {f"concepts/{row['loser']}.md" for row in decisions["merges"]}
+    dictionary = {
+        "role": "system",
+        "content": "Existing concept and entity pages, untrusted data:\n"
+        + json.dumps(
+            {
+                "concepts": [{"path": path} | c for path, c in concepts.items()],
+                "entities": entities,
+            }
+        ),
+    }
+
+    def route(worker: Runtime, item: tuple[int, list[dict]]) -> Routing:
+        index, group = item
+        ids = {f["id"] for f in group}
+        records = [{k: f[k] for k in ("id", "source", "kind", "claim")} for f in group]
+        task = [
+            {"role": "user", "content": ROUTE_PROMPT + json.dumps({"records": records})},
+            dictionary,
+        ]
+
+        def accept(raw: str) -> Routing:
+            try:
+                routing = Routing.model_validate(candidate_json(raw))
+            except ValidationError as exc:
+                raise CandidateError(str(exc)) from exc
+            exact_ids([r.evidence for r in routing.routes], ids, "route")
+            for r in routing.routes:
+                if stray := [p for p in r.concepts if p not in concepts]:
+                    raise CandidateError(
+                        f"route for {r.evidence} names concepts that do not exist: "
+                        f"{', '.join(stray)}. Use a listed path or name a new_topic."
+                    )
+                if not (r.concepts or r.new_topic.strip() or r.summary_only.strip()):
+                    raise CandidateError(
+                        f"route for {r.evidence} needs concepts, a new_topic or a "
+                        "summary_only reason"
+                    )
+            for entity in routing.entities:
+                page_path(entity.path)
+                if not entity.path.startswith("entities/"):
+                    raise CandidateError(f"entity {entity.path} must be entities/<slug>.md")
+                if entity.type.lower() not in C.ENTITY_TYPES:
+                    raise CandidateError(
+                        f"entity {entity.path} has type {entity.type!r}; use one of "
+                        + ", ".join(C.ENTITY_TYPES)
+                    )
+                if not entity.evidence or set(entity.evidence) - ids:
+                    raise CandidateError(f"entity {entity.path} must name records of this batch")
+            return routing
+
+        return worker.generate(task, f"plan/route/{index}", accept, attempts=CORRECTION_ATTEMPTS)
+
+    groups = [findings[i : i + ROUTE_RECORDS] for i in range(0, len(findings), ROUTE_RECORDS)]
+    routings = fan_out(agent, route, list(enumerate(groups)))
+    routes = {r.evidence: r for routing in routings for r in routing.routes}
+
+    # Leftovers run in sequence, each job told what the earlier ones proposed, so two
+    # never name one idea twice; there are few of them.
+    leftovers = [
+        f for f in findings if not routes[f["id"]].concepts and routes[f["id"]].new_topic.strip()
+    ]
+    proposed: dict[str, NewConcept] = {}
+    unplaced: dict[str, str] = {}
+    for index, start in enumerate(range(0, len(leftovers), PROPOSE_RECORDS)):
+        group = leftovers[start : start + PROPOSE_RECORDS]
+        ids = {f["id"] for f in group}
+        data = {
+            "proposed": [
+                {"path": c.path, "title": c.title, "reason": c.reason} for c in proposed.values()
+            ],
+            "records": [
+                {k: f[k] for k in ("id", "source", "claim")} | {"topic": routes[f["id"]].new_topic}
+                for f in group
+            ],
+        }
+        task = [{"role": "user", "content": PROPOSE_PROMPT + json.dumps(data)}, dictionary]
+
+        def accept_proposal(raw: str, ids: set[str] = ids) -> Proposal:
+            try:
+                proposal = Proposal.model_validate(candidate_json(raw))
+            except ValidationError as exc:
+                raise CandidateError(str(exc)) from exc
+            placed = [e for c in proposal.concepts for e in c.evidence]
+            exact_ids(placed + [u.evidence for u in proposal.unplaced], ids, "record placement")
+            paths = [c.path for c in proposal.concepts]
+            if len(set(paths)) != len(paths):
+                raise CandidateError(
+                    "each proposed concept path may appear once; merge their records"
+                )
+            for concept in proposal.concepts:
+                page_path(concept.path)
+                if not concept.path.startswith("concepts/") or concept.path in retired:
+                    raise CandidateError(
+                        f"{concept.path} is not a usable concept path: it must be "
+                        "concepts/<slug>.md and not a retired identity"
+                    )
+            return proposal
+
+        proposal = agent.generate(
+            task, f"plan/propose/{index}", accept_proposal, attempts=CORRECTION_ATTEMPTS
+        )
+        for concept in proposal.concepts:
+            if concept.path in proposed:
+                proposed[concept.path].evidence.extend(concept.evidence)
+            else:
+                proposed[concept.path] = concept.model_copy(deep=True)
+        unplaced.update({u.evidence: u.summary_only for u in proposal.unplaced})
+
+    added: dict[str, list[str]] = {}
+    for concept in proposed.values():
+        for eid in concept.evidence:
+            added.setdefault(eid, []).append(concept.path)
+    coverage = []
+    for finding in findings:
+        r = routes[finding["id"]]
+        paths = sorted(set(r.concepts) | set(added.get(finding["id"], [])))
+        reason = "" if paths else unplaced.get(finding["id"]) or r.summary_only or r.new_topic
+        coverage.append(Coverage(evidence=finding["id"], concepts=paths, summary_only=reason))
+
+    source_of = {f["id"]: f["source"] for f in findings}
+    routed: dict[str, list[str]] = {}
+    for row in coverage:
+        for path in row.concepts:
+            routed.setdefault(path, []).append(row.evidence)
+    pages = []
+    for path, ids in sorted(routed.items()):
+        new = proposed.get(path) if path not in concepts else None
+        pages.append(
+            PageJob(
+                path=path,
+                title=new.title if new else concepts[path]["title"],
+                type="Concept",
+                sources=sorted({source_of[e] for e in ids}),
+                reason=new.reason if new else "Integrate routed evidence",
+            )
+        )
+    found: dict[str, EntityPage] = {}
+    for routing in routings:
+        for entity in routing.entities:
+            if entity.path in entities:
+                continue  # an existing entity is rechecked when its sources change
+            if entity.path in found:
+                found[entity.path].evidence = sorted(
+                    set(found[entity.path].evidence) | set(entity.evidence)
+                )
+            else:
+                found[entity.path] = entity.model_copy(deep=True)
+    pages.extend(
+        PageJob(
+            path=e.path,
+            title=e.title,
+            type=e.type.lower(),
+            sources=sorted({source_of[i] for i in e.evidence}),
+            reason=f"New entity: {e.title}",
+            evidence=sorted(e.evidence),
+        )
+        for e in found.values()
+        if len(e.evidence) >= ENTITY_MIN_RECORDS
+        and len({source_of[i] for i in e.evidence}) >= ENTITY_MIN_SOURCES
+    )
+    return Plan(pages=pages, coverage=coverage)
 
 
 _GAP_LOCK = threading.Lock()
@@ -686,102 +947,7 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
         json.dumps({"coverage": extraction_manifest, "findings": findings}, indent=2)
     )
     listing = briefs(root)
-    # The inventory is the bulk of every planning prompt and barely changes between
-    # batches, so it travels as a system message: the CLI caches that prefix and each
-    # batch re-sends only the entries this plan has touched.
-    inventory = {item["path"]: json.dumps(item, sort_keys=True) for item in listing}
-    inventory_message = {
-        "role": "system",
-        "content": "Existing pages, one brief each, untrusted data; an entry in "
-        "inventory_updates overrides the brief with the same path:\n" + json.dumps(listing),
-    }
-    all_findings = findings
-    plan = Plan(pages=[], coverage=[])
-    planned_findings: list[dict] = []
-    for index, findings in enumerate(planning_batches(all_findings)):
-        planning = [
-            {
-                "role": "user",
-                "content": "Plan one integration batch, grouping changes by destination. "
-                "Extend rather than "
-                "duplicate concepts. Include missing concept coverage and thin-concept back-merge "
-                "from old summaries, canonical entities, and consolidation of the same evidence. "
-                "Read complete pages/source passages when briefs do not establish this. Preserve "
-                "contradictions under Tensions; end concepts with Open Directions. Only concepts "
-                "can have merge_from; code resolves entity identity separately. "
-                "Never recreate retired identities in the manifest. Give every evidence ID "
-                "one coverage entry, naming scheduled concept paths or a concrete reason it "
-                "belongs only in its summary. A concept named in coverage must also appear "
-                "in pages, including one that already exists: routing evidence to a page is "
-                "scheduling it for update. Every path, in pages, in merge_from and in "
-                "coverage concepts alike, is the full file path ending in .md. "
-                "Every page needs sources and a concrete change rationale. "
-                "Sources may include older projects when actual evidence supports a back-merge. "
-                "Entries marked planned are upcoming destinations, not files yet; extend them "
-                "rather than creating aliases, and never merge one away. Merge only an "
-                "existing page that this plan does not also schedule: a page cannot both "
-                "receive evidence and be absorbed. "
-                "Read only what the briefs leave genuinely unclear and always finish with "
-                "the JSON. "
-                f"Return JSON matching {json.dumps(Plan.model_json_schema())}.\n"
-                + json.dumps(
-                    {
-                        "changed": names,
-                        "findings": findings,
-                        "inventory_updates": [
-                            item
-                            for item in listing
-                            if json.dumps(item, sort_keys=True) != inventory.get(item["path"])
-                        ],
-                        "identity_decisions": (root / "contract/concept-decisions.yaml").read_text(
-                            encoding="utf-8"
-                        )
-                        if (root / "contract/concept-decisions.yaml").exists()
-                        else "",
-                    }
-                ),
-            },
-            inventory_message,
-        ]
-        planned_findings.extend(findings)
-
-        def accept_plan(raw: str) -> Plan:
-            try:
-                partial = Plan.model_validate(candidate_json(raw))
-            except ValidationError as exc:
-                raise CandidateError(str(exc)) from exc
-            combined = Plan(
-                pages=plan.pages + partial.pages, coverage=plan.coverage + partial.coverage
-            )
-            plan_jobs(root, combined, planned_findings, sources, listing, names)
-            return partial
-
-        partial = agent.generate(
-            planning, f"batch/plan/{index}", accept_plan, attempts=CORRECTION_ATTEMPTS
-        )
-        plan.pages.extend(partial.pages)
-        plan.coverage.extend(partial.coverage)
-        listing[:] = retire_merged(listing, partial.pages)
-        # A page an earlier batch scheduled is a destination whether or not it already
-        # existed. Unmarked, an existing one looks ordinary and a later batch merges it
-        # away, which the gate refuses because a page cannot both receive and be absorbed.
-        scheduled = {job.path for job in partial.pages}
-        for item in listing:
-            if item["path"] in scheduled:
-                item["planned"] = True
-        known_paths = {item["path"] for item in listing}
-        listing.extend(
-            {
-                "path": job.path,
-                "description": job.reason,
-                "type": job.type,
-                "sources": job.sources,
-                "planned": True,
-            }
-            for job in partial.pages
-            if job.path not in known_paths
-        )
-    findings = all_findings
+    plan = route_plan(root, agent, findings)
     jobs, losers = plan_jobs(root, plan, findings, sources, listing, names)
     targets = (C.wikilink_targets(root) | {p.removesuffix(".md") for p in jobs}) - {
         p.removesuffix(".md") for p in losers
@@ -932,14 +1098,17 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
         # A writer gets what it must integrate, not every finding its sources ever
         # yielded: for one concept that was 1,324 records sent against 33 assigned,
         # 711KB in place of 19KB, and 141MB across the plan. A new entity has no
-        # assignment and is written from its sources' findings.
-        slices = passes(assigned, int(agent.config.get("pass_records", PASS_RECORDS)))
+        # assignment and is written from the records the router said describe it.
+        cap = int(agent.config.get("pass_records", PASS_RECORDS))
+        about = [f for f in relevant if f["id"] in set(job.evidence)][: cap or None]
+        slices = passes(assigned, cap)
         dropped = 0
         try:
             for index, part in enumerate(slices):
                 before = len(worker.jobs)
                 try:
-                    write_pass(worker, path, job, part, part or relevant, (index, len(slices)))
+                    context = part or about or relevant
+                    write_pass(worker, path, job, part, context, (index, len(slices)))
                 except (CandidateError, Unconverged) as exc:
                     # A pass that will not converge is dropped, not the page: at nine in ten
                     # passes accepted, a seven-pass page failing whole would publish under
@@ -969,9 +1138,10 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
             raise
         return True
 
-    def attempt(worker: Runtime, path: str, job: PageJob) -> bool:
+    def attempt(worker: Runtime, item: tuple[str, PageJob]) -> bool:
         """A page that fails its rounds or its own job is recorded and the batch goes
         on, as a derived page is; --strict-pages stops the run instead."""
+        path, job = item
         try:
             return write_page(worker, path, job)
         except (CandidateError, JobFailed, Unconverged) as exc:
@@ -986,18 +1156,7 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
             print(f"agentic: failed page {path}: {str(exc)[:200]}", flush=True)
             return False
 
-    count = int(agent.config.get("workers", 1))
-    written = 0
-    if count > 1 and len(selected) > 1:
-        # Each worker needs its own Runtime: a ledger connection belongs to one thread.
-        def in_worker(item: tuple[str, PageJob]) -> bool:
-            return attempt(Runtime(agent.config), *item)
-
-        with ThreadPoolExecutor(max_workers=count) as pool:
-            written = sum(pool.map(in_worker, selected))
-    else:
-        for path, job in selected:
-            written += attempt(agent, path, job)
+    written = sum(fan_out(agent, attempt, selected))
     failures_path = agent.store / "failures.json"
     before = json.loads(failures_path.read_text(encoding="utf-8")) if failures_path.exists() else {}
     recorded = {page: entry for page, entry in before.items() if page not in dict(selected)}

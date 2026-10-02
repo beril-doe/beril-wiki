@@ -117,8 +117,8 @@ def test_refusal_scope_covers_the_text_a_job_carries():
     # other batches, and a page's rounds are the same page seen again.
     # A refused planning batch speaks for itself only: most batches are accepted, and
     # the configured model is worth one wasted attempt on the few that are not.
-    assert R.refusal_scope("batch/plan/1") == "batch/plan/1"
-    assert R.refusal_scope("batch/plan/1/repair") == "batch/plan/1"
+    assert R.refusal_scope("plan/route/1") == "plan/route/1"
+    assert R.refusal_scope("plan/route/1/repair") == "plan/route/1"
     assert R.refusal_scope("conflicts/slug/patch/2/review") == "conflicts/slug"
     assert R.refusal_scope("write/concepts/yield.md/repair") == "write/concepts/yield.md"
 
@@ -126,7 +126,7 @@ def test_refusal_scope_covers_the_text_a_job_carries():
 def test_a_refusal_is_found_for_the_step_that_recorded_it(tmp_path):
     agent = runtime(tmp_path)
     key = "k"
-    agent.ledger.reserve(key, "batch/plan/1", "claude-opus-5-5")
+    agent.ledger.reserve(key, "plan/route/1", "claude-opus-5-5")
     agent.ledger.finish(
         key,
         '{"refused_to": "claude-opus-5"}',
@@ -135,7 +135,7 @@ def test_a_refusal_is_found_for_the_step_that_recorded_it(tmp_path):
         status="rejected",
     )
     # A scope that is a step in its own right still finds its refusal.
-    assert agent.ledger.refused_model("batch/plan/1") == "claude-opus-5"
+    assert agent.ledger.refused_model("plan/route/1") == "claude-opus-5"
     assert agent.ledger.refused_model("conflicts/other") == ""
 
 
@@ -167,7 +167,7 @@ def test_truncated_reply_names_the_output_cap(tmp_path, monkeypatch):
     # A truncated reply arrives as a success whose text begins mid-object; without
     # this check the only symptom is a JSON error far from the cause.
     with pytest.raises(R.WorkflowError, match="1000-token output cap"):
-        agent.ask([{"role": "user", "content": "plan"}], "batch/plan/0")
+        agent.ask([{"role": "user", "content": "plan"}], "plan/route/0")
     status, error = agent.ledger.db.execute("SELECT status, error FROM jobs").fetchone()
     assert status == "failed" and "truncated" in error
 
@@ -198,7 +198,7 @@ def test_output_cap_is_judged_per_turn_not_per_session(tmp_path, monkeypatch):
         return stream()
 
     monkeypatch.setattr(R, "query", query)
-    assert agent.ask([{"role": "user", "content": "plan"}], "batch/plan/0") == (
+    assert agent.ask([{"role": "user", "content": "plan"}], "plan/route/0") == (
         '{"pages": [], "coverage": []}'
     )
 
@@ -473,7 +473,7 @@ def test_large_collection_context_is_bounded_and_retrievable():
     [
         ("curator/topics/repair", "planning"),
         ("extract/a/0", "extraction"),
-        ("batch/plan/0/repair", "planning"),
+        ("plan/route/0/repair", "planning"),
         ("write/concepts/a.md/repair", "writing"),
         ("lit/a/section", "writing"),
         ("conflicts/a/review", "review"),
@@ -992,19 +992,19 @@ def test_a_refusal_stated_in_prose_is_answered_on_the_fallback_model(tmp_path, m
         return text
 
     monkeypatch.setattr(agent, "_query", fake_query)
-    assert agent.ask([{"role": "user", "content": "plan"}], "batch/plan/7") == '{"pages": []}'
+    assert agent.ask([{"role": "user", "content": "plan"}], "plan/route/7") == '{"pages": []}'
     assert calls == ["claude-opus-5-5", "claude-opus-5"]
     rows = agent.ledger.db.execute(
-        "SELECT model, status, output FROM jobs WHERE step='batch/plan/7' ORDER BY rowid"
+        "SELECT model, status, output FROM jobs WHERE step='plan/route/7' ORDER BY rowid"
     ).fetchall()
     assert rows[0][:2] == ("claude-opus-5-5", "rejected") and R.refusal_target(rows[0][2])
     assert rows[1][:2] == ("claude-opus-5", "done")
-    assert agent.ledger.refused_model("batch/plan/7") == "claude-opus-5"
+    assert agent.ledger.refused_model("plan/route/7") == "claude-opus-5"
     # The memory holds: a sibling job in the scope goes straight to the fallback.
     calls.clear()
-    assert agent.ask([{"role": "user", "content": "plan"}], "batch/plan/7") == '{"pages": []}'
+    assert agent.ask([{"role": "user", "content": "plan"}], "plan/route/7") == '{"pages": []}'
     assert calls == []
-    assert agent.ask([{"role": "user", "content": "again"}], "batch/plan/7/repair") == (
+    assert agent.ask([{"role": "user", "content": "again"}], "plan/route/7/repair") == (
         '{"pages": []}'
     )
     assert calls == ["claude-opus-5"]

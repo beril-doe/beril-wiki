@@ -138,7 +138,7 @@ def role_for(step: str) -> str:
         role = "review"
     elif step.startswith("extract/"):
         role = "extraction"
-    elif step.startswith("batch/plan/") or step == "curator/topics":
+    elif step.startswith("plan/") or step == "curator/topics":
         role = "planning"
     elif step.startswith("lit/") and step.endswith("/queries"):
         role = "queries"
@@ -655,9 +655,7 @@ def tool_profile(step: str) -> str:
     # writers had used their tools mostly to search sources while repairing.
     if step.startswith("write/") and step.endswith("/verify"):
         return "read"
-    if step.startswith(("curator/", "batch/plan")) or (
-        step.startswith("write/") and step.endswith("/repair")
-    ):
+    if step.startswith("curator/") or (step.startswith("write/") and step.endswith("/repair")):
         return "extended"
     return "none"
 

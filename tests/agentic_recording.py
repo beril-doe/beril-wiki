@@ -48,27 +48,30 @@ def reply(self, messages, step, *, model=None):
                 "empty_reason": "",
             }
         )
-    if step.startswith("batch/plan"):
+    if step.startswith("plan/route/"):
+        data = json.loads(messages[0]["content"].split("\n")[-1])
         return json.dumps(
             {
-                "pages": [
+                "routes": [
+                    {"evidence": r["id"], "concepts": [], "summary_only": "", "new_topic": "yield"}
+                    for r in data["records"]
+                ],
+                "entities": [],
+            }
+        )
+    if step.startswith("plan/propose/"):
+        data = json.loads(messages[0]["content"].split("\n")[-1])
+        return json.dumps(
+            {
+                "concepts": [
                     {
-                        "path": f"concepts/{name}.md",
-                        "title": name.title(),
-                        "type": "Concept",
-                        "sources": ["a", "b"],
+                        "path": "concepts/yield.md",
+                        "title": "Yield",
                         "reason": "Integrate distinct yield context",
+                        "evidence": [r["id"] for r in data["records"]],
                     }
-                    for name in ("yield", "cost", "temperature")
                 ],
-                "coverage": [
-                    {
-                        "evidence": f"{sid}:0:0",
-                        "concepts": ["concepts/yield.md"],
-                        "summary_only": "",
-                    }
-                    for sid in ("a", "b")
-                ],
+                "unplaced": [],
             }
         )
     if step.startswith("write/"):
