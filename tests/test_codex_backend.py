@@ -263,7 +263,8 @@ def test_parallel_tool_calls_spend_one_turn_per_batch_and_a_loop_is_interrupted(
     agent.ledger.reserve("k4", agent._step, "gpt-6-astra")
     payload = json.dumps([{"role": "user", "content": "x"}])
     assert C.run_job(agent, payload, "k4", "gpt-6-astra") == "answer"
-    assert fake.host.seen.batches == 3 and fake.host.seen.turns == 0
+    seen = fake.host.seen
+    assert seen is not None and seen.batches == 3 and seen.turns == 0
 
     # Seven tool-calling turns against a budget of three: interrupted, charged, failed.
     turn = FakeTurn([e for _ in range(7) for e in tool_batch(2)] + completed("late"))
