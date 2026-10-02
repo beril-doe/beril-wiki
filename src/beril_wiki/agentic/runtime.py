@@ -649,11 +649,15 @@ def tool_profile(step: str) -> str:
     """Integration jobs read and search evidence; derived prose gets its evidence packed."""
     if step.endswith("/science-review") or step.startswith("extract/"):
         return "read"
-    # A page writer gets everything packed and answers in one turn; checking its
-    # repair may still read originals, as the review it continues did.
+    # A page writer drafts with everything packed, in one turn. Its repair may read and
+    # search the sources, as the review it answers did: without that, pages written
+    # tool-free scored a point lower on fidelity in a blind judge, and the earlier
+    # writers had used their tools mostly to search sources while repairing.
     if step.startswith("write/") and step.endswith("/verify"):
         return "read"
-    if step.startswith(("curator/", "batch/plan")):
+    if step.startswith(("curator/", "batch/plan")) or (
+        step.startswith("write/") and step.endswith("/repair")
+    ):
         return "extended"
     return "none"
 

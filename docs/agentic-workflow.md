@@ -140,7 +140,7 @@ every stage that depends on it stale as well:
 
 | Stage | Work and completion condition |
 |---|---|
-| Integrate | Runs first when sources changed: extract changed reports, plan complete evidence coverage, group edits by destination, validate and review pages; resolve entities and refresh deterministic metadata. A writer receives the evidence assigned to its page with quotes packed, not every finding its sources yielded; an existing entity with nothing assigned and no revised source is skipped. It accounts for each assigned record by the index of the paragraph carrying it, not by repeating the paragraph, since a page assigned three hundred records could not otherwise finish its answer; the validator resolves the index against every paragraph of the body, including Open Directions, and the reviewer sees the resolved text. The writer has no tools and answers in one turn: the page, absorbed pages and quotes are packed, and the prompt states the host gates it will meet. A page assigned more than `--pass-records` records is written in near-equal passes in evidence-id order, each a full write, review and repair of its slice against the page the previous pass left, so no single job integrates hundreds of records; the retention gate keeps every earlier pass's citations and figures. A pass that will not converge is dropped rather than the page, which keeps every accepted pass; its records, objections and job keys go to `.agentic/salvaged.json`, as a salvaged derived page's paragraphs do. At nine passes in ten accepted in the pilot, a seven-pass page failing whole would publish under half the time. Only a page whose every pass fails keeps its previous version. |
+| Integrate | Runs first when sources changed: extract changed reports, plan complete evidence coverage, group edits by destination, validate and review pages; resolve entities and refresh deterministic metadata. A writer receives the evidence assigned to its page with quotes packed, not every finding its sources yielded; an existing entity with nothing assigned and no revised source is skipped. It accounts for each assigned record by the index of the paragraph carrying it, not by repeating the paragraph, since a page assigned three hundred records could not otherwise finish its answer; the validator resolves the index against every paragraph of the body, including Open Directions, and the reviewer sees the resolved text. The writer drafts with no tools, in one turn: the page, absorbed pages and quotes are packed, and the prompt states the host gates it will meet. A repair may read and search the sources, as the review it answers did; drafted and repaired without them, pages scored about a point lower on fidelity in a blind judge. A page assigned more than `--pass-records` records is written in near-equal passes in evidence-id order, each a full write, review and repair of its slice against the page the previous pass left, so no single job integrates hundreds of records; the retention gate keeps every earlier pass's citations and figures. A pass that will not converge is dropped rather than the page, which keeps every accepted pass; its records, objections and job keys go to `.agentic/salvaged.json`, as a salvaged derived page's paragraphs do. At nine passes in ten accepted in the pilot, a seven-pass page failing whole would publish under half the time. Only a page whose every pass fails keeps its previous version. |
 
 Before writing hundreds of planned pages, measure a few: `--write-only
 concepts/a.md,summaries/b.md` writes only those pages and then stops before any
@@ -214,9 +214,10 @@ meaning. Review is useful evidence, not a guarantee of scientific correctness.
 
 Only the integration path uses tools. Extraction and its review get bounded
 `read_evidence`, as do the reviewer's checks of a page repair; planner jobs also
-get literal `search_evidence`. Page writers have no tools: a validation tool made
-the writer emit its whole candidate twice, once to check and once to answer, and
-the host checks the answer anyway, sending any defect to the repair. The final
+get literal `search_evidence`, as does a page repair. Page drafts have no tools: a
+validation tool made the writer emit its whole candidate twice, once to check and
+once to answer, and the host checks the answer anyway, sending any defect to the
+repair. The final
 candidate must pass the host checks and independent scientific review before it
 is written. Extraction and retrieval both decode UTF-8 with
 replacement for invalid bytes; offsets refer to that decoded text. Original

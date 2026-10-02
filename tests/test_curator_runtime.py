@@ -947,7 +947,8 @@ def test_writer_effort_rekeys_writers_only_and_page_writes_use_no_tools(tmp_path
         ("write/concepts/a.md", "medium"),
     ]
     assert R.tool_profile("write/concepts/a.md") == "none"
-    assert R.tool_profile("write/concepts/a.md/pass/1/repair") == "none"
+    assert R.tool_profile("write/concepts/a.md/pass/1") == "none"
+    assert R.tool_profile("write/concepts/a.md/pass/1/repair") == "extended"
     assert R.tool_profile("write/concepts/a.md/verify") == "read"
     assert R.refusal_scope("write/concepts/a.md/pass/2/repair") == "write/concepts/a.md"
 
