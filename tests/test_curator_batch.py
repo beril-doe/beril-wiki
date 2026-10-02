@@ -184,6 +184,23 @@ def test_a_failed_pass_leaves_the_page_as_it_was(tmp_path, monkeypatch):
     assert list(failures) == ["concepts/yield.md"]
 
 
+def test_host_corrections_leave_the_review_its_repair(tmp_path, monkeypatch):
+    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch, bad_writes=2)
+    rejected = []
+
+    def review(task, raw, step):
+        if step.startswith("write/concepts/") and not rejected:
+            rejected.append(step)
+            raise CandidateError("rejected", ["a caveat is missing"])
+
+    monkeypatch.setattr(agent, "review", review)
+    monkeypatch.setattr(agent, "verify", lambda task, raw, issues, step: [])
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    # Two drafts the host rejected, then the review and the one repair answering it.
+    assert sum(s.startswith("write/concepts/") for s, _ in calls) == 4
+    assert not (agent.store / "failures.json").exists()
+
+
 def test_a_repair_the_reviewer_still_rejects_ends_the_page(tmp_path, monkeypatch):
     agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
 
