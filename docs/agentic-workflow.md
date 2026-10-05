@@ -329,7 +329,12 @@ answered. A safeguard refuses a body of text rather than one prompt, so every
 later job carrying that text, the rest of a source's chunks or the rest of a
 page's rounds, goes straight to the model that answered instead of buying the
 same refusal again, unless the configured model already answered that job, whose
-result stands rather than being discarded and bought again. On this corpus refused attempts were a fifth of extraction
+result stands rather than being discarded and bought again. The GPT reviewer has
+the same arrangement: a GPT-6.1 Sol turn the server refuses as possible biological
+risk, which reports no usage, is charged the reservation, recorded as a refusal and
+answered on GPT-5.6 Sol, and refusal memory sends the rest of that page's review jobs
+there. The memory is per backend, so a refused Claude writer never redirects the
+GPT reviewer of the same page or the reverse. On this corpus refused attempts were a fifth of extraction
 spend, and a flagged report cost five to ten times an ordinary one. The worst case for a derived page is twelve jobs: a draft, one
 open review, and five patch rounds each with its own verification.
 

@@ -84,7 +84,7 @@ def refusal_scope(step: str) -> str:
 # A safeguard sometimes stops a reply partway and the model says so in prose instead
 # of the CLI signalling a refusal. The reply is short, is not the JSON asked for, and
 # names the stop; the job is then answered on the model the CLI itself falls back to.
-REFUSAL_FALLBACK = {"claude-opus-5-5": "claude-opus-5"}
+REFUSAL_FALLBACK = {"claude-opus-5-5": "claude-opus-5", "gpt-6.1-sol": "gpt-5.6-sol"}
 # Wordings seen so far; each is a short prose reply in place of the JSON asked for.
 REFUSAL_PHRASES = (
     "stopped partway",
@@ -455,15 +455,21 @@ class Ledger:
         if not changed:
             raise WorkflowError("job is not pending/unknown")
 
-    def refused_model(self, scope: str) -> str:
-        """The model that answered a refusal recorded anywhere in this scope."""
+    def refused_model(self, scope: str, backend: str = "claude") -> str:
+        """The model that answered the latest refusal in this scope on this backend.
+
+        A page's writer and reviewer share its scope but not their models, so a refusal
+        on one backend says nothing about where the other's jobs should go."""
         # The scope is a step in its own right when a job has no rounds below it.
-        row = self.db.execute(
+        for (output,) in self.db.execute(
             "SELECT output FROM jobs WHERE status='rejected' AND (step = ? OR step LIKE ?) "
-            "AND error LIKE 'refused on %' ORDER BY rowid DESC LIMIT 1",
+            "AND error LIKE 'refused on %' ORDER BY rowid DESC",
             (scope, scope + "/%"),
-        ).fetchone()
-        return refusal_target(row[0]) if row else ""
+        ):
+            target = refusal_target(output)
+            if target and backend_for(target) == backend:
+                return target
+        return ""
 
     def reconcile_stale(self, transcripts: Path) -> list[str]:
         """Charge jobs left pending by a killed worker from their saved streams."""
@@ -847,12 +853,12 @@ class Runtime:
             return cached
         if answers:
             return self.ask(messages, step, model=answers)
-        if not requested and backend == "claude":
+        if not requested:
             # This text was refused before, so do not buy the same refusal again: a
             # refused attempt is billed in full and answers nothing. Only once the
             # configured model has nothing cached, or an answer it gave would have to
             # be thrown away and bought again on the other model.
-            answers = self.ledger.refused_model(refusal_scope(step))
+            answers = self.ledger.refused_model(refusal_scope(step), backend)
             if answers and answers != model:
                 print(
                     f"agentic: {step} on {answers}; {refusal_scope(step)} was refused", flush=True

@@ -204,20 +204,37 @@ def test_run_job_records_usage_transcript_and_clears_binding(tmp_path, monkeypat
     assert "DELTA-TEXT" not in transcript and '"method": "item/completed"' in transcript
 
 
-def test_refused_turn_without_usage_fails_its_job_not_the_run(tmp_path, monkeypatch):
-    agent = agent_for(tmp_path)
-    flagged = SimpleNamespace(message="This content was flagged for possible biological risk.")
-    events = [
-        notification(
-            "turn/completed", turn=SimpleNamespace(id="t1", status="failed", error=flagged)
-        )
+def failed_without_usage(message):
+    error = SimpleNamespace(message=message)
+    return [
+        notification("turn/completed", turn=SimpleNamespace(id="t1", status="failed", error=error))
     ]
-    fake_session(monkeypatch, FakeTurn(events))
+
+
+def test_failed_turn_without_usage_fails_its_job_not_the_run(tmp_path, monkeypatch):
+    agent = agent_for(tmp_path)
+    fake_session(monkeypatch, FakeTurn(failed_without_usage("server overloaded")))
     agent.ledger.reserve("k9", agent._step, "gpt-6.1-sol")
-    with pytest.raises(R.JobFailed, match="biological risk"):
+    with pytest.raises(R.JobFailed, match="overloaded"):
         C.run_job(agent, json.dumps([{"role": "user", "content": "x"}]), "k9", "gpt-6.1-sol")
     row = agent.ledger.db.execute("SELECT status,tokens FROM jobs WHERE key='k9'").fetchone()
     assert row == ("failed", agent.ledger.headroom)
+
+
+def test_bio_flagged_review_is_answered_on_the_fallback_model(tmp_path, monkeypatch):
+    agent = agent_for(tmp_path)
+    fake_session(
+        monkeypatch, FakeTurn(failed_without_usage("flagged for possible biological risk"))
+    )
+    agent.ledger.reserve("k10", "write/concepts/x.md/science-review", "gpt-6.1-sol")
+    with pytest.raises(R.Refused) as caught:
+        C.run_job(agent, json.dumps([{"role": "user", "content": "x"}]), "k10", "gpt-6.1-sol")
+    assert caught.value.fallback_model == "gpt-5.6-sol"
+    row = agent.ledger.db.execute("SELECT status,output FROM jobs WHERE key='k10'").fetchone()
+    assert row == ("rejected", json.dumps({"refused_to": "gpt-5.6-sol"}))
+    # The page's later review jobs go there; its Claude writer is not redirected.
+    assert agent.ledger.refused_model("write/concepts/x.md", "codex") == "gpt-5.6-sol"
+    assert agent.ledger.refused_model("write/concepts/x.md", "claude") == ""
 
 
 def test_failed_turn_keeps_usage_and_fails_the_job(tmp_path, monkeypatch):

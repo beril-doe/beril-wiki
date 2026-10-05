@@ -17,10 +17,12 @@ from pathlib import Path
 from typing import Any
 
 from beril_wiki.agentic.runtime import (
+    REFUSAL_FALLBACK,
     SYSTEM,
     EvidenceTools,
     JobFailed,
     ReadTools,
+    Refused,
     Runtime,
     WorkflowError,
     digest,
@@ -431,6 +433,17 @@ def run_job(agent: Runtime, payload: str, key: str, model: str) -> str:
         error = "empty Codex output"
     else:
         error = ""
+    answers = REFUSAL_FALLBACK.get(model)
+    if answers and status == "failed" and "biological risk" in error:
+        # A content refusal: like a Claude refusal, it is recorded against the
+        # configured model and the job is answered on the fallback, keyed to it, and
+        # the rest of the page's review jobs go there directly.
+        refused = f"refused on {model} [bio]; answered on {answers}"
+        usage = usage or {"input_tokens": agent.ledger.headroom, "output_tokens": 0}
+        agent.ledger.finish(
+            key, json.dumps({"refused_to": answers}), usage, refused, cost=None, status="rejected"
+        )
+        raise Refused(refused, answers)
     if error and usage is None:
         # A turn the server refuses, such as content flagged for biological risk, ends
         # without reporting usage. Left unknown it would block every later job and stop
