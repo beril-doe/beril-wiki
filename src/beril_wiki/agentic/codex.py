@@ -431,6 +431,13 @@ def run_job(agent: Runtime, payload: str, key: str, model: str) -> str:
         error = "empty Codex output"
     else:
         error = ""
+    if error and usage is None:
+        # A turn the server refuses, such as content flagged for biological risk, ends
+        # without reporting usage. Left unknown it would block every later job and stop
+        # the run over one page; it is charged the reservation instead, as an interrupted
+        # job without a usable transcript is, and fails only its page.
+        usage = {"input_tokens": agent.ledger.headroom, "output_tokens": 0}
+        error += "; no usage reported, charged the reservation"
     agent.ledger.finish(key, output, usage, error, reader.dependencies, cost=None)
     if error:
         raise JobFailed(error)

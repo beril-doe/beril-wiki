@@ -204,6 +204,22 @@ def test_run_job_records_usage_transcript_and_clears_binding(tmp_path, monkeypat
     assert "DELTA-TEXT" not in transcript and '"method": "item/completed"' in transcript
 
 
+def test_refused_turn_without_usage_fails_its_job_not_the_run(tmp_path, monkeypatch):
+    agent = agent_for(tmp_path)
+    flagged = SimpleNamespace(message="This content was flagged for possible biological risk.")
+    events = [
+        notification(
+            "turn/completed", turn=SimpleNamespace(id="t1", status="failed", error=flagged)
+        )
+    ]
+    fake_session(monkeypatch, FakeTurn(events))
+    agent.ledger.reserve("k9", agent._step, "gpt-6.1-sol")
+    with pytest.raises(R.JobFailed, match="biological risk"):
+        C.run_job(agent, json.dumps([{"role": "user", "content": "x"}]), "k9", "gpt-6.1-sol")
+    row = agent.ledger.db.execute("SELECT status,tokens FROM jobs WHERE key='k9'").fetchone()
+    assert row == ("failed", agent.ledger.headroom)
+
+
 def test_failed_turn_keeps_usage_and_fails_the_job(tmp_path, monkeypatch):
     agent = agent_for(tmp_path)
     failed = completed("", status="failed", error=SimpleNamespace(message="boom"))
