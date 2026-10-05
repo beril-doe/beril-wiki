@@ -201,6 +201,30 @@ def test_a_page_whose_every_pass_fails_is_left_as_it_was(tmp_path, monkeypatch):
     assert list(failures) == ["concepts/yield.md"]
 
 
+def test_a_repair_that_closed_most_objections_earns_one_more_round(tmp_path, monkeypatch):
+    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
+    verdicts = [["a denominator is missing"], ["a denominator is missing"]]
+
+    def review(task, raw, step):
+        if step.startswith("write/concepts/"):
+            raise CandidateError(
+                "rejected", ["a caveat is lost", "a unit is wrong", "a denominator is missing"]
+            )
+
+    monkeypatch.setattr(agent, "review", review)
+    monkeypatch.setattr(agent, "verify", lambda task, raw, issues, step: verdicts.pop(0))
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    # Two of three closed, so the one left gets a second repair; it stays open there
+    # too, and a third review round is never bought.
+    assert [s for s, _ in calls if s.startswith("write/concepts/")] == [
+        "write/concepts/yield.md",
+        "write/concepts/yield.md/repair",
+        "write/concepts/yield.md/repair",
+    ]
+    failures = json.loads((tmp_path / "jobs/failures.json").read_text())
+    assert "a denominator is missing" in failures["concepts/yield.md"]["issues"][0]["note"]
+
+
 def test_host_corrections_leave_the_review_its_repair(tmp_path, monkeypatch):
     agent, calls, _, _ = setup_batch(tmp_path, monkeypatch, bad_writes=2)
     rejected = []

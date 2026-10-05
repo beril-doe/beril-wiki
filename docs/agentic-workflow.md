@@ -213,11 +213,16 @@ three times the write prompt, and the evidence map alone repeated 53 paragraphs
 311 times.
 
 Page writes fan out across `--workers` threads, each with its own runtime. A page
-write gets four attempts: the draft and at most three repairs, of which only one
-answers the review; the others correct what the host rejects, such as a list
-stating figures without its own citation or a figure the writer computed. The reviewer states its objections once and then verifies
-that one repair; objections still open end the page rather than buying more
-rounds, which the heaviest page spent USD 25 on without converging. A page
+write gets five attempts: the draft and at most four repairs. One answers the
+review; if its verification still leaves objections, a second round on just
+those is allowed once, and only when the first closed most of them (two or fewer
+left, at most half of what it answered). In the first full compile 23 of 24 failed
+pages were such near misses. The other repairs correct what the host rejects,
+such as a list stating figures without its own citation or a figure the writer
+computed. The reviewer states its objections once and then verifies
+its repairs; objections still open after a repair without progress end the page
+rather than buying more rounds, which the heaviest page spent USD 25 on without
+converging. A page
 that fails its correction rounds, or whose own job times out or is cut off, is
 recorded in `.agentic/failures.json` and the batch goes on; its sources are not
 recorded as integrated, so the next run schedules them again. `--strict-pages`

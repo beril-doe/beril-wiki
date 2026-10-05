@@ -81,12 +81,13 @@ class Plan(BaseModel):
 # so the budget is how many times the model may answer for one job.
 CORRECTION_ATTEMPTS = 4
 
-# A page write is a draft and at most three repairs, of which only one may answer a
-# review: the heaviest page spent four attempts and USD 25 and still left four of six
-# objections open, so further review rounds bought cost, not convergence. The others
-# correct what the host rejects, which in the first tool-free pilot spent two of three
-# attempts on one page before its review was ever read.
-WRITE_ATTEMPTS = 4
+# A page write is a draft and at most four repairs. One answers the review and a second
+# may close what its verification left, if that repair made progress (see accept in
+# write_pass); the others correct what the host rejects, which in the first tool-free
+# pilot spent two of three attempts on one page before its review was ever read. The
+# heaviest page once spent four review rounds and USD 25 and still left four of six
+# objections open, so rounds without progress buy cost, not convergence.
+WRITE_ATTEMPTS = 5
 
 # A page assigned more records than this is written in passes of at most this many,
 # each against the page the previous pass left: one write of 347 records emitted
@@ -1025,10 +1026,14 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
             },
         ]
 
-        # The reviewer states its objections once and then only verifies the one repair
-        # that answers them: a page it still objects to fails and keeps its previous
-        # version, rather than buying more rounds that the heaviest pages never closed.
+        # The reviewer states its objections once and then only verifies the repairs that
+        # answer them. A repair that closed most of them earns one more round on what is
+        # left: in the first full compile 23 of 24 failed pages were such near misses,
+        # 5 of 7 objections closed with one or two small ones open, and each failure
+        # threw away the page's new evidence. A repair that made little progress still
+        # fails the page rather than buying rounds the heaviest pages never closed.
         pending: list[str] = []
+        second: list[bool] = []
 
         def accept(raw: str) -> tuple[dict, str]:
             candidate = candidate_json(raw)
@@ -1069,7 +1074,13 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                     raise
             else:
                 still = worker.verify(review_task, body, list(pending), step)
+                progress = len(still) <= 2 and 2 * len(still) <= len(pending)
                 pending[:] = still
+                if still and progress and not second:
+                    second.append(True)
+                    raise CandidateError(
+                        f"objections still open on {step}: {json.dumps(still)}", still
+                    )
                 if still:
                     raise Unconverged(f"objections still open on {step}: {json.dumps(still)}")
             return candidate, body
