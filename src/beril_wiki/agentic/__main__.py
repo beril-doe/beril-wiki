@@ -202,6 +202,14 @@ def main() -> int:
                         state.pop("fingerprint", None)
                         for stage in {owning_stage(p) for p in pages}:
                             state.get("editorial", {}).pop(stage, None)
+                        # An integrated page is rewritten only when its sources are
+                        # integrated again, which an unchanged checkout never asks for;
+                        # without the accepted outputs the next run replays integration,
+                        # re-drafting the retried pages and reusing everything else.
+                        if any(
+                            p.startswith(("concepts/", "entities/", "summaries/")) for p in pages
+                        ):
+                            state.pop("core_outputs", None)
                         atomic_json(accepted, state)
                     print(f"retry: {changed} job(s) will be re-issued on the next run")
         else:

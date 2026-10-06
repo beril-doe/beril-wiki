@@ -394,7 +394,8 @@ maintenance tools; they do not promote.
 
 `status` lists the failed pages beside the totals. `retry --page` and
 `retry --all-failed` mark every job a failed page used as rejected and drop the
-owning stage from the accepted state, so the next run (which would otherwise
+owning stage from the accepted state (for a concept, entity or summary, the
+accepted integration outputs), so the next run (which would otherwise
 report "unchanged") re-runs that stage, drafts the page afresh (fresh drafts
 converged where repeated repairs did not in the first live run) and leaves every
 other cached page untouched. A pass that records any failure retires no pages,
