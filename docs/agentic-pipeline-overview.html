@@ -260,12 +260,13 @@ button.theme { position: fixed; right: 16px; top: 16px; z-index: 3; font: 400 11
 
 <h2 id="hours-not-days" data-toc="Cost and time">A full compile now takes hours and a third of the spend</h2>
 <div class="tiles">
-  <div class="tile"><div class="n hot">$732</div><div class="k">Claude spend, full compile</div></div>
+  <div class="tile"><div class="n hot">$766</div><div class="k">Claude spend, full compile</div></div>
+  <div class="tile"><div class="n">211M</div><div class="k">Codex tokens, full compile</div></div>
   <div class="tile"><div class="n good">$46</div><div class="k">planning, was $223</div></div>
   <div class="tile"><div class="n good">27 min</div><div class="k">planning, was 10 to 14 h</div></div>
   <div class="tile"><div class="n">248</div><div class="k">pages written</div></div>
 </div>
-<p>The previous full run spent about $1,100 on planning alone, with roughly $1,200 more projected for writing. The new compile ran for about seven to eight hours; extraction and review used 203 million tokens on the ChatGPT subscription rather than Claude spend.</p>
+<p>The previous full run spent about $1,100 on planning alone, with roughly $1,200 more projected for writing. The new compile ran for about seven to eight hours. Both totals include the two automatic retry runs. Codex usage is on the ChatGPT subscription, so it is counted in tokens rather than dollars: 196 million of the 211 million were page reviews, and extraction was reused from cache.</p>
 
 <h2 id="next">Next</h2>
 <div class="callout warn" data-label="Caution">The subscription's five-hour usage window, not the code, now sets how fast a compile finishes; twelve parallel jobs spend it in about an hour.</div>
