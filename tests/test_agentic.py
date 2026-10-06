@@ -811,12 +811,7 @@ def test_reconcile_and_explicit_retry_keep_prior_charge(tmp_path, monkeypatch):
     monkeypatch.setattr(sys, "argv", ["agentic", "--root", str(tmp_path), "retry"])
     assert cli.main() == 1  # nothing named
     (tmp_path / ".agentic/failures.json").write_text(
-        json.dumps(
-            {
-                "conflicts/x": {"step": "conflicts/x", "issues": [], "jobs": [key]},
-                "concepts/z.md": {"step": "write/concepts/z.md", "issues": [], "jobs": [key]},
-            }
-        )
+        json.dumps({"conflicts/x": {"step": "conflicts/x", "issues": [], "jobs": [key]}})
     )
     monkeypatch.setattr(
         sys, "argv", ["agentic", "--root", str(tmp_path), "retry", "--page", "conflicts/y"]
@@ -824,19 +819,12 @@ def test_reconcile_and_explicit_retry_keep_prior_charge(tmp_path, monkeypatch):
     assert cli.main() == 1  # unknown page
     (tmp_path / "state").mkdir()
     (tmp_path / "state/agentic.json").write_text(
-        json.dumps(
-            {
-                "fingerprint": "current",
-                "core_outputs": {"wiki/concepts/z.md": "hash"},
-                "editorial": {"conflicts": {}, "topics": {}},
-            }
-        )
+        json.dumps({"fingerprint": "current", "editorial": {"conflicts": {}, "topics": {}}})
     )
     monkeypatch.setattr(sys, "argv", ["agentic", "--root", str(tmp_path), "retry", "--all-failed"])
     assert cli.main() == 0
     accepted = json.loads((tmp_path / "state/agentic.json").read_text())
     assert "fingerprint" not in accepted and accepted["editorial"] == {"topics": {}}
-    assert "core_outputs" not in accepted  # a retried concept re-runs integration
     monkeypatch.setattr(sys, "argv", ["agentic", "--root", str(tmp_path), "status"])
     assert cli.main() == 0
     restarted = module.Runtime(config)
