@@ -887,6 +887,11 @@ def assemble_evidence(
 
 RETRY_LIMIT = 2
 
+# What integration means, as one explicit revision: bump it when a change should make
+# the next run re-integrate every source. Hashing this file's source did that on any
+# edit, and with routing that is a full re-plan and rewrite of the corpus.
+INTEGRATION_REVISION = "integration@1"
+
 
 def load_failures(store: Path) -> dict:
     path = store / "failures.json"

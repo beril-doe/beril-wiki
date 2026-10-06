@@ -17,7 +17,7 @@ from importlib.metadata import version
 from pathlib import Path
 
 from beril_wiki import compiler as C
-from beril_wiki.agentic.batch import changed_sources, retryable
+from beril_wiki.agentic.batch import INTEGRATION_REVISION, changed_sources, retryable
 from beril_wiki.agentic.curator import EDITORIAL, curate, stage_revision, stage_snapshot
 from beril_wiki.agentic.runtime import (
     AUTH_ENV,
@@ -210,9 +210,10 @@ def compiler_revision() -> str:
     """Scientific compiler semantics, excluding CLI versions and unrelated rendering code."""
     package = Path(__file__).resolve().parents[1]
     return digest(
-        [
+        [INTEGRATION_REVISION]
+        + [
             ast.dump(ast.parse((package / p).read_text(encoding="utf-8")))
-            for p in ("agentic/batch.py", "compiler.py", "check.py")
+            for p in ("compiler.py", "check.py")
         ]
     )
 
@@ -306,7 +307,14 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
         )
         # Compiler/config edits invalidate previous accepted core outputs.
         if accepted and accepted.get("revision") != scientific_revision:
-            changed = sorted(p.name for p in (work / "staging").glob("*.md"))
+            if accepted.get("revision_scheme") == 2:
+                changed = sorted(p.name for p in (work / "staging").glob("*.md"))
+            else:
+                # Accepted before revisions were explicit: its revision hashed source
+                # that has since changed and cannot be recomputed, and re-integrating
+                # every source to find out would re-plan the corpus. Adopt it once;
+                # promotion records the explicit scheme.
+                print("agentic: adopting the accepted revision under explicit revisions")
         if accepted:
             prior_outputs = accepted.get("core_outputs", {})
             current_outputs = manifest(work, ("wiki/concepts", "wiki/entities", "wiki/summaries"))
@@ -349,6 +357,7 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
             )
         next_state = {
             "revision": scientific_revision,
+            "revision_scheme": 2,
             "fingerprint": digest([fingerprint(work), external, rev, models, staged]),
             "models": model_policy(config),
             "core_outputs": manifest(work, ("wiki/concepts", "wiki/entities", "wiki/summaries")),
