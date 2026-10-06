@@ -370,11 +370,14 @@ legacy key, and a hit is recorded in the ledger's `aliases` table, so one replay
 carries the cache over with no duplicated rows or charges.
 
 Scientific compiler/model changes and manual edits to core pages conservatively
-revisit staged sources. What integration means is one explicit revision,
-`INTEGRATION_REVISION` in `agentic/batch.py`, bumped when a change should
-re-integrate every source; hashing that file did so on any edit, which with routing
-re-plans and rewrites the corpus. A state accepted under the older hashed revision is
-adopted once and recorded under the explicit scheme at the next promotion. Deleted sources require a separate scientific retraction;
+revisit staged sources. Code is not hashed for this: what integration means is one
+explicit revision, `INTEGRATION_REVISION` in `agentic/batch.py`, bumped when a change
+should re-integrate every source. Hashing `batch.py`, `compiler.py` and `check.py`
+did so on any edit, which with routing re-plans and rewrites the corpus. A state
+accepted under another revision scheme (`REVISION_SCHEME` in `agentic/runner.py`) is
+adopted once and recorded under the current scheme at the next promotion. A source
+is recorded as integrated even when one of its pages fails, since the page's retry,
+not a second integration of the source, is what writes it again. Deleted sources require a separate scientific retraction;
 they are never silently accepted. Evidence read limits are 24,000 characters per
 read and 100KB total tool output per job; requests are limited to 500KB and
 transcripts/stage logs to 4MB. Oversized inventories still stop with saved

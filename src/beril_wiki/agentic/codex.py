@@ -6,7 +6,6 @@ not this file's source, so bump that when a change here should re-key Codex work
 
 from __future__ import annotations
 
-import ast
 import atexit
 import json
 import os
@@ -25,13 +24,11 @@ from beril_wiki.agentic.runtime import (
     Refused,
     Runtime,
     WorkflowError,
-    digest,
     tool_profile,
     turn_budget_sentence,
 )
 
 EFFORT = "high"
-REVISION = digest([ast.dump(ast.parse(Path(__file__).read_text())), EFFORT])
 ENV_PREFIXES = ("OPENAI_", "ANTHROPIC_", "CLAUDE_")
 # Verified accepted by `codex exec --strict-config` on CLI 0.157.1.
 OVERRIDES = (

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import ast
 import fcntl
 import json
 import os
@@ -206,16 +205,16 @@ def revision() -> str:
     return digest(manifest(package.parent, (package.name,)))
 
 
+# How the accepted revision is computed. A state accepted under another scheme cannot
+# be compared with this one and is adopted once rather than re-integrated.
+REVISION_SCHEME = 3
+
+
 def compiler_revision() -> str:
-    """Scientific compiler semantics, excluding CLI versions and unrelated rendering code."""
-    package = Path(__file__).resolve().parents[1]
-    return digest(
-        [INTEGRATION_REVISION]
-        + [
-            ast.dump(ast.parse((package / p).read_text(encoding="utf-8")))
-            for p in ("compiler.py", "check.py")
-        ]
-    )
+    """What integration means, as the explicit revision alone: hashing compiler.py and
+    check.py made an unrelated edit to either re-plan and rewrite the corpus. Model
+    policy and the contract still re-integrate, as deliberate scientific changes."""
+    return digest([INTEGRATION_REVISION])
 
 
 def fingerprint(root: Path) -> dict[str, str]:
@@ -307,13 +306,12 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
         )
         # Compiler/config edits invalidate previous accepted core outputs.
         if accepted and accepted.get("revision") != scientific_revision:
-            if accepted.get("revision_scheme") == 2:
+            if accepted.get("revision_scheme") == REVISION_SCHEME:
                 changed = sorted(p.name for p in (work / "staging").glob("*.md"))
             else:
-                # Accepted before revisions were explicit: its revision hashed source
-                # that has since changed and cannot be recomputed, and re-integrating
-                # every source to find out would re-plan the corpus. Adopt it once;
-                # promotion records the explicit scheme.
+                # Accepted under another scheme, whose revision cannot be recomputed
+                # here; re-integrating every source to find out would re-plan the
+                # corpus. Adopt it once; promotion records the current scheme.
                 print("agentic: adopting the accepted revision under explicit revisions")
         if accepted:
             prior_outputs = accepted.get("core_outputs", {})
@@ -357,7 +355,7 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
             )
         next_state = {
             "revision": scientific_revision,
-            "revision_scheme": 2,
+            "revision_scheme": REVISION_SCHEME,
             "fingerprint": digest([fingerprint(work), external, rev, models, staged]),
             "models": model_policy(config),
             "core_outputs": manifest(work, ("wiki/concepts", "wiki/entities", "wiki/summaries")),

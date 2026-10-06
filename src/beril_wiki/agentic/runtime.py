@@ -177,6 +177,10 @@ def digest(value: Any) -> str:
 # extraction, on any edit. Bump one when a change should invalidate what it keys.
 TOOLS_REVISION = {"none": "none@1", "read": "read@1", "extended": "extended@1"}
 CODEX_REVISION = "codex@1"
+# The adapter's source hash when keys were last derived from it (3a1635b): legacy
+# lookups need the value cached work was keyed under, not today's, or any edit to
+# codex.py would hide that work from the store that has not aliased it yet.
+LEGACY_CODEX_REVISION = "046597e47ecabb8e5241d9fc5e64484d297631219c1c7a6e6e2603dc88b535f7"
 
 # Instruction texts by tag. A key holds the tag, not the wording, so a wording fix
 # keeps cached work; bump the tag when the change should re-key it, including a change
@@ -787,6 +791,7 @@ class Runtime:
         self._validation_context: Any = None
         self._step = ""
         self.jobs: list[str] = []  # every key this runtime touched, cached or fresh
+        self.closed = 0  # objections the last verification marked resolved
         self.ledger = Ledger(
             self.store / "jobs.sqlite",
             config["run"],
@@ -841,7 +846,7 @@ class Runtime:
 
             # The adapter and its effort shape a Codex answer as the SDK tools shape a
             # Claude one; Claude keys stay byte-identical.
-            legacy = digest([legacy, codex.REVISION])
+            legacy = digest([legacy, LEGACY_CODEX_REVISION])
             revision = digest([revision, CODEX_REVISION, codex.EFFORT])
         effort = self.effort(step) if backend == "claude" else None
         if effort:
@@ -1260,6 +1265,7 @@ class Runtime:
             still_open = [str(i) for i in verdict["open"]]
         except (ValueError, KeyError, TypeError) as exc:
             raise WorkflowError(f"invalid verification verdict: {exc}") from exc
+        self.closed = len(resolved & set(range(len(issues))))
         return [i for n, i in enumerate(issues) if n not in resolved] + still_open
 
 

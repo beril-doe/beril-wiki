@@ -1059,6 +1059,19 @@ def compile_batch(
     prior = load_failures(agent.store)
     failures: dict[str, dict] = {}
     lock = threading.Lock()
+    # A later integration replaced the saved plan; a page it no longer holds cannot be
+    # re-drafted from it, so it goes to a person instead of waiting silently forever.
+    for page in [p for p in retry or [] if p not in jobs]:
+        failures[page] = prior.get(page, {}) | {
+            "retries": RETRY_LIMIT,
+            "issues": [
+                {
+                    "category": "write",
+                    "note": "not in the saved plan, which a later integration replaced; "
+                    "needs a person or a re-plan",
+                }
+            ],
+        }
 
     def write_pass(
         worker: Runtime,
@@ -1164,7 +1177,10 @@ def compile_batch(
                     raise
             else:
                 still = worker.verify(review_task, body, list(pending), step)
-                progress = len(still) <= 2 and 2 * len(still) <= len(pending)
+                # Judged on the objections it closed: the reviewer restates an open one
+                # in its own list, so counting what is left counts it twice.
+                left = len(pending) - worker.closed
+                progress = left <= 2 and 2 * left <= len(pending)
                 pending[:] = still
                 if still and progress and not second:
                     second.append(True)
@@ -1214,7 +1230,7 @@ def compile_batch(
         # 711KB in place of 19KB, and 141MB across the plan. A new entity has no
         # assignment and is written from the records the router said describe it.
         cap = int(agent.config.get("pass_records", PASS_RECORDS))
-        about = [f for f in relevant if f["id"] in set(job.evidence)][: cap or None]
+        about = [f for f in relevant if f["id"] in set(job.evidence)]
         slices = passes(assigned, cap)
         dropped = 0
         try:
@@ -1256,6 +1272,9 @@ def compile_batch(
         """A page that fails its rounds or its own job is recorded and the batch goes
         on, as a derived page is; --strict-pages stops the run instead."""
         path, job = item
+        # Only this page's jobs: a single selected page runs on the main runtime, whose
+        # list also holds extraction and routing, which a retry would otherwise re-buy.
+        start = len(worker.jobs)
         try:
             return write_page(worker, path, job)
         except (CandidateError, JobFailed, Unconverged) as exc:
@@ -1265,7 +1284,7 @@ def compile_batch(
                 failures[path] = {
                     "step": f"write/{path}",
                     "issues": [{"category": "write", "note": str(exc)[:400]}],
-                    "jobs": list(worker.jobs),
+                    "jobs": worker.jobs[start:],
                     "retries": prior.get(path, {}).get("retries", 0) + bool(retry),
                 }
             print(f"agentic: failed page {path}: {str(exc)[:200]}", flush=True)
@@ -1291,7 +1310,6 @@ def compile_batch(
             f"pilot complete: {written} of {len(pilot)} named page(s) written to "
             f"{root / 'wiki'}; integration was not recorded"
         )
-    failed_sources = {sid for path in failures for sid in jobs[path].sources}
     for loser, survivor in losers.items():
         if survivor in failures:
             continue
@@ -1304,12 +1322,9 @@ def compile_batch(
     hashes_path = root / "state/hashes.json"
     hashes_path.parent.mkdir(exist_ok=True)
     hashes = json.loads(hashes_path.read_text(encoding="utf-8")) if hashes_path.exists() else {}
-    hashes.update(
-        {
-            name: file_hash(root / "staging" / name)
-            for name in names
-            if sid_for(name) not in failed_sources
-        }
-    )
+    # Every source is recorded, failed pages or not: a failed page is re-drafted by the
+    # retry on the next run, while a source left pending would be integrated again,
+    # re-routing it and never spending the page's retries.
+    hashes.update({name: file_hash(root / "staging" / name) for name in names})
     hashes_path.write_text(json.dumps(hashes, indent=1, sort_keys=True))
     C.rebuild_index(root)

@@ -131,7 +131,10 @@ def test_repeated_quantity_loss_is_recorded_and_the_batch_goes_on(tmp_path, monk
     failures = json.loads((tmp_path / "jobs/failures.json").read_text())
     assert list(failures) == ["concepts/yield.md"]
     assert "unchanged citations or quantities" in failures["concepts/yield.md"]["issues"][0]["note"]
-    assert "a__REPORT.md" not in json.loads((tmp_path / "state/hashes.json").read_text())
+    # The source is recorded: the page is re-drafted by the next run's retry, while a
+    # pending source would be integrated again and never spend the page's retries.
+    assert "a__REPORT.md" in json.loads((tmp_path / "state/hashes.json").read_text())
+    assert batch.retryable(agent.store) == ["concepts/yield.md"]
     # The other page of the batch was still written.
     assert (tmp_path / "wiki/summaries/a__REPORT.md").exists()
 
@@ -203,7 +206,12 @@ def test_a_page_whose_every_pass_fails_is_left_as_it_was(tmp_path, monkeypatch):
 
 def test_a_repair_that_closed_most_objections_earns_one_more_round(tmp_path, monkeypatch):
     agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
-    verdicts = [["a denominator is missing"], ["a denominator is missing"]]
+    # Live verdicts restate an objection still open in their own list, so the parsed
+    # result names it twice; progress is judged on what was closed, not on that count.
+    verdicts = [
+        {"resolved": [0, 1], "open": ["a denominator is missing"]},
+        {"resolved": [], "open": ["a denominator is missing"]},
+    ]
 
     def review(task, raw, step):
         if step.startswith("write/concepts/"):
@@ -211,11 +219,18 @@ def test_a_repair_that_closed_most_objections_earns_one_more_round(tmp_path, mon
                 "rejected", ["a caveat is lost", "a unit is wrong", "a denominator is missing"]
             )
 
+    reply = agent.ask
+
+    def answer(messages, step):
+        if step.endswith("/verify"):
+            return json.dumps(verdicts.pop(0))
+        return reply(messages, step)
+
     monkeypatch.setattr(agent, "review", review)
-    monkeypatch.setattr(agent, "verify", lambda task, raw, issues, step: verdicts.pop(0))
+    monkeypatch.setattr(agent, "ask", answer)
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
     # Two of three closed, so the one left gets a second repair; it stays open there
-    # too, and a third review round is never bought.
+    # too, and a third round is never bought.
     assert [s for s, _ in calls if s.startswith("write/concepts/")] == [
         "write/concepts/yield.md",
         "write/concepts/yield.md/repair",
@@ -274,6 +289,21 @@ def test_a_failed_page_is_redrafted_from_the_saved_plan_without_replanning(tmp_p
         s.startswith("write/concepts/yield.md") for s, _ in calls[before:]
     )
     assert batch.load_failures(agent.store) == {}
+
+
+def test_a_failed_page_missing_from_the_saved_plan_goes_to_a_person(tmp_path, monkeypatch):
+    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    stale = {"step": "write/concepts/gone.md", "issues": [], "jobs": [], "retries": 0}
+    (agent.store / "failures.json").write_text(json.dumps({"concepts/gone.md": stale}))
+    before = len(calls)
+    batch.compile_batch(tmp_path, agent, [], retry=batch.retryable(agent.store))
+    # A later plan no longer holds it: nothing is written and it stops being retried.
+    assert len(calls) == before and batch.retryable(agent.store) == []
+    assert (
+        "needs a person"
+        in batch.load_failures(agent.store)["concepts/gone.md"]["issues"][0]["note"]
+    )
 
 
 def test_a_page_failing_its_retries_waits_for_a_person(tmp_path, monkeypatch):
