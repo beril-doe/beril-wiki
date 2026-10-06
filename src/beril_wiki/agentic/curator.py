@@ -173,15 +173,18 @@ def curate(
     changed: list[str],
     refresh: Callable[[str, list[str]], None],
     prior: dict,
+    retry: list[str] | None = None,
 ) -> dict:
-    """Run integration, then each editorial stage whose fingerprint is stale, in table order."""
+    """Run integration, then each editorial stage whose fingerprint is stale, in table order.
+
+    With no changed source, pages a run left failed are re-drafted from the saved plan."""
     state = dict(prior)
     receipts: list[dict] = []
     refresh("extras", [])
     refresh("names-core", [str(root)])
     # Freshness is judged when each stage is reached: integration can make a stage
     # stale that was current before it ran (authors reads summaries, for instance).
-    for action in (["integrate"] if changed else []) + list(EDITORIAL):
+    for action in (["integrate"] if changed or retry else []) + list(EDITORIAL):
         if action != "integrate" and action not in pending_actions(
             root, state, agent.config, integrated=True
         ):
@@ -190,7 +193,10 @@ def curate(
         before = manifest(root, ("wiki", "state"))
         try:
             if action == "integrate":
-                compile_batch(root, agent, changed)
+                if changed:
+                    compile_batch(root, agent, changed)
+                else:
+                    compile_batch(root, agent, [], retry=retry)
                 refresh("entities", ["--apply"])
                 refresh("names-core", [str(root)])
                 refresh("extras", [])

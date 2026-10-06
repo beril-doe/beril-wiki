@@ -885,16 +885,61 @@ def assemble_evidence(
     return findings, manifest
 
 
-def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
-    if not names:
-        return
-    sources = C.load_sources(root)
-    revised = {
-        sid_for(name)
-        for name in names
-        if (root / "wiki/sources" / name).exists()
-        and file_hash(root / "staging" / name) != file_hash(root / "wiki/sources" / name)
-    }
+RETRY_LIMIT = 2
+
+
+def load_failures(store: Path) -> dict:
+    path = store / "failures.json"
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+
+
+def retryable(store: Path) -> list[str]:
+    """Integrated pages a run left failed that have retries left; the next run re-drafts
+    them without anyone asking, and a page failing RETRY_LIMIT times waits for a person."""
+    return sorted(
+        page
+        for page, entry in load_failures(store).items()
+        if page.startswith(("concepts/", "entities/", "summaries/"))
+        and entry.get("retries", 0) < RETRY_LIMIT
+    )
+
+
+def reissue(agent: Runtime, keys: list[str]) -> None:
+    """Mark a page's jobs for a fresh draft, as retry --job does; a recorded refusal keeps
+    the model it was answered on."""
+    with agent.ledger.db:
+        agent.ledger.db.executemany(
+            "UPDATE jobs SET status='rejected' WHERE key=? AND status IN ('done','failed')",
+            [(key,) for key in keys],
+        )
+
+
+def saved_plan(store: Path) -> tuple[list[dict], Plan, dict[str, PageJob]]:
+    """The last plan and the evidence it was made from."""
+    path = store / "last-plan.json"
+    if not path.exists():
+        raise WorkflowError("no saved plan to retry from; a full run must plan first")
+    saved = json.loads(path.read_text(encoding="utf-8"))
+    pages = [PageJob.model_validate(p) for p in saved["pages"]]
+    coverage = [Coverage.model_validate(c) for c in saved["coverage"]]
+    ids = {c.evidence for c in coverage}
+    named = saved.get("evidence")
+    candidates = (
+        [store / "evidence" / named]
+        if named
+        else sorted((store / "evidence").glob("*.json"), key=lambda p: -p.stat().st_mtime)
+    )
+    for candidate in candidates:
+        findings = json.loads(candidate.read_text(encoding="utf-8"))["findings"]
+        if {f["id"] for f in findings} == ids:
+            return findings, Plan(pages=pages, coverage=coverage), {p.path: p for p in pages}
+    raise WorkflowError("no saved evidence matches the saved plan; a full run must re-plan")
+
+
+def plan_batch(
+    root: Path, agent: Runtime, names: list[str], sources: dict[str, str]
+) -> tuple[list[dict], Plan, dict[str, PageJob], dict[str, str]]:
+    """Extract the changed sources, route their evidence and save the plan."""
     tasks: list[tuple[str, str, int, int]] = []
     for name in names:
         text = (root / "staging" / name).read_text(encoding="utf-8", errors="replace")
@@ -958,23 +1003,55 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
     listing = briefs(root)
     plan = route_plan(root, agent, findings)
     jobs, losers = plan_jobs(root, plan, findings, sources, listing, names)
-    targets = (C.wikilink_targets(root) | {p.removesuffix(".md") for p in jobs}) - {
-        p.removesuffix(".md") for p in losers
-    }
     (agent.store / "last-plan.json").write_text(
         json.dumps(
             {
+                "evidence": f"{digest(extraction_manifest)}.json",
                 "pages": [j.model_dump() for j in jobs.values()],
                 "coverage": [c.model_dump() for c in plan.coverage],
             },
             indent=2,
         )
     )
+    return findings, plan, jobs, losers
+
+
+def compile_batch(
+    root: Path, agent: Runtime, names: list[str], retry: list[str] | None = None
+) -> None:
+    """Integrate changed sources, or, with retry, re-draft pages a run left failed.
+
+    A retry reuses the saved plan instead of routing again: once a compile has been
+    promoted, routing prompts carry the new concept dictionary and every write carries
+    its page's new text, so replaying integration would re-plan and rewrite the corpus
+    to re-draft a handful of pages."""
+    if not names and not retry:
+        return
+    sources = C.load_sources(root)
+    if retry:
+        findings, plan, jobs = saved_plan(agent.store)
+        losers: dict[str, str] = {}
+        revised: set[str] = set()
+        previous = load_failures(agent.store)
+        reissue(agent, [k for page in retry for k in previous.get(page, {}).get("jobs", [])])
+    else:
+        revised = {
+            sid_for(name)
+            for name in names
+            if (root / "wiki/sources" / name).exists()
+            and file_hash(root / "staging" / name) != file_hash(root / "wiki/sources" / name)
+        }
+        findings, plan, jobs, losers = plan_batch(root, agent, names, sources)
+    targets = (C.wikilink_targets(root) | {p.removesuffix(".md") for p in jobs}) - {
+        p.removesuffix(".md") for p in losers
+    }
     # A pilot writes a few named pages to measure cost and acceptance, then stops
     # before the bookkeeping below: a partial run must never record every source as
     # integrated, or the next run would believe the work was done.
     pilot = {p for p in str(agent.config.get("write_only", "")).split(",") if p}
-    selected = [(path, job) for path, job in sorted(jobs.items()) if not pilot or path in pilot]
+    wanted = set(retry or []) or pilot
+    selected = [(path, job) for path, job in sorted(jobs.items()) if not wanted or path in wanted]
+    prior = load_failures(agent.store)
     failures: dict[str, dict] = {}
     lock = threading.Lock()
 
@@ -1176,6 +1253,7 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
                     "step": f"write/{path}",
                     "issues": [{"category": "write", "note": str(exc)[:400]}],
                     "jobs": list(worker.jobs),
+                    "retries": prior.get(path, {}).get("retries", 0) + bool(retry),
                 }
             print(f"agentic: failed page {path}: {str(exc)[:200]}", flush=True)
             return False
@@ -1187,12 +1265,14 @@ def compile_batch(root: Path, agent: Runtime, names: list[str]) -> None:
     recorded.update(failures)
     if failures:
         print(
-            f"agentic: {len(failures)} page(s) kept their previous version; their sources "
-            "stay pending for the next run",
+            f"agentic: {len(failures)} page(s) kept their previous version; the next run "
+            "re-drafts each up to its retry limit",
             flush=True,
         )
     if recorded != before:
         atomic_json(failures_path, recorded)
+    if retry:
+        return  # the sources were integrated before; only these pages were re-drafted
     if pilot:
         raise WorkflowError(
             f"pilot complete: {written} of {len(pilot)} named page(s) written to "

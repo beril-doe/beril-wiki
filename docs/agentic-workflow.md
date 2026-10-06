@@ -224,8 +224,15 @@ its repairs; objections still open after a repair without progress end the page
 rather than buying more rounds, which the heaviest page spent USD 25 on without
 converging. A page
 that fails its correction rounds, or whose own job times out or is cut off, is
-recorded in `.agentic/failures.json` and the batch goes on; its sources are not
-recorded as integrated, so the next run schedules them again. `--strict-pages`
+recorded in `.agentic/failures.json` and the batch goes on. The next run re-drafts
+it without being asked, up to two retries per page: with no changed source, a run
+that finds failed concept, entity or summary pages reuses the saved plan
+(`.agentic/last-plan.json` and the evidence it names), marks the pages' jobs for
+fresh drafts and writes only those pages, then runs the later stages, the check and
+promotion as usual. It never routes again: once a compile is promoted, routing
+prompts carry the new concept dictionary and every write carries its page's new
+text, so replaying integration would re-plan and rewrite the corpus to re-draft a
+handful of pages. A page that fails its retries waits for a person. `--strict-pages`
 stops the run instead.
 Quantities in those mixed-source paragraphs are retained conservatively; separate
 scientific review assesses support and lost
@@ -392,7 +399,8 @@ For a capped acceptance pass, invoke a stage directly with `--limit N`
 partial pass never reaps pages it did not get to. Direct stage invocations are
 maintenance tools; they do not promote.
 
-`status` lists the failed pages beside the totals. `retry --page` and
+`status` lists the failed pages beside the totals. Failed integrated pages are
+retried automatically, as above. For a derived page, `retry --page` and
 `retry --all-failed` mark every job a failed page used as rejected and drop the
 owning stage from the accepted state, so the next run (which would otherwise
 report "unchanged") re-runs that stage, drafts the page afresh (fresh drafts

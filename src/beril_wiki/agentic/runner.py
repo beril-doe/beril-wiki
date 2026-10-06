@@ -17,7 +17,7 @@ from importlib.metadata import version
 from pathlib import Path
 
 from beril_wiki import compiler as C
-from beril_wiki.agentic.batch import changed_sources
+from beril_wiki.agentic.batch import changed_sources, retryable
 from beril_wiki.agentic.curator import EDITORIAL, curate, stage_revision, stage_snapshot
 from beril_wiki.agentic.runtime import (
     AUTH_ENV,
@@ -262,10 +262,11 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
         accepted = (
             json.loads(accepted_path.read_text(encoding="utf-8")) if accepted_path.exists() else {}
         )
-        if accepted.get("fingerprint") == identity:
+        store = root / ".agentic"
+        retry = retryable(store)
+        if accepted.get("fingerprint") == identity and not retry:
             print("agentic: unchanged; zero model calls")
             return {"unchanged": True}
-        store = root / ".agentic"
         work = store / "work"
         if work.exists():
             manifest(work, (*TREES, "contract", "reference"))  # reject symlinks before cleanup
@@ -327,7 +328,7 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
 
         prior = accepted.get("editorial", {}) if accepted.get("version") == 2 else {}
         # Accepted snapshots are recomputed after final naming and figure postprocessing.
-        curate(work, agent, changed, refresh, prior)
+        curate(work, agent, changed, refresh, prior, retry)
         refresh("names", [str(work)])
         refresh("errata", [str(work)])
         figure_state = ("state/figures-placements.json", "state/figures-state.json")

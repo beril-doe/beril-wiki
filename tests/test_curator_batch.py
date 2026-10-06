@@ -263,6 +263,28 @@ def test_a_repair_the_reviewer_still_rejects_ends_the_page(tmp_path, monkeypatch
     assert (tmp_path / "wiki/concepts/yield.md").read_text() == OLD
 
 
+def test_a_failed_page_is_redrafted_from_the_saved_plan_without_replanning(tmp_path, monkeypatch):
+    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch, bad_writes=batch.WRITE_ATTEMPTS)
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    assert batch.retryable(agent.store) == ["concepts/yield.md"]
+    before = len(calls)
+    batch.compile_batch(tmp_path, agent, [], retry=batch.retryable(agent.store))
+    # Only the failed page is written, from the saved plan: no extraction, no routing.
+    assert calls[before:] and all(
+        s.startswith("write/concepts/yield.md") for s, _ in calls[before:]
+    )
+    assert batch.load_failures(agent.store) == {}
+
+
+def test_a_page_failing_its_retries_waits_for_a_person(tmp_path, monkeypatch):
+    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch, bad_writes=99)
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    for retries in (1, 2):
+        batch.compile_batch(tmp_path, agent, [], retry=batch.retryable(agent.store))
+        assert batch.load_failures(agent.store)["concepts/yield.md"]["retries"] == retries
+    assert batch.retryable(agent.store) == []
+
+
 def test_strict_pages_stops_on_the_first_failed_page(tmp_path, monkeypatch):
     agent, calls, _, _ = setup_batch(tmp_path, monkeypatch, bad_writes=batch.WRITE_ATTEMPTS)
     monkeypatch.setitem(agent.config, "strict_pages", True)
