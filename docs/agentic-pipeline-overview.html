@@ -260,13 +260,42 @@ button.theme { position: fixed; right: 16px; top: 16px; z-index: 3; font: 400 11
 
 <h2 id="hours-not-days" data-toc="Cost and time">A full compile now takes hours and a third of the spend</h2>
 <div class="tiles">
-  <div class="tile"><div class="n hot">$766</div><div class="k">Claude spend, full compile</div></div>
-  <div class="tile"><div class="n">211M</div><div class="k">Codex tokens, full compile</div></div>
+  <div class="tile"><div class="n hot">$812</div><div class="k">Claude, all stages</div></div>
+  <div class="tile"><div class="n">311M</div><div class="k">Codex tokens, all stages</div></div>
   <div class="tile"><div class="n good">$46</div><div class="k">planning, was $223</div></div>
   <div class="tile"><div class="n good">27 min</div><div class="k">planning, was 10 to 14 h</div></div>
   <div class="tile"><div class="n">248</div><div class="k">pages written</div></div>
 </div>
-<p>The previous full run spent about $1,100 on planning alone, with roughly $1,200 more projected for writing. The new compile ran for about seven to eight hours. Both totals include the two automatic retry runs. Codex usage is on the ChatGPT subscription, so it is counted in tokens rather than dollars: 196 million of the 211 million were page reviews, and extraction was reused from cache.</p>
+<p>The previous full run spent about $1,100 on planning alone, with roughly $1,200 more projected for writing. The new compile ran for about seven to eight hours. Page writing is most of the Claude spend, and page review most of the Codex tokens.</p>
+<figure class="table">
+<figcaption><b>Usage by stage, provider and model for the full compile.</b> Jobs, tokens (input, output and cache, in millions) and Claude cost in US dollars, 2 to 6 October 2026, including routing, both automatic retry runs and the extraction the compile reused from 28 September; from the job ledger.</figcaption>
+<div class="table-wrap"><table>
+<thead><tr><th>Stage</th><th>Provider</th><th>Model</th><th class="num">Jobs</th><th class="num">Tokens (M)</th><th class="num">Claude cost ($)<sup>a</sup></th></tr></thead>
+<tbody>
+<tr><td>Extraction (once, reused)</td><td><span class="tag teal">Codex</span></td><td>GPT-6 Sol</td><td class="num">329</td><td class="num">64.6</td><td class="num">—</td></tr>
+<tr><td>Extraction (once, reused)</td><td><span class="tag teal">Codex</span></td><td>GPT-6.1 Sol</td><td class="num">324</td><td class="num">34.2</td><td class="num">—</td></tr>
+<tr><td>Routing</td><td><span class="tag peach">Anthropic</span></td><td>Opus 5.5</td><td class="num">79</td><td class="num">4.3</td><td class="num">32.56</td></tr>
+<tr><td>Routing</td><td><span class="tag peach">Anthropic</span></td><td>Opus 5</td><td class="num">21</td><td class="num">1.2</td><td class="num">14.08</td></tr>
+<tr><td>Page writing</td><td><span class="tag peach">Anthropic</span></td><td>Opus 5.5</td><td class="num">838</td><td class="num">65.9</td><td class="num">402.14</td></tr>
+<tr><td>Page writing</td><td><span class="tag peach">Anthropic</span></td><td>Opus 5</td><td class="num">287</td><td class="num">39.4</td><td class="num">286.45</td></tr>
+<tr><td>Page review</td><td><span class="tag teal">Codex</span></td><td>GPT-6.1 Sol</td><td class="num">883</td><td class="num">195.3</td><td class="num">—</td></tr>
+<tr><td>Page review</td><td><span class="tag teal">Codex</span></td><td>GPT-5.6 Sol</td><td class="num">6</td><td class="num">0.7</td><td class="num">—</td></tr>
+<tr><td>Derived pages</td><td><span class="tag peach">Anthropic</span></td><td>Opus 5.5</td><td class="num">535</td><td class="num">9.4</td><td class="num">61.34</td></tr>
+<tr><td>Derived pages</td><td><span class="tag peach">Anthropic</span></td><td>Opus 5</td><td class="num">47</td><td class="num">1.7</td><td class="num">15.57</td></tr>
+<tr><td>Derived pages</td><td><span class="tag teal">Codex</span></td><td>GPT-6.1 Sol</td><td class="num">816</td><td class="num">15.9</td><td class="num">—</td></tr>
+<tr><td><b>Total</b></td><td><span class="tag peach">Anthropic</span></td><td>Opus 5.5, Opus 5</td><td class="num">1,807</td><td class="num">121.9</td><td class="num hot">812.14</td></tr>
+<tr><td><b>Total</b></td><td><span class="tag teal">Codex</span></td><td>GPT-6 Sol, GPT-6.1 Sol, GPT-5.6 Sol</td><td class="num">2,358</td><td class="num">310.7</td><td class="num">—</td></tr>
+</tbody></table></div>
+<p class="fn"><sup>a</sup> Claude Code's reported cost at API list prices; on the Claude subscription this is an equivalent, not a bill. Codex runs on the ChatGPT subscription and reports tokens only, so it has no price here. Opus 5 and GPT-5.6 Sol rows are jobs re-run after Opus 5.5 or GPT-6.1 Sol declined biological content.</p>
+</figure>
+<figure>
+<div class="vega"><script type="application/json">{"$schema": "https://vega.github.io/schema/vega-lite/v6.json", "width": "container", "height": 230, "data": {"values": [{"stage": "Extraction (once, reused)", "model": "GPT-6 Sol", "tokens": 64.6}, {"stage": "Extraction (once, reused)", "model": "GPT-6.1 Sol", "tokens": 34.2}, {"stage": "Routing", "model": "Opus 5.5", "tokens": 4.3}, {"stage": "Routing", "model": "Opus 5", "tokens": 1.2}, {"stage": "Page writing", "model": "Opus 5.5", "tokens": 65.9}, {"stage": "Page writing", "model": "Opus 5", "tokens": 39.4}, {"stage": "Page review", "model": "GPT-6.1 Sol", "tokens": 195.3}, {"stage": "Page review", "model": "GPT-5.6 Sol", "tokens": 0.7}, {"stage": "Derived pages", "model": "Opus 5.5", "tokens": 9.4}, {"stage": "Derived pages", "model": "Opus 5", "tokens": 1.7}, {"stage": "Derived pages", "model": "GPT-6.1 Sol", "tokens": 15.9}]}, "mark": {"type": "bar", "tooltip": true}, "encoding": {"y": {"field": "stage", "type": "nominal", "sort": ["Extraction (once, reused)", "Routing", "Page writing", "Page review", "Derived pages"], "title": null}, "x": {"field": "tokens", "type": "quantitative", "title": "Tokens (millions)"}, "color": {"field": "model", "type": "nominal", "scale": {"domain": ["Opus 5.5", "Opus 5", "GPT-6 Sol", "GPT-6.1 Sol", "GPT-5.6 Sol"]}, "title": "Model"}, "order": {"field": "model", "type": "nominal"}}}</script></div>
+<figcaption><b>Tokens by stage and model.</b> Bars stack the tokens (millions) each model used in each stage of the full compile, both providers; hover for values. Page review on GPT-6.1 Sol is the largest single use, and extraction was paid once and reused.</figcaption>
+</figure>
+<figure>
+<div class="vega"><script type="application/json">{"$schema": "https://vega.github.io/schema/vega-lite/v6.json", "width": "container", "height": 230, "data": {"values": [{"stage": "Routing", "model": "Opus 5.5", "usd": 32.56}, {"stage": "Routing", "model": "Opus 5", "usd": 14.08}, {"stage": "Page writing", "model": "Opus 5.5", "usd": 402.14}, {"stage": "Page writing", "model": "Opus 5", "usd": 286.45}, {"stage": "Derived pages", "model": "Opus 5.5", "usd": 61.34}, {"stage": "Derived pages", "model": "Opus 5", "usd": 15.57}]}, "mark": {"type": "bar", "tooltip": true}, "encoding": {"y": {"field": "stage", "type": "nominal", "sort": ["Extraction (once, reused)", "Routing", "Page writing", "Page review", "Derived pages"], "title": null}, "x": {"field": "usd", "type": "quantitative", "title": "Claude cost (US dollars)"}, "color": {"field": "model", "type": "nominal", "scale": {"domain": ["Opus 5.5", "Opus 5", "GPT-6 Sol", "GPT-6.1 Sol", "GPT-5.6 Sol"]}, "title": "Model"}, "order": {"field": "model", "type": "nominal"}}}</script></div>
+<figcaption><b>Claude cost by stage and model.</b> Bars stack the API-equivalent dollars per Claude model in each stage; Codex stages carry no price. Page writing is 85% of the Claude cost, and the Opus 5 share is the price of falling back after Opus 5.5 declines.</figcaption>
+</figure>
 
 <h2 id="next">Next</h2>
 <div class="callout warn" data-label="Caution">The subscription's five-hour usage window, not the code, now sets how fast a compile finishes; twelve parallel jobs spend it in about an hour.</div>
