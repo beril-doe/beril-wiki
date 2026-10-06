@@ -1,0 +1,26 @@
+{
+  "alt": "Project reports are extracted into quoted evidence, routed to pages, written and reviewed page by page, followed by derived pages, a strict check and publication; a ledger caches every model job.",
+  "elements": [
+    {"type": "rectangle", "id": "reports", "x": 0, "y": 0, "width": 240, "height": 100, "label": {"text": "Project reports"}},
+    {"type": "rectangle", "id": "extract", "x": 330, "y": 0, "width": 240, "height": 100, "label": {"text": "Extract evidence"}},
+    {"type": "rectangle", "id": "route", "x": 660, "y": 0, "width": 240, "height": 100, "label": {"text": "Route to pages"}},
+    {"type": "rectangle", "id": "write", "x": 990, "y": 0, "width": 240, "height": 100, "label": {"text": "Write and review\npages"}, "strokeColor": "$accent"},
+    {"type": "rectangle", "id": "derived", "x": 990, "y": 300, "width": 240, "height": 100, "label": {"text": "Derived pages"}},
+    {"type": "rectangle", "id": "check", "x": 660, "y": 300, "width": 240, "height": 100, "label": {"text": "Strict check"}},
+    {"type": "rectangle", "id": "publish", "x": 330, "y": 300, "width": 240, "height": 100, "label": {"text": "Promote to wiki"}},
+    {"type": "text", "x": 10, "y": -42, "text": "75 reports, unchanged", "fontSize": 17},
+    {"type": "text", "x": 340, "y": -42, "text": "GPT-6 Sol, quotes verbatim", "fontSize": 17},
+    {"type": "text", "x": 670, "y": -42, "text": "Opus 5.5, parallel jobs", "fontSize": 17},
+    {"type": "text", "x": 1000, "y": -42, "text": "Opus writes, GPT reviews", "fontSize": 17},
+    {"type": "text", "x": 1000, "y": 412, "text": "conflicts, topics,\nliterature, authors", "fontSize": 17},
+    {"type": "text", "x": 670, "y": 412, "text": "citations, figures, links", "fontSize": 17},
+    {"type": "text", "x": 340, "y": 412, "text": "only if the check passes", "fontSize": 17},
+    {"type": "arrow", "x": 245, "y": 50, "points": [[0, 0], [80, 0]], "start": {"id": "reports"}, "end": {"id": "extract"}},
+    {"type": "arrow", "x": 575, "y": 50, "points": [[0, 0], [80, 0]], "start": {"id": "extract"}, "end": {"id": "route"}},
+    {"type": "arrow", "x": 905, "y": 50, "points": [[0, 0], [80, 0]], "start": {"id": "route"}, "end": {"id": "write"}},
+    {"type": "arrow", "x": 1110, "y": 105, "points": [[0, 0], [0, 190]], "start": {"id": "write"}, "end": {"id": "derived"}, "label": {"text": "pages", "fontSize": 17}},
+    {"type": "arrow", "x": 985, "y": 350, "points": [[0, 0], [-80, 0]], "start": {"id": "derived"}, "end": {"id": "check"}},
+    {"type": "arrow", "x": 655, "y": 350, "points": [[0, 0], [-80, 0]], "start": {"id": "check"}, "end": {"id": "publish"}},
+    {"type": "rectangle", "id": "ledger", "x": 0, "y": 520, "width": 1230, "height": 70, "strokeColor": "$teal", "label": {"text": "Ledger: every model job is cached, costed and resumable; reruns replay for free", "fontSize": 18}}
+  ]
+}

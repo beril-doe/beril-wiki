@@ -1,0 +1,311 @@
+{
+ "alt": "A page is drafted, checked by host gates, reviewed by the other model family, repaired and verified; it is accepted, or recorded as failed and re-drafted on the next run.",
+ "elements": [
+  {
+   "type": "rectangle",
+   "id": "draft",
+   "x": 0,
+   "y": 0,
+   "width": 230,
+   "height": 100,
+   "label": {
+    "text": "Draft"
+   }
+  },
+  {
+   "type": "rectangle",
+   "id": "gates",
+   "x": 320,
+   "y": 0,
+   "width": 230,
+   "height": 100,
+   "label": {
+    "text": "Host gates"
+   }
+  },
+  {
+   "type": "rectangle",
+   "id": "review",
+   "x": 640,
+   "y": 0,
+   "width": 230,
+   "height": 100,
+   "label": {
+    "text": "Independent\nreview"
+   },
+   "strokeColor": "$accent"
+  },
+  {
+   "type": "rectangle",
+   "id": "ok",
+   "x": 1040,
+   "y": 0,
+   "width": 230,
+   "height": 100,
+   "label": {
+    "text": "Accepted"
+   },
+   "strokeColor": "$green"
+  },
+  {
+   "type": "rectangle",
+   "id": "repair",
+   "x": 320,
+   "y": 280,
+   "width": 230,
+   "height": 100,
+   "label": {
+    "text": "Repair"
+   }
+  },
+  {
+   "type": "rectangle",
+   "id": "verify",
+   "x": 640,
+   "y": 280,
+   "width": 230,
+   "height": 100,
+   "label": {
+    "text": "Verify"
+   }
+  },
+  {
+   "type": "rectangle",
+   "id": "fail",
+   "x": 1040,
+   "y": 280,
+   "width": 230,
+   "height": 100,
+   "label": {
+    "text": "Failed"
+   },
+   "strokeColor": "$peach"
+  },
+  {
+   "type": "text",
+   "x": 10,
+   "y": -42,
+   "text": "Opus 5.5, one turn",
+   "fontSize": 17
+  },
+  {
+   "type": "text",
+   "x": 330,
+   "y": -42,
+   "text": "quotes, citations, figures",
+   "fontSize": 17
+  },
+  {
+   "type": "text",
+   "x": 650,
+   "y": -42,
+   "text": "GPT-6.1 Sol reads sources",
+   "fontSize": 17
+  },
+  {
+   "type": "text",
+   "x": 330,
+   "y": 392,
+   "text": "may search sources",
+   "fontSize": 17
+  },
+  {
+   "type": "text",
+   "x": 650,
+   "y": 392,
+   "text": "were the issues closed?",
+   "fontSize": 17
+  },
+  {
+   "type": "text",
+   "x": 1050,
+   "y": 392,
+   "text": "old version kept,\nretried next run",
+   "fontSize": 17
+  },
+  {
+   "type": "arrow",
+   "x": 235,
+   "y": 50,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     80,
+     0
+    ]
+   ],
+   "start": {
+    "id": "draft"
+   },
+   "end": {
+    "id": "gates"
+   }
+  },
+  {
+   "type": "arrow",
+   "x": 555,
+   "y": 50,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     80,
+     0
+    ]
+   ],
+   "start": {
+    "id": "gates"
+   },
+   "end": {
+    "id": "review"
+   }
+  },
+  {
+   "type": "arrow",
+   "x": 875,
+   "y": 50,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     160,
+     0
+    ]
+   ],
+   "start": {
+    "id": "review"
+   },
+   "end": {
+    "id": "ok"
+   }
+  },
+  {
+   "type": "arrow",
+   "x": 435,
+   "y": 105,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     170
+    ]
+   ],
+   "start": {
+    "id": "gates"
+   },
+   "end": {
+    "id": "repair"
+   },
+   "label": {
+    "text": "rejected",
+    "fontSize": 17
+   }
+  },
+  {
+   "type": "arrow",
+   "x": 700,
+   "y": 105,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     -160,
+     170
+    ]
+   ],
+   "start": {
+    "id": "review"
+   },
+   "end": {
+    "id": "repair"
+   },
+   "label": {
+    "text": "objections",
+    "fontSize": 17
+   }
+  },
+  {
+   "type": "arrow",
+   "x": 555,
+   "y": 330,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     80,
+     0
+    ]
+   ],
+   "start": {
+    "id": "repair"
+   },
+   "end": {
+    "id": "verify"
+   }
+  },
+  {
+   "type": "arrow",
+   "x": 800,
+   "y": 275,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     270,
+     -170
+    ]
+   ],
+   "start": {
+    "id": "verify"
+   },
+   "end": {
+    "id": "ok"
+   },
+   "label": {
+    "text": "closed",
+    "fontSize": 17
+   }
+  },
+  {
+   "type": "arrow",
+   "x": 875,
+   "y": 330,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     160,
+     0
+    ]
+   ],
+   "start": {
+    "id": "verify"
+   },
+   "end": {
+    "id": "fail"
+   },
+   "label": {
+    "text": "still open",
+    "fontSize": 17
+   }
+  }
+ ]
+}
