@@ -382,7 +382,8 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
             print(f"agentic: failed page {page} ({entry['step']}): {issues}")
         if failures:
             print(
-                f"agentic: {len(failures)} page(s) kept their previous version; "
-                "inspect .agentic/failures.json, then `retry --page PAGE` or `retry --all-failed`"
+                f"agentic: {len(failures)} page(s) kept their previous version; integrated "
+                "pages are re-drafted on the next run up to their retry limit, derived ones "
+                "after `retry --page PAGE`; see .agentic/failures.json"
             )
         return totals | {"failures": sorted(failures)}

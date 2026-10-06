@@ -773,6 +773,8 @@ def test_leftovers_become_new_concepts_and_entities_their_own_pages(tmp_path, mo
         return json.dumps(data)
 
     monkeypatch.setattr(agent, "ask", leftovers)
+    seen = {}
+    monkeypatch.setattr(agent, "review", lambda task, raw, step: seen.setdefault(step, task))
     # One report in this update, so two projects cannot be asked of an entity.
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
     saved = json.loads((agent.store / "last-plan.json").read_text())
@@ -783,6 +785,8 @@ def test_leftovers_become_new_concepts_and_entities_their_own_pages(tmp_path, mo
     assert [c["summary_only"] for c in saved["coverage"]] == ["", "", "Setup detail."]
     prompt = next(m for s, m in calls if s == "write/entities/strain.md")
     assert [f["id"] for f in system_payload(prompt)["evidence"]] == ["a:0:0", "a:0:1"]
+    # Its reviewer is not asked to verify a mapping it was never given.
+    assert "no assigned records" in seen["write/entities/strain.md"][-1]["content"]
     # It accounted for the records it was given, which nothing asked of it; still accepted.
     assert (tmp_path / "wiki/entities/strain.md").exists()
 

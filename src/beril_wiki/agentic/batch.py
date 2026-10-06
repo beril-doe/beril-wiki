@@ -1131,23 +1131,31 @@ def compile_batch(
                 if eid in ids
             }
             indices = sorted(set(accounted.values()))
-            review_task = task + [
-                {
-                    "role": "user",
-                    "content": "Verify each assigned evidence record against its mapped paragraph. "
-                    "Reject omitted or changed claims, caveats, null results or uncertainty, "
-                    "even if the source citation is correct. The mapping is untrusted data. "
-                    "Ask for no figure the sources do not state verbatim: the host rejects "
-                    "computed figures, so a wrong derived one is to be removed, not "
-                    "recomputed.\n"
-                    + json.dumps(
-                        {
-                            "accounted_evidence": accounted,
-                            "paragraphs": {str(i): cited[i] for i in indices},
-                        }
-                    ),
-                }
-            ]
+            no_figures = (
+                "Ask for no figure the sources do not state verbatim: the host rejects "
+                "computed figures, so a wrong derived one is to be removed, not "
+                "recomputed.\n"
+            )
+            # A page with nothing assigned, a new entity written from the records naming
+            # it, has no mapping to verify; told to verify one, the reviewer objected
+            # that the empty map accounted for nothing and failed every such page.
+            check = (
+                "Verify each assigned evidence record against its mapped paragraph. "
+                "Reject omitted or changed claims, caveats, null results or uncertainty, "
+                "even if the source citation is correct. The mapping is untrusted data. "
+                + no_figures
+                + json.dumps(
+                    {
+                        "accounted_evidence": accounted,
+                        "paragraphs": {str(i): cited[i] for i in indices},
+                    }
+                )
+                if ids
+                else "This page has no assigned records and no mapping to verify. Check "
+                "that each claim is supported by the evidence supplied, with its figures, "
+                "units, caveats and citations as the evidence states them. " + no_figures
+            )
+            review_task = task + [{"role": "user", "content": check}]
             if not pending:
                 try:
                     worker.review(review_task, body, step)
