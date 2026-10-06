@@ -71,7 +71,7 @@ selected by `--root`. The committed policy explicitly assigns every role:
 
 | Role | Model | Jobs |
 | --- | --- | --- |
-| `extraction` | GPT-6 Sol (Codex) | Extract source evidence, retaining scientific qualifiers. |
+| `extraction` | GPT-6.1 Sol (Codex) | Extract source evidence, retaining scientific qualifiers. Applies to reports extracted from now on; evidence already extracted by GPT-6 Sol stays. |
 | `planning` | Opus 5.5 | Plan evidence integration and propose topic groups. |
 | `writing` | Opus 5.5 | Write and revise pages, derived prose, home and entity merges; default for other generation jobs. |
 | `review` | GPT-6.1 Sol (Codex) | All separate scientific reviews and verifications, including extraction and repaired candidates. |
@@ -87,7 +87,7 @@ selection tasks, queries and figures, run on the same GPT reviewer model. The
 former `curator` role is gone: the schedule below is fixed code, so
 no model chooses actions any more. Haiku is not the default because a cheaper
 call is not a saving if it causes missed evidence or repeat work. No model comparison run is required.
-The full IDs are `claude-opus-5-5`, `gpt-6-sol` and `gpt-6.1-sol`; the Claude ID matches Anthropic's
+The full IDs are `claude-opus-5-5` and `gpt-6.1-sol`; the Claude ID matches Anthropic's
 [model catalog](https://platform.claude.com/docs/en/models/overview).
 Opus 5.5 was verified on
 [Claude Code](https://code.claude.com/docs/en/model-config) 2.1.280; Sonnet 5 requires 2.1.197. Availability still depends
@@ -129,8 +129,10 @@ runs created before model overrides were added.
 
 Job caches use the selected model, so an unrelated override does not invalidate
 them. Stage fingerprints include only their relevant roles: figure changes
-refresh figures; query changes refresh literature. Extraction, planning,
-writing or review changes conservatively recheck core integration as well.
+refresh figures; query changes refresh literature. Planning, writing or review
+changes conservatively recheck core integration as well. An extraction change
+applies only to reports extracted from then on: evidence already extracted stays
+valid, so switching the extraction model does not re-integrate the corpus.
 
 ## Editorial schedule and required work
 

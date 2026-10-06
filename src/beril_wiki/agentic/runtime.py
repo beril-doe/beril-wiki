@@ -59,7 +59,10 @@ class CandidateError(WorkflowError):
 
 
 MODEL_ROLES = ("extraction", "planning", "writing", "review", "queries", "figures")
-CORE_MODEL_ROLES = ("extraction", "planning", "writing", "review")
+# The roles whose model decides whether integrated pages are current. Extraction is not
+# one: a new extraction model applies to reports extracted from then on, and evidence
+# already extracted stays valid rather than re-integrating the whole corpus.
+CORE_MODEL_ROLES = ("planning", "writing", "review")
 
 
 def refusal_scope(step: str) -> str:

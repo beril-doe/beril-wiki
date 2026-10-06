@@ -207,7 +207,7 @@ def revision() -> str:
 
 # How the accepted revision is computed. A state accepted under another scheme cannot
 # be compared with this one and is adopted once rather than re-integrated.
-REVISION_SCHEME = 3
+REVISION_SCHEME = 4
 
 
 def compiler_revision() -> str:
