@@ -16,6 +16,7 @@ from contextlib import contextmanager
 from importlib.metadata import version
 from pathlib import Path
 
+from beril_wiki import compiler as C
 from beril_wiki.agentic.batch import changed_sources
 from beril_wiki.agentic.curator import EDITORIAL, curate, stage_revision, stage_snapshot
 from beril_wiki.agentic.runtime import (
@@ -138,6 +139,21 @@ def checkout_inputs(checkout: Path) -> dict[str, str]:
     if "ui/config/collections.yaml" not in result:
         raise WorkflowError("observatory checkout must contain ui/config/collections.yaml")
     return result
+
+
+def unlink_missing(work: Path) -> None:
+    """Keep the label of a link to a page that was never written, dropping its brackets.
+
+    A writer may link any page the plan schedules; when a new page then fails its
+    rounds, the links to it dangle and the strict check refuses the whole compile (34
+    such links in the first full compile). Derived pages already repair links in code;
+    this does the same for the rest, after every stage has read its inputs."""
+    targets = C.wikilink_targets(work)
+    for page in sorted((work / "wiki").rglob("*.md")):
+        text = page.read_text(encoding="utf-8")
+        fixed = C.downgrade_dead_links(text, targets)
+        if fixed != text:
+            page.write_text(fixed, encoding="utf-8")
 
 
 def run_stage(work: Path, config_path: Path, name: str, module: str, args: list[str]) -> None:
@@ -320,6 +336,7 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
             "figure_outputs"
         ) != manifest(work, figure_state)
         refresh("figures", ["--force"] if force_figures else [])
+        unlink_missing(work)
         run_stage(work, config_path, "check", "check", [str(work), "--strict"])
         if (
             fingerprint(root) != base

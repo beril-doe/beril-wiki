@@ -1027,3 +1027,16 @@ def test_figure_pages_place_in_parallel_workers(tmp_path, monkeypatch):
     placements = json.loads((F.STATE / "figures-placements.json").read_text())
     assert sorted(placements) == ["topics/a.md", "topics/b.md", "topics/c.md", "topics/d.md"]
     assert not list(F.STATE.glob("*.tmp"))
+
+
+def test_links_to_pages_never_written_keep_their_label(tmp_path):
+    from beril_wiki.agentic.runner import unlink_missing
+
+    (tmp_path / "wiki/concepts").mkdir(parents=True)
+    (tmp_path / "wiki/concepts/kept.md").write_text("See [[concepts/kept]].")
+    page = tmp_path / "wiki/concepts/a.md"
+    page.write_text(
+        "Links [[concepts/kept]], [[concepts/never-written|the lost page]] and [[entities/gone]]."
+    )
+    unlink_missing(tmp_path)
+    assert page.read_text() == "Links [[concepts/kept]], the lost page and gone."
