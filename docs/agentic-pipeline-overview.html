@@ -229,7 +229,7 @@ button.theme { position: fixed; right: 16px; top: 16px; z-index: 3; font: 400 11
 </div>
 <figcaption><b>The compile, from project reports to the published wiki.</b> Boxes are stages in run order; the line beside each names the model or the check it applies, and the band is the job ledger every stage shares. The highlighted stage is where most of the cost and the page quality are decided.</figcaption>
 </figure>
-<p>Extraction keeps exact quotes, and the host rejects any quote that is not verbatim in its report. Routing runs in parallel batches of 120 records, so planning no longer waits on itself, and a rerun replays every finished job from the ledger instead of paying for it again.</p>
+<p>Extraction runs on GPT-6 Sol, the model policy in <code>agentic.yaml</code>: in a September pilot it found more findings than Claude with fewer review repairs. It ran once, on 28 September, and every compile since has reused that evidence from the ledger. Extraction keeps exact quotes, and the host rejects any quote that is not verbatim in its report. Routing runs in parallel batches of 120 records, so planning no longer waits on itself, and a rerun replays every finished job from the ledger instead of paying for it again.</p>
 
 <h2 id="two-families-check-every-page" data-toc="Writing a page">Two model families check every page</h2>
 <figure>
