@@ -462,16 +462,19 @@ class Ledger:
         if not changed:
             raise WorkflowError("job is not pending/unknown")
 
-    def refused_model(self, scope: str, backend: str = "claude") -> str:
-        """The model that answered the latest refusal in this scope on this backend.
+    def refused_model(self, scope: str, backend: str = "claude", model: str = "") -> str:
+        """The model that answered the latest refusal in this scope on this backend,
+        counting only refusals by ``model`` when one is named.
 
         A page's writer and reviewer share its scope but not their models, so a refusal
-        on one backend says nothing about where the other's jobs should go."""
+        on one backend says nothing about where the other's jobs should go. Nor does a
+        refusal by one model say another would refuse: a page Opus 5.5 refused is
+        still offered to a different writer the policy now names."""
         # The scope is a step in its own right when a job has no rounds below it.
         for (output,) in self.db.execute(
             "SELECT output FROM jobs WHERE status='rejected' AND (step = ? OR step LIKE ?) "
-            "AND error LIKE 'refused on %' ORDER BY rowid DESC",
-            (scope, scope + "/%"),
+            "AND error LIKE ? ORDER BY rowid DESC",
+            (scope, scope + "/%", f"refused on {model} %" if model else "refused on %"),
         ):
             target = refusal_target(output)
             if target and backend_for(target) == backend:
@@ -866,7 +869,7 @@ class Runtime:
             # refused attempt is billed in full and answers nothing. Only once the
             # configured model has nothing cached, or an answer it gave would have to
             # be thrown away and bought again on the other model.
-            answers = self.ledger.refused_model(refusal_scope(step), backend)
+            answers = self.ledger.refused_model(refusal_scope(step), backend, model)
             if answers and answers != model:
                 print(
                     f"agentic: {step} on {answers}; {refusal_scope(step)} was refused", flush=True

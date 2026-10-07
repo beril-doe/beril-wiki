@@ -139,6 +139,22 @@ def test_a_refusal_is_found_for_the_step_that_recorded_it(tmp_path):
     assert agent.ledger.refused_model("conflicts/other") == ""
 
 
+def test_a_refusal_redirects_only_the_model_that_refused(tmp_path):
+    agent = runtime(tmp_path)
+    agent.ledger.reserve("k", "write/concepts/a.md", "claude-opus-5-5")
+    agent.ledger.finish(
+        "k",
+        '{"refused_to": "claude-opus-5"}',
+        {"input_tokens": 1, "output_tokens": 1},
+        "refused on claude-opus-5-5 [stated in the reply]; answered on claude-opus-5",
+        status="rejected",
+    )
+    scope = "write/concepts/a.md"
+    assert agent.ledger.refused_model(scope, "claude", "claude-opus-5-5") == "claude-opus-5"
+    # A writer the policy now names is offered the page before any fallback.
+    assert agent.ledger.refused_model(scope, "claude", "claude-sonnet-5-5") == ""
+
+
 def test_truncated_reply_names_the_output_cap(tmp_path, monkeypatch):
     from claude_agent_sdk import ResultMessage, SystemMessage
 
