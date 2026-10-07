@@ -8,6 +8,7 @@ model: claude-opus-5-5
 step_models:
   extraction: gpt-6.1-sol
   planning: claude-opus-5-5
+  pages: claude-sonnet-5-5
   writing: claude-opus-5-5
   review: gpt-6.1-sol
   queries: gpt-6.1-sol

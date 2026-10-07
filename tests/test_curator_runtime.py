@@ -490,7 +490,8 @@ def test_large_collection_context_is_bounded_and_retrievable():
         ("curator/topics/repair", "planning"),
         ("extract/a/0", "extraction"),
         ("plan/route/0/repair", "planning"),
-        ("write/concepts/a.md/repair", "writing"),
+        ("write/concepts/a.md/repair", "pages"),
+        ("write/concepts/a.md/pass/2", "pages"),
         ("lit/a/section", "writing"),
         ("conflicts/a/review", "review"),
         ("topics/a/patch/2", "writing"),
@@ -667,7 +668,12 @@ def test_cli_loads_committed_policy_without_model_flag(tmp_path, monkeypatch):
     assert cli.main() == 0
     claude_roles = {"planning", "writing"}
     assert R.model_policy(configs[0]) == {
-        role: "claude-opus-5-5" if role in claude_roles else "gpt-6.1-sol" for role in R.MODEL_ROLES
+        role: "claude-sonnet-5-5"
+        if role == "pages"
+        else "claude-opus-5-5"
+        if role in claude_roles
+        else "gpt-6.1-sol"
+        for role in R.MODEL_ROLES
     }
     # Replacement file paths resolve against the chosen root, and a role flag wins.
     (tmp_path / "custom.yaml").write_text("model: alternate\nstep_models: {review: specialist}")
@@ -951,7 +957,7 @@ def test_writer_effort_rekeys_writers_only_and_page_writes_use_no_tools(tmp_path
     for step in steps:
         agent.ask(task, step)
     monkeypatch.setitem(agent.config, "write_effort", "medium")
-    for step in steps:  # a derived page is in the writing role too, and stays cached
+    for step in steps:  # a derived page is in the writing role, and stays cached
         agent.ask(task, step)
     assert calls == [
         ("write/concepts/a.md", None),
@@ -1030,3 +1036,14 @@ def test_a_refusal_stated_in_prose_is_answered_on_the_fallback_model(tmp_path, m
     # A long page that merely mentions a safety check is not a refusal.
     assert not R.looks_refused("# Page\n\n" + "A safety check was run on the samples. " * 200)
     assert not R.looks_refused('{"accepted": false, "issues": ["safety check stopped nothing"]}')
+
+
+def test_a_new_page_writer_leaves_accepted_pages_and_derived_stages_current(tmp_path):
+    from beril_wiki.agentic.curator import EDITORIAL, stage_revision
+
+    before = {"model": "claude-opus-5-5", "step_models": {}}
+    after = before | {"step_models": {"pages": "claude-sonnet-5-5"}}
+    core = R.CORE_MODEL_ROLES
+    assert R.model_signature(before, core) == R.model_signature(after, core)
+    for name in EDITORIAL:
+        assert stage_revision(tmp_path, name, before) == stage_revision(tmp_path, name, after)

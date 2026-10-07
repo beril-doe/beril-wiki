@@ -73,7 +73,8 @@ selected by `--root`. The committed policy explicitly assigns every role:
 | --- | --- | --- |
 | `extraction` | GPT-6.1 Sol (Codex) | Extract source evidence, retaining scientific qualifiers. Applies to reports extracted from now on; evidence already extracted by GPT-6 Sol stays. |
 | `planning` | Opus 5.5 | Plan evidence integration and propose topic groups. |
-| `writing` | Opus 5.5 | Write and revise pages, derived prose, home and entity merges; default for other generation jobs. |
+| `pages` | Sonnet 5.5 | Write and repair the concept, entity and summary pages integration produces (`write/` jobs, every pass). Applies to pages written from now on; pages already accepted stay. |
+| `writing` | Opus 5.5 | Derived prose (conflicts, topics, literature, authors), home and entity merges; default for other generation jobs. |
 | `review` | GPT-6.1 Sol (Codex) | All separate scientific reviews and verifications, including extraction and repaired candidates. |
 | `queries` | GPT-6.1 Sol (Codex) | Construct literature search queries. |
 | `figures` | GPT-6.1 Sol (Codex) | Select figure placements. |
@@ -83,14 +84,20 @@ a GPT model extracts and reviews, so no page is checked by the family that wrote
 it. Two pilots (September 2026) measured GPT writing at a third to a tenth of
 Claude's tokens but preferred Claude's prose four pages to one, and GPT
 extraction at a higher finding yield with fewer review repairs. The bounded
-selection tasks, queries and figures, run on the same GPT reviewer model. The
+selection tasks, queries and figures, run on the same GPT reviewer model.
+Integrated pages moved to Sonnet 5.5 in October 2026. On nine pilot pages (11 to
+319 records) it cost a third of the Opus writers, half the job time, and refused
+none of the pages Opus 5.5 had refused. A blind GPT judge, both orders, scored its
+fidelity equal or higher on every page it judged and its clarity about a point
+lower. One 197-record page lost two of its four passes where Opus kept all four.
+Derived pages stay on Opus 5.5 until a pilot covers them. The
 former `curator` role is gone: the schedule below is fixed code, so
 no model chooses actions any more. Haiku is not the default because a cheaper
 call is not a saving if it causes missed evidence or repeat work. No model comparison run is required.
-The full IDs are `claude-opus-5-5` and `gpt-6.1-sol`; the Claude ID matches Anthropic's
+The full IDs are `claude-opus-5-5`, `claude-sonnet-5-5` and `gpt-6.1-sol`; the Claude IDs match Anthropic's
 [model catalog](https://platform.claude.com/docs/en/models/overview).
 Opus 5.5 was verified on
-[Claude Code](https://code.claude.com/docs/en/model-config) 2.1.280; Sonnet 5 requires 2.1.197. Availability still depends
+[Claude Code](https://code.claude.com/docs/en/model-config) 2.1.280 and Sonnet 5.5 on 2.1.293. Availability still depends
 on the authenticated account. Fable is not selected because SDK usage can draw
 on additional usage credits, depending on the plan.
 
@@ -133,6 +140,8 @@ refresh figures; query changes refresh literature. Planning, writing or review
 changes conservatively recheck core integration as well. An extraction change
 applies only to reports extracted from then on: evidence already extracted stays
 valid, so switching the extraction model does not re-integrate the corpus.
+A `pages` change works the same way: it applies to pages written from then on,
+accepted pages stay, and neither integration nor any derived stage reruns.
 
 ## Editorial schedule and required work
 
@@ -343,7 +352,9 @@ the same arrangement: a GPT-6.1 Sol turn the server refuses as possible biologic
 risk, which reports no usage, is charged the reservation, recorded as a refusal and
 answered on GPT-5.6 Sol, and refusal memory sends the rest of that page's review jobs
 there. The memory is per backend, so a refused Claude writer never redirects the
-GPT reviewer of the same page or the reverse. On this corpus refused attempts were a fifth of extraction
+GPT reviewer of the same page or the reverse. It also counts only refusals by the
+model about to be asked, so a page Opus 5.5 refused is offered to a new page
+writer before any fallback. On this corpus refused attempts were a fifth of extraction
 spend, and a flagged report cost five to ten times an ordinary one. The worst case for a derived page is twelve jobs: a draft, one
 open review, and five patch rounds each with its own verification.
 

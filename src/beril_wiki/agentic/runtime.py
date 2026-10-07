@@ -58,10 +58,11 @@ class CandidateError(WorkflowError):
         self.objections = objections or []
 
 
-MODEL_ROLES = ("extraction", "planning", "writing", "review", "queries", "figures")
-# The roles whose model decides whether integrated pages are current. Extraction is not
-# one: a new extraction model applies to reports extracted from then on, and evidence
-# already extracted stays valid rather than re-integrating the whole corpus.
+MODEL_ROLES = ("extraction", "planning", "pages", "writing", "review", "queries", "figures")
+# The roles whose model decides whether integrated pages are current. Extraction and
+# pages are not: a new extraction model applies to reports extracted from then on, and a
+# new page writer to pages written from then on, so evidence already extracted and pages
+# already accepted stay valid rather than re-integrating the whole corpus.
 CORE_MODEL_ROLES = ("planning", "writing", "review")
 
 
@@ -87,7 +88,11 @@ def refusal_scope(step: str) -> str:
 # A safeguard sometimes stops a reply partway and the model says so in prose instead
 # of the CLI signalling a refusal. The reply is short, is not the JSON asked for, and
 # names the stop; the job is then answered on the model the CLI itself falls back to.
-REFUSAL_FALLBACK = {"claude-opus-5-5": "claude-opus-5", "gpt-6.1-sol": "gpt-5.6-sol"}
+REFUSAL_FALLBACK = {
+    "claude-opus-5-5": "claude-opus-5",
+    "claude-sonnet-5-5": "claude-opus-5",
+    "gpt-6.1-sol": "gpt-5.6-sol",
+}
 # Wordings seen so far; each is a short prose reply in place of the JSON asked for.
 REFUSAL_PHRASES = (
     "stopped partway",
@@ -147,6 +152,8 @@ def role_for(step: str) -> str:
         role = "queries"
     elif step.startswith("figures/"):
         role = "figures"
+    elif step.startswith("write/"):
+        role = "pages"
     else:
         role = "writing"
     return role
@@ -912,9 +919,9 @@ class Runtime:
 
     def effort(self, step: str) -> Literal["low", "medium", "high", "xhigh", "max"] | None:
         """The page writer's reasoning effort, when a run sets one; the CLI default
-        otherwise. Only the writer of a write/ job: the writing role also covers every
-        derived page, and a write/ job's review belongs to the reviewer."""
-        writer = step.startswith("write/") and role_for(step) == "writing"
+        otherwise. Only the writer of a write/ job: derived pages are the writing role's,
+        and a write/ job's review belongs to the reviewer."""
+        writer = role_for(step) == "pages"
         return self.config.get("write_effort") if writer else None
 
     def _screened(self, messages: list[dict], step: str, model: str, key: str, output: str) -> str:
