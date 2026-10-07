@@ -25,7 +25,9 @@ from beril_wiki.agentic.prose import (
     NO_PREAMBLE,
     PLATFORM,
     Contract,
+    Issue,
     PageFailure,
+    blocks,
     derived_page,
     limit,
     parallel,
@@ -70,6 +72,29 @@ TASK = (
     "Write the CONFLICT page for the disagreement in the TENSION text: a first-class record "
     "of a real disagreement between projects in the corpus."
 )
+
+
+SIDE = re.compile(r"\*\*Side [A-Z]\b[^\n]*\*\*")
+
+
+def empty_sides(parts: list[str]) -> list[Issue]:
+    """Sides named with nothing under them. Salvage once removed a side's only
+    paragraph and published a conflict that argued one side; a page like that is not
+    a record of a disagreement, so it fails rather than publishes."""
+
+    def bare(i: int) -> bool:
+        return i < len(parts) and SIDE.fullmatch(parts[i].strip()) is not None
+
+    return [
+        Issue(paragraph=i, category="format", note="this side has no evidence under it")
+        for i in range(len(parts))
+        if bare(i)
+        and (
+            i + 1 == len(parts)
+            or bare(i + 1)
+            or parts[i + 1].startswith(("#", "> **Editorial note."))
+        )
+    ]
 
 
 def tension_blocks() -> list[dict]:
@@ -191,6 +216,7 @@ def main() -> int:
             sources=src_texts,
             valid_ids=projects,
             targets=targets,
+            extra=empty_sides,
         )
 
     cap = limit(sys.argv)
@@ -203,6 +229,11 @@ def main() -> int:
             failed += 1
             record_failure(f"conflicts/{slug}", result)
             print(f"  [FAILED] conflicts/{slug}: {result}")
+            # The previous version is kept only if it is a valid page.
+            page = OUT / f"{slug}.md"
+            if page.exists() and empty_sides(blocks(page.read_text(encoding="utf-8"))):
+                page.unlink()
+                print(f"  removed conflicts/{slug}.md: a side has no evidence")
             continue
         (OUT / f"{slug}.md").write_text(
             f"<!-- tension-hash: {digest} -->\n{result}\n", encoding="utf-8"

@@ -46,3 +46,32 @@ def test_merge_only_on_shared_project_and_shared_figures():
     merged = next(g for g in groups if len(g) == 2)
     assert [b["concept"] for b in merged] == ["x", "y"]
     assert CB.conflict_slug(merged).startswith("conflict--x--")
+
+
+def test_a_side_left_without_evidence_fails_the_page():
+    """Salvage once removed a side's only paragraph and published a one-sided
+    conflict; a named side with nothing under it is a gate failure, so salvage
+    returns no page and the stage keeps no such version."""
+    from beril_wiki.agentic.prose import blocks
+
+    page = (
+        "# Does X track Y?\n\nLead. [src: a]\n\n## Evidence Sides\n\n"
+        "**Side A: AMR-specific decoupling (null result)**\n\n"
+        "**Side B: a modest association**\n\n- 86.1% versus 81.2%. [src: b]\n\n"
+        "## Possible Reconciliations\n\n- Hypothesis."
+    )
+    parts = blocks(page)
+    assert [parts[i.paragraph] for i in CB.empty_sides(parts)] == [
+        "**Side A: AMR-specific decoupling (null result)**"
+    ]
+    # A side whose evidence follows it, or shares its paragraph, is complete.
+    whole = page.replace("(null result)**\n\n", "(null result)**\n\n- No link. [src: a]\n\n")
+    assert CB.empty_sides(blocks(whole)) == []
+    inline = page.replace("(null result)**", "(null result).** No link. [src: a]")
+    assert CB.empty_sides(blocks(inline)) == []
+    # The last side, and a side followed only by a salvage note, are empty too.
+    assert len(CB.empty_sides(blocks(page.split("\n\n- 86.1%")[0]))) == 2
+    noted = page.replace(
+        "(null result)**\n\n", "(null result)**\n\n> **Editorial note.** Text was removed.\n\n"
+    )
+    assert len(CB.empty_sides(blocks(noted))) == 1
