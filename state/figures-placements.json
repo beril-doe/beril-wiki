@@ -20,9 +20,9 @@
   },
   "conflicts/conflict--adversarial-research-quality-assurance--eca086c5.md": {
     "csv_flags": [
-      "Visualize the reported 188-strain, 96-phage inventory versus the 94-phage denominator and 17,672 outcomes; distinguish expected matrix cells from observed non-null pairs using a raw-table audit to expose the counting discrepancy."
+      "Visualize the reported 188 strains, 96-phage inventory, 94-phage denominator, and 17,672 outcomes by project alongside implied complete-crossing counts, making the arithmetic inconsistency visible without treating filtering or missing pairs as established explanations."
     ],
-    "page_hash": "7a5282275128023c",
+    "page_hash": "05ed5f6ff81fba1d",
     "placements": []
   },
   "conflicts/conflict--antimicrobial-resistance-fitness-cost--3139de09.md": {
@@ -1248,18 +1248,6 @@
         "caption": "Box plot comparing core vs accessory AMR gene fitness",
         "file": "figures/h3_core_vs_accessory.png",
         "project": "amr_fitness_cost"
-      }
-    ]
-  },
-  "conflicts/conflict--pangenome-conservation-fitness-decoupling--e503d1e4.md": {
-    "csv_flags": [],
-    "page_hash": "d970720ea8f198dc",
-    "placements": [
-      {
-        "after_paragraph": 5,
-        "caption": "Essential vs Core Forest Plot",
-        "file": "figures/essential_vs_core_forest_plot.png",
-        "project": "conservation_vs_fitness"
       }
     ]
   },
@@ -2918,19 +2906,14 @@
   },
   "topics/data-infrastructure-provenance-and-research-practice.md": {
     "csv_flags": [
-      "Visualize FW300-N2E3 four-resource coverage and concordance, distinguishing 17/21 testable metabolites fully concordant from 37/58 metabolites occurring only in Web of Microbes; preserve the different denominators.",
-      "Plot observed Jaccard 0.104 against the 200-permutation null distribution, if individual permutation values are available, retaining the reported null mean 0.785 \u00b1 0.054 and empirical p = 0.000 to illustrate the corrected analysis."
+      "Visualize the provenance audit mapping 20 names containing \"nmdc\" to 7 maintained resources across six provenance classes, distinguishing names from resource identities.",
+      "Visualize validated-join coverage separately from concordance: 21/58 metabolites were testable, and 17/21 (81%) testable metabolites were fully concordant. This prevents concordance from obscuring coverage gaps.",
+      "Compare routine review's \"no critical issues\" with adversarial review's 5 critical and 6 important issues for the same notebooks, making the quality-assurance contrast explicit."
     ],
-    "page_hash": "ebda0f8f2e29d8b8",
+    "page_hash": "11f624c13774f348",
     "placements": [
       {
         "after_paragraph": 9,
-        "caption": "Agency \u00d7 biological topic coverage",
-        "file": "figures/nb01_agency_topic_heatmap.png",
-        "project": "berdl_data_atlas"
-      },
-      {
-        "after_paragraph": 13,
         "caption": "(Tenant, topic) linkage graph \u2014 edges = \u22651 shared canonical join key",
         "file": "figures/nb02_linkage_graph.png",
         "project": "berdl_data_atlas"

@@ -614,7 +614,7 @@
       "outputs": {
         "wiki/conflicts/conflict--adaptive-versus-housekeeping-functional-differentiation--a27e3db1.md": "e84a23835e058fa5c6cc83438b8c3525d1491f12ec88db7515b35833f69cce68",
         "wiki/conflicts/conflict--adversarial-research-quality-assurance--a6ef7613.md": "1360c40b12535e1b8801e63027e2116b02a622ff474a59153aae25cc5bdb138a",
-        "wiki/conflicts/conflict--adversarial-research-quality-assurance--eca086c5.md": "7a5282275128023c420ecb02f151393296b2b5a83095f2fe2b691a793f4cb02d",
+        "wiki/conflicts/conflict--adversarial-research-quality-assurance--eca086c5.md": "05ed5f6ff81fba1d902346e280aabb4ade4096edb3e946e8638a5794f2b19f15",
         "wiki/conflicts/conflict--antimicrobial-resistance-fitness-cost--3139de09.md": "b48f956422ca9252e38b9fa837f3c96a3eadff89803a6101a4ab9791b12278e0",
         "wiki/conflicts/conflict--antimicrobial-resistance-fitness-cost--cded18a3.md": "fa22ea414b7bbad6a015a75fab525c1911241628d3dd14ec404bd01de3a19b84",
         "wiki/conflicts/conflict--biosynthetic-self-sufficiency-and-cultivation--0f75deea.md": "7b10174841b26eea268579f4b41bb76a3d4c053a468244369d73342bb2cb3d9b",
@@ -727,7 +727,6 @@
         "wiki/conflicts/conflict--pangenome-conservation-fitness-decoupling--8173d997.md": "de4678e4ea0fc08d2cd37fcf534c7879b67e7aa59354934cc4d0237971f051bc",
         "wiki/conflicts/conflict--pangenome-conservation-fitness-decoupling--ae3d6d63.md": "d1416ef578c2452a4b37ee3034904e69925e25a0252d39a851bb5aa688575a6c",
         "wiki/conflicts/conflict--pangenome-conservation-fitness-decoupling--e470a03a.md": "d4a5ecdd69e9695c6470c620981155c0d267d64626c40f8cecb590665d562b0e",
-        "wiki/conflicts/conflict--pangenome-conservation-fitness-decoupling--e503d1e4.md": "d970720ea8f198dc129a4c271bdcc90d648f8c707f300d141fc60b6bc475d8d7",
         "wiki/conflicts/conflict--pangenome-core-boundary-and-clade-size-bias--95ccf0a3.md": "9d570f7dc9b5a832c122a2fe1beebce3b07a2c88a32ab9bf037a61aafe65fffb",
         "wiki/conflicts/conflict--pangenome-core-boundary-and-clade-size-bias--b490a636.md": "437f6302f536f4abbfc25240de6842bbd72236cfe1af1e0913d4b7a3b8f58b77",
         "wiki/conflicts/conflict--pangenome-core-boundary-and-clade-size-bias--f5ff24c2.md": "f892a1124561b36cf41f616b8b4961ed23ae14cab16bb4c169c38841005cec7d",
@@ -766,12 +765,12 @@
         "wiki/conflicts/conflict--two-speed-bacterial-genome--c03a2981.md": "9fc01310164030f99cfcfd8e2b4c96cf9950ca1ca04198e66d37a742ce945c76",
         "wiki/conflicts/conflict--two-speed-bacterial-genome--ec20299a.md": "44c17f2507252e8fa82164202ce7096255f7bd80932aef1d5fa42ceb824c8bec"
       },
-      "semantic": "04a55cc60c8193902e305196f1b29015704d55620433f5ab291621e1ad409107"
+      "semantic": "138424caa9e04675d56cc16fc7383629cfedfb01aaa6e2c27cd15390a8841c08"
     },
     "literature": {
-      "inputs": "4cc150976e29463375d9da16d971388b21fbb47b1c12c1f65c922f2bdc831640",
+      "inputs": "b91df9f694fd0517427a9e4ec05f188155ff0263fc6755ffa1678c726340ee2b",
       "outputs": {
-        "wiki/topics/data-infrastructure-provenance-and-research-practice.md": "c1d5953c375c555b03c779e4d4d3830d048f298b9cdb54727cc84969664a4cd4",
+        "wiki/topics/data-infrastructure-provenance-and-research-practice.md": "6693bbe6d101bdaa7783e98e860354de0fdfbdac2c22fa2f5f748ebf2c33e330",
         "wiki/topics/distributed-computation-and-analysis-execution.md": "3729b2a833c71f22f6f3991d94c54adbc97a02dfab346e0c3b30e4960414d727",
         "wiki/topics/ecotypes-and-environmental-gene-content-differentiation.md": "3d25e44b6870ab95b84c4264214f3364d41ccdfcd075694933f4241fd9e808cf",
         "wiki/topics/functional-dark-matter-and-annotation-resolution.md": "fad74c5b96f19b24496fbee08ab9ca93c2dfd44f03c172333c231208e53179c3",
@@ -790,10 +789,10 @@
       "semantic": "30b03e9a1bbc9fedef5e46db6f2426fe1da38d8595cc1d855746301af0e18051"
     },
     "topics": {
-      "inputs": "4beb5f4baf09511e02f1da134f0e3bb801ed22fdb20ee5266aad6a92f4bfb604",
+      "inputs": "0a99fa068bdde4cde27f745ce5f8bb03c4c974e7866e3bb91be179ad80f58103",
       "outputs": {
-        "wiki/index.md": "6d619d09610f907afce864e9581772b37ae1deb32fe73ad6b49b486e9f508155",
-        "wiki/topics/data-infrastructure-provenance-and-research-practice.md": "0f8ea283542bc70bd634d570bb8756ef11ae9761d1d51736bda67e9c4bc1821e",
+        "wiki/index.md": "f65a43bcb739b0f9348d76ee1466cd493c14cddd8abfff46b219334ff2bd3dfc",
+        "wiki/topics/data-infrastructure-provenance-and-research-practice.md": "5277b4b50856fb1ba0a7ddb759a532f6f237acf57e643068d25b0cc570e9f183",
         "wiki/topics/distributed-computation-and-analysis-execution.md": "534b71eac0b9524ab725252c6e3d842e0982fd2277745b514165877b6ea3eabd",
         "wiki/topics/ecotypes-and-environmental-gene-content-differentiation.md": "225a1d944c7a97fdaec4217d2ffc769857be72b6190c95a3cfd6af1df6660acf",
         "wiki/topics/functional-dark-matter-and-annotation-resolution.md": "adf9b7f1761bc17ae10b70fca329660f38c8c6d4e64c2410973d26ae821e869a",
@@ -813,20 +812,21 @@
     }
   },
   "figure_outputs": {
-    "state/figures-placements.json": "34c909645a08f7cb64e15a67dffafe4cc395badd00e3ff7743b679b72ffa33bb",
-    "state/figures-state.json": "5837099344ac94b0f6f8202710484c172ba64b23c31cabfb3d609c8673bee2ad"
+    "state/figures-placements.json": "9811bd6bbe407316d050eee79fa1a2e14dcda07eb186b88c0fdc992513c5a4a6",
+    "state/figures-state.json": "1b01dc633261bc791dcebef8f51eb41738e0447746113d3a93e61e9b2db1dad0"
   },
   "figure_revision": "13a9613a596d6c563e0be6c750a5b15e3bf737eac766409860b9a37a42ebd002",
-  "fingerprint": "e3369d3906ded4f83af2002c537d24cf42ec44978d6eea64f4954416476080be",
+  "fingerprint": "ce18b6794cef7ffebc687c981d7f0d2363fda26d8e1cc8388782f11673f5930b",
   "models": {
-    "extraction": "gpt-6-sol",
+    "extraction": "gpt-6.1-sol",
     "figures": "gpt-6.1-sol",
+    "pages": "claude-sonnet-5-5",
     "planning": "claude-opus-5-5",
     "queries": "gpt-6.1-sol",
     "review": "gpt-6.1-sol",
     "writing": "claude-opus-5-5"
   },
-  "revision": "71586fea8b8f218c4826d1967741b88cc762325cd6a1c77284cb9d19c7a13bb5",
-  "revision_scheme": 2,
+  "revision": "64a7f0bdb2e1fe3c804e6b16674300927f228a4962abf8630df28f809e20acbb",
+  "revision_scheme": 4,
   "version": 2
 }

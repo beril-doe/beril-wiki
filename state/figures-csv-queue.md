@@ -6,7 +6,7 @@ Pages the placement pass flagged as needing a chart for evidence with no figure.
 - Plot COG category enrichment in the novel/singleton class and cross-species consistency, including mobile elements (L: +10.88%, 100% consistency) and defense (V: +2.83%), to visualize Side A's quantitative evidence, which no candidate figure covers.
 
 ## conflicts/conflict--adversarial-research-quality-assurance--eca086c5.md
-- Visualize the reported 188-strain, 96-phage inventory versus the 94-phage denominator and 17,672 outcomes; distinguish expected matrix cells from observed non-null pairs using a raw-table audit to expose the counting discrepancy.
+- Visualize the reported 188 strains, 96-phage inventory, 94-phage denominator, and 17,672 outcomes by project alongside implied complete-crossing counts, making the arithmetic inconsistency visible without treating filtering or missing pairs as established explanations.
 
 ## conflicts/conflict--classifier-database-compatibility-in-taxonomic-quantification--2b613a7b.md
 - Visualize the reported median partial correlations side by side by source, distinguishing the original 0.0025 from the reanalysis's 0.003 comparator. No candidate explicitly covers this cross-project magnitude discrepancy; keep unreconciled baselines separate.
@@ -450,8 +450,9 @@ Pages the placement pass flagged as needing a chart for evidence with no figure.
 - Visualize pangenome genome counts by taxon, labeling species-clade counts as top-5-capped rather than exhaustive totals.
 
 ## topics/data-infrastructure-provenance-and-research-practice.md
-- Visualize FW300-N2E3 four-resource coverage and concordance, distinguishing 17/21 testable metabolites fully concordant from 37/58 metabolites occurring only in Web of Microbes; preserve the different denominators.
-- Plot observed Jaccard 0.104 against the 200-permutation null distribution, if individual permutation values are available, retaining the reported null mean 0.785 ± 0.054 and empirical p = 0.000 to illustrate the corrected analysis.
+- Visualize the provenance audit mapping 20 names containing "nmdc" to 7 maintained resources across six provenance classes, distinguishing names from resource identities.
+- Visualize validated-join coverage separately from concordance: 21/58 metabolites were testable, and 17/21 (81%) testable metabolites were fully concordant. This prevents concordance from obscuring coverage gaps.
+- Compare routine review's "no critical issues" with adversarial review's 5 critical and 6 important issues for the same notebooks, making the quality-assurance contrast explicit.
 
 ## topics/ecotypes-and-environmental-gene-content-differentiation.md
 - Visualize gene-content ecotype silhouette-score distributions (mean 0.215, median 0.174) to show cluster overlap; no candidate directly covers this evidence.
