@@ -61,9 +61,8 @@ def test_a_side_left_without_evidence_fails_the_page():
         "## Possible Reconciliations\n\n- Hypothesis."
     )
     parts = blocks(page)
-    assert [parts[i.paragraph] for i in CB.empty_sides(parts)] == [
-        "**Side A: AMR-specific decoupling (null result)**"
-    ]
+    side_a = parts.index("**Side A: AMR-specific decoupling (null result)**")
+    assert [i.paragraph for i in CB.empty_sides(parts)] == [side_a]
     # A side whose evidence follows it, or shares its paragraph, is complete.
     whole = page.replace("(null result)**\n\n", "(null result)**\n\n- No link. [src: a]\n\n")
     assert CB.empty_sides(blocks(whole)) == []
