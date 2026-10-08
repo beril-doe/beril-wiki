@@ -1,0 +1,335 @@
+{
+  "concepts": {
+    "wiki/concepts/active-learning-experiment-selection.md": "6a29beb8b9448d292d12bccff92962573f4e1f359d29a1ef35cf208ec116ebf2",
+    "wiki/concepts/adaptive-versus-housekeeping-functional-differentiation.md": "87c04a157fd4a3ca52aeb3e4be5f21b44b6d255d1f4aa400f7c0f7f13ccc1b92",
+    "wiki/concepts/adversarial-research-quality-assurance.md": "479ce2444fc30d3ede3606c3185cd7291c98b524aff2720233ea71e0d22469c8",
+    "wiki/concepts/analysis-provenance-and-reproducible-outputs.md": "f8a3b71ffbbd52c11b0a5ce149ca222275fc5bc3067ae4efec308f4b7606ffdb",
+    "wiki/concepts/antimicrobial-resistance-fitness-cost.md": "e136db741fcfb85013a05e1f3106473ae6596dfd850e278e1288fc96d1b6dbad",
+    "wiki/concepts/biosynthetic-prototrophy-and-auxotrophy.md": "0f70fc5045da666c249412cf5aead4344a565973642dc1a048dc8ebecf8fbb06",
+    "wiki/concepts/biosynthetic-self-sufficiency-and-cultivation.md": "f1fd08389944b5d5ed94db582f9558bdca1a5cd514c0af3c5d265fa7853fd744",
+    "wiki/concepts/callability-limited-comparative-inference.md": "683a7b5cab78e24f1e27793cae4df6a001be5ab48fba1d6524ae0d519cc124e0",
+    "wiki/concepts/capability-versus-kinetic-predictability.md": "130c2a4f7607258cd9e34a9de157103a89465fd4c1e0d125ce79e8b271f0865e",
+    "wiki/concepts/carriage-prevalence-versus-within-carrier-function.md": "a9e629d4950cb0836d81c233873eaa5028a1804293f83aa986e558817a291856",
+    "wiki/concepts/chromosomal-and-integrative-gene-transfer.md": "9c86d00b1e36015686ab0875db890de54987ee044e95207b21f16d781389780c",
+    "wiki/concepts/circularity-in-metabolic-model-validation.md": "e70bbd11b75ae260683e01548428d1729d9908f3b6dd9eb552a0954ffc6d6d78",
+    "wiki/concepts/classifier-database-compatibility-in-taxonomic-quantification.md": "bcf1803ef2652845a11dea03081a1e59c6b9f213bb154699434259ca48330ccc",
+    "wiki/concepts/cofitness-network-architecture.md": "ac38019eade6c219ef3edb90e3075f0910ee8087c60ad0365b8ce074b19be039",
+    "wiki/concepts/community-metabolic-interdependence.md": "d39237e47f47df5abb8c92c1a70d046a5ec270985c5ed5925945a3c181aae317",
+    "wiki/concepts/comparative-conservation-metric-calibration.md": "5398e3f8b4e78400a2d47e5a11c173be5326eca361b9b8d50342413c7e2c6e27",
+    "wiki/concepts/competitive-exclusion-consortium-design.md": "288b1254b683a176a03b39bd38b7c39bde759933b9912777a7594cf93b772798",
+    "wiki/concepts/composite-functional-annotation.md": "fd18ce52bde972bbb1a726d1c12a0b9817502af5ff73250645dfd76932410d3e",
+    "wiki/concepts/composite-resistance-score-limitations.md": "cacaf263fd300bbb9252f70274ba80f077a2a681007734b7d2c675fde85cfbd0",
+    "wiki/concepts/compositional-robustness-of-differential-abundance-calls.md": "8bac2ccef20cbb6f00fd28e5692352ed992b5b842ada4e0a1c4315853dd96c96",
+    "wiki/concepts/computational-pathway-prediction-validation.md": "fd00ffaf5d6249d8f55c7ff28dfdbca5538aeac1735fa4ddf77b5ae00d7e4f7a",
+    "wiki/concepts/condition-dependent-gene-tradeoffs.md": "868488998043ce35bafbcb8980bd500a15b60429f1ad6d1187ab95082b5a0e6e",
+    "wiki/concepts/condition-space-dimensionality.md": "b5a628cc11d172a43873e3a8aed44b4ef3469aeca2a86cdf2e2f1264701b9ac5",
+    "wiki/concepts/condition-specific-fitness.md": "d327ec2f034b374966f65b4cf99b5a10a740301499778040519024451bb40599",
+    "wiki/concepts/confirmatory-exploratory-ecological-association-discordance.md": "5ef02718f5a545c3021ba596034a1c533403abc2e457da006eb18833d7034edd",
+    "wiki/concepts/contaminant-selection-of-subsurface-communities.md": "70c7e2b43cc233da2892e3dde4e06a19e380fac7e646204ec5e6ee7aa392e9cb",
+    "wiki/concepts/core-gene-annotation-paradox.md": "1861ebaab9eb3529e38792897616361069a1dc96449dcb08286149348eec8285",
+    "wiki/concepts/core-genome-burden-paradox.md": "46866ef67ee880d02567df8faa45943ec1b876055d045d01f97bc9a7144a034d",
+    "wiki/concepts/costly-dispensable-gene-loss.md": "e6230b723d978dfb97e729135fdfa53f632e45b17a21fec661b3046eb32c3278",
+    "wiki/concepts/credential-and-tenant-access-lifecycle.md": "c37b53d0220e736a520354fdd86275430fb9e69bc8f0127f6980b8ab7e850b18",
+    "wiki/concepts/cross-cohort-microbiome-portability.md": "a7892cc1f84cfedd2e93a0bbf029da38f26f0a2d4707cb539117854b65b9f2b5",
+    "wiki/concepts/cross-condition-metabolic-comparability.md": "598f3647c76214841b0aae613b534dce2f015ebbb5ea319f43ea2e7fae26b4be",
+    "wiki/concepts/cross-species-fitness-transferability.md": "c29c30a5b70185fadf813372fa3dd4740a64806de37fd0d1f2dcf38dc5fbe6f3",
+    "wiki/concepts/cross-tenant-data-bridging.md": "26d9860d797d05e263c040daec906626f53cb27a5cdd51a1a6db2318ac6c5f73",
+    "wiki/concepts/cultivation-collection-bias-in-ecological-genomics.md": "76a8d1e5c71a3c6ddc0c6ebe34c900c3068a192e80ae69bbf474ccb5e1d0184c",
+    "wiki/concepts/data-landscape-ownership-and-coverage-bias.md": "9a4b9981673cb9d5f306ffabedffd1371cb2dd716999c97dcb2772d9a0ee24a2",
+    "wiki/concepts/driver-side-result-collection-limits.md": "ec84fa8f4ab319ddd279d6ea3ee4fceb5d9ed436f12cb84fed38d12a5e499b6e",
+    "wiki/concepts/dual-nature-plant-associated-bacteria.md": "705a489f47b1b82b84569d90a65c2884de27b777cec7b4f51463b586b3a5f17e",
+    "wiki/concepts/ec-less-reaction-annotation.md": "71fde54805c5a1c9525c91c7a6e00e2464ccf56c656fcad9b91b4cf312e803d0",
+    "wiki/concepts/ecological-cost-of-microbiome-target-depletion.md": "bcf4853f5dac24deac04210c6ae9f1752fc1c990c985a6d9b0ff326b1c108bc2",
+    "wiki/concepts/ecological-memory.md": "db102d1faf4ee9cf9bdc1476bf81e0276bf45148e1d1a1460a7da44faa28f47c",
+    "wiki/concepts/ecotype-clustering-validity.md": "2f0d0bb9fadef70de9272e176a1f6c5c632f6c8f30a655ef8e82226461a2c87e",
+    "wiki/concepts/ecotype-environment-gene-content.md": "131c444a703216d984004d338e8abe17044b7cd4635a572c8c5e0f0c16f5b000",
+    "wiki/concepts/environment-embedding-geography.md": "dd5c9323c50ff404298218833ac76e87fe0cfb47516880a20b4ba6169882f45c",
+    "wiki/concepts/environmental-distribution-of-lanthanide-methylotrophy.md": "071215e63c2d6876903cd10950233164f4f5d2fc05f508337540118729452dec",
+    "wiki/concepts/environmental-resistome.md": "30bcf9e5e2854c912b612503c13a98e30a1ba6859a92ee8c2acbb490a989fa2b",
+    "wiki/concepts/essentiality-assay-discordance.md": "b244c95066beee4c6c469bfd59a5e11d940b71e159013ba48360ce494aaa9212",
+    "wiki/concepts/eukaryotic-dna-admixture-in-prokaryotic-metagenomes.md": "ad70419c5978ac2d75f06176075758ccb1aa0159fdf05cebff520807b9558959",
+    "wiki/concepts/evidence-triangulation-for-functional-annotation.md": "d7d7c8d0279cad03fc4d3ad57257c4fbb9a96b4183b474dd7f3c32ea66484b4f",
+    "wiki/concepts/execution-environment-dependent-access-paths.md": "40efde6be46bf40acc014c06296a554b08af7613c6fc195322623295319469f7",
+    "wiki/concepts/experimental-prioritization-of-functional-dark-matter.md": "3a8237883593615aa74dfb85d36cad2d4c2e6e974cc669b41f1ab3a3da4dc79f",
+    "wiki/concepts/feature-attribution-with-correlated-genomic-features.md": "0f2ceaa9146547eb565f9a0ee9e0e32b26871ae4b0454568f3fc962ade3e1871",
+    "wiki/concepts/fitness-condition-coverage-prioritization-bias.md": "e6af11b2789b2399b2b5ef98bc4ebb1f3cc5d50c817114dea71956aeef593b75",
+    "wiki/concepts/fitness-matched-null-models.md": "b78e253c03eb8a978d5faa3c005a8df4f5301775ea01acb79a47262704ce8ec4",
+    "wiki/concepts/fitness-module-detection-sensitivity.md": "c92bddcaffc8018c3f2f4d676f5cafdc2d25ae83736e776bf8a5d8c8c01dfd12",
+    "wiki/concepts/foreign-dump-ingestion-fidelity.md": "ee50c982be87474de0125850505423c881a50776b128280aafefe3e7946d3874",
+    "wiki/concepts/functional-marker-validation.md": "cb9a2bfce6af6a72828d2d98e104fce1cdcf749da7ee9b87b12790172705ab08",
+    "wiki/concepts/gene-cooccurrence-ecological-guilds.md": "a94a3f4ce21f9d62336ab642529f9f3b2a89cf788bfa9ad5322f88bf2dcad36c",
+    "wiki/concepts/gene-essentiality.md": "a17152c687e52c14ff41a71aa2d65ab0c580cd43d8530a2229a3ee2c8cf8677d",
+    "wiki/concepts/gene-function-acquisition-depth.md": "5e4904728d923df0e248e382c105580909eabe1aab0a97dff3387434da39bce4",
+    "wiki/concepts/genetic-perturbation-coverage-bias.md": "07430214997ccb7f7dedf2ca2db05ea98005fc2403d1fc19d7ddf8f1dbfec475",
+    "wiki/concepts/genome-wide-versus-locus-specific-ecological-adaptation.md": "5c3f5b869ba2cc0e38aa4abeb28846448249105e2ee445b8de2461741baa4d1f",
+    "wiki/concepts/genomic-dispersal-functional-coupling.md": "fae8627fb53e9202aa6ab3aa17d08055385d904bed03e7ae850f80dfee37163e",
+    "wiki/concepts/genomic-under-representation.md": "6a26a5bbaf2be41c353b831c080715573a5e25b24f984d420d8aa0b34056983e",
+    "wiki/concepts/gut-microbiome-ecotypes-as-patient-strata.md": "17bf4fe921eecf450fb68b9996896503229626a0300d2ffbba123eeebc8284bb",
+    "wiki/concepts/habitat-structured-community-metabolic-potential.md": "66c84e93ae99195f962c13180a8ccfe89f48ed8a4ebde0c934fb994da249024c",
+    "wiki/concepts/homology-search-negative-evidence.md": "177db8711c119ada7d90e0859fffc0c97dc7c0e37e2d98285881bfef23fc1dda",
+    "wiki/concepts/horizontal-gene-transfer-driven-innovation.md": "f40a3129a20c5af439cceec656d9f7ff1cb4cd39974724c0ee30cf30372b5c5d",
+    "wiki/concepts/iron-acquisition-and-pathobiont-expansion.md": "f1e2515155b94d007ad0d0bc5d0849353763b7eee39c3e61c7d579edfb676223",
+    "wiki/concepts/join-strategy-and-table-partitioning-cost.md": "7fe1e623d5e16e1d14607562179f1360623d3ed7e3bbb69d63c629331de1bfe3",
+    "wiki/concepts/lab-field-fitness-concordance.md": "528619d0b2ccb441adca60c3d8d078e37ef795678763d2b7024716f79e7663ae",
+    "wiki/concepts/laboratory-fitness-versus-natural-selection.md": "e8ba8e8dcb909d24768982f04877a773f861ed785e4c9c00f17129e6e2ef7bc8",
+    "wiki/concepts/lanmodulin-narrow-distribution.md": "a8a98b1a6c29caab571f5b1e7b9385bdc76406f68f46857d285c239f43973305",
+    "wiki/concepts/lanthanide-dependent-methanol-dehydrogenase-predominance.md": "7e1c5577e20f1ac197eb730a16a863abbd3f0fc83a2c67723937c71b8441b92c",
+    "wiki/concepts/long-running-analysis-execution-reliability.md": "7b871583d4bc0c4382a15c9a3703ae801c3dfc7a4f574a15d89102dc243531c0",
+    "wiki/concepts/long-term-soil-warming-microbial-response.md": "d30506c67ff68dfe04da0b1b444d6f90096157dfea1aa01c24b3d6d40b775885",
+    "wiki/concepts/metabolic-capacity-specialization.md": "5101ff12dc35da5facc6fb1b33135067c44c277d7109d570f4a4df992300a469",
+    "wiki/concepts/metabolic-model-gapfilling.md": "d134df5e86ea4dfd904432af88955eee3e75c5a6e76da6f1caa7f7689db2c8e2",
+    "wiki/concepts/metabolite-class-signatures-of-gut-inflammation.md": "9bb0508e346378e6bdc912365979583708deba401f4558144ebe2d8151bf6a3e",
+    "wiki/concepts/metal-cross-resistance.md": "e39be6e9c4d0104dfe8e398c7944014507fbd80d48db0df537f768df8476a713",
+    "wiki/concepts/module-level-coinheritance.md": "19a15f1620a05f47c6c18001f635ebaa84d403663b8034716c7e521eee8404c8",
+    "wiki/concepts/multi-omics-integration.md": "a2ebaaa46cfae8551674ad016fe05d0ec2137dfcddecd92a0fbf748afbc71a34",
+    "wiki/concepts/null-results-under-limited-statistical-resolution.md": "4b72f67716fa1ee808ab6949c8ce449dddb3422c7a0a5741da4f1ce5b5db855a",
+    "wiki/concepts/numeric-type-fidelity-across-engine-boundaries.md": "ccb38017cf7dc41a5e28ecf3bd9e9dfee637d39694940cb69ad564e8ee2a995e",
+    "wiki/concepts/occurrence-versus-catabolic-activity.md": "46b7dc62c732274974c07359d4e4a7e9935e3270b82f01ff06f6ac4298615c1e",
+    "wiki/concepts/ontology-and-category-schema-sensitivity.md": "553bb5b20610a102bf61fef5b0beb74ca9bf454b05df13437ba6e99f142a80db",
+    "wiki/concepts/organism-dark-compounds.md": "4d0c5d458eb18969e8832236959f1faf95e51fe9a457c8c1de8a319be0baca11",
+    "wiki/concepts/outer-membrane-lipid-homeostasis.md": "c733887cecf2316675433f25461e0ade6ef02b6e143eca98c29aac02bd6106d5",
+    "wiki/concepts/pangenome-conservation-fitness-decoupling.md": "85f6f133672ede0b7dd59cd64d99e5b125f9f43ef88609aee95c9ea0addcb990",
+    "wiki/concepts/pangenome-core-boundary-and-clade-size-bias.md": "0d33df6e9edce86f9253fdc97f12e9aa7aee6f21f8c68ccc5668be49a32ac0e0",
+    "wiki/concepts/pangenome-integration.md": "b4bf2dbaf259fd2d5ff84a13c32292ccca07202be40f0d08cff1ed19d288454c",
+    "wiki/concepts/pangenome-openness-determinants.md": "c3795c8f1680643f6d17bdb1110cd5187335cc9eb43017276f74a9d2ee70060c",
+    "wiki/concepts/pathobiont-biosynthetic-gene-cluster-repertoires.md": "994cbcba5906d3a7276a9e8870e7bf08f1edabfbec17961c8de819ab0747ab09",
+    "wiki/concepts/pathway-versus-reaction-evidence-resolution.md": "ce9e3e6cc28a3dc678d519c9868a5c96717c29b07e9601437c12071d200230c7",
+    "wiki/concepts/phage-defense-syndromes-and-arms-race.md": "e6c13f6a98314bc30168ecd2fc31edc891151bebef19f826c065852e3c733e36",
+    "wiki/concepts/phage-therapy-evidence-translation.md": "d5a9241825ac1787d8eb14c769b3f69cb66bbf6c6bfafbbf96e6f8e6d1faf18a",
+    "wiki/concepts/phb-granule-ecology.md": "9be80030d2f2ef246c667a8251ea9da11f532aed385d31ebfbea9e82d5fc102f",
+    "wiki/concepts/phenotype-database-coverage-bias.md": "e782888e3262d6c49f4ef43641e7b729005e05f4044d2ff5abd89ae1726bfb4e",
+    "wiki/concepts/phylogenetic-confounding-of-pangenome-associations.md": "6a344989e935cda2e3067a1ed9f305fc6a73dc886ede05cda56eb055af1ea66f",
+    "wiki/concepts/pooled-run-pseudoreplication-and-metadata-label-noise.md": "9691d9430bd53634e889258f70f287d1235ec0889a03b15d2dd3caaa2b641c1e",
+    "wiki/concepts/provenance-aware-resource-discovery.md": "723e7131eec22bc2f50aed96278995ebfed16347f92accd2e8bf8a27af9f457c",
+    "wiki/concepts/proxy-assays-for-community-state-assignment.md": "f141a788bc40952feec4757b09215800c5b33ea7d08d3ae09bc9640259020488",
+    "wiki/concepts/reference-strain-representativeness.md": "f5c990b276d92ea686f814f38ae8fe1c7a81dfbbd5567de6608ecbcdce33f6ed",
+    "wiki/concepts/research-attention-inequality.md": "f34ef5b375ded0bd29695f18e85193b1b8df6d700de955aed0aac288f782e806",
+    "wiki/concepts/resistance-island-coinheritance.md": "6d3fe609f529e32d089915b896475efa7352239e01f43e4e45ed33afa37c30d3",
+    "wiki/concepts/respiratory-capacity-and-nadh-load.md": "5c11a474bc4d5999e33bd063395c540baaafc101de72e7032ee9d71265f36f14",
+    "wiki/concepts/runtime-budgeted-resampling-and-embedding.md": "04a9f14e5b49c19a316788cc358e03d7f927530b04bf18791a4447e1e4144586",
+    "wiki/concepts/sample-size-aware-phenotype-consensus.md": "0488104feaf0ec98b731472cc5be561c30e09a88c1799ba37c8c90c16c1d8da0",
+    "wiki/concepts/sampling-depth-and-downsampling-effects.md": "1d7dca38b3fa058e60c34449ccb5d8fe565fdccfe3ac3642db31ea7577907f4b",
+    "wiki/concepts/scale-dependent-mobile-element-associations.md": "7747104607d99ac332730166902cbfa7b3d5f6a97afa8dbd3d14e8519c015196",
+    "wiki/concepts/selection-on-outcome-leakage.md": "f705217f6124e28b9901ed86d1aa3d55339c953cf6029d01c86e402bd51a30bb",
+    "wiki/concepts/shared-stress-versus-stressor-specific-fitness.md": "173796e876695bcd4f833d7727354afde02d95326fe765503eee80420c3441f0",
+    "wiki/concepts/silent-failure-modes-in-distributed-queries.md": "8e5b8985f1caf2d26778a67f766c3d3ac6e115d16cf7afce9beac344545eb852",
+    "wiki/concepts/soil-horizon-response-heterogeneity.md": "b1b46cbc8b2ddfefa484a0e90782f73c08f4d65e9cb0ace1b1013a92f04b536d",
+    "wiki/concepts/spatial-sampling-effort-confounding.md": "aa6037b066eaa693e57264fe03e3bc56896103d74254d5628eb877ee3580f388",
+    "wiki/concepts/species-cooccurrence-modules-as-intervention-units.md": "1970a7aee7ca5d0de128b2ae93992a3858953e2152bd4644f71e2b1d2444a206",
+    "wiki/concepts/structural-annotation-gap.md": "d7a6f7b4d0c7b465c70e22a2d281b54021db5c195c17e2e866755978257622ba",
+    "wiki/concepts/study-batch-confounding-of-environmental-associations.md": "c5dab8000065bbd578c51dad1acb060cf35e67db1324bc815d16bdd4764ca2f5",
+    "wiki/concepts/subsurface-bacillota-specialization.md": "699f8bf30d53781f95a3389c4beb9255b852975b631c3a5107c34ec4333c3cf4",
+    "wiki/concepts/subsurface-hydrogeological-zonation.md": "634916b825ea8d35f5a13e39b3a2b15b16135177c1df8897321ec98e0957d6db",
+    "wiki/concepts/taxonomic-nomenclature-reconciliation.md": "0dfa045f5fab06f21d3347e974981190a457a127b0497f58b9da963d32cb59b3",
+    "wiki/concepts/taxonomic-resolution-dependent-functional-inference.md": "63ab3beaddf037608634a6296e0d49ded2d34772768dd7dc70f6da0f2bbcddfe",
+    "wiki/concepts/transposon-callability-bias.md": "a4eb982f6688251779c45365b50c07368938ffadc9d768b41515d40dac19291a",
+    "wiki/concepts/two-speed-bacterial-genome.md": "8dc3fc97f40afadd6db86bf36660f68fb32d6155982f71ffd4042180e09f1f1d",
+    "wiki/concepts/vectorization-versus-row-wise-iteration.md": "e464bc8c7c91ce53d3e693bb369d057a8f2ca0ec224198ccbacbdc7c52de1da9",
+    "wiki/concepts/within-species-conservation-between-species-functional-divergence.md": "37dec7333abdc388de755dc5eae8da31a5590b180eb7a291074eea7bf3f15704"
+  },
+  "groups": [
+    {
+      "concepts": [
+        "cofitness-network-architecture",
+        "condition-dependent-gene-tradeoffs",
+        "condition-space-dimensionality",
+        "condition-specific-fitness",
+        "cross-species-fitness-transferability",
+        "fitness-matched-null-models",
+        "fitness-module-detection-sensitivity",
+        "genomic-dispersal-functional-coupling",
+        "module-level-coinheritance",
+        "outer-membrane-lipid-homeostasis",
+        "shared-stress-versus-stressor-specific-fitness"
+      ],
+      "title": "Gene Fitness Landscapes and Cofitness Modules"
+    },
+    {
+      "concepts": [
+        "callability-limited-comparative-inference",
+        "essentiality-assay-discordance",
+        "fitness-condition-coverage-prioritization-bias",
+        "gene-essentiality",
+        "genetic-perturbation-coverage-bias",
+        "transposon-callability-bias"
+      ],
+      "title": "Gene Essentiality and Perturbation-Assay Validity"
+    },
+    {
+      "concepts": [
+        "comparative-conservation-metric-calibration",
+        "core-genome-burden-paradox",
+        "costly-dispensable-gene-loss",
+        "lab-field-fitness-concordance",
+        "laboratory-fitness-versus-natural-selection",
+        "pangenome-conservation-fitness-decoupling"
+      ],
+      "title": "Laboratory Fitness Versus Natural Selection and Gene Conservation"
+    },
+    {
+      "concepts": [
+        "chromosomal-and-integrative-gene-transfer",
+        "gene-function-acquisition-depth",
+        "horizontal-gene-transfer-driven-innovation",
+        "pangenome-core-boundary-and-clade-size-bias",
+        "pangenome-integration",
+        "pangenome-openness-determinants",
+        "phylogenetic-confounding-of-pangenome-associations",
+        "two-speed-bacterial-genome",
+        "within-species-conservation-between-species-functional-divergence"
+      ],
+      "title": "Pangenome Structure and Genome Evolution"
+    },
+    {
+      "concepts": [
+        "adaptive-versus-housekeeping-functional-differentiation",
+        "dual-nature-plant-associated-bacteria",
+        "ecotype-clustering-validity",
+        "ecotype-environment-gene-content",
+        "environment-embedding-geography",
+        "gene-cooccurrence-ecological-guilds",
+        "genome-wide-versus-locus-specific-ecological-adaptation"
+      ],
+      "title": "Ecotypes and Environmental Gene-Content Differentiation"
+    },
+    {
+      "concepts": [
+        "active-learning-experiment-selection",
+        "biosynthetic-prototrophy-and-auxotrophy",
+        "biosynthetic-self-sufficiency-and-cultivation",
+        "capability-versus-kinetic-predictability",
+        "community-metabolic-interdependence",
+        "habitat-structured-community-metabolic-potential",
+        "metabolic-capacity-specialization",
+        "occurrence-versus-catabolic-activity",
+        "organism-dark-compounds",
+        "phb-granule-ecology",
+        "respiratory-capacity-and-nadh-load",
+        "sample-size-aware-phenotype-consensus"
+      ],
+      "title": "Metabolic Traits, Auxotrophy, and Community Dependence"
+    },
+    {
+      "concepts": [
+        "circularity-in-metabolic-model-validation",
+        "computational-pathway-prediction-validation",
+        "cross-condition-metabolic-comparability",
+        "ec-less-reaction-annotation",
+        "metabolic-model-gapfilling",
+        "pathway-versus-reaction-evidence-resolution"
+      ],
+      "title": "Metabolic Models and Pathway-Level Evidence"
+    },
+    {
+      "concepts": [
+        "environmental-distribution-of-lanthanide-methylotrophy",
+        "lanmodulin-narrow-distribution",
+        "lanthanide-dependent-methanol-dehydrogenase-predominance"
+      ],
+      "title": "Lanthanide-Dependent Methylotrophy"
+    },
+    {
+      "concepts": [
+        "composite-functional-annotation",
+        "core-gene-annotation-paradox",
+        "evidence-triangulation-for-functional-annotation",
+        "experimental-prioritization-of-functional-dark-matter",
+        "functional-marker-validation",
+        "homology-search-negative-evidence",
+        "ontology-and-category-schema-sensitivity",
+        "research-attention-inequality",
+        "structural-annotation-gap"
+      ],
+      "title": "Functional Dark Matter and Annotation Resolution"
+    },
+    {
+      "concepts": [
+        "antimicrobial-resistance-fitness-cost",
+        "composite-resistance-score-limitations",
+        "environmental-resistome",
+        "metal-cross-resistance",
+        "phage-defense-syndromes-and-arms-race",
+        "resistance-island-coinheritance",
+        "scale-dependent-mobile-element-associations"
+      ],
+      "title": "Resistance, Defense Systems, and Mobile Elements"
+    },
+    {
+      "concepts": [
+        "classifier-database-compatibility-in-taxonomic-quantification",
+        "confirmatory-exploratory-ecological-association-discordance",
+        "cultivation-collection-bias-in-ecological-genomics",
+        "eukaryotic-dna-admixture-in-prokaryotic-metagenomes",
+        "feature-attribution-with-correlated-genomic-features",
+        "genomic-under-representation",
+        "null-results-under-limited-statistical-resolution",
+        "phenotype-database-coverage-bias",
+        "pooled-run-pseudoreplication-and-metadata-label-noise",
+        "sampling-depth-and-downsampling-effects",
+        "selection-on-outcome-leakage",
+        "spatial-sampling-effort-confounding",
+        "study-batch-confounding-of-environmental-associations",
+        "taxonomic-resolution-dependent-functional-inference"
+      ],
+      "title": "Sampling Coverage and Statistical Confounding"
+    },
+    {
+      "concepts": [
+        "adversarial-research-quality-assurance",
+        "analysis-provenance-and-reproducible-outputs",
+        "cross-tenant-data-bridging",
+        "data-landscape-ownership-and-coverage-bias",
+        "foreign-dump-ingestion-fidelity",
+        "multi-omics-integration",
+        "provenance-aware-resource-discovery",
+        "taxonomic-nomenclature-reconciliation"
+      ],
+      "title": "Data Infrastructure, Provenance, and Research Practice"
+    },
+    {
+      "concepts": [
+        "credential-and-tenant-access-lifecycle",
+        "driver-side-result-collection-limits",
+        "execution-environment-dependent-access-paths",
+        "join-strategy-and-table-partitioning-cost",
+        "long-running-analysis-execution-reliability",
+        "numeric-type-fidelity-across-engine-boundaries",
+        "runtime-budgeted-resampling-and-embedding",
+        "silent-failure-modes-in-distributed-queries",
+        "vectorization-versus-row-wise-iteration"
+      ],
+      "title": "Distributed Computation and Analysis Execution"
+    },
+    {
+      "concepts": [
+        "carriage-prevalence-versus-within-carrier-function",
+        "competitive-exclusion-consortium-design",
+        "compositional-robustness-of-differential-abundance-calls",
+        "cross-cohort-microbiome-portability",
+        "ecological-cost-of-microbiome-target-depletion",
+        "gut-microbiome-ecotypes-as-patient-strata",
+        "iron-acquisition-and-pathobiont-expansion",
+        "metabolite-class-signatures-of-gut-inflammation",
+        "pathobiont-biosynthetic-gene-cluster-repertoires",
+        "phage-therapy-evidence-translation",
+        "proxy-assays-for-community-state-assignment",
+        "reference-strain-representativeness",
+        "species-cooccurrence-modules-as-intervention-units"
+      ],
+      "title": "Translational Microbiome and Phage Therapeutics"
+    },
+    {
+      "concepts": [
+        "contaminant-selection-of-subsurface-communities",
+        "ecological-memory",
+        "long-term-soil-warming-microbial-response",
+        "soil-horizon-response-heterogeneity",
+        "subsurface-bacillota-specialization",
+        "subsurface-hydrogeological-zonation"
+      ],
+      "title": "Subsurface and Soil Community Ecology"
+    }
+  ],
+  "reason": "I kept all 15 existing hubs with the same titles and members. I checked every concept in the inventory against them. Each one appears in exactly one group, and no group is empty or missing. The groupings already form coherent scientific topics: fitness landscapes, essentiality assays, lab fitness versus natural selection, pangenome evolution, ecotypes, metabolic traits, metabolic models, lanthanide methylotrophy, functional dark matter, resistance and mobile elements, sampling and statistical confounding, data infrastructure, distributed computation, translational microbiome work, and subsurface and soil ecology. Moving pages between hubs would break published membership without a clear scientific gain, so no names or memberships changed.",
+  "version": 1
+}

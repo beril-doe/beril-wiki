@@ -151,3 +151,153 @@
 ## [2026-09-02 00:08:12] ingest | webofmicrobes_explorer__REPORT.md
 
 ## [2026-09-02 00:10:44] ingest | conservation_vs_fitness__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | acinetobacter_adp1_explorer__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | adp1_deletion_phenotypes__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | adp1_triple_essentiality__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | alphafold_msa_annotation__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | amr_cofitness_networks__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | amr_environmental_resistome__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | amr_fitness_cost__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | amr_pangenome_atlas__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | amr_strain_variation__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | annotation_gap_discovery__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | aromatic_catabolism_network__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | bacdive_metal_validation__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | bacdive_phenotype_metal_tolerance__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | bacillota_b_subsurface_accessory__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | berdl_data_atlas__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | caulobacter_fur_lipida_loss__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | cf_formulation_design__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | clay_confined_subsurface__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | cofitness_coinheritance__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | cog_analysis__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | conservation_fitness_synthesis__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | conservation_vs_fitness__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | core_gene_tradeoffs__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | costly_dispensable_genes__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | counter_ion_effects__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | discoveries.md
+
+## [2026-10-05 20:22:31] ingest | ecotype_analysis__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | ecotype_env_reanalysis__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | ecotype_functional_differentiation__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | enigma_carbon_census_1__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | enigma_contamination_functional_potential__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | enigma_sso_asv_ecology__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | env_embedding_explorer__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | essential_genome__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | essential_metabolome__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | euk_in_prok_correlates__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | field_vs_lab_fitness__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | fitness_effects_conservation__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | fitness_modules__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | functional_dark_matter__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | fw300_metabolic_consistency__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | gene_function_ecological_agora__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | genotype_to_phenotype_enigma__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | harvard_forest_warming__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | ibd_phage_targeting__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | lab_field_ecology__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | lanthanide_methylotrophy_atlas__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | lignin_community_enrichment__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | metabolic_capability_dependency__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | metal_cross_resistance__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | metal_fitness_atlas__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | metal_resistance_global_biogeography__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | metal_specificity__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | microbeatlas_metal_ecology__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | module_conservation__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | nmdc_community_metabolic_ecology__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | nmdc_context_audit__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | pangenome_openness__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | paperblast_explorer__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | pathway_capability_dependency__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | pgp_pangenome_ecology__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | phage_defense_arsenal__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | phb_granule_ecology__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | pitfalls.md
+
+## [2026-10-05 20:22:31] ingest | plant_microbiome_ecotypes__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | prophage_amr_comobilization__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | prophage_ecology__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | pseudomonas_carbon_ecology__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | respiratory_chain_wiring__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | snipe_defense_system__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | soil_frontier_genomics__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | soil_metal_functional_genomics__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | t4ss_cazy_environmental_hgt__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | truly_dark_genes__REPORT.md
+
+## [2026-10-05 20:22:31] ingest | webofmicrobes_explorer__REPORT.md

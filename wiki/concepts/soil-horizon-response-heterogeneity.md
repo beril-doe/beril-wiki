@@ -1,0 +1,37 @@
+---
+type: "Concept"
+description: "In stratified soils, depth horizon explains more community variance than experimental treatment and is associated with different treatment responses between layers, suggesting that organic and mineral compartments should not be pooled."
+sources: ["summaries/harvard_forest_warming__REPORT.md"]
+---
+## Core Claim
+
+In layered soils, depth horizon looks like a main axis of community structure rather than a covariate to average over. At the [[entities/harvard-forest]] long-term warming site, horizon explains far more variance in community composition than heating does. Warming responses at the KO level also agree only weakly between the organic and mineral horizons [src: harvard_forest_warming]. Together these results suggest the hypothesis that stratified compartments should be analysed separately rather than pooled. This project did not directly test that pooling hides signals. The evidence comes from a single site and a single treatment, and part of the functional comparison is confounded with sample incubation (see below) [src: harvard_forest_warming]. See [[concepts/long-term-soil-warming-microbial-response]] for the warming response itself and [[summaries/harvard_forest_warming__REPORT]] for the project summary.
+
+## Design Caveat: Horizon Is Partly Confounded With Incubation
+
+The project used a factorial design of treatment (control vs heated) × horizon (organic vs mineral) × incubation (direct vs lab-incubated). The DNA cohort (n=28) contains only mineral direct and organic incubated samples. In the DNA functional comparisons, then, every organic sample was lab-incubated and every mineral sample was direct. Any DNA-level difference between horizons cannot be credited to depth alone, because it may also reflect incubation. Coverage is unbalanced because the underlying NMDC pipeline did not produce metagenomes from organic-direct or some mineral-direct samples [src: harvard_forest_warming].
+
+## Evidence
+
+Community composition was tested with [[entities/permanova]] (permutational multivariate analysis of variance) on [[entities/bray-curtis-dissimilarity]] distances between genus profiles. Treatment explained R²=7.6% (p=0.069), horizon explained R²=30.6% (p=0.0002), and the four treatment-by-horizon cells explained R²=41% (p=0.0002). In the mineral horizon, no phylum-level change survived FDR (false discovery rate, the expected share of false positives among the significant calls) correction. On this measure horizon is the dominant structuring factor, and the treatment main effect alone is only marginal [src: harvard_forest_warming].
+
+At the functional level, warming log2 fold changes per KO (a KEGG Orthology functional gene group) were only weakly correlated between the organic and mineral horizons. For DNA, Pearson r=0.075 (p=1.78e-17) and Spearman ρ=0.216 (p=2e-134). For RNA, Pearson r=0.034 (p=6e-5) and Spearman ρ=0.120 (p=4e-47). The very small p-values come from the large number of KOs, not from strong agreement. The low correlations mean that a KO's warming response in one horizon says little about its response in the other. For the DNA pool, this comparison sets organic incubated samples against mineral direct samples, so horizon and incubation effects are mixed together. The source also cautions that RNA KO counts from contig annotations reflect transcript-pool composition, not TPM-quantified expression, and are biased by assembly quality [src: harvard_forest_warming].
+
+This **supports** horizon-specific responses at the genome-wide level: ~39% of DNA KOs were organic-only, mineral-only, or sign-flipping. One part of the picture is a null result, though. The curated 62-KO carbon-cycling list was **not** differentially enriched in any horizon-specific class (OR<1, p>0.87 everywhere). The source links this to [[entities/pmoa]]/[[entities/pmob]] being UP in both horizons. Those are RNA-pool signals (log2 FC +0.7 to +0.9, p=0.009-0.054 nominal) that are directional only and do not survive FDR correction across 14K KOs. The horizon-by-warming interaction therefore looks broad but is not driven primarily by the curated carbon-cycling categories [src: harvard_forest_warming].
+
+The heating response was also tested in compound-level potential. Mean detectable ChEBI (Chemical Entities of Biological Interest) counts were 167 ± 9 in control mineral and 155 ± 4 in heated mineral samples, a significant drop by [[entities/mann-whitney-u-test]] (MW p=0.012). In the organic horizon, means were 173 ± 6 in control and 160 ± 13 in heated samples (p=0.209), a shift in the same direction that was not significant. Both horizons fell under heating. A significant result in one horizon and not the other does not show that the treatment effects differ between horizons, because no horizon-by-treatment interaction was tested. It also does not show that pooling would weaken the signal. This result is therefore weak evidence for horizon heterogeneity [src: harvard_forest_warming].
+
+## Evidence Grading
+
+The stronger evidence consists of direct statistical measurements: horizon dominates treatment in genus-level community structure, and KO warming responses correlate weakly across horizons. In the DNA functional comparisons, however, horizon cannot be separated from lab incubation. The ChEBI contrast and the pmoA/pmoB markers are weak evidence: the first rests on separate within-horizon tests, the second on nominal p-values that do not survive FDR. All lines of evidence come from one site and one manipulation. That stratified compartments cannot be pooled, in this or other soils, sediments or depth profiles, remains a hypothesis to test [src: harvard_forest_warming].
+
+## Tensions
+
+The Harvard Forest project contains an internal tension. Most warming responses are horizon-specific genome-wide. Yet the curated carbon-cycling categories that motivate warming studies are not enriched among horizon-specific KOs, and the methane-oxidation markers change in the same direction in both horizons (nominal RNA-pool signals only). Gene sets chosen in advance may understate horizon heterogeneity, or the heterogeneity may lie mainly outside carbon cycling. The incubation confound in the DNA cohort leaves a further possibility: part of the apparent horizon specificity may reflect incubation. The source does not settle which explanation holds [src: harvard_forest_warming].
+
+## Open Directions
+
+- Re-run the organic-only, mineral-only and sign-flip classification on the RNA cohort, restricted to direct samples in both horizons. That cohort includes organic direct samples, so the comparison would test whether horizon specificity holds once incubation is removed from the horizon contrast [src: harvard_forest_warming].
+- Fit a formal treatment-by-horizon interaction test for ChEBI richness and per-KO fold changes, and compare pooled with stratified analyses. This would directly test whether pooling hides signals, instead of inferring it from separate within-horizon p-values [src: harvard_forest_warming].
+- Test enrichment of horizon-specific KOs across all KEGG pathways rather than the curated 62-KO carbon-cycling list. This would identify which functions actually drive the horizon-by-warming interaction [src: harvard_forest_warming].
+- Apply the same stratified PERMANOVA (treatment, horizon and treatment-by-horizon cells) to other depth-resolved datasets in the corpus. This would test whether horizon dominance over treatment holds beyond a single warming site [src: harvard_forest_warming].

@@ -82,7 +82,7 @@ Every build checks these, and a failure stops publication:
 - Every number in a cited paragraph appears in a source that paragraph cites.
   The pipeline re-runs a page that fails against its own sources, and rejects
   the page if it fails twice.
-- Every `[[wikilink]]` resolves. Dead ones become plain text.
+- Every `wikilink` resolves. Dead ones become plain text.
 
 Nothing checks these:
 

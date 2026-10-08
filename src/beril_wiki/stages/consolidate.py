@@ -1011,6 +1011,9 @@ def main(root: pathlib.Path, args) -> int:
     if decision_failures:
         return 1
 
+    if getattr(args, "decisions_only", False):
+        return 0
+
     concepts, summaries = load_concepts(wiki), load_summaries(wiki)
     models = [m.strip() for m in args.merge_models.split(",") if m.strip()]
     # --dry-run is advertised as $0, so it may only use free models. cohere is
@@ -1097,6 +1100,7 @@ def main(root: pathlib.Path, args) -> int:
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", type=pathlib.Path, default=ROOT)
+    ap.add_argument("--decisions-only", action="store_true", help="apply manifest; no embeddings")
     ap.add_argument(
         "--dry-run", action="store_true", help="rank and print candidates; no LLM calls, $0"
     )

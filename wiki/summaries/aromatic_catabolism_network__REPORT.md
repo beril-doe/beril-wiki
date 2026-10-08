@@ -1,6 +1,6 @@
 ---
 type: "Summary"
-description: "ADP1 aromatic catabolism depends on a 51-gene support network."
+description: "Summary of the aromatic_catabolism_network project, which defines a 51-gene quinate-specific support network around the \u03b2-ketoadipate pathway in Acinetobacter baylyi ADP1 spanning aromatic degradation, Complex I, iron acquisition, PQQ biosynthesis and regulation."
 doc_type: "short"
 full_text: "sources/aromatic_catabolism_network__REPORT.md"
 ---
@@ -8,15 +8,15 @@ full_text: "sources/aromatic_catabolism_network__REPORT.md"
 
 ## Overview
 
-This report defines a 51-gene support network for quinate catabolism in *Acinetobacter baylyi* ADP1. The network surrounds the [[entities/beta-ketoadipate-pathway]] and spans core aromatic degradation, Complex I / NADH dehydrogenase, iron acquisition, PQQ biosynthesis, and transcriptional regulation. The analysis combines growth phenotypes, flux-balance analysis (FBA), genomic organization, co-fitness correlations, and cross-species ortholog-transferred fitness data. [src: aromatic_catabolism_network]
+This report defines a 51-gene support network for quinate catabolism in *Acinetobacter baylyi* ADP1 ([[entities/acinetobacter-baylyi-adp1]]). The network surrounds the [[entities/beta-ketoadipate-pathway]] and spans core aromatic degradation, Complex I / NADH dehydrogenase, iron acquisition, PQQ biosynthesis, and transcriptional regulation. The analysis combines growth phenotypes, flux-balance analysis (FBA, a constraint-based model that predicts metabolic fluxes by optimizing for growth), genomic organization, co-fitness correlations, and cross-species ortholog-transferred fitness data. [src: aromatic_catabolism_network]
 
 ## Key Findings
 
 ### A 51-gene support network
 
-The 51 quinate-specific genes organize into a coherent dependency network around the β-ketoadipate pathway. Co-fitness analysis assigns 44/51 genes (86%) to four functional subsystems: 8 aromatic-pathway genes, 21 Complex I genes, 7 iron-acquisition genes, and 2 PQQ-biosynthesis genes; 6 additional genes are transcriptional regulators and 7 remain unassigned. The core pathway converts quinate through protocatechuate and β-ketoadipate to succinyl-CoA and acetyl-CoA, which enter the TCA cycle. [src: aromatic_catabolism_network]
+The 51 quinate-specific genes organize into a coherent metabolic dependency network around the β-ketoadipate pathway. Co-fitness analysis assigns 44/51 genes (86%) to four functional subsystems — the core aromatic degradation pathway (8 genes), Complex I / NADH dehydrogenase (21 genes), iron acquisition (7 genes), and PQQ biosynthesis (2 genes) — plus 6 transcriptional regulators. The report's wording counts the regulators within the 44-gene total, so the four subsystem counts alone do not make up the 44 assigned genes. A further 7 genes remain unassigned because of low co-fitness with all subsystems. The core pathway converts quinate through protocatechuate and β-ketoadipate to succinyl-CoA and acetyl-CoA, which enter the TCA cycle. [src: aromatic_catabolism_network]
 
-The biochemical rationale is that quinate dehydrogenase (quiA) requires the PQQ cofactor, protocatechuate 3,4-dioxygenase (pcaGH) requires non-heme Fe²⁺ for ring cleavage, and TCA-cycle oxidation generates NADH that must be reoxidized by respiratory machinery. [src: aromatic_catabolism_network]
+The biochemical rationale has three parts. Quinate dehydrogenase (quiA) is a PQQ-dependent quinoprotein, which the report uses to explain the 2 PQQ-biosynthesis genes (pqqC, pqqD). Protocatechuate 3,4-dioxygenase (pcaGH) is a non-heme Fe²⁺-dependent ring-cleavage enzyme, which the report uses to explain the 7 iron-acquisition genes (siderophore biosynthesis, ExbD/TolR transport, ferrichrome receptor, TonB-dependent receptor). Succinyl-CoA and acetyl-CoA from β-ketoadipate are fully oxidized in the TCA cycle, generating NADH at multiple steps, and the report proposes that this requires [[entities/complex-i]] for NADH reoxidation under high flux. [src: aromatic_catabolism_network]
 
 ### Complex I is the largest support subsystem and an FBA blind spot
 
@@ -30,19 +30,19 @@ The report interprets this discrepancy as a limitation of growth-optimizing line
 
 The support subsystems occupy distinct chromosomal regions rather than a shared genomic neighborhood. The Complex I operon lies at 714–729 kb, the pca/qui pathway at 1,709–1,724 kb, PQQ biosynthesis at 2,461 kb, and iron-acquisition genes are scattered across 4 loci. No cross-category operons were identified, except within the aromatic pathway itself. [src: aromatic_catabolism_network]
 
-The Complex I operon contains 13 nuoA–N subunits on the same strand with <100 bp intergenic distances. The pca/qui region forms a 12-gene operon spanning pcaIJFBDCHG-quiABC plus transport genes. Across the chromosome, 9 genomic clusters contain ≥2 quinate-specific genes, with mild overall clustering expressed as an observed/expected nearest-neighbor distance ratio of 0.89. [src: aromatic_catabolism_network]
+The Complex I operon contains 13 nuoA–N subunits on the same strand with <100 bp intergenic distances. The pca/qui region forms a 12-gene operon spanning pcaIJFBDCHG-quiABC plus transport genes; the report states that this operon prediction matches prior experimental transcriptional mapping of the pca/qui genes (Dal et al. 2005). Across the chromosome, 9 genomic clusters contain ≥2 quinate-specific genes, with mild overall clustering expressed as an observed/expected nearest-neighbor distance ratio of 0.89. [src: aromatic_catabolism_network]
 
 ### Co-fitness assigns previously unknown genes
 
 Of 23 genes initially categorized as Other or Unknown, co-fitness assigns 16 to support subsystems with medium or high confidence. Two DUF-domain proteins, ACIAD3137 (UPF0234) and ACIAD2176 (DUF2280), correlate with Complex I genes at r > 0.98 and are candidate uncharacterized Complex I accessory factors. Within-category correlations are higher than between-category correlations, with mean r = 0.992 for Complex I and r = 0.961 for the aromatic pathway. [src: aromatic_catabolism_network]
 
-The co-fitness analysis also recovered pcaC, a 4-carboxymuconolactone decarboxylase that was initially miscategorized by keyword matching. However, the analysis uses only 8 conditions and 8-dimensional growth vectors, limiting the resolution of gene-gene correlations; the 11 Complex I-associated assignments beyond the core nuo operon are based on phenotypic correlation and may represent indirect connections rather than physical association. [src: aromatic_catabolism_network]
+The co-fitness analysis also recovered pcaC, a 4-carboxymuconolactone decarboxylase that was initially miscategorized by keyword matching, and nominated two DUF proteins (ACIAD3137, ACIAD2176) as probable Complex I accessory factors. However, the analysis uses only 8 conditions and 8-dimensional growth vectors, limiting the resolution of gene-gene correlations; the 11 Complex I-associated assignments beyond the core nuo operon are based on phenotypic correlation and may represent indirect connections rather than physical association. [src: aromatic_catabolism_network]
 
 ### Complex I dependence tracks NADH-generating substrates
 
 Ortholog-transferred fitness data from the [[entities/kescience-fitnessbrowser]] contains 12,241 entries covering 2,005 genes and 13 conditions. Complex I orthologs have significantly worse fitness on aromatic conditions than on the comparison conditions, with mean fitness values of -1.35 versus -0.77 and Mann-Whitney p < 0.0001. [src: aromatic_catabolism_network]
 
-Per-condition analysis refines this result: the largest Complex I defects relative to background occur on acetate (-1.55) and succinate (-1.39), which are non-aromatic substrates that also generate high NADH flux through the TCA cycle. Complex I fitness is reported as dispensable on glucose and lactate, consistent with the hypothesis that an alternative NADH dehydrogenase, NDH-2, compensates under lower NADH flux. [src: aromatic_catabolism_network]
+Per-condition analysis refines this result: the largest Complex I defects relative to background occur on acetate (-1.55) and succinate (-1.39), which are non-aromatic substrates that also generate high NADH flux through the TCA cycle. The report therefore reads the cross-species data as a high-TCA-flux dependency rather than a strictly aromatic one: Complex I is reported as dispensable on glucose and lactate but essential on substrates that generate high TCA-cycle flux (aromatics, acetate, succinate). The report attributes ADP1's apparent quinate specificity of Complex I to an alternative NADH dehydrogenase, [[entities/ndh-2]], that likely compensates on simpler substrates. This compensation is an inferred hypothesis, not a result the report establishes. [src: aromatic_catabolism_network]
 
 The cross-species evidence is not definitive for ADP1 because the transferred data mixes organisms with different respiratory-chain architectures. Direct Complex I fitness measurements on aromatic substrates in a single organism would provide a stronger test of whether the dependency is caused by aromatic catabolism itself or by high NADH flux. [src: aromatic_catabolism_network]
 
@@ -56,9 +56,27 @@ The report presents the Complex I dependency as its novel finding. Bacterial res
 
 The PQQ dependency is not exclusively aromatic: PQQ-biosynthesis genes also appear as glucose-specific in the adp1_deletion_phenotypes project, where they are associated with PQQ-dependent glucose dehydrogenase. [src: aromatic_catabolism_network]
 
+The report's summary states that aromatic catabolism requires 51 genes, "over 8×" the core pathway, and that the support requirement exceeds the pathway itself "by 7:1". Neither ratio is consistent with the report's own counts of 51 total genes and 8 core-pathway genes. The intended denominators and the meaning of "support requirement" are unresolved, so these ratios should not be relied on. [src: aromatic_catabolism_network]
+
 The 8-condition co-fitness matrix provides approximately 5 independent dimensions, so additional conditions are needed to sharpen subsystem boundaries. The ortholog-transferred cross-species data is confounded by organism-specific respiratory architectures, and the non-core Complex I assignments rely on correlation rather than direct physical evidence. [src: aromatic_catabolism_network]
 
-The report proposes searching the ADP1 genome for NDH-2 and testing its deletion on quinate versus glucose; experimentally validating ACIAD3137 and ACIAD2176 by protein-protein interaction or co-purification studies; expanding the condition panel with benzoate, catechol, vanillate, iron limitation, and respiratory inhibitors; comparing Complex I retention across aromatic-degrading species using pangenome data; and adding PQQ biosynthesis, iron homeostasis, and respiratory-chain capacity constraints to the ADP1 FBA model. [src: aromatic_catabolism_network]
+The proposed NDH-2 compensation mechanism remains untested. The report proposes searching the ADP1 genome for NDH-2 and testing its deletion on quinate versus glucose; experimentally validating ACIAD3137 (UPF0234) and ACIAD2176 (DUF2280), which show r > 0.98 co-fitness with Complex I, by protein-protein interaction or co-purification studies; expanding the condition panel with benzoate, catechol, vanillate, iron limitation, and respiratory inhibitors; comparing Complex I retention across aromatic-degrading species using pangenome data; and adding PQQ biosynthesis, iron homeostasis, and respiratory-chain capacity constraints to the ADP1 FBA model. [src: aromatic_catabolism_network]
+
+## Figures
+
+- Quinate-specific genes by functional category (figures/support_network_categories.png)
+- FBA-predicted flux heatmap for quinate-specific genes (figures/fba_flux_heatmap.png)
+- Chromosome map of quinate-specific genes (figures/chromosome_map.png)
+- Genomic clusters of quinate-specific genes (figures/gene_clusters.png)
+- Co-fitness heatmap among 51 quinate-specific genes (figures/cofitness_heatmap.png)
+- Unknown gene correlations with known subsystems (figures/unknown_assignments_heatmap.png)
+- Within vs between category co-fitness (figures/cofitness_within_between.png)
+- Cross-species fitness on aromatic vs non-aromatic conditions (figures/cross_species_fitness.png)
+- Complex I fitness relative to background by condition (figures/complex_I_vs_background.png) [src: aromatic_catabolism_network]
+
+## Cited Background Literature
+
+The report's reference list includes de Berardinis et al. (2008), "A complete collection of single-gene deletion mutants of Acinetobacter baylyi ADP1" (*Molecular Systems Biology* 4:174; PMID: 18319726); an article titled "Catabolite repression of aromatic compound degradation in Acinetobacter baylyi"; a work titled "The β-ketoadipate pathway"; and an article titled "Novel metabolic features in Acinetobacter baylyi ADP1 revealed by a multiomics approach". These are cited background works, and their titles alone do not establish results within this report. [src: aromatic_catabolism_network]
 
 ## Slots Into
 
@@ -67,3 +85,10 @@ The report proposes searching the ADP1 genome for NDH-2 and testing its deletion
 - [[concepts/metabolic-model-gapfilling]] — the 0% predicted Complex I essentiality, 1.76× flux increase, and 30/51 unmapped genes identify cofactor, respiratory, and regulatory blind spots for FBA. [src: aromatic_catabolism_network]
 - [[concepts/gene-essentiality]] — the contrast between model-predicted 0% essentiality and observed defects for 10/13 Complex I subunits tests how complex-level constraints shape gene essentiality. [src: aromatic_catabolism_network]
 - [[concepts/multi-omics-integration]] — the report integrates fitness phenotypes, FBA, genomic organization, co-fitness, and prior transcriptomic evidence to explain aromatic-catabolism dependencies. [src: aromatic_catabolism_network]
+- [[concepts/respiratory-capacity-and-nadh-load]] — Complex I accounts for 21/51 quinate-specific genes. The largest cross-species Complex I defects, on acetate (-1.55) and succinate (-1.39), point to NADH load rather than aromatic chemistry, and NDH-2 compensation is proposed but untested. [src: aromatic_catabolism_network]
+- [[concepts/genomic-dispersal-functional-coupling]] — the support subsystems sit in distinct chromosomal regions with no cross-category operons, yet are metabolically coupled through PQQ, iron, and NADH demands. [src: aromatic_catabolism_network]
+- [[concepts/cross-species-fitness-transferability]] — ortholog-transferred Fitness Browser data (12,241 entries, 2,005 genes, 13 conditions) support a Complex I dependency but mix organisms with different respiratory-chain architectures. [src: aromatic_catabolism_network]
+- [[concepts/evidence-triangulation-for-functional-annotation]] — co-fitness assigned 16 of 23 Other/Unknown genes and corrected the keyword miscategorization of pcaC. [src: aromatic_catabolism_network]
+- [[concepts/experimental-prioritization-of-functional-dark-matter]] — ACIAD3137 (UPF0234) and ACIAD2176 (DUF2280), with r > 0.98 Complex I co-fitness, are candidate accessory factors awaiting experimental validation. [src: aromatic_catabolism_network]
+- [[concepts/condition-space-dimensionality]] — the 8-condition growth matrix provides only ~5 independent dimensions, limiting subsystem resolution. [src: aromatic_catabolism_network]
+- [[concepts/fitness-module-detection-sensitivity]] — co-fitness assignments derived from only 8 conditions have limited resolution and may capture indirect rather than physical associations. [src: aromatic_catabolism_network]

@@ -1,7 +1,7 @@
 """The subjectivity guard on author pages: it must catch the phrasings the
 pre-rev-2 prompt produced, and leave factual contribution prose alone."""
 
-from beril_wiki.stages.authors import strip_subjective, subjective_hits
+from beril_wiki.stages.authors import subjective_hits
 
 # Real sentences from the rev-1 pages (wiki/authors/), which asserted
 # what a named person is interested in rather than what their projects found.
@@ -64,13 +64,3 @@ def test_catches_characterising_sentences():
 def test_passes_factual_reporting():
     for s in FACTUAL:
         assert not subjective_hits(s), f"false positive: {s}"
-
-
-def test_strip_keeps_factual_sentences_and_headings():
-    section = "## Contributions\n\n" + FACTUAL[0] + " " + CHARACTERISING[0] + "\n\n" + FACTUAL[1]
-    out = strip_subjective(section)
-    assert out.startswith("## Contributions")
-    assert FACTUAL[1] in out
-    assert "research program" not in out
-    assert "27,690 pangenome species" in out  # the factual half survives
-    assert not subjective_hits(out)

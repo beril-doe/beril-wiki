@@ -33,7 +33,7 @@ FIG_EMBED = re.compile(r"!\[[^\]]*\]\((figures/[^)]+)\)")
 
 def fetch_local(staging: pathlib.Path) -> int:
     staging.mkdir(parents=True, exist_ok=True)
-    figroot = ROOT / "wiki" / "figures"
+    figroot = staging.parent / "wiki" / "figures"
     n = nf = 0
     for report in sorted(CHECKOUT.glob("projects/*/REPORT.md")):
         text = report.read_text(encoding="utf-8", errors="replace")
@@ -46,7 +46,7 @@ def fetch_local(staging: pathlib.Path) -> int:
             if not src.exists():
                 continue
             dst = figroot / report.parent.name / re.sub(r"^figures/", "", rel)
-            if not dst.exists() or dst.stat().st_size != src.stat().st_size:
+            if not dst.exists() or dst.read_bytes() != src.read_bytes():
                 dst.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(src, dst)
                 nf += 1
