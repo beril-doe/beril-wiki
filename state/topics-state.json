@@ -1,22 +1,18 @@
 {
- "__names__": {
-  "58fa72442f97": "Gene Fitness-Conservation Dynamics",
-  "fd4a567e032e": "Ecological Genomic Inference Biases",
-  "3db8006d2381": "Metabolic Capability Inference",
-  "f94bbdff5356": "Resistance Ecology and Mobility",
-  "3db49f52ef44": "Biological Evidence Integration",
-  "937bc07f418a": "Functional Annotation Gaps",
-  "7cc4758168f0": "Schema-Dependent Functional Inference",
-  "3e1f76340644": "Subsurface Ecological Genomics",
-  "3accb6df7435": "Cofitness Network Modules"
- },
- "gene-fitness-conservation-dynamics": "dd4b467320c4d747",
- "ecological-genomic-inference-biases": "98b967f90291c4a7",
- "metabolic-capability-inference": "58459d964b9ef1ce",
- "resistance-ecology-and-mobility": "df278dbf49ab68ca",
- "biological-evidence-integration": "0af8395165ac78fd",
- "functional-annotation-gaps": "e4930ff92ed3fd45",
- "schema-dependent-functional-inference": "a79984f2de88ddfc",
- "subsurface-ecological-genomics": "cac14c7abd834c30",
- "cofitness-network-modules": "2e340b1bb66a6eed"
+  "__names__": {},
+  "data-infrastructure-provenance-and-research-practice": "1a82e45823d8a9fe",
+  "distributed-computation-and-analysis-execution": "36afb32188e7af6e",
+  "ecotypes-and-environmental-gene-content-differentiation": "2780ae8334199aeb",
+  "functional-dark-matter-and-annotation-resolution": "d3177098ac61453f",
+  "gene-essentiality-and-perturbation-assay-validity": "465cc12248c6ea10",
+  "gene-fitness-landscapes-and-cofitness-modules": "3aeb4105bcbea387",
+  "laboratory-fitness-versus-natural-selection-and-gene-conservation": "e282bf930faf9c61",
+  "lanthanide-dependent-methylotrophy": "985c22e67c44bd8c",
+  "metabolic-models-and-pathway-level-evidence": "fb2e4f512e3d5e3b",
+  "metabolic-traits-auxotrophy-and-community-dependence": "33d514b23b90b9b9",
+  "pangenome-structure-and-genome-evolution": "1f2e50e36fe50696",
+  "resistance-defense-systems-and-mobile-elements": "cb370a843b25ca43",
+  "sampling-coverage-and-statistical-confounding": "1484e7cab5bad71f",
+  "subsurface-and-soil-community-ecology": "859c514a1d5fe938",
+  "translational-microbiome-and-phage-therapeutics": "c19279a4863df96d"
 }

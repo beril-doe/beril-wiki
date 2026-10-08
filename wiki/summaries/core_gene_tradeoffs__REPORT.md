@@ -1,6 +1,6 @@
 ---
 type: "Summary"
-description: "Analysis of why conserved bacterial genes can be burdensome in laboratory conditions"
+description: "Summary of the core_gene_tradeoffs project, which links Fitness Browser RB-TnSeq fitness burden to pangenome conservation and finds a function-specific core-gene burden paradox, enrichment of condition-dependent trade-off genes among core genes, and a costly-versus-conserved selection-signature matrix."
 doc_type: "short"
 full_text: "sources/core_gene_tradeoffs__REPORT.md"
 ---
@@ -14,19 +14,27 @@ This report analyzes the relationship between gene conservation and laboratory f
 
 ### Function-Specific Burden Paradox
 
-Core genes are disproportionately burdensome in Protein Metabolism, Motility, and RNA Metabolism, with burden differences of +6.2 percentage points, +7.8 percentage points, and +12.9 percentage points, respectively. Cell Wall genes show the opposite pattern: non-core cell wall genes are more burdensome, corresponding to a difference of -14.1 percentage points. [src: core_gene_tradeoffs]
+Not all functional categories show the paradox. Core genes are disproportionately burdensome in Protein Metabolism, Motility, and RNA Metabolism, with burden differences of +6.2 percentage points, +7.8 percentage points, and +12.9 percentage points, respectively. Cell Wall genes show the opposite pattern: non-core cell wall genes are more burdensome, corresponding to a difference of -14.1 percentage points. [src: core_gene_tradeoffs]
+
+Figures: Burden by Functional Category (`figures/burden_by_function.png`) and Burden Patterns by Condition Type (`figures/burden_by_condition.png`). [src: core_gene_tradeoffs]
 
 ### Trade-Off Gene Enrichment
 
-The analysis identifies 25,271 true trade-off genes, representing 17.8% of the genes examined; these genes have fitness below -1 in some conditions and above 1 in others. Trade-off genes are 1.29 times more likely to be core than non-core genes, with an odds ratio of 1.29 and p=1.2e-44. The report interprets this enrichment as evidence that core genes participate in more pathways whose costs and benefits vary by condition. [src: core_gene_tradeoffs]
+The analysis identifies 25,271 true trade-off genes, representing 17.8% of the genes examined; these genes have fitness below -1 in some conditions and above 1 in others. Trade-off genes are enriched among core genes, with a reported odds ratio of OR=1.29 and p=1.2e-44. The report interprets this enrichment as evidence that core genes participate in more pathways whose costs and benefits vary by condition. This explanation is an interpretation and was not tested separately. [src: core_gene_tradeoffs]
+
+Figure: Trade-off Gene Conservation Enrichment (`figures/tradeoff_genes_conservation.png`). [src: core_gene_tradeoffs]
 
 ### Selection Signature Matrix
 
-The selection-signature matrix contains 28,017 Costly + Conserved genes, 5,526 Costly + Dispensable genes, 86,761 Neutral + Conserved genes, and 21,886 Neutral + Dispensable genes. The report interprets the Costly + Conserved group as genes maintained by natural selection despite a laboratory-measured cost, the Costly + Dispensable group as candidates for ongoing gene loss, the Neutral + Conserved group as classic housekeeping genes, and the Neutral + Dispensable group as niche-specific genes. [src: core_gene_tradeoffs]
+The selection-signature matrix contains 28,017 Costly + Conserved genes, 5,526 Costly + Dispensable genes, 86,761 Neutral + Conserved genes, and 21,886 Neutral + Dispensable genes. Neutral genes are those with no measured laboratory burden. The report interprets the Costly + Conserved group as genes that natural selection keeps despite a laboratory-measured cost, because they are needed in natural environments that laboratory experiments do not capture. Essentiality in natural environments was not measured directly. The report treats the Costly + Dispensable group as candidates for ongoing gene loss; these losses are not demonstrated. It classes the Neutral + Conserved group as classic housekeeping genes and the Neutral + Dispensable group as niche-specific genes. [src: core_gene_tradeoffs]
+
+Figure: Selection Signature Matrix (`figures/selection_signature_matrix.png`). [src: core_gene_tradeoffs]
 
 ### Condition-Specific Effects and Case Studies
 
-Genes with strong condition-specific effects are more likely to be core, reinforcing the conclusion that the conserved genome is functionally active rather than uniformly inert. Motility genes illustrate the burden paradox: flagellar machinery is energetically expensive and can be costly under laboratory conditions, yet is conserved because it can be essential for chemotaxis in natural environments. [src: core_gene_tradeoffs]
+The report says genes with strong condition-specific effects are more likely to be core. This supports its conclusion that the conserved genome is functionally active rather than uniformly inert, but no effect size is given for this pattern. Motility genes are the case study for the burden paradox. Flagellar machinery is energetically expensive and costly under laboratory conditions, yet it is conserved. The report attributes this to its importance for chemotaxis in natural environments; this ecological explanation is an interpretation, not a direct measurement. [src: core_gene_tradeoffs]
+
+Figures: Specific Phenotype Conditions (`figures/specific_phenotype_conditions.png`) and Motility Case Study (`figures/motility_case_study.png`). [src: core_gene_tradeoffs]
 
 ### Interpretation
 
@@ -34,7 +42,16 @@ The report resolves the burden paradox by treating laboratory conditions as an i
 
 ### Literature Context
 
-The analysis uses Fitness Browser data generated by Price et al. (2018), which provide genome-wide mutant fitness measurements across diverse bacteria and reveal condition-dependent costs and benefits. Rosconi et al. (2022) showed that gene essentiality is strain-dependent across Streptococcus pneumoniae pangenomes, supporting the report's interpretation that conservation reflects selection across diverse environments rather than universal essentiality. Koskiniemi et al. (2012) reported that dispensable genes impose fitness costs in Salmonella, which is consistent with the report's observation that conserved genes can carry higher laboratory burden because of the metabolic expense of maintaining active pathways. [src: core_gene_tradeoffs]
+The analysis uses Fitness Browser data generated by Price et al. (2018), which provide genome-wide mutant fitness measurements across diverse bacteria and reveal condition-dependent costs and benefits. Rosconi et al. (2022) showed that gene essentiality is strain-dependent across Streptococcus pneumoniae pangenomes, supporting the report's interpretation that conservation reflects selection across diverse environments rather than universal essentiality. Koskiniemi et al. (2012) reported that dispensable genes impose fitness costs in Salmonella (literature context, not a new Salmonella result from this project), which is consistent with the report's observation that conserved genes can carry higher laboratory burden because of the metabolic expense of maintaining active pathways. [src: core_gene_tradeoffs]
+
+## Data Sources
+
+- Fitness Browser: RB-TnSeq mutant fitness data, attributed to Price et al. (2018). [src: core_gene_tradeoffs]
+- KBase pangenome link table: gene-to-cluster conservation mapping (`conservation_vs_fitness/data/fb_pangenome_link.tsv`). [src: core_gene_tradeoffs]
+- Fitness stats: per-gene fitness summary (`fitness_effects_conservation/data/fitness_stats.tsv`). [src: core_gene_tradeoffs]
+- SEED annotations: functional category assignments (`conservation_vs_fitness/data/seed_annotations.tsv`). [src: core_gene_tradeoffs]
+
+The project produces only figures. Intermediate results are computed in the notebook from upstream data and are not released as separate project outputs. [src: core_gene_tradeoffs]
 
 ## Caveats
 
@@ -47,3 +64,10 @@ The analysis uses Fitness Browser data generated by Price et al. (2018), which p
 
 - [[concepts/gene-essentiality]] — adds evidence that conservation and laboratory essentiality or burden are distinct, including 25,271 condition-dependent trade-off genes and 28,017 costly-but-conserved genes. [src: core_gene_tradeoffs]
 - [[concepts/condition-specific-fitness]] — shows that core-gene burden and trade-off status depend on functional category and environmental condition. [src: core_gene_tradeoffs]
+- [[concepts/core-genome-burden-paradox]] — core genes carry excess burden in Protein Metabolism, Motility and RNA Metabolism, Cell Wall reverses the pattern, and the report reads costly-but-conserved genes as maintained by selection. [src: core_gene_tradeoffs]
+- [[concepts/condition-dependent-gene-tradeoffs]] — 25,271 trade-off genes (17.8%) are enriched among core genes (OR=1.29, p=1.2e-44); burden (fit > 1) may reflect trade-offs. [src: core_gene_tradeoffs]
+- [[concepts/pangenome-conservation-fitness-decoupling]] — the neutral conserved and neutral dispensable classes, plus literature on strain-dependent essentiality. [src: core_gene_tradeoffs]
+- [[concepts/costly-dispensable-gene-loss]] — 5,526 costly dispensable genes proposed as candidates for ongoing gene loss. [src: core_gene_tradeoffs]
+- [[concepts/laboratory-fitness-versus-natural-selection]] — laboratory conditions are an impoverished proxy for nature, and the ecological explanations for conserved costly genes are interpretive. [src: core_gene_tradeoffs]
+- [[concepts/fitness-condition-coverage-prioritization-bias]] — Fitness Browser conditions are biased toward experimental convenience and cover only a fraction of natural conditions. [src: core_gene_tradeoffs]
+- [[concepts/pangenome-integration]] — the 90% identity DIAMOND matching threshold may miss rapidly evolving genes. [src: core_gene_tradeoffs]

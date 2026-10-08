@@ -1,6 +1,6 @@
 ---
 type: "Summary"
-description: "Tests the clay shield hypothesis and identifies alkaline-soil genomic sampling gaps."
+description: "Preliminary global soil analysis of 5,441 samples finding no support for the clay shield hypothesis, and introducing a Genomic Discovery Index that flags forest, cropland and alkaline soils as genomically under-represented."
 doc_type: "short"
 full_text: "sources/soil_frontier_genomics__REPORT.md"
 ---
@@ -22,7 +22,7 @@ At global scale, the clay shield hypothesis is not supported. Clay content showe
 
 ### Genomic Discovery Index
 
-The GDI is defined as OTU Richness / (Mean Genome Completeness + 1), calculated at 1° spatial bins. Forest had GDI = 902.36 and cropland had GDI = 890.82, while grassland had GDI = 503.42 and wetland had GDI = 525.13. Forest and cropland were therefore identified as jointly highest-GDI biomes, whereas grassland and wetland were relatively well-mapped. [src: soil_frontier_genomics]
+The GDI is defined as OTU (operational taxonomic unit, a cluster of similar marker-gene sequences used as a species proxy) Richness / (Mean Genome Completeness + 1), calculated at 1° spatial bins. Forest had GDI = 902.36 and cropland had GDI = 890.82, while grassland had GDI = 503.42 and wetland had GDI = 525.13. Forest and cropland were therefore identified as jointly highest-GDI biomes, whereas grassland and wetland were relatively well-mapped. [src: soil_frontier_genomics]
 
 Frontier areas with GDI > 1000 had mean pH = 6.74, compared with mean pH = 5.94 in mapped areas, a +0.8 pH unit gap. The report interprets this as evidence of systematic under-sampling of alkaline soil microbiomes in public genomic databases. [src: soil_frontier_genomics]
 
@@ -45,3 +45,8 @@ Pending analyses are: decomposing negative R² into distributional shift, outlie
 - [[concepts/genomic-under-representation]] — The GDI identifies forest and cropland genomic under-representation and an alkaline-soil sampling gap relevant to uncharacterized microbial functional potential. [src: soil_frontier_genomics]
 - [[concepts/environment-embedding-geography]] — The report tests spatially structured prediction and shows that spatial autocorrelation and distributional shift must be separated from biological unpredictability. [src: soil_frontier_genomics]
 - [[concepts/provenance-aware-resource-discovery]] — The proposed controls for 16S sampling effort and completeness highlight the need to distinguish database sampling gaps from assembly or annotation gaps. [src: soil_frontier_genomics]
+- [[concepts/confirmatory-exploratory-ecological-association-discordance]] — Clay shows correlational associations with functional potential, but the confirmatory low-clay versus high-clay shield-efficiency test is null, so the hypothesis is not supported at global scale. [src: soil_frontier_genomics]
+- [[concepts/study-batch-confounding-of-environmental-associations]] — All three model families predict worse than the training mean, and the report has not separated distributional shift, outlier leverage and batch or unmeasured confounding from genuine unpredictability. [src: soil_frontier_genomics]
+- [[concepts/spatial-sampling-effort-confounding]] — A spatially blocked reanalysis is still pending to decompose the negative out-of-sample R² values. [src: soil_frontier_genomics]
+- [[concepts/sampling-depth-and-downsampling-effects]] — Rarefaction-corrected GDI and control for the number of 16S samples per pH bin are pending, so richness and the pH gap may reflect sequencing depth or sampling effort. [src: soil_frontier_genomics]
+- [[concepts/cultivation-collection-bias-in-ecological-genomics]] — The pH gap between frontier and mapped areas is read as under-sampling of alkaline soil microbiomes in public genomic databases, which is a collection-bias claim that has not yet been checked for sampling effort. [src: soil_frontier_genomics]

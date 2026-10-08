@@ -1,0 +1,22 @@
+<!-- tension-hash: 797bce433eb2ce1e -->
+# Does Pangenome Openness Track Metabolic Turnover Without Tracking Environmental Differentiation?
+
+Two lines of evidence in [[concepts/ecotype-environment-gene-content]] diverge on what pangenome openness signals. Openness is the share of a species' gene content that is accessory (variable between strains) rather than core [src: metabolic_capability_dependency; pathway_capability_dependency; pangenome_openness]. Metabolic-capability analyses report that more open pangenomes carry more latent or variable metabolic pathways [src: metabolic_capability_dependency; pathway_capability_dependency; pangenome_openness]. These correlations do not directly measure ongoing gene gain or loss. They only suggest the hypothesis that open pangenomes are where metabolic gene content is actively reshuffled [src: metabolic_capability_dependency; pathway_capability_dependency; pangenome_openness]. The openness analysis reports that openness does not predict environment or phylogeny effect sizes [src: metabolic_capability_dependency; pathway_capability_dependency; pangenome_openness]. This matters because the concept page treats environment-linked gene content as a core theme. If openness reflected metabolic turnover that follows habitat, it should mark species whose gene content tracks environment. On the effect-size metrics tested, it does not.
+
+## Evidence Sides
+
+**Side A: openness correlates with latent and variable metabolic pathways.** Latent capability rate is the fraction of complete pathways that are fitness-neutral [src: metabolic_capability_dependency; pathway_capability_dependency; pangenome_openness]. It correlated with openness at ρ = 0.69, p = 0.0004, n = 22 [src: metabolic_capability_dependency; pathway_capability_dependency; pangenome_openness]. Here ρ is the Spearman rank correlation, a nonparametric measure of monotonic association. The p-value (p) is the probability of a correlation at least this strong if no association existed, and n is the number of units analysed. Variable pathway count also correlated with openness, with partial rho=0.530, p=2.83e-203 [src: metabolic_capability_dependency; pathway_capability_dependency; pangenome_openness]. A partial correlation is one computed after controlling for a confounding covariate. The tension text gives no sample size for this second correlation. Neither correlation directly measures gene turnover over time.
+
+**Side B: openness does not predict environmental or phylogenetic structuring.** Openness did not predict environment or phylogeny effect sizes, with rho = -0.05 and 0.03 and p-values 0.54 and 0.73 [src: metabolic_capability_dependency; pathway_capability_dependency; pangenome_openness]. These are null results. They show no detectable association; they do not establish that none exists. The tension text gives no sample size for this comparison.
+
+## Possible Reconciliations
+
+- *Hypothesis 1:* Metabolic turnover in open pangenomes may be driven by community context or nutrient availability, not by the habitat categories behind the environment effect-size metric. If so, openness could track pathway variation without tracking environmental structuring.
+- *Hypothesis 2:* The analyses may differ in scale and sampling. Side A includes an estimate with n = 22 [src: metabolic_capability_dependency; pathway_capability_dependency; pangenome_openness]. Side B's sample size is not stated in the tension text. The divergence may partly reflect different species sets rather than a biological conflict.
+
+## Resolving Work
+
+- On the same species set, use a Spearman correlation and a partial correlation adjusted for genome count to test whether variable pathway count predicts the environment effect size directly. This would show whether the two sides disagree on matched data.
+- Split the environment effect size into metabolic and non-metabolic accessory gene families, then regress each on openness. This would test whether a metabolic signal is diluted when all gene families are pooled.
+- Restrict to the clades that have both fitness data and environment metadata, and test whether latent capability rate predicts environment effect size. This would show whether fitness-neutral pathways are environment-linked.
+- Within single species, group strains by shared pathway-presence profiles and compare those groups against sample habitat labels. This would ask whether pathway variants in open pangenomes sort by environment at finer scale than species-level effect sizes capture.
