@@ -25,6 +25,9 @@ reference/
 /docs/**/*.excalidraw
 !/docs/agentic-workflow.html
 /.agentic/
+# Personal worktree hook for Orca and T3 Code; lives only in the main checkout.
+/t3.json
+/scripts/worktree-setup.sh
 
 # Meaning-search vectors: shared through the search-data branch, not main
 # (beril_wiki.publish.search_data).
