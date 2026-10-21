@@ -14,6 +14,7 @@
 #   hubs     re-cluster + regenerate only topic hubs whose members changed
 #   figures  manifest + LLM figure placements (hash-skipped)
 #   extras   deterministic author/data pages
+#   titles   give an untitled page the title its plan chose (deterministic)
 #   names    rename the data platform to its current name (deterministic)
 #   repair   re-run any page failing write-time validation (no-op when clean)
 #   check    citation, numeric, uptake, and duplicate-concept audits (fails on errors)
@@ -72,6 +73,11 @@ echo "== authors" | tee -a "$LOG"
 "${PY[@]}" -m beril_wiki.stages.authors | tee -a "$LOG" | tail -3
 
 # The platform is the KBase Data Lakehouse. Reports written while it was
+# A page the writer left without an H1 publishes under its slug; give it the
+# title its plan chose. Deterministic and idempotent; no LLM call.
+echo "== titles" | tee -a "$LOG"
+"${PY[@]}" -m beril_wiki.stages.titles "$REPO" | tee -a "$LOG"
+
 # called BERDL, or the BER Data Lakehouse, seed those names into every page
 # compiled from them, so the rename runs after everything that writes a page
 # and before the checks. Deterministic and idempotent; no LLM call.

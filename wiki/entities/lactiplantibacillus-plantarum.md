@@ -3,6 +3,8 @@ type: "Organism"
 description: "Plant- and gut-associated Firmicute that appears in this corpus both as a genetically tractable candidate host for dark-gene experiments and as a proposed probiotic reported to enhance Pseudomonas aeruginosa pathogenicity in a cystic fibrosis model."
 sources: ["summaries/cf_formulation_design__REPORT.md", "summaries/functional_dark_matter__REPORT.md"]
 ---
+# Lactiplantibacillus plantarum
+
 *Lactiplantibacillus plantarum* enters this corpus from two directions: as a "plant-associated and gut-associated Firmicute with well-developed genetic tools" proposed as an experimental host for testing uncharacterized genes [src: functional_dark_matter], and as a commonly proposed probiotic whose safety in a cystic fibrosis context is questioned [src: cf_formulation_design].
 
 ## Names used in this corpus

@@ -3,6 +3,8 @@ type: "Gene_Or_Pathway"
 description: "pcaC (locus ACIAD1710) encodes 4-carboxymuconolactone decarboxylase (EC 4.1.1.44), a core protocatechuate (pca) pathway enzyme that a keyword annotation pass misclassified and co-fitness analysis recovered."
 sources: ["summaries/aromatic_catabolism_network__REPORT.md", "summaries/pitfalls.md"]
 ---
+# pcaC
+
 pcaC encodes 4-carboxymuconolactone decarboxylase (EC 4.1.1.44), a core enzyme of the protocatechuate (pca) branch of aromatic catabolism. The pitfalls digest records it under the locus tag ACIAD1710, which is the gene it reports as recovered as pcaC. Known aliases: ACIAD1710; 4-carboxymuconolactone decarboxylase. [src: pitfalls]
 
 ## Keyword misclassification

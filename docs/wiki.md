@@ -38,7 +38,9 @@ The curator uses content hashes, accepted coverage and cached job results for
 resume decisions. Metadata pages and raw reports have their own formats.
 
 Deterministic checks verify citation IDs, selected quantities, links and
-retention of unchanged evidence. Separate model review assesses scientific
+retention of unchanged evidence. Every generated page needs an H1, which
+publishing turns into its title; `beril_wiki.check` fails on a page without
+one. Separate model review assesses scientific
 support and lost meaning. Neither establishes that the underlying research is
 correct; a number appearing in a cited report does not establish its units,
 denominator or interpretation.

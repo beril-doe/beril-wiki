@@ -3,6 +3,8 @@ type: "Gene_Or_Pathway"
 description: "The dissimilatory sulfate reduction pathway (Sat\u2013AprAB\u2013DsrAB), and how strongly its genomic markers are enriched in clay-confined deep-subsurface genomes, both within Bacillota_B and after a later marker correction."
 sources: ["summaries/bacillota_b_subsurface_accessory__REPORT.md", "summaries/clay_confined_subsurface__REPORT.md", "summaries/discoveries.md"]
 ---
+# Dissimilatory sulfate reduction pathway
+
 ## Overview
 
 Dissimilatory sulfate reduction (SR; aliases: the dsrAB-aprAB-sat module, the Sat–AprAB–DsrAB module, the dissimilatory sulfate reduction module) is detected in this corpus through genomic markers rather than measured activity. The marker set is the KEGG orthologs K11180, K11181, K00394, K00395 and K00958, and a later re-audit confirmed that these markers were correctly identified [src: bacillota_b_subsurface_accessory, clay_confined_subsurface].

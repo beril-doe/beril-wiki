@@ -3,6 +3,8 @@ type: "Concept"
 description: "What counts as a reproducible analysis record in this corpus: committed figures and data files are not enough without committed code history and retained execution outputs."
 sources: ["summaries/pitfalls.md"]
 ---
+# Committed Artifacts Are Not Provenance: Code History and Retained Outputs Are
+
 A project can look reproducible while lacking the record that would let anyone rerun it. The central pitfalls digest documents two separate failures. In the first, outputs were committed while the code that produced them was not. In the second, the notebook executor reported success while saving no outputs. Both rest on single documented incidents rather than a corpus-wide audit, so their frequency across projects is not established [src: pitfalls]. Related execution-side failures are covered in [[concepts/long-running-analysis-execution-reliability]] and [[concepts/silent-failure-modes-in-distributed-queries]]. The digest itself is summarized in [[summaries/pitfalls]].
 
 ## Committed Outputs Without Committed Code

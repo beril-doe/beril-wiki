@@ -3,6 +3,8 @@ type: "Method"
 description: "Kaiju, the NCBI-NR read-based taxonomic classifier used for the Kuehl_WGS (UC Davis) IBD cohort, and the reliability and classifier-mismatch limits that follow from using it alongside MetaPhlAn3-trained references."
 sources: ["summaries/discoveries.md", "summaries/ibd_phage_targeting__REPORT.md"]
 ---
+# Kaiju
+
 Kaiju is a taxonomic classification method applied to sequencing reads; the cross-project digest names the specific configuration in use as "Kaiju NCBI-NR read classification", i.e. read classification against the NCBI non-redundant protein database [src: discoveries]. Within this corpus it appears as the taxonomic profiler for the Kuehl_WGS (UC Davis) whole-genome-shotgun cohort of the IBD phage-targeting project, where it supplies both ecotype-projection features and pathobiont presence calls [src: ibd_phage_targeting]. Because the reference embedding it is projected onto was built from a different profiler, Kaiju is also the pivot case for [[concepts/classifier-database-compatibility-in-taxonomic-quantification]] and [[concepts/cross-cohort-microbiome-portability]].
 
 ## Aliases and identifiers

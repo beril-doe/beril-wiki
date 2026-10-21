@@ -3,6 +3,8 @@ type: "Method"
 description: "HUMAnN3, the metagenomic functional profiler whose MetaCyc pathway-abundance outputs (unstratified and species-stratified) are analysed in this corpus and whose pathway categories depend on the class hierarchy used to annotate them."
 sources: ["summaries/discoveries.md", "summaries/ibd_phage_targeting__REPORT.md"]
 ---
+# HUMAnN3
+
 HUMAnN3 is the metagenomic functional-profiling tool whose pathway-abundance outputs appear in this corpus as [[entities/metacyc]]-keyed tables, used both in an unstratified form (one row per pathway) and in a species-resolved stratified-pathway form written as `PWY-XXX|g__species` [src: ibd_phage_targeting]. Its outputs are also the target of pathway-category annotation that draws on an external MetaCyc class hierarchy [src: discoveries].
 
 ## Pathway tables in the IBD phage-targeting analysis

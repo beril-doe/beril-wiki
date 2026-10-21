@@ -3,6 +3,8 @@ type: "Organism"
 description: "Ralstonia solanacearum is one of the six species directly matched between the Fitness Browser and BacDive, and in a plant-microbiome ecotype analysis its subclade \u00d7 plant-host association passed Benjamini\u2013Hochberg FDR but not across-species Bonferroni correction."
 sources: ["summaries/bacdive_phenotype_metal_tolerance__REPORT.md", "summaries/plant_microbiome_ecotypes__REPORT.md"]
 ---
+# Ralstonia solanacearum
+
 *Ralstonia solanacearum* appears in two projects in this corpus. The first cross-references Fitness Browser organisms against BacDive phenotype records. The second is a plant-microbiome ecotype analysis that tested whether subclades are associated with plant hosts, where its result depended on which multiple-testing correction was applied [src: bacdive_phenotype_metal_tolerance, plant_microbiome_ecotypes]. The assigned evidence records no NCBI taxid for it [src: bacdive_phenotype_metal_tolerance, plant_microbiome_ecotypes].
 
 ## Fitness Browser–BacDive taxonomy match

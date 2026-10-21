@@ -3,6 +3,8 @@ type: "Concept"
 description: "Whether species co-occurrence modules detected in gut metagenomes can serve as units for microbiome intervention, given that they concentrate phage-target candidates but shift membership between community states."
 sources: ["summaries/ibd_phage_targeting__REPORT.md"]
 ---
+# Species Co-occurrence Modules as Candidate Intervention Units
+
 A species-level co-occurrence module is the natural candidate unit for a multi-target microbiome intervention: if the species one wants to remove sit together in one correlated block, one cocktail addresses them as an ecological group rather than one by one. The IBD phage-targeting project tested this by building four per-subnet correlation networks via CLR transform (centered log-ratio, a transform applied to compositional abundance vectors before correlation) plus rank-based Pearson correlation (equivalent to Spearman rho), with per-edge BH-FDR (Benjamini-Hochberg false discovery rate control), thresholded at |rho| > 0.3 AND FDR < 0.05, then ran Louvain community detection (`networkx.community.louvain_communities`, edge-weighted by |rho|); Networkx 3.5's built-in Louvain was sufficient and FastSpar / SpiecEasi installation was held back as unnecessary for the question given clear module structure at CLR-Spearman [src: ibd_phage_targeting].
 
 ## Module structure across ecotype subnets

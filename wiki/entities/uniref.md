@@ -3,6 +3,8 @@ type: "Dataset"
 description: "UniRef protein clusters at three redundancy levels (UniRef100, UniRef90, UniRef50) as held in the KBase Data Lakehouse, with snapshot counts, dataset variants and query caveats."
 sources: ["summaries/berdl_data_atlas__REPORT.md", "summaries/pitfalls.md"]
 ---
+# UniRef
+
 **UniRef** is a set of protein clusters at three redundancy levels: UniRef100, UniRef90 and UniRef50. In the KBase Data Lakehouse it appears in two groups. One is the `refdata_uniref*` reference-data collections. The other is the `kbase_uniref*` datasets [src: berdl_data_atlas, pitfalls].
 
 ## Collections in the KBase Data Lakehouse

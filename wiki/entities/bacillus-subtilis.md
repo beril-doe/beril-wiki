@@ -3,6 +3,8 @@ type: "Organism"
 description: "Bacillus subtilis 168, the Gram-positive model bacterium proposed in the corpus as a priority genetic-library addition and used as a prophage validation species."
 sources: ["summaries/functional_dark_matter__REPORT.md", "summaries/prophage_ecology__REPORT.md"]
 ---
+# Bacillus subtilis
+
 *Bacillus subtilis* is a Firmicutes (Bacillota) bacterium. Strain 168 is described as the best-studied Gram-positive model organism and has well-established RB-TnSeq (random barcode transposon sequencing, a pooled mutant-fitness assay) protocols (Koo et al. 2017). Aliases: *B. subtilis*, *B. subtilis* 168. [src: functional_dark_matter]
 
 ## Proposed Fitness Browser library addition

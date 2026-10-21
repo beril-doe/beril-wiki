@@ -3,6 +3,8 @@ type: "Gene_Or_Pathway"
 description: "The Wood\u2013Ljungdahl pathway as a genomic marker in this corpus, whose apparent enrichment in deep clay-confined subsurface isolates turns out to track the Bacillota_B lineage rather than the habitat."
 sources: ["summaries/clay_confined_subsurface__REPORT.md", "summaries/discoveries.md"]
 ---
+# Wood–Ljungdahl pathway
+
 In this corpus the Wood–Ljungdahl (WL) pathway is a genomic marker. It was tested, alongside [NiFe]-hydrogenase and sulfate reduction, for enrichment in isolates from deep clay-confined subsurface settings [src: clay_confined_subsurface, discoveries].
 
 Aliases: WL; `WL_complete`, the completeness flag used in the clay-subsurface comparison tables [src: clay_confined_subsurface].

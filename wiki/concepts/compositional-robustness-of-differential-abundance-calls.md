@@ -3,6 +3,8 @@ type: "Concept"
 description: "How normalization choice (raw relative abundance vs CLR/LinDA) and contrast design (pooled vs within-substudy, ecotype-stratified) can reverse, erase or re-rank differential-abundance calls in gut microbiome data."
 sources: ["summaries/discoveries.md", "summaries/ibd_phage_targeting__REPORT.md"]
 ---
+# Compositional Transformation and Design Stratification Reverse Abundance Contrasts
+
 Differential abundance (DA) — testing which taxa differ in abundance between sample groups — returns answers that depend on two choices made before any test is run: how counts are normalized, and how the contrast is designed. Both choices can reverse the direction of a call, not merely its significance. The methodological grounding is explicit in the corpus: cited work identifies microbiome datasets as compositional, i.e. constrained by a sum-to-constant [src: ibd_phage_targeting]; a cited review sets out the fundamentals, tools and challenges of compositional data analysis of the microbiome [src: ibd_phage_targeting]; and a cited method paper supplies analysis of compositions of microbiomes with bias correction [src: ibd_phage_targeting]. The direct evidence below is method-vs-method and design-vs-design comparison on the same data, which is strong for the comparison itself, but it comes from one human gut project plus the cross-project digest, so the magnitude of the effect elsewhere is untested.
 
 ## Normalization can reverse the sign of a call

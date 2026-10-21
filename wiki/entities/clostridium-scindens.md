@@ -3,6 +3,8 @@ type: "Organism"
 description: "Human gut bacterium whose apparent Crohn's-disease enrichment in IBD metagenome re-analyses moved from a flagged protective-species paradox to a confound-free CD-up call after feature-leakage repair."
 sources: ["summaries/discoveries.md", "summaries/ibd_phage_targeting__REPORT.md", "summaries/pitfalls.md"]
 ---
+# Clostridium scindens
+
 *Clostridium scindens* is the named gut species at the centre of the apparent Crohn's-disease (CD) enrichment paradox in the IBD metagenome re-analyses [src: ibd_phage_targeting]. The central digest describes it as a protective species: a secondary bile-acid producer via 7α-dehydroxylation, a TGR5 activator, present at ~79 % prevalence in healthy individuals, and an inhibitor of *C. difficile* [src: discoveries]. It is also one of the named organisms in the ecotype feature-leakage analysis [src: pitfalls].
 
 ## Aliases

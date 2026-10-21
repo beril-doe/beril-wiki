@@ -3,6 +3,8 @@ type: "Concept"
 description: "How to tell FDR-corrected null results caused by incomplete metadata or sample-size p-value floors apart from real evidence that an effect is absent, using AMR temporal trends and per-OTU lignin enrichment as examples."
 sources: ["summaries/amr_strain_variation__REPORT.md", "summaries/lignin_community_enrichment__REPORT.md"]
 ---
+# Design-Limited Nulls Versus Genuine Absence of Effect
+
 A null result after multiple-testing correction can mean one of two things. Either the effect is absent, or the design could not have detected it. Two projects in this corpus report nulls after false-discovery-rate (FDR; the expected share of false positives among calls declared significant) correction. In each case the authors attribute the null to a limitation of the design or data rather than to an absent effect: incomplete metadata in one case and small group sizes in the other. How well each explanation is supported differs. For the lignin project the explanation is a demonstrated p-value floor, so its per-OTU null is uninformative. For the AMR project the explanation is the authors' interpretation and remains a hypothesis. Neither null should be read as established evidence of absence, but only the first is known to be uninformative [src: amr_strain_variation, lignin_community_enrichment].
 
 ## Metadata-limited null: AMR gene-count temporal trends

@@ -8,6 +8,7 @@ checker over OpenKB output. Run after every `openkb add` / `recompile`:
 
 Checks (concepts/ and entities/ pages):
   ERROR  [src: id] cites an id with no corresponding source document
+  ERROR  a page has no H1 title (every generated collection)
   WARN   a paragraph containing figures (numbers/percentages) has no [src:] tag
   WARN   a number in a cited paragraph appears in none of its cited sources
 
@@ -58,6 +59,16 @@ NUMBER = re.compile(
 # it made those figures invisible and every page quoting them looked unsupported.
 
 _SRC_NUMS: dict[tuple[str, str], set[str]] = {}
+
+FRONTMATTER = re.compile(r"^---\n.*?\n---\n", re.S)
+H1 = re.compile(r"^# +\S", re.M)
+# A `# comment` line inside a code block is not a heading.
+FENCED = re.compile(r"^(`{3,}|~{3,}).*?^\1", re.M | re.S)
+
+
+def has_title(text: str) -> bool:
+    """Whether the page body has an H1, which publish turns into its title."""
+    return bool(H1.search(FENCED.sub("", FRONTMATTER.sub("", text, count=1))))
 
 
 def norm_num(tok: str) -> str:
@@ -378,6 +389,17 @@ def main() -> int:
             for d in dead:
                 msg = f"{sub}/{page.name}: link [[{d}]] targets a page that does not exist"
                 (errors if strict else warns).append(msg)
+
+    # Without an H1 a page publishes under its slug: 31 pages read
+    # `foreign-dump-ingestion-fidelity` and `cohens-d` in titles, cards and search.
+    # The home page is model-written too (stages.topics), outside every collection.
+    titled = [
+        wiki / "index.md",
+        *(p for base, sub in roots for p in sorted((base / sub).glob("*.md"))),
+    ]
+    for page in titled:
+        if page.exists() and not has_title(page.read_text(encoding="utf-8", errors="replace")):
+            errors.append(f"{page.relative_to(wiki)}: no H1 title (run stages.titles)")
 
     # Integration-depth audit: every project should feed >=2 concept/topic pages.
     uptake: dict[str, int] = {}
