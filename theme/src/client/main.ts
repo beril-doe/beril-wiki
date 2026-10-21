@@ -6,7 +6,7 @@
 import MiniSearch, { type SearchResult } from "minisearch"
 import { type IndexFile, PAGE_OPTIONS, type Page, type PagesFile, SEARCH_DEPTH, SECTION_OPTIONS, type Section, type SectionFile, processTerm, tokenize } from "../search/config"
 import { type ChatMessage, ensureKey, loadSettings, modelLabel, onSettingsChange, openSettings, statusLine, streamChat } from "./ai"
-import { fuse, meaningError, meaningProgress, meaningRank, meaningStatus, onMeaningChange, setMeaningWanted } from "./semantic"
+import { fuse, meaningError, meaningLoading, meaningProgress, meaningRank, meaningStatus, onMeaningChange, setMeaningWanted } from "./semantic"
 import { asset, currentSlug, esc, pageHref as href, session, slugOfHref, titleHtml as title } from "./site"
 
 // ---------------------------------------------------------------- data
@@ -214,6 +214,23 @@ function meaningControl(el: HTMLElement, onChange: () => void) {
   onSettingsChange(() => {
     if (document.body.contains(el)) paint()
   })
+}
+
+// Ask always ranks by keywords and meaning, since it already has the reader's key. The
+// search box's switch does not apply to it, so the Ask page says how it ranks instead.
+function askRanking(el: HTMLElement) {
+  const paint = () => {
+    if (!document.body.contains(el)) return
+    const { loaded, total } = meaningProgress()
+    const mb = (b: number) => (b / 1e6).toFixed(1)
+    el.textContent = meaningLoading()
+      ? `Loading meaning search${total ? `: ${mb(loaded)} of ${mb(total)} MB` : "…"}`
+      : meaningError()
+        ? `Ranking by keywords only: ${meaningError()}`
+        : "Sections are ranked by keywords and meaning"
+  }
+  paint()
+  onMeaningChange(paint)
 }
 
 function snippet(text: string, terms: string[], words = 30): string {
@@ -1034,7 +1051,7 @@ function renderAskPage() {
               pageScope && bySlug.get(pageScope) ? `<option value="page:${esc(pageScope)}" selected>This page: ${esc(bySlug.get(pageScope)!.title)}</option>` : ""
             }${topics.map((t) => `<option value="topic:${esc(t.slug)}">Topic: ${esc(t.title)}</option>`).join("")}</select></label>
             <span class="px-aistatus"></span>
-            <span class="px-meaning-ctl"></span>
+            <span class="px-askrank px-meaning-status" aria-live="polite"></span>
             <button type="button" class="px-new">New conversation</button>
           </div>
         </form>
@@ -1047,7 +1064,7 @@ function renderAskPage() {
   const select = form.querySelector("select")!
   const evlist = main.querySelector<HTMLElement>(".px-evlist")!
   statusLine(form.querySelector<HTMLElement>(".px-aistatus")!)
-  meaningControl(form.querySelector<HTMLElement>(".px-meaning-ctl")!, () => {})
+  askRanking(form.querySelector<HTMLElement>(".px-askrank")!)
   loadIndex().then((ix) => (main.querySelector(".px-nsec")!.textContent = ix.sections.length.toLocaleString()))
   let turns: Turn[] = []
   let conversation = 0
