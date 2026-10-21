@@ -6,7 +6,7 @@
 import MiniSearch, { type SearchResult } from "minisearch"
 import { type IndexFile, PAGE_OPTIONS, type Page, type PagesFile, SEARCH_DEPTH, SECTION_OPTIONS, type Section, type SectionFile, processTerm, tokenize } from "../search/config"
 import { type ChatMessage, ensureKey, loadSettings, modelLabel, onSettingsChange, openSettings, statusLine, streamChat } from "./ai"
-import { fuse, meaningError, meaningLoading, meaningProgress, meaningRank, meaningStatus, onMeaningChange, setMeaningWanted } from "./semantic"
+import { fuse, meaningError, meaningLoading, meaningPaused, meaningProgress, meaningRank, meaningStatus, onMeaningChange, setMeaningWanted } from "./semantic"
 import { asset, currentSlug, esc, pageHref as href, session, slugOfHref, titleHtml as title } from "./site"
 
 // ---------------------------------------------------------------- data
@@ -225,9 +225,11 @@ function askRanking(el: HTMLElement) {
     const mb = (b: number) => (b / 1e6).toFixed(1)
     el.textContent = meaningLoading()
       ? `Loading meaning search${total ? `: ${mb(loaded)} of ${mb(total)} MB` : "…"}`
-      : meaningError()
-        ? `Ranking by keywords only: ${meaningError()}`
-        : "Sections are ranked by keywords and meaning"
+      : meaningPaused()
+        ? "Ranking by keywords only for a minute: CBORG's rate limit was reached"
+        : meaningError()
+          ? `Ranking by keywords only: ${meaningError()}`
+          : "Sections are ranked by keywords and meaning"
   }
   paint()
   onMeaningChange(paint)
