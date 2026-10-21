@@ -254,8 +254,9 @@ export async function streamChat(messages: ChatMessage[], onText: (t: string) =>
         out.cut = reason !== "stop"
       }
       if (j.usage) {
-        out.inTokens = j.usage.prompt_tokens ?? 0
-        out.outTokens = j.usage.completion_tokens ?? 0
+        // Numbers only: the counts are shown in HTML.
+        out.inTokens = Number(j.usage.prompt_tokens) || 0
+        out.outTokens = Number(j.usage.completion_tokens) || 0
       }
     }
   }

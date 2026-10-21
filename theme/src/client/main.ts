@@ -600,7 +600,7 @@ function wireRecord(page: Page) {
       const items = linksIn(sec).map((a) => ({ href: a.href, text: a.textContent!.trim() }))
       for (const c of chips)
         makeChip(c, (el) =>
-          popover(el, `<h4>Linked from · ${chips.map((x) => x.textContent!.trim()).join(", ")}</h4>${listHtml(items)}`),
+          popover(el, `<h4>Linked from · ${esc(chips.map((x) => x.textContent!.trim()).join(", "))}</h4>${listHtml(items)}`),
         )
     } else if (/^Conflicts?$/.test(label)) {
       const sec = railSection(/conflict/i)
