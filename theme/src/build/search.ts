@@ -7,11 +7,12 @@
 // see) and quartz/content (descriptions, which the site hides). Writes into
 // quartz/public/static/search/: sections.json, section-index.json and
 // page-index.json for keyword search, pages.json for page metadata, and
-// vectors.i8 + vectors.json for meaning search. Vectors come from the committed
-// store search/section-vectors.jsonl, keyed by a hash of the exact text embedded;
-// the search_vectors pipeline stage fills that store from
-// quartz/search-embed-input.json, which this script also writes. CI has no
-// CBORG key, so it only ever reads the store.
+// vectors.i8 + vectors.json for meaning search. Vectors come from the local
+// store search/section-vectors.jsonl, keyed by a hash of the exact text embedded,
+// which build_quartz.sh first fills from the search-data branch. The
+// search_vectors stage embeds what is missing from quartz/search-embed-input.json,
+// which this script also writes. CI has no CBORG key, so it only reads the store:
+// SEARCH_REQUIRE_VECTORS=1 (pull requests) makes a missing vector an error.
 import { createHash } from "node:crypto"
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
@@ -235,6 +236,15 @@ writeFileSync(join(OUT, "vectors.json"), JSON.stringify(meta))
 writeFileSync(EMBED_INPUT, JSON.stringify(inputs))
 console.log(
   `search index: ${pages.length} pages, ${sections.length} sections; ` +
-    `${sections.length - meta.missing} with vectors, ${meta.missing} without` +
-    (meta.missing ? " (run the search_vectors stage to embed them)" : ""),
+    `${sections.length - meta.missing} with vectors, ${meta.missing} without`,
 )
+if (meta.missing) {
+  const fix =
+    `${meta.missing} section(s) have no meaning-search vector. Run scripts/build_quartz.sh with CBORG_API_KEY set, ` +
+    "then `uv run python -m beril_wiki.publish.search_data push`, and re-run this check."
+  if (process.env.SEARCH_REQUIRE_VECTORS) {
+    console.log(`::error::${fix}`)
+    process.exit(1)
+  }
+  console.log(process.env.GITHUB_ACTIONS ? `::warning::${fix}` : `  ${fix}`)
+}

@@ -3,7 +3,9 @@ name: Publish wiki
 # Render-only: wiki/ and every figure are committed, so this needs no CBORG
 # key and no observatory checkout. Refreshing the *content* is still a
 # maintainer running scripts/run_pipeline.sh and committing the result; this
-# job only turns what is committed into the published site.
+# job only turns what is committed into the published site. The meaning-search
+# vectors come from the search-data branch (beril_wiki.publish.search_data);
+# pushing new ones there dispatches this workflow on main.
 on:
   push:
     branches: [main]
@@ -12,7 +14,6 @@ on:
       - "src/**"
       - "scripts/**"
       - "theme/**"
-      - "search/**"
       - "pyproject.toml"
       - "uv.lock"
       - ".github/workflows/pages.yml"
@@ -59,9 +60,13 @@ jobs:
       - name: Validate the corpus
         run: uv run --project . python -m beril_wiki.check --strict
 
+      # A pull request must bring the vectors for the sections it changes (pushed
+      # to search-data before review), so pages never change without them. A
+      # deploy only warns: holding back content for a missing vector is worse.
       - name: Build site
         env:
           WIKI_BASE_URL: beril-doe.org/beril-wiki
+          SEARCH_REQUIRE_VECTORS: ${{ github.event_name == 'pull_request' && '1' || '' }}
         run: scripts/build_quartz.sh
 
       # The theme is compiled by build_quartz.sh but never type-checked by it;

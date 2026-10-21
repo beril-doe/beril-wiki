@@ -474,9 +474,10 @@ copied raw sources. This CLI is a retrieval boundary, **not an installed BERIL o
 OpenViking integration**.
 
 After local acceptance, `scripts/build_quartz.sh` renders the existing format.
-With `CBORG_API_KEY` set, it also embeds the sections that have no vector yet
-into `search/section-vectors.jsonl`; commit that file with the accepted wiki so
-CI publishes meaning search for the new pages.
+With `CBORG_API_KEY` set, it also embeds the sections that have no vector yet.
+Then run `uv run python -m beril_wiki.publish.search_data push` before opening
+the pull request: the vectors live on the `search-data` branch, and a pull
+request whose sections lack vectors fails its build.
 The curator does not commit, push or deploy. Do not publish concurrently with
 promotion.
 

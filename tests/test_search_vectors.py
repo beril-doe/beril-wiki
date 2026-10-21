@@ -34,10 +34,11 @@ def test_only_new_hashes_are_embedded():
     assert calls == [["search_document: c"]]
 
 
-def test_vectors_for_removed_sections_are_dropped():
+def test_vectors_for_removed_sections_are_kept():
+    # Another branch's build may still use them; search_data push --prune drops them.
     store, _ = sv.update(inputs("a", "b"), {}, embedder=fake_embedder([]), pace=0)
     store, n = sv.update(inputs("b"), store, embedder=fake_embedder([]), pace=0)
-    assert n == 0 and set(store) == {"h-b"}
+    assert n == 0 and set(store) == {"h-a", "h-b"}
 
 
 def test_force_re_embeds_everything():

@@ -21,3 +21,7 @@ reference/
 # Local planning artifacts: html-artifact pages and their diagram sources.
 /docs/drafts/
 /.agentic/
+
+# Meaning-search vectors: shared through the search-data branch, not main
+# (beril_wiki.publish.search_data).
+/search/

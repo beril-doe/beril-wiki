@@ -67,7 +67,7 @@ The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 | `theme/` | the Quartz page frame (one component per page region), the stylesheet (one partial per region), and the browser script and index builder for search and Ask |
 | `contract/` | the editorial contract injected into every compile, the concept decisions manifest, and the errata a person has recorded against the source reports |
 | `state/` | per-stage caches that make the pipeline incremental |
-| `search/` | the section vectors for meaning search, kept outside `state/` so the curator does not track them |
+| `search/` | ignored local copy of the section vectors for meaning search; the shared copy lives on the `search-data` branch |
 | `.agentic/` | ignored runtime ledger, raw results, receipts, and candidate workspace; preserve when resuming |
 | `docs/` | curator operating guide, HTML walkthrough, and wiki-format reference |
 
@@ -132,13 +132,28 @@ reader's credit.
 
 `scripts/build_quartz.sh` builds the search index after `npx quartz build`.
 Meaning search compares the reader's query with one int8 vector per section,
-read from the committed store `search/section-vectors.jsonl` and keyed by a hash
-of the section's text. When `CBORG_API_KEY` is set, the script runs
+keyed by a hash of the section's text. The vectors (about 8 MB) live on the
+orphan branch `search-data`, which holds one commit with one file, so they never
+enter `main`'s history. The script first pulls them into the ignored local store
+`search/section-vectors.jsonl`. When `CBORG_API_KEY` is set, it then runs
 `python -m beril_wiki.stages.search_vectors`, which embeds only the sections
-with no stored vector using CBORG's free `lbl/nomic-embed-text`, and then
-indexes again. Commit the updated store with the wiki. CI has no key, so it
-publishes the store as committed, and meaning search cannot rank a section
-whose vector is missing.
+with no vector using CBORG's free `lbl/nomic-embed-text`, and indexes again.
+
+Whenever page text changes, share the new vectors before the change merges:
+
+```sh
+CBORG_API_KEY=... scripts/build_quartz.sh
+uv run python -m beril_wiki.publish.search_data push
+```
+
+`push` merges the local store into `search-data`, replaces the branch's single
+commit, and dispatches the Pages workflow on `main` (it needs `gh`; otherwise
+run `gh workflow run pages.yml --ref main`). CI has no key: it pulls the
+vectors, fails a pull request whose sections lack one, and only warns on a
+deploy from `main`. Vectors for sections that no longer exist are kept, so a
+feature branch's push never drops ones the live site uses; from an up-to-date
+`main`, `push --prune` removes them. `scripts/run_pipeline.sh` pushes after
+publishing.
 
 ## License
 

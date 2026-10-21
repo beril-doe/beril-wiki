@@ -5,11 +5,15 @@ The publish step (``scripts/build_quartz.sh``) splits every rendered page into
 sections and writes the exact text each one is embedded with, keyed by its
 hash, to ``quartz/search-embed-input.json``. This stage embeds the sections
 whose hash has no stored vector, with CBORG's LBL-hosted nomic-embed-text
-($0 per token), and keeps one int8 vector per current hash in
+($0 per token), and adds one int8 vector per hash to
 ``search/section-vectors.jsonl``. The next publish copies them into the site.
 
-The store is committed because the site is built in CI, which has no CBORG
-key: readers' browsers embed only their queries, with their own keys.
+CI has no CBORG key, so the vectors are shared through the ``search-data``
+branch (beril_wiki.publish.search_data): a build pulls them first and a
+maintainer pushes the new ones. Readers' browsers embed only their queries,
+with their own keys. Vectors for sections that no longer exist are kept, so a
+build of an older or newer branch still finds its own; ``search_data push
+--prune`` drops them.
 
     OPENAI_API_KEY=$CBORG_API_KEY OPENAI_BASE_URL=https://api.cborg.lbl.gov \\
         uv run python -m beril_wiki.stages.search_vectors [--force]
@@ -99,15 +103,15 @@ def update(
     batch: int = EMBED_BATCH,
     save: Callable[[dict[str, dict]], None] | None = None,
 ) -> tuple[dict[str, dict], int]:
-    """Embed the inputs whose hash is not stored; drop vectors no section uses.
+    """Embed the inputs whose hash is not stored; keep every stored vector.
 
     Returns the new store and the number of sections embedded, not counting
     duplicated rows left for the next run. ``save`` is called
     after every 50 batches so an interrupted run keeps its progress.
     """
     current = {r["h"]: r["text"] for r in inputs}
-    kept = {} if force else {h: v for h, v in store.items() if h in current}
-    todo = [h for h in current if h not in kept]
+    kept = dict(store)
+    todo = [h for h in current if force or h not in kept]
     embedded = 0
     for start in range(0, len(todo), batch):
         hashes = todo[start : start + batch]
