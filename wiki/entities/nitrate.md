@@ -3,6 +3,8 @@ type: "Compound"
 description: "Nitrate (NO\u2083\u207b) is a groundwater contaminant in the Oak Ridge plume that shapes the SSO well grid, and a candidate compound in proposed ENIGMA growth experiments."
 sources: ["summaries/enigma_sso_asv_ecology__REPORT.md", "summaries/genotype_to_phenotype_enigma__REPORT.md"]
 ---
+# Nitrate
+
 Nitrate (NO₃⁻; aliases: NO3−, NO₃⁻) appears in this corpus in two roles. At the [[entities/sso]] well grid it is a component of contaminated groundwater. In proposed ENIGMA wet-lab experiments it is a named compound to be tested [src: enigma_sso_asv_ecology, genotype_to_phenotype_enigma].
 
 ## Contamination Plume at the SSO

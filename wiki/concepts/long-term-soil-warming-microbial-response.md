@@ -3,6 +3,8 @@ type: "Concept"
 description: "How long-term experimental soil warming at Harvard Forest shifts microbial community composition with FDR support while gene-content, transcript and metabolite signals remain weak or nominal."
 sources: ["summaries/harvard_forest_warming__REPORT.md"]
 ---
+# Long-Term Soil Warming Shifts Community Composition More Clearly Than Gene Content
+
 ## Overview
 
 At [[entities/harvard-forest]], long-term warming gives its clearest microbial signal in phylum composition in the organic horizon. Gene-content (DNA KO, i.e. KEGG Orthology functional group) enrichment for carbon cycling is weak. Transcript (RNA) signals for methanotrophy and the [[entities/glyoxylate-shunt]] are nominal only and do not survive false discovery rate (FDR) correction. Detectable metabolite richness drops in heated mineral soil. All of this evidence comes from one project at one site, so it is untested whether the pattern holds at other sites [src: harvard_forest_warming]. Differences between horizons are discussed further in [[concepts/soil-horizon-response-heterogeneity]].

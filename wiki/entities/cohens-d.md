@@ -3,6 +3,8 @@ type: "Method"
 description: "Cohen's d, the standardized mean-difference effect size, and how BERIL projects used and qualified it in genome-completeness and functional-atlas comparisons."
 sources: ["summaries/clay_confined_subsurface__REPORT.md", "summaries/gene_function_ecological_agora__REPORT.md"]
 ---
+# Cohen's d
+
 Cohen's d is a standardized mean-difference effect size. Corpus projects use it alongside p-values and bootstrap confidence intervals to judge whether group differences are large enough to matter. In this corpus it appears in [[summaries/clay_confined_subsurface__REPORT]] for GapMind pathway-completeness comparisons and in [[summaries/gene_function_ecological_agora__REPORT]] for KO-level class-control and phylogenetic-rank comparisons [src: clay_confined_subsurface, gene_function_ecological_agora].
 
 ## Use in clay-confined subsurface genomes

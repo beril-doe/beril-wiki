@@ -3,6 +3,8 @@ type: "Organism"
 description: "Human gut bacterial species listed among the discovery digest's trustworthy Crohn's-enriched E3 candidates but dropped from that set by a stricter E3-restricted recheck."
 sources: ["summaries/discoveries.md", "summaries/ibd_phage_targeting__REPORT.md"]
 ---
+# Blautia wexlerae
+
 *Blautia wexlerae* appears in this corpus as a candidate taxon in the inflammatory-bowel-disease differential-abundance screens, where its status changed between analysis passes: it was listed among the trustworthy candidates in the cross-project discovery digest, then removed from that set when a stricter, E3-restricted recheck was applied [src: discoveries, ibd_phage_targeting].
 
 ## Candidate status in the E3 differential-abundance screen

@@ -267,3 +267,89 @@
     }
   }
 }
+
+// Search and Ask, under the introduction.
+.hero .homesearch {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 1.5rem;
+  max-width: 760px;
+  .bigsearch {
+    flex: 1 1 360px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border: 1px solid var(--line-2);
+    background: var(--card);
+    color: var(--mute);
+    font: 400 1rem / 1.4 var(--sans);
+    text-align: left;
+    cursor: text;
+    svg {
+      width: 18px;
+      height: 18px;
+      flex: none;
+    }
+    kbd {
+      margin-left: auto;
+      padding: 2px 5px;
+      border: 1px solid var(--line-2);
+      border-radius: 3px;
+      font: 500 0.6875rem / 1 var(--mono);
+    }
+    &:hover {
+      border-color: var(--ink-2);
+    }
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 18px;
+    border: 1px solid var(--secondary);
+    background: var(--secondary);
+    color: var(--light);
+    font: 500 var(--t-ui-lg) / 1.3 var(--sans);
+    &:hover {
+      text-decoration: none;
+      filter: brightness(1.08);
+    }
+  }
+}
+
+// One card per kind of page, saying what it answers.
+.kinds {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  border: 1px solid var(--line);
+  background: var(--card);
+  .kindcard {
+    display: grid;
+    gap: 6px;
+    align-content: start;
+    padding: 16px 18px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    b {
+      font: 500 var(--t-ui-lg) / 1.3 var(--sans);
+    }
+    span {
+      color: var(--ink-2);
+      font: 400 var(--t-meta) / 1.5 var(--sans);
+    }
+    .n {
+      color: var(--mute);
+      font: 400 0.75rem var(--mono);
+    }
+    &:hover {
+      text-decoration: none;
+      background: color-mix(in srgb, var(--secondary) 5%, transparent);
+    }
+  }
+}
+.browse.also {
+  margin-top: 14px;
+}

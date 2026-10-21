@@ -3,6 +3,8 @@ type: "Method"
 description: "The Kruskal-Wallis test, a rank-based test for differences among three or more groups, as applied across BERIL projects to resistome, fitness-cost, eukaryotic-admixture, growth-rate and metabolic-pathway comparisons."
 sources: ["summaries/adp1_triple_essentiality__REPORT.md", "summaries/amr_environmental_resistome__REPORT.md", "summaries/amr_fitness_cost__REPORT.md", "summaries/amr_pangenome_atlas__REPORT.md", "summaries/euk_in_prok_correlates__REPORT.md", "summaries/nmdc_community_metabolic_ecology__REPORT.md"]
 ---
+# Kruskal-Wallis test
+
 The Kruskal-Wallis test (often reported as "KW" or "Kruskal H") is a rank-based method for testing whether three or more groups differ. In this corpus it is used to compare antimicrobial-resistance (AMR) gene content across environments, AMR fitness costs across mechanisms, eukaryotic DNA fraction across sample types, sites and vegetation, growth rates across metabolic-model classes, and pathway completeness across ecosystems. [src: amr_environmental_resistome, amr_fitness_cost, amr_pangenome_atlas, euk_in_prok_correlates, adp1_triple_essentiality, nmdc_community_metabolic_ecology]
 
 ## Uses in the corpus

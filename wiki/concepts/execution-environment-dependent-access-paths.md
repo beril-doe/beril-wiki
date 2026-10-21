@@ -3,6 +3,8 @@ type: "Concept"
 description: "How the REST interface, direct Spark SQL, hosted notebooks, cluster scripts and local machines each impose different access paths, failure signatures and limits on the same KBase Data Lakehouse analysis."
 sources: ["summaries/pitfalls.md"]
 ---
+# The Same Analysis Needs Different Access Paths and Hits Different Limits in Each Execution Environment
+
 The same query or analysis on the KBase Data Lakehouse does not behave the same way in every execution environment. In the cases the pitfalls digest records, the REST interface hits timeouts and rejects some query text, while direct [[entities/spark-sql]] handles the same work or accepts the same text. The digest recommends direct Spark as the alternative, but it does not show that direct Spark can never time out or fail. Spark session construction differs between hosted notebooks, cluster-side scripts and local machines. Off-cluster object-store access and Spark Connect daemon recovery each need steps specific to the environment. Together these operational records, collected in the central pitfalls digest ([[summaries/pitfalls]]), support the working claim that the access path is part of the method and should be reported with it [src: pitfalls].
 
 ## REST interface versus direct Spark SQL

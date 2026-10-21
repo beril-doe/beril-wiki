@@ -3,6 +3,8 @@ type: "Compound"
 description: "Rhamnose, a plant-derived sugar that appears in this corpus both as a genomic pathway marker for Pseudomonas environment classification and as a candidate selective prebiotic, with the caveat that its selectivity is predicted from pathway completeness rather than measured growth."
 sources: ["summaries/cf_formulation_design__REPORT.md", "summaries/functional_dark_matter__REPORT.md", "summaries/pseudomonas_carbon_ecology__REPORT.md"]
 ---
+# Rhamnose
+
 Rhamnose is a sugar described as a plant cell wall component, and it appears in this corpus both as a genomic pathway marker and as a candidate prebiotic substrate [src: pseudomonas_carbon_ecology, cf_formulation_design]. Source tables refer to it as "Rhamnose" and, in gap listings, as "Rhamnose utilization" [src: functional_dark_matter].
 
 ## Candidate selective prebiotic in consortium design

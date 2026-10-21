@@ -286,3 +286,66 @@
     grid-template-columns: 8ch minmax(0, 1fr);
   }
 }
+
+// What the page argues, what this kind of page is for, and a way to ask it.
+.record .brief {
+  margin: 0.35rem 0 0;
+  max-width: 68ch;
+  font: 400 var(--t-read) / 1.5 var(--serif);
+  color: var(--ink-2);
+}
+.record .kindline {
+  margin: 0.6rem 0 0;
+  max-width: 68ch;
+  font: 400 var(--t-meta) / 1.5 var(--sans);
+  color: var(--ink-2);
+  a {
+    color: var(--secondary);
+    white-space: nowrap;
+  }
+}
+.record .askrow {
+  margin-top: 12px;
+}
+.record .px-askpage {
+  padding: 4px 12px;
+  border: 1px solid var(--secondary);
+  background: transparent;
+  color: var(--secondary);
+  font: 500 var(--t-ui) / 1.4 var(--sans);
+  cursor: pointer;
+  &:hover {
+    background: color-mix(in srgb, var(--secondary) 9%, transparent);
+  }
+}
+// The brief makes the title column taller; keep the facts at the top of theirs.
+.record .facts {
+  align-content: start;
+}
+// A count that opens what it counts (src/client) gets a dotted underline.
+.record .chip.px-link {
+  cursor: pointer;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, currentColor 55%, transparent);
+  &:hover,
+  &:focus-visible {
+    border-color: currentColor;
+    background: color-mix(in srgb, currentColor 7%, transparent);
+  }
+}
+// Once the facts stack under the title, 8ch clipped "PROJECTS CITED".
+@media (max-width: 1180px) {
+  .record .facts {
+    grid-template-columns: max-content minmax(0, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .record .facts {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 4px;
+    dd {
+      margin-bottom: 8px;
+    }
+  }
+}

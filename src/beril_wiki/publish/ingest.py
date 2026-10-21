@@ -101,6 +101,107 @@ def write_collection_indexes(dst: pathlib.Path) -> int:
     return n
 
 
+# What each kind of page answers. theme/src/page.ts says the same in one line
+# under each page's title and links here for the whole table.
+READER_KINDS = [
+    (
+        "Topic",
+        "topics",
+        "What does the corpus say about this research area, and how does it relate to "
+        "published literature?",
+        "You are new to an area.",
+    ),
+    (
+        "Concept",
+        "concepts",
+        "What do several projects together show about one claim, and where do they disagree?",
+        "You want the evidence for or against a specific idea.",
+    ),
+    (
+        "Conflict",
+        "conflicts",
+        "Where do projects disagree, and what work would settle it?",
+        "You are planning follow-up work.",
+    ),
+    (
+        "Entity",
+        "entities",
+        "What does the corpus record about one organism, gene, compound, method or dataset?",
+        "You have a name or identifier.",
+    ),
+    (
+        "Project report",
+        "summaries",
+        "What did one project do and find, with exact numbers?",
+        "You need to cite a figure.",
+    ),
+    (
+        "Raw report",
+        "sources",
+        "What did the project's own report say, unedited?",
+        "You need to check a summary against its source.",
+    ),
+]
+
+
+def write_reader_pages(dst: pathlib.Path) -> int:
+    """The guide to page kinds, and the page the Ask the wiki interface fills in.
+
+    Both are publishing chrome rather than corpus content, so they are written
+    here instead of into wiki/. The browser script (theme/src/client) replaces
+    the Ask page's body; without JavaScript the text below says what is missing.
+    """
+
+    def count(folder: str) -> int:
+        return sum(1 for f in (dst / folder).glob("*.md") if f.name != "index.md")
+
+    rows = "\n".join(
+        f"| [{label}]({folder}/) | {count(folder)} | {answers} | {when} |"
+        for label, folder, answers, when in READER_KINDS
+    )
+    # The publish workflow fails any page without the provenance callout.
+    guide = f"""---
+title: "How to read this wiki"
+---
+{provenance_block(None)}
+
+AI agents ran each BERIL project and wrote its report. This wiki compiles those reports
+into pages of six kinds, and each kind answers a different question.
+
+| Kind | Pages | Answers | Open it when |
+|---|---|---|---|
+{rows}
+
+## Finding something specific
+
+Press **/** or click Search. Results are sections, not whole pages, so a result opens the
+page at the paragraph that matched. Entity aliases count, so a short name such as DvH finds
+*Desulfovibrio vulgaris* Hildenborough. With your CBORG key, the search box can also rank
+sections by meaning.
+
+## Asking a question
+
+[[ask|Ask the wiki]] answers a question in your own words from the sections that best
+match it, and cites every claim to the section it came from. It uses your own CBORG key,
+which stays in your browser and goes only to CBORG. Every page also has an *Ask about this
+page* button that answers from that page alone.
+"""
+    ask = f"""---
+title: "Ask the wiki"
+---
+{provenance_block(None)}
+
+Ask a question in your own words. The answer comes only from wiki sections and cites each
+claim to the section it came from.
+
+This page needs JavaScript and your own CBORG key. Without them, use the search box or
+[[guide|How to read this wiki]].
+"""
+    (dst / "guide.md").write_text(guide, encoding="utf-8")
+    (dst / "ask.md").write_text(ask, encoding="utf-8")
+    return 2
+
+
 # A markdown link whose target is a path in the observatory checkout, not a page
 # in this wiki: notebooks, ../schemas/, ../references. The raw reports are
 # written to sit inside that repository, so published standalone these lead
@@ -405,6 +506,7 @@ def main() -> None:
         n += 1
 
     n += write_collection_indexes(dst)
+    n += write_reader_pages(dst)
 
     images = kb / "wiki" / "sources" / "images"
     if images.is_dir():

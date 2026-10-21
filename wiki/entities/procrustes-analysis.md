@@ -3,6 +3,8 @@ type: "Method"
 description: "Procrustes analysis is an ordination-alignment method used in BERIL projects to test whether community or functional configurations correspond to physical layouts or to each other."
 sources: ["summaries/enigma_sso_asv_ecology__REPORT.md", "summaries/harvard_forest_warming__REPORT.md"]
 ---
+# Procrustes analysis
+
 In this corpus, Procrustes analysis (also called Procrustes superimposition or Procrustes alignment) is used to test whether one multivariate configuration, such as a community ordination, lines up with another, such as a physical sampling grid or a paired data layer. [src: enigma_sso_asv_ecology, harvard_forest_warming]
 
 ## Uses in the corpus

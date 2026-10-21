@@ -3,6 +3,8 @@ type: "Concept"
 description: "How the documented MySQL dumps and SQLite files lose fidelity at ingestion through headerless data, literal null markers, unparseable DDL and non-UTF-8 text, and the preprocessing proposed to repair them."
 sources: ["summaries/pitfalls.md"]
 ---
+# Ingesting Foreign Database Dumps Requires Schema and Encoding Repair Before Any Analysis
+
 The central pitfalls digest documents specific MySQL dump and SQLite ingestion cases in which column names, null encodings, schema definitions and text encodings each had to be repaired before the data could be used, and in which one failure was silent rather than loud [src: pitfalls]. See [[summaries/pitfalls]] for the full digest.
 
 ## Headerless data and literal nulls

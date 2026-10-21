@@ -26,8 +26,9 @@ from beril_wiki.agentic.runtime import (
     file_hash,
     prompt,
 )
-from beril_wiki.check import all_paragraphs, cited_ids, paragraphs
+from beril_wiki.check import all_paragraphs, cited_ids, has_title, paragraphs
 from beril_wiki.stages.consolidate import body_src_ids, load_decisions, page_numbers, repoint_links
+from beril_wiki.stages.titles import fallback_title, with_title
 
 
 class Finding(BaseModel):
@@ -346,6 +347,12 @@ def validate_candidate(
     ]
     sources = C.load_sources(root)
     body = reconstruct(old, candidate).strip()
+    # The title is the plan's, like the frontmatter is the host's: writers left it out
+    # of 31 new pages, which then published under their slugs.
+    if not has_title(body):
+        title = job.title if job.title != Path(path).stem else fallback_title(root, path, old)
+        if title:
+            body = with_title(body, title).strip()
     description = candidate.get("description")
     if not isinstance(description, str) or not description.strip():
         raise CandidateError("candidate needs a nonempty description")

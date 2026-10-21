@@ -182,6 +182,15 @@ remain compatible with existing provenance and Quartz tools. This is bounded
 editorial autonomy; the agent cannot change its acceptance rules or run arbitrary
 code.
 
+After the editorial stages and before naming, the deterministic `titles` stage
+(`beril_wiki.stages.titles`) writes the planner's title as the H1 of any page
+that lacks one. It reads titles from `.agentic/last-plan.json` in the curator
+store and makes no model call. Without an H1 a page publishes under its slug,
+as 31 pages from the October 2026 compile did. The batch writer also inserts the
+planned title when a candidate has no H1, and `beril_wiki.check` fails on any
+generated page still without one. `scripts/run_pipeline.sh` runs the same
+stage before `names`.
+
 ## Evidence, correction and token reuse
 
 Changed reports are extracted in bounded overlapping ranges with exact quotes and
@@ -383,7 +392,11 @@ legacy key, and a hit is recorded in the ledger's `aliases` table, so one replay
 carries the cache over with no duplicated rows or charges.
 
 Scientific compiler/model changes and manual edits to core pages conservatively
-revisit staged sources. Code is not hashed for this: what integration means is one
+revisit staged sources. The runner compares a manifest of `wiki/concepts`,
+`wiki/entities` and `wiki/summaries` with the one it accepted, so any edit there
+outside a curator run, including one by a deterministic stage run by hand, makes
+the next run re-integrate every source. The title backfill ran through the
+curator for this reason. Code is not hashed for this: what integration means is one
 explicit revision, `INTEGRATION_REVISION` in `agentic/batch.py`, bumped when a change
 should re-integrate every source. Hashing `batch.py`, `compiler.py` and `check.py`
 did so on any edit, which with routing re-plans and rewrites the corpus. A state
@@ -461,6 +474,10 @@ copied raw sources. This CLI is a retrieval boundary, **not an installed BERIL o
 OpenViking integration**.
 
 After local acceptance, `scripts/build_quartz.sh` renders the existing format.
+With `CBORG_API_KEY` set, it also embeds the sections that have no vector yet.
+Then run `uv run python -m beril_wiki.publish.search_data push` before opening
+the pull request: the vectors live on the `search-data` branch, and a pull
+request whose sections lack vectors fails its build.
 The curator does not commit, push or deploy. Do not publish concurrently with
 promotion.
 

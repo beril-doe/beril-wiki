@@ -3,6 +3,8 @@ type: "Gene_Or_Pathway"
 description: "Gut-microbial bai-operon bile-acid transformation whose active taxa, metabolite signature, and ecological cost shape IBD phage-cocktail design."
 sources: ["summaries/discoveries.md", "summaries/ibd_phage_targeting__REPORT.md"]
 ---
+# Bile-acid 7α-dehydroxylation
+
 Bile-acid 7α-dehydroxylation is a gut-microbial bile-acid transformation encoded by the *bai* operon; the report cites Devlin & Fischbach (2015), "A biosynthetic pathway for a prominent class of microbiota-derived bile acids" (*Nat Chem Biol* 11(9):685–690, PMID: 26412091), as the mechanism in [[entities/clostridium-scindens]]-like bacteria and as the anchor for its NB09c bile-acid network finding [src: ibd_phage_targeting].
 
 Aliases in the corpus: "7α-dehydroxylation", "BA 7α-dehydroxylation", "*bai*-operon activity". The project attributes the activity to core *bai*-operon genes that are, in its own wording, "presumably present in essentially all *F. plautii* strains" — a presumption asserted in the report rather than a measurement made in it, so the core-rather-than-strain-variable status of the pathway is not established here [src: ibd_phage_targeting].

@@ -55,13 +55,13 @@ export const BerilFrame: PageFrame = {
           <Home file={file} c={c} tree={tree} standing={w.standing} />
         ) : index ? (
           <main class="band index-page" style={accent ? `--accent:${accent}` : undefined}>
-            <Record file={file} c={c} terms={w.terms} standing={w.standing} orcid={w.orcid} cites={w.cites} rels={w.rels} t={t} figures={indexFigures(file, c)} />
+            <Record file={file} c={c} tree={tree} terms={w.terms} standing={w.standing} orcid={w.orcid} cites={w.cites} rels={w.rels} t={t} figures={indexFigures(file, c)} />
             <div class="prose">{prose}</div>
             <Listing file={file} c={c} />
           </main>
         ) : (
           <main class="page-grid" style={accent ? `--accent:${accent}` : undefined}>
-            <Record file={file} c={c} terms={w.terms} standing={w.standing} orcid={w.orcid} cites={w.cites} rels={w.rels} t={t} />
+            <Record file={file} c={c} tree={tree} terms={w.terms} standing={w.standing} orcid={w.orcid} cites={w.cites} rels={w.rels} t={t} />
             <NavRail cd={cd} file={file} c={c} right={right} />
             <div class="prose">
               {prose}

@@ -64,9 +64,10 @@ The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 | `src/beril_wiki/` | the curator and runtime under `agentic/`, shared compiler and checks, domain operations under `stages/`, and Quartz rendering under `publish/` |
 | `scripts/` | `setup.sh`, `run_pipeline.sh` and `build_quartz.sh` |
 | `tests/` | deterministic checks and recorded-response workflow tests |
-| `theme/` | the Quartz page frame (one component per page region) and the stylesheet (one partial per region) |
+| `theme/` | the Quartz page frame (one component per page region), the stylesheet (one partial per region), and the browser script and index builder for search and Ask |
 | `contract/` | the editorial contract injected into every compile, the concept decisions manifest, and the errata a person has recorded against the source reports |
 | `state/` | per-stage caches that make the pipeline incremental |
+| `search/` | ignored local copy of the section vectors for meaning search; the shared copy lives on the `search-data` branch |
 | `.agentic/` | ignored runtime ledger, raw results, receipts, and candidate workspace; preserve when resuming |
 | `docs/` | curator operating guide, HTML walkthrough, and wiki-format reference |
 
@@ -113,6 +114,46 @@ commit, push, build Quartz, or deploy automatically.
 Before it deploys, the workflow runs `beril_wiki.check --strict` over the corpus and
 asserts that every content page carries its provenance callout; either failing
 blocks publication.
+
+### Search and Ask
+
+Search and Ask the wiki run in the reader's browser, so the Pages site needs
+no server. Keyword search needs nothing from the reader. Meaning search and Ask
+call CBORG with the reader's own CBORG key, which the reader enters through the
+key button in the top bar. The browser stores the key in localStorage (or in
+sessionStorage if the reader unticks "Remember on this device") and sends it
+only to `api.cborg.lbl.gov`. The site ships no maintainer key. Browser storage
+belongs to the origin, not the path, so every page under `beril-doe.org`,
+including the organisation's home page, can read a remembered key; the key
+dialog says so. A dedicated subdomain for the wiki would remove that exposure.
+An `/ask?q=` link fills in the question but asks it only when the reader came
+from the site's own search or page drawer, so a shared link never spends the
+reader's credit.
+
+`scripts/build_quartz.sh` builds the search index after `npx quartz build`.
+Meaning search compares the reader's query with one int8 vector per section,
+keyed by a hash of the section's text. The vectors (about 8 MB) live on the
+orphan branch `search-data`, which holds one commit with one file, so they never
+enter `main`'s history. The script first pulls them into the ignored local store
+`search/section-vectors.jsonl`. When `CBORG_API_KEY` is set, it then runs
+`python -m beril_wiki.stages.search_vectors`, which embeds only the sections
+with no vector using CBORG's free `lbl/nomic-embed-text`, and indexes again.
+
+Whenever page text changes, share the new vectors before the change merges:
+
+```sh
+CBORG_API_KEY=... scripts/build_quartz.sh
+uv run python -m beril_wiki.publish.search_data push
+```
+
+`push` merges the local store into `search-data`, replaces the branch's single
+commit, and dispatches the Pages workflow on `main` (it needs `gh`; otherwise
+run `gh workflow run pages.yml --ref main`). CI has no key: it pulls the
+vectors, fails a pull request whose sections lack one, and only warns on a
+deploy from `main`. Vectors for sections that no longer exist are kept, so a
+feature branch's push never drops ones the live site uses; from an up-to-date
+`main`, `push --prune` removes them. `scripts/run_pipeline.sh` pushes after
+publishing.
 
 ## License
 

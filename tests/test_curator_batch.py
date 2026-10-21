@@ -702,6 +702,23 @@ def test_validator_checks_authoritative_merge_inputs_and_description(tmp_path, m
     assert (tmp_path / "wiki/concepts/yield.md").read_text() == OLD
 
 
+def test_validator_gives_an_untitled_page_its_planned_title(tmp_path, monkeypatch):
+    _, _, _, job = setup_batch(tmp_path, monkeypatch)
+    candidate = {
+        "base_hash": digest(OLD),
+        "content": OLD.removeprefix("# Yield\n\n"),
+        "rewrite_reason": "Restructure",
+        "description": "Yield of the reference strain.",
+    }
+    body = batch.validate_candidate(tmp_path, job.path, job, candidate, set(), {"concepts/yield"})
+    assert body == OLD
+    # A recheck job is titled with its slug, which is no title to publish; the page keeps
+    # the H1 it had.
+    job.title = "yield"
+    body = batch.validate_candidate(tmp_path, job.path, job, candidate, set(), {"concepts/yield"})
+    assert body == OLD
+
+
 @pytest.mark.parametrize(
     "failure", ["malformed", "unknown", "empty", "repeated", "entity-type", "entity-records"]
 )

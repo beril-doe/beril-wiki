@@ -3,6 +3,8 @@ type: "Concept"
 description: "Community-level predicted metabolic pathway completeness separates soil from freshwater communities, with carbon-utilization pathways on the main ordination axis and amino-acid biosynthesis on a secondary axis."
 sources: ["summaries/nmdc_community_metabolic_ecology__REPORT.md"]
 ---
+# Habitat Separates Community-Level Metabolic Potential Along Carbon and Amino-Acid Axes
+
 This page covers whether habitat type structures the *metabolic potential* of whole microbial communities, measured as predicted pathway completeness, beyond simply changing which taxa are present. The current evidence comes from a single project, [[summaries/nmdc_community_metabolic_ecology__REPORT]], which drew community samples from [[entities/nmdc]]. The ordination and per-pathway contrasts are direct statistical results on predicted completeness. The proposed mechanism remains a hypothesis. [src: nmdc_community_metabolic_ecology]
 
 ## Ordination Evidence

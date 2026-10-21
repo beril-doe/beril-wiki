@@ -3,6 +3,8 @@ type: "Concept"
 description: "Across a genome-scale atlas, annotations for the lanthanide-dependent methanol dehydrogenase xoxF far outnumber those for the calcium-dependent mxaF, globally and within every adequately sampled phylum carrying either gene."
 sources: ["summaries/lanthanide_methylotrophy_atlas__REPORT.md"]
 ---
+# Lanthanide-Dependent Methanol Dehydrogenases Predominate Over Calcium-Dependent Ones
+
 Methylotrophic bacteria oxidize methanol with pyrroloquinoline-quinone methanol dehydrogenases (MDH) of two kinds: the lanthanide-dependent [[entities/xoxf]] (EC 1.1.2.8) and the calcium-dependent [[entities/mxaf]] (EC 1.1.2.7). This page tracks the claim that, at the level of genome annotation, the lanthanide-dependent form is by far the more widespread. The evidence comes from [[entities/eggnog]] KEGG orthology (KO) calls across [[entities/gtdb]] (Genome Taxonomy Database) genomes [src: lanthanide_methylotrophy_atlas].
 
 ## Genome-scale ratio

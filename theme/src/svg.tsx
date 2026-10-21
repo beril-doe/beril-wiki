@@ -73,6 +73,8 @@ export function LocalGraph({ file, c }: { file: File; c: Corpus }) {
         // than reporting one project, so it is round like the other syntheses.
         return (
           <a href={resolveRelative(slug, slugOf(n.file) as FullSlug)}>
+            {/* The label is cut to fit; hovering names the page in full. */}
+            <title>{titleOf(n.file)}</title>
             {isReport(n.file) ? (
               <rect class="node report" x={n.x - 4} y={n.y - 4} width={8} height={8} style={`--c:${n.hue}`} />
             ) : (

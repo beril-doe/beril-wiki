@@ -335,6 +335,7 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
         prior = accepted.get("editorial", {}) if accepted.get("version") == 2 else {}
         # Accepted snapshots are recomputed after final naming and figure postprocessing.
         curate(work, agent, changed, refresh, prior, retry)
+        refresh("titles", [str(work)])
         refresh("names", [str(work)])
         refresh("errata", [str(work)])
         figure_state = ("state/figures-placements.json", "state/figures-state.json")

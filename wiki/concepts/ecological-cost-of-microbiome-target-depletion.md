@@ -3,6 +3,8 @@ type: "Concept"
 description: "Why candidate microbiome depletion targets need per-target ecological-cost annotations, instantiated by a bile-acid 7\u03b1-dehydroxylation network whose active members cannot be removed without predicted metabolic collateral."
 sources: ["summaries/discoveries.md", "summaries/ibd_phage_targeting__REPORT.md"]
 ---
+# Depleting a Target Taxon Carries Measurable Ecological Costs
+
 A target-priority score ranks taxa by how strongly they are implicated in disease, but it says nothing about what the community loses when that taxon is removed. In the IBD phage-targeting work the dominant such cost axis is explicit: the analysis identifies a **bile-acid 7α-dehydroxylation network** — the conversion of primary bile acids into secondary, unconjugated forms — comprising [[entities/flavonifractor-plautii]], [[entities/eggerthella-lenta]] and [[entities/enterocloster-bolteae]] as its principal per-target ecological-cost axis in paired [[entities/hmp2]] samples [src: ibd_phage_targeting].
 
 ## Per-target annotation axes a headline score does not carry

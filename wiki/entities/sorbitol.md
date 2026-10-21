@@ -3,6 +3,8 @@ type: "Compound"
 description: "Sorbitol, a sugar alcohol that appears in this corpus as a predicted carbon-utilization pathway \u2014 frequently gap-flagged by pathway prediction across genomes and reduced in lung-adapted Pseudomonas aeruginosa genomes."
 sources: ["summaries/cf_formulation_design__REPORT.md", "summaries/functional_dark_matter__REPORT.md"]
 ---
+# Sorbitol
+
 Sorbitol is a sugar alcohol that enters this corpus only as a *predicted* carbon-utilization capability: it is scored as a carbon-category pathway by [[entities/gapmind]] (which scores how completely a genome's annotations cover the steps of a known metabolic pathway), so the evidence below is about pathway-completeness scores and annotation gaps, not about measured growth on sorbitol [src: functional_dark_matter].
 
 ## Predicted pathway gaps across organisms

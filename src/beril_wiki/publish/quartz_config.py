@@ -72,6 +72,9 @@ def main(qp: pathlib.Path, base_url: str) -> None:
         "reader-mode",
         "breadcrumbs",
         "spacer",
+        # The theme's own section search (theme/src/client) replaces the stock
+        # whole-page search box.
+        "search",
     }
     # Footer is on every page by construction, so it carries the things a reader
     # needs from anywhere: what this is, how to cite it, its licence, and where the
@@ -81,10 +84,10 @@ def main(qp: pathlib.Path, base_url: str) -> None:
         name = p["source"].removeprefix("@quartz-community/")
         if name in FRAME_REPLACES:
             p["enabled"] = False
-        # Search and the theme toggle sit in the frame's top bar (the header slot),
-        # not in the default toolbar group of the left sidebar.
-        if name in ("search", "darkmode"):
-            p["layout"] = {"position": "header", "priority": 10 if name == "search" else 20}
+        # The theme toggle sits in the frame's top bar (the header slot), not in
+        # the default toolbar group of the left sidebar.
+        if name == "darkmode":
+            p["layout"] = {"position": "header", "priority": 20}
         # CNAME is only for a per-repo custom domain. The org already serves Pages
         # from the verified domain beril-doe.org, so this project site is routed to
         # beril-doe.org/beril-wiki without a CNAME file; writing one derived from

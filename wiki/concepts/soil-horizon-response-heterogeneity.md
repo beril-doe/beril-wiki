@@ -3,6 +3,8 @@ type: "Concept"
 description: "In stratified soils, depth horizon explains more community variance than experimental treatment and is associated with different treatment responses between layers, suggesting that organic and mineral compartments should not be pooled."
 sources: ["summaries/harvard_forest_warming__REPORT.md"]
 ---
+# Depth Horizon Dominates and Reshapes Treatment Responses in Soil
+
 ## Core Claim
 
 In layered soils, depth horizon looks like a main axis of community structure rather than a covariate to average over. At the [[entities/harvard-forest]] long-term warming site, horizon explains far more variance in community composition than heating does. Warming responses at the KO level also agree only weakly between the organic and mineral horizons [src: harvard_forest_warming]. Together these results suggest the hypothesis that stratified compartments should be analysed separately rather than pooled. This project did not directly test that pooling hides signals. The evidence comes from a single site and a single treatment, and part of the functional comparison is confounded with sample incubation (see below) [src: harvard_forest_warming]. See [[concepts/long-term-soil-warming-microbial-response]] for the warming response itself and [[summaries/harvard_forest_warming__REPORT]] for the project summary.
