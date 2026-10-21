@@ -100,7 +100,10 @@ export interface IndexFile {
   index: unknown
 }
 
-/** Vector file header: rows align with sections.json; a missing row is all zeros. */
+/**
+ * vectors.json, describing vectors.i8: the 16-character build id, then one row of `dim`
+ * int8 values per section, aligned with sections.json; a missing row is all zeros.
+ */
 export interface VectorMeta {
   model: string
   /** the build of the sections.json these rows align with */

@@ -1320,10 +1320,13 @@ window.addEventListener(
   },
   true,
 )
-// Leaving a page closes search and stops any answer still streaming.
+// Leaving a page closes search and the page drawer and stops any answer still streaming.
 document.addEventListener("prenav", () => {
   closePalette()
   for (const s of streams) s.abort()
+  // The drawer belongs to the page being left, and the SPA morph does not remove it.
+  drawer?.remove()
+  drawer = null
 })
 document.addEventListener("nav", () => void enhance())
 if (document.readyState !== "loading") void enhance()

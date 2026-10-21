@@ -231,7 +231,9 @@ writeFileSync(join(OUT, "pages.json"), JSON.stringify(pagesFile))
 writeFileSync(join(OUT, "sections.json"), JSON.stringify(sectionFile))
 writeFileSync(join(OUT, "section-index.json"), JSON.stringify(envelope(sectionIndex)))
 writeFileSync(join(OUT, "page-index.json"), JSON.stringify(envelope(pageIndex)))
-writeFileSync(join(OUT, "vectors.i8"), vectors)
+// The build id leads the binary too: a cached vectors.i8 from another deploy is then caught
+// even when its size matches.
+writeFileSync(join(OUT, "vectors.i8"), Buffer.concat([Buffer.from(build, "ascii"), Buffer.from(vectors.buffer)]))
 writeFileSync(join(OUT, "vectors.json"), JSON.stringify(meta))
 writeFileSync(EMBED_INPUT, JSON.stringify(inputs))
 console.log(
