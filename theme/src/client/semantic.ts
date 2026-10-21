@@ -24,6 +24,9 @@ const notify = () => listeners.forEach((f) => f())
 
 export const onMeaningChange = (f: () => void) => listeners.add(f)
 export const meaningProgress = () => progress
+export const meaningLoading = () => loading
+/** CBORG refused a query for the rate limit; meaning ranking resumes after PAUSE_MS. */
+export const meaningPaused = () => Date.now() < pausedUntil
 /** The reader's choice for the search box; Ask ignores it. */
 // Held here and only persisted, so the switch works where the browser refuses to store it.
 let wanted: boolean | null = null
