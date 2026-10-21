@@ -18,4 +18,6 @@ reference/
 .ruff_cache/
 .pytest_cache/
 /docs/superpowers/
+# Local planning artifacts: html-artifact pages and their diagram sources.
+/docs/drafts/
 /.agentic/
