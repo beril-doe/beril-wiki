@@ -57,5 +57,19 @@ printf '@use "beril/beril";\n' > "$QP/quartz/styles/custom.scss"
 # observatory checkout when present; a checkout-less clone renders without them.
 uv run --project "$REPO" python -m beril_wiki.publish.ingest "$REPO" "$QP/content"
 (cd "$QP" && npx quartz build)
+# Search index from the rendered pages; vectors come from the committed
+# search/section-vectors.jsonl. With a CBORG key, embed the sections that have
+# none yet (free, hash-skipped) and index again. CI has no key and publishes
+# the committed store as it is.
+node "$THEME/dist/build-search.js" "$REPO"
+if [ -n "${CBORG_API_KEY:-}" ]; then
+  OPENAI_API_KEY="$CBORG_API_KEY" OPENAI_BASE_URL="${OPENAI_BASE_URL:-https://api.cborg.lbl.gov}" \
+    uv run --project "$REPO" python -m beril_wiki.stages.search_vectors
+  node "$THEME/dist/build-search.js" "$REPO"
+fi
+# `npx quartz build --serve` rebuilds public/ from scratch; keep the index in
+# Quartz's static folder so a served build still has search.
+rm -rf "$QP/quartz/static/search"
+cp -R "$QP/public/static/search" "$QP/quartz/static/search"
 echo
 echo "built. serve with:  cd $QP && npx quartz build --serve"

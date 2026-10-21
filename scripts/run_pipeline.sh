@@ -18,7 +18,8 @@
 #   names    rename the data platform to its current name (deterministic)
 #   repair   re-run any page failing write-time validation (no-op when clean)
 #   check    citation, numeric, uptake, and duplicate-concept audits (fails on errors)
-#   publish  Quartz static site (dead links stripped, evidence labels added)
+#   publish  Quartz static site (dead links stripped, evidence labels added),
+#            search index, and vectors for sections new since the last publish
 #
 # scripts/run_pipeline.sh --force        rebuild every derived stage, ignoring caches
 # scripts/run_pipeline.sh --no-publish   skip the Quartz build
@@ -72,12 +73,12 @@ echo "== extras" | tee -a "$LOG"
 echo "== authors" | tee -a "$LOG"
 "${PY[@]}" -m beril_wiki.stages.authors | tee -a "$LOG" | tail -3
 
-# The platform is the KBase Data Lakehouse. Reports written while it was
 # A page the writer left without an H1 publishes under its slug; give it the
 # title its plan chose. Deterministic and idempotent; no LLM call.
 echo "== titles" | tee -a "$LOG"
 "${PY[@]}" -m beril_wiki.stages.titles "$REPO" | tee -a "$LOG"
 
+# The platform is the KBase Data Lakehouse. Reports written while it was
 # called BERDL, or the BER Data Lakehouse, seed those names into every page
 # compiled from them, so the rename runs after everything that writes a page
 # and before the checks. Deterministic and idempotent; no LLM call.
@@ -108,6 +109,7 @@ echo "== check" | tee -a "$LOG"
 
 if [ "${1:-}" != "--no-publish" ]; then
   echo "== publish" | tee -a "$LOG"
-  "$HERE/build_quartz.sh" 2>&1 | tail -2 | tee -a "$LOG"
+  # Also embeds new sections for meaning search, since CBORG_API_KEY is set.
+  "$HERE/build_quartz.sh" 2>&1 | tail -6 | tee -a "$LOG"
 fi
 echo "== pipeline done"

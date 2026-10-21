@@ -5,11 +5,11 @@
 import type { FullSlug } from "@quartz-community/types"
 import type { JSX } from "preact"
 import { resolveRelative } from "@quartz-community/utils"
-import type { ElementContent } from "hast"
+import type { ElementContent, Root } from "hast"
 import { cell, cited } from "../cites"
 import { jsx } from "../jsx"
-import { type Cite, type Corpus, type File, RELS, kindOf, slugOf, titleOf } from "../page"
-import type { Ties } from "../ties"
+import { type Cite, type Corpus, type File, RELS, briefOf, kindLineOf, kindOf, slugOf, titleOf } from "../page"
+import { type Ties, isKnowledge } from "../ties"
 
 // Twelve blocks and a +N fit one row of the header's facts column.
 const MAX_STRIP = 12
@@ -29,8 +29,10 @@ function sentence(terms: string | null): string | null {
   return s ? s[0].toUpperCase() + s.slice(1) + "." : null
 }
 
-export function Record({ file, c, terms, standing, orcid, cites, rels, t, figures }: {
+export function Record({ file, c, tree, terms, standing, orcid, cites, rels, t, figures }: {
   file: File
+  /** The page body, for the opening sentence a topic's brief is taken from. */
+  tree: Root
   c: Corpus
   terms: string | null
   standing: ElementContent[] | null
@@ -44,6 +46,8 @@ export function Record({ file, c, terms, standing, orcid, cites, rels, t, figure
   const slug = slugOf(file) as FullSlug
   const kind = kindOf(file)
   const topics = c.topicsOf(file)
+  const brief = briefOf(file, tree)
+  const kindLine = kindLineOf(file)
   const line = sentence(terms)
 
   // The facts panel: one labelled row per countable thing the page rests on.
@@ -146,11 +150,26 @@ export function Record({ file, c, terms, standing, orcid, cites, rels, t, figure
             )}
           </p>
           <h1>{titleOf(file)}</h1>
+          {brief && <p class="brief">{brief}</p>}
+          {kindLine && (
+            <p class="kindline">
+              {kindLine} <a href={resolveRelative(slug, "guide" as FullSlug)}>How to read this wiki</a>
+            </p>
+          )}
           {(line || standing) && (
             <p class="standing">
               {line && <span>{line} </span>}
               {standing && jsx(standing)}
             </p>
+          )}
+          {/* src/client opens the page-scoped Ask panel from this button. Not on
+              author pages: answers there could turn into claims about a person. */}
+          {isKnowledge(file) && kind.cls !== "author" && (
+            <div class="askrow">
+              <button class="px-askpage" type="button">
+                Ask about this page
+              </button>
+            </div>
           )}
         </div>
         {rows.length > 0 && (

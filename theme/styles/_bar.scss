@@ -7,10 +7,22 @@
   background: var(--card);
   border-bottom: 1px solid var(--line);
   .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex: none;
     font-family: var(--serif);
     font-size: 1.3rem;
     color: var(--ink);
     white-space: nowrap;
+    .logo {
+      width: 28px;
+      height: 28px;
+      flex: none;
+    }
+    .name .short {
+      display: none;
+    }
     &:hover {
       text-decoration: none;
     }
@@ -19,9 +31,10 @@
     display: flex;
     gap: 18px;
     font-size: var(--t-ui);
-    overflow-x: auto;
-    // Without this the nav refuses to shrink below its content and pushes the
-    // whole page sideways on a narrow screen instead of scrolling itself.
+    // Every tab stays visible: the name shortens and the search field narrows
+    // first (_responsive.scss), and on a phone the tabs wrap onto a second row.
+    flex-wrap: wrap;
+    row-gap: 2px;
     min-width: 0;
     a {
       color: var(--ink-2);
@@ -39,37 +52,98 @@
     }
   }
   .tools {
+    flex: none;
     margin-left: auto;
     display: flex;
     align-items: center;
     gap: 14px;
   }
-  // Stock search button, restyled as a quiet field.
-  .search {
-    max-width: 300px;
-    & > .search-button {
-      background: var(--bg);
-      border: 1px solid var(--line-2);
-      border-radius: 0;
-      color: var(--mute);
-      padding: 5px 10px;
-      width: 240px;
-      justify-content: flex-start;
-      gap: 8px;
-      font-size: var(--t-ui);
-      font-family: var(--sans);
-      svg {
-        width: 15px;
-        height: 15px;
-        margin: 0;
-        .search-path {
-          stroke: var(--mute);
-        }
-      }
-      p {
-        margin: 0;
-        color: var(--mute);
-      }
+  // Section search, as a quiet field; src/client opens the search window from it.
+  .search-button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: 220px;
+    height: 32px;
+    padding: 0 10px;
+    background: var(--bg);
+    border: 1px solid var(--line-2);
+    color: var(--mute);
+    font: 400 var(--t-ui) / 1 var(--sans);
+    cursor: pointer;
+    svg {
+      width: 15px;
+      height: 15px;
+      flex: none;
     }
+    kbd {
+      margin-left: auto;
+      padding: 2px 5px;
+      border: 1px solid var(--line-2);
+      border-radius: 3px;
+      font: 500 0.6875rem / 1 var(--mono);
+      color: var(--mute);
+    }
+    &:hover {
+      border-color: var(--ink-2);
+    }
+  }
+  // Ask is a tool beside search, not a collection tab.
+  .askbtn {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 32px;
+    padding: 0 12px;
+    border: 1px solid var(--secondary);
+    color: var(--secondary);
+    font: 500 var(--t-ui) / 1 var(--sans);
+    white-space: nowrap;
+    svg {
+      width: 17px;
+      height: 17px;
+      flex: none;
+    }
+    &:hover,
+    &[aria-current="page"] {
+      background: color-mix(in srgb, var(--secondary) 10%, transparent);
+      text-decoration: none;
+    }
+  }
+  // The CBORG key: a grey dot without one, green with one.
+  .px-keybtn {
+    box-sizing: border-box;
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 1px solid var(--line-2);
+    background: var(--bg);
+    color: var(--ink-2);
+    cursor: pointer;
+    svg {
+      width: 17px;
+      height: 17px;
+    }
+    &:hover {
+      color: var(--ink);
+      border-color: var(--ink-2);
+    }
+    &.set .px-keydot {
+      background: var(--organism);
+    }
+  }
+  .px-keydot {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--line-2);
   }
 }

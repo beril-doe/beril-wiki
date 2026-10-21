@@ -1,3 +1,40 @@
+// ---- top bar -----------------------------------------------------------------
+// Every tab stays on one row down to 961px: the name shortens, then the search
+// field narrows and Ask drops its label. Measured at 1440, 1180, 1100 and 980px.
+@media (max-width: 1320px) {
+  .bar {
+    gap: 20px;
+    .wordmark .name .full {
+      display: none;
+    }
+    .wordmark .name .short {
+      display: inline;
+    }
+    .search-button {
+      width: 170px;
+    }
+  }
+}
+@media (max-width: 1100px) {
+  .bar {
+    nav {
+      gap: 14px;
+    }
+    .search-button {
+      width: 140px;
+      kbd {
+        display: none;
+      }
+    }
+    .askbtn {
+      padding: 0 7px;
+      span {
+        display: none;
+      }
+    }
+  }
+}
+
 // ---- medium screens --------------------------------------------------------
 @media (max-width: 1100px) {
   .cards {
@@ -63,9 +100,28 @@
     .tools {
       margin-left: 0;
       width: 100%;
+      gap: 10px;
     }
-    .search > .search-button {
+    // The bar wraps onto rows here, so the name and Ask's label have room again.
+    .wordmark .name .full {
+      display: inline;
+    }
+    .wordmark .name .short {
+      display: none;
+    }
+    nav {
       width: 100%;
+      gap: 4px 16px;
+    }
+    .search-button {
+      flex: 1;
+      width: auto;
+    }
+    .askbtn {
+      padding: 0 12px;
+      span {
+        display: inline;
+      }
     }
   }
   .page-grid {

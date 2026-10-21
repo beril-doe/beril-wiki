@@ -12,6 +12,7 @@ on:
       - "src/**"
       - "scripts/**"
       - "theme/**"
+      - "search/**"
       - "pyproject.toml"
       - "uv.lock"
       - ".github/workflows/pages.yml"

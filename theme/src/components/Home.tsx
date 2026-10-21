@@ -39,6 +39,20 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
           <div class="lead">{jsx(lead)}</div>
           {after.length > 0 && <div class="after">{jsx(after)}</div>}
         </div>
+        {/* src/client opens section search from this box. */}
+        <div class="homesearch">
+          <button class="bigsearch px-bigsearch" type="button">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <circle cx="8.5" cy="8.5" r="6.5" />
+              <path d="M13.5 13.5 18 18" />
+            </svg>
+            <span>Search every section: a gene, an organism, a method, a claim</span>
+            <kbd>/</kbd>
+          </button>
+          <a class="btn" href={resolveRelative(slug, "ask" as FullSlug)}>
+            Ask the wiki
+          </a>
+        </div>
         <dl class="figures" aria-label="The corpus in figures">
           <p class="lbl">The corpus</p>
           {(
@@ -61,14 +75,32 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
           <p class="note">Every figure counts pages on this site, not a claim about the field.</p>
         </dl>
       </section>
-      {browse && (
-        <section class="band">
-          <SecHead title="Start here" deck="Ways in, depending on what you came for." />
-          <nav class="browse" aria-label="Browse">
+      {/* Each kind of page answers a different question; the cards say which. */}
+      <section class="band">
+        <SecHead title="Find your way in" deck="Each kind of page answers a different question. Pick the one that matches yours." />
+        <nav class="kinds" aria-label="Kinds of page">
+          {(
+            [
+              ["topics/index", "Topics", "What the corpus says about one research area. Start here if you are new to an area.", `${n.topics} topics`],
+              ["concepts/index", "Concepts", "What several projects together show about one claim, and where they disagree.", `${n.concepts} concepts`],
+              ["entities/index", "Entities", "Everything recorded about one organism, gene, compound, method or dataset.", `${n.entities} entities`],
+              ["conflicts/index", "Conflicts", "Where projects disagree, the evidence on each side, and what would settle it.", `${n.conflicts} conflicts`],
+              ["summaries/index", "Reports", "What one project did and found, with exact numbers to cite.", `${n.reports} reports, ${n.digests} digests`],
+            ] as [string, string, string, string][]
+          ).map(([target, label, what, count]) => (
+            <a class="kindcard" href={resolveRelative(slug, target as FullSlug)}>
+              <b>{label}</b>
+              <span>{what}</span>
+              <span class="n">{count}</span>
+            </a>
+          ))}
+        </nav>
+        {browse && (
+          <nav class="browse also" aria-label="Also">
             {jsx(browse)}
           </nav>
-        </section>
-      )}
+        )}
+      </section>
       <section class="band" aria-label="Map of the corpus">
         <SecHead
           title="The map"

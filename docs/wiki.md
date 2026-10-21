@@ -61,6 +61,11 @@ from the accepted wiki without editing it:
   that figure wrongly. The reports are archived unedited, so the correction is
   recorded in `contract/errata.yaml` and placed beside every claim that repeats
   the figure; the paragraph above it copies the report faithfully.
+- Two reader pages are written at publish time and never into `wiki/`:
+  `guide.md` ("How to read this wiki", a table of page kinds with their page
+  counts) and `ask.md`, which the theme's browser script fills with the Ask
+  interface. A record page shows its one-line brief, when the page has one,
+  and a line naming its kind that links to the guide.
 
 Run [`scripts/build_quartz.sh`](../scripts/build_quartz.sh) after local
 acceptance to render the site. Publishing committed content is separate from
@@ -72,7 +77,23 @@ curation; the curator does not build or deploy the site. See the
 Start at home, open a topic hub, then follow concepts to summaries and raw
 reports. Literature Context connects the synthesis to external papers;
 opportunities and negative results help readers find follow-up questions and
-avoid repeating unsuccessful analyses.
+avoid repeating unsuccessful analyses. The home page's "Find your way in"
+cards state which question each kind of page answers.
+
+Search (the top bar, or `/`) returns sections rather than whole pages, so a
+result opens the page at the matching paragraph. It ranks by keywords unless
+the reader turns on "Meaning search" in the search palette, which also ranks
+sections by meaning. Ask the wiki (`/ask`) answers a question from the 8
+best-matching sections, at most 3 from one page, and cites each claim to its
+section. Ask never draws on author pages, so an answer cannot turn into a claim
+about a person. Every knowledge page except author pages has an "Ask about this
+page" button that answers from that page only. Meaning search and Ask use the
+reader's own CBORG key, entered through the key button in the top bar. Ask
+ranks by keywords and meaning together and answers with Claude Sonnet 5.5
+unless the reader picks another CBORG model; when CBORG cannot embed the
+question, the answer says it used keyword ranking only. The
+[README](../README.md#search-and-ask) covers how the index and its vectors are
+built.
 
 `wiki/` is generated output. Change source reports, the
 [editorial contract](../contract/AGENTS.md), recorded human concept decisions

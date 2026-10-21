@@ -232,6 +232,8 @@ export function walk(root: Root): Walk {
           if (found && found.length > 0) {
             const words = [...new Set(found)]
             addClass(c, "rel", `rel-${words[0]}`)
+            // The record header's count for each word steps through the phrases naming it.
+            c.properties = { ...c.properties, dataRels: words.join(" ") }
             for (const w of words) {
               out.rels[w]++
               rels.push(w)
@@ -415,4 +417,57 @@ export function authorsOf(report: File, c: Corpus): File[] {
   return (c.inbound.get(simplifySlug(slug)) ?? [])
     .filter((f) => collectionOf(slugOf(f)) === "authors" && !isIndex(slugOf(f)))
     .sort((a, b) => titleOf(a).localeCompare(titleOf(b)))
+}
+
+// What each kind of page is for, in one line under its title. The guide page
+// (publish/ingest.py) gives the same answers as a table.
+const KIND_LINE: Record<string, string> = {
+  topic: "A topic page introduces one research area, sets it against published literature, and gathers the concepts that argue it.",
+  concept: "A concept page shows what several projects together say about one claim, and where they disagree.",
+  conflict: "A conflict page sets out where projects disagree, the evidence on each side, and what work would settle it.",
+  entity: "An entity page collects what the corpus records about one organism, gene, compound, method or dataset.",
+  report: "A project report page condenses one project's investigation, with its exact numbers.",
+  digest: "A cross-project digest collects discoveries or pitfalls that recur across projects.",
+  source: "A raw report is the project's own write-up, unedited. Use it to check a summary against its source.",
+}
+const ENTITY_CLS = new Set(["organism", "compound", "method", "dataset", "gene", "entity"])
+
+export function kindLineOf(f: File): string {
+  const k = kindOf(f)
+  if (k.label === "Cross-project digest") return KIND_LINE.digest
+  if (k.label === "Raw report") return KIND_LINE.source
+  if (ENTITY_CLS.has(k.cls)) return KIND_LINE.entity
+  return KIND_LINE[k.cls] ?? ""
+}
+
+// Plain text without citation markers, which render as <sub> numbers.
+function prose(n: Root | RootContent): string {
+  if (n.type === "text") return n.value
+  if (isEl(n) && n.tagName === "sub") return ""
+  if ("children" in n) return (n.children as RootContent[]).map(prose).join("")
+  return ""
+}
+
+const firstSentence = (s: string) => s.match(/^.+?[.!?](?=\s+[A-Z]|$)/)?.[0] ?? ""
+const comparable = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim()
+
+/**
+ * The sentence under a record's title saying what the page argues: the
+ * frontmatter description, or for a topic its opening sentence, which defines
+ * the area. A conflict's title is already its question. Skipped when it would
+ * only repeat the opening paragraph, as some entity descriptions do.
+ */
+export function briefOf(f: File, root: Root): string {
+  const k = kindOf(f)
+  const opening = (root.children.find((c) => isEl(c) && c.tagName === "p") as Element | undefined) ?? null
+  const openingText = opening ? prose(opening).replace(/\s+/g, " ").trim() : ""
+  const brief =
+    k.cls === "topic" ? firstSentence(openingText)
+    : ["conflict", "collection", "plain", "author"].includes(k.cls) ? ""
+    : (fm(f)?.description ?? "")
+  // A topic's brief is its opening's first sentence, so it repeats the opening only when that
+  // is all there is. A description repeats it when both start the same way.
+  const repeats =
+    k.cls === "topic" ? comparable(brief) === comparable(openingText) : comparable(brief).slice(0, 80) === comparable(openingText).slice(0, 80)
+  return brief && !repeats ? brief : ""
 }
