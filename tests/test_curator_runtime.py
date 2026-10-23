@@ -579,18 +579,24 @@ def test_cli_loads_committed_policy_without_model_flag(tmp_path, monkeypatch):
     configs = []
     monkeypatch.setattr(cli, "run", lambda root, checkout, config, staged: configs.append(config))
     assert cli.main() == 0
-    claude_roles = {"planning", "writing"}
-    pinned = {"card_review": "gpt-6-luna", "labels": "claude-haiku-5-5"}
     assert R.model_policy(configs[0]) == {
-        role: pinned.get(role)
-        or (
-            "claude-sonnet-5-5"
-            if role in ("pages", "cards")
-            else "claude-opus-5-5"
-            if role in claude_roles
-            else "gpt-6.1-sol"
-        )
-        for role in R.MODEL_ROLES
+        "extraction": "gpt-6.1-sol",
+        "planning": "claude-sonnet-5-5",
+        "pages": "claude-haiku-5-5",
+        "writing": "claude-sonnet-5-5",
+        "review": "gpt-6-luna",
+        "queries": "gpt-6.1-sol",
+        "figures": "gpt-6.1-sol",
+        "cards": "claude-sonnet-5-5",
+        "card_review": "gpt-6-luna",
+        "findings_review": "gpt-6.1-sol",
+        "labels": "claude-haiku-5-5",
+    }
+    assert configs[0]["step_efforts"] == {
+        "planning": "high",
+        "pages": "medium",
+        "writing": "medium",
+        "review": "high",
     }
     # Replacement file paths resolve against the chosen root, and a role flag wins.
     (tmp_path / "custom.yaml").write_text("model: alternate\nstep_models: {review: specialist}")

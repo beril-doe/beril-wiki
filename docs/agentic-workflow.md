@@ -113,10 +113,10 @@ selected by `--root`. The committed policy explicitly assigns every role:
 | Role | Model | Effort | Jobs |
 | --- | --- | --- | --- |
 | `extraction` | GPT-6.1 Sol (Codex) | default | Extract source evidence, retaining scientific qualifiers. Applies to reports extracted from now on; evidence already extracted by GPT-6 Sol stays. |
-| `planning` | Opus 5.5 | default | Plan evidence integration and propose topic groups. |
-| `pages` | Sonnet 5.5 | default | Write the concept, entity and summary pages integration produces: one page session per `write/` pass. Applies to pages written from now on; pages already accepted stay. |
-| `writing` | Opus 5.5 | default | Derived pages (conflicts, topics, literature, authors) as page sessions, home and entity merges; default for other generation jobs. Applies to pages written from now on. |
-| `review` | GPT-6.1 Sol (Codex) | default | All separate scientific reviews and verifications, including extraction and the reviews a page session asks for. |
+| `planning` | Sonnet 5.5 | `high` | Plan evidence integration and propose topic groups. |
+| `pages` | Haiku 5.5 | `medium` | Write the concept, entity and summary pages integration produces: one page session per `write/` pass. Applies to pages written from now on; pages already accepted stay. |
+| `writing` | Sonnet 5.5 | `medium` | Derived pages (conflicts, topics, literature, authors) as page sessions, home and entity merges; default for other generation jobs. Applies to pages written from now on. |
+| `review` | GPT-6 Luna (Codex) | `high` | All separate scientific reviews and verifications, including extraction and the reviews a page session asks for. |
 | `queries` | GPT-6.1 Sol (Codex) | default | Construct literature search queries, including the PubMed queries for literature labels. |
 | `figures` | GPT-6.1 Sol (Codex) | default | Select figure placements. |
 | `cards` | Sonnet 5.5 | `medium`, fixed | Choose headline findings, judge literature labels, write research directions and plain summaries, sort links between projects and write shared results (stages `headlines`, `novelty`, `directions`, `gists`, `links`, `shared`). The effort is `CARD_EFFORT` in `agentic/runtime.py`; `step_efforts` does not change it. |
@@ -136,12 +136,16 @@ Integrated pages moved to Sonnet 5.5 in October 2026. On nine pilot pages (11 to
 none of the pages Opus 5.5 had refused. A blind GPT judge, both orders, scored its
 fidelity equal or higher on every page it judged and its clarity about a point
 lower. One 197-record page lost two of its four passes where Opus kept all four.
-Derived pages stay on Opus 5.5 until `agentic.yaml` adopts what the October
-pilots under [Pilots](#pilots) chose. The
+Derived pages moved to Sonnet 5.5 after the October pilot described under
+[Pilots](#pilots). The later model-mix pilot, also under [Pilots](#pilots),
+moved integrated pages to Haiku 5.5, review to GPT-6 Luna and planning to
+Sonnet 5.5, and set the efforts above. Pages already accepted stay as their
+writers left them. The card roles keep the models that judged their accepted
+records. The
 former `curator` role is gone: the schedule below is fixed code, so
 no model chooses actions any more. No model comparison run is required.
-The full IDs are `claude-opus-5-5`, `claude-sonnet-5-5`, `claude-haiku-5-5`,
-`gpt-6.1-sol` and `gpt-6-luna`. The file's default `model`, `claude-opus-5-5`, supplies no role
+The full IDs are `claude-sonnet-5-5`, `claude-haiku-5-5`, `gpt-6.1-sol` and
+`gpt-6-luna`. The file's default `model`, `claude-opus-5-5`, supplies no role
 while every role is pinned. The Claude IDs match Anthropic's
 [model catalog](https://platform.claude.com/docs/en/models/overview).
 Opus 5.5 was verified on
