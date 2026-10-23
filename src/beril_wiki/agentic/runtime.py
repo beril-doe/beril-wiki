@@ -59,11 +59,6 @@ class CandidateError(WorkflowError):
 
 
 MODEL_ROLES = ("extraction", "planning", "pages", "writing", "review", "queries", "figures")
-# The roles whose model decides whether integrated pages are current. Extraction and
-# pages are not: a new extraction model applies to reports extracted from then on, and a
-# new page writer to pages written from then on, so evidence already extracted and pages
-# already accepted stay valid rather than re-integrating the whole corpus.
-CORE_MODEL_ROLES = ("planning", "writing", "review")
 
 
 def refusal_scope(step: str) -> str:
@@ -78,7 +73,7 @@ def refusal_scope(step: str) -> str:
     scope = step
     while True:
         trimmed = re.sub(
-            r"/(patch/\d+|pass/\d+|repair|science-review|review|verify|again)$", "", scope
+            r"/(patch/\d+|pass/\d+|agent/\d+|repair|science-review|review|verify|again)$", "", scope
         )
         if trimmed == scope:
             return scope
@@ -91,7 +86,11 @@ def refusal_scope(step: str) -> str:
 REFUSAL_FALLBACK = {
     "claude-opus-5-5": "claude-opus-5",
     "claude-sonnet-5-5": "claude-opus-5",
+    # Sonnet 5.5 refused none of the pages Opus 5.5 refused in its pilot.
+    "claude-haiku-5-5": "claude-sonnet-5-5",
     "gpt-6.1-sol": "gpt-5.6-sol",
+    "gpt-6-sol": "gpt-5.6-sol",
+    "gpt-6-luna": "gpt-5.6-sol",
 }
 # Wordings seen so far; each is a short prose reply in place of the JSON asked for.
 REFUSAL_PHRASES = (
@@ -140,9 +139,9 @@ def model_policy(config: dict) -> dict[str, str]:
 
 def role_for(step: str) -> str:
     """Route by job role; a repair, retry or patch keeps its role. Review and verify
-    are the reviewer's own jobs and route to it."""
+    are the reviewer's own jobs and route to it, as a pilot's judgements do."""
     step = re.sub(r"/patch/\d+$", "", step.removesuffix("/again").removesuffix("/repair"))
-    if step.endswith(("/science-review", "/review", "/verify")):
+    if step.endswith(("/science-review", "/review", "/verify")) or step.startswith("pilot/judge/"):
         role = "review"
     elif step.startswith("extract/"):
         role = "extraction"
@@ -259,14 +258,17 @@ TOKEN_FIELDS = (
     "cache_read_input_tokens",
 )
 # Admission weights: a cache read costs a tenth of a fresh input token and a
-# cache write a quarter more, so the effective figure tracks spend while the raw
-# ledger count remains the audit record.
+# 5-minute cache write a quarter more, so the effective figure tracks input spend
+# while the raw ledger count remains the audit record. The CLI writes 1-hour caches,
+# billed at twice the input price; a usage that splits its writes by lifetime is
+# charged that way (see cache_write_weight).
 EFFECTIVE_WEIGHTS = {
     "input_tokens": 1.0,
     "output_tokens": 1.0,
     "cache_creation_input_tokens": 1.25,
     "cache_read_input_tokens": 0.1,
 }
+ONE_HOUR_WRITE_WEIGHT = 2.0
 
 
 def valid_usage(usage: object) -> TypeGuard[dict]:
@@ -278,7 +280,15 @@ def valid_usage(usage: object) -> TypeGuard[dict]:
 
 
 def effective_tokens(usage: dict) -> int:
-    return math.ceil(sum(usage.get(k, 0) * w for k, w in EFFECTIVE_WEIGHTS.items()))
+    total = sum(usage.get(k, 0) * w for k, w in EFFECTIVE_WEIGHTS.items())
+    split = usage.get("cache_creation")
+    if isinstance(split, dict):
+        one_hour = split.get("ephemeral_1h_input_tokens", 0)
+        if type(one_hour) is int and 0 < one_hour <= usage.get("cache_creation_input_tokens", 0):
+            total += one_hour * (
+                ONE_HOUR_WRITE_WEIGHT - EFFECTIVE_WEIGHTS["cache_creation_input_tokens"]
+            )
+    return math.ceil(total)
 
 
 def transcript_usage(path: Path) -> tuple[dict, float | None] | None:
@@ -314,9 +324,14 @@ class Ledger:
         max_jobs: int,
         reserve: int,
         stage_budget: int = 0,
+        caps: dict | None = None,
     ):
         if min(budget, max_jobs, reserve) <= 0 or stage_budget < 0:
             raise ValueError("budgets must be positive")
+        # Optional per-run spend caps in the units a person approves: Claude USD (the
+        # SDK's own estimate) and raw Codex tokens, each with headroom held for every
+        # job of that backend still in flight.
+        self.caps = caps or {}
         path.parent.mkdir(parents=True, exist_ok=True)
         self.db = sqlite3.connect(path, timeout=30)
         self.run, self.budget, self.max_jobs, self.headroom = run, budget, max_jobs, reserve
@@ -349,7 +364,9 @@ class Ledger:
             self.db.execute("UPDATE jobs SET effective=? WHERE key=?", (value, key))
         self.db.commit()
 
-    def reserve(self, key: str, step: str = "", model: str | None = None) -> str | None:
+    def reserve(
+        self, key: str, step: str = "", model: str | None = None, hold: float | None = None
+    ) -> str | None:
         stage = os.environ.get("BERIL_AGENTIC_STAGE", "")
         self.db.execute("BEGIN IMMEDIATE")
         try:
@@ -375,6 +392,7 @@ class Ledger:
                     f"budget admission refused: jobs={count}, effective={spent}, "
                     f"inflight={inflight}"
                 )
+            held_usd, held_tokens = self._check_caps(model, hold)
             if self.stage_budget and stage:
                 stage_spent, stage_inflight = self.db.execute(
                     "SELECT coalesce(sum(effective),0),coalesce(sum(status='pending'),0) "
@@ -385,15 +403,52 @@ class Ledger:
                     raise WorkflowError(
                         f"stage budget admission refused: {stage} effective={stage_spent}"
                     )
+            # A capped run holds each pending job's possible spend in its cost (Claude)
+            # or tokens (Codex) until finish() records the real figure.
             self.db.execute(
-                "INSERT INTO jobs(key,run,status,step,model,stage) VALUES(?,?,'pending',?,?,?)",
-                (key, self.run, step, model, stage),
+                "INSERT INTO jobs(key,run,status,step,model,stage,cost,tokens) "
+                "VALUES(?,?,'pending',?,?,?,?,?)",
+                (key, self.run, step, model, stage, held_usd, held_tokens),
             )
             self.db.commit()
             return None
         except BaseException:
             self.db.rollback()
             raise
+
+    def _check_caps(self, model: str | None, hold: float | None) -> tuple[float | None, int | None]:
+        """Refuse a job whose possible spend would cross a cap; return what to hold for it.
+
+        Spent counts finished jobs at their recorded charge and pending ones at their
+        hold, so a job admitted near the edge cannot carry the run past the cap: a page
+        session holds its whole session budget, other jobs a fixed headroom."""
+        if not self.caps or not model:
+            return None, None
+        if backend_for(model) == "claude" and self.caps.get("max_usd"):
+            held = float(hold if hold is not None else self.caps.get("usd_headroom", 2.0))
+            (spent,) = self.db.execute(
+                "SELECT coalesce(sum(cost),0) FROM jobs WHERE run=? AND model LIKE 'claude%'",
+                (self.run,),
+            ).fetchone()
+            if spent + held > float(self.caps["max_usd"]):
+                raise WorkflowError(
+                    f"budget admission refused: Claude USD {spent:.2f} spent or held, "
+                    f"{held:.2f} more needed, cap {self.caps['max_usd']}"
+                )
+            return held, None
+        if backend_for(model) == "codex" and self.caps.get("max_codex_tokens"):
+            held_tokens = int(self.caps.get("codex_headroom", 400_000))
+            (spent,) = self.db.execute(
+                "SELECT coalesce(sum(tokens),0) FROM jobs WHERE run=? AND model LIKE 'gpt-%'",
+                (self.run,),
+            ).fetchone()
+            if spent + held_tokens > int(self.caps["max_codex_tokens"]):
+                raise WorkflowError(
+                    f"budget admission refused: Codex tokens {spent} spent or held, "
+                    f"cap {self.caps['max_codex_tokens']}"
+                )
+            return None, held_tokens
+        return None, None
 
     def finish(
         self,
@@ -413,8 +468,10 @@ class Ledger:
         status = status or (("failed" if error else "done") if valid else "unknown")
         with self.db:
             self.db.execute(
-                "UPDATE jobs SET status=?,output=?,usage=?,tokens=?,effective=?,cost=?,error=?,"
-                "dependencies=? WHERE key=?",
+                # A charge the job never reported keeps the hold it was admitted with, so
+                # an interrupted job still counts against a capped run.
+                "UPDATE jobs SET status=?,output=?,usage=?,tokens=coalesce(?,tokens),"
+                "effective=?,cost=coalesce(?,cost),error=?,dependencies=? WHERE key=?",
                 (
                     status,
                     output,
@@ -673,13 +730,11 @@ def tool_profile(step: str) -> str:
     """Integration jobs read and search evidence; derived prose gets its evidence packed."""
     if step.endswith("/science-review") or step.startswith("extract/"):
         return "read"
-    # A page writer drafts with everything packed, in one turn. Its repair may read and
-    # search the sources, as the review it answers did: without that, pages written
-    # tool-free scored a point lower on fidelity in a blind judge, and the earlier
-    # writers had used their tools mostly to search sources while repairing.
+    # Page writers run in page sessions (page_agent) with their own tools; the reviewer
+    # verifying a page's revision may read the sources, as its review did.
     if step.startswith("write/") and step.endswith("/verify"):
         return "read"
-    if step.startswith("curator/") or (step.startswith("write/") and step.endswith("/repair")):
+    if step.startswith("curator/"):
         return "extended"
     return "none"
 
@@ -800,8 +855,6 @@ class Runtime:
     def __init__(self, config: dict):
         self.config = config
         self.root, self.store = Path(config["root"]), Path(config["store"])
-        self._validator: Callable[[str], Any] | None = None
-        self._validation_context: Any = None
         self._step = ""
         self.jobs: list[str] = []  # every key this runtime touched, cached or fresh
         self.closed = 0  # objections the last verification marked resolved
@@ -812,6 +865,7 @@ class Runtime:
             config["max_jobs"],
             config.get("reserve_tokens", 50_000),
             config.get("stage_max_tokens", 0),
+            {k: config[k] for k in ("max_usd", "max_codex_tokens") if config.get(k)},
         )
 
     def ask(self, messages: list[dict], step: str, *, model: str | None = None) -> str:
@@ -847,23 +901,29 @@ class Runtime:
                     ast.dump(ast.parse(inspect.getsource(EvidenceTools))),
                     ast.dump(ast.parse(inspect.getsource(search_inventory))),
                     ast.dump(ast.parse(textwrap.dedent(inspect.getsource(self._query)))),
-                    self._validation_context,
+                    None,
                 ]
             )
-            revision = digest([revision, self._validation_context])
+            # The None once named the writer's validation context, which an in-session
+            # validation tool used; kept so extended (topic proposal) keys stay put.
+            revision = digest([revision, None])
         requested = model
         model = model or model_for(self.config, step)
         backend = backend_for(model)
+        effort = self.effort(step)
         if backend == "codex":
             from beril_wiki.agentic import codex
 
             # The adapter and its effort shape a Codex answer as the SDK tools shape a
             # Claude one; Claude keys stay byte-identical.
             legacy = digest([legacy, LEGACY_CODEX_REVISION])
-            revision = digest([revision, CODEX_REVISION, codex.EFFORT])
-        effort = self.effort(step) if backend == "claude" else None
-        if effort:
+            revision = digest([revision, CODEX_REVISION, effort or codex.EFFORT])
+            effort = None if effort == codex.EFFORT else effort
+        elif effort:
             revision = digest([revision, effort])
+        if effort:
+            # Legacy answers ran at the default effort; another effort must not replay them.
+            legacy = digest([legacy, effort])
         tool_revision = (revision, legacy)
         key, cached, answers = self.resolve(messages, step, model, tool_revision, inputs)
         if cached is not None:
@@ -918,11 +978,12 @@ class Runtime:
             raise WorkflowError(f"{step} failed; inspect job {key}: {exc}") from exc
 
     def effort(self, step: str) -> Literal["low", "medium", "high", "xhigh", "max"] | None:
-        """The page writer's reasoning effort, when a run sets one; the CLI default
-        otherwise. Only the writer of a write/ job: derived pages are the writing role's,
-        and a write/ job's review belongs to the reviewer."""
-        writer = role_for(step) == "pages"
-        return self.config.get("write_effort") if writer else None
+        """The reasoning effort a run sets for this step's role (step_efforts, or
+        write_effort for page writers); the backend's default otherwise. A write/ job's
+        review is the reviewer's role, so it takes the reviewer's effort."""
+        role = role_for(step)
+        writer = self.config.get("write_effort") if role == "pages" else None
+        return self.config.get("step_efforts", {}).get(role) or writer
 
     def _screened(self, messages: list[dict], step: str, model: str, key: str, output: str) -> str:
         """A fresh reply that is a refusal in prose is recorded as one and answered on
@@ -975,40 +1036,15 @@ class Runtime:
             except (WorkflowError, OSError, KeyError, ValueError, TypeError) as exc:
                 return {"is_error": True, "content": [{"type": "text", "text": str(exc)}]}
 
-        @tool(
-            "validate_candidate",
-            "Check a candidate JSON string against the bound page task; no writes.",
-            {"candidate": str},
-        )
-        async def validate_candidate(args):
-            try:
-                if self._validator is None:
-                    raise WorkflowError("no writer validation context")
-                self._validator(args["candidate"])
-                value = {"valid": True}
-            except (WorkflowError, OSError, ValueError, TypeError, KeyError) as exc:
-                value = {"valid": False, "issues": [str(exc)[:4000]]}
-            size = len(json.dumps(value).encode())
-            if size > reader.remaining:
-                return {
-                    "is_error": True,
-                    "content": [{"type": "text", "text": "tool output budget exhausted"}],
-                }
-            reader.remaining -= size
-            return {"content": [{"type": "text", "text": json.dumps(value)}]}
-
         available = [] if profile == "none" else [read_evidence]
         if extended:
             available.append(search_evidence)
-            if self._validator is not None:
-                available.append(validate_candidate)
         system = SYSTEM.replace(
             "Use only the supplied evidence read tool.",
             {
                 "none": "All evidence is supplied in the prompt; there are no tools.",
                 "read": "Use only the supplied evidence read tool.",
-                "extended": "Use only the supplied read-only evidence, search and "
-                "candidate-check tools.",
+                "extended": "Use only the supplied read-only evidence and search tools.",
             }[profile],
         )
         # The turn budget is a launch setting, so it is stated here rather than in a
@@ -1195,32 +1231,25 @@ class Runtime:
         step: str,
         accept: Callable[[str], T],
         *,
-        validator: Callable[[str], Any] | None = None,
-        context: Any = None,
         attempts: int = 2,
     ) -> T:
         """Try targeted corrections, one per extra attempt; never retry operational failures."""
-        previous = self._validator, self._validation_context
-        self._validator, self._validation_context = validator, context
         task = messages
-        try:
-            for attempt in range(attempts):
-                raw = self.ask(task, step if attempt == 0 else step + "/repair")
-                try:
-                    return accept(raw)
-                except CandidateError as exc:
-                    if attempt == attempts - 1:
-                        raise
-                    task = messages + [
-                        {
-                            "role": "user",
-                            "content": REPAIR_PROMPT
-                            + json.dumps({"previous": raw, "issues": str(exc)[:8000]}),
-                        }
-                    ]
-            raise AssertionError("unreachable")
-        finally:
-            self._validator, self._validation_context = previous
+        for attempt in range(attempts):
+            raw = self.ask(task, step if attempt == 0 else step + "/repair")
+            try:
+                return accept(raw)
+            except CandidateError as exc:
+                if attempt == attempts - 1:
+                    raise
+                task = messages + [
+                    {
+                        "role": "user",
+                        "content": REPAIR_PROMPT
+                        + json.dumps({"previous": raw, "issues": str(exc)[:8000]}),
+                    }
+                ]
+        raise AssertionError("unreachable")
 
     def review(self, messages: list[dict], candidate: str, step: str) -> None:
         from beril_wiki.compiler import parse_json_reply
@@ -1280,6 +1309,17 @@ class Runtime:
             raise WorkflowError(f"invalid verification verdict: {exc}") from exc
         self.closed = len(resolved & set(range(len(issues))))
         return [i for n, i in enumerate(issues) if n not in resolved] + still_open
+
+
+def record_pack(config: dict, step: str, payload: dict) -> None:
+    """A pilot keeps exactly what each writer was given, so its judge reads the same
+    evidence rather than reassembling it from stores that hold several versions."""
+    folder = config.get("pilot_dir")
+    if not folder:
+        return
+    path = Path(folder) / "packs" / (step.replace("/", "__") + ".json")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"step": step} | payload, ensure_ascii=False), encoding="utf-8")
 
 
 def configured() -> bool:

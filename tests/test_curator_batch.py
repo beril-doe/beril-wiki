@@ -6,12 +6,16 @@ from typing import cast
 
 import pytest
 
-from beril_wiki.agentic import batch
+from agentic_recording import page_session
+from beril_wiki.agentic import batch, page_agent
 from beril_wiki.agentic.runtime import CandidateError, Runtime, WorkflowError, digest
 from beril_wiki.check import all_paragraphs
 
 OLD = "# Yield\n\nYield was 42%. [src: a]\n\n## Open Directions\n\nRepeat measurements."
 LOSS = OLD.replace("42%", "measured")
+
+# A recorded page session: the draft and four corrections (agentic_recording.page_session).
+WRITES = 5
 
 
 def route(evidence, *concepts, summary_only="", new_topic=""):
@@ -121,11 +125,11 @@ def system_payload(messages):
 
 
 def test_repeated_quantity_loss_is_recorded_and_the_batch_goes_on(tmp_path, monkeypatch):
-    agent, calls, reviews, _ = setup_batch(tmp_path, monkeypatch, bad_writes=batch.WRITE_ATTEMPTS)
+    agent, calls, reviews, _ = setup_batch(tmp_path, monkeypatch, bad_writes=WRITES)
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
     # The budget is finite: a writer that keeps dropping a quantity is not published,
     # the page is recorded as failed, and its source is not recorded as integrated.
-    assert sum(s.startswith("write/concepts/") for s, _ in calls) == batch.WRITE_ATTEMPTS
+    assert sum(s.startswith("write/concepts/") for s, _ in calls) == WRITES
     assert (tmp_path / "wiki/concepts/yield.md").read_text() == OLD
     assert not any(s == "write/concepts/yield.md" for s, _ in reviews)
     failures = json.loads((tmp_path / "jobs/failures.json").read_text())
@@ -279,7 +283,7 @@ def test_a_repair_the_reviewer_still_rejects_ends_the_page(tmp_path, monkeypatch
 
 
 def test_a_failed_page_is_redrafted_from_the_saved_plan_without_replanning(tmp_path, monkeypatch):
-    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch, bad_writes=batch.WRITE_ATTEMPTS)
+    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch, bad_writes=WRITES)
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
     assert batch.retryable(agent.store) == ["concepts/yield.md"]
     before = len(calls)
@@ -316,7 +320,7 @@ def test_a_page_failing_its_retries_waits_for_a_person(tmp_path, monkeypatch):
 
 
 def test_strict_pages_stops_on_the_first_failed_page(tmp_path, monkeypatch):
-    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch, bad_writes=batch.WRITE_ATTEMPTS)
+    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch, bad_writes=WRITES)
     monkeypatch.setitem(agent.config, "strict_pages", True)
     with pytest.raises(WorkflowError, match="unchanged citations or quantities"):
         batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
@@ -854,22 +858,17 @@ def test_scientific_rejection_uses_same_single_correction(tmp_path, monkeypatch)
 
 def test_source_read_failure_is_not_repaired(tmp_path, monkeypatch):
     agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
-    generate = agent.generate
 
-    def generate_with_failed_read(
-        messages, step, accept, *, validator=None, context=None, attempts=2
-    ):
-        if step.startswith("write/"):
+    def session_with_failed_read(agent, page, workdir, **kwargs):
+        if page.step.startswith("write/"):
 
             def failed_read(root):
                 raise OSError("source unavailable")
 
             monkeypatch.setattr(batch.C, "load_sources", failed_read)
-        return generate(
-            messages, step, accept, validator=validator, context=context, attempts=attempts
-        )
+        return page_session(agent, page, workdir, **kwargs)
 
-    monkeypatch.setattr(agent, "generate", generate_with_failed_read)
+    monkeypatch.setattr(page_agent, "run", session_with_failed_read)
     with pytest.raises(OSError, match="source unavailable"):
         batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
     assert sum(s.startswith("write/") for s, _ in calls) == 1
@@ -1045,16 +1044,12 @@ def test_concept_assignments_survive_writing_validation_and_review(tmp_path, mon
         if "a:0:1" in account and claims[1] not in account["a:0:1"]:
             raise CandidateError("assigned null result is missing from its mapped paragraph")
 
-    generate = agent.generate
-
-    def check_assignment(messages, step, accept, *, validator=None, context=None, attempts=2):
-        if step == "write/concepts/limits.md":
-            payload = json.loads(messages[0]["content"].split("\n")[-1])
+    def check_assignment(agent, page, workdir, **kwargs):
+        if page.step == "write/concepts/limits.md":
+            payload = json.loads(page.messages[0]["content"].split("\n")[-1])
             assert {c["evidence"] for c in payload["coverage"]} == {"a:0:1", "a:0:2"}
             assert payload["job"]["sources"] == ["a", "b"]
-        return generate(
-            messages, step, accept, validator=validator, context=context, attempts=attempts
-        )
+        return page_session(agent, page, workdir, **kwargs)
 
     plan = batch.Plan(
         pages=[job, job.model_copy(update={"path": assignments[1], "sources": ["b"]})],
@@ -1066,7 +1061,7 @@ def test_concept_assignments_survive_writing_validation_and_review(tmp_path, mon
     monkeypatch.setattr(batch, "route_plan", lambda root, agent, findings: plan)
     monkeypatch.setattr(agent, "ask", replies)
     monkeypatch.setattr(agent, "review", review)
-    monkeypatch.setattr(agent, "generate", check_assignment)
+    monkeypatch.setattr(page_agent, "run", check_assignment)
     batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
     assert sum(step.startswith("write/concepts/limits.md") for step, _ in calls) == 2
     assert inspected.count("write/concepts/limits.md") == (2 if failure == "misrepresented" else 1)
