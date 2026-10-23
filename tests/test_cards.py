@@ -161,8 +161,7 @@ def test_shared_card_modules_reschedule_only_card_stages(tmp_path, monkeypatch, 
     from beril_wiki.agentic import curator as C
 
     (tmp_path / "contract").mkdir()
-    config = {"model": "m"}
-    before = {name: C.stage_revision(tmp_path, name, config) for name in C.EDITORIAL}
+    before = {name: C.stage_revision(tmp_path, name) for name in C.EDITORIAL}
     real = C.Path.read_text
 
     def edited(self, *args, **kwargs):
@@ -170,7 +169,7 @@ def test_shared_card_modules_reschedule_only_card_stages(tmp_path, monkeypatch, 
         return text + "\nEDITED = 1\n" if self.as_posix().endswith(module) else text
 
     monkeypatch.setattr(C.Path, "read_text", edited)
-    after = {name: C.stage_revision(tmp_path, name, config) for name in C.EDITORIAL}
+    after = {name: C.stage_revision(tmp_path, name) for name in C.EDITORIAL}
     for name in ("conflicts", "topics", "literature", "authors"):
         assert after[name] == before[name]
     for name in C.CARD_STAGES:

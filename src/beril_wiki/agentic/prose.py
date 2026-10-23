@@ -1,10 +1,12 @@
-"""Derived prose from packed evidence: one-turn drafts, one-turn review, paragraph patches.
+"""Derived prose from packed evidence: gates, review, verification and salvage.
 
-Every page job receives its complete evidence in the prompt, so writer and
-reviewer share one pack and one rule list and no job reads files through
-tools. Deterministic gates run before any review; a rejected page is patched
-by paragraph index, and only the patched paragraphs are reviewed again. A page
-that does not converge is recorded as a failure and the stage moves on.
+Every page receives its complete evidence in the prompt, so writer and reviewer
+share one pack and one rule list. Under the agentic runtime a page is one page
+session (agent_page): the writer drafts and revises it, the stage's gates run as
+its check, and the reviewer gives one open review and then closed verifications.
+The API pipeline drafts once and patches by paragraph index what the gates
+report. A page that does not converge is recorded as a failure and the stage
+moves on.
 """
 
 from __future__ import annotations
@@ -23,9 +25,11 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from beril_wiki import compiler as C
 from beril_wiki.agentic.runtime import (
     CandidateError,
+    Runtime,
     atomic_json,
     configured,
     digest,
+    record_pack,
     runtime,
     runtime_config,
 )
@@ -138,26 +142,6 @@ def blocks(text: str) -> list[str]:
 
 def numbered(parts: list[str]) -> str:
     return "\n\n".join(f"[{i}] {part}" for i, part in enumerate(parts))
-
-
-def scoped(parts: list[str], scope: list[int]) -> str:
-    """The paragraphs under review with their neighbours and every heading, keeping the
-    original indices so a verdict still names the right paragraph.
-
-    A scoped re-review used to receive the whole candidate and differ from a full
-    review only in its instructions, so it cost as much as the review it replaced.
-    Headings are cheap and tell the reviewer which section a paragraph sits in."""
-    wanted = {i + d for i in scope for d in (-1, 0, 1)}
-    shown = [f"[{i}] {part}" for i, part in enumerate(parts) if i in wanted or part.startswith("#")]
-    return "\n\n".join(shown)
-
-
-def moved(issue: Issue, remap: dict[int, list[int]]) -> Issue:
-    """The same objection pointing at where its paragraph landed after a patch."""
-    if issue.paragraph is None:
-        return issue
-    landed = remap.get(issue.paragraph, [])
-    return issue.model_copy(update={"paragraph": landed[0] if landed else None})
 
 
 def clean(raw: str, targets: set[str] | None) -> str:
@@ -298,27 +282,18 @@ def review(
     contract: Contract,
     pack: str,
     parts: list[str],
-    scope: list[int] | None,
     step: str,
     call: Ask = ask,
 ) -> list[Issue] | None:
-    """The reviewer's in-scope issues; None when it returned no usable verdict."""
-    scope_line = (
-        "Review every paragraph."
-        if scope is None
-        else (
-            f"Review only paragraphs {scope}; their neighbours are shown for context and "
-            "every paragraph not shown was accepted in an earlier round."
-        )
-    )
-    candidate = numbered(parts) if scope is None else scoped(parts, scope)
+    """The reviewer's issues; None when it returned no usable verdict."""
+    candidate = numbered(parts)
     raw = call(
         prompt(
             contract,
             pack,
             f"CANDIDATE (numbered paragraphs):\n{candidate}\n\n"
             "You are the independent scientific reviewer. Check the candidate against the "
-            f"RULES using only the EVIDENCE. {scope_line} Length, required headings, "
+            "RULES using only the EVIDENCE. Review every paragraph. Length, required headings, "
             "citation ids and figure provenance were already checked by code; report what "
             "remains: wrong numbers, inverted directions or denominators, dropped or softened "
             "caveats and null results, claims the evidence does not support, citations beside "
@@ -337,8 +312,6 @@ def review(
         return None  # a rejection with nothing to fix is not a verdict; fail closed
     # Length is code-owned; a reviewer word count must never cost a prose patch.
     issues = [i for i in verdict.issues if i.category != "length"]
-    if scope is not None:
-        issues = [i for i in issues if i.paragraph is None or i.paragraph in scope]
     return issues
 
 
@@ -347,9 +320,9 @@ def verify(
     pack: str,
     parts: list[str],
     pending: list[Issue],
-    scope: list[int] | None,
     step: str,
     call: Ask = ask,
+    changed: set[int] | None = None,
 ) -> list[Issue] | None:
     """Check the revision against the issues it was meant to close.
 
@@ -359,15 +332,7 @@ def verify(
     something new while 42% of patches had not fixed what they were told to. This
     asks only whether each issue is closed and whether the revision broke something,
     so the open list can shrink or hold but never grow on settled text."""
-    candidate = numbered(parts) if scope is None else scoped(parts, scope)
-    scope_line = (
-        ""
-        if scope is None
-        else (
-            f" Review only paragraphs {scope}; their neighbours are shown for context and "
-            "every paragraph not shown was accepted earlier."
-        )
-    )
+    candidate = numbered(parts)
     listed = json.dumps(
         [
             {
@@ -386,7 +351,13 @@ def verify(
             pack,
             f"CANDIDATE (numbered paragraphs, revised):\n{candidate}\n\n"
             f"ISSUES YOU RAISED:\n{listed}\n\n"
-            f"The writer revised the page to close these issues.{scope_line} You are "
+            + (
+                f"The writer changed paragraphs {sorted(changed)}; every other paragraph "
+                "was accepted earlier.\n\n"
+                if changed is not None
+                else ""
+            )
+            + "The writer revised the page to close these issues. You are "
             "verifying that revision, not reviewing the page again. Decide for each issue "
             "whether it is "
             "now closed. Then check the revised paragraphs only for a factual error the "
@@ -408,9 +379,8 @@ def verify(
     except (ValueError, ValidationError):
         return None
     # An objection stays open until the verifier names it resolved: silence is not
-    # closure. A newly introduced one counts only against a paragraph in scope and
-    # only when it touches what the page claims, so a late note about wording, or
-    # a fresh opinion about text that was already accepted, cannot extend the loop.
+    # closure. A newly introduced one counts only when it touches what the page
+    # claims, so a late note about wording cannot extend the loop.
     unresolved = [i for n, i in enumerate(pending) if n not in set(checked.resolved)]
     seen = {(i.paragraph, i.category, i.quote) for i in unresolved}
     raised = {i.category for i in pending}
@@ -419,7 +389,7 @@ def verify(
         for i in checked.open
         if i.category != "length"
         and (i.category in raised or i.category in SUBSTANTIVE)
-        and (scope is None or i.paragraph is None or i.paragraph in scope)
+        and (changed is None or i.paragraph is None or i.paragraph in changed)
         and (i.paragraph, i.category, i.quote) not in seen
     ]
     return unresolved + new
@@ -566,109 +536,169 @@ def derived_page(
     extra: Callable[[list[str]], list[Issue]] | None = None,
     normalize: Callable[[str], str] | None = None,
 ) -> str:
-    """Draft, gate, review and patch one page until it converges or its rounds run out.
+    """One derived page. Under the agentic runtime it is a page session (agent_page):
+    the writer drafts, checks, asks for review and submits. The API pipeline drafts
+    once and patches what the gates report; it has no model reviewer.
 
     `extra` adds stage-specific gate issues; `normalize` is a deterministic repair
     applied before the gates so code-owned fixes never cost a patch round."""
-    # One runtime for the whole page, so every job key lands in the failure record.
-    agent = runtime() if configured() else None
-    call: Ask = agent.ask if agent is not None else ask
-    jobs: list[str] = agent.jobs if agent else []
-    first = len(jobs)
 
     def prepare(raw: str) -> list[str]:
         text = clean(raw, targets)
         return blocks(normalize(text) if normalize else text)
 
     body = f"TASK:\n{task}\n\nReturn only the page Markdown, beginning with {contract.first!r}."
-    draft = clean(call(prompt(contract, pack, body), step), targets)
+    if configured():
+        # One runtime for the whole page, so every job key lands in the failure record.
+        agent = runtime()
+        record_pack(agent.config, step, {"messages": prompt(contract, pack, body)})
+        first = len(agent.jobs)
+        return agent_page(
+            agent, step, contract, pack, body, prepare, allowed, sources, valid_ids, extra, first
+        )
+    draft = clean(ask(prompt(contract, pack, body), step), targets)
     if contract.empty is not None and draft == contract.empty:
         return draft
     parts = prepare(draft)
-    # Paragraphs not yet covered by a verdict; None means the whole page.
-    unreviewed: set[int] | None = None
-    pending: list[Issue] = []  # the reviewer's objections still open
-    reviewed_fully = False  # no page publishes before one open review of all of it
     for round_index in range(PATCH_ROUNDS + 1):
-        reviewed = False  # gate issues are code-owned and never publish
         text = "\n\n".join(parts)
         issues = gate(text, contract, allowed=allowed, sources=sources, valid_ids=valid_ids)
         if extra is not None:
             issues += extra(parts)
-        if not issues and agent is not None:
-            scope = None if unreviewed is None else sorted(unreviewed)
-            if not reviewed_fully:
-                # The first review reads the whole page, however many gate-only
-                # rounds came before it: a repair of one figure is no verdict on the rest.
-                name = f"{step}/patch/{round_index}/review" if round_index else f"{step}/review"
-                verdict = review(contract, pack, parts, None, name, call)
-                if verdict is None:  # malformed: ask once more, never patch prose on a guess
-                    verdict = review(contract, pack, parts, None, f"{name}/again", call)
-                if verdict is not None:
-                    reviewed_fully = True
-            else:
-                name = f"{step}/patch/{round_index}/verify"
-                verdict = verify(contract, pack, parts, pending, scope, name, call)
-                if verdict is None:
-                    verdict = verify(contract, pack, parts, pending, scope, f"{name}/again", call)
-            if verdict is None:
-                note = "reviewer returned no usable verdict twice"
-                raise PageFailure(step, [Issue(category="format", note=note)], jobs[first:])
-            issues, unreviewed = verdict, set()
-            reviewed = True
         if not issues:
             return text
         if round_index == PATCH_ROUNDS:
-            if not reviewed_fully:
-                # Gates failed every round; nothing here was ever reviewed.
-                raise PageFailure(step, issues, jobs[first:])
-            if reviewed and not any(i.category in SUBSTANTIVE for i in issues):
-                summary = "; ".join(f"{i.category}: {i.note or i.quote}"[:120] for i in issues[:3])
-                print(f"  [PRESENTATION] {step} published with unresolved: {summary}", flush=True)
-                return text
-            # Publishing the page without what the reviewer still objects to beats
-            # dropping the page and leaving the subject uncovered.
-            rescued = salvage(
-                parts,
-                issues,
-                contract,
-                allowed=allowed,
-                sources=sources,
-                valid_ids=valid_ids,
-                extra=extra,
-            )
-            if rescued is not None:
-                text, removed = rescued
-                summary = "; ".join(f"{i.category}: {i.note or i.quote}"[:120] for i in issues[:3])
-                print(
-                    f"  [SALVAGED] {step} dropped {len(removed)} paragraph(s): {summary}",
-                    flush=True,
-                )
-                record_salvage(step, issues, removed, jobs[first:])
-                return text
-            raise PageFailure(step, issues, jobs[first:])
+            raise PageFailure(step, issues, [])
         try:
-            parts, changed, remap = patch(
-                contract, pack, parts, issues, f"{step}/patch/{round_index + 1}", call
+            parts, _, _ = patch(
+                contract, pack, parts, issues, f"{step}/patch/{round_index + 1}", ask
             )
         except PageFailure as exc:
             # Keep the issues the patch was meant to fix beside the reason it could not.
-            remaining = issues + [Issue(**i) for i in exc.issues]
-            raise PageFailure(step, remaining, jobs[first:]) from exc
-
-        # A gate-only round patches mechanics; the reviewer's objections are not
-        # discharged by it and follow their paragraphs into the next verification.
-        pending = [moved(i, remap) for i in (issues if reviewed else pending)]
-        if unreviewed is not None:
-            # Everything changed since the last verdict, plus any objection the patch
-            # did not address, follows its paragraph into the next scope.
-            carried = unreviewed | {i.paragraph for i in issues if i.paragraph is not None}
-            unreviewed = set(changed) | {n for old in carried for n in remap.get(old, [])}
-        patched = parts
-        parts = prepare("\n\n".join(patched))
-        if unreviewed is not None and len(parts) != len(patched):
-            unreviewed = None  # normalization reshaped the page; verify it whole
+            raise PageFailure(step, issues + [Issue(**i) for i in exc.issues], []) from exc
+        parts = prepare("\n\n".join(parts))
     raise AssertionError("unreachable")
+
+
+def agent_page(
+    agent: Runtime,
+    step: str,
+    contract: Contract,
+    pack: str,
+    body: str,
+    prepare: Callable[[str], list[str]],
+    allowed: str,
+    sources: dict[str, str],
+    valid_ids: set[str],
+    extra: Callable[[list[str]], list[Issue]] | None,
+    first: int,
+) -> str:
+    """A derived page as one page session: the stage's gates and the same open review
+    and closed verification, as tools; salvage only after a full review."""
+    from beril_wiki.agentic import page_agent as PA
+
+    # The reviewer's paragraph indices refer to the text it last saw, so salvage and the
+    # presentation-only rule work on that text, not on whatever the writer checked since.
+    state: dict = {"parts": [], "reviewed_parts": [], "pending": [], "reviewed": False, "rounds": 0}
+
+    def issues_of(text: str) -> tuple[list[str], list[Issue]]:
+        parts = prepare(text)
+        state["parts"] = parts
+        if contract.empty is not None and text.strip() == contract.empty:
+            return parts, []
+        found = gate(
+            "\n\n".join(parts), contract, allowed=allowed, sources=sources, valid_ids=valid_ids
+        )
+        return parts, found + (extra(parts) if extra is not None else [])
+
+    def shown(issues: list[Issue]) -> list[str]:
+        return [f"paragraph {i.paragraph} {i.category}: {i.quote} {i.note}".strip() for i in issues]
+
+    def check(text: str, meta: dict | None) -> list[str]:
+        return shown(issues_of(text)[1])
+
+    def review_page(text: str, meta: dict | None) -> list[str]:
+        parts, found = issues_of(text)
+        if contract.empty is not None and text.strip() == contract.empty:
+            return []
+        state["rounds"] += 1
+        name = f"{step}/agent/{state['rounds']}"
+        if not state["reviewed"]:
+            verdict = review(contract, pack, parts, f"{name}/review", agent.ask)
+            if verdict is None:
+                verdict = review(contract, pack, parts, f"{name}/review/again", agent.ask)
+        else:
+            # Only what changed since the reviewer last saw the page may raise new
+            # objections: the closed-question rule that lets the open list converge.
+            before = state["reviewed_parts"]
+            changed = {i for i, part in enumerate(parts) if i >= len(before) or before[i] != part}
+            verdict = verify(
+                contract, pack, parts, state["pending"], f"{name}/verify", agent.ask, changed
+            )
+            if verdict is None:
+                verdict = verify(
+                    contract,
+                    pack,
+                    parts,
+                    state["pending"],
+                    f"{name}/verify/again",
+                    agent.ask,
+                    changed,
+                )
+        if verdict is None:
+            state["unusable"] = True
+            raise CandidateError("reviewer returned no usable verdict twice")
+        state["reviewed"] = True
+        state["reviewed_parts"] = parts
+        state["pending"] = verdict
+        return shown(verdict)
+
+    page = PA.Page(
+        step=step,
+        messages=prompt(contract, pack, body),
+        text="",
+        meta=None,
+        meta_help="",
+        check=check,
+        review=review_page,
+        reads=[],
+    )
+    try:
+        text, _ = PA.run(agent, page, agent.store / "pages" / digest(step)[:16])
+    except PA.Exhausted as exc:
+        issues = state["pending"] or [Issue(category="format", note=str(exc)[:300])]
+        if state.get("unusable"):
+            # No verdict on the current text: fail closed rather than publish a guess.
+            note = "reviewer returned no usable verdict twice"
+            raise PageFailure(
+                step, [Issue(category="format", note=note)], agent.jobs[first:]
+            ) from exc
+        if not exc.reviewed or not state["reviewed"]:
+            raise PageFailure(step, issues, agent.jobs[first:]) from exc
+        parts = state["reviewed_parts"]
+        if state["pending"] and not any(i.category in SUBSTANTIVE for i in state["pending"]):
+            # A subject must not lose its page over an undefined acronym.
+            summary = "; ".join(f"{i.category}: {i.note or i.quote}"[:120] for i in issues[:3])
+            print(f"  [PRESENTATION] {step} published with unresolved: {summary}", flush=True)
+            return "\n\n".join(parts)
+        rescued = salvage(
+            parts,
+            issues,
+            contract,
+            allowed=allowed,
+            sources=sources,
+            valid_ids=valid_ids,
+            extra=extra,
+        )
+        if rescued is None:
+            raise PageFailure(step, issues, agent.jobs[first:]) from exc
+        text, removed = rescued
+        print(f"  [SALVAGED] {step} dropped {len(removed)} paragraph(s)", flush=True)
+        record_salvage(step, issues, removed, agent.jobs[first:])
+        return text
+    if contract.empty is not None and text.strip() == contract.empty:
+        return contract.empty
+    return "\n\n".join(prepare(text))
 
 
 def excerpts(pages: dict[str, str], budget: int, per_page: int = 12_000) -> str:
@@ -711,6 +741,15 @@ def limit(argv: list[str]) -> int | None:
     """`--limit N` caps a direct stage invocation at N new pages; pages are then never retired."""
     if "--limit" in argv:
         return int(argv[argv.index("--limit") + 1])
+    return None
+
+
+def only(argv: list[str]) -> set[str] | None:
+    """`--pages a,b` rewrites exactly these pages, named as their steps are (such as
+    conflicts/<slug> or authors/<stem>), whatever their cache says; a pilot uses it to
+    measure named pages. Nothing else is written and no page is retired."""
+    if "--pages" in argv:
+        return {p for p in argv[argv.index("--pages") + 1].split(",") if p}
     return None
 
 

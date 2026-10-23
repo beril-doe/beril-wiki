@@ -32,6 +32,7 @@ from beril_wiki.agentic.prose import (
     PageFailure,
     derived_page,
     excerpts,
+    only,
     parallel,
     prune_failures,
     record_failure,
@@ -151,6 +152,7 @@ def main() -> int:
     state_path.parent.mkdir(exist_ok=True)
     state = json.loads(state_path.read_text()) if state_path.exists() else {}
 
+    named = only(sys.argv)
     todo = []
     skipped = 0
     for page in sorted(authors_dir.glob("*.md")):
@@ -172,6 +174,10 @@ def main() -> int:
                 f"r{PROMPT_REV}" + name + "".join(f"{k}{v}" for k, v in sorted(summaries.items()))
             ).encode()
         ).hexdigest()[:16]
+        if named is not None:
+            if f"authors/{page.stem}" in named:
+                todo.append((page, stub, name, summaries, digest))
+            continue
         if state.get(page.name) == digest:
             skipped += 1
             continue

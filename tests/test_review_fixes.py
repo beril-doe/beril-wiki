@@ -18,31 +18,29 @@ GOOD = judgment(novelty.EXTENDS, closest=(("111", "same relationship elsewhere")
 
 def test_expired_label_makes_novelty_pending(tmp_path, monkeypatch):
     run(tmp_path, monkeypatch, {f"novelty/{FID}/judge": [GOOD]})
-    config = {"model": "m"}
-    state = {name: C.stage_snapshot(tmp_path, name, config) for name in C.EDITORIAL}
-    assert "novelty" not in C.pending_actions(tmp_path, state, config, integrated=True)
+    state = {name: C.stage_snapshot(tmp_path, name) for name in C.EDITORIAL}
+    assert "novelty" not in C.pending_actions(tmp_path, state, integrated=True)
     monkeypatch.setattr(novelty, "today", lambda: datetime.date(2027, 3, 1))
     assert novelty.labels_due(tmp_path)
-    assert "novelty" in C.pending_actions(tmp_path, state, config, integrated=True)
+    assert "novelty" in C.pending_actions(tmp_path, state, integrated=True)
 
 
 def test_failed_expired_refresh_does_not_hold_this_curator_run(tmp_path, monkeypatch):
     """F2: a refresh that ran and failed leaves novelty due next run, not pending now."""
     run(tmp_path, monkeypatch, {f"novelty/{FID}/judge": [GOOD]})
-    config = {"model": "m"}
     monkeypatch.setattr(novelty, "today", lambda: datetime.date(2027, 3, 1))
-    state = {name: C.stage_snapshot(tmp_path, name, config) for name in C.EDITORIAL}
+    state = {name: C.stage_snapshot(tmp_path, name) for name in C.EDITORIAL}
     assert novelty.labels_due(tmp_path)
-    assert "novelty" in C.pending_actions(tmp_path, state, config, integrated=True)
+    assert "novelty" in C.pending_actions(tmp_path, state, integrated=True)
     ran = frozenset({"novelty"})
-    pending = C.pending_actions(tmp_path, state, config, integrated=True, attempted=ran)
+    pending = C.pending_actions(tmp_path, state, integrated=True, attempted=ran)
     assert "novelty" not in pending and "directions" not in pending
 
 
 def test_invalidation_keeps_published_labels(tmp_path, monkeypatch):
     run(tmp_path, monkeypatch, {f"novelty/{FID}/judge": [GOOD]})
     before = (tmp_path / "state/novelty.json").read_text()
-    now = C.stage_snapshot(tmp_path, "novelty", {"model": "m"})
+    now = C.stage_snapshot(tmp_path, "novelty")
     C.invalidate_outputs(tmp_path, "novelty", {}, now)
     assert (tmp_path / "state/novelty.json").read_text() == before
 
@@ -237,8 +235,7 @@ def test_cards_command_leaves_status_readable(tmp_path, monkeypatch):
 
 def test_expired_label_stays_pending_after_its_snapshot_is_accepted(tmp_path, monkeypatch):
     run(tmp_path, monkeypatch, {f"novelty/{FID}/judge": [GOOD]})
-    config = {"model": "m"}
     monkeypatch.setattr(novelty, "today", lambda: datetime.date(2027, 3, 1))
     # A failed refresh keeps the old date; the run then accepts a snapshot taken while due.
-    state = {name: C.stage_snapshot(tmp_path, name, config) for name in C.EDITORIAL}
-    assert "novelty" in C.pending_actions(tmp_path, state, config, integrated=True)
+    state = {name: C.stage_snapshot(tmp_path, name) for name in C.EDITORIAL}
+    assert "novelty" in C.pending_actions(tmp_path, state, integrated=True)

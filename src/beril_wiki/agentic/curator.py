@@ -3,24 +3,18 @@
 from __future__ import annotations
 
 import ast
-import inspect
 import json
 import re
-import textwrap
 from collections.abc import Callable
 from pathlib import Path
 
 from beril_wiki.agentic.batch import compile_batch
 from beril_wiki.agentic.runtime import (
-    SYSTEM,
     Runtime,
     WorkflowError,
     contract_manifest,
     digest,
     manifest,
-    model_signature,
-    page_context,
-    page_contexts,
 )
 from beril_wiki.agentic.topics import load_groups, propose_topics
 from beril_wiki.stages.literature import SECTION, topic_core
@@ -123,9 +117,8 @@ EDITORIAL = {
         None,
     ),
 }
-# Stages that apply the shared card modules. Only they hash CARD_FILES, so the
-# revisions of the stages that predate them are unchanged, and a change to one of
-# those modules reschedules every card stage.
+# Stages that apply the shared card modules. Only they hash CARD_FILES, so a change to
+# one of those modules reschedules every card stage and no other stage.
 CARD_STAGES = (
     "headlines",
     "novelty",
@@ -165,46 +158,52 @@ def owned_manifest(root: Path, folders: tuple, *, part: str = "") -> dict[str, s
     return result
 
 
-def stage_revision(root: Path, name: str, config: dict) -> str:
+# What each derived stage means, as an explicit revision: bump one when a change to the
+# stage, its prompts or the shared prose machinery should rewrite that stage's pages.
+# Hashing the model policy and the source code made a cheaper model, or any edit to
+# prose.py, rewrite every derived page of the accepted wiki.
+STAGE_REVISIONS = {
+    "conflicts": "conflicts@1",
+    "topics": "topics@1",
+    "literature": "literature@1",
+    "authors": "authors@1",
+    "figures": "figures@1",
+    "headlines": "headlines@1",
+    "novelty": "novelty@1",
+    "directions": "directions@1",
+    "gists": "gists@1",
+    "links": "links@1",
+    "shared": "shared@1",
+    "outcomes": "outcomes@1",
+    "followups": "followups@1",
+}
+
+
+def stage_revision(root: Path, name: str) -> str:
+    """A card stage also hashes the card modules it applies: rerunning one re-checks its
+    saved records against today's code without model calls, since a record's key holds
+    its models and prompt, not the stage's source."""
     package = Path(__file__).resolve().parents[1]
-    roles = {
-        "topics": ("planning", "writing", "review"),
-        "literature": ("queries", "writing", "review"),
-        "figures": ("figures",),
-        "headlines": ("cards", "review"),
-        "novelty": ("cards", "queries", "review"),
-        "directions": ("cards", "card_review"),
-        "gists": ("cards", "card_review"),
-        "links": ("cards", "card_review"),
-        "shared": ("cards", "card_review"),
-        "outcomes": ("labels", "card_review"),
-        "followups": ("labels", "card_review"),
-    }.get(name, ("writing", "review"))
-    files = (f"stages/{name}.py", "agentic/prose.py", "compiler.py")
+    files: tuple[str, ...] = ()
     if name in CARD_STAGES:
-        files += CARD_FILES
+        files = (f"stages/{name}.py", *CARD_FILES)
     if name in LABEL_STAGES:
         files += ("stages/classify.py", "stages/gists.py")
     return digest(
         [
-            model_signature(config, roles),
+            STAGE_REVISIONS[name],
             contract_manifest(root),
-            SYSTEM,
-            *[
-                ast.dump(ast.parse(textwrap.dedent(inspect.getsource(helper))))
-                for helper in (page_context, page_contexts)
-            ],
             *[ast.dump(ast.parse((package / file).read_text(encoding="utf-8"))) for file in files],
         ]
     )
 
 
-def stage_snapshot(root: Path, name: str, config: dict) -> dict:
+def stage_snapshot(root: Path, name: str) -> dict:
     inputs, outputs, _, _ = EDITORIAL[name]
     # Labels age without any input changing; an expired one makes the stage stale.
     due = {"due": True} if name == "novelty" and labels_due(root) else {}
     return due | {
-        "semantic": stage_revision(root, name, config),
+        "semantic": stage_revision(root, name),
         "inputs": digest(owned_manifest(root, inputs, part="core")),
         "outputs": owned_manifest(
             root, outputs, part="literature" if name == "literature" else "core"
@@ -213,7 +212,7 @@ def stage_snapshot(root: Path, name: str, config: dict) -> dict:
 
 
 def pending_actions(
-    root: Path, state: dict, config: dict, *, integrated: bool, attempted: frozenset = frozenset()
+    root: Path, state: dict, *, integrated: bool, attempted: frozenset = frozenset()
 ) -> list[str]:
     """`attempted`: stages this curator run already ran. An expired label whose refresh
     failed stays due for the next run, but must not hold this run's promotion."""
@@ -222,7 +221,7 @@ def pending_actions(
         if (
             not integrated
             or any(d in pending for d in dependencies)
-            or state.get(name) != stage_snapshot(root, name, config)
+            or state.get(name) != stage_snapshot(root, name)
             # A failed refresh is accepted with the label still expired; retry each run.
             or (name == "novelty" and name not in attempted and labels_due(root))
         ):
@@ -297,7 +296,7 @@ def curate(
     # stale that was current before it ran (authors reads summaries, for instance).
     for action in (["integrate"] if changed or retry else []) + list(EDITORIAL):
         if action != "integrate" and action not in pending_actions(
-            root, state, agent.config, integrated=True, attempted=frozenset(ran)
+            root, state, integrated=True, attempted=frozenset(ran)
         ):
             continue
         receipt: dict = {"action": action, "result": "failed"}
@@ -313,13 +312,13 @@ def curate(
                 refresh("extras", [])
             else:
                 previous = state.get(action, {})
-                now = stage_snapshot(root, action, agent.config)
+                now = stage_snapshot(root, action)
                 args = invalidate_outputs(root, action, previous, now)
                 if action == "topics":
                     propose_topics(root, agent)
                 refresh(action, args)
                 ran.add(action)
-                state[action] = stage_snapshot(root, action, agent.config)
+                state[action] = stage_snapshot(root, action)
             after = manifest(root, ("wiki", "state"))
             paths = sorted(p for p in before.keys() | after.keys() if before.get(p) != after.get(p))
             receipt.update(result="completed", changed_paths=paths, changed_count=len(paths))
@@ -328,14 +327,12 @@ def curate(
             raise
         finally:
             receipt["pending"] = pending_actions(
-                root, state, agent.config, integrated=True, attempted=frozenset(ran)
+                root, state, integrated=True, attempted=frozenset(ran)
             )
             receipts.append(receipt)
             (agent.store / "curator-receipts.json").write_text(
                 json.dumps(receipts, indent=2, sort_keys=True), encoding="utf-8"
             )
-    if pending := pending_actions(
-        root, state, agent.config, integrated=True, attempted=frozenset(ran)
-    ):
+    if pending := pending_actions(root, state, integrated=True, attempted=frozenset(ran)):
         raise WorkflowError(f"editorial obligations remain after scheduling: {pending}")
     return state
