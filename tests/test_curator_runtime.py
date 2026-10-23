@@ -118,6 +118,9 @@ def test_refusal_scope_covers_the_text_a_job_carries():
     # A refused planning batch speaks for itself only: most batches are accepted, and
     # the configured model is worth one wasted attempt on the few that are not.
     assert R.refusal_scope("plan/route/1") == "plan/route/1"
+    # A page session's review rounds share the page's scope, as patch rounds did.
+    assert R.refusal_scope("conflicts/x/agent/2/verify") == "conflicts/x"
+    assert R.refusal_scope("lit/t/section/agent/1/review/again") == "lit/t/section"
     assert R.refusal_scope("plan/route/1/repair") == "plan/route/1"
     assert R.refusal_scope("conflicts/slug/patch/2/review") == "conflicts/slug"
     assert R.refusal_scope("write/concepts/yield.md/repair") == "write/concepts/yield.md"
@@ -377,87 +380,6 @@ def test_legacy_retry_gets_review_without_another_repair(tmp_path, monkeypatch, 
     assert calls == [step, step + "/science-review"]
 
 
-def test_sdk_validation_tool_is_bound_only_to_a_bound_job(tmp_path, monkeypatch):
-    from claude_agent_sdk import ResultMessage, SystemMessage
-
-    agent = runtime(tmp_path)
-    monkeypatch.setattr(R, "check_auth", lambda cli: None)
-    (tmp_path / "staging").mkdir()
-    (tmp_path / "staging/a.md").write_bytes(b"value \xff end")
-    original_server = R.create_sdk_mcp_server
-    exposed = {}
-
-    def server(name, *, tools):
-        exposed.clear()
-        exposed.update({t.name: t for t in tools})
-        return original_server(name, tools=tools)
-
-    monkeypatch.setattr(R, "create_sdk_mcp_server", server)
-
-    async def query(**kwargs):
-        yield SystemMessage(subtype="init", data={"apiKeySource": "none"})
-        read = await exposed["read_evidence"].handler(
-            {"path": "staging/a.md", "start": 0, "end": 11}
-        )
-        assert json.loads(read["content"][0]["text"])["text"] == "value \ufffd end"
-        invalid = await exposed["read_evidence"].handler(
-            {"path": "wiki/\0.md", "start": 0, "end": 1}
-        )
-        assert invalid["is_error"]
-        if agent._step.startswith("curator/"):
-            found = await exposed["search_evidence"].handler(
-                {"query": "value", "scope": "staging", "offset": 0}
-            )
-            assert (
-                json.loads(found["content"][0]["text"])["matches"][0]["text"] == "value \ufffd end"
-            )
-            with monkeypatch.context() as patch:
-
-                def fail(*args):
-                    raise ValueError("invalid text")
-
-                patch.setattr(R.EvidenceTools, "search", fail)
-                error = await exposed["search_evidence"].handler(
-                    {"query": "value", "scope": "staging", "offset": 0}
-                )
-                assert error["is_error"]
-            assert set(exposed) == {"read_evidence", "search_evidence", "validate_candidate"}
-            verdict = await exposed["validate_candidate"].handler({"candidate": "bad"})
-            assert not json.loads(verdict["content"][0]["text"])["valid"]
-            verdict = await exposed["validate_candidate"].handler({"candidate": "good"})
-            assert json.loads(verdict["content"][0]["text"])["valid"]
-        else:
-            assert set(exposed) == {"read_evidence"}
-        yield ResultMessage(
-            subtype="success",
-            duration_ms=0,
-            duration_api_ms=0,
-            is_error=False,
-            num_turns=1,
-            session_id="fixture",
-            result="good",
-            usage={"input_tokens": 2, "output_tokens": 3},
-        )
-
-    def validate(raw):
-        if raw != "good":
-            raise R.CandidateError("wrong value")
-
-    monkeypatch.setattr(R, "query", query)
-    assert (
-        agent.generate(
-            [],
-            "curator/test",
-            lambda raw: raw,
-            validator=validate,
-            context={"base": "authoritative"},
-        )
-        == "good"
-    )
-    assert agent.ask([], "extract/test") == "good"
-    assert agent._validator is None
-
-
 def test_search_ignores_unsearched_assets_and_bounds_long_snippets(tmp_path):
     (tmp_path / "wiki/concepts").mkdir(parents=True)
     (tmp_path / "wiki/concepts/a.md").write_text("z" * 100 + "x" * 200 + "z" * 100)
@@ -553,23 +475,14 @@ def test_model_cache_and_sdk_selection_share_one_budget(tmp_path, monkeypatch):
     assert len(models) == 3
 
 
-def test_model_changes_invalidate_only_relevant_stage_policy(tmp_path):
-    from beril_wiki.agentic.curator import stage_revision
+def test_no_model_change_alters_a_stage_revision(tmp_path):
+    """Every role is forward-only: a new model writes new and changed pages only."""
+    from beril_wiki.agentic.curator import STAGE_REVISIONS, stage_revision
 
-    config = {"model": "strong"}
-    figure = config | {"step_models": {"figures": "small"}}
-    query = config | {"step_models": {"queries": "small"}}
-    review = config | {"step_models": {"review": "other"}}
-    baseline = {
-        s: stage_revision(tmp_path, s, config)
-        for s in ("topics", "literature", "authors", "conflicts", "figures")
-    }
-    for stage, rev in baseline.items():
-        assert (stage_revision(tmp_path, stage, figure) != rev) == (stage == "figures")
-        assert (stage_revision(tmp_path, stage, query) != rev) == (stage == "literature")
-        assert (stage_revision(tmp_path, stage, review) != rev) == (stage != "figures")
-    assert R.model_signature(config) == "strong"
-    assert R.model_signature(config | {"step_models": {"writing": "strong"}}) == "strong"
+    baseline = {s: stage_revision(tmp_path, s) for s in STAGE_REVISIONS}
+    assert len(set(baseline.values())) == len(baseline)
+    assert R.model_signature({"model": "strong"}) == "strong"
+    assert R.model_signature({"model": "strong", "step_models": {"writing": "strong"}}) == "strong"
 
 
 @pytest.mark.parametrize(
@@ -666,14 +579,20 @@ def test_cli_loads_committed_policy_without_model_flag(tmp_path, monkeypatch):
     configs = []
     monkeypatch.setattr(cli, "run", lambda root, checkout, config, staged: configs.append(config))
     assert cli.main() == 0
-    claude_roles = {"planning", "writing"}
     assert R.model_policy(configs[0]) == {
-        role: "claude-sonnet-5-5"
-        if role == "pages"
-        else "claude-opus-5-5"
-        if role in claude_roles
-        else "gpt-6.1-sol"
-        for role in R.MODEL_ROLES
+        "extraction": "gpt-6.1-sol",
+        "planning": "claude-sonnet-5-5",
+        "pages": "claude-haiku-5-5",
+        "writing": "claude-sonnet-5-5",
+        "review": "gpt-6-luna",
+        "queries": "gpt-6.1-sol",
+        "figures": "gpt-6.1-sol",
+    }
+    assert configs[0]["step_efforts"] == {
+        "planning": "high",
+        "pages": "medium",
+        "writing": "medium",
+        "review": "high",
     }
     # Replacement file paths resolve against the chosen root, and a role flag wins.
     (tmp_path / "custom.yaml").write_text("model: alternate\nstep_models: {review: specialist}")
@@ -965,11 +884,59 @@ def test_writer_effort_rekeys_writers_only_and_page_writes_use_no_tools(tmp_path
         ("conflicts/b", None),
         ("write/concepts/a.md", "medium"),
     ]
+    calls.clear()
+    monkeypatch.setitem(agent.config, "step_efforts", {"writing": "low", "review": "high"})
+    for step in steps:  # per-role efforts re-key each role; write_effort still holds
+        agent.ask(task, step)
+    assert calls == [
+        ("write/concepts/a.md/science-review", "high"),
+        ("conflicts/b", "low"),
+    ]
     assert R.tool_profile("write/concepts/a.md") == "none"
     assert R.tool_profile("write/concepts/a.md/pass/1") == "none"
-    assert R.tool_profile("write/concepts/a.md/pass/1/repair") == "extended"
+    assert R.tool_profile("write/concepts/a.md/pass/1/repair") == "none"  # page sessions
     assert R.tool_profile("write/concepts/a.md/verify") == "read"
     assert R.refusal_scope("write/concepts/a.md/pass/2/repair") == "write/concepts/a.md"
+
+
+def test_a_chosen_effort_never_replays_a_legacy_answer(tmp_path, monkeypatch):
+    agent = runtime(tmp_path)
+    legacies = []
+    real = agent.ledger.lookup
+
+    def lookup(key, legacy=""):
+        legacies.append(legacy)
+        return real(key, legacy)
+
+    monkeypatch.setattr(agent.ledger, "lookup", lookup)
+    monkeypatch.setattr(R, "check_auth", lambda cli: None)
+
+    async def answer(payload, key, model):
+        agent.ledger.finish(key, "ok", {"input_tokens": 1, "output_tokens": 1})
+        return "ok"
+
+    monkeypatch.setattr(agent, "_query", answer)
+    task = [{"role": "user", "content": "x"}]
+    for efforts in ({}, {"review": "low"}):
+        monkeypatch.setitem(agent.config, "step_efforts", efforts)
+        agent.ask(task, "topics/a/review")
+    # Legacy rows ran at the default effort, so another effort looks under another key.
+    assert legacies[0] != legacies[-1]
+    assert R.role_for("pilot/judge/cell/topics/a.md/baseline-first") == "review"
+
+
+def test_load_models_validates_efforts(tmp_path):
+    from beril_wiki.agentic.__main__ import load_models
+
+    (tmp_path / "agentic.yaml").write_text("model: m\nstep_efforts: {planning: high}\n")
+    config = load_models(tmp_path, None, None, [], ["writing=low"])
+    assert config["step_efforts"] == {"planning": "high", "writing": "low"}
+    for bad in ("writing=extreme", "nobody=low"):
+        with pytest.raises(R.WorkflowError):
+            load_models(tmp_path, None, None, [], [bad])
+    (tmp_path / "agentic.yaml").write_text("model: m\nstep_efforts:\n")
+    with pytest.raises(R.WorkflowError, match="map roles"):
+        load_models(tmp_path, None, None, [])
 
 
 def test_review_embeds_json_candidates_as_objects_and_explains_encoding(tmp_path, monkeypatch):
@@ -1038,12 +1005,11 @@ def test_a_refusal_stated_in_prose_is_answered_on_the_fallback_model(tmp_path, m
     assert not R.looks_refused('{"accepted": false, "issues": ["safety check stopped nothing"]}')
 
 
-def test_a_new_page_writer_leaves_accepted_pages_and_derived_stages_current(tmp_path):
+def test_contract_change_rewrites_derived_stages(tmp_path):
     from beril_wiki.agentic.curator import EDITORIAL, stage_revision
 
-    before = {"model": "claude-opus-5-5", "step_models": {}}
-    after = before | {"step_models": {"pages": "claude-sonnet-5-5"}}
-    core = R.CORE_MODEL_ROLES
-    assert R.model_signature(before, core) == R.model_signature(after, core)
+    before = {name: stage_revision(tmp_path, name) for name in EDITORIAL}
+    (tmp_path / "contract").mkdir()
+    (tmp_path / "contract/AGENTS.md").write_text("A new rule.")
     for name in EDITORIAL:
-        assert stage_revision(tmp_path, name, before) == stage_revision(tmp_path, name, after)
+        assert stage_revision(tmp_path, name) != before[name]

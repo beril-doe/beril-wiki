@@ -22,8 +22,9 @@ GOOD = (
 class Stub:
     """A scripted runtime: replies by step, recording every prompt and job key."""
 
-    def __init__(self, script):
+    def __init__(self, script, store=None):
         self.script, self.prompts, self.jobs = script, [], []
+        self.store, self.config = store, {}
 
     def ask(self, messages, step):
         self.prompts.append((step, "\n".join(m["content"] for m in messages)))
@@ -33,12 +34,34 @@ class Stub:
 
 
 def configure(monkeypatch, tmp_path, script, workers=1):
-    stub = Stub(script)
+    """The agentic runtime: a derived page is a page session, replayed from the script
+    (agentic_recording.page_session): the draft is the page's step, each correction
+    its step plus /repair, review and verification the steps page_agent names."""
+    stub = Stub(script, tmp_path)
     monkeypatch.setattr(P, "configured", lambda: True)
     # Every runtime() call is a fresh connection in production; the page must keep one.
-    monkeypatch.setattr(P, "runtime", lambda: stub if stub.prompts == [] else Stub(script))
+    monkeypatch.setattr(
+        P, "runtime", lambda: stub if stub.prompts == [] else Stub(script, tmp_path)
+    )
     monkeypatch.setattr(P, "runtime_config", lambda: {"store": str(tmp_path), "workers": workers})
     return stub
+
+
+def api(monkeypatch, script):
+    """The API pipeline: a draft, then gate-only patch rounds, with no model reviewer."""
+    stub = Stub(script)
+    monkeypatch.setattr(P, "configured", lambda: False)
+    monkeypatch.setattr(P, "ask", stub.ask)
+    return stub
+
+
+def rounds(script, review, verify, repair):
+    """A session script: one review, then a repair and a verification per round."""
+    script["x/agent/1/review"] = review
+    for n in range(2, 7):
+        script[f"x/agent/{n}/verify"] = verify
+    script["x/repair"] = repair
+    return script
 
 
 def run(step, **kwargs):
@@ -72,7 +95,7 @@ def test_gate_reports_mechanical_issues_by_paragraph():
     assert P.gate(GOOD, CONTRACT, allowed=GOOD, sources=SOURCES, valid_ids={"a", "b"}) == []
 
 
-def test_gate_failure_is_patched_before_any_review(monkeypatch, tmp_path):
+def test_api_pipeline_patches_what_the_gates_report(monkeypatch):
     draft = GOOD.replace("Yield was 42%. [src: a]", "Yield was 42% of 8,314 loci. [src: a]")
 
     def fix(messages):
@@ -80,50 +103,40 @@ def test_gate_failure_is_patched_before_any_review(monkeypatch, tmp_path):
         base = messages[1]["content"].split("base_hash ")[1].split(")")[0]
         return json.dumps({"base_hash": base, "paragraphs": {"3": "Yield was 42%. [src: a]"}})
 
-    stub = configure(
-        monkeypatch,
-        tmp_path,
-        {"x": draft, "x/patch/1": fix, "x/patch/1/review": '{"accepted": true, "issues": []}'},
-    )
+    stub = api(monkeypatch, {"x": draft, "x/patch/1": fix})
     assert run("x") == GOOD
-    assert [s for s, _ in stub.prompts] == ["x", "x/patch/1", "x/patch/1/review"]
-    assert "Review every paragraph." in stub.prompts[-1][1]  # a repair is no verdict on the rest
+    assert [s for s, _ in stub.prompts] == ["x", "x/patch/1"]  # no model reviewer
 
 
-def test_review_rejection_patches_and_rereviews_only_changed_paragraphs(monkeypatch, tmp_path):
-    verdicts = iter(
-        [
+def test_review_objection_is_repaired_then_verified_with_its_note(monkeypatch, tmp_path):
+    reject = {
+        "accepted": False,
+        "issues": [
             {
-                "accepted": False,
-                "issues": [
-                    {
-                        "paragraph": 4,
-                        "category": "direction",
-                        "quote": "Yield was 56%.",
-                        "note": "inverted",
-                    }
-                ],
-            },
-        ]
-    )
-
-    def patch(messages):
-        base = messages[1]["content"].split("base_hash ")[1].split(")")[0]
-        return json.dumps({"base_hash": base, "paragraphs": {"4": "Yield fell to 56%. [src: b]"}})
-
+                "paragraph": 4,
+                "category": "direction",
+                "quote": "Yield was 56%.",
+                "note": "the sign is inverted",
+            }
+        ],
+    }
+    fixed = GOOD.replace("Yield was 56%. [src: b]", "Yield fell to 56%. [src: b]")
     stub = configure(
         monkeypatch,
         tmp_path,
         {
             "x": GOOD,
-            "x/review": lambda m: json.dumps(next(verdicts)),
-            "x/patch/1": patch,
-            "x/patch/1/verify": _ok(),
+            "x/agent/1/review": json.dumps(reject),
+            "x/repair": fixed,
+            "x/agent/2/verify": _ok(),
         },
     )
     assert "Yield fell to 56%. [src: b]" in run("x")
-    assert '"category": "direction"' in stub.prompts[-1][1]  # verify is told what to check
-    assert "the rules allow 20-60; keep the patched page inside" in stub.prompts[-2][1]
+    steps = [s for s, _ in stub.prompts]
+    assert steps == ["x", "x/agent/1/review", "x/repair", "x/agent/2/verify"]
+    assert "Review every paragraph." in stub.prompts[1][1]  # the first review reads it all
+    verify = stub.prompts[-1][1]  # verification is told what to check, with the note
+    assert '"category": "direction"' in verify and '"note": "the sign is inverted"' in verify
 
 
 def test_page_that_cannot_be_salvaged_fails_and_keeps_its_job_keys(monkeypatch, tmp_path):
@@ -132,17 +145,16 @@ def test_page_that_cannot_be_salvaged_fails_and_keeps_its_job_keys(monkeypatch, 
         {"paragraph": n, "category": "unsupported", "quote": "q", "note": "no evidence"}
         for n in (1, 3, 4, 5)
     ]
-    script = {"x": GOOD, "x/review": json.dumps({"accepted": False, "issues": issues})}
-    for n in range(1, P.PATCH_ROUNDS + 1):
-        script[f"x/patch/{n}"] = lambda m: _patch_reply(m, {"1": "Another lead sentence."})
-        script[f"x/patch/{n}/verify"] = _still(issues)
+    script = rounds(
+        {"x": GOOD}, json.dumps({"accepted": False, "issues": issues}), _still(issues), GOOD
+    )
     stub = configure(monkeypatch, tmp_path, script)
     with pytest.raises(P.PageFailure) as failure:
         run("x")
     assert failure.value.issues[0]["category"] == "unsupported"
     assert failure.value.jobs == [f"key:{s}" for s, _ in stub.prompts]
-    # draft + review + five (patch, verify) pairs
-    assert len(stub.prompts) == 2 + 2 * P.PATCH_ROUNDS
+    # draft, review, and four (repair, verify) rounds
+    assert len(stub.prompts) == 2 + 2 * 4
     P.record_failure("conflicts/x", failure.value)
     saved = json.loads((tmp_path / "failures.json").read_text())
     assert saved["conflicts/x"]["jobs"] == failure.value.jobs
@@ -153,10 +165,9 @@ def test_page_that_cannot_be_salvaged_fails_and_keeps_its_job_keys(monkeypatch, 
 def test_unresolved_paragraph_is_dropped_and_the_page_still_publishes(monkeypatch, tmp_path):
     """The reader keeps the page and is told something was removed."""
     stuck = [{"paragraph": 4, "category": "unsupported", "quote": "56%", "note": "no evidence"}]
-    script = {"x": GOOD, "x/review": json.dumps({"accepted": False, "issues": stuck})}
-    for n in range(1, P.PATCH_ROUNDS + 1):
-        script[f"x/patch/{n}"] = lambda m: _patch_reply(m, {"4": "Yield was 56%. [src: b]"})
-        script[f"x/patch/{n}/verify"] = _still(stuck)
+    script = rounds(
+        {"x": GOOD}, json.dumps({"accepted": False, "issues": stuck}), _still(stuck), GOOD
+    )
     configure(monkeypatch, tmp_path, script)
     out = run("x")
     assert "Yield was 56%" not in out  # the objected paragraph is gone
@@ -181,13 +192,12 @@ def test_salvage_refuses_when_removal_would_break_a_gate(monkeypatch, tmp_path):
     )
 
 
-def test_malformed_patch_or_stale_hash_is_a_page_failure(monkeypatch, tmp_path):
-    configure(monkeypatch, tmp_path, {"x": "no heading at all", "x/patch/1": "not json"})
+def test_malformed_patch_or_stale_hash_is_a_page_failure(monkeypatch):
+    api(monkeypatch, {"x": "no heading at all", "x/patch/1": "not json"})
     with pytest.raises(P.PageFailure, match="patch not JSON"):
         run("x")
-    configure(
+    api(
         monkeypatch,
-        tmp_path,
         {"x": "no heading at all", "x/patch/1": '{"base_hash": "old", "paragraphs": {"0": "x"}}'},
     )
     with pytest.raises(P.PageFailure, match="stale or empty"):
@@ -243,13 +253,8 @@ def test_conflicts_stage_continues_past_a_failed_page(monkeypatch, tmp_path):
                 return _still(json.loads(reject)["issues"]) if "two" in step else _ok()
             if step.endswith("/review"):
                 return reject if "two" in step else '{"accepted": true, "issues": []}'
-            if "/patch/" in step:
-                return lambda m: json.dumps(
-                    {
-                        "base_hash": m[1]["content"].split("base_hash ")[1].split(")")[0],
-                        "paragraphs": {"1": "Lead again, see [[concepts/two]]."},
-                    }
-                )
+            if step.endswith("/repair"):
+                return page.replace("see [[concepts/one]]", "see [[concepts/two]]")
             return page
 
     configure(monkeypatch, tmp_path, Script(), workers=2)
@@ -258,6 +263,15 @@ def test_conflicts_stage_continues_past_a_failed_page(monkeypatch, tmp_path):
     assert CB.main() == 0
     assert (tmp_path / "wiki/conflicts/conflict--old--00000000.md").exists()  # capped: no reaping
     assert len(list((tmp_path / "wiki/conflicts").glob("conflict--one--*.md"))) == 1
+    # A named page is rewritten whatever its cache says; nothing else is written or reaped.
+    one = next((tmp_path / "wiki/conflicts").glob("conflict--one--*.md"))
+    cached = one.read_text().splitlines()[0]
+    one.write_text(f"{cached}\nOLD TEXT\n")
+    monkeypatch.setattr(CB.sys, "argv", ["conflicts", "--pages", f"conflicts/{one.stem}"])
+    assert CB.main() == 0
+    assert "OLD TEXT" not in one.read_text()
+    assert (tmp_path / "wiki/conflicts/conflict--old--00000000.md").exists()
+    assert not list((tmp_path / "wiki/conflicts").glob("conflict--two--*.md"))
     for stale in (tmp_path / "wiki/conflicts").glob("*.md"):
         stale.unlink()
     (tmp_path / "wiki/conflicts/conflict--old--00000000.md").write_text("predecessor")
@@ -303,83 +317,9 @@ def _patch_reply(messages, edits):
     return json.dumps({"base_hash": base, "paragraphs": edits})
 
 
-def test_unresolved_and_unreviewed_paragraphs_stay_in_scope(monkeypatch, tmp_path):
-    """A patch that fixes one of two objections must not retire the other one."""
-    first = {
-        "accepted": False,
-        "issues": [
-            {"paragraph": 1, "category": "unsupported", "quote": "Lead"},
-            {"paragraph": 4, "category": "direction", "quote": "56%"},
-        ],
-    }
-    checks = iter(
-        [
-            json.dumps(
-                {
-                    "resolved": [0],  # the unsupported lead was fixed
-                    "open": [{"paragraph": 4, "category": "direction", "quote": "56%"}],
-                }
-            ),
-            _ok(),
-        ]
-    )
-    stub = configure(
-        monkeypatch,
-        tmp_path,
-        {
-            "x": GOOD,
-            "x/review": json.dumps(first),
-            "x/patch/1": lambda m: _patch_reply(m, {"1": "A lead that is supported."}),
-            "x/patch/1/verify": lambda m: next(checks),
-            "x/patch/2": lambda m: _patch_reply(m, {"4": "Yield rose to 56%. [src: b]"}),
-            "x/patch/2/verify": lambda m: next(checks),
-        },
-    )
-    out = run("x")
-    assert "Yield rose to 56%." in out and "A lead that is supported." in out
-    # both objections travel into the first verification, only the open one into the second
-    assert '"category": "unsupported"' in stub.prompts[2][1]
-    assert '"category": "direction"' in stub.prompts[2][1]
-    assert '"category": "unsupported"' not in stub.prompts[4][1]
-
-
-def test_patch_that_fails_a_gate_keeps_its_changes_unreviewed(monkeypatch, tmp_path):
-    reject = json.dumps(
-        {
-            "accepted": False,
-            "issues": [{"paragraph": 1, "category": "unsupported", "quote": "Lead"}],
-        }
-    )
-    stub = configure(
-        monkeypatch,
-        tmp_path,
-        {
-            "x": GOOD,
-            "x/review": reject,
-            # Fixes paragraph 1 but imports a figure into paragraph 3: the gate rejects it.
-            "x/patch/1": lambda m: _patch_reply(
-                m, {"1": "Supported lead.", "3": "Yield was 42% of 8,314 loci. [src: a]"}
-            ),
-            "x/patch/2": lambda m: _patch_reply(m, {"3": "Yield was 42%. [src: a]"}),
-            "x/patch/2/verify": _ok(),
-        },
-    )
-    run("x")
-    assert "Review only paragraphs [1, 3]" in stub.prompts[-1][1]
-
-
-def test_invalid_patch_index_is_a_page_failure(monkeypatch, tmp_path):
-    reject = json.dumps(
-        {
-            "accepted": False,
-            "issues": [{"paragraph": 1, "category": "unsupported", "quote": "Lead"}],
-        }
-    )
-    configure(
-        monkeypatch,
-        tmp_path,
-        {"x": GOOD, "x/review": reject, "x/patch/1": lambda m: _patch_reply(m, {"999": "x"})},
-    )
+def test_invalid_patch_index_is_a_page_failure(monkeypatch):
+    draft = GOOD.replace("Yield was 42%. [src: a]", "Yield was 42% of 8,314 loci. [src: a]")
+    api(monkeypatch, {"x": draft, "x/patch/1": lambda m: _patch_reply(m, {"999": "x"})})
     with pytest.raises(P.PageFailure, match="do not exist"):
         run("x")
 
@@ -388,18 +328,22 @@ def test_contradictory_or_malformed_verdict_is_asked_again_then_fails(monkeypatc
     stub = configure(
         monkeypatch,
         tmp_path,
-        {"x": GOOD, "x/review": '{"accepted": false, "issues": []}', "x/review/again": "nonsense"},
+        {
+            "x": GOOD,
+            "x/agent/1/review": '{"accepted": false, "issues": []}',
+            "x/agent/1/review/again": "nonsense",
+        },
     )
     with pytest.raises(P.PageFailure, match="no usable verdict"):
         run("x")
-    assert [s for s, _ in stub.prompts] == ["x", "x/review", "x/review/again"]
+    assert [s for s, _ in stub.prompts] == ["x", "x/agent/1/review", "x/agent/1/review/again"]
     configure(
         monkeypatch,
         tmp_path,
         {
             "x": GOOD,
-            "x/review": "nonsense",
-            "x/review/again": json.dumps(
+            "x/agent/1/review": "nonsense",
+            "x/agent/1/review/again": json.dumps(
                 {
                     "accepted": False,
                     "issues": [{"paragraph": None, "category": "length", "quote": "too long"}],
@@ -407,13 +351,13 @@ def test_contradictory_or_malformed_verdict_is_asked_again_then_fails(monkeypatc
             ),
         },
     )
-    assert run("x") == GOOD  # a reviewer word count is code-owned and never patched
+    assert run("x") == GOOD  # a reviewer word count is code-owned and never repaired
 
 
 def test_normalize_runs_before_gates_and_review(monkeypatch, tmp_path):
     draft = GOOD.replace("## Sides", "## Sides\n\nSee [[concepts/missing]].")
     stub = configure(
-        monkeypatch, tmp_path, {"x": draft, "x/review": '{"accepted": true, "issues": []}'}
+        monkeypatch, tmp_path, {"x": draft, "x/agent/1/review": '{"accepted": true, "issues": []}'}
     )
     out = P.derived_page(
         "x",
@@ -494,10 +438,12 @@ def test_paced_get_gives_up_after_its_last_try(monkeypatch):
 def test_presentation_only_objections_publish_the_page_intact(monkeypatch, tmp_path):
     """A subject must not lose its page over an undefined acronym."""
     fmt = [{"paragraph": 1, "category": "format", "quote": "SNIPE", "note": "undefined"}]
-    script = {"x": GOOD, "x/review": json.dumps({"accepted": False, "issues": fmt})}
-    for n in range(1, P.PATCH_ROUNDS + 1):
-        script[f"x/patch/{n}"] = lambda m: _patch_reply(m, {"1": "A lead that is supported."})
-        script[f"x/patch/{n}/verify"] = _still(fmt)
+    repaired = GOOD.replace(
+        "Lead sentence about yield without figures here at all today.", "A lead that is supported."
+    )
+    script = rounds(
+        {"x": GOOD}, json.dumps({"accepted": False, "issues": fmt}), _still(fmt), repaired
+    )
     configure(monkeypatch, tmp_path, script)
     out = run("x")
     assert "A lead that is supported." in out
@@ -507,10 +453,12 @@ def test_presentation_only_objections_publish_the_page_intact(monkeypatch, tmp_p
 def test_substantive_objection_drops_its_paragraph_rather_than_the_page(monkeypatch, tmp_path):
     """The page survives; the claim the evidence does not support does not."""
     bad = [{"paragraph": 1, "category": "unsupported", "quote": "Lead", "note": "no evidence"}]
-    script = {"x": GOOD, "x/review": json.dumps({"accepted": False, "issues": bad})}
-    for n in range(1, P.PATCH_ROUNDS + 1):
-        script[f"x/patch/{n}"] = lambda m: _patch_reply(m, {"1": "A lead that is supported."})
-        script[f"x/patch/{n}/verify"] = _still(bad)
+    repaired = GOOD.replace(
+        "Lead sentence about yield without figures here at all today.", "A lead that is supported."
+    )
+    script = rounds(
+        {"x": GOOD}, json.dumps({"accepted": False, "issues": bad}), _still(bad), repaired
+    )
     configure(monkeypatch, tmp_path, script)
     out = run("x")
     assert "A lead that is supported." not in out  # the objected paragraph is removed
@@ -518,54 +466,28 @@ def test_substantive_objection_drops_its_paragraph_rather_than_the_page(monkeypa
     assert "Yield was 42%. [src: a]" in out  # the rest of the page stands
 
 
-def test_scoped_review_shows_only_the_scope_its_neighbours_and_headings():
-    parts = P.blocks(GOOD)  # [0] # Title, [1] lead, [2] ## Sides, [3] 42%, [4] 56%, [5] closing
-    shown = P.scoped(parts, [4])
-    assert "[3] Yield was 42%" in shown and "[4] Yield was 56%" in shown  # scope + neighbour
-    assert "[5] Closing words" in shown  # neighbour
-    assert "[0] # Title" in shown and "[2] ## Sides" in shown  # headings always
-    assert "Lead sentence" not in shown  # accepted earlier, not a neighbour: omitted
-    assert "[4]" in shown  # original index preserved
-
-
-def test_scoped_verification_omits_paragraphs_accepted_earlier(monkeypatch, tmp_path):
-    stuck = [{"paragraph": 4, "category": "direction", "quote": "56%"}]
-    checks = iter([_still(stuck), _ok()])
-    stub = configure(
-        monkeypatch,
-        tmp_path,
-        {
-            "x": GOOD,
-            "x/review": json.dumps({"accepted": False, "issues": stuck}),
-            "x/patch/1": lambda m: _patch_reply(m, {"4": "Yield rose to 56%. [src: b]"}),
-            "x/patch/1/verify": lambda m: next(checks),
-            "x/patch/2": lambda m: _patch_reply(m, {"4": "Yield fell to 56%. [src: b]"}),
-            "x/patch/2/verify": lambda m: next(checks),
-        },
-    )
-    run("x")
-    full, scoped_prompt = stub.prompts[1][1], stub.prompts[3][1]
-    assert "Lead sentence" in full  # the one open review sees the whole page
-    assert "Review only paragraphs [4]" in scoped_prompt
-    assert "Lead sentence" not in scoped_prompt  # accepted, not adjacent: dropped
-    assert "Yield rose to 56%" in scoped_prompt and "[4]" in scoped_prompt
-
-
-# --- findings of the independent review of cf12b31..f62839f -------------------
-
-
 def test_gates_failing_every_round_never_publish(monkeypatch, tmp_path):
     """A page nobody reviewed cannot publish, however many repairs it had."""
     draft = GOOD.replace("Yield was 42%. [src: a]", "Yield was 42% of 8,314 loci. [src: a]")
-    script = {"x": draft}
-    for n in range(1, P.PATCH_ROUNDS + 1):  # every repair leaves the imported figure in place
-        script[f"x/patch/{n}"] = lambda m: _patch_reply(
-            m, {"3": "Yield was 42% of 8,314 loci. [src: a]"}
-        )
-    stub = configure(monkeypatch, tmp_path, script)
+    stub = configure(monkeypatch, tmp_path, {"x": draft, "x/repair": draft})
     with pytest.raises(P.PageFailure):
         run("x")
     assert not any("review" in st or "verify" in st for st, _ in stub.prompts)
+    api_stub = api(
+        monkeypatch,
+        {
+            "x": draft,
+            **{
+                f"x/patch/{n}": lambda m: _patch_reply(
+                    m, {"3": "Yield was 42% of 8,314 loci. [src: a]"}
+                )
+                for n in range(1, P.PATCH_ROUNDS + 1)
+            },
+        },
+    )
+    with pytest.raises(P.PageFailure):
+        run("x")
+    assert len(api_stub.prompts) == 1 + P.PATCH_ROUNDS
 
 
 def test_empty_verification_is_not_a_verdict(monkeypatch, tmp_path):
@@ -577,10 +499,10 @@ def test_empty_verification_is_not_a_verdict(monkeypatch, tmp_path):
         tmp_path,
         {
             "x": GOOD,
-            "x/review": reject,
-            "x/patch/1": lambda m: _patch_reply(m, {"4": "Yield fell to 56%. [src: b]"}),
-            "x/patch/1/verify": "{}",
-            "x/patch/1/verify/again": '{"accepted": false, "issues": []}',  # the old shape
+            "x/agent/1/review": reject,
+            "x/repair": GOOD.replace("Yield was 56%. [src: b]", "Yield fell to 56%. [src: b]"),
+            "x/agent/2/verify": "{}",
+            "x/agent/2/verify/again": '{"accepted": false, "issues": []}',  # the old shape
         },
     )
     with pytest.raises(P.PageFailure, match="no usable verdict"):
@@ -591,97 +513,22 @@ def test_an_objection_stays_open_until_the_verifier_names_it_resolved(monkeypatc
     reject = json.dumps(
         {"accepted": False, "issues": [{"paragraph": 4, "category": "direction", "quote": "56%"}]}
     )
+    repairs = iter(["Yield fell to 56%. [src: b]", "Yield rose to 56%. [src: b]"])
     stub = configure(
         monkeypatch,
         tmp_path,
         {
             "x": GOOD,
-            "x/review": reject,
-            "x/patch/1": lambda m: _patch_reply(m, {"4": "Yield fell to 56%. [src: b]"}),
-            "x/patch/1/verify": '{"resolved": [], "open": []}',  # silent on the objection
-            "x/patch/2": lambda m: _patch_reply(m, {"4": "Yield rose to 56%. [src: b]"}),
-            "x/patch/2/verify": _ok(),
+            "x/agent/1/review": reject,
+            "x/repair": lambda m: GOOD.replace("Yield was 56%. [src: b]", next(repairs)),
+            "x/agent/2/verify": '{"resolved": [], "open": []}',  # silent on the objection
+            "x/agent/3/verify": _ok(),
         },
     )
     assert "Yield rose to 56%" in run("x")
     steps = [st for st, _ in stub.prompts]
-    assert "x/patch/2" in steps  # silence cost another round rather than publishing
-    assert '"category": "direction"' in stub.prompts[steps.index("x/patch/2/verify")][1]
-
-
-def test_a_gate_only_round_keeps_the_reviewers_objections(monkeypatch, tmp_path):
-    reject = json.dumps(
-        {"accepted": False, "issues": [{"paragraph": 4, "category": "direction", "quote": "56%"}]}
-    )
-    stub = configure(
-        monkeypatch,
-        tmp_path,
-        {
-            "x": GOOD,
-            "x/review": reject,
-            # Ignores the objection and imports a figure into paragraph 3: a gate round follows.
-            "x/patch/1": lambda m: _patch_reply(m, {"3": "Yield was 42% of 8,314 loci. [src: a]"}),
-            "x/patch/2": lambda m: _patch_reply(m, {"3": "Yield was 42%. [src: a]"}),
-            "x/patch/2/verify": _ok(),
-        },
-    )
-    run("x")
-    verify = stub.prompts[-1]
-    assert verify[0] == "x/patch/2/verify"
-    assert '"category": "direction"' in verify[1]  # survived the gate-only round
-    assert '"paragraph": 4' in verify[1]
-
-
-def test_verifier_receives_the_objections_note(monkeypatch, tmp_path):
-    reject = json.dumps(
-        {
-            "accepted": False,
-            "issues": [
-                {
-                    "paragraph": 4,
-                    "category": "direction",
-                    "quote": "56%",
-                    "note": "the sign is inverted",
-                }
-            ],
-        }
-    )
-    stub = configure(
-        monkeypatch,
-        tmp_path,
-        {
-            "x": GOOD,
-            "x/review": reject,
-            "x/patch/1": lambda m: _patch_reply(m, {"4": "Yield fell to 56%. [src: b]"}),
-            "x/patch/1/verify": _ok(),
-        },
-    )
-    run("x")
-    assert '"note": "the sign is inverted"' in stub.prompts[-1][1]
-
-
-def test_verification_drops_a_new_objection_outside_its_scope(monkeypatch, tmp_path):
-    reject = json.dumps(
-        {"accepted": False, "issues": [{"paragraph": 4, "category": "direction", "quote": "56%"}]}
-    )
-    stub = configure(
-        monkeypatch,
-        tmp_path,
-        {
-            "x": GOOD,
-            "x/review": reject,
-            "x/patch/1": lambda m: _patch_reply(m, {"4": "Yield fell to 56%. [src: b]"}),
-            "x/patch/1/verify": json.dumps(
-                {
-                    "resolved": [0],
-                    "open": [{"paragraph": 1, "category": "unsupported", "quote": "Lead"}],
-                }
-            ),
-        },
-    )
-    out = run("x")
-    assert "Yield fell to 56%" in out and "Lead sentence" in out  # accepted text untouched
-    assert "x/patch/2" not in [st for st, _ in stub.prompts]
+    assert steps.count("x/repair") == 2  # silence cost another round rather than publishing
+    assert '"category": "direction"' in stub.prompts[steps.index("x/agent/3/verify")][1]
 
 
 def test_salvage_refuses_an_undischarged_substantive_objection():
@@ -721,3 +568,26 @@ def test_salvage_ledger_survives_concurrent_writers(monkeypatch, tmp_path):
         "issues": [issue.model_dump()],
         "jobs": ["key:7"],
     }
+
+
+def test_verification_raises_new_objections_only_on_changed_paragraphs(monkeypatch, tmp_path):
+    """A settled paragraph cannot be reopened: only the writer's changes are in scope."""
+    reject = json.dumps(
+        {"accepted": False, "issues": [{"paragraph": 4, "category": "direction", "quote": "56%"}]}
+    )
+    fixed = GOOD.replace("Yield was 56%. [src: b]", "Yield fell to 56%. [src: b]")
+    reopen = json.dumps(
+        {
+            "resolved": [0],
+            "open": [{"paragraph": 1, "category": "unsupported", "quote": "Lead"}],
+        }
+    )
+    stub = configure(
+        monkeypatch,
+        tmp_path,
+        {"x": GOOD, "x/agent/1/review": reject, "x/repair": fixed, "x/agent/2/verify": reopen},
+    )
+    out = run("x")
+    assert "Yield fell to 56%" in out and "Lead sentence" in out  # accepted text untouched
+    assert "The writer changed paragraphs [4]" in stub.prompts[-1][1]
+    assert [s for s, _ in stub.prompts].count("x/repair") == 1

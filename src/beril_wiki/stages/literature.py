@@ -46,6 +46,7 @@ from beril_wiki.agentic.prose import (
     Issue,
     PageFailure,
     derived_page,
+    only,
     parallel,
     prune_failures,
     record_failure,
@@ -289,11 +290,16 @@ def main(root: pathlib.Path) -> int:
         state = {}
         print("  --force: ignoring cached digests")
 
+    named = only(sys.argv)
     todo = []
     for page in sorted(topics.glob("*.md")):
         page_digest = hashlib.sha256(
             topic_core(page.read_text(encoding="utf-8", errors="replace")).encode()
         ).hexdigest()[:16]
+        if named is not None:
+            if f"lit/{page.stem}" in named:
+                todo.append((page, page_digest))
+            continue
         if state.get(page.name) == page_digest:
             continue
         todo.append((page, page_digest))
@@ -332,4 +338,4 @@ def main(root: pathlib.Path) -> int:
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", type=pathlib.Path, default=ROOT)
-    sys.exit(main(ap.parse_args().root))
+    sys.exit(main(ap.parse_known_args()[0].root))

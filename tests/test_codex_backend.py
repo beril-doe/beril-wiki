@@ -69,7 +69,7 @@ def test_host_serves_bound_reader_and_refuses_tools_outside_the_profile(tmp_path
     (tmp_path / "staging").mkdir()
     (tmp_path / "staging/a__REPORT.md").write_text("The Q10 value was 2.3 (n=12).")
     reader = R.ReadTools(tmp_path)
-    host.binding = C.Binding(reader, ["read_evidence"], None, turns=2)
+    host.binding = C.Binding(reader, ["read_evidence"], turns=2)
     args = {"path": "staging/a__REPORT.md", "start": 0, "end": 7}
     result = call(host.url, "read_evidence", args)
     assert not result.isError
@@ -86,18 +86,6 @@ def test_host_serves_bound_reader_and_refuses_tools_outside_the_profile(tmp_path
     host.binding = None
     unbound = call(host.url, "read_evidence", args)
     assert unbound.isError and "no job" in unbound.content[0].text
-
-
-def test_validate_candidate_reports_validator_issues(tmp_path, host):
-    def validator(candidate):
-        raise R.WorkflowError("missing evidence id e1")
-
-    host.binding = C.Binding(R.EvidenceTools(tmp_path), ["validate_candidate"], validator, 3)
-    result = call(host.url, "validate_candidate", {"candidate": "{}"})
-    assert json.loads(result.content[0].text) == {
-        "valid": False,
-        "issues": ["missing evidence id e1"],
-    }
 
 
 def agent_for(tmp_path, **extra):
@@ -191,7 +179,7 @@ def test_run_job_records_usage_transcript_and_clears_binding(tmp_path, monkeypat
     assert start["model"] == "gpt-6-astra" and start["ephemeral"] is True
     assert "Preserve source evidence." in start["base_instructions"]
     assert start["base_instructions"].endswith("PACKED")
-    assert "candidate-check tools" in start["base_instructions"]
+    assert "read-only evidence and search tools" in start["base_instructions"]
     text, options = fake.client.turns[0]
     assert json.loads(getattr(text, "text", text)) == [{"role": "user", "content": "write"}]
     assert getattr(options["effort"], "value", options["effort"]) == "high"
@@ -221,14 +209,15 @@ def test_failed_turn_without_usage_fails_its_job_not_the_run(tmp_path, monkeypat
     assert row == ("failed", agent.ledger.headroom)
 
 
-def test_bio_flagged_review_is_answered_on_the_fallback_model(tmp_path, monkeypatch):
+@pytest.mark.parametrize("model", ["gpt-6.1-sol", "gpt-6-luna"])
+def test_bio_flagged_review_is_answered_on_the_fallback_model(tmp_path, monkeypatch, model):
     agent = agent_for(tmp_path)
     fake_session(
         monkeypatch, FakeTurn(failed_without_usage("flagged for possible biological risk"))
     )
-    agent.ledger.reserve("k10", "write/concepts/x.md/science-review", "gpt-6.1-sol")
+    agent.ledger.reserve("k10", "write/concepts/x.md/science-review", model)
     with pytest.raises(R.Refused) as caught:
-        C.run_job(agent, json.dumps([{"role": "user", "content": "x"}]), "k10", "gpt-6.1-sol")
+        C.run_job(agent, json.dumps([{"role": "user", "content": "x"}]), "k10", model)
     assert caught.value.fallback_model == "gpt-5.6-sol"
     row = agent.ledger.db.execute("SELECT status,output FROM jobs WHERE key='k10'").fetchone()
     assert row == ("rejected", json.dumps({"refused_to": "gpt-5.6-sol"}))
