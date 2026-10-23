@@ -4,12 +4,20 @@
 # every page is checked by a model family that did not write it.
 # Budgets remain explicit run flags, never implicit permission to spend.
 # Every role below is pinned; model is only the fallback for omitted roles.
+# Roles apply to work done from now on; accepted pages stay as Opus wrote them.
+# Chosen by the Oct 2026 model-mix and extraction pilots (docs/agentic-workflow.md#pilots):
+# Haiku planning misrouted a third of records, and Luna or Haiku extraction lost coverage.
 model: claude-opus-5-5
 step_models:
   extraction: gpt-6.1-sol
-  planning: claude-opus-5-5
-  pages: claude-sonnet-5-5
-  writing: claude-opus-5-5
-  review: gpt-6.1-sol
+  planning: claude-sonnet-5-5
+  pages: claude-haiku-5-5
+  writing: claude-sonnet-5-5
+  review: gpt-6-luna
   queries: gpt-6.1-sol
   figures: gpt-6.1-sol
+step_efforts:
+  planning: high
+  pages: medium
+  writing: medium
+  review: high

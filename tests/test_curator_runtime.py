@@ -581,12 +581,18 @@ def test_cli_loads_committed_policy_without_model_flag(tmp_path, monkeypatch):
     assert cli.main() == 0
     assert R.model_policy(configs[0]) == {
         "extraction": "gpt-6.1-sol",
-        "planning": "claude-opus-5-5",
-        "pages": "claude-sonnet-5-5",
-        "writing": "claude-opus-5-5",
-        "review": "gpt-6.1-sol",
+        "planning": "claude-sonnet-5-5",
+        "pages": "claude-haiku-5-5",
+        "writing": "claude-sonnet-5-5",
+        "review": "gpt-6-luna",
         "queries": "gpt-6.1-sol",
         "figures": "gpt-6.1-sol",
+    }
+    assert configs[0]["step_efforts"] == {
+        "planning": "high",
+        "pages": "medium",
+        "writing": "medium",
+        "review": "high",
     }
     # Replacement file paths resolve against the chosen root, and a role flag wins.
     (tmp_path / "custom.yaml").write_text("model: alternate\nstep_models: {review: specialist}")
