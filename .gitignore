@@ -18,8 +18,12 @@ reference/
 .ruff_cache/
 .pytest_cache/
 /docs/superpowers/
-# Local planning artifacts: html-artifact pages and their diagram sources.
+# Local planning artifacts: html-artifact pages and their diagram sources
+# (CLAUDE.md). docs/agentic-workflow.html is published documentation.
 /docs/drafts/
+/docs/**/*.html
+/docs/**/*.excalidraw
+!/docs/agentic-workflow.html
 /.agentic/
 
 # Meaning-search vectors: shared through the search-data branch, not main
