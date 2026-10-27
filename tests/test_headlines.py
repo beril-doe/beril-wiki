@@ -156,8 +156,7 @@ TWO = {
 def test_headlines_salvage_drops_only_named_headlines(tmp_path, monkeypatch):
     objection = ["Headline a:0:1 overstates the null"]
     replies = {"headlines/a": [json.dumps(TWO)], "headlines/a/repair": [json.dumps(TWO)] * 3}
-    setup(tmp_path, monkeypatch, replies)
-    agent = cards.runtime()
+    agent = setup(tmp_path, monkeypatch, replies)
     agent.objections = {"headlines/a": objection}
     agent.still_open = {"headlines/a": objection}
     assert headlines.main(tmp_path) == 0
@@ -168,8 +167,7 @@ def test_headlines_salvage_drops_only_named_headlines(tmp_path, monkeypatch):
 def test_headlines_unmatched_objection_fails_the_report(tmp_path, monkeypatch):
     objection = ["The caveats are too vague"]
     replies = {"headlines/a": [json.dumps(TWO)], "headlines/a/repair": [json.dumps(TWO)] * 3}
-    setup(tmp_path, monkeypatch, replies)
-    agent = cards.runtime()
+    agent = setup(tmp_path, monkeypatch, replies)
     agent.objections = {"headlines/a": objection}
     agent.still_open = {"headlines/a": objection}
     assert headlines.main(tmp_path) == 0

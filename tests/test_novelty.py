@@ -2,7 +2,7 @@
 
 import datetime
 import json
-import re
+from urllib.parse import parse_qs, urlsplit
 
 import pytest
 
@@ -14,7 +14,7 @@ PAPERS = {
     "111": "Depletion in E. coli\nABSTRACT (not full text):\nx",
     "222": "Unrelated\nABSTRACT:\ny",
 }
-CROSS = {
+CROSS: dict = {
     "model": "claude-sonnet-5-5",
     "step_models": {"review": "gpt-6.1-sol", "queries": "gpt-6.1-sol"},
 }
@@ -224,7 +224,7 @@ def test_abstracts_are_fetched_in_batches_under_the_size_cap(monkeypatch):
     asked: list[list[str]] = []
 
     def fake_get(url, cap=None):
-        ids = re.search(r"id=([\d%C,]+)", url).group(1).replace("%2C", ",").split(",")
+        ids = parse_qs(urlsplit(url).query)["id"][0].split(",")
         asked.append(ids)
         return b"<PubmedArticleSet/>"
 
@@ -239,7 +239,7 @@ def test_an_oversized_record_is_skipped_not_fatal(monkeypatch, capsys):
     from beril_wiki.stages import literature as L
 
     def fake_get(url, cap=None):
-        ids = re.search(r"id=([\d%C,]+)", url).group(1).replace("%2C", ",").split(",")
+        ids = parse_qs(urlsplit(url).query)["id"][0].split(",")
         return b"x" * (cap or 0) if "2" in ids else ("|".join(ids)).encode()
 
     monkeypatch.setattr(L, "paced_get", fake_get)
