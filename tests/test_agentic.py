@@ -448,6 +448,9 @@ def test_runner_stage_order_noop_and_failed_gate(tmp_path, monkeypatch, failed_s
         "topics",
         "literature",
         "authors",
+        "headlines",
+        "novelty",
+        "directions",
         "titles",
         "names",
         "errata",
@@ -1041,3 +1044,24 @@ def test_links_to_pages_never_written_keep_their_label(tmp_path):
     )
     unlink_missing(tmp_path)
     assert page.read_text() == "Links [[concepts/kept]], the lost page and gone."
+
+
+def test_stored_content_flag_replays_as_that_jobs_failure(tmp_path):
+    from beril_wiki.agentic.runtime import JobFailed
+
+    db = tmp_path / "jobs.sqlite"
+    ledger = Ledger(db, "batch", 1000, 9, 20)
+    ledger.reserve("flagged")
+    ledger.finish(
+        "flagged",
+        "",
+        {"input_tokens": 20, "output_tokens": 0},
+        "flagged for possible biological risk",
+    )
+    ledger.reserve("broken")
+    ledger.finish("broken", "", {"input_tokens": 20, "output_tokens": 0}, "Codex transport failed")
+    with pytest.raises(JobFailed, match="biological risk"):
+        ledger.reserve("flagged")
+    with pytest.raises(WorkflowError, match="inspect saved job") as caught:
+        ledger.reserve("broken")
+    assert not isinstance(caught.value, JobFailed)

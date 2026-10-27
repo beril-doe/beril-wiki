@@ -32,6 +32,7 @@ from beril_wiki.agentic.runtime import (
     model_policy,
     model_signature,
 )
+from beril_wiki.stages.novelty import labels_due
 
 TREES = ("wiki", "state", "staging")
 
@@ -258,6 +259,9 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
             ]
         )
         identity = digest([base, external, rev, models, staged])
+        if labels_due(root):
+            # Literature labels expire with time alone, which no fingerprint sees.
+            identity = digest([identity, "labels-due"])
         accepted_path = root / "state/agentic.json"
         accepted = (
             json.loads(accepted_path.read_text(encoding="utf-8")) if accepted_path.exists() else {}

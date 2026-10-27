@@ -3,19 +3,23 @@
 import argparse
 import json
 import shutil
+import signal
+import sys
 from pathlib import Path
 
 import yaml
 
 from beril_wiki.agentic.batch import changed_sources
 from beril_wiki.agentic.prose import owning_stage
-from beril_wiki.agentic.runner import locked, recover, run
+from beril_wiki.agentic.runner import locked, recover, run, run_stage
 from beril_wiki.agentic.runtime import (
     MODEL_ROLES,
     EvidenceTools,
     Runtime,
     WorkflowError,
     atomic_json,
+    digest,
+    manifest,
     model_policy,
 )
 from beril_wiki.paths import ROOT
@@ -52,6 +56,43 @@ def load_models(root: Path, path: Path | None, model: str | None, overrides: lis
 def load_failures(root: Path) -> dict:
     path = root / ".agentic/failures.json"
     return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+
+
+CARD_STAGES = ("headlines", "novelty", "directions")
+
+
+def run_cards(root: Path, config: dict) -> dict:
+    """Run only the finding, label and research-direction stages in place, then the strict check.
+
+    For a pilot: `run` would also schedule every other stale editorial stage. These
+    stages write only their own outputs, and their hash caches let a later full run
+    adopt what they wrote without model calls. The accepted state is not touched."""
+    store = root / ".agentic"
+    if (store / "promotion.json").exists():
+        raise WorkflowError("promotion pending; run recover first")
+    config = config | {
+        "root": str(root),
+        "store": str(store),
+        "run": digest(["cards", manifest(root, ("wiki", "state", "contract"))]),
+    }
+    # The same file run() writes, so status, account and retry read this run.
+    path = store / "config.json"
+    atomic_json(path, config)
+    agent = Runtime(config)
+    agent.ledger.reconcile_stale(store / "transcripts")
+    # Python's default SIGTERM skips finally blocks, which would orphan the stage's
+    # process group; an exit runs run_stage's cleanup instead.
+    previous = signal.signal(signal.SIGTERM, lambda *_: sys.exit(143))
+    try:
+        for name in CARD_STAGES:
+            run_stage(root, path, name, f"stages.{name}", [])
+        run_stage(root, path, "check", "check", [str(root), "--strict"])
+    finally:
+        signal.signal(signal.SIGTERM, previous)
+        agent.ledger.reconcile_stale(store / "transcripts")
+    totals = agent.ledger.totals()
+    print(f"agentic cards: {json.dumps(totals)}")
+    return totals
 
 
 def main() -> int:
@@ -137,6 +178,25 @@ def main() -> int:
         "--page", action="append", default=[], help="page key from failures.json; repeatable"
     )
     retry.add_argument("--all-failed", action="store_true", help="every page in failures.json")
+    pilot = commands.add_parser(
+        "cards",
+        help="run only the finding, label and direction stages in place, then check --strict",
+    )
+    for flag, default in (
+        ("--max-tokens", None),
+        ("--max-jobs", None),
+        ("--reserve-tokens", 50_000),
+        ("--max-turns", 12),
+        ("--max-output-tokens", 32768),
+        ("--timeout", 600),
+        ("--stage-timeout", 14400),
+        ("--stage-max-tokens", 0),
+        ("--workers", 4),
+    ):
+        pilot.add_argument(flag, type=int, default=default, required=default is None)
+    pilot.add_argument("--model-config", type=Path)
+    pilot.add_argument("--step-model", action="append", default=[], metavar="ROLE=MODEL")
+    pilot.add_argument("--cli", default=shutil.which("claude"))
     commands.add_parser("recover", help="finish an interrupted promotion without model calls")
     commands.add_parser("status", help="show durable job IDs, states and usage")
     args = parser.parse_args()
@@ -156,6 +216,29 @@ def main() -> int:
                 print(
                     json.dumps(EvidenceTools(root).search(args.query, offset=args.offset), indent=2)
                 )
+        elif args.command == "cards":
+            if not args.cli:
+                raise WorkflowError("install Claude Code and log in with a subscription first")
+            if min(args.max_tokens, args.max_jobs, args.workers, args.timeout) <= 0:
+                raise WorkflowError("budgets, workers and timeout must be positive")
+            config = {
+                key: getattr(args, key)
+                for key in (
+                    "max_tokens",
+                    "max_jobs",
+                    "reserve_tokens",
+                    "max_turns",
+                    "max_output_tokens",
+                    "timeout",
+                    "stage_timeout",
+                    "stage_max_tokens",
+                    "workers",
+                    "cli",
+                )
+            } | load_models(root, args.model_config, None, args.step_model)
+            print(json.dumps({"models": model_policy(config)}, indent=2))
+            with locked(root):
+                run_cards(root, config)
         elif args.command == "recover":
             with locked(root):
                 recover(root)

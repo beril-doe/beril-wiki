@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import Any
 
 from beril_wiki.agentic.runtime import (
+    CONTENT_FLAG,
     REFUSAL_FALLBACK,
     SYSTEM,
     EvidenceTools,
@@ -431,7 +432,7 @@ def run_job(agent: Runtime, payload: str, key: str, model: str) -> str:
     else:
         error = ""
     answers = REFUSAL_FALLBACK.get(model)
-    if answers and status == "failed" and "biological risk" in error:
+    if answers and status == "failed" and CONTENT_FLAG in error:
         # A content refusal: like a Claude refusal, it is recorded against the
         # configured model and the job is answered on the fallback, keyed to it, and
         # the rest of the page's review jobs go there directly.

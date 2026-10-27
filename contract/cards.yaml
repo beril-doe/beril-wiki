@@ -1,0 +1,8 @@
+# Which reports get finding records and which topics get research directions.
+# Either key takes a list or `all` (every report under wiki/sources, every topic in
+# state/curator-topics.json). Widening the scope makes the next run spend on every
+# new report and topic, so it needs a priced approval.
+# Excluded from the job cache keys (see runtime.contract_manifest): the stages
+# headlines and directions list this file as an input instead.
+topics: all
+reports: all

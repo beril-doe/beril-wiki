@@ -45,12 +45,23 @@ def test_schedule_runs_stale_stages_in_table_order(tmp_path, monkeypatch):
         "topics",
         "literature",
         "authors",
+        "headlines",
+        "novelty",
+        "directions",
     ]
     assert set(state) == set(C.EDITORIAL)
     # Literature owns its section; its insertion must not dirty topic synthesis.
     assert C.pending_actions(tmp_path, state, Agent.config, integrated=True) == []
     receipts = json.loads((tmp_path / "jobs/curator-receipts.json").read_text())
-    assert [r["action"] for r in receipts] == ["conflicts", "topics", "literature", "authors"]
+    assert [r["action"] for r in receipts] == [
+        "conflicts",
+        "topics",
+        "literature",
+        "authors",
+        "headlines",
+        "novelty",
+        "directions",
+    ]
     assert all(r["result"] == "completed" for r in receipts)
     calls.clear()
     # Only stale stages and their dependents run again.
@@ -64,6 +75,7 @@ def test_schedule_runs_stale_stages_in_table_order(tmp_path, monkeypatch):
         "topics",
         "literature",
         "authors",
+        "directions",
     ]
 
 
@@ -92,7 +104,15 @@ def test_schedule_integrates_changed_sources_first(tmp_path, monkeypatch):
         "names-core",
         "extras",
     ]
-    assert calls[6:] == ["conflicts", "topics", "literature", "authors"]
+    assert calls[6:] == [
+        "conflicts",
+        "topics",
+        "literature",
+        "authors",
+        "headlines",
+        "novelty",
+        "directions",
+    ]
 
 
 def test_stage_made_stale_by_integration_still_runs(tmp_path, monkeypatch):

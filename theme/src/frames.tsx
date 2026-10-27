@@ -11,6 +11,7 @@
 import type { FullSlug, PageFrame } from "@quartz-community/types"
 import type { Root } from "hast"
 import { Bar } from "./components/Bar"
+import { DirectionBoard, FindingBoard, RecordBar, TopicCards } from "./components/Cards"
 import { EvidenceRail } from "./components/EvidenceRail"
 import { Home } from "./components/Home"
 import { Listing, indexFigures } from "./components/Listing"
@@ -18,7 +19,7 @@ import { NavRail } from "./components/NavRail"
 import { Record } from "./components/Record"
 import { Sources } from "./components/Sources"
 import { slot } from "./jsx"
-import { type File, corpus, isIndex, slugOf, stripIndexLists, walk } from "./page"
+import { type File, collectionOf, corpus, isIndex, slugOf, stripIndexLists, walk } from "./page"
 import { ties } from "./ties"
 
 export const BerilFrame: PageFrame = {
@@ -38,8 +39,11 @@ export const BerilFrame: PageFrame = {
     // The page's topic colour, handed to the stylesheet for the one place
     // colour enters the chrome: the tick before each section label.
     const accent = c.hueOf(file)
+    const kind = collectionOf(slug)
     const prose = (
       <>
+        {kind === "topics" && !index && <TopicCards file={file} c={c} />}
+        {(kind === "findings" || kind === "directions") && !index && <RecordBar file={file} />}
         {slot(beforeBody).map((B) => (
           <B {...cd} />
         ))}
@@ -57,7 +61,13 @@ export const BerilFrame: PageFrame = {
           <main class="band index-page" style={accent ? `--accent:${accent}` : undefined}>
             <Record file={file} c={c} tree={tree} terms={w.terms} standing={w.standing} orcid={w.orcid} cites={w.cites} rels={w.rels} t={t} figures={indexFigures(file, c)} />
             <div class="prose">{prose}</div>
-            <Listing file={file} c={c} />
+            {slug === "findings/index" ? (
+              <FindingBoard c={c} from={slug as FullSlug} />
+            ) : slug === "directions/index" ? (
+              <DirectionBoard c={c} from={slug as FullSlug} />
+            ) : (
+              <Listing file={file} c={c} />
+            )}
           </main>
         ) : (
           <main class="page-grid" style={accent ? `--accent:${accent}` : undefined}>

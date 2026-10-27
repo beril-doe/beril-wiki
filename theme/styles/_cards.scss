@@ -1,0 +1,395 @@
+// ---- finding and next-step cards (preview builds) ------------------------
+// Label colours mean one thing each: teal for candidate novel, amber for
+// extends, the conflict red for in tension, grey for established, a dashed
+// outline for insufficient or not assessed. Chip fills are mixed from the
+// text colour so dark mode needs no second palette.
+:root {
+  --v-new: #0e5a6b;
+  --v-ext: #8a5d08;
+}
+:root[saved-theme="dark"] {
+  --v-new: #57a8ba;
+  --v-ext: #e2a94a;
+}
+
+.discovery-hero {
+  padding-top: 44px;
+  h1 {
+    font-size: var(--t-hero);
+    line-height: 1.04;
+    letter-spacing: -0.012em;
+    margin: 0 0 12px;
+    max-width: 22ch;
+  }
+  .lead {
+    font-family: var(--serif);
+    font-size: var(--t-lead);
+    color: var(--ink-2);
+    max-width: 66ch;
+    margin: 0 0 12px;
+  }
+  .preview-note {
+    font-size: var(--t-meta);
+    color: var(--mute);
+    margin: 0 0 18px;
+  }
+}
+
+.planner {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: grid;
+  gap: 10px;
+  max-width: 860px;
+  .row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .field {
+    flex: 1 1 260px;
+    border: 1px solid var(--line-2);
+    border-radius: 6px;
+    padding: 9px 11px;
+    font: inherit;
+    font-size: var(--t-ui-lg);
+    color: var(--ink);
+    background: var(--bg);
+  }
+  .c-chips {
+    margin: 0;
+  }
+  .hint {
+    font-size: var(--t-meta);
+    color: var(--mute);
+    margin: 0;
+  }
+}
+
+// The home search's button, outside the home band: the planner and the
+// next-step record bar use it too.
+.planner .btn,
+.cardbar .btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 16px;
+  border: 1px solid var(--secondary);
+  border-radius: 6px;
+  background: var(--secondary);
+  color: var(--light);
+  font: 500 var(--t-ui) / 1.3 var(--sans);
+  cursor: pointer;
+  &:hover {
+    filter: brightness(1.08);
+  }
+  &.sm {
+    padding: 5px 10px;
+    font-size: var(--t-meta);
+  }
+  &.ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line-2);
+  }
+}
+.planner .lbl {
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  margin: 16px 0 0;
+  max-width: 860px;
+  div {
+    padding: 10px 12px;
+    border-right: 1px solid var(--line);
+    &:last-child {
+      border-right: 0;
+    }
+  }
+  dt {
+    font-family: var(--serif);
+    font-size: var(--t-figure);
+    line-height: 1.1;
+  }
+  dd {
+    margin: 0;
+    font-size: var(--t-meta);
+    line-height: 1.3;
+    a {
+      color: var(--ink-2);
+    }
+  }
+}
+
+.v {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--t-label);
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 2px 7px;
+  color: var(--mute);
+  border: 1px dashed var(--line-2);
+  &::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  &.new,
+  &.ext,
+  &.con,
+  &.conf {
+    border: 0;
+    background: color-mix(in srgb, currentColor 13%, transparent);
+  }
+  &.new {
+    color: var(--v-new);
+  }
+  &.ext {
+    color: var(--v-ext);
+  }
+  &.con {
+    color: var(--conflict);
+  }
+  &.conf {
+    color: var(--ink-2);
+  }
+}
+
+.tags,
+.cardbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.cardbar {
+  margin: 0 0 18px;
+  .when {
+    font-size: var(--t-meta);
+    color: var(--mute);
+  }
+}
+.rt,
+.c-kind {
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.rt.null {
+  color: var(--ink);
+}
+
+.c-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 0 0 12px;
+}
+.c-chip {
+  font: inherit;
+  font-size: var(--t-meta);
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  padding: 3px 11px;
+  color: var(--ink-2);
+  background: var(--card);
+  cursor: pointer;
+  &.on {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--method);
+    outline-offset: 2px;
+  }
+}
+
+// Two columns at desktop width: four home cards fill two rows, not three and one.
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  gap: 12px;
+}
+.stack {
+  display: grid;
+  gap: 10px;
+}
+.fcard,
+.ncard {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 15px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  &[hidden] {
+    display: none;
+  }
+  h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: var(--t-sub);
+    line-height: 1.3;
+    margin: 0;
+    a {
+      color: var(--ink);
+    }
+  }
+  p {
+    margin: 0;
+    font-size: var(--t-ui);
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+}
+.fcard {
+  .figs {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .num {
+    font-family: var(--mono);
+    font-size: var(--t-meta);
+    color: var(--ink);
+    background: color-mix(in srgb, var(--method) 9%, transparent);
+    padding: 0 4px;
+    border-radius: 3px;
+  }
+  .cav b {
+    color: var(--ink);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    font-size: var(--t-meta);
+    color: var(--mute);
+    border-top: 1px solid var(--line);
+    padding-top: 8px;
+    margin-top: auto;
+  }
+}
+.ncard {
+  border-left: 3px solid var(--ink);
+  border-radius: 6px;
+  gap: 7px;
+  .top {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .basis {
+    font-size: var(--t-meta);
+    color: var(--mute);
+  }
+  .hyp b {
+    color: var(--ink);
+  }
+}
+.ready {
+  font-size: var(--t-meta);
+  font-weight: 600;
+  color: var(--supports);
+  &.part {
+    color: var(--refines);
+  }
+  &.lab {
+    color: var(--method);
+  }
+  &.no {
+    color: var(--mute);
+  }
+}
+.sig {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  span {
+    font-size: var(--t-meta);
+    border-radius: 4px;
+    padding: 1px 7px;
+    background: color-mix(in srgb, var(--ink) 6%, transparent);
+    color: var(--ink-2);
+  }
+  .ds {
+    color: var(--dataset);
+    background: color-mix(in srgb, var(--dataset) 10%, transparent);
+    font-family: var(--mono);
+  }
+}
+
+.c-more {
+  margin: 12px 0 0;
+  font-size: var(--t-ui);
+}
+.px-nomatch {
+  font-size: var(--t-ui);
+  color: var(--mute);
+}
+.sortline {
+  font-size: var(--t-meta);
+  color: var(--mute);
+  margin: 0 0 12px;
+}
+.cards-board {
+  margin-top: 20px;
+}
+
+.clist {
+  border-top: 1px solid var(--line);
+  .crow {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    a {
+      font-family: var(--serif);
+      font-size: var(--t-ui-lg);
+    }
+    .n {
+      font-size: var(--t-meta);
+      color: var(--mute);
+      white-space: nowrap;
+    }
+  }
+}
+
+// The corpus introduction, as a section below the findings rather than the title.
+.hero .hero-title {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: var(--t-display);
+  margin: 0 0 12px;
+}
+
+.topic-cards {
+  display: grid;
+  gap: 26px;
+  margin: 0 0 22px;
+  .sechead p {
+    max-width: 60ch;
+  }
+}

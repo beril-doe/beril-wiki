@@ -669,7 +669,7 @@ def test_cli_loads_committed_policy_without_model_flag(tmp_path, monkeypatch):
     claude_roles = {"planning", "writing"}
     assert R.model_policy(configs[0]) == {
         role: "claude-sonnet-5-5"
-        if role == "pages"
+        if role in ("pages", "cards")
         else "claude-opus-5-5"
         if role in claude_roles
         else "gpt-6.1-sol"
