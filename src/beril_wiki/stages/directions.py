@@ -396,7 +396,13 @@ def main(root: Path = ROOT) -> int:
             reply = Reply.model_validate(saved["reply"])
         else:
             if not pack["FINDINGS"] and not pack["CONFLICTS"]:
-                print(f"  directions/{topic}: no findings or conflicts yet; skipped")
+                # Earlier directions would cite findings or conflicts that are gone.
+                for page in pages_for(out, topic):
+                    page.unlink()
+                state.pop(topic, None)
+                atomic_json(state_path, state)
+                record_failure(f"directions/{topic}", None)
+                print(f"  directions/{topic}: no findings or conflicts; no directions")
                 continue
             parse = checker(pack)
             try:

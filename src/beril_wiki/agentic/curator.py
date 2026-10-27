@@ -152,6 +152,8 @@ def pending_actions(root: Path, state: dict, config: dict, *, integrated: bool) 
             not integrated
             or any(d in pending for d in dependencies)
             or state.get(name) != stage_snapshot(root, name, config)
+            # A failed refresh is accepted with the label still expired; retry each run.
+            or (name == "novelty" and labels_due(root))
         ):
             pending.append(name)
     try:

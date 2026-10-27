@@ -316,3 +316,14 @@ def test_an_unresolvable_restatement_fails_the_topic(tmp_path, monkeypatch, caps
         still_open={f"directions/{TOPIC}": ["Issue 7 remains: the test is not decisive"]},
     )
     assert f"[FAILED] directions/{TOPIC}" in capsys.readouterr().out
+
+
+def test_a_topic_that_loses_its_evidence_loses_its_directions(tmp_path, monkeypatch):
+    run(tmp_path, monkeypatch, {f"directions/{TOPIC}": [THREE]})
+    assert list((tmp_path / "wiki/directions").glob("*.md"))
+    (tmp_path / "wiki/findings" / f"{FID}.md").unlink()
+    (tmp_path / "wiki/conflicts" / f"{CONFLICT}.md").unlink()
+    assert directions.main(tmp_path) == 0
+    assert not list((tmp_path / "wiki/directions").glob("*.md"))
+    state = json.loads((tmp_path / "state/directions.json").read_text())
+    assert TOPIC not in state

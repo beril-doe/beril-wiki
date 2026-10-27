@@ -226,3 +226,15 @@ def test_card_styles_leave_record_classes_alone():
     css = (Path(__file__).parents[1] / "theme/styles/_cards.scss").read_text()
     for name in ("kind", "chips", "chip", "more"):
         assert not re.search(rf"(^|[\s,]){re.escape('.' + name)}\b", css, re.M), name
+
+
+# PR #13 review (Codex bot, Oct 2026)
+
+
+def test_expired_label_stays_pending_after_its_snapshot_is_accepted(tmp_path, monkeypatch):
+    run(tmp_path, monkeypatch, {f"novelty/{FID}/judge": [GOOD]})
+    config = {"model": "m"}
+    monkeypatch.setattr(novelty, "today", lambda: datetime.date(2027, 3, 1))
+    # A failed refresh keeps the old date; the run then accepts a snapshot taken while due.
+    state = {name: C.stage_snapshot(tmp_path, name, config) for name in C.EDITORIAL}
+    assert "novelty" in C.pending_actions(tmp_path, state, config, integrated=True)

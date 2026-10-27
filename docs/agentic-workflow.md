@@ -228,8 +228,8 @@ is not a relationship and is never "Candidate novel"; it is labelled
 "Insufficient literature evidence" unless a retrieved paper reports the same
 pattern. A label is judged
 again when its finding changes, when the `cards`, `review` or `queries` model
-changes, or 90 days after retrieval (`REFRESH_DAYS`). An expired label makes an
-otherwise unchanged `agentic run` schedule the novelty stage. When retrieval
+changes, or 90 days after retrieval (`REFRESH_DAYS`). An expired label makes every
+`agentic run` schedule the novelty stage until a refresh succeeds. When retrieval
 fails, the previous label and date stay.
 `contract/novelty-decisions.yaml` pins or withdraws a label with a person's
 reason; a withdrawn label shows as "Not assessed".
