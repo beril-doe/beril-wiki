@@ -63,6 +63,12 @@ export function kindOf(f: File): Kind {
       return { label: "Author", cls: "author" }
     case "data":
       return { label: "Data collection", cls: "plain" }
+    case "findings":
+      return { label: "Finding", cls: "finding" }
+    case "directions":
+      return { label: "Research direction", cls: "direction" }
+    case "data-issues":
+      return { label: "Data issues", cls: "plain" }
     default:
       return { label: "Page", cls: "plain" }
   }
@@ -107,8 +113,15 @@ export function corpus(allFiles: File[]): Corpus {
     const s = slugOf(f)
     let r = memo.get(s)
     if (!r) {
-      const simple = simplifySlug(s)
-      r = topics.filter((t) => t !== f && linksOf(t).includes(simple))
+      // Finding and research-direction records name their topics in frontmatter (publish/cards.py);
+      // no topic page links to them.
+      const named = (fm(f) as { topics?: unknown } | undefined)?.topics
+      if (["findings", "directions"].includes(collectionOf(s)) && Array.isArray(named)) {
+        r = named.map((t) => bySlug.get(`topics/${t}`)).filter((t): t is File => !!t)
+      } else {
+        const simple = simplifySlug(s)
+        r = topics.filter((t) => t !== f && linksOf(t).includes(simple))
+      }
       memo.set(s, r)
     }
     return r
@@ -429,6 +442,8 @@ const KIND_LINE: Record<string, string> = {
   report: "A project report page condenses one project's investigation, with its exact numbers.",
   digest: "A cross-project digest collects discoveries or pitfalls that recur across projects.",
   source: "A raw report is the project's own write-up, unedited. Use it to check a summary against its source.",
+  finding: "A finding page states one headline result from a project report, its caveat, and where it sits against published work.",
+  direction: "A research direction states a question the findings open, a hypothesis, the test that would settle it, and the data it needs.",
 }
 const ENTITY_CLS = new Set(["organism", "compound", "method", "dataset", "gene", "entity"])
 
@@ -463,7 +478,7 @@ export function briefOf(f: File, root: Root): string {
   const openingText = opening ? prose(opening).replace(/\s+/g, " ").trim() : ""
   const brief =
     k.cls === "topic" ? firstSentence(openingText)
-    : ["conflict", "collection", "plain", "author"].includes(k.cls) ? ""
+    : ["conflict", "collection", "plain", "author", "finding", "direction"].includes(k.cls) ? ""
     : (fm(f)?.description ?? "")
   // A topic's brief is its opening's first sentence, so it repeats the opening only when that
   // is all there is. A description repeats it when both start the same way.

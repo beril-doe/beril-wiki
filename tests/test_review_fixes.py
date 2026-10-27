@@ -2,6 +2,7 @@
 
 import datetime
 import json
+import re
 import xml.etree.ElementTree as ET
 
 import pytest
@@ -142,6 +143,21 @@ def test_any_retrieval_fault_is_a_per_finding_failure(tmp_path, monkeypatch, err
     assert entry["failed"] is True
 
 
+def test_pin_without_retrieval_publishes_and_checks(tmp_path):
+    from beril_wiki.check import card_errors
+    from beril_wiki.publish.cards import literature_section
+
+    decision = novelty.Decision(finding="x", label=novelty.EXTENDS, reason="checked by hand")
+    entry = novelty.apply_decision({"label": novelty.NOT_ASSESSED, "failed": True}, decision)
+    text = literature_section(entry)
+    assert "checked by hand" in text and "Extends retrieved work" in text
+    (tmp_path / "state").mkdir()
+    (tmp_path / "wiki/findings").mkdir(parents=True)
+    (tmp_path / "wiki/findings/x.md").write_text("---\nfinding_id: x\nsource: a\n---\n# X\n")
+    (tmp_path / "state/novelty.json").write_text(json.dumps({"x": entry}))
+    assert not [e for e in card_errors(tmp_path, {"a": "x"}) if "retrieval date" in e]
+
+
 # Second review (Codex, Oct 2026)
 
 from test_headlines import TWO  # noqa: E402
@@ -202,3 +218,11 @@ def test_cards_command_leaves_status_readable(tmp_path, monkeypatch):
     cli.run_cards(tmp_path, {"model": "m", "max_tokens": 10, "max_jobs": 1, "cli": "unused"})
     monkeypatch.setattr(sys, "argv", ["agentic", "--root", str(tmp_path), "status"])
     assert cli.main() == 0
+
+
+def test_card_styles_leave_record_classes_alone():
+    from pathlib import Path
+
+    css = (Path(__file__).parents[1] / "theme/styles/_cards.scss").read_text()
+    for name in ("kind", "chips", "chip", "more"):
+        assert not re.search(rf"(^|[\s,]){re.escape('.' + name)}\b", css, re.M), name

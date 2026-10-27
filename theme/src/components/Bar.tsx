@@ -31,9 +31,18 @@ function Logo() {
   )
 }
 
+// Findings and research directions lead the bar where a preview build publishes
+// them; every collection keeps its own entry, so no part of the wiki is hidden.
+const RECORDS: [string, string][] = [
+  ["Findings", "findings/index"],
+  ["Directions", "directions/index"],
+]
+
 export function Bar({ cd, header }: { cd: QuartzComponentProps; header: PageFrameProps["header"] }) {
   const slug = cd.fileData.slug as FullSlug
   const here = collectionOf(slug)
+  const published = new Set((cd.allFiles ?? []).map((f) => f.slug as string))
+  const nav = [...RECORDS.filter(([, target]) => published.has(target)), ...NAV]
   return (
     <header class="bar">
       <a class="wordmark" href={resolveRelative(slug, "index" as FullSlug)} aria-label={`${cd.cfg.pageTitle}, home`}>
@@ -45,7 +54,7 @@ export function Bar({ cd, header }: { cd: QuartzComponentProps; header: PageFram
         </span>
       </a>
       <nav aria-label="Collections">
-        {NAV.map(([label, target]) => (
+        {nav.map(([label, target]) => (
           <a
             href={resolveRelative(slug, target as FullSlug)}
             aria-current={collectionOf(target) === here && here !== "" ? "page" : undefined}

@@ -6,6 +6,7 @@
 import MiniSearch, { type SearchResult } from "minisearch"
 import { type IndexFile, PAGE_OPTIONS, type Page, type PagesFile, SEARCH_DEPTH, SECTION_OPTIONS, type Section, type SectionFile, processTerm, tokenize } from "../search/config"
 import { type ChatMessage, ensureKey, loadSettings, modelLabel, onSettingsChange, openSettings, statusLine, streamChat } from "./ai"
+import { wireCards } from "./cards"
 import { fuse, meaningError, meaningLoading, meaningPaused, meaningProgress, meaningRank, meaningStatus, onMeaningChange, setMeaningWanted } from "./semantic"
 import { asset, currentSlug, esc, pageHref as href, session, slugOfHref, titleHtml as title } from "./site"
 
@@ -104,15 +105,20 @@ const GROUPS: [string, string][] = [
   ["concept", "Concepts"],
   ["entity", "Entities"],
   ["conflict", "Conflicts"],
+  ["finding", "Findings"],
+  ["direction", "Research directions"],
   ["report", "Reports"],
   ["source", "Raw reports"],
   ["other", "Other pages"],
 ]
 const TAG: Record<string, string> = {
-  topic: "Topic", concept: "Concept", entity: "Entity", conflict: "Conflict", report: "Report", source: "Raw report", other: "Page",
+  topic: "Topic", concept: "Concept", entity: "Entity", conflict: "Conflict", finding: "Finding", direction: "Research direction",
+  report: "Report", source: "Raw report", other: "Page",
 }
 // Synthesis pages answer most questions; raw reports repeat them at length.
-const GROUP_BOOST: Record<string, number> = { topic: 1.1, concept: 1.15, entity: 1.1, conflict: 1, report: 1, source: 0.7, other: 0.6 }
+const GROUP_BOOST: Record<string, number> = {
+  topic: 1.1, concept: 1.15, entity: 1.1, conflict: 1, finding: 1.1, direction: 1.05, report: 1, source: 0.7, other: 0.6,
+}
 
 const here = currentSlug
 const route = () => (["ask", "guide"].includes(here()) ? here() : "")
@@ -338,7 +344,10 @@ function ensurePalette(): HTMLElement {
 
 function scopesFor(): [string, string][] {
   const p = bySlug.get(here())
-  const s: [string, string][] = [["all", "All"], ...GROUPS.slice(0, 6)]
+  // Finding and research-direction groups only where a preview build published them.
+  const present = new Set(pages.map((x) => x.group))
+  const groups = GROUPS.filter(([g]) => g !== "other" && (!["finding", "direction"].includes(g) || present.has(g)))
+  const s: [string, string][] = [["all", "All"], ...groups]
   if (p && p.group !== "other") s.splice(1, 0, ["page", "This page"])
   return s
 }
@@ -1031,6 +1040,10 @@ function renderAskPage() {
   const scoped = bySlug.get(params.get("page") ?? "")
   const pageScope = scoped && askable(scoped) ? scoped.slug : ""
   const topics = pages.filter((p) => p.group === "topic")
+  // Planning reads only the records a project is chosen from; a preview build publishes them.
+  const PLAN = new Set(["finding", "direction", "conflict"])
+  const canPlan = pages.some((p) => p.group === "finding" || p.group === "direction")
+  const planScope = canPlan && params.get("scope") === "plan"
   main.className = "px-askpage-main"
   main.innerHTML = `<div class="px-askhead">
       <div class="eyebrow">Ask the wiki</div>
@@ -1051,6 +1064,8 @@ function renderAskPage() {
           <div class="opts">
             <label>Scope <select aria-label="Scope"><option value="">All of the wiki</option>${
               pageScope && bySlug.get(pageScope) ? `<option value="page:${esc(pageScope)}" selected>This page: ${esc(bySlug.get(pageScope)!.title)}</option>` : ""
+            }${
+              canPlan ? `<option value="plan"${planScope ? " selected" : ""}>Findings, research directions and conflicts</option>` : ""
             }${topics.map((t) => `<option value="topic:${esc(t.slug)}">Topic: ${esc(t.title)}</option>`).join("")}</select></label>
             <span class="px-aistatus"></span>
             <span class="px-askrank px-meaning-status" aria-live="polite"></span>
@@ -1112,6 +1127,7 @@ function renderAskPage() {
       const slug = v.slice(5)
       return { filter: (p) => p.slug === slug, page: bySlug.get(slug), perPage: Infinity }
     }
+    if (v === "plan") return { filter: (p) => PLAN.has(p.group), perPage: 2 }
     if (v.startsWith("topic:")) {
       const slug = v.slice(6)
       return { filter: (p) => p.slug === slug || p.topicSlugs.includes(slug) }
@@ -1293,6 +1309,11 @@ function openDrawer(page: Page) {
 
 async function enhance() {
   wireBar()
+  // The planner hands its question to Ask the way search does, so Ask asks it on arrival.
+  wireCards((question, askUrl) => {
+    session.set(ASK_HANDOFF, question)
+    location.href = `${askUrl}?scope=plan&q=${encodeURIComponent(question)}`
+  })
   if (!pal?.classList.contains("open")) document.documentElement.style.overflow = ""
   // The keyword index (about 6 MB gzipped) loads in the background once the page is idle,
   // so the first search is quick. Meaning vectors load only when meaning search or Ask needs them.

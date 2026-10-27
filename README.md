@@ -44,8 +44,10 @@ staged changes without inference:
 uv run python -m beril_wiki.agentic plan
 ```
 
-Runs load the committed [model policy](agentic.yaml): Opus 5.5 for scientific
-work and Sonnet 5 for queries and figure selection.
+Runs load the committed [model policy](agentic.yaml): Opus 5.5 plans and writes
+derived pages, Sonnet 5.5 writes integrated pages and the finding and research-direction
+records, and GPT-6.1 Sol extracts evidence, reviews, writes queries and selects
+figures.
 Derived pages (conflicts, hubs, home, literature, authors) are written from
 evidence packed into one prompt, checked by code, reviewed in one turn and
 corrected by paragraph patches; a page that does not converge is recorded, not
@@ -54,6 +56,9 @@ subscription login, the observatory checkout, run budgets, workers, failed-page
 retry, search, and recovery, or open the
 [HTML walkthrough](docs/agentic-workflow.html) for the control flow. A capped
 real-source update remains the acceptance step before a large compilation.
+`uv run python -m beril_wiki.agentic cards --max-tokens N --max-jobs M` runs
+only the finding, literature-label and research-direction stages for the reports and
+topics in `contract/cards.yaml`, then `check --strict`.
 The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 
 ## Repository layout
@@ -65,7 +70,7 @@ The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 | `scripts/` | `setup.sh`, `run_pipeline.sh` and `build_quartz.sh` |
 | `tests/` | deterministic checks and recorded-response workflow tests |
 | `theme/` | the Quartz page frame (one component per page region), the stylesheet (one partial per region), and the browser script and index builder for search and Ask |
-| `contract/` | the editorial contract injected into every compile, the concept decisions manifest, and the errata a person has recorded against the source reports |
+| `contract/` | the editorial contract injected into every compile, the concept decisions manifest, the errata a person has recorded against the source reports, the scope of finding and research-direction records (`cards.yaml`), and human decisions on literature labels (`novelty-decisions.yaml`) |
 | `state/` | per-stage caches that make the pipeline incremental |
 | `search/` | ignored local copy of the section vectors for meaning search; the shared copy lives on the `search-data` branch |
 | `.agentic/` | ignored runtime ledger, raw results, receipts, and candidate workspace; preserve when resuming |
@@ -105,6 +110,11 @@ Pushing to `main` rebuilds and deploys the site to
 ([`.github/workflows/pages.yml`](.github/workflows/pages.yml)). Pull requests
 build without deploying, so the Linux-only parts of the render are checked
 before they reach the live site.
+
+The deployed site leaves out the finding and research-direction records under
+`wiki/findings/` and `wiki/directions/`. `WIKI_PREVIEW=1 scripts/build_quartz.sh`
+renders them locally, and its home page then leads with findings and next
+steps.
 
 The job is render-only. It needs no API key, because `wiki/` and every
 figure are committed. Refreshing the *content* is still a maintainer

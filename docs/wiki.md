@@ -18,6 +18,8 @@ the schedule runs and what validates each page.
 | `wiki/authors/` | Attribution and project lists from observatory metadata, plus model-written, reviewed Contributions sections. |
 | `wiki/data/` | Data-collection metadata joined to the projects that mention each collection. |
 | `wiki/opportunities.md` and `wiki/negative-results.md` | Deterministic digests of Open Directions and report caveats or null results. |
+| `wiki/findings/` | At most 6 headline findings per report in `contract/cards.yaml`, each with Key figures, the verbatim Evidence quote, its Caveat and the report's other caveats. The literature label lives in `state/novelty.json` and joins the page at publish. Published only in a preview build. |
+| `wiki/directions/` | Research directions for each topic in `contract/cards.yaml`, written from the topic's findings, literature labels and conflicts: the question, Hypothesis, Why it matters, How to test it, What would support or refute it, Data, Builds on and Closest published work. Proposals that would repeat or correct existing work are not directions; they are listed per report for maintainers at publish. Published only in a preview build. |
 
 Topic membership is saved in `state/curator-topics.json`. The host rejects
 unknown or duplicated concepts, missing memberships, unsafe titles and stale
@@ -40,7 +42,14 @@ resume decisions. Metadata pages and raw reports have their own formats.
 Deterministic checks verify citation IDs, selected quantities, links and
 retention of unchanged evidence. Every generated page needs an H1, which
 publishing turns into its title; `beril_wiki.check` fails on a page without
-one. Separate model review assesses scientific
+one. For finding and research-direction records the check also requires that a
+finding's Evidence quote appear verbatim in its report and its key figures in
+that report. A literature label must be one of the six, carry a retrieval date
+unless it is "Not assessed", and name only PMIDs it retrieved. A research
+direction must build on findings or conflicts that exist, name collections
+that are pages under `wiki/data/`, cite only papers a finding's literature
+check retrieved, and not have a title that asks to redo existing work.
+Separate model review assesses scientific
 support and lost meaning. Neither establishes that the underlying research is
 correct; a number appearing in a cited report does not establish its units,
 denominator or interpretation.
@@ -66,6 +75,16 @@ from the accepted wiki without editing it:
   counts) and `ask.md`, which the theme's browser script fills with the Ask
   interface. A record page shows its one-line brief, when the page has one,
   and a line naming its kind that links to the guide.
+- Finding and research-direction records publish only when `WIKI_PREVIEW=1`
+  is set (`WIKI_PREVIEW=1 scripts/build_quartz.sh`). Then
+  [`publish/cards.py`](../src/beril_wiki/publish/cards.py) joins each finding's
+  literature label, topics, related conflicts and the research directions that
+  build on it, and gives each direction a BERIL prompt and a handoff brief. It
+  also writes `findings/index.md`, `directions/index.md`, a `cards.json`
+  export, and one `data-issues/<report>.md` page per report listing the
+  in-scope proposals that would repeat, correct or reconcile its work; each
+  report summary links to its list. The public build leaves all of these out,
+  and links to them become plain text.
 
 Run [`scripts/build_quartz.sh`](../scripts/build_quartz.sh) after local
 acceptance to render the site. Publishing committed content is separate from
@@ -79,6 +98,20 @@ reports. Literature Context connects the synthesis to external papers;
 opportunities and negative results help readers find follow-up questions and
 avoid repeating unsuccessful analyses. The home page's "Find your way in"
 cards state which question each kind of page answers.
+
+In a preview build with findings, the top bar adds Findings and Directions
+before the existing collections, which all keep their entries. The home page
+leads with findings, research directions and the conflicts the most directions
+build on, then shows the usual home sections in full below the topic table. A
+topic hub with findings or directions shows "New here" and "Research
+directions" cards above its synthesis. The findings index filters its cards by
+label and topic, and the directions index by readiness, approach and topic.
+"Plan my next project" sends the reader's interest to Ask with the scope
+"Findings, research directions and conflicts", which answers from those three
+kinds of page, at most 2 sections from one page. On a direction, "Copy BERIL
+prompt" copies a prompt to paste into BERIL and "Copy handoff brief" copies
+Markdown for a collaborator or a lab. A literature label is a pipeline judgment
+against PubMed abstracts, not a reviewed verdict.
 
 Search (the top bar, or `/`) returns sections rather than whole pages, so a
 result opens the page at the matching paragraph. It ranks by keywords unless
