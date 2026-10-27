@@ -26,6 +26,9 @@ uv run python -m beril_wiki.agentic run \
 
 # Search accepted wiki Markdown without inference.
 uv run python -m beril_wiki.agentic search 'carbon yield'
+
+# Run only the finding, literature-label and research-direction stages, then check --strict.
+uv run python -m beril_wiki.agentic cards --max-tokens 200000 --max-jobs 40
 ```
 
 These budgets illustrate syntax, not measured requirements for this corpus.
@@ -75,9 +78,10 @@ selected by `--root`. The committed policy explicitly assigns every role:
 | `planning` | Opus 5.5 | Plan evidence integration and propose topic groups. |
 | `pages` | Sonnet 5.5 | Write and repair the concept, entity and summary pages integration produces (`write/` jobs, every pass). Applies to pages written from now on; pages already accepted stay. |
 | `writing` | Opus 5.5 | Derived prose (conflicts, topics, literature, authors), home and entity merges; default for other generation jobs. |
-| `review` | GPT-6.1 Sol (Codex) | All separate scientific reviews and verifications, including extraction and repaired candidates. |
-| `queries` | GPT-6.1 Sol (Codex) | Construct literature search queries. |
+| `review` | GPT-6.1 Sol (Codex) | All separate scientific reviews and verifications, including extraction and repaired candidates, and the second opinion a "Candidate novel" or "In tension" literature label needs. |
+| `queries` | GPT-6.1 Sol (Codex) | Construct literature search queries, including the PubMed queries for literature labels. |
 | `figures` | GPT-6.1 Sol (Codex) | Select figure placements. |
+| `cards` | Sonnet 5.5 | Choose headline findings, judge literature labels and write research directions (stages `headlines`, `novelty`, `directions`), at medium reasoning effort (`CARD_EFFORT` in `agentic/runtime.py`). |
 
 This is a deliberate hybrid, not a measured optimum: Claude plans and writes,
 a GPT model extracts and reviews, so no page is checked by the family that wrote
@@ -142,6 +146,8 @@ applies only to reports extracted from then on: evidence already extracted stays
 valid, so switching the extraction model does not re-integrate the corpus.
 A `pages` change works the same way: it applies to pages written from then on,
 accepted pages stay, and neither integration nor any derived stage reruns.
+A `cards` change refreshes only the three card stages. Their fingerprints also
+take `review`, and `novelty` takes `queries`.
 
 ## Editorial schedule and required work
 
@@ -152,16 +158,19 @@ every stage that depends on it stale as well:
 | Stage | Work and completion condition |
 |---|---|
 | Integrate | Runs first when sources changed: extract changed reports, route every evidence record to concept pages, group edits by destination, validate and review pages; resolve entities and refresh deterministic metadata. A writer receives the evidence assigned to its page with quotes packed, not every finding its sources yielded; an existing entity with nothing assigned and no revised source is skipped. It accounts for each assigned record by the index of the paragraph carrying it, not by repeating the paragraph, since a page assigned three hundred records could not otherwise finish its answer; the validator resolves the index against every paragraph of the body, including Open Directions, and the reviewer sees the resolved text. The writer drafts with no tools, in one turn: the page, absorbed pages and quotes are packed, and the prompt states the host gates it will meet. A repair may read and search the sources, as the review it answers did; drafted and repaired without them, pages scored about a point lower on fidelity in a blind judge. A page assigned more than `--pass-records` records is written in near-equal passes in evidence-id order, each a full write, review and repair of its slice against the page the previous pass left, so no single job integrates hundreds of records; the retention gate keeps every earlier pass's citations and figures. A pass that will not converge is dropped rather than the page, which keeps every accepted pass; its records, objections and job keys go to `.agentic/salvaged.json`, as a salvaged derived page's paragraphs do. At nine passes in ten accepted in the pilot, a seven-pass page failing whole would publish under half the time. Only a page whose every pass fails keeps its previous version. |
+| Conflicts | Reconcile tensions after integration. |
+| Topics | Choose concept groups and titles, then write hubs/home after conflicts are current. Every concept must occur exactly once. |
+| Literature | Add supported external context after topics are current. |
+| Authors | Update contributions from current summaries and metadata; independent of topics. |
+| Headlines | For each report in `contract/cards.yaml`, choose up to 4 observations or inferences and up to 2 null results or corrections from its accepted evidence records, and write each to `wiki/findings/<id>.md`. Cached per report in `state/headlines.json`. A report whose evidence snapshot does not match its current text is skipped and keeps its previous pages. |
+| Novelty | Label each finding against PubMed after headlines; labels go to `state/novelty.json`, not to the finding page. |
+| Research directions | After conflicts, topics, headlines and novelty, write 3 to 8 research directions for each topic in `contract/cards.yaml` into `wiki/directions/<slug>.md`. Cached per topic in `state/directions.json`, with the accepted reply kept so a page re-renders without a model call. |
 
 Before writing hundreds of planned pages, measure a few: `--write-only
 concepts/a.md,summaries/b.md` writes only those pages and then stops before any
 source is recorded as integrated, so the ledger shows what an accepted page
 costs and the work tree holds the pages for inspection. A partial run must never
 mark the corpus integrated, or the next run would believe the work done.
-| Conflicts | Reconcile tensions after integration. |
-| Topics | Choose concept groups and titles, then write hubs/home after conflicts are current. Every concept must occur exactly once. |
-| Literature | Add supported external context after topics are current. |
-| Authors | Update contributions from current summaries and metadata; independent of topics. |
 
 Every stage writes a receipt (`.agentic/curator-receipts.json`) with the paths
 it changed, so the audit trail of the earlier action loop survives without a
@@ -190,6 +199,83 @@ as 31 pages from the October 2026 compile did. The batch writer also inserts the
 planned title when a candidate has no H1, and `beril_wiki.check` fails on any
 generated page still without one. `scripts/run_pipeline.sh` runs the same
 stage before `names`.
+
+### Finding and research-direction records
+
+`contract/cards.yaml` names the topics and reports these stages cover. Either
+key takes a list or `all`, which means every report under `wiki/sources` and
+every topic in `state/curator-topics.json`, read at each run. Both are `all`
+since the first full-corpus run (October 2026, USD 84 of Claude). Each stage writes only its own outputs, so topic and literature
+fingerprints stay unchanged. The stages need the agentic runtime: run without it,
+as from `scripts/run_pipeline.sh`, they print a notice and write nothing.
+
+The novelty stage labels each finding in `wiki/findings`. The `queries` model
+writes up to 3 PubMed queries, NCBI eutils retrieves at most 30 abstracts from
+those queries and the papers the report cites, and the `cards` model picks one
+label. Abstracts are fetched 10 records at a time; a batch over the 2 MB response
+cap is fetched one record at a time, and a single record over the cap is left out
+with a warning. Code checks every PMID it names against the retrieved set. The labels are
+"Established in retrieved literature", "Extends retrieved work", "In tension
+with retrieved work", "Candidate novel", "Insufficient literature evidence" and
+"Not assessed", the last for a finding never labelled. "Candidate novel" and "In
+tension with retrieved work" stand only when the `review` model, from the other
+vendor, assigns the same label. Otherwise the finding takes "Extends retrieved
+work" if that model chose "Established" or "Extends", and "Insufficient
+literature evidence" for any other answer. A search that retrieves nothing gives
+"Insufficient literature evidence" without a judging call. A count, share or
+inventory of the report's own data, such as how many genes fall in each class,
+is not a relationship and is never "Candidate novel"; it is labelled
+"Insufficient literature evidence" unless a retrieved paper reports the same
+pattern. A label is judged
+again when its finding changes, when the `cards`, `review` or `queries` model
+changes, or 90 days after retrieval (`REFRESH_DAYS`). An expired label makes an
+otherwise unchanged `agentic run` schedule the novelty stage. When retrieval
+fails, the previous label and date stay.
+`contract/novelty-decisions.yaml` pins or withdraws a label with a person's
+reason; a withdrawn label shows as "Not assessed".
+
+The directions stage writes one reviewed job per topic. The `cards` model reads
+the topic's findings with their literature labels and closest papers, its
+conflict pages, the proposals its pages already make, and the collection list.
+It proposes 3 to 8 directions, each with an id (D1, D2, ...) that repairs keep
+even when they rewrite the direction, a question, a falsifiable hypothesis,
+why it matters, the decisive test, what would support or refute it, an
+approach, the data and its readiness, and the findings, conflicts and closest
+papers it rests on. A direction is a biological question, never a request to
+repeat, correct, reconcile, recount or audit existing work: code rejects a
+title or question that opens that way (`REANALYSIS` in `stages/cards.py`). Those
+proposals are listed for the reports' maintainers at publish instead. Code also
+checks that each direction rests on a finding or conflict of the topic, cites
+only PMIDs the topic's findings retrieved, names collections under
+`wiki/data/`, and states no result figure the evidence it cites lacks.
+Directions carry no score.
+
+When a headline or direction job does not converge, the stage keeps the last
+candidate the reviewer judged, minus the headlines or directions an open
+objection names. Each objection is read against the candidate it was raised on: a
+headline by its evidence id, a direction by its id. An open objection that opens
+with "Issue N" restates issue N of the list the verifier was given, so salvage also
+drops what issue N named; an "issue N" elsewhere in the text is context only. If
+any objection names none, the record fails. `.agentic/salvaged.json` lists what was
+dropped.
+
+When the GPT reviewer refuses a card job's content as possible biological risk on
+its fallback model too, only that report, finding or topic fails, without salvage
+since the refused verification gave no verdict on the repair, and the ledger
+replays the stored refusal on later runs instead of asking again. Any other job
+failure still stops the stage.
+
+`contract/cards.yaml` and `contract/novelty-decisions.yaml` are left out of job
+cache keys (`UNKEYED_CONTRACT` in `agentic/runtime.py`), as `contract/errata.yaml`
+is. The stages list them as inputs instead, so widening the scope reruns only
+these stages.
+
+`agentic cards` runs `headlines`, `novelty`, `directions` and then `check
+--strict` in place, under the same ledger and budget flags as `run`. It does
+not promote or touch `state/agentic.json`, and it refuses while a promotion is
+pending. A later full `agentic run` adopts what it wrote from the stages' hash
+caches. [`wiki.md`](wiki.md#rendering-the-accepted-corpus) describes how the
+records publish.
 
 ## Evidence, correction and token reuse
 
@@ -474,6 +560,8 @@ copied raw sources. This CLI is a retrieval boundary, **not an installed BERIL o
 OpenViking integration**.
 
 After local acceptance, `scripts/build_quartz.sh` renders the existing format.
+`WIKI_PREVIEW=1 scripts/build_quartz.sh` also publishes the finding and
+research-direction records and the maintainers' data-issue lists.
 With `CBORG_API_KEY` set, it also embeds the sections that have no vector yet.
 Then run `uv run python -m beril_wiki.publish.search_data push` before opening
 the pull request: the vectors live on the `search-data` branch, and a pull
@@ -486,8 +574,8 @@ promotion.
 Offline tests exercise the actual subprocess pipeline with recorded model and
 PubMed replies: the stage schedule, dependency enforcement, gates, paragraph
 patches, closed verification, salvage, recorded page failures, errata
-placement, topic decisions, cache invalidation, subscription setup and
-promotion recovery. They do not establish model quality or real subscription
+placement, topic decisions, the finding, literature-label and research-direction
+stages, cache invalidation, subscription setup and promotion recovery. They do not establish model quality or real subscription
 savings. The tests workflow runs them, with ruff and ty, on every pull request
 and on `main`; the publish workflow validates the committed wiki, renders it and
 type-checks the theme, and neither needs a key or an observatory checkout. The

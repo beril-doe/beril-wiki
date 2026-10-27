@@ -1,0 +1,7 @@
+# Human decisions on literature labels. Each entry pins a label or withdraws
+# one, with the reason a person gives. A withdrawn label shows as Not assessed.
+#
+#   - finding: truly_dark_genes--1a2b3c4d
+#     label: Extends retrieved work      # or: withdraw: true
+#     reason: PMID 12345678 reports the same depletion in E. coli.
+decisions: []

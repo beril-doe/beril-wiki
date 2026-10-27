@@ -35,6 +35,10 @@ class WorkflowError(RuntimeError):
     """Stop without accepting partial work or silently spending more tokens."""
 
 
+# Codex's wording when it blocks a turn for its content (codex.py, stages/cards.py).
+CONTENT_FLAG = "biological risk"
+
+
 class JobFailed(WorkflowError):
     """One job's own operational failure: a timeout, a cut-off reply, a failed turn.
 
@@ -58,7 +62,20 @@ class CandidateError(WorkflowError):
         self.objections = objections or []
 
 
-MODEL_ROLES = ("extraction", "planning", "pages", "writing", "review", "queries", "figures")
+MODEL_ROLES = (
+    "extraction",
+    "planning",
+    "pages",
+    "writing",
+    "review",
+    "queries",
+    "figures",
+    "cards",
+)
+# The finding, literature-label and research-direction stages: each runs its own judgment jobs,
+# kept off the writing role so they never inherit a derived-page writer.
+CARD_STAGES = ("headlines/", "novelty/", "directions/")
+CARD_EFFORT: Literal["medium"] = "medium"
 # The roles whose model decides whether integrated pages are current. Extraction and
 # pages are not: a new extraction model applies to reports extracted from then on, and a
 # new page writer to pages written from then on, so evidence already extracted and pages
@@ -142,18 +159,22 @@ def role_for(step: str) -> str:
     """Route by job role; a repair, retry or patch keeps its role. Review and verify
     are the reviewer's own jobs and route to it."""
     step = re.sub(r"/patch/\d+$", "", step.removesuffix("/again").removesuffix("/repair"))
-    if step.endswith(("/science-review", "/review", "/verify")):
+    if step.endswith(("/science-review", "/review", "/verify")) or (
+        step.startswith("novelty/") and step.endswith("/agree")
+    ):
         role = "review"
     elif step.startswith("extract/"):
         role = "extraction"
     elif step.startswith("plan/") or step == "curator/topics":
         role = "planning"
-    elif step.startswith("lit/") and step.endswith("/queries"):
+    elif step.startswith(("lit/", "novelty/")) and step.endswith("/queries"):
         role = "queries"
     elif step.startswith("figures/"):
         role = "figures"
     elif step.startswith("write/"):
         role = "pages"
+    elif step.startswith(CARD_STAGES):
+        role = "cards"
     else:
         role = "writing"
     return role
@@ -353,10 +374,16 @@ class Ledger:
         stage = os.environ.get("BERIL_AGENTIC_STAGE", "")
         self.db.execute("BEGIN IMMEDIATE")
         try:
-            row = self.db.execute("SELECT status,output FROM jobs WHERE key=?", (key,)).fetchone()
+            row = self.db.execute(
+                "SELECT status,output,error FROM jobs WHERE key=?", (key,)
+            ).fetchone()
             if row and row[0] == "done":
                 self.db.commit()
                 return row[1]
+            if row and row[0] == "failed" and CONTENT_FLAG in (row[2] or ""):
+                # Re-issuing would be flagged again; the caller fails only its item.
+                self.db.commit()
+                raise JobFailed(f"job {key}: {row[2]}")
             if row:
                 raise WorkflowError(f"job {key}: {row[0]}; inspect saved job before retrying")
             unknown = self.db.execute(
@@ -623,6 +650,11 @@ class EvidenceTools(ReadTools):
         return result
 
 
+UNKEYED_CONTRACT = frozenset(
+    {"contract/errata.yaml", "contract/cards.yaml", "contract/novelty-decisions.yaml"}
+)
+
+
 def contract_manifest(root: Path) -> dict[str, str]:
     """The contract files that define what accepted prose means.
 
@@ -632,8 +664,9 @@ def contract_manifest(root: Path) -> dict[str, str]:
     claim and changes nothing a writer or reviewer was told; recording one must
     not miss every cached job, redraft every page or re-integrate every report.
     The run fingerprint keeps the file, so editing it still triggers a run in
-    which only the cheap post-passes see it."""
-    return {p: h for p, h in manifest(root, ("contract",)).items() if p != "contract/errata.yaml"}
+    which only the cheap post-passes see it. The card scope and novelty decisions
+    are excluded for the same reason: the stages that read them list them as inputs."""
+    return {p: h for p, h in manifest(root, ("contract",)).items() if p not in UNKEYED_CONTRACT}
 
 
 def search_inventory(root: Path, scope: str) -> dict[str, str]:
@@ -921,8 +954,10 @@ class Runtime:
         """The page writer's reasoning effort, when a run sets one; the CLI default
         otherwise. Only the writer of a write/ job: derived pages are the writing role's,
         and a write/ job's review belongs to the reviewer."""
-        writer = role_for(step) == "pages"
-        return self.config.get("write_effort") if writer else None
+        role = role_for(step)
+        if role == "cards":
+            return CARD_EFFORT
+        return self.config.get("write_effort") if role == "pages" else None
 
     def _screened(self, messages: list[dict], step: str, model: str, key: str, output: str) -> str:
         """A fresh reply that is a refusal in prose is recorded as one and answered on

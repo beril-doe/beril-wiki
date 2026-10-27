@@ -24,6 +24,7 @@ from beril_wiki.agentic.runtime import (
 )
 from beril_wiki.agentic.topics import load_groups, propose_topics
 from beril_wiki.stages.literature import SECTION, topic_core
+from beril_wiki.stages.novelty import labels_due
 
 # Action dependencies and owned outputs are host policy; the table order is the schedule.
 EDITORIAL = {
@@ -42,7 +43,42 @@ EDITORIAL = {
     ),
     "literature": (("wiki/topics", "staging"), ("wiki/topics",), ("topics",), "litcontext.json"),
     "authors": (("wiki/summaries", "wiki/concepts"), ("wiki/authors",), (), "authors.json"),
+    # Findings, literature labels and research directions: each stage writes only its
+    # own outputs, so the pages Topics and Literature fingerprint are never touched.
+    # Placement is at publish.
+    "headlines": (
+        ("wiki/sources", "contract/cards.yaml"),
+        ("wiki/findings",),
+        (),
+        "headlines.json",
+    ),
+    "novelty": (
+        ("wiki/findings", "wiki/sources", "contract/novelty-decisions.yaml"),
+        ("state/novelty.json",),
+        ("headlines",),
+        # No disposable cache: state/novelty.json is the published labels, and a
+        # label whose retrieval later fails must keep its previous value and date.
+        None,
+    ),
+    "directions": (
+        (
+            "wiki/findings",
+            "state/novelty.json",
+            "wiki/concepts",
+            "wiki/conflicts",
+            "wiki/sources",
+            "wiki/data",
+            "contract/cards.yaml",
+            "state/curator-topics.json",
+        ),
+        ("wiki/directions",),
+        ("conflicts", "topics", "headlines", "novelty"),
+        "directions.json",
+    ),
 }
+# Stages that also read the shared card helpers; only they hash stages/cards.py, so
+# the revisions of the stages that predate it are unchanged.
+CARD_STAGES = ("headlines", "novelty", "directions")
 # Fail immediately if a future table edit would make freshness propagation order-dependent.
 for index, (action, (_, _, dependencies, _)) in enumerate(EDITORIAL.items()):
     if not set(dependencies) <= set(list(EDITORIAL)[:index]):
@@ -75,7 +111,13 @@ def stage_revision(root: Path, name: str, config: dict) -> str:
         "topics": ("planning", "writing", "review"),
         "literature": ("queries", "writing", "review"),
         "figures": ("figures",),
+        "headlines": ("cards", "review"),
+        "novelty": ("cards", "queries", "review"),
+        "directions": ("cards", "review"),
     }.get(name, ("writing", "review"))
+    files = (f"stages/{name}.py", "agentic/prose.py", "compiler.py")
+    if name in CARD_STAGES:
+        files += ("stages/cards.py",)
     return digest(
         [
             model_signature(config, roles),
@@ -85,21 +127,16 @@ def stage_revision(root: Path, name: str, config: dict) -> str:
                 ast.dump(ast.parse(textwrap.dedent(inspect.getsource(helper))))
                 for helper in (page_context, page_contexts)
             ],
-            *[
-                ast.dump(ast.parse((package / file).read_text(encoding="utf-8")))
-                for file in (
-                    f"stages/{name}.py",
-                    "agentic/prose.py",
-                    "compiler.py",
-                )
-            ],
+            *[ast.dump(ast.parse((package / file).read_text(encoding="utf-8"))) for file in files],
         ]
     )
 
 
 def stage_snapshot(root: Path, name: str, config: dict) -> dict:
     inputs, outputs, _, _ = EDITORIAL[name]
-    return {
+    # Labels age without any input changing; an expired one makes the stage stale.
+    due = {"due": True} if name == "novelty" and labels_due(root) else {}
+    return due | {
         "semantic": stage_revision(root, name, config),
         "inputs": digest(owned_manifest(root, inputs, part="core")),
         "outputs": owned_manifest(
