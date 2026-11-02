@@ -74,53 +74,10 @@ jobs:
       - name: Type-check the theme
         run: npm --prefix theme run typecheck
 
-      # A build that silently dropped the corpus would still deploy green.
-      - name: Check the site is not empty
-        run: |
-          pages=$(find quartz/public -name '*.html' | wc -l)
-          echo "$pages HTML pages built"
-          [ "$pages" -ge 400 ] || { echo "::error::only $pages pages built, expected >=400"; exit 1; }
-          test -f quartz/public/about.html || { echo "::error::about page missing"; exit 1; }
-
-      # The disclaimer is injected into Markdown inputs, so any route Quartz
-      # generates on its own publishes without it. Two kinds of file are not
-      # content and are exempt: 404 (an error page) and about.html (which IS
-      # the explanation), plus Quartz's redirect stubs -- the corpus names
-      # pages `X__REPORT` while Quartz's canonical slug is lowercase, so it
-      # emits a noindex meta-refresh at the original casing. Those stubs only
-      # exist as separate files on a case-sensitive filesystem, which is why
-      # this check can only be got right on Linux.
-      # The disclaimer is injected into Markdown inputs, so any route Quartz
-      # generates on its own publishes without it. Exempt: 404 (an error page),
-      # about.html (which IS the explanation), and Quartz's redirect stubs,
-      # which are meta-refreshes rather than pages.
-      #
-      # The marker is DERIVED from the constant the pipeline injects, not typed
-      # here. Hand-copying it meant every reword silently disarmed the gate:
-      # rewording the sentence once left the check hunting for a phrase no page
-      # contained any more, which fails every page rather than passing them, but
-      # the reverse is just as possible.
-      - name: Every published page states its provenance
-        run: |
-          uv run --project . python - <<'PY'
-          import pathlib, sys
-          from beril_wiki.publish.ingest import PROVENANCE
-          marker = PROVENANCE.split(".")[0].strip()   # first sentence, rendered verbatim
-          assert len(marker) > 20, marker
-          missing, checked = [], 0
-          for f in sorted(pathlib.Path("quartz/public").rglob("*.html")):
-              text = f.read_text(errors="replace")
-              if 'http-equiv="refresh"' in text or f.name in ("404.html", "about.html"):
-                  continue
-              checked += 1
-              if marker not in text:
-                  missing.append(str(f))
-          if missing:
-              print(f"::error::{len(missing)} page(s) published without the provenance callout")
-              print("\n".join(missing[:20]))
-              sys.exit(1)
-          print(f"all {checked} content pages carry: {marker!r}")
-          PY
+      # Page count, the about page, and the provenance callout on every page;
+      # shared with the SPIN image build (image.yml), so both publish the same.
+      - name: Check the built site
+        run: scripts/check_site.sh
 
       - uses: actions/upload-pages-artifact@v3
         with:

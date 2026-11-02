@@ -1,0 +1,9 @@
+# The image needs only the built site, the server module and the lock that pins
+# its dependencies (see Dockerfile). Everything else stays out of the context,
+# which otherwise carries wiki/, quartz/node_modules and .git.
+*
+!pyproject.toml
+!uv.lock
+!src/beril_wiki/__init__.py
+!src/beril_wiki/serve.py
+!quartz/public/
