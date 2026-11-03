@@ -112,8 +112,30 @@ running the curator and committing the accepted result. The curator does not
 commit, push, build Quartz, or deploy automatically.
 
 Before it deploys, the workflow runs `beril_wiki.check --strict` over the corpus and
-asserts that every content page carries its provenance callout; either failing
-blocks publication.
+asserts that every content page carries its provenance callout
+([`scripts/check_site.sh`](scripts/check_site.sh)); either failing blocks publication.
+
+### The SPIN image
+
+The same site is also served from the BERIL webapp's host, at
+[beril.kbase.us/wiki](https://beril.kbase.us/wiki), by a container on SPIN. The
+ingress routes `/wiki` to it without rewriting the path. The container runs a
+small server ([`src/beril_wiki/serve.py`](src/beril_wiki/serve.py)) that resolves
+extensionless page URLs as Pages does.
+[`.github/workflows/image.yml`](.github/workflows/image.yml) runs the same render
+and checks, then pushes `ghcr.io/beril-doe/beril-wiki:latest` (built for
+`beril.kbase.us/wiki`) and `:develop` (built for `beril-dev.kbase.us/wiki`).
+The host is baked into absolute links, so each environment has its own tag.
+Restarting the deployment on SPIN picks up the new image.
+
+To run the image locally:
+
+    WIKI_BASE_URL=localhost:8080/wiki scripts/build_quartz.sh
+    docker build -t beril-wiki .
+    docker run --rm -p 8080:8080 beril-wiki     # http://localhost:8080/wiki/
+
+The site is built before the image rather than inside it, because the search
+vectors come from the `search-data` branch and need the checkout's `.git`.
 
 ### Search and Ask
 

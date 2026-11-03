@@ -12,7 +12,7 @@ an orphan branch that always holds one commit with one file,
 `pull` merges the branch's vectors into the local store, `search/section-vectors.jsonl`.
 scripts/build_quartz.sh runs it before indexing, in CI and locally, so a build
 only embeds sections that have no vector anywhere. `push` merges the local
-store into the branch, pushes it, and dispatches the Pages workflow on main so
+store into the branch, pushes it, and dispatches the site workflows on main so
 the site picks the vectors up; a push to a branch with no workflow of its own
 triggers nothing by itself. Both merge rather than replace, so a push
 from a feature branch never drops vectors the live site still uses. `--prune`
@@ -140,16 +140,24 @@ def push(
     return f"pushed {len(merged)} vectors to {BRANCH} ({commit[:8]})"
 
 
+# Both builds of the site bake the vectors in: GitHub Pages and the SPIN image.
+DEPLOY_WORKFLOWS = ("pages.yml", "image.yml")
+
+
 def redeploy(root: pathlib.Path) -> str:
-    """Rebuild the live site from main with the new vectors."""
-    cmd = ["gh", "workflow", "run", "pages.yml", "--ref", "main"]
-    try:
-        r = subprocess.run(cmd, cwd=root, capture_output=True, text=True)
-    except FileNotFoundError:
-        r = None
-    if r is None or r.returncode:
-        why = "gh is not installed" if r is None else r.stderr.strip()
-        return f"[WARN] could not redeploy ({why}); run `{' '.join(cmd)}`"
+    """Rebuild the live sites from main with the new vectors."""
+    failed = []
+    for workflow in DEPLOY_WORKFLOWS:
+        cmd = ["gh", "workflow", "run", workflow, "--ref", "main"]
+        try:
+            r = subprocess.run(cmd, cwd=root, capture_output=True, text=True)
+        except FileNotFoundError:
+            r = None
+        if r is None or r.returncode:
+            why = "gh is not installed" if r is None else r.stderr.strip()
+            failed.append(f"could not redeploy ({why}); run `{' '.join(cmd)}`")
+    if failed:
+        return "[WARN] " + "; ".join(failed)
     return "redeploying the site from main"
 
 
