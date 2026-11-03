@@ -40,8 +40,23 @@ def test_prefix_and_root_redirect_to_the_index(client):
 def test_extensionless_page_and_folder_index(client):
     assert client.get("/wiki/a").text == "page a"
     assert client.get("/wiki/a.html").text == "page a"
-    assert client.get("/wiki/d").text == "folder d"
     assert client.get("/wiki/d/").text == "folder d"
+
+
+# Page links are relative, so each page works at one form of its URL only: a
+# folder index (which links ../index.css) at d/, a page without the slash.
+@pytest.mark.parametrize(
+    "url, location",
+    [
+        ("/wiki/d", "/wiki/d/"),
+        ("/wiki/a/", "/wiki/a"),
+        ("/wiki/a.html/", "/wiki/a.html"),
+        ("/wiki/d?q=x y", "/wiki/d/?q=x%20y"),
+    ],
+)
+def test_the_wrong_trailing_slash_redirects(client, url, location):
+    r = client.get(url)
+    assert r.status_code == 308 and r.headers["location"] == location
 
 
 def test_assets_are_served_with_a_short_cache(client):

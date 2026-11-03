@@ -71,6 +71,11 @@ jobs:
           SEARCH_REQUIRE_VECTORS: ${{ github.event_name == 'pull_request' && '1' || '' }}
         run: scripts/build_quartz.sh
 
+      # As in pages.yml: build_quartz.sh compiles the theme but never
+      # type-checks it, and an image must not ship a theme Pages would reject.
+      - name: Type-check the theme
+        run: npm --prefix theme run typecheck
+
       - name: Check the built site
         run: scripts/check_site.sh
 
