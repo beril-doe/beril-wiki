@@ -708,7 +708,7 @@ function enhanceCollection() {
   tools.className = "px-tools"
   tools.innerHTML = `<div class="row1">
       <input type="search" placeholder="Filter ${esc(noun)} by title, description${collection === "entities" ? ", alias" : ""} or topic" aria-label="Filter ${esc(noun)}" value="${esc(state.q)}">
-      <label class="count" style="display:flex;gap:6px;align-items:center">Sort <select aria-label="Sort"><option value="rank">${collection === "topics" ? "As on the home page" : "Most linked"}</option><option value="az">A–Z</option></select></label>
+      <label class="count" style="display:flex;gap:6px;align-items:center">Sort <select aria-label="Sort"><option value="rank">${collection === "topics" ? "As on the home page" : collection === "authors" ? "Most credited" : "Most linked"}</option><option value="az">A–Z</option></select></label>
       <span class="px-seg" role="group" aria-label="View"><button type="button" data-v="cards">Cards</button><button type="button" data-v="list">List</button></span>
       <span class="count" aria-live="polite"></span>
     </div>

@@ -85,9 +85,12 @@ export function Listing({ file, c }: { file: File; c: Corpus }) {
     (c.inbound.get(simplifySlug(slugOf(f))) ?? []).filter((k) => !isIndex(slugOf(k))).length
   const byRank = (a: File, b: File) => inbound(b) - inbound(a) || titleOf(a).localeCompare(titleOf(b))
   const byName = (a: File, b: File) => titleOf(a).localeCompare(titleOf(b))
+  // Nothing links to an author page, so authors rank by the project reports
+  // that credit them, the count each author card shows.
+  const byCredit = (a: File, b: File) => out(b, "summaries") - out(a, "summaries") || byName(a, b)
   // Topics keep the order the home page lists them in; nothing links to a
   // topic often enough for a ranking to mean anything.
-  const alphabetical = here === "authors" || here === "data" || here === "topics"
+  const order = here === "topics" ? byName : here === "authors" ? byCredit : byRank
 
   // What to count differs by collection: nothing links to an author page, so
   // "linked from" would read zero on every one of them, and a topic page is
@@ -175,7 +178,7 @@ export function Listing({ file, c }: { file: File; c: Corpus }) {
   return (
     <div class="listing">
       <div class="cards">
-        {members.sort(alphabetical ? byName : byRank).map((f) => (
+        {members.sort(order).map((f) => (
           <Card f={f} />
         ))}
       </div>
