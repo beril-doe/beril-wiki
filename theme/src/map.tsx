@@ -21,18 +21,30 @@ import { type Corpus, type File, collectionOf, isIndex, linksOf, slugOf, titleOf
 // than three, so it grows sideways as well as downward and the whole map still
 // fits on one screen as topics are added. The frame scales the map to its
 // width, so hub labels are scaled up by the same factor to keep the size they
-// have at three columns.
+// have at three columns, up to LABEL_SCALE_MAX: the widest label line measured
+// 241 units at three columns, so beyond about 1.7 times that two neighbouring
+// labels would meet. Each row gets extra room above it for the larger label.
 const COL_EDGE = 190
 const COL_PITCH = 410
 const colsFor = (topics: number) => Math.max(3, Math.ceil(Math.sqrt(topics)))
 const widthFor = (cols: number) => 2 * COL_EDGE + COL_PITCH * (cols - 1)
 const BASE_W = widthFor(3)
-// Room above each row for a two-line hub label and its count.
+const LABEL_SCALE_MAX = 1.6
+const labelScale = (topics: number) => Math.min(LABEL_SCALE_MAX, widthFor(colsFor(topics)) / BASE_W)
+// Room above each row for a two-line hub label and its count. A two-line label
+// stack (gap, second line and cap height) rises LABEL_RISE units above the ring
+// per unit of scale; rows move apart only once a scaled label needs the room.
 const ROW_TOP = 175
 const ROW_PITCH = 270
 const ROW_BOTTOM = 185
+const LABEL_RISE = 64
+const LABEL_CLEAR = 12
+const rowTopFor = (topics: number) =>
+  Math.max(ROW_TOP, Math.ceil(RING_MAX + LABEL_RISE * labelScale(topics) + LABEL_CLEAR))
+const rowPitchFor = (topics: number) =>
+  Math.max(ROW_PITCH, Math.ceil(2 * RING_MAX + LABEL_RISE * labelScale(topics) + LABEL_CLEAR))
 const rowsFor = (topics: number) => Math.max(1, Math.ceil(topics / colsFor(topics)))
-const heightFor = (topics: number) => ROW_TOP + ROW_PITCH * (rowsFor(topics) - 1) + ROW_BOTTOM
+const heightFor = (topics: number) => rowTopFor(topics) + rowPitchFor(topics) * (rowsFor(topics) - 1) + ROW_BOTTOM
 // Concepts occupy 300 degrees of the ring; the gap at the top is where the
 // hub's own label goes.
 const ARC = 300
@@ -131,11 +143,13 @@ function build(c: Corpus): Graph {
     new Set([...linksOf(f), ...(c.inbound.get(slugOf(f)) ?? []).map(slugOf)]).size
 
   const cols = colsFor(c.topics.length)
+  const rowTop = rowTopFor(c.topics.length)
+  const rowPitch = rowPitchFor(c.topics.length)
   const at = new Map<string, [Point, Cluster]>()
   let id = 0
   const clusters: Cluster[] = c.topics.map((t, i) => {
     const cx = COL_EDGE + COL_PITCH * (i % cols)
-    const cy = ROW_TOP + ROW_PITCH * Math.floor(i / cols)
+    const cy = rowTop + rowPitch * Math.floor(i / cols)
     const hue = c.hue(slugOf(t))
     // Members first, then the unclaimed, so the grey points form one arc
     // rather than speckling the ring.
@@ -244,7 +258,7 @@ export function CorpusMap({ c, from }: { c: Corpus; from: FullSlug }) {
   const W = widthFor(colsFor(clusters.length))
   const H = heightFor(clusters.length)
   // Hub label size, line step and gap above the ring, scaled with the width.
-  const k = W / BASE_W
+  const k = labelScale(clusters.length)
   const href = (f: File) => resolveRelative(from, slugOf(f) as FullSlug)
   const radius = (p: Point) => 3.4 + Math.min(3.4, Math.sqrt(p.deg))
   const heaviest = Math.max(1, ...ties.map((t) => t.count))
