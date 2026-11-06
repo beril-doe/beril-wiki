@@ -28,7 +28,8 @@ const STORE = join(REPO, "search/section-vectors.jsonl")
 const EMBED_INPUT = join(REPO, "quartz/search-embed-input.json")
 const DIM = 768
 
-const DIRS = ["topics", "concepts", "conflicts", "entities", "summaries", "sources", "authors", "data"]
+// findings and directions exist only in a preview build (publish/cards.py).
+const DIRS = ["topics", "concepts", "conflicts", "entities", "summaries", "sources", "authors", "data", "findings", "directions"]
 const ROOT_PAGES = ["about", "negative-results", "opportunities"]
 const ENTITY = new Set(["organism", "gene", "compound", "method", "dataset", "entity"])
 // Sections longer than this are cut into chunks small enough to cite.
@@ -40,6 +41,8 @@ const groupOf = (dir: string, cls: string) =>
   cls === "topic" ? "topic"
   : cls === "concept" ? "concept"
   : cls === "conflict" ? "conflict"
+  : cls === "finding" ? "finding"
+  : cls === "direction" ? "direction"
   : ENTITY.has(cls) ? "entity"
   : dir === "summaries" ? "report"
   : dir === "sources" ? "source"

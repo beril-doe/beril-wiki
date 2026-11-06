@@ -66,7 +66,7 @@ export interface Page {
   cls: string
   /** label shown in the record header: Concept, Organism, Project report... */
   label: string
-  /** search group: topic | concept | conflict | entity | report | source | other */
+  /** search group: topic | concept | conflict | finding | direction | entity | report | source | other */
   group: string
   desc: string
   /** the first topic the record header names, which sets the page's colour */

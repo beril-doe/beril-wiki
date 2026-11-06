@@ -1,18 +1,23 @@
 // The home page swaps the record for the corpus in figures, a map of it, and
-// the topic table.
+// the topic table. When finding records are published (a preview build), two
+// boxes join Find your way in, and three results and three questions follow it,
+// each with a topic strip.
 import type { FullSlug } from "@quartz-community/types"
 import { resolveRelative } from "@quartz-community/utils"
 import type { ElementContent, Root } from "hast"
 import { jsx } from "../jsx"
 import { CorpusMap, mapStats } from "../map"
 import { type Corpus, type File, counts, sections, slugOf, titleOf, topicBlurbs } from "../page"
+import { FindingCard, type FindingFm, directionsOf, findingsOf, resultsIndex } from "./Cards"
+import { CrossQuestions } from "./Questions"
+import { TopicKey } from "./Strip"
 import { Topics } from "./Topics"
 
-function SecHead({ title, deck }: { title: string; deck: string }) {
+function SecHead({ title, deck }: { title: string; deck?: string }) {
   return (
     <div class="sechead">
       <h2>{title}</h2>
-      <p>{deck}</p>
+      {deck && <p>{deck}</p>}
     </div>
   )
 }
@@ -27,6 +32,31 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
   const blurbs = topicBlurbs(byHeading.get("topics"))
   const n = counts(c)
   const stats = mapStats(c)
+  const findings = findingsOf(c)
+  const published = findings.length > 0
+  const questions = directionsOf(c).length
+  const rankOf = (f: File) => (f.frontmatter as { home_rank?: number } | undefined)?.home_rank
+  const picks = findings
+    .filter((f) => rankOf(f) !== undefined)
+    .sort((a, b) => rankOf(a)! - rankOf(b)!)
+    .slice(0, 3)
+  const unmatched = resultsIndex(c).compare_order?.[0]
+  const picksDeck =
+    picks.length > 0 && picks.every((f) => (f.frontmatter as FindingFm | undefined)?.compare_text === unmatched)
+      ? "Results from different topics with no close match in PubMed abstracts."
+      : "Results from different topics with the least published work like them."
+  const kinds = [
+    ["topics/index", "Topics", "What the corpus says about one research area. Start here if you are new to an area.", `${n.topics} topics`],
+    ["concepts/index", "Concepts", "What several projects together show about one claim, and where they disagree.", `${n.concepts} concepts`],
+    ["entities/index", "Entities", "Everything recorded about one organism, gene, compound, method or dataset.", `${n.entities} entities`],
+    ["conflicts/index", "Conflicts", "Where projects disagree, the evidence on each side, and what would settle it.", `${n.conflicts} conflicts`],
+    ["summaries/index", "Reports", "What one project did and found, with exact numbers to cite.", `${n.reports} reports, ${n.digests} digests`],
+  ] as [string, string, string, string][]
+  if (published)
+    kinds.push(
+      ["findings/index", "Results", "What single projects measured or found missing, in plain words.", `${findings.length} results`],
+      ["directions/index", "Open questions", "Questions the results leave open, by topic and by what answering them needs.", `${questions} questions`],
+    )
   return (
     <>
       {/* The introduction keeps one honest measure on the left; the corpus,
@@ -72,22 +102,13 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
               </dd>
             </div>
           ))}
-          <p class="note">Every figure counts pages on this site, not a claim about the field.</p>
         </dl>
       </section>
       {/* Each kind of page answers a different question; the cards say which. */}
       <section class="band">
-        <SecHead title="Find your way in" deck="Each kind of page answers a different question. Pick the one that matches yours." />
+        <SecHead title="Find your way in" />
         <nav class="kinds" aria-label="Kinds of page">
-          {(
-            [
-              ["topics/index", "Topics", "What the corpus says about one research area. Start here if you are new to an area.", `${n.topics} topics`],
-              ["concepts/index", "Concepts", "What several projects together show about one claim, and where they disagree.", `${n.concepts} concepts`],
-              ["entities/index", "Entities", "Everything recorded about one organism, gene, compound, method or dataset.", `${n.entities} entities`],
-              ["conflicts/index", "Conflicts", "Where projects disagree, the evidence on each side, and what would settle it.", `${n.conflicts} conflicts`],
-              ["summaries/index", "Reports", "What one project did and found, with exact numbers to cite.", `${n.reports} reports, ${n.digests} digests`],
-            ] as [string, string, string, string][]
-          ).map(([target, label, what, count]) => (
+          {kinds.map(([target, label, what, count]) => (
             <a class="kindcard" href={resolveRelative(slug, target as FullSlug)}>
               <b>{label}</b>
               <span>{what}</span>
@@ -101,12 +122,38 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
           </nav>
         )}
       </section>
+      {published && (
+        <>
+          <TopicKey c={c} from={slug} blurbs={blurbs} />
+          <section class="band" data-cards data-tstrips aria-label="What the projects found">
+            <SecHead title="What the projects found" deck={picksDeck} />
+            {picks.length > 0 && (
+              <div class="grid2 grid3">
+                {picks.map((f) => (
+                  <FindingCard f={f} from={slug} c={c} strip />
+                ))}
+              </div>
+            )}
+            <p class="c-more">
+              <a href={resolveRelative(slug, "findings/index" as FullSlug)}>All {findings.length} results</a>
+            </p>
+          </section>
+          <section class="band" data-tstrips aria-label="Questions still open">
+            <SecHead title="Questions still open" deck="Questions that draw on results from more than one project." />
+            <CrossQuestions c={c} from={slug} />
+            <p class="c-more">
+              <a href={resolveRelative(slug, "directions/index" as FullSlug)}>All {questions} questions</a>
+            </p>
+          </section>
+        </>
+      )}
       <section class="band" aria-label="Map of the corpus">
         <SecHead
           title="The map"
-          deck={`Each of the ${stats.topics} topics sits at the middle of the concepts that belong to it, ${stats.concepts} in all, sized by how linked each one is. Click any point to open the page.`}
+          deck={`The ${stats.topics} topics and the ${stats.concepts} concepts they gather. Click a point to open its page.`}
         />
-        <div class="mapframe">
+        {/* src/client/strips.ts lights the picked topic's cluster here. */}
+        <div class="mapframe" id="home-map" data-tmap>
           <CorpusMap c={c} from={slug} />
         </div>
         <div class="maplegend">
@@ -121,10 +168,13 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
             {stats.crossings} wikilinks cross between topics, summed into one line per pair
           </span>
           <span class="key">Hover a concept for its own links, a topic for everything leaving it.</span>
+          {published && (
+            <span class="key">The colours are the same topics as the strips on the results and questions above.</span>
+          )}
         </div>
       </section>
       <section class="band" aria-label="Topics">
-        <SecHead title="Topics" deck="What each hub covers, and how much evidence stands behind it." />
+        <SecHead title="Topics" />
         <Topics c={c} from={slug} blurbs={blurbs} />
       </section>
     </>

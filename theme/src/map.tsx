@@ -303,7 +303,7 @@ export function CorpusMap({ c, from }: { c: Corpus; from: FullSlug }) {
         ))}
       </g>
       {clusters.map((cl) => (
-        <g class="cluster" style={`--c:${cl.hue}`}>
+        <g class="cluster" data-t={slugOf(cl.topic).replace(/^topics\//, "")} style={`--c:${cl.hue}`}>
           {cl.points.map((p) => (
             <line class={p.adopted ? "spoke loose" : "spoke"} x1={cl.x} y1={cl.y} x2={p.x} y2={p.y} />
           ))}
