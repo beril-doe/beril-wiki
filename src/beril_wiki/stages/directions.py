@@ -34,6 +34,7 @@ from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, file
 from beril_wiki.check import numbers_in, pmids_in, prose_only
 from beril_wiki.paths import ROOT
 from beril_wiki.stages import cards
+from beril_wiki.stages.gists import statistical
 from beril_wiki.stages.topics import slugify
 
 OUT = Path("wiki/directions")
@@ -74,7 +75,7 @@ class Reply(BaseModel):
 
 
 PROMPT = prompt(
-    "directions@2",
+    "directions@3",
     "Propose research directions for scientists choosing their next project in one topic of "
     "a microbial-biology research wiki built from AI-run analyses over the KBase Data "
     "Lakehouse. You get the topic's FINDINGS (headline results, each with a literature label "
@@ -108,7 +109,20 @@ PROMPT = prompt(
     "to 6 PMIDs from PAPERS that are its closest published work) and prior_work (one "
     "sentence on how it goes beyond them, naming them by PMID; empty if none apply). "
     "Use only result figures stated in FINDINGS or CONFLICTS, keep each finding's "
-    "qualifications, and add no confidence label, ranking or claim about a person. "
+    "qualifications, and add no confidence label, ranking or claim about a person.\n"
+    "A scientist outside the subfield reads every field. Write them in plain words: no "
+    "test statistics (p-values, correlation coefficients, FDR or q-values, AUC, odds "
+    "ratios, accuracy scores) and no statistical words such as 'significant' or 'nominal'; "
+    "say what was seen in words. Name a dataset by its title in COLLECTIONS, never by its "
+    "id, and use no table names, notebook, node or sample identifiers. Say what was found, "
+    "not what 'the report' or 'the evidence' says. The title is a question ending in '?' "
+    "and does not state the hypothesis as a fact.\n"
+    "The decisive test must be able to fail in an informative way, and outcomes say what "
+    "result would refute the hypothesis. A direction whose main step checks whether an "
+    "existing result holds after a control, a correction or a replication is a "
+    "re-analysis, not a new project. OTHER_TOPICS lists the directions other topics "
+    "already propose: do not propose the same project again, and leave a project that "
+    "builds on the same evidence to the topic that has it. "
     + PLATFORM
     + f"\nReturn only JSON matching {json.dumps(Reply.model_json_schema())}.\n",
 )
@@ -192,6 +206,26 @@ def text_of(d: Direction) -> str:
     )
 
 
+# Identifiers a reader cannot decode: snake_case table or collection names, NMDC study
+# ids and tree node names.
+IDENTIFIER = re.compile(r"\b[a-z0-9]+(?:_[a-z0-9]+)+\b|\bnmdc:[\w-]+|\bNode_\d+\b")
+REPORT_TALK = re.compile(
+    r"\bthe (?:reports?|supplied evidence|evidence supplied|source reports?)\b", re.I
+)
+# Shared share of cited findings and conflicts at which two directions are one project.
+SAME_EVIDENCE, SAME_EVIDENCE_MIN = 0.6, 3
+
+
+def builds_on(d: Direction | dict) -> set[str]:
+    get = d.get if isinstance(d, dict) else lambda k, _=None: getattr(d, k)
+    return set(get("findings", []) or []) | set(get("conflicts", []) or [])
+
+
+def same_project(a: set[str], b: set[str]) -> bool:
+    shared = len(a & b)
+    return shared >= SAME_EVIDENCE_MIN and shared / len(a | b) >= SAME_EVIDENCE
+
+
 def new_result_figures(text: str, pool: str) -> list[str]:
     """Result-like figures (decimals, percentages, large counts) the evidence never states.
     A plan's small counts ("the top 20 candidates") are proposals, not results."""
@@ -203,6 +237,7 @@ def checker(pack: dict) -> Callable[[str], Reply]:
     findings, conflicts = pack["_findings"], pack["_conflicts"]
     papers = {p["pmid"] for p in pack["PAPERS"]}
     known = {c["id"] for c in pack["COLLECTIONS"]}
+    others = pack.get("OTHER_TOPICS", [])
 
     def parse(raw: str) -> Reply:
         reply = cards.parse_reply(raw, Reply)
@@ -212,12 +247,39 @@ def checker(pack: dict) -> Callable[[str], Reply]:
         ids = [d.id for d in reply.directions]
         if dup := sorted({i for i in ids if ids.count(i) > 1}):
             problems.append(f"direction ids {dup} are repeated")
-        for d in reply.directions:
+        for i, d in enumerate(reply.directions):
             where = f"{d.id} ({d.title[:50]})"
             if cards.is_reanalysis(d.title) or cards.is_reanalysis(d.question):
                 problems.append(f"{where}: repeats or corrects existing work; propose a question")
             if len(d.title.split()) > TITLE_WORDS or numbers_in(d.title):
                 problems.append(f"{where}: title over {TITLE_WORDS} words or carries figures")
+            if not d.title.rstrip().endswith("?"):
+                problems.append(f"{where}: the title must be a question ending in '?'")
+            prose = text_of(d)
+            if statistical(prose):
+                problems.append(
+                    f"{where}: carries a test statistic or statistical wording; say it in words"
+                )
+            if found := sorted(set(IDENTIFIER.findall(prose))):
+                problems.append(
+                    f"{where}: names identifiers {found[:4]}; use the dataset's title "
+                    "or plain words"
+                )
+            if REPORT_TALK.search(prose):
+                problems.append(
+                    f"{where}: says what 'the report' or 'the evidence' says; say what was found"
+                )
+            for other in others:
+                if same_project(builds_on(d), builds_on(other)):
+                    problems.append(
+                        f"{where}: builds on the same evidence as '{other['title']}' in "
+                        f"{other['topic']}; drop it or build on different findings"
+                    )
+            for e in reply.directions[:i]:
+                if same_project(builds_on(d), builds_on(e)):
+                    problems.append(
+                        f"{where}: builds on the same evidence as {e.id}; merge them into one"
+                    )
             if not d.findings and not d.conflicts:
                 problems.append(f"{where}: builds on no finding or conflict")
             if bad := sorted(set(d.findings) - findings.keys()):
@@ -390,7 +452,18 @@ def main(root: Path = ROOT) -> int:
         pack = topic_pack(root, topic, reports)
         public = {k: v for k, v in pack.items() if not k.startswith("_")}
         messages = [{"role": "user", "content": PROMPT + json.dumps(public)}]
+        # Other topics' directions steer the draft but stay out of the key: in it, each
+        # topic's rewrite would make every other topic stale, and the topics would keep
+        # rewriting one another.
         key = digest([messages, cards.policy(agent.config, ("cards", "review"))])
+        pack["OTHER_TOPICS"] = [
+            {"topic": t, "title": d["title"]}
+            | {"findings": d.get("findings", []), "conflicts": d.get("conflicts", [])}
+            for t, saved_other in sorted(state.items())
+            if t != topic and t in topics
+            for d in (saved_other.get("reply") or {}).get("directions", [])
+        ]
+        draft = PROMPT + json.dumps(public | {"OTHER_TOPICS": pack["OTHER_TOPICS"]})
         saved = state.get(topic, {})
         on_disk = {p.name: file_hash(p) for p in pages_for(out, topic)}
         if saved.get("input") == key and saved.get("reply"):
@@ -410,7 +483,11 @@ def main(root: Path = ROOT) -> int:
             parse = checker(pack)
             try:
                 reply = cards.reviewed(
-                    messages, f"directions/{topic}", parse, agent=agent, salvage=salvager(parse)
+                    [{"role": "user", "content": draft}],
+                    f"directions/{topic}",
+                    parse,
+                    agent=agent,
+                    salvage=salvager(parse),
                 )
             except CandidateError as exc:
                 failed += 1

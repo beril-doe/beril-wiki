@@ -17,8 +17,8 @@ GOOD = (
 )
 
 
-def reply(gist=GOOD, case="", title=""):
-    return json.dumps({"gist": gist, "case": case, "title": title})
+def reply(gist=GOOD, case="", title="", repeats=""):
+    return json.dumps({"gist": gist, "case": case, "title": title, "repeats": repeats})
 
 
 def page(root, title="Genes were depleted", result="observation", quote=QUOTE):
@@ -212,9 +212,13 @@ def test_caveat_wording_is_sent_back_with_a_reason():
 
 
 def test_prompt_tag_is_bumped_and_forbids_caveats():
-    assert gists.PROMPT_TAG == "gists@3" and gists.LEGACY_TAGS == ("gists@2",)
+    assert gists.PROMPT_TAG == "gists@4"
     assert "do not repeat or paraphrase the caveat" in gists.PROMPT
     assert "never invent an organism" in gists.PROMPT
+    # Content review, Nov 2026: cards claimed more than predictions, correlations and
+    # relative comparisons show.
+    assert "a prediction stays a prediction" in gists.PROMPT
+    assert "say in plain words that the report gives both results" in gists.PROMPT
 
 
 def test_statistical_wording_counts_as_a_statistic_in_gists_and_titles():
@@ -241,8 +245,6 @@ def test_gist_keeps_at_most_one_standalone_number():
     signed = gists.checker({"result": "observation", "quote": fell}, "Plain")
     with pytest.raises(CandidateError, match="2 numbers"):
         signed(reply("Mutants lose most fitness on acetate (-1.55) and succinate (-1.39) here."))
-    lenient = gists.checker({"result": "observation", "quote": pool}, "Plain", count_numbers=False)
-    assert lenient(reply("Roughly 20% of 866 genes were depleted in this archaeon under stress."))
 
 
 def test_the_writer_is_told_when_the_title_needs_a_plain_replacement(tmp_path, monkeypatch):
@@ -258,19 +260,79 @@ def test_the_writer_is_told_when_the_title_needs_a_plain_replacement(tmp_path, m
     assert '"TITLE_NEEDS_PLAIN": true' in seen[0]
 
 
-def test_legacy_gist_is_kept_unless_the_new_checks_reject_it(tmp_path, monkeypatch):
-    monkeypatch.setattr(gists, "PROMPT_TAG", "gists@2")
-    run(tmp_path, monkeypatch, {STEP: [reply()]})
-    monkeypatch.setattr(gists, "PROMPT_TAG", "gists@3")
-    state, agent = run(tmp_path, monkeypatch, {})
-    assert agent.asked == [] and state[FID]["gist"] == GOOD
+def test_jargon_goes_back_to_the_writer_and_needs_a_plain_title():
+    parse = gists.checker({"result": "observation", "quote": QUOTE}, "Plain")
+    for bad in (
+        "Mobile SEED categories were enriched among depleted genes in this archaeon.",
+        "Genes in the Pseudomonas_E lineage were depleted in this archaeon under stress.",
+        "Depleted genes clustered in one ICA module in this archaeon under stress.",
+    ):
+        with pytest.raises(CandidateError, match="plain words"):
+            parse(reply(bad))
+    finding = {"result": "observation", "quote": QUOTE}
+    titled = gists.checker(finding, "Compartment PERMANOVA effect")
+    with pytest.raises(CandidateError, match="plain title"):
+        titled(reply())
+    assert titled(reply(title="Plant compartment effect came from a few species")).title
+    # Hydrogen is not a hypothesis code.
+    assert parse(reply("Hydrogen (H2) producers were depleted in this archaeon under stress."))
 
-    path = tmp_path / "state/gists.json"
-    stored = json.loads(path.read_text())
-    stored[FID]["gist"] = "Genes were significantly depleted in this archaeon under stress."
-    path.write_text(json.dumps(stored))
-    state, agent = run(tmp_path, monkeypatch, {STEP: [reply()]})
-    assert agent.asked == [STEP, f"{STEP}/science-review"] and state[FID]["gist"] == GOOD
+
+def test_a_repeat_must_name_an_earlier_finding_of_the_report():
+    parse = gists.checker({"result": "observation", "quote": QUOTE}, "Plain", ["a--00000001"])
+    assert parse(reply(repeats="a--00000001")).repeats == "a--00000001"
+    with pytest.raises(CandidateError, match="not an EARLIER finding"):
+        parse(reply(repeats="a--ffffffff"))
+
+
+def sibling(root, fid, claim):
+    cards.write_page(
+        root / "wiki/findings" / f"{fid}.md",
+        {"type": "Finding", "description": claim, "result": "observation", "source": "a"},
+        f"# {claim}\n\n{claim} [src: a]\n\n## Evidence\n\n> {claim} [src: a]\n",
+    )
+
+
+def test_the_writer_sees_report_caveats_and_siblings_and_a_sibling_change_reruns(
+    tmp_path, monkeypatch
+):
+    seen = []
+    real = gists.cards.reviewed
+
+    def spy(messages, step, *args, **kwargs):
+        seen.append((step, messages[0]["content"]))
+        return real(messages, step, *args, **kwargs)
+
+    monkeypatch.setattr(gists.cards, "reviewed", spy)
+    earlier, later = "a--00000001", "a--ffffffff"
+    sibling(tmp_path, earlier, "Stress genes were enriched.")
+    sibling(tmp_path, later, "Stress genes were depleted in the cold.")
+    plain = reply("Stress genes stood out among the genes of this archaeon under stress.")
+    replies = {f"gists/{earlier}": [plain], f"gists/{later}": [plain], STEP: [reply()]}
+    run(tmp_path, monkeypatch, replies)
+    # The report's other caveats reach only their own finding's request.
+    path = tmp_path / "wiki/findings" / f"{FID}.md"
+    path.write_text(
+        path.read_text()
+        + "\n## Other caveats in this report\n\n- Only one growth medium was used. [src: a]\n"
+    )
+
+    def again(replies):
+        seen.clear()
+        install(monkeypatch, FakeAgent(tmp_path / "store", replies))
+        assert gists.main(tmp_path) == 0
+
+    again({STEP: [reply(repeats=earlier)]})
+    assert [step for step, _ in seen] == [STEP]
+    content = seen[0][1]
+    assert '"REPORT_CAVEATS": ["Only one growth medium was used."]' in content
+    assert f'"EARLIER": ["{earlier}"]' in content and later in content
+    state = json.loads((tmp_path / "state/gists.json").read_text())
+    assert state[FID]["repeats"] == earlier
+    # A sibling's new claim reruns every finding of the report.
+    sibling(tmp_path, later, "Stress genes were depleted in the heat.")
+    again({f"gists/{earlier}": [plain], f"gists/{later}": [plain], STEP: [reply()]})
+    assert {step for step, _ in seen} == {STEP, f"gists/{earlier}", f"gists/{later}"}
 
 
 def test_status_counts_without_the_runtime(tmp_path, monkeypatch, capsys):

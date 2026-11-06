@@ -65,7 +65,7 @@ def corpus(root):
 def direction(**kw):
     return {
         "id": "D1",
-        "title": "Dark genes as nutrient and community-interaction genes",
+        "title": "Are dark genes nutrient and community-interaction genes?",
         "question": "Do dark genes with strong phenotypes act in nutrient uptake?",
         "hypothesis": "Their fitness profiles co-vary with known transporter genes.",
         "why_it_matters": "It would move annotation screens toward nutrient conditions.",
@@ -90,12 +90,12 @@ THREE = reply(
     direction(),
     direction(
         id="D2",
-        title="Iron limitation as the niche of truly dark genes",
+        title="Is iron limitation the niche of truly dark genes?",
         question="Is iron the niche?",
     ),
     direction(
         id="D3",
-        title="Community interaction genes hidden among hypotheticals",
+        title="Do community interaction genes hide among hypotheticals?",
         question="Do they mediate interactions?",
     ),
 )
@@ -170,7 +170,7 @@ def test_salvage_drops_only_named_directions(tmp_path, monkeypatch):
         cards.read_page(p)[1].splitlines()[0] for p in (tmp_path / "wiki/directions").glob("*.md")
     ]
     # "Direction 2" is index 1 counted from 1 and index 2 from 0: both are dropped.
-    assert titles == ["# Dark genes as nutrient and community-interaction genes"]
+    assert titles == ["# Are dark genes nutrient and community-interaction genes?"]
 
 
 def test_unchanged_input_makes_no_calls_and_rerenders_from_reply(tmp_path, monkeypatch):
@@ -228,7 +228,7 @@ def renamed(n, title):
 
 def test_salvage_follows_a_rewritten_direction_by_id(tmp_path, monkeypatch):
     objection = ["D2 overstates the iron enrichment"]
-    rewritten = renamed(1, "Iron scarcity selects for truly dark genes")
+    rewritten = renamed(1, "Does iron scarcity select for truly dark genes?")
     replies = {f"directions/{TOPIC}": [THREE], f"directions/{TOPIC}/repair": [rewritten] * 3}
     run(
         tmp_path,
@@ -241,8 +241,8 @@ def test_salvage_follows_a_rewritten_direction_by_id(tmp_path, monkeypatch):
         cards.read_page(p)[1].splitlines()[0] for p in (tmp_path / "wiki/directions").glob("*.md")
     )
     assert titles == [
-        "# Community interaction genes hidden among hypotheticals",
-        "# Dark genes as nutrient and community-interaction genes",
+        "# Are dark genes nutrient and community-interaction genes?",
+        "# Do community interaction genes hide among hypotheticals?",
     ]
 
 
@@ -258,7 +258,7 @@ def test_salvage_reads_a_restated_issue_through_its_original(tmp_path, monkeypat
     titles = sorted(
         cards.read_page(p)[1].splitlines()[0] for p in (tmp_path / "wiki/directions").glob("*.md")
     )
-    assert "# Community interaction genes hidden among hypotheticals" not in titles
+    assert "# Do community interaction genes hide among hypotheticals?" not in titles
     assert len(titles) == 2
 
 
@@ -301,8 +301,8 @@ def test_a_new_objection_that_mentions_an_old_issue_names_its_own_item(tmp_path,
         cards.read_page(p)[1].splitlines()[0] for p in (tmp_path / "wiki/directions").glob("*.md")
     )
     assert titles == [
-        "# Dark genes as nutrient and community-interaction genes",
-        "# Iron limitation as the niche of truly dark genes",
+        "# Are dark genes nutrient and community-interaction genes?",
+        "# Is iron limitation the niche of truly dark genes?",
     ]
 
 
@@ -411,3 +411,71 @@ def test_two_topics_with_the_same_direction_keep_their_own_pages(tmp_path, monke
     assert directions.main(tmp_path) == 0
     assert len(agent.asked) == asked
     assert {p.name: p.read_bytes() for p in out.glob("*.md")} == hashes
+
+
+@pytest.mark.parametrize(
+    ("change", "message"),
+    [
+        ({"title": "Dark genes are nutrient genes"}, "question ending in"),
+        ({"hypothesis": "Dark genes co-vary with transporters (rho = 0.41)."}, "statistic"),
+        ({"hypothesis": "Dark genes significantly co-vary with transporter genes."}, "statistic"),
+        ({"test": "Join ecotype_env_reanalysis to the Fitness Browser organisms."}, "identifiers"),
+        ({"test": "Rerun the cofitness the report describes as pending."}, "'the report'"),
+    ],
+)
+def test_reader_text_is_plain_and_titles_are_questions(tmp_path, change, message):
+    corpus(tmp_path)
+    parse = directions.checker(directions.topic_pack(tmp_path, TOPIC, ["a"]))
+    items = json.loads(THREE)["directions"]
+    with pytest.raises(cards.CandidateError, match=message):
+        parse(reply(items[0] | change, items[1], items[2]))
+
+
+def test_a_direction_on_another_topics_evidence_goes_back(tmp_path, monkeypatch):
+    corpus(tmp_path)
+    monkeypatch.setattr(directions, "SAME_EVIDENCE_MIN", 2)
+    pack = directions.topic_pack(tmp_path, TOPIC, ["a"])
+    pack["OTHER_TOPICS"] = [
+        {"topic": "light-matter", "title": "Do dark genes do it?"}
+        | {"findings": [FID], "conflicts": [CONFLICT]}
+    ]
+    with pytest.raises(cards.CandidateError, match="same evidence as 'Do dark genes do it"):
+        directions.checker(pack)(THREE)
+    # Within one reply the second of two same-evidence directions goes back too.
+    pack["OTHER_TOPICS"] = []
+    with pytest.raises(cards.CandidateError, match="same evidence as D1"):
+        directions.checker(pack)(THREE)
+
+
+def test_another_topics_rewrite_does_not_make_a_topic_stale(tmp_path, monkeypatch):
+    corpus(tmp_path)
+    (tmp_path / "state/curator-topics.json").write_text(
+        json.dumps(
+            {
+                "groups": [
+                    {"title": "Dark Matter", "concepts": ["gap"]},
+                    {"title": "Light Matter", "concepts": ["gap"]},
+                ]
+            }
+        )
+    )
+    scope(tmp_path, reports=["a"], topics=[TOPIC, "light-matter"])
+    agent = FakeAgent(
+        tmp_path / "store", {f"directions/{TOPIC}": [THREE], "directions/light-matter": [THREE]}
+    )
+    install(monkeypatch, agent)
+    assert directions.main(tmp_path) == 0
+    path = tmp_path / "state/directions.json"
+    state = json.loads(path.read_text())
+    state["light-matter"]["reply"]["directions"][0]["title"] = "Is light the niche?"
+    path.write_text(json.dumps(state))
+    asked = len(agent.asked)
+    assert directions.main(tmp_path) == 0
+    assert len(agent.asked) == asked
+
+
+def test_prompt_asks_for_plain_questions_and_new_projects():
+    """Content review, Nov 2026: statistics, ids and re-run projects on question pages."""
+    assert "The title is a question ending in '?'" in directions.PROMPT
+    assert "is a re-analysis, not a new project" in directions.PROMPT
+    assert "OTHER_TOPICS lists the directions other topics" in directions.PROMPT

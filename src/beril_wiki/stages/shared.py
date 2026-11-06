@@ -37,7 +37,7 @@ from beril_wiki.stages.gists import report_title
 
 STATE = Path("state/shared.json")
 LINKS = Path("state/links.json")
-PROMPT_TAG = "shared@1"
+PROMPT_TAG = "shared@2"
 MAX_MEMBERS = 4
 # Strongest first; a group takes the weakest relation among its links.
 RELATIONS = (
@@ -70,7 +70,12 @@ PROMPT = prompt(
     "asked. 'lanes': for each result id, at most 8 words naming what that project "
     "compared or measured. 'how': at most two sentences, 50 words, saying how the results "
     "relate, following the RELATION; when the results report identical figures or one "
-    "project uses another's data, say they share an analysis or data.\n"
+    "project uses another's data, say they share an analysis or data, in the sentence as "
+    "well as in 'how'.\n"
+    "When the results reach different conclusions (one finds a pattern, the other does "
+    "not, or they differ in direction), the title and sentence say what differs; never "
+    "present them as one result. Claim nothing the results did not test: a comparison of "
+    "how common genes are does not show what niche they serve.\n"
     "Never say or imply that the projects confirm, corroborate, validate, reproduce, "
     "replicate or agree with each other, or that they are independent. Do not write "
     "caveats, limitations or 'however' clauses, or 'novel', 'first' or 'breakthrough'. "

@@ -67,7 +67,7 @@ def default_answer(step, content):
             {
                 "id": i,
                 "relation": "uses its data or methods",
-                "label": "Reuses the fitness table the beta project built",
+                "label": "Reuses the gene fitness measurements the beta project made",
             }
             for i in ids
         ]
@@ -139,6 +139,9 @@ def test_links_to_removed_results_are_pruned(tmp_path, monkeypatch):
         ("The two analyses agree on how essential genes are core", "agree"),
         ("Essential genes core at p = 0.01 in both projects", "statistic"),
         ("Essential genes were 99% core in both of the projects", "figures"),
+        ("Uses the gene_to_cluster mapping from the other project", "gene_to_cluster"),
+        ("Builds on the other project's link table for essential genes", "'table'"),
+        ("Uses its essential gene counts for the core comparison", "whose data"),
     ],
 )
 def test_labels_that_claim_confirmation_or_add_figures_go_back(label, problem):
@@ -202,3 +205,15 @@ def test_labels_with_significance_wording_are_asked_again(tmp_path, monkeypatch)
     state, agent = run(tmp_path, monkeypatch, answer=wording)
     assert any(s.endswith("/repair") for s in agent.asked)
     assert all("significant" not in x["label"] for x in state["links"])
+
+
+def test_only_labels_todays_rules_reject_are_asked_again(tmp_path, monkeypatch):
+    corpus(tmp_path)
+    run(tmp_path, monkeypatch)
+    path = tmp_path / "state/links.json"
+    state = json.loads(path.read_text())
+    ref = next(k for k, v in state["candidates"].items() if k.startswith("ref:"))
+    state["candidates"][ref]["label"] = "Takes its fitness table as input data"
+    path.write_text(json.dumps(state))
+    _, agent = run(tmp_path, monkeypatch)
+    assert agent.asked and all(step.startswith("links/refs-") for step in agent.asked)

@@ -90,6 +90,33 @@ RefRelation = Literal[
     "not a reference",
 ]
 DROPPED = {"not the same question", "not a reference"}
+# Plumbing a reader cannot use on a link: files, tables and their snake_case names.
+PLUMBING = re.compile(
+    r"\b(?:files?|tables?|columns?|parquet|tsv|csv|schema|notebooks?)\b|\b[a-z0-9]+(?:_[a-z0-9]+)+\b",
+    re.I,
+)
+# A label that opens "Uses its ..." leaves the reader to guess whose data it is.
+WHOSE = re.compile(
+    r"^(?:uses|takes|reuses|draws|adopts|applies|lists|compares|cites|borrows|builds)\b"
+    r"[^.]*\bits\b",
+    re.I,
+)
+
+
+def label_problem(label: str) -> str:
+    """Why a label fails today's wording rules, or empty when it passes."""
+    if STATS.search(label) or STAT_WORDS.search(label):
+        return "label contains a statistic or significance wording"
+    if banned := BANNED.search(label):
+        return (
+            f"label says '{banned.group(0)}'; describe how the results relate without "
+            "claiming one confirms or matches the other"
+        )
+    if plumbing := PLUMBING.search(label):
+        return f"label names '{plumbing.group(0)}'; say what the data are in biological words"
+    if WHOSE.search(label):
+        return "label opens with 'uses its ...'; say whose data, as 'the other project's ...'"
+    return ""
 
 
 class Item(BaseModel):
@@ -134,7 +161,9 @@ REF_PROMPT = prompt(
     "'lists it as a reference only', or 'not a reference' (a file name, a generic phrase, "
     "or a proposal the report did not carry out).\n"
     "Write 'label': at most 16 words a microbiologist reads on the link, saying what the "
-    "report did with the other project, in plain words. Never say or imply that the "
+    "report did with the other project, in plain words. Say whose data or result it is, "
+    "as in 'Builds on the other project's mutant fitness data', and describe data in "
+    "biological words, never as files, tables, columns or their names. Never say or imply that the "
     "projects confirm, corroborate, validate, reproduce or agree with each other. Use no "
     "statistics and no figure the lines do not state. Leave 'label' empty for 'not a "
     "reference'.\n"
@@ -260,15 +289,10 @@ def checker(
                 continue
             if not 3 <= words(label) <= MAX_LABEL_WORDS:
                 problems.append(f"{item.id}: label needs 3 to {MAX_LABEL_WORDS} words")
-            if STATS.search(label) or STAT_WORDS.search(label):
-                problems.append(f"{item.id}: label contains a statistic or significance wording")
             if extra := cards.new_figures(label, pools.get(item.id, "")):
                 problems.append(f"{item.id}: label uses figures the inputs never state: {extra}")
-            if banned := BANNED.search(label):
-                problems.append(
-                    f"{item.id}: label says '{banned.group(0)}'; describe how the results "
-                    "relate without claiming one confirms or matches the other"
-                )
+            if why := label_problem(label):
+                problems.append(f"{item.id}: {why}")
         if problems:
             raise CandidateError("; ".join(problems))
         return reply
@@ -322,10 +346,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         entry = entries.get(cid, {})
         if entry.get("input") != keys[cid] or entry.get("failed"):
             return True
-        label = entry.get("label", "")
-        return entry.get("relation") not in DROPPED and bool(
-            STATS.search(label) or STAT_WORDS.search(label) or BANNED.search(label)
-        )
+        return entry.get("relation") not in DROPPED and bool(label_problem(entry.get("label", "")))
 
     def current_links() -> list[dict]:
         out = []

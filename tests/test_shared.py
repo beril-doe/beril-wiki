@@ -158,3 +158,9 @@ def test_publisher_ranks_relations_in_the_stage_order():
     from beril_wiki.publish.cards import RELATION_TEXT
 
     assert tuple(RELATION_TEXT) == shared.RELATIONS
+
+
+def test_prompt_keeps_disagreeing_results_apart():
+    """Content review, Nov 2026: a group of results that disagreed read as one result."""
+    assert shared.PROMPT_TAG == "shared@2"
+    assert "never present them as one result" in shared.PROMPT
