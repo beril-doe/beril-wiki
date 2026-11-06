@@ -19,6 +19,7 @@ import subprocess
 import sys
 
 from beril_wiki import evidence
+from beril_wiki.publish import cards
 
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
 FM = re.compile(r"^(---\n.*?\n---\n)", re.S)
@@ -438,6 +439,13 @@ def main() -> None:
     pl_path = kb / "state" / "figures-placements.json"
     placements = json.loads(pl_path.read_text()) if pl_path.exists() else {}
     conflict_srcs = evidence.conflict_sources(kb)
+    # Finding and research-direction records publish only in a preview build (publish/cards.py).
+    records = cards.Corpus(kb) if cards.preview() else None
+    if records is None:
+        targets = {t for t in targets if t.split("/", 1)[0] not in cards.DIRS}
+    else:
+        # Maintainer lists are written straight to the site, so no wiki page backs them.
+        targets |= {f"{cards.ISSUES}/{_slug(sid)}" for sid in records.issues}
     shutil.rmtree(dst, ignore_errors=True)
 
     n = 0
@@ -447,10 +455,14 @@ def main() -> None:
             continue
         if rel.parts[0] == "entities" and src.stem in skip_entities:
             continue
+        if rel.parts[0] in cards.DIRS and records is None:
+            continue
         pub = published(rel)
         out = dst / pub
         out.parent.mkdir(parents=True, exist_ok=True)
         text = src.read_text(encoding="utf-8", errors="replace")
+        if records is not None and rel.parts[0] in cards.DIRS:
+            text = cards.record(rel, records)
         if rel.parts[0] == "sources" and rel.stem.endswith("__REPORT"):
             text = rewrite_source_figures(text, re.sub(r"__REPORT$", "", rel.stem), kb, dst)
         # Report prose carries links into the observatory checkout and
@@ -491,6 +503,12 @@ def main() -> None:
                 raw = f"sources/{pub.stem}"
                 text = text.replace(f"[[summaries/{pub.stem}|", f"[[{raw}|")
                 nav.append(f"> Raw report: [[{raw}|{pub.stem}]]")
+            issues = records.issues.get(pub.stem, []) if records is not None else []
+            if issues:
+                nav.append(
+                    f"> Data issues: [[{cards.ISSUES}/{pub.stem}|{len(issues)} proposal(s) "
+                    "for the report's maintainers]]"
+                )
             feeds = uptake.get(pub.stem, [])
             if feeds:
                 links = ", ".join(f"[[concepts/{c}]]" for c in feeds)
@@ -505,6 +523,8 @@ def main() -> None:
         out.write_text(text, encoding="utf-8")
         n += 1
 
+    if records is not None:
+        n += cards.write_extras(dst, records, provenance_block(None))
     n += write_collection_indexes(dst)
     n += write_reader_pages(dst)
 

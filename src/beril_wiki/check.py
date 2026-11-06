@@ -18,9 +18,12 @@ Exit code 1 if any ERROR, else 0. WARNs are reported but do not fail.
 from __future__ import annotations
 
 import hashlib
+import json
 import pathlib
 import re
 import sys
+
+import yaml
 
 from beril_wiki.paths import ROOT
 
@@ -110,6 +113,37 @@ def numbers_in(text: str) -> set[str]:
         if m:
             out.add(m.group(1))
     return out
+
+
+# Integers below four digits, which NUMBER leaves out on purpose for prose checks.
+# Card records promise every figure is in their quote, counts included, so their
+# checks add these; the guards keep them out of identifiers and larger numbers.
+SMALL_INT = re.compile(r"(?<![\w.,])\d{1,3}(?!\d|[,.]\d)")
+PMID_MENTION = re.compile(
+    r"PMIDs?\s*:?\s*((?:\d+(?:\s*(?:,|and|&)\s*)?)+)|pubmed\.ncbi\.nlm\.nih\.gov/(\d+)"
+)
+
+
+def figures_in(text: str) -> set[str]:
+    """Every figure in text for card records' quote checks: small integers included,
+    and a percent sign kept, since a card that turns "42 genes" into "42%" states a
+    figure its quote does not (paragraph checks drop it on purpose; see norm_num)."""
+    out = set()
+    for t in NUMBER.findall(text):
+        n = t.replace(",", "").replace(" ", "")
+        out.add(n)
+        m = re.match(r"([\d.]+)[eE][-+]?\d+$", n)
+        if m:
+            out.add(m.group(1))
+    return out | set(SMALL_INT.findall(text))
+
+
+def pmids_in(text: str) -> set[str]:
+    """PMIDs a sentence names, as "PMID 123", "PMIDs 1, 2 and 3" or a PubMed link."""
+    found = set()
+    for listed, linked in PMID_MENTION.findall(text):
+        found |= set(re.findall(r"\d+", listed)) | ({linked} if linked else set())
+    return found
 
 
 def source_numbers(sid: str, text: str) -> set[str]:
@@ -289,6 +323,85 @@ def duplicate_concepts(kb: pathlib.Path) -> list[str]:
     return out
 
 
+def card_errors(kb: pathlib.Path, sources: dict[str, str]) -> list[str]:
+    """Finding and research-direction records: every figure and reference traceable.
+
+    A finding's quote must be verbatim in its report and its key figures in that
+    report; a literature label must be one of the six, dated, and name only papers
+    it retrieved. A research direction must rest on findings or conflicts that exist,
+    read data from collections under wiki/data, cite only papers the novelty stage
+    retrieved, and not be a request to redo existing work."""
+    from beril_wiki.stages.cards import is_reanalysis
+    from beril_wiki.stages.novelty import LABELS, NOT_ASSESSED
+
+    wiki = kb / "wiki"
+    errors: list[str] = []
+    squash = lambda t: re.sub(r"\s+", " ", t).strip()  # noqa: E731
+    findings = {p.stem: p for p in sorted((wiki / "findings").glob("*.md"))}
+    for stem, page in findings.items():
+        text = page.read_text(encoding="utf-8", errors="replace")
+        fm = re.match(r"^---\n(.*?)\n---\n", text, re.S)
+        meta = yaml.safe_load(fm.group(1)) if fm else {}
+        rel = f"findings/{page.name}"
+        sid = meta.get("source", "")
+        if meta.get("finding_id") != stem:
+            errors.append(f"{rel}: finding_id does not match the file name")
+        if sid not in sources:
+            errors.append(f"{rel}: unknown source {sid!r}")
+            continue
+        report = sources[sid]
+        quote = re.search(r"^## Evidence\s*\n+> (.+?)(?: \[src: [^\]]+\])?$", text, re.M)
+        if not quote or squash(quote.group(1)) not in squash(report):
+            errors.append(f"{rel}: the evidence quote is not verbatim in {sid}")
+        pool = figures_in(report)
+        for q in meta.get("quantities") or []:
+            value = str(q.get("value", ""))
+            missing = figures_in(value) - pool
+            whole = re.search(rf"(?<!\w){re.escape(value)}(?!\w)", report)
+            if missing or (not figures_in(value) and not whole):
+                errors.append(f"{rel}: key figure {value!r} is not in {sid}")
+    labels_path = kb / "state" / "novelty.json"
+    labels = json.loads(labels_path.read_text(encoding="utf-8")) if labels_path.exists() else {}
+    for fid, entry in labels.items():
+        where = f"state/novelty.json {fid}"
+        if fid not in findings:
+            errors.append(f"{where}: no such finding")
+        if entry.get("label") not in LABELS:
+            errors.append(f"{where}: unknown label {entry.get('label')!r}")
+        elif entry["label"] != NOT_ASSESSED and not entry.get("retrieved_on"):
+            # A person may pin a label the pipeline never reached; it says so instead.
+            if not entry.get("override"):
+                errors.append(f"{where}: label without a retrieval date")
+        retrieved = set(entry.get("candidates") or [])
+        named = {p.get("pmid") for p in entry.get("closest") or []}
+        named |= pmids_in(entry.get("difference") or "")
+        for pmid in sorted(n for n in named if n not in retrieved):
+            errors.append(f"{where}: PMID {pmid} was not retrieved")
+    data = {p.stem for p in (wiki / "data").glob("*.md")}
+    papers = {p.get("pmid") for entry in labels.values() for p in entry.get("closest") or []}
+    for page in sorted((wiki / "directions").glob("*.md")):
+        text = page.read_text(encoding="utf-8", errors="replace")
+        fm = re.match(r"^---\n(.*?)\n---\n", text, re.S)
+        meta = yaml.safe_load(fm.group(1)) if fm else {}
+        rel = f"directions/{page.name}"
+        title = re.search(r"^# +(.+)$", text, re.M)
+        if title and is_reanalysis(title.group(1)):
+            errors.append(f"{rel}: the title asks to redo existing work, not a research question")
+        for c in meta.get("collections") or []:
+            if c not in data:
+                errors.append(f"{rel}: collection {c!r} is not a page under wiki/data")
+        refs = meta.get("builds_on") or []
+        if not refs:
+            errors.append(f"{rel}: builds on no finding or conflict")
+        for ref in refs:
+            if not (wiki / f"{ref}.md").exists():
+                errors.append(f"{rel}: builds on {ref!r}, which does not exist")
+        for pmid in sorted(set(meta.get("papers") or []) | pmids_in(text)):
+            if pmid not in papers:
+                errors.append(f"{rel}: PMID {pmid} is not a closest paper of any finding")
+    return errors
+
+
 def main() -> int:
     argv = [a for a in sys.argv[1:] if not a.startswith("--")]
     kb = pathlib.Path(argv[0]) if argv else ROOT
@@ -318,8 +431,19 @@ def main() -> int:
     wiki = kb / "wiki"
     roots = [
         (wiki, sub)
-        for sub in ("concepts", "entities", "summaries", "topics", "conflicts", "authors")
+        for sub in (
+            "concepts",
+            "entities",
+            "summaries",
+            "topics",
+            "conflicts",
+            "authors",
+            "findings",
+        )
     ]
+    # Research directions are proposals, like Open Directions: their figures are
+    # checked against the findings they cite by the stage, not against a source.
+    linked = [*roots, (wiki, "directions")]
     for base, sub in roots:
         for page in sorted((base / sub).glob("*.md")):
             n_pages += 1
@@ -380,7 +504,7 @@ def main() -> int:
     # exist. publish.ingest downgrades them at publish, which hid the problem
     # rather than fixing it.
     targets = {str(f.relative_to(wiki)).removesuffix(".md") for f in wiki.rglob("*.md")}
-    for base, sub in roots:
+    for base, sub in linked:
         for page in sorted((base / sub).glob("*.md")):
             text = page.read_text(encoding="utf-8", errors="replace")
             dead = sorted(
@@ -395,7 +519,7 @@ def main() -> int:
     # The home page is model-written too (stages.topics), outside every collection.
     titled = [
         wiki / "index.md",
-        *(p for base, sub in roots for p in sorted((base / sub).glob("*.md"))),
+        *(p for base, sub in linked for p in sorted((base / sub).glob("*.md"))),
     ]
     for page in titled:
         if page.exists() and not has_title(page.read_text(encoding="utf-8", errors="replace")):
@@ -417,6 +541,7 @@ def main() -> int:
             )
 
     warns.extend(duplicate_concepts(kb))
+    errors.extend(card_errors(kb, sources))
 
     print(
         f"check: {n_pages} pages, {n_cited_pars} cited paragraphs, "
