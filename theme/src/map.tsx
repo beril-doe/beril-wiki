@@ -276,7 +276,10 @@ export function CorpusMap({ c, from }: { c: Corpus; from: FullSlug }) {
     `${on("a.pt", ".tie")}{opacity:.08}`,
     ...clusters.flatMap((cl) => [
       `${on(`a.hub.c${cl.id}`, `.link.c${cl.id}`)}{opacity:.8}`,
-      ...cl.points.map((p) => `${on(`a.n${p.id}`, `.link.n${p.id}`)}{opacity:1}`),
+      ...cl.points.flatMap((p) => [
+        `${on(`a.n${p.id}`, `.link.n${p.id}`)}{opacity:1}`,
+        `${on(`a.n${p.id}`, `.clabel.n${p.id}`)}{opacity:1}`,
+      ]),
     ]),
   ].join("")
   // A curve that bows away from the middle of the map, so a line between two
@@ -334,25 +337,13 @@ export function CorpusMap({ c, from }: { c: Corpus; from: FullSlug }) {
           {cl.points.map((p) => (
             <line class={p.adopted ? "spoke loose" : "spoke"} x1={cl.x} y1={cl.y} x2={p.x} y2={p.y} />
           ))}
-          {cl.points.map((p) => {
-            const right = p.x > W * 0.62
-            return (
-              <a class={`pt n${p.id}`} href={href(p.file)}>
-                <title>{titleOf(p.file)}</title>
-                <circle class="node" cx={p.x} cy={p.y} r={radius(p)} style={`--c:${p.hue}`} />
-                <circle class="hit" cx={p.x} cy={p.y} r={11} />
-                <text
-                  class="clabel"
-                  x={p.x + (right ? -10 : 10) * s}
-                  y={p.y + 3.5 * s}
-                  text-anchor={right ? "end" : "start"}
-                  style={`font-size:${13 * s}px`}
-                >
-                  {truncate(titleOf(p.file), 46)}
-                </text>
-              </a>
-            )
-          })}
+          {cl.points.map((p) => (
+            <a class={`pt n${p.id}`} href={href(p.file)}>
+              <title>{titleOf(p.file)}</title>
+              <circle class="node" cx={p.x} cy={p.y} r={radius(p)} style={`--c:${p.hue}`} />
+              <circle class="hit" cx={p.x} cy={p.y} r={11} />
+            </a>
+          ))}
           <a class={`pt hub c${cl.id}`} href={href(cl.topic)}>
             <title>{titleOf(cl.topic)}</title>
             <circle class="node hub" cx={cl.x} cy={cl.y} r={11} style={`--c:${cl.hue}`} />
@@ -374,6 +365,28 @@ export function CorpusMap({ c, from }: { c: Corpus; from: FullSlug }) {
           </a>
         </g>
       ))}
+      {/* Concept labels last, in their own layer, so a revealed title paints
+          over every spoke, node and hub, whichever cluster drew them. They are
+          not inside the point's anchor, so the hover and focus rules that show
+          them are generated per point above, like the link rules. */}
+      <g class="clabels">
+        {clusters
+          .flatMap((cl) => cl.points)
+          .map((p) => {
+            const right = p.x > W * 0.62
+            return (
+              <text
+                class={`clabel n${p.id}`}
+                x={p.x + (right ? -10 : 10) * s}
+                y={p.y + 3.5 * s}
+                text-anchor={right ? "end" : "start"}
+                style={`font-size:${13 * s}px`}
+              >
+                {truncate(titleOf(p.file), 46)}
+              </text>
+            )
+          })}
+      </g>
     </svg>
   )
 }
