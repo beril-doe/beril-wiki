@@ -259,6 +259,9 @@ export function CorpusMap({ c, from }: { c: Corpus; from: FullSlug }) {
   const H = heightFor(clusters.length)
   // Hub label size, line step and gap above the ring, scaled with the width.
   const k = labelScale(clusters.length)
+  // Concept labels on hover, scaled with the width so they keep their size at
+  // three columns. Only one shows at a time, so they need no cap.
+  const s = W / BASE_W
   const href = (f: File) => resolveRelative(from, slugOf(f) as FullSlug)
   const radius = (p: Point) => 3.4 + Math.min(3.4, Math.sqrt(p.deg))
   const heaviest = Math.max(1, ...ties.map((t) => t.count))
@@ -340,9 +343,10 @@ export function CorpusMap({ c, from }: { c: Corpus; from: FullSlug }) {
                 <circle class="hit" cx={p.x} cy={p.y} r={11} />
                 <text
                   class="clabel"
-                  x={p.x + (right ? -10 : 10)}
-                  y={p.y + 3.5}
+                  x={p.x + (right ? -10 : 10) * s}
+                  y={p.y + 3.5 * s}
                   text-anchor={right ? "end" : "start"}
+                  style={`font-size:${13 * s}px`}
                 >
                   {truncate(titleOf(p.file), 46)}
                 </text>
