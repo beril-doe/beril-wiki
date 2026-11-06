@@ -184,6 +184,15 @@ def is_reanalysis(text: str) -> bool:
     return REANALYSIS.search(lead) is not None
 
 
+def asks_to_redo(text: str) -> bool:
+    """Whether a research question opens by asking to redo or tidy existing work.
+
+    Only the first words count: a question may name redone work as its context ("Do
+    genes that stay dark after reannotation ...") without asking to redo it."""
+    lead = " ".join(re.sub(r"\*\*", "", text).split()[:4])
+    return REANALYSIS.search(lead) is not None
+
+
 def projects_in(text: str) -> list[str]:
     out: list[str] = []
     for tag in SRC.finditer(text):

@@ -331,7 +331,7 @@ def card_errors(kb: pathlib.Path, sources: dict[str, str]) -> list[str]:
     it retrieved. A research direction must rest on findings or conflicts that exist,
     read data from collections under wiki/data, cite only papers the novelty stage
     retrieved, and not be a request to redo existing work."""
-    from beril_wiki.stages.cards import is_reanalysis
+    from beril_wiki.stages.cards import asks_to_redo
     from beril_wiki.stages.novelty import LABELS, NOT_ASSESSED
 
     wiki = kb / "wiki"
@@ -385,7 +385,7 @@ def card_errors(kb: pathlib.Path, sources: dict[str, str]) -> list[str]:
         meta = yaml.safe_load(fm.group(1)) if fm else {}
         rel = f"directions/{page.name}"
         title = re.search(r"^# +(.+)$", text, re.M)
-        if title and is_reanalysis(title.group(1)):
+        if title and asks_to_redo(title.group(1)):
             errors.append(f"{rel}: the title asks to redo existing work, not a research question")
         for c in meta.get("collections") or []:
             if c not in data:

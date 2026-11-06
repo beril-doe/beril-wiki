@@ -516,3 +516,23 @@ def test_a_saved_reply_todays_checks_reject_is_drafted_again(tmp_path, monkeypat
     asked = agent.asked.count(f"directions/{TOPIC}")
     assert directions.main(tmp_path) == 0
     assert agent.asked.count(f"directions/{TOPIC}") == asked + 1
+
+
+def test_a_question_may_name_redone_work_as_context():
+    """Rerun, Nov 2026: 'after reannotation' sent a real question back four times."""
+    assert not cards.asks_to_redo(
+        "Do genes that stay dark after reannotation mediate contact with other microbes?"
+    )
+    assert cards.asks_to_redo("Recompute the stress rates per experiment")
+    assert cards.asks_to_redo("Does re-running the cofitness change the modules?")
+
+
+def test_a_question_title_may_run_a_few_words_past_the_prompt_limit(tmp_path):
+    corpus(tmp_path)
+    parse = directions.checker(directions.topic_pack(tmp_path, TOPIC, ["a"]))
+    items = json.loads(THREE)["directions"]
+    long = (
+        "Does adding an amino acid to soil erode that amino acid's synthesis genes in the"
+        " community?"
+    )
+    assert parse(reply(items[0] | {"title": long}, items[1], items[2]))

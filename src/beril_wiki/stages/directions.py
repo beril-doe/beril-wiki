@@ -43,6 +43,9 @@ FINDINGS = Path("wiki/findings")
 LABELS = Path("state/novelty.json")
 MIN_DIRECTIONS, MAX_DIRECTIONS = 3, 8
 TITLE_WORDS = 14
+# The check allows a few words past the prompt's limit: a question needs more words
+# than a label, and a draft one word over cost a full rewrite.
+TITLE_CHECK_WORDS = 18
 # Bump when render() changes: pages re-render from the saved reply at no cost.
 RENDER = "direction-page@1"
 READINESS = ("data in the lakehouse", "needs compute", "needs new measurements", "unknown")
@@ -251,10 +254,10 @@ def checker(pack: dict, counted: bool = True) -> Callable[[str], Reply]:
             problems.append(f"direction ids {dup} are repeated")
         for i, d in enumerate(reply.directions):
             where = f"{d.id} ({d.title[:50]})"
-            if cards.is_reanalysis(d.title) or cards.is_reanalysis(d.question):
+            if cards.asks_to_redo(d.title) or cards.asks_to_redo(d.question):
                 problems.append(f"{where}: repeats or corrects existing work; propose a question")
-            if len(d.title.split()) > TITLE_WORDS or numbers_in(d.title):
-                problems.append(f"{where}: title over {TITLE_WORDS} words or carries figures")
+            if len(d.title.split()) > TITLE_CHECK_WORDS or numbers_in(d.title):
+                problems.append(f"{where}: title over {TITLE_CHECK_WORDS} words or carries figures")
             if not d.title.rstrip().endswith("?"):
                 problems.append(f"{where}: the title must be a question ending in '?'")
             prose = text_of(d)
