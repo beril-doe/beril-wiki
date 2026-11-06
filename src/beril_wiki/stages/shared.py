@@ -31,9 +31,9 @@ from beril_wiki.agentic.prose import (
 )
 from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, prompt
 from beril_wiki.paths import ROOT
-from beril_wiki.publish.cards import STATS
 from beril_wiki.stages import cards, links
 from beril_wiki.stages.gists import report_title
+from beril_wiki.wording import LINK_BANNED, STAT_WORDS, STATS
 
 STATE = Path("state/shared.json")
 LINKS = Path("state/links.json")
@@ -141,9 +141,9 @@ def checker(members: dict[str, dict]) -> Callable[[str], Group]:
                 problems.append(f"{field} contains a statistic; say it in words")
             if extra := cards.new_figures(text, pool):
                 problems.append(f"{field} uses figures the results never state: {extra}")
-            if links.STAT_WORDS.search(text):
+            if STAT_WORDS.search(text):
                 problems.append(f"{field} uses significance or power wording; say it in words")
-            if banned := links.BANNED.search(text):
+            if banned := LINK_BANNED.search(text):
                 problems.append(
                     f"{field} says '{banned.group(0)}'; say how the results relate without "
                     "claiming one confirms or matches the other"
@@ -161,9 +161,7 @@ def checker(members: dict[str, dict]) -> Callable[[str], Group]:
 def reads_badly(group: dict) -> bool:
     """Accepted text that today's word checks would reject."""
     texts = [str(group.get(k, "")) for k in LIMITS] + list((group.get("lanes") or {}).values())
-    return any(
-        STATS.search(t) or links.STAT_WORDS.search(t) or links.BANNED.search(t) for t in texts
-    )
+    return any(STATS.search(t) or STAT_WORDS.search(t) or LINK_BANNED.search(t) for t in texts)
 
 
 def status(root: Path = ROOT) -> int:

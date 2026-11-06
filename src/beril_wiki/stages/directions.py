@@ -34,8 +34,14 @@ from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, file
 from beril_wiki.check import numbers_in, pmids_in, prose_only
 from beril_wiki.paths import ROOT
 from beril_wiki.stages import cards
-from beril_wiki.stages.gists import statistical
 from beril_wiki.stages.topics import slugify
+from beril_wiki.wording import (
+    IDENTIFIER,
+    REPORT_TALK,
+    asks_to_redo,
+    is_reanalysis,
+    statistical,
+)
 
 OUT = Path("wiki/directions")
 STATE = Path("state/directions.json")
@@ -188,7 +194,7 @@ def topic_pack(root: Path, topic: str, reports: list[str]) -> dict:
     proposals = [
         b["text"]
         for b in cards.forward_bullets(root, topic, reports)
-        if not cards.is_reanalysis(b["text"])
+        if not is_reanalysis(b["text"])
     ]
     return {
         "FINDINGS": list(findings.values()),
@@ -209,12 +215,6 @@ def text_of(d: Direction) -> str:
     )
 
 
-# Identifiers a reader cannot decode: snake_case table or collection names, NMDC study
-# ids and tree node names.
-IDENTIFIER = re.compile(r"\b[a-z0-9]+(?:_[a-z0-9]+)+\b|\bnmdc:[\w-]+|\bNode_\d+\b")
-REPORT_TALK = re.compile(
-    r"\bthe (?:reports?|supplied evidence|evidence supplied|source reports?)\b", re.I
-)
 # Shared share of cited findings and conflicts at which two directions are one project.
 SAME_EVIDENCE, SAME_EVIDENCE_MIN = 0.6, 3
 
@@ -254,7 +254,7 @@ def checker(pack: dict, counted: bool = True) -> Callable[[str], Reply]:
             problems.append(f"direction ids {dup} are repeated")
         for i, d in enumerate(reply.directions):
             where = f"{d.id} ({d.title[:50]})"
-            if cards.asks_to_redo(d.title) or cards.asks_to_redo(d.question):
+            if asks_to_redo(d.title) or asks_to_redo(d.question):
                 problems.append(f"{where}: repeats or corrects existing work; propose a question")
             if len(d.title.split()) > TITLE_CHECK_WORDS or numbers_in(d.title):
                 problems.append(f"{where}: title over {TITLE_CHECK_WORDS} words or carries figures")

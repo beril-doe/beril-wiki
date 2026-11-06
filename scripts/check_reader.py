@@ -29,7 +29,7 @@ from urllib.parse import urlparse
 # Supplied at run time by `uv run --with playwright`; not a project dependency.
 from playwright.sync_api import Page, sync_playwright  # ty: ignore[unresolved-import]
 
-from beril_wiki.stages.gists import statistical
+from beril_wiki.wording import CONFIRMING, statistical
 
 ROOT = Path(__file__).resolve().parent.parent
 PHONE = {"width": 390, "height": 844}
@@ -66,12 +66,6 @@ NEED_COLUMN = {
     "unknown": 3,
 }
 BAD_NULL_CASES = ("missing data", "unperformed analysis")
-# Wording that would read as one project confirming another (the links stage's list).
-CONFIRM = re.compile(
-    r"\b(?:confirm\w*|corroborat\w*|validat\w*|reproduc\w*|replicat\w*|independen\w*|agree\w*)\b"
-    r"|support(?:s|ed)? each other",
-    re.I,
-)
 LIGHT_LABELS = [".rt", ".fcard .meta", ".qcolh", ".qlab", ".skicker", ".nvcolh", ".ready.part"]
 KIND_CHIPS = ["All", "Results", "Interpretations", "Null or missing results", "Corrections"]
 FINDING_HEADINGS = [
@@ -679,7 +673,7 @@ def check_cross(browser, base: str) -> list[str]:
         # Report titles name methods ("Independent Component Analysis"), not a relation.
         for title in titles:
             said = said.replace(title, "")
-        if hit := CONFIRM.search(said):
+        if hit := CONFIRMING.search(said):
             fails.append(f"cross: shared card {i + 1} says '{hit[0]}'")
     go(page, base + "/")
     qs = page.eval_on_selector_all(".xqlist li .xqp", "els => els.map(e => e.textContent)")

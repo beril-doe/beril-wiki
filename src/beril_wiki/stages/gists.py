@@ -39,10 +39,10 @@ from beril_wiki.agentic.prose import (
 )
 from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, model_policy, prompt
 from beril_wiki.paths import ROOT
-from beril_wiki.publish.cards import STATS, title_of
+from beril_wiki.publish.cards import title_of
 from beril_wiki.stages import cards
-from beril_wiki.stages.links import STAT_WORDS
 from beril_wiki.stages.novelty import finding_text
+from beril_wiki.wording import GIST_BANNED, JARGON, statistical
 
 STATE = Path("state/gists.json")
 FINDINGS = Path("wiki/findings")
@@ -51,7 +51,6 @@ MAX_GIST_WORDS = 45
 MIN_GIST_WORDS = 6
 MAX_TITLE_WORDS = 12
 MAX_SENTENCES = 2
-BANNED = re.compile(r"\b(novel|first|breakthrough|confirms|caveats?|limitations?|however)\b", re.I)
 SENTENCE_END = re.compile(r"(?<=[.!?])\s+(?=[A-Z])")
 NULL_RESULT = "null result"
 MAX_NUMBERS = 1
@@ -60,22 +59,6 @@ MAX_NUMBERS = 1
 CHECK_NUMBERS = 2
 # A standalone number: "68.9%", "14,768", "-1.55"; not the digits in "16S", "K-12" or "GT2".
 NUMBER = re.compile(r"(?<![\w.])(?<!\w-)-?\d[\d,]*(?:\.\d+)?%?(?![\w-])")
-MULTIPLE_TESTING = re.compile(r"\bmultiple[- ]testing\b", re.I)
-# Names a reader outside the project cannot decode: an annotation system or database, a
-# statistical procedure or a notebook code. Lineage names such as Pseudomonas_E are left
-# to the prompt: the reviewer requires the name the finding gives, so code rejecting it
-# made those gists unresolvable. Hypothesis codes (H2) too: hydrogen is also H2.
-JARGON = re.compile(
-    r"\b(?:SEED|COGs?|KEGG|GapMind|ICA|PERMANOVA|Procrustes|Mantel|D'Agostino|"
-    r"Black Queen|preregistered|pre-registered|Tier[- ]?[A-C]|NB\d+)\b"
-)
-
-
-def statistical(text: str) -> bool:
-    """A statistic or statistical wording, such as 'significant' or 'multiple-testing'."""
-    return any(p.search(text) for p in (STATS, STAT_WORDS, MULTIPLE_TESTING))
-
-
 Case = Literal["measured absence", "inconclusive test", "missing data", "unperformed analysis", ""]
 
 
@@ -222,7 +205,7 @@ def checker(finding: dict, title: str, earlier: Sequence[str] = ()) -> Callable[
             out.append(f"{label} uses figures the claim, quote and caveat never state: {extra}")
         if jargon := JARGON.search(text):
             out.append(f"{label} uses '{jargon.group(0)}'; say what it stands for in plain words")
-        if banned := BANNED.search(text):
+        if banned := GIST_BANNED.search(text):
             out.append(
                 f"{label} uses '{banned.group(0)}'; the page shows limits separately, "
                 "so leave caveats out"

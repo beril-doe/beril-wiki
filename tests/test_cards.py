@@ -138,8 +138,10 @@ def test_check_flags_card_errors(tmp_path):
     assert "quote is not verbatim" not in errors
 
 
-def test_existing_stage_revisions_ignore_cards_module(tmp_path, monkeypatch):
-    """Editing the card helpers must not make conflicts, topics, literature or authors stale."""
+@pytest.mark.parametrize("module", ["stages/cards.py", "wording.py"])
+def test_shared_card_modules_reschedule_only_card_stages(tmp_path, monkeypatch, module):
+    """Editing a module every card stage applies (a wording rule, say) makes each card
+    stage stale, and leaves conflicts, topics, literature and authors current."""
     from beril_wiki.agentic import curator as C
 
     (tmp_path / "contract").mkdir()
@@ -149,7 +151,7 @@ def test_existing_stage_revisions_ignore_cards_module(tmp_path, monkeypatch):
 
     def edited(self, *args, **kwargs):
         text = real(self, *args, **kwargs)
-        return text + "\nEDITED = 1\n" if self.name == "cards.py" else text
+        return text + "\nEDITED = 1\n" if self.as_posix().endswith(module) else text
 
     monkeypatch.setattr(C.Path, "read_text", edited)
     after = {name: C.stage_revision(tmp_path, name, config) for name in C.EDITORIAL}

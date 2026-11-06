@@ -41,9 +41,10 @@ from beril_wiki.agentic.prose import (
 )
 from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, prompt
 from beril_wiki.paths import ROOT
-from beril_wiki.publish.cards import STATS, title_of
+from beril_wiki.publish.cards import title_of
 from beril_wiki.stages import cards
 from beril_wiki.stages.novelty import finding_text
+from beril_wiki.wording import LINK_BANNED, PLUMBING, STAT_WORDS, STATS
 
 STATE = Path("state/links.json")
 FINDINGS = Path("wiki/findings")
@@ -57,19 +58,6 @@ STOP = frozenset(
     "a an the and or of to in for with from by on at is are was were be this that these "
     "those as not no but its it their than more across both all each any which only into "
     "has have had can may after between using based".split()
-)
-# Wording that would read as two projects confirming each other, plus the gists list.
-BANNED = re.compile(
-    r"\b(?:confirm\w*|corroborat\w*|validat\w*|reproduc\w*|replicat\w*|independen\w*"
-    r"|agree\w*|novel|first|breakthrough|caveats?|limitations?|however)\b"
-    r"|support(?:s|ed)? each other",
-    re.I,
-)
-# Statistical and power wording a reader should not meet in a link label or shared text.
-STAT_WORDS = re.compile(
-    r"\b(?:(?:non-?)?significan\w*|(?:under|low|statistical )power\w*|effect sizes?"
-    r"|statistic\w*|p-?values?)\b",
-    re.I,
 )
 
 PairRelation = Literal[
@@ -90,11 +78,6 @@ RefRelation = Literal[
     "not a reference",
 ]
 DROPPED = {"not the same question", "not a reference"}
-# Plumbing a reader cannot use on a link: files, tables and their snake_case names.
-PLUMBING = re.compile(
-    r"\b(?:files?|tables?|columns?|parquet|tsv|csv|schema|notebooks?)\b|\b[a-z0-9]+(?:_[a-z0-9]+)+\b",
-    re.I,
-)
 # A label that opens "Uses its ..." leaves the reader to guess whose data it is.
 WHOSE = re.compile(
     r"^(?:uses|takes|reuses|draws|adopts|applies|lists|compares|cites|borrows|builds)\b"
@@ -107,7 +90,7 @@ def label_problem(label: str) -> str:
     """Why a label fails today's wording rules, or empty when it passes."""
     if STATS.search(label) or STAT_WORDS.search(label):
         return "label contains a statistic or significance wording"
-    if banned := BANNED.search(label):
+    if banned := LINK_BANNED.search(label):
         return (
             f"label says '{banned.group(0)}'; describe how the results relate without "
             "claiming one confirms or matches the other"

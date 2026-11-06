@@ -26,6 +26,7 @@ import sys
 import yaml
 
 from beril_wiki.paths import ROOT
+from beril_wiki.wording import asks_to_redo
 
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
 WIKILINK = re.compile(r"\[\[([^\]|#]+?)(?:[|#][^\]]*)?\]\]")
@@ -331,7 +332,6 @@ def card_errors(kb: pathlib.Path, sources: dict[str, str]) -> list[str]:
     it retrieved. A research direction must rest on findings or conflicts that exist,
     read data from collections under wiki/data, cite only papers the novelty stage
     retrieved, and not be a request to redo existing work."""
-    from beril_wiki.stages.cards import asks_to_redo
     from beril_wiki.stages.novelty import LABELS, NOT_ASSESSED
 
     wiki = kb / "wiki"

@@ -22,6 +22,8 @@ import re
 
 import yaml
 
+from beril_wiki.wording import is_reanalysis
+
 DIRS = ("findings", "directions")
 ISSUES = "data-issues"
 FM = re.compile(r"^---\n(.*?)\n---\n", re.S)
@@ -82,11 +84,6 @@ READER_TERMS = {
     "Research direction": "Open question",
     "research direction": "open question",
 } | {label: text for label, text in LABEL_TEXT.items()}
-STATS = re.compile(
-    r"\bp\s*[=<>≤]|\b[rq]\s*=|ρ|\brho\b|\bAUC\b|χ²|\bFDR\b|×\s*10"
-    r"|\b(Cohen|Mann-Whitney|Kruskal|Spearman|Pearson|Mantel)\b",
-    re.I,
-)
 # A null result a home or topic card may show: only the ones that measured something.
 SHOWN_CASES = ("measured absence", "inconclusive test")
 SPOTLIGHT = ("null result", "correction")
@@ -264,7 +261,7 @@ def data_issues(kb: pathlib.Path) -> dict[str, list[dict]]:
     seen: set[tuple[str, str]] = set()
     for topic in scope.topics:
         for b in cards.forward_bullets(kb, topic, scope.reports):
-            if not cards.is_reanalysis(b["text"]):
+            if not is_reanalysis(b["text"]):
                 continue
             for sid in b["projects"]:
                 if sid in cards.DIGESTS or (sid, b["text"]) in seen:

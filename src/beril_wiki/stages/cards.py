@@ -167,30 +167,6 @@ SRC = re.compile(r"\[src:\s*([^\]]+)\]")
 FORWARD = re.compile(r"^(Open Directions|Resolving Work)$")
 REPORT_FORWARD = re.compile(r"Future Directions|Experimental Recommendations|Next Steps", re.I)
 DIGESTS = ("discoveries", "pitfalls")
-# Work that repeats, corrects or tidies an existing analysis. It belongs to the people
-# who maintain the reports, not on the pages a scientist reads to choose a project.
-REANALYSIS = re.compile(
-    r"\b(?:re-?(?:comput|run|analy[sz]|count|deriv|estimat|scor|test|fit|build|process"
-    r"|annotat|classif|examin|evaluat|quantif|check|tabulat)\w*|recount\w*|reconcil\w*"
-    r"|audit\w*|harmoni[sz]\w*|standardi[sz]\w*|repeat\w*|trace\s+the|correct\s+the"
-    r"|align\s+(?:the\s+)?(?:denominator|threshold|definition|count)s?)\b",
-    re.I,
-)
-
-
-def is_reanalysis(text: str) -> bool:
-    """Whether a proposal's opening clause asks to redo or tidy existing work."""
-    lead = " ".join(re.sub(r"\*\*", "", text).split()[:14])
-    return REANALYSIS.search(lead) is not None
-
-
-def asks_to_redo(text: str) -> bool:
-    """Whether a research question opens by asking to redo or tidy existing work.
-
-    Only the first words count: a question may name redone work as its context ("Do
-    genes that stay dark after reannotation ...") without asking to redo it."""
-    lead = " ".join(re.sub(r"\*\*", "", text).split()[:4])
-    return REANALYSIS.search(lead) is not None
 
 
 def projects_in(text: str) -> list[str]:

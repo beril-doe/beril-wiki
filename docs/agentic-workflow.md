@@ -165,7 +165,19 @@ valid, so switching the extraction model does not re-integrate the corpus.
 A `pages` change works the same way: it applies to pages written from then on,
 accepted pages stay, and neither integration nor any derived stage reruns.
 A `cards` change refreshes only the six card stages. Their fingerprints also
-take `review`, and `novelty` takes `queries`.
+take `review`, and `novelty` takes `queries`. A card stage's fingerprint also
+hashes its own module and the modules all six share (`CARD_FILES` in
+`agentic/curator.py`: `stages/cards.py` and `wording.py`, the wording rules), so
+editing a rule reschedules every card stage.
+A reschedule clears none of the card stages' saved answers: each one's cache
+entry in `EDITORIAL` is `None`. A stage keeps a saved answer while its cache key
+is unchanged and the answer did not fail, and rechecks it with today's code:
+headlines, directions and gists rerun their reply checks (directions skips the
+3-to-8 count), and links and shared rerun their wording checks on the stored
+text. A rescheduled card stage therefore asks a model again only for records
+that are new, whose cache keys changed, whose last attempt failed, or whose
+saved answer an edited rule now rejects. Novelty rechecks no saved label, and it
+also asks again for a label older than `REFRESH_DAYS`.
 
 ## Editorial schedule and required work
 
@@ -271,7 +283,7 @@ why it matters, the decisive test, what would support or refute it, an
 approach, the data and its readiness, and the findings, conflicts and closest
 papers it rests on. A direction is a biological question, never a request to
 repeat, correct, reconcile, recount or audit existing work: code rejects a
-title or question that opens that way (`REANALYSIS` in `stages/cards.py`). Those
+title or question that opens that way (`REANALYSIS` in `wording.py`). Those
 proposals are listed for the reports' maintainers at publish instead. Code also
 checks that each direction rests on a finding or conflict of the topic, cites
 only PMIDs the topic's findings retrieved, names collections under
