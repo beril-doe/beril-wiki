@@ -17,7 +17,8 @@ import json
 import sys
 from pathlib import Path
 
-from beril_wiki.publish.cards import Corpus, links_index
+from beril_wiki.publish.cards import Corpus
+from beril_wiki.publish.cards.links import links_index
 from beril_wiki.stages import cards, links, shared
 from beril_wiki.wording import LINK_BANNED, STAT_WORDS, STATS
 

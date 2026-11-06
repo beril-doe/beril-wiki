@@ -154,8 +154,8 @@ def test_changed_groups_lose_their_text_before_any_job_runs(tmp_path, monkeypatc
 
 
 def test_publisher_ranks_relations_in_the_stage_order():
-    """publish.cards.relation_of ranks by RELATION_TEXT; it must match the stage's ranking."""
-    from beril_wiki.publish.cards import RELATION_TEXT
+    """publish.cards.links.relation_of ranks by RELATION_TEXT; it must match the stage's ranking."""
+    from beril_wiki.publish.cards.text import RELATION_TEXT
 
     assert tuple(RELATION_TEXT) == shared.RELATIONS
 

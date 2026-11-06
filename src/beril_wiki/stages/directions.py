@@ -7,7 +7,7 @@ and the proposals its pages already make, then proposes a handful of research
 directions: a question, a falsifiable hypothesis, why it matters, the decisive
 test and what would support or refute it. A direction that would repeat, correct
 or tidy an existing analysis is rejected in code; those proposals are listed for
-the reports' maintainers at publish instead (publish/cards.py). Code also checks
+the reports' maintainers at publish instead (publish/cards/). Code also checks
 that every direction rests on a finding or conflict of the topic, names only
 papers the novelty stage retrieved and collections under wiki/data/, and states
 no result figure the evidence lacks. Each direction becomes wiki/directions/<slug>.md.
