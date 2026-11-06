@@ -217,3 +217,13 @@ def test_only_labels_todays_rules_reject_are_asked_again(tmp_path, monkeypatch):
     path.write_text(json.dumps(state))
     _, agent = run(tmp_path, monkeypatch)
     assert agent.asked and all(step.startswith("links/refs-") for step in agent.asked)
+
+
+def test_a_label_naming_the_other_project_may_say_its_later():
+    """Rerun, Nov 2026: a later 'its' failed labels that already said whose data."""
+    for label in (
+        "Builds on the other project's conservation test, extending its core enrichment.",
+        "Compares its osmotic-stress gene overlap with the other project's overlap.",
+    ):
+        assert links.label_problem(label) == ""
+    assert links.label_problem("Uses its essential gene counts for the comparison")

@@ -114,7 +114,8 @@ def label_problem(label: str) -> str:
         )
     if plumbing := PLUMBING.search(label):
         return f"label names '{plumbing.group(0)}'; say what the data are in biological words"
-    if WHOSE.search(label):
+    # "its" alone is ambiguous; a label that names the other project already says whose.
+    if WHOSE.search(label) and "other project" not in label.lower():
         return "label opens with 'uses its ...'; say whose data, as 'the other project's ...'"
     return ""
 
