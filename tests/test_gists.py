@@ -235,16 +235,20 @@ def test_statistical_wording_counts_as_a_statistic_in_gists_and_titles():
     assert titled(reply(title="Depletion held in only some strains")).title
 
 
-def test_gist_keeps_at_most_one_standalone_number():
-    pool = QUOTE + " 866 genes in 16S-typed K-12 strains."
+def test_gist_keeps_at_most_two_standalone_numbers():
+    """The prompt asks for one; the check allows two so reviewer and code can agree."""
+    pool = QUOTE + " 866 genes in 16S-typed K-12 strains, 12 of them on 3 plasmids."
     parse = gists.checker({"result": "observation", "quote": pool}, "Plain")
-    with pytest.raises(CandidateError, match="2 numbers"):
-        parse(reply("Roughly 20% of 866 genes were depleted in this archaeon under stress."))
+    assert parse(reply("Roughly 20% of 866 genes were depleted in this archaeon under stress."))
+    with pytest.raises(CandidateError, match="3 numbers"):
+        parse(reply("Roughly 20% of 866 genes, 12 of them on plasmids, were depleted here."))
     assert parse(reply("Roughly 20% of 16S-typed K-12 genes were depleted in this archaeon."))
-    fell = "Fitness fell on acetate (-1.55) and succinate (-1.39)."
+    fell = "Fitness fell on acetate (-1.55), succinate (-1.39) and quinate (-0.8)."
     signed = gists.checker({"result": "observation", "quote": fell}, "Plain")
-    with pytest.raises(CandidateError, match="2 numbers"):
-        signed(reply("Mutants lose most fitness on acetate (-1.55) and succinate (-1.39) here."))
+    with pytest.raises(CandidateError, match="3 numbers"):
+        signed(
+            reply("Mutants lose fitness on acetate (-1.55), succinate (-1.39) and quinate (-0.8).")
+        )
 
 
 def test_the_writer_is_told_when_the_title_needs_a_plain_replacement(tmp_path, monkeypatch):
@@ -264,7 +268,6 @@ def test_jargon_goes_back_to_the_writer_and_needs_a_plain_title():
     parse = gists.checker({"result": "observation", "quote": QUOTE}, "Plain")
     for bad in (
         "Mobile SEED categories were enriched among depleted genes in this archaeon.",
-        "Genes in the Pseudomonas_E lineage were depleted in this archaeon under stress.",
         "Depleted genes clustered in one ICA module in this archaeon under stress.",
     ):
         with pytest.raises(CandidateError, match="plain words"):
@@ -274,7 +277,8 @@ def test_jargon_goes_back_to_the_writer_and_needs_a_plain_title():
     with pytest.raises(CandidateError, match="plain title"):
         titled(reply())
     assert titled(reply(title="Plant compartment effect came from a few species")).title
-    # Hydrogen is not a hypothesis code.
+    # A lineage name the finding gives is the reviewer's to require; hydrogen is no code.
+    assert parse(reply("Genes in the Pseudomonas_E lineage were depleted in this archaeon."))
     assert parse(reply("Hydrogen (H2) producers were depleted in this archaeon under stress."))
 
 

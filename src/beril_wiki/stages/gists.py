@@ -53,16 +53,19 @@ BANNED = re.compile(r"\b(novel|first|breakthrough|confirms|caveats?|limitations?
 SENTENCE_END = re.compile(r"(?<=[.!?])\s+(?=[A-Z])")
 NULL_RESULT = "null result"
 MAX_NUMBERS = 1
+# The check allows one number past the prompt's limit: a reviewer asking for a specific
+# figure and the code refusing a second one sent drafts back and forth until they failed.
+CHECK_NUMBERS = 2
 # A standalone number: "68.9%", "14,768", "-1.55"; not the digits in "16S", "K-12" or "GT2".
 NUMBER = re.compile(r"(?<![\w.])(?<!\w-)-?\d[\d,]*(?:\.\d+)?%?(?![\w-])")
 MULTIPLE_TESTING = re.compile(r"\bmultiple[- ]testing\b", re.I)
 # Names a reader outside the project cannot decode: an annotation system or database, a
-# statistical procedure, a notebook code, or a genome-database lineage suffix such as
-# Pseudomonas_E. Hypothesis codes (H2) are left to the prompt: hydrogen is also H2.
+# statistical procedure or a notebook code. Lineage names such as Pseudomonas_E are left
+# to the prompt: the reviewer requires the name the finding gives, so code rejecting it
+# made those gists unresolvable. Hypothesis codes (H2) too: hydrogen is also H2.
 JARGON = re.compile(
     r"\b(?:SEED|COGs?|KEGG|GapMind|ICA|PERMANOVA|Procrustes|Mantel|D'Agostino|"
     r"Black Queen|preregistered|pre-registered|Tier[- ]?[A-C]|NB\d+)\b"
-    r"|\b[A-Z][a-z]+_[A-Z]{1,2}\b"
 )
 
 
@@ -220,7 +223,7 @@ def checker(finding: dict, title: str, earlier: Sequence[str] = ()) -> Callable[
         if len(SENTENCE_END.split(gist)) > MAX_SENTENCES:
             problems.append(f"gist must be at most {MAX_SENTENCES} sentences")
         problems += text_problems("gist", gist)
-        if (count := len(NUMBER.findall(gist))) > MAX_NUMBERS:
+        if (count := len(NUMBER.findall(gist))) > CHECK_NUMBERS:
             problems.append(f"gist uses {count} numbers; keep at most {MAX_NUMBERS}")
         if is_null and not reply.case:
             problems.append("a null result needs a case")
