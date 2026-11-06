@@ -116,7 +116,7 @@ export function NoveltyMap({ c, from }: { c: Corpus; from: FullSlug }) {
           })}
         </div>
       </div>
-      {empty.length > 0 && <p class="nvempty">No results are filed under {empty.join(", ")} yet.</p>}
+      {empty.length > 0 && <p class="nvempty">No listed result has {empty.join(", ")} as its main topic yet.</p>}
       <div class="nvpanel" aria-live="polite" hidden />
       <script type="application/json" class="nvdata" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }} />
     </section>

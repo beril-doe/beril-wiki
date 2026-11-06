@@ -22,6 +22,7 @@ export interface FindingFm {
   report_title?: string
   home_rank?: number
   topic_ranks?: Record<string, number>
+  listed?: boolean
 }
 
 export interface SharedMember {
@@ -94,8 +95,13 @@ const fmOf = <T,>(f: File) => (f.frontmatter ?? {}) as T
 const searchText = (...parts: (string | undefined)[]) => parts.filter(Boolean).join(" ").toLowerCase()
 const topicSlug = (t: File) => slugOf(t).replace(/^topics\//, "")
 
+/** Listed findings. publish/cards.py marks a finding `listed: false` when it is not a
+ * result a reader should browse (no plain summary, a repeat, missing data); its page stays. */
 export function findingsOf(c: Corpus): File[] {
-  return [...c.bySlug.values()].filter((f) => collectionOf(slugOf(f)) === "findings" && !isIndex(slugOf(f)))
+  return [...c.bySlug.values()].filter(
+    (f) =>
+      collectionOf(slugOf(f)) === "findings" && !isIndex(slugOf(f)) && (f.frontmatter as FindingFm | undefined)?.listed !== false,
+  )
 }
 
 export function directionsOf(c: Corpus): File[] {

@@ -286,14 +286,19 @@ def title_of(body: str, fallback: str) -> str:
     return m.group(1).strip() if m else fallback
 
 
-def chip_note(entry: dict | None) -> str:
+def chip_note(entry: dict | None, result: str = "") -> str:
     """What a PubMed chip means and when it was checked; empty when there is no chip."""
-    return CHIP_NOTE.format(date=entry.get("retrieved_on", "")) if entry and chip_of(entry) else ""
+    if not entry or not chip_of(entry, result):
+        return ""
+    return CHIP_NOTE.format(date=entry.get("retrieved_on", ""))
 
 
-def chip_of(entry: dict | None) -> str:
-    """The comparison chip a card shows; empty unless a pipeline label says something."""
-    if not entry or entry.get("override"):
+def chip_of(entry: dict | None, result: str = "") -> str:
+    """The comparison chip a card shows; empty unless a pipeline label says something.
+
+    A correction revises the project's own earlier analysis, so how PubMed relates to it
+    says nothing a reader can use, and a chip there reads as a verdict on the error."""
+    if not entry or entry.get("override") or result == "correction":
         return ""
     return CHIP.get(entry.get("label", NOT_ASSESSED), "")
 
@@ -319,6 +324,8 @@ def literature_section(entry: dict | None) -> str:
     lines = [heading, "", f"**{label}.**"]
     if entry.get("override"):
         lines[-1] += f" A person set this label: {entry['override']}"
+    elif not entry.get("retrieved"):
+        lines[-1] += f" PubMed searches on {entry['retrieved_on']} found no abstracts to compare."
     else:
         lines[-1] += " " + CHIP_NOTE.format(date=entry["retrieved_on"])
     # An unconfirmed judgment's difference and closest papers argued for the label the
@@ -379,7 +386,17 @@ def measured_and_limits(body: str) -> tuple[str, list[str], str, list[str]]:
         if caveat:
             limits += [caveat, ""]
         if others:
-            limits += ["**Other caveats in this report**", "", others, ""]
+            # Report-wide caveats, most about other results; folded so the finding's own
+            # caveat reads first, and kept so no caveat drops off the page.
+            limits += [
+                "<details><summary>Other caveats in this report, not specific to this "
+                "result</summary>",
+                "",
+                others,
+                "",
+                "</details>",
+                "",
+            ]
     extra = [x for k, v in sec.items() for x in (f"## {k}", "", v, "")]
     return (
         h1,
@@ -390,9 +407,14 @@ def measured_and_limits(body: str) -> tuple[str, list[str], str, list[str]]:
 
 
 def eligible(c: Corpus, fid: str) -> bool:
-    """A finding with an accepted plain summary, and a null result only if it measured something."""
+    """Whether a finding is listed: on the Results page, in counts, the picture and picks.
+
+    It needs an accepted plain summary that does not repeat an earlier finding from its
+    report, and a null result must have measured something: missing data and an analysis
+    that never ran are not results. An unlisted finding keeps its page, so links to it
+    still resolve."""
     gist = c.gists.get(fid, {})
-    if not gist.get("gist"):
+    if not gist.get("gist") or gist.get("repeats"):
         return False
     if c.findings[fid][0].get("result") == "null result":
         return gist.get("case") in SHOWN_CASES
@@ -491,6 +513,9 @@ def links_index(c: Corpus) -> list[dict]:
     for x in c.link_records:
         a, b = x.get("a", ""), x.get("b", "")
         if x.get("level") == "project":
+            # A report that only lists another among its references does nothing with it.
+            if x.get("type") == "lists it as a reference only":
+                continue
             if a in projects and b in projects:
                 out.append({"pa": a, "pb": b, "family": "p", "label": x.get("label", "")})
         elif a in c.findings and b in c.findings:
@@ -593,8 +618,8 @@ def shared_index(c: Corpus) -> list[dict]:
                         "lane": (g.get("lanes") or {}).get(m, ""),
                         "source": c.findings[m][0].get("source", ""),
                         "report_title": c.report_title(c.findings[m][0].get("source", "")),
-                        "chip": chip_of(c.labels.get(m)),
-                        "chip_note": chip_note(c.labels.get(m)),
+                        "chip": chip_of(c.labels.get(m), c.findings[m][0].get("result", "")),
+                        "chip_note": chip_note(c.labels.get(m), c.findings[m][0].get("result", "")),
                     }
                     for m in members
                 ],
@@ -630,7 +655,7 @@ def finding_page(fid: str, c: Corpus) -> str:
     sid = fields.get("source", "")
     topics = c.topics_of(sid)
     gist = c.gists.get(fid, {})
-    chip = chip_of(entry)
+    chip = chip_of(entry, fields.get("result", ""))
     home, by_topic = _picks(c)
     ranks = {t: ids.index(fid) + 1 for t, ids in by_topic.items() if fid in ids}
     fields = fields | {
@@ -640,7 +665,8 @@ def finding_page(fid: str, c: Corpus) -> str:
         "kind_text": KIND_TEXT.get(fields.get("result", ""), fields.get("result", "")),
         "chip": chip,
         "compare_text": compare_text(entry),
-        "chip_note": chip_note(entry),
+        "chip_note": chip_note(entry, fields.get("result", "")),
+        "listed": eligible(c, fid),
         "gist": gist.get("gist", ""),
         "gist_case": gist.get("case", ""),
         "topic": c.display_topic(sid),
@@ -902,7 +928,11 @@ def picture_data(c: Corpus) -> dict:
         "project_titles": {sid: c.report_title(sid) for sid in sorted(named)},
         "empty_topics": sorted(
             set(c.topic_titles)
-            - {c.display_topic(f.get("source", "")) for f, _ in c.findings.values()}
+            - {
+                c.display_topic(c.findings[fid][0].get("source", ""))
+                for fid in c.findings
+                if eligible(c, fid)
+            }
         ),
     }
 

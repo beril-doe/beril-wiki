@@ -113,6 +113,18 @@ from the accepted wiki without editing it:
   - Free text a stage wrote, such as a readiness explanation or a question's
     body, passes through one map of reader terms, so "needs compute" reads
     "needs a new analysis" and a label name reads as its chip text.
+  - A finding page's frontmatter gains `listed`. A finding is listed (on the
+    Results page, in counts, the picture and the home and topic picks) only
+    with an accepted plain summary that does not repeat an earlier finding of
+    its report, and a null result only when it measured something; missing
+    data and an analysis that never ran are not results. An unlisted finding
+    keeps its page, so links to it still resolve.
+  - A correction carries no PubMed chip: it revises the project's own work.
+    A label whose searches found no abstracts says so instead of the
+    comparison note. A result page's report-wide caveats fold under "Other
+    caveats in this report, not specific to this result".
+  - A project link whose only relation is "lists it as a reference only" is
+    not shown.
 
 Run [`scripts/build_quartz.sh`](../scripts/build_quartz.sh) after local
 acceptance to render the site. Publishing committed content is separate from

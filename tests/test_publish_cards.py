@@ -51,6 +51,8 @@ def test_finding_page_orders_sections_for_readers(tmp_path):
     assert body.index("Dark genes are rare here.") < body.index("## What the report measured")
     assert "## Caveat" not in body and "## Literature check" not in body
     assert "Quote text." in body and "Small sample." in body and "Old annotations." in body
+    # Report-wide caveats stay, folded under their own summary.
+    assert "<summary>Other caveats in this report, not specific to this result</summary>" in body
     assert body.rstrip().endswith("From the report [[summaries/a__REPORT]].")
 
 
@@ -96,6 +98,44 @@ def test_chip_only_for_informative_pipeline_labels(tmp_path):
     assert "A person set this label" in body
     f, body = fields_for(label="Not assessed", override="wrong match")
     assert "A person withdrew the pipeline's label: wrong match" in body
+
+
+def test_listing_skips_non_results_repeats_and_title_only_cards(tmp_path):
+    kb = build(tmp_path)
+    page = kb / "wiki/findings" / f"{FID}.md"
+
+    def listed(gist, result="observation"):
+        fields, body = cards.split(page.read_text())
+        page.write_text(cards.join(fields | {"result": result}, body))
+        set_state(kb, "gists.json", {FID: gist} if gist else {})
+        c = Corpus(kb)
+        return cards.split(finding_page(FID, c))[0]["listed"], cards.eligible(c, FID)
+
+    assert listed({"gist": "Dark genes are rare here.", "case": ""}) == (True, True)
+    assert listed(None) == (False, False)
+    assert listed({"gist": "g", "case": "", "repeats": "a--00000000"}) == (False, False)
+    for case, shown in (("measured absence", True), ("missing data", False)):
+        gist = {"gist": "No dark genes were seen.", "case": case}
+        assert listed(gist, "null result") == (shown, shown)
+
+
+def test_a_correction_carries_no_pubmed_chip(tmp_path):
+    kb = build(tmp_path)
+    page = kb / "wiki/findings" / f"{FID}.md"
+    fields, body = cards.split(page.read_text())
+    page.write_text(cards.join(fields | {"result": "correction"}, body))
+    f, _ = cards.split(finding_page(FID, Corpus(kb)))
+    assert f["chip"] == "" and f["chip_note"] == ""
+
+
+def test_an_empty_search_says_no_abstracts_were_found(tmp_path):
+    kb = build(tmp_path)
+    entry = json.loads((kb / "state/novelty.json").read_text())[FID]
+    empty = entry | {"label": "Insufficient literature evidence", "retrieved": 0}
+    set_state(kb, "novelty.json", {FID: empty})
+    body = cards.split(finding_page(FID, Corpus(kb)))[1]
+    assert "found no abstracts to compare" in body
+    assert "An AI comparison with PubMed abstracts" not in body
 
 
 def test_literature_provenance_is_collapsed_not_dropped(tmp_path):
@@ -394,6 +434,8 @@ def test_links_with_a_missing_end_are_dropped(tmp_path):
         {"a": FID, "b": "gone--00000000", "level": "finding", "type": "same result", "label": "x"},
         {"a": "a", "b": "b", "level": "project", "type": "corrects it", "label": "Fixes markers"},
         {"a": "a", "b": "missing", "level": "project", "type": "audits it", "label": "y"},
+        {"a": "b", "b": "a", "level": "project", "type": "lists it as a reference only"}
+        | {"label": "Lists it among references"},
     ]
     set_state(kb, "links.json", {"links": records})
     got = cards.links_index(Corpus(kb))

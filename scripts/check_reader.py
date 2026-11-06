@@ -681,16 +681,30 @@ def check_cross(browser, base: str) -> list[str]:
             fails.append(f"cross: ringed question {i + 1} bridge has projects {links}")
 
     go(page, base + "/findings/")
+    # Expected counts come from the published records: publish marks some findings
+    # unlisted, and those stay off the picture.
+    listed = [
+        fm
+        for p in sorted((ROOT / "quartz/content/findings").glob("*.md"))
+        if p.stem != "index" and (fm := frontmatter(p)).get("listed") is not False
+    ]
+    too_little = sum(fm.get("label") == "Insufficient literature evidence" for fm in listed)
     dots = page.locator(".nvmap .nd").count()
     none = page.locator(".nvmap .nbead.nv-none .nd").count()
-    if dots != len(ids("findings")) or none != 208:
-        fails.append(f"cross: picture has {dots} dots and {none} with too little evidence")
+    if dots != len(listed) or none != too_little:
+        fails.append(
+            f"cross: picture has {dots} dots and {none} with too little evidence; "
+            f"the records list {len(listed)} and {too_little}"
+        )
     if page.locator("svg.nvlinks path").count():
         fails.append("cross: links are drawn before any interaction")
     rows = page.eval_on_selector_all(".nvrowh", "els => els.map(e => e.textContent.trim())")
     infra = [r for r in rows if r.startswith("Data Infrastructure")]
-    if not infra or not infra[0].endswith(" 26"):
-        fails.append(f"cross: Data Infrastructure row reads {infra}")
+    filed = sum(
+        fm.get("topic") == "data-infrastructure-provenance-and-research-practice" for fm in listed
+    )
+    if not infra or not infra[0].endswith(f" {filed}"):
+        fails.append(f"cross: Data Infrastructure row reads {infra}, expected {filed}")
     expected = page.evaluate(
         """() => {
             const data = JSON.parse(document.querySelector('.nvdata').textContent);
