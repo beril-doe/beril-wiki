@@ -92,7 +92,10 @@ svg a:hover .tlabel {
 .hit {
   fill: transparent;
 }
-// Concept titles are too many to show at once; hovering reveals one.
+// Concept titles are too many to show at once; hovering reveals one. They sit
+// in a layer after every cluster so the revealed title paints on top, which
+// puts them outside their point's anchor: the rules that show one on hover or
+// focus are generated into the SVG per point, like the link rules.
 .clabel {
   font-family: var(--sans);
   font-size: 13px;
@@ -103,8 +106,4 @@ svg a:hover .tlabel {
   stroke-linejoin: round;
   opacity: 0;
   pointer-events: none;
-}
-svg a:hover .clabel,
-svg a:focus-visible .clabel {
-  opacity: 1;
 }
