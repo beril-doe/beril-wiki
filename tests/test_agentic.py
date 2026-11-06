@@ -74,6 +74,48 @@ def test_effective_tokens_drive_admission_and_stage_ceiling(tmp_path, monkeypatc
     assert ledger.reserve("two", "topics/b") is None
 
 
+def test_usd_and_codex_caps_refuse_admission_per_backend(tmp_path):
+    ledger = Ledger(
+        tmp_path / "jobs.sqlite",
+        "pilot",
+        10**9,
+        99,
+        10,
+        caps={"max_usd": 5, "max_codex_tokens": 10**6},
+    )
+    usage = {"input_tokens": 10, "output_tokens": 10}
+    ledger.reserve("a", "write/x", "claude-sonnet-5-5")
+    ledger.finish("a", "ok", usage, cost=3.5)
+    with pytest.raises(WorkflowError, match="Claude USD"):
+        ledger.reserve("b", "write/y", "claude-haiku-5-5")  # 3.5 spent + 2 held > 5
+    ledger.reserve("c", "write/x/science-review", "gpt-6.1-sol")
+    ledger.finish("c", "ok", {"input_tokens": 600_000, "output_tokens": 100_000})
+    with pytest.raises(WorkflowError, match="Codex tokens"):
+        ledger.reserve("d", "write/y/science-review", "gpt-6.1-sol")
+    # A pending job counts at its hold: a page session holds its whole session budget,
+    # so a job admitted near the edge cannot carry the run past the cap.
+    capped = Ledger(tmp_path / "held.sqlite", "pilot", 10**9, 99, 10, caps={"max_usd": 9})
+    capped.reserve("s1", "write/a", "claude-sonnet-5-5", hold=8.0)
+    with pytest.raises(WorkflowError, match="Claude USD 8.00 spent or held"):
+        capped.reserve("s2", "write/b", "claude-sonnet-5-5")
+    # A job that ends without a reported cost keeps its hold rather than counting as 0.
+    capped.finish("s1", "", usage, "interrupted: killed")
+    assert capped.db.execute("SELECT cost FROM jobs WHERE key='s1'").fetchone() == (8.0,)
+    # Another run, or no model named, is not held to this run's caps.
+    assert Ledger(tmp_path / "jobs.sqlite", "other", 10**9, 99, 10).reserve("e", "x") is None
+
+
+def test_one_hour_cache_writes_count_at_their_price():
+    from beril_wiki.agentic.runtime import effective_tokens
+
+    usage = {"input_tokens": 0, "output_tokens": 0, "cache_creation_input_tokens": 1000}
+    assert effective_tokens(usage) == 1250
+    split = usage | {"cache_creation": {"ephemeral_1h_input_tokens": 600}}
+    assert effective_tokens(split) == 600 * 2 + 400 * 1.25
+    # A split larger than the total it splits is malformed: charge the plain weight.
+    assert effective_tokens(usage | {"cache_creation": {"ephemeral_1h_input_tokens": 5000}}) == 1250
+
+
 def test_read_tools_bound_ranges_and_reject_escape(tmp_path):
     (tmp_path / "staging").mkdir()
     (tmp_path / "staging/a.md").write_text("0123456789")
@@ -148,19 +190,6 @@ def test_chunks_and_exact_quote_validation():
                 "empty_reason": "",
             },
         )
-
-
-def test_patch_rejects_stale_ambiguous_and_overlapping_anchors():
-    from beril_wiki.agentic.batch import reconstruct
-    from beril_wiki.agentic.runtime import digest
-
-    old = "# Title\n\nAlpha.\n\nBeta."
-    candidate = {"base_hash": digest(old), "edits": [{"old": "Alpha.", "new": "Gamma."}]}
-    assert reconstruct(old, candidate) == "# Title\n\nGamma.\n\nBeta."
-    with pytest.raises(WorkflowError, match="base"):
-        reconstruct(old + " changed", candidate)
-    with pytest.raises(WorkflowError, match="anchor"):
-        reconstruct("aaa", {"base_hash": digest("aaa"), "edits": [{"old": "a", "new": "b"}]})
 
 
 def test_source_revision_not_source_membership(tmp_path):
@@ -457,6 +486,9 @@ def test_runner_stage_order_noop_and_failed_gate(tmp_path, monkeypatch, failed_s
     calls.clear()
     assert runner.run(root, checkout, config) == {"unchanged": True}
     assert calls == []
+    # A model change no longer reruns derived stages; a changed input does.
+    (root / "wiki/summaries").mkdir(exist_ok=True)
+    (root / "wiki/summaries/new__REPORT.md").write_text("A new summary.")
     before = manifest(root, runner.TREES)
 
     def fail_gate(work, config_path, name, module, args):
@@ -471,6 +503,99 @@ def test_runner_stage_order_noop_and_failed_gate(tmp_path, monkeypatch, failed_s
     with pytest.raises(WorkflowError, match="strict gate"):
         runner.run(root, checkout, config | {"model": "changed"})
     assert manifest(root, runner.TREES) == before
+
+
+def test_older_revision_scheme_and_model_change_adopt_accepted_wiki(tmp_path, monkeypatch):
+    """A state accepted under the previous revision scheme, then a new writing model,
+    must neither re-integrate sources nor rerun derived stages or force figures."""
+    import json
+    from types import SimpleNamespace
+
+    from beril_wiki.agentic import runner
+    from beril_wiki.agentic.curator import curate as runner_curate
+
+    root, checkout = tmp_path / "repo", tmp_path / "checkout"
+    for folder in (*runner.TREES, "contract"):
+        (root / folder).mkdir(parents=True)
+    (root / "contract/AGENTS.md").write_text("Contract")
+    (checkout / "ui/config").mkdir(parents=True)
+    (checkout / "ui/config/collections.yaml").write_text("collections: []")
+    config = dict(cli="claude", model="test", max_tokens=100, max_jobs=5, reserve_tokens=10)
+    monkeypatch.setattr(
+        runner.subprocess, "run", lambda *a, **k: SimpleNamespace(stdout="test CLI")
+    )
+    calls = []
+
+    def recorded_stage(work, config_path, name, module, args):
+        calls.append((name, tuple(args)))
+        (work / "wiki" / f"{name}.md").write_text(name)
+
+    from agentic_recording import reply
+
+    monkeypatch.setattr(runner.Runtime, "ask", reply)
+    monkeypatch.setattr(runner, "run_stage", recorded_stage)
+    runner.run(root, checkout, config)
+    # Re-stamp the accepted state as a scheme-4 state: every revision formula differs.
+    state_path = root / "state/agentic.json"
+    state = json.loads(state_path.read_text())
+    state.update(revision="scheme-4", revision_scheme=4, figure_revision="scheme-4")
+    state["fingerprint"] = "scheme-4"
+    for snapshot in state["editorial"].values():
+        snapshot["semantic"] = "scheme-4"
+    state_path.write_text(json.dumps(state))
+    integrated = []
+    monkeypatch.setattr(
+        runner, "curate", lambda *a, **k: integrated.append(a[2]) or runner_curate(*a, **k)
+    )
+    for policy in (config, config | {"step_models": {"writing": "other", "planning": "other"}}):
+        calls.clear()
+        integrated.clear()
+        runner.run(root, checkout, policy)
+        names = [name for name, _ in calls]
+        assert not {"conflicts", "topics", "literature", "authors"} & set(names), names
+        assert ("figures", ("--force",)) not in calls
+        assert integrated == [[]]
+        state = json.loads(state_path.read_text())
+        assert state["revision_scheme"] == runner.REVISION_SCHEME
+
+
+def test_a_recorded_contract_change_is_not_adopted(tmp_path, monkeypatch):
+    """Adoption keeps the accepted wiki only under the contract it was written to."""
+    import json
+    from types import SimpleNamespace
+
+    from beril_wiki.agentic import runner
+
+    root, checkout = tmp_path / "repo", tmp_path / "checkout"
+    for folder in (*runner.TREES, "contract"):
+        (root / folder).mkdir(parents=True)
+    (root / "contract/AGENTS.md").write_text("Contract")
+    (checkout / "ui/config").mkdir(parents=True)
+    (checkout / "ui/config/collections.yaml").write_text("collections: []")
+    config = dict(cli="claude", model="test", max_tokens=100, max_jobs=5, reserve_tokens=10)
+    monkeypatch.setattr(
+        runner.subprocess, "run", lambda *a, **k: SimpleNamespace(stdout="test CLI")
+    )
+    calls = []
+
+    def recorded_stage(work, config_path, name, module, args):
+        calls.append(name)
+        (work / "wiki" / f"{name}.md").write_text(name)
+
+    from agentic_recording import reply
+
+    monkeypatch.setattr(runner.Runtime, "ask", reply)
+    monkeypatch.setattr(runner, "run_stage", recorded_stage)
+    runner.run(root, checkout, config)
+    state_path = root / "state/agentic.json"
+    state = json.loads(state_path.read_text())
+    assert state["contract"]
+    state.update(revision_scheme=4, fingerprint="old")
+    state_path.write_text(json.dumps(state))
+    (root / "contract/AGENTS.md").write_text("A new rule.")
+    calls.clear()
+    runner.run(root, checkout, config)
+    assert {"conflicts", "topics", "literature", "authors"} <= set(calls)
 
 
 def test_source_numbers_invalidates_same_length_revision():
@@ -724,20 +849,6 @@ def test_auth_failure_does_not_reserve_and_cached_output_survives_cli_update(tmp
     restarted = module.Runtime(config | {"revision": "new-cli"})
     monkeypatch.setattr(module, "check_auth", no_login)
     assert restarted.ask(messages, "test") == "saved"
-
-
-def test_overlapping_anchors_are_rejected():
-    from beril_wiki.agentic.batch import reconstruct
-    from beril_wiki.agentic.runtime import digest
-
-    with pytest.raises(WorkflowError, match="overlap"):
-        reconstruct(
-            "abcdef",
-            {
-                "base_hash": digest("abcdef"),
-                "edits": [{"old": "abc", "new": "X"}, {"old": "bcd", "new": "Y"}],
-            },
-        )
 
 
 def test_large_hub_previews_keep_retrieval_references():

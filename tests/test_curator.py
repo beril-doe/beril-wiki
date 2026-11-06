@@ -48,7 +48,7 @@ def test_schedule_runs_stale_stages_in_table_order(tmp_path, monkeypatch):
     ]
     assert set(state) == set(C.EDITORIAL)
     # Literature owns its section; its insertion must not dirty topic synthesis.
-    assert C.pending_actions(tmp_path, state, Agent.config, integrated=True) == []
+    assert C.pending_actions(tmp_path, state, integrated=True) == []
     receipts = json.loads((tmp_path / "jobs/curator-receipts.json").read_text())
     assert [r["action"] for r in receipts] == ["conflicts", "topics", "literature", "authors"]
     assert all(r["result"] == "completed" for r in receipts)
@@ -111,8 +111,8 @@ def test_stage_made_stale_by_integration_still_runs(tmp_path, monkeypatch):
 
     monkeypatch.setattr(C, "load_groups", lambda root: [])
     monkeypatch.setattr(C, "propose_topics", lambda root, agent: None)
-    prior = {name: C.stage_snapshot(tmp_path, name, Agent.config) for name in C.EDITORIAL}
-    assert C.pending_actions(tmp_path, prior, Agent.config, integrated=True) == []
+    prior = {name: C.stage_snapshot(tmp_path, name) for name in C.EDITORIAL}
+    assert C.pending_actions(tmp_path, prior, integrated=True) == []
 
     def integrate(root, agent, names):
         (tmp_path / "wiki/summaries/a__REPORT.md").write_text("revised summary")
@@ -122,7 +122,7 @@ def test_stage_made_stale_by_integration_still_runs(tmp_path, monkeypatch):
         tmp_path, cast(Runtime, Agent()), ["a__REPORT.md"], lambda n, a: calls.append(n), prior
     )
     assert "authors" in calls and "conflicts" not in calls
-    assert C.pending_actions(tmp_path, state, Agent.config, integrated=True) == []
+    assert C.pending_actions(tmp_path, state, integrated=True) == []
 
 
 def test_literature_changes_only_its_owned_fingerprint(tmp_path):
@@ -132,11 +132,11 @@ def test_literature_changes_only_its_owned_fingerprint(tmp_path):
     folder.mkdir(parents=True)
     path = folder / "a.md"
     path.write_text("# A\n\nLead.\n\n## Findings\n\nEvidence.\n")
-    before = {n: C.stage_snapshot(tmp_path, n, {"model": "fixture"}) for n in C.EDITORIAL}
+    before = {n: C.stage_snapshot(tmp_path, n) for n in C.EDITORIAL}
     path.write_text(
         "# A\n\nLead.\n\n## Literature Context\n\nA paper.\n\n## Findings\n\nEvidence.\n"
     )
-    after = {n: C.stage_snapshot(tmp_path, n, {"model": "fixture"}) for n in C.EDITORIAL}
+    after = {n: C.stage_snapshot(tmp_path, n) for n in C.EDITORIAL}
     assert before["topics"] == after["topics"]
     assert before["literature"] != after["literature"]
 

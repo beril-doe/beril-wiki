@@ -11,7 +11,6 @@ import json
 import os
 import threading
 import time
-from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
@@ -42,12 +41,11 @@ OVERRIDES = (
     # Under a never-ask policy an MCP call is denied unless its tool is pre-approved.
     'mcp_servers.evidence.tools.read_evidence.approval_mode="approve"',
     'mcp_servers.evidence.tools.search_evidence.approval_mode="approve"',
-    'mcp_servers.evidence.tools.validate_candidate.approval_mode="approve"',
 )
 PROFILE_SENTENCE = {
     "none": "All evidence is supplied in the prompt; there are no tools.",
     "read": "Use only the supplied evidence read tool.",
-    "extended": "Use only the supplied read-only evidence, search and candidate-check tools.",
+    "extended": "Use only the supplied read-only evidence and search tools.",
 }
 TRANSCRIPT_LIMIT = 4_000_000
 
@@ -83,7 +81,7 @@ def final_response(items: list) -> str:
 
 
 class Binding:
-    """What the host serves for the job in flight: reader, allowed tools, validator,
+    """What the host serves for the job in flight: reader, allowed tools and the
     remaining tool turns.
 
     A turn is one model turn, as it is for Claude's max_turns: Codex issues several
@@ -94,10 +92,9 @@ class Binding:
         self,
         reader: ReadTools,
         tools: list[str],
-        validator: Callable[[str], Any] | None,
         turns: int,
     ) -> None:
-        self.reader, self.tools, self.validator, self.turns = reader, tools, validator, turns
+        self.reader, self.tools, self.turns = reader, tools, turns
         self.budget = turns
         self.batches = 0  # model turns that called tools; consume() counts them
         self.refused = 0  # calls made after the turn budget ran out
@@ -107,7 +104,7 @@ class EvidenceHost:
     """The pipeline's evidence tools served over local streamable HTTP for Codex.
 
     Tool names, argument shapes and reply text match the Claude branch so prompts
-    and validators are shared. The host holds no reader itself: run_job binds one
+    are shared. The host holds no reader itself: run_job binds one
     per job and clears it afterwards."""
 
     def __init__(self) -> None:
@@ -132,11 +129,6 @@ class EvidenceHost:
             annotations=read_only,
             description="Search literal text in wiki or staging; paginate with next_offset.",
         )(self._search)
-        mcp.tool(
-            name="validate_candidate",
-            annotations=read_only,
-            description="Check a candidate JSON string against the bound page task; no writes.",
-        )(self._validate)
         config = uvicorn.Config(
             mcp.streamable_http_app(), host="127.0.0.1", port=0, log_level="warning"
         )
@@ -178,21 +170,6 @@ class EvidenceHost:
         bound = self._bound("search_evidence")
         assert isinstance(bound.reader, EvidenceTools)
         return json.dumps(bound.reader.search(query, scope, offset))
-
-    def _validate(self, candidate: str) -> str:
-        bound = self._bound("validate_candidate")
-        try:
-            if bound.validator is None:
-                raise WorkflowError("no writer validation context")
-            bound.validator(candidate)
-            value: dict = {"valid": True}
-        except (WorkflowError, OSError, ValueError, TypeError, KeyError) as exc:
-            value = {"valid": False, "issues": [str(exc)[:4000]]}
-        text = json.dumps(value)
-        if len(text.encode()) > bound.reader.remaining:
-            raise WorkflowError("tool output budget exhausted")
-        bound.reader.remaining -= len(text.encode())
-        return text
 
 
 def prepare_home(store: Path, name: str) -> Path:
@@ -353,8 +330,6 @@ def run_job(agent: Runtime, payload: str, key: str, model: str) -> str:
     tools = [] if profile == "none" else ["read_evidence"]
     if profile == "extended":
         tools.append("search_evidence")
-        if agent._validator is not None:
-            tools.append("validate_candidate")
     messages = json.loads(payload)
     system_parts = [m["content"] for m in messages if m.get("role") == "system"]
     user_payload = json.dumps(
@@ -368,7 +343,7 @@ def run_job(agent: Runtime, payload: str, key: str, model: str) -> str:
     instructions = "\n\n".join([system + contract, *system_parts])
     current = session(agent.store)
     budget = max(0, turns - 1)
-    binding = Binding(reader, tools, agent._validator, budget)
+    binding = Binding(reader, tools, budget)
     current.host.binding = binding
     scratch = agent.store / "codex-scratch"
     scratch.mkdir(parents=True, exist_ok=True)
@@ -385,7 +360,11 @@ def run_job(agent: Runtime, payload: str, key: str, model: str) -> str:
                 ephemeral=True,
                 base_instructions=instructions,
             )
-            turn = thread.turn(TextInput(user_payload), model=model, effort=ReasoningEffort(EFFORT))
+            turn = thread.turn(
+                TextInput(user_payload),
+                model=model,
+                effort=ReasoningEffort(agent.effort(agent._step) or EFFORT),
+            )
             # A few refused calls are a model finishing badly; as many again as the
             # budget is a loop, and only interrupting it bounds the spend.
             state = consume(turn, out, timeout, binding)

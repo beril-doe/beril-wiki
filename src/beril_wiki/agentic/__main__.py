@@ -21,9 +21,14 @@ from beril_wiki.agentic.runtime import (
 from beril_wiki.paths import ROOT
 from beril_wiki.stages.fetch import CHECKOUT
 
+EFFORTS = ("low", "medium", "high", "xhigh", "max")
 
-def load_models(root: Path, path: Path | None, model: str | None, overrides: list[str]) -> dict:
-    """Load repository policy, then apply an all-role override and individual overrides."""
+
+def load_models(
+    root: Path, path: Path | None, model: str | None, overrides: list[str], efforts=()
+) -> dict:
+    """Load repository policy, then apply an all-role override, individual overrides
+    and per-role reasoning efforts."""
     source = root / (path or "agentic.yaml")
     config: dict = {}
     if source.exists() or path is not None:
@@ -31,8 +36,8 @@ def load_models(root: Path, path: Path | None, model: str | None, overrides: lis
             config = yaml.safe_load(source.read_text(encoding="utf-8"))
         except yaml.YAMLError as exc:
             raise WorkflowError(f"invalid model config {source}: {exc}") from exc
-        if not isinstance(config, dict) or set(config) - {"model", "step_models"}:
-            raise WorkflowError("model config must contain only model and step_models")
+        if not isinstance(config, dict) or set(config) - {"model", "step_models", "step_efforts"}:
+            raise WorkflowError("model config must contain only model, step_models, step_efforts")
         model_policy(config)
     if model is not None:
         config = {"model": model}
@@ -46,6 +51,18 @@ def load_models(root: Path, path: Path | None, model: str | None, overrides: lis
         roles[role] = selected.strip()
     config["step_models"] = config.get("step_models", {}) | roles
     model_policy(config)
+    chosen = config.get("step_efforts", {})
+    if not isinstance(chosen, dict):
+        raise WorkflowError("step_efforts must map roles to efforts")
+    chosen = dict(chosen)
+    for value in efforts:
+        role, _, level = value.partition("=")
+        chosen[role] = level.strip()
+    for role, level in chosen.items():
+        if role not in MODEL_ROLES or level not in EFFORTS:
+            raise WorkflowError(f"invalid effort {role}={level}; use ROLE={'|'.join(EFFORTS)}")
+    if chosen:
+        config["step_efforts"] = chosen
     return config
 
 
@@ -79,6 +96,13 @@ def main() -> int:
         default=[],
         metavar="ROLE=MODEL",
         help=f"override a role's model; repeat for roles: {', '.join(MODEL_ROLES)}",
+    )
+    execute.add_argument(
+        "--effort",
+        action="append",
+        default=[],
+        metavar="ROLE=LEVEL",
+        help="a role's reasoning effort; repeat for roles (default: the model's own)",
     )
     execute.add_argument("--max-tokens", type=int, required=True)
     execute.add_argument("--max-jobs", type=int, required=True)
@@ -139,6 +163,29 @@ def main() -> int:
     retry.add_argument("--all-failed", action="store_true", help="every page in failures.json")
     commands.add_parser("recover", help="finish an interrupted promotion without model calls")
     commands.add_parser("status", help="show durable job IDs, states and usage")
+    pilot = commands.add_parser("pilot", help="measure other models on named pages")
+    pilot.add_argument("action", choices=("setup", "cell", "judge", "report"))
+    pilot.add_argument("--scratch", type=Path, required=True)
+    pilot.add_argument("--store", type=Path, help="setup: the ledger store to copy")
+    pilot.add_argument("--before", help="setup: commit holding the pre-compile wiki")
+    pilot.add_argument("--checkout", type=Path, default=CHECKOUT, help="setup: observatory")
+    pilot.add_argument("--name", help="cell or judge: the cell name")
+    pilot.add_argument(
+        "--kind",
+        choices=("integrated", "derived", "routing", "grouping", "extraction"),
+        help="cell kind",
+    )
+    pilot.add_argument(
+        "--pages", default="", help="cell: comma-separated page names, or sources to extract"
+    )
+    pilot.add_argument("--step-model", action="append", default=[], metavar="ROLE=MODEL")
+    pilot.add_argument("--effort", action="append", default=[], metavar="ROLE=LEVEL")
+    pilot.add_argument("--run", default="pilot", help="ledger run id the caps apply to")
+    pilot.add_argument("--max-usd", type=float, default=0)
+    pilot.add_argument("--max-codex-tokens", type=int, default=0)
+    pilot.add_argument("--workers", type=int, default=4)
+    pilot.add_argument("--timeout", type=int, default=900)
+    pilot.add_argument("--cli", default=shutil.which("claude"))
     args = parser.parse_args()
     root = args.root.resolve()
     try:
@@ -156,6 +203,38 @@ def main() -> int:
                 print(
                     json.dumps(EvidenceTools(root).search(args.query, offset=args.offset), indent=2)
                 )
+        elif args.command == "pilot":
+            from beril_wiki.agentic import pilot as P
+
+            scratch = args.scratch.resolve()
+            if args.action == "setup":
+                if not args.store or not args.before:
+                    raise WorkflowError("pilot setup needs --store and --before")
+                P.setup(root, args.store.resolve(), scratch, args.before, args.checkout.resolve())
+                return 0
+            if args.action == "report":
+                print(json.dumps(P.report(scratch), indent=1))
+                return 0
+            if args.action in ("cell", "judge") and (not args.max_usd or not args.max_codex_tokens):
+                raise WorkflowError("a pilot cell or judge needs --max-usd and --max-codex-tokens")
+            config = {
+                "cli": args.cli,
+                "run": args.run,
+                "max_usd": args.max_usd,
+                "max_codex_tokens": args.max_codex_tokens,
+                "reserve_tokens": 50_000,
+                "max_turns": 12,
+                "max_output_tokens": 32768,
+                "timeout": args.timeout,
+                "stage_timeout": 14_400,
+                "workers": args.workers,
+                "pass_records": 60,
+            } | load_models(scratch / "derived", None, None, args.step_model, args.effort)
+            if args.action == "cell":
+                pages = [p for p in args.pages.split(",") if p]
+                P.run_cell(scratch, args.name, args.kind, pages, config)
+            else:
+                P.judge(scratch, args.name, config)
         elif args.command == "recover":
             with locked(root):
                 recover(root)
@@ -242,7 +321,9 @@ def main() -> int:
                     "cli",
                 )
             }
-            config.update(load_models(root, args.model_config, args.model, args.step_model))
+            config.update(
+                load_models(root, args.model_config, args.model, args.step_model, args.effort)
+            )
             print(json.dumps({"models": model_policy(config)}, indent=2))
             run(root, args.checkout.resolve(), config, args.staged)
     except (WorkflowError, OSError, ValueError) as exc:

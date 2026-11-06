@@ -20,7 +20,6 @@ from beril_wiki.agentic.batch import INTEGRATION_REVISION, changed_sources, retr
 from beril_wiki.agentic.curator import EDITORIAL, curate, stage_revision, stage_snapshot
 from beril_wiki.agentic.runtime import (
     AUTH_ENV,
-    CORE_MODEL_ROLES,
     Runtime,
     WorkflowError,
     atomic_json,
@@ -206,14 +205,17 @@ def revision() -> str:
 
 
 # How the accepted revision is computed. A state accepted under another scheme cannot
-# be compared with this one and is adopted once rather than re-integrated.
-REVISION_SCHEME = 4
+# be compared with this one and is adopted once rather than re-integrated. Scheme 5
+# took model identities out of every revision: a model change applies to pages written
+# from then on, so a cheaper model never recompiles the accepted wiki.
+REVISION_SCHEME = 5
 
 
 def compiler_revision() -> str:
     """What integration means, as the explicit revision alone: hashing compiler.py and
-    check.py made an unrelated edit to either re-plan and rewrite the corpus. Model
-    policy and the contract still re-integrate, as deliberate scientific changes."""
+    check.py made an unrelated edit to either re-plan and rewrite the corpus. The
+    contract still re-integrates, as a deliberate scientific change; the model policy
+    does not."""
     return digest([INTEGRATION_REVISION])
 
 
@@ -221,6 +223,20 @@ def fingerprint(root: Path) -> dict[str, str]:
     return {
         p: h for p, h in manifest(root, (*TREES, "contract")).items() if p != "state/agentic.json"
     }
+
+
+def adopt_editorial(work: Path, prior: dict) -> dict:
+    """Re-stamp each derived stage accepted under the previous scheme whose inputs and
+    outputs are still the ones it recorded, so the new formula alone rewrites nothing.
+    A stage whose files moved keeps its old snapshot and runs as it would have."""
+    adopted = dict(prior)
+    for name, snapshot in prior.items():
+        if name not in EDITORIAL:
+            continue
+        now = stage_snapshot(work, name)
+        if snapshot.get("inputs") == now["inputs"] and snapshot.get("outputs") == now["outputs"]:
+            adopted[name] = now
+    return adopted
 
 
 def budget_run(root: Path, base: dict, external: dict, staged: bool) -> str:
@@ -297,16 +313,21 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
             (work / "staging").mkdir()
             run_stage(work, config_path, "fetch", "stages.fetch", [])
         changed = changed_sources(work)
-        scientific_revision = digest(
-            [
-                compiler_revision(),
-                model_signature(config, CORE_MODEL_ROLES),
-                contract_manifest(work),
-            ]
+        scientific_revision = digest([compiler_revision(), contract_manifest(work)])
+        contract = digest(contract_manifest(work))
+        # A state accepted under another scheme is adopted, not rewritten, when its
+        # contract is the one in force. States from scheme 5 on record their contract; an
+        # older one cannot say, and adopting it assumes the contract has not changed since.
+        adopting = (
+            bool(accepted)
+            and accepted.get("revision_scheme") != REVISION_SCHEME
+            and accepted.get("contract", contract) == contract
         )
+        if adopting and "contract" not in accepted:
+            print("agentic: adopting a state with no recorded contract; assuming it is unchanged")
         # Compiler/config edits invalidate previous accepted core outputs.
         if accepted and accepted.get("revision") != scientific_revision:
-            if accepted.get("revision_scheme") == REVISION_SCHEME:
+            if not adopting:
                 changed = sorted(p.name for p in (work / "staging").glob("*.md"))
             else:
                 # Accepted under another scheme, whose revision cannot be recomputed
@@ -333,16 +354,19 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
                 agent.ledger.reconcile_stale(store / "transcripts")
 
         prior = accepted.get("editorial", {}) if accepted.get("version") == 2 else {}
+        if adopting:
+            prior = adopt_editorial(work, prior)
         # Accepted snapshots are recomputed after final naming and figure postprocessing.
         curate(work, agent, changed, refresh, prior, retry)
         refresh("titles", [str(work)])
         refresh("names", [str(work)])
         refresh("errata", [str(work)])
         figure_state = ("state/figures-placements.json", "state/figures-state.json")
-        figure_revision = stage_revision(work, "figures", config)
-        force_figures = accepted.get("figure_revision") != figure_revision or accepted.get(
-            "figure_outputs"
-        ) != manifest(work, figure_state)
+        figure_revision = stage_revision(work, "figures")
+        figures_current = accepted.get("figure_outputs") == manifest(work, figure_state)
+        force_figures = not figures_current or (
+            accepted.get("figure_revision") != figure_revision and not adopting
+        )
         refresh("figures", ["--force"] if force_figures else [])
         unlink_missing(work)
         run_stage(work, config_path, "check", "check", [str(work), "--strict"])
@@ -357,13 +381,14 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
         next_state = {
             "revision": scientific_revision,
             "revision_scheme": REVISION_SCHEME,
+            "contract": contract,
             "fingerprint": digest([fingerprint(work), external, rev, models, staged]),
             "models": model_policy(config),
             "core_outputs": manifest(work, ("wiki/concepts", "wiki/entities", "wiki/summaries")),
             "version": 2,
             "figure_revision": figure_revision,
             "figure_outputs": manifest(work, figure_state),
-            "editorial": {name: stage_snapshot(work, name, config) for name in EDITORIAL},
+            "editorial": {name: stage_snapshot(work, name) for name in EDITORIAL},
         }
         atomic_json(work / "state/agentic.json", next_state)
         promote(root, work, original)

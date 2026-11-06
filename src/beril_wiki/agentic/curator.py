@@ -2,25 +2,18 @@
 
 from __future__ import annotations
 
-import ast
-import inspect
 import json
 import re
-import textwrap
 from collections.abc import Callable
 from pathlib import Path
 
 from beril_wiki.agentic.batch import compile_batch
 from beril_wiki.agentic.runtime import (
-    SYSTEM,
     Runtime,
     WorkflowError,
     contract_manifest,
     digest,
     manifest,
-    model_signature,
-    page_context,
-    page_contexts,
 )
 from beril_wiki.agentic.topics import load_groups, propose_topics
 from beril_wiki.stages.literature import SECTION, topic_core
@@ -69,38 +62,27 @@ def owned_manifest(root: Path, folders: tuple, *, part: str = "") -> dict[str, s
     return result
 
 
-def stage_revision(root: Path, name: str, config: dict) -> str:
-    package = Path(__file__).resolve().parents[1]
-    roles = {
-        "topics": ("planning", "writing", "review"),
-        "literature": ("queries", "writing", "review"),
-        "figures": ("figures",),
-    }.get(name, ("writing", "review"))
-    return digest(
-        [
-            model_signature(config, roles),
-            contract_manifest(root),
-            SYSTEM,
-            *[
-                ast.dump(ast.parse(textwrap.dedent(inspect.getsource(helper))))
-                for helper in (page_context, page_contexts)
-            ],
-            *[
-                ast.dump(ast.parse((package / file).read_text(encoding="utf-8")))
-                for file in (
-                    f"stages/{name}.py",
-                    "agentic/prose.py",
-                    "compiler.py",
-                )
-            ],
-        ]
-    )
+# What each derived stage means, as an explicit revision: bump one when a change to the
+# stage, its prompts or the shared prose machinery should rewrite that stage's pages.
+# Hashing the model policy and the source code made a cheaper model, or any edit to
+# prose.py, rewrite every derived page of the accepted wiki.
+STAGE_REVISIONS = {
+    "conflicts": "conflicts@1",
+    "topics": "topics@1",
+    "literature": "literature@1",
+    "authors": "authors@1",
+    "figures": "figures@1",
+}
 
 
-def stage_snapshot(root: Path, name: str, config: dict) -> dict:
+def stage_revision(root: Path, name: str) -> str:
+    return digest([STAGE_REVISIONS[name], contract_manifest(root)])
+
+
+def stage_snapshot(root: Path, name: str) -> dict:
     inputs, outputs, _, _ = EDITORIAL[name]
     return {
-        "semantic": stage_revision(root, name, config),
+        "semantic": stage_revision(root, name),
         "inputs": digest(owned_manifest(root, inputs, part="core")),
         "outputs": owned_manifest(
             root, outputs, part="literature" if name == "literature" else "core"
@@ -108,13 +90,13 @@ def stage_snapshot(root: Path, name: str, config: dict) -> dict:
     }
 
 
-def pending_actions(root: Path, state: dict, config: dict, *, integrated: bool) -> list[str]:
+def pending_actions(root: Path, state: dict, *, integrated: bool) -> list[str]:
     pending = [] if integrated else ["integrate"]
     for name, (_, _, dependencies, _) in EDITORIAL.items():
         if (
             not integrated
             or any(d in pending for d in dependencies)
-            or state.get(name) != stage_snapshot(root, name, config)
+            or state.get(name) != stage_snapshot(root, name)
         ):
             pending.append(name)
     try:
@@ -185,9 +167,7 @@ def curate(
     # Freshness is judged when each stage is reached: integration can make a stage
     # stale that was current before it ran (authors reads summaries, for instance).
     for action in (["integrate"] if changed or retry else []) + list(EDITORIAL):
-        if action != "integrate" and action not in pending_actions(
-            root, state, agent.config, integrated=True
-        ):
+        if action != "integrate" and action not in pending_actions(root, state, integrated=True):
             continue
         receipt: dict = {"action": action, "result": "failed"}
         before = manifest(root, ("wiki", "state"))
@@ -202,12 +182,12 @@ def curate(
                 refresh("extras", [])
             else:
                 previous = state.get(action, {})
-                now = stage_snapshot(root, action, agent.config)
+                now = stage_snapshot(root, action)
                 args = invalidate_outputs(root, action, previous, now)
                 if action == "topics":
                     propose_topics(root, agent)
                 refresh(action, args)
-                state[action] = stage_snapshot(root, action, agent.config)
+                state[action] = stage_snapshot(root, action)
             after = manifest(root, ("wiki", "state"))
             paths = sorted(p for p in before.keys() | after.keys() if before.get(p) != after.get(p))
             receipt.update(result="completed", changed_paths=paths, changed_count=len(paths))
@@ -215,11 +195,11 @@ def curate(
             receipt["diagnostic"] = str(exc)[:4000]
             raise
         finally:
-            receipt["pending"] = pending_actions(root, state, agent.config, integrated=True)
+            receipt["pending"] = pending_actions(root, state, integrated=True)
             receipts.append(receipt)
             (agent.store / "curator-receipts.json").write_text(
                 json.dumps(receipts, indent=2, sort_keys=True), encoding="utf-8"
             )
-    if pending := pending_actions(root, state, agent.config, integrated=True):
+    if pending := pending_actions(root, state, integrated=True):
         raise WorkflowError(f"editorial obligations remain after scheduling: {pending}")
     return state

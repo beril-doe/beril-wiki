@@ -33,6 +33,7 @@ from beril_wiki.agentic.prose import (
     excerpts,
     failed_pages,
     limit,
+    only,
     parallel,
     prune_failures,
     record_failure,
@@ -467,6 +468,7 @@ def main() -> int:
         else {}
     )
 
+    named = only(sys.argv)
     todo, planned = [], []
     for i, members in enumerate(clusters):
         topic = names.get(str(i), f"Topic {i}")
@@ -487,6 +489,10 @@ def main() -> int:
                 + "".join(conflicts[c] for c in rel_conflicts)
             ).encode()
         ).hexdigest()[:16]
+        if named is not None:
+            if f"topics/{slug}" in named:
+                todo.append((topic, slug, list(members), srcs, rel_conflicts, digest))
+            continue
         if state.get(slug) == digest and (OUT / "topics" / f"{slug}.md").exists():
             print(f"  unchanged topics/{slug}.md")
             continue
@@ -543,6 +549,8 @@ def main() -> int:
         record_failure(f"topics/{slug}", None)
         print(f"  wrote topics/{slug}.md ({len(members)} concepts, {len(rel_conflicts)} conflicts)")
     atomic_json(state_path, state)
+    if named is not None:
+        return 1 if failed and strict_pages() else 0  # named hubs only: no retiring, no home
     # Retire hub pages for topics that no longer exist after re-clustering, unless a
     # hub failed this pass: its predecessor under an old title is the kept version.
     live = {slug for _, slug, _ in planned}
