@@ -168,6 +168,14 @@ def checker(records: list[dict]) -> Callable[[str], Reply]:
     return parse
 
 
+def passes(reply: dict, records: list[dict]) -> bool:
+    try:
+        checker(records)(json.dumps(reply))
+    except CandidateError:
+        return False
+    return True
+
+
 def short_id(evidence: str) -> str:
     """The ":chunk:index" part of a record id, as reviewers abbreviate it."""
     return evidence[evidence.index(":") :] if ":" in evidence else evidence
@@ -322,7 +330,9 @@ def main(root: Path = ROOT) -> int:
         key = digest([messages, cards.policy(agent.config, ("cards", "review"))])
         saved = state.get(sid, {})
         on_disk = {p.name: file_hash(p) for p in pages_of(out, sid)}
-        if saved.get("input") == key and saved.get("reply"):
+        # A saved reply stays while its input is unchanged and today's checks accept it,
+        # so a code change re-asks only the reports whose replies its rules now reject.
+        if saved.get("input") == key and saved.get("reply") and passes(saved["reply"], records):
             # The accepted reply is kept, so a page edited by hand or a new render
             # is rewritten from it without a model call.
             if saved.get("render") != RENDER or saved.get("pages") != on_disk:

@@ -240,3 +240,31 @@ def test_other_caveats_leave_out_figures_their_quote_lacks():
     _, _, body = headlines.render("a", h, [*RECORDS, derived, stated], "2026-10-23", "x")
     assert "Only 12 conditions were assayed" in body
     assert "6.375" not in body
+
+
+def test_a_reschedule_keeps_saved_replies_and_rechecks_them(tmp_path, monkeypatch):
+    """A code change no longer clears state/headlines.json; a saved reply today's checks
+    reject is asked again, and only that one."""
+    from beril_wiki.agentic import curator
+
+    good = {"headlines": [headline()]}
+    agent = setup(tmp_path, monkeypatch, {"headlines/a": [json.dumps(good), json.dumps(good)]})
+    assert headlines.main(tmp_path) == 0
+    path = tmp_path / "state/headlines.json"
+    saved = json.loads(path.read_text())
+    curator.invalidate_outputs(
+        tmp_path,
+        "headlines",
+        {"semantic": "old", "outputs": {}},
+        {"semantic": "new", "outputs": {}},
+    )
+    assert json.loads(path.read_text()) == saved
+    calls = len(agent.asked)
+    assert headlines.main(tmp_path) == 0
+    assert len(agent.asked) == calls
+    # A saved reply whose quantity no longer passes the figure check is asked again.
+    state = json.loads(path.read_text())
+    state["a"]["reply"]["headlines"][0]["quantities"][0]["value"] = "0.99"
+    path.write_text(json.dumps(state))
+    assert headlines.main(tmp_path) == 0
+    assert agent.asked.count("headlines/a") == 2

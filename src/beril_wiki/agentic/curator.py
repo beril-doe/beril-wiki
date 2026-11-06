@@ -50,7 +50,10 @@ EDITORIAL = {
         ("wiki/sources", "contract/cards.yaml"),
         ("wiki/findings",),
         (),
-        "headlines.json",
+        # Not disposable: the run that wrote the records may have used another job
+        # store, so clearing would buy every report again. The stage re-checks saved
+        # replies against today's code instead.
+        None,
     ),
     "novelty": (
         ("wiki/findings", "wiki/sources", "contract/novelty-decisions.yaml"),
