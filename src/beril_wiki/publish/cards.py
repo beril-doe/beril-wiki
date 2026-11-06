@@ -22,12 +22,13 @@ import re
 
 import yaml
 
+from beril_wiki import records
+from beril_wiki.records import DIGESTS, title_of
 from beril_wiki.wording import is_reanalysis
 
 DIRS = ("findings", "directions")
 ISSUES = "data-issues"
 FM = re.compile(r"^---\n(.*?)\n---\n", re.S)
-SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
 NOT_ASSESSED = "Not assessed"
 PUBMED = "https://pubmed.ncbi.nlm.nih.gov/{}/"
 # The guarded labels name the agreement that let them stand.
@@ -102,9 +103,6 @@ def compare_text(entry: dict | None) -> str:
     return LABEL_TEXT.get((entry or {}).get("label", NOT_ASSESSED), NOT_COMPARED)
 
 
-DIGESTS = ("discoveries", "pitfalls")
-
-
 def split(text: str) -> tuple[dict, str]:
     m = FM.match(text)
     return ((yaml.safe_load(m.group(1)) or {}), text[m.end() :]) if m else ({}, text)
@@ -114,37 +112,21 @@ def join(fields: dict, body: str) -> str:
     return "---\n" + "".join(f"{k}: {json.dumps(v)}\n" for k, v in fields.items()) + "---\n" + body
 
 
-def slugify(text: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
-
-
-def cited(text: str) -> set[str]:
-    return {
-        re.sub(r"__REPORT$", "", part.strip())
-        for tag in SRC_TAG.finditer(text)
-        for part in re.split(r"[,;]", tag.group(1))
-        if part.strip()
-    }
-
-
 class Corpus:
     """What the joins read: topic membership, citations, labels and the records."""
 
     def __init__(self, kb: pathlib.Path):
         self.kb = kb
         wiki = kb / "wiki"
-        groups_path = kb / "state" / "curator-topics.json"
-        groups = json.loads(groups_path.read_text())["groups"] if groups_path.exists() else []
-        self.topic_concepts = {slugify(g["title"]): set(g["concepts"]) for g in groups}
-        self.topic_titles = {slugify(g["title"]): g["title"] for g in groups}
+        self.topic_concepts = records.topic_groups(kb)
+        self.topic_titles = {
+            records.slugify(g["title"]): g["title"] for g in records.curator_groups(kb)
+        }
         self.concept_titles = {
             f"concepts/{p.stem}": title_of(p.read_text(encoding="utf-8", errors="replace"), p.stem)
             for p in (wiki / "concepts").glob("*.md")
         }
-        self.concept_cites = {
-            p.stem: cited(p.read_text(encoding="utf-8", errors="replace"))
-            for p in (wiki / "concepts").glob("*.md")
-        }
+        self.concept_cites = records.concept_citations(kb)
         self.conflicts = {
             p.stem: (p.read_text(encoding="utf-8", errors="replace"))
             for p in sorted((wiki / "conflicts").glob("*.md"))
@@ -183,10 +165,8 @@ class Corpus:
         self.issues = data_issues(kb)
 
     def topics_of(self, sid: str) -> list[str]:
-        from beril_wiki.stages.cards import main_topics
-
         if sid not in self._topics:
-            self._topics[sid] = main_topics(sid, self.topic_concepts, self.concept_cites)
+            self._topics[sid] = records.main_topics(sid, self.topic_concepts, self.concept_cites)
         return self._topics[sid]
 
     def citing(self, sid: str, topic: str) -> int:
@@ -200,13 +180,8 @@ class Corpus:
         return min(tops, key=lambda t: (-self.citing(sid, t), t)) if tops else ""
 
     def report_title(self, sid: str) -> str:
-        for name in (f"{sid}__REPORT.md", f"{sid}.md"):
-            path = self.kb / "wiki" / "summaries" / name
-            if path.exists():
-                # Some report titles carry Markdown emphasis; a card footer shows plain text.
-                title = title_of(path.read_text(encoding="utf-8", errors="replace"), sid)
-                return re.sub(r"\*+", "", title).strip()
-        return sid
+        # Some report titles carry Markdown emphasis; a card footer shows plain text.
+        return re.sub(r"\*+", "", records.summary_title(self.kb, sid)).strip()
 
     def related_conflicts(self, sid: str, topics: list[str]) -> list[str]:
         concepts = (
@@ -215,7 +190,7 @@ class Corpus:
         return [
             stem
             for stem, text in self.conflicts.items()
-            if stem.split("--")[1] in concepts and sid in cited(text)
+            if stem.split("--")[1] in concepts and sid in records.projects_in(text)
         ]
 
     def projects(self) -> set[str]:
@@ -251,29 +226,21 @@ class Corpus:
 
 def data_issues(kb: pathlib.Path) -> dict[str, list[dict]]:
     """Report id -> the in-scope proposals that would redo or correct its work."""
-    # Imported here: stages.topics imports this module through publish.ingest.
-    from beril_wiki.stages import cards
-
-    scope = cards.load_scope(kb)
+    scope = records.load_scope(kb)
     if scope is None:
         return {}
     out: dict[str, list[dict]] = {}
     seen: set[tuple[str, str]] = set()
     for topic in scope.topics:
-        for b in cards.forward_bullets(kb, topic, scope.reports):
+        for b in records.forward_bullets(kb, topic, scope.reports):
             if not is_reanalysis(b["text"]):
                 continue
             for sid in b["projects"]:
-                if sid in cards.DIGESTS or (sid, b["text"]) in seen:
+                if sid in DIGESTS or (sid, b["text"]) in seen:
                     continue
                 seen.add((sid, b["text"]))
                 out.setdefault(sid, []).append(b)
     return dict(sorted(out.items()))
-
-
-def title_of(body: str, fallback: str) -> str:
-    m = re.search(r"^# +(.+)$", body, re.M)
-    return m.group(1).strip() if m else fallback
 
 
 def chip_note(entry: dict | None, result: str = "") -> str:
@@ -534,24 +501,15 @@ def links_index(c: Corpus) -> list[dict]:
 
 def related_components(c: Corpus) -> set[frozenset[str]]:
     """The result groups the current related-result links join, as the shared stage forms them."""
-    parent: dict[str, str] = {}
-
-    def find(x: str) -> str:
-        parent.setdefault(x, x)
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-
-    for x in c.link_records:
-        a, b = x.get("a", ""), x.get("b", "")
-        if x.get("level") == "finding" and x.get("type") in RELATION_TEXT:
-            if a in c.findings and b in c.findings:
-                parent[find(a)] = find(b)
-    groups: dict[str, set[str]] = {}
-    for x in parent:
-        groups.setdefault(find(x), set()).add(x)
-    return {frozenset(g) for g in groups.values()}
+    edges = [
+        (x["a"], x["b"])
+        for x in c.link_records
+        if x.get("level") == "finding"
+        and x.get("type") in RELATION_TEXT
+        and x.get("a", "") in c.findings
+        and x.get("b", "") in c.findings
+    ]
+    return {frozenset(g) for g in records.components(edges)}
 
 
 def relation_of(c: Corpus, members: list[str]) -> str:
@@ -836,7 +794,7 @@ def issues_page(sid: str, items: list[dict], provenance: str, titles: dict[str, 
             where = f"[[summaries/{sid}|the report]] ({b['section']})"
         else:
             where = f"[[{page}|{titles.get(page, page.rsplit('/', 1)[-1])}]] ({b['section']})"
-        text = SRC_TAG.sub(
+        text = records.SRC.sub(
             lambda m: "(" + ", ".join(x.strip() for x in m.group(1).split(",")) + ")", b["text"]
         )
         lines.append(f"- {text} From {where}.")

@@ -24,6 +24,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from beril_wiki import records
 from beril_wiki.agentic.prose import (
     PLATFORM,
     prune_failures,
@@ -33,8 +34,8 @@ from beril_wiki.agentic.prose import (
 from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, file_hash, prompt
 from beril_wiki.check import numbers_in, pmids_in, prose_only
 from beril_wiki.paths import ROOT
+from beril_wiki.records import FINDINGS, slugify, title_of
 from beril_wiki.stages import cards
-from beril_wiki.stages.topics import slugify
 from beril_wiki.wording import (
     IDENTIFIER,
     REPORT_TALK,
@@ -45,7 +46,6 @@ from beril_wiki.wording import (
 
 OUT = Path("wiki/directions")
 STATE = Path("state/directions.json")
-FINDINGS = Path("wiki/findings")
 LABELS = Path("state/novelty.json")
 MIN_DIRECTIONS, MAX_DIRECTIONS = 3, 8
 TITLE_WORDS = 14
@@ -149,21 +149,16 @@ def section(text: str, name: str, limit: int = 1800) -> str:
     return m.group(1).strip()[:limit] if m else ""
 
 
-def title_of(text: str, fallback: str) -> str:
-    m = re.search(r"^# +(.+)$", text, re.M)
-    return m.group(1).strip() if m else fallback
-
-
 def topic_pack(root: Path, topic: str, reports: list[str]) -> dict:
     """What the model reads for one topic, and what the checks hold its reply to."""
-    groups = cards.topic_groups(root)
-    cites = cards.concept_citations(root)
+    groups = records.topic_groups(root)
+    cites = records.concept_citations(root)
     labels_path = root / LABELS
     labels = json.loads(labels_path.read_text(encoding="utf-8")) if labels_path.exists() else {}
     findings, papers = {}, {}
     for page in sorted((root / FINDINGS).glob("*.md")):
         fields, body = cards.read_page(page)
-        if topic not in cards.main_topics(fields.get("source", ""), groups, cites):
+        if topic not in records.main_topics(fields.get("source", ""), groups, cites):
             continue
         entry = labels.get(page.stem, {})
         findings[page.stem] = {
@@ -189,11 +184,11 @@ def topic_pack(root: Path, topic: str, reports: list[str]) -> dict:
                 "title": title_of(text, page.stem),
                 "lead": first_paragraph(text),
                 "sides": section(text, "Evidence Sides"),
-                "projects": cards.projects_in(text),
+                "projects": records.projects_in(text),
             }
     proposals = [
         b["text"]
-        for b in cards.forward_bullets(root, topic, reports)
+        for b in records.forward_bullets(root, topic, reports)
         if not is_reanalysis(b["text"])
     ]
     return {
@@ -387,7 +382,7 @@ def render(topic: str, d: Direction, pack: dict, known: dict[str, str]):
         "papers": d.papers,
         "builds_on": [f"findings/{f}" for f in d.findings]
         + [f"conflicts/{c}" for c in d.conflicts],
-        "projects": [p for p in projects if p not in cards.DIGESTS],
+        "projects": [p for p in projects if p not in records.DIGESTS],
         "topics": [topic],
     }
     lines = [
@@ -450,7 +445,7 @@ def main(root: Path = ROOT) -> int:
     if not cards.require_runtime("directions"):
         return 0
     agent = cards.runtime()
-    scope = cards.load_scope(root)
+    scope = records.load_scope(root)
     topics, reports = (scope.topics, scope.reports) if scope else ([], [])
     out = root / OUT
     out.mkdir(parents=True, exist_ok=True)

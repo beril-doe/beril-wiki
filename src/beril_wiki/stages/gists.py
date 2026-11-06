@@ -39,13 +39,18 @@ from beril_wiki.agentic.prose import (
 )
 from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, model_policy, prompt
 from beril_wiki.paths import ROOT
-from beril_wiki.publish.cards import title_of
+from beril_wiki.records import (
+    FINDINGS,
+    caveat_quote,
+    finding_text,
+    report_caveats,
+    summary_title,
+    title_of,
+)
 from beril_wiki.stages import cards
-from beril_wiki.stages.novelty import finding_text
 from beril_wiki.wording import GIST_BANNED, JARGON, statistical
 
 STATE = Path("state/gists.json")
-FINDINGS = Path("wiki/findings")
 PROMPT_TAG = "gists@4"
 MAX_GIST_WORDS = 45
 MIN_GIST_WORDS = 6
@@ -148,40 +153,6 @@ def last_objections(step: str) -> str:
 
 def words(text: str) -> int:
     return len(text.split())
-
-
-def caveat_quote(body: str) -> str:
-    """The blockquote lines under `## Caveat`, source tags removed."""
-    section = re.search(r"^## Caveat\s*\n(.*?)(?=^## |\Z)", body, re.M | re.S)
-    if not section:
-        return ""
-    quoted = [
-        re.sub(r"\s*\[src: [^\]]+\]", "", line[1:]).strip()
-        for line in section.group(1).splitlines()
-        if line.startswith(">")
-    ]
-    return " ".join(q for q in quoted if q)
-
-
-def report_caveats(body: str) -> list[str]:
-    """The bullets under `## Other caveats in this report`, source tags removed."""
-    section = re.search(r"^## Other caveats in this report\s*\n(.*?)(?=^## |\Z)", body, re.M | re.S)
-    if not section:
-        return []
-    return [
-        re.sub(r"\s*\[src: [^\]]+\]", "", line[2:]).strip()
-        for line in section.group(1).splitlines()
-        if line.startswith("- ")
-    ]
-
-
-def report_title(root: Path, sid: str) -> str:
-    """The report's H1, from its summary page, else the report id."""
-    for name in (f"{sid}__REPORT.md", f"{sid}.md"):
-        path = root / "wiki" / "summaries" / name
-        if path.exists():
-            return title_of(path.read_text(encoding="utf-8", errors="replace"), sid)
-    return sid
 
 
 def plain_title(title: str) -> bool:
@@ -287,7 +258,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         fields, body = cards.read_page(page)
         finding = finding_text(fields, body) | {"caveat_quote": caveat_quote(body)}
         heading = title_of(body, "")
-        findings[page.stem] = (finding, heading, report_title(root, finding["report"]))
+        findings[page.stem] = (finding, heading, summary_title(root, finding["report"]))
         caveats[page.stem] = report_caveats(body)
     by_report: dict[str, list[str]] = {}
     for fid, (finding, _, _) in findings.items():

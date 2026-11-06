@@ -37,9 +37,10 @@ from beril_wiki.agentic.prose import (
 )
 from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, file_hash, prompt
 from beril_wiki.paths import ROOT
+from beril_wiki.records import FINDINGS, load_scope, source_path, source_title
 from beril_wiki.stages import cards
 
-OUT = Path("wiki/findings")
+OUT = FINDINGS
 STATE = Path("state/headlines.json")
 MAX_FINDINGS = 4  # observations and inferences per report
 MAX_NULLS = 2  # null results and corrections per report
@@ -295,12 +296,6 @@ def render(sid: str, h: Headline, records: list[dict], first_added: str, source_
     return fid, fields, "\n".join(lines)
 
 
-def report_title(root: Path, sid: str) -> str:
-    text = cards.source_path(root, sid).read_text(encoding="utf-8", errors="replace")
-    m = re.search(r"^# +(.+)$", text, re.M)
-    return m.group(1).strip() if m else sid
-
-
 def pages_of(out: Path, sid: str) -> list[Path]:
     return sorted(out.glob(f"{sid}--*.md"))
 
@@ -308,7 +303,7 @@ def pages_of(out: Path, sid: str) -> list[Path]:
 def main(root: Path = ROOT) -> int:
     if not cards.require_runtime("headlines"):
         return 0
-    scope = cards.load_scope(root)
+    scope = load_scope(root)
     reports = scope.reports if scope else []
     out = root / OUT
     out.mkdir(parents=True, exist_ok=True)
@@ -324,7 +319,7 @@ def main(root: Path = ROOT) -> int:
             print(f"  headlines/{sid}: no evidence extracted from the current text; skipped")
             continue
         records = evidence[sid]
-        body = pack(sid, report_title(root, sid), records)
+        body = pack(sid, source_title(root, sid), records)
         messages = [{"role": "user", "content": PROMPT + json.dumps(body)}]
         # The models are part of the key: a new cards or review model re-judges.
         key = digest([messages, cards.policy(agent.config, ("cards", "review"))])
@@ -359,7 +354,7 @@ def main(root: Path = ROOT) -> int:
 
     def publish(sid: str, records: list[dict], key: str, result: Reply) -> None:
         previous = {p.stem: cards.read_page(p)[0] for p in pages_of(out, sid)}
-        source_hash = file_hash(cards.source_path(root, sid))
+        source_hash = file_hash(source_path(root, sid))
         names = set()
         for h in result.headlines:
             fid = cards.finding_id(sid, next(r for r in records if r["id"] == h.evidence)["quote"])

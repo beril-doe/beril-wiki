@@ -6,6 +6,7 @@ import re
 
 import pytest
 
+from beril_wiki import records
 from beril_wiki.agentic import runtime as R
 from beril_wiki.stages import cards
 
@@ -82,7 +83,7 @@ def test_bullets_reads_numbered_and_dashed_items():
         "# R\n\n## Future Directions\n\n1. **Structure**: run ESMFold\n   on 100 genes.\n"
         "2. Assay growth.\n\n## References\n\n- Price 2018\n\n## Open Directions\n- Re-run it.\n"
     )
-    found = cards.bullets(text, re.compile(r"Future Directions|Open Directions"))
+    found = records.bullets(text, re.compile(r"Future Directions|Open Directions"))
     assert found == ["**Structure**: run ESMFold on 100 genes.", "Assay growth.", "Re-run it."]
 
 
@@ -97,8 +98,8 @@ def test_topic_concepts_reads_curator_groups(tmp_path):
     (tmp_path / "state/curator-topics.json").write_text(
         json.dumps({"groups": [{"title": "Functional Dark Matter", "concepts": ["b", "a"]}]})
     )
-    assert cards.topic_concepts(tmp_path, "functional-dark-matter") == ["a", "b"]
-    assert cards.topic_concepts(tmp_path, "other") == []
+    assert records.topic_concepts(tmp_path, "functional-dark-matter") == ["a", "b"]
+    assert records.topic_concepts(tmp_path, "other") == []
 
 
 def test_check_flags_card_errors(tmp_path):
@@ -138,7 +139,7 @@ def test_check_flags_card_errors(tmp_path):
     assert "quote is not verbatim" not in errors
 
 
-@pytest.mark.parametrize("module", ["stages/cards.py", "wording.py"])
+@pytest.mark.parametrize("module", ["stages/cards.py", "records.py", "wording.py"])
 def test_shared_card_modules_reschedule_only_card_stages(tmp_path, monkeypatch, module):
     """Editing a module every card stage applies (a wording rule, say) makes each card
     stage stale, and leaves conflicts, topics, literature and authors current."""
@@ -220,7 +221,7 @@ def test_scope_all_resolves_to_every_report_and_topic(tmp_path):
     )
     (tmp_path / "contract").mkdir()
     (tmp_path / "contract/cards.yaml").write_text("topics: all\nreports: all\n")
-    scope = cards.load_scope(tmp_path)
+    scope = records.load_scope(tmp_path)
     assert scope is not None
     assert scope.reports == ["a", "b"] and scope.topics == ["dark-matter"]
 

@@ -167,8 +167,9 @@ accepted pages stay, and neither integration nor any derived stage reruns.
 A `cards` change refreshes only the six card stages. Their fingerprints also
 take `review`, and `novelty` takes `queries`. A card stage's fingerprint also
 hashes its own module and the modules all six share (`CARD_FILES` in
-`agentic/curator.py`: `stages/cards.py` and `wording.py`, the wording rules), so
-editing a rule reschedules every card stage.
+`agentic/curator.py`: `stages/cards.py`, `records.py`, which reads the corpus pages
+and card records, and `wording.py`, the wording rules), so editing a rule
+reschedules every card stage.
 A reschedule clears none of the card stages' saved answers: each one's cache
 entry in `EDITORIAL` is `None`. A stage keeps a saved answer while its cache key
 is unchanged and the answer did not fail, and rechecks it with today's code:

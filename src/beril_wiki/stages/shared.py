@@ -21,6 +21,7 @@ from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict
 
+from beril_wiki import records
 from beril_wiki.agentic.prose import (
     PageFailure,
     parallel,
@@ -32,7 +33,6 @@ from beril_wiki.agentic.prose import (
 from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, prompt
 from beril_wiki.paths import ROOT
 from beril_wiki.stages import cards, links
-from beril_wiki.stages.gists import report_title
 from beril_wiki.wording import LINK_BANNED, STAT_WORDS, STATS
 
 STATE = Path("state/shared.json")
@@ -90,29 +90,11 @@ def words(text: str) -> int:
     return len(text.split())
 
 
-def components(edges: list[tuple[str, str]]) -> list[list[str]]:
-    parent: dict[str, str] = {}
-
-    def find(x: str) -> str:
-        parent.setdefault(x, x)
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-
-    for a, b in edges:
-        parent[find(a)] = find(b)
-    groups: dict[str, list[str]] = {}
-    for x in parent:
-        groups.setdefault(find(x), []).append(x)
-    return sorted(sorted(g) for g in groups.values())
-
-
 def group_topics(root: Path, projects: list[str]) -> list[str]:
     """The union of the projects' main topics."""
-    groups = cards.topic_groups(root)
-    cites = cards.concept_citations(root)
-    return sorted({t for sid in projects for t in cards.main_topics(sid, groups, cites)})
+    groups = records.topic_groups(root)
+    cites = records.concept_citations(root)
+    return sorted({t for sid in projects for t in records.main_topics(sid, groups, cites)})
 
 
 def checker(members: dict[str, dict]) -> Callable[[str], Group]:
@@ -205,7 +187,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
 
     todo = []
     groups: dict[str, dict] = {}
-    for members in components([(x["a"], x["b"]) for x in related]):
+    for members in records.components([(x["a"], x["b"]) for x in related]):
         projects = sorted({findings[f]["report"] for f in members})
         if len(members) > MAX_MEMBERS:
             print(f"  shared: skipped a group of {len(members)} results: {members}")
@@ -220,7 +202,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         gid = "g-" + digest(members)[:10]
         texts = {
             f: {k: findings[f][k] for k in ("title", "claim", "quote", "quantities")}
-            | {"project": report_title(root, findings[f]["report"])}
+            | {"project": records.summary_title(root, findings[f]["report"])}
             for f in members
         }
         pack = {"RESULTS": texts, "RELATION": relation, "LINKS": [x["label"] for x in inner]}

@@ -51,11 +51,12 @@ from beril_wiki.agentic.runtime import (
 )
 from beril_wiki.check import pmids_in
 from beril_wiki.paths import ROOT
+from beril_wiki.records import FINDINGS, finding_text, source_path
 from beril_wiki.stages import cards
 from beril_wiki.stages import literature as L
 
 STATE = Path("state/novelty.json")
-FINDINGS = Path("wiki/findings")
+DECISIONS = "contract/novelty-decisions.yaml"
 ESTABLISHED = "Established in retrieved literature"
 EXTENDS = "Extends retrieved work"
 TENSION = "In tension with retrieved work"
@@ -276,18 +277,6 @@ def weaker(agree_label: str | None) -> str:
     return EXTENDS if agree_label in (ESTABLISHED, EXTENDS) else INSUFFICIENT
 
 
-def finding_text(fields: dict, body: str) -> dict:
-    quote = re.search(r"^## Evidence\s*\n+> (.+?)(?: \[src: [^\]]+\])?$", body, re.M)
-    return {
-        "claim": fields.get("description", ""),
-        "result": fields.get("result", ""),
-        "quantities": fields.get("quantities", []),
-        "caveat": fields.get("caveat", ""),
-        "quote": quote.group(1) if quote else "",
-        "report": fields.get("source", ""),
-    }
-
-
 def judgment_checker(papers: dict[str, str]) -> Callable[[str], Judgment]:
     def parse(raw: str) -> Judgment:
         judged = cards.parse_reply(raw, Judgment)
@@ -386,16 +375,16 @@ def judge(fid: str, finding: dict, cited: list[str], agent: Runtime) -> dict:
 
 
 def load_decisions(root: Path) -> dict[str, Decision]:
-    path = root / cards.DECISIONS
+    path = root / DECISIONS
     if not path.exists():
         return {}
     try:
         parsed = Decisions.model_validate(yaml.safe_load(path.read_text(encoding="utf-8")) or {})
     except (ValidationError, yaml.YAMLError) as exc:
-        raise WorkflowError(f"invalid {cards.DECISIONS}: {exc}") from exc
+        raise WorkflowError(f"invalid {DECISIONS}: {exc}") from exc
     for d in parsed.decisions:
         if not d.withdraw and d.label not in LABELS:
-            raise WorkflowError(f"{cards.DECISIONS}: unknown label {d.label!r} for {d.finding}")
+            raise WorkflowError(f"{DECISIONS}: unknown label {d.label!r} for {d.finding}")
     return {d.finding: d for d in parsed.decisions}
 
 
@@ -423,7 +412,7 @@ def main(root: Path = ROOT) -> int:
     # as the fallback if retrieval then fails.
     revision = digest([JUDGE_REVISION, cards.policy(cards.runtime().config)])
     for fid in decisions.keys() - findings.keys():
-        print(f"  [WARN] {cards.DECISIONS}: no finding {fid}")
+        print(f"  [WARN] {DECISIONS}: no finding {fid}")
     reports: dict[str, list[str]] = {}
     # Every saved label takes its person's decision before any paid job, so a run
     # stopped mid-way never leaves a withdrawn or pinned label showing the model's.
@@ -444,7 +433,7 @@ def main(root: Path = ROOT) -> int:
             continue
         sid = finding["report"]
         if sid not in reports:
-            path = cards.source_path(root, sid)
+            path = source_path(root, sid)
             reports[sid] = cited_pmids(path.read_text(encoding="utf-8")) if path.exists() else []
         todo.append((fid, finding, key))
 

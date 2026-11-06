@@ -41,13 +41,11 @@ from beril_wiki.agentic.prose import (
 )
 from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, prompt
 from beril_wiki.paths import ROOT
-from beril_wiki.publish.cards import title_of
+from beril_wiki.records import DIGESTS, FINDINGS, finding_text, projects_in, title_of
 from beril_wiki.stages import cards
-from beril_wiki.stages.novelty import finding_text
 from beril_wiki.wording import LINK_BANNED, PLUMBING, STAT_WORDS, STATS
 
 STATE = Path("state/links.json")
-FINDINGS = Path("wiki/findings")
 SOURCES = Path("wiki/sources")
 PROMPT_TAG = "links@1"
 THRESHOLD = 0.30
@@ -176,7 +174,7 @@ def memberships(root: Path) -> list[set[str]]:
     """The project sets each concept or conflict page cites."""
     pages = sorted((root / "wiki/concepts").glob("*.md"))
     pages += sorted((root / "wiki/conflicts").glob("*.md"))
-    return [set(cards.projects_in(p.read_text(encoding="utf-8", errors="replace"))) for p in pages]
+    return [set(projects_in(p.read_text(encoding="utf-8", errors="replace"))) for p in pages]
 
 
 def pair_candidates(findings: dict[str, dict], groups: list[set[str]]) -> list[tuple[str, str]]:
@@ -214,7 +212,7 @@ def report_titles(root: Path) -> dict[str, str]:
     out = {}
     for path in sorted((root / SOURCES).glob("*__REPORT.md")):
         sid = path.name.removesuffix("__REPORT.md")
-        if sid in cards.DIGESTS:
+        if sid in DIGESTS:
             continue
         text = path.read_text(encoding="utf-8", errors="replace")
         out[sid] = re.sub(r"^Report:\s*", "", title_of(text, sid)).strip()

@@ -12,10 +12,9 @@ import json
 import re
 from collections.abc import Callable
 from pathlib import Path
-from typing import Literal, TypeVar
+from typing import TypeVar
 
-import yaml
-from pydantic import BaseModel, ConfigDict, ValidationError
+from pydantic import BaseModel, ValidationError
 
 from beril_wiki import compiler as C
 from beril_wiki.agentic.prose import Issue, PageFailure, record_salvage
@@ -26,7 +25,6 @@ from beril_wiki.agentic.runtime import (
     JobFailed,
     Refused,
     Runtime,
-    WorkflowError,
     configured,
     digest,
     file_hash,
@@ -34,50 +32,14 @@ from beril_wiki.agentic.runtime import (
     runtime,
 )
 from beril_wiki.check import figures_in, prose_only
-from beril_wiki.stages.topics import slugify
+from beril_wiki.records import source_path, title_of
 
 T = TypeVar("T")
 M = TypeVar("M", bound=BaseModel)
 
-SCOPE = "contract/cards.yaml"
-DECISIONS = "contract/novelty-decisions.yaml"
 # A verifier objection that opens "Issue 3 remains: ..." restates issue 3 of its list.
 RESTATED = re.compile(r"^\W*issue\s+#?(\d+)\b", re.I)
 RESOLVED = " [restates an issue listed among these notes]"
-ITEM = re.compile(r"^(?:[-*]|\d+[.)])\s+(.*)$")
-
-
-class Scope(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-    topics: list[str] | Literal["all"] = []
-    reports: list[str] | Literal["all"] = []
-
-
-class Resolved(BaseModel):
-    topics: list[str]
-    reports: list[str]
-
-
-def load_scope(root: Path) -> Resolved | None:
-    """The topics and reports in scope, or None when the file is absent.
-
-    "all" means every report under wiki/sources and every topic in the curator's
-    topic decision, read at each run so new reports join without an edit.
-    """
-    path = root / SCOPE
-    if not path.exists():
-        return None
-    try:
-        scope = Scope.model_validate(yaml.safe_load(path.read_text(encoding="utf-8")) or {})
-    except (ValidationError, yaml.YAMLError) as exc:
-        raise WorkflowError(f"invalid {SCOPE}: {exc}") from exc
-    reports = scope.reports
-    if reports == "all":
-        reports = sorted(
-            p.name.removesuffix("__REPORT.md") for p in (root / "wiki/sources").glob("*__REPORT.md")
-        )
-    topics = sorted(topic_groups(root)) if scope.topics == "all" else scope.topics
-    return Resolved(topics=topics, reports=reports)
 
 
 def require_runtime(stage: str) -> bool:
@@ -87,10 +49,6 @@ def require_runtime(stage: str) -> bool:
         return True
     print(f"stages.{stage}: needs the agentic runtime (agentic run); nothing written")
     return False
-
-
-def source_path(root: Path, sid: str) -> Path:
-    return root / "wiki" / "sources" / f"{sid}__REPORT.md"
 
 
 def source_evidence(store: Path, root: Path, sids: list[str]) -> dict[str, list[dict]]:
@@ -130,124 +88,17 @@ def read_page(path: Path) -> tuple[dict, str]:
     return C.parse_fm(path.read_text(encoding="utf-8"))
 
 
-def topic_concepts(root: Path, slug: str) -> list[str]:
-    """The concept stems a topic hub gathers, from the curator's topic decision."""
-    path = root / "state" / "curator-topics.json"
-    if not path.exists():
-        return []
-    groups = json.loads(path.read_text(encoding="utf-8")).get("groups", [])
-    return next((sorted(g["concepts"]) for g in groups if slugify(g["title"]) == slug), [])
-
-
-def bullets(text: str, heading: re.Pattern[str]) -> list[str]:
-    """List items under every heading the pattern matches, continuation lines joined."""
-    out: list[str] = []
-    lines = text.splitlines()
-    inside = False
-    level = 0
-    for line in lines:
-        h = re.match(r"^(#{1,6})\s+(.*)$", line)
-        if h:
-            if inside and len(h.group(1)) <= level:
-                inside = False
-            if not inside and heading.search(h.group(2)):
-                inside, level = True, len(h.group(1))
-            continue
-        if not inside:
-            continue
-        m = ITEM.match(line.strip()) if line[:1] not in (" ", "\t") else None
-        if m:
-            out.append(m.group(1).strip())
-        elif line.strip() and out and line[:1] in (" ", "\t"):
-            out[-1] += " " + line.strip()
-    return out
-
-
-SRC = re.compile(r"\[src:\s*([^\]]+)\]")
-FORWARD = re.compile(r"^(Open Directions|Resolving Work)$")
-REPORT_FORWARD = re.compile(r"Future Directions|Experimental Recommendations|Next Steps", re.I)
-DIGESTS = ("discoveries", "pitfalls")
-
-
-def projects_in(text: str) -> list[str]:
-    out: list[str] = []
-    for tag in SRC.finditer(text):
-        for part in re.split(r"[,;]", tag.group(1)):
-            sid = re.sub(r"__REPORT$", "", part.strip())
-            if sid and sid not in out:
-                out.append(sid)
-    return out
-
-
-def forward_bullets(root: Path, topic: str, reports: list[str]) -> list[dict]:
-    """Every forward-looking bullet the topic's pages and in-scope reports carry."""
-    concepts = topic_concepts(root, topic)
-    items: list[dict] = []
-
-    def add(page: str, section: str, text: str, projects: list[str]) -> None:
-        items.append(
-            {"id": f"b{len(items)}", "page": page, "section": section, "text": text}
-            | {"projects": projects or projects_in(text)}
-        )
-
-    for stem in concepts:
-        path = root / "wiki/concepts" / f"{stem}.md"
-        if path.exists():
-            for text in bullets(path.read_text(encoding="utf-8"), FORWARD):
-                add(f"concepts/{stem}", "Open Directions", text, [])
-    for path in sorted((root / "wiki/conflicts").glob("conflict--*.md")):
-        if path.stem.split("--")[1] in concepts:
-            body = path.read_text(encoding="utf-8")
-            sides = projects_in(body)
-            for text in bullets(body, FORWARD):
-                add(f"conflicts/{path.stem}", "Resolving Work", text, projects_in(text) or sides)
-    for sid in reports:
-        path = source_path(root, sid)
-        if path.exists():
-            for text in bullets(path.read_text(encoding="utf-8"), REPORT_FORWARD):
-                add(f"sources/{sid}__REPORT", "Future Directions", text, [sid])
-    return items
-
-
 def collections(root: Path) -> dict[str, str]:
     """Collection page stem -> its title, from wiki/data/."""
     out = {}
     for path in sorted((root / "wiki/data").glob("*.md")):
         if path.stem != "index":
-            m = re.search(r"^# +(.+)$", path.read_text(encoding="utf-8"), re.M)
-            out[path.stem] = m.group(1).strip() if m else path.stem
+            out[path.stem] = title_of(path.read_text(encoding="utf-8"), path.stem)
     return out
 
 
 def collection_id(name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
-
-
-def main_topics(
-    sid: str, groups: dict[str, set[str]], concept_cites: dict[str, set[str]]
-) -> list[str]:
-    """The topics a report mainly feeds: those whose concepts cite it at least half
-    as often as its most-citing topic does. Counting every topic with one citing
-    concept put most reports in most topics, so topic filters selected nothing."""
-    counts = {
-        slug: sum(sid in concept_cites.get(c, set()) for c in concepts)
-        for slug, concepts in groups.items()
-    }
-    top = max(counts.values(), default=0)
-    return sorted(slug for slug, n in counts.items() if n and 2 * n >= top)
-
-
-def topic_groups(root: Path) -> dict[str, set[str]]:
-    path = root / "state" / "curator-topics.json"
-    groups = json.loads(path.read_text(encoding="utf-8")).get("groups", []) if path.exists() else []
-    return {slugify(g["title"]): set(g["concepts"]) for g in groups}
-
-
-def concept_citations(root: Path) -> dict[str, set[str]]:
-    return {
-        p.stem: set(projects_in(p.read_text(encoding="utf-8", errors="replace")))
-        for p in (root / "wiki/concepts").glob("*.md")
-    }
 
 
 def new_figures(text: str, pool: str) -> list[str]:
