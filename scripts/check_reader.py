@@ -636,6 +636,10 @@ def check_cross(browser, base: str) -> list[str]:
     )
     if not 1 <= n <= accepted:
         fails.append(f"cross: Results page has {n} shared cards, expected 1 to {accepted}")
+    index = ROOT / "quartz/content/findings/index.md"
+    titles = sorted(
+        (frontmatter(index).get("project_titles") or {}).values(), key=len, reverse=True
+    )
     for i in range(n):
         card = cards.nth(i)
         kicker = card.locator(".skicker").inner_text()
@@ -660,7 +664,17 @@ def check_cross(browser, base: str) -> list[str]:
         lanes = panel.locator(".slane").count()
         if lanes < 2:
             fails.append(f"cross: shared card {i + 1} panel has {lanes} lanes")
-        if hit := CONFIRM.search(card.inner_text() + " " + panel.inner_text()):
+        # The statement's own words, not its member results' titles and summaries, which
+        # can say "independent" about biology.
+        own = panel.evaluate(
+            "e => { const c = e.cloneNode(true); c.querySelectorAll('.smini')"
+            ".forEach(m => m.remove()); return c.textContent }"
+        )
+        said = card.inner_text() + " " + own
+        # Report titles name methods ("Independent Component Analysis"), not a relation.
+        for title in titles:
+            said = said.replace(title, "")
+        if hit := CONFIRM.search(said):
             fails.append(f"cross: shared card {i + 1} says '{hit[0]}'")
     go(page, base + "/")
     qs = page.eval_on_selector_all(".xqlist li .xqp", "els => els.map(e => e.textContent)")
@@ -672,8 +686,13 @@ def check_cross(browser, base: str) -> list[str]:
 
     go(page, base + "/directions/")
     rings = page.locator(".qgrid .qd.cross")
-    if rings.count() != 16:
-        fails.append(f"cross: {rings.count()} ringed questions, expected 16")
+    crossing = sum(
+        bool(frontmatter(p).get("cross"))
+        for p in (ROOT / "quartz/content/directions").glob("*.md")
+        if p.stem != "index"
+    )
+    if rings.count() != crossing:
+        fails.append(f"cross: {rings.count()} ringed questions, the records give {crossing}")
     for i in range(rings.count()):
         projects = rings.nth(i).locator(".qproj")
         links = [projects.nth(j).locator(".qpres a").count() for j in range(projects.count())]
