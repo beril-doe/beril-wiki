@@ -303,13 +303,24 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
             "EARLIER": [f for f in siblings if f < fid],
         }
 
+    def passes(fid: str, prev: dict, pack: dict) -> bool:
+        finding, heading, _ = findings[fid]
+        stored = {k: prev.get(k, "") for k in ("gist", "case", "title", "repeats")}
+        try:
+            checker(finding, heading, pack["EARLIER"])(json.dumps(stored))
+        except CandidateError:
+            return False
+        return True
+
     todo = []
     for fid in findings:
         # A sibling's change can make this gist a repeat or contradict it, so it reruns.
         pack = pack_of(fid)
         key = digest([pack, PROMPT_TAG, policy])
         prev = state.get(fid, {})
-        if prev.get("input") == key and not prev.get("failed"):
+        # A saved gist stays while its input is unchanged and today's checks accept it,
+        # so a tightened rule re-asks only the gists it now rejects.
+        if prev.get("input") == key and not prev.get("failed") and passes(fid, prev, pack):
             continue
         todo.append((fid, pack, key))
 

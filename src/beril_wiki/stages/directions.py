@@ -233,7 +233,9 @@ def new_result_figures(text: str, pool: str) -> list[str]:
     return sorted(n for n in numbers_in(prose_only(text)) if n not in have)
 
 
-def checker(pack: dict) -> Callable[[str], Reply]:
+def checker(pack: dict, counted: bool = True) -> Callable[[str], Reply]:
+    """Code checks on a reply. `counted=False` skips the 3-to-8 count, for a saved reply a
+    salvage left shorter."""
     findings, conflicts = pack["_findings"], pack["_conflicts"]
     papers = {p["pmid"] for p in pack["PAPERS"]}
     known = {c["id"] for c in pack["COLLECTIONS"]}
@@ -242,7 +244,7 @@ def checker(pack: dict) -> Callable[[str], Reply]:
     def parse(raw: str) -> Reply:
         reply = cards.parse_reply(raw, Reply)
         problems: list[str] = []
-        if not MIN_DIRECTIONS <= len(reply.directions) <= MAX_DIRECTIONS:
+        if counted and not MIN_DIRECTIONS <= len(reply.directions) <= MAX_DIRECTIONS:
             problems.append(f"give {MIN_DIRECTIONS} to {MAX_DIRECTIONS} directions")
         ids = [d.id for d in reply.directions]
         if dup := sorted({i for i in ids if ids.count(i) > 1}):
@@ -429,6 +431,14 @@ def render(topic: str, d: Direction, pack: dict, known: dict[str, str]):
     return name, fields, "\n".join(lines)
 
 
+def accepted(reply: dict, pack: dict) -> bool:
+    try:
+        checker(pack, counted=False)(json.dumps(reply))
+    except CandidateError:
+        return False
+    return True
+
+
 def pages_for(out: Path, topic: str) -> list[Path]:
     return [p for p in sorted(out.glob("*.md")) if topic in cards.read_page(p)[0].get("topics", [])]
 
@@ -466,7 +476,9 @@ def main(root: Path = ROOT) -> int:
         draft = PROMPT + json.dumps(public | {"OTHER_TOPICS": pack["OTHER_TOPICS"]})
         saved = state.get(topic, {})
         on_disk = {p.name: file_hash(p) for p in pages_for(out, topic)}
-        if saved.get("input") == key and saved.get("reply"):
+        # A saved reply stays while its input is unchanged and today's checks accept it,
+        # so a code change re-asks only the topics whose replies its rules now reject.
+        if saved.get("input") == key and saved.get("reply") and accepted(saved["reply"], pack):
             if saved.get("render") == RENDER and saved.get("pages") == on_disk:
                 continue
             reply = Reply.model_validate(saved["reply"])

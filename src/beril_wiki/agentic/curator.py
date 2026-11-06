@@ -73,7 +73,10 @@ EDITORIAL = {
         ),
         ("wiki/directions",),
         ("conflicts", "topics", "headlines", "novelty"),
-        "directions.json",
+        # Not disposable: each topic's draft reads the other topics' accepted replies, so
+        # clearing them would change the drafts' text and buy them again. The stage
+        # re-checks saved replies against today's code instead.
+        None,
     ),
     # Plain summaries of findings; published state like novelty, never cleared.
     "gists": (

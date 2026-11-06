@@ -348,3 +348,17 @@ def test_status_counts_without_the_runtime(tmp_path, monkeypatch, capsys):
     assert gists.main(tmp_path, ["--status"]) == 0
     assert "1 accepted, 1 failed, 2 pending, 4 total" in capsys.readouterr().out
     assert (tmp_path / "state/gists.json").read_text() == before
+
+
+def test_only_saved_gists_todays_checks_reject_are_written_again(tmp_path, monkeypatch):
+    state, _ = run(tmp_path, monkeypatch, {STEP: [reply()]})
+    _, agent = run(tmp_path, monkeypatch, {})
+    assert agent.asked == []
+    path = tmp_path / "state/gists.json"
+    stored = json.loads(path.read_text())
+    stored[FID]["gist"] = (
+        "Depleted genes clustered in one ICA module in this archaeon under stress."
+    )
+    path.write_text(json.dumps(stored))
+    state, agent = run(tmp_path, monkeypatch, {STEP: [reply()]})
+    assert agent.asked == [STEP, f"{STEP}/science-review"] and state[FID]["gist"] == GOOD

@@ -479,3 +479,40 @@ def test_prompt_asks_for_plain_questions_and_new_projects():
     assert "The title is a question ending in '?'" in directions.PROMPT
     assert "is a re-analysis, not a new project" in directions.PROMPT
     assert "OTHER_TOPICS lists the directions other topics" in directions.PROMPT
+
+
+def test_a_curator_reschedule_keeps_saved_replies_and_asks_nothing(tmp_path, monkeypatch):
+    """PR #20 review: clearing state/directions.json on a code change emptied OTHER_TOPICS,
+    which changed the drafts' text and bought them again."""
+    from beril_wiki.agentic import curator
+
+    corpus(tmp_path)
+    agent = FakeAgent(tmp_path / "store", {f"directions/{TOPIC}": [THREE]})
+    install(monkeypatch, agent)
+    assert directions.main(tmp_path) == 0
+    saved = json.loads((tmp_path / "state/directions.json").read_text())
+    curator.invalidate_outputs(
+        tmp_path,
+        "directions",
+        {"semantic": "old", "outputs": {}},
+        {"semantic": "new", "outputs": {}},
+    )
+    assert json.loads((tmp_path / "state/directions.json").read_text()) == saved
+    asked = len(agent.asked)
+    assert directions.main(tmp_path) == 0
+    assert len(agent.asked) == asked
+
+
+def test_a_saved_reply_todays_checks_reject_is_drafted_again(tmp_path, monkeypatch):
+    corpus(tmp_path)
+    agent = FakeAgent(tmp_path / "store", {f"directions/{TOPIC}": [THREE, THREE]})
+    install(monkeypatch, agent)
+    assert directions.main(tmp_path) == 0
+    path = tmp_path / "state/directions.json"
+    state = json.loads(path.read_text())
+    # A reply accepted before titles had to be questions.
+    state[TOPIC]["reply"]["directions"][0]["title"] = "Dark genes are nutrient genes"
+    path.write_text(json.dumps(state))
+    asked = agent.asked.count(f"directions/{TOPIC}")
+    assert directions.main(tmp_path) == 0
+    assert agent.asked.count(f"directions/{TOPIC}") == asked + 1
