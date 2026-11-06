@@ -1,13 +1,14 @@
 {
   "data-infrastructure-provenance-and-research-practice": {
-    "input": "f28aa16f4f3d56cfa2228e32192329f8c5bcc2dea2dcab1bafef7459ace2b87c",
+    "input": "8d8deb94948e9d941af8c0c537dd21bcfcfa1ca461dcef5a31f02a566ed83bec",
     "pages": {
-      "core-proteins-with-shallow-alignments-essential-unknowns-or--5b6dea.md": "f72a95c4927629b69811055cd7798b91f509917accee59d6b6e9d075b32390db",
-      "does-the-catalase-sign-reversal-inside-classes-persist-at-fi--a650d9.md": "094f6f135e712260d827716e1b8a029f669dadc054dbdd8264929d8d483715cc",
-      "fur-release-and-sspb-loss-jointly-rewire-respiration-to-bypa--3c90a1.md": "44f83deb35ddfb39943dffad0fec9051b7e3cc1e9455d5b81fc721fe24571ee3",
-      "is-the-negative-completeness-metabolite-link-adaptive-gene-l--46f01e.md": "5b4a3330969dd7f8349a5a831b25a10c617d5e45763aea9ab9b051269007e549",
-      "is-urea-fitness-independent-of-other-carbons-because-of-resp--320eb4.md": "fada0088880f8c952a3226e4e0c2254e985e8fac06e08b61c96df7a25b70e0b3",
-      "lung-adaptation-shortens-pseudomonas-carbon-repertoires-leav--8b7965.md": "d8364dde4c19de0256bc50956915ce1dad32052d80bb9d3a07f5853219de49b1"
+      "are-dark-carbon-compounds-consumed-by-consortia-rather-than--61c469.md": "60fea2e32b79a4a12568f45a762ee464434dbb0b0745dfc2ba562ecb53f08d95",
+      "do-commensal-strains-inhibit-cystic-fibrosis-type-pseudomona--3b151b.md": "38455730e6f3dbc314a77fd5f318a4701e00a1b544331b1859d951aff534e834",
+      "do-communities-short-on-amino-acid-synthesis-live-where-free--183264.md": "3531b895d1025da927e4a4374776dc947e47c5f4ff4d70428ad6fcad349365cd",
+      "does-gene-content-growth-prediction-work-mainly-by-recognizi--046cb5.md": "ed581ba385b019d3bc6365ada45be06cebc09e9ded91c62f192fdd807467f861",
+      "does-silencing-the-cbb3-respiratory-operon-let-caulobacter-s--8a44a0.md": "e48d415ad0bba8d4e47f4b16bc43b6d78cb875f29b9b09474809ebeea3430155",
+      "is-disagreement-between-metabolic-model-and-transposon-data--11421d.md": "f99f7124298c96550778b58c8e55de20ef76c1bd4946578aaf21b52dc50819f2",
+      "is-the-metal-tolerance-advantage-of-contaminated-site-bacter--d1d9f2.md": "aaf5d5e5cc150e1271423a8488d7e21c188f232d2ad0644113003ae76479bfbb"
     },
     "render": "direction-page@1",
     "reply": {
@@ -15,31 +16,156 @@
         {
           "approach": "analysis then experiment",
           "collections": [
+            "nmdc-arkin"
+          ],
+          "conflicts": [],
+          "findings": [
+            "nmdc_community_metabolic_ecology--dcef6254",
+            "nmdc_community_metabolic_ecology--7d46eb90"
+          ],
+          "hypothesis": "If the Black Queen mechanism (loss of genes for a leaked public good) is at work, each amino acid's free level should relate to its own pathway independently. If the pattern comes from a shared pool, free levels of different amino acids will rise together and the link to pathway completeness will vanish once total free amino acids are accounted for.",
+          "id": "D1",
+          "outcomes": "Support: the leucine and arginine link survives removal of the shared pool, and added leucine shifts the community toward fewer synthesis-capable members. Refutation: the link disappears once the shared pool is accounted for, or the amended community does not change.",
+          "papers": [
+            "37322284",
+            "35592760",
+            "31316056",
+            "35085485",
+            "33311510"
+          ],
+          "prior_work": "PMID 37322284 and PMID 35592760 show how auxotrophs are supported in cultures, and PMID 31316056 predicts metabolites from sequences. None of them tests whether natural communities' synthesis completeness follows free amino acid levels once a shared pool is removed.",
+          "question": "Does the tendency for soil communities with less complete leucine and arginine synthesis pathways to sit in samples with more free leucine and arginine reflect cheaper uptake by auxotrophs (organisms that cannot make an amino acid)? Or does it only reflect a shared pool of amino acids released by cell breakdown?",
+          "readiness": "needs compute",
+          "readiness_basis": "Pathway completeness and metabolite intensities are already joined for the cohort, but pH, temperature and other abiotic covariates were empty and nearly all samples came from one study.",
+          "test": "Using the NMDC Multi-omics collection, take the 13 testable amino acid pathways, 11 of which showed the negative trend, with leucine and arginine strongest and almost all samples from one soil study. Compute, per sample, the total free amino acid pool. Test whether pathway completeness still tracks free leucine or arginine after removing the shared pool, and whether the other nine pathways with the negative trend follow the same pattern. Then run a soil microcosm experiment with leucine added versus not added, and follow the leucine-synthesis-capable fraction of the community by metagenomics over several weeks.",
+          "title": "Do communities short on amino-acid synthesis live where free amino acids are abundant?",
+          "why_it_matters": "It would show whether gene loss in natural communities is actually shaped by dependence on a leaked public good, or whether this is a misreading of sample-wide chemistry. This would change how community amino-acid exchange is modelled."
+        },
+        {
+          "approach": "lakehouse analysis",
+          "collections": [
+            "kbase-ke-pangenome",
             "kbase-phenotype",
+            "kescience-fitnessbrowser"
+          ],
+          "conflicts": [
+            "conflict--taxonomic-nomenclature-reconciliation--2208cd83",
+            "conflict--taxonomic-nomenclature-reconciliation--a209158c"
+          ],
+          "findings": [
+            "bacdive_metal_validation--09db2bda",
+            "bacdive_metal_validation--1ac30de6",
+            "bacdive_metal_validation--60f073d0",
+            "bacdive_metal_validation--894e1826",
+            "field_vs_lab_fitness--296eadf6"
+          ],
+          "hypothesis": "The score difference between contamination and environmental isolates comes mainly from accessory metal-resistance clusters, and the difference grows with contamination intensity. Core metal clusters will not differ between the two groups when species are matched.",
+          "id": "D2",
+          "outcomes": "Support: the difference sits in accessory clusters and rises with contamination intensity, with core clusters similar in both groups, under both matching routes. Refutation: the difference appears equally in core clusters, or disappears when species are matched or when accession matching replaces name matching.",
+          "papers": [
+            "41601069",
+            "33540257",
+            "35107332",
+            "37065130"
+          ],
+          "prior_work": "PMID 41601069 and PMID 33540257 link contamination to resistance at community level. PMID 37065130 reports Desulfovibrio fitness genes. None splits an isolate-level contamination signal into core versus accessory clusters.",
+          "question": "Within the dominant phylum Pseudomonadota, do isolates from heavy-metal-contaminated sites score higher on predicted metal tolerance because they carry more accessory (not present in most genomes of the species) metal-resistance gene clusters, rather than more of the shared core clusters?",
+          "readiness": "data in the lakehouse",
+          "readiness_basis": "The metal scores and isolation-source bridge already exist; the heavy-metal group is only 10 matched isolates, the score is a genome-based prediction, and the two name-based bridges disagree on coverage, so the size of the advantage is only roughly known.",
+          "test": "Using the Pangenome Collection linked to isolation sources in the Phenotype Collection, split each isolate's metal-resistance clusters into core and accessory for its species. Compare contamination versus environmental isolates within Pseudomonadota, separately for heavy-metal, waste or sludge, and industrial contamination, and for host-associated isolates, with species matched. Check whether the stepwise ordering by contamination category holds for accessory clusters only. Repeat using genome-accession matching instead of species-name matching, because the two bridges between the strain database and the pangenome give different coverage and suffix-stripping of species names may merge distinct clades. Compare against Fitness Browser metal-important genes in Desulfovibrio vulgaris Hildenborough, which showed no clear deficit in core share relative to baseline.",
+          "title": "Is the metal-tolerance advantage of contaminated-site bacteria carried by variable accessory gene clusters?",
+          "why_it_matters": "If correct, tolerance in polluted habitats tracks variable gene content rather than a fixed species-wide trait, which changes how contamination-site isolates should be screened and how tolerance scores are built. Accessory status alone does not show the genes were horizontally transferred; that would be a follow-up question."
+        },
+        {
+          "approach": "analysis then experiment",
+          "collections": [
+            "kbase-ke-pangenome",
+            "kbase-msd-biochemistry",
+            "kbase-genomes"
+          ],
+          "conflicts": [],
+          "findings": [
+            "acinetobacter_adp1_explorer--1cfedc83",
+            "acinetobacter_adp1_explorer--4460d103",
+            "acinetobacter_adp1_explorer--c925d9c6"
+          ],
+          "hypothesis": "Genes predicted essential by the model but dispensable in the transposon data mostly have paralogs or alternative reactions absent from the model. Genes predicted dispensable but essential in transposon data are enriched for unannotated essential functions.",
+          "id": "D3",
+          "outcomes": "Support: backup routes are common in model-essential, transposon-dispensable genes, and the reverse set holds the unannotated essentials. Refutation: discordance is spread evenly across annotation status and redundancy, pointing to regulation or measurement.",
+          "papers": [
+            "18840283",
+            "18319726",
+            "17437026",
+            "36097170"
+          ],
+          "prior_work": "PMID 18840283 used ADP1 knockouts to refine the model and report agreement after refinement. It did not ask which kind of hidden redundancy or missing annotation causes the remaining disagreements. PMID 36097170 shows that essentiality varies with pangenome content in another organism.",
+          "question": "For Acinetobacter baylyi ADP1 genes where growth-model essentiality and transposon essentiality disagree, are the disagreements mostly genes with alternative enzymes or pathways that the model lacks, rather than regulation or missing annotation?",
+          "readiness": "data in the lakehouse",
+          "readiness_basis": "Both calls and annotations exist for 866 genes, though only 15% of genes have model flux data and growth predictions depend heavily on added gapfilled reactions.",
+          "test": "Take the 866 ADP1 genes with both calls, of which 639 are concordant and the remaining 26% discordant. Split the discordant genes by direction. Using the Pangenome Collection and ModelSEED Biochemistry, count paralogs and look for alternative reactions that could substitute. Test whether either direction is enriched for unannotated genes, using the ADP1 pattern that essential genes more often carry pathway assignments than dispensable ones, and use the genes that change flux class between rich and minimal media (177 of 866) as a comparison group. Select the best candidates for double-deletion tests.",
+          "title": "Is disagreement between metabolic model and transposon data explained by hidden backup routes?",
+          "why_it_matters": "It would show which kind of model error dominates, and mark where essential but uncharacterized functions are most likely to be found."
+        },
+        {
+          "approach": "experiment",
+          "collections": [
+            "nmdc-arkin",
+            "enigma-coral",
             "kbase-ke-pangenome"
           ],
           "conflicts": [],
           "findings": [
-            "bacdive_phenotype_metal_tolerance--a1b67557",
-            "bacdive_phenotype_metal_tolerance--885a4ca9",
-            "bacdive_phenotype_metal_tolerance--9b04bc8d",
-            "bacdive_phenotype_metal_tolerance--202a67ef"
+            "enigma_carbon_census_1--5022536d",
+            "enigma_carbon_census_1--8512f374",
+            "enigma_carbon_census_1--f8b7ca8b"
           ],
-          "hypothesis": "The within-class catalase-negative advantage (Actinomycetes, Gammaproteobacteria, Betaproteobacteria) shrinks toward zero when order, family and genus are held fixed, so the pooled positive effect and the within-class reversals are both composition effects. If a real association exists, it survives genus-level stratification and holds when measured tolerance replaces the genome-derived score.",
-          "outcomes": "Support: the catalase coefficient is null at genus level and the measured MICs do not differ between matched strains. Refute: catalase-negative strains keep a higher score at genus level, or show higher measured tolerance in matched pairs. The score-based result alone cannot establish mechanism either way.",
+          "hypothesis": "Freshwater biofilm communities rich in Burkholderiales and Comamonadaceae will consume some dark compounds, but no single isolate from the enrichment will grow on them alone. Consumption will need a pair or small group.",
+          "id": "D4",
+          "outcomes": "Support: communities consume dark compounds while single isolates fail, and specific pairs restore growth. Refutation: single isolates grow on the compounds, which would point to annotation gaps, or no community consumes them.",
           "papers": [
-            "32683159",
-            "17183702",
-            "37290750",
-            "33279087"
+            "22026719",
+            "34612321",
+            "40960580",
+            "19457026"
           ],
-          "prior_work": "PMID 32683159 links catalase-producing Proteobacteria to multimetal resistance and PMID 17183702 shows catalase-mediated tellurite resistance, but neither stratifies by lineage rank or compares genome-predicted with measured tolerance across species.",
-          "question": "Inside classes where phenotype varies, is the catalase-metal association a lineage-composition effect that keeps dissolving at finer ranks, or does a lineage-independent association remain?",
+          "prior_work": "PMID 22026719 shows aromatic versatility is lineage-bound in Burkholderiales, and PMID 34612321 and PMID 40960580 note poorly understood terpenoid biology. None tests single-organism versus consortium use of compounds that lack known catabolic routes.",
+          "question": "Most compounds in the ENIGMA Carbon Census (74 of 83) have no isolate known to use them. Is that because their breakdown requires several organisms working in sequence, rather than missing annotation in single genomes?",
           "readiness": "needs new measurements",
-          "readiness_basis": "The phenotype and pangenome tables are in the lakehouse, but the measured-MIC arm needs new growth assays and the finer-rank models need building.",
-          "test": "Step 1 (lakehouse): bridge BacDive phenotypes to pangenome species and fit nested mixed models of the metal score on catalase, with random effects for order, family and genus within each class. Taxonomy alone explained 35.4% of variance and taxonomy plus phenotype was no better. Step 2: because the scores are genome-based predictions, measure minimum inhibitory concentrations (MICs) of copper, nickel and zinc in catalase-positive and catalase-negative strains matched within genus. Report the composite-score and measured-MIC results separately.",
-          "title": "Does the catalase sign reversal inside classes persist at finer lineage ranks?",
-          "why_it_matters": "It would show whether routine phenotypes such as catalase can screen for metal tolerance, or only proxy for taxonomy. Gram stain cannot be tested this way, because no Gram-positive Proteobacteria or Gram-negative Actinomycetes exist in the data."
+          "readiness_basis": "The compounds and candidate sources are identified, but the isolates, enrichments and chemical measurements do not exist yet.",
+          "test": "Using NMDC Multi-omics and the Carbon Census compounds, choose the dark alkaloids and terpenoids with no pathway annotations. Inoculate freshwater biofilm (periphyton) samples onto minimal medium with each compound as sole carbon source, and confirm loss of the compound by chemical measurement. Isolate members, test each alone and in pairs, and sequence the enriched communities. Compare against the known-callable aromatic compounds as a positive control.",
+          "title": "Are dark carbon compounds consumed by consortia rather than by any single isolate?",
+          "why_it_matters": "It would show that the unexplained part of environmental carbon turnover reflects community division of labour as well as unannotated enzymes. This would change how enrichments and isolate screens are designed."
+        },
+        {
+          "approach": "analysis then experiment",
+          "collections": [
+            "enigma-coral",
+            "kbase-phenotype",
+            "kbase-ke-pangenome"
+          ],
+          "conflicts": [
+            "conflict--cross-tenant-data-bridging--d89b8efa"
+          ],
+          "findings": [
+            "genotype_to_phenotype_enigma--602fd76d",
+            "genotype_to_phenotype_enigma--ccab2bff",
+            "genotype_to_phenotype_enigma--ad8903f3"
+          ],
+          "hypothesis": "Prediction quality for amino acids and nucleosides falls sharply when only strains of the same genus are compared, because the model relies on gene sets that act as genus proxies. Metals, antibiotics and nitrogen sources depend on single accessory or regulatory differences that gene-content features miss.",
+          "id": "D5",
+          "outcomes": "Support: accuracy collapses within genus for amino acids and nucleosides, and the leading features are those that differ between genera. Refutation: within-genus accuracy stays comparable to the across-genus result and leading features vary within genera.",
+          "papers": [
+            "42271456",
+            "29769716",
+            "14688090"
+          ],
+          "prior_work": "PMID 42271456 links genomes to optimal growth pH with machine learning and PMID 29769716 maps mutant phenotypes of unknown genes. Neither tests whether prediction survives restriction to strains within one genus.",
+          "question": "Binary growth on amino acids, nucleosides and tryptophan was predicted from gene content across genera, yet metals, antibiotics and nitrogen sources were not, and growth rate, lag and yield could not be predicted across genera. Does the prediction also hold among strains within one genus, or does it mostly sort genera?",
+          "readiness": "needs compute",
+          "readiness_basis": "The 46K strain-condition pairs are in hand, but continuous traits could not be predicted across genera and GC content was available for only 32 of 727 genomes.",
+          "test": "In the ENIGMA CORAL growth data joined to the Phenotype Collection and Pangenome Collection, compare leave-one-genus-out evaluation with within-genus splits for each condition class, restricted to genera with enough strains that both growers and non-growers occur. Measure what share of the predictive gene groups differ between genera versus vary among strains within a genus. For metal, antibiotic and nitrogen conditions, test whether accessory genes that vary within a genus separate growers from non-growers. Then choose strain pairs of one genus that the model calls differently and test their growth in the lab.",
+          "title": "Does gene-content growth prediction work mainly by recognizing which genus a strain belongs to?",
+          "why_it_matters": "It would show whether gene content truly predicts phenotype or mostly reflects phylogeny, setting the limit on predicting growth for new isolates within a well-sampled genus."
         },
         {
           "approach": "experiment",
@@ -51,149 +177,64 @@
             "caulobacter_fur_lipida_loss--088e2303",
             "caulobacter_fur_lipida_loss--75b18331"
           ],
-          "hypothesis": "Lipid A dispensability needs both Fur derepression and the sspB-dependent respiratory operon state. Deleting lpxC is not viable in a \u0394fur-only or \u0394sspB-only background, and loss of the respiratory operon blocks rescue, while sphingolipid pools are maintained or increased without induction of biosynthesis genes.",
-          "outcomes": "Support: neither single background tolerates \u0394lpxC, operon deletion blocks rescue, and sphingolipid levels hold or rise with no spt induction (spt was down -0.64, FDR 0.002). Refute: \u0394lpxC is viable with \u0394fur alone, operon loss does not matter, or sphingolipid levels fall.",
+          "hypothesis": "Cells lacking lipid A and Fur survive only if cbb3-type respiration is kept low. Forcing high expression of the cbb3 operon in the rescued strain will kill it, while deleting cbb3 in a lipid A-deficient, Fur-deficient strain that has no sspB deletion will restore viability.",
+          "id": "D6",
+          "outcomes": "Support: forced operon expression kills the rescued strain and deletion restores viability in the strain without sspB deletion. Refutation: viability is unchanged by operon expression or deletion, so the buffering is a side effect.",
           "papers": [
             "35649364",
             "19520766",
             "30210482"
           ],
-          "prior_work": "PMID 35649364 shows fur mutations and anionic sphingolipids make lipid A dispensable, and PMID 19520766 and PMID 30210482 define the Fur regulon; none tests respiratory-operon buffering or post-transcriptional sphingolipid control.",
-          "question": "Is the transcript-level buffering of the cbb3/cyd/fix respiratory operon in the sspB background required for lipid A dispensability, with sphingolipid flux controlled post-transcriptionally?",
+          "prior_work": "PMID 35649364 shows that fur mutations and anionic sphingolipids make lipid A dispensable, and PMID 19520766 and PMID 30210482 define the Fur regulon and iron stress. None tests whether respiratory-operon buffering is required for survival.",
+          "question": "In Caulobacter, loss of Fur lets cells survive without lipid A, and a further sspB deletion dampens a group of respiratory genes (cbb3, cyd, fix-NOPQ) that Fur loss would otherwise raise. Is lowering that respiratory operon part of what makes lipid A loss tolerable?",
           "readiness": "needs new measurements",
-          "readiness_basis": "The transcript evidence exists, but strains, lipidomics and iron-limitation fitness experiments are new.",
-          "test": "In Caulobacter, attempt \u0394lpxC in \u0394fur-only, \u0394sspB-only and double backgrounds and compare viability with the triple mutant. Delete the cbb3/cyd/fix operon in the rescued strain. Run targeted lipidomics of sphingolipid and CPG levels. Add RB-TnSeq under bipyridyl, ferric salt and hemin, since the existing compendium has no iron-limitation experiments.",
-          "title": "Fur release and sspB loss jointly rewire respiration to bypass lipid A",
-          "why_it_matters": "It would establish a two-switch, post-transcriptional route around an essential outer-membrane pathway. Transcript buffering alone does not show these genes are mechanistically critical, so this tests that directly."
+          "readiness_basis": "Transcriptome and fitness data identify the buffered operon, but no strains altering its expression exist and transcriptomes were taken only in rich medium.",
+          "test": "In Caulobacter strains lacking lpxC and fur, with and without sspB, construct inducible expression of ccoNOPQ and a ccoNOPQ deletion. Measure viability, oxygen consumption and iron-related oxidative stress in rich medium. Use Fitness Browser Caulobacter data to see whether cbb3, cyd and fix genes carry fitness effects under envelope stress. Add iron-limitation experiments, since none exist in the compendium.",
+          "title": "Does silencing the cbb3 respiratory operon let Caulobacter survive without lipid A?",
+          "why_it_matters": "It would show that rescue involves metabolic and oxidative-stress control as well as membrane lipids, since sphingolipid synthesis genes were not switched on. It would also redirect antibiotic-resistance models based on lipid A loss."
         },
         {
-          "approach": "analysis then experiment",
-          "collections": [
-            "nmdc-arkin",
-            "kbase-ke-pangenome"
-          ],
-          "conflicts": [],
-          "findings": [
-            "nmdc_community_metabolic_ecology--dcef6254",
-            "nmdc_community_metabolic_ecology--7d46eb90",
-            "nmdc_community_metabolic_ecology--6853a137"
-          ],
-          "hypothesis": "If Black Queen loss operates, the correlation persists within taxa, pathway losses in species with variable pathways fall on recent branches in high-amino-acid samples, and an isogenic pathway-deletion mutant gains a fitness advantage over its parent that rises with leucine supplied by neighbors. Persistence of the correlation within taxa is necessary but not sufficient.",
-          "outcomes": "Support: the association holds within taxa and across studies, losses are recent and tied to ambient levels, and the deletion mutant's advantage rises with leucine, mainly when a neighbor supplies it. Refute: the association is confined to the dominant study or vanishes within taxa, or the deletion confers no advantage at any leucine. Such results would leave taxon turnover, other selection, or measurement limits unresolved; the data alone would not choose among them.",
-          "papers": [
-            "37322284",
-            "35592760",
-            "31316056",
-            "35085485"
-          ],
-          "prior_work": "PMID 37322284 and PMID 35592760 treat auxotroph provisioning in cultures, and PMID 31316056 and PMID 35085485 predict metabolites from community genes; none tests selection on gene loss against taxon turnover in environmental samples.",
-          "question": "Does the negative correlation between community amino acid biosynthesis completeness and ambient amino acid level reflect selection favoring biosynthetic gene loss when neighbors supply the amino acid, or other causes such as taxon turnover?",
-          "readiness": "needs new measurements",
-          "readiness_basis": "One study supports the current result and abiotic features were NaN in the analysis matrix; the loss-event mapping needs compute and the competition assays are new measurements.",
-          "test": "Step 1 (lakehouse): decompose completeness variation for the 13 testable pathways into between-taxon and within-taxon parts, using GapMind pathway variability across pangenome genomes within species. Repeat the leucine and arginine tests (r = -0.390 and -0.297) in studies other than nmdc:sty-11-r2h77870, which supplied 125 of 131 samples, with pH, temperature and organic carbon as covariates once the abiotic fields are populated. Step 2: for species with variable pathways, map loss events on the GTDB tree and test whether losses are recent and linked to ambient amino acid, and whether retained pathway genes show relaxed constraint. Step 3: in a leucine-pathway species, compete the isogenic leucine biosynthesis deletion against its parent across graded leucine, with and without a prototroph neighbor supplying leucine, and measure biosynthesis cost.",
-          "title": "Is the negative completeness-metabolite link adaptive gene loss, not just taxon turnover?",
-          "why_it_matters": "Replicated correlations cannot separate public-goods dynamics from other processes. Evidence of selection on loss, with a measured fitness benefit of dropping the pathway, would show Black Queen dynamics shape environmental metabolite pools, not just culture co-existence."
-        },
-        {
-          "approach": "analysis then experiment",
-          "collections": [
-            "protect-genomedepot",
-            "kbase-ke-pangenome"
-          ],
-          "conflicts": [],
-          "findings": [
-            "cf_formulation_design--460ed03a",
-            "cf_formulation_design--8bf20af1",
-            "cf_formulation_design--94972e2b",
-            "cf_formulation_design--951bde52",
-            "cf_formulation_design--1799127b"
-          ],
-          "hypothesis": "Lung PA genomes lose sugar pathways but keep amino acid catabolism, and a multi-commensal formulation suppresses ExoS+ PA strains through joint depletion, with a combined effect that departs from the mean of its members.",
-          "outcomes": "Support: lung strains show lower sugar scores (e.g. sorbitol -0.165) with amino acid pathways retained, and formulation inhibition departs from additivity. Refute: lung PA keep sugar pathways under phylogenetic control, or one substrate gives a clear commensal advantage.",
-          "papers": [
-            "17873029",
-            "25409940",
-            "31214142",
-            "35174108",
-            "27881418",
-            "25036925"
-          ],
-          "prior_work": "PMID 25409940 and PMID 31214142 describe carbon use by single CF isolates and PMID 17873029 gives sputum carbon preferences; none tests genome-wide streamlining or non-additive multi-strain exclusion.",
-          "question": "Does lung-associated streamlining of sugar catabolism in P. aeruginosa leave amino acid use intact, so that commensals exclude it through community-level resource depletion and not through a selective substrate?",
-          "readiness": "needs new measurements",
-          "readiness_basis": "Genome-side comparison is in the lakehouse, but all inhibition data are PA14 and non-PA14 co-cultures are new.",
-          "test": "Compare GapMind pathway scores in lung versus non-lung PA genomes with phylogeny controlled. Then co-culture ExoS+ (PAO1-type) and ExoU+ PA strains, not only PA14, with the k=3 formulation (M. luteus, N. mucosa, S. salivarius) versus its members, measuring the combined inhibition and substrate depletion directly instead of assuming additivity.",
-          "title": "Lung adaptation shortens Pseudomonas carbon repertoires, leaving commensals no selective substrate",
-          "why_it_matters": "It would shift probiotic design for CF infection from picking a prebiotic to assembling guilds that jointly deplete PA's preferred resources."
-        },
-        {
-          "approach": "analysis then experiment",
-          "collections": [
-            "kbase-ke-pangenome"
-          ],
-          "conflicts": [],
-          "findings": [
-            "acinetobacter_adp1_explorer--df385e36",
-            "acinetobacter_adp1_explorer--4460d103",
-            "acinetobacter_adp1_explorer--1cfedc83"
-          ],
-          "hypothesis": "Urea growth differs from the other carbon sources in its dependence on Complex I, so Complex I deletion, alone or combined with deletion of any NDH-2 gene, produces carbon-source-specific defects that match the fitness correlation structure (urea r = 0.11 with quinate).",
-          "outcomes": "Support: Complex I deletion gives defects on quinate and glucose-type substrates that differ from urea, and NDH-2 loss shifts dependence on Complex I. Refute: urea shows the same Complex I dependence as the other carbons, or no genotype changes the condition pattern.",
-          "papers": [
-            "18840283",
-            "18319726",
-            "17437026"
-          ],
-          "prior_work": "PMID 18840283 and PMID 18319726 describe the ADP1 deletion collection and FBA essentiality consistency; neither tests respiratory compensation or condition-specific redox flux.",
-          "question": "Does the near-independence of urea fitness from other carbon sources in ADP1 reflect different NADH and respiratory demand, and not just a distinct gene set?",
-          "readiness": "needs new measurements",
-          "readiness_basis": "The urea correlation exists, but mutant construction, NADH/NAD+ assays and co-purification are new experiments.",
-          "test": "First search the ADP1 genome for NDH-2 genes. Then delete a Complex I subunit, and the NDH-2 gene if present, singly and in combination. Grow on quinate, glucose, acetate, lactate and urea, and measure NADH/NAD+. Test the co-fitness partners ACIAD3137 and ACIAD2176 by co-purification with Complex I. In the lakehouse, test K03885 against K00330-K00343 co-occurrence across pangenome species.",
-          "title": "Is urea fitness independent of other carbons because of respiratory wiring or separate genes?",
-          "why_it_matters": "It would explain condition-specific essentiality through redox flux and show whether unannotated essential genes are respiratory accessory factors. The competing reading, that urea needs the respiratory chain like the other carbons, would make the independence a gene-set property."
-        },
-        {
-          "approach": "lakehouse analysis",
+          "approach": "experiment",
           "collections": [
             "kbase-ke-pangenome",
-            "kescience-fitnessbrowser",
-            "kbase-uniprot"
+            "protect-genomedepot"
           ],
           "conflicts": [],
           "findings": [
-            "alphafold_msa_annotation--b7b252bd",
-            "alphafold_msa_annotation--f4d7e00d",
-            "alphafold_msa_annotation--0b782ee2",
-            "field_vs_lab_fitness--d31622df"
+            "cf_formulation_design--1799127b",
+            "cf_formulation_design--951bde52",
+            "cf_formulation_design--8bf20af1"
           ],
-          "hypothesis": "Core clusters with MSA depth below 10 carry measurable fitness phenotypes at a higher rate than depth-matched accessory clusters, after gene-length control, and concentrate in specific lineages instead of spreading evenly across phyla.",
-          "outcomes": "Support: low-depth core clusters have more fitness phenotypes than depth-matched accessory ones after length control, concentrated in particular lineages. Refute: rates equal to or below accessory clusters, or the signal vanishes after length control.",
+          "hypothesis": "Metabolic overlap with PA14 predicts inhibition of PA14 only modestly and predicts inhibition of ExoS-carrying cystic fibrosis isolates still less. Interference mechanisms, not nutrient overlap, will explain a larger share against those isolates.",
+          "id": "D7",
+          "outcomes": "Support: rankings differ between PA14 and ExoS-positive isolates, and strain-specific overlap does not predict inhibition. Refutation: rankings match and strain-specific overlap predicts inhibition about as well as for PA14.",
           "papers": [
-            "29769716",
-            "41273079",
-            "32124724",
-            "36097170"
+            "19936230",
+            "27881418",
+            "17873029",
+            "25036925",
+            "42151817"
           ],
-          "prior_work": "PMID 29769716 gives mutant phenotypes for thousands of unknown genes and PMID 32124724 assesses annotation coverage; neither links shallow MSA depth in core clusters to fitness.",
-          "question": "Are core gene clusters with very shallow alignments and almost no annotation functionally important, or do they persist as lineage-bound remnants?",
-          "readiness": "needs compute",
-          "readiness_basis": "The census and fitness data are in the lakehouse, but the cluster-to-gene join and length-controlled comparison are not yet done.",
-          "test": "Join low-depth core clusters to Fitness Browser genes through the pangenome link. Compare the fraction with significant fitness phenotypes against depth-matched accessory clusters and deeper core clusters, controlling for gene length, which confounds both transposon coverage and core status. Map the clusters onto GTDB to find high-density lineages. Depth was taken from each cluster's representative only, and 71% of clusters lack AlphaFold entries.",
-          "title": "Core proteins with shallow alignments: essential unknowns or relaxed-constraint remnants?",
-          "why_it_matters": "It would show whether the 415,603 low-depth clusters (68.9% hypothetical) deserve experimental effort. Shallow depth is only an interpretation of possible novelty, so this tests functional importance, not unprecedented folds."
+          "prior_work": "PMID 27881418 shows environmental pseudomonads inhibit patient-derived Pseudomonas aeruginosa, and PMID 17873029 describes carbon preferences in sputum. Neither asks whether a nutrient-overlap rule built on one toxin-type strain transfers to the ExoS-dominant clinical population.",
+          "question": "All inhibition assays used PA14, which carries the ExoU toxin and makes only the Pel matrix, whereas among 291 cystic fibrosis isolates 94% carry ExoS and 5% carry ExoU, a very different mix from environmental isolates. Does a commensal's shared nutrient use with PA14 predict how strongly it inhibits typical ExoS-carrying cystic fibrosis isolates?",
+          "readiness": "needs new measurements",
+          "readiness_basis": "Genome-based classification of toxin type exists for 6,760 genomes, but all inhibition measurements were made with PA14 only and have not been validated against ExoS-positive or PAO1-type strains.",
+          "test": "Grow the 142-isolate commensal set against PA14, PAO1 and cystic fibrosis isolates that are ExoS-positive and ExoU-negative. Compare inhibition rankings. For each target strain, compute metabolic overlap using that strain's own substrate preferences, and test whether it predicts inhibition better than PA14 overlap. Use spent-medium and contact-free assays to separate nutrient depletion from secreted inhibitors.",
+          "title": "Do commensal strains inhibit cystic fibrosis-type Pseudomonas as well as the PA14 test strain?",
+          "why_it_matters": "A formulation designed on PA14 could fail on the strains patients actually carry. This would show whether nutrient competition is a transferable design rule."
         }
       ]
     }
   },
   "ecotypes-and-environmental-gene-content-differentiation": {
-    "input": "0edbe73e3bba27504ede3593fa8604009db4ef40109ff1533ef7d1795d5df1bf",
+    "input": "9e04803fb647c769b662cb008d991f3e3e751b53b752a9f44d6afa8f5f6b5e9f",
     "pages": {
-      "are-pseudomonas-sugar-catabolism-differences-lineage-legacie--36d77f.md": "f9a7d9217fcc41bdadbb023b09d5a98915c0d1b94090a82bc18b6bea8040edb2",
-      "do-rhodanobacter-type-and-caulobacter-type-genera-partition--f81f16.md": "c76efdfaf4995be8eb21f2c9c284b05e50be51e30e2fd1d962a0491beb65c12b",
-      "does-depth-linked-geochemistry-not-lateral-position-organize--3a79e7.md": "7087c82be59ba0877cf310e32ae82bf614b97f756e6d80a288343e997a4a5357",
-      "does-long-term-warming-activate-methanotroph-and-glyoxylate--686711.md": "2cde7a5a38691b4b3f7529ba0bcd3a1c9b1a1f2741a47930a3435e098dd23907",
-      "does-lung-adaptation-make-p-aeruginosa-depend-on-amino-acids--aafd40.md": "962f53bef93bd1f599d2e79fcc3f0f88853db5bed436b0d6dbe746db9f908177",
-      "is-environment-s-weak-grip-on-gene-content-concentrated-in-s--cae14a.md": "98bfedbb6a17efb67eb49354dbb975d2c312e9b30e2bf5eef45471733b73f405"
+      "are-nitrogen-fixation-and-acc-deaminase-fixed-within-species--9ba3a1.md": "4385380cd4482a2b43b6c3804469736b6c08d1bc70fab190c07a0546ea17cba4",
+      "are-replication-and-repair-ecotype-differences-really-mobile--ccdc0f.md": "1ab44a3656cf00d537c3cc0703696ea1133a8572cdc23ffa541cc51101403636",
+      "do-resistance-islands-spread-as-clonal-passengers-or-hop-bet--160118.md": "7c038eb19fc4c1442ebf24b035dfb77d2f67faf390c832de2d392fc756b83a04",
+      "do-soil-metals-select-metal-specific-gene-programs-or-one-sh--2d0444.md": "804bdc58819a4cff9d0344b4714eee12a368155419f7b70fd296a4f8db3510fa",
+      "does-long-term-warming-raise-methane-oxidation-activity-in-f--6e9596.md": "7e2c6e4a972dbf6ccf812365ca98b9efb8bfb722c9c0abc002bb92143f2642f1",
+      "is-environment-s-effect-on-gene-content-hidden-in-a-few-func--1cfd24.md": "8db97aef2d9c9d76b1fe9f79c9119b684e8728994246f2e065760b6373ed7b93"
     },
     "render": "direction-page@1",
     "reply": {
@@ -201,191 +242,188 @@
         {
           "approach": "lakehouse analysis",
           "collections": [
+            "kbase-ke-pangenome"
+          ],
+          "conflicts": [
+            "conflict--adaptive-versus-housekeeping-functional-differentiation--a27e3db1"
+          ],
+          "findings": [
+            "ecotype_functional_differentiation--69a046fd",
+            "ecotype_functional_differentiation--667d861b",
+            "ecotype_functional_differentiation--840b73cb"
+          ],
+          "hypothesis": "Most of the ecotype difference in the replication/recombination/repair category comes from transposase, integrase and recombinase genes, and the unknown-function genes that differ between ecotypes mostly lie next to those mobile elements. Core repair genes differ little between ecotypes.",
+          "id": "D1",
+          "outcomes": "Support: the category's ecotype difference largely disappears once mobile genes are removed, and unknown-function genes are enriched next to mobile genes, including within lineages. Refute: core repair genes carry the difference, or unknown-function genes are no closer to mobile elements than random accessory genes.",
+          "papers": [
+            "40644951",
+            "37154706",
+            "36853054",
+            "33423895"
+          ],
+          "prior_work": "PMIDs 40644951 and 37154706 report enrichment of the replication/repair category in accessory or unique genes but do not ask whether mobile-element genes rather than repair genes drive it, and PMID 33423895 reviews how mobile elements shape pangenomes without testing this.",
+          "question": "In species that split into gene-content ecotypes, is the difference in the replication, recombination and repair category carried by mobile-element genes (transposases, integrases) rather than genuine DNA-repair genes? Is the unknown-function category's difference carried by genes that sit beside mobile elements?",
+          "readiness": "data in the lakehouse",
+          "readiness_basis": "Gene-cluster annotations and genome-level presence/absence for the ecotype species are in the Pangenome Collection; the work is a finer annotation split and a gene-neighbourhood check.",
+          "test": "In the 12 species with valid ecotypes, split every gene in the replication/recombination/repair category into mobile (transposase, integrase, recombinase, phage-type) and housekeeping repair (e.g. mismatch and excision repair), using annotations in the Pangenome Collection. Recompute the ecotype difference for each part. For the unknown-function category, measure how often differing genes lie within a few genes of a mobile-element gene, and compare with size-matched random accessory genes. Repeat the comparison within the major lineages of each species, since ancestry was not controlled in the original result.",
+          "title": "Are replication-and-repair ecotype differences really mobile-element turnover in disguise?",
+          "why_it_matters": "These two categories showed the largest ecotype differences, but the differences are modest (about 3 to 4 percentage points in category proportions), and shared ancestry was not controlled, so they cannot yet be called adaptive. If mobile genes carry them, they would be read as mobile-element turnover, possibly reflecting lineage substructure, not habitat-specific repair. That would also help reconcile adaptive-looking categories with curated adaptive markers sitting in the core genome."
+        },
+        {
+          "approach": "lakehouse analysis",
+          "collections": [
             "kbase-ke-pangenome",
             "nmdc-ncbi-biosamples"
           ],
           "conflicts": [
-            "conflict--genome-wide-versus-locus-specific-ecological-adaptation--3fea06ca",
             "conflict--ecotype-environment-gene-content--744fe541",
-            "conflict--ecotype-environment-gene-content--66537c9c"
+            "conflict--genome-wide-versus-locus-specific-ecological-adaptation--3fea06ca"
           ],
           "findings": [
             "ecotype_analysis--9366534f",
             "ecotype_analysis--aa4707c1",
             "ecotype_env_reanalysis--82307b2c",
-            "ecotype_env_reanalysis--1cadc0c9",
-            "ecotype_functional_differentiation--667d861b"
+            "env_embedding_explorer--7dd94f0f"
           ],
-          "hypothesis": "The near-null whole-genome environment effect (not significant in 156 species, 90.7%) hides category-restricted signal, so V, L or transport subsets show more species with significant phylogeny-controlled environment partial correlations than size-matched random gene sets.",
+          "hypothesis": "A small set of functional groups shows a clear environment association after removing evolutionary relatedness. Randomly chosen gene sets of the same size and frequency show none, so the near-zero whole-genome signal is a dilution effect, not an absence of habitat adaptation.",
           "id": "D2",
-          "outcomes": "Support: some categories show significantly more species with environment effects than matched random subsets. A null across categories would be uninformative about cause: genuinely weak structuring, low power, unsuitable functional groupings and AlphaEarth or coordinate measurement limits all remain possible, and only paired direct habitat measurements could separate the last.",
+          "outcomes": "Support: some categories (e.g. transport, defense) exceed the matched random gene sets in many species, and the effect is stronger with isolation-source categories than with coordinates. Refute: every category falls within the random-set range under both descriptors, which would place the weakness in the biology.",
           "papers": [
             "29975997",
             "33602135",
             "23332119",
             "31227022"
           ],
-          "prior_work": "PMID 29975997 and 33602135 report weak habitat association in single species; PMID 23332119 argues habitat structures gene transfer. None partitions environment signal by functional category across many species.",
-          "question": "Do within-species environment effects on gene content appear when whole-genome distances are replaced by specific functional subsets, using organism-proximal habitat measurements?",
+          "prior_work": "PMIDs 29975997 and 33602135 report weak or nascent habitat association for single species, and PMID 23332119 argues habitat structures gene transfer; none compares functional categories against matched random gene sets across many species.",
+          "question": "Do particular functional groups of genes (transport, secondary metabolism, defense, mobile elements) track environment within bacterial species, even though whole-genome gene content mostly does not?",
           "readiness": "needs compute",
-          "readiness_basis": "Pangenome gene clusters, COG annotations and sample metadata exist; per-category partial-correlation runs have not been performed.",
-          "test": "For the species of ecotype_analysis, compute phylogeny-controlled partial correlations between environment and gene-content distance per COG category, including V and L, using kbase-ke-pangenome and structured env_broad_scale terms. Compare each with permutation nulls from random gene subsets matched for size and prevalence, and report power per species. Repeat on the ecotype_env_reanalysis set (environmental n=37, median 0.051; human-associated n=93, median 0.084) and with alternative functional groupings.",
-          "title": "Is environment's weak grip on gene content concentrated in specific functional categories?",
-          "why_it_matters": "It would decide whether species-level 'no environment effect' statements should be limited to whole-genome similarity, and whether locus-specific adaptation is the better description."
+          "readiness_basis": "Gene-cluster presence/absence, annotations and isolation-source metadata exist, but the per-category, per-species distance correlations with matched random nulls need new computation.",
+          "test": "For the species in the ecotype correlation analysis, split accessory gene clusters by functional category. For each category and species, compute the association between environmental distance and gene-content distance while controlling for evolutionary distance. Build a null from random gene sets matched in size and prevalence. Repeat with organism-proximal isolation-source categories in place of collection coordinates, in free-living and host-associated species separately.",
+          "title": "Is environment's effect on gene content hidden in a few functions?",
+          "why_it_matters": "The corpus mostly finds that environment barely predicts gene content, including no difference between free-living and host-associated bacteria, the opposite of what papers on reef and fungal communities report. A functional-group signal would show the weak whole-genome result hides targeted adaptation. A flat result across all groups would point to the environmental descriptors instead."
         },
         {
-          "approach": "analysis then experiment",
+          "approach": "lakehouse analysis",
           "collections": [
             "kbase-ke-pangenome"
           ],
           "conflicts": [],
           "findings": [
-            "cf_formulation_design--460ed03a",
-            "cf_formulation_design--1799127b",
-            "cf_formulation_design--8bf20af1",
-            "cf_formulation_design--951bde52"
+            "amr_strain_variation--065d36b5",
+            "amr_strain_variation--e349ed14",
+            "amr_strain_variation--6ebb7e8b",
+            "amr_strain_variation--f9cc56e8"
           ],
-          "hypothesis": "Lung lineages lose sugar pathways independently of clade membership while amino acid catabolism stays conserved, so lung and CF isolates grow more on amino acids than non-lung isolates do. Commensal competition for cysteine, threonine and methionine then inhibits lung isolates more than non-lung isolates.",
+          "hypothesis": "Resistance islands are less lineage-restricted than size-matched sets of independently occurring acquired resistance genes, because they move as a unit on mobile elements. Core, near-universal resistance genes are excluded from the comparison.",
           "id": "D3",
-          "outcomes": "Support: independent recurrent sugar-pathway loss in lung lineages, and stronger commensal inhibition of lung isolates on amino acid media. Refute: lower scores explained by clade membership, or equal inhibition across isolate origins. The relaxed-selection reading is an evolutionary interpretation, not a measured loss, and PA14 was the only strain in the inhibition assays so far.",
+          "outcomes": "Support: islands show more independent gains and weaker clustering by lineage than matched acquired gene sets, and recur across species. Refute: islands are as lineage-restricted as, or more than, matched gene sets, which implies mostly clonal inheritance.",
           "papers": [
-            "25409940",
-            "31214142",
-            "17873029",
-            "19936230",
-            "27881418",
-            "35174108"
+            "33602143",
+            "20375036",
+            "30068738",
+            "30953542",
+            "39233522"
           ],
-          "prior_work": "PMID 25409940 and 31214142 describe individual CF isolates' metabolic adaptation, PMID 19936230 reports ExoS+ dominance in CF, and PMID 17873029 covers CF sputum carbon preferences; none links genome-wide carbon pathway scores to commensal inhibition by substrate class.",
-          "question": "If lung P. aeruginosa has lost sugar catabolism but kept amino acid catabolism, does it rely more on amino acids in lung-like conditions, making commensals that compete for those amino acids more effective against lung isolates than against non-lung isolates?",
-          "readiness": "needs new measurements",
-          "readiness_basis": "Genome analyses use existing data, but inhibition has not been measured against ExoS+ or non-lung strains.",
-          "test": "Analysis: across the 6,760 P. aeruginosa genomes in kbase-ke-pangenome (1,796 lung or CF among 5,199 with metadata), use phylogenetically controlled models to test whether lower sugar-pathway scores (sorbitol -0.165, mannitol -0.204, gluconate -0.185) recur across independent lung lineages rather than tracking clade, and whether amino acid pathways stay at 97%+ conservation. Experiment: in defined media with a single sugar or a single amino acid as carbon source, grow ExoS+ CF isolates, non-lung isolates and PA14 alone and with M. luteus, N. mucosa and S. salivarius. Measure inhibition by substrate class, focusing on the selective substrates (commensal-to-PA14 ratios 0.77 to 0.96).",
-          "title": "Does lung adaptation make P. aeruginosa depend on amino acids that commensals can contest?",
-          "why_it_matters": "It would turn a genome-scale streamlining inference into a testable vulnerability, and show whether the commensal-inhibition design, built on the ExoU+ PA14 strain, transfers to the ExoS+ strains that dominate CF."
-        },
-        {
-          "approach": "experiment",
-          "collections": [],
-          "conflicts": [],
-          "findings": [
-            "harvard_forest_warming--4fcaf7c4",
-            "harvard_forest_warming--5dcb42f7",
-            "harvard_forest_warming--d1815e53",
-            "harvard_forest_warming--8f0aae96"
-          ],
-          "hypothesis": "Long-term warming raises transcripts of methane oxidation and glyoxylate-cycle genes in a taxon subset, so an independent set of warmed and control soils will show increases of the same sign for these genes, passing correction within that new test.",
-          "id": "D5",
-          "outcomes": "Support: same-sign increases in independent samples that pass correction, localized to specific MAGs. Refute: no increase in new samples. RNA and DNA layers must be judged separately: incubation confounds the DNA-organic result, while the RNA organic samples were direct.",
-          "papers": [
-            "34512564",
-            "38561130",
-            "26884466",
-            "25762989",
-            "27590813",
-            "40105318"
-          ],
-          "prior_work": "PMID 34512564 reports warming-responsive RNA in carbohydrate and lipid enzymes, and 38561130 finds raised methane uptake without a pmoA copy rise; none tests transcript-level pmoA or glyoxylate genes under long-term warming.",
-          "question": "Are the nominal RNA increases in pmoA, pmoB, aceA and aceB under long-term warming real, and do they replicate in new, independent measurements?",
-          "readiness": "needs new measurements",
-          "readiness_basis": "Independent validation requires new transcript, DNA and qPCR measurements; the original report used nmdc_metadata and nmdc_results, so access through a listed collection is not established.",
-          "test": "Treat the original signals (pmoA K10944, pmoB K10945, mineral aceA K01637 and aceB K01638, all nominal and not surviving FDR across 14K KOs) as hypotheses from the discovery set, not a prespecified confirmatory panel. Collect new RNA and DNA from direct organic and mineral samples of heated and control Harvard Forest plots at several dates, including organic-horizon DNA that was absent here, and test these genes with a denominator fixed in advance. Resolve which of the 298 MAGs carry them, and confirm pmoA transcripts by qPCR.",
-          "title": "Does long-term warming activate methanotroph and glyoxylate-cycle transcription in forest soil?",
-          "why_it_matters": "It would link the organic-horizon phylum shift (Actinobacteria up, Acidobacteria down) to a functional mechanism and bear on warming effects on the methane sink."
-        },
-        {
-          "approach": "analysis then experiment",
-          "collections": [
-            "enigma-coral"
-          ],
-          "conflicts": [],
-          "findings": [
-            "enigma_sso_asv_ecology--7ffad219",
-            "enigma_sso_asv_ecology--519fc7f6",
-            "enigma_sso_asv_ecology--9b46b768",
-            "enigma_sso_asv_ecology--51556105",
-            "enigma_sso_asv_ecology--ab22d581"
-          ],
-          "hypothesis": "Within-well depth turnover (median Bray-Curtis 0.977 versus 0.835 for same-zone samples across wells) reflects plume geochemistry. Geochemical variables alone should then predict community composition about as well as depth or zone, and lateral coordinates should add little. Concurrent sediment and groundwater sampling should preserve the Rhodanobacter and Anaeromyxobacter partition.",
-          "id": "D6",
-          "outcomes": "Support: geochemistry alone explains much of the community variation and predicts held-out samples comparably to depth or zone, with large shared depth-geochemistry variance, while lateral position adds little. Refute: geochemistry alone explains little total variation or predicts poorly where depth does well, or lateral structure emerges with concurrent sampling. Little unique geochemical variance beyond zone would not refute the mechanism, because depth-linked geochemistry predicts mostly shared variance.",
-          "papers": [
-            "22179233",
-            "20305024",
-            "30265315",
-            "16407148",
-            "34130083"
-          ],
-          "prior_work": "PMID 22179233 ties Rhodanobacter dominance to low pH and 30265315 reviews hydrologic boundaries; neither tests depth versus horizontal structure with a paired sediment-groundwater design.",
-          "question": "Does geochemistry measured in the same wells account for the depth-driven community turnover and the sediment-versus-groundwater genus partition, while lateral position adds little?",
-          "readiness": "needs new measurements",
-          "readiness_basis": "Geochemistry is registered but sample-name resolution is incomplete, and concurrent sediment-groundwater sampling does not exist.",
-          "test": "Load the registered SSO geochemistry (221 samples) from enigma-coral, resolving sample names to wells. Run variance partitioning (db-RDA) of communities on three predictor sets, geochemistry (pH, nitrate, uranium, metals), depth or zone, and lateral coordinates, without conditioning on depth, reporting unique and shared fractions plus cross-validated prediction from each set. Use the hillslope Mantel test (rho = -0.049, p = 0.580) only as a spatial-structure test, not as variance explained. Zone explained 27.5% of sediment variance (F = 4.05, p = 0.0001), but the report lists 37 segments against zone counts of 33, 25, 54 and 45; groundwater ASV data cover 5 of 9 wells. Resample groundwater concurrently with sediment to remove the 18-month offset.",
-          "title": "Does depth-linked geochemistry, not lateral position, organize Oak Ridge subsurface communities?",
-          "why_it_matters": "It would confirm a plume model currently inferred from community composition alone, and indicate that sampling designs should stratify by depth."
-        },
-        {
-          "approach": "analysis then experiment",
-          "collections": [
-            "kbase-ke-pangenome",
-            "kbase-phenotype",
-            "enigma-coral"
-          ],
-          "conflicts": [],
-          "findings": [
-            "genotype_to_phenotype_enigma--a6ede42b",
-            "genotype_to_phenotype_enigma--602fd76d",
-            "genotype_to_phenotype_enigma--ccab2bff"
-          ],
-          "hypothesis": "Acid tolerance genes (proton homeostasis, acid resistance) distinguish the acidic cluster, so genus-blocked models trained on these features predict pH-dependent growth of strains from both clusters.",
-          "id": "D7",
-          "outcomes": "Support: cluster-distinguishing KOs predict pH tolerance under genus-blocked validation. Refute: no predictive power across genera, as with the continuous growth-parameter null.",
-          "papers": [
-            "38366921",
-            "40118314",
-            "42271456",
-            "22179233"
-          ],
-          "prior_work": "PMID 38366921 and 40118314 link pH and temperature to Ralstonia and Sphingomonas in other settings, and 42271456 predicts optimal pH from genomes; none tests this cluster contrast.",
-          "question": "Which genomic features explain the global pH and temperature separation between the Rhodanobacter-Ralstonia-Dyella cluster and the Brevundimonas-Caulobacter-Sphingomonas cluster?",
-          "readiness": "needs new measurements",
-          "readiness_basis": "Clusters were defined across 464K samples but pH growth data for isolates need to be measured.",
-          "test": "Fit genus-blocked models of growth pH optimum from KO content (kbase-ke-pangenome, kbase-phenotype) and compare features with cluster-distinguishing KOs. Measure growth of Cluster A and B isolates across pH. Test co-occurrence with compositionally aware SparCC on the 100WS ASV matrix.",
-          "title": "Do Rhodanobacter-type and Caulobacter-type genera partition by pH through identifiable genes?",
-          "why_it_matters": "It would give mechanism to a correlational niche partition (1.35 pH units more acidic and 6.9\u00b0C warmer) and a basis for predicting contaminated-site community shifts from genomes."
+          "prior_work": "PMID 33602143 and PMID 20375036 follow resistance islands in single genera or species, and PMID 39233522 shows resistance genes tracking mobile elements in one E. coli lineage; none compares island lineage-restriction with matched acquired genes across hundreds of species.",
+          "question": "Within a species, are tightly co-occurring resistance gene islands concentrated in particular strain lineages, or scattered across lineages like horizontally transferred cassettes? Is that pattern different from single acquired resistance genes?",
+          "readiness": "needs compute",
+          "readiness_basis": "Island calls and genome-level resistance gene tables exist, but gain counting on within-species trees and matched null sets need new computation; the largest species (e.g. E. coli) were excluded by size.",
+          "test": "In the species with at most 500 genomes, take the detected islands and compare their distribution on the within-species genome-distance tree with that of random sets of non-core resistance genes matched on size and prevalence. Count how many separate times each island appears to have been gained along the tree. Check whether the same island appears in several species in the Pangenome Collection, and compare island-carrying species to those without islands.",
+          "title": "Do resistance islands spread as clonal passengers or hop between bacterial lineages?",
+          "why_it_matters": "More than half of species carry such islands, yet it is unknown whether they are inherited with the strain or repeatedly gained. The answer decides whether surveillance should track strain lineages or the islands themselves, and excluding near-universal core genes removes a partly artefactual contribution to earlier lineage-signal differences."
         },
         {
           "approach": "lakehouse analysis",
           "collections": [
-            "kbase-ke-pangenome",
-            "kescience-fitnessbrowser"
+            "kbase-ke-pangenome"
           ],
           "conflicts": [
-            "conflict--ecotype-environment-gene-content--30e389f5"
+            "conflict--ecotype-environment-gene-content--aa91ad15",
+            "conflict--adaptive-versus-housekeeping-functional-differentiation--a27e3db1"
           ],
           "findings": [
-            "pseudomonas_carbon_ecology--9c42f41a",
-            "pseudomonas_carbon_ecology--eb1d58ae",
-            "pseudomonas_carbon_ecology--cbe7e256",
-            "pseudomonas_carbon_ecology--0211e0cd"
+            "plant_microbiome_ecotypes--223dadd3"
           ],
-          "hypothesis": "Within Pseudomonas_E, rhizosphere and soil species differ in specific carbon pathways beyond subgenus effects, and these differences predict condition-specific fitness.",
-          "id": "D8",
-          "outcomes": "Support: environment associations remain within Pseudomonas_E and predict fitness. Refute: associations vanish after phylogenetic control, leaving the subgenus split (43 of 62 pathways) as the only signal.",
+          "hypothesis": "Where nitrogen fixation and ACC deaminase occur, they are near-universal within a species, yet sister species in the same genus differ in carrying them at all. The lifestyle switch then happens between species, and the type III secretion system may follow the same pattern less clearly.",
+          "id": "D4",
+          "outcomes": "Support: within-species fixation is high, presence between sister species is patchy, and carrier neighbourhoods show more mobile signatures than the other markers. Refute: the markers vary within species, or sister species rarely differ, which would point to inheritance from a common ancestor.",
           "papers": [
-            "22576821",
-            "41332517",
-            "29607620",
-            "3922954",
-            "26913973"
+            "29255260",
+            "22792073",
+            "35536128",
+            "32040377"
           ],
-          "prior_work": "PMID 22576821 links catabolic profiles of 23 strains to rhizosphere competence and 41332517 shows P. putida strain variation; neither separates niche from subgenus across species.",
-          "question": "Does loss of plant-derived sugar pathways in the P. aeruginosa group reflect ancestral divergence, and do lifestyle effects exist within Pseudomonas_E once subgenus is controlled?",
+          "prior_work": "PMID 29255260 and PMID 22792073 describe genomic features that distinguish plant-associated bacteria and diversity of plant-interaction traits in Pseudomonas, but neither asks whether the key genes are fixed within species and switched between sister species.",
+          "question": "After comparison within the same genus, nitrogen fixation and ACC deaminase stayed tied to plant association most clearly, with the type III secretion system a weaker case. For these markers, is presence fixed within a species but gained or lost between sister species?",
           "readiness": "needs compute",
-          "readiness_basis": "Pathway and fitness tables exist, but phylogenetic regression and within-species clustering are unrun.",
-          "test": "Run PGLS (phylogenetic generalized least squares) on GapMind carbon-pathway completeness against environment in 54 species with subgenus as covariate; analyse P. fluorescens and P. putida for within-species metabolic ecotypes using kbase-ke-pangenome. Link pathways to RB-TnSeq fitness from kescience-fitnessbrowser on matching carbon sources.",
-          "title": "Are Pseudomonas sugar-catabolism differences lineage legacies or niche adaptations?",
-          "why_it_matters": "It would separate recent niche adaptation from deep phylogenetic inertia in carbon metabolism, which is mixed in the current signal (balanced accuracy 0.408 \u00b1 0.169)."
+          "readiness_basis": "Marker calls and species-level core status exist for plant-associated species; the rerun shuffle, sister-species comparison and neighbourhood analysis need new queries, and tree coverage is limited for many plant-associated species.",
+          "test": "For each marker, in genera with both plant-associated and non-plant species in the Pangenome Collection, compute the fraction of genomes carrying the marker within each species and whether it is classed as core. Count how often presence differs between sister species. Check whether carrier gene neighbourhoods contain mobile-element genes or breaks in gene order, compared with markers that did not stay tied to plant association. Because the original within-genus shuffle used only 200 repeats and no correction across 15 markers, rerun it with many more repeats and a correction, and treat the type III secretion result as provisional.",
+          "title": "Are nitrogen fixation and ACC deaminase fixed within species but switched between sister species?",
+          "why_it_matters": "It would show whether plant-association genes are stable within a species but move over evolutionary time between species, which bears on the higher mobile-element load of plant-associated genera. It would also say where to look for the mobile elements involved. The 64.6% core share measured for beneficial gene clusters as a group does not by itself show that these markers are core, so this must be tested marker by marker."
+        },
+        {
+          "approach": "analysis then experiment",
+          "collections": [
+            "nmdc-arkin"
+          ],
+          "conflicts": [],
+          "findings": [
+            "harvard_forest_warming--4fcaf7c4",
+            "harvard_forest_warming--8f0aae96",
+            "harvard_forest_warming--d1815e53",
+            "harvard_forest_warming--5dcb42f7"
+          ],
+          "hypothesis": "If the weak methane-oxidation transcript signal is real, transcripts are higher in heated plots while pmoA and pmoB DNA abundance and methanotroph taxa are unchanged, so warming raises activity per cell instead of enriching methanotrophs.",
+          "id": "D5",
+          "outcomes": "Support: transcript ratios and measured methane oxidation rise in heated plots with flat DNA, in both horizons and across seasons. Refute: the transcript signal vanishes with replication, or DNA abundance rises as much as RNA, which would mean enrichment instead of activation.",
+          "papers": [
+            "38561130",
+            "34512564",
+            "27590813",
+            "25762989",
+            "26884466"
+          ],
+          "prior_work": "PMID 38561130 saw higher methane uptake under warming without a rise in pmoA copies in a subtropical forest, and PMID 34512564 profiled warming-responsive transcripts at this site but reported carbohydrate and lipid enzymes; neither compares methane-oxidation transcripts with DNA or measures the process at this site.",
+          "question": "In long-term warmed Harvard Forest soil, do the higher transcripts of the methane-oxidation genes pmoA and pmoB reflect higher activity of existing methanotrophs rather than more of them?",
+          "readiness": "needs new measurements",
+          "readiness_basis": "Only a single sampling date exists, the signals are weak and confounded by incubation, so seasonal replication and process measurements are required.",
+          "test": "The existing data cannot settle this: the transcript signals were weak and did not hold up once thousands of gene functions were tested together (the pmoB mineral-soil signal was borderline even before that), only one sampling date exists, and horizon is confounded with incubation. Analysis: in the Harvard Forest warming data, compare pmoA/pmoB RNA-to-DNA ratios between control and heated plots, and check the NMDC Multi-omics warming or thaw studies for the same signal. Experiment: sample control and heated plots in each horizon across seasons with replicate cores, all handled the same way, measure methane oxidation rates, and quantify pmoA DNA and RNA by targeted PCR.",
+          "title": "Does long-term warming raise methane-oxidation activity in forest soil without adding methanotrophs?",
+          "why_it_matters": "Whether warmed forest soils take up more or less methane depends on this. If warming mainly changes expression, DNA-based community surveys would miss a change in a greenhouse-gas sink. The same experiment tests whether a warming-selected group of fast-responding taxa exists."
+        },
+        {
+          "approach": "lakehouse analysis",
+          "collections": [
+            "nmdc-ncbi-biosamples",
+            "kescience-fitnessbrowser",
+            "kbase-ke-pangenome"
+          ],
+          "conflicts": [
+            "conflict--environment-embedding-geography--32d28f91",
+            "conflict--ecotype-environment-gene-content--751c5f9a"
+          ],
+          "findings": [
+            "soil_metal_functional_genomics--129a64ad",
+            "soil_metal_functional_genomics--2a80fc76",
+            "soil_metal_functional_genomics--becb7d4e",
+            "soil_metal_functional_genomics--fd9b94cc"
+          ],
+          "hypothesis": "Most metal-linked associations collapse onto a single shared multi-metal axis. Only metals with dedicated resistance machinery (mercury, arsenic) keep associations of their own after the shared axis is removed.",
+          "id": "D6",
+          "outcomes": "Support: most associations are explained by the shared axis, and the few surviving metal-specific hits line up with metal-specific fitness genes. Refute: many metals keep distinct association sets after residualising, matching metal-specific fitness genes, so specificity is real.",
+          "papers": [
+            "41539526",
+            "30336790",
+            "42150504",
+            "41848047"
+          ],
+          "prior_work": "PMID 41539526 and PMID 30336790 relate metal gradients to community function across sites, and PMID 41848047 suggests co-selection by residual metals; none separates a shared multi-metal axis from metal-specific programs or checks them against fitness data.",
+          "question": "Chromium, copper, lead and zinc rise together in industrial soils. Do the many metal-linked gene-category associations reflect distinct metal-specific programs, or one shared stress response that every co-varying metal inherits?",
+          "readiness": "unknown",
+          "readiness_basis": "The soil metal measurements and gene-category tables were analysed in a prior project, but whether per-sample metal values can be rejoined to genome-resolved data and Fitness Browser organisms for this design is not shown in the findings.",
+          "test": "In the soil metal dataset, extract the dominant shared axis of metal covariation, then retest every gene-category association with each metal's residual after that axis is removed, and with metals fitted jointly. Compare the surviving metal-specific hits with metal fitness genes in the Fitness Browser for organisms with copper, chromium, zinc and mercury experiments, asking whether metal-specific hits are enriched for genes with metal-specific fitness defects while shared-axis hits overlap generic stress genes.",
+          "title": "Do soil metals select metal-specific gene programs or one shared multi-metal stress program?",
+          "why_it_matters": "Reports of strong metal effects on community function, and the suggested energetic trade-off under copper stress, cannot be assigned to any single metal while metals co-vary. A shared program would mean metal-specific resistance gene panels overstate specificity, and would change how bioremediation and risk assessments use metal-linked markers."
         }
       ]
     }
@@ -546,6 +584,175 @@
           "test": "For the 14 Fitness Browser organisms, compare fitness-significant carbon-source genes for EC-less reactions with those for EC-assigned reactions, scoring overlap with truly dark genes and low-MSA clusters and running structural-family searches. Treat the 96 assigned pairs as candidates, since 33 have only single-stream, low-confidence support. Test top candidates by purified-protein assays of the specific reaction, as knockouts cannot separate direct from indirect pathway effects. Consider alternative gapfill solutions, since default gapfilling minimizes added reactions without guaranteeing optimality.",
           "title": "Gapfilled reactions without EC numbers may be catalyzed by novel enzyme families",
           "why_it_matters": "It would link metabolic-model gaps to unexplored enzyme space, showing whether model failures reflect missing enzyme classes and which dark genes to characterize first."
+        }
+      ]
+    }
+  },
+  "gene-fitness-landscapes-and-cofitness-modules": {
+    "input": "c2c376879aae1a6efc7a324d63fb05ad3209c13fa0218157032a77d3ba49029b",
+    "pages": {
+      "could-iron-sulfur-cluster-damage-underlie-the-cross-resistan--187f17.md": "bee017c33117791844138d6942eb1db95952d6986c4db72fdfcbb5158b8fb14d",
+      "could-the-weak-co-inheritance-of-accessory-fitness-modules-r--a1069a.md": "31e42618cb64f618fc19303312f92dc668172aae1fd0994d8afdd3f6d4ee5702",
+      "do-accessory-genes-show-strong-phenotypes-only-when-the-cond--b20478.md": "385746505871f5f4bd0ff9ae42e31d193596fb7b243f123ca9ab0fd7fc0449a1",
+      "do-orphan-essential-genes-substitute-for-universal-functions--e0d011.md": "abf0f5fab6c602fa511994f1ee9d55370a872c333364c8e22a4eefecb54194a8",
+      "do-pqq-and-iron-acquisition-defects-on-quinate-reflect-diffe--1956da.md": "d94795c6d27a225f19eede6e131f6cc5287e2c5e6e1297ffc0f6a1b30686c402"
+    },
+    "render": "direction-page@1",
+    "reply": {
+      "directions": [
+        {
+          "approach": "analysis then experiment",
+          "collections": [
+            "kescience-fitnessbrowser",
+            "kbase-ke-pangenome"
+          ],
+          "conflicts": [],
+          "findings": [
+            "fitness_effects_conservation--ae67b7f2",
+            "conservation_fitness_synthesis--0c074210",
+            "fitness_effects_conservation--e931cad7",
+            "metal_specificity--fed6dcbd"
+          ],
+          "hypothesis": "Accessory genes cause strong growth changes mainly in the specific condition their annotation predicts (for example efflux genes under their metal). The core excess therefore reflects a mismatch between lab conditions and accessory gene function, not weaker accessory effects.",
+          "id": "D1",
+          "outcomes": "Support: accessory genes show a much larger growth change under matched conditions than under unmatched ones, which core genes do not, and the core excess disappears among matched-condition tests. Refute: accessory genes stay weaker than core genes even under matched conditions, so the gap is not a coverage artefact.",
+          "papers": [
+            "29769716",
+            "38948139",
+            "21592774",
+            "42262111"
+          ],
+          "prior_work": "PMID 29769716 reports condition-specific phenotypes and PMID 38948139 shows fitness genes enriched in core genes in one rich medium; neither asks whether accessory phenotypes appear when the tested condition matches gene function.",
+          "question": "Genes with strong condition-specific effects are more often core than accessory. Is that because accessory genes were simply not tested under the conditions they serve, or because their effects are weaker?",
+          "readiness": "needs compute",
+          "readiness_basis": "Fitness data and pangenome core labels are in the lakehouse, but matching annotation-predicted conditions to experiments needs new curation and compute.",
+          "test": "In the Fitness Browser, tag each gene with the condition class its annotation predicts, such as metal transporters or efflux for metals and catabolic genes for the matching carbon source. Using pangenome core/accessory labels, compare how strongly mutants grow worse or better in annotation-matched conditions versus unmatched ones, separately for core and accessory genes. Restrict to organisms with many metal and carbon experiments, such as Desulfovibrio vulgaris Hildenborough, Pseudomonas stutzeri RCH2 and Bacteroides thetaiotaomicron. Then test a few predicted-condition accessory genes with targeted deletions.",
+          "title": "Do accessory genes show strong phenotypes only when the condition matches their function?",
+          "why_it_matters": "It would show whether 'condition-specific does not mean niche-specific' is a limit of lab panels or a real property of bacterial genomes. That changes how accessory genes are screened for function."
+        },
+        {
+          "approach": "lakehouse analysis",
+          "collections": [
+            "kescience-fitnessbrowser",
+            "kbase-ke-pangenome"
+          ],
+          "conflicts": [
+            "conflict--cofitness-network-architecture--52cc7c49",
+            "conflict--cofitness-network-architecture--f152c7da"
+          ],
+          "findings": [
+            "cofitness_coinheritance--0fab94f0",
+            "cofitness_coinheritance--67c8c90f",
+            "module_conservation--d13bfcb2"
+          ],
+          "hypothesis": "The small set of accessory fitness modules is enriched for genes that sit close together in genomes and near mobile-element markers, which would explain their co-occurrence across strains. Core modules and cofit pairs outside modules lack this clustering. Failure of this prediction would mean the module signal reflects shared ancestry or prevalence.",
+          "id": "D2",
+          "outcomes": "Support: accessory module members cluster physically and near mobile markers more than prevalence-matched random sets, and the pattern holds in near-clonal strains. Refute: module members are scattered like random accessory genes, so the co-inheritance signal reflects ancestry or prevalence. If too few accessory modules are testable in any organism, the question stays open rather than refuted.",
+          "papers": [
+            "34499026",
+            "32100706",
+            "40304385",
+            "38948139"
+          ],
+          "prior_work": "PMID 34499026 and PMID 32100706 show accessory genes co-occur beyond chance in pangenomes; this direction tests whether fitness-defined accessory modules are physically linked mobile units, which those papers did not examine.",
+          "question": "Gene modules defined by correlated fitness show a larger co-inheritance signal than gene pairs, with the highest values for accessory modules. That module result is fragile: the accessory-versus-core difference was only borderline, accessory modules were about 5% of the mapped set, and in one organism no module qualified. Do accessory modules, where they exist, travel together as physical units?",
+          "readiness": "needs compute",
+          "readiness_basis": "Module memberships, gene coordinates and pangenome presence/absence are in the lakehouse; the work is coordinate-based distance computation and matched nulls, limited by the small number of accessory modules.",
+          "test": "Take the accessory module families (fewer than half core genes) and prevalence-matched core modules across the Fitness Browser organisms. Take gene coordinates from the pangenome genomes and measure distance between module members and closeness to transposase, integrase and phage genes. Compare with prevalence-matched random accessory gene sets and with cofit pairs outside modules. Repeat within the closest-related genomes only, to check the result is not driven by ancestry. Report per organism, because the per-organism module counts do not sum to the headline totals and the accessory class is small.",
+          "title": "Could the weak co-inheritance of accessory fitness modules reflect physical co-transfer units?",
+          "why_it_matters": "It would separate real co-transfer from inherited relatedness for the one class of modules where co-inheritance looks strongest, and show whether fitness modules can be evolutionary units as well as regulatory ones."
+        },
+        {
+          "approach": "analysis then experiment",
+          "collections": [
+            "kescience-fitnessbrowser"
+          ],
+          "conflicts": [
+            "conflict--cofitness-network-architecture--2d1b0ad4",
+            "conflict--shared-stress-versus-stressor-specific-fitness--07279e23"
+          ],
+          "findings": [
+            "metal_cross_resistance--fbb37c50",
+            "metal_cross_resistance--8b1ef6ba",
+            "metal_cross_resistance--fe1c0679"
+          ],
+          "hypothesis": "Iron-zinc cross-resistance is carried mainly by iron-sulfur cluster biogenesis and repair genes. Removing those genes weakens the iron-zinc correlation much more than the correlation of metal pairs that do not target iron-sulfur proteins, and non-metal stressors correlate with metals far less.",
+          "id": "D4",
+          "outcomes": "Support: removing iron-sulfur genes selectively lowers the iron-zinc correlation, non-metal stressors correlate much more weakly, and the deletions are sensitive to both metals. Refute: correlation is unchanged after removal and non-metal stressors correlate as strongly as metals, pointing to a general stress axis.",
+          "papers": [
+            "31586033",
+            "37272830",
+            "16537105",
+            "28528649"
+          ],
+          "prior_work": "PMID 31586033 shows zinc excess raises iron demand in E. coli and PMID 37272830 links iron uptake to zinc, manganese and copper responses; they do not test a shared iron-sulfur mechanism across organisms or compare against non-metal stress.",
+          "question": "Gene-level fitness is positively correlated between nearly all metal pairs, and iron with zinc more strongly than expected, but that Fe-Zn estimate rests on only 6 organisms and no non-metal stress controls exist. Is this a general-stress signal or a specific metal-damage mechanism such as iron-sulfur cluster damage?",
+          "readiness": "needs new measurements",
+          "readiness_basis": "The correlation analysis uses Fitness Browser data, but the deciding deletion measurements under zinc and iron excess are new, and the Fe-Zn estimate currently covers only 6 organisms.",
+          "test": "In the Fitness Browser organisms that have both iron and zinc experiments (only 6 so far), recompute metal-metal correlations after removing iron-sulfur biogenesis genes, and compare with removing size-matched random gene sets. Add non-metal stress conditions (antibiotics, oxidative, osmotic) as controls in the same organisms. Then, in one tractable organism, measure deletions of iron-sulfur biogenesis genes under zinc and iron excess.",
+          "title": "Could iron-sulfur cluster damage underlie the cross-resistance between zinc and iron?",
+          "why_it_matters": "It would separate a specific chemical mechanism from a generic stress response in a result that currently reads as 'all metals are alike', and tell us which tolerance genes are worth engineering."
+        },
+        {
+          "approach": "analysis then experiment",
+          "collections": [
+            "kescience-fitnessbrowser",
+            "kbase-ke-pangenome",
+            "kbase-uniprot"
+          ],
+          "conflicts": [],
+          "findings": [
+            "essential_genome--a70d258c",
+            "essential_genome--5e670ea8",
+            "essential_genome--8a3a7af5",
+            "essential_genome--876909a2"
+          ],
+          "hypothesis": "In organisms where a universally essential family seems absent, orphan essential genes can functionally replace it: a member of that family from a relative will rescue depletion of the best-matching orphan, and these orphans share predicted structure or domains with the missing family more often than orphans elsewhere.",
+          "id": "D5",
+          "outcomes": "Support: genuine gaps remain after sensitive search, orphans in gap organisms show structural similarity to the missing family more often than controls, and heterologous family members rescue orphan depletion. Refute: gaps disappear under sensitive search, hit rates match controls, and rescue fails. Structure-search failure alone does not refute; only failed rescue does.",
+          "papers": [
+            "36097170",
+            "42726091",
+            "15035042",
+            "33753464"
+          ],
+          "prior_work": "PMID 36097170 and PMID 42726091 define core and strain-specific essential genes within one species or family, and PMID 15035042 treats minimal gene sets; none asks whether lineage-restricted essentials substitute for a missing universal function.",
+          "question": "Some essential genes have no orthologs in other organisms and are mostly of unknown function, while a few families are essential everywhere. Do orphan essentials fill the roles of universal essential functions that appear to be absent in their lineage?",
+          "readiness": "needs compute",
+          "readiness_basis": "Essentiality calls and ortholog families exist in the lakehouse; sensitive homology and structure searches need compute and the rescue test needs new measurements.",
+          "test": "Across the 48 Fitness Browser organisms, list organisms where a universally essential family has no detected member although relatives have one. First rule out missed distant homologs with sensitive profile searches, since best-hit orthology misses paralogs, fusions and diverged homologs; apparent gaps that vanish are not displacement. For the remaining gaps, predict structures of orphan essentials and search for fold or domain similarity to the missing family, and compare hit rates with orphans from organisms with no gap. Then, for top candidates in a tractable host, deplete the orphan and test rescue by the relative's family member, which tests function without relying on structural resemblance.",
+          "title": "Do orphan essential genes substitute for universal functions missing in their lineage?",
+          "why_it_matters": "It would give a route to function for the largest class of unannotated essential genes, and show whether essential functions are conserved as roles while the genes themselves are swapped."
+        },
+        {
+          "approach": "analysis then experiment",
+          "collections": [
+            "kbase-ke-pangenome"
+          ],
+          "conflicts": [
+            "conflict--condition-space-dimensionality--aeb98adb"
+          ],
+          "findings": [
+            "aromatic_catabolism_network--8650ba38",
+            "adp1_deletion_phenotypes--ec39f324",
+            "adp1_deletion_phenotypes--f675f8be"
+          ],
+          "hypothesis": "PQQ-biosynthesis mutants are defective on quinate because the PQQ-dependent quinate dehydrogenase lacks its cofactor, so added PQQ rescues them but not the core aromatic pathway mutants. Iron-acquisition mutants are not rescued by PQQ; whether added iron rescues them is the open part of the question.",
+          "id": "D6",
+          "outcomes": "Support: PQQ restores quinate growth of PQQ mutants but not iron or core pathway mutants, and iron addition has a distinct effect on the iron mutants. Refute: PQQ gives no rescue of PQQ mutants, or rescues other classes too, indicating a nonspecific effect. If iron mutants stay unrescued by both, their cause remains unexplained.",
+          "papers": [
+            "3044290",
+            "2855587",
+            "15691962",
+            "18319726"
+          ],
+          "prior_work": "PMID 3044290 shows quinate dehydrogenase is a quinoprotein and PMID 2855587 studies PQQ biosynthesis; they do not test genome-wide whether PQQ and iron gene defects on quinate come from separate cofactor demands.",
+          "question": "In ADP1, quinate-specific defects fall in aromatic degradation, Complex I, iron acquisition and PQQ biosynthesis genes. Quinate dehydrogenase is a PQQ-dependent quinoprotein, which could explain the PQQ genes, but the reason for the iron-acquisition defects is unknown. Are the two defects separate cofactor demands?",
+          "readiness": "needs new measurements",
+          "readiness_basis": "Deletion strains exist for ADP1, but rescue experiments are new measurements; the pangenome co-retention check uses data in the lakehouse.",
+          "test": "Grow ADP1 deletion mutants of PQQ biosynthesis, iron acquisition and core aromatic degradation genes on quinate, with and without added PQQ or iron, and on glucose or succinate as controls. Compare rescue by mutant class. Check in the pangenome whether species carrying the aromatic pathway also keep PQQ synthesis genes.",
+          "title": "Do PQQ and iron-acquisition defects on quinate reflect different cofactor demands of quinate growth?",
+          "why_it_matters": "It would show whether a 'support subsystem' signature in fitness data reflects a specific enzyme cofactor dependency, and whether the iron defect has its own cause, which explains part of why quinate behaves unlike other carbon sources."
         }
       ]
     }
