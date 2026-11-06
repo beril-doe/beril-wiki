@@ -1,0 +1,258 @@
+{
+  "g-01672baddd": {
+    "how": "The dark-gene survey builds on the module project's results and data, so they share an analysis. It counts essential genes lacking insertion mutants, which the module analysis cannot see without fitness data.",
+    "input": "ed403a023a14e07d9d3c54d6d5bc72c2703d84e327a585229c693b9980161f7c",
+    "lanes": {
+      "functional_dark_matter--1e0e1f03": "Unannotated genes with strong fitness effects or essentiality",
+      "module_conservation--1e6a89d4": "Essential genes found within fitness modules"
+    },
+    "members": [
+      "functional_dark_matter--1e0e1f03",
+      "module_conservation--1e6a89d4"
+    ],
+    "projects": [
+      "functional_dark_matter",
+      "module_conservation"
+    ],
+    "question": "Which unannotated genes matter for growth, and which can fitness modules capture?",
+    "relation": "one measures what the other cannot",
+    "sentence": "One project counted unannotated bacterial genes that are important or essential for growth, including genes with no viable insertion mutants. The other found no essential genes in any fitness module, since those genes lack fitness data.",
+    "title": "Unannotated genes matter for growth, yet fitness modules cannot include essential ones",
+    "topics": [
+      "functional-dark-matter-and-annotation-resolution",
+      "gene-essentiality-and-perturbation-assay-validity",
+      "gene-fitness-landscapes-and-cofitness-modules",
+      "pangenome-structure-and-genome-evolution",
+      "sampling-coverage-and-statistical-confounding"
+    ]
+  },
+  "g-0bfc35e63b": {
+    "how": "The two results report the same finding, with identical figures for RNA metabolism, motility and protein metabolism. They share an analysis or data.",
+    "input": "998270d8fdda0b047a423130a71791480e01006e0a8c3b5106bb5631ecdb15c6",
+    "lanes": {
+      "conservation_fitness_synthesis--d115e8ed": "Core-gene burden excess across functional categories",
+      "core_gene_tradeoffs--fef60979": "Core-gene burden excess in protein, motility, RNA metabolism"
+    },
+    "members": [
+      "conservation_fitness_synthesis--d115e8ed",
+      "core_gene_tradeoffs--fef60979"
+    ],
+    "projects": [
+      "conservation_fitness_synthesis",
+      "core_gene_tradeoffs"
+    ],
+    "question": "Which gene functions make core genes costly to growth in the laboratory?",
+    "relation": "same result",
+    "sentence": "Core genes, those shared across bacterial genomes, are disproportionately burdensome, meaning deleting them improved growth in laboratory tests. The excess is driven by RNA metabolism, motility and chemotaxis, and protein metabolism rather than spread evenly.",
+    "title": "Core genes carry extra growth burden in RNA, motility and protein functions",
+    "topics": [
+      "gene-essentiality-and-perturbation-assay-validity",
+      "gene-fitness-landscapes-and-cofitness-modules",
+      "laboratory-fitness-versus-natural-selection-and-gene-conservation",
+      "pangenome-structure-and-genome-evolution"
+    ]
+  },
+  "g-0ee5dd82c1": {
+    "how": "Both ask whether a gene group is less often core than its baseline, but at different scopes: resistance genes across thousands of species, and metal-fitness genes within one bacterium, DvH.",
+    "input": "512f3c464546169028137443cb4f46e9aa1a2ef9011462221446cac1cbc97099",
+    "lanes": {
+      "amr_pangenome_atlas--1e435872": "Resistance gene core share versus pangenome baseline",
+      "field_vs_lab_fitness--296eadf6": "Metal-fitness gene core share versus baseline in DvH"
+    },
+    "members": [
+      "amr_pangenome_atlas--1e435872",
+      "field_vs_lab_fitness--296eadf6"
+    ],
+    "projects": [
+      "amr_pangenome_atlas",
+      "field_vs_lab_fitness"
+    ],
+    "question": "Are resistance genes and metal-fitness genes less often core than other genes?",
+    "relation": "similar comparison, different scope",
+    "sentence": "Across thousands of species, resistance genes, including metal and stress-response ones, were less often core and more often in the variable genome. In Desulfovibrio vulgaris Hildenborough, metal-fitness genes were not clearly depleted from the core.",
+    "title": "Resistance genes are rarely core; metal-fitness genes show no clear deficit",
+    "topics": [
+      "data-infrastructure-provenance-and-research-practice",
+      "functional-dark-matter-and-annotation-resolution",
+      "gene-essentiality-and-perturbation-assay-validity",
+      "gene-fitness-landscapes-and-cofitness-modules",
+      "laboratory-fitness-versus-natural-selection-and-gene-conservation",
+      "pangenome-structure-and-genome-evolution",
+      "resistance-defense-systems-and-mobile-elements"
+    ]
+  },
+  "g-11067df239": {
+    "how": "Both projects report the same Bakta reannotation of the linked dark genes, with identical figures. The second project goes further and counts the genes that stay hypothetical under both annotations.",
+    "input": "36c052bfb4c9f5b8285ea9bba55e0d27026174d9d560ae88ce4c7dfc5a0979b8",
+    "lanes": {
+      "functional_dark_matter--edbf95bc": "Fitness Browser dark genes versus Bakta annotations",
+      "truly_dark_genes--92c362cf": "Dark genes versus Bakta; residual unexplained set"
+    },
+    "members": [
+      "functional_dark_matter--edbf95bc",
+      "truly_dark_genes--92c362cf"
+    ],
+    "projects": [
+      "functional_dark_matter",
+      "truly_dark_genes"
+    ],
+    "question": "How many unexplained genes still lack a function after modern annotation?",
+    "relation": "same result",
+    "sentence": "Re-reading thousands of previously unexplained genes with a newer annotation tool assigned a function description to most that could be linked to genome collections. This leaves a smaller set that stays unexplained under both annotations.",
+    "title": "Modern reannotation gives most unexplained bacterial genes a functional description",
+    "topics": [
+      "functional-dark-matter-and-annotation-resolution",
+      "gene-essentiality-and-perturbation-assay-validity",
+      "gene-fitness-landscapes-and-cofitness-modules",
+      "pangenome-structure-and-genome-evolution",
+      "sampling-coverage-and-statistical-confounding"
+    ]
+  },
+  "g-1666d0651d": {
+    "failed": true,
+    "input": "4a2e954c221e2026791185d37d8caf48fc0a8b107f085245f507a2029e2650e3"
+  },
+  "g-372f4b3d89": {
+    "how": "The projects make a similar comparison at different scope, with different baselines: non-essential genes in one, always-neutral genes in the others. Shared mapping and essentiality data link all three, and two report identical figures, so they share an analysis or data.",
+    "input": "cfd36da4ccaaf9718bea8b5b9ab12b2f9b915741ef6e6434d84d4d98575a0732",
+    "lanes": {
+      "conservation_fitness_synthesis--ae15e56e": "Essential versus always-neutral genes, share that are core",
+      "conservation_vs_fitness--e95508d3": "Putative essential versus non-essential genes, share core",
+      "fitness_effects_conservation--e831e5ad": "Essential versus always-neutral genes across 43 organisms"
+    },
+    "members": [
+      "conservation_fitness_synthesis--ae15e56e",
+      "conservation_vs_fitness--e95508d3",
+      "fitness_effects_conservation--e831e5ad"
+    ],
+    "projects": [
+      "conservation_fitness_synthesis",
+      "conservation_vs_fitness",
+      "fitness_effects_conservation"
+    ],
+    "question": "Are genes that matter more for growth more often core in the pangenome?",
+    "relation": "similar comparison, different scope",
+    "sentence": "Three projects linked how much a gene matters for growth to how widely it is shared across genomes of a lineage. Putative essential genes were more often core than non-essential genes, and essential genes more often than always-neutral genes.",
+    "title": "Essential genes are more often core than less important genes",
+    "topics": [
+      "gene-essentiality-and-perturbation-assay-validity",
+      "gene-fitness-landscapes-and-cofitness-modules",
+      "laboratory-fitness-versus-natural-selection-and-gene-conservation",
+      "pangenome-structure-and-genome-evolution"
+    ]
+  },
+  "g-72550828cb": {
+    "how": "These results report the same finding: condition-specific fitness genes are not preferentially accessory. The synthesis project draws on the fitness and conservation data analysed in the fitness-effects project, so the results share an analysis or data.",
+    "input": "fe5cca51bf4a6e2017adf8d7e91b5b7539e9d01fbf07b6328251b51d0f4ba8fa",
+    "lanes": {
+      "conservation_fitness_synthesis--0c074210": "Condition-specific fitness effects versus core or accessory status",
+      "fitness_effects_conservation--13498333": "Condition-specific genes against the expectation they are accessory",
+      "fitness_effects_conservation--ae67b7f2": "Core share with versus without specific phenotypes"
+    },
+    "members": [
+      "conservation_fitness_synthesis--0c074210",
+      "fitness_effects_conservation--13498333",
+      "fitness_effects_conservation--ae67b7f2"
+    ],
+    "projects": [
+      "conservation_fitness_synthesis",
+      "fitness_effects_conservation"
+    ],
+    "question": "Are genes with condition-specific fitness effects mostly accessory in the pangenome?",
+    "relation": "same result",
+    "sentence": "Genes that matter strongly under particular growth conditions are found more often in the core genome than other genes, not in the accessory genome. Condition-specific therefore does not mean niche-specific.",
+    "title": "Genes with condition-specific fitness effects are more often core than accessory",
+    "topics": [
+      "gene-essentiality-and-perturbation-assay-validity",
+      "gene-fitness-landscapes-and-cofitness-modules",
+      "laboratory-fitness-versus-natural-selection-and-gene-conservation",
+      "pangenome-structure-and-genome-evolution"
+    ]
+  },
+  "g-7762ddbf53": {
+    "how": "This is a similar comparison at a different scope. Both split metal-important genes by overlap with non-metal stress, using different stress baselines and different organism sets.",
+    "input": "e81fa2bdd0b911d82afa1a2853618280e8ace6b99cdca9edf3e12f277bb84421",
+    "lanes": {
+      "counter_ion_effects--5a2d3c21": "Metal-important genes also important under NaCl stress",
+      "metal_specificity--0f40573a": "Metal-important genes versus many non-metal experiments"
+    },
+    "members": [
+      "counter_ion_effects--5a2d3c21",
+      "metal_specificity--0f40573a"
+    ],
+    "projects": [
+      "counter_ion_effects",
+      "metal_specificity"
+    ],
+    "question": "How many metal-important genes matter mainly for metals rather than other stresses?",
+    "relation": "similar comparison, different scope",
+    "sentence": "Two projects split metal-important genes by whether they also matter under non-metal stress. One found a large share also matter under NaCl stress; the other found just over half are metal-specific, rarely showing fitness defects in non-metal experiments.",
+    "title": "Many metal-important genes also matter under salt stress; others are metal-specific",
+    "topics": [
+      "gene-essentiality-and-perturbation-assay-validity",
+      "gene-fitness-landscapes-and-cofitness-modules",
+      "laboratory-fitness-versus-natural-selection-and-gene-conservation",
+      "resistance-defense-systems-and-mobile-elements"
+    ]
+  },
+  "g-bed7b52b93": {
+    "failed": true,
+    "input": "b97e07280667e55234f4c6ff48a0fd0b774cdb5dd9d7c671a5136443e1d8efde"
+  },
+  "g-c47e07c21c": {
+    "how": "These are similar comparisons of latent and active pathways at different scope: one splits pathways by category, one asks whether latent pathways are less conserved, and one tallies seven model organisms.",
+    "input": "16d7321a7515e85d00a19e60a261efc84b2bed4f6adad59712038f0e48d9cb92",
+    "lanes": {
+      "metabolic_capability_dependency--88a382b0": "Latent versus active share by pathway category",
+      "metabolic_capability_dependency--b6cd74ee": "Conservation of latent versus active pathways",
+      "pathway_capability_dependency--250e9510": "Dependency classes across seven model organisms"
+    },
+    "members": [
+      "metabolic_capability_dependency--88a382b0",
+      "metabolic_capability_dependency--b6cd74ee",
+      "pathway_capability_dependency--250e9510"
+    ],
+    "projects": [
+      "metabolic_capability_dependency",
+      "pathway_capability_dependency"
+    ],
+    "question": "How often are complete metabolic pathways latent rather than needed for fitness?",
+    "relation": "similar comparison, different scope",
+    "sentence": "Many genomically complete pathways showed no fitness importance under the conditions measured, more often for carbon-source use than for amino acid synthesis. Latent pathways showed slightly higher mean conservation than active ones, not lower as predicted.",
+    "title": "Complete metabolic pathways are often latent, most of all for carbon-source use",
+    "topics": [
+      "ecotypes-and-environmental-gene-content-differentiation",
+      "gene-fitness-landscapes-and-cofitness-modules",
+      "laboratory-fitness-versus-natural-selection-and-gene-conservation",
+      "metabolic-models-and-pathway-level-evidence",
+      "metabolic-traits-auxotrophy-and-community-dependence",
+      "pangenome-structure-and-genome-evolution"
+    ]
+  },
+  "g-d1a6fa579d": {
+    "how": "Both results point the same direction but define groups differently. One calls genes metal-specific when important for exactly one metal, versus general-stress genes; the other defines them by fitness defects under metals with a low sick rate under non-metal conditions, versus general-sick genes.",
+    "input": "a7c177ac227616bc0e16ab7dbaeb4485a1761bf3ebfaff11e7227bcc6c924249",
+    "lanes": {
+      "metal_cross_resistance--fdba2abe": "Core share: general-stress, multi-metal, single-metal gene tiers",
+      "metal_specificity--fed6dcbd": "Core enrichment: metal-specific versus general-sick genes"
+    },
+    "members": [
+      "metal_cross_resistance--fdba2abe",
+      "metal_specificity--fed6dcbd"
+    ],
+    "projects": [
+      "metal_cross_resistance",
+      "metal_specificity"
+    ],
+    "question": "Are metal-specific genes less often core than genes important under general stress?",
+    "relation": "same direction, different definitions",
+    "sentence": "Two projects find that genes tied to particular metals are less often part of the core genome than genes important across many stresses. One adds a middle tier of genes important for two or more metals, which sits in between.",
+    "title": "Metal-specific genes are less often core than general-stress genes in two projects",
+    "topics": [
+      "gene-essentiality-and-perturbation-assay-validity",
+      "gene-fitness-landscapes-and-cofitness-modules",
+      "pangenome-structure-and-genome-evolution",
+      "resistance-defense-systems-and-mobile-elements"
+    ]
+  }
+}

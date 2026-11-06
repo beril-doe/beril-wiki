@@ -1,0 +1,1180 @@
+{
+  "candidates": {
+    "pair:amr_environmental_resistome--96de8ae3|amr_pangenome_atlas--b878500b": {
+      "input": "7a1ac1552c57e00094a9a4d2cfaa3b86650d0bb4256d2e718ca784701522410f",
+      "label": "",
+      "relation": "not the same question"
+    },
+    "pair:amr_fitness_cost--95a8021f|amr_strain_variation--e349ed14": {
+      "input": "19f02561f40336407cdf372c9b5a65456bfad613ec511b534ed805cf6ec90882",
+      "label": "",
+      "relation": "not the same question"
+    },
+    "pair:amr_pangenome_atlas--1e435872|field_vs_lab_fitness--296eadf6": {
+      "input": "e62b186a473f982894070dc081d9ba17e82374110a67b89b559376c19e1eb90e",
+      "label": "Resistance genes compared with pangenome baseline across thousands of species; metal-fitness genes in one bacterium, DvH.",
+      "relation": "similar comparison, different scope"
+    },
+    "pair:amr_pangenome_atlas--b878500b|prophage_amr_comobilization--02e63b0a": {
+      "input": "13a22c86f2c35a9a3222fcb0394d30eb959bc3c84e1d5ff354f84354e630b3aa",
+      "label": "",
+      "relation": "not the same question"
+    },
+    "pair:bacdive_metal_validation--09db2bda|field_vs_lab_fitness--296eadf6": {
+      "input": "28a8e4a402b6d87cff4c1f25a0bfdfd270d4a7c8738d12b772bb5d5fd2b9cc43",
+      "label": "",
+      "relation": "not the same question"
+    },
+    "pair:bacdive_metal_validation--894e1826|ecotype_analysis--aa4707c1": {
+      "input": "07bdee26bfc715f37c5ad10eba07374b15f6b31cde090c5856267008e15c93cd",
+      "label": "",
+      "relation": "not the same question"
+    },
+    "pair:bacillota_b_subsurface_accessory--0b68d03d|clay_confined_subsurface--eb9811c0": {
+      "input": "0c952d3aab8e6eca308e5016941745ab8f364065581caf1e573368bee603aa26",
+      "label": "",
+      "relation": "not the same question"
+    },
+    "pair:bacillota_b_subsurface_accessory--bbe885ea|clay_confined_subsurface--208cd800": {
+      "input": "c267fe9b076fa7fdc2cc06f2270c8691aefba909c336f48715b9b340f29b32f2",
+      "label": "Both find the corrected iron-reduction marker removes the earlier shallow-over-deep clay pattern.",
+      "relation": "same result"
+    },
+    "pair:bacillota_b_subsurface_accessory--f9a4cc6b|clay_confined_subsurface--208cd800": {
+      "input": "9d532cad01eea86b43e0fbfe80751350c5c6a79dc90d6c6bf2a7ab1130928950",
+      "label": "",
+      "relation": "not the same question"
+    },
+    "pair:conservation_fitness_synthesis--0c074210|fitness_effects_conservation--13498333": {
+      "input": "41fcd4811b7c282125e991327f41010df4dcda25e3493b2d744bac7da3d532b4",
+      "label": "Both report that genes with condition-specific fitness effects are not preferentially accessory in the pangenome.",
+      "relation": "same result"
+    },
+    "pair:conservation_fitness_synthesis--0c074210|fitness_effects_conservation--ae67b7f2": {
+      "input": "2dacfed59c2dec0b3d3df1bbfb55d788d003517b26bd47485c5e88a2ac025a96",
+      "label": "Both report that genes with strong condition-specific fitness effects are more often core than other genes.",
+      "relation": "same result"
+    },
+    "pair:conservation_fitness_synthesis--ae15e56e|fitness_effects_conservation--e831e5ad": {
+      "input": "34a26d36d7f021aca5b1827e3aa61d37487470a01d92f8099a3ff8d1ef588eb9",
+      "label": "Both describe essential genes as more often core than always-neutral genes, a modest gradient.",
+      "relation": "same result"
+    },
+    "pair:conservation_fitness_synthesis--d115e8ed|core_gene_tradeoffs--fef60979": {
+      "input": "e528a97f9b3f88dcee0513fa76d54dde4563cbf1eaa013b63c344bd4fd26050c",
+      "label": "Both report the same excess burden of core genes in protein, motility and RNA metabolism.",
+      "relation": "same result"
+    },
+    "pair:conservation_vs_fitness--0144bf06|essential_metabolome--b64bf8d6": {
+      "input": "9a4e0b9da97ed35683c9c5afc14c84b12c75fcbdff78077e6384faba476f3034",
+      "label": "",
+      "relation": "not the same question"
+    },
+    "pair:conservation_vs_fitness--e95508d3|fitness_effects_conservation--e831e5ad": {
+      "input": "429b06c4c84462209a544c93bed4d7921bfd1e3e89a27c175b0e9930c8cbdb92",
+      "label": "Core share of essential genes compared against different baselines: non-essential genes here, always-neutral genes there.",
+      "relation": "similar comparison, different scope"
+    },
+    "pair:costly_dispensable_genes--7f8211ca|fitness_effects_conservation--ae67b7f2": {
+      "input": "f465d5166ba5c44cf1c248d18004546866684a0f18b4926d2e650473b3456735",
+      "label": "",
+      "relation": "not the same question"
+    },
+    "pair:counter_ion_effects--5a2d3c21|metal_cross_resistance--fdba2abe": {
+      "input": "7c62f9725b6be865a4e1143c8f66102403e9c897403b06373cc7abec15241032",
+      "label": "",
+      "relation": "not the same question"
+    },
+    "pair:counter_ion_effects--5a2d3c21|metal_specificity--0f40573a": {
+      "input": "abdcbe8fe71949eefdc8e01cbd700ad761e900b848e122993efc33354a880ab0",
+      "label": "Both split metal-important genes by overlap with non-metal stress, using different stress baselines and organism sets.",
+      "relation": "similar comparison, different scope"
+    },
+    "pair:ecotype_analysis--9366534f|ecotype_env_reanalysis--82307b2c": {
+      "input": "0be1b55a0ba92eb6b3bf25544d171ded8dd7e6707cd9bd83661186b9e534cff0",
+      "label": "Species-level environment effect on gene content, then retested by comparing environmental versus human-associated species.",
+      "relation": "one extends the other"
+    },
+    "pair:ecotype_analysis--aa4707c1|pseudomonas_carbon_ecology--eb1d58ae": {
+      "input": "9e5a36ed1b8321738ce5ee034ac61cbae04362e127dfd554d09ecc9fed6f899c",
+      "label": "",
+      "relation": "not the same question"
+    },
+    "pair:ecotype_analysis--d8dfb23b|ecotype_env_reanalysis--82307b2c": {
+      "input": "4909739bf36bce06db6fe6648e4f59a09ddd6b93d5deeeb83735c99da6c274a2",
+      "label": "Phylogeny-over-environment conclusion, followed by a reanalysis comparing environmental and human-associated species.",
+      "relation": "one extends the other"
+    },
+    "pair:essential_metabolome--6a696123|metabolic_capability_dependency--88a382b0": {
+      "input": "c6763b877600f8e7ae74027e5d42aee388ce5d4c54f0540d377a4ea06d167e8b",
+      "label": "",
+      "relation": "not the same question"
+    },
+    "pair:essential_metabolome--6a696123|nmdc_community_metabolic_ecology--dcef6254": {
+      "input": "bc9b5579512effb8e9a705ca462a99d6371027fb30d03d01918bb06a7adbbe31",
+      "label": "",
+      "relation": "not the same question"
+    },
+    "pair:field_vs_lab_fitness--73215ec1|metal_specificity--83d867cf": {
+      "input": "8d2adb62ed558e845e6f65911b594e781ba0dfe3e262549e984271f0a0eb7b72",
+      "label": "",
+      "relation": "not the same question"
+    },
+    "pair:fitness_modules--c9df945b|module_conservation--ef29c9c3": {
+      "input": "d7a00ec4ffe9f4faacc3e03a1cab040b7e9775d1de5d79bda3ac34d855a30985",
+      "label": "Counts organism breadth of module families; separately tests whether broader families are more core.",
+      "relation": "one extends the other"
+    },
+    "pair:functional_dark_matter--1e0e1f03|module_conservation--1e6a89d4": {
+      "input": "9f9d0652e8416ca5e9198f2ff07c991b9e5a8976662698799a6b91ac6dd8217f",
+      "label": "Dark-gene survey includes essential genes lacking insertion mutants; module analysis cannot see them without fitness data.",
+      "relation": "one measures what the other cannot"
+    },
+    "pair:functional_dark_matter--edbf95bc|truly_dark_genes--92c362cf": {
+      "input": "b3300c4449e5bfbdac10ee2a09bcb68ed54481d1f68673c7019d17d459cdba16",
+      "label": "Same bakta reannotation of linked dark genes; one also reports the residual truly dark set.",
+      "relation": "same result"
+    },
+    "pair:metabolic_capability_dependency--88a382b0|pathway_capability_dependency--250e9510": {
+      "input": "2f430b72acff0ec3180dfb9e8ae1cc4e71c1e9cdec831fd35d6d4db3be639b35",
+      "label": "Latent versus active pathways: one splits by pathway category, the other tallies seven model organisms.",
+      "relation": "similar comparison, different scope"
+    },
+    "pair:metabolic_capability_dependency--b6cd74ee|pathway_capability_dependency--250e9510": {
+      "input": "366f4292710742c5fdad194b5e8d90e7f7b5eb5ecf19eebb9e0f60691d5c6300",
+      "label": "One tallies latent versus active pathways; the other tests whether latent pathways are less conserved.",
+      "relation": "one extends the other"
+    },
+    "pair:metal_cross_resistance--fdba2abe|metal_specificity--0f40573a": {
+      "input": "fad890acf472d2a94e39cda4688467a6d29e58937b31daa560cfef72a2a5aa03",
+      "label": "",
+      "relation": "not the same question"
+    },
+    "pair:metal_cross_resistance--fdba2abe|metal_specificity--fed6dcbd": {
+      "input": "6722697473b9bd61d7e67c5605202c33d1742bbdd560a19676c13967f9660495",
+      "label": "Metal-specific genes are less core-conserved in both, but against different comparison groups: general-stress versus general-sick genes.",
+      "relation": "same direction, different definitions"
+    },
+    "pair:metal_resistance_global_biogeography--9181c949|soil_metal_functional_genomics--becb7d4e": {
+      "input": "bb34f048defb42585987e28fb7416e53c1748e308b35b598af99d790d242214d",
+      "label": "",
+      "relation": "not the same question"
+    },
+    "ref:adp1_triple_essentiality>acinetobacter_adp1_explorer": {
+      "input": "586a48f32ca49a597a8cd2e357e2e6e526e294fdcbc2ccd7674785cc831e1179",
+      "label": "Takes knockout essentiality calls from the database originally assembled in this project's data explorer.",
+      "relation": "uses its data or methods"
+    },
+    "ref:amr_cofitness_networks>amr_fitness_cost": {
+      "input": "d7ca2933e59214f88ad45528fe670b5aeb9b3c9a9ae8d8168c709817ca45a8a2",
+      "label": "Uses its AMR gene catalog and per-gene fitness costs; explains its conservation-versus-cost puzzle.",
+      "relation": "uses its data or methods"
+    },
+    "ref:amr_cofitness_networks>conservation_vs_fitness": {
+      "input": "8c91f0f662652a97d2e3d17b680b9377d027c4e6929eb4aa0d361ca10f6b16a4",
+      "label": "Uses its table linking Fitness Browser genes to pangenome clusters.",
+      "relation": "uses its data or methods"
+    },
+    "ref:amr_cofitness_networks>fitness_modules": {
+      "input": "155f7e726a7cb22a23bf1f0dbda439be4923f09b633a12e997e198e8c61f89f0",
+      "label": "Uses its ICA module membership, module families and cached fitness matrices for AMR genes.",
+      "relation": "uses its data or methods"
+    },
+    "ref:amr_environmental_resistome>amr_fitness_cost": {
+      "input": "2d42e8c33619e86fd6bc91b59994dcd3a24f186ed45350da14ad670df5d128cc",
+      "label": "Relates its mechanism-and-conservation pattern to ecology; a combined analysis is only proposed.",
+      "relation": "compares with its results"
+    },
+    "ref:amr_fitness_cost>conservation_vs_fitness": {
+      "input": "13271a2c6373b5d11507bcfe112946a86c8649cfe90f88bffad79ea2ae39a169",
+      "label": "Uses its gene-to-pangenome-cluster link table to connect Fitness Browser genes to pangenome clusters.",
+      "relation": "uses its data or methods"
+    },
+    "ref:amr_fitness_cost>fitness_effects_conservation": {
+      "input": "74c122a80882e335ff8463cd598ae65ffcf1b6cf4402ebca30caee8a64daac59",
+      "label": "Compares the share of AMR genes missing from fitness matrices with that project's background essential-gene rate.",
+      "relation": "compares with its results"
+    },
+    "ref:amr_fitness_cost>fitness_modules": {
+      "input": "344e48a037695922083d7a12d4b3cf672184454a466f5cd0a6ddb54b26bcbdac",
+      "label": "Uses its pre-cached fitness matrices as input data.",
+      "relation": "uses its data or methods"
+    },
+    "ref:amr_fitness_cost>metal_fitness_atlas": {
+      "input": "4ae068ea335b721be37d83bf7c26ab22745bef4158f1e7600f782f8bd7b336f9",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:amr_pangenome_atlas>core_gene_tradeoffs": {
+      "input": "3b763b04f791cdb47cee6f328944bbc05ee9111ed545578df719658c23e1b846",
+      "label": "Relates intrinsic AMR genes' fitness neutrality to its core-gene burden finding, as an exception",
+      "relation": "compares with its results"
+    },
+    "ref:amr_pangenome_atlas>pangenome_openness": {
+      "input": "2f0ed5a7ad5058d34ad64b48bf50115c178bd92cfe52eeaf19bc23c36cd0a180",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:amr_strain_variation>ecotype_analysis": {
+      "failed": true,
+      "input": "603f499f7ce03cc358dd1d8af9a83eae0939d738b00938d32b8b7378ff091e21"
+    },
+    "ref:amr_strain_variation>pangenome_openness": {
+      "failed": true,
+      "input": "b89ae93f6bd268dde1da24833aa56452b00d949aab30c43a7fe9b9d08bd6494b"
+    },
+    "ref:aromatic_catabolism_network>adp1_deletion_phenotypes": {
+      "input": "d96c7e9020790978745405c678746d3b52d0d5cd2c00b5e2201c907d24c2b47d",
+      "label": "Notes PQQ biosynthesis genes also appear glucose-specific there, so PQQ dependency is shared with glucose catabolism.",
+      "relation": "compares with its results"
+    },
+    "ref:bacdive_metal_validation>lab_field_ecology": {
+      "input": "dce15233e200383fa8f555592da63e05f973569bb66173651a830471ff4a14eb",
+      "label": "Contrasts its own BacDive-based metal tolerance result with this project's weaker Oak Ridge lab-to-field correlation.",
+      "relation": "compares with its results"
+    },
+    "ref:bacdive_metal_validation>metal_fitness_atlas": {
+      "input": "684c39aa66d5af859d45175b7724d479a5d926203cda04ba2523db28f766daa8",
+      "label": "Tests this atlas's genome-based metal tolerance score against isolation environments from BacDive.",
+      "relation": "uses its data or methods"
+    },
+    "ref:bacdive_metal_validation>metal_specificity": {
+      "input": "e8580d202a55bd09573e2f48c7bf2ff7109719da785e2d8b608dcc8efa010e6d",
+      "label": "Reconciles its finding that metal tolerance genes are mostly core with the isolation-environment signal found here.",
+      "relation": "compares with its results"
+    },
+    "ref:bacdive_phenotype_metal_tolerance>metal_fitness_atlas": {
+      "input": "7d284e5bb71ec0360945a56ae1857ffb9b0c4213afb96b116cfbfb5b2e11635d",
+      "label": "Uses its genome-based metal tolerance scores and metal gene counts to test BacDive phenotypes.",
+      "relation": "uses its data or methods"
+    },
+    "ref:bacillota_b_subsurface_accessory>clay_confined_subsurface": {
+      "input": "1f9b2ba3e7a869b5f4ff578900eb37a8e47f896b41fbaff14b18cc68df527d10",
+      "label": "Finds the clay project's iron-reduction analysis used mismatched gene IDs; supplies corrected rates.",
+      "relation": "corrects it"
+    },
+    "ref:bacillota_b_subsurface_accessory>plant_microbiome_ecotypes": {
+      "input": "f9d95d783d3d5d9c40681dd5b5ea69d1acda7734a61bca0992b15c1d3a7f087a",
+      "label": "Applies the documented warning that PF14537 is silently absent, so relies on heme-motif counting.",
+      "relation": "applies its warning"
+    },
+    "ref:berdl_data_atlas>cf_formulation_design": {
+      "input": "f405906303b7b50bf244afa577861d6f252369ac6e9eb4ad9d2fa04dd8bca5d9",
+      "label": "Names the cystic fibrosis formulation project as an existing bridge across programs, as an example.",
+      "relation": "lists it as a reference only"
+    },
+    "ref:berdl_data_atlas>ibd_phage_targeting": {
+      "input": "d6faa67c14027281874bc0a25e8f97ba8502dd1087c2ef9f8ca4ce23e070b856",
+      "label": "Names the IBD phage targeting project as an existing cross-program bridge, as an example.",
+      "relation": "lists it as a reference only"
+    },
+    "ref:clay_confined_subsurface>bacillota_b_subsurface_accessory": {
+      "failed": true,
+      "input": "f6fcd4cb58b5ffc503b059f4bf8d61ddbf25f010c294ac9995d376792bd664b9"
+    },
+    "ref:cofitness_coinheritance>conservation_vs_fitness": {
+      "input": "015301ddc5f6f27f4ee51f69ba1651a1dffc92a5bc9acb9d41ca774ebe3b061b",
+      "label": "Takes its gene-to-cluster link table and SEED functional annotations as input data.",
+      "relation": "uses its data or methods"
+    },
+    "ref:cofitness_coinheritance>fitness_modules": {
+      "input": "11ab8dcb1fc093ce60a8e37bd5a5d89e65f41c46155e1d0c4cd50c234885315d",
+      "label": "Takes its ICA-derived co-regulated gene modules as input for the co-inheritance analysis.",
+      "relation": "uses its data or methods"
+    },
+    "ref:cofitness_coinheritance>module_conservation": {
+      "input": "b4febf40dc67096a21f9219f3ad0075328119f20feb743ea5a3db462f2afe30f",
+      "label": "Uses its module conservation results, including the accessory modules, as input data.",
+      "relation": "uses its data or methods"
+    },
+    "ref:conservation_fitness_synthesis>conservation_vs_fitness": {
+      "input": "84b23860fb4e57801b5d0d409076a8a6e8752344bacffac800646c012808f135",
+      "label": "Takes per-gene fitness summaries from this project's data folder as upstream input to the synthesis.",
+      "relation": "uses its data or methods"
+    },
+    "ref:conservation_fitness_synthesis>costly_dispensable_genes": {
+      "input": "3b2d812e07e9beaad7aba4a1aacb5881e6f5855347e8bf76c1af9e3cb9298142",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:conservation_fitness_synthesis>fitness_effects_conservation": {
+      "input": "bba867a2de32708e0466121ec699db30a4f1c6a338eb211b9d0fa1bcba14e79f",
+      "label": "Takes per-gene fitness summaries from this project's data folder as upstream input to the synthesis.",
+      "relation": "uses its data or methods"
+    },
+    "ref:conservation_fitness_synthesis>fitness_modules": {
+      "input": "ea300a29717ba0226cff7db0b27c97126d4bc68bd09cee55f692c904fc1cc472",
+      "label": "Reports its fitness modules and tests how enriched they are in core genes.",
+      "relation": "uses its data or methods"
+    },
+    "ref:conservation_vs_fitness>essential_genome": {
+      "input": "9cc877daf8a7b3509ddee34c00e568f5904c428d9338ac9e2299c9108868c514",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:core_gene_tradeoffs>conservation_vs_fitness": {
+      "input": "3ce0413d99bb0cd281f10aa4064787e1e83e9ab4c7d76054a70cba80f7a7fe31",
+      "label": "Takes its gene-to-pangenome-cluster link table and SEED functional annotations as input data.",
+      "relation": "uses its data or methods"
+    },
+    "ref:core_gene_tradeoffs>fitness_effects_conservation": {
+      "input": "6bca0d4216a33da916e7b09eb06c2764a9469a552b7b2e451cd6db74694f09d9",
+      "label": "Takes its per-gene fitness summary table as an input data file.",
+      "relation": "uses its data or methods"
+    },
+    "ref:counter_ion_effects>fitness_modules": {
+      "input": "4723ee8a0a853b2fe4d34ec4ee8c89d581468bda409e8900c42126f7e850a118",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:counter_ion_effects>metal_fitness_atlas": {
+      "input": "4fe61f7b90dc8c07814f9235189bbb4b6c8255688e3ed70a260c480de2ea31fd",
+      "label": "Re-analyzes the atlas after removing shared-stress genes to test whether its core enrichment survives the correction.",
+      "relation": "audits it"
+    },
+    "ref:ecotype_env_reanalysis>ecotype_analysis": {
+      "input": "dccdd4a2e8cdbafe6f8ccb9497c4282775eb1c3d7aaa5002bf859d5042dbeed7",
+      "label": "Re-runs the original ecotype analysis with genome-level environment labels and contrasts its correlations and null result.",
+      "relation": "compares with its results"
+    },
+    "ref:ecotype_env_reanalysis>env_embedding_explorer": {
+      "input": "8f44dfbf1aedd9a5a7ee180a06238cc06e1bebc99d292e85f4e691c08741caa9",
+      "label": "Uses its harmonized genome-level environment categories and builds on its finding of clinical sampling bias.",
+      "relation": "uses its data or methods"
+    },
+    "ref:ecotype_functional_differentiation>cog_analysis": {
+      "input": "0e5746774c3e6d6d5a41075b22f319b4ce4133fb0ba62b3980a3015d521df756",
+      "label": "Contrasts its within-accessory function results with the earlier core-versus-accessory analysis, noting a shared mobile-element pattern.",
+      "relation": "compares with its results"
+    },
+    "ref:ecotype_functional_differentiation>ecotype_analysis": {
+      "input": "c1326a318d59c4e7c5ccfd6bc0b9401337a15a38ace45e54c3957cdc21697af6",
+      "label": "Cites the earlier ecotype analysis as prior work on within-species gene-content subpopulations.",
+      "relation": "lists it as a reference only"
+    },
+    "ref:env_embedding_explorer>ecotype_analysis": {
+      "input": "15b66abfc26be6b570b53b3784a6dc1d2b16c63c8f950ca493958b99f7e0d096",
+      "label": "Cites its weak environment\u2013gene content finding, suggests clinical bias may explain it, proposes environmental-only rerun.",
+      "relation": "compares with its results"
+    },
+    "ref:essential_genome>conservation_vs_fitness": {
+      "input": "f4587c93ac5c8c8231d3a71519aeb124fd711f2422cdf428cca663bc41e5180a",
+      "label": "Uses its fitness-to-pangenome link table for gene-to-cluster conservation mapping, and its SEED annotations for functional categories.",
+      "relation": "uses its data or methods"
+    },
+    "ref:essential_genome>fitness_modules": {
+      "input": "d24cd9551cca0e79672951b229addcc79e92dbc5c94144a86d6da849b5c2554d",
+      "label": "Uses its ICA fitness modules and module families to predict functions for hypothetical essential genes.",
+      "relation": "uses its data or methods"
+    },
+    "ref:essential_metabolome>essential_genome": {
+      "input": "b41c4b592d12cdc5c048ecf534b473317703b97dc7ec88c8756a0267739abb10",
+      "label": "Takes its list of universally essential gene families as input for the pathway analysis.",
+      "relation": "uses its data or methods"
+    },
+    "ref:field_vs_lab_fitness>fitness_modules": {
+      "input": "cd83316b86c9e5e5e6c36601c29079ddd9a207238f05aa03a6a38d134b037094",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:field_vs_lab_fitness>module_conservation": {
+      "input": "e1800496b99b41e73048a336dd3f8b92f678c2733b335e4479c0a571f024d933",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:fitness_effects_conservation>conservation_vs_fitness": {
+      "input": "da0abcd26688be95ab19604fd1474cc1c71a5178a9ac834531e69c96d504a3c1",
+      "label": "Draws on its gene-to-pangenome link table and essential-gene classification as input data files.",
+      "relation": "uses its data or methods"
+    },
+    "ref:functional_dark_matter>conservation_vs_fitness": {
+      "input": "b60f88511807731aa4f649c4462aad2207f032821b9e8439c07b1e191b0c4e38",
+      "label": "Draws pangenome links for dark genes from this project and folds them into the census.",
+      "relation": "uses its data or methods"
+    },
+    "ref:functional_dark_matter>essential_genome": {
+      "input": "26fb49f05e3113bc861f10d1107583719ac1415b94d6fa75da73c5a519614600",
+      "label": "Folds this project's essential-gene results into the single dark-gene census table.",
+      "relation": "uses its data or methods"
+    },
+    "ref:functional_dark_matter>fitness_modules": {
+      "input": "ec997ffdb08d898e041985ff04e01743d64297e421041be42914bbb65047bb1f",
+      "label": "Takes ICA fitness modules and guilt-by-association function predictions for dark genes from this project.",
+      "relation": "uses its data or methods"
+    },
+    "ref:functional_dark_matter>module_conservation": {
+      "input": "fdc5f44a055f89a16ae32aef564805fd96a6a57ae9977f8466fae31502d1a852",
+      "label": "Folds this project's module conservation results into the combined dark-gene census table.",
+      "relation": "uses its data or methods"
+    },
+    "ref:gene_function_ecological_agora>pangenome_openness": {
+      "input": "14b520b155066e71b1724fc841b3c4944bf85c58c9123a11fe0039a8a8948794",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:gene_function_ecological_agora>plant_microbiome_ecotypes": {
+      "input": "08fa54d99040e70640fb677ce04fc6814178ad0f19bd3a1c4d98bb715b7feb54",
+      "label": "Checked its warning about missing marker Pfams in bakta; problem recurred, so used InterProScan.",
+      "relation": "applies its warning"
+    },
+    "ref:ibd_phage_targeting>ecotype_analysis": {
+      "input": "59c5bdc0c7fb76fd95859804f53debe6d07953c85fdf49bdad455e71245b0977",
+      "label": "Finds under a confound-free design that the ecotype project's within-ecotype analysis pointed the opposite way.",
+      "relation": "corrects it"
+    },
+    "ref:lab_field_ecology>conservation_vs_fitness": {
+      "input": "f146e48a7dcea4f15fb984800c9ee54186f5a33a20593498119cfdf1b9eb5d29",
+      "label": "Draws on its organism mapping and gene-to-pangenome link tables as input data files.",
+      "relation": "uses its data or methods"
+    },
+    "ref:lab_field_ecology>costly_dispensable_genes": {
+      "input": "e1ef64c813692324050fdcf4ef2ddcae0f8cd8ac257de76fface459b1e1ae1de",
+      "label": "Sets its accessory-genome metal resistance gene finding beside Oak Ridge literature results, noting a parallel.",
+      "relation": "compares with its results"
+    },
+    "ref:lab_field_ecology>fitness_effects_conservation": {
+      "input": "e20b787b17ca531600d87530a28c3f18bf0c91075d3b069d4956ef65314b2987",
+      "label": "Takes its per-gene fitness table across 43 organisms as an input data file.",
+      "relation": "uses its data or methods"
+    },
+    "ref:lanthanide_methylotrophy_atlas>metal_fitness_atlas": {
+      "input": "081f7881f3ba956a57d93b2aab53a960afe7da855e9d7acc8d5eb67e62f66f05",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:metabolic_capability_dependency>ecotype_analysis": {
+      "input": "9371884fd032d19f2410c5dc9dc10057fb0df9b32b2532929ff84496dfb9e6a7",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:metabolic_capability_dependency>pangenome_openness": {
+      "input": "98b493d491bdbd9924910131f547b4a36b1dd40e817997ea534501e1e52b1a16",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:metal_cross_resistance>bacdive_metal_validation": {
+      "input": "bfccac540f21b62163dddc9008686fa8a37a585962c0fe404a2608b29de1de99",
+      "label": "Explains its null result using that project's finding that metal tolerance prediction needs pangenome-scale data.",
+      "relation": "applies its warning"
+    },
+    "ref:metal_cross_resistance>counter_ion_effects": {
+      "input": "0eb06a3f2f05306f5c8dc3a973155d071ee30b884a3de7517aca3510e9d60c2c",
+      "label": "Compares its metal-metal correlation grouping with that project's metal-NaCl hierarchy following toxicity mechanism.",
+      "relation": "compares with its results"
+    },
+    "ref:metal_cross_resistance>fitness_modules": {
+      "input": "d088d6c3d5fb6207890df81ebe5b88253c646c3757940c8dd72e757bbf3fbeb4",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:metal_cross_resistance>metal_fitness_atlas": {
+      "input": "80eb7ec3031240d3318bd796f172d34f447a883192cd0d68f81172302a1efe2e",
+      "label": "Compares its core-gene fractions across metal gene classes with the Atlas's 87.4% core figure.",
+      "relation": "compares with its results"
+    },
+    "ref:metal_fitness_atlas>field_vs_lab_fitness": {
+      "input": "5be1b42e929abe33904613dab84f9f4ffae5cdb909228de0bc1446a9d30394c1",
+      "label": "Explains earlier Desulfovibrio result of least-conserved metal genes by its narrower condition-specific gene definition.",
+      "relation": "compares with its results"
+    },
+    "ref:metal_fitness_atlas>metal_specificity": {
+      "input": "b6eadf0e52e030cb88ba675229f83c37fdef7a714c0a7b68c27439f24ec0acde",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:metal_fitness_atlas>module_conservation": {
+      "input": "34da3d84804021c7f0bac5f55c5224d4f875963b4d55fa126d18b86192fccf28",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:metal_specificity>counter_ion_effects": {
+      "input": "84c04c99ec8892a0d6f5addb99c0a3d603696ec7e43b61dec71c09034f099d43",
+      "label": "Compares its osmotic-stress overlap with that project's NaCl overlap, attributing the gap mainly to differing thresholds.",
+      "relation": "compares with its results"
+    },
+    "ref:metal_specificity>metal_fitness_atlas": {
+      "input": "379d2398433a23b399c02a7f1b902267d868443eebafdc7135efa061d18320f6",
+      "label": "Listed among observatory references; no use of its data or results is shown in these lines.",
+      "relation": "lists it as a reference only"
+    },
+    "ref:microbeatlas_metal_ecology>pangenome_openness": {
+      "input": "d167684486a9a439874807f1cc196acce8dc2bbf966ade10ece5f31aa04681d4",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:module_conservation>conservation_vs_fitness": {
+      "input": "111a509edf1f381b814bd9470ce191ee28b6329921f1cdbe8df98b4eb4c3881e",
+      "label": "Uses its gene-to-pangenome-cluster link table and essential-gene classification as inputs for the conservation analysis.",
+      "relation": "uses its data or methods"
+    },
+    "ref:module_conservation>fitness_modules": {
+      "input": "6d295368b5fd197d172c8ec38f19a6d54daa5a1a75eff2d1fea95e94e8332696",
+      "label": "Builds on its ICA fitness modules and module families, testing where they fall in the pangenome.",
+      "relation": "uses its data or methods"
+    },
+    "ref:nmdc_context_audit>berdl_data_atlas": {
+      "input": "a87c4dceba03b4d898c9585621e210a0e8d7c9ac9cfd501c9df15f5d3906a781",
+      "label": "Flags its tagging of Rhea/GO reference ontologies as NMDC integrated; recommends retagging them as external reference.",
+      "relation": "audits it"
+    },
+    "ref:pangenome_openness>ecotype_analysis": {
+      "failed": true,
+      "input": "45b5f39e331eb2b2bb261e7269b89a46662178714b6abce4a8e69e6a71572bc5"
+    },
+    "ref:pathway_capability_dependency>cofitness_coinheritance": {
+      "input": "d224f176c065f8970f3fad67d2a7926edddbb2171fbd3832f600d9250fd370b3",
+      "label": "Cites its co-inheritance with co-fitness result to justify aggregating fitness by pathway.",
+      "relation": "uses its data or methods"
+    },
+    "ref:pathway_capability_dependency>conservation_fitness_synthesis": {
+      "input": "eca02e0133eee42f107429eed4b35e0ba3aaf32479607a1839147f3f1b435fce",
+      "label": "Compares its Active Dependencies with this project's fitness-conservation gradient, placing them at the high end.",
+      "relation": "compares with its results"
+    },
+    "ref:pathway_capability_dependency>core_gene_tradeoffs": {
+      "input": "4e845cb06a263fc13c6352f7fe1e8391cc7c17f9f0e2a942d171443459b410b8",
+      "label": "Takes its costly-in-lab but conserved genes finding as motivation for condition-type stratification.",
+      "relation": "uses its data or methods"
+    },
+    "ref:pathway_capability_dependency>ecotype_analysis": {
+      "input": "437a6b2e714b13cf86c36d99bbf2cb6467b35bcff2651c2e6236b4a6cd60d70c",
+      "label": "Adds within-genus checks and phylogenetic controls because it found phylogeny dominates gene content.",
+      "relation": "applies its warning"
+    },
+    "ref:pathway_capability_dependency>essential_metabolome": {
+      "input": "aab7549c23afb57d270cbe7c66a2f3833eb164abcd09fbfd9bbdb8a8e32735d0",
+      "label": "Notes its pilot flagged GapMind coverage gaps and suggests its essentials as a calibration set.",
+      "relation": "lists it as a reference only"
+    },
+    "ref:pathway_capability_dependency>field_vs_lab_fitness": {
+      "input": "16a4059414dda66cf7d1059c6ba88b4be3b145d4e3e237009df70950986fc40e",
+      "label": "Adopts its carbon, nitrogen and stress condition-type stratification for fitness aggregation.",
+      "relation": "uses its data or methods"
+    },
+    "ref:pathway_capability_dependency>fitness_effects_conservation": {
+      "input": "ca8330fcb47a699c7ca250c8501298b5e79e17ec9deae35a7d46f1261a27e2c1",
+      "label": "Builds fitness breadth into its importance score, since breadth predicts conservation better than magnitude.",
+      "relation": "uses its data or methods"
+    },
+    "ref:pathway_capability_dependency>metal_fitness_atlas": {
+      "input": "d1fbd62b6c5906485bfb3ded9840ad6ec211038ff60509c2942766887bce4e4f",
+      "label": "Adopts its odds-ratio conservation framework and extends its core-enrichment finding from genes to pathways.",
+      "relation": "uses its data or methods"
+    },
+    "ref:pathway_capability_dependency>module_conservation": {
+      "input": "546c11bfa3c900145ca9fc92456d13202a65f5d6913c54f568da49d3b2a4c1e5",
+      "label": "Cites its null result that module breadth does not predict conservation; adds pathway-level view.",
+      "relation": "compares with its results"
+    },
+    "ref:pathway_capability_dependency>pangenome_openness": {
+      "input": "fbb77fe67c741c7fe18424d771380687ed2b27b2ebb60782b438c9b399b96da5",
+      "label": "Contrasts its null openness result for environment and phylogeny with pathway variation correlating with openness.",
+      "relation": "compares with its results"
+    },
+    "ref:pgp_pangenome_ecology>pangenome_openness": {
+      "input": "b24b4ecf13f344d9c546cd5402241e33befa1d10330a9e382573b4a1eb873a5d",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:phage_defense_arsenal>prophage_ecology": {
+      "input": "efa989eefeac9ef852b64ca3c6419bb51afb2effa49132d2ffdd64682a423aa1",
+      "label": "Re-derives per-species prophage burden using that project's classifier, and notes the classifier over-counts by design.",
+      "relation": "uses its data or methods"
+    },
+    "ref:prophage_ecology>phb_granule_ecology": {
+      "failed": true,
+      "input": "9a22c9d3d5fc159b977b09b1fb95a69066e2ca01d377eee67cdfedb2c830461c"
+    },
+    "ref:truly_dark_genes>fitness_modules": {
+      "input": "66e4528d9854105f0b2889cc7cee9a0a3f2fd6fe770791aba5af40b41df78a43",
+      "label": "Draws on its ICA fitness modules to flag candidate genes and infer functions by association.",
+      "relation": "uses its data or methods"
+    },
+    "ref:truly_dark_genes>functional_dark_matter": {
+      "input": "1cd023ffa03e713550c056b945ef3b9f3e84373585ce64388a828d492291d2ae",
+      "label": "",
+      "relation": "not a reference"
+    },
+    "ref:webofmicrobes_explorer>pangenome_openness": {
+      "input": "68f102a442c97e91cc8400ef2824f0b534a173d8b81335907d1e10cc163cd067",
+      "label": "",
+      "relation": "not a reference"
+    }
+  },
+  "links": [
+    {
+      "a": "amr_pangenome_atlas--1e435872",
+      "b": "field_vs_lab_fitness--296eadf6",
+      "label": "Resistance genes compared with pangenome baseline across thousands of species; metal-fitness genes in one bacterium, DvH.",
+      "level": "finding",
+      "type": "similar comparison, different scope"
+    },
+    {
+      "a": "bacillota_b_subsurface_accessory--bbe885ea",
+      "b": "clay_confined_subsurface--208cd800",
+      "label": "Both find the corrected iron-reduction marker removes the earlier shallow-over-deep clay pattern.",
+      "level": "finding",
+      "type": "same result"
+    },
+    {
+      "a": "conservation_fitness_synthesis--0c074210",
+      "b": "fitness_effects_conservation--13498333",
+      "label": "Both report that genes with condition-specific fitness effects are not preferentially accessory in the pangenome.",
+      "level": "finding",
+      "type": "same result"
+    },
+    {
+      "a": "conservation_fitness_synthesis--0c074210",
+      "b": "fitness_effects_conservation--ae67b7f2",
+      "label": "Both report that genes with strong condition-specific fitness effects are more often core than other genes.",
+      "level": "finding",
+      "type": "same result"
+    },
+    {
+      "a": "conservation_fitness_synthesis--ae15e56e",
+      "b": "fitness_effects_conservation--e831e5ad",
+      "label": "Both describe essential genes as more often core than always-neutral genes, a modest gradient.",
+      "level": "finding",
+      "type": "same result"
+    },
+    {
+      "a": "conservation_fitness_synthesis--d115e8ed",
+      "b": "core_gene_tradeoffs--fef60979",
+      "label": "Both report the same excess burden of core genes in protein, motility and RNA metabolism.",
+      "level": "finding",
+      "type": "same result"
+    },
+    {
+      "a": "conservation_vs_fitness--e95508d3",
+      "b": "fitness_effects_conservation--e831e5ad",
+      "label": "Core share of essential genes compared against different baselines: non-essential genes here, always-neutral genes there.",
+      "level": "finding",
+      "type": "similar comparison, different scope"
+    },
+    {
+      "a": "counter_ion_effects--5a2d3c21",
+      "b": "metal_specificity--0f40573a",
+      "label": "Both split metal-important genes by overlap with non-metal stress, using different stress baselines and organism sets.",
+      "level": "finding",
+      "type": "similar comparison, different scope"
+    },
+    {
+      "a": "ecotype_analysis--9366534f",
+      "b": "ecotype_env_reanalysis--82307b2c",
+      "label": "Species-level environment effect on gene content, then retested by comparing environmental versus human-associated species.",
+      "level": "finding",
+      "type": "one extends the other"
+    },
+    {
+      "a": "ecotype_analysis--d8dfb23b",
+      "b": "ecotype_env_reanalysis--82307b2c",
+      "label": "Phylogeny-over-environment conclusion, followed by a reanalysis comparing environmental and human-associated species.",
+      "level": "finding",
+      "type": "one extends the other"
+    },
+    {
+      "a": "fitness_modules--c9df945b",
+      "b": "module_conservation--ef29c9c3",
+      "label": "Counts organism breadth of module families; separately tests whether broader families are more core.",
+      "level": "finding",
+      "type": "one extends the other"
+    },
+    {
+      "a": "functional_dark_matter--1e0e1f03",
+      "b": "module_conservation--1e6a89d4",
+      "label": "Dark-gene survey includes essential genes lacking insertion mutants; module analysis cannot see them without fitness data.",
+      "level": "finding",
+      "type": "one measures what the other cannot"
+    },
+    {
+      "a": "functional_dark_matter--edbf95bc",
+      "b": "truly_dark_genes--92c362cf",
+      "label": "Same bakta reannotation of linked dark genes; one also reports the residual truly dark set.",
+      "level": "finding",
+      "type": "same result"
+    },
+    {
+      "a": "metabolic_capability_dependency--88a382b0",
+      "b": "pathway_capability_dependency--250e9510",
+      "label": "Latent versus active pathways: one splits by pathway category, the other tallies seven model organisms.",
+      "level": "finding",
+      "type": "similar comparison, different scope"
+    },
+    {
+      "a": "metabolic_capability_dependency--b6cd74ee",
+      "b": "pathway_capability_dependency--250e9510",
+      "label": "One tallies latent versus active pathways; the other tests whether latent pathways are less conserved.",
+      "level": "finding",
+      "type": "one extends the other"
+    },
+    {
+      "a": "metal_cross_resistance--fdba2abe",
+      "b": "metal_specificity--fed6dcbd",
+      "label": "Metal-specific genes are less core-conserved in both, but against different comparison groups: general-stress versus general-sick genes.",
+      "level": "finding",
+      "type": "same direction, different definitions"
+    },
+    {
+      "a": "adp1_triple_essentiality",
+      "b": "acinetobacter_adp1_explorer",
+      "label": "Takes knockout essentiality calls from the database originally assembled in this project's data explorer.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "amr_cofitness_networks",
+      "b": "amr_fitness_cost",
+      "label": "Uses its AMR gene catalog and per-gene fitness costs; explains its conservation-versus-cost puzzle.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "amr_cofitness_networks",
+      "b": "conservation_vs_fitness",
+      "label": "Uses its table linking Fitness Browser genes to pangenome clusters.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "amr_cofitness_networks",
+      "b": "fitness_modules",
+      "label": "Uses its ICA module membership, module families and cached fitness matrices for AMR genes.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "amr_environmental_resistome",
+      "b": "amr_fitness_cost",
+      "label": "Relates its mechanism-and-conservation pattern to ecology; a combined analysis is only proposed.",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "amr_fitness_cost",
+      "b": "conservation_vs_fitness",
+      "label": "Uses its gene-to-pangenome-cluster link table to connect Fitness Browser genes to pangenome clusters.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "amr_fitness_cost",
+      "b": "fitness_effects_conservation",
+      "label": "Compares the share of AMR genes missing from fitness matrices with that project's background essential-gene rate.",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "amr_fitness_cost",
+      "b": "fitness_modules",
+      "label": "Uses its pre-cached fitness matrices as input data.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "amr_pangenome_atlas",
+      "b": "core_gene_tradeoffs",
+      "label": "Relates intrinsic AMR genes' fitness neutrality to its core-gene burden finding, as an exception",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "aromatic_catabolism_network",
+      "b": "adp1_deletion_phenotypes",
+      "label": "Notes PQQ biosynthesis genes also appear glucose-specific there, so PQQ dependency is shared with glucose catabolism.",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "bacdive_metal_validation",
+      "b": "lab_field_ecology",
+      "label": "Contrasts its own BacDive-based metal tolerance result with this project's weaker Oak Ridge lab-to-field correlation.",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "bacdive_metal_validation",
+      "b": "metal_fitness_atlas",
+      "label": "Tests this atlas's genome-based metal tolerance score against isolation environments from BacDive.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "bacdive_metal_validation",
+      "b": "metal_specificity",
+      "label": "Reconciles its finding that metal tolerance genes are mostly core with the isolation-environment signal found here.",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "bacdive_phenotype_metal_tolerance",
+      "b": "metal_fitness_atlas",
+      "label": "Uses its genome-based metal tolerance scores and metal gene counts to test BacDive phenotypes.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "bacillota_b_subsurface_accessory",
+      "b": "clay_confined_subsurface",
+      "label": "Finds the clay project's iron-reduction analysis used mismatched gene IDs; supplies corrected rates.",
+      "level": "project",
+      "type": "corrects it"
+    },
+    {
+      "a": "bacillota_b_subsurface_accessory",
+      "b": "plant_microbiome_ecotypes",
+      "label": "Applies the documented warning that PF14537 is silently absent, so relies on heme-motif counting.",
+      "level": "project",
+      "type": "applies its warning"
+    },
+    {
+      "a": "berdl_data_atlas",
+      "b": "cf_formulation_design",
+      "label": "Names the cystic fibrosis formulation project as an existing bridge across programs, as an example.",
+      "level": "project",
+      "type": "lists it as a reference only"
+    },
+    {
+      "a": "berdl_data_atlas",
+      "b": "ibd_phage_targeting",
+      "label": "Names the IBD phage targeting project as an existing cross-program bridge, as an example.",
+      "level": "project",
+      "type": "lists it as a reference only"
+    },
+    {
+      "a": "cofitness_coinheritance",
+      "b": "conservation_vs_fitness",
+      "label": "Takes its gene-to-cluster link table and SEED functional annotations as input data.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "cofitness_coinheritance",
+      "b": "fitness_modules",
+      "label": "Takes its ICA-derived co-regulated gene modules as input for the co-inheritance analysis.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "cofitness_coinheritance",
+      "b": "module_conservation",
+      "label": "Uses its module conservation results, including the accessory modules, as input data.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "conservation_fitness_synthesis",
+      "b": "conservation_vs_fitness",
+      "label": "Takes per-gene fitness summaries from this project's data folder as upstream input to the synthesis.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "conservation_fitness_synthesis",
+      "b": "fitness_effects_conservation",
+      "label": "Takes per-gene fitness summaries from this project's data folder as upstream input to the synthesis.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "conservation_fitness_synthesis",
+      "b": "fitness_modules",
+      "label": "Reports its fitness modules and tests how enriched they are in core genes.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "core_gene_tradeoffs",
+      "b": "conservation_vs_fitness",
+      "label": "Takes its gene-to-pangenome-cluster link table and SEED functional annotations as input data.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "core_gene_tradeoffs",
+      "b": "fitness_effects_conservation",
+      "label": "Takes its per-gene fitness summary table as an input data file.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "counter_ion_effects",
+      "b": "metal_fitness_atlas",
+      "label": "Re-analyzes the atlas after removing shared-stress genes to test whether its core enrichment survives the correction.",
+      "level": "project",
+      "type": "audits it"
+    },
+    {
+      "a": "ecotype_env_reanalysis",
+      "b": "ecotype_analysis",
+      "label": "Re-runs the original ecotype analysis with genome-level environment labels and contrasts its correlations and null result.",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "ecotype_env_reanalysis",
+      "b": "env_embedding_explorer",
+      "label": "Uses its harmonized genome-level environment categories and builds on its finding of clinical sampling bias.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "ecotype_functional_differentiation",
+      "b": "cog_analysis",
+      "label": "Contrasts its within-accessory function results with the earlier core-versus-accessory analysis, noting a shared mobile-element pattern.",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "ecotype_functional_differentiation",
+      "b": "ecotype_analysis",
+      "label": "Cites the earlier ecotype analysis as prior work on within-species gene-content subpopulations.",
+      "level": "project",
+      "type": "lists it as a reference only"
+    },
+    {
+      "a": "env_embedding_explorer",
+      "b": "ecotype_analysis",
+      "label": "Cites its weak environment\u2013gene content finding, suggests clinical bias may explain it, proposes environmental-only rerun.",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "essential_genome",
+      "b": "conservation_vs_fitness",
+      "label": "Uses its fitness-to-pangenome link table for gene-to-cluster conservation mapping, and its SEED annotations for functional categories.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "essential_genome",
+      "b": "fitness_modules",
+      "label": "Uses its ICA fitness modules and module families to predict functions for hypothetical essential genes.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "essential_metabolome",
+      "b": "essential_genome",
+      "label": "Takes its list of universally essential gene families as input for the pathway analysis.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "fitness_effects_conservation",
+      "b": "conservation_vs_fitness",
+      "label": "Draws on its gene-to-pangenome link table and essential-gene classification as input data files.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "functional_dark_matter",
+      "b": "conservation_vs_fitness",
+      "label": "Draws pangenome links for dark genes from this project and folds them into the census.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "functional_dark_matter",
+      "b": "essential_genome",
+      "label": "Folds this project's essential-gene results into the single dark-gene census table.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "functional_dark_matter",
+      "b": "fitness_modules",
+      "label": "Takes ICA fitness modules and guilt-by-association function predictions for dark genes from this project.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "functional_dark_matter",
+      "b": "module_conservation",
+      "label": "Folds this project's module conservation results into the combined dark-gene census table.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "gene_function_ecological_agora",
+      "b": "plant_microbiome_ecotypes",
+      "label": "Checked its warning about missing marker Pfams in bakta; problem recurred, so used InterProScan.",
+      "level": "project",
+      "type": "applies its warning"
+    },
+    {
+      "a": "ibd_phage_targeting",
+      "b": "ecotype_analysis",
+      "label": "Finds under a confound-free design that the ecotype project's within-ecotype analysis pointed the opposite way.",
+      "level": "project",
+      "type": "corrects it"
+    },
+    {
+      "a": "lab_field_ecology",
+      "b": "conservation_vs_fitness",
+      "label": "Draws on its organism mapping and gene-to-pangenome link tables as input data files.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "lab_field_ecology",
+      "b": "costly_dispensable_genes",
+      "label": "Sets its accessory-genome metal resistance gene finding beside Oak Ridge literature results, noting a parallel.",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "lab_field_ecology",
+      "b": "fitness_effects_conservation",
+      "label": "Takes its per-gene fitness table across 43 organisms as an input data file.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "metal_cross_resistance",
+      "b": "bacdive_metal_validation",
+      "label": "Explains its null result using that project's finding that metal tolerance prediction needs pangenome-scale data.",
+      "level": "project",
+      "type": "applies its warning"
+    },
+    {
+      "a": "metal_cross_resistance",
+      "b": "counter_ion_effects",
+      "label": "Compares its metal-metal correlation grouping with that project's metal-NaCl hierarchy following toxicity mechanism.",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "metal_cross_resistance",
+      "b": "metal_fitness_atlas",
+      "label": "Compares its core-gene fractions across metal gene classes with the Atlas's 87.4% core figure.",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "metal_fitness_atlas",
+      "b": "field_vs_lab_fitness",
+      "label": "Explains earlier Desulfovibrio result of least-conserved metal genes by its narrower condition-specific gene definition.",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "metal_specificity",
+      "b": "counter_ion_effects",
+      "label": "Compares its osmotic-stress overlap with that project's NaCl overlap, attributing the gap mainly to differing thresholds.",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "metal_specificity",
+      "b": "metal_fitness_atlas",
+      "label": "Listed among observatory references; no use of its data or results is shown in these lines.",
+      "level": "project",
+      "type": "lists it as a reference only"
+    },
+    {
+      "a": "module_conservation",
+      "b": "conservation_vs_fitness",
+      "label": "Uses its gene-to-pangenome-cluster link table and essential-gene classification as inputs for the conservation analysis.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "module_conservation",
+      "b": "fitness_modules",
+      "label": "Builds on its ICA fitness modules and module families, testing where they fall in the pangenome.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "nmdc_context_audit",
+      "b": "berdl_data_atlas",
+      "label": "Flags its tagging of Rhea/GO reference ontologies as NMDC integrated; recommends retagging them as external reference.",
+      "level": "project",
+      "type": "audits it"
+    },
+    {
+      "a": "pathway_capability_dependency",
+      "b": "cofitness_coinheritance",
+      "label": "Cites its co-inheritance with co-fitness result to justify aggregating fitness by pathway.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "pathway_capability_dependency",
+      "b": "conservation_fitness_synthesis",
+      "label": "Compares its Active Dependencies with this project's fitness-conservation gradient, placing them at the high end.",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "pathway_capability_dependency",
+      "b": "core_gene_tradeoffs",
+      "label": "Takes its costly-in-lab but conserved genes finding as motivation for condition-type stratification.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "pathway_capability_dependency",
+      "b": "ecotype_analysis",
+      "label": "Adds within-genus checks and phylogenetic controls because it found phylogeny dominates gene content.",
+      "level": "project",
+      "type": "applies its warning"
+    },
+    {
+      "a": "pathway_capability_dependency",
+      "b": "essential_metabolome",
+      "label": "Notes its pilot flagged GapMind coverage gaps and suggests its essentials as a calibration set.",
+      "level": "project",
+      "type": "lists it as a reference only"
+    },
+    {
+      "a": "pathway_capability_dependency",
+      "b": "field_vs_lab_fitness",
+      "label": "Adopts its carbon, nitrogen and stress condition-type stratification for fitness aggregation.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "pathway_capability_dependency",
+      "b": "fitness_effects_conservation",
+      "label": "Builds fitness breadth into its importance score, since breadth predicts conservation better than magnitude.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "pathway_capability_dependency",
+      "b": "metal_fitness_atlas",
+      "label": "Adopts its odds-ratio conservation framework and extends its core-enrichment finding from genes to pathways.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "pathway_capability_dependency",
+      "b": "module_conservation",
+      "label": "Cites its null result that module breadth does not predict conservation; adds pathway-level view.",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "pathway_capability_dependency",
+      "b": "pangenome_openness",
+      "label": "Contrasts its null openness result for environment and phylogeny with pathway variation correlating with openness.",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "phage_defense_arsenal",
+      "b": "prophage_ecology",
+      "label": "Re-derives per-species prophage burden using that project's classifier, and notes the classifier over-counts by design.",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "truly_dark_genes",
+      "b": "fitness_modules",
+      "label": "Draws on its ICA fitness modules to flag candidate genes and infer functions by association.",
+      "level": "project",
+      "type": "uses its data or methods"
+    }
+  ]
+}

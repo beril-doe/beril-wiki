@@ -1,0 +1,2091 @@
+{
+  "acinetobacter_adp1_explorer--1cfedc83": {
+    "case": "",
+    "gist": "In Acinetobacter baylyi ADP1, growth-model predictions and gene-knockout screens agree on which genes are essential for 73.8% of genes with both kinds of data. The mismatches are candidates for model refinement or may reflect regulation the model does not capture.",
+    "input": "51cf8ced22524d704206dd445a321da64c204e32e1b638632b384409c377197d",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "acinetobacter_adp1_explorer--4460d103": {
+    "case": "",
+    "gist": "In Acinetobacter baylyi ADP1, essential genes are far better annotated than dispensable ones, with 92% carrying a KEGG orthology assignment. The remainder without one suggest the hypothesis of unrecognized essential functions worth pursuing.",
+    "input": "c261e845586b87fec86f548d17f2d25a0e502fea212570ccf3c17d1b99a2ae15",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "acinetobacter_adp1_explorer--886c47ff": {
+    "case": "missing data",
+    "gist": "Acinetobacter baylyi ADP1 has no entry in the Fitness Browser, the collection of gene-knockout fitness screens: the lookup found 0 matches for this strain, so those screens are not available for it there.",
+    "input": "29a8db1491cd572d61abe08f4c8b9e40a1bccad5ad93bd38b315bd0dc05d01da",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "acinetobacter_adp1_explorer--c925d9c6": {
+    "case": "",
+    "gist": "In growth models of Acinetobacter baylyi ADP1, 20% of genes shift their predicted metabolic activity between rich and minimal media. This suggests the cell's metabolism is used differently depending on the nutrients available.",
+    "input": "d47fba72b0051898e09bbee83db12800f29cf7489bc62f5a3de84f0f70530c1e",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "acinetobacter_adp1_explorer--df385e36": {
+    "case": "",
+    "gist": "In Acinetobacter baylyi ADP1 gene-disruption growth data across 8 carbon sources, urea fitness tracked other conditions only weakly, and was nearly unrelated to quinate. This suggests urea catabolism relies on a largely independent set of genes.",
+    "input": "34b2d55225972b0db0acc2fd58c160bc54fe87d5ab12e1116d905dd8bf231843",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "acinetobacter_adp1_explorer--ef9044ba": {
+    "case": "missing data",
+    "gist": "In the Acinetobacter baylyi ADP1 data explorer, no gene has data in all six kinds of measurement, though pairs of datasets overlap substantially, especially gene essentiality, pangenome and proteomics.",
+    "input": "6ad88a92afbf82d8b9569203ffee354b8b4ec2532b31781ee1a73a114ac6934d",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "adp1_deletion_phenotypes--69241676": {
+    "case": "",
+    "gist": "In Acinetobacter ADP1 deletion mutants, 31% of genes matter for growth mainly on a single carbon source, and the top genes for each carbon source fall in the expected metabolic pathways, linking gene sets to the substrates they handle.",
+    "input": "1361c5638fbc145dc5886eb9aeb637cfcf274ec152b1ba1cb80763395b381ef9",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "adp1_deletion_phenotypes--86a03233": {
+    "case": "measured absence",
+    "gist": "In Acinetobacter baylyi ADP1 deletion mutants, clustering genes by growth across 8 conditions split most genes into two broad groups, 'generally sensitive' and 'generally tolerant', with no specific functions standing out, suggesting gene importance shifts gradually across conditions.",
+    "input": "bc58f59996484bae1cd07ee1f7db1517120f23a786b70482c955e2fb0a1fe739",
+    "model": "claude-sonnet-5-5",
+    "title": "Gene clustering finds no specific functional groups among the two large modules"
+  },
+  "adp1_deletion_phenotypes--e7f5d7d3": {
+    "case": "",
+    "gist": "In Acinetobacter ADP1 deletion mutants, growth effects across the carbon sources track each other only weakly, suggesting the conditions capture about 5 independent kinds of phenotypic information rather than a simple demanding-versus-robust split.",
+    "input": "5957abc49f5c577776d9018898a8408cfa119690c03cbc1abaeaeee774b986a5",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "adp1_deletion_phenotypes--ec39f324": {
+    "case": "",
+    "gist": "Across the Acinetobacter ADP1 deletion collection, phenotypes vary smoothly, except for one small group of 24 genes. Their loss causes severe, quinate-specific growth defects, and they are aromatic degradation pathway genes, the only discrete module in the dataset.",
+    "input": "9ffb20f5f30846e0b9a2cfe2f6f432d66f3ff4dca0cb02a0f179c753491445de",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "adp1_deletion_phenotypes--f675f8be": {
+    "case": "",
+    "gist": "In Acinetobacter ADP1 deletion mutants, carbon sources sort into demanding, moderate and robust tiers by how many genes matter for growth. Urea was harshest, with 97.9% of genes showing severe defects, while quinate was gentlest.",
+    "input": "3ee0fb7d5a737cd2707f3db7166474ee887ed63ecc131fa33dda95b63e658938",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "adp1_triple_essentiality--19478689": {
+    "case": "",
+    "gist": "In Acinetobacter baylyi ADP1, genes whose proteins are more abundant tend to be the ones that cannot be knocked out, so protein levels alone sort essential from non-essential genes fairly well.",
+    "input": "714e68a7b484771e95b758d8c06312ded78df8870c9a65b9c154f709dabd5f1e",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "adp1_triple_essentiality--45426cbd": {
+    "case": "",
+    "gist": "In Acinetobacter baylyi ADP1, genes for breaking down aromatic compounds mostly show growth defects when deleted even though growth models predict they carry no flux, so the models under-predict their importance.",
+    "input": "023c19539806063da43325ccc6ed285812039deb2f810be0e3df44e5f48bc0a0",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "adp1_triple_essentiality--73c3cad3": {
+    "case": "",
+    "gist": "In Acinetobacter baylyi ADP1, gene fitness from growth experiments, inverted, ranked knockout-essential genes better than chance in both rich and minimal media, while the aggregated essentiality fraction ranked them worse than random.",
+    "input": "6d79fb509e70b331fe571686a6b45f3d10c0adf8f78360a45e42b0a66e9d7705",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "adp1_triple_essentiality--93d338c1": {
+    "case": "measured absence",
+    "gist": "In Acinetobacter baylyi ADP1, growth-model predictions of essential, variable or blocked genes showed no detectable link to growth defects among 478 genes that knockout screens found dispensable; defect rates were nearly identical across the classes.",
+    "input": "7405b4c99de407f41c9d63bfcede1a4913cb7107663d965ccfe683752da25fd6",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "adp1_triple_essentiality--b191b064": {
+    "case": "",
+    "gist": "In Acinetobacter baylyi ADP1 grown in rich medium, gene-knockout screens using transposons largely failed to match which genes are essential by deletion. At the best cutoff, they caught only 15.3% of the knockout-essential genes.",
+    "input": "875a67431449b90732e311e79a1bcc5f060eb21a2bf25cd533ae3c92bcc0656c",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "alphafold_msa_annotation--0b782ee2": {
+    "case": "measured absence",
+    "gist": "In a census of bacterial low-depth core protein clusters, enzyme (EC) annotation was measured as very rare: only 0.033% carry an EC number. Pathway (KEGG) mapping was similarly sparse, so these proteins are barely covered by standard enzyme and pathway databases.",
+    "input": "dd61cd7e54486e313dafc7fca0c9999992157a47214113551ff7252135647bed",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "alphafold_msa_annotation--3386d12a": {
+    "case": "",
+    "gist": "Across bacterial core gene families, those found in deeper sequence alignments carried far more recognizable protein domains, suggesting that poorly annotated families are also the rarely observed ones; the shallowest averaged 0.59 domain hits.",
+    "input": "55643fc3df42a060a725bfb2131e44c5391c9be920f396910a15a4f0b30d8e8d",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "alphafold_msa_annotation--b7b252bd": {
+    "case": "",
+    "gist": "Among conserved core gene clusters from 14,768 bacterial species clades whose protein families have very few detectable relatives, most lack any functional annotation, and almost none carry enzyme or KEGG assignments. This points to a large pool of widespread but unexplained proteins.",
+    "input": "be1ffc8e5e21ebfde7a02e9006ca6594587a04466ba3a22177023e31b6918fd2",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "alphafold_msa_annotation--f4d7e00d": {
+    "case": "",
+    "gist": "In bacterial pangenomes, core gene clusters had much deeper protein-sequence alignments (median depth 15,308) than accessory clusters. The gap was widest among the shallowest alignments, where accessory genes had far fewer aligned sequences.",
+    "input": "a11cdd4b2b1e7ded820022b510e98bd67a0e503da7492cfd9f3902ecf45e6453",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_environmental_resistome--0cf37cb9": {
+    "case": "",
+    "gist": "Among classified antimicrobial-resistance gene clusters, metal resistance is a large share of the resistance carried by aquatic and soil species (about 45% in aquatic species) but rare in human gut species, suggesting habitat strongly shapes resistance mechanisms.",
+    "input": "41809ceb171bb6e36db55db61d5e889e64b7c3c595d7939409695156471c83cb",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_environmental_resistome--4d34e715": {
+    "case": "",
+    "gist": "Across bacterial pangenomes, clinical species carry more antibiotic-resistance gene clusters than soil, aquatic or host-associated species, with a median of 5 clusters per species. Human gut species look similar to clinical ones.",
+    "input": "f80d70b9195326cc7018f26401dbb40501a503ebf61601e0c427b832c2c50471",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_environmental_resistome--96de8ae3": {
+    "case": "",
+    "gist": "Bacterial species whose genomes come mostly from clinical sources carry about 4.4\u00d7 more antimicrobial-resistance gene clusters than species sampled mostly from the environment, suggesting resistance gene load tracks clinical association across species found in multiple environments.",
+    "input": "0ee8dd6ff34ff68ce4a4e1db4c6b58638e11f40e3c5e38c9d868660442f93e6e",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_environmental_resistome--e39caf4e": {
+    "case": "",
+    "gist": "Antimicrobial-resistance genes in clinical bacterial species are mostly acquired accessory genes (68%), whereas soil species carry a smaller acquired share. This suggests clinical resistomes are shaped more by gene gain than soil ones.",
+    "input": "72f6aee5a13340ec2054edf7f0f8004311a4a0534661bd9c3eb88fbbc45bcbca",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_fitness_cost--104baecc": {
+    "case": "measured absence",
+    "gist": "In these gene-knockout screens, the fitness cost of antibiotic-resistance genes showed no detectable difference among efflux pumps, drug-inactivating enzymes, metal-resistance genes and genes of unknown mechanism, contrary to the hypothesis that mechanism would matter.",
+    "input": "e3bb7842392b55b15e6f5f09ba2fa903fea6f318e01d621069aa485f1e3cd29e",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_fitness_cost--4f2f8508": {
+    "case": "",
+    "gist": "Across 25 bacteria, knocking out antibiotic-resistance genes cost cells less than knocking out other genes when no antibiotic was present. This suggests that carrying resistance genes imposes a metabolic burden.",
+    "input": "780c9b198a8c1224d603977395e7167f346c8ce119bd4445c4aac9e1cae28011",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_fitness_cost--67395444": {
+    "case": "",
+    "gist": "Across antimicrobial-resistance genes in Fitness Browser bacterial species, the resistance mechanism a gene uses is strongly linked to whether it is core or variable across genomes, even though mechanism does not predict its fitness cost.",
+    "input": "ace3f78dba3127e19c1afad6178f2f555105207aa53a5fbe45eae9b505cb74df",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_fitness_cost--7ffc7d6b": {
+    "case": "",
+    "gist": "In gene-knockout fitness data, antibiotic-resistance genes that pump drugs out (efflux) shifted toward being more important under antibiotics, while genes that enzymatically inactivate drugs showed essentially no shift. This suggests the fitness effect depends on resistance mechanism.",
+    "input": "98e88b72fc158abfd89b26ab0bba7a6719eff9d0d633a081313fe0d34f487b74",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_fitness_cost--95a8021f": {
+    "case": "measured absence",
+    "gist": "Across bacterial species with gene-knockout fitness data, intrinsic (core) and acquired (accessory) antibiotic-resistance genes showed virtually identical fitness effects. Acquired resistance genes did not look costlier than intrinsic ones in these data.",
+    "input": "4239537342b3f3acbb4db92053ddd016c324b58298dcbc0d11a8b2fa0d044479",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_pangenome_atlas--1e435872": {
+    "case": "",
+    "gist": "Across bacterial pangenomes, antibiotic-resistance genes are less often part of the conserved core genome than other genes, with only 30.3% core, and they are concentrated in the variable auxiliary genome. This depletion from the core appears in most species examined.",
+    "input": "d7318e929541e9682800e5b7ba4bc039151e2e7f20a4239339a48bfe2c0bafc6",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_pangenome_atlas--9947286c": {
+    "case": "",
+    "gist": "Across bacterial species pangenomes, resistance genes differ in whether they sit in the shared core genome: beta-lactamases are 54.9% core, intrinsic efflux pumps such as emhABC are nearly always core, while regulatory genes and mobile genes like blaTEM are mostly or wholly accessory.",
+    "input": "78a9617d63b4980007e52e7007468e8e5cb50a32fe30c1134747d97ce47fc689",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_pangenome_atlas--9f045e80": {
+    "case": "measured absence",
+    "gist": "In the pan-bacterial antimicrobial-resistance gene families, none of the resistance gene clusters had protein-domain (Pfam) matches, suggesting that resistance-gene detection and Pfam domain scans cover different sequence space. This is a measured absence in this table.",
+    "input": "a9f58701484b05c7220bbcc54602f30912bf19e539c02f9cbe9c946ba55f1642",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_pangenome_atlas--b878500b": {
+    "case": "",
+    "gist": "Across 2,684 bacterial species, those sampled from more varied environments carried more antibiotic-resistance genes, and a smaller share of those genes sat in the species' core genome.",
+    "input": "5054723f1d86873c9f72ec468b6f46433396d1c05f3f1fe322ffe1e77140be75",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_pangenome_atlas--ee1ea51b": {
+    "case": "",
+    "gist": "Across bacterial genomes as a whole, species with more open pangenomes show almost no overall tendency to carry more antimicrobial-resistance genes. Within 8/10 tested phyla, though, open pangenomes go with more resistance genes, suggesting lineage masks the link.",
+    "input": "87e0eb2ff604af331b5085f9bee8840d3555080cf8373c185b766b8517362ac1",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_strain_variation--065d36b5": {
+    "case": "",
+    "gist": "Within bacterial species, antibiotic-resistance genes often occur in tightly co-occurring groups, called resistance islands. Species with such islands made up 54% of those analyzed, suggesting that co-occurring resistance gene sets are common in these genomes.",
+    "input": "2a1435f214704511a41d133fdc962e1a291ee1aa3ec4bb44eb7cde2bc82f691a",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_strain_variation--1d3c3dfa": {
+    "case": "inconclusive test",
+    "gist": "Among 513 bacterial species with enough dated genomes spanning several years, no species showed a clear rise or fall in antibiotic-resistance gene counts over time. This analysis was inconclusive: it could not establish whether resistance-gene counts changed over time.",
+    "input": "6370953d8bcd1f755ca52ef68acd9970615b3b06e550c833763db1df8eb5afdc",
+    "model": "claude-sonnet-5-5",
+    "title": "No antibiotic-resistance gene-count trend over time found after correcting for many species"
+  },
+  "amr_strain_variation--6ebb7e8b": {
+    "case": "",
+    "gist": "Across 1,261 bacterial species, genomes that are more closely related tend to carry more similar sets of antimicrobial-resistance genes. In over half of species this link was clear, suggesting resistance gene content often follows evolutionary ancestry within a species.",
+    "input": "db1640082b3b6618ab892b5778abf7d1bba1a00f6b0ab9f551d160c361ad2802",
+    "model": "claude-sonnet-5-5",
+    "title": "Over half of species show AMR gene content that tracks relatedness"
+  },
+  "amr_strain_variation--e349ed14": {
+    "case": "",
+    "gist": "Within species, antimicrobial-resistance genes that are non-core, meaning carried by fewer strains and likely acquired, track the strain family tree more closely than core, intrinsic resistance genes. This is counter-intuitive, since acquired genes might be expected to move freely between lineages.",
+    "input": "3602d040eaea0414298bdf1ecc25ee6787fa3257560892d28dfe8a3ae0bd8c2e",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "amr_strain_variation--f9cc56e8": {
+    "case": "",
+    "gist": "Across bacterial species, most antibiotic-resistance gene occurrences are rare within a species, and only 7.5% are present in nearly all strains, suggesting resistance repertoires differ substantially between close relatives.",
+    "input": "41538871ea22082c3e6c9d1fe3f8eb3e32ef33d2cf093a4fdeadc3ad5d3944b0",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "annotation_gap_discovery--12a061bc": {
+    "failed": true
+  },
+  "annotation_gap_discovery--41b7c54a": {
+    "case": "inconclusive test",
+    "gist": "In growth models of bacteria built from automated annotations, knockout simulations on minimal carbon sources showed zero wildtype growth even after 23 gene-to-reaction rules were added for the top candidate genes, so the candidates could not be tested this way. The test was inconclusive.",
+    "input": "df5e0c21ad42aa302da4da97dea56b0e02fc5a051781deab86b25831217cb0eb",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "annotation_gap_discovery--61f3d4be": {
+    "case": "",
+    "gist": "Among reactions added to growth models to fill gaps, those with no enzyme classification number were rarely resolved, only 16%, while reactions with one were resolved far more often. Reactions known only by stoichiometry appear to be the hardest annotation gaps.",
+    "input": "ce71583ab7e676af2a5537f80b14a28be579222f6b3b8d29c5110378d5e7f456",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "annotation_gap_discovery--ccaed616": {
+    "case": "inconclusive test",
+    "gist": "In a survey of gapfilled phenotype pairs across bacteria, gene-knockout fitness data and pangenomes found no convincing gene candidate for 105 pairs (52.2%). This is an inconclusive test: the genes behind many gapfilled reactions remain unidentified.",
+    "input": "8452248d62eccfdcc4c0c2d25e2da7435916867c2178233829c841c689417506",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "annotation_gap_discovery--ea6047b9": {
+    "failed": true
+  },
+  "annotation_gap_discovery--fa3a9dc4": {
+    "case": "",
+    "gist": "Integrating several kinds of evidence pointed to candidate genes for nearly half of the gapfilled enzymatic reaction-organism pairs in Fitness Browser bacteria, with 47.8% assigned, suggesting this approach can fill a substantial share of metabolic annotation gaps.",
+    "input": "68b01b5694f6c03c1a2361adb31a1d538d058713a28c5b8f7a4b03c2eb2cc2c0",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "aromatic_catabolism_network--3128e9e3": {
+    "case": "",
+    "gist": "Across bacterial species in gene-knockout screens, genes for respiratory Complex I were more costly to lose when cells grew on aromatic compounds than on other conditions, suggesting these carbon sources lean heavily on Complex I-dependent respiration.",
+    "input": "877b6b9e3271aaaed75d7f36ea97e1f0fa1ba3be6107ccde7adf76fc364e57c6",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "aromatic_catabolism_network--3a51f6c6": {
+    "case": "",
+    "gist": "In cross-species gene-knockout data transferred by orthologs, Complex I defects relative to background were largest on acetate and succinate, not aromatic compounds. This suggests high NADH flux through the TCA cycle, rather than aromatic breakdown alone, underlies the dependence.",
+    "input": "9f291a251b21e06aa36d5f6f898bc14254ab835326709ffa2ddc17e5b2819eb5",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "aromatic_catabolism_network--7d6bd2aa": {
+    "case": "measured absence",
+    "gist": "In ADP1 growing on aromatic substrates, the growth model predicts 1.76\u00d7 higher flux through respiratory Complex I, yet it predicts no essentiality for that complex. This is a measured absence of predicted essentiality.",
+    "input": "16515e51d86fb29ad03229bc05fb77df8624c7f2fa8aeeaac2dd592a5722b98b",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "aromatic_catabolism_network--8650ba38": {
+    "case": "",
+    "gist": "In the soil bacterium Acinetobacter baylyi ADP1, gene-knockout growth data place 86% of quinate-specific genes into support systems for aromatic breakdown, respiratory Complex I, iron acquisition and PQQ cofactor synthesis, alongside regulators.",
+    "input": "c6df3c7f6539e11b3af5af7df75243afe62f491660d5aeb639f72d4e787b2e87",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "bacdive_metal_validation--09db2bda": {
+    "case": "",
+    "gist": "Bacteria isolated from heavy-metal-contaminated sites have clearly higher genome-predicted metal tolerance than isolates from ordinary environments, suggesting the predicted scores track real exposure to metals.",
+    "input": "9624f3952b25cc6e135857e6bbf1f71b1256e60b17b31dac7be6533b0a05155f",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "bacdive_metal_validation--1ac30de6": {
+    "case": "",
+    "gist": "Within Pseudomonadota, the dominant phylum, isolates from contaminated sites still devote a larger share of their annotated gene clusters to metal tolerance than isolates from natural environments. This suggests the link to contamination is not just a side effect of which phyla are present.",
+    "input": "44119dc500c90d68fefa23c03532b0e5958c7e37161de205d6243ceff997282d",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "bacdive_metal_validation--2a7f4c05": {
+    "case": "inconclusive test",
+    "failed": true,
+    "gist": "In BacDive strains tested for metal use, predicted metal-tolerance scores could not be shown to track actual utilization, because too few strains were tested. This inconclusive test leaves the question open.",
+    "input": "5e6075fd02875112eba2b5fd3006cffd6f3bd1429b4fc66209bb1e0a840dc036",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "bacdive_metal_validation--60f073d0": {
+    "case": "",
+    "gist": "Across BacDive isolation records, the metal-tolerance prediction signal appears to strengthen with contamination severity. Bacteria from heavy-metal sites show the largest effect, followed by waste/sludge, then contamination overall, with industrial sites lowest.",
+    "input": "7e05e23485df95bc7756df0349bad40e1a5e6c24f5d0829d5cc1c729953b2caf",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "bacdive_metal_validation--894e1826": {
+    "case": "",
+    "gist": "Across BacDive isolates, bacteria from host-associated sources scored slightly higher for predicted metal tolerance than bacteria from environmental sources. This is the reverse of the expected direction, which makes the host-associated group worth a closer look.",
+    "input": "1414c81b1785e2816030f6d10fa3c705677692eb3deb3a42812315b8d0919828",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "bacdive_phenotype_metal_tolerance--202a67ef": {
+    "case": "",
+    "gist": "Across bacterial species in BacDive, those that make urease had lower metal tolerance scores, the opposite of what nickel-import machinery would predict. The pattern comes mainly from Actinomycetes and vanishes within Gammaproteobacteria and Bacilli.",
+    "input": "0854b0541f8bbc30b1bfe6d97e825f78cedbc30438085a3bc4bdb2ef4af9ac4e",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "bacdive_phenotype_metal_tolerance--885a4ca9": {
+    "case": "",
+    "gist": "In bacterial strains from BacDive, evolutionary lineage appears to absorb the link between phenotype and metal tolerance, so phenotype adds nothing beyond taxonomy. Counting a genome's metal-resistance gene clusters sharply improved prediction, suggesting the resistance gene repertoire is what matters.",
+    "input": "c242629bffd581d17f29c93e4fa8fbefb3f7eb221660aa4337ff30b4fc7f618a",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "bacdive_phenotype_metal_tolerance--9b04bc8d": {
+    "case": "",
+    "gist": "Gram-negative bacteria scored as more metal-tolerant than Gram-positive ones across 3,272 species, the largest effect among the phenotype traits tested. This fits the idea that the Gram-negative outer membrane limits metal uptake.",
+    "input": "f669b5c8fd2b4e1f001a1bcfcccff835258bafe8bd8eeb80da70bac632db5c35",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "bacdive_phenotype_metal_tolerance--a1b67557": {
+    "case": "",
+    "gist": "Across BacDive bacterial species, catalase-positive ones score slightly higher on metal tolerance overall, yet within Actinomycetes, Gammaproteobacteria and Betaproteobacteria the catalase-negative species score higher. The overall trend appears to come from which bacterial classes carry catalase, not from catalase itself.",
+    "input": "8fb56cb431d277579219f914c075e0e908f3f71a6cd574a545f956d7edc38b27",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "bacdive_phenotype_metal_tolerance--c1e60f42": {
+    "case": "measured absence",
+    "gist": "Across 3,751 bacterial species, anaerobes and aerobes scored almost the same on metal tolerance, and facultative anaerobes were only slightly higher. This suggests oxygen lifestyle does little to predict how well a species tolerates metals.",
+    "input": "155c6a4c4a0ae8eb81086bb99eacd6cf6974b2472cf73c8cc5b5bad8d4a6b5c4",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "bacillota_b_subsurface_accessory--0b68d03d": {
+    "case": "",
+    "gist": "Bacillota_B genomes from deep clay were about 35% larger than those of soil relatives and carried more gene families, opposite to the expectation that subsurface lineages would be streamlined and compact.",
+    "input": "0dda259a2246cbd3d11f0a0f003aeb80157f14b0574604076b827f884e8a26d4",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "bacillota_b_subsurface_accessory--2f0dbfa7": {
+    "case": "",
+    "gist": "An earlier clay-subsurface analysis used three gene markers as stand-ins for iron reduction, but they actually encode TMAO reductase and two glycerol transporters. The source names no canonical KEGG marker for the multi-heme outer-surface cytochromes of Geobacter and Shewanella.",
+    "input": "a7eccd7eb6311d5b0bf489c5df92d9a677a04856999eed95835ae4f64343eba0",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "bacillota_b_subsurface_accessory--b2fd7eb1": {
+    "failed": true
+  },
+  "bacillota_b_subsurface_accessory--bbe885ea": {
+    "case": "measured absence",
+    "gist": "With a corrected way of detecting multi-heme cytochromes, electron-transfer proteins tied to iron reduction, Bacillota_B from deep clay, shallow clay and soil showed no detectable difference in cytochrome content. The earlier pattern of more iron-reduction capacity in shallow than deep clay disappeared.",
+    "input": "56059b3e2b898b653f0129becc3e71a5deaf653adffad6a52ef01768bc675295",
+    "model": "claude-sonnet-5-5",
+    "title": "Corrected cytochrome detection finds no detectable deep versus shallow clay iron-reduction difference"
+  },
+  "bacillota_b_subsurface_accessory--f9a4cc6b": {
+    "case": "",
+    "gist": "In deep clay subsurface genomes, 5/9 carry sulfate-reduction genes, far more than the 0.2% seen in rock-attached communities, and the signal holds after the marker genes were rechecked.",
+    "input": "174146231a2a50df9949a1b19c487b4457847cd529bcd1c97d6c783d4dfa3990",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "caulobacter_fur_lipida_loss--088e2303": {
+    "case": "",
+    "gist": "In Caulobacter crescentus, more than half of the gene expression changes seen after deleting the iron regulator Fur were buffered in the \u0394sspB background, mostly in a micro-aerobic respiratory operon (cbb3, cyd, fix-NOPQ).",
+    "input": "177ab46a0fdd8b347ad11005419607847f661f585370672dd0424b6291761022",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "caulobacter_fur_lipida_loss--75b18331": {
+    "case": "measured absence",
+    "gist": "In Caulobacter crescentus rescued from lipid A loss, none of the sphingolipid biosynthesis genes were more highly expressed, and the spt and sphk genes were expressed at lower levels. This suggests the hypothesis that the pathway is not induced during rescue.",
+    "input": "c738d9e510e06986de223ddc8670b076d62ccd4b0fe9e433ccbac22fb02917d9",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "cf_formulation_design--1799127b": {
+    "case": "",
+    "gist": "In Pseudomonas aeruginosa genomes from cystic fibrosis patients, 94% carry the ExoS type III secretion effector and only 5% carry ExoU, whereas ExoU is far more common in other clinical and environmental isolates.",
+    "input": "a1399fdca20e17b5b6257514ddab861932ec531b965a0a7500f01ad69a0e833b",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "cf_formulation_design--460ed03a": {
+    "case": "",
+    "gist": "In Pseudomonas aeruginosa genomes from cystic fibrosis and other lung sources, seven carbon-source pathways, including those for sorbitol, mannitol and gluconate, score lower than in non-lung genomes, suggesting these strains may be shedding sugar use in amino acid-rich sputum.",
+    "input": "873f80ae60d8dfa339f7698879d419d149af6ce24ea6b4065d049aab3ce0b1be",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "cf_formulation_design--8bf20af1": {
+    "case": "measured absence",
+    "gist": "In growth tests on 22 substrates, the cystic fibrosis pathogen Pseudomonas aeruginosa PA14 outgrew the average airway commensal on every one. Even on the most selective amino acids (cysteine, threonine, methionine), commensals gained no clear edge, so none of these substrates favored them.",
+    "input": "2af59f09216eb52241598e75fb3ab3a775c961f25fefb24eb7005a84bc69c22d",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "cf_formulation_design--94972e2b": {
+    "case": "",
+    "gist": "In modeled cystic fibrosis airway communities, adding Micrococcus luteus to Neisseria mucosa and Streptococcus salivarius raises coverage of Pseudomonas aeruginosa PA14's preferred nutrients from 18% to 100%, since M. luteus grows on 9 of PA14's 11.",
+    "input": "cdc79e7263530bbcfe4a60148d18a31e2c0e4754b66ff3d206850b6a4e43f951",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "cf_formulation_design--951bde52": {
+    "case": "",
+    "gist": "Airway bacteria whose carbon-source use overlapped more with Pseudomonas aeruginosa PA14, weighted by the substrates PA14 prefers, tended to inhibit its planktonic growth more across 142 isolates, suggesting nutrient competition contributes to protection.",
+    "input": "5b9cf0969f4ec84a24970cf17c88aa07f219baef0c3d25fd164c5b741e3e7495",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "cf_formulation_design--c513d6f7": {
+    "case": "inconclusive test",
+    "gist": "In this design for protective microbiome mixtures against Pseudomonas aeruginosa in cystic fibrosis airways, the overall scores could not separate mixtures of different sizes, so the test was inconclusive; the report favors the simplest two-species mixture as a practical starting point.",
+    "input": "8c785ab325219df08f08872664bc9408258a00b6b7a810c22f2221c739d250b5",
+    "model": "claude-sonnet-5-5",
+    "title": "Mixture size could not be distinguished on the overall formulation score"
+  },
+  "clay_confined_subsurface--0265377f": {
+    "case": "",
+    "gist": "All 8 deep-clay Opalinus genomes come from borehole porewater isolation sources, so the enrichment of sulfate-reduction genes is read as a sign of cultivation bias: the culture collection appears to capture porewater microbes rather than those attached to rock.",
+    "input": "622b03ca6b06f1fbabe4b0fd6357448fd400a3885e50be61c7a6e3310a72d38b",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "clay_confined_subsurface--10b5365e": {
+    "case": "",
+    "gist": "Among quality-filtered cultured genomes from clay environments, the deep-subsurface anchor strains were somewhat less complete in amino-acid biosynthesis pathways than the soil baseline genomes, suggesting slightly reduced self-sufficiency in deep clay lineages.",
+    "input": "eebd065f04806fef9f159f12654179cdb1ca82522ab0d73b07242483678a02e6",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "clay_confined_subsurface--208cd800": {
+    "case": "measured absence",
+    "gist": "Once the iron-reduction gene markers were corrected, the earlier pattern of more iron reducers in shallow than deep clay-confined bacterial genomes reversed, with deep genomes slightly higher. No cohort comparison showed a detectable difference, a measured absence.",
+    "input": "f1c78de7937cc2f0d12fa5cef039bf8f0d7c1305274b0ad370fbbc4d88f8acfa",
+    "model": "claude-sonnet-5-5",
+    "title": "Corrected iron-reduction markers show no detectable difference between cohorts"
+  },
+  "clay_confined_subsurface--eb9811c0": {
+    "case": "measured absence",
+    "gist": "Within Bacillota_B genomes, the Wood\u2013Ljungdahl carbon-fixation pathway and [NiFe]-hydrogenase showed no detectable difference between deep-clay and baseline genomes (all 5 deep-clay genomes carried both), suggesting these traits follow the lineage rather than the habitat.",
+    "input": "a227eb11f16f351f795aabd0457fbd8d26aa614d3dc9dd9319d1bdb090ffec82",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "cofitness_coinheritance--07f43b9f": {
+    "case": "missing data",
+    "gist": "Two Ralstonia strains, UW163 and GMI1000, have no gene co-fitness data in the Fitness Browser even though they are listed there, so the co-fitness and co-inheritance analysis was run without them. This is a missing-data null result.",
+    "input": "a4cd62a21021f60642af3870a3e3a6f9f1766af09897744af601fb1329fa2a76",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "cofitness_coinheritance--0fab94f0": {
+    "case": "",
+    "gist": "Groups of genes whose fitness patterns move together in several bacterial organisms also tend to occur together across genomes, more than expected from how common each gene is. About 11% of the modules show this clearly, suggesting shared function and shared inheritance are linked.",
+    "input": "991e58e0883f7ec261df313d77217693e10f160e9e01905fe1a612eb49fc9365",
+    "model": "claude-sonnet-5-5",
+    "title": "Genes in the same module occur together across genomes more than expected"
+  },
+  "cofitness_coinheritance--179c7596": {
+    "case": "",
+    "gist": "Even the nearly clonal bacterium Ddia6719 showed the strongest signal of genes being inherited together across strains, suggesting it still has enough accessory-gene variation to reveal which genes travel together.",
+    "input": "c03c307a6973537153536e08dd61bf46c99e4a722f03418bf3d9a0c190fc52dd",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "cofitness_coinheritance--67c8c90f": {
+    "case": "",
+    "gist": "Across bacterial pangenomes from 9 organisms, genes whose knockout fitness effects move together were slightly more likely to be present or absent together across genomes than matched random pairs. The shift is small, suggesting only a weak link between shared function and co-inheritance.",
+    "input": "78d0901cec3182c9dbe43f231d5f67d808667680d486c707f65968e0c9e68cef",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "cog_analysis--62995938": {
+    "case": "",
+    "gist": "In a comparison of 32 bacterial species, genes found in only one species were consistently enriched for defense-mechanism functions (COG V), suggesting that defense systems are a recurring part of species-specific gene content.",
+    "input": "f53abd9d8119c9d4d6f6e27e42af619fd8a2df2696274782ecb4af77a3bf0ad6",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "cog_analysis--73ed94e8": {
+    "case": "",
+    "gist": "Genes for translation, the ribosome and protein-synthesis machinery, were the most under-represented functional category among singleton genes, depleted by 4.65% and consistently across comparisons. Translation functions appear concentrated in the conserved core rather than in lineage-specific genes.",
+    "input": "b61ddb77ce46a030baf5344c38a2c2ca153069387469e7539151e370e09d68bd",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "cog_analysis--7a21065f": {
+    "case": "",
+    "gist": "Across the sampled species, genes found in only one genome were consistently enriched for mobile-element functions (COG L), by +10.88%, the strongest signal among functional categories, suggesting mobile elements drive much genomic innovation.",
+    "input": "75de7e40735a736c736b28f499412f4675200df974c1ead87c47cc6cc5d531f0",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "cog_analysis--ddfb9269": {
+    "case": "",
+    "gist": "Across 32 bacterial species, the gene categories enriched in the core genome suggest an ancient, conserved metabolic engine covering protein synthesis, energy production and biosynthesis.",
+    "input": "cf0f60734d9a470d060197003efb356df5ce9917aaaf2ce4d86fb316a7110ccd",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "conservation_fitness_synthesis--0c074210": {
+    "case": "measured absence",
+    "gist": "In these bacterial genomes, genes with strong condition-specific fitness effects were more likely to be core, with no detectable tendency toward accessory status. Condition-specific fitness effects therefore do not mark a gene as niche-specific.",
+    "input": "1fb25a24448a2d02b7afbf290e4bc5183edef7b29ecb6cc620f09fca2b9a9cbf",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "conservation_fitness_synthesis--0c3c94d9": {
+    "case": "measured absence",
+    "gist": "Across bacterial genomes, genes found in only some strains were not systematically burdensome to the cell; in lab growth tests they were less costly than core genes, contrary to the streamlining hypothesis. This is a measured absence of the expected burden.",
+    "input": "1251713270c245b7199d788454a014d6ed21fac6eea6fc98c19bda0fbd112ff8",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "conservation_fitness_synthesis--415598f3": {
+    "case": "",
+    "gist": "In the gene-knockout data, core genes were more often a burden to the cell than accessory genes: 24.4% of core genes gave mutants that grew better when deleted. Many conserved genes may therefore cost growth in rich lab media.",
+    "input": "867ac231e4d001da43215e4b1e0b7ef3000e03b6e3f58de7b748f815dbc6e7fa",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "conservation_fitness_synthesis--ae15e56e": {
+    "case": "",
+    "gist": "Genes that matter more for growth tend to be more conserved across bacterial genomes: about 82% of essential genes are core, compared with a somewhat lower share of genes that are always neutral. The gradient is clear but modest.",
+    "input": "de9efed303246d6e607914c5a8fc20ed9c174c90fab61b6e33ba69a6bc2403fb",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "conservation_fitness_synthesis--b05bd909": {
+    "case": "",
+    "gist": "In bacterial genomes, 28,017 genes that slow growth in the lab are nonetheless conserved across their species' pangenomes. This suggests natural selection maintains them despite their metabolic cost, making them the strongest evidence for purifying selection.",
+    "input": "0664210c3f7cf968ed6b577478f9531b87327c3c01a3e537157f56bd8784c331",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "conservation_fitness_synthesis--d115e8ed": {
+    "case": "",
+    "gist": "The extra burden carried by core genes is concentrated in particular cellular functions rather than spread evenly across bacterial genomes. RNA metabolism, motility and chemotaxis, and protein metabolism drive the effect, with RNA metabolism showing a +12.9pp excess.",
+    "input": "425db2c4df0a0f30a24d96e653945484668fcb6c0efb07bdf3ac38c1b85623e4",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "conservation_vs_fitness--0144bf06": {
+    "case": "missing data",
+    "gist": "The main Escherichia coli clade was missing from the pangenome because it had too many genomes. The Keio strain (E. coli BW25113) matched only a small related clade, at 26.1% coverage, so E. coli was left out of the analysis.",
+    "input": "932d1b5a20d919f1f7a939cfda319dd8282577b44a1962c4ed2d3c1480dec52a",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "conservation_vs_fitness--23e6bd24": {
+    "case": "",
+    "gist": "In just over half of the organisms examined with gene-knockout screens, genes classified as essential were concentrated in core gene clusters, the conserved part of the pangenome. This suggests essential functions often sit in the gene set shared across strains.",
+    "input": "734a68bb4a2bba35f3c7b5a97ea6f7b2f28564b32dfab3fc0f69296ec0a7ec49",
+    "model": "claude-sonnet-5-5",
+    "title": "Essential genes cluster in the core pangenome in over half of organisms"
+  },
+  "conservation_vs_fitness--4e694a06": {
+    "case": "",
+    "gist": "Genes that gene-knockout screens mark as essential in the core genome are the most enzyme-rich (41.9%) and best annotated, and are enriched in protein metabolism. Carbohydrate, amino acid and transport genes are depleted, functions that tend to be conditionally important rather than universally essential.",
+    "input": "0ad9e88c0337beb339f6b72e7120226d4ff43422ad5f87330010ac8925e5c761",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "conservation_vs_fitness--d7946a23": {
+    "case": "missing data",
+    "gist": "In the project linking gene-knockout fitness data to pangenome clusters, 10 organisms were left out of the second phase because their protein sequences were not well covered by the sequence matching, which narrows the range of bacterial lineages examined.",
+    "input": "3f848ad461e40cecaabda850ab954c47deaff746e7a9861e4c82f85053ff8f61",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "conservation_vs_fitness--e95508d3": {
+    "case": "",
+    "gist": "Genes that look essential for growth in well-characterized bacteria are more often part of the core genome shared across a species than non-essential genes, with 86.1% of putative essential genes being core, in line with expectations for viability genes.",
+    "input": "d77b73c698d233b6388b10a9b915589f67599319668d154fccc2afcce2ae0fdc",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "conservation_vs_fitness--f320d5c5": {
+    "case": "",
+    "gist": "Genes essential for viability yet missing from some strains are poorly characterized: 38.2% are hypothetical. Their top functions include ribosomes, DNA replication, type 4 secretion and plasmid replication, suggesting strain-specific variants of core machinery plus mobile genetic elements.",
+    "input": "56db79aabc0063a7d9659b2554abbfe4e842f2e6c85913943e88f16e21b03757",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "core_gene_tradeoffs--26e4ba12": {
+    "case": "measured absence",
+    "gist": "In bacterial gene-knockout fitness screens, most genes showed no detectable growth burden, including 86,761 conserved genes. Dispensable genes were mostly neutral too, so the 'burdensome core gene' puzzle rests on a small minority of genes.",
+    "input": "e4cce4a3dc3570649eef0976729fb85d36ac1537bd140ca2db8ba001998eeda4",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "core_gene_tradeoffs--a0b96f0f": {
+    "case": "",
+    "gist": "In bacterial gene-knockout screens, 17.8% of genes were important for growth under some conditions yet burdensome under others, suggesting that many genes switch between helping and hurting depending on the environment.",
+    "input": "db600a96fb5d45cc5ee67929878248971c7b854385db0dcb0993a5b37ab5a1bb",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "core_gene_tradeoffs--c29ab7fa": {
+    "case": "",
+    "gist": "Genes whose benefit depends on growth condition, helping in some conditions and costing in others, are 1.29x more likely to be core genes, those shared across a species' genomes. This was seen across the genes analysed in the Core Gene Paradox report.",
+    "input": "e1c9d1534f28876cccf9b7f2750ba2c2c8a076d2eb2e97ea8846082791092ab3",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "core_gene_tradeoffs--fbfb5326": {
+    "case": "",
+    "gist": "In the Cell Wall category, genes outside the core set are more burdensome than core cell wall genes, by 14.1 percentage points. This reverses the pattern examined for core versus non-core genes, making cell wall genes a revealing place to look.",
+    "input": "fde81fa9cd9ffe849535bc227ff9291f2c604e2440f72d7ad172de31b4f6e3d1",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "core_gene_tradeoffs--fef60979": {
+    "case": "",
+    "gist": "In these bacterial genomes, core genes (those shared across strains) are over-represented among genes that burden the cell, even though they are expected to be essential. Protein metabolism, motility and RNA metabolism are affected, with RNA metabolism highest at +12.9pp.",
+    "input": "ed4d4f2568d20fb3b7e0bcf141122f14707f6cb7970d0547f30d104cd85f6589",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "costly_dispensable_genes--31cecf6a": {
+    "case": "",
+    "gist": "In gene-knockout fitness data, genes that burden bacterial growth yet are dispensable are strongly enriched for descriptions naming transposases, integrases, phage, insertion sequences and recombinases, pointing to mobile-element-like functions among them.",
+    "input": "478f8d4535eb0facd5867a1cf3fe648d6f2d4cc7c1b12fa1870b8731327595a3",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "costly_dispensable_genes--7f8211ca": {
+    "case": "",
+    "gist": "Genes that are burdensome and not conserved across genomes are not inert: 14.1% still show effects on growth under specific conditions, far above neutral dispensable genes. This suggests the hypothesis that such effects could slow their loss from the genome.",
+    "input": "6ea119296b0b3d8c9ab496462a06143ced375cfc8f20da4ad89e644d7aa34f28",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "costly_dispensable_genes--81b8bf3d": {
+    "case": "",
+    "gist": "In gene-knockout screens across organisms, Pseudomonas stutzeri RCH2 stood out: 21.5% of its genes were costly yet dispensable, well above Bacteroides thetaiotaomicron and every other organism compared.",
+    "input": "201d5c04cc7b69c9a3c14b1845eeed11e1c69baf1055d7c2b54e2cbdfcf0cc73",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "costly_dispensable_genes--f3a85492": {
+    "case": "",
+    "gist": "Among costly genes, those that are dispensable are far richer in mobile-element functions (phages, prophages, transposons, plasmids; 11.7x) and in virulence functions than costly genes that are conserved, suggesting that costly, dispensable genes are tied to mobile and virulence-related gene content.",
+    "input": "a09e96e2cdc2fc33ad90fff7c285af29d7ca696f3cba47a229fa5fa974cd11af",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "costly_dispensable_genes--f4e2ff44": {
+    "case": "measured absence",
+    "gist": "Among genes that carry a fitness cost yet are dispensable, 24.2% are singletons, present in no other genome; no detectable singletons appear among costly genes that are conserved. This suggests costly, dispensable genes are often strain-specific.",
+    "input": "04683d6e81dd2d753e0def3316d843503bac32975c42f593effdab763a1709a4",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "counter_ion_effects--482d2003": {
+    "case": "",
+    "gist": "In bacterial gene-knockout screens, zinc sulfate, which delivers no chloride, shared 44.6% of its gene fitness effects with salt stress, more than cobalt, copper or nickel did. This suggests shared stress biology, not chloride counter ions, drives the overlap.",
+    "input": "b101e1d8c7e4f306edbcdcb69ca85abf2ef4e211210f750076b108470a94e18a",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "counter_ion_effects--5a2d3c21": {
+    "case": "",
+    "gist": "In gene-knockout screens across 19 bacteria, many genes needed to survive metals were also needed under salt stress, suggesting much of the apparent metal-specific signal reflects general vulnerability to ionic and osmotic stress. The overlap ranged from 9.2% for molybdenum to 57.6% for manganese.",
+    "input": "dd99fee2c0ca1417c03952676b5c6cdcaf04c4e02bc925ae72d870c0aba8d0de",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "counter_ion_effects--5a523214": {
+    "case": "",
+    "gist": "In Pseudomonas psRCH2, gene-fitness patterns under two different copper salts matched only moderately, less closely than replicates of either salt matched each other.",
+    "input": "6d6f0e57aa9f37d2f546f40eee6522a3abe1c9f3b084f4f16906d1c777a1f010",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "counter_ion_effects--5c39821b": {
+    "case": "",
+    "gist": "In Desulfovibrio vulgaris Hildenborough, genes that matter under zinc, manganese, copper or cobalt stress overlap strongly with those needed under salt stress, while iron overlaps little. Zinc, supplied with no chloride, still ranked highest, suggesting toxicity mechanism rather than chloride drives the pattern.",
+    "input": "4f7577d4a9c7ec92bde9c0b442ffca8ea7a29811b30f1e0bbe8156ed27571187",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "counter_ion_effects--619981e8": {
+    "case": "measured absence",
+    "gist": "Across bacterial gene-fitness data, a metal's overlap with the NaCl response did not rise with its chloride content: zinc sulfate, with no chloride, overlapped more than most chloride metals. There was no detectable chloride dose-dependence in that overlap.",
+    "input": "67718c630b282ac06146befb6aff31d8418972900084a1679bbfd51097bc6ac1",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "counter_ion_effects--e835d451": {
+    "case": "measured absence",
+    "gist": "Genes tied to metal fitness stayed enriched in the core genome even after genes responding to general stress were removed. No detectable weakening appeared, and the enrichment strengthened for essential metals.",
+    "input": "d4029e0b9401467b6d3a075a352c354a31f35c940f5587c923dc9a1ad04d33de",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "ecotype_analysis--38d98bec": {
+    "case": "",
+    "gist": "In 60.5% of species, shared ancestry tracked the pattern better than environment did in a comparison of phylogeny and environment, suggesting that evolutionary relatedness is often the stronger signal than habitat across these species.",
+    "input": "43058851cf1c3e48c6fd10ad11d2b8ce9c3dd45ba61367fd7ecabd01c713ac6a",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "ecotype_analysis--9366534f": {
+    "case": "measured absence",
+    "gist": "In 156 of the species examined, the environment a genome's sample came from showed no detectable link to which genes it carries, suggesting that habitat left no clear signal in gene content for most species here.",
+    "input": "2c6b4d8026025dd81e5a6b351d2a3045884eef55a21ab181fbbc21291f5cc54b",
+    "model": "claude-sonnet-5-5",
+    "title": "Environment shows no detectable effect on gene content in most species"
+  },
+  "ecotype_analysis--aa4707c1": {
+    "case": "measured absence",
+    "gist": "Free-living bacteria, whose collection coordinates tie closely to their habitat, did not show stronger environmental effects than host-associated bacteria. This was a measured comparison that found no detectable difference between the two lifestyles.",
+    "input": "40f793aa1de97ba643056beee32adc63f5636bf29659857e192e5b6ae2272cf5",
+    "model": "claude-sonnet-5-5",
+    "title": "No detectable difference in environment effects between free-living and host-associated bacteria"
+  },
+  "ecotype_analysis--d8dfb23b": {
+    "case": "",
+    "gist": "Across bacterial species, how closely related two lineages are appears to predict which genes they carry better than how similar their environments are, an inference that makes ancestry a strong starting point for interpreting gene content.",
+    "input": "1b6d45d8d1737fd5945fe7b7322a744b998789b5eed71db9735e0c5d989d43cf",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "ecotype_env_reanalysis--1cadc0c9": {
+    "case": "measured absence",
+    "gist": "Environmental bacterial species, whose satellite-based location embeddings carry more geographic signal than those of human-associated species, showed no stronger link between environment and gene content. This was a measured absence: the analysis ran and found nothing.",
+    "input": "4b5d5e55d9ba954b4e3a3ab9a695091d1e40259ae4e72067b57c9e03333b3cec",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "ecotype_env_reanalysis--82307b2c": {
+    "case": "measured absence",
+    "gist": "Bacterial species from environmental habitats did not show stronger links between their environment and gene content than human-associated species; the human-associated group was, if anything, slightly higher. Lifestyle did not predict tighter gene\u2013environment coupling in these species.",
+    "input": "cd7ed5abb731b0911d14af0948da742ba78d8e2930f587951b4a6cafce8fc4a8",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "ecotype_env_reanalysis--ebb50481": {
+    "case": "",
+    "gist": "Among the 224 bacterial species with enough genomes for an ecotype analysis, 106 (47%) are mostly human-associated by isolation source, compared with 47 (21%) mostly environmental, so the species available for comparing habitats lean toward human-associated ones.",
+    "input": "b751a56b8a6d6a386c11431d26f602460f79403c3ee535e7d5677ff3023bc893",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "ecotype_functional_differentiation--667d861b": {
+    "case": "",
+    "gist": "Across bacterial species with distinct ecotypes, gene functions tied to adaptation differed between ecotypes about 2.13 times more strongly than housekeeping functions. This suggests ecotype divergence concentrates in adaptive functions.",
+    "input": "09cad5379c20305fce2ba28ac2ce80f6ad687f3ae3326ba3f30a8e06e3c98071",
+    "model": "claude-sonnet-5-5",
+    "title": "Adaptive gene function categories differ more between ecotypes than housekeeping categories"
+  },
+  "ecotype_functional_differentiation--69a046fd": {
+    "case": "",
+    "gist": "Across 12 species, the biggest gene-content differences between ecotypes were in genes of unknown function and in replication, recombination and repair genes, suggesting ecotypes diverge most in these categories.",
+    "input": "93a828d152326287b2743b1f770dec32f998ec8f7bcc28aa9901ca67bc8a1109",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "ecotype_functional_differentiation--7fe6d42b": {
+    "case": "",
+    "gist": "Grouping genomes by which accessory genes they carry split most sampled bacterial species into distinct gene-content groups, 12 of 15 in total, with the clearest separation in Erwinia amylovora and Bacteroides xylanisolvens. This suggests many species contain subgroups defined by gene content.",
+    "input": "971ce6a8edb390c2a95a7e17ae03564e03a0eb295769cf53551a9cedf09c3f22",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "ecotype_functional_differentiation--840b73cb": {
+    "failed": true
+  },
+  "enigma_carbon_census_1--16f93626": {
+    "case": "",
+    "gist": "In the ENIGMA carbon census, aromatic and non-aromatic compound-use capacities almost never occur together in a genome: only 0.8% of the genomes carry both, even though some pairs of capacities are enriched.",
+    "input": "bc2f1f71210cc7036450a127268eb76f773f71b7f19508b116b567d15b20b241",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "enigma_carbon_census_1--5022536d": {
+    "case": "",
+    "gist": "In the ENIGMA Carbon Census, about 89% of the enrichment compounds had no isolate identified as able to use them. The gaps appear to follow chemical class, with alkaloids and terpenoids lacking identified users and aromatics having them, rather than sampling source.",
+    "input": "7bb9d738fd7b56f3fcd97171360688cd8ddfee316f74dcfa4695449445c640b1",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "enigma_carbon_census_1--8512f374": {
+    "case": "",
+    "gist": "Freshwater biofilms (periphyton) emerge as a strong reservoir in the NMDC atlas: Burkholderiales/Comamonadaceae genera such as Rhizobacter, Variovorax, Polaromonas, Methylibium, Sphingomonas and Hydrogenophaga turn up in about 96\u201397% of periphyton samples.",
+    "input": "4579cb638e297ad951fae9da8aabca5cf60b7119051fb48e512a3cb152961ae0",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "enigma_carbon_census_1--8b8214bb": {
+    "case": "",
+    "gist": "Among genomes able to break down aromatic or alkaloid compounds, most carry a single such capacity, and only 18 carry several. These versatile genomes cluster in Paraburkholderia, Burkholderia and Hydrogenophaga, suggesting versatility is a trait of particular clades rather than a portable module.",
+    "input": "754e256be6f4aa33f7b1b2b8a4f80a1f0ca0549cddddcb2dcac7a5b2c3276212",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "enigma_carbon_census_1--bc52527b": {
+    "case": "",
+    "gist": "In a census of candidate carbon-source compounds from enrichment studies, phenylethylamine feeds the phenylacetyl-CoA ring-cleavage route, but xanthine is a purine, nitrogen-handling compound wrongly included, so the count of carbon-callable compounds was overstated.",
+    "input": "529be1c3da44175fe1b6ef41ab6f44168d4e24153d18bf3e6edba0e87131ba36",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "enigma_carbon_census_1--f8b7ca8b": {
+    "case": "inconclusive test",
+    "gist": "Across 83 enrichment compounds, the few that isolates could be called as degrading (shikimates, alkaloids, terpenoids) showed no clear difference in coverage between chemical classes, but the test could not settle whether classes differ; adding measured lauric acid changed nothing.",
+    "input": "7f9ebcf8e8c5426a7673a8207ba830d9ea3b481ce98ca7112b23c9a261b8bb0d",
+    "model": "claude-sonnet-5-5",
+    "title": "Isolate-callable compound coverage across chemical classes: test could not settle the question"
+  },
+  "enigma_contamination_functional_potential--606b2ef6": {
+    "case": "measured absence",
+    "gist": "In ENIGMA communities, none of the ways of defining the contamination gradient, including uranium alone, produced a detectable shift in inferred stress-related functional potential. This measured absence held across all 8 confirmatory tests.",
+    "input": "bfd3b42d522f9766c562d8141efd37cf1572533fd65bedb617c4d4562c71fc75",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "enigma_contamination_functional_potential--a97faeef": {
+    "case": "",
+    "gist": "In ENIGMA communities, more contaminated samples tended to carry more defense-related functional potential once depth, location and the fraction of community abundance represented by mapped genera were accounted for. This signal appeared under relaxed genus-to-clade mapping.",
+    "input": "17ded6626320b3c55bb5c5f453804999b847da659f2cc377c08abb7d461209f2",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "enigma_contamination_functional_potential--f4cd1747": {
+    "case": "measured absence",
+    "gist": "In ENIGMA contamination-gradient communities, a site's defense-gene score showed no detectable association with contamination level in the planned test under the broadest genus-to-pangenome mapping, among the genera that could be mapped.",
+    "input": "e4a18bc6db80ef67a8cb1c90946a5926481d6f1848e8302f0186912bb0051cae",
+    "model": "claude-sonnet-5-5",
+    "title": "No detectable defense-score link to contamination under relaxed genus mapping"
+  },
+  "enigma_sso_asv_ecology--51556105": {
+    "case": "",
+    "gist": "In wells at the Oak Ridge subsurface site, groundwater was enriched in iron-oxidizing Gallionella (8.9\u00d7) and denitrifying Rhodanobacter relative to sediment, while Anaeromyxobacter, Arcobacter and Ca. Methanoperedens were largely absent from groundwater, suggesting each material hosts a distinct community.",
+    "input": "eea7c5b0c6aa6ef505169d7f19a41ab6fa5f9c047141373df19aa5c8b314e6c9",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "enigma_sso_asv_ecology--519fc7f6": {
+    "case": "measured absence",
+    "gist": "Across nine sediment wells at the SSO site, differences between microbial communities did not line up with the uphill\u2013downhill direction of the hillslope. They showed a suggestive link to the east\u2013west axis, hinting at a lateral structuring force rather than topography-driven hydrology.",
+    "input": "48f46d6ed54b8776fe9fc9e9e264c172c044191b2847d51edd8bb58d4ca07043",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "enigma_sso_asv_ecology--6ee64744": {
+    "case": "",
+    "gist": "In subsurface groundwater, wells with similar microbial communities on one sampling date were also the most similar nine days later, suggesting the spatial layout of these communities is stable over that period.",
+    "input": "0cd0a9acae8543b019b443bc3b71947f4b3b9a8d76a9c6e609d212012ada12c3",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "enigma_sso_asv_ecology--7ffad219": {
+    "case": "",
+    "gist": "Subsurface microbial communities from the same well at different depths were almost completely different, while samples from the same depth zone in different wells were more alike. This suggests depth determines whether a sample intersects the contamination plume.",
+    "input": "8cfb9dc42a45221e5a2e0799ad91299e628b2fa4fc44e02dc5b673b8d10c0372",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "enigma_sso_asv_ecology--9b46b768": {
+    "case": "",
+    "gist": "In subsurface sediment cores, the hydrogeological zone a sample came from, from the unsaturated vadose zone down into the saturated groundwater zones, accounted for 27.5% of the variation in microbial community composition, suggesting groundwater setting strongly shapes who lives where.",
+    "input": "7c80fd6e7c7aa8a9a7f6a7a4c06f73788409d48441cb54e38cf927e1e2f08a9c",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "enigma_sso_asv_ecology--ab22d581": {
+    "case": "measured absence",
+    "gist": "In groundwater from this subsurface site, sampling date explained only 0.8% of the variation in microbial community composition, and no detectable change over time appeared across the sampled dates.",
+    "input": "7b3038c9af6ee46fbf3f7bef5824f895de71063c15833f6de4fda795b6705239",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "env_embedding_explorer--0ef24a89": {
+    "case": "",
+    "gist": "Genomes with AlphaEarth embeddings are dominated by human-associated sources, 38% in total, mostly clinical isolates and gut microbes, while soil, marine and freshwater genomes are far fewer. The report links this to pathogen-sequencing bias and well-documented clinical locations.",
+    "input": "2dd612a066826cca38d5a6a83f0043d6cd18be187fbcd5afbfd18af3851696b5",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "env_embedding_explorer--1251a078": {
+    "case": "",
+    "gist": "Genomes sampled farther apart have more different environmental embeddings, with the clearest trend among sites within about 2,000 km and a levelling off at intercontinental scales. This suggests the embeddings capture local climate, vegetation and land use that vary smoothly across space.",
+    "input": "ffa815c8ad2bf0779ffecba76d0751fb4d844deedcdf6d6e1f37f62b38160ea3",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "env_embedding_explorer--7dd94f0f": {
+    "case": "unperformed analysis",
+    "gist": "An earlier project found that similarity in satellite-derived environment profiles barely predicted which genes genomes share. This report proposes, but did not test, that hospital-heavy sampling may have masked a stronger link, and suggests rerunning on environmental samples only.",
+    "input": "be6a0fb8dce29ba9aa8aefe46f4e99a8cc73fe84dc43d1c266dcb3e835a56388",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "env_embedding_explorer--974280a5": {
+    "case": "",
+    "gist": "Satellite-derived environment profiles of genomes track geography much more sharply for soil, marine, freshwater, extreme and plant samples than for human-associated ones, which stay more alike across continents. Environmental samples differ about 3.4x more between far and near sites.",
+    "input": "5dacc505f48812891a1377e2c13697c378b6bfa22c351a7c20c43ba4d72379c0",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "essential_genome--2c306756": {
+    "case": "",
+    "gist": "Across bacteria, essential genes of unknown function gained 1,382 family-backed function predictions, borrowed from non-essential relatives in other organisms. Suggested roles include signal transduction, flagellar rod components and lactoylglutathione lyase.",
+    "input": "45fa618d61197843e91009cec9974673a492accd14d3e002182ebf00d0ad760a",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "essential_genome--5e670ea8": {
+    "failed": true
+  },
+  "essential_genome--876909a2": {
+    "case": "measured absence",
+    "gist": "In gene-knockout data from many bacteria, clade size showed no detectable link to how often gene families are essential. Families essential in more organisms were only slightly more likely to belong to the core genome.",
+    "input": "1eedb6d5ef0e1ae695729145aa60e8aefc5decaf2cfeb6ac0c0d7dfd7087d027",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "essential_genome--8a3a7af5": {
+    "case": "",
+    "gist": "Gene-knockout screens across 48 bacteria found the same set of gene families essential in every one, including ribosomal proteins, the chaperonin groEL, pyrG, fusA, valS and SelGGPS, with no exceptions. This suggests a shared core of bacterial life.",
+    "input": "ff469309d429ac011daa5ba7ef05b54558314796028c117124d8ee1f2adf4370",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "essential_genome--a70d258c": {
+    "case": "",
+    "gist": "Across the bacteria in the Fitness Browser, 7,084 essential genes have no identified orthologs in any other organism there, and 58.7% of them are hypothetical. Universally essential genes are far less often hypothetical, at 8.2%, so these genes are the least characterized.",
+    "input": "406b9e6f80d4e3a5645c3c37be5987ef24a8530ca4fbc0cc7d00727364d6e339",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "essential_metabolome--04b688de": {
+    "case": "",
+    "gist": "Among the seven organisms compared, the sulfate reducer Desulfovibrio vulgaris was the only one whose genome did not yield a complete serine biosynthesis pathway in GapMind's pathway predictions, making its route to serine an intriguing question.",
+    "input": "128e329944a4d88d573fcfb83ccf6ff11b54f7822c653dfe96d0563f34023dd9",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "essential_metabolome--6a696123": {
+    "case": "",
+    "gist": "Pathway predictions across a small set of bacteria found 17 of 18 amino acid biosynthesis routes complete in every organism, suggesting these bacteria can make nearly all of their own amino acids.",
+    "input": "565824d1f29e6747966c9b0d0354b65986eed297d09f9554727e3de9549b82e5",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "essential_metabolome--79f760d7": {
+    "case": "measured absence",
+    "gist": "In a pathway survey of seven bacteria, no detectable pathway was present in every organism. Organism-specific gaps appeared, such as serine in DvH, so even this small set shows no truly universal metabolic pathway.",
+    "input": "e4a370cbf264d72a3fef2170b0fe80f4e6dde94a175589789a45a1ca102ae218",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "essential_metabolome--a8599193": {
+    "case": "",
+    "gist": "Across organisms that have gene-essentiality data, metabolic pathways are nearly always complete, but not in every case. This suggests the remaining differences between organisms may reflect adaptation to their ecology and the nutrients available to them.",
+    "input": "32f94cc5f69b5ab0ba027e6fe541e2f5f1c170dcadf21d9be36eb97f2ff2554b",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "essential_metabolome--b64bf8d6": {
+    "case": "missing data",
+    "gist": "E. coli, the standard model bacterium, is missing from the GapMind pathway collection built on the KBase pangenomes, so its metabolic pathways cannot be examined there. This is missing data: the genomes are simply not in the collection.",
+    "input": "b449e00c6132296a177b5499b09725ddd8e0a34ceb5c700d1324a5ddf65b37fe",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "euk_in_prok_correlates--34c5889f": {
+    "case": "",
+    "gist": "In NMDC prokaryote-targeted metagenomes, environment type predicted the eukaryotic share of reads well when samples from the same study appeared in training. When whole studies were held out, predictions became worse than guessing the average, and adding sequencing details did not help.",
+    "input": "8742fd31bb1c50a6ae6f0c5fab0e4805fbba43ef73321600972d207e0aa09776",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "euk_in_prok_correlates--59085a38": {
+    "case": "",
+    "gist": "In NMDC metagenomes aimed at prokaryotes, 77% of runs carry detectable eukaryotic reads, and in those runs the eukaryotic signal is typically almost entirely chloroplast DNA, suggesting contamination comes from plants and algae rather than animal hosts.",
+    "input": "07166a78afa84c18916d90a2061b61fb161c3b6a7b39e88842a1c5cd72682aae",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "euk_in_prok_correlates--77a05e86": {
+    "case": "",
+    "gist": "In plant root samples, every metagenome carried eukaryote DNA, and almost none of it came from plastids (0.03 share). Instead, root-associated fungi and protists dominated the signal, suggesting these prokaryote-targeted samples capture the root's own microbial eukaryotes.",
+    "input": "46204db6c089173d067bfffe656110db81f0e5558c1643dfad1aecdd0a670afb",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "euk_in_prok_correlates--d08fdf8f": {
+    "case": "",
+    "gist": "In one soil study of prokaryote-targeted metagenomes, local environment and geography together predicted how much of the reads were eukaryotic, whereas the same kind of model failed to predict eukaryotic share in studies it had not seen.",
+    "input": "2b1d021956305e64b0194e0327def84d4c9bf393ed053a6ca20cf5cb09f20f85",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "euk_in_prok_correlates--d3b3ef95": {
+    "case": "missing data",
+    "gist": "In NMDC prokaryote-targeted metagenomes, DNA-extraction kit, host-depletion method, size fractionation and library-prep details are not recorded, so their possible role in eukaryotic contamination could not be tested. This is missing data, not evidence of no effect.",
+    "input": "7e4235322dd44f46eecab553ae4f6edf627fb6027c77afbd56c05db7c42c71e6",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "field_vs_lab_fitness--252d6ff5": {
+    "case": "",
+    "gist": "In Desulfovibrio vulgaris Hildenborough, genes in modules that are active in the field and conserved across genomes include 52 with no annotation, making them candidates for new roles in environmental adaptation.",
+    "input": "e02ecd18371c077a7620616dced6b63d2207131c30de2ed29f4f1a27256f44b7",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "field_vs_lab_fitness--296eadf6": {
+    "case": "measured absence",
+    "gist": "In Desulfovibrio vulgaris Hildenborough, genes important for growth under heavy-metal stress were 71.2% core, a bit lower than the baseline but not clearly different, so metal-response genes do not look distinctly accessory in this genome set.",
+    "input": "b2eb8840272856cff3649c05d85a82f8579165027e6a148dc0219149685062d1",
+    "model": "claude-sonnet-5-5",
+    "title": "Heavy-metal fitness genes are not clearly less core than baseline"
+  },
+  "field_vs_lab_fitness--571f3f78": {
+    "case": "",
+    "gist": "In the sulfate-reducing bacterium Desulfovibrio vulgaris Hildenborough, non-essential genes linked to field stress, core field fitness and lab nutrient use are enriched in the core genome, the genes shared across strains, suggesting these functions are broadly conserved.",
+    "input": "b2ed97713f62b6dbb9913e3dfa1425764df31fae9bd44cdeb0fe255ed565dcca",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "field_vs_lab_fitness--73215ec1": {
+    "case": "measured absence",
+    "gist": "In Desulfovibrio vulgaris Hildenborough, gene modules built from the fitness data were mostly made of core genes. How active a module was under field conditions showed no detectable link to how widely conserved the module is.",
+    "input": "616c7713bde0a7860219f844108522535514f2747960d26eda6346e81a55eec7",
+    "model": "claude-sonnet-5-5",
+    "title": "Module field activity shows no detectable link to module conservation"
+  },
+  "field_vs_lab_fitness--d31622df": {
+    "case": "",
+    "gist": "In Desulfovibrio vulgaris Hildenborough, how long a gene is predicted whether it is a core gene much better than how costly its loss was in field or lab conditions. Neither field nor lab fitness alone was informative.",
+    "input": "c569cf9d27a20d9e4d6a48f781c2fd2ae8273420c3f96122983adc116ea59c1c",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "fitness_effects_conservation--13498333": {
+    "case": "measured absence",
+    "gist": "In bacterial gene-knockout screens, genes with condition-specific growth effects showed no detectable enrichment in the variable accessory genome. If anything they leaned toward the conserved core, contradicting the expectation that condition-specific genes would be accessory.",
+    "input": "59ea25c32b9cb7dc3fcc241504367379a2b68bfb66feb9732f8654444eb7d5af",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "fitness_effects_conservation--6e6a4a45": {
+    "case": "",
+    "gist": "Genes shared by every genome in a group were more often beneficial to delete than genes found in only some genomes, running against the expectation that accessory genes are costly to carry: 24.4% of core genes were ever beneficial to lose.",
+    "input": "04ab397179a8f11a968f19818ca3269b0b2780f4def38ff652069b55e9b6cb68",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "fitness_effects_conservation--87474237": {
+    "case": "measured absence",
+    "gist": "In bacterial gene-knockout screens, genes found in only one genome (singletons) showed mean fitness near zero, suggesting lab assays barely detect them. They looked neither helpful nor harmful under the tested conditions, a measured absence of effect.",
+    "input": "909fc70d19f93d53106d84270ab2900e86bfead98e321de7983983362da3182c",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "fitness_effects_conservation--ae67b7f2": {
+    "case": "",
+    "gist": "In fitness screens across bacterial genomes, genes with strong condition-specific growth effects are more often core genes, shared across a species' genomes: 77.3% of them, versus a somewhat lower share among genes without such phenotypes.",
+    "input": "50f4a03506f5a8d15a6ba418ceb2ccc6a5c325280bd8c2d49d3b75371f6bc2f3",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "fitness_effects_conservation--e831e5ad": {
+    "case": "",
+    "gist": "Across many diverse bacteria, genes that matter more for growth are more often part of the core genome shared by all strains of a species. Essential genes are 82% core, versus a lower share for genes that are always neutral.",
+    "input": "28b87b112ca6dc46f82313a74fb0e122a6d973bcd94a036fb53973caf2cb7c8a",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "fitness_effects_conservation--e931cad7": {
+    "case": "",
+    "gist": "Genes that make no difference to growth overall but become critical in one condition were commoner among core genes (3.0%) than among auxiliary or singleton genes, which runs against the expectation that such niche-specific genes would be rarer in the conserved core.",
+    "input": "3f9973a7abea03ea123dbd5919457b6f0b8534c1dd49551ec93b703b482b7eda",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "fitness_modules--0c88eee5": {
+    "failed": true
+  },
+  "fitness_modules--86f7465d": {
+    "case": "",
+    "gist": "Adding protein-domain annotations and relaxing the overlap needed to assign a function to a gene module raised the share of annotated modules in bacterial fitness data from 8% to most of them, greatly expanding the function predictions available.",
+    "input": "b7da4e4e12181a83f8c2583297d9959554082765ab918d215e6b4c23d9593a06",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "fitness_modules--c9df945b": {
+    "case": "",
+    "gist": "Groups of co-regulated genes recur across bacteria: 156 module families are shared by multiple organisms, suggesting that some gene sets that work together are conserved across wide bacterial diversity.",
+    "input": "4b23de52a3d6b9aa674db0af4cc248ea70aee2f9327b6f73117815ae23c3534f",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "fitness_modules--e06e01e0": {
+    "case": "",
+    "gist": "Gene modules built from bacterial fitness experiments initially grouped genes whose fitness profiles were only weakly alike. Switching the earlier gene-selection rule to absolute weight cutoffs made modules biologically coherent, with 94% showing enrichment for genes with similar fitness profiles.",
+    "input": "d76dd1a765801d0889000869a24efcc4a97b5d8a43ee7787bf759ee0e0331d18",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "fitness_modules--e33de0ee": {
+    "case": "",
+    "gist": "Across the bacterial genomes analyzed, 94.2% of gene modules showed elevated within-module cofitness, meaning genes grouped together tend to respond similarly across growth conditions. This suggests the modules capture coordinated functional units.",
+    "input": "d66a125398c1fd690f096250492145701c831949f2a97da0fbf48ce4d6a637d2",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "functional_dark_matter--1e0e1f03": {
+    "failed": true
+  },
+  "functional_dark_matter--b069dc6a": {
+    "case": "",
+    "gist": "In a survey of poorly understood genes across bacteria, 55.9% of the ortholog groups of unknown function turn out to be conserved across multiple phyla. This suggests dark matter is not a minor annotation gap but sits in broadly shared biology.",
+    "input": "6b9f4d898d8f3c63654e9c0a83f8a5c72c9d344c9a2112fd2b5b036d5244ccd6",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "functional_dark_matter--cefca00d": {
+    "case": "measured absence",
+    "gist": "Among 7,491 dark genes of unknown function, those tied to stress conditions were slightly less often accessory than those tied to carbon or nitrogen conditions, the opposite of the prediction. Condition specificity and gene conservation appear more complex than a simple stress-accessory split.",
+    "input": "c12045cf64a7a4aa7a10638bacca6c8a3c6de3434db61413a7ade0c6e08e8b5c",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "functional_dark_matter--edbf95bc": {
+    "case": "",
+    "gist": "Re-annotating the Fitness Browser's 'dark' genes with Bakta gave a specific product description to 83.7% of those linked to pangenomes, where the browser listed only 'hypothetical protein'. This suggests many of these genes are less mysterious than they appeared.",
+    "input": "b6ef54e9af8f7d396d06b41a11f9ecb0c24e1bc83af3d1fdd40f487e799813b2",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "genotype_to_phenotype_enigma--602fd76d": {
+    "case": "",
+    "gist": "In ENIGMA bacterial growth data, gene content predicts growth well on amino acids (especially tryptophan) and nucleosides, only moderately on carbon sources, and not on metals, antibiotics or nitrogen sources, suggesting some nutrient classes are tied more closely to gene content.",
+    "input": "c81424c411e42f2f3a024bb7a3d732f01ca87adb0b25d40a20a56fb02cbf0748",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "genotype_to_phenotype_enigma--a6ede42b": {
+    "case": "",
+    "gist": "Across samples from around the world, the Oak Ridge genus group Rhodanobacter, Ralstonia and Dyella lives in environments 1.35 pH units more acidic than the Brevundimonas, Caulobacter and Sphingomonas group, suggesting acidity helps sort which genera co-occur locally.",
+    "input": "82a1e747d59285bfb0e412a57f76e3291978a3c5940887ab87ba02555e0f3fc9",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "genotype_to_phenotype_enigma--ad8903f3": {
+    "case": "",
+    "gist": "In growth data from Pseudomonas, Cupriavidus, Acidovorax and Pedobacter, a model trained on seven strains leaned on condition class and genome-scale features. With a far larger set of strain\u2013condition pairs, condition-specific catabolic genes, including transporters, emerged, suggesting how much data mechanistic prediction needs.",
+    "input": "9f93f6bdeca36bf188fe35a214e01d625d55de2415ec6eda89e2cb86e94e05e8",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "genotype_to_phenotype_enigma--ccab2bff": {
+    "case": "measured absence",
+    "gist": "Across ENIGMA bacterial isolates, gene content did not predict growth rate, lag time or yield for genera the models had not seen. Apparent links with genome size reflect lineage, as fast-growing large-genome Pseudomonas contrast with slow-growing small-genome Pedobacter.",
+    "input": "e074754a97b7d4a774133170ea1de973a1f47a7bf03ed8640b571e4a580f7c7f",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "harvard_forest_warming--4fcaf7c4": {
+    "case": "",
+    "gist": "In Harvard Forest warming-experiment soil, RNA from methane-oxidation genes (pmoA and pmoB) was higher in both organic and mineral horizons, while glyoxylate-cycle genes (aceA, aceB) were higher only in the mineral horizon, suggesting shifts in methane and carbon cycling.",
+    "input": "2c9ca852924b4c191232ad726403b7a274b9e3eb9e571a61b0bd231b253efb06",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "harvard_forest_warming--5dcb42f7": {
+    "case": "",
+    "gist": "In the organic soil layer of the Harvard Forest warming experiment, heated plots had relatively more Actinobacteria and fewer Acidobacteria than control plots, suggesting long-term warming shifts which bacterial phyla dominate forest topsoil.",
+    "input": "e02c2c6da050103882cb2dd1ce4b13767a0d7acc3c991ae09b28a6cb8eeaa69e",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "harvard_forest_warming--664ecd79": {
+    "case": "inconclusive test",
+    "gist": "Heated mineral soil samples from the Harvard Forest warming experiment had ~7% fewer detectable metabolites than controls. Tests on individual metabolites were inconclusive, though several showed hints of change.",
+    "input": "ee80a67a978ed75fda64dd1ac3a2df507eec8dce935691f8078c4fdb3fd87e2c",
+    "model": "claude-sonnet-5-5",
+    "title": "Heated mineral soil has fewer detectable metabolites; individual changes remain unclear"
+  },
+  "harvard_forest_warming--8f0aae96": {
+    "case": "measured absence",
+    "gist": "In Harvard Forest warming plots, functional gene (DNA) and transcript (RNA) profiles shifted with warming to a similar degree, so the idea that the active transcript pool is more sensitive was not supported in this dataset.",
+    "input": "51b369fb866972cd63778d8fe92c0772366d3bb0d93cadd3668ab3a8ed8681fc",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "harvard_forest_warming--d1815e53": {
+    "case": "",
+    "gist": "In Harvard Forest warming experiments, carbon-cycling genes were over-represented among DNA-based functions that increased with warming in the organic soil horizon. None appeared among warming-increased functions in the mineral horizon or among RNA-based functions.",
+    "input": "1a78dc766afc8d410106b5c05beac72e938761455c5e26bd751a137256e3e0cf",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "ibd_phage_targeting--218b95c7": {
+    "case": "",
+    "gist": "In Crohn's disease gut samples from the HMP2 cohort, one combined microbe\u2013metabolite signal tied all 6 actionable core pathobionts, including E. coli and M. gnavus, to disease, alongside polyamines and fatty-acid amides, while commensals and secondary bile acids pointed the other way.",
+    "input": "ad721e11069a9b54a9ea0e74df57b07d237f375e0b5b4ca8147ddbfd5c566147",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "ibd_phage_targeting--446eca8c": {
+    "case": "",
+    "gist": "In a Crohn's disease and IBD phage-targeting analysis of gut bacteria, the top-priority genomes were strongly enriched for gene clusters matching iron-scavenging siderophores and genotoxin or microcin compounds, relative to the wider cluster catalog, with E. coli carrying the iron signature.",
+    "input": "27f4279f4ca7d6f8b87d1838723bf2c638c3f79b017b3d5bd0c368a96c4fa0f8",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "ibd_phage_targeting--56e3bb7d": {
+    "case": "",
+    "gist": "In IBD metagenome analyses, the top-30 phage targets for the E1 and E3 ecotypes overlapped far less than random label shuffling would predict, so the ecotype divergence appears real. The earlier argument lacked a shuffled baseline and was retracted.",
+    "input": "f7de2abed496649377a1c8be36339bf1da046c93262d056faaf2d3e610b1ef53",
+    "model": "claude-sonnet-5-5",
+    "title": "Ecotype-specific targeting holds up, but the earlier overlap measure was replaced"
+  },
+  "ibd_phage_targeting--6d9fa20c": {
+    "case": "",
+    "gist": "In a Crohn's disease cohort from UC Davis, only 35 % of patients carried detectable E. coli, suggesting that adherent-invasive E. coli, often framed as the typical Crohn's pathobiont, may be less central in these patients.",
+    "input": "45b2056cbb67b5b5bac7bd661a918621367f6011fab8bc30fbdca121bf644a6d",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "ibd_phage_targeting--d7f80dce": {
+    "case": "",
+    "gist": "In an independent Crohn's disease gut-metagenome cohort (HMP2), 88.2 % of the candidate species from one gut community type (E1) again shifted in the same direction, being enriched in Crohn's disease samples relative to non-IBD samples.",
+    "input": "a0d3290f5bf35aa5ca273584a30d15d6a58834e3e0b48fa6b0f2dfad8982ffe4",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "ibd_phage_targeting--f8d4a8f9": {
+    "case": "measured absence",
+    "gist": "In these gut samples, lactate moved in the opposite direction for A. caccae than for F. plautii and E. bolteae. The pattern expected if lactate were passed between them was absent, suggesting they occupy different metabolic niches.",
+    "input": "57291dd7c076453c8a0e31e3c07ccb7e2204a596a1be40f4dddbd8b7c104318e",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "lab_field_ecology--0a8de054": {
+    "case": "inconclusive test",
+    "gist": "Across 12 genera at Oak Ridge, those that tolerated metals better in lab gene-knockout screens tended to be more abundant at high-uranium field sites. This was an inconclusive test, so it suggests, but does not establish, a link between lab tolerance and field response.",
+    "input": "ea8abf71745e79b58bb99687449d046bf3e6d43183f14c831b472c9458d9e3fa",
+    "model": "claude-sonnet-5-5",
+    "title": "Lab metal tolerance only suggestively predicts field uranium response"
+  },
+  "lab_field_ecology--20abf7b5": {
+    "failed": true
+  },
+  "lab_field_ecology--7268dc9b": {
+    "case": "",
+    "gist": "Across Oak Ridge sites, the bacterium Caulobacter was less abundant where uranium was higher, suggesting this genus is depleted at high-uranium sites.",
+    "input": "df5827fa704a3f0477fa4fe5d3edab77b37adcd14fa2527557df2098cff9626a",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "lab_field_ecology--94b20be5": {
+    "case": "measured absence",
+    "gist": "In Oak Ridge field samples, Desulfovibrio and Pseudomonas, both ENIGMA model organisms, showed no detectable link between their abundance and uranium levels, even though each is a studied model for the site's microbiology.",
+    "input": "176de539e544b6de1d0e79d9053e5a392412dd801c537e465f31b01fd6e54acc",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "lab_field_ecology--c4028be7": {
+    "case": "",
+    "gist": "In Oak Ridge samples, the bacterium Herbaspirillum was more abundant at sites with higher uranium, a positive association that makes it a candidate for further study in uranium-contaminated groundwater.",
+    "input": "951dbfcaeb07c6a96fecf40208197e49ab24ec83aba11c2f8c85ab5f53b92402",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "lab_field_ecology--d16a3056": {
+    "case": "",
+    "gist": "Desulfovibrio, the main ENIGMA model organism for uranium reduction, was found at only 34% of Oak Ridge sites, and where present it was very scarce in the 16S community data.",
+    "input": "3e201d7328f557f5cc277222127e494d5fc47118e3b28ca41b78585210f1d795",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "lanthanide_methylotrophy_atlas--4129a02d": {
+    "case": "",
+    "gist": "Across bacterial genomes, the lanthanide-using methanol dehydrogenase gene xoxF far outnumbers the calcium-type mxaF, and this holds when evolutionary relatedness is accounted for. Within typical phyla the dominance looks even stronger, at roughly 143 xoxF per mxaF.",
+    "input": "030443283946c1193e7cc3b2ef3741cbf6148365f7b607fa44168b3c613acb4b",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "lanthanide_methylotrophy_atlas--4c03dc0b": {
+    "case": "measured absence",
+    "gist": "In 37 genomes reconstructed from acid mine drainage rich in rare earth elements, few carried the lanthanide-using methanol enzyme gene xoxF, and none carried lanmodulin or xoxJ. Instead the genes looked like an acid-and-metal stress toolkit: DNA repair, acid resistance and oxidative-stress defense.",
+    "input": "18ae81abd3061b694a1ee8b0e97d8631c9c6b9b1518f45fbbd55fd8034c51153",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "lanthanide_methylotrophy_atlas--6465f1d3": {
+    "case": "",
+    "gist": "Across 293,059 bacterial and archaeal genomes, the lanthanide-dependent methanol dehydrogenase gene xoxF was annotated far more often than its calcium-dependent counterpart mxaF. This suggests lanthanide-based methanol oxidation is the dominant form in these genomes.",
+    "input": "dbe1df031bc2ec3eef2a3251c6c153e8396d5d7a11b82fa6b658501d71b6dfed",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "lanthanide_methylotrophy_atlas--6543a6a6": {
+    "case": "inconclusive test",
+    "gist": "In these genomes, the lanthanide-binding protein lanmodulin usually came with xoxF, a gene for a lanthanide-dependent methanol dehydrogenase, in 79.0% of genomes; the test was inconclusive on whether this is a rule, and genomes without xoxF may use other lanthanide-handling routes.",
+    "input": "7958746cd81d06e5b124a7692f2a0e57f52f505ed7863e87d450f0a14a8a887f",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "lanthanide_methylotrophy_atlas--73b82896": {
+    "case": "",
+    "gist": "The lanthanide-dependent methanol-oxidation gene xoxF remains more common in soil and sediment genomes even when only Acidobacteriota are compared, suggesting the soil association is not just a matter of shared ancestry.",
+    "input": "801306ad6208df008f541642494f3227bd0cd934287b92d0dbfac97eff7e76f1",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "lanthanide_methylotrophy_atlas--d54adcf1": {
+    "case": "",
+    "gist": "In these genomes, the lanthanide-binding protein lanmodulin appeared only in alpha-Proteobacterial methylotroph families (Beijerinckiaceae, Acetobacteraceae, Hyphomicrobiaceae), with every genome carrying it falling inside those families.",
+    "input": "b0ed1a49447e5812014286b5e00923688250792a79a9b32b713645359cfb0465",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "lignin_community_enrichment--0c3cdb00": {
+    "case": "",
+    "gist": "In lignin-enriched communities, bacteria responded to treatment in a consistent, repeatable way, while fungi varied wildly between replicates. This suggests, as a hypothesis, that the two kingdoms assemble by different mechanisms.",
+    "input": "37184d7919198fd2059dbb37b8fb51fc6efec43f00f2435f2eed9e0932ad2d84",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "lignin_community_enrichment--8b7c9a44": {
+    "case": "inconclusive test",
+    "gist": "In lignin-enriched microbial communities, the fungal (ITS) data gave an inconclusive test of whether earlier enrichment history leaves a lasting imprint on community makeup. Fungal profiles fit the grouping less well than bacterial profiles did.",
+    "input": "65e5901fdfad429a74cc61bb3a8b7ca96e4b07e31db986bb73dfc1c67291630e",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "lignin_community_enrichment--fa5eb6ce": {
+    "case": "unperformed analysis",
+    "gist": "A planned side-by-side test of whether bacterial and fungal communities in the lignin enrichments changed together was not completed, so their concordance remains untested. This is an unperformed analysis, not evidence for or against agreement.",
+    "input": "8414eea5c89854cc6185dba0591731d7aec79eed3e34ab4f8cab013191bbd66e",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metabolic_capability_dependency--6a369153": {
+    "case": "",
+    "gist": "Across 22 bacterial species clades drawn from the Fitness Browser organisms, clades carrying more complete but fitness-neutral metabolic pathways tended to have more open, dynamic pangenomes, in line with Black Queen-style gene loss at the species level.",
+    "input": "ad813ac31f100949f7e88755720ed19d3befc3f437a1b913bba1d042e818e131",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metabolic_capability_dependency--88a382b0": {
+    "case": "",
+    "gist": "Whether a metabolic pathway is kept but not needed in the lab depends strongly on its role: 24.3% of carbon-source utilization pathways were latent, while amino acid biosynthesis pathways were mostly active. This suggests carbon-use capacity is often held in reserve.",
+    "input": "c14ad2d64a31cf976979d039f8bd8e5a36e0094eef83bd9069c8f0e5a6c3d57d",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metabolic_capability_dependency--b6cd74ee": {
+    "case": "measured absence",
+    "gist": "Across bacterial species clades, pathways that genomes carry but that gene-fitness data class as not needed (latent) were no less conserved than fitness-important pathways, and slightly more so. This is a measured absence: no detectable conservation deficit.",
+    "input": "8c7cabb8b31264a0174c4f323a5c80e6b39d477ef3860cf4807c43947e339c10",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metabolic_capability_dependency--f41ac91a": {
+    "failed": true
+  },
+  "metal_cross_resistance--109ca8e4": {
+    "case": "inconclusive test",
+    "gist": "In Fitness Browser bacteria, multi-metal tolerance scores showed no clear relationship to isolation from metal-rich environments recorded in BacDive, but with only 20 independent species the analysis could not settle whether tolerance tracks isolation environment.",
+    "input": "0e1529d423a21751353f6b18e6e3c1c4855d503af405b93c600f5a04a7b8c8f6",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metal_cross_resistance--8b1ef6ba": {
+    "case": "",
+    "gist": "In gene-level screens across diverse bacteria, genes that matter for surviving iron stress also tended to matter for zinc stress, more strongly than expected. This suggests the hypothesis that both metals disrupt shared iron-sulfur cluster proteins.",
+    "input": "deb80b03887f55fcbe9af41b056f583e950fa33b3cb2c175e3b2570c1c97a7cf",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metal_cross_resistance--fbb37c50": {
+    "case": "",
+    "gist": "In gene-knockout fitness screens across diverse bacteria, genes tied to tolerance of one metal tended to matter for other metals too: 98.1% of gene-level fitness correlations between metal pairs were positive, and no metal pair was systematically opposite in any organism.",
+    "input": "30f41a1b5ece4629ccf06f5369db563a793eaeeaca271fdf37bc3f8a0c8c1fdc",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metal_cross_resistance--fdba2abe": {
+    "case": "",
+    "gist": "Across diverse bacteria, genes needed under many kinds of stress are the most likely to belong to the core genome shared by all strains, genes needed for several metals fall in between, and metal-specific genes are the least conserved, by 11.5 percentage points.",
+    "input": "009e77181e45770ec923b926a0a2e9e16f677634b0a09d7f288e72f71d9ae2f5",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metal_cross_resistance--fe1c0679": {
+    "case": "",
+    "gist": "Across 28 diverse bacteria, resistance to one metal consistently went along with resistance to others, with the same positive direction in every organism. How strongly the metals were linked was only moderately shared between organisms.",
+    "input": "38e57e6fcc8c9f97f5722c21e9060fcd77ee3cfe7c1fb94c4b5da434d1d4d8ab",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metal_fitness_atlas--33814a75": {
+    "case": "measured absence",
+    "gist": "After scaling for genome size, bioleaching genera as a group showed no detectable enrichment in metal-related genes across 27,702 bacterial species, though Leptospirillum alone ranked high. This suggests metal tolerance genes are widespread rather than confined to specialists.",
+    "input": "a8ff16fa701aee9108a3e78c3ac1a8490974af5a03a6167cecb40673b7c8de46",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metal_fitness_atlas--e9d8e5b4": {
+    "case": "",
+    "gist": "Across the bacteria screened, 149 gene families show matching metal-fitness effects across organisms yet lack full annotation. Most are truly unknown or carry only domain-of-unknown-function labels, suggesting hypotheses about their roles in metal biology from fitness data alone.",
+    "input": "f8723b91b5aaf481f48d19f91ef4a532b58682fa0cb86f02bcbf803f7ff32214",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metal_resistance_global_biogeography--181dc531": {
+    "case": "",
+    "gist": "Among environmental bacterial genomes assembled from metagenomes worldwide, those from the Atacama/Andean region of Chile formed the strongest hotspot for metal resistance, with 21.8% of genomes there carrying it.",
+    "input": "01b7d299995f8e236b85920d86710ecd0d6cc1b70f20c2c234aa3d3092bb9f5a",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metal_resistance_global_biogeography--2ac1d00b": {
+    "case": "",
+    "gist": "Among environmental bacterial genomes assembled from metagenomes that have known sampling locations, only 2.8% carry any metal resistance type, suggesting resistance is rare across the global environmental pool and lower than the larger filtered set implied.",
+    "input": "6e289a1bdefd23f366fa1d7e41cfe933dddd7b834b9a54f1a8eb41fa1fcfff43",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metal_resistance_global_biogeography--9181c949": {
+    "case": "",
+    "gist": "Among bacterial genomes assembled from environmental samples, soil genomes carry metal-resistance genes far more often (5.8%) than expected, while marine genomes carry them much less often, suggesting habitat shapes how common metal resistance is.",
+    "input": "56f347d4c709b3a6a73c11a5edc437fd472f2e56a2a1a2256425db4892b60d91",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metal_resistance_global_biogeography--a6cb44ef": {
+    "case": "measured absence",
+    "gist": "In a global survey of environmental bacterial genomes, every one of the 532 map grid cells had coordinate coverage in the public ENA sequence archive, so the 30.8% coordinate gap reflects individual samples lacking coordinates, not whole areas missing.",
+    "input": "daea6e53ca2a7e66be97f0acf7758bfb68113a4296bdbf9b0e30887ddecdcd8e",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metal_resistance_global_biogeography--a8d92f5f": {
+    "case": "",
+    "gist": "Mapping bacterial genomes assembled from environmental samples onto a world grid, a handful of regions stood out: metal resistance genes were unusually common in 11 grid cells and unusually rare in a few others, suggesting uneven geography among these genomes.",
+    "input": "4c3e840d9237a27cbc22d0520ea07c9a65cd50828c2efe5b647a55e426601b94",
+    "model": "claude-sonnet-5-5",
+    "title": "Metal resistance is unusually common in a few world grid cells"
+  },
+  "metal_specificity--0f40573a": {
+    "case": "",
+    "gist": "In gene-knockout screens across 24 organisms, just over half of the metal-important genes with usable data, 54.9%, were needed for growth specifically under metal stress. Disrupting them rarely reduced fitness in other conditions, suggesting dedicated metal-tolerance genes.",
+    "input": "53e07f679d2d752de9eb506108d641e670048347096c98e60d50037893b79026",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metal_specificity--1f6b00a4": {
+    "case": "",
+    "gist": "In gene-knockout screens of bacteria such as Desulfovibrio vulgaris and Bacteroides thetaiotaomicron, newly proposed metal-related gene families are less often metal-specific than annotated ones; only 45.6% mainly affect growth under metal stress.",
+    "input": "9737554c5fda1babd861f509e5bbbe098b0400e94778d5b64009e79f36e9671d",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metal_specificity--83d867cf": {
+    "case": "measured absence",
+    "gist": "Grouping genes into co-acting modules and comparing their activity across experiments turned up no module that responded specifically to a metal. This was a measured absence: the analysis ran and found 0 metal-specific modules.",
+    "input": "2b002cd6b067859e12551c4b281bd45717eb9e1dd819a509571e0c56803bff72",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metal_specificity--94cbeb4a": {
+    "case": "",
+    "gist": "Genes whose loss hurts growth under particular metals were more often annotated with metal-handling functions such as efflux, transport and siderophores than genes needed under stress in general, with 12.2% matching such keywords, suggesting metal-specific genes carry recognisable metal-resistance roles.",
+    "input": "f71d2a999307a2a6086736ad8dd84cb15afc65b7263be1825548209e034213ac",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "metal_specificity--fed6dcbd": {
+    "case": "",
+    "gist": "Across several bacteria, genes whose disruption hurts growth specifically under metal stress are less often part of the conserved core genome than genes whose disruption reduces fitness under many different stresses, suggesting metal-specific adaptations vary more between strains.",
+    "input": "af4cb70bde1fac184b0340e620c664e44006b22fce331977cb710c82e75d8a80",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "microbeatlas_metal_ecology--012a4b6c": {
+    "case": "",
+    "gist": "Across 606 bacterial genera, those resistant to more distinct types of metals tend to occupy a broader range of environments, even after accounting for shared ancestry. Metal-type diversity was the only metal-resistance measure that held up in these genera.",
+    "input": "578531e0b00db77f7533e6396df47e59016a6239d733eaadcf60151b80ac0761",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "microbeatlas_metal_ecology--1e5f530e": {
+    "case": "measured absence",
+    "gist": "An earlier link between metal type and how widely microbial taxa are spread across environments disappeared when niche breadth was recomputed under strict prevalence filtering. No detectable association remained, which suggests the original pattern depended on the filtering choice.",
+    "input": "e73d6168251fd72f287e21b3eeb9687762ad31c5f8138396b99b5d566e494aa6",
+    "model": "claude-sonnet-5-5",
+    "title": "Metal-type link to niche breadth disappears under strict prevalence filtering"
+  },
+  "microbeatlas_metal_ecology--8da311a7": {
+    "case": "measured absence",
+    "gist": "Genera carrying a wider range of metal-resistance types were somewhat more prevalent in groundwater samples, but no detectable extra enrichment specific to groundwater was seen beyond their general prevalence, so the pattern may simply track broad ecological success.",
+    "input": "fb29972c65cdedb3ff1fb7974c43039d89274c5e3401963e4cd9ef0ddfe2e1bc",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "microbeatlas_metal_ecology--b38d81d3": {
+    "case": "",
+    "gist": "Across 1,264 bacterial genera in MicrobeAtlas, how broadly a genus's niche spans environments is strongly shared among relatives, and the number of environment categories where a genus is detected is even more tightly conserved, suggesting habitat breadth runs in lineages.",
+    "input": "b8a1b75919206bfc0cf1eb1a227618c42d23c6be3964e3ceb81bc1c01d8f9336",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "microbeatlas_metal_ecology--e5de5df1": {
+    "case": "",
+    "gist": "In groundwater amplicon samples, the average metal-resistance diversity of the microbial community tended to be higher at later time points. This suggests that community metal-resistance potential shifts over time across the 133 samples.",
+    "input": "c46d4fa14bbd4962dfaaff361eea9c4ed21cae63c0b4265578ff7cc1dc9cf6ac",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "module_conservation--1e6a89d4": {
+    "case": "measured absence",
+    "gist": "Across the gene modules built from gene-knockout screen fitness patterns, no detectable essential genes appeared in any module (0 genes). This is a measured absence, and it shows what kinds of genes these modules do and do not group.",
+    "input": "d75b8eca98a28a95b7cfb3a7bf7869b20d4efa02347b42ee2cc9bf9c845b2870",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "module_conservation--b36fddee": {
+    "case": "",
+    "gist": "Grouping gene-knockout fitness data into functional modules showed that most modules are built almost entirely from core genes shared across a species' genomes, while only a small fraction are mostly accessory genes. About 59% of modules were core.",
+    "input": "e41f2f5f58092a7c6693c1d059f51f11ebc0319cf59240657899ba19d467af5e",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "module_conservation--ba3f89b5": {
+    "case": "",
+    "gist": "Genes that group into co-varying fitness modules in gene-knockout screens are more often part of the conserved core genome than genes overall, at 86%. This suggests that functional units acting together tend to sit in the conserved part of these genomes.",
+    "input": "2f423bd8464a40e065e7580530c180117b4c715b1ef2f90f948bba5b94d01fda",
+    "model": "claude-sonnet-5-5",
+    "title": "Fitness-module genes are more often in the core genome"
+  },
+  "module_conservation--d13bfcb2": {
+    "case": "",
+    "gist": "Across bacteria with gene-knockout fitness data, 38 families of co-regulated gene modules are mostly made of accessory genes (those not found in every strain of a species). This suggests the hypothesis that they are horizontally transferred functional units or niche-specific operons.",
+    "input": "073a57267f95d2f8271bb9b25a5d3ddd0f44970baf35ebaec8e6d71cfb661169",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "module_conservation--ef29c9c3": {
+    "case": "measured absence",
+    "gist": "Gene modules found across more organisms were no more likely to belong to the core genome than modules found in only a few. The analysis ran and found no detectable link between how widely a module family spans organisms and its core fraction.",
+    "input": "edeacd12df1be6d9cf572490d9ea7ef709b1fe3639a88846302b87729510e9d7",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "nmdc_community_metabolic_ecology--4a766ba0": {
+    "case": "",
+    "gist": "In NMDC samples, mostly soil, nearly every amino acid biosynthesis pathway (17 of 18) differed in how completely communities carried it across ecosystem types. Glycine, asparagine and cysteine differed most; tyrosine showed no clear difference.",
+    "input": "5572a32f0165d8ae1d52901aa5cefa29b55f2d7f7210ef01211cf85bad5019dc",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "nmdc_community_metabolic_ecology--6853a137": {
+    "case": "measured absence",
+    "gist": "In microbial community data, communities' ability to make tyrosine trended opposite to the expected link between amino-acid synthesis and availability. Isoleucine synthesis, tested across 18 samples, showed no detectable link in either direction.",
+    "input": "6cbbb15a953419203d180c4bc8cffde8e86b47a0a943efc187436ae0c29a6f18",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "nmdc_community_metabolic_ecology--7d46eb90": {
+    "failed": true
+  },
+  "nmdc_community_metabolic_ecology--dcef6254": {
+    "case": "",
+    "gist": "In environmental microbial communities, most tested amino acid biosynthesis pathways tended to be less complete where the matching amino acid was more abundant in the surrounding metabolites. This fits the Black Queen idea that microbes drop costly functions when neighbors supply them.",
+    "input": "36497639d292337d397220c165496d5d5877a0f25bce09c0a1cbd0842f5827c8",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "nmdc_community_metabolic_ecology--fb740bf4": {
+    "case": "",
+    "gist": "Across soil and freshwater microbial communities, the main axis of metabolic difference was carbon-use pathways (glucuronate, fumarate, succinate, cellobiose, galactose), with soil communities appearing more complete for them. Amino acid pathways separated samples within soil instead.",
+    "input": "a5ab82363239e40d803f083c48b697e8b661fbdb000516a48d77851c816f06c7",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "nmdc_context_audit--10a5a668": {
+    "case": "",
+    "gist": "Data resources labeled as NMDC differ widely in how recently they were updated: the metagenome-assembled genome and NEON tables are the freshest, while the NCBI biosamples table is the stalest, about 4 months behind.",
+    "input": "848c63dfd68887ba2acb12a98038c0c1dde9b751716770abef0b5781206c3499",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "nmdc_context_audit--7809faa5": {
+    "case": "",
+    "gist": "A search of the KBase Data Lakehouse for 'nmdc' returns many database names, but they reduce to just 7 real, maintained resources. These differ in origin, scope and currency, so the shared label tells a researcher little about what any of them holds.",
+    "input": "df9362a3cf9bfd3e451319c3f382f1d86a473a26eff5fc31b8b5383553ea68f7",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "nmdc_context_audit--99bbd8c1": {
+    "case": "measured absence",
+    "gist": "An audit of the KBase Data Lakehouse found that its catalog holds no descriptive comments on tables and no properties on databases, so the NMDC resources there come with no human-readable explanation of what they contain.",
+    "input": "c2e1b473068b1d8e5e65d1590a97f4846d4c0a2291b58bd81246c9ebe0827629",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "nmdc_context_audit--b3940fd4": {
+    "case": "",
+    "gist": "Part of the nmdc tenant is external data re-hosted rather than NMDC output, including an NCBI BioSample harvest of 51,711,888 biosamples and a Pfam term list; the NMDC-related databases nmdc_arkin, nmdc_mags and nmdc_neon sit outside the tenant, in kbase.",
+    "input": "caaf72de800a00ff0b4e3ee1e25953a031570ecc728416f0bd04508c268f671b",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "nmdc_context_audit--d8ef5d8f": {
+    "case": "",
+    "gist": "Among the sample collections hosted together in the lakehouse, the genuine NMDC biosample set is about 3,000\u00d7 smaller than the NCBI mirror stored beside it, and nothing in the table names signals that difference.",
+    "input": "8a4e2c18c4ff4cce1a9e31572a794a2d85ec813952346399d8c35ab9874ada00",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pangenome_openness--0e2125d9": {
+    "case": "measured absence",
+    "gist": "How readily a pangenome gains new genes (its openness) showed no detectable link to how strongly environment shapes a species' ecotypes, suggesting that open pangenomes do not simply track ecological differentiation.",
+    "input": "5d118352691fe1a2cdc032c4adf6b055bfcea74bbec4ad0cfc003abdc0520f4f",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pangenome_openness--737ca282": {
+    "case": "measured absence",
+    "gist": "Across the species analysed, pangenomes that keep turning up extra genes as more genomes are sampled were no more or less tied to shared evolutionary ancestry than other pangenomes. The test ran and found nothing, so there is no detectable relationship.",
+    "input": "7d934e29dd24dc330fafc54ba9db58f557aa34b85575c6163a0801885d0bbb73",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "paperblast_explorer--15fe9e7d": {
+    "failed": true
+  },
+  "paperblast_explorer--3dc1e920": {
+    "case": "",
+    "gist": "In PaperBLAST's text-mined literature links, most genes are tied to just one paper, while the most-referenced genes are all human, led by p53. A small fraction of genes accounts for a majority of all gene-paper links.",
+    "input": "348f61f670725cce85904b302b68f16995b5f3158936436c1506a36487f66a2b",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "paperblast_explorer--415e8345": {
+    "case": "",
+    "gist": "Published gene literature in PaperBLAST is heavily skewed toward a few model species: humans alone account for 46.7% of gene-paper records, while thousands of other organisms share only a thin slice of the papers.",
+    "input": "71cef7f63845c8541ee101b66328078bb328c5d74d2f2e7488487bc47ac4b695",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "paperblast_explorer--9d3f88b4": {
+    "case": "measured absence",
+    "gist": "Across protein families, literature is thin: 9.2% have no papers linked to any member, and nearly half have just one. This suggests large 'dark' regions of protein sequence space that remain essentially unstudied.",
+    "input": "1260b04de17bb54f22723f45ba7f161d5c880af74de2fea647e4d40c831b5f88",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pathway_capability_dependency--250e9510": {
+    "case": "",
+    "failed": true,
+    "gist": "Across model bacteria, pathways that are genomically complete were often not needed: 41.0% showed no significant fitness defects under standard conditions, the largest category, suggesting many pathways act as reserve capability.",
+    "input": "79347fb9ac9a5181b9daa01221d09b62d5b129b3327ebf940f032d54be4e3143",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pathway_capability_dependency--4df15631": {
+    "case": "",
+    "gist": "Within bacterial species that have many sequenced genomes, strains split into distinct metabolic ecotypes according to which pathways they carry, typically about 4 per species, suggesting substantial metabolic sub-structure inside single species.",
+    "input": "3a87b30c81a5629acf2e9bc0bdb3389f169ba17510ba5bb2dc488342d84d8e26",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pathway_capability_dependency--61e28c8b": {
+    "case": "",
+    "gist": "Separating fitness effects by nitrogen source, carbon source, stress and other condition types showed that all 66 pathway-organism pairs whose metabolic pathways appeared dispensable overall became important to growth under at least one condition type.",
+    "input": "12c7bd8ebb55a8d7332e4820c77d132490087fc8ea1f97122206caea8a50c45d",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pathway_capability_dependency--84c4b29b": {
+    "case": "",
+    "gist": "Across 2,810 bacterial species in GTDB, species with more pathways that vary among their genomes tend to have more open pangenomes. The link became stronger once differences in how many genomes each species has were accounted for.",
+    "input": "1c0ee486ae1225cc9a4bf48fb5a57dcba5462dea73dcfa2fec7f3ad712c1ad91",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pathway_capability_dependency--f655b856": {
+    "case": "unperformed analysis",
+    "gist": "A planned comparison of metabolic ecotypes with how broadly genomes range across environments, using AlphaEarth environmental data, was not run, so whether ecotype relates to environmental breadth remains untested here.",
+    "input": "0342732791262a288a19104e8bda62fc182ebf426cb3d813e9dd597ddb63ff74",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pgp_pangenome_ecology--45e0cc45": {
+    "case": "",
+    "gist": "In bacterial pangenomes, plant-growth-promoting genes were on average only 29.7% accessory, well below the genome-wide average. This suggests these traits are mostly inherited vertically with the core genome rather than spread by horizontal transfer.",
+    "input": "b5c85db57f0b5d78ce2d0935e9f6cc90db079f1d0bb7959cc3bc727198137c63",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pgp_pangenome_ecology--6ad3c804": {
+    "case": "",
+    "gist": "Across bacterial species, a complete tryptophan pathway tends to go with carrying ipdC, a gene for making the plant hormone auxin. In soil and rhizosphere species the link flipped: tryptophan-complete species were less likely to carry it.",
+    "input": "e06de23251b0a2e301c775fe174704eafffd3f60855f67cf7a03d19528ab851c",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pgp_pangenome_ecology--6ef7f988": {
+    "case": "",
+    "gist": "The gene for ACC deaminase, a plant growth-promoting enzyme, is 7\u00d7 more prevalent in soil and rhizosphere bacterial species than in species from other environments, and the enrichment persists after accounting for phylum and when only root-associated genomes are used.",
+    "input": "990f7aeb2c03bea7245a9b4700a11d7c294b70918756402cd813ca174c00f165",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pgp_pangenome_ecology--7e9e60f9": {
+    "case": "",
+    "gist": "Across bacterial genomes in this pangenome survey, the nitrogen-fixation gene nifH was found together with the cyanide-production gene hcnC and the pyrroloquinoline-quinone gene pqqC less often than expected, suggesting these plant-growth genes tend not to co-occur with nitrogen fixation.",
+    "input": "fdd0470e092f696aa5716385ea55d6d81dd42df63894059a09ce0bafbf9993fe",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pgp_pangenome_ecology--ac2bd4ee": {
+    "case": "inconclusive test",
+    "gist": "In bacterial genomes, a tyrosine-synthesis pathway meant as a negative control predicted the plant-growth gene ipdC at a similar strength to the tryptophan pathway. This inconclusive test leaves tryptophan-specific coupling unsettled.",
+    "input": "462986af4d5296dca033bdea988a5eb8ae61974e00c3000c9ad2ced3a54c1411",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "phb_granule_ecology--0215baea": {
+    "case": "measured absence",
+    "gist": "In these genomes, Campylobacterota, Gemmatimonadota, Nanoarchaeota and Marinisomatota had no species with a detected PHB synthase, the key enzyme for making the carbon-storage polymer PHB, and Patescibacteria was near zero at 0.4%.",
+    "input": "6f3ce35ec4b982784be12332d0f533db5e5ddd1e37ea8c3b9dd25eee782aa38c",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "phb_granule_ecology--1de7b86b": {
+    "case": "",
+    "gist": "The PHB-synthesis gene phaC is carried by about 60.9% of Pseudomonadota species, but is much rarer in Actinomycetota and other phyla, so the capacity to make PHB granules is unevenly spread across bacterial and archaeal lineages.",
+    "input": "92b5d209b3f2427ca647bc13a60cdd606ebf839c949bfbe3efb3ace9ad5ded6a",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "phb_granule_ecology--589de302": {
+    "case": "",
+    "gist": "Genes for making PHB, a carbon-storage polymer, were consistently more common in bacterial genomes from highly variable environments than from stable ones. The pattern held in small, medium and large genomes alike, with the biggest difference, 4.6-fold, in small-to-mid-sized genomes.",
+    "input": "df9774b8152ceec09edbc7f7612601226ab2189c882580435197fe014494a12a",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "phb_granule_ecology--5e2bc604": {
+    "case": "",
+    "gist": "The polyhydroxybutyrate-synthesis gene phaC is found in about 44.0% of plant-associated bacterial species and nearly as often in soil species, but is rare in human-clinical and animal-associated species, suggesting carbon-storage granules track habitat.",
+    "input": "383ac51976cbbdc4d1f427287dd820077c16aaf4439536f48372f8c3d9301f35",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "phb_granule_ecology--ef20cc78": {
+    "case": "inconclusive test",
+    "gist": "Across bacterial genomes, the apparent link between making the carbon-storage polymer PHB and living in a wider range of environments, which seemed to support the feast-and-famine idea, cannot be separated from genome size, so this analysis was inconclusive.",
+    "input": "7584b5fd2c42fb495b1a0cfa05c9c7cd766c7010da65a036a8d2e5eccf6ef171",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "phb_granule_ecology--f9008fe7": {
+    "case": "",
+    "gist": "Bacterial species whose phaC, a key gene for making PHB storage granules, doesn't match their family tree are far more likely to carry it in the accessory genome, nearly double the rate seen across all phaC carriers. This suggests horizontal acquisition.",
+    "input": "f57d0eac00aa074646d0afc4c85c5d35374cbad75cfb64009ead015e338221ef",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "plant_microbiome_ecotypes--223dadd3": {
+    "case": "",
+    "gist": "Across plant-associated bacteria, comparing against shuffled labels within each genus left only three functional markers standing out: nitrogen fixation, ACC deaminase (an enzyme that lowers plant stress hormone) and the type III secretion system.",
+    "input": "499d8337fc64e541a33435918846feed64ef788316e690e77e779c0d84c7cd62",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "plant_microbiome_ecotypes--64143b61": {
+    "case": "",
+    "gist": "Among plant-associated Xanthomonas species with enough host data, two split by host across their subclades: in X. campestris, nearly all genomes of one subclade come from Brassica, and in X. vasicola, a subclade is dominated by maize (Zea mays) isolates.",
+    "input": "7f0796c747e6a96f33f8cd48e775716d5369558cc43b99cdb0a0a3b8b488d43f",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "plant_microbiome_ecotypes--8106ac12": {
+    "case": "",
+    "gist": "Nearly all of the top plant-enriched gene families (96%) stay clearly more common in plant-associated bacterial genomes even after accounting for phylum and genome size, suggesting the signal is not simply a lineage or genome-size effect.",
+    "input": "fd914345d3ce59940c2a45926101c7d4e83bd8b2753ecd6a5ec7c8be2a19be9b",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "plant_microbiome_ecotypes--de6d574e": {
+    "case": "",
+    "gist": "In plant-associated microbiomes, the clear separation of microbial communities between plant compartments largely disappeared once the few most dominant species in each compartment were removed. This suggests a handful of abundant species drove much of the original compartment signal.",
+    "input": "401fa3603bdcae24b9650566ac074e469bbf78bd130a8c4c88119ea2a57d9b3f",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "prophage_amr_comobilization--02e63b0a": {
+    "case": "",
+    "gist": "Across 4,770 bacterial species, those with higher prophage (integrated virus) marker density also carry a broader range of antibiotic-resistance genes, and the link persists after accounting for the number of genomes sequenced per species.",
+    "input": "3aea28ab3e39f155cd9604a78ec6ad6a1b100dfe69fe6d9e07bc21d5ad6840b6",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "prophage_amr_comobilization--3eb68b95": {
+    "case": "unperformed analysis",
+    "gist": "Whether antibiotic-resistance genes sitting next to prophages (integrated viral DNA) impose a growth cost on their bacterial hosts was not tested, so the question stays open. The analysis was not run.",
+    "input": "5004ee3473788563fcc0b6f1a08633922fa3b06c9a7c86f335cf9dd935154916",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "prophage_amr_comobilization--4cead8a0": {
+    "case": "",
+    "gist": "In bacterial genomes, antibiotic-resistance genes lying close to prophage (integrated virus) markers were slightly more often part of the variable accessory genome than distant ones, with 67.6% of nearby genes accessory versus 65.5% of distant genes.",
+    "input": "022e6445c743109f964914a66cd3f96ab27e7174b63f4acfc1b4a50d5c613b31",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "prophage_amr_comobilization--7802d299": {
+    "case": "",
+    "gist": "In the most resistance-burdened bacterial species, over half (55.7%) of antibiotic-resistance gene instances sit on the same contigs as prophage marker genes, suggesting a frequent physical link between resistance and integrated phages.",
+    "input": "25e925fbd230c74e4751e637be6f0136550155e66fe971752730c7145f36a182",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "prophage_amr_comobilization--f3c69b78": {
+    "case": "",
+    "gist": "In a survey of the full pangenome collection, more than half of bacterial species carry both antibiotic-resistance genes and prophage (integrated virus) markers, 52.9% of the species. Prophage markers were mostly accessory, so they vary between strains of a species.",
+    "input": "01cbc6e55ad197d657a61e923ac4c802af056b35f12e5a237228f372d96ebbad",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pseudomonas_carbon_ecology--0211e0cd": {
+    "case": "inconclusive test",
+    "gist": "In free-living Pseudomonas, carbon-use profiles carry real ecological signal, but the test was inconclusive on whether they can tell fine-grained environment types apart. Carbon metabolism alone, as measured here, does not settle a species' specific habitat.",
+    "input": "18deff4e3b1084f132c1c5614ba6de694d03f2b0efbe75982642545ff681b8b7",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pseudomonas_carbon_ecology--24adcf2d": {
+    "case": "inconclusive test",
+    "gist": "Rhamnose and fucose pathways looked more complete in Pseudomonas aeruginosa genomes (66.8%) than in the P. fluorescens group (41.3% and 45.1%). The comparison was inconclusive, so whether these lineages truly differ in pathway completeness remains unsettled.",
+    "input": "ad45e6a56f02323374ba4722997f92190eccf75b1aac3a416810303797a723b5",
+    "model": "claude-sonnet-5-5",
+    "title": "Rhamnose and fucose pathways look more complete in P. aeruginosa, inconclusively"
+  },
+  "pseudomonas_carbon_ecology--9c42f41a": {
+    "case": "",
+    "gist": "Across Pseudomonas genomes, the P. aeruginosa group appears to have lost most of the ability to catabolize plant-derived sugars, while the P. fluorescens/putida group keeps it. Genome-based pathway predictions separated the two groups in 43 carbon pathways.",
+    "input": "77846d541b1fcf8ca4d0fcf3aa58e43ceaf70fe74555182ce9a97e0f09013859",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pseudomonas_carbon_ecology--a6ba828d": {
+    "case": "",
+    "gist": "In Pseudomonas genomes, the P. aeruginosa group has no complete pathways for xylose, arabinose or myo-inositol, whereas the P. fluorescens group often does, with ribose, galacturonate, mannitol and sorbitol also much lower. This suggests the groups use plant-derived sugars differently.",
+    "input": "ca85e32cac76c6fde99b98df53d01de484f0859ef9bc554520ce73926b549ec2",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pseudomonas_carbon_ecology--cbe7e256": {
+    "case": "",
+    "gist": "In Pseudomonas, the carbon-use pathways encoded in a genome carry some signal about where a species lives. A classifier sorting species into soil, freshwater, plant-surface or rhizosphere habitats did clearly better than chance, suggesting carbon metabolism partly tracks habitat.",
+    "input": "1056ecd19ae60ea9ed43c9a868e2cf242bd1458268e713bc2403b3fb04357bc6",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "pseudomonas_carbon_ecology--eb1d58ae": {
+    "case": "",
+    "gist": "Across 54 free-living and plant-associated Pseudomonas species, the mix of carbon-use pathways in their genomes tracked where the strains were isolated, suggesting that carbon metabolism carries an ecological signal.",
+    "input": "c848d0043a20d0f9b42d8a23024b37a01739fa88ec163f037e9f6f28ba97b685",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "soil_frontier_genomics--0fa73728": {
+    "case": "inconclusive test",
+    "gist": "Models predicting functional-gene counts in soils from soil and climate, geochemical, or industrial variables all did worse than guessing the average on held-out samples. This test was inconclusive about whether these soil genes are predictable from such variables.",
+    "input": "f48c7a14e14bb882db7bd6ef9c1d3dbdbfa5613950927e650154c393208f3fdd",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "soil_frontier_genomics--25df967c": {
+    "case": "",
+    "gist": "Soil areas that are poorly represented in public genomic databases were more alkaline than well-mapped areas, by about 0.8 pH units. This suggests alkaline soil microbiomes are systematically under-sampled in public genomic databases.",
+    "input": "7c4e7863d5a98073bd38d9f860b1a1780d1bee4daeb1cac58b6304e307656358",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "soil_frontier_genomics--2ab586c6": {
+    "case": "",
+    "gist": "Forest and Cropland soils stand out as the least-mapped genomic frontier, with the highest genomic discovery index of the biomes compared, while Grassland and Wetland look relatively well mapped. This suggests where new soil sequencing could add the most.",
+    "input": "48a71c42827c65c32c582319d5eec2be8330043a58b2e0e0cc4a89d1d6c7ca6b",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "soil_frontier_genomics--a002c998": {
+    "failed": true
+  },
+  "soil_metal_functional_genomics--129a64ad": {
+    "case": "",
+    "gist": "In soil microbial communities, the abundance of many gene families shifted with metal levels, with chromium and lead giving the strongest signals. Transporter genes (ABC, RND) and biosynthesis genes dominated the top hits, suggesting soil microbial functions track metal contamination.",
+    "input": "547cb1343df61bee506882cf96a04c77bd59170cdf8357e73ff280ca4764a368",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "soil_metal_functional_genomics--2a80fc76": {
+    "case": "",
+    "gist": "Across soils matched to nearby KBase genomes, genes for cell division and nucleotide transport were enriched with copper, while energy-production genes were depleted. This suggests microbial communities under copper stress may trade energy metabolism for other functions.",
+    "input": "b38e8901f8a001579e55de83bd2ecd6c2e3ef9652d628d1ad0071e0a8d7f6f5f",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "soil_metal_functional_genomics--aaafa6a8": {
+    "case": "missing data",
+    "gist": "In this soil study of metal concentrations and community functional genes, the share of gene-content variation explained by metals alone was not reported. This is missing data, so how strongly metals shape functional genes by themselves is unknown.",
+    "input": "cbe49e11cf82cc6d44451a61f3e8ec62ad606a5dbe79a390f931aca312ef8156",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "soil_metal_functional_genomics--becb7d4e": {
+    "case": "",
+    "gist": "Across soil, marine and wastewater microbial communities, the links between metal levels and gene functional categories differed by environment, suggesting each habitat responds to metals in its own way rather than through one shared resistance programme.",
+    "input": "662c642fbe9749fbd7ff3611928044b39039b40e3747bc60b55e3a455b586e39",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "soil_metal_functional_genomics--e27860e8": {
+    "case": "unperformed analysis",
+    "gist": "A soil study links metal concentrations to shifts in gene functional categories across 2,355 associations. How large each shift is has not been reported across the whole set, so many may be too small to matter biologically; this analysis was not performed.",
+    "input": "2f8b701e525f148eff2f73cb3e18dec8613466cef1ef8b6cefc0608dadb2dae1",
+    "model": "claude-sonnet-5-5",
+    "title": "Size of metal-gene associations not yet systematically reported across the full set"
+  },
+  "soil_metal_functional_genomics--fd9b94cc": {
+    "case": "",
+    "gist": "In soil microbial communities, metal concentrations accounted for 80% of the variation in community gene-function profiles once differences between sampling projects were removed, suggesting metals strongly shape which functional genes communities carry.",
+    "input": "416d63d1192127c6ef01682adb391fa166bb4335b83741fac5fbfc8ab08839db",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "t4ss_cazy_environmental_hgt--44ad24db": {
+    "case": "",
+    "gist": "Among environmental genomes assembled from metagenomes, those carrying a GT2 sugar-transferase gene near type IV secretion genes had 11\u00d7 more metal resistance genes than other genomes. This suggests a link between gene-transfer machinery and metal tolerance.",
+    "input": "39614e37940d586f95806ce3833d2277f325c5b86f36919f2c29f9c6ce982de5",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "t4ss_cazy_environmental_hgt--5d73bfde": {
+    "case": "measured absence",
+    "gist": "Scans of bacterial genomes found no detectable plasmid-borne carbohydrate-active enzyme genes among the top gene accumulators. Genomes with type IV secretion systems had 10\u00d7 higher density of mobile genetic elements, suggesting these genes spread by chromosomal, integrative transfer.",
+    "input": "bda917726544e6b97ff6eaa697e9830f4108f4e8f86a1a3f3c090846ccc9d8f2",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "t4ss_cazy_environmental_hgt--91e33b0b": {
+    "case": "",
+    "gist": "Across bacterial genomes, 92 families of carbohydrate-processing enzymes tend to sit near type IV secretion system genes, suggesting a link between secretion machinery and sugar-modifying enzymes. Glycosyltransferase family GT2 is the strongest association, found beside these loci in many genomes.",
+    "input": "70d0eb3b627025e3f5e2679313329c02245ac23876a61f1f0126af6bd8ec5683",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "t4ss_cazy_environmental_hgt--a2b33180": {
+    "case": "",
+    "gist": "A gene-family tree for GT2 sugar-building enzymes points to 32 high-confidence horizontal gene transfer events crossing phyla, suggesting these genes move between distant bacterial lineages, with the strongest event linking many phyla.",
+    "input": "09bce37010a3d74f5d5bd0f2404be2d4bf6cea62ddad778a4057075b1de150ad",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "t4ss_cazy_environmental_hgt--a744bbc9": {
+    "case": "",
+    "gist": "Genes for type IV secretion and conjugation, a machinery bacteria use to pass DNA between cells, turned up in 21.8% of high-quality environmental genomes assembled from metagenomes, suggesting DNA-transfer capacity is widespread in environmental bacteria.",
+    "input": "550f078f2150e83f47914c15d9b93e3741ad5e1c8de50a29244048465d3139f8",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "truly_dark_genes--8c818410": {
+    "case": "measured absence",
+    "gist": "Truly dark genes (no known function even after modern annotation) that strongly affect growth in gene-knockout screens showed no detectable stress enrichment. They were less often stress-related than genes whose annotation merely lagged, and more often tied to nutrient, mixed-community and iron conditions.",
+    "input": "ba2bbc5f7f5ea69f381a68538c947f12ea7d836def5aa5edc187418e14d5712c",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "truly_dark_genes--92c362cf": {
+    "case": "",
+    "gist": "Re-annotating Fitness Browser dark genes with a modern annotation tool gave a more informative label to most of those linked to pangenomes, shrinking the mystery set to a small core that both old and new annotations still call hypothetical proteins.",
+    "input": "2b976b3bdd3699c1ce37e1aba7e076968e4dc0ccfd9db5a9ba4501bdc0417d23",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "truly_dark_genes--947aec4f": {
+    "case": "",
+    "gist": "Genes that stay unexplained after modern annotation are shorter, more often found only in some strains, and have orthologs in far fewer organisms than genes whose function was simply slow to be annotated. Only 29.3% of the truly dark genes have orthologs.",
+    "input": "6d5000fa81384f85592ef0820911e4aa9028136d331e60050d4c0c6f2a26e6c1",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "truly_dark_genes--ba47a194": {
+    "case": "",
+    "gist": "Of the truly dark genes that remain unexplained after modern annotation, only 246 have no clue of any kind. Most carry sequence identifiers alone, and many others have a fitness or essentiality signal, which gives a starting map for choosing genes to study.",
+    "input": "a1e1d1ea77bafd221fafeca408c12f7c924db6eaefbf7b3313a9d99480d9dd43",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  },
+  "truly_dark_genes--d1b84273": {
+    "case": "",
+    "gist": "Genes that stay unannotated even with modern tools cluster in a few organisms: Methanococcus strains S2 and JJ hold 55% of all truly dark genes in the Fitness Browser, with archaea at the high end, likely reflecting sparse archaeal coverage in annotation databases.",
+    "input": "d727a5afa79b9dcf4eb0bd34248086655068fe8c37662ed6e0bed6d4eb3a4807",
+    "model": "claude-sonnet-5-5",
+    "title": ""
+  }
+}
