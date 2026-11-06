@@ -18,8 +18,8 @@ the schedule runs and what validates each page.
 | `wiki/authors/` | Attribution and project lists from observatory metadata, plus model-written, reviewed Contributions sections. |
 | `wiki/data/` | Data-collection metadata joined to the projects that mention each collection. |
 | `wiki/opportunities.md` and `wiki/negative-results.md` | Deterministic digests of Open Directions and report caveats or null results. |
-| `wiki/findings/` | At most 6 headline findings per report in `contract/cards.yaml`, each with Key figures, the verbatim Evidence quote, its Caveat and the report's other caveats. The literature label lives in `state/novelty.json` and joins the page at publish. Published only in a preview build. |
-| `wiki/directions/` | Research directions for each topic in `contract/cards.yaml`, written from the topic's findings, literature labels and conflicts: the question, Hypothesis, Why it matters, How to test it, What would support or refute it, Data, Builds on and Closest published work. Proposals that would repeat or correct existing work are not directions; they are listed per report for maintainers at publish. Published only in a preview build. |
+| `wiki/findings/` | At most 6 headline findings per report in `contract/cards.yaml`, each with Key figures, the verbatim Evidence quote, its Caveat and the report's other caveats. The literature label lives in `state/novelty.json` and joins the page at publish. |
+| `wiki/directions/` | Research directions for each topic in `contract/cards.yaml`, written from the topic's findings, literature labels and conflicts: the question, Hypothesis, Why it matters, How to test it, What would support or refute it, Data, Builds on and Closest published work. Proposals that would repeat or correct existing work are not directions; they are listed per report for maintainers at publish. |
 
 Topic membership is saved in `state/curator-topics.json`. The host rejects
 unknown or duplicated concepts, missing memberships, unsafe titles and stale
@@ -75,17 +75,15 @@ from the accepted wiki without editing it:
   counts) and `ask.md`, which the theme's browser script fills with the Ask
   interface. A record page shows its one-line brief, when the page has one,
   and a line naming its kind that links to the guide.
-- Finding and research-direction records publish only when `WIKI_PREVIEW=1`
-  is set (`WIKI_PREVIEW=1 scripts/build_quartz.sh`). Then
+- Finding and research-direction records publish with every build.
   [`publish/cards.py`](../src/beril_wiki/publish/cards.py) joins each finding's
   literature label, topics, related conflicts and the research directions that
   build on it, and gives each direction a BERIL prompt and a handoff brief. It
   also writes `findings/index.md`, `directions/index.md`, a `cards.json`
   export, and one `data-issues/<report>.md` page per report listing the
   in-scope proposals that would repeat, correct or reconcile its work; each
-  report summary links to its list. The public build leaves all of these out,
-  and links to them become plain text.
-- In a preview build, `publish/cards.py` also places and joins results across
+  report summary links to its list.
+- `publish/cards.py` also places and joins results across
   projects:
   - Each result sits under the main topic whose concepts cite its project
     most; ties go alphabetically.
@@ -139,10 +137,10 @@ opportunities and negative results help readers find follow-up questions and
 avoid repeating unsuccessful analyses. The home page's "Find your way in"
 cards state which question each kind of page answers.
 
-In a preview build with findings, the top bar adds Results and Open questions
+When the corpus has findings, the top bar adds Results and Open questions
 before the existing collections, which all keep their entries. The home page
-opens as the public home does (what the wiki is, how it was made, the corpus
-counts and Ask), then "Find your way in", "What the projects found",
+opens with what the wiki is, how it was made, the corpus
+counts and Ask, then "Find your way in", "What the projects found",
 "Questions still open", The map and Topics.
 
 Each home result and question carries a topic strip: one slot per topic, in

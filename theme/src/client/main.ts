@@ -348,7 +348,7 @@ function ensurePalette(): HTMLElement {
 
 function scopesFor(): [string, string][] {
   const p = bySlug.get(here())
-  // Finding and research-direction groups only where a preview build published them.
+  // Finding and research-direction groups only where the build published records.
   const present = new Set(pages.map((x) => x.group))
   const groups = GROUPS.filter(([g]) => g !== "other" && (!["finding", "direction"].includes(g) || present.has(g)))
   const s: [string, string][] = [["all", "All"], ...groups]
@@ -1044,7 +1044,7 @@ function renderAskPage() {
   const scoped = bySlug.get(params.get("page") ?? "")
   const pageScope = scoped && askable(scoped) ? scoped.slug : ""
   const topics = pages.filter((p) => p.group === "topic")
-  // Planning reads only the records a project is chosen from; a preview build publishes them.
+  // Planning reads only the records a project is chosen from.
   const PLAN = new Set(["finding", "direction", "conflict"])
   const canPlan = pages.some((p) => p.group === "finding" || p.group === "direction")
   const planScope = canPlan && params.get("scope") === "plan"

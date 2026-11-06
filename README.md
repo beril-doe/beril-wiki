@@ -114,10 +114,8 @@ Pushing to `main` rebuilds and deploys the site to
 build without deploying, so the Linux-only parts of the render are checked
 before they reach the live site.
 
-The deployed site leaves out the finding and research-direction records under
-`wiki/findings/` and `wiki/directions/`. `WIKI_PREVIEW=1 scripts/build_quartz.sh`
-renders them locally, and its home page then leads with findings and next
-steps.
+The site publishes the finding and research-direction records under
+`wiki/findings/` and `wiki/directions/` as its Results and Open questions pages.
 
 The job is render-only. It needs no API key, because `wiki/` and every
 figure are committed. Refreshing the *content* is still a maintainer

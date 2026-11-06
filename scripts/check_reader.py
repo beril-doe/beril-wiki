@@ -1,10 +1,10 @@
-"""Done checks for the preview reader pages (spec 2026-11-04-reader-overhaul-design.md).
+"""Done checks for the result and question reader pages (spec 2026-11-04-reader-overhaul-design.md).
 
-Run against a preview build, either the one `quartz build --serve` serves on 8080 or
+Run against a build, either the one `quartz build --serve` serves on 8080 or
 `--serve quartz/public`, which serves the built folder with clean URLs (a plain
 `http.server` 404s on `/findings/<id>`)::
 
-    WIKI_BASE_URL=localhost:8096 WIKI_PREVIEW=1 CBORG_API_KEY= scripts/build_quartz.sh
+    WIKI_BASE_URL=localhost:8096 CBORG_API_KEY= scripts/build_quartz.sh
     uv run --with playwright python scripts/check_reader.py grid \
         --base http://localhost:8096 --serve quartz/public
 

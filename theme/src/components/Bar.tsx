@@ -31,8 +31,8 @@ function Logo() {
   )
 }
 
-// Results and open questions lead the bar where a preview build publishes
-// them; every collection keeps its own entry, so no part of the wiki is hidden.
+// Results and open questions lead the bar when the build has records; every
+// collection keeps its own entry, so no part of the wiki is hidden.
 const RECORDS: [string, string][] = [
   ["Results", "findings/index"],
   ["Open questions", "directions/index"],

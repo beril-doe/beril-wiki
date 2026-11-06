@@ -1,4 +1,4 @@
-"""Publish-time joins for finding and research-direction records (preview builds only).
+"""Publish-time joins for finding and research-direction records.
 
 The curator stages write each record alone; this step places them. It adds the
 literature label from state/novelty.json, the topics a finding belongs to, the
@@ -10,21 +10,18 @@ so placement never costs a model call and never edits pages under wiki/.
 Reanalysis proposals, which repeat or correct existing work, are listed per report
 under data-issues/ for the reports' maintainers rather than as research.
 
-The public build leaves the records out until the full-corpus run is approved:
-set WIKI_PREVIEW=1 to publish them. ingest.py calls record() on each record page
-before its generic transforms (title, [src:] links, dead-link repair) run.
+ingest.py calls record() on each record page before its generic transforms (title,
+[src:] links, dead-link repair) run.
 """
 
 from __future__ import annotations
 
 import json
-import os
 import pathlib
 import re
 
 import yaml
 
-PREVIEW_ENV = "WIKI_PREVIEW"
 DIRS = ("findings", "directions")
 ISSUES = "data-issues"
 FM = re.compile(r"^---\n(.*?)\n---\n", re.S)
@@ -109,10 +106,6 @@ def compare_text(entry: dict | None) -> str:
 
 
 DIGESTS = ("discoveries", "pitfalls")
-
-
-def preview() -> bool:
-    return os.environ.get(PREVIEW_ENV) == "1"
 
 
 def split(text: str) -> tuple[dict, str]:

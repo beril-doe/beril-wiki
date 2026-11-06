@@ -28,7 +28,7 @@ const STORE = join(REPO, "search/section-vectors.jsonl")
 const EMBED_INPUT = join(REPO, "quartz/search-embed-input.json")
 const DIM = 768
 
-// findings and directions exist only in a preview build (publish/cards.py).
+// findings and directions exist when the corpus has records (publish/cards.py).
 const DIRS = ["topics", "concepts", "conflicts", "entities", "summaries", "sources", "authors", "data", "findings", "directions"]
 const ROOT_PAGES = ["about", "negative-results", "opportunities"]
 const ENTITY = new Set(["organism", "gene", "compound", "method", "dataset", "entity"])

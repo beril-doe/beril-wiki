@@ -1,5 +1,5 @@
 // The home page swaps the record for the corpus in figures, a map of it, and
-// the topic table. When finding records are published (a preview build), two
+// the topic table. When finding records are published, two
 // boxes join Find your way in, and three results and three questions follow it,
 // each with a topic strip.
 import type { FullSlug } from "@quartz-community/types"

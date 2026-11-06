@@ -314,8 +314,8 @@ records publish.
 ## Checking the reader pages
 
 `scripts/check_reader.py {home,plain,grid,pages,cross}` drives the installed Chrome
-through Playwright against a preview build and exits 1 with one line per
-failure. Build with `WIKI_BASE_URL=localhost:8096 WIKI_PREVIEW=1
+through Playwright against a local build and exits 1 with one line per
+failure. Build with `WIKI_BASE_URL=localhost:8096
 CBORG_API_KEY= scripts/build_quartz.sh`, then run
 `uv run --with playwright python scripts/check_reader.py grid --base
 http://localhost:8096 --serve quartz/public`. `--serve` serves the built folder
@@ -648,9 +648,8 @@ page; this is a file cursor, not a result count. Search is literal and excludes
 copied raw sources. This CLI is a retrieval boundary, **not an installed BERIL or
 OpenViking integration**.
 
-After local acceptance, `scripts/build_quartz.sh` renders the existing format.
-`WIKI_PREVIEW=1 scripts/build_quartz.sh` also publishes the finding and
-research-direction records and the maintainers' data-issue lists.
+After local acceptance, `scripts/build_quartz.sh` renders the site, including the
+finding and research-direction records and the maintainers' data-issue lists.
 With `CBORG_API_KEY` set, it also embeds the sections that have no vector yet.
 Then run `uv run python -m beril_wiki.publish.search_data push` before opening
 the pull request: the vectors live on the `search-data` branch, and a pull

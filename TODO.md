@@ -44,18 +44,19 @@ wishlist are tagged [P]; platform-dependent items are deferred at the bottom.
       them), and `wiki/directions/` (58 directions in 12 of
       14 topics with findings); reanalysis proposals are listed per report for
       maintainers under `data-issues/` at publish. `contract/cards.yaml` scopes
-      `all` reports and topics. The records publish only with `WIKI_PREVIEW=1`.
+      `all` reports and topics. The records publish with every build.
       Stage `links` writes links between projects to `state/links.json`
       (Nov 2026: 121 candidates, 83 current links, 34 dropped, 4 failed; USD
       2.23 of a USD 5 cap). Stage `shared` writes results two or more projects
       reached to `state/shared.json` (9 accepted, 2 failed review; USD 0.71 of
       a USD 8 cap); the Results page shows them under the picture.
-      `scripts/check_reader.py` checks the preview pages and
-      `scripts/check_links.py` the links and shared results. Open before the
-      public flip: a person reads 10 summaries and the home page; a person
-      checks 10 labels against PubMed; a BERIL scientist rates the directions;
-      embed the new sections on LBLnet and push them to
-      `search-data`. Two topics have no directions because OpenAI refuses
+      `scripts/check_reader.py` checks the reader pages and
+      `scripts/check_links.py` the links and shared results. The records
+      publish with every build since PR #13 (Nov 2026). Still open: a person
+      checks 10 labels against PubMed, and a BERIL scientist rates the
+      directions; a Sonnet and a Codex content review stand in for now. The
+      gists, directions, links and shared stages have new rules from that
+      review and need a priced rerun to apply them. Two topics have no directions because OpenAI refuses
       their GPT review as possible biological risk; 9 reports did not converge
       (see `.agentic/failures.json`).
       [P: surface hypotheses, recommend next steps]

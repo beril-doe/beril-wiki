@@ -1,4 +1,4 @@
-// Result and open-question cards: the front of the wiki in a preview build. Every
+// Result and open-question cards: the front of the wiki. Every
 // word a card shows comes from page frontmatter that publish/cards.py wrote, so
 // nothing here re-maps or judges a record. The cards carry data attributes the
 // browser script filters on (src/client/cards.ts).

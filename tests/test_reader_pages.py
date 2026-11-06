@@ -99,34 +99,20 @@ def card_corpus(kb):
     )
 
 
-def publish(kb, dst, monkeypatch, preview):
+def publish(kb, dst, monkeypatch):
     import sys
 
     from beril_wiki.publish import ingest
 
-    if preview:
-        monkeypatch.setenv("WIKI_PREVIEW", "1")
-    else:
-        monkeypatch.delenv("WIKI_PREVIEW", raising=False)
     monkeypatch.setattr(sys, "argv", ["ingest", str(kb), str(dst)])
     ingest.main()
 
 
-def test_ingest_hides_records_without_preview(tmp_path, monkeypatch):
-    card_corpus(tmp_path / "kb")
-    publish(tmp_path / "kb", tmp_path / "out", monkeypatch, preview=False)
-    assert not (tmp_path / "out/findings").exists()
-    assert not (tmp_path / "out/directions").exists()
-    assert not (tmp_path / "out/data-issues").exists()
-    assert not (tmp_path / "out/cards.json").exists()
-    assert (tmp_path / "out/concepts/gap.md").exists()
-
-
-def test_ingest_preview_merges_label_and_topics(tmp_path, monkeypatch):
+def test_ingest_merges_label_and_topics(tmp_path, monkeypatch):
     import json
 
     card_corpus(tmp_path / "kb")
-    publish(tmp_path / "kb", tmp_path / "out", monkeypatch, preview=True)
+    publish(tmp_path / "kb", tmp_path / "out", monkeypatch)
     finding = (tmp_path / "out/findings/a--1a2b3c4d.md").read_text()
     assert 'label: "Candidate novel"' in finding and 'topics: ["dark-matter"]' in finding
     assert "## Compared with published work" in finding and "retrieved on 2026-10-23" in finding
