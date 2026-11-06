@@ -89,3 +89,8 @@ def asks_to_redo(text: str) -> bool:
     genes that stay dark after reannotation ...") without asking to redo it."""
     lead = " ".join(re.sub(r"\*\*", "", text).split()[:4])
     return REANALYSIS.search(lead) is not None
+
+
+def words(text: str) -> int:
+    """The word count the length limits on card text use."""
+    return len(text.split())

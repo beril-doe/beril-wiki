@@ -11,7 +11,7 @@ from pathlib import Path
 import yaml
 
 from beril_wiki.agentic.batch import changed_sources
-from beril_wiki.agentic.curator import EDITORIAL, pending_actions
+from beril_wiki.agentic.curator import CARD_STAGES, EDITORIAL, pending_actions
 from beril_wiki.agentic.prose import owning_stage
 from beril_wiki.agentic.runner import locked, recover, run, run_stage
 from beril_wiki.agentic.runtime import (
@@ -60,7 +60,6 @@ def load_failures(root: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
 
 
-CARD_STAGES = ("headlines", "novelty", "directions", "gists", "links", "shared")
 # Job step prefixes a full run issues besides the editorial stages; a USD cap must name one.
 RUN_PREFIXES = (
     "extract",

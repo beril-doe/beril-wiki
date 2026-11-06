@@ -26,7 +26,7 @@ from beril_wiki.agentic.prose import PageFailure, prune_failures, record_failure
 from beril_wiki.agentic.runtime import CandidateError, Runtime, atomic_json, digest, prompt
 from beril_wiki.paths import ROOT
 from beril_wiki.stages import cards, links
-from beril_wiki.wording import LINK_BANNED, STAT_WORDS, STATS
+from beril_wiki.wording import LINK_BANNED, STAT_WORDS, STATS, words
 
 STATE = Path("state/shared.json")
 LINKS = Path("state/links.json")
@@ -77,10 +77,6 @@ PROMPT = prompt(
     'Return only JSON {"title": "...", "sentence": "...", "question": "...", '
     '"lanes": {"<result id>": "..."}, "how": "..."}.\n',
 )
-
-
-def words(text: str) -> int:
-    return len(text.split())
 
 
 def group_topics(root: Path, projects: list[str]) -> list[str]:

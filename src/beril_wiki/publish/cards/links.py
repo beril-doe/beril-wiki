@@ -62,8 +62,9 @@ def related_components(c: Corpus) -> set[frozenset[str]]:
 
 
 def relation_of(c: Corpus, members: list[str]) -> str:
-    """How the current links relate a group's results: the strongest relation among
-    them, in the order the shared stage ranks them (RELATION_TEXT's order)."""
+    """How the current links relate a group's results: the weakest relation among
+    them, as the shared stage sets it (RELATION_TEXT lists the relations strongest
+    first)."""
     order = list(RELATION_TEXT)
     inner = [
         x["type"]

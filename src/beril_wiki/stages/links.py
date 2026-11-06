@@ -36,7 +36,7 @@ from beril_wiki.agentic.runtime import CandidateError, Runtime, atomic_json, dig
 from beril_wiki.paths import ROOT
 from beril_wiki.records import DIGESTS, FINDINGS, finding_text, projects_in, title_of
 from beril_wiki.stages import cards
-from beril_wiki.wording import LINK_BANNED, PLUMBING, STAT_WORDS, STATS
+from beril_wiki.wording import LINK_BANNED, PLUMBING, STAT_WORDS, STATS, words
 
 STATE = Path("state/links.json")
 SOURCES = Path("wiki/sources")
@@ -145,10 +145,6 @@ REF_PROMPT = prompt(
     'Return only JSON {"items": [{"id": "R1", "relation": "...", "label": "..."}]}, one '
     "item per named project.\n",
 )
-
-
-def words(text: str) -> int:
-    return len(text.split())
 
 
 def normalized(text: str) -> str:

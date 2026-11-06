@@ -49,7 +49,6 @@ TITLE_WORDS = 14
 TITLE_CHECK_WORDS = 18
 # Bump when render() changes: pages re-render from the saved reply at no cost.
 RENDER = "direction-page@1"
-READINESS = ("data in the lakehouse", "needs compute", "needs new measurements", "unknown")
 Approach = Literal["lakehouse analysis", "experiment", "analysis then experiment"]
 Readiness = Literal["data in the lakehouse", "needs compute", "needs new measurements", "unknown"]
 

@@ -47,7 +47,7 @@ from beril_wiki.records import (
     title_of,
 )
 from beril_wiki.stages import cards
-from beril_wiki.wording import GIST_BANNED, JARGON, statistical
+from beril_wiki.wording import GIST_BANNED, JARGON, statistical, words
 
 STATE = Path("state/gists.json")
 PROMPT_TAG = "gists@4"
@@ -148,10 +148,6 @@ def last_objections(step: str) -> str:
     entry = json.loads(path.read_text(encoding="utf-8")).get(step) or {}
     notes = [i["note"].split("unsupported: ", 1)[-1] for i in entry.get("issues", [])]
     return " ".join(notes)[:1500]
-
-
-def words(text: str) -> int:
-    return len(text.split())
 
 
 def plain_title(title: str) -> bool:
