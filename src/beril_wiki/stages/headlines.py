@@ -29,13 +29,17 @@ from pydantic import BaseModel, ConfigDict, Field
 from beril_wiki.agentic.prose import (
     PLATFORM,
     PageFailure,
-    parallel,
     prune_failures,
     record_failure,
-    strict_pages,
-    workers,
 )
-from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, file_hash, prompt
+from beril_wiki.agentic.runtime import (
+    CandidateError,
+    Runtime,
+    atomic_json,
+    digest,
+    file_hash,
+    prompt,
+)
 from beril_wiki.paths import ROOT
 from beril_wiki.records import FINDINGS, load_scope, source_path, source_title
 from beril_wiki.stages import cards
@@ -308,7 +312,7 @@ def main(root: Path = ROOT) -> int:
     out = root / OUT
     out.mkdir(parents=True, exist_ok=True)
     state_path = root / STATE
-    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+    state = cards.load_state(state_path)
     agent = cards.runtime()
     evidence = cards.source_evidence(agent.store, root, reports)
 
@@ -335,19 +339,11 @@ def main(root: Path = ROOT) -> int:
             continue
         todo.append((sid, records, messages, key))
 
-    def write(item: tuple) -> Reply:
+    def write(item: tuple, agent: Runtime) -> Reply:
         sid, records, messages, _ = item
-        mine = cards.runtime()  # a ledger connection belongs to the thread that opened it
-        try:
-            return cards.reviewed(
-                messages,
-                f"headlines/{sid}",
-                checker(records),
-                agent=mine,
-                salvage=salvager(records),
-            )
-        except CandidateError as exc:
-            raise cards.failure(f"headlines/{sid}", exc, mine) from exc
+        return cards.reviewed(
+            messages, f"headlines/{sid}", checker(records), agent=agent, salvage=salvager(records)
+        )
 
     today = datetime.date.today().isoformat()
     written = failed = 0
@@ -377,11 +373,11 @@ def main(root: Path = ROOT) -> int:
 
     for sid, records, key, reply in accepted:
         publish(sid, records, key, reply)
-    for (sid, records, _, key), result in parallel(todo, write, workers()):
+    for (sid, records, _, key), result in cards.each_job(
+        todo, lambda item: f"headlines/{item[0]}", write
+    ):
         if isinstance(result, PageFailure):
             failed += 1
-            record_failure(f"headlines/{sid}", result)
-            print(f"  [FAILED] headlines/{sid}: {result}")
             continue
         publish(sid, records, key, result)
         written += 1
@@ -399,7 +395,7 @@ def main(root: Path = ROOT) -> int:
         f"headlines: {written} report(s) written, {len(reports) - len(todo)} unchanged or "
         f"skipped, {failed} failed, {retired} page(s) retired"
     )
-    return 1 if failed and strict_pages() else 0
+    return cards.exit_code(failed)
 
 
 if __name__ == "__main__":

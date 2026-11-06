@@ -285,3 +285,34 @@ def test_run_rejects_a_usd_cap_on_a_stage_it_never_runs(tmp_path, monkeypatch):
     called.clear()
     monkeypatch.setattr(sys, "argv", [*base, "lit=5"])
     assert cli.main() == 0 and called
+
+
+def test_each_job_records_unconverged_items_and_stops_on_other_errors(
+    tmp_path, monkeypatch, capsys
+):
+    """An item whose reply never converges fails alone, recorded under its step; the
+    item that converged is left for the caller to clear after it saves; any other
+    error stops the stage."""
+    config = tmp_path / "config.json"
+    config.write_text(json.dumps({"store": str(tmp_path), "workers": 2}))
+    monkeypatch.setenv("BERIL_AGENTIC_CONFIG", str(config))
+    monkeypatch.setattr(cards, "runtime", lambda: type("Agent", (), {"jobs": ["j1"]})())
+    (tmp_path / "failures.json").write_text(json.dumps({"s/ok": {"issues": []}}))
+
+    def job(item, agent):
+        if item == "bad":
+            raise R.CandidateError("objections still open")
+        return item.upper()
+
+    results = dict(cards.each_job(["ok", "bad"], lambda item: f"s/{item}", job))
+    assert results["ok"] == "OK"
+    assert isinstance(results["bad"], cards.PageFailure)
+    failures = json.loads((tmp_path / "failures.json").read_text())
+    assert set(failures) == {"s/ok", "s/bad"}
+    assert "[FAILED] s/bad" in capsys.readouterr().out
+
+    def broken(item, agent):
+        raise R.WorkflowError("budget admission refused")
+
+    with pytest.raises(R.WorkflowError):
+        list(cards.each_job(["x"], lambda item: f"s/{item}", broken))

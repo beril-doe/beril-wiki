@@ -1,8 +1,12 @@
-"""Shared pieces of the finding, literature-label and research-direction stages.
+"""The model-job machinery the six card stages share.
 
-The stages headlines, novelty and directions each write only their own records, so
-the pages Topics and Literature own keep their fingerprints. Their model replies
-are JSON, checked here in code before any reviewer reads them.
+The card stages (headlines, novelty, directions, gists, links and shared) each write
+only their own records, so the pages Topics and Literature own keep their
+fingerprints. Their model replies are JSON, checked in code before any reviewer
+reads them. This module runs those jobs: one per item in a worker pool, with code
+checks, an open review and closed verifications, salvage of a reply that did not
+converge, and a failure record per item. Reading pages and records is in
+beril_wiki.records; the wording rules are in beril_wiki.wording.
 """
 
 from __future__ import annotations
@@ -10,14 +14,22 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
 from pathlib import Path
 from typing import TypeVar
 
 from pydantic import BaseModel, ValidationError
 
 from beril_wiki import compiler as C
-from beril_wiki.agentic.prose import Issue, PageFailure, record_salvage
+from beril_wiki.agentic.prose import (
+    Issue,
+    PageFailure,
+    parallel,
+    record_failure,
+    record_salvage,
+    strict_pages,
+    workers,
+)
 from beril_wiki.agentic.runtime import (
     CARD_EFFORT,
     CONTENT_FLAG,
@@ -36,6 +48,7 @@ from beril_wiki.records import source_path, title_of
 
 T = TypeVar("T")
 M = TypeVar("M", bound=BaseModel)
+I = TypeVar("I")  # noqa: E741
 
 # A verifier objection that opens "Issue 3 remains: ..." restates issue 3 of its list.
 RESTATED = re.compile(r"^\W*issue\s+#?(\d+)\b", re.I)
@@ -49,6 +62,41 @@ def require_runtime(stage: str) -> bool:
         return True
     print(f"stages.{stage}: needs the agentic runtime (agentic run); nothing written")
     return False
+
+
+def load_state(path: Path) -> dict:
+    """A stage's state file, or an empty state before the stage first saves one."""
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+
+
+def each_job(
+    items: list[I], step: Callable[[I], str], job: Callable[[I, Runtime], T]
+) -> Iterator[tuple[I, T | PageFailure]]:
+    """Run `job` on each item in the worker pool and yield each result as it finishes.
+
+    Each job gets its own runtime, since a ledger connection belongs to the thread that
+    opened it. An item whose reply does not converge, or whose content a model refuses,
+    comes back as its PageFailure, already recorded under its step and printed; any
+    other error stops the stage. The caller clears a converged item's failure after it
+    saves the item, so a run stopped between the two still lists the item as failed."""
+
+    def run(item: I) -> T:
+        agent = runtime()
+        try:
+            return job(item, agent)
+        except CandidateError as exc:
+            raise failure(step(item), exc, agent) from exc
+
+    for item, result in parallel(items, run, workers()):
+        if isinstance(result, PageFailure):
+            record_failure(step(item), result)
+            print(f"  [FAILED] {step(item)}: {result}")
+        yield item, result
+
+
+def exit_code(failed: int) -> int:
+    """A stage's exit status: failed items stop the run only under --strict-pages."""
+    return 1 if failed and strict_pages() else 0
 
 
 def source_evidence(store: Path, root: Path, sids: list[str]) -> dict[str, list[dict]]:

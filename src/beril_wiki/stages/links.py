@@ -31,15 +31,8 @@ from typing import Literal, get_args
 
 from pydantic import BaseModel, ConfigDict
 
-from beril_wiki.agentic.prose import (
-    PageFailure,
-    parallel,
-    prune_failures,
-    record_failure,
-    strict_pages,
-    workers,
-)
-from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, prompt
+from beril_wiki.agentic.prose import PageFailure, prune_failures, record_failure
+from beril_wiki.agentic.runtime import CandidateError, Runtime, atomic_json, digest, prompt
 from beril_wiki.paths import ROOT
 from beril_wiki.records import DIGESTS, FINDINGS, finding_text, projects_in, title_of
 from beril_wiki.stages import cards
@@ -288,7 +281,7 @@ def pair_text(f: dict) -> dict:
 
 def status(root: Path = ROOT) -> int:
     path = root / STATE
-    state = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    state = cards.load_state(path)
     entries = state.get("candidates", {})
     kept = Counter(
         e["relation"] for e in entries.values() if e.get("relation") and not e.get("failed")
@@ -306,7 +299,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     if not cards.require_runtime("links"):
         return 0
     state_path = root / STATE
-    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+    state = cards.load_state(state_path)
     entries: dict[str, dict] = state.get("candidates", {})
     config = cards.runtime().config
     policy = cards.policy(config, ("cards", "review"))
@@ -364,9 +357,8 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
             chunk = ids[i : i + BATCH]
             batches.append((f"links/refs-{sid}-{digest(chunk)[:6]}", chunk))
 
-    def ask(batch: tuple[str, list[str]]) -> dict[str, dict]:
+    def ask(batch: tuple[str, list[str]], agent: Runtime) -> dict[str, dict]:
         step, ids = batch
-        mine = cards.runtime()  # a ledger connection belongs to the thread that opened it
         kind = current[ids[0]][0]
         local = {cid: f"{'P' if kind == 'pair' else 'R'}{n + 1}" for n, cid in enumerate(ids)}
         if kind == "pair":
@@ -392,15 +384,12 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
             message = REF_PROMPT + json.dumps(body, ensure_ascii=False)
             relations = get_args(RefRelation)
             pools = {local[c]: " ".join(current[c][3]["LINES"]) for c in ids}
-        try:
-            reply = cards.reviewed(
-                [{"role": "user", "content": message}],
-                step,
-                checker(list(local.values()), relations, pools),
-                agent=mine,
-            )
-        except CandidateError as exc:
-            raise cards.failure(step, exc, mine) from exc
+        reply = cards.reviewed(
+            [{"role": "user", "content": message}],
+            step,
+            checker(list(local.values()), relations, pools),
+            agent=agent,
+        )
         answers = {item.id: item for item in reply.items}
         return {
             cid: {"relation": answers[n].relation, "label": answers[n].label.strip()}
@@ -410,19 +399,18 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     # Links whose inputs changed stop being current before any job can stop the run.
     save()
     done = failed = 0
-    for (step, ids), result in parallel(batches, ask, workers()):
+    for (step, ids), result in cards.each_job(batches, lambda batch: batch[0], ask):
         if isinstance(result, PageFailure):
             failed += 1
-            record_failure(step, result)
-            print(f"  [FAILED] {step}: {result}")
             for cid in ids:
                 entries[cid] = {"input": keys[cid], "failed": True}
-        else:
-            for cid, answer in result.items():
-                entries[cid] = {"input": keys[cid], **answer}
-            record_failure(step, None)
-            done += 1
+            save()
+            continue
+        for cid, answer in result.items():
+            entries[cid] = {"input": keys[cid], **answer}
         save()
+        record_failure(step, None)
+        done += 1
 
     # A candidate that left the list keeps its answer for when it returns; one whose
     # results or projects are gone is pruned.
@@ -441,7 +429,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         f"links: {len(links)} current from {len(current)} candidates; "
         f"{done} batches asked, {failed} failed"
     )
-    return 1 if failed and strict_pages() else 0
+    return cards.exit_code(failed)
 
 
 if __name__ == "__main__":

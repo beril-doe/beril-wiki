@@ -141,7 +141,7 @@ def test_decision_reaches_a_cached_label_before_any_job(tmp_path, monkeypatch):
     def stop(*_a, **_k):
         raise novelty.WorkflowError("budget admission refused")
 
-    monkeypatch.setattr(novelty, "parallel", stop)
+    monkeypatch.setattr(cards, "parallel", stop)
     with pytest.raises(novelty.WorkflowError):
         novelty.main(tmp_path)
     on_disk = json.loads((tmp_path / "state/novelty.json").read_text())[FID]

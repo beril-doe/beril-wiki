@@ -31,14 +31,7 @@ from typing import Literal
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
-from beril_wiki.agentic.prose import (
-    PageFailure,
-    parallel,
-    prune_failures,
-    record_failure,
-    strict_pages,
-    workers,
-)
+from beril_wiki.agentic.prose import PageFailure, prune_failures, record_failure
 from beril_wiki.agentic.runtime import (
     CandidateError,
     Runtime,
@@ -402,7 +395,7 @@ def main(root: Path = ROOT) -> int:
     if not cards.require_runtime("novelty"):
         return 0
     state_path = root / STATE
-    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+    state = cards.load_state(state_path)
     decisions = load_decisions(root)
     findings = {}
     for page in sorted((root / FINDINGS).glob("*.md")):
@@ -437,26 +430,20 @@ def main(root: Path = ROOT) -> int:
             reports[sid] = cited_pmids(path.read_text(encoding="utf-8")) if path.exists() else []
         todo.append((fid, finding, key))
 
-    def label(item: tuple) -> dict:
+    def label(item: tuple, agent: Runtime) -> dict:
         fid, finding, _ = item
-        mine = cards.runtime()  # a ledger connection belongs to the thread that opened it
         try:
             return cards.content_refusal_fails_item(
-                f"novelty/{fid}", lambda: judge(fid, finding, reports[finding["report"]], mine)
+                f"novelty/{fid}", lambda: judge(fid, finding, reports[finding["report"]], agent)
             )
-        except CandidateError as exc:
-            raise cards.failure(f"novelty/{fid}", exc, mine) from exc
         except RetrievalError as exc:
             # PubMed or the network: keep what the finding showed before.
-            note = WorkflowError(f"retrieval failed: {exc}")
-            raise cards.failure(f"novelty/{fid}", note, mine) from exc
+            raise CandidateError(f"retrieval failed: {exc}") from exc
 
     done = failed = 0
-    for (fid, _, key), result in parallel(todo, label, workers()):
+    for (fid, _, key), result in cards.each_job(todo, lambda item: f"novelty/{item[0]}", label):
         if isinstance(result, PageFailure):
             failed += 1
-            record_failure(f"novelty/{fid}", result)
-            print(f"  [FAILED] novelty/{fid}: {result}")
             kept = state.get(fid) or {"label": NOT_ASSESSED, "pipeline_label": NOT_ASSESSED}
             state[fid] = kept | {"failed": True}
             continue
@@ -482,7 +469,7 @@ def main(root: Path = ROOT) -> int:
     print(
         f"novelty: {done} labelled, {len(findings) - len(todo)} current, {failed} failed; {counts}"
     )
-    return 1 if failed and strict_pages() else 0
+    return cards.exit_code(failed)
 
 
 if __name__ == "__main__":

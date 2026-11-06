@@ -25,12 +25,7 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 from beril_wiki import records
-from beril_wiki.agentic.prose import (
-    PLATFORM,
-    prune_failures,
-    record_failure,
-    strict_pages,
-)
+from beril_wiki.agentic.prose import PLATFORM, prune_failures, record_failure
 from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, file_hash, prompt
 from beril_wiki.check import numbers_in, pmids_in, prose_only
 from beril_wiki.paths import ROOT
@@ -154,7 +149,7 @@ def topic_pack(root: Path, topic: str, reports: list[str]) -> dict:
     groups = records.topic_groups(root)
     cites = records.concept_citations(root)
     labels_path = root / LABELS
-    labels = json.loads(labels_path.read_text(encoding="utf-8")) if labels_path.exists() else {}
+    labels = cards.load_state(labels_path)
     findings, papers = {}, {}
     for page in sorted((root / FINDINGS).glob("*.md")):
         fields, body = cards.read_page(page)
@@ -450,7 +445,7 @@ def main(root: Path = ROOT) -> int:
     out = root / OUT
     out.mkdir(parents=True, exist_ok=True)
     state_path = root / STATE
-    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+    state = cards.load_state(state_path)
     known = cards.collections(root)
     written = failed = 0
     for topic in topics:
@@ -547,7 +542,7 @@ def main(root: Path = ROOT) -> int:
     atomic_json(state_path, state)
     prune_failures("directions/", {f"directions/{t}" for t in topics})
     print(f"directions: {written} topic(s) written, {failed} failed, {retired} page(s) retired")
-    return 1 if failed and strict_pages() else 0
+    return cards.exit_code(failed)
 
 
 if __name__ == "__main__":

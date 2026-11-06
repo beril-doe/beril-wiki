@@ -22,15 +22,8 @@ from pathlib import Path
 from pydantic import BaseModel, ConfigDict
 
 from beril_wiki import records
-from beril_wiki.agentic.prose import (
-    PageFailure,
-    parallel,
-    prune_failures,
-    record_failure,
-    strict_pages,
-    workers,
-)
-from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, prompt
+from beril_wiki.agentic.prose import PageFailure, prune_failures, record_failure
+from beril_wiki.agentic.runtime import CandidateError, Runtime, atomic_json, digest, prompt
 from beril_wiki.paths import ROOT
 from beril_wiki.stages import cards, links
 from beril_wiki.wording import LINK_BANNED, STAT_WORDS, STATS
@@ -148,7 +141,7 @@ def reads_badly(group: dict) -> bool:
 
 def status(root: Path = ROOT) -> int:
     path = root / STATE
-    state = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    state = cards.load_state(path)
     accepted = [g for g in state.values() if not g.get("failed")]
     failed = len(state) - len(accepted)
     print(f"shared: {len(accepted)} accepted, {failed} failed")
@@ -165,9 +158,9 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     if not cards.require_runtime("shared"):
         return 0
     state_path = root / STATE
-    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+    state = cards.load_state(state_path)
     link_path = root / LINKS
-    saved_links = json.loads(link_path.read_text(encoding="utf-8")) if link_path.exists() else {}
+    saved_links = cards.load_state(link_path)
     if "links" not in saved_links:
         # No finished links checkpoint yet: building groups from none would prune them all.
         print("shared: no current links to group; nothing changed")
@@ -223,27 +216,19 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
             state[gid] = {"input": "", "failed": True}
     atomic_json(state_path, dict(sorted(state.items())))
 
-    def write(item: tuple) -> dict:
+    def write(item: tuple, agent: Runtime) -> dict:
         gid, pack, members = item
-        mine = cards.runtime()  # a ledger connection belongs to the thread that opened it
-        step = f"shared/{gid}"
-        try:
-            reply = cards.reviewed(
-                [{"role": "user", "content": PROMPT + json.dumps(pack, ensure_ascii=False)}],
-                step,
-                checker(members),
-                agent=mine,
-            )
-        except CandidateError as exc:
-            raise cards.failure(step, exc, mine) from exc
-        return reply.model_dump()
+        return cards.reviewed(
+            [{"role": "user", "content": PROMPT + json.dumps(pack, ensure_ascii=False)}],
+            f"shared/{gid}",
+            checker(members),
+            agent=agent,
+        ).model_dump()
 
     done = failed = 0
-    for (gid, *_), result in parallel(todo, write, workers()):
+    for (gid, *_), result in cards.each_job(todo, lambda item: f"shared/{item[0]}", write):
         if isinstance(result, PageFailure):
             failed += 1
-            record_failure(f"shared/{gid}", result)
-            print(f"  [FAILED] shared/{gid}: {result}")
             state[gid] = {"input": groups[gid]["input"], "failed": True}
         else:
             state[gid] = groups[gid] | result
@@ -260,7 +245,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     atomic_json(state_path, dict(sorted(state.items())))
     prune_failures("shared/", {f"shared/{gid}" for gid in groups})
     print(f"shared: {done} written, {len(groups) - len(todo)} current, {failed} failed")
-    return 1 if failed and strict_pages() else 0
+    return cards.exit_code(failed)
 
 
 if __name__ == "__main__":

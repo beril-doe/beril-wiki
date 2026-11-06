@@ -28,16 +28,15 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
-from beril_wiki.agentic.prose import (
-    PageFailure,
-    failures_path,
-    parallel,
-    prune_failures,
-    record_failure,
-    strict_pages,
-    workers,
+from beril_wiki.agentic.prose import PageFailure, failures_path, prune_failures, record_failure
+from beril_wiki.agentic.runtime import (
+    CandidateError,
+    Runtime,
+    atomic_json,
+    digest,
+    model_policy,
+    prompt,
 )
-from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, model_policy, prompt
 from beril_wiki.paths import ROOT
 from beril_wiki.records import (
     FINDINGS,
@@ -229,8 +228,7 @@ def checker(finding: dict, title: str, earlier: Sequence[str] = ()) -> Callable[
 
 def status(root: Path = ROOT) -> int:
     """Print accepted, failed and pending counts; touches neither the runtime nor state."""
-    path = root / STATE
-    state = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    state = cards.load_state(root / STATE)
     ids = [page.stem for page in (root / FINDINGS).glob("*.md")]
     entries = [state.get(fid) for fid in ids]
     failed = sum(1 for e in entries if e and e.get("failed"))
@@ -248,7 +246,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     if not cards.require_runtime("gists"):
         return 0
     state_path = root / STATE
-    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+    state = cards.load_state(state_path)
     config = cards.runtime().config
     policy = cards.policy(config, ("cards", "review"))
     writer = model_policy(config)["cards"]
@@ -299,21 +297,17 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
             continue
         todo.append((fid, pack, key, last_objections(f"gists/{fid}") if prev.get("failed") else ""))
 
-    def write(item: tuple) -> dict:
+    def write(item: tuple, agent: Runtime) -> dict:
         fid, pack, _, objections = item
         finding, heading, _ = findings[fid]
-        mine = cards.runtime()  # a ledger connection belongs to the thread that opened it
         sent = pack | {"LAST_ATTEMPT": objections} if objections else pack
         content = PROMPT + json.dumps(sent, ensure_ascii=False) + (RETRY if objections else "")
-        try:
-            reply = cards.reviewed(
-                [{"role": "user", "content": content}],
-                f"gists/{fid}",
-                checker(finding, heading, pack["EARLIER"]),
-                agent=mine,
-            )
-        except CandidateError as exc:
-            raise cards.failure(f"gists/{fid}", exc, mine) from exc
+        reply = cards.reviewed(
+            [{"role": "user", "content": content}],
+            f"gists/{fid}",
+            checker(finding, heading, pack["EARLIER"]),
+            agent=agent,
+        )
         return {
             "gist": reply.gist,
             "case": reply.case,
@@ -322,11 +316,9 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         }
 
     done = failed = 0
-    for (fid, _, key, _), result in parallel(todo, write, workers()):
+    for (fid, _, key, _), result in cards.each_job(todo, lambda item: f"gists/{item[0]}", write):
         if isinstance(result, PageFailure):
             failed += 1
-            record_failure(f"gists/{fid}", result)
-            print(f"  [FAILED] gists/{fid}: {result}")
             state[fid] = (state.get(fid) or {}) | {"failed": True}
             continue
         state[fid] = {"input": key, **result, "model": writer}
@@ -339,7 +331,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     atomic_json(state_path, dict(sorted(state.items())))
     prune_failures("gists/", {f"gists/{fid}" for fid in findings})
     print(f"gists: {done} written, {len(findings) - len(todo)} current, {failed} failed")
-    return 1 if failed and strict_pages() else 0
+    return cards.exit_code(failed)
 
 
 if __name__ == "__main__":
