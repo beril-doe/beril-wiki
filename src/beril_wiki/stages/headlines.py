@@ -29,17 +29,22 @@ from pydantic import BaseModel, ConfigDict, Field
 from beril_wiki.agentic.prose import (
     PLATFORM,
     PageFailure,
-    parallel,
     prune_failures,
     record_failure,
-    strict_pages,
-    workers,
 )
-from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, file_hash, prompt
+from beril_wiki.agentic.runtime import (
+    CandidateError,
+    Runtime,
+    atomic_json,
+    digest,
+    file_hash,
+    prompt,
+)
 from beril_wiki.paths import ROOT
+from beril_wiki.records import FINDINGS, load_scope, source_path, source_title
 from beril_wiki.stages import cards
 
-OUT = Path("wiki/findings")
+OUT = FINDINGS
 STATE = Path("state/headlines.json")
 MAX_FINDINGS = 4  # observations and inferences per report
 MAX_NULLS = 2  # null results and corrections per report
@@ -295,12 +300,6 @@ def render(sid: str, h: Headline, records: list[dict], first_added: str, source_
     return fid, fields, "\n".join(lines)
 
 
-def report_title(root: Path, sid: str) -> str:
-    text = cards.source_path(root, sid).read_text(encoding="utf-8", errors="replace")
-    m = re.search(r"^# +(.+)$", text, re.M)
-    return m.group(1).strip() if m else sid
-
-
 def pages_of(out: Path, sid: str) -> list[Path]:
     return sorted(out.glob(f"{sid}--*.md"))
 
@@ -308,12 +307,12 @@ def pages_of(out: Path, sid: str) -> list[Path]:
 def main(root: Path = ROOT) -> int:
     if not cards.require_runtime("headlines"):
         return 0
-    scope = cards.load_scope(root)
+    scope = load_scope(root)
     reports = scope.reports if scope else []
     out = root / OUT
     out.mkdir(parents=True, exist_ok=True)
     state_path = root / STATE
-    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+    state = cards.load_state(state_path)
     agent = cards.runtime()
     evidence = cards.source_evidence(agent.store, root, reports)
 
@@ -324,7 +323,7 @@ def main(root: Path = ROOT) -> int:
             print(f"  headlines/{sid}: no evidence extracted from the current text; skipped")
             continue
         records = evidence[sid]
-        body = pack(sid, report_title(root, sid), records)
+        body = pack(sid, source_title(root, sid), records)
         messages = [{"role": "user", "content": PROMPT + json.dumps(body)}]
         # The models are part of the key: a new cards or review model re-judges.
         key = digest([messages, cards.policy(agent.config, ("cards", "review"))])
@@ -340,26 +339,18 @@ def main(root: Path = ROOT) -> int:
             continue
         todo.append((sid, records, messages, key))
 
-    def write(item: tuple) -> Reply:
+    def write(item: tuple, agent: Runtime) -> Reply:
         sid, records, messages, _ = item
-        mine = cards.runtime()  # a ledger connection belongs to the thread that opened it
-        try:
-            return cards.reviewed(
-                messages,
-                f"headlines/{sid}",
-                checker(records),
-                agent=mine,
-                salvage=salvager(records),
-            )
-        except CandidateError as exc:
-            raise cards.failure(f"headlines/{sid}", exc, mine) from exc
+        return cards.reviewed(
+            messages, f"headlines/{sid}", checker(records), agent=agent, salvage=salvager(records)
+        )
 
     today = datetime.date.today().isoformat()
     written = failed = 0
 
     def publish(sid: str, records: list[dict], key: str, result: Reply) -> None:
         previous = {p.stem: cards.read_page(p)[0] for p in pages_of(out, sid)}
-        source_hash = file_hash(cards.source_path(root, sid))
+        source_hash = file_hash(source_path(root, sid))
         names = set()
         for h in result.headlines:
             fid = cards.finding_id(sid, next(r for r in records if r["id"] == h.evidence)["quote"])
@@ -382,11 +373,11 @@ def main(root: Path = ROOT) -> int:
 
     for sid, records, key, reply in accepted:
         publish(sid, records, key, reply)
-    for (sid, records, _, key), result in parallel(todo, write, workers()):
+    for (sid, records, _, key), result in cards.each_job(
+        todo, lambda item: f"headlines/{item[0]}", write
+    ):
         if isinstance(result, PageFailure):
             failed += 1
-            record_failure(f"headlines/{sid}", result)
-            print(f"  [FAILED] headlines/{sid}: {result}")
             continue
         publish(sid, records, key, result)
         written += 1
@@ -404,7 +395,7 @@ def main(root: Path = ROOT) -> int:
         f"headlines: {written} report(s) written, {len(reports) - len(todo)} unchanged or "
         f"skipped, {failed} failed, {retired} page(s) retired"
     )
-    return 1 if failed and strict_pages() else 0
+    return cards.exit_code(failed)
 
 
 if __name__ == "__main__":

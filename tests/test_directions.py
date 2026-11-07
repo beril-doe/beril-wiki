@@ -6,6 +6,7 @@ import pytest
 
 from beril_wiki.agentic.runtime import JobFailed, Refused
 from beril_wiki.stages import cards, directions
+from beril_wiki.wording import asks_to_redo, is_reanalysis
 from card_fakes import FakeAgent, install, report, scope
 
 TOPIC = "dark-matter"
@@ -184,11 +185,9 @@ def test_unchanged_input_makes_no_calls_and_rerenders_from_reply(tmp_path, monke
 
 
 def test_is_reanalysis_reads_the_opening_clause():
-    assert cards.is_reanalysis("Using the metadata, recompute rates per experiment.")
-    assert cards.is_reanalysis("Reconcile the two counts.")
-    assert not cards.is_reanalysis(
-        "Test whether dark genes encode transporters across 48 organisms."
-    )
+    assert is_reanalysis("Using the metadata, recompute rates per experiment.")
+    assert is_reanalysis("Reconcile the two counts.")
+    assert not is_reanalysis("Test whether dark genes encode transporters across 48 organisms.")
 
 
 @pytest.mark.parametrize(
@@ -520,11 +519,11 @@ def test_a_saved_reply_todays_checks_reject_is_drafted_again(tmp_path, monkeypat
 
 def test_a_question_may_name_redone_work_as_context():
     """Rerun, Nov 2026: 'after reannotation' sent a real question back four times."""
-    assert not cards.asks_to_redo(
+    assert not asks_to_redo(
         "Do genes that stay dark after reannotation mediate contact with other microbes?"
     )
-    assert cards.asks_to_redo("Recompute the stress rates per experiment")
-    assert cards.asks_to_redo("Does re-running the cofitness change the modules?")
+    assert asks_to_redo("Recompute the stress rates per experiment")
+    assert asks_to_redo("Does re-running the cofitness change the modules?")
 
 
 def test_a_question_title_may_run_a_few_words_past_the_prompt_limit(tmp_path):

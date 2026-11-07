@@ -7,7 +7,7 @@ and the proposals its pages already make, then proposes a handful of research
 directions: a question, a falsifiable hypothesis, why it matters, the decisive
 test and what would support or refute it. A direction that would repeat, correct
 or tidy an existing analysis is rejected in code; those proposals are listed for
-the reports' maintainers at publish instead (publish/cards.py). Code also checks
+the reports' maintainers at publish instead (publish/cards/). Code also checks
 that every direction rests on a finding or conflict of the topic, names only
 papers the novelty stage retrieved and collections under wiki/data/, and states
 no result figure the evidence lacks. Each direction becomes wiki/directions/<slug>.md.
@@ -24,22 +24,23 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from beril_wiki.agentic.prose import (
-    PLATFORM,
-    prune_failures,
-    record_failure,
-    strict_pages,
-)
+from beril_wiki import records
+from beril_wiki.agentic.prose import PLATFORM, prune_failures, record_failure
 from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, file_hash, prompt
 from beril_wiki.check import numbers_in, pmids_in, prose_only
 from beril_wiki.paths import ROOT
+from beril_wiki.records import FINDINGS, slugify, title_of
 from beril_wiki.stages import cards
-from beril_wiki.stages.gists import statistical
-from beril_wiki.stages.topics import slugify
+from beril_wiki.wording import (
+    IDENTIFIER,
+    REPORT_TALK,
+    asks_to_redo,
+    is_reanalysis,
+    statistical,
+)
 
 OUT = Path("wiki/directions")
 STATE = Path("state/directions.json")
-FINDINGS = Path("wiki/findings")
 LABELS = Path("state/novelty.json")
 MIN_DIRECTIONS, MAX_DIRECTIONS = 3, 8
 TITLE_WORDS = 14
@@ -48,7 +49,6 @@ TITLE_WORDS = 14
 TITLE_CHECK_WORDS = 18
 # Bump when render() changes: pages re-render from the saved reply at no cost.
 RENDER = "direction-page@1"
-READINESS = ("data in the lakehouse", "needs compute", "needs new measurements", "unknown")
 Approach = Literal["lakehouse analysis", "experiment", "analysis then experiment"]
 Readiness = Literal["data in the lakehouse", "needs compute", "needs new measurements", "unknown"]
 
@@ -143,21 +143,16 @@ def section(text: str, name: str, limit: int = 1800) -> str:
     return m.group(1).strip()[:limit] if m else ""
 
 
-def title_of(text: str, fallback: str) -> str:
-    m = re.search(r"^# +(.+)$", text, re.M)
-    return m.group(1).strip() if m else fallback
-
-
 def topic_pack(root: Path, topic: str, reports: list[str]) -> dict:
     """What the model reads for one topic, and what the checks hold its reply to."""
-    groups = cards.topic_groups(root)
-    cites = cards.concept_citations(root)
+    groups = records.topic_groups(root)
+    cites = records.concept_citations(root)
     labels_path = root / LABELS
-    labels = json.loads(labels_path.read_text(encoding="utf-8")) if labels_path.exists() else {}
+    labels = cards.load_state(labels_path)
     findings, papers = {}, {}
     for page in sorted((root / FINDINGS).glob("*.md")):
         fields, body = cards.read_page(page)
-        if topic not in cards.main_topics(fields.get("source", ""), groups, cites):
+        if topic not in records.main_topics(fields.get("source", ""), groups, cites):
             continue
         entry = labels.get(page.stem, {})
         findings[page.stem] = {
@@ -183,12 +178,12 @@ def topic_pack(root: Path, topic: str, reports: list[str]) -> dict:
                 "title": title_of(text, page.stem),
                 "lead": first_paragraph(text),
                 "sides": section(text, "Evidence Sides"),
-                "projects": cards.projects_in(text),
+                "projects": records.projects_in(text),
             }
     proposals = [
         b["text"]
-        for b in cards.forward_bullets(root, topic, reports)
-        if not cards.is_reanalysis(b["text"])
+        for b in records.forward_bullets(root, topic, reports)
+        if not is_reanalysis(b["text"])
     ]
     return {
         "FINDINGS": list(findings.values()),
@@ -209,12 +204,6 @@ def text_of(d: Direction) -> str:
     )
 
 
-# Identifiers a reader cannot decode: snake_case table or collection names, NMDC study
-# ids and tree node names.
-IDENTIFIER = re.compile(r"\b[a-z0-9]+(?:_[a-z0-9]+)+\b|\bnmdc:[\w-]+|\bNode_\d+\b")
-REPORT_TALK = re.compile(
-    r"\bthe (?:reports?|supplied evidence|evidence supplied|source reports?)\b", re.I
-)
 # Shared share of cited findings and conflicts at which two directions are one project.
 SAME_EVIDENCE, SAME_EVIDENCE_MIN = 0.6, 3
 
@@ -254,7 +243,7 @@ def checker(pack: dict, counted: bool = True) -> Callable[[str], Reply]:
             problems.append(f"direction ids {dup} are repeated")
         for i, d in enumerate(reply.directions):
             where = f"{d.id} ({d.title[:50]})"
-            if cards.asks_to_redo(d.title) or cards.asks_to_redo(d.question):
+            if asks_to_redo(d.title) or asks_to_redo(d.question):
                 problems.append(f"{where}: repeats or corrects existing work; propose a question")
             if len(d.title.split()) > TITLE_CHECK_WORDS or numbers_in(d.title):
                 problems.append(f"{where}: title over {TITLE_CHECK_WORDS} words or carries figures")
@@ -387,7 +376,7 @@ def render(topic: str, d: Direction, pack: dict, known: dict[str, str]):
         "papers": d.papers,
         "builds_on": [f"findings/{f}" for f in d.findings]
         + [f"conflicts/{c}" for c in d.conflicts],
-        "projects": [p for p in projects if p not in cards.DIGESTS],
+        "projects": [p for p in projects if p not in records.DIGESTS],
         "topics": [topic],
     }
     lines = [
@@ -450,12 +439,12 @@ def main(root: Path = ROOT) -> int:
     if not cards.require_runtime("directions"):
         return 0
     agent = cards.runtime()
-    scope = cards.load_scope(root)
+    scope = records.load_scope(root)
     topics, reports = (scope.topics, scope.reports) if scope else ([], [])
     out = root / OUT
     out.mkdir(parents=True, exist_ok=True)
     state_path = root / STATE
-    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+    state = cards.load_state(state_path)
     known = cards.collections(root)
     written = failed = 0
     for topic in topics:
@@ -552,7 +541,7 @@ def main(root: Path = ROOT) -> int:
     atomic_json(state_path, state)
     prune_failures("directions/", {f"directions/{t}" for t in topics})
     print(f"directions: {written} topic(s) written, {failed} failed, {retired} page(s) retired")
-    return 1 if failed and strict_pages() else 0
+    return cards.exit_code(failed)
 
 
 if __name__ == "__main__":

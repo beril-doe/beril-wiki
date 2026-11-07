@@ -3,8 +3,12 @@
 import json
 import re
 
-from beril_wiki.publish import cards
-from beril_wiki.publish.cards import Corpus, finding_page
+from beril_wiki.publish.cards.corpus import Corpus, join, split
+from beril_wiki.publish.cards.export import INDEXES, export, picture_data
+from beril_wiki.publish.cards.links import links_index, shared_index
+from beril_wiki.publish.cards.pages import direction_page, finding_page, literature_section
+from beril_wiki.publish.cards.picks import eligible, home_picks, topic_picks
+from beril_wiki.publish.cards.text import CHIP_NOTE, NOT_ASSESSED, NOT_COMPARED, compare_text
 from test_reader_pages import card_corpus
 
 FID = "a--1a2b3c4d"
@@ -18,7 +22,7 @@ def build(tmp_path, with_extras=True):
     kb = tmp_path / "kb"
     card_corpus(kb)
     page = kb / "wiki/findings" / f"{FID}.md"
-    fields, _ = cards.split(page.read_text())
+    fields, _ = split(page.read_text())
     body = (
         "# P < 0.001 for depleted dark genes\n\nDark genes were depleted. [src: a]\n\n"
         "## Key figures\n\n- **12%**: dark genes [src: a]\n\n"
@@ -26,7 +30,7 @@ def build(tmp_path, with_extras=True):
         "## Caveat\n\nOnly one organism. [src: a]\n\n"
         "## Other caveats in this report\n\n- Small sample. [src: a]\n- Old annotations. [src: a]\n"
     )
-    page.write_text(cards.join(fields, body))
+    page.write_text(join(fields, body))
     return kb
 
 
@@ -38,7 +42,7 @@ def test_finding_page_orders_sections_for_readers(tmp_path):
     kb = build(tmp_path)
     set_state(kb, "gists.json", {FID: {"gist": "Dark genes are rare here.", "case": ""}})
     page = finding_page(FID, Corpus(kb))
-    body = cards.split(page)[1]
+    body = split(page)[1]
     assert headings(body) == [
         "What the report measured",
         "Limits",
@@ -64,7 +68,7 @@ def test_plain_title_replaces_a_statistical_title(tmp_path):
     )
     page = finding_page(FID, Corpus(kb))
     assert "# Few modules hold up after correction" in page
-    assert "P < 0.001" not in cards.split(page)[1]
+    assert "P < 0.001" not in split(page)[1]
 
 
 def test_a_failed_summary_is_not_published(tmp_path):
@@ -73,7 +77,7 @@ def test_a_failed_summary_is_not_published(tmp_path):
     old = {"gist": "Dark genes showed no significant defects.", "case": "", "failed": True}
     set_state(kb, "gists.json", {FID: old})
     c = Corpus(kb)
-    assert not cards.eligible(c, FID)
+    assert not eligible(c, FID)
     page = finding_page(FID, c)
     assert "no significant defects" not in page
 
@@ -85,7 +89,7 @@ def test_chip_only_for_informative_pipeline_labels(tmp_path):
     def fields_for(**change):
         set_state(kb, "novelty.json", {FID: entry | change})
         page = finding_page(FID, Corpus(kb))
-        return cards.split(page)
+        return split(page)
 
     f, _ = fields_for()
     assert f["chip"] == "No close match in PubMed abstracts"
@@ -105,11 +109,11 @@ def test_listing_skips_non_results_repeats_and_title_only_cards(tmp_path):
     page = kb / "wiki/findings" / f"{FID}.md"
 
     def listed(gist, result="observation"):
-        fields, body = cards.split(page.read_text())
-        page.write_text(cards.join(fields | {"result": result}, body))
+        fields, body = split(page.read_text())
+        page.write_text(join(fields | {"result": result}, body))
         set_state(kb, "gists.json", {FID: gist} if gist else {})
         c = Corpus(kb)
-        return cards.split(finding_page(FID, c))[0]["listed"], cards.eligible(c, FID)
+        return split(finding_page(FID, c))[0]["listed"], eligible(c, FID)
 
     assert listed({"gist": "Dark genes are rare here.", "case": ""}) == (True, True)
     assert listed(None) == (False, False)
@@ -122,9 +126,9 @@ def test_listing_skips_non_results_repeats_and_title_only_cards(tmp_path):
 def test_a_correction_carries_no_pubmed_chip(tmp_path):
     kb = build(tmp_path)
     page = kb / "wiki/findings" / f"{FID}.md"
-    fields, body = cards.split(page.read_text())
-    page.write_text(cards.join(fields | {"result": "correction"}, body))
-    f, _ = cards.split(finding_page(FID, Corpus(kb)))
+    fields, body = split(page.read_text())
+    page.write_text(join(fields | {"result": "correction"}, body))
+    f, _ = split(finding_page(FID, Corpus(kb)))
     assert f["chip"] == "" and f["chip_note"] == ""
 
 
@@ -133,15 +137,15 @@ def test_an_empty_search_says_no_abstracts_were_found(tmp_path):
     entry = json.loads((kb / "state/novelty.json").read_text())[FID]
     empty = entry | {"label": "Insufficient literature evidence", "retrieved": 0}
     set_state(kb, "novelty.json", {FID: empty})
-    body = cards.split(finding_page(FID, Corpus(kb)))[1]
+    body = split(finding_page(FID, Corpus(kb)))[1]
     assert "found no abstracts to compare" in body
     assert "An AI comparison with PubMed abstracts" not in body
 
 
 def test_literature_provenance_is_collapsed_not_dropped(tmp_path):
     kb = build(tmp_path)
-    body = cards.split(finding_page(FID, Corpus(kb)))[1]
-    assert cards.CHIP_NOTE.format(date="2026-10-23") in body
+    body = split(finding_page(FID, Corpus(kb)))[1]
+    assert CHIP_NOTE.format(date="2026-10-23") in body
     assert "[PMID 111](https://pubmed.ncbi.nlm.nih.gov/111/)" in body
     details = body.split("<details><summary>How this was checked</summary>")[1].split("</details>")[
         0
@@ -154,15 +158,15 @@ def test_direction_page_uses_reader_words(tmp_path):
     kb = tmp_path / "kb"
     card_corpus(kb)
     page = kb / "wiki/directions/transport--abc123.md"
-    fields, body = cards.split(page.read_text())
+    fields, body = split(page.read_text())
     body += (
         "\n## Data\n\nApproach: lakehouse analysis. Readiness: needs compute. Data exists.\n\n"
         "## Builds on\n\n"
         "- Finding: [[findings/a--1a2b3c4d|Dark]] (Candidate novel)\n"
         "- Finding: [[findings/b--00000000|Other]] (Insufficient literature evidence)\n"
     )
-    page.write_text(cards.join(fields, body))
-    fields, text = cards.split(cards.direction_page("transport--abc123", Corpus(kb)))
+    page.write_text(join(fields, body))
+    fields, text = split(direction_page("transport--abc123", Corpus(kb)))
     assert "Approach: Analysis of existing data. Needs: Analysis to build. Data exists." in text
     assert "|Dark]] (No close match in PubMed abstracts)" in text
     assert "|Other]]\n" in text and "(Insufficient" not in text
@@ -183,7 +187,7 @@ def make_picks_corpus(tmp_path, specs, broad=True):
     gists = {}
     for fid, project, result, topic, case in specs:
         (wiki / "findings" / f"{fid}.md").write_text(
-            cards.join({"source": project, "result": result}, f"# {fid}\n\nClaim.\n")
+            join({"source": project, "result": result}, f"# {fid}\n\nClaim.\n")
         )
         groups.setdefault(topic, set())
         gists[fid] = {"gist": f"Gist {fid}", "case": case}
@@ -212,8 +216,8 @@ def test_home_skips_projects_in_one_topic(tmp_path):
         ("a1", "pa", "observation", "alpha", ""),
         ("b1", "pb", "observation", "beta", ""),
     ]
-    assert cards.home_picks(Corpus(make_picks_corpus(tmp_path, specs, broad=False))) == []
-    assert cards.home_picks(Corpus(make_picks_corpus(tmp_path / "b", specs))) == ["a1", "b1"]
+    assert home_picks(Corpus(make_picks_corpus(tmp_path, specs, broad=False))) == []
+    assert home_picks(Corpus(make_picks_corpus(tmp_path / "b", specs))) == ["a1", "b1"]
 
 
 def test_home_picks_are_distinct_and_skip_missing_data_nulls(tmp_path):
@@ -227,7 +231,7 @@ def test_home_picks_are_distinct_and_skip_missing_data_nulls(tmp_path):
     ]
     kb = make_picks_corpus(tmp_path, specs)
     c = Corpus(kb)
-    picks = cards.home_picks(c)
+    picks = home_picks(c)
     projects = [c.findings[f][0]["source"] for f in picks]
     assert len(set(picks)) == len(set(projects)) == 3
     for f in picks:
@@ -235,9 +239,9 @@ def test_home_picks_are_distinct_and_skip_missing_data_nulls(tmp_path):
     assert picks == ["a2", "b1", "c1"]  # a3 shares a2's topic
     # Only two eligible findings: two picks.
     kb2 = make_picks_corpus(tmp_path / "two", specs[:2])
-    assert cards.home_picks(Corpus(kb2)) == ["a2"]
+    assert home_picks(Corpus(kb2)) == ["a2"]
     two = [("x1", "px", "observation", "t1", ""), ("y1", "py", "observation", "t2", "")]
-    assert len(cards.home_picks(Corpus(make_picks_corpus(tmp_path / "three", two)))) == 2
+    assert len(home_picks(Corpus(make_picks_corpus(tmp_path / "three", two)))) == 2
 
 
 def test_home_picks_and_ranks_reach_frontmatter_and_export(tmp_path):
@@ -248,21 +252,21 @@ def test_home_picks_and_ranks_reach_frontmatter_and_export(tmp_path):
         ("c1", "pd", "correction", "gamma", ""),
     ]
     c = Corpus(make_picks_corpus(tmp_path, specs))
-    assert cards.home_picks(c) == ["a1", "b1", "c1"]
-    assert cards.topic_picks(c, "alpha") == ["a1", "a2"]
-    fields, _ = cards.split(finding_page("c1", c))
+    assert home_picks(c) == ["a1", "b1", "c1"]
+    assert topic_picks(c, "alpha") == ["a1", "a2"]
+    fields, _ = split(finding_page("c1", c))
     assert fields["home_rank"] == 3 and fields["topic_ranks"]["gamma"] == 1
-    fields, _ = cards.split(finding_page("a2", c))
+    fields, _ = split(finding_page("a2", c))
     assert "home_rank" not in fields and fields["topic_ranks"]["alpha"] == 2
-    assert cards.export(c)["home"] == ["a1", "b1", "c1"]
+    assert export(c)["home"] == ["a1", "b1", "c1"]
 
 
 def test_index_blurbs_use_reader_words():
-    assert cards.INDEXES["findings"] == (
+    assert INDEXES["findings"] == (
         "Results",
         "Results from the project reports, one per card.",
     )
-    assert cards.INDEXES["directions"] == (
+    assert INDEXES["directions"] == (
         "Open questions",
         "Questions the project results leave open, by topic and by what answering them needs.",
     )
@@ -288,7 +292,7 @@ def test_home_ranks_by_distance_from_pubmed_then_links_to_other_projects(tmp_pat
     set_state(kb, "links.json", {"links": [link | {"a": "f1", "b": "a1"}]})
     # f1 links to another project; e1 is a result where d1 is a null in the same topic;
     # c1 builds on PubMed work, ahead of a1 and b1, which were never compared.
-    assert cards.home_picks(Corpus(kb)) == ["f1", "e1", "c1"]
+    assert home_picks(Corpus(kb)) == ["f1", "e1", "c1"]
 
 
 def test_topic_picks_swap_in_a_null_or_correction(tmp_path):
@@ -301,7 +305,7 @@ def test_topic_picks_swap_in_a_null_or_correction(tmp_path):
     ]
     c = Corpus(make_picks_corpus(tmp_path, specs))
     # a4 shares project pa with a1, so a5 is the first usable null.
-    assert cards.topic_picks(c, "alpha") == ["a1", "a2", "a5"]
+    assert topic_picks(c, "alpha") == ["a1", "a2", "a5"]
 
 
 def test_display_topic_is_the_most_citing_main_topic(tmp_path):
@@ -328,23 +332,23 @@ def test_display_topic_is_the_most_citing_main_topic(tmp_path):
 
 
 def test_compare_text_names_unlabelled_results():
-    assert cards.compare_text(None) == cards.NOT_COMPARED
-    assert cards.compare_text({"label": cards.NOT_ASSESSED, "override": "x"}) == cards.NOT_COMPARED
-    assert cards.compare_text({"label": "Insufficient literature evidence"}) == (
+    assert compare_text(None) == NOT_COMPARED
+    assert compare_text({"label": NOT_ASSESSED, "override": "x"}) == NOT_COMPARED
+    assert compare_text({"label": "Insufficient literature evidence"}) == (
         "Too little published evidence to compare"
     )
-    assert cards.compare_text({"label": "Candidate novel"}) == "No close match in PubMed abstracts"
+    assert compare_text({"label": "Candidate novel"}) == "No close match in PubMed abstracts"
 
 
 def test_readiness_explanations_and_check_notes_use_reader_words(tmp_path):
     """F6: free text a stage wrote never shows pipeline terms to readers."""
     kb = build(tmp_path)
     page = kb / "wiki/directions/transport--abc123.md"
-    fields, body = cards.split(page.read_text())
+    fields, body = split(page.read_text())
     fields["readiness_basis"] = "The census exists, but the join needs compute."
-    page.write_text(cards.join(fields, body + "\nApproach: lakehouse analysis. Readiness: x. "))
-    out = cards.direction_page("transport--abc123", Corpus(kb))
-    published, text = cards.split(out)
+    page.write_text(join(fields, body + "\nApproach: lakehouse analysis. Readiness: x. "))
+    out = direction_page("transport--abc123", Corpus(kb))
+    published, text = split(out)
     assert published["readiness_basis"] == "The census exists, but the join needs a new analysis."
     assert "needs compute" not in text and "lakehouse analysis" not in text
     entry = {
@@ -357,7 +361,7 @@ def test_readiness_explanations_and_check_notes_use_reader_words(tmp_path):
         "difference": "No retrieved paper reports it.",
         "closest": [{"pmid": "1", "title": "T", "relation": "related"}],
     }
-    section = cards.literature_section(entry)
+    section = literature_section(entry)
     assert "Candidate novel" not in section
     assert "No close match in PubMed abstracts" in section
     # F4: the unconfirmed judge's difference and papers argued for the rejected label.
@@ -392,36 +396,36 @@ def cross_corpus(tmp_path):
     (kb / "wiki/concepts/gap.md").write_text("# Gap\n\nDark genes. [src: a, b]\n")
     other = "b--5e6f7a8b"
     (kb / "wiki/findings" / f"{other}.md").write_text(
-        cards.join(
+        join(
             {"source": "b", "result": "observation", "description": "Dark genes were rare."},
             "# Dark genes are rare in b\n\nClaim. [src: b]\n",
         )
     )
     page = kb / "wiki/directions/transport--abc123.md"
-    fields, body = cards.split(page.read_text())
-    page.write_text(cards.join(fields | {"findings": [FID, other]}, body))
+    fields, body = split(page.read_text())
+    page.write_text(join(fields | {"findings": [FID, other]}, body))
     return kb, other
 
 
 def test_degenerate_picture_without_link_or_shared_state(tmp_path):
     kb = build(tmp_path)
     c = Corpus(kb)
-    data = cards.picture_data(c)
+    data = picture_data(c)
     assert data["links"] == [] and data["shared"] == []
-    assert data["compare_order"][-1] == cards.NOT_COMPARED
+    assert data["compare_order"][-1] == NOT_COMPARED
     set_state(kb, "novelty.json", {})
-    fields, _ = cards.split(finding_page(FID, Corpus(kb)))
-    assert fields["compare_text"] == cards.NOT_COMPARED
+    fields, _ = split(finding_page(FID, Corpus(kb)))
+    assert fields["compare_text"] == NOT_COMPARED
 
 
 def test_question_links_come_from_the_question_records(tmp_path):
     kb, other = cross_corpus(tmp_path)
     c = Corpus(kb)
-    (q,) = [x for x in cards.links_index(c) if x["family"] == "q"]
+    (q,) = [x for x in links_index(c) if x["family"] == "q"]
     assert {q["a"], q["b"]} == {FID, other} and q["questions"] == [
         "Dark genes as nutrient transporters"
     ]
-    fields, _ = cards.split(cards.direction_page("transport--abc123", c))
+    fields, _ = split(direction_page("transport--abc123", c))
     assert [p["source"] for p in fields["cross"]] == ["a", "b"]
     assert fields["cross"][1]["results"] == [{"id": other, "title": "Dark genes are rare in b"}]
     assert fields["home_question_rank"] == 1 and len(fields["cross_topics"]) == 2
@@ -438,12 +442,12 @@ def test_links_with_a_missing_end_are_dropped(tmp_path):
         | {"label": "Lists it among references"},
     ]
     set_state(kb, "links.json", {"links": records})
-    got = cards.links_index(Corpus(kb))
+    got = links_index(Corpus(kb))
     assert sorted((x["family"], x.get("label", "")) for x in got if x["family"] != "q") == [
         ("p", "Fixes markers"),
         ("r", "Same thing"),
     ]
-    assert cards.picture_data(Corpus(kb))["project_titles"] == {"a": "Report A", "b": "Report B"}
+    assert picture_data(Corpus(kb))["project_titles"] == {"a": "Report A", "b": "Report B"}
 
 
 def test_shared_groups_need_living_members_two_projects_and_two_topics(tmp_path):
@@ -455,20 +459,20 @@ def test_shared_groups_need_living_members_two_projects_and_two_topics(tmp_path)
     } | {k: f"{k} text" for k in ("title", "sentence", "question", "how")}
     set_state(kb, "shared.json", {"g-1": group, "g-2": group | {"members": [FID, "gone--1"]}})
     # Without a current related-result link joining the members, nothing is published.
-    assert cards.shared_index(Corpus(kb)) == []
+    assert shared_index(Corpus(kb)) == []
     link = {"a": FID, "b": other, "level": "finding", "type": "same result", "label": "Same"}
     set_state(kb, "links.json", {"links": [link]})
-    (g,) = cards.shared_index(Corpus(kb))
+    (g,) = shared_index(Corpus(kb))
     assert g["id"] == "g-1" and "home_rank" not in g and g["sources"] == ["a", "b"]
     assert g["relation"] == "Same result in each project" and len(g["topics"]) == 2
     assert [m["lane"] for m in g["members"]] == ["Dark genes in a", "Dark genes in b"]
     set_state(kb, "shared.json", {"g-1": group | {"failed": True}})
-    assert cards.shared_index(Corpus(kb)) == []
+    assert shared_index(Corpus(kb)) == []
     # A links refresh that changed how the results relate retires the old text.
     link |= {"type": "one measures what the other cannot", "label": "A measures what B cannot"}
     set_state(kb, "links.json", {"links": [link]})
     set_state(kb, "shared.json", {"g-1": group})
-    assert cards.shared_index(Corpus(kb)) == []
+    assert shared_index(Corpus(kb)) == []
 
 
 def test_export_leaves_out_papers_an_unconfirmed_label_rested_on(tmp_path):
@@ -485,5 +489,5 @@ def test_export_leaves_out_papers_an_unconfirmed_label_rested_on(tmp_path):
             }
         },
     )
-    (row,) = [x for x in cards.export(Corpus(kb))["findings"] if x["id"] == FID]
+    (row,) = [x for x in export(Corpus(kb))["findings"] if x["id"] == FID]
     assert row["closest"] == []

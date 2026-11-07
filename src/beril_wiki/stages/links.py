@@ -31,22 +31,14 @@ from typing import Literal, get_args
 
 from pydantic import BaseModel, ConfigDict
 
-from beril_wiki.agentic.prose import (
-    PageFailure,
-    parallel,
-    prune_failures,
-    record_failure,
-    strict_pages,
-    workers,
-)
-from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, prompt
+from beril_wiki.agentic.prose import PageFailure, prune_failures, record_failure
+from beril_wiki.agentic.runtime import CandidateError, Runtime, atomic_json, digest, prompt
 from beril_wiki.paths import ROOT
-from beril_wiki.publish.cards import STATS, title_of
+from beril_wiki.records import DIGESTS, FINDINGS, finding_text, projects_in, title_of
 from beril_wiki.stages import cards
-from beril_wiki.stages.novelty import finding_text
+from beril_wiki.wording import LINK_BANNED, PLUMBING, STAT_WORDS, STATS, words
 
 STATE = Path("state/links.json")
-FINDINGS = Path("wiki/findings")
 SOURCES = Path("wiki/sources")
 PROMPT_TAG = "links@1"
 THRESHOLD = 0.30
@@ -57,19 +49,6 @@ STOP = frozenset(
     "a an the and or of to in for with from by on at is are was were be this that these "
     "those as not no but its it their than more across both all each any which only into "
     "has have had can may after between using based".split()
-)
-# Wording that would read as two projects confirming each other, plus the gists list.
-BANNED = re.compile(
-    r"\b(?:confirm\w*|corroborat\w*|validat\w*|reproduc\w*|replicat\w*|independen\w*"
-    r"|agree\w*|novel|first|breakthrough|caveats?|limitations?|however)\b"
-    r"|support(?:s|ed)? each other",
-    re.I,
-)
-# Statistical and power wording a reader should not meet in a link label or shared text.
-STAT_WORDS = re.compile(
-    r"\b(?:(?:non-?)?significan\w*|(?:under|low|statistical )power\w*|effect sizes?"
-    r"|statistic\w*|p-?values?)\b",
-    re.I,
 )
 
 PairRelation = Literal[
@@ -90,11 +69,6 @@ RefRelation = Literal[
     "not a reference",
 ]
 DROPPED = {"not the same question", "not a reference"}
-# Plumbing a reader cannot use on a link: files, tables and their snake_case names.
-PLUMBING = re.compile(
-    r"\b(?:files?|tables?|columns?|parquet|tsv|csv|schema|notebooks?)\b|\b[a-z0-9]+(?:_[a-z0-9]+)+\b",
-    re.I,
-)
 # A label that opens "Uses its ..." leaves the reader to guess whose data it is.
 WHOSE = re.compile(
     r"^(?:uses|takes|reuses|draws|adopts|applies|lists|compares|cites|borrows|builds)\b"
@@ -107,7 +81,7 @@ def label_problem(label: str) -> str:
     """Why a label fails today's wording rules, or empty when it passes."""
     if STATS.search(label) or STAT_WORDS.search(label):
         return "label contains a statistic or significance wording"
-    if banned := BANNED.search(label):
+    if banned := LINK_BANNED.search(label):
         return (
             f"label says '{banned.group(0)}'; describe how the results relate without "
             "claiming one confirms or matches the other"
@@ -173,10 +147,6 @@ REF_PROMPT = prompt(
 )
 
 
-def words(text: str) -> int:
-    return len(text.split())
-
-
 def normalized(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
 
@@ -193,7 +163,7 @@ def memberships(root: Path) -> list[set[str]]:
     """The project sets each concept or conflict page cites."""
     pages = sorted((root / "wiki/concepts").glob("*.md"))
     pages += sorted((root / "wiki/conflicts").glob("*.md"))
-    return [set(cards.projects_in(p.read_text(encoding="utf-8", errors="replace"))) for p in pages]
+    return [set(projects_in(p.read_text(encoding="utf-8", errors="replace"))) for p in pages]
 
 
 def pair_candidates(findings: dict[str, dict], groups: list[set[str]]) -> list[tuple[str, str]]:
@@ -231,7 +201,7 @@ def report_titles(root: Path) -> dict[str, str]:
     out = {}
     for path in sorted((root / SOURCES).glob("*__REPORT.md")):
         sid = path.name.removesuffix("__REPORT.md")
-        if sid in cards.DIGESTS:
+        if sid in DIGESTS:
             continue
         text = path.read_text(encoding="utf-8", errors="replace")
         out[sid] = re.sub(r"^Report:\s*", "", title_of(text, sid)).strip()
@@ -307,7 +277,7 @@ def pair_text(f: dict) -> dict:
 
 def status(root: Path = ROOT) -> int:
     path = root / STATE
-    state = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    state = cards.load_state(path)
     entries = state.get("candidates", {})
     kept = Counter(
         e["relation"] for e in entries.values() if e.get("relation") and not e.get("failed")
@@ -325,7 +295,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     if not cards.require_runtime("links"):
         return 0
     state_path = root / STATE
-    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+    state = cards.load_state(state_path)
     entries: dict[str, dict] = state.get("candidates", {})
     config = cards.runtime().config
     policy = cards.policy(config, ("cards", "review"))
@@ -383,9 +353,8 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
             chunk = ids[i : i + BATCH]
             batches.append((f"links/refs-{sid}-{digest(chunk)[:6]}", chunk))
 
-    def ask(batch: tuple[str, list[str]]) -> dict[str, dict]:
+    def ask(batch: tuple[str, list[str]], agent: Runtime) -> dict[str, dict]:
         step, ids = batch
-        mine = cards.runtime()  # a ledger connection belongs to the thread that opened it
         kind = current[ids[0]][0]
         local = {cid: f"{'P' if kind == 'pair' else 'R'}{n + 1}" for n, cid in enumerate(ids)}
         if kind == "pair":
@@ -411,15 +380,12 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
             message = REF_PROMPT + json.dumps(body, ensure_ascii=False)
             relations = get_args(RefRelation)
             pools = {local[c]: " ".join(current[c][3]["LINES"]) for c in ids}
-        try:
-            reply = cards.reviewed(
-                [{"role": "user", "content": message}],
-                step,
-                checker(list(local.values()), relations, pools),
-                agent=mine,
-            )
-        except CandidateError as exc:
-            raise cards.failure(step, exc, mine) from exc
+        reply = cards.reviewed(
+            [{"role": "user", "content": message}],
+            step,
+            checker(list(local.values()), relations, pools),
+            agent=agent,
+        )
         answers = {item.id: item for item in reply.items}
         return {
             cid: {"relation": answers[n].relation, "label": answers[n].label.strip()}
@@ -429,19 +395,18 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     # Links whose inputs changed stop being current before any job can stop the run.
     save()
     done = failed = 0
-    for (step, ids), result in parallel(batches, ask, workers()):
+    for (step, ids), result in cards.each_job(batches, lambda batch: batch[0], ask):
         if isinstance(result, PageFailure):
             failed += 1
-            record_failure(step, result)
-            print(f"  [FAILED] {step}: {result}")
             for cid in ids:
                 entries[cid] = {"input": keys[cid], "failed": True}
-        else:
-            for cid, answer in result.items():
-                entries[cid] = {"input": keys[cid], **answer}
-            record_failure(step, None)
-            done += 1
+            save()
+            continue
+        for cid, answer in result.items():
+            entries[cid] = {"input": keys[cid], **answer}
         save()
+        record_failure(step, None)
+        done += 1
 
     # A candidate that left the list keeps its answer for when it returns; one whose
     # results or projects are gone is pruned.
@@ -460,7 +425,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         f"links: {len(links)} current from {len(current)} candidates; "
         f"{done} batches asked, {failed} failed"
     )
-    return 1 if failed and strict_pages() else 0
+    return cards.exit_code(failed)
 
 
 if __name__ == "__main__":

@@ -109,9 +109,11 @@ EDITORIAL = {
         None,
     ),
 }
-# Stages that also read the shared card helpers; only they hash stages/cards.py, so
-# the revisions of the stages that predate it are unchanged.
+# Stages that apply the shared card modules. Only they hash CARD_FILES, so the
+# revisions of the stages that predate them are unchanged, and a change to one of
+# those modules reschedules every card stage.
 CARD_STAGES = ("headlines", "novelty", "directions", "gists", "links", "shared")
+CARD_FILES = ("stages/cards.py", "records.py", "wording.py")
 # Fail immediately if a future table edit would make freshness propagation order-dependent.
 for index, (action, (_, _, dependencies, _)) in enumerate(EDITORIAL.items()):
     if not set(dependencies) <= set(list(EDITORIAL)[:index]):
@@ -153,7 +155,7 @@ def stage_revision(root: Path, name: str, config: dict) -> str:
     }.get(name, ("writing", "review"))
     files = (f"stages/{name}.py", "agentic/prose.py", "compiler.py")
     if name in CARD_STAGES:
-        files += ("stages/cards.py",)
+        files += CARD_FILES
     return digest(
         [
             model_signature(config, roles),
