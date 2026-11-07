@@ -17,11 +17,13 @@ class FakeAgent:
         self.objections = dict(objections or {})
         self.jobs: list[str] = []
         self.asked: list[str] = []
+        self.sent: dict[str, str] = {}  # step -> the last prompt text it was asked
         self.config = {"step_models": {}, "model": "claude-sonnet-5-5"}
 
     def ask(self, messages, step, *, model=None):
         self.asked.append(step)
         self.jobs.append(step)
+        self.sent[step] = messages[-1]["content"]
         queue = self.replies.get(step)
         if not queue:
             raise AssertionError(f"no recorded reply for {step}")

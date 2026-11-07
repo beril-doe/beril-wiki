@@ -366,3 +366,26 @@ def test_only_saved_gists_todays_checks_reject_are_written_again(tmp_path, monke
     path.write_text(json.dumps(stored))
     state, agent = run(tmp_path, monkeypatch, {STEP: [reply()]})
     assert agent.asked == [STEP, f"{STEP}/science-review"] and state[FID]["gist"] == GOOD
+
+
+def test_a_failed_finding_retries_with_the_objections_that_stopped_it(tmp_path, monkeypatch):
+    """A replayed failure costs nothing and changes nothing, so the retry must differ."""
+    failures = tmp_path / "store/failures.json"
+    failures.parent.mkdir(parents=True)
+    monkeypatch.setattr(gists, "failures_path", lambda: failures)
+    still = ["The gist says 'about 20%'; the source says 20%."]
+    replies = {STEP: [reply()], f"{STEP}/repair": [reply()] * 3}
+    state, agent = run(
+        tmp_path, monkeypatch, replies, objections={STEP: still}, still_open={STEP: still}
+    )
+    assert state[FID] == {"failed": True}
+    assert "LAST_ATTEMPT" not in agent.sent[STEP]
+    note = f"{STEP}: unresolved after 2 jobs: unsupported: objections still open: {still}"
+    failures.write_text(json.dumps({STEP: {"step": STEP, "issues": [{"note": note}]}}))
+    state, agent = run(tmp_path, monkeypatch, {STEP: [reply()]})
+    sent = json.loads(agent.sent[STEP][len(gists.PROMPT) :].removesuffix(gists.RETRY))
+    assert sent["LAST_ATTEMPT"] == f"objections still open: {still}"
+    assert agent.sent[STEP].endswith(gists.RETRY)
+    # The saved key is the finding's own, so the next run finds the retried gist current.
+    state, agent = run(tmp_path, monkeypatch, {})
+    assert agent.asked == [] and state[FID]["gist"] == GOOD

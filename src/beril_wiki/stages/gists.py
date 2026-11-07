@@ -29,6 +29,7 @@ from pydantic import BaseModel, ConfigDict
 
 from beril_wiki.agentic.prose import (
     PageFailure,
+    failures_path,
     parallel,
     prune_failures,
     record_failure,
@@ -143,6 +144,22 @@ PROMPT = prompt(
     "is not a repeat.\n"
     'Return only JSON {"gist": "...", "case": "...", "title": "...", "repeats": "..."}.\n',
 )
+# Sent only when this finding's last attempt failed, so the retry is a new question rather
+# than a replay of the jobs that failed; the cache key and PROMPT stay as they were.
+RETRY = (
+    "\nLAST_ATTEMPT gives the objections that rejected the previous gist for this "
+    "finding. Write one that meets them and keeps every rule above.\n"
+)
+
+
+def last_objections(step: str) -> str:
+    """Why the last attempt at `step` failed, from the run's failure list."""
+    path = failures_path()
+    if path is None or not path.exists():
+        return ""
+    entry = json.loads(path.read_text(encoding="utf-8")).get(step) or {}
+    notes = [i["note"].split("unsupported: ", 1)[-1] for i in entry.get("issues", [])]
+    return " ".join(notes)[:1500]
 
 
 def words(text: str) -> int:
@@ -325,15 +342,17 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         # so a tightened rule re-asks only the gists it now rejects.
         if prev.get("input") == key and not prev.get("failed") and passes(fid, prev, pack):
             continue
-        todo.append((fid, pack, key))
+        todo.append((fid, pack, key, last_objections(f"gists/{fid}") if prev.get("failed") else ""))
 
     def write(item: tuple) -> dict:
-        fid, pack, _ = item
+        fid, pack, _, objections = item
         finding, heading, _ = findings[fid]
         mine = cards.runtime()  # a ledger connection belongs to the thread that opened it
+        sent = pack | {"LAST_ATTEMPT": objections} if objections else pack
+        content = PROMPT + json.dumps(sent, ensure_ascii=False) + (RETRY if objections else "")
         try:
             reply = cards.reviewed(
-                [{"role": "user", "content": PROMPT + json.dumps(pack, ensure_ascii=False)}],
+                [{"role": "user", "content": content}],
                 f"gists/{fid}",
                 checker(finding, heading, pack["EARLIER"]),
                 agent=mine,
@@ -348,7 +367,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         }
 
     done = failed = 0
-    for (fid, *_, key), result in parallel(todo, write, workers()):
+    for (fid, _, key, _), result in parallel(todo, write, workers()):
         if isinstance(result, PageFailure):
             failed += 1
             record_failure(f"gists/{fid}", result)
