@@ -310,10 +310,12 @@ def check_plain(browser, base: str) -> list[str]:
             if term.lower() in body.lower():
                 fails.append(f"plain: {path}: reader text contains '{term}'")
         if path.startswith("/directions/") and path != "/directions/":
-            # A question page's own prose; linked result titles are checked as titles.
+            # A question page's own prose; linked result titles are checked as titles, and
+            # a cited paper's title is quoted as published.
             for t in page.eval_on_selector_all(
                 "article .markdown-rendered > p, article .markdown-rendered li",
-                "els => els.map(e => { const c = e.cloneNode(true);"
+                "els => els.filter(e => !e.querySelector('a[href*=\"pubmed\"]'))"
+                ".map(e => { const c = e.cloneNode(true);"
                 " c.querySelectorAll('a').forEach(a => a.remove()); return c.textContent })",
             ):
                 counts["question page"] += 1
@@ -333,6 +335,9 @@ def check_plain(browser, base: str) -> list[str]:
                     // The footer and topic strip name reports and topics, not the card's words.
                     const skip = 'h3, .meta, .tstrip';
                     if (sel === '.fcard') c.querySelectorAll(skip).forEach(h => h.remove());
+                    // So do a pop-up's project and topic labels, such as "Statistical Confounding".
+                    const labels = '.qpname, .qptopic';
+                    if (sel === '.qpop') c.querySelectorAll(labels).forEach(h => h.remove());
                     return c.textContent;
                 })""",
                 sel,
