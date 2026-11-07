@@ -36,6 +36,30 @@ wishlist are tagged [P]; platform-dependent items are deferred at the bottom.
 - [x] **Entity hygiene** (DONE): single-source entity pages (197/336) are
       filtered at publish time (reversible — they surface at 2+ sources);
       their links downgrade to plain text.
+- [ ] **Finding and research-direction cards** (full corpus run Oct 2026, USD 84
+      of Claude): stages `headlines`, `novelty` and `directions` write
+      `wiki/findings/` (305 findings from 64 of 73 reports), literature labels
+      in `state/novelty.json`, plain summaries in `state/gists.json` (stage
+      `gists`; 291 of 305 after the Nov 2026 `gists@3` retry, USD 3.66; cards, the Results index and the open-questions grid read
+      them), and `wiki/directions/` (58 directions in 12 of
+      14 topics with findings); reanalysis proposals are listed per report for
+      maintainers under `data-issues/` at publish. `contract/cards.yaml` scopes
+      `all` reports and topics. The records publish with every build.
+      Stage `links` writes links between projects to `state/links.json`
+      (Nov 2026: 121 candidates, 83 current links, 34 dropped, 4 failed; USD
+      2.23 of a USD 5 cap). Stage `shared` writes results two or more projects
+      reached to `state/shared.json` (9 accepted, 2 failed review; USD 0.71 of
+      a USD 8 cap); the Results page shows them under the picture.
+      `scripts/check_reader.py` checks the reader pages and
+      `scripts/check_links.py` the links and shared results. The records
+      publish with every build since PR #13 (Nov 2026). Still open: a person
+      checks 10 labels against PubMed, and a BERIL scientist rates the
+      directions; a Sonnet and a Codex content review stand in for now. The
+      gists, directions, links and shared stages have new rules from that
+      review and need a priced rerun to apply them. Two topics have no directions because OpenAI refuses
+      their GPT review as possible biological risk; 9 reports did not converge
+      (see `.agentic/failures.json`).
+      [P: surface hypotheses, recommend next steps]
 
 ## P2 — cheap visibility wins, after P0/P1
 

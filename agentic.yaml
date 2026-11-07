@@ -13,3 +13,7 @@ step_models:
   review: gpt-6.1-sol
   queries: gpt-6.1-sol
   figures: gpt-6.1-sol
+  # Finding cards, literature labels and research directions (stages headlines,
+  # novelty, directions). Their reviews, queries and the cross-vendor label check run on
+  # review and queries, so a GPT model checks every card a Claude model writes.
+  cards: claude-sonnet-5-5

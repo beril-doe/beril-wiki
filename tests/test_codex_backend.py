@@ -221,14 +221,15 @@ def test_failed_turn_without_usage_fails_its_job_not_the_run(tmp_path, monkeypat
     assert row == ("failed", agent.ledger.headroom)
 
 
-def test_bio_flagged_review_is_answered_on_the_fallback_model(tmp_path, monkeypatch):
+@pytest.mark.parametrize("model", ["gpt-6.1-sol", "gpt-6-luna"])
+def test_bio_flagged_review_is_answered_on_the_fallback_model(tmp_path, monkeypatch, model):
     agent = agent_for(tmp_path)
     fake_session(
         monkeypatch, FakeTurn(failed_without_usage("flagged for possible biological risk"))
     )
-    agent.ledger.reserve("k10", "write/concepts/x.md/science-review", "gpt-6.1-sol")
+    agent.ledger.reserve("k10", "write/concepts/x.md/science-review", model)
     with pytest.raises(R.Refused) as caught:
-        C.run_job(agent, json.dumps([{"role": "user", "content": "x"}]), "k10", "gpt-6.1-sol")
+        C.run_job(agent, json.dumps([{"role": "user", "content": "x"}]), "k10", model)
     assert caught.value.fallback_model == "gpt-5.6-sol"
     row = agent.ledger.db.execute("SELECT status,output FROM jobs WHERE key='k10'").fetchone()
     assert row == ("rejected", json.dumps({"refused_to": "gpt-5.6-sol"}))

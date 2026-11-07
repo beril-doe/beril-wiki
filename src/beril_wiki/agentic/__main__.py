@@ -2,20 +2,26 @@
 
 import argparse
 import json
+import math
 import shutil
+import signal
+import sys
 from pathlib import Path
 
 import yaml
 
 from beril_wiki.agentic.batch import changed_sources
+from beril_wiki.agentic.curator import EDITORIAL, pending_actions
 from beril_wiki.agentic.prose import owning_stage
-from beril_wiki.agentic.runner import locked, recover, run
+from beril_wiki.agentic.runner import locked, recover, run, run_stage
 from beril_wiki.agentic.runtime import (
     MODEL_ROLES,
     EvidenceTools,
     Runtime,
     WorkflowError,
     atomic_json,
+    digest,
+    manifest,
     model_policy,
 )
 from beril_wiki.paths import ROOT
@@ -54,12 +60,127 @@ def load_failures(root: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
 
 
+CARD_STAGES = ("headlines", "novelty", "directions", "gists", "links", "shared")
+# Job step prefixes a full run issues besides the editorial stages; a USD cap must name one.
+RUN_PREFIXES = (
+    "extract",
+    "plan",
+    "write",
+    "lit",
+    "figures",
+    "curator",
+    "merge",
+    "merge-judge",
+    "backmerge",
+    "repair",
+)
+# Stages whose jobs carry another step prefix. A cap must name the prefix, or it would
+# be accepted and never consulted.
+FILED_AS = {"literature": "lit", "entities": "merge"}
+# What the card stages write. A run's budget identity leaves them out, so a run
+# stopped after saving some records resumes under the same identity and ceilings.
+CARD_OUTPUTS = (
+    "wiki/findings/",
+    "wiki/directions/",
+    "state/headlines.json",
+    "state/directions.json",
+    "state/novelty.json",
+    "state/gists.json",
+    "state/links.json",
+    "state/shared.json",
+)
+
+
+def card_run(root: Path) -> str:
+    inputs = {
+        path: h
+        for path, h in manifest(root, ("wiki", "state", "contract")).items()
+        if not path.startswith(CARD_OUTPUTS)
+    }
+    return digest(["cards", inputs])
+
+
+def usd_caps(values: list[str]) -> dict[str, float]:
+    """`STAGE=USD` flags as a mapping; each stage's spend is capped across runs."""
+    caps: dict[str, float] = {}
+    for value in values:
+        stage, sep, amount = value.partition("=")
+        try:
+            usd = float(amount)
+        except ValueError:
+            usd = 0.0
+        # nan never compares greater and inf never refuses: either would disable the cap.
+        if not sep or not stage or not math.isfinite(usd) or usd <= 0:
+            raise WorkflowError(f"--stage-max-usd expects STAGE=USD with USD > 0, got {value!r}")
+        caps[stage] = usd
+    return caps
+
+
+def run_cards(root: Path, config: dict, stages: list[str] | None = None) -> dict:
+    """Run only the card stages (CARD_STAGES) in place, then the strict check.
+
+    For a pilot: `run` would also schedule every other stale editorial stage. These
+    stages write only their own outputs, and their hash caches let a later full run
+    adopt what they wrote without model calls. The accepted state is not touched.
+    `stages` limits the run to those card stages, in table order."""
+    unknown = set(stages or []) - set(CARD_STAGES)
+    if unknown:
+        raise WorkflowError(f"unknown card stage: {', '.join(sorted(unknown))}")
+    store = root / ".agentic"
+    if (store / "promotion.json").exists():
+        raise WorkflowError("promotion pending; run recover first")
+    config = config | {
+        "root": str(root),
+        "store": str(store),
+        "run": card_run(root),
+    }
+    # The same file run() writes, so status, account and retry read this run.
+    path = store / "config.json"
+    atomic_json(path, config)
+    agent = Runtime(config)
+    agent.ledger.reconcile_stale(store / "transcripts")
+    # Python's default SIGTERM skips finally blocks, which would orphan the stage's
+    # process group; an exit runs run_stage's cleanup instead.
+    previous = signal.signal(signal.SIGTERM, lambda *_: sys.exit(143))
+    try:
+        for name in CARD_STAGES:
+            if stages is None or name in stages:
+                run_stage(root, path, name, f"stages.{name}", [])
+        run_stage(root, path, "check", "check", [str(root), "--strict"])
+    finally:
+        signal.signal(signal.SIGTERM, previous)
+        agent.ledger.reconcile_stale(store / "transcripts")
+    totals = agent.ledger.totals()
+    print(f"agentic cards: {json.dumps(totals)}")
+    for stage, cap in (config.get("stage_max_usd") or {}).items():
+        print(f"  {stage}: USD {agent.ledger.stage_usd(stage):.2f} of a USD {cap:.2f} cap")
+    return totals
+
+
+def plan(root: Path) -> dict:
+    """What the next run would do, without model calls: changed staged sources and the
+    editorial stages whose fingerprint no longer matches the accepted state."""
+    accepted_path = root / "state/agentic.json"
+    accepted = (
+        json.loads(accepted_path.read_text(encoding="utf-8")) if accepted_path.exists() else {}
+    )
+    config = load_models(root, None, None, [])
+    staged = any((root / "staging").glob("*.md"))
+    return {
+        "changed_sources": changed_sources(root) if staged else [],
+        "pending_editorial": pending_actions(
+            root, accepted.get("editorial", {}), config, integrated=True
+        ),
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=ROOT)
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser(
-        "plan", help="inspect currently staged source changes; no network/model calls"
+        "plan",
+        help="list changed staged sources and stale editorial stages; no network/model calls",
     )
     search = commands.add_parser("search", help="search accepted wiki text; no model calls")
     search.add_argument("query")
@@ -97,6 +218,19 @@ def main() -> int:
     )
     execute.add_argument(
         "--workers", type=int, default=4, help="page jobs run concurrently inside each stage"
+    )
+    execute.add_argument(
+        "--stage-max-usd",
+        action="append",
+        default=[],
+        metavar="STAGE=USD",
+        help="cap a stage's recorded Claude spend, counted across runs; repeatable",
+    )
+    execute.add_argument(
+        "--usd-reserve",
+        type=float,
+        default=0.40,
+        help="USD held for each paid job in flight when a stage has a USD cap",
     )
     execute.add_argument(
         "--write-only",
@@ -137,18 +271,54 @@ def main() -> int:
         "--page", action="append", default=[], help="page key from failures.json; repeatable"
     )
     retry.add_argument("--all-failed", action="store_true", help="every page in failures.json")
+    pilot = commands.add_parser(
+        "cards",
+        help="run only the finding, label and direction stages in place, then check --strict",
+    )
+    for flag, default in (
+        ("--max-tokens", None),
+        ("--max-jobs", None),
+        ("--reserve-tokens", 50_000),
+        ("--max-turns", 12),
+        ("--max-output-tokens", 32768),
+        ("--timeout", 600),
+        ("--stage-timeout", 14400),
+        ("--stage-max-tokens", 0),
+        ("--workers", 4),
+    ):
+        pilot.add_argument(flag, type=int, default=default, required=default is None)
+    pilot.add_argument(
+        "--stage",
+        action="append",
+        default=None,
+        choices=CARD_STAGES,
+        help="run only this card stage; repeatable",
+    )
+    pilot.add_argument(
+        "--stage-max-usd",
+        action="append",
+        default=[],
+        metavar="STAGE=USD",
+        help="cap a stage's recorded Claude spend, counted across runs; repeatable",
+    )
+    pilot.add_argument(
+        "--usd-reserve",
+        type=float,
+        default=0.40,
+        help="USD held for each paid job in flight when a stage has a USD cap",
+    )
+    pilot.add_argument("--model-config", type=Path)
+    pilot.add_argument("--step-model", action="append", default=[], metavar="ROLE=MODEL")
+    pilot.add_argument("--cli", default=shutil.which("claude"))
     commands.add_parser("recover", help="finish an interrupted promotion without model calls")
     commands.add_parser("status", help="show durable job IDs, states and usage")
     args = parser.parse_args()
     root = args.root.resolve()
     try:
         if args.command == "plan":
-            if not any((root / "staging").glob("*.md")):
-                print("No staged sources. Use agentic run to fetch into its isolated workspace.")
-                return 0
             if (root / ".agentic/promotion.json").exists():
                 raise WorkflowError("promotion pending; run recover before inspection")
-            print(json.dumps({"changed_sources": changed_sources(root)}, indent=2))
+            print(json.dumps(plan(root), indent=2))
         elif args.command == "search":
             with locked(root):
                 if (root / ".agentic/promotion.json").exists():
@@ -156,6 +326,33 @@ def main() -> int:
                 print(
                     json.dumps(EvidenceTools(root).search(args.query, offset=args.offset), indent=2)
                 )
+        elif args.command == "cards":
+            if not args.cli:
+                raise WorkflowError("install Claude Code and log in with a subscription first")
+            if min(args.max_tokens, args.max_jobs, args.workers, args.timeout) <= 0:
+                raise WorkflowError("budgets, workers and timeout must be positive")
+            config = {
+                key: getattr(args, key)
+                for key in (
+                    "max_tokens",
+                    "max_jobs",
+                    "reserve_tokens",
+                    "max_turns",
+                    "max_output_tokens",
+                    "timeout",
+                    "stage_timeout",
+                    "stage_max_tokens",
+                    "workers",
+                    "cli",
+                    "usd_reserve",
+                )
+            } | {"stage_max_usd": usd_caps(args.stage_max_usd)}
+            if unknown := set(config["stage_max_usd"]) - set(CARD_STAGES):
+                raise WorkflowError(f"--stage-max-usd names no card stage: {sorted(unknown)}")
+            config |= load_models(root, args.model_config, None, args.step_model)
+            print(json.dumps({"models": model_policy(config)}, indent=2))
+            with locked(root):
+                run_cards(root, config, args.stage)
         elif args.command == "recover":
             with locked(root):
                 recover(root)
@@ -240,8 +437,20 @@ def main() -> int:
                     "write_effort",
                     "strict_pages",
                     "cli",
+                    "usd_reserve",
                 )
-            }
+            } | {"stage_max_usd": usd_caps(args.stage_max_usd)}
+            known = (set(EDITORIAL) | set(RUN_PREFIXES)) - FILED_AS.keys()
+            if unknown := set(config["stage_max_usd"]) - known:
+                hints = [
+                    f"{n} jobs are filed as {FILED_AS[n]}/"
+                    for n in sorted(unknown)
+                    if n in FILED_AS
+                ]
+                raise WorkflowError(
+                    f"--stage-max-usd names no job prefix a run issues: {sorted(unknown)}"
+                    + (f" ({'; '.join(hints)})" if hints else "")
+                )
             config.update(load_models(root, args.model_config, args.model, args.step_model))
             print(json.dumps({"models": model_policy(config)}, indent=2))
             run(root, args.checkout.resolve(), config, args.staged)
