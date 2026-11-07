@@ -10,7 +10,8 @@ measurement and its limits allow. A finding whose stored title holds a statistic
 jargon also gets a plain replacement title. A gist may mark its finding as repeating an
 earlier one from the same report; publish then leaves it off the lists. A refusal or an
 unconverged record fails only that finding and keeps its previous gist in state for
-recovery; publish shows a failed finding's title only.
+recovery; publish shows a failed finding's title only. The next run asks a failed
+finding again with the objections that rejected it.
 
 Output: state/gists.json, joined into finding pages and cards at publish.
 """
