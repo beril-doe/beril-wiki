@@ -152,8 +152,9 @@ vectors come from the `search-data` branch and need the checkout's `.git`.
 
 Search and Ask the wiki run in the reader's browser, so the Pages site needs
 no server. Keyword search needs nothing from the reader. Meaning search and Ask
-call CBORG with the reader's own CBORG key, which the reader enters through the
-key button in the top bar. The browser stores the key in localStorage (or in
+call CBORG with the reader's own CBORG key. The reader enters it on the Ask page
+or in the search box's meaning-search control, and asking without a key opens
+the same key dialog. The browser stores the key in localStorage (or in
 sessionStorage if the reader unticks "Remember on this device") and sends it
 only to `api.cborg.lbl.gov`. The site ships no maintainer key. Browser storage
 belongs to the origin, not the path, so every page under `beril-doe.org`,

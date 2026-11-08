@@ -1,8 +1,8 @@
 // The BERIL page frame. One frame for every page type: a top bar, a record
 // header that states what the page is and what it rests on, the prose, and two
 // rails: contents and neighbourhood on the left, evidence on the right. The
-// home page swaps the record for the corpus in figures and a map of it, and a
-// collection index swaps the prose for a listing of what the collection holds.
+// home page swaps the record for three doors into the wiki, and a collection
+// index swaps the prose for a listing of what the collection holds.
 //
 // Stock components (search, dark mode, table of contents, footer) arrive
 // through the layout slots; everything else is rendered here from page data.
@@ -11,7 +11,7 @@
 import type { FullSlug, PageFrame } from "@quartz-community/types"
 import type { Root } from "hast"
 import { Bar } from "./components/Bar"
-import { RecordBar, ResultsBoard, SharedResults, TopicCards } from "./components/Cards"
+import { RecordBar, ResultsBoard, TopicCards } from "./components/Cards"
 import { EvidenceRail } from "./components/EvidenceRail"
 import { Home } from "./components/Home"
 import { Listing, indexFigures } from "./components/Listing"
@@ -20,6 +20,7 @@ import { NoveltyMap } from "./components/Novelty"
 import { QuestionsPage } from "./components/Questions"
 import { Record } from "./components/Record"
 import { Sources } from "./components/Sources"
+import { TopicsPage } from "./components/Topics"
 import { slot } from "./jsx"
 import { type File, collectionOf, corpus, isIndex, slugOf, stripIndexLists, walk } from "./page"
 import { ties } from "./ties"
@@ -66,13 +67,15 @@ export const BerilFrame: PageFrame = {
             {slug === "findings/index" ? (
               <>
                 <NoveltyMap c={c} from={slug as FullSlug} />
-                <SharedResults c={c} from={slug as FullSlug} />
                 <ResultsBoard c={c} from={slug as FullSlug} />
               </>
             ) : slug === "directions/index" ? (
               <QuestionsPage c={c} from={slug as FullSlug} />
             ) : (
-              <Listing file={file} c={c} />
+              <>
+                <Listing file={file} c={c} />
+                {slug === "topics/index" && <TopicsPage c={c} from={slug as FullSlug} />}
+              </>
             )}
           </main>
         ) : (

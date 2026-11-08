@@ -49,7 +49,8 @@ let wired = false
 export function wireQuestions() {
   if (wired) return
   wired = true
-  const wrapOf = (t: EventTarget | null) => (t as HTMLElement | null)?.closest?.<HTMLElement>(".qd") ?? null
+  // Legend dots share the grid's classes but are not questions.
+  const wrapOf = (t: EventTarget | null) => (t as HTMLElement | null)?.closest?.<HTMLElement>(".qd:not(.key)") ?? null
   // Hover lives in data-hover, not :hover, so the pop-up follows aim.ts: it stays while the
   // pointer travels from the dot into it, past neighbouring dots. CSS :hover remains the
   // fallback without this script.
@@ -128,7 +129,7 @@ export function wireQuestions() {
   })
   document.addEventListener("click", (e) => {
     const me = e as MouseEvent
-    const dot = (e.target as HTMLElement | null)?.closest?.<HTMLElement>(".qdot")
+    const dot = (e.target as HTMLElement | null)?.closest?.<HTMLElement>(".qd:not(.key) > .qdot")
     if (!dot || me.button !== 0 || me.metaKey || me.ctrlKey || me.shiftKey || me.altKey) return
     // detail 0 is a keyboard activation: the pop-up already shows on focus, so follow the link.
     if (me.detail === 0) return

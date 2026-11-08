@@ -1,74 +1,66 @@
-// The home page swaps the record for the corpus in figures, a map of it, and
-// the topic table. When finding records are published, two
-// boxes join Find your way in, and three results and three questions follow it,
-// each with a topic strip.
+// The home page opens on the same three ways in as the top bar: results, open
+// questions and topics, each as a door card with its count. One line of
+// reference links follows. The map, the topic key and the topics table live on
+// the Topics page; the results and questions live on their own pages.
 import type { FullSlug } from "@quartz-community/types"
-import { resolveRelative } from "@quartz-community/utils"
-import type { ElementContent, Root } from "hast"
+import { resolveRelative, simplifySlug } from "@quartz-community/utils"
+import type { Element, ElementContent, Root } from "hast"
 import { jsx } from "../jsx"
-import { CorpusMap, mapStats } from "../map"
-import { type Corpus, type File, counts, sections, slugOf, titleOf, topicBlurbs } from "../page"
-import { FindingCard, type FindingFm, directionsOf, findingsOf, resultsIndex } from "./Cards"
-import { CrossQuestions } from "./Questions"
-import { TopicKey } from "./Strip"
-import { Topics } from "./Topics"
+import { type Corpus, type File, collectionOf, counts, isIndex, sections, slugOf, titleOf } from "../page"
+import { directionsOf, findingsOf } from "./Cards"
 
-function SecHead({ title, deck }: { title: string; deck?: string }) {
-  return (
-    <div class="sechead">
-      <h2>{title}</h2>
-      {deck && <p>{deck}</p>}
-    </div>
-  )
+const plural = (n: number, unit: string) => `${n} ${unit}${n === 1 ? "" : "s"}`
+const isEl = (n: ElementContent): n is Element => n.type === "element"
+
+/** The links of the home page's Browse list, minus the ones the reference line already gives. */
+function extraLinks(nodes: ElementContent[] | undefined, skip: Set<string>): ElementContent[][] {
+  const out: ElementContent[][] = []
+  for (const list of nodes ?? []) {
+    if (!isEl(list) || (list.tagName !== "ul" && list.tagName !== "ol")) continue
+    for (const li of list.children) {
+      if (!isEl(li) || li.tagName !== "li") continue
+      const a = li.children.find((k): k is Element => isEl(k) && k.tagName === "a")
+      const target = String(a?.properties?.["data-slug"] ?? a?.properties?.dataSlug ?? "")
+      if (a && !skip.has(simplifySlug(target as FullSlug))) out.push([a])
+    }
+  }
+  return out
 }
 
 export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree: Root; standing: ElementContent[] | null }) {
   const slug = slugOf(file) as FullSlug
-  const { intro, byHeading } = sections(tree)
-  const firstPara = intro.findIndex((n) => n.type === "element" && n.tagName === "p")
-  const lead = firstPara >= 0 ? [intro[firstPara]] : intro
-  const after = firstPara >= 0 ? intro.filter((_, i) => i !== firstPara) : []
-  const browse = byHeading.get("browse")
-  const blurbs = topicBlurbs(byHeading.get("topics"))
+  const { byHeading } = sections(tree)
   const n = counts(c)
-  const stats = mapStats(c)
-  const findings = findingsOf(c)
-  const published = findings.length > 0
+  const findings = findingsOf(c).length
   const questions = directionsOf(c).length
-  const rankOf = (f: File) => (f.frontmatter as { home_rank?: number } | undefined)?.home_rank
-  const picks = findings
-    .filter((f) => rankOf(f) !== undefined)
-    .sort((a, b) => rankOf(a)! - rankOf(b)!)
-    .slice(0, 3)
-  const unmatched = resultsIndex(c).compare_order?.[0]
-  const picksDeck =
-    picks.length > 0 && picks.every((f) => (f.frontmatter as FindingFm | undefined)?.compare_text === unmatched)
-      ? "Results from different topics with no close match in PubMed abstracts."
-      : "Results from different topics with the least published work like them."
-  const kinds = [
-    ["topics/index", "Topics", "What the corpus says about one research area. Start here if you are new to an area.", `${n.topics} topics`],
-    ["concepts/index", "Concepts", "What several projects together show about one claim, and where they disagree.", `${n.concepts} concepts`],
-    ["entities/index", "Entities", "Everything recorded about one organism, gene, compound, method or dataset.", `${n.entities} entities`],
-    ["conflicts/index", "Conflicts", "Where projects disagree, the evidence on each side, and what would settle it.", `${n.conflicts} conflicts`],
-    ["summaries/index", "Reports", "What one project did and found, with exact numbers to cite.", `${n.reports} reports, ${n.digests} digests`],
+  const authors = [...c.bySlug.keys()].filter((s) => collectionOf(s) === "authors" && !isIndex(s)).length
+  const doors = [
+    ...(findings > 0
+      ? [
+          ["findings/index", "Results", "What the projects found, and how new each result is.", plural(findings, "result")],
+          ["directions/index", "Open questions", "What the results leave open, and what answering needs.", plural(questions, "question")],
+        ]
+      : []),
+    ["topics/index", "Topics", findings > 0
+        ? `The ${n.topics} research areas, each with its results and questions.`
+        : `The ${n.topics} research areas, each with its concepts and reports.`, plural(n.topics, "topic")],
   ] as [string, string, string, string][]
-  if (published)
-    kinds.push(
-      ["findings/index", "Results", "What single projects measured or found missing, in plain words.", `${findings.length} results`],
-      ["directions/index", "Open questions", "Questions the results leave open, by topic and by what answering them needs.", `${questions} questions`],
-    )
+  const reference = (
+    [
+      ["concepts/index", "Concepts", n.concepts],
+      ["entities/index", "Entities", n.entities],
+      ["conflicts/index", "Conflicts", n.conflicts],
+      ["summaries/index", "Reports", n.reports + n.digests],
+      ["authors/index", "Authors", authors],
+    ] as [string, string, number][]
+  ).filter(([, , count]) => count > 0)
+  const also = extraLinks(byHeading.get("browse"), new Set(reference.map(([target]) => simplifySlug(target as FullSlug) as string)))
   return (
     <>
-      {/* The introduction keeps one honest measure on the left; the corpus,
-          in figures, fills the right instead of a second column of prose. The
-          figures start level with the first paragraph, not with the title. */}
       <section class="band hero">
         <h1>{titleOf(file)}</h1>
+        <p class="deck">What the BERIL projects found, what they leave open, and where to look next.</p>
         {standing && <p class="standing">{jsx(standing)}</p>}
-        <div class="lede">
-          <div class="lead">{jsx(lead)}</div>
-          {after.length > 0 && <div class="after">{jsx(after)}</div>}
-        </div>
         {/* src/client opens section search from this box. */}
         <div class="homesearch">
           <button class="bigsearch px-bigsearch" type="button">
@@ -83,99 +75,41 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
             Ask the wiki
           </a>
         </div>
-        <dl class="figures" aria-label="The corpus in figures">
-          <p class="lbl">The corpus</p>
-          {(
-            [
-              [n.reports, "Project reports", "the primary evidence", "summaries/index"],
-              [n.digests, "Cross-project digests", "discoveries and pitfalls", "summaries/index"],
-              [n.concepts, "Concepts", "synthesised across them", "concepts/index"],
-              [n.entities, "Entities", "organisms, genes, datasets, methods", "entities/index"],
-              [n.conflicts, "Recorded conflicts", "with the evidence on both sides", "conflicts/index"],
-              [n.topics, "Topics", "gathering the rest", "topics/index"],
-            ] as [number, string, string, string][]
-          ).map(([value, label, tail, target]) => (
-            <div class="frow">
-              <dt>{value}</dt>
-              <dd>
-                <a href={resolveRelative(slug, target as FullSlug)}>{label}</a> {tail}
-              </dd>
-            </div>
-          ))}
-        </dl>
       </section>
-      {/* Each kind of page answers a different question; the cards say which. */}
-      <section class="band">
-        <SecHead title="Find your way in" />
-        <nav class="kinds" aria-label="Kinds of page">
-          {kinds.map(([target, label, what, count]) => (
-            <a class="kindcard" href={resolveRelative(slug, target as FullSlug)}>
+      <section class="band homedoors">
+        <nav class="cards doors" aria-label="Ways in">
+          {doors.map(([target, label, what, count]) => (
+            <a class="card door" href={resolveRelative(slug, target as FullSlug)}>
               <b>{label}</b>
-              <span>{what}</span>
-              <span class="n">{count}</span>
+              <span class="desc">{what}</span>
+              <span class="meta">
+                <span class="n">{count}</span>
+              </span>
             </a>
           ))}
         </nav>
-        {browse && (
-          <nav class="browse also" aria-label="Also">
-            {jsx(browse)}
+        <nav class="reflinks" aria-label="Reference">
+          <span class="lbl">Browse the reference:</span>
+          {reference.map(([target, label, count], i) => (
+            <>
+              {i > 0 && <span class="sep" aria-hidden="true">·</span>}
+              <a href={resolveRelative(slug, target as FullSlug)}>
+                {label} <span class="n">{count}</span>
+              </a>
+            </>
+          ))}
+        </nav>
+        {also.length > 0 && (
+          <nav class="reflinks also" aria-label="More pages">
+            <span class="lbl">Also:</span>
+            {also.map((link, i) => (
+              <>
+                {i > 0 && <span class="sep" aria-hidden="true">·</span>}
+                {jsx(link)}
+              </>
+            ))}
           </nav>
         )}
-      </section>
-      {published && (
-        <>
-          <TopicKey c={c} from={slug} blurbs={blurbs} />
-          <section class="band" data-cards data-tstrips aria-label="What the projects found">
-            <SecHead title="What the projects found" deck={picksDeck} />
-            {picks.length > 0 && (
-              <div class="grid2 grid3">
-                {picks.map((f) => (
-                  <FindingCard f={f} from={slug} c={c} strip />
-                ))}
-              </div>
-            )}
-            <p class="c-more">
-              <a href={resolveRelative(slug, "findings/index" as FullSlug)}>All {findings.length} results</a>
-            </p>
-          </section>
-          <section class="band" data-tstrips aria-label="Questions still open">
-            <SecHead title="Questions still open" deck="Questions that draw on results from more than one project." />
-            <CrossQuestions c={c} from={slug} />
-            <p class="c-more">
-              <a href={resolveRelative(slug, "directions/index" as FullSlug)}>All {questions} questions</a>
-            </p>
-          </section>
-        </>
-      )}
-      <section class="band" aria-label="Map of the corpus">
-        <SecHead
-          title="The map"
-          deck={`The ${stats.topics} topics and the ${stats.concepts} concepts they gather. Click a point to open its page.`}
-        />
-        {/* src/client/strips.ts lights the picked topic's cluster here. */}
-        <div class="mapframe" id="home-map" data-tmap>
-          <CorpusMap c={c} from={slug} />
-        </div>
-        <div class="maplegend">
-          <span class="key">
-            <i class="swatch" />A concept the topic gathers, sized by how linked it is
-          </span>
-          <span class="key">
-            <i class="swatch grey" />A concept no topic claims, on a dashed tether
-          </span>
-          <span class="key">
-            <i class="tie" />
-            {stats.crossings} wikilinks cross between topics, summed into one line per pair
-          </span>
-          <span class="key">Hover a concept for its own links, a topic for everything leaving it.</span>
-          {published && (
-            <span class="key">The colours are the same topics as the strips on the results and questions above.</span>
-          )}
-        </div>
-      </section>
-      <section class="band" aria-label="Topics">
-        <SecHead title="Topics" />
-        <Topics c={c} from={slug} blurbs={blurbs} />
       </section>
     </>
   )

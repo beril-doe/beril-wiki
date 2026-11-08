@@ -15,6 +15,8 @@
   --nv-builds: #2a78d6;
   --nv-match: #138a60;
   --nv-none: #868d94;
+  // A project's box on the Results map: 3:1 against the page, so the grouping reads.
+  --nv-box: #878e94;
 }
 :root[saved-theme="dark"] {
   --v-new: #57a8ba;
@@ -25,6 +27,7 @@
   --nv-builds: #3987e5;
   --nv-match: #199e70;
   --nv-none: #7c848c;
+  --nv-box: #6b7075;
 }
 
 // The home search's button, outside the home band: the open-question
@@ -116,31 +119,6 @@
   color: var(--ink);
 }
 
-.c-chips {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin: 0 0 12px;
-}
-.c-chip {
-  font: inherit;
-  font-size: var(--t-meta);
-  border: 1px solid var(--line-2);
-  border-radius: 999px;
-  padding: 3px 11px;
-  color: var(--ink-2);
-  background: var(--card);
-  cursor: pointer;
-  &.on {
-    background: var(--ink);
-    color: var(--bg);
-    border-color: var(--ink);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--method);
-    outline-offset: 2px;
-  }
-}
 
 // Two columns at desktop width: four home cards fill two rows, not three and one.
 .grid2 {
@@ -236,7 +214,6 @@
   font: inherit;
   font-size: var(--t-meta);
   border: 1px solid var(--line-2);
-  border-radius: 999px;
   padding: 2px 10px;
   color: var(--ink-2);
   background: transparent;
@@ -345,7 +322,11 @@
 .qd {
   position: relative;
   display: block;
-  color: var(--hue, var(--mute));
+  color: var(--ink);
+  // Cites a result in the Novel column: the one colour on this map.
+  &.novel {
+    color: var(--nv-new);
+  }
 }
 .qdot {
   display: grid;
@@ -354,25 +335,18 @@
   height: var(--hit);
   color: inherit;
   -webkit-tap-highlight-color: transparent;
+  border-radius: 50%;
   &::before {
     content: "";
     width: var(--mark);
     height: var(--mark);
-    background: currentColor;
-    transition: transform 0.12s;
-  }
-  &[data-shape="lakehouse analysis"]::before {
     border-radius: 50%;
+    background: currentColor;
   }
-  &[data-shape="experiment"]::before {
-    border-radius: 2px;
-  }
-  &[data-shape="analysis then experiment"]::before {
-    transform: rotate(45deg) scale(0.78);
-  }
-  &:focus-visible::before,
-  .qd[data-open] &::before {
-    box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 28%, transparent);
+  // A soft halo for hover, focus and pin, which never reads as the ring.
+  .qd[data-open] &,
+  .qd[data-hover] & {
+    background: color-mix(in srgb, var(--ink) 14%, transparent);
   }
   &:focus-visible {
     outline: 2px solid var(--method);
@@ -395,7 +369,6 @@
   background: var(--card);
   color: var(--ink);
   border: 1px solid var(--line-2);
-  border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
   font-size: var(--t-meta);
   line-height: 1.4;
@@ -441,8 +414,8 @@
   .qd[data-hover] .qpop {
     display: block;
   }
-  .qd:hover .qdot::before {
-    box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 28%, transparent);
+  html:not([data-qhover]) .qd:hover .qdot {
+    background: color-mix(in srgb, var(--ink) 14%, transparent);
   }
 }
 .qd:has(:focus-visible) .qpop,
@@ -469,20 +442,16 @@
   align-items: center;
   gap: 6px;
 }
-.qdot-key {
+.qd.key {
   display: inline-block;
-  width: 11px;
-  height: 11px;
-  background: var(--ink-2);
-  &[data-shape="lakehouse analysis"] {
-    border-radius: 50%;
-  }
-  &[data-shape="experiment"] {
-    border-radius: 2px;
-  }
-  &[data-shape="analysis then experiment"] {
-    transform: rotate(45deg) scale(0.8);
-  }
+  vertical-align: middle;
+  --hit: 22px;
+  --mark: 14px;
+}
+.qnovel {
+  display: block;
+  color: var(--nv-new);
+  font-weight: 600;
 }
 .qall {
   margin: 22px 0 0;
@@ -566,23 +535,11 @@
 }
 
 // ---- questions that join projects ----------------------------------------
-// A ring marks a question citing results from two or more projects; the other
-// dots step back so the rings read first. Only the dot fades: its pop-up sits
-// inside the same .qd and must stay opaque.
-.qgrid:has(.qd.cross) .qd:not(.cross) > .qdot {
-  opacity: 0.55;
-}
-.qgrid:has(.qd.cross) .qd:not(.cross):is(:hover, [data-open], :has(:focus-visible)) > .qdot {
-  opacity: 1;
-}
-.qd.cross .qdot::before,
-.qdot-key.ring {
+// A ring marks a question citing results from two or more projects.
+.qd.cross .qdot::before {
   box-shadow:
     0 0 0 2px var(--card),
     0 0 0 3.5px currentColor;
-}
-.qdot-key.ring {
-  border-radius: 50%;
 }
 .qd.cross .qpop {
   width: min(24rem, calc(100vw - 16px));
@@ -624,118 +581,16 @@
   margin-top: 3px;
   color: var(--method);
 }
-.xqlist {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 16px;
-  display: grid;
-  gap: 8px;
-  > li {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 10px 14px;
-  }
-}
-.xqt {
-  font-family: var(--serif);
-  font-size: var(--t-sub);
-  line-height: 1.3;
-  color: var(--ink);
-}
-.xqp {
-  font-size: var(--t-meta);
-  color: var(--ink-2);
-}
-.stopics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 6px;
-}
-.xtopic {
-  font-size: var(--t-meta);
-  color: var(--ink-2);
-  border: 1px solid var(--line-2);
-  border-radius: 999px;
-  padding: 1px 9px;
-}
-
-// ---- home results that span projects --------------------------------------
-.scard {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-top: 3px solid var(--method);
-  border-radius: 8px;
-  padding: 14px 15px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  h3 {
-    font-family: var(--serif);
-    font-weight: 500;
-    font-size: var(--t-sub);
-    line-height: 1.3;
-    margin: 0;
-  }
-  p {
-    margin: 0;
-    font-size: var(--t-ui);
-    line-height: 1.5;
-  }
-  &.open {
-    border-color: var(--method);
-    box-shadow: inset 0 0 0 1px var(--method);
-  }
-}
-.skicker {
-  font-size: var(--t-label);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--mute-ink);
-}
-.sprojects {
-  margin: 0;
-  padding-left: 18px;
-  font-size: var(--t-meta);
-}
-.srel {
-  font-size: var(--t-meta) !important;
-  color: var(--ink-2);
-  font-style: italic;
-}
-.scmp {
-  margin-top: auto;
-  align-self: flex-start;
-  font: 500 var(--t-meta) / 1.3 var(--sans);
-  color: var(--method);
-  background: transparent;
-  border: 1px solid var(--line-2);
-  border-radius: 6px;
-  padding: 6px 12px;
-  min-height: 32px;
-  cursor: pointer;
-  &[aria-expanded="true"] {
-    border-color: var(--method);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--method);
-    outline-offset: 2px;
-  }
-}
+// ---- the comparison a result card's Compare button opens ------------------
 .spanel {
   margin-top: 12px;
   // Placed inside the card grid under the clicked card's row, it spans every column.
-  .scards > & {
+  .cards > & {
     grid-column: 1 / -1;
     margin-top: 0;
   }
   background: var(--card);
   border: 1px solid var(--method);
-  border-radius: 8px;
   padding: 14px 15px;
   &[hidden] {
     display: none;
@@ -761,7 +616,6 @@
 }
 .smini {
   border: 1px solid var(--line);
-  border-radius: 6px;
   padding: 10px 12px;
   display: flex;
   flex-direction: column;
@@ -832,16 +686,55 @@
   padding: 8px 6px;
   border-bottom: 1px solid var(--line-2);
   line-height: 1.3;
+  // Only the Novel column's bar is coloured; the column already names its class.
   i {
     display: block;
     height: 4px;
-    border-radius: 2px;
-    background: var(--nv);
+    background: var(--line);
     margin-bottom: 6px;
+  }
+  &.nv-new i {
+    background: var(--nv-new);
   }
   .n {
     color: var(--ink);
   }
+}
+.nvnotewrap {
+  position: relative;
+}
+.nvnoteb {
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: help;
+  text-align: left;
+}
+.nvnote {
+  display: block;
+  margin-top: 4px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink-2);
+  &[hidden] {
+    display: none;
+  }
+}
+// The square beside a topic is the topic's colour on cards and chips; no mark takes it.
+.nvrowh::before,
+.qrowh::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  background: var(--d, var(--line-2));
+  vertical-align: 1px;
 }
 .nvrowh {
   font-family: var(--serif);
@@ -867,18 +760,8 @@
 .nvlab {
   display: none;
 }
-.nv-new {
-  --nv: var(--nv-new);
-}
-.nv-builds {
-  --nv: var(--nv-builds);
-}
-.nv-match {
-  --nv: var(--nv-match);
-}
-.nv-none,
-.nv-unset {
-  --nv: var(--nv-none);
+.nvlab.nv-new {
+  color: var(--nv-new);
 }
 .nbead {
   position: relative;
@@ -891,13 +774,20 @@
   align-items: center;
   max-width: 100%;
   padding: 4px 5px;
-  border: 1px solid var(--line-2);
-  border-radius: 8px;
+  border: 1px solid var(--nv-box);
   background: var(--card);
   cursor: pointer;
   transition: opacity 0.15s;
-  &.nv-unset {
-    border-style: dashed;
+  // A ring sits 3px outside its mark; the wider pitch keeps rings off neighbours and the box.
+  &:has(.rel) {
+    gap: 7px;
+    padding: 6px 7px;
+  }
+  &.key {
+    display: inline-flex;
+    min-width: 0;
+    min-height: 0;
+    cursor: default;
   }
   &:focus-visible {
     outline: 2px solid var(--method);
@@ -913,11 +803,48 @@
   }
 }
 .nd {
+  // The shape is drawn in ::before, so a clipped triangle never clips the ring in ::after.
+  position: relative;
   display: block;
+  flex: none;
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--nv);
+  color: var(--ink);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  &[data-k="null"]::before {
+    background: var(--card);
+    box-shadow: inset 0 0 0 1.5px currentColor;
+  }
+  &[data-k="interpretation"]::before {
+    border-radius: 0;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  }
+  &[data-k="correction"]::before {
+    border-radius: 0;
+    background:
+      linear-gradient(45deg, transparent 38%, currentColor 38% 62%, transparent 62%),
+      linear-gradient(-45deg, transparent 38%, currentColor 38% 62%, transparent 62%);
+  }
+  &.rel::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border: 1.2px solid currentColor;
+    border-radius: 50%;
+  }
+  &.on {
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--ink) 16%, transparent);
+  }
+}
+.nvkey .nd.key {
+  margin: 0 2px;
 }
 .nvbox.sel .nbead:not(.me):not(.nb) {
   opacity: 0.4;
@@ -934,13 +861,6 @@ svg.nvlinks {
     stroke-width: 1.8;
     opacity: 0.85;
   }
-  path.q {
-    stroke-dasharray: 5 3;
-  }
-  path.p {
-    stroke-dasharray: 1.5 3;
-    stroke-linecap: round;
-  }
 }
 .nvempty {
   font-size: var(--t-meta);
@@ -951,7 +871,6 @@ svg.nvlinks {
   margin-top: 12px;
   background: var(--card);
   border: 1px solid var(--line-2);
-  border-radius: 8px;
   padding: 14px 15px;
   font-size: var(--t-meta);
   &[hidden] {
@@ -1008,7 +927,6 @@ svg.nvlinks {
   background: var(--card);
   color: var(--ink);
   border: 1px solid var(--line-2);
-  border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
   font-size: var(--t-meta);
   line-height: 1.45;
@@ -1025,6 +943,17 @@ svg.nvlinks {
   .nvtipsrc {
     margin-top: 4px;
     color: var(--method);
+  }
+  .nvtipkind {
+    font-size: var(--t-label);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--mute-ink);
+    margin-bottom: 2px;
+  }
+  .nvtiprel {
+    margin-top: 4px;
   }
   .nvopen {
     display: block;
@@ -1083,72 +1012,17 @@ svg.nvlinks {
     width: 12px;
     height: 12px;
   }
+  .nbead:has(.rel) {
+    gap: 9px;
+  }
 }
 
-// ---- home topic strips ---------------------------------------------------
-// One slot per topic, in the same order on every strip, so shared topics line
-// up across the cards and the questions. The main topic's slot stands taller.
-.tstrip > summary {
-  list-style: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 32px;
-  &::-webkit-details-marker {
-    display: none;
-  }
-  &:focus-visible {
-    outline: 2px solid var(--method);
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
-}
-.tslots,
+// ---- the topic key -------------------------------------------------------
 .tkeyslots {
   display: grid;
   grid-template-columns: repeat(var(--topics, 15), 1fr);
   gap: 2px;
 }
-.tslots {
-  flex: 1;
-  max-width: 260px;
-  align-items: center;
-}
-.tslot {
-  height: 12px;
-  border-radius: 2px;
-  background: var(--line);
-  transition:
-    opacity 0.2s,
-    transform 0.2s;
-  &.on {
-    background: var(--h);
-  }
-  &.main {
-    height: 18px;
-  }
-}
-.tcap {
-  font-size: var(--t-meta);
-  color: var(--ink-2);
-  white-space: nowrap;
-  &::after {
-    content: " \25B8";
-  }
-  .tstrip[open] &::after {
-    content: " \25BE";
-  }
-}
-.tnames {
-  list-style: none;
-  padding: 0;
-  margin: 6px 0 2px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-}
-.tname,
 .tkeyslot,
 .tclear {
   font: inherit;
@@ -1156,22 +1030,6 @@ svg.nvlinks {
   &:focus-visible {
     outline: 2px solid var(--method);
     outline-offset: 2px;
-  }
-}
-.tname {
-  font-size: var(--t-meta);
-  border: 1px solid var(--line-2);
-  border-left: 4px solid var(--h);
-  border-radius: 4px;
-  padding: 2px 8px;
-  background: var(--card);
-  color: var(--ink);
-  &[aria-pressed="true"] {
-    background: color-mix(in srgb, var(--h) 16%, var(--card));
-    border-color: var(--h);
-  }
-  &:disabled {
-    cursor: default;
   }
 }
 // The key above both sections: what a topic is, the row of topics in strip order,
@@ -1258,9 +1116,6 @@ svg.nvlinks {
     display: none;
   }
 }
-.tkcount {
-  font-weight: 600;
-}
 .tmapgo {
   font: inherit;
   font-size: var(--t-meta);
@@ -1281,7 +1136,6 @@ svg.nvlinks {
 .tclear {
   font-size: var(--t-meta);
   border: 1px solid var(--line-2);
-  border-radius: 999px;
   padding: 2px 10px;
   background: var(--card);
   color: var(--ink);
@@ -1300,31 +1154,6 @@ svg.nvlinks {
     height: 32px;
   }
 }
-// A picked topic outlines every entry with it and marks its slot on each strip.
-// Entries without it lose their card and their strip fades; their text keeps its
-// colour so it stays readable.
-[data-tstrips] [data-topics] {
-  transition:
-    background-color 0.2s,
-    border-color 0.2s;
-}
-[data-tstrips][data-pick] [data-topics] {
-  &.hit {
-    border-color: var(--ink);
-    box-shadow: inset 0 0 0 1px var(--ink);
-  }
-  &:not(.hit) {
-    background: transparent;
-    border-style: dashed;
-    .tslots {
-      opacity: 0.35;
-    }
-  }
-}
-[data-tstrips][data-pick] .tslot.pick {
-  transform: scaleY(1.5);
-  outline: 2px solid var(--ink);
-}
 // The home map fades every topic cluster but the picked one, and the lines between them.
 [data-tmap] .cluster,
 [data-tmap] .ties,
@@ -1341,11 +1170,127 @@ svg.nvlinks {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .tslot,
   [data-tmap] .cluster,
   [data-tmap] .ties,
-  [data-tmap] .links,
-  [data-tstrips] [data-topics] {
+  [data-tmap] .links {
     transition: none;
   }
+}
+
+// ---- the boards under both maps --------------------------------------------
+// Result and question cards use the concepts card (.cards .card in _listing.scss). They
+// are containers, not links, so the title link stretches over the card and the chip and
+// Compare buttons sit above it.
+.board {
+  margin-top: 28px;
+  .px-nomatch[hidden] {
+    display: none;
+  }
+  .toggles {
+    gap: 6px 18px;
+  }
+}
+.px-tog {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--t-ui);
+  color: var(--ink-2);
+  cursor: pointer;
+  .n {
+    color: var(--mute);
+    font: 400 0.75rem var(--mono);
+  }
+}
+.cards .rcard,
+.cards .qcard {
+  .ct {
+    color: inherit;
+    text-decoration: none;
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
+  }
+  .ctags,
+  .crel {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
+    font-size: var(--t-meta);
+  }
+  .crel {
+    color: var(--ink-2);
+  }
+  .desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .cnovel {
+    font-size: var(--t-meta);
+    font-weight: 600;
+    color: var(--nv-new);
+  }
+  .meta span + span::before {
+    content: "·";
+    margin-right: 8px;
+  }
+  &:hover .ct {
+    color: var(--method);
+  }
+}
+.ccmp {
+  font: 500 var(--t-meta) / 1.3 var(--sans);
+  color: var(--method);
+  background: transparent;
+  border: 1px solid var(--line-2);
+  padding: 2px 9px;
+  cursor: pointer;
+  &[aria-expanded="true"] {
+    border-color: var(--method);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--method);
+    outline-offset: 2px;
+  }
+}
+.board.px-compact > .cards {
+  display: block;
+}
+.board.px-compact > .cards > .card:not(.px-hidden) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px 16px;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--line);
+  .desc,
+  .crel,
+  .cnovel {
+    display: none;
+  }
+  .ctags {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .meta {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding-top: 0;
+  }
+}
+// The filter fades the map marks it hides (option 1B); the marks stay where they are.
+.nd.out {
+  opacity: 0.15;
+}
+.nbead.out {
+  opacity: 0.35;
+}
+.qd.out > .qdot {
+  opacity: 0.18;
 }

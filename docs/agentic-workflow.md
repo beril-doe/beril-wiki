@@ -313,57 +313,71 @@ records publish.
 
 ## Checking the reader pages
 
-`scripts/check_reader.py {home,plain,grid,pages,cross}` drives the installed Chrome
-through Playwright against a local build and exits 1 with one line per
-failure. Build with `WIKI_BASE_URL=localhost:8096
-CBORG_API_KEY= scripts/build_quartz.sh`, then run
+`scripts/check_reader.py
+{home,strips,plain,grid,pages,contrast,cross,marks,filters,related}` drives the
+installed Chrome through Playwright against a local build and exits 1 with one
+line per failure. Lines starting `note:` never fail a check. Build with
+`WIKI_BASE_URL=localhost:8096 CBORG_API_KEY= scripts/build_quartz.sh`, then run
 `uv run --with playwright python scripts/check_reader.py grid --base
 http://localhost:8096 --serve quartz/public`. `--serve` serves the built folder
 with clean URLs, which a plain `http.server` does not; without it, serve the
-site on `--base` yourself (default `http://localhost:8080`).
+site on `--base` yourself (default `http://localhost:8080`). The checks read
+their expected values from the records under `quartz/content/` and
+`wiki/directions/`, so they follow the current corpus.
 
-- `home` checks the heading order and the removed wording, that the home shows
-  no shared-result card, that every home result and question has a topic strip
-  that fills the topics it names, that pointing at a key slot names its topic,
-  that picking a topic in the key or a strip outlines exactly the entries that
-  share it, shows their counts and lights only that topic on the map (the key
-  row hidden without JavaScript),
-  and that its three result cards have distinct ids,
-  projects and topics and are not missing-data or unperformed null results. With no summaries yet it
-  prints a note and passes.
-- `plain` checks card, chip and pop-up text and the prose of the first 20
-  question pages for test statistics, statistical wording such as "significant"
-  (the gists stage's rule) and "Caveat", card titles separately (lines starting
-  `title:`; the gists stage replaces statistic titles), and that no visited page
-  shows a pipeline term such as
-  "Candidate novel" or "needs compute", including text inside pop-ups and
-  folded details.
+- `home` checks the home page's title, its three doors and their counts, and
+  the reference line with its counts. It checks the top bar: at most 7
+  controls after the wordmark at 1440 px, every collection within two clicks
+  of home, and the Browse menu by mouse, keyboard and tap. It checks that the
+  bar has no CBORG key button and that the search box's meaning-search control
+  and the Ask page each offer key entry. It then runs `strips`.
+- `strips` checks the topic key, the map and the table on `/topics/`, that
+  picking a topic lights its map cluster, and that cards and map rows carry
+  their topic's key colour.
+- `plain` checks card, chip, pop-up and column-note text and the prose of the
+  first 20 question pages for test statistics, statistical wording such as
+  "significant" (the gists stage's rule) and "Caveat", card titles separately,
+  and that no visited page shows a pipeline term such as "Candidate novel" or
+  "needs compute".
 - `grid` loads `/directions/` without JavaScript and follows every dot link,
   compares each dot's row and column with its record under `wiki/directions/`,
   exercises hover, focus, click, Escape and tap, checks that Tab from a focused
-  dot reaches its pop-up's links and that each dot's name states its approach,
-  and checks for horizontal scroll at 390 px on `/`, `/findings/` and
-  `/directions/`. It also moves the pointer from up to 8 ringed and 8 plain dots
-  onto each pop-up in 2 px steps and checks that the pop-up stays open. A jump
-  straight from one dot to another must open the second dot's pop-up.
-- `pages` checks the finding page headings, the Results index title and chips,
-  that the kind chips have a group name and follow `aria-pressed`, that small
-  labels reach 4.5:1 contrast in light mode, and that no card footer shows its
-  separator alone at phone width.
-- `cross` checks the Results page's shared cards and their comparison panels, the three
-  home questions with no project repeated, the ringed questions and their
-  bridges, and the Results picture: no links drawn before interaction, hover
-  and focus drawing a group's links, a project without results listed, phone
-  width and both colour themes. It moves the pointer from every third of the
-  first 60 result dots to the card's link and to its title, and checks that the
-  card still names the hovered result. It checks that a click pins the card
-  without pinning the project's links, and that the pinned card survives
-  hovering another dot and a resize to 900 px. It checks that Escape closes the
-  card and that a jump between result dots shows the new dot's card. At 390 px a
-  tap must open the card; at 320 px a second tap on the dot must close the card
-  instead of opening the result. It fails on any page or console error except
-  the one Quartz's own diagram script raises, which predates these pages. Its
-  expected counts (16 ringed questions, for example) match the current corpus.
+  dot reaches its pop-up's links, that no dot carries an approach shape and
+  that each dot's name and pop-up still state its approach. It checks for
+  horizontal scroll at 390 px on `/`, `/findings/` and `/directions/`. It also
+  moves the pointer from ringed and plain dots onto each pop-up in 2 px steps
+  and checks that the pop-up stays open. A jump straight from one dot to
+  another must open the second dot's pop-up.
+- `pages` checks the result page headings and their order, the Results index
+  title and kind chips (group name, `aria-pressed`), that each listed null
+  reads "No effect found" or "Inconclusive test", that both boards use the
+  concepts card with square corners, that no card footer shows its separator
+  alone at phone width, and then runs the `contrast` check.
+- `contrast` checks that small labels reach 4.5:1 against their background in
+  light mode.
+- `cross` checks the Results map against the records, the hover cards (the
+  pointer walk onto each card, pinning, a resize, Escape, a jump between
+  marks, and taps at 390 and 320 px), that hovering a box draws only
+  related-result lines, the list a pinned box opens, the column notes, the
+  Compare panels, and the ringed questions and their bridges. It fails on any
+  page or console error except the one Quartz's own diagram script raises,
+  which predates these pages.
+- `marks` checks both maps against design option M2 (`--option M2`, the only
+  option it accepts and the default), in light and dark themes, at 1280 and
+  390 px. Each mark's fill, shape, ring and colour must match its record;
+  marks must be ink or the Novel orange, with only the Novel header coloured;
+  each legend entry must match a map mark of its class; marks, rings and box
+  borders must reach 3:1; novel questions and box labels must carry their
+  words; and no ring may touch another mark or its box. Two injected negative
+  controls, a solid null mark and marks coloured by column, must each fail.
+- `filters` checks on each board that a topic chip, a category chip and each
+  toggle leave only matching cards, that the count reads "N of M", that the
+  URL holds the state and a reload restores it, that list view toggles, and
+  that the map fades the marks outside the filter.
+- `related` checks that each listed result whose record lists related results
+  shows them under "Related results in other projects", one link per id, that
+  every result the map can draw a related line for has the section, and that
+  no other listed result has it.
 
 `scripts/check_links.py` checks the links and shared stages without a browser
 and exits 1 with one line per failure. `--shared` re-runs the code checks on

@@ -95,7 +95,8 @@
       flex-wrap: wrap;
       font-family: var(--mono);
       font-size: var(--t-label);
-      color: var(--mute);
+      // 4.5:1 on white; the palette grey reaches about 4.3.
+      color: var(--mute-ink);
       .tag {
         margin-left: 0;
         font-family: var(--sans);

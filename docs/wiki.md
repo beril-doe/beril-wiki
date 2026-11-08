@@ -90,29 +90,40 @@ from the accepted wiki without editing it:
   - A finding page's frontmatter gains `compare_text`, its PubMed comparison in
     reader words or "Not compared yet".
   - A question that builds on results from two or more projects gains `cross`
-    (each project, its topic and its results) and `cross_topics`. The home
-    takes three such questions, most projects first, with no project in two.
-  - `findings/index.md` carries the Results picture's data in its frontmatter:
-    the comparison columns, the links, the shared results (most topics first), project
-    titles and the topics with no results. Links come in three families: `r`,
-    related results from `state/links.json`; `p`, one project's report uses or
-    cites another's, also from `state/links.json`; and `q`, results the same
-    open question builds on, computed from the direction records so the ringed
-    questions and the lines always agree. A link or shared result with a
-    missing end is dropped. `cards.json` gains the same `links` and `shared`.
-  - The home shows the three most interesting results, each from its own
-    project and topic, drawn only from projects that feed two or more topics.
-    Results rank by their PubMed comparison (no close match, then differs, then
-    builds on, then the rest), then by how many other projects they link to,
-    then a result before a null or correction, then by the project's topic
-    count.
-  - The Results page shows every shared result from `state/shared.json` under
-    the picture, those spanning the most topics, then the most projects, first.
+    (each project, its topic and its results) and `cross_topics`.
+  - `findings/index.md` carries the Results map's data in its frontmatter:
+    the comparison columns (`compare_order`), the note for each column
+    (`compare_notes`), the links, the shared results (most topics first),
+    project titles and the topics with no results. Links come in three
+    families: `r`, related results from `state/links.json`; `p`, one
+    project's report uses or cites another's, also from `state/links.json`;
+    and `q`, results the same open question builds on, computed from the
+    direction records. The map draws only `r` links whose two results are
+    both listed. A link or shared result with a missing end is dropped.
+    `cards.json` gains the same `links` and `shared`.
+  - A finding page's frontmatter gains `related`: the listed results in other
+    projects that a current related-result link joins to it. The page lists
+    them under "Related results in other projects", each with its report
+    title and the relation in reader words, sorted by report title, then by
+    result title. A result with no listed related result has no such section.
+  - Publish still ranks three results (`home_rank`) and three questions that
+    build on several projects (`home_question_rank`) for the home page, but
+    the home page no longer shows them. Results rank by their PubMed
+    comparison (novel, then differs, then builds on, then the rest), then by
+    how many other projects they link to, then a result before a null or
+    correction, then by the project's topic count.
+  - Each shared result in `state/shared.json` whose listed members number two
+    or more gives each of those members' cards a Compare button on the
+    Results page.
+  - A finding's `kind_text` is its kind in reader words: Result,
+    Interpretation, Correction, or for a null result its summary's case, "No
+    effect found" or "Inconclusive test". A null result without one of those
+    cases is unlisted and keeps "Null or missing result".
   - Free text a stage wrote, such as a readiness explanation or a question's
     body, passes through one map of reader terms, so "needs compute" reads
     "needs a new analysis" and a label name reads as its chip text.
   - A finding page's frontmatter gains `listed`. A finding is listed (on the
-    Results page, in counts, the picture and the home and topic picks) only
+    Results page, in counts, the map and the topic hub picks) only
     with an accepted plain summary that does not repeat an earlier finding of
     its report, and a null result only when it measured something; missing
     data and an analysis that never ran are not results. An unlisted finding
@@ -134,96 +145,130 @@ curation; the curator does not build or deploy the site. See the
 Start at home, open a topic hub, then follow concepts to summaries and raw
 reports. Literature Context connects the synthesis to external papers;
 opportunities and negative results help readers find follow-up questions and
-avoid repeating unsuccessful analyses. The home page's "Find your way in"
-cards state which question each kind of page answers.
+avoid repeating unsuccessful analyses.
 
-When the corpus has findings, the top bar adds Results and Open questions
-before the existing collections, which all keep their entries. The home page
-opens with what the wiki is, how it was made, the corpus
-counts and Ask, then "Find your way in", "What the projects found",
-"Questions still open", The map and Topics.
+The top bar holds Results and Open questions (when the corpus has findings),
+Topics, a Browse menu, Search, Ask and the theme toggle. Browse lists
+Concepts, Entities, Conflicts, Reports, Authors and About. Without JavaScript
+the Browse list opens while focus is inside the menu.
 
-Each home result and question carries a topic strip: one slot per topic, in
-the same order on every strip, filled for each topic the entry touches. The
-taller slot is the entry's main topic. Opening a strip lists its topic names.
-A "Topic strips" panel above both sections says what a topic is and holds a
-row of the same slots. Pointing at a slot shows that topic's name, linked to
-its page, and its sentence from the home topic list. Picking a topic in the row
-or in a strip's list outlines every home result and question that has it,
-drops the card from the rest, and keeps the topic and how many of each share it
-in the panel. The pick also lights that topic's cluster on the home map and
-fades the others; "See it on the map" scrolls down to it, and the map's legend
-says its colours are the same topics as the strips. Escape or "Show all" clears
-the pick. Without JavaScript the
-panel keeps its explanation, the row stays hidden, and the strips still open.
+The home page shows the wiki's title, a one-line deck, the search box and an
+"Ask the wiki" button. Three door cards follow: Results, Open questions and
+Topics, each with what it holds and its count. One line of reference links
+follows ("Browse the reference": Concepts, Entities, Conflicts, Reports and
+Authors, each with its count). An "Also" line adds the links in the home
+page's Browse list that the reference line does not already give.
 
-"What the projects found" shows three result cards, each from its own project
-and topic. They are the results PubMed abstracts hold the least like and that
-link to the most other projects, as the rendering section above ranks them.
-
-"Questions still open" lists three questions that join projects, each naming
-the projects it builds on. In the
-open-questions grid a ringed dot marks a question that builds on
-results from two or more projects; its pop-up names those projects, their
-topics and the results it builds on.
+The Topics index (`/topics/`) lists the topic cards. When the corpus has
+findings, a "Topic colours" key follows: one coloured slot per topic.
+Pointing at a slot shows that topic's name, linked to its page, and its
+sentence from the topic list in `wiki/index.md`. Picking a slot lights that
+topic's cluster on the map below and fades the others. "See it on the map"
+scrolls down to it, and Escape or "Show all" clears the pick. Without
+JavaScript the key keeps its explanation and the row of slots stays hidden.
+Below the key are the map of topics and concepts and the "What each topic
+covers" table.
 
 A topic hub shows "Results from this topic" (up to three cards) and "Open
 questions in this topic" (that topic's row of the grid) above its synthesis.
 
-A result card shows its kind in plain words (Result, Interpretation, Null or
-missing result, Correction), a title, a one or two sentence summary from
-`state/gists.json`, and a footer naming the source report and the topic whose
-concepts cite that report most. A card has no test statistics and no caveat; the page holds the
-numbers and the Limits section. A finding without an accepted summary shows
-only title and footer. The Results index (`/findings/`) filters cards by kind
-and topic.
+A result card shows its kind in plain words (Result, Interpretation, No
+effect found, Inconclusive test, Correction), a title, a one or two sentence
+summary from `state/gists.json`, and a footer naming the source report and
+the topic whose concepts cite that report most. A card has no test statistics
+and no caveat; the page holds the numbers and the Limits section. A finding
+without an accepted summary shows only title and footer.
 
-Under the Results picture, "Results several projects reached" shows every
-shared result: a result that two or more projects reached, spanning two or more
-topics. A shared card names its projects, its topics and how the results
-relate. Its "Compare the results" button opens a panel under the card's row,
-or under the card on a phone. The panel holds the question the projects asked,
-each project's own result with its summary, and a paragraph on how they
-relate. Without JavaScript every panel shows.
+The Results index (`/findings/`) opens with a map headed "How new is each
+result?". A mark's position shows the topic (rows) and how the result
+compares with PubMed (columns: Novel, Builds on PubMed work, Differs from
+PubMed abstracts, Similar result in PubMed, Too little published evidence to
+compare, then Not compared yet when any result lacks a comparison). Every
+column heading carries the note `compare_notes` gives it, shown on hover or
+on a click or tap. The Novel note says that an AI search of PubMed abstracts
+found nothing close, so the results could be new, and that the search does
+not establish novelty or correctness.
 
-At the top of the Results index, the Results picture places each result by how it compares
-with PubMed (columns, from "No close match in PubMed abstracts" to "Too little
-published evidence to compare", then "Not compared yet" when any result lacks a
-comparison) and by topic (rows). A project's results in one cell form a group.
-Hovering over or focusing a group draws its links to other projects: a solid line for
-related results, a dashed line for results the same open question builds on,
-and a dotted line for one project using or citing another. Hovering a result's
-dot opens its card beside the dot: title, gist, project and an "Open the result"
-link. The card stays while the pointer is on the dot or the card. While the
-pointer moves from the dot toward the card, the card stays inside the triangle
-from where the pointer left the dot to the card's near edge. Dots the pointer
-crosses inside that triangle do not take over; outside it, the dot under the
-pointer takes over. A click or tap on a dot pins that result's card only.
-Escape, a press outside, or a second click or tap closes it. A pinned card stays
-while other dots are hovered and follows its dot on scroll and resize. Clicking a
-group's edge, or pressing Enter on the focused group, pins the group and lists
-every link below the picture, including links to projects with no results;
-Escape clears it. Phones draw no lines. On a phone, a tap on a dot opens its
-card, and a tap on the group's edge opens the list under the cell. Touch screens
-show larger dots. A note under the picture names topics with no results.
+A mark's fill and shape show the kind of result: a solid circle for a
+result, a hollow circle for no effect found or an inconclusive test, a
+triangle for an interpretation and a cross for a correction. A ring marks a
+result that has a related result in another project, where that result also
+has a mark. Marks are ink. Only the Novel column's header is orange. A square
+box holds one project's results in one cell. The square beside each row's
+topic label is the topic's colour, the same colour its cards and chips use;
+no mark takes it. The legend draws the kinds, the ring and the box with the
+same classes as the map.
 
-A comparison chip appears on a card only when the PubMed comparison found a
-close match, a build on earlier work, a difference or a similar result. Tap or
-focus it to read that it is an AI comparison with PubMed abstracts, dated, and
-that it does not establish novelty or correctness. "Too little published
-evidence" and "Not assessed" show no chip.
+Hovering over or focusing a box draws a line from each of its ringed results
+to its related result, outlines the box and dashes the outline of each box
+the lines reach. Other boxes fade. Hovering a result's mark opens its card
+beside the mark: its kind, title, gist, a line when it has a related result,
+project and an "Open the result" link. The card stays while the pointer is on
+the mark or the card. While the pointer moves from the mark toward the card,
+the card stays inside the triangle from where the pointer left the mark to
+the card's near edge. Marks the pointer crosses inside that triangle do not
+take over; outside it, the mark under the pointer takes over. A click or tap
+on a mark pins that result's card only. Escape, a press outside, or a second
+click or tap closes it. A pinned card stays while other marks are hovered and
+follows its mark on scroll and resize. Clicking a box's edge, or pressing
+Enter on the focused box, pins the box and lists below the map the project
+(linked to its report), each result in the box with its kind, and each
+related result in another project with the link's label from
+`state/links.json` and a button that pins that result's box. Escape clears it. At 700 px and below the map becomes a
+list by topic: each cell shows its column label with the note button and its
+count, and no lines are drawn. On a phone, a tap on a mark opens its card,
+and a tap on the box's edge opens the list under the cell. Touch screens show
+larger marks. A note under the map names topics with no results.
+
+A comparison chip appears on a card only when the PubMed comparison gave one
+of four labels: Novel, Builds on PubMed work, Differs from PubMed abstracts
+or Similar result in PubMed. Tap or focus it to read its note: an AI
+comparison with PubMed abstracts, dated, that does not establish novelty or
+correctness. The Novel chip's note says the search found nothing close to
+the result, so it could be new. "Too little published evidence" and "Not
+assessed" show no chip, and neither does a correction.
 
 `/directions/` is the open-questions grid: topics down the side, what answering
 a question needs across the top (data already in the lakehouse, analysis to
-build, new measurements, not yet clear), one dot per question. Dot shape is the
-approach, colour is the topic. Hover, focus or tap a dot for a card with the
-question, what it needs and an "Open the question" link. The card stays, pins
-and closes as a result's card does in the Results picture. The dot is a link, so
-the grid works without JavaScript. Under
-640 px each topic becomes one block. Every question is also in a collapsed list.
-"Plan my next project" is gone from the home page; the Ask box stays. On a
-direction, "Copy BERIL prompt" copies a prompt to paste into BERIL and "Copy
-handoff brief" copies Markdown for a collaborator or a lab.
+build, new measurements, not yet clear), one dot per question. Every dot is an
+ink circle. A dot is orange when the question cites a listed result in the
+Results map's Novel column, and ringed when it builds on results from two or
+more projects. The square beside each row's topic label is the topic's
+colour. Hover, focus or tap a dot for a pop-up with the question, "Cites a
+result in the Novel column" when that applies, its approach, what it needs
+and why, and an "Open the question" link. A ringed dot's pop-up also names
+the projects it builds on, their topics and the results it builds on. The
+pop-up stays, pins and closes as a result's card does on the Results map.
+The dot's accessible name carries the question, its approach, the Novel
+words and how many projects and topics it joins. The dot is a link, so the
+grid works without JavaScript. Under 640 px each topic becomes one block.
+
+Under each map, every listed result or question is a card in the concepts
+card style, and a filter bar sits above the cards. The bar holds a text
+filter, a sort, a Cards or List switch, an "N of M" count, rows of chips and
+toggles. The URL keeps the state (`q`, `sort`, `view`, one parameter per chip
+row and per toggle), so a link or a reload restores the filter. Filtering
+fades the map marks that the filter hides, and each box whose marks are all
+hidden. Cards render without JavaScript; the bar needs it.
+
+- On Results, the chip rows are Topic, How new and Kind, and the sorts are
+  Novel first, Topic and Project. The "Related across projects" toggle keeps
+  the results that have a related result in another project, and those cards
+  say so. A result that belongs to a shared result names the relation and has
+  a Compare button. Compare opens a panel
+  under the last card of its row, holding the question the projects asked,
+  each project's own result with its summary, and a paragraph on how they
+  relate. Without JavaScript every panel shows below the cards.
+- On Open questions, the chip rows are Topic, What it needs and Approach, and
+  the sorts are Topic and What it needs. The toggles are "Builds on results
+  from two or more projects" and "Cites a result in the Novel column". A
+  question card shows its approach, what it needs, why, the Novel words when
+  they apply, how many projects and topics it joins, and its topic.
+
+A result page lists "Related results in other projects" when a listed result
+in another project relates to it. On a direction, "Copy BERIL prompt" copies a
+prompt to paste into BERIL and "Copy handoff brief" copies Markdown for a
+collaborator or a lab.
 `scripts/check_reader.py` checks these pages (see
 [the agentic workflow](agentic-workflow.md#checking-the-reader-pages)). A
 comparison chip is an AI comparison with PubMed abstracts, not a reviewed
@@ -237,7 +282,10 @@ best-matching sections, at most 3 from one page, and cites each claim to its
 section. Ask never draws on author pages, so an answer cannot turn into a claim
 about a person. Every knowledge page except author pages has an "Ask about this
 page" button that answers from that page only. Meaning search and Ask use the
-reader's own CBORG key, entered through the key button in the top bar. Ask
+reader's own CBORG key. The reader adds, changes or forgets it under the
+question box on the Ask page and in "Ask about this page", or in the search
+palette's meaning-search control. Asking or turning on meaning search without
+a key opens the key dialog. Ask
 ranks by keywords and meaning together and answers with Claude Sonnet 5.5
 unless the reader picks another CBORG model; when CBORG cannot embed the
 question, the answer says it used keyword ranking only. The

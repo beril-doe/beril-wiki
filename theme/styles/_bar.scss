@@ -27,29 +27,102 @@
       text-decoration: none;
     }
   }
-  nav {
+  .barnav {
     display: flex;
+    align-items: center;
     gap: 18px;
     font-size: var(--t-ui);
-    // Every tab stays visible: the name shortens and the search field narrows
-    // first (_responsive.scss), and on a phone the tabs wrap onto a second row.
+    // On a phone the links wrap onto a second row (_responsive.scss).
     flex-wrap: wrap;
     row-gap: 2px;
     min-width: 0;
-    a {
-      color: var(--ink-2);
-      white-space: nowrap;
-      padding: 4px 0;
-      border-bottom: 1px solid transparent;
-      &[aria-current="page"] {
-        color: var(--ink);
-        border-bottom-color: var(--ink);
-      }
-      &:hover {
-        text-decoration: none;
-        color: var(--ink);
+  }
+  .barlink,
+  .barmenu-btn {
+    color: var(--ink-2);
+    white-space: nowrap;
+    padding: 4px 0;
+    border-bottom: 1px solid transparent;
+    &:hover {
+      text-decoration: none;
+      color: var(--ink);
+    }
+  }
+  .barlink[aria-current="page"],
+  .barmenu-btn.here {
+    color: var(--ink);
+    border-bottom-color: var(--ink);
+  }
+  // Browse: a disclosure button and the list it opens, square like every box here.
+  .barmenu {
+    position: relative;
+  }
+  .barmenu-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0;
+    background: none;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    font: inherit;
+    cursor: pointer;
+    svg {
+      width: 10px;
+      height: 10px;
+      transition: transform 0.12s ease;
+    }
+    &[aria-expanded="true"] {
+      color: var(--ink);
+      svg {
+        transform: rotate(180deg);
       }
     }
+  }
+  .barmenu-list {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: -12px;
+    z-index: 60;
+    min-width: 180px;
+    margin: 0;
+    padding: 6px 0;
+    list-style: none;
+    background: var(--card);
+    border: 1px solid var(--line-2);
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--ink) 12%, transparent);
+    li {
+      margin: 0;
+    }
+    a {
+      display: block;
+      padding: 7px 14px;
+      color: var(--ink-2);
+      white-space: nowrap;
+      border-left: 2px solid transparent;
+      &:hover,
+      &:focus-visible {
+        text-decoration: none;
+        color: var(--ink);
+        background: color-mix(in oklab, var(--line) 35%, var(--card));
+      }
+      &[aria-current="page"] {
+        color: var(--ink);
+        border-left-color: var(--ink);
+      }
+    }
+  }
+  // Before the script runs the list opens while focus is inside the menu, so
+  // Browse still reaches every item; once scripted, aria-expanded rules.
+  .barmenu:not(.js) .barmenu-list {
+    display: none;
+  }
+  .barmenu:not(.js):focus-within .barmenu-list {
+    display: block;
+  }
+  .barmenu.js .barmenu-list[hidden] {
+    display: none;
   }
   .tools {
     flex: none;
@@ -111,39 +184,5 @@
       background: color-mix(in srgb, var(--secondary) 10%, transparent);
       text-decoration: none;
     }
-  }
-  // The CBORG key: a grey dot without one, green with one.
-  .px-keybtn {
-    box-sizing: border-box;
-    position: relative;
-    display: inline-grid;
-    place-items: center;
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    border: 1px solid var(--line-2);
-    background: var(--bg);
-    color: var(--ink-2);
-    cursor: pointer;
-    svg {
-      width: 17px;
-      height: 17px;
-    }
-    &:hover {
-      color: var(--ink);
-      border-color: var(--ink-2);
-    }
-    &.set .px-keydot {
-      background: var(--organism);
-    }
-  }
-  .px-keydot {
-    position: absolute;
-    top: 3px;
-    right: 3px;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--line-2);
   }
 }
