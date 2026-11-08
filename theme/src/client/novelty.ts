@@ -1,8 +1,11 @@
 // The Results picture in the browser. Links between projects are never drawn all at
-// once: hovering or focusing a project's group draws its links, a click or Enter pins
-// it and lists every link below the picture, and Escape clears. Phones draw no lines;
+// once: hovering or focusing a project's group draws its links, a click on the group's
+// edge or Enter pins it and lists every link below the picture, and Escape clears. A click
+// on a dot pins that result's card instead. Phones draw no lines;
 // the list opens under the tapped cell instead. Every string from the data is set with
 // textContent, never as HTML.
+
+import { AIM_MS, LEAVE_MS, type Point, towards } from "./aim"
 
 interface Link {
   a?: string
@@ -207,39 +210,184 @@ function wireMap(map: HTMLElement, signal: AbortSignal) {
     { signal },
   )
 
-  // A dot's result on hover, for pointers that hover.
-  map.querySelector(".nvtip")?.remove()
+  // A dot's result in a card, in the questions grid's model. A hover opens a card that stays
+  // while the pointer is on the dot or the card. A click or tap pins a second card that
+  // stays through other hovers until Escape, a press outside, or a second click.
+  for (const old of map.querySelectorAll(".nvtip")) old.remove()
   panel.hidden = true
   clear()
   const tip = el("div", "nvtip")
-  tip.setAttribute("role", "tooltip")
+  const pinCard = el("div", "nvtip pin")
   tip.hidden = true
-  map.appendChild(tip)
+  pinCard.hidden = true
+  map.append(tip, pinCard)
+  const dotOf = (t: EventTarget | null) => (t as HTMLElement | null)?.closest?.<HTMLElement>(".nd") ?? null
+  let tipDot: HTMLElement | null = null
+  let pinDot: HTMLElement | null = null
+  let apex: Point | null = null
+  // The pointer's last position, and its last position over the shown dot. An event that
+  // leaves the dot reports where the pointer landed, which after a jump is the next dot.
+  let last: Point = { x: 0, y: 0 }
+  let onDot: Point | null = null
+  let hideTimer = 0
+
+  function fill(card: HTMLElement, dot: HTMLElement) {
+    card.replaceChildren(el("strong", undefined, dot.dataset.t ?? ""))
+    if (dot.dataset.g) card.appendChild(el("span", undefined, dot.dataset.g))
+    card.appendChild(el("span", "nvtipsrc", dot.dataset.r ?? ""))
+    const open = el("a", "nvopen", "Open the result")
+    open.href = data.findings[dot.dataset.id ?? ""] ?? "#"
+    card.appendChild(open)
+  }
+
+  function placeCard(card: HTMLElement, dot: HTMLElement | null) {
+    if (!dot || card.hidden) return
+    // Measured at the left edge: a fixed card near the right edge shrinks to fit.
+    card.style.left = "0px"
+    const r = dot.getBoundingClientRect()
+    card.style.left = `${Math.max(8, Math.min(r.left, window.innerWidth - card.offsetWidth - 8))}px`
+    // Height is read at the final left: a narrower card wraps taller and would cover its dot.
+    const h = card.offsetHeight
+    // The card touches its dot, so no gap ends the hover on the way in.
+    card.style.top = `${r.bottom + h > window.innerHeight - 8 ? r.top - h : r.bottom}px`
+  }
+
+  function hideTip() {
+    window.clearTimeout(hideTimer)
+    apex = null
+    tip.hidden = true
+    tipDot = null
+  }
+
+  // When the wait ends, the dot under the pointer, if any, takes over.
+  function hideIn(ms: number) {
+    window.clearTimeout(hideTimer)
+    hideTimer = window.setTimeout(() => {
+      const shown = tipDot
+      hideTip()
+      const dot = dotOf(document.elementFromPoint(last.x, last.y))
+      if (dot && dot !== shown) showTip(dot)
+    }, ms)
+  }
+
+  const aimed = (p: Point) => !!apex && !tip.hidden && towards(apex, tip.getBoundingClientRect(), p)
+
+  function showTip(dot: HTMLElement) {
+    window.clearTimeout(hideTimer)
+    apex = null
+    onDot = null
+    if (dot === pinDot) return hideTip()
+    if (dot === tipDot && !tip.hidden) return
+    tipDot = dot
+    fill(tip, dot)
+    tip.hidden = false
+    placeCard(tip, dot)
+  }
+
+  function pinTo(dot: HTMLElement | null) {
+    hideTip()
+    pinDot = dot
+    pinCard.hidden = !dot
+    if (!dot) return
+    fill(pinCard, dot)
+    placeCard(pinCard, dot)
+  }
+
   map.addEventListener(
     "pointerover",
     (e) => {
-    const dot = (e.target as HTMLElement).closest<HTMLElement>(".nd")
-    if (!dot || (e as PointerEvent).pointerType === "touch") return
-    tip.replaceChildren(el("strong", undefined, dot.dataset.t ?? ""))
-    if (dot.dataset.g) tip.appendChild(el("span", undefined, dot.dataset.g))
-    tip.appendChild(el("span", "nvtipsrc", dot.dataset.r ?? ""))
-    tip.hidden = false
-    const r = dot.getBoundingClientRect()
-    const w = tip.offsetWidth
-    const h = tip.offsetHeight
-    tip.style.left = `${Math.max(8, Math.min(r.left, window.innerWidth - w - 8))}px`
-    tip.style.top = `${r.bottom + 8 + h > window.innerHeight ? r.top - h - 8 : r.bottom + 8}px`
+      const dot = dotOf(e.target)
+      const pe = e as PointerEvent
+      if (!dot || pe.pointerType === "touch") return
+      if (dot === tipDot) {
+        window.clearTimeout(hideTimer)
+        apex = null
+      } else if (!aimed({ x: pe.clientX, y: pe.clientY })) showTip(dot)
     },
     { signal },
   )
   map.addEventListener(
     "pointerout",
     (e) => {
-      if ((e.target as HTMLElement).closest(".nd")) tip.hidden = true
+      const pe = e as PointerEvent
+      if (dotOf(e.target) !== tipDot || !tipDot || tip.contains(pe.relatedTarget as Node | null)) return
+      apex = onDot ?? { x: pe.clientX, y: pe.clientY }
+      hideIn(AIM_MS)
+      const next = dotOf(pe.relatedTarget)
+      if (next && !aimed({ x: pe.clientX, y: pe.clientY })) showTip(next)
     },
     { signal },
   )
-  window.addEventListener("scroll", () => (tip.hidden = true), { passive: true, signal })
+  document.addEventListener(
+    "pointermove",
+    (e) => {
+      last = { x: e.clientX, y: e.clientY }
+      if (tipDot && dotOf(e.target) === tipDot) onDot = last
+      if (!apex || tip.hidden || aimed(last)) return
+      apex = null
+      const dot = dotOf(e.target)
+      if (dot && dot !== tipDot) showTip(dot)
+      else if (!dot) hideIn(LEAVE_MS)
+    },
+    { signal },
+  )
+  tip.addEventListener(
+    "pointerenter",
+    () => {
+      window.clearTimeout(hideTimer)
+      apex = null
+    },
+    { signal },
+  )
+  tip.addEventListener(
+    "pointerleave",
+    (e) => {
+      if (!dotOf(e.relatedTarget)) hideIn(LEAVE_MS)
+    },
+    { signal },
+  )
+  // Capture, so a click on a dot pins its card without also pinning its project's links.
+  // Enter on a focused group targets the group itself and still lists its links.
+  map.addEventListener(
+    "click",
+    (e) => {
+      const dot = dotOf(e.target)
+      if (!dot) return
+      e.stopPropagation()
+      pinTo(dot === pinDot ? null : dot)
+    },
+    { signal, capture: true },
+  )
+  document.addEventListener(
+    "pointerdown",
+    (e) => {
+      const t = e.target as Node
+      if (!tip.contains(t) && !pinCard.contains(t) && !dotOf(t)) {
+        hideTip()
+        pinTo(null)
+      }
+    },
+    { signal },
+  )
+  document.addEventListener(
+    "keydown",
+    (e) => {
+      if (e.key !== "Escape") return
+      hideTip()
+      pinTo(null)
+    },
+    { signal },
+  )
+  const follow = () => placeCard(pinCard, pinDot)
+  window.addEventListener(
+    "scroll",
+    () => {
+      hideTip()
+      follow()
+    },
+    { passive: true, signal },
+  )
+  window.addEventListener("resize", follow, { signal })
 }
 
 // Quartz's navigation reuses nodes and strips data attributes; one signal per page lets

@@ -343,7 +343,9 @@ site on `--base` yourself (default `http://localhost:8080`).
   exercises hover, focus, click, Escape and tap, checks that Tab from a focused
   dot reaches its pop-up's links and that each dot's name states its approach,
   and checks for horizontal scroll at 390 px on `/`, `/findings/` and
-  `/directions/`.
+  `/directions/`. It also moves the pointer from up to 8 ringed and 8 plain dots
+  onto each pop-up in 2 px steps and checks that the pop-up stays open. A jump
+  straight from one dot to another must open the second dot's pop-up.
 - `pages` checks the finding page headings, the Results index title and chips,
   that the kind chips have a group name and follow `aria-pressed`, that small
   labels reach 4.5:1 contrast in light mode, and that no card footer shows its
@@ -352,7 +354,14 @@ site on `--base` yourself (default `http://localhost:8080`).
   home questions with no project repeated, the ringed questions and their
   bridges, and the Results picture: no links drawn before interaction, hover
   and focus drawing a group's links, a project without results listed, phone
-  width and both colour themes. It fails on any page or console error except
+  width and both colour themes. It moves the pointer from every third of the
+  first 60 result dots to the card's link and to its title, and checks that the
+  card still names the hovered result. It checks that a click pins the card
+  without pinning the project's links, and that the pinned card survives
+  hovering another dot and a resize to 900 px. It checks that Escape closes the
+  card and that a jump between result dots shows the new dot's card. At 390 px a
+  tap must open the card; at 320 px a second tap on the dot must close the card
+  instead of opening the result. It fails on any page or console error except
   the one Quartz's own diagram script raises, which predates these pages. Its
   expected counts (16 ringed questions, for example) match the current corpus.
 

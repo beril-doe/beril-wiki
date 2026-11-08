@@ -436,7 +436,9 @@
 // Hover reveals only for pointers that hover: on touch a tap would otherwise
 // be consumed as hover and the open/close sequence breaks.
 @media (hover: hover) {
-  .qd:hover .qpop {
+  // questions.ts sets data-qhover and drives data-hover itself, with a grace period.
+  html:not([data-qhover]) .qd:hover .qpop,
+  .qd[data-hover] .qpop {
     display: block;
   }
   .qd:hover .qdot::before {
@@ -997,6 +999,8 @@ svg.nvlinks {
   color: var(--ink-2);
 }
 .nvtip {
+  // Padding inside the width, so the viewport cap holds and the measured size is the drawn one.
+  box-sizing: border-box;
   position: fixed;
   z-index: 40;
   max-width: min(22rem, calc(100vw - 16px));
@@ -1008,7 +1012,6 @@ svg.nvlinks {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
   font-size: var(--t-meta);
   line-height: 1.45;
-  pointer-events: none;
   strong {
     display: block;
     font-family: var(--serif);
@@ -1021,6 +1024,12 @@ svg.nvlinks {
   }
   .nvtipsrc {
     margin-top: 4px;
+    color: var(--method);
+  }
+  .nvopen {
+    display: block;
+    margin-top: 6px;
+    font-weight: 600;
     color: var(--method);
   }
   &[hidden] {
@@ -1063,6 +1072,16 @@ svg.nvlinks {
   }
   svg.nvlinks {
     display: none;
+  }
+}
+// A finger needs a bigger dot than a pointer: a tap on a dot opens its card.
+@media (pointer: coarse) {
+  .nbead {
+    gap: 7px;
+  }
+  .nd {
+    width: 12px;
+    height: 12px;
   }
 }
 

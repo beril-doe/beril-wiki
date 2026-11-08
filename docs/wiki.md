@@ -192,10 +192,20 @@ published evidence to compare", then "Not compared yet" when any result lacks a
 comparison) and by topic (rows). A project's results in one cell form a group.
 Hovering over or focusing a group draws its links to other projects: a solid line for
 related results, a dashed line for results the same open question builds on,
-and a dotted line for one project using or citing another. Clicking a group
-pins it and lists every link below the picture, including links to projects
-with no results; Escape clears it. Phones draw no lines and open the list under
-the tapped cell. A note under the picture names topics with no results.
+and a dotted line for one project using or citing another. Hovering a result's
+dot opens its card beside the dot: title, gist, project and an "Open the result"
+link. The card stays while the pointer is on the dot or the card. While the
+pointer moves from the dot toward the card, the card stays inside the triangle
+from where the pointer left the dot to the card's near edge. Dots the pointer
+crosses inside that triangle do not take over; outside it, the dot under the
+pointer takes over. A click or tap on a dot pins that result's card only.
+Escape, a press outside, or a second click or tap closes it. A pinned card stays
+while other dots are hovered and follows its dot on scroll and resize. Clicking a
+group's edge, or pressing Enter on the focused group, pins the group and lists
+every link below the picture, including links to projects with no results;
+Escape clears it. Phones draw no lines. On a phone, a tap on a dot opens its
+card, and a tap on the group's edge opens the list under the cell. Touch screens
+show larger dots. A note under the picture names topics with no results.
 
 A comparison chip appears on a card only when the PubMed comparison found a
 close match, a build on earlier work, a difference or a similar result. Tap or
@@ -206,8 +216,10 @@ evidence" and "Not assessed" show no chip.
 `/directions/` is the open-questions grid: topics down the side, what answering
 a question needs across the top (data already in the lakehouse, analysis to
 build, new measurements, not yet clear), one dot per question. Dot shape is the
-approach, colour is the topic. Hover, focus or tap a dot for the question and
-what it needs; the dot is a link, so the grid works without JavaScript. Under
+approach, colour is the topic. Hover, focus or tap a dot for a card with the
+question, what it needs and an "Open the question" link. The card stays, pins
+and closes as a result's card does in the Results picture. The dot is a link, so
+the grid works without JavaScript. Under
 640 px each topic becomes one block. Every question is also in a collapsed list.
 "Plan my next project" is gone from the home page; the Ask box stays. On a
 direction, "Copy BERIL prompt" copies a prompt to paste into BERIL and "Copy

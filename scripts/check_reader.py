@@ -109,6 +109,53 @@ def go(page: Page, url: str) -> None:
     page.goto(url, wait_until="networkidle")
 
 
+def walk_onto(page: Page, mark, card, want: str | None = None, aim: str = "link") -> str:
+    """Hover `mark`, then move to its `card` in 2 px steps, as a hand would.
+
+    `aim` is "link" (the card's "Open" link) or "head" (the card's title, across neighbours).
+
+    Returns "" when the card is still open there and links to `want` (when given), else
+    the failure. Coarser steps jump over gaps and neighbouring marks a real pointer meets.
+    """
+    mark.scroll_into_view_if_needed()
+    r = mark.bounding_box()
+    x0, y0 = r["x"] + r["width"] / 2, r["y"] + r["height"] / 2
+    page.mouse.move(x0, y0)
+    page.wait_for_timeout(150)
+    if not card.is_visible():
+        return "hover does not open the card"
+    c = card.bounding_box()
+    link = card.locator("a.nvopen, a.qopen").first
+    box = link.bounding_box() if link.count() else None
+    inside = box and c["y"] <= box["y"] and box["y"] + box["height"] <= c["y"] + c["height"]
+    if aim == "link" and inside:
+        x1, y1 = box["x"] + min(30, box["width"] / 2), box["y"] + box["height"] / 2
+    else:
+        x1, y1 = c["x"] + c["width"] / 2, c["y"] + min(20, c["height"] / 2)
+    page.mouse.move(x1, y1, steps=max(4, int(((x1 - x0) ** 2 + (y1 - y0) ** 2) ** 0.5 / 2)))
+    page.wait_for_timeout(400)
+    if not card.is_visible():
+        return "the card closes while the pointer moves onto it"
+    if not card.locator("a").count():
+        return "the card holds no link"
+    if want is not None and card.locator("a.nvopen").get_attribute("href") != want:
+        return "the card switched to another result on the way"
+    return ""
+
+
+def jump_to(page: Page, a, b) -> str:
+    """Hover mark `a`, then move to mark `b` in one step and rest there for 900 ms."""
+    a.scroll_into_view_if_needed()
+    ra = a.bounding_box()
+    page.mouse.move(ra["x"] + ra["width"] / 2, ra["y"] + ra["height"] / 2)
+    page.wait_for_timeout(200)
+    b.scroll_into_view_if_needed()
+    rb = b.bounding_box()
+    page.mouse.move(rb["x"] + rb["width"] / 2, rb["y"] + rb["height"] / 2)
+    page.wait_for_timeout(900)
+    return f"from ({ra['x']:.0f}, {ra['y']:.0f}) to ({rb['x']:.0f}, {rb['y']:.0f})"
+
+
 def collapse(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
@@ -460,6 +507,28 @@ def check_grid(browser, base: str) -> list[str]:
     if pop.is_visible():
         fails.append("grid: Escape does not close a pinned pop-up")
 
+    # The pointer can move from any dot onto its pop-up. Ringed pop-ups scroll, which
+    # once clipped the CSS bridge across the gap and closed them on the way. Focus left
+    # on a dot after Escape keeps its pop-up shut, so it is cleared first.
+    page.evaluate("document.activeElement.blur()")
+    for sel in (".qgrid .qd.cross", ".qgrid .qd:not(.cross)"):
+        wraps = page.locator(sel)
+        for i in range(min(8, wraps.count())):
+            wrap = wraps.nth(i)
+            why = walk_onto(page, wrap.locator("a.qdot"), wrap.locator(".qpop"))
+            # Let the last pop-up close: a dot entered within 250 ms counts as a neighbour.
+            page.mouse.move(0, 0)
+            page.wait_for_timeout(400)
+            if why:
+                fails.append(f"grid: {sel.split()[-1]} dot {i + 1}: {why}")
+                break
+    # A pointer that jumps straight from one dot to another, outside the corridor to the
+    # first pop-up, gets the second dot's pop-up and keeps it.
+    a, z = page.locator(".qgrid .qd").nth(0), page.locator(".qgrid .qd").nth(12)
+    jump = jump_to(page, a.locator("a.qdot"), z.locator("a.qdot"))
+    if not z.locator(".qpop").is_visible() or a.locator(".qpop").is_visible():
+        fails.append(f"grid: a jump between dots leaves the wrong pop-up ({jump})")
+
     # Tab from a focus-opened pop-up reaches its "Open the question" link (review F10).
     page.evaluate("document.activeElement.blur()")
     page.mouse.move(0, 0)
@@ -498,6 +567,28 @@ def check_grid(browser, base: str) -> list[str]:
     ttitle = tpop.locator("strong").first.text_content() or ""
     if not ttitle or not tpop.is_visible() or ttitle not in tpop.inner_text():
         fails.append("grid: tap does not open the pop-up with the title")
+    # On a narrow phone a pop-up taller than the room above and below scrolls instead of
+    # covering its dot, so a second tap on the dot closes it.
+    small = browser.new_context(
+        viewport={"width": 320, "height": 568}, has_touch=True, is_mobile=True
+    ).new_page()
+    go(small, base + "/directions/")
+    small.wait_for_timeout(500)
+    dots = small.locator(".qgrid .qd:visible a.qdot")
+    for i in range(0, min(60, dots.count()), 5):
+        d = dots.nth(i)
+        d.scroll_into_view_if_needed()
+        small.evaluate("y => scrollBy({top: y, behavior: 'instant'})", d.bounding_box()["y"] - 300)
+        r = d.bounding_box()
+        x, y = r["x"] + r["width"] / 2, r["y"] + r["height"] / 2
+        small.touchscreen.tap(x, y)
+        small.wait_for_timeout(250)
+        small.touchscreen.tap(x, y)
+        small.wait_for_timeout(250)
+        if small.locator(".qd[data-open]").count():
+            fails.append(f"grid: at 320 px a second tap on dot {i + 1} does not close its pop-up")
+            break
+        small.keyboard.press("Escape")
 
     for path in ("/", "/findings/", "/directions/"):
         narrow = new_page(browser, PHONE)
@@ -722,6 +813,94 @@ def check_cross(browser, base: str) -> list[str]:
         )
     if page.locator("svg.nvlinks path").count():
         fails.append("cross: links are drawn before any interaction")
+    # A result's card follows the questions grid: it stays, on the same result, while the
+    # pointer moves onto it past neighbouring dots; a click pins it without pinning the
+    # project; a pinned card survives hovering other dots and a resize, until Escape.
+    card = page.locator(".nvtip:not(.pin)")
+    pinned = page.locator(".nvtip.pin")
+    marks = page.locator(".nvmap .nd")
+    href_of = "id => JSON.parse(document.querySelector('.nvdata').textContent).findings[id]"
+    for i in range(0, min(60, marks.count()), 3):
+        want = page.evaluate(href_of, marks.nth(i).get_attribute("data-id"))
+        for aim in ("link", "head"):
+            why = walk_onto(page, marks.nth(i), card, want, aim)
+            page.mouse.move(0, 0)
+            page.wait_for_timeout(400)
+            if why:
+                break
+        if why:
+            fails.append(f"cross: result dot {i + 1}, walking to the {aim}: {why}")
+            break
+    first, second = marks.nth(0), marks.nth(1)
+    want = page.evaluate(href_of, first.get_attribute("data-id"))
+    first.click()
+    page.mouse.move(0, 0)
+    page.wait_for_timeout(400)
+    if not pinned.is_visible():
+        fails.append("cross: clicking a result dot does not pin its card")
+    elif pinned.locator("a.nvopen").get_attribute("href") != want:
+        fails.append("cross: a result card's link does not open its result")
+    if page.locator(".nvpanel:not([hidden])").count():
+        fails.append("cross: clicking a result dot also pins its project's links")
+    second.hover()
+    page.mouse.move(0, 0)
+    page.wait_for_timeout(400)
+    if not pinned.is_visible() or pinned.locator("a.nvopen").get_attribute("href") != want:
+        fails.append("cross: hovering another dot replaces or closes a pinned card")
+    page.set_viewport_size({"width": 900, "height": 900})
+    page.wait_for_timeout(300)
+    b = pinned.bounding_box() if pinned.count() else None
+    if not b or b["x"] < 0 or b["x"] + b["width"] > 900:
+        fails.append(f"cross: a pinned card leaves the screen after a resize: {b}")
+    page.set_viewport_size(DESKTOP)
+    page.keyboard.press("Escape")
+    if pinned.is_visible():
+        fails.append("cross: Escape does not close a pinned result card")
+    # The target must lie outside the first card: a pointer landing on the card keeps it.
+    marks.nth(0).hover()
+    page.wait_for_timeout(200)
+    t = card.bounding_box()
+    far = next(
+        marks.nth(i)
+        for i in range(1, marks.count())
+        if (b := marks.nth(i).bounding_box())
+        and not (t["x"] - 20 < b["x"] < t["x"] + t["width"] + 20)
+        and abs(b["y"] - t["y"]) < 300
+    )
+    jump = jump_to(page, marks.nth(0), far)
+    want = page.evaluate(href_of, far.get_attribute("data-id"))
+    if not card.is_visible() or card.locator("a.nvopen").get_attribute("href") != want:
+        fails.append(f"cross: a jump between result dots leaves the wrong card ({jump})")
+    page.mouse.move(0, 0)
+    page.wait_for_timeout(400)
+    # On a narrow phone a pinned card must not cover its dot: a second tap closes it.
+    small = browser.new_context(
+        viewport={"width": 320, "height": 568}, has_touch=True, is_mobile=True
+    ).new_page()
+    go(small, base + "/findings/")
+    small.wait_for_timeout(500)
+    sdot = small.locator(".nvmap .nd").first
+    sdot.scroll_into_view_if_needed()
+    small.evaluate("y => scrollBy(0, y)", sdot.bounding_box()["y"] - 450)
+    sdot.tap()
+    small.wait_for_timeout(300)
+    url = small.url
+    # Tap the screen point, as a finger does; a locator tap would route around a covering card.
+    r = sdot.bounding_box()
+    small.touchscreen.tap(r["x"] + r["width"] / 2, r["y"] + r["height"] / 2)
+    small.wait_for_timeout(500)
+    if small.url != url or small.locator(".nvtip.pin").is_visible():
+        fails.append("cross: at 320 px a second tap on a result dot does not close its card")
+    tap = browser.new_context(viewport=PHONE, has_touch=True, is_mobile=True).new_page()
+    go(tap, base + "/findings/")
+    tap.wait_for_timeout(500)
+    dot = tap.locator(".nvmap .nd").first
+    dot.scroll_into_view_if_needed()
+    dot.tap()
+    tap.wait_for_timeout(300)
+    tcard = tap.locator(".nvtip.pin")
+    if not tcard.is_visible() or not tcard.locator("a.nvopen").count():
+        fails.append("cross: a tap on a result dot does not open its card, as on questions")
     rows = page.eval_on_selector_all(".nvrowh", "els => els.map(e => e.textContent.trim())")
     infra = [r for r in rows if r.startswith("Data Infrastructure")]
     filed = sum(
@@ -754,7 +933,8 @@ def check_cross(browser, base: str) -> list[str]:
     page.keyboard.press("Escape")
     off = page.locator(".nbead[data-p=nmdc_context_audit]").first
     if off.count():
-        off.click()
+        # The box's edge, not a dot: a dot click pins that result's card instead.
+        off.click(position={"x": 2, "y": 2})
         if "(no results in this picture)" not in page.locator(".nvpanel").inner_text():
             fails.append("cross: the audit of a project without results is not listed")
     else:
