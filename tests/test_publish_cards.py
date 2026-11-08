@@ -88,8 +88,14 @@ def test_chip_only_for_informative_pipeline_labels(tmp_path):
         return cards.split(page)
 
     f, _ = fields_for()
-    assert f["chip"] == "No close match in PubMed abstracts"
-    assert "2026-10-23" in f["chip_note"]
+    assert f["chip"] == "Novel"
+    assert f["chip_note"] == (
+        "An AI search of PubMed abstracts, retrieved on 2026-10-23, found nothing close to "
+        "this result, so it could be new. It does not establish novelty or correctness."
+    )
+    f, _ = fields_for(label="Extends retrieved work")
+    assert f["chip"] == "Builds on PubMed work"
+    assert f["chip_note"] == cards.CHIP_NOTE.format(date="2026-10-23")
     for label in ("Insufficient literature evidence", "Not assessed"):
         f, _ = fields_for(label=label)
         assert f["chip"] == "" and f["chip_note"] == ""
@@ -141,7 +147,7 @@ def test_an_empty_search_says_no_abstracts_were_found(tmp_path):
 def test_literature_provenance_is_collapsed_not_dropped(tmp_path):
     kb = build(tmp_path)
     body = cards.split(finding_page(FID, Corpus(kb)))[1]
-    assert cards.CHIP_NOTE.format(date="2026-10-23") in body
+    assert "**Novel.** " + cards.NOVEL_NOTE.format(date="2026-10-23") in body
     assert "[PMID 111](https://pubmed.ncbi.nlm.nih.gov/111/)" in body
     details = body.split("<details><summary>How this was checked</summary>")[1].split("</details>")[
         0
@@ -164,7 +170,7 @@ def test_direction_page_uses_reader_words(tmp_path):
     page.write_text(cards.join(fields, body))
     fields, text = cards.split(cards.direction_page("transport--abc123", Corpus(kb)))
     assert "Approach: Analysis of existing data. Needs: Analysis to build. Data exists." in text
-    assert "|Dark]] (No close match in PubMed abstracts)" in text
+    assert "|Dark]] (Novel)" in text
     assert "|Other]]\n" in text and "(Insufficient" not in text
     assert fields["need"] == "build" and fields["need_text"] == "Analysis to build"
     assert fields["approach_text"] == "Analysis of existing data"
@@ -333,7 +339,7 @@ def test_compare_text_names_unlabelled_results():
     assert cards.compare_text({"label": "Insufficient literature evidence"}) == (
         "Too little published evidence to compare"
     )
-    assert cards.compare_text({"label": "Candidate novel"}) == "No close match in PubMed abstracts"
+    assert cards.compare_text({"label": "Candidate novel"}) == "Novel"
 
 
 def test_readiness_explanations_and_check_notes_use_reader_words(tmp_path):
@@ -359,7 +365,7 @@ def test_readiness_explanations_and_check_notes_use_reader_words(tmp_path):
     }
     section = cards.literature_section(entry)
     assert "Candidate novel" not in section
-    assert "No close match in PubMed abstracts" in section
+    assert "**Builds on PubMed work.**" in section and "“Novel”, which" in section
     # F4: the unconfirmed judge's difference and papers argued for the rejected label.
     assert "No retrieved paper reports it." not in section and "PMID 1" not in section
 
@@ -487,3 +493,97 @@ def test_export_leaves_out_papers_an_unconfirmed_label_rested_on(tmp_path):
     )
     (row,) = [x for x in cards.export(Corpus(kb))["findings"] if x["id"] == FID]
     assert row["closest"] == []
+
+
+def test_null_results_are_named_by_their_summary_case(tmp_path):
+    kb = build(tmp_path)
+    page = kb / "wiki/findings" / f"{FID}.md"
+    fields, body = cards.split(page.read_text())
+
+    def kind(result, case):
+        page.write_text(cards.join(fields | {"result": result}, body))
+        set_state(kb, "gists.json", {FID: {"gist": "g", "case": case}})
+        return cards.split(finding_page(FID, Corpus(kb)))[0]["kind_text"]
+
+    assert kind("null result", "measured absence") == "No effect found"
+    assert kind("null result", "inconclusive test") == "Inconclusive test"
+    # Unlisted nulls keep the general words.
+    assert kind("null result", "missing data") == "Null or missing result"
+    assert kind("null result", "") == "Null or missing result"
+    assert kind("observation", "measured absence") == "Result"
+    assert kind("correction", "") == "Correction"
+
+
+def test_every_results_picture_column_has_a_reader_note(tmp_path):
+    data = cards.picture_data(Corpus(build(tmp_path)))
+    assert list(data["compare_notes"]) == data["compare_order"] == cards.COMPARE_ORDER
+    assert all(note.strip() for note in data["compare_notes"].values())
+    assert data["compare_notes"]["Novel"].startswith("An AI search of PubMed abstracts found")
+    assert not any(cards.STATS.search(note) for note in data["compare_notes"].values())
+
+
+def related_corpus(tmp_path):
+    """FID in project a, linked to listed results in b and c, an unlisted result in c and
+    a listed result in a."""
+    kb, other = cross_corpus(tmp_path)
+    extra = {
+        "c--11111111": ("c", "# Dark genes cluster in c\n\nClaim. [src: c]\n"),
+        "c--22222222": ("c", "# Unlisted in c\n\nClaim. [src: c]\n"),
+        "a--33333333": ("a", "# Same project result\n\nClaim. [src: a]\n"),
+    }
+    for fid, (sid, text) in extra.items():
+        (kb / "wiki/findings" / f"{fid}.md").write_text(
+            cards.join({"source": sid, "result": "observation"}, text)
+        )
+    gists = {f: {"gist": f"Gist {f}", "case": ""} for f in (FID, other, "c--11111111")}
+    set_state(kb, "gists.json", gists | {"a--33333333": {"gist": "g", "case": ""}})
+    link = {"level": "finding", "label": "x"}
+    similar = "similar comparison, different scope"
+    set_state(
+        kb,
+        "links.json",
+        {
+            "links": [
+                link | {"a": "c--11111111", "b": FID, "type": similar},
+                link | {"a": FID, "b": other, "type": "same result"},
+                link | {"a": FID, "b": "c--22222222", "type": "same result"},
+                link | {"a": FID, "b": "a--33333333", "type": "same result"},
+                link | {"a": FID, "b": "gone--00000000", "type": "same result"},
+                {"level": "project", "a": "a", "b": "b", "type": "corrects it", "label": "y"},
+            ]
+        },
+    )
+    return kb, other
+
+
+def test_result_page_lists_related_results_in_other_projects(tmp_path):
+    kb, other = related_corpus(tmp_path)
+    fields, body = cards.split(finding_page(FID, Corpus(kb)))
+    assert headings(body)[-3:] == [
+        "Open questions that build on this",
+        "Related results in other projects",
+        "Related conflicts",
+    ]
+    section = body.split("## Related results in other projects\n\n")[1].split("\n\n")[0]
+    # By report title; the unlisted, same-project and missing partners are left out.
+    assert section.splitlines() == [
+        f"- [[findings/{other}|Dark genes are rare in b]] · Report B · Same result in each project",
+        "- [[findings/c--11111111|Dark genes cluster in c]] · Report C · "
+        "A similar comparison on different data",
+    ]
+    assert fields["related"] == [other, "c--11111111"]
+    assert "confirm" not in section.lower()
+    # The link works from the other end too.
+    fields, body = cards.split(finding_page("c--11111111", Corpus(kb)))
+    assert fields["related"] == [FID]
+    assert "[[findings/a--1a2b3c4d|" in body and "· Report A ·" in body
+
+
+def test_no_related_section_without_a_cross_project_link(tmp_path):
+    kb, _ = related_corpus(tmp_path)
+    fields, body = cards.split(finding_page("a--33333333", Corpus(kb)))
+    # Its only link is to a result in its own project.
+    assert "related" not in fields and "Related results in other projects" not in body
+    set_state(kb, "links.json", {"links": []})
+    fields, body = cards.split(finding_page(FID, Corpus(kb)))
+    assert "related" not in fields and "Related results in other projects" not in body

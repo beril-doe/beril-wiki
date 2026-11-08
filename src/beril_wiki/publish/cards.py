@@ -38,8 +38,13 @@ KIND_TEXT = {
     "null result": "Null or missing result",
     "correction": "Correction",
 }
+# A listed null result is named by what its summary found; other nulls keep KIND_TEXT's.
+NULL_CASE_TEXT = {
+    "measured absence": "No effect found",
+    "inconclusive test": "Inconclusive test",
+}
 CHIP = {
-    "Candidate novel": "No close match in PubMed abstracts",
+    "Candidate novel": "Novel",
     "Extends retrieved work": "Builds on PubMed work",
     "In tension with retrieved work": "Differs from PubMed abstracts",
     "Established in retrieved literature": "Similar result in PubMed",
@@ -52,6 +57,11 @@ INTEREST = [CHIP[k] for k in ("Candidate novel", "In tension with retrieved work
 CHIP_NOTE = (
     "An AI comparison with PubMed abstracts retrieved on {date}. "
     "It does not establish novelty or correctness."
+)
+# "Novel" alone would read as a verdict, so its note says what the search did and did not show.
+NOVEL_NOTE = (
+    "An AI search of PubMed abstracts, retrieved on {date}, found nothing close to this "
+    "result, so it could be new. It does not establish novelty or correctness."
 )
 NEED = {
     "data in the lakehouse": ("data", "Data already in the lakehouse"),
@@ -67,6 +77,24 @@ APPROACH_TEXT = {
 NOT_COMPARED = "Not compared yet"
 # The Results picture's columns, most novel first; the last shows only when non-empty.
 COMPARE_ORDER = [*CHIP.values(), LABEL_TEXT["Insufficient literature evidence"], NOT_COMPARED]
+# What each Results picture column means, shown when a reader hovers or taps its heading.
+COMPARE_NOTES = {
+    CHIP["Candidate novel"]: (
+        "An AI search of PubMed abstracts found nothing close to these results, so they "
+        "could be new. It does not establish novelty or correctness."
+    ),
+    CHIP["Extends retrieved work"]: (
+        "PubMed abstracts report related work, and these results add to it."
+    ),
+    CHIP["In tension with retrieved work"]: (
+        "PubMed abstracts report something different from these results."
+    ),
+    CHIP["Established in retrieved literature"]: "PubMed abstracts report a similar result.",
+    LABEL_TEXT["Insufficient literature evidence"]: (
+        "PubMed abstracts hold too little on these topics to compare."
+    ),
+    NOT_COMPARED: "These results are waiting for their PubMed search.",
+}
 RELATION_TEXT = {
     "same result": "Same result in each project",
     "one extends the other": "One project extends the other's analysis",
@@ -97,6 +125,13 @@ def reader_terms(text: str) -> str:
     for term, plain_words in READER_TERMS.items():
         text = text.replace(term, plain_words)
     return text
+
+
+def kind_text(result: str, case: str = "") -> str:
+    """The reader's words for a record's kind; a null result's come from its summary's case."""
+    if result == "null result" and case in NULL_CASE_TEXT:
+        return NULL_CASE_TEXT[case]
+    return KIND_TEXT.get(result, result)
 
 
 def compare_text(entry: dict | None) -> str:
@@ -283,7 +318,13 @@ def chip_note(entry: dict | None, result: str = "") -> str:
     """What a PubMed chip means and when it was checked; empty when there is no chip."""
     if not entry or not chip_of(entry, result):
         return ""
-    return CHIP_NOTE.format(date=entry.get("retrieved_on", ""))
+    return label_note(entry)
+
+
+def label_note(entry: dict) -> str:
+    """The note for a pipeline label, dated by its PubMed retrieval."""
+    note = NOVEL_NOTE if entry.get("label") == "Candidate novel" else CHIP_NOTE
+    return note.format(date=entry.get("retrieved_on", ""))
 
 
 def chip_of(entry: dict | None, result: str = "") -> str:
@@ -320,7 +361,7 @@ def literature_section(entry: dict | None) -> str:
     elif not entry.get("retrieved"):
         lines[-1] += f" PubMed searches on {entry['retrieved_on']} found no abstracts to compare."
     else:
-        lines[-1] += " " + CHIP_NOTE.format(date=entry["retrieved_on"])
+        lines[-1] += " " + label_note(entry)
     # An unconfirmed judgment's difference and closest papers argued for the label the
     # other model rejected, so they would contradict the label shown.
     confirmed = entry.get("agreed") is not False
@@ -450,7 +491,7 @@ def _picks(c: Corpus) -> tuple[list[str], dict[str, list[str]]]:
 def _home(c: Corpus, ids: list[str], project: dict[str, str], n: int = 3) -> list[str]:
     """The n most interesting results, each from its own project and topic.
 
-    Most interesting: furthest from PubMed abstracts (no close match, then differs, then
+    Most interesting: furthest from PubMed abstracts (novel, then differs, then
     builds on), then linked to the most other projects, then a result before a null or
     correction, then from the project in the most topics."""
     tier = {text: i for i, text in enumerate(INTEREST)}
@@ -572,6 +613,31 @@ def relation_of(c: Corpus, members: list[str]) -> str:
     return max(inner, key=order.index) if inner else ""
 
 
+def related_results(c: Corpus, fid: str) -> list[tuple[str, str]]:
+    """Listed results in other projects that a current related-result link joins to this
+    one, each with the relation's reader words, by project title, then result title.
+
+    Unlisted results keep their pages but are hidden from readers, so they are left out."""
+    sid = c.findings[fid][0].get("source", "")
+    others = {
+        x["b"] if x.get("a") == fid else x["a"]
+        for x in c.link_records
+        if x.get("level") == "finding"
+        and x.get("type") in RELATION_TEXT
+        and fid in (x.get("a"), x.get("b"))
+        and x.get("a") != x.get("b")
+    }
+    keep = [
+        o
+        for o in others
+        if o in c.findings and c.findings[o][0].get("source", "") != sid and eligible(c, o)
+    ]
+    keep.sort(
+        key=lambda o: (c.report_title(c.findings[o][0].get("source", "")), finding_title(c, o), o)
+    )
+    return [(o, RELATION_TEXT[relation_of(c, [fid, o])]) for o in keep]
+
+
 def shared_index(c: Corpus) -> list[dict]:
     """Accepted shared results whose members still exist and still form one group of
     current related-result links, those spanning the most topics first. A links refresh
@@ -655,7 +721,7 @@ def finding_page(fid: str, c: Corpus) -> str:
         "label": (entry or {}).get("label", NOT_ASSESSED),
         "label_date": (entry or {}).get("retrieved_on", ""),
         "topics": topics,
-        "kind_text": KIND_TEXT.get(fields.get("result", ""), fields.get("result", "")),
+        "kind_text": kind_text(fields.get("result", ""), gist.get("case", "")),
         "chip": chip,
         "compare_text": compare_text(entry),
         "chip_note": chip_note(entry, fields.get("result", "")),
@@ -668,6 +734,9 @@ def finding_page(fid: str, c: Corpus) -> str:
     }
     if fid in home:
         fields["home_rank"] = home.index(fid) + 1
+    related = related_results(c, fid)
+    if related:
+        fields["related"] = [o for o, _ in related]
     h1, measured, limits, report = measured_and_limits(body)
     if gist.get("title"):
         h1 = f"# {gist['title']}"
@@ -682,6 +751,13 @@ def finding_page(fid: str, c: Corpus) -> str:
     if directions:
         parts += ["", "## Open questions that build on this", ""]
         parts += [f"- [[directions/{d}|{title_of(c.directions[d][1], d)}]]" for d in directions]
+    if related:
+        parts += ["", "## Related results in other projects", ""]
+        parts += [
+            f"- [[findings/{o}|{finding_title(c, o)}]] · "
+            f"{c.report_title(c.findings[o][0].get('source', ''))} · {relation}"
+            for o, relation in related
+        ]
     conflicts = c.related_conflicts(sid, topics)
     if conflicts:
         parts += ["", "## Related conflicts", ""]
@@ -916,6 +992,7 @@ def picture_data(c: Corpus) -> dict:
     named = {x[k] for x in links for k in ("pa", "pb")}
     return {
         "compare_order": COMPARE_ORDER,
+        "compare_notes": {text: COMPARE_NOTES[text] for text in COMPARE_ORDER},
         "links": links,
         "shared": shared_index(c),
         "project_titles": {sid: c.report_title(sid) for sid in sorted(named)},
