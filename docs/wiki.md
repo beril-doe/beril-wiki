@@ -106,12 +106,15 @@ from the accepted wiki without editing it:
     them under "Related results in other projects", each with its report
     title and the relation in reader words, sorted by report title, then by
     result title. A result with no listed related result has no such section.
-  - Publish still ranks three results (`home_rank`) and three questions that
-    build on several projects (`home_question_rank`) for the home page, but
-    the home page no longer shows them. Results rank by their PubMed
-    comparison (novel, then differs, then builds on, then the rest), then by
-    how many other projects they link to, then a result before a null or
-    correction, then by the project's topic count.
+  - Publish ranks three results (`home_rank`) and three questions that
+    build on several projects (`home_question_rank`) for the home page.
+    The home results come only from projects that feed two or more topics,
+    and each comes from its own project and topic. Results rank by their
+    PubMed comparison (novel, then differs, then builds on, then the rest),
+    then by how many other projects they link to, then a result before a
+    null or correction, then by the project's topic count. The home
+    questions rank by how many projects they build on, then by how many
+    topics. No project appears in two home questions.
   - Each shared result in `state/shared.json` whose listed members number two
     or more gives each of those members' cards a Compare button on the
     Results page.
@@ -123,7 +126,7 @@ from the accepted wiki without editing it:
     body, passes through one map of reader terms, so "needs compute" reads
     "needs a new analysis" and a label name reads as its chip text.
   - A finding page's frontmatter gains `listed`. A finding is listed (on the
-    Results page, in counts, the map and the topic hub picks) only
+    Results page, in counts, the map and the home and topic hub picks) only
     with an accepted plain summary that does not repeat an earlier finding of
     its report, and a null result only when it measured something; missing
     data and an analysis that never ran are not results. An unlisted finding
@@ -148,26 +151,53 @@ opportunities and negative results help readers find follow-up questions and
 avoid repeating unsuccessful analyses.
 
 The top bar holds Results and Open questions (when the corpus has findings),
-Topics, a Browse menu, Search, Ask and the theme toggle. Browse lists
-Concepts, Entities, Conflicts, Reports, Authors and About. Without JavaScript
-the Browse list opens while focus is inside the menu.
+Topics, a Browse menu, About, Search, Ask and the theme toggle. Browse lists
+Concepts, Entities, Conflicts, Reports and Authors. Without JavaScript the
+Browse list opens while focus is inside the menu.
 
-The home page shows the wiki's title, a one-line deck, the search box and an
-"Ask the wiki" button. Three door cards follow: Results, Open questions and
-Topics, each with what it holds and its count. One line of reference links
-follows ("Browse the reference": Concepts, Entities, Conflicts, Reports and
-Authors, each with its count). An "Also" line adds the links in the home
-page's Browse list that the reference line does not already give.
+The home page opens with the wiki's title, the introduction from
+`wiki/index.md`, the search box and an "Ask the wiki" button. Beside the
+introduction, "The corpus" gives the number of project reports,
+cross-project digests, concepts, entities, recorded conflicts and topics.
+Each figure links to its collection. The sections that follow are "Find your
+way in", "What the projects found", "Questions still open", "The map" and
+"Topics". The two sections on results and questions appear only when the
+corpus has findings.
 
-The Topics index (`/topics/`) lists the topic cards. When the corpus has
-findings, a "Topic colours" key follows: one coloured slot per topic.
-Pointing at a slot shows that topic's name, linked to its page, and its
-sentence from the topic list in `wiki/index.md`. Picking a slot lights that
-topic's cluster on the map below and fades the others. "See it on the map"
-scrolls down to it, and Escape or "Show all" clears the pick. Without
-JavaScript the key keeps its explanation and the row of slots stays hidden.
-Below the key are the map of topics and concepts and the "What each topic
-covers" table.
+"Find your way in" holds one card per kind of page: Topics, Concepts,
+Entities, Conflicts and Reports, then Results and Open questions when the
+corpus has findings. Each card states which question that kind of page
+answers, and gives its page count. A row of links follows, taken from the
+Browse list in `wiki/index.md`.
+
+"What the projects found" shows the three result cards that publish ranks
+for the home page, as the rendering section above describes. "Questions
+still open" lists the three questions that publish ranks for the home page.
+Each question names the projects it builds on. Each section ends with a link
+to all results or all questions.
+
+Each home result and question carries a topic strip: one slot per topic, in
+the same order on every strip, filled for each topic the entry touches. The
+taller slot is the entry's main topic. Opening a strip lists its topic names.
+A "Topic strips" panel above both sections says what a topic is and holds a
+row of the same slots. Pointing at a slot shows that topic's name, linked to
+its page, and its sentence from the topic list in `wiki/index.md`. Picking a
+topic in the row or in a strip's list outlines every home result and
+question that has it. The other entries lose their card background and
+their strips fade. The panel keeps the picked topic and says how many
+results and questions on the page share it. The pick also lights that
+topic's cluster on the home map and fades the others. "See it on the map"
+scrolls down to the map, whose legend says its colours are the same topics
+as the strips. Escape or "Show all" clears the pick. Without JavaScript the
+panel keeps its explanation, the row stays hidden, and the strips still open.
+
+"The map" draws the topics and the concepts they gather. A click on a point
+opens its page. "Topics" is a table with one row per topic: its name, its
+sentence from the topic list in `wiki/index.md`, and its counts of concepts,
+reports, conflicts and entities.
+
+The Topics index (`/topics/`) lists the topic cards, each with its concept
+and report counts.
 
 A topic hub shows "Results from this topic" (up to three cards) and "Open
 questions in this topic" (that topic's row of the grid) above its synthesis.
@@ -193,7 +223,11 @@ A mark's fill and shape show the kind of result: a solid circle for a
 result, a hollow circle for no effect found or an inconclusive test, a
 triangle for an interpretation and a cross for a correction. A ring marks a
 result that has a related result in another project, where that result also
-has a mark. Marks are ink. Only the Novel column's header is orange. A square
+has a mark. Marks are ink and 10 px across, and no mark takes a column's
+colour. Each column header has a coloured bar: orange for Novel, blue for
+Builds on PubMed work, green for Differs from PubMed abstracts and Similar
+result in PubMed, and grey for Too little published evidence to compare and
+Not compared yet. A square
 box holds one project's results in one cell. The square beside each row's
 topic label is the topic's colour, the same colour its cards and chips use;
 no mark takes it. The legend draws the kinds, the ring and the box with the
@@ -216,7 +250,8 @@ Enter on the focused box, pins the box and lists below the map the project
 related result in another project with the link's label from
 `state/links.json` and a button that pins that result's box. Escape clears it. At 700 px and below the map becomes a
 list by topic: each cell shows its column label with the note button and its
-count, and no lines are drawn. On a phone, a tap on a mark opens its card,
+count, and no lines are drawn. Each cell label has a bar on its left in its
+column's colour. On a phone, a tap on a mark opens its card,
 and a tap on the box's edge opens the list under the cell. Touch screens show
 larger marks. A note under the map names topics with no results.
 
@@ -231,8 +266,9 @@ assessed" show no chip, and neither does a correction.
 `/directions/` is the open-questions grid: topics down the side, what answering
 a question needs across the top (data already in the lakehouse, analysis to
 build, new measurements, not yet clear), one dot per question. Every dot is an
-ink circle. A dot is orange when the question cites a listed result in the
-Results map's Novel column, and ringed when it builds on results from two or
+ink circle, 10 px across like the Results map's marks. Both maps use one type
+size for row labels and one for column headers. A dot is orange when the
+question cites a listed result in the Results map's Novel column, and ringed when it builds on results from two or
 more projects. The square beside each row's topic label is the topic's
 colour. Hover, focus or tap a dot for a pop-up with the question, "Cites a
 result in the Novel column" when that applies, its approach, what it needs

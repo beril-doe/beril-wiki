@@ -7,6 +7,7 @@ import type { ComponentChildren } from "preact"
 import { resolveRelative } from "@quartz-community/utils"
 import { type Corpus, type File, collectionOf, isIndex, slugOf, titleOf } from "../page"
 import { QuestionGrid } from "./Questions"
+import { TopicStrip, topicList } from "./Strip"
 
 export interface FindingFm {
   result?: string
@@ -137,17 +138,20 @@ function Chip({ m }: { m: FindingFm }) {
   )
 }
 
-/** `c` supplies the topic title; without it the footer shows the topic slug. */
-export function FindingCard({ f, from, c }: { f: File; from: FullSlug; c?: Corpus }) {
+/** `c` supplies the topic title; without it the footer shows the topic slug. `strip` adds
+ * the home page's topic strip. */
+export function FindingCard({ f, from, c, strip }: { f: File; from: FullSlug; c?: Corpus; strip?: boolean }) {
   const m = fmOf<FindingFm>(f)
   const kind = kindOf(m)
   return (
     <article
       class="fcard"
       data-topic={m.topic}
+      data-topics={strip ? topicList(m.topics, m.topic) : undefined}
       data-kind={kind}
       data-text={searchText(titleOf(f), m.gist, m.report_title)}
     >
+      {strip && c && <TopicStrip c={c} topics={m.topics} primary={m.topic} />}
       {m.gist && (
         <div class="tags">
           <span class={`rt${kind === "null" ? " null" : ""}`}>{m.kind_text}</span>

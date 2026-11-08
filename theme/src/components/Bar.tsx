@@ -1,5 +1,5 @@
 // The top bar: the logo and name, the three ways in (results, open questions,
-// topics), a Browse menu holding the reference collections, then the tools:
+// topics), a Browse menu holding the reference collections, About, then the tools:
 // section search, Ask, and the stock theme toggle from the header slot. The
 // CBORG key is entered where it is used, on the Ask page and in search.
 // src/client wires the search button and the Browse menu.
@@ -20,8 +20,9 @@ const BROWSE: [string, string][] = [
   ["Conflicts", "conflicts/index"],
   ["Reports", "summaries/index"],
   ["Authors", "authors/index"],
-  ["About", "about"],
 ]
+// About the wiki is its own tab, after Browse, at the maintainer's request.
+const ABOUT: [string, string] = ["About", "about"]
 
 // The mark: a dish holding a small knowledge graph. The accent node takes the
 // topic blue; everything else follows the ink colour, so it works in both themes.
@@ -84,6 +85,9 @@ export function Bar({ cd, header }: { cd: QuartzComponentProps; header: PageFram
             ))}
           </ul>
         </div>
+        <a class="barlink" href={resolveRelative(slug, ABOUT[1] as FullSlug)} aria-current={current(ABOUT[1]) ? "page" : undefined}>
+          {ABOUT[0]}
+        </a>
       </nav>
       <div class="tools">
         <button class="search-button" type="button" aria-label="Search the wiki">

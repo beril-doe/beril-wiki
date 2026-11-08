@@ -13,6 +13,9 @@ const fmOf = (f: File) => (f.frontmatter ?? {}) as FindingFm
 const topicSlug = (t: File) => slugOf(t).replace(/^topics\//, "")
 const idOf = (f: File) => slugOf(f).replace(/^findings\//, "")
 
+// Each column's colour, in publish's order: novel, builds on, differs, similar, too little
+// evidence, not compared yet. Marks stay ink; the colour names the column.
+const TONE = ["new", "builds", "match", "match", "none", "unset"]
 // Column widths follow the usual counts: the "too little evidence" column holds most results.
 const WIDTH = [1.1, 1.4, 0.6, 0.6, 2.2, 0.8]
 
@@ -100,7 +103,6 @@ export function NoveltyMap({ c, from }: { c: Corpus; from: FullSlug }) {
   const cols = order.filter((col) => col !== last || all.some((f) => fmOf(f).compare_text === col))
   const rows = c.topics.filter((t) => all.some((f) => fmOf(f).topic === topicSlug(t)))
   const count = (col: string) => all.filter((f) => fmOf(f).compare_text === col).length
-  const novel = order[0]
   const related = drawableRelated(c)
   const data = {
     links: related.links,
@@ -153,7 +155,7 @@ export function NoveltyMap({ c, from }: { c: Corpus; from: FullSlug }) {
         <div class="nvgrid" style={`--nvtpl:minmax(8rem,11rem) ${cols.map((col) => `minmax(3.5rem,${WIDTH[order.indexOf(col)] ?? 1}fr)`).join(" ")}`}>
           <span class="nvcorner" />
           {cols.map((col) => (
-            <span class={`nvcolh${col === novel ? " nv-new" : ""}`}>
+            <span class={`nvcolh nv-${TONE[order.indexOf(col)] ?? "none"}`}>
               <i aria-hidden="true" />
               <ColNote col={col} note={idx.compare_notes?.[col]} /> <span class="n">{count(col)}</span>
             </span>
@@ -175,7 +177,7 @@ export function NoveltyMap({ c, from }: { c: Corpus; from: FullSlug }) {
                   }
                   return (
                     <div class="nvcell" data-empty={cell.length === 0 ? "1" : undefined}>
-                      <span class={`nvlab${col === novel ? " nv-new" : ""}`}>
+                      <span class={`nvlab nv-${TONE[order.indexOf(col)] ?? "none"}`}>
                         <ColNote col={col} note={idx.compare_notes?.[col]} /> · {cell.length}
                       </span>
                       {[...by.entries()]

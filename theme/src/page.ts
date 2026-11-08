@@ -340,6 +340,40 @@ export function stripIndexLists(root: Root, slug: string) {
   })
 }
 
+// The home page's topic list carries one blurb per topic, written as
+// "[[topics/x|Title]] (12 concepts): what it covers". The frame lays those
+// blurbs out beside the counts it computes, so pull each list item apart
+// into the topic it names and the sentence describing it.
+export function topicBlurbs(nodes: ElementContent[] | undefined): Map<string, ElementContent[]> {
+  const out = new Map<string, ElementContent[]>()
+  if (!nodes) return out
+  for (const list of nodes) {
+    if (!isEl(list) || (list.tagName !== "ul" && list.tagName !== "ol")) continue
+    for (const li of list.children) {
+      if (!isEl(li) || li.tagName !== "li") continue
+      const kids = [...li.children]
+      const first = kids.find((k) => isEl(k) && k.tagName === "a") as Element | undefined
+      if (!first) continue
+      const slug = String(first.properties?.["data-slug"] ?? first.properties?.dataSlug ?? "")
+      if (!slug) continue
+      const rest = kids.slice(kids.indexOf(first) + 1)
+      // "(12 concepts): the disciplined combination…" — the count is rendered
+      // as a figure beside the row, so only the sentence is wanted here.
+      const head = rest[0]
+      if (head?.type === "text") {
+        // "(12 concepts): the disciplined combination…" reads as a sentence
+        // once the count is gone, so it starts one.
+        const value = head.value
+          .replace(/^\s*\(\d+\s+concepts?\)\s*:?\s*/, "")
+          .replace(/^\s*:\s*/, "")
+        rest[0] = { type: "text", value: value.charAt(0).toUpperCase() + value.slice(1) }
+      }
+      out.set(simplifySlug(slug), rest)
+    }
+  }
+  return out
+}
+
 // What the corpus holds, counted off the pages that actually rendered rather
 // than read out of a sentence in the markdown.
 export interface Counts {

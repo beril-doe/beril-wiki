@@ -8,6 +8,7 @@ import type { FullSlug } from "@quartz-community/types"
 import { resolveRelative } from "@quartz-community/utils"
 import { type Corpus, type File, slugOf, titleOf } from "../page"
 import { Board, type BoardConfig, type FindingFm, directionsOf, resultsIndex } from "./Cards"
+import { TopicStrip, topicList } from "./Strip"
 
 interface CrossProject {
   source: string
@@ -146,6 +147,31 @@ function LegendDot({ cls }: { cls?: string }) {
     <span class={`qd key${cls ? ` ${cls}` : ""}`} aria-hidden="true">
       <span class="qdot" />
     </span>
+  )
+}
+
+/** Up to three questions that join projects, for the home page. */
+export function CrossQuestions({ c, from }: { c: Corpus; from: FullSlug }) {
+  const rank = (q: File) => fmOf(q).home_question_rank
+  const picks = directionsOf(c)
+    .filter((q) => rank(q) !== undefined)
+    .sort((a, b) => rank(a)! - rank(b)!)
+  if (picks.length === 0) return null
+  return (
+    <ul class="xqlist">
+      {picks.map((q) => {
+        const m = fmOf(q)
+        return (
+          <li data-topics={topicList(m.cross_topics, m.topic)}>
+            <a class="xqt" href={resolveRelative(from, slugOf(q) as FullSlug)}>
+              {titleOf(q)}
+            </a>
+            <span class="xqp">Builds on {m.cross!.map((p) => p.title).join(" · ")}</span>
+            <TopicStrip c={c} topics={m.cross_topics} primary={m.topic} />
+          </li>
+        )
+      })}
+    </ul>
   )
 }
 

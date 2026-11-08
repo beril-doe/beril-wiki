@@ -264,7 +264,8 @@
   max-width: 100%;
   overflow-x: auto;
   --hit: 28px;
-  --mark: 14px;
+  // The same mark size as the Results map's dots.
+  --mark: 10px;
   margin: 0 0 18px;
 }
 .qgrid {
@@ -297,7 +298,8 @@
   padding: 12px 10px 12px 0;
   border-bottom: 1px solid var(--line);
   font-family: var(--serif);
-  font-size: var(--t-ui-lg);
+  // One row-label size on both maps.
+  font-size: var(--t-ui);
   line-height: 1.3;
   a {
     color: var(--ink);
@@ -445,8 +447,8 @@
 .qd.key {
   display: inline-block;
   vertical-align: middle;
-  --hit: 22px;
-  --mark: 14px;
+  --hit: 18px;
+  --mark: 10px;
 }
 .qnovel {
   display: block;
@@ -471,6 +473,13 @@
     --hit: 44px;
   }
 }
+// Touch draws question dots at the Results map's touch size.
+@media (pointer: coarse) {
+  .qwrap,
+  .qd.key {
+    --mark: 12px;
+  }
+}
 @media (max-width: 640px) {
   .qgrid,
   .qgrid[data-single] {
@@ -485,11 +494,13 @@
   .qhead {
     display: none;
   }
+  // The same phone row label as the Results map's.
   .qrowh {
     display: block;
     border: 0;
     padding: 0 0 6px;
-    font-size: var(--t-sub);
+    font-size: var(--t-ui);
+    font-weight: 600;
   }
   .qcell {
     border: 0;
@@ -580,6 +591,32 @@
   display: block;
   margin-top: 3px;
   color: var(--method);
+}
+.xqlist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: grid;
+  gap: 8px;
+  > li {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+}
+.xqt {
+  font-family: var(--serif);
+  font-size: var(--t-sub);
+  line-height: 1.3;
+  color: var(--ink);
+}
+.xqp {
+  font-size: var(--t-meta);
+  color: var(--ink-2);
 }
 // ---- the comparison a result card's Compare button opens ------------------
 .spanel {
@@ -680,21 +717,17 @@
 .nvcolh {
   font-size: var(--t-label);
   font-weight: 600;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--ink-2);
+  color: var(--mute-ink);
   padding: 8px 6px;
   border-bottom: 1px solid var(--line-2);
   line-height: 1.3;
-  // Only the Novel column's bar is coloured; the column already names its class.
   i {
     display: block;
     height: 4px;
-    background: var(--line);
+    background: var(--nv);
     margin-bottom: 6px;
-  }
-  &.nv-new i {
-    background: var(--nv-new);
   }
   .n {
     color: var(--ink);
@@ -738,7 +771,7 @@
 }
 .nvrowh {
   font-family: var(--serif);
-  font-size: var(--t-meta);
+  font-size: var(--t-ui);
   line-height: 1.3;
   color: var(--ink);
   padding: 6px 8px 6px 0;
@@ -760,8 +793,18 @@
 .nvlab {
   display: none;
 }
-.nvlab.nv-new {
-  color: var(--nv-new);
+.nv-new {
+  --nv: var(--nv-new);
+}
+.nv-builds {
+  --nv: var(--nv-builds);
+}
+.nv-match {
+  --nv: var(--nv-match);
+}
+.nv-none,
+.nv-unset {
+  --nv: var(--nv-none);
 }
 .nbead {
   position: relative;
@@ -807,8 +850,9 @@
   position: relative;
   display: block;
   flex: none;
-  width: 8px;
-  height: 8px;
+  // The same mark size as the Open questions dots.
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   color: var(--ink);
   &::before {
@@ -987,9 +1031,12 @@ svg.nvlinks {
       display: none;
     }
   }
+  // The phone label carries its column's colour as a bar, like the desktop header.
   .nvlab {
     display: block;
     width: 100%;
+    border-left: 4px solid var(--nv);
+    padding-left: 6px;
     font-size: var(--t-label);
     font-weight: 600;
     text-transform: uppercase;
@@ -1017,12 +1064,70 @@ svg.nvlinks {
   }
 }
 
-// ---- the topic key -------------------------------------------------------
+// ---- home topic strips ---------------------------------------------------
+// One slot per topic, in the same order on every strip, so shared topics line
+// up across the cards and the questions. The main topic's slot stands taller.
+.tstrip > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  &::-webkit-details-marker {
+    display: none;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--method);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+.tslots,
 .tkeyslots {
   display: grid;
   grid-template-columns: repeat(var(--topics, 15), 1fr);
   gap: 2px;
 }
+.tslots {
+  flex: 1;
+  max-width: 260px;
+  align-items: center;
+}
+.tslot {
+  height: 12px;
+  border-radius: 2px;
+  background: var(--line);
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+  &.on {
+    background: var(--h);
+  }
+  &.main {
+    height: 18px;
+  }
+}
+.tcap {
+  font-size: var(--t-meta);
+  color: var(--ink-2);
+  white-space: nowrap;
+  &::after {
+    content: " \25B8";
+  }
+  .tstrip[open] &::after {
+    content: " \25BE";
+  }
+}
+.tnames {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 2px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.tname,
 .tkeyslot,
 .tclear {
   font: inherit;
@@ -1030,6 +1135,22 @@ svg.nvlinks {
   &:focus-visible {
     outline: 2px solid var(--method);
     outline-offset: 2px;
+  }
+}
+.tname {
+  font-size: var(--t-meta);
+  border: 1px solid var(--line-2);
+  border-left: 4px solid var(--h);
+  border-radius: 4px;
+  padding: 2px 8px;
+  background: var(--card);
+  color: var(--ink);
+  &[aria-pressed="true"] {
+    background: color-mix(in srgb, var(--h) 16%, var(--card));
+    border-color: var(--h);
+  }
+  &:disabled {
+    cursor: default;
   }
 }
 // The key above both sections: what a topic is, the row of topics in strip order,
@@ -1116,6 +1237,9 @@ svg.nvlinks {
     display: none;
   }
 }
+.tkcount {
+  font-weight: 600;
+}
 .tmapgo {
   font: inherit;
   font-size: var(--t-meta);
@@ -1136,6 +1260,7 @@ svg.nvlinks {
 .tclear {
   font-size: var(--t-meta);
   border: 1px solid var(--line-2);
+  border-radius: 999px;
   padding: 2px 10px;
   background: var(--card);
   color: var(--ink);
@@ -1154,6 +1279,31 @@ svg.nvlinks {
     height: 32px;
   }
 }
+// A picked topic outlines every entry with it and marks its slot on each strip.
+// Entries without it lose their card and their strip fades; their text keeps its
+// colour so it stays readable.
+[data-tstrips] [data-topics] {
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
+}
+[data-tstrips][data-pick] [data-topics] {
+  &.hit {
+    border-color: var(--ink);
+    box-shadow: inset 0 0 0 1px var(--ink);
+  }
+  &:not(.hit) {
+    background: transparent;
+    border-style: dashed;
+    .tslots {
+      opacity: 0.35;
+    }
+  }
+}
+[data-tstrips][data-pick] .tslot.pick {
+  transform: scaleY(1.5);
+  outline: 2px solid var(--ink);
+}
 // The home map fades every topic cluster but the picked one, and the lines between them.
 [data-tmap] .cluster,
 [data-tmap] .ties,
@@ -1170,9 +1320,11 @@ svg.nvlinks {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .tslot,
   [data-tmap] .cluster,
   [data-tmap] .ties,
-  [data-tmap] .links {
+  [data-tmap] .links,
+  [data-tstrips] [data-topics] {
     transition: none;
   }
 }
@@ -1197,6 +1349,10 @@ svg.nvlinks {
   font-size: var(--t-ui);
   color: var(--ink-2);
   cursor: pointer;
+  // Quartz pulls task-list checkboxes 1.4rem left, which put this one outside the bar.
+  input {
+    margin: 0;
+  }
   .n {
     color: var(--mute);
     font: 400 0.75rem var(--mono);

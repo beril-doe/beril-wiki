@@ -62,36 +62,31 @@ PHONE = {"width": 390, "height": 844}
 DESKTOP = {"width": 1280, "height": 900}
 WIDE = {"width": 1440, "height": 900}
 
-HOME_HEADINGS = ["BERIL Knowledge Wiki"]
+HOME_HEADINGS = [
+    "BERIL Knowledge Wiki",
+    "Find your way in",
+    "What the projects found",
+    "Questions still open",
+    "The map",
+    "Topics",
+]
 HOME_ABSENT = [
     "What BERIL found",
     "Plan your next project",
     "checked against PubMed",
     "change the picture",
 ]
-# Home sections the doors replaced; each now lives on /topics/, a board or nowhere.
-HOME_GONE = [
-    ".fcard",
-    ".scard",
-    ".xqlist",
-    ".kindcard",
-    "[data-tkey]",
-    "[data-tmap]",
-    ".topictable",
-    ".qgrid",
-    ".nvmap",
-]
-DOORS = [
-    ("Results", "findings/"),
-    ("Open questions", "directions/"),
-    ("Topics", "topics/"),
-]
-REFERENCE = [
-    ("Concepts", "concepts"),
-    ("Entities", "entities"),
-    ("Conflicts", "conflicts"),
-    ("Reports", "summaries"),
-    ("Authors", "authors"),
+BAR_LINKS = ["Results", "Open questions", "Topics", "About"]
+BROWSE_ITEMS = ["Concepts", "Entities", "Conflicts", "Reports", "Authors"]
+# The kind cards under "Find your way in", by the collection each opens.
+KIND_CARDS = [
+    "topics/",
+    "concepts/",
+    "entities/",
+    "conflicts/",
+    "summaries/",
+    "findings/",
+    "directions/",
 ]
 # Every collection index a reader reaches from home within two clicks.
 COLLECTIONS = [
@@ -105,7 +100,8 @@ COLLECTIONS = [
     "authors/",
     "about",
 ]
-BAR_MAX = 7
+# The maintainer asked for About as its own tab after Browse, which makes 8 controls.
+BAR_MAX = 8
 PIPELINE_TERMS = [
     "Candidate novel",
     "Insufficient literature evidence",
@@ -489,7 +485,6 @@ def lib(body: str) -> str:
 
 def check_home(browser, base: str) -> list[str]:
     fails: list[str] = []
-    rec = records()
     page = new_page(browser)
     go(page, base + "/")
     heads = page.eval_on_selector_all("h1, h2", "els => els.map(e => e.textContent.trim())")
@@ -497,53 +492,64 @@ def check_home(browser, base: str) -> list[str]:
         fails.append(f"home: headings {heads} != {HOME_HEADINGS}")
     text = page.inner_text("body")
     fails += [f"home: contains '{s}'" for s in HOME_ABSENT if s.lower() in text.lower()]
-    for sel in HOME_GONE:
-        if n := page.locator(sel).count():
-            fails.append(f"home: still shows {n} '{sel}'; it moved off the home page")
 
-    # Three doors, each with its count from the records.
-    doors = page.eval_on_selector_all(
-        ".homedoors nav.cards.doors a.card.door",
-        """els => els.map(e => ({label: e.querySelector('b')?.textContent.trim(),
-            href: e.getAttribute('href'), n: e.querySelector('.meta .n')?.textContent.trim()}))""",
+    if page.locator(".scard").count():
+        fails.append("home: shows shared cards; they belong on the Results page")
+    fails += check_strips(browser, base, page)
+    cards = page.eval_on_selector_all(
+        ".fcard",
+        """els => els.map(e => ({
+            href: e.querySelector('h3 a')?.getAttribute('href') || '',
+            kind: e.dataset.kind || '',
+            topic: e.dataset.topic || '',
+            report: e.querySelector('.meta a')?.getAttribute('href') || '',
+        }))""",
     )
-    topics = len([p for p in (CONTENT / "topics").glob("*.md") if p.stem != "index"])
-    counts = {
-        "findings/": f"{len(rec['listed'])} results",
-        "directions/": f"{len(rec['directions'])} questions",
-        "topics/": f"{topics} topics",
-    }
-    want = [lab for lab, _ in DOORS]
-    if [d["label"] for d in doors] != want:
-        fails.append(f"home: doors {[d['label'] for d in doors]}, expected {want}")
-    for d in doors:
-        target = next((t for lab, t in DOORS if lab == d["label"]), None)
-        if target is None:
-            continue
-        if not (d["href"] or "").endswith(target):
-            fails.append(f"home: door {d['label']} links to {d['href']}, expected {target}")
-        if d["n"] != counts[target]:
-            fails.append(f"home: door {d['label']} reads '{d['n']}', records give {counts[target]}")
-    ref = page.eval_on_selector_all(
-        'nav.reflinks[aria-label="Reference"] a',
-        "els => els.map(e => [e.childNodes[0].textContent.trim(), e.getAttribute('href'),"
-        " e.querySelector('.n')?.textContent.trim()])",
-    )
-    if [r[0] for r in ref] != [lab for lab, _ in REFERENCE]:
-        fails.append(f"home: reference line {[r[0] for r in ref]}, expected {REFERENCE}")
-    for label, href, n in ref:
-        coll = next((c for lab, c in REFERENCE if lab == label), "")
-        files = [p for p in (CONTENT / coll).glob("*.md") if p.stem != "index"]
-        # Reports also count the digests, which publish files beside them.
-        if coll != "summaries" and n != str(len(files)):
-            fails.append(f"home: reference {label} reads {n}, {coll}/ holds {len(files)} pages")
-        if not (n or "").isdigit() or int(n) < 1:
-            fails.append(f"home: reference {label} count '{n}'")
-        if not (href or "").rstrip("/").endswith(coll):
-            fails.append(f"home: reference {label} links to {href}")
-
+    gists_path = ROOT / "state" / "gists.json"
+    gists = json.loads(gists_path.read_text()) if gists_path.exists() else {}
+    have = sum(1 for g in gists.values() if g.get("gist"))
+    if not cards and not have:
+        print("note: home: 0 cards (no summaries yet)")
+        return [
+            *fails,
+            *kind_card_fails(page),
+            *check_bar(browser, base),
+            *key_entry_fails(browser, base),
+        ]
+    if have and len(cards) != 3:
+        fails.append(f"home: {len(cards)} cards, expected 3 ({have} summaries exist)")
+    fid = [c["href"].rsplit("/", 1)[-1] for c in cards]
+    for label, vals in (
+        ("ids", fid),
+        ("projects", [c["report"].rsplit("/", 1)[-1] for c in cards]),
+        ("topics", [c["topic"] for c in cards]),
+    ):
+        if len(set(vals)) != len(vals):
+            fails.append(f"home: card {label} not distinct: {vals}")
+    for c, i in zip(cards, fid, strict=True):
+        case = gists.get(i, {}).get("case", "")
+        if c["kind"] == "null" and (not case or case in BAD_NULL_CASES):
+            fails.append(f"home: null-result card {i} has case '{case or 'none'}'")
+    fails += kind_card_fails(page)
     fails += check_bar(browser, base)
-    # The CBORG key is entered where it is used: on Ask and in search's meaning control.
+    fails += key_entry_fails(browser, base)
+    return fails
+
+
+def kind_card_fails(page: Page) -> list[str]:
+    """The "Find your way in" kind cards open each collection."""
+    hrefs = page.eval_on_selector_all("a.kindcard", "els => els.map(e => e.getAttribute('href'))")
+    got = sorted(h.removeprefix("./") for h in hrefs)
+    if got != sorted(KIND_CARDS):
+        return [f"home: kind cards link to {got}, expected {sorted(KIND_CARDS)}"]
+    return []
+
+
+def key_entry_fails(browser, base: str) -> list[str]:
+    """The CBORG key is entered where it is used: on Ask and in search's meaning control."""
+    fails: list[str] = []
+    page = new_page(browser)
+    go(page, base + "/")
     if page.locator(".px-keybtn").count():
         fails.append("home: the bar still has the CBORG key button")
     page.locator("header.bar .search-button").click()
@@ -559,12 +565,12 @@ def check_home(browser, base: str) -> list[str]:
     go(page, base + "/ask")
     if not page.locator(".px-aistatus .px-keyentry").count():
         fails.append("home: the Ask page has no CBORG key entry in .px-aistatus")
-    fails += check_strips(browser, base)
+    page.context.close()
     return fails
 
 
 def check_bar(browser, base: str) -> list[str]:
-    """At 1440 px the bar holds at most 7 controls after the wordmark; every collection is
+    """At 1440 px the bar holds at most 8 controls after the wordmark; every collection is
     within two clicks of home; the Browse menu works by mouse, keyboard and tap."""
     fails: list[str] = []
     page = new_page(browser, WIDE)
@@ -581,19 +587,22 @@ def check_bar(browser, base: str) -> list[str]:
     navs = page.eval_on_selector_all(
         "header.bar .barnav > a.barlink", "els => els.map(e => e.textContent.trim())"
     )
-    if navs != [lab for lab, _ in DOORS]:
-        fails.append(f"home: bar links {navs}, expected {[lab for lab, _ in DOORS]}")
+    if navs != BAR_LINKS:
+        fails.append(f"home: bar links {navs}, expected {BAR_LINKS}")
+    # About is a tab of its own after the Browse menu, then the tools.
+    order = page.evaluate(
+        """() => [...document.querySelector('header.bar .barnav').children,
+                  ...document.querySelector('header.bar .tools').children]
+            .map(e => e.matches('.barmenu') ? 'Browse' : e.matches('.search-button') ? 'Search'
+                 : e.matches('.darkmode') ? 'theme' : e.textContent.trim())"""
+    )
+    want_order = [*BAR_LINKS[:3], "Browse", "About", "Search", "Ask", "theme"]
+    if order != want_order:
+        fails.append(f"home: the bar reads {order}, expected {want_order}")
     browse = page.eval_on_selector_all(
         "#barmenu-list a", "els => els.map(e => [e.textContent.trim(), e.getAttribute('href')])"
     )
-    if [b[0] for b in browse] != [
-        "Concepts",
-        "Entities",
-        "Conflicts",
-        "Reports",
-        "Authors",
-        "About",
-    ]:
+    if [b[0] for b in browse] != BROWSE_ITEMS:
         fails.append(f"home: Browse menu lists {[b[0] for b in browse]}")
 
     # Two clicks: a link shown on home is one click; a Browse item is two.
@@ -604,9 +613,7 @@ def check_bar(browser, base: str) -> list[str]:
     for coll in COLLECTIONS:
         go(page, base + "/")
         want = coll.rstrip("/")
-        shown = page.locator(
-            "header.bar .barnav > a.barlink, .homedoors a.card.door, nav.reflinks a"
-        )
+        shown = page.locator("header.bar .barnav > a.barlink, a.kindcard")
         hrefs = shown.evaluate_all("els => els.map(e => e.href)")
         hit = next((i for i, h in enumerate(hrefs) if target_of(h).strip("/") == want), None)
         clicks = 1
@@ -617,7 +624,7 @@ def check_bar(browser, base: str) -> list[str]:
             ih = items.evaluate_all("els => els.map(e => e.href)")
             j = next((i for i, h in enumerate(ih) if target_of(h).strip("/") == want), None)
             if j is None:
-                fails.append(f"home: {coll} is not linked from the bar, a door or the reference")
+                fails.append(f"home: {coll} is not linked from the bar, a kind card or Browse")
                 continue
             btn.click()
             items.nth(j).click()
@@ -699,96 +706,140 @@ def check_bar(browser, base: str) -> list[str]:
     return fails
 
 
-def check_strips(browser, base: str) -> list[str]:
-    """The topic key, map and table on /topics/; picking a topic lights its map cluster;
-    cards and map rows carry their topic's key colour."""
+def check_strips(browser, base: str, page: Page) -> list[str]:
+    """Every home result and question has a topic strip; picking a topic marks those sharing it."""
     fails: list[str] = []
-    page = new_page(browser)
-    go(page, base + "/topics/")
-    for sel in ("[data-tkey]", "#topic-map[data-tmap]", ".topictable"):
-        if page.locator(f".topicspage {sel}").count() != 1:
-            fails.append(f"strips: /topics/ has {page.locator(f'.topicspage {sel}').count()} {sel}")
-    topics = sorted(p.stem for p in (CONTENT / "topics").glob("*.md") if p.stem != "index")
-    rows = page.eval_on_selector_all(
-        ".topictable .trow .name a", "els => els.map(e => e.getAttribute('href'))"
+    entries_js = "[data-tstrips] [data-topics]"
+    entries = page.eval_on_selector_all(
+        entries_js,
+        """els => els.map(e => ({
+            topics: e.dataset.topics.split(' '),
+            slots: e.querySelectorAll('.tslot').length,
+            on: [...e.querySelectorAll('.tslot.on')].map(s => s.dataset.t),
+            card: e.matches('.fcard'),
+        }))""",
     )
-    if sorted(last_part(h) for h in rows) != topics:
-        fails.append(f"strips: the topics table has {len(rows)} rows for {len(topics)} topics")
-    slots = page.eval_on_selector_all(
-        ".tkeyslot", "els => els.map(e => [e.dataset.t, e.style.getPropertyValue('--h')])"
+    if not entries:
+        return ["home: no result or question has a topic strip"]
+    hue = dict(
+        page.eval_on_selector_all(
+            ".tkeyslot", "els => els.map(e => [e.dataset.t, e.style.getPropertyValue('--h')])"
+        )
     )
-    hue = dict(slots)
-    if sorted(hue) != topics:
-        fails.append(f"strips: the key has slots {sorted(hue)}, the records {topics}")
+    keys = page.locator(".tkeyslot").count()
+    for i, e in enumerate(entries):
+        if e["slots"] != keys:
+            fails.append(f"home: strip {i} has {e['slots']} slots, the key has {keys}")
+        if sorted(e["on"]) != sorted(e["topics"]):
+            fails.append(f"home: strip {i} fills {e['on']}, its entry names {e['topics']}")
     if not page.locator(".tkey").is_visible():
-        fails.append("strips: the topic key is hidden with the script")
+        fails.append("home: the topic key is hidden with the script")
+    # What a reader sees: an outlined entry shares the topic, a dashed one does not.
+    looks = """els => els.map(e => {
+        const s = getComputedStyle(e)
+        return s.boxShadow !== 'none' ? 'lit' : s.borderTopStyle === 'dashed' ? 'faded' : 'plain'
+    })"""
+
+    def want(t: str | None) -> list[str]:
+        return [("lit" if t in e["topics"] else "faded") if t else "plain" for e in entries]
+
+    def told(t: str) -> str:
+        def n(k: int, word: str) -> str:
+            return f"no {word}s" if k == 0 else f"1 {word}" if k == 1 else f"{k} {word}s"
+
+        hit = [e for e in entries if t in e["topics"]]
+        cards = sum(e["card"] for e in hit)
+        return f"On this page: {n(cards, 'result')} and {n(len(hit) - cards, 'question')}."
 
     def readout() -> str:
-        """The key's visible readout: the topic shown, or 'idle'."""
+        """The key's visible readout: the topic shown, or 'idle', plus the count line."""
         return page.evaluate(
             """() => {
             const info = [...document.querySelectorAll('.tinfo')].find(e => !e.hidden)
-            return (info ? info.dataset.t : 'idle') + '|'
+            const state = document.querySelector('.tstate')
+            const line = state.hidden ? '' : state.querySelector('.tkcount').textContent
+            return (info ? info.dataset.t : 'idle') + '|' + line
         }"""
         )
 
-    lit_map = """() => [...document.querySelectorAll('[data-tmap] .cluster')]
-        .filter(g => getComputedStyle(g).opacity > 0.5).map(g => g.dataset.t)"""
+    def settled() -> list[str]:
+        page.wait_for_timeout(300)
+        return page.eval_on_selector_all(entries_js, looks)
+
     page.mouse.move(0, 0)
     if readout() != "idle|":
-        fails.append(f"strips: the key opens showing {readout()}")
-    if not slots:
-        return [*fails, "strips: the key has no slots"]
-    hover = slots[-1][0]
+        fails.append(f"home: the key opens showing {readout()}")
+    hover = entries[-1]["topics"][0]
     page.locator(f'.tkeyslot[data-t="{hover}"]').hover()
     if readout() != f"{hover}|":
-        fails.append(f"strips: pointing at {hover} shows {readout()}")
+        fails.append(f"home: pointing at {hover} shows {readout()}")
     page.mouse.move(0, 0)
-    topic = slots[0][0]
+    topic = entries[0]["topics"][0]
     page.locator(f'.tkeyslot[data-t="{topic}"]').click()
-    page.wait_for_timeout(300)
+    if (got := settled()) != want(topic):
+        fails.append(f"home: picking {topic} shows {got}, expected {want(topic)}")
     page.mouse.move(0, 0)
-    # The Topics page has no strips, so the count line stays empty.
-    if (text := readout()) != f"{topic}|":
-        fails.append(f"strips: the key shows '{text}', expected '{topic}|'")
-    pressed = page.eval_on_selector_all(
-        ".tkeyslot[aria-pressed=true]", "els => els.map(e => e.dataset.t)"
-    )
-    if pressed != [topic]:
-        fails.append(f"strips: picking {topic} presses key slots {pressed}")
+    if (text := readout()) != f"{topic}|{told(topic)}":
+        fails.append(f"home: the key shows '{text}', expected '{topic}|{told(topic)}'")
+    lit_map = """() => [...document.querySelectorAll('[data-tmap] .cluster')]
+        .filter(g => getComputedStyle(g).opacity > 0.5).map(g => g.dataset.t)"""
     if (got := page.evaluate(lit_map)) != [topic]:
-        fails.append(f"strips: picking {topic} leaves map clusters {got} bright")
+        fails.append(f"home: picking {topic} leaves map clusters {got} bright")
     page.locator(".tmapgo").click()
     page.wait_for_timeout(800)
     if not page.evaluate(
         "(() => { const r = document.querySelector('[data-tmap]').getBoundingClientRect();"
         " return r.top < innerHeight && r.bottom > 0 })()"
     ):
-        fails.append("strips: See it on the map does not bring the map into view")
+        fails.append("home: See it on the map does not bring the map into view")
     page.keyboard.press("Escape")
-    page.wait_for_timeout(300)
-    # Focus was on "See it on the map", which Escape hides, so it returns to the key slot.
+    # Focus was on "See it on the map", which Escape hides, so it returns to the key
+    # slot, and the readout previews that slot's topic without the count line.
+    if (got := settled()) != want(None) or readout() != f"{topic}|":
+        fails.append(f"home: Escape leaves {got}, key {readout()}")
     if page.evaluate("document.activeElement?.dataset?.t") != topic:
-        fails.append("strips: Escape does not return focus to the topic's key slot")
+        fails.append("home: Escape does not return focus to the topic's key slot")
     if len(got := page.evaluate(lit_map)) != page.locator("[data-tmap] .cluster").count():
-        fails.append(f"strips: Escape leaves only map clusters {got} bright")
-    page.locator(f'.tkeyslot[data-t="{topic}"]').click()
+        fails.append(f"home: Escape leaves only map clusters {got} bright")
+    page.locator(f"{entries_js} .tstrip summary").last.click()
+    name = page.locator(f"{entries_js} .tstrip[open] .tname").first
+    picked = name.get_attribute("data-t") or ""
+    name.click()
+    if (got := settled()) != want(picked):
+        fails.append(f"home: picking {picked} from a strip shows {got}")
     page.locator(".tclear").click()
-    page.wait_for_timeout(300)
-    if page.evaluate("document.activeElement?.dataset?.t") != topic:
-        fails.append("strips: Show all does not return focus to the topic's key slot")
-    if len(page.evaluate(lit_map)) != page.locator("[data-tmap] .cluster").count():
-        fails.append("strips: Show all leaves the map faded")
-
+    # Focus returns to the key slot, which previews its topic without the count line.
+    if (got := settled()) != want(None) or readout() != f"{picked}|":
+        fails.append(f"home: Show all leaves {got}, key {readout()}")
+    if page.evaluate("document.activeElement?.dataset?.t") != picked:
+        fails.append("home: Show all does not return focus to the topic's key slot")
     nojs = new_page(browser, js=False)
-    go(nojs, base + "/topics/")
+    go(nojs, base + "/")
     if nojs.locator(".tkey").is_visible():
-        fails.append("strips: the topic key shows without the script")
+        fails.append("home: the topic key shows without the script")
     if not nojs.locator(".tintro").is_visible():
-        fails.append("strips: the topic explanation is missing without the script")
+        fails.append("home: the topic-strip explanation is missing without the script")
+    if nojs.locator(f"{entries_js} .tstrip").count() != len(entries):
+        fails.append("home: strips missing without the script")
+    if nojs.locator(".tname:not([disabled])").count():
+        fails.append("home: topic names are live buttons without the script")
+    # A page of its own, so the caller's home page stays on home.
+    other = new_page(browser)
+    fails += board_colour_fails(other, base, hue)
+    # /topics/ is a plain listing again: the key, the map and the table live on home.
+    go(other, base + "/topics/")
+    for sel in ("[data-tkey]", "[data-tmap]", ".topictable"):
+        if n := other.locator(sel).count():
+            fails.append(f"home: /topics/ shows {n} '{sel}'; it belongs on the home page")
+    return fails
 
-    # The strips are gone; each card and map row takes its topic's key colour instead.
+
+def board_colour_fails(page: Page, base: str, hue: dict[str, str]) -> list[str]:
+    """Each board card and map row takes its topic's colour from the home key."""
+    fails: list[str] = []
     seen = 0
+    if not hue:
+        return ["strips: the home key has no topic colours"]
     for path, card in (("/findings/", ".rcard"), ("/directions/", ".qcard")):
         go(page, base + path)
         cards = page.eval_on_selector_all(
@@ -813,6 +864,12 @@ def check_strips(browser, base: str) -> list[str]:
     if not seen:
         fails.append("strips: no board card to compare with the key")
     return fails
+
+
+def check_strips_page(browser, base: str) -> list[str]:
+    page = new_page(browser)
+    go(page, base + "/")
+    return check_strips(browser, base, page)
 
 
 # ---------------------------------------------------------------- plain words
@@ -884,7 +941,7 @@ def check_plain(browser, base: str) -> list[str]:
                 """(els, name) => els.map(e => {
                     const c = e.cloneNode(true);
                     // The title and footer name results, reports and topics, not the card's words.
-                    const skip = 'h3, .ct, .meta';
+                    const skip = 'h3, .ct, .meta, .tstrip';
                     if (name === 'card') c.querySelectorAll(skip).forEach(h => h.remove());
                     // So do a pop-up's project and topic labels, such as "Statistical Confounding".
                     const labels = '.qpname, .qptopic';
@@ -1470,6 +1527,15 @@ def check_cross(browser, base: str) -> list[str]:
         if page.locator(".spanel:not([hidden])").count():
             fails.append(f"cross: a second click on Compare {i + 1} leaves its panel open")
 
+    # The home page names three cross-project questions, no project in two of them.
+    go(page, base + "/")
+    qs = page.eval_on_selector_all(".xqlist li .xqp", "els => els.map(e => e.textContent)")
+    if len(qs) != 3:
+        fails.append(f"cross: home lists {len(qs)} cross-project questions, expected 3")
+    named = [p for q in qs for p in q.removeprefix("Builds on ").split(" · ")]
+    if len(named) != len(set(named)):
+        fails.append("cross: a project appears in two home questions")
+
     go(page, base + "/directions/")
     if page.locator("details.qall").count() or "as a list" in page.inner_text("body"):
         fails.append("cross: /directions/ still has the 'All N as a list' details")
@@ -1609,7 +1675,7 @@ def check_cross(browser, base: str) -> list[str]:
     # A comparison still opens after navigating away and back: Quartz reuses nodes,
     # so a second set of listeners would open and close it in one click.
     go(page, base + "/")
-    page.locator("a.card.door[href$='findings/']").first.click()
+    page.locator("a.kindcard[href$='findings/']").first.click()
     page.wait_for_url("**/findings/**")
     page.wait_for_selector(".ccmp")
     page.locator("a.nvrowh").first.click()
@@ -2074,6 +2140,8 @@ def note_fails(page: Page, label: str) -> list[str]:
 RESULT_MARKS_JS = lib(
     """return {
     ink: tok('--ink'), card: tok('--card'), new: tok('--nv-new'), box: tok('--nv-box'),
+    builds: tok('--nv-builds'), match: tok('--nv-match'), none: tok('--nv-none'),
+    mute: tok('--mute-ink'),
     marks: [...document.querySelectorAll('.nvgrid .nd')].map(ndFeat),
     legend: [...document.querySelectorAll('.nvlegend .nd.key')].map(ndFeat),
     legendBox: [...document.querySelectorAll('.nvlegend .nbead.key')].map(b => ({
@@ -2083,6 +2151,8 @@ RESULT_MARKS_JS = lib(
         border: getComputedStyle(b).borderTopColor, under: under(b)})),
     heads: [...document.querySelectorAll('.nvcolh')].map(h => ({
         novel: h.classList.contains('nv-new'),
+        col: (h.querySelector('.nvnoteb')?.childNodes[0].textContent
+              ?? h.childNodes[1]?.textContent ?? '').trim(),
         text: h.textContent.trim(), bar: getComputedStyle(h.querySelector('i')).backgroundColor,
         line: getComputedStyle(h).borderBottomColor, shown: !!h.getClientRects().length})),
     labs: [...document.querySelectorAll('.nvgrid .nvlab')].map(l => ({
@@ -2090,6 +2160,8 @@ RESULT_MARKS_JS = lib(
         col: (l.querySelector('.nvnoteb')?.childNodes[0].textContent
               ?? l.textContent.split(' · ')[0]).trim(),
         color: getComputedStyle(l).color,
+        edge: [getComputedStyle(l).borderLeftWidth, getComputedStyle(l).borderLeftStyle,
+               getComputedStyle(l).borderLeftColor],
         shown: !!l.getClientRects().length})),
     cells: [...document.querySelectorAll('.nvgrid .nvcell')]
         .map(c => getComputedStyle(c).backgroundColor),
@@ -2380,9 +2452,92 @@ def control_fails(page: Page, tag: str, tk: dict, results_page: bool) -> list[st
     return fails
 
 
+# The Results map's column colours by compare_order position (Novelty.tsx TONE).
+TONES = ["new", "builds", "match", "match", "none", "none"]
+
+
+def column_tone(rec: dict, col: str) -> str:
+    i = rec["order"].index(col) if col in rec["order"] else len(TONES) - 1
+    return TONES[min(i, len(TONES) - 1)]
+
+
+SIZE_JS = """() => {
+    const probe = v => { const e = document.createElement('span'); e.style.fontSize = v;
+        document.body.append(e); const px = getComputedStyle(e).fontSize; e.remove(); return px }
+    const font = e => { if (!e) return null; const s = getComputedStyle(e)
+        return [s.fontSize, s.fontWeight, s.letterSpacing, s.textTransform, s.color] }
+    const mute = (() => { const e = document.createElement('i'); e.style.color = 'var(--mute-ink)';
+        document.body.append(e); const c = getComputedStyle(e).color; e.remove(); return c })()
+    const box = e => { const r = e.getBoundingClientRect(); return [r.width, r.height] }
+    const pseudo = e => { const b = getComputedStyle(e, '::before')
+        return [parseFloat(b.width), parseFloat(b.height)] }
+    return {
+        ui: probe('var(--t-ui)'), label: probe('var(--t-label)'), mute,
+        nd: [...document.querySelectorAll('.nvgrid .nd, .nvlegend .nd')].map(box),
+        qd: [...document.querySelectorAll('.qgrid .qdot, .qlegend .qdot')].map(pseudo),
+        row: [...document.querySelectorAll('.nvrowh, .qrowh')]
+            .map(e => getComputedStyle(e).fontSize),
+        head: font(document.querySelector('.nvcolh, .qcolh')),
+    }
+}"""
+
+
+def typography_fails(browser, base: str) -> list[str]:
+    """At 1280 px both maps draw 10 px marks and share one row-label and column-header style;
+    under touch at 390 px both draw 12 px marks and share one row-label size."""
+    fails: list[str] = []
+    got = {}
+    for path in ("/findings/", "/directions/"):
+        page = new_page(browser)
+        go(page, base + path)
+        got[path] = page.evaluate(SIZE_JS)
+        page.context.close()
+    r, q = got["/findings/"], got["/directions/"]
+    for label, sizes in (("Results marks", r["nd"]), ("question dots", q["qd"])):
+        odd = {tuple(round(v, 1) for v in s) for s in sizes}
+        if odd != {(10.0, 10.0)}:
+            fails.append(f"marks: at 1280 px {label} measure {sorted(odd)}, expected 10 x 10")
+    rows = set(r["row"]) | set(q["row"])
+    if rows != {r["ui"]} or not r["row"] or not q["row"]:
+        fails.append(f"marks: row labels use {sorted(rows)}, --t-ui is {r['ui']}")
+    if r["head"] != q["head"] or not r["head"]:
+        fails.append(f"marks: column headers differ: Results {r['head']}, questions {q['head']}")
+    elif r["head"]:
+        size, weight, spacing, case, colour = r["head"]
+        em = (
+            float(spacing.removesuffix("px")) / float(size.removesuffix("px"))
+            if spacing != "normal"
+            else 0
+        )
+        if (size, weight, case) != (r["label"], "600", "uppercase") or abs(em - 0.04) > 0.002:
+            fails.append(
+                f"marks: column headers are {r['head']}, expected {r['label']} 600 0.04em uppercase"
+            )
+        if not same(rgba(colour), rgba(r["mute"])):
+            fails.append(f"marks: column header colour {colour}, --mute-ink is {r['mute']}")
+    # Under touch at phone width both maps draw 12 px marks and share one row-label size.
+    phone = {}
+    for path in ("/findings/", "/directions/"):
+        touch = browser.new_context(viewport=PHONE, has_touch=True, is_mobile=True).new_page()
+        go(touch, base + path)
+        phone[path] = touch.evaluate(SIZE_JS)
+        touch.context.close()
+    pr, pq = phone["/findings/"], phone["/directions/"]
+    for label, sizes in (("Results marks", pr["nd"]), ("question dots", pq["qd"])):
+        coarse = {tuple(round(v, 1) for v in s) for s in sizes}
+        if coarse != {(12.0, 12.0)}:
+            fails.append(
+                f"marks: under a coarse pointer {label} measure {sorted(coarse)}, expected 12 x 12"
+            )
+    phone_rows = set(pr["row"]) | set(pq["row"])
+    if len(phone_rows) != 1 or not pr["row"] or not pq["row"]:
+        fails.append(f"marks: at 390 px the two maps' row labels use {sorted(phone_rows)}")
+    return fails
+
+
 def check_marks(browser, base: str) -> list[str]:
     """design-marks.md done checks 1 to 6 for option M2, in light and dark, at 1280 and 390 px."""
-    fails: list[str] = []
+    fails: list[str] = typography_fails(browser, base)
     rec = records()
     for theme in ("light", "dark"):
         for viewport, touch in ((DESKTOP, False), (PHONE, True)):
@@ -2424,25 +2579,34 @@ def marks_on(page: Page, tag: str, theme: str, rec: dict, desktop: bool) -> list
         fails.append(f"{tag}: and {len(diffs) - 12} more marks differ from their records")
     fails += control_fails(page, tag, tk, results_page)
 
-    # 2. No colour by position: marks are ink or the Novel orange; headers and boxes neutral.
+    # 2. Colour by position only where the column already names it: marks stay ink (orange
+    # for novel questions), boxes keep the neutral border, and each column header bar (and
+    # on phones each cell label's left edge) carries its column's colour.
     colours = {named(rgba(m["color"]), tk) for m in rd["marks"] + qd.get("marks", [])}
     if extra := colours - {"ink", "orange"}:
         fails.append(f"{tag}: marks take colours {sorted(extra)}")
     if results_page:
+        tone = {k: rgba(rd[k]) for k in ("new", "builds", "match", "none")}
+        if not neutral(tone["none"]) or len({show(c) for c in tone.values()}) != 4:
+            fails.append(f"{tag}: column colours {[show(c) for c in tone.values()]}")
         if {named(rgba(m["color"]), tk) for m in rd["marks"]} != {"ink"}:
             fails.append(f"{tag}: Results marks are not all ink")
         heads = rd["heads"]
         novel_heads = [h for h in heads if h["novel"]]
         if len(novel_heads) != 1 or not heads or not heads[0]["novel"]:
             fails.append(f"{tag}: Novel header flags {[h['novel'] for h in heads]}; only the first")
+        if [h["col"] for h in heads] != rec["cols"]:
+            fails.append(f"{tag}: headers {[h['col'] for h in heads]}, records {rec['cols']}")
         for h in heads:
             bar, line = rgba(h["bar"]), rgba(h["line"])
-            if h["novel"] and not same(bar, tk["new"]):
-                fails.append(f"{tag}: the Novel header bar is {show(bar)}, not orange")
-            if not h["novel"] and not neutral(bar):
-                fails.append(f"{tag}: header '{h['text'][:30]}' bar is coloured {show(bar)}")
+            want = tone[column_tone(rec, h["col"])]
+            if not same(bar, want):
+                fails.append(
+                    f"{tag}: header '{h['col']}' bar is {show(bar)}, its column's "
+                    f"--nv-{column_tone(rec, h['col'])} is {show(want)}"
+                )
             if not neutral(line):
-                fails.append(f"{tag}: header '{h['text'][:30]}' rule is coloured {show(line)}")
+                fails.append(f"{tag}: header '{h['col']}' rule is coloured {show(line)}")
         for b in rd["boxes"]:
             c = rgba(b["border"])
             if not same(c, tk["box"]) or not neutral(c):
@@ -2459,10 +2623,16 @@ def marks_on(page: Page, tag: str, theme: str, rec: dict, desktop: bool) -> list
                 is_novel = lab["col"] == rec["novel"]
                 if lab["novel"] != is_novel:
                     fails.append(f"{tag}: cell label '{lab['col']}' Novel flag {lab['novel']}")
-                if is_novel and not same(c, tk["new"]):
-                    fails.append(f"{tag}: the Novel cell label is {show(c)}, not orange")
-                if not is_novel and not neutral(c):
-                    fails.append(f"{tag}: cell label '{lab['col']}' is coloured {show(c)}")
+                if not same(c, rgba(rd["mute"])):
+                    fails.append(f"{tag}: cell label '{lab['col']}' text is {show(c)}, not mute")
+                width, style, edge = lab["edge"]
+                want = tone[column_tone(rec, lab["col"])]
+                if width != "4px" or style != "solid" or not same(rgba(edge), want):
+                    fails.append(
+                        f"{tag}: cell label '{lab['col']}' left edge {width} {style} "
+                        f"{show(rgba(edge))}, its column's colour is {show(want)}"
+                    )
+                    break
         for c in rd["cells"]:
             if not neutral(rgba(c)):
                 fails.append(f"{tag}: a map cell has a coloured background {c}")
@@ -2542,7 +2712,7 @@ def marks_on(page: Page, tag: str, theme: str, rec: dict, desktop: bool) -> list
             if desktop and (q["w"], q["h"]) != (twin["w"], twin["h"]):
                 sizes.add((q["w"], twin["w"]))
         for small, big in sorted(sizes):
-            print(f"note: {tag}: legend dots are {small} px, map dots {big} px")
+            fails.append(f"{tag}: legend dots are {small} px, map dots {big} px")
 
     # 4. Contrast: 3:1 against the map surface, opacity composited.
     low: list[str] = []
@@ -2791,6 +2961,37 @@ def check_filters(browser, base: str) -> list[str]:
         fails += board_fails(page, base, path, cfg)
         page.context.close()
     fails += stale_url_fails(browser, base)
+    fails += toggle_box_fails(browser, base)
+    return fails
+
+
+def toggle_box_fails(browser, base: str) -> list[str]:
+    """Each toggle's checkbox lies inside its filter bar (Quartz once pushed it 22.4 px out)."""
+    fails: list[str] = []
+    for viewport in (DESKTOP, PHONE):
+        for path in board_expectations():
+            page = new_page(browser, viewport)
+            go(page, base + path)
+            boxes = page.evaluate(
+                """() => [...document.querySelectorAll('.px-tog input')].map(i => {
+                    const r = i.getBoundingClientRect()
+                    const t = i.closest('.px-tools')?.getBoundingClientRect()
+                    return {t: i.dataset.t, inside: !!t && r.width > 0 && r.left >= t.left - 0.5
+                        && r.right <= t.right + 0.5 && r.top >= t.top - 0.5
+                        && r.bottom <= t.bottom + 0.5, left: r.left, bar: t ? t.left : null}
+                })"""
+            )
+            label = f"filters: {path} at {viewport['width']} px"
+            want = len(board_expectations()[path]["toggles"])
+            if len(boxes) != want:
+                fails.append(f"{label}: {len(boxes)} toggle boxes, expected {want}")
+            for b in boxes:
+                if not b["inside"]:
+                    fails.append(
+                        f"{label}: toggle {b['t']} box at x {b['left']:.1f} lies outside "
+                        f"the filter bar (x {b['bar']})"
+                    )
+            page.context.close()
     return fails
 
 
@@ -3030,7 +3231,7 @@ def check_related(browser, base: str) -> list[str]:
 
 CHECKS = {
     "home": check_home,
-    "strips": check_strips,
+    "strips": check_strips_page,
     "plain": check_plain,
     "grid": check_grid,
     "pages": check_pages,

@@ -325,15 +325,25 @@ site on `--base` yourself (default `http://localhost:8080`). The checks read
 their expected values from the records under `quartz/content/` and
 `wiki/directions/`, so they follow the current corpus.
 
-- `home` checks the home page's title, its three doors and their counts, and
-  the reference line with its counts. It checks the top bar: at most 7
-  controls after the wordmark at 1440 px, every collection within two clicks
-  of home, and the Browse menu by mouse, keyboard and tap. It checks that the
-  bar has no CBORG key button and that the search box's meaning-search control
-  and the Ask page each offer key entry. It then runs `strips`.
-- `strips` checks the topic key, the map and the table on `/topics/`, that
-  picking a topic lights its map cluster, and that cards and map rows carry
-  their topic's key colour.
+- `home` checks the home page's headings in order and the removed wording,
+  that the home shows no shared-result card, and that its three result cards
+  have distinct ids, projects and topics and are not missing-data or
+  unperformed null results. With no summaries yet it prints a note and skips
+  the card checks. It checks that the "Find your way in" cards open each
+  collection and runs the `strips` checks on the home page. It checks the top
+  bar: at most 8 controls after the wordmark at 1440 px, the order Results,
+  Open questions, Topics, Browse, About, Search, Ask and the theme toggle, the
+  Browse items, every collection within two clicks of home, and the Browse
+  menu by mouse, keyboard and tap. It checks that the bar has no CBORG key
+  button and that the search box's meaning-search control and the Ask page
+  each offer key entry.
+- `strips` checks that every home result and question has a topic strip that
+  fills the topics it names, that pointing at a key slot names its topic, and
+  that picking a topic in the key or in a strip outlines exactly the entries
+  that share it, shows their counts and lights only that topic on the map.
+  Without JavaScript the key row stays hidden and the strips still render. It
+  checks that cards and map rows on the boards carry their topic's key
+  colour, and that `/topics/` shows no topic key, map or topics table.
 - `plain` checks card, chip, pop-up and column-note text and the prose of the
   first 20 question pages for test statistics, statistical wording such as
   "significant" (the gists stage's rule) and "Caveat", card titles separately,
@@ -365,11 +375,15 @@ their expected values from the records under `quartz/content/` and
 - `marks` checks both maps against design option M2 (`--option M2`, the only
   option it accepts and the default), in light and dark themes, at 1280 and
   390 px. Each mark's fill, shape, ring and colour must match its record;
-  marks must be ink or the Novel orange, with only the Novel header coloured;
+  marks must be ink or the Novel orange; each Results column header's bar,
+  and at 390 px each cell label's left bar, must take its column's colour;
   each legend entry must match a map mark of its class; marks, rings and box
   borders must reach 3:1; novel questions and box labels must carry their
   words; and no ring may touch another mark or its box. Two injected negative
   controls, a solid null mark and marks coloured by column, must each fail.
+  At 1280 px both maps must draw 10 px marks, and Results marks must measure
+  12 px under a coarse pointer. Row labels on both maps must use one type
+  size, and column headers must share one type style.
 - `filters` checks on each board that a topic chip, a category chip and each
   toggle leave only matching cards, that the count reads "N of M", that the
   URL holds the state and a reload restores it, that list view toggles, and
