@@ -236,7 +236,8 @@ def records() -> dict:
     }
     questions = {}
     for stem, fm in directions.items():
-        need = fm.get("need") if fm.get("need") in NEEDS else "unclear"
+        raw = fm.get("need")
+        need: str = raw if isinstance(raw, str) and raw in NEEDS else "unclear"
         questions[f"directions/{stem}"] = {
             "novel": any(
                 f in listed and findings[f].get("compare_text") == novel
@@ -251,7 +252,7 @@ def records() -> dict:
         }
     boxes: dict[tuple[str, str, str], list[str]] = {}
     for i, r in results.items():
-        boxes.setdefault((r["topic"], r["col"], r["source"]), []).append(i)
+        boxes.setdefault((str(r["topic"]), str(r["col"]), str(r["source"])), []).append(i)
     return {
         "findings": findings,
         "directions": directions,
