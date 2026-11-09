@@ -74,7 +74,16 @@ MODEL_ROLES = (
 )
 # The card stages (findings, labels, questions, summaries, links, shared results): each runs
 # its own judgment jobs, kept off the writing role so they never inherit a derived-page writer.
-CARD_STAGES = ("headlines/", "novelty/", "directions/", "gists/", "links/", "shared/")
+CARD_STAGES = (
+    "headlines/",
+    "novelty/",
+    "directions/",
+    "gists/",
+    "links/",
+    "shared/",
+    "outcomes/",
+    "followups/",
+)
 CARD_EFFORT: Literal["medium"] = "medium"
 # The roles whose model decides whether integrated pages are current. Extraction and
 # pages are not: a new extraction model applies to reports extracted from then on, and a

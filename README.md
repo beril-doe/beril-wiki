@@ -58,7 +58,8 @@ retry, search, and recovery, or open the
 real-source update remains the acceptance step before a large compilation.
 `uv run python -m beril_wiki.agentic cards --max-tokens N --max-jobs M` runs
 only the finding, literature-label, research-direction, plain-summary,
-links and shared-result stages (or those named with `--stage`) for the reports
+links, shared-result, result-type (`outcomes`) and follow-up (`followups`)
+stages (or those named with `--stage`) for the reports
 and topics in `contract/cards.yaml`, then `check --strict`.
 `--stage-max-usd STAGE=USD` caps a stage's recorded Claude spend across runs,
 on `cards` and `run` alike.

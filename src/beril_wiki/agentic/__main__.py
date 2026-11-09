@@ -60,7 +60,16 @@ def load_failures(root: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
 
 
-CARD_STAGES = ("headlines", "novelty", "directions", "gists", "links", "shared")
+CARD_STAGES = (
+    "headlines",
+    "novelty",
+    "directions",
+    "gists",
+    "links",
+    "shared",
+    "outcomes",
+    "followups",
+)
 # Job step prefixes a full run issues besides the editorial stages; a USD cap must name one.
 RUN_PREFIXES = (
     "extract",
@@ -88,6 +97,8 @@ CARD_OUTPUTS = (
     "state/gists.json",
     "state/links.json",
     "state/shared.json",
+    "state/outcomes.json",
+    "state/followups.json",
 )
 
 

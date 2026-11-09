@@ -108,10 +108,35 @@ EDITORIAL = {
         ("links",),
         None,
     ),
+    # The kind of each listed result (positive, negative ...): the Results map's marks.
+    "outcomes": (
+        ("wiki/findings", "state/gists.json"),
+        ("state/outcomes.json",),
+        ("gists",),
+        None,
+    ),
+    # What following up each open question needs: the Open questions map's columns.
+    "followups": (
+        ("wiki/directions",),
+        ("state/followups.json",),
+        ("directions",),
+        None,
+    ),
 }
 # Stages that also read the shared card helpers; only they hash stages/cards.py, so
 # the revisions of the stages that predate it are unchanged.
-CARD_STAGES = ("headlines", "novelty", "directions", "gists", "links", "shared")
+CARD_STAGES = (
+    "headlines",
+    "novelty",
+    "directions",
+    "gists",
+    "links",
+    "shared",
+    "outcomes",
+    "followups",
+)
+# The one-label stages share stages/classify.py's loop and gists' retry helpers.
+LABEL_STAGES = ("outcomes", "followups")
 # Fail immediately if a future table edit would make freshness propagation order-dependent.
 for index, (action, (_, _, dependencies, _)) in enumerate(EDITORIAL.items()):
     if not set(dependencies) <= set(list(EDITORIAL)[:index]):
@@ -150,10 +175,14 @@ def stage_revision(root: Path, name: str, config: dict) -> str:
         "gists": ("cards", "review"),
         "links": ("cards", "review"),
         "shared": ("cards", "review"),
+        "outcomes": ("cards", "review"),
+        "followups": ("cards", "review"),
     }.get(name, ("writing", "review"))
     files = (f"stages/{name}.py", "agentic/prose.py", "compiler.py")
     if name in CARD_STAGES:
         files += ("stages/cards.py",)
+    if name in LABEL_STAGES:
+        files += ("stages/classify.py", "stages/gists.py")
     return digest(
         [
             model_signature(config, roles),

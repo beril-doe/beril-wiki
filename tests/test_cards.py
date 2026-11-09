@@ -177,6 +177,8 @@ def test_cards_command_runs_only_card_stages(tmp_path, monkeypatch):
         ("gists", []),
         ("links", []),
         ("shared", []),
+        ("outcomes", []),
+        ("followups", []),
         ("check", [str(tmp_path), "--strict"]),
     ]
     assert (tmp_path / "state/agentic.json").read_text() == '{"accepted": true}'
@@ -242,7 +244,7 @@ def test_card_run_identity_survives_saved_progress(tmp_path):
     (tmp_path / "state").mkdir()
     before = cli.card_run(tmp_path)
     (tmp_path / "state/gists.json").write_text('{"a--1": {"gist": "g"}}')
-    for name in ("headlines", "directions", "novelty", "links", "shared"):
+    for name in ("headlines", "directions", "novelty", "links", "shared", "outcomes", "followups"):
         (tmp_path / "state" / f"{name}.json").write_text('{"saved": 1}')
     (tmp_path / "wiki/findings").mkdir()
     (tmp_path / "wiki/findings/a--1.md").write_text("# F\n")
