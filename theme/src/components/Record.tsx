@@ -8,7 +8,7 @@ import { resolveRelative } from "@quartz-community/utils"
 import type { ElementContent, Root } from "hast"
 import { cell, cited } from "../cites"
 import { jsx } from "../jsx"
-import { type Cite, type Corpus, type File, RELS, briefOf, kindLineOf, kindOf, slugOf, titleOf } from "../page"
+import { ARCHIVE_NOTES, type Cite, type Corpus, type File, RELS, briefOf, isArchive, kindLineOf, kindOf, slugOf, titleOf } from "../page"
 import { type Ties, isKnowledge } from "../ties"
 
 // Twelve blocks and a +N fit one row of the header's facts column.
@@ -49,6 +49,7 @@ export function Record({ file, c, tree, terms, standing, orcid, cites, rels, t, 
   const brief = briefOf(file, tree)
   const kindLine = kindLineOf(file)
   const line = sentence(terms)
+  const note = isArchive(file) ? ARCHIVE_NOTES[slugOf(file)] : undefined
 
   // The facts panel: one labelled row per countable thing the page rests on.
   // Every value is a nowrap chip inside a wrapping row, so a narrow card
@@ -65,7 +66,7 @@ export function Record({ file, c, tree, terms, standing, orcid, cites, rels, t, 
           ))}
           {cites.length > MAX_STRIP && <span class="more">+{cites.length - MAX_STRIP}</span>}
         </span>
-        <span class="sub">{src.summary}, listed in the margin</span>
+        <span class="sub">{src.summary[0].toUpperCase() + src.summary.slice(1)}, listed in the margin</span>
       </>,
     ])
   // What a topic gathers is the measure of a topic, the way citations are the
@@ -150,6 +151,17 @@ export function Record({ file, c, tree, terms, standing, orcid, cites, rels, t, 
             )}
           </p>
           <h1>{titleOf(file)}</h1>
+          {note && (
+            <p class="archnote">
+              {note.before}
+              {c.bySlug.has(note.target) ? (
+                <a href={resolveRelative(slug, note.target as FullSlug)}>{note.link}</a>
+              ) : (
+                note.link
+              )}
+              {note.after}
+            </p>
+          )}
           {brief && <p class="brief">{brief}</p>}
           {kindLine && (
             <p class="kindline">

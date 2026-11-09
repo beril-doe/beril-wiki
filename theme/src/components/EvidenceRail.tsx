@@ -70,7 +70,7 @@ export function EvidenceRail({ cd, file, c, cites, t, left }: {
                   <span>
                     <a href={rel(k.target)}>{report ? titleOf(report) : k.label}</a>
                     <span class="w">
-                      <code>{k.label}</code> · {citeNote(k, src.isDigest(k))}
+                      <code>{k.label}</code> · {citeNote(k, src.isArchive(k))}
                     </span>
                   </span>
                 </li>

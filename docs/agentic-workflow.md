@@ -429,7 +429,12 @@ their expected values from the records under `quartz/content/` and
   first, headers that are uppercase, smaller than the links, a different
   colour, never focusable and at least 4.5:1, and arrow keys and Tab reaching
   the nine links in order. It checks that Browse marks the current page for
-  Pitfalls, Data collections, Data issues, All pages and Reports.
+  Pitfalls, Data collections, Data issues, All pages and Reports. On both
+  archives it checks the title, the Archive kind and kind line, the note and
+  its link, and that no "Projects cited" or author list shows. Every concept
+  that cites only the archives must read "Cross-project archive" and never
+  "source project", and concepts that cite an archive beside reports must
+  say "and a cross-project archive".
 
 `scripts/check_links.py` checks the links and shared stages without a browser
 and exits 1 with one line per failure. `--shared` re-runs the code checks on

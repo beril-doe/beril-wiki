@@ -37,9 +37,33 @@ export const titleOf = (f: File) => fm(f)?.title ?? slugOf(f)
 export const linksOf = (f: File) => (f.links ?? []) as string[]
 export const collectionOf = (slug: string) => slug.split("/")[0]
 export const isIndex = (slug: string) => slug === "index" || slug.endsWith("/index")
-/** A project report, as opposed to one of the cross-project digests. The
+/** A project report, as opposed to one of the cross-project archives. The
  *  publish step stamps this type on the summaries that have a raw report. */
 export const isReport = (f: File) => fm(f)?.type === "Project report"
+/** One of the two cross-project archives, which publish stamps `type: "Archive"`. */
+export const isArchive = (f: File) => collectionOf(slugOf(f)) === "summaries" && fm(f)?.type === "Archive"
+
+export interface ArchiveNote {
+  before: string
+  link: string
+  target: string
+  after: string
+}
+// Each archive says where the newer material it no longer collects now lives.
+export const ARCHIVE_NOTES: Record<string, ArchiveNote> = {
+  "summaries/discoveries": {
+    before: "This list stopped growing in May 2026. Newer results from every project are on the ",
+    link: "Results",
+    target: "findings/index",
+    after: " page.",
+  },
+  "summaries/pitfalls": {
+    before: "This list stopped growing in May 2026. Problems found in each project's data are listed under ",
+    link: "Data issues",
+    target: "data-issues/index",
+    after: ".",
+  },
+}
 
 export function kindOf(f: File): Kind {
   const slug = slugOf(f)
@@ -54,7 +78,7 @@ export function kindOf(f: File): Kind {
     case "summaries":
       return isReport(f)
         ? { label: "Project report", cls: "report" }
-        : { label: "Cross-project digest", cls: "report" }
+        : { label: "Archive", cls: "report" }
     case "sources":
       return { label: "Raw report", cls: "report" }
     case "entities":
@@ -440,7 +464,7 @@ const KIND_LINE: Record<string, string> = {
   conflict: "A conflict page sets out where projects disagree, the evidence on each side, and what work would settle it.",
   entity: "An entity page collects what the corpus records about one organism, gene, compound, method or dataset.",
   report: "A project report page condenses one project's investigation, with its exact numbers.",
-  digest: "A cross-project digest collects discoveries or pitfalls that recur across projects.",
+  archive: "An archive collects discoveries or pitfalls gathered across projects until May 2026.",
   source: "A raw report is the project's own write-up, unedited. Use it to check a summary against its source.",
   finding: "A result page states one result from a project report in plain words, then the numbers, their limits and how it compares with published work.",
   direction: "An open question page states a question the results raise, a hypothesis, the test that would settle it, and the data it needs.",
@@ -449,7 +473,7 @@ const ENTITY_CLS = new Set(["organism", "compound", "method", "dataset", "gene",
 
 export function kindLineOf(f: File): string {
   const k = kindOf(f)
-  if (k.label === "Cross-project digest") return KIND_LINE.digest
+  if (k.label === "Archive") return KIND_LINE.archive
   if (k.label === "Raw report") return KIND_LINE.source
   if (ENTITY_CLS.has(k.cls)) return KIND_LINE.entity
   return KIND_LINE[k.cls] ?? ""

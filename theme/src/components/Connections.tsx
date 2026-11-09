@@ -146,7 +146,7 @@ export function Connections({ file, c }: { file: File; c: Corpus }) {
     )
   }
 
-  // A cross-project digest is its own kind of page: no project, so no project results.
+  // A cross-project archive is its own kind of page: no project, so no project results.
   if (kind === "summaries" && isReport(file)) {
     const sid = sidOf(slug)
     const results = findingsOf(c)

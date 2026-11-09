@@ -127,7 +127,8 @@ for (const [dir, slug] of files) {
     title: clean(record?.querySelector("h1")?.text ?? root.querySelector("title")?.text ?? slug),
     cls,
     label: record?.querySelector(".kind b")?.text.trim() ?? "",
-    group: groupOf(dir, cls),
+    // An archive shares summaries/ with the reports but is not one.
+    group: record?.querySelector(".kind b")?.text.trim() === "Archive" ? "other" : groupOf(dir, cls),
     desc: fm.description ?? "",
     topic: clean(topicA?.text ?? ""),
     topicSlug: (topicA?.getAttribute("href") ?? "").replace(/^(\.\.\/|\.\/)+/, ""),

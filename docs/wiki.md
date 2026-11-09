@@ -29,7 +29,7 @@ concept fingerprints. The number of hubs follows the accepted grouping.
 
 `[src: project_id]` identifies evidence supporting a paragraph. IDs resolve to
 source report stems, with `discoveries` and `pitfalls` identifying the
-cross-project digests. `[[wikilinks]]` connect concepts, entities, summaries
+two cross-project archives. `[[wikilinks]]` connect concepts, entities, summaries
 and other pages. Literature Context sections cite external papers with
 `[PMID nnnn](PubMed URL)` links checked against retrieved PubMed results.
 
@@ -65,7 +65,16 @@ from the accepted wiki without editing it:
   become plain text; those entities remain in the source corpus.
 - Saved figure placements use committed files under `wiki/figures/`.
 - Pages receive provenance callouts and evidence counts. These counts do not
-  represent human review or confidence ratings.
+  represent human review or confidence ratings. The two archives never count
+  as source projects: a page that cites only them reads "Cross-project
+  archive", and a page that also cites reports reads, for example, "2 source
+  projects and a cross-project archive".
+- The digests `wiki/summaries/discoveries.md` and `wiki/summaries/pitfalls.md`
+  stopped growing upstream in May 2026. They keep their files and URLs and
+  publish as archives titled "Earlier discoveries" and "Earlier pitfalls",
+  with `type: "Archive"`. The theme labels them "Archive" and shows a note
+  under each title: Earlier discoveries points to Results, and Earlier
+  pitfalls points to Data issues.
 - A `> **Erratum.**` callout under a paragraph means the cited report states
   that figure wrongly. The reports are archived unedited, so the correction is
   recorded in `contract/errata.yaml` and placed beside every claim that repeats
@@ -276,7 +285,7 @@ gap between parts.
 - Every topic, report and concept page shows both parts, so pages of one
   kind share one layout. An empty part keeps its head and shows one sentence
   in a dashed box, such as "No open question builds on this project yet."
-  The two cross-project digests have no project, so they show neither part.
+  The two cross-project archives have no project, so they show neither part.
 
 A result card shows its type in plain words (Positive result, Negative
 result, Inconclusive, About the data), a title, a one or two sentence

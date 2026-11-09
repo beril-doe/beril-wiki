@@ -35,6 +35,10 @@ SKIP = {"AGENTS.md", "log.md"}
 # said overlapping things and read as a disclaimer stack; "partially reviewed"
 # carries the same fact in two words. The About page defines what "partially"
 # covers, which is the right split: the badge is short, the About page precise.
+# The two cross-project digests stopped growing upstream in May 2026. They keep
+# their files and URLs, because concept pages cite them over a thousand times,
+# and publish as labelled archives under these titles.
+ARCHIVES = {"discoveries": "Earlier discoveries", "pitfalls": "Earlier pitfalls"}
 PROVENANCE = (
     "AI-generated wiki from AI-conducted research reports. Partially "
     "reviewed by scientists. See [[about|About This Wiki]]."
@@ -245,6 +249,11 @@ def promote_title(text: str) -> str:
     if fm:  # splice into the existing block, before its closing ---
         return text[: fm.end() - 4] + f"title: {title}\n" + text[fm.end() - 4 :]
     return f"---\ntitle: {title}\n---\n" + text
+
+
+def retitle(text: str, title: str) -> str:
+    """Replace the `title:` that promote_title wrote."""
+    return re.sub(r"^title: .*$", f"title: {json.dumps(title)}", text, count=1, flags=re.M)
 
 
 def insert_after_fm(text: str, block: str) -> str:
@@ -493,6 +502,8 @@ def main() -> None:
                 text = re.sub(
                     r'^type: "Summary"$', 'type: "Project report"', text, count=1, flags=re.M
                 )
+            elif rel.stem in ARCHIVES:
+                text = re.sub(r'^type: "Summary"$', 'type: "Archive"', text, count=1, flags=re.M)
             if (root / "sources" / src.name).exists():
                 raw = f"sources/{pub.stem}"
                 text = text.replace(f"[[summaries/{pub.stem}|", f"[[{raw}|")
@@ -512,6 +523,8 @@ def main() -> None:
         # Title must move into frontmatter before the blocks go in, since
         # this is what removes the H1 they would otherwise sit under.
         text = promote_title(text)
+        if rel.parts[0] == "summaries" and rel.stem in ARCHIVES:
+            text = retitle(text, ARCHIVES[rel.stem])
         if head:
             text = insert_after_fm(text, "\n\n".join(head))
         out.write_text(text, encoding="utf-8")

@@ -24,7 +24,7 @@ export function Sources({ cites, c, from }: { cites: Cite[]; c: Corpus; from: Fu
                 {report ? titleOf(report) : k.label}
               </a>
               <span class="w">
-                <code>{k.label}</code> · {citeNote(k, src.isDigest(k))}
+                <code>{k.label}</code> · {citeNote(k, src.isArchive(k))}
               </span>
             </li>
           )

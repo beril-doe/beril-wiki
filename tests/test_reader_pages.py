@@ -157,3 +157,16 @@ def test_finding_topics_are_the_reports_main_topics(tmp_path):
         )
     )
     assert Corpus(tmp_path).topics_of("r") == ["main"]
+
+
+def test_digests_publish_as_titled_archives(tmp_path, monkeypatch):
+    card_corpus(tmp_path / "kb")
+    (tmp_path / "kb/wiki/summaries/pitfalls.md").write_text(
+        '---\ntype: "Summary"\ndescription: "Gotchas."\n---\n# Common Pitfalls\n\nText.\n'
+    )
+    publish(tmp_path / "kb", tmp_path / "out", monkeypatch)
+    page = (tmp_path / "out/summaries/pitfalls.md").read_text()
+    assert 'type: "Archive"' in page and 'title: "Earlier pitfalls"' in page
+    assert "Common Pitfalls" not in page
+    # The wiki file keeps its own title and type; only the published copy changes.
+    assert "# Common Pitfalls" in (tmp_path / "kb/wiki/summaries/pitfalls.md").read_text()

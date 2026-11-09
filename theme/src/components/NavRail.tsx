@@ -23,7 +23,7 @@ export function NavRail({ cd, file, c, right }: {
           <LocalGraph file={file} c={c} />
           <p class="more">
             Neighbours by wikilink, coloured by topic. Round is a synthesis page — concept, topic,
-            conflict or cross-project digest; square is a project report.
+            conflict or cross-project archive; square is a project report.
           </p>
         </section>
       )}

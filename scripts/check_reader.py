@@ -34,7 +34,8 @@ Checks, each run by name:
 - connections: results and open questions on topic, report and concept pages, the
   concepts on result and question pages, the topic board links, and About's reading guide.
 - reference: the grouped Browse menu (headers, rules, keyboard, contrast, light and dark,
-  wide to phone) and the reference pages around it.
+  wide to phone) and the reference pages around it: the two archives and the archive
+  label on the concepts that cite them.
 
 Exit 0 when the check passes, 1 with one line per failure otherwise. Notes (lines
 starting "note:") never fail a check. Uses the installed Chrome, so no browser download.
@@ -62,6 +63,7 @@ from playwright.sync_api import (  # ty: ignore[unresolved-import]
 )
 from playwright.sync_api import TimeoutError as PlaywrightTimeout  # ty: ignore[unresolved-import]
 
+from beril_wiki.evidence import ARCHIVES, page_sources
 from beril_wiki.wording import CONFIRMING, statistical
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -98,6 +100,24 @@ BROWSE_GROUPS = [
     (None, ["All pages"]),
 ]
 BROWSE_ITEMS = [link for _, links in BROWSE_GROUPS for link in links]
+# The two cross-project archives: title, the note under it, and the page its link opens.
+ARCHIVE_PAGES = {
+    "discoveries": (
+        "Earlier discoveries",
+        "This list stopped growing in May 2026. Newer results from every project are on the "
+        "Results page.",
+        "findings",
+    ),
+    "pitfalls": (
+        "Earlier pitfalls",
+        "This list stopped growing in May 2026. Problems found in each project's data are "
+        "listed under Data issues.",
+        "data-issues",
+    ),
+}
+ARCHIVE_KIND_LINE = (
+    "An archive collects discoveries or pitfalls gathered across projects until May 2026."
+)
 # Widths at which the Browse menu must keep its groups: wide, the bar's two narrow
 # breakpoints (it wraps at 960 px) and a phone.
 BROWSE_WIDTHS = [1440, 961, 960, 390]
@@ -4652,9 +4672,70 @@ def browse_group_fails(browser, base: str) -> list[str]:
     return fails
 
 
+RAIL_HEADS_JS = """() => [...document.querySelectorAll(
+    '.evidence-rail h3, .record dt, .sources h2')].map(e => e.textContent.trim())"""
+
+
+def archive_fails(browser, base: str) -> list[str]:
+    """Both archives carry their title, the Archive kind, the kind line and the note with its
+    link, and no "Projects cited" or author list. A concept citing only archives reads
+    "Cross-project archive" and never "source project"; a mixed one names the archive."""
+    fails: list[str] = []
+    page = new_page(browser, WIDE)
+    for stem, (title, note, target) in ARCHIVE_PAGES.items():
+        where = f"reference: /summaries/{stem}"
+        go(page, f"{base}/summaries/{stem}")
+        h1 = page.inner_text(".record h1").strip()
+        kind = page.inner_text(".record .kind b").strip()
+        line = collapse(page.inner_text(".record .kindline"))
+        got = (
+            collapse(page.inner_text(".record .archnote"))
+            if page.locator(".archnote").count()
+            else ""
+        )
+        if (h1, kind) != (title, "Archive"):
+            fails.append(f"{where}: title '{h1}', kind '{kind}'")
+        if not line.startswith(ARCHIVE_KIND_LINE):
+            fails.append(f"{where}: kind line reads '{line}'")
+        if got != note:
+            fails.append(f"{where}: note reads '{got}'")
+        else:
+            href = page.get_attribute(".record .archnote a", "href") or ""
+            if target not in href:
+                fails.append(f"{where}: the note links to '{href}', not /{target}/")
+        heads = page.evaluate(RAIL_HEADS_JS)
+        bad = [h for h in heads if h in ("Projects cited", "Project authors", "Authors")]
+        bad += [h for h in heads if h.startswith("Authors of")]
+        if bad:
+            fails.append(f"{where}: shows {bad}")
+    concepts = {
+        p.stem: page_sources(p.read_text(encoding="utf-8", errors="replace"))
+        for p in sorted((ROOT / "wiki" / "concepts").glob("*.md"))
+    }
+    only = [s for s, ids in concepts.items() if ids and ids <= ARCHIVES]
+    mixed = [s for s, ids in concepts.items() if ids & ARCHIVES and ids - ARCHIVES]
+    if not only:
+        fails.append("reference: no concept cites only the archives; the check has nothing to test")
+    print(f"note: reference: {len(only)} concepts cite only the archives")
+    for stem in only:
+        go(page, f"{base}/concepts/{stem}")
+        text = page.inner_text(".record")
+        if "Cross-project archive" not in text or "source project" in text:
+            fails.append(
+                f"reference: /concepts/{stem} cites only archives but reads "
+                f"'{collapse(page.inner_text('.record .standing'))[:120]}'"
+            )
+    for stem in mixed[:3]:
+        go(page, f"{base}/concepts/{stem}")
+        if "and a cross-project archive" not in page.inner_text(".record"):
+            fails.append(f"reference: /concepts/{stem} cites an archive but does not say so")
+    page.context.close()
+    return fails
+
+
 def check_reference(browser, base: str) -> list[str]:
     """The grouped Browse menu and the reference pages around it."""
-    return browse_group_fails(browser, base)
+    return [*browse_group_fails(browser, base), *archive_fails(browser, base)]
 
 
 CHECKS = {
