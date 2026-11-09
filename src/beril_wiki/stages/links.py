@@ -298,7 +298,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     state = cards.load_state(state_path)
     entries: dict[str, dict] = state.get("candidates", {})
     config = cards.runtime().config
-    policy = cards.policy(config, ("cards", "review"))
+    policy = cards.policy(config, ("cards", "card_review"))
 
     findings = read_findings(root)
     titles = report_titles(root)

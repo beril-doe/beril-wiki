@@ -14,7 +14,8 @@ import re
 import yaml
 
 from beril_wiki import records
-from beril_wiki.records import DIGESTS, title_of
+from beril_wiki.publish.cards.text import OFF_TYPES, TYPE_FALLBACK
+from beril_wiki.records import DIGESTS, SHOWN_CASES, title_of
 from beril_wiki.wording import is_reanalysis
 
 DIRS = ("findings", "directions")
@@ -63,6 +64,9 @@ class Corpus:
             ).items()
             if not g.get("failed")
         }
+        # A failed label keeps its old value for recovery; the fallback stands in for it.
+        self.outcomes = accepted(kb / "state" / "outcomes.json")
+        self.followups = accepted(kb / "state" / "followups.json")
         links_path = kb / "state" / "links.json"
         self.link_records: list[dict] = (
             json.loads(links_path.read_text()).get("links", []) if links_path.exists() else []
@@ -143,6 +147,21 @@ class Corpus:
         ]
 
 
+def accepted(path: pathlib.Path) -> dict[str, dict]:
+    """A one-label stage's saved answers, without the failed ones."""
+    saved = json.loads(path.read_text()) if path.exists() else {}
+    return {k: v for k, v in saved.items() if not v.get("failed")}
+
+
+def result_type(c: Corpus, fid: str) -> str:
+    """The kind of result a finding is: the outcomes stage's answer, else its tag's."""
+    if t := c.outcomes.get(fid, {}).get("type"):
+        return t
+    result = c.findings[fid][0].get("result", "")
+    key = c.gists.get(fid, {}).get("case", "") if result == "null result" else result
+    return TYPE_FALLBACK.get(key, "inconclusive" if result == "null result" else "positive")
+
+
 def data_issues(kb: pathlib.Path) -> dict[str, list[dict]]:
     """Report id -> the in-scope proposals that would redo or correct its work."""
     scope = records.load_scope(kb)
@@ -164,3 +183,20 @@ def data_issues(kb: pathlib.Path) -> dict[str, list[dict]]:
 
 def finding_title(c: Corpus, fid: str) -> str:
     return c.gists.get(fid, {}).get("title") or title_of(c.findings[fid][1], fid)
+
+
+def eligible(c: Corpus, fid: str) -> bool:
+    """Whether a finding is listed: on the Results page, in counts, the picture and picks.
+
+    It needs an accepted plain summary that does not repeat an earlier finding from its
+    report, and a null result must have measured something: missing data and an analysis
+    that never ran are not results. Bookkeeping fixes and untested explanations are not
+    results either. An unlisted finding keeps its page, so links to it still resolve."""
+    gist = c.gists.get(fid, {})
+    if not gist.get("gist") or gist.get("repeats"):
+        return False
+    if c.outcomes.get(fid, {}).get("type") in OFF_TYPES:
+        return False
+    if c.findings[fid][0].get("result") == "null result":
+        return gist.get("case") in SHOWN_CASES
+    return True

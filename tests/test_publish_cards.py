@@ -3,12 +3,20 @@
 import json
 import re
 
-from beril_wiki.publish.cards.corpus import Corpus, join, split
+from beril_wiki.publish.cards.corpus import Corpus, eligible, join, split
 from beril_wiki.publish.cards.export import INDEXES, export, picture_data
 from beril_wiki.publish.cards.links import links_index, shared_index
 from beril_wiki.publish.cards.pages import direction_page, finding_page, literature_section
-from beril_wiki.publish.cards.picks import eligible, home_picks, topic_picks
-from beril_wiki.publish.cards.text import CHIP_NOTE, NOT_ASSESSED, NOT_COMPARED, compare_text
+from beril_wiki.publish.cards.picks import home_picks, topic_picks
+from beril_wiki.publish.cards.text import (
+    CHIP_NOTE,
+    COMPARE_ORDER,
+    NOT_ASSESSED,
+    NOT_COMPARED,
+    NOVEL_NOTE,
+    compare_text,
+)
+from beril_wiki.wording import STATS
 from test_reader_pages import card_corpus
 
 FID = "a--1a2b3c4d"
@@ -92,8 +100,15 @@ def test_chip_only_for_informative_pipeline_labels(tmp_path):
         return split(page)
 
     f, _ = fields_for()
-    assert f["chip"] == "No close match in PubMed abstracts"
-    assert "2026-10-23" in f["chip_note"]
+    assert f["chip"] == "New direction"
+    assert f["chip_note"] == (
+        "An AI search of PubMed abstracts, retrieved on 2026-10-23, found nothing close to "
+        "this result, so it could open a new direction. It does not establish novelty or "
+        "correctness."
+    )
+    f, _ = fields_for(label="Extends retrieved work")
+    assert f["chip"] == "Adds to published work"
+    assert f["chip_note"] == CHIP_NOTE.format(date="2026-10-23")
     for label in ("Insufficient literature evidence", "Not assessed"):
         f, _ = fields_for(label=label)
         assert f["chip"] == "" and f["chip_note"] == ""
@@ -123,12 +138,19 @@ def test_listing_skips_non_results_repeats_and_title_only_cards(tmp_path):
         assert listed(gist, "null result") == (shown, shown)
 
 
-def test_a_correction_carries_no_pubmed_chip(tmp_path):
+def test_a_listed_correction_carries_its_chip_and_says_it_revises(tmp_path):
+    """A listed correction reports a result; only bookkeeping fixes leave the lists."""
     kb = build(tmp_path)
     page = kb / "wiki/findings" / f"{FID}.md"
     fields, body = split(page.read_text())
     page.write_text(join(fields | {"result": "correction"}, body))
+    set_state(kb, "gists.json", {FID: {"gist": "Dark genes were depleted.", "case": ""}})
     f, _ = split(finding_page(FID, Corpus(kb)))
+    assert f["chip"] == "New direction" and f["updates_claim"] is True and f["listed"]
+    set_state(kb, "outcomes.json", {FID: {"type": "bookkeeping", "reason": "r"}})
+    f, _ = split(finding_page(FID, Corpus(kb)))
+    # A bookkeeping fix keeps its page without a type, a revision note or a PubMed verdict.
+    assert f["listed"] is False and f["kind_text"] == "" and f["updates_claim"] is False
     assert f["chip"] == "" and f["chip_note"] == ""
 
 
@@ -145,7 +167,7 @@ def test_an_empty_search_says_no_abstracts_were_found(tmp_path):
 def test_literature_provenance_is_collapsed_not_dropped(tmp_path):
     kb = build(tmp_path)
     body = split(finding_page(FID, Corpus(kb)))[1]
-    assert CHIP_NOTE.format(date="2026-10-23") in body
+    assert "**New direction.** " + NOVEL_NOTE.format(date="2026-10-23") in body
     assert "[PMID 111](https://pubmed.ncbi.nlm.nih.gov/111/)" in body
     details = body.split("<details><summary>How this was checked</summary>")[1].split("</details>")[
         0
@@ -167,12 +189,30 @@ def test_direction_page_uses_reader_words(tmp_path):
     )
     page.write_text(join(fields, body))
     fields, text = split(direction_page("transport--abc123", Corpus(kb)))
-    assert "Approach: Analysis of existing data. Needs: Analysis to build. Data exists." in text
-    assert "|Dark]] (No close match in PubMed abstracts)" in text
+    # Before the followups stage reads it, the planned approach stands in.
+    assert "Following up: analyze existing data. Data exists." in text
+    assert "|Dark]] (New direction)" in text
     assert "|Other]]\n" in text and "(Insufficient" not in text
-    assert fields["need"] == "build" and fields["need_text"] == "Analysis to build"
-    assert fields["approach_text"] == "Analysis of existing data"
-    assert fields["topic"] == "dark-matter"
+    assert fields["follow"] == "existing" and fields["follow_text"] == "Analyze existing data"
+    assert fields["first_step"] is False and fields["topic"] == "dark-matter"
+    set_state(
+        kb,
+        "followups.json",
+        {
+            "transport--abc123": {
+                "need": "experiment",
+                "first_step_existing": True,
+                "data_unclear": True,
+                "reason": "r",
+            }
+        },
+    )
+    fields, text = split(direction_page("transport--abc123", Corpus(kb)))
+    assert fields["follow"] == "experiment" and fields["first_step"] and fields["data_unclear"]
+    assert (
+        "Following up: run an experiment. Starts with existing data. "
+        "Data availability unclear. Data exists." in text
+    )
 
 
 def make_picks_corpus(tmp_path, specs, broad=True):
@@ -268,7 +308,7 @@ def test_index_blurbs_use_reader_words():
     )
     assert INDEXES["directions"] == (
         "Open questions",
-        "Questions the project results leave open, by topic and by what answering them needs.",
+        "Questions the project results leave open, by topic and by what following them up needs.",
     )
 
 
@@ -334,10 +374,8 @@ def test_display_topic_is_the_most_citing_main_topic(tmp_path):
 def test_compare_text_names_unlabelled_results():
     assert compare_text(None) == NOT_COMPARED
     assert compare_text({"label": NOT_ASSESSED, "override": "x"}) == NOT_COMPARED
-    assert compare_text({"label": "Insufficient literature evidence"}) == (
-        "Too little published evidence to compare"
-    )
-    assert compare_text({"label": "Candidate novel"}) == "No close match in PubMed abstracts"
+    assert compare_text({"label": "Insufficient literature evidence"}) == ("No clear comparison")
+    assert compare_text({"label": "Candidate novel"}) == "New direction"
 
 
 def test_readiness_explanations_and_check_notes_use_reader_words(tmp_path):
@@ -363,7 +401,7 @@ def test_readiness_explanations_and_check_notes_use_reader_words(tmp_path):
     }
     section = literature_section(entry)
     assert "Candidate novel" not in section
-    assert "No close match in PubMed abstracts" in section
+    assert "**Adds to published work.**" in section and "“New direction”, which" in section
     # F4: the unconfirmed judge's difference and papers argued for the rejected label.
     assert "No retrieved paper reports it." not in section and "PMID 1" not in section
 
@@ -458,6 +496,8 @@ def test_shared_groups_need_living_members_two_projects_and_two_topics(tmp_path)
         "lanes": {FID: "Dark genes in a", other: "Dark genes in b"},
     } | {k: f"{k} text" for k in ("title", "sentence", "question", "how")}
     set_state(kb, "shared.json", {"g-1": group, "g-2": group | {"members": [FID, "gone--1"]}})
+    listed = {f: {"gist": "Dark genes were depleted.", "case": ""} for f in (FID, other)}
+    set_state(kb, "gists.json", listed)
     # Without a current related-result link joining the members, nothing is published.
     assert shared_index(Corpus(kb)) == []
     link = {"a": FID, "b": other, "level": "finding", "type": "same result", "label": "Same"}
@@ -466,6 +506,10 @@ def test_shared_groups_need_living_members_two_projects_and_two_topics(tmp_path)
     assert g["id"] == "g-1" and "home_rank" not in g and g["sources"] == ["a", "b"]
     assert g["relation"] == "Same result in each project" and len(g["topics"]) == 2
     assert [m["lane"] for m in g["members"]] == ["Dark genes in a", "Dark genes in b"]
+    # A member the Results page hides retires the statement that speaks for it.
+    set_state(kb, "gists.json", listed | {other: listed[other] | {"repeats": FID}})
+    assert shared_index(Corpus(kb)) == []
+    set_state(kb, "gists.json", listed)
     set_state(kb, "shared.json", {"g-1": group | {"failed": True}})
     assert shared_index(Corpus(kb)) == []
     # A links refresh that changed how the results relate retires the old text.
@@ -491,3 +535,105 @@ def test_export_leaves_out_papers_an_unconfirmed_label_rested_on(tmp_path):
     )
     (row,) = [x for x in export(Corpus(kb))["findings"] if x["id"] == FID]
     assert row["closest"] == []
+
+
+def test_result_types_come_from_the_outcomes_stage_else_the_tag(tmp_path):
+    kb = build(tmp_path)
+    page = kb / "wiki/findings" / f"{FID}.md"
+    fields, body = split(page.read_text())
+
+    def kind(result, case, outcome=None):
+        page.write_text(join(fields | {"result": result}, body))
+        set_state(kb, "gists.json", {FID: {"gist": "g", "case": case}})
+        set_state(kb, "outcomes.json", {FID: outcome} if outcome else {})
+        f = split(finding_page(FID, Corpus(kb)))[0]
+        return f["rtype"], f["kind_text"]
+
+    assert kind("null result", "measured absence") == ("negative", "Negative result")
+    assert kind("null result", "inconclusive test") == ("inconclusive", "Inconclusive")
+    assert kind("null result", "missing data")[0] == "inconclusive"
+    assert kind("observation", "") == ("positive", "Positive result")
+    assert kind("inference", "") == ("positive", "Positive result")
+    # The stage's reading wins over the tag, in both directions; a failed answer does not.
+    assert kind("inference", "", {"type": "negative", "reason": "r"})[0] == "negative"
+    assert kind("null result", "measured absence", {"type": "positive", "reason": "r"})[0] == (
+        "positive"
+    )
+    assert kind("observation", "", {"type": "data", "reason": "r"}) == ("data", "About the data")
+    assert kind("observation", "", {"type": "negative", "failed": True})[0] == "positive"
+
+
+def test_every_results_picture_column_has_a_reader_note(tmp_path):
+    data = picture_data(Corpus(build(tmp_path)))
+    assert list(data["compare_notes"]) == data["compare_order"] == COMPARE_ORDER
+    assert all(note.strip() for note in data["compare_notes"].values())
+    assert data["compare_notes"]["New direction"].startswith("An AI search of PubMed abstracts")
+    assert data["something_new"] == ["Something new", "New direction", "Adds to published work"]
+    assert not any(STATS.search(note) for note in data["compare_notes"].values())
+
+
+def related_corpus(tmp_path):
+    """FID in project a, linked to listed results in b and c, an unlisted result in c and
+    a listed result in a."""
+    kb, other = cross_corpus(tmp_path)
+    extra = {
+        "c--11111111": ("c", "# Dark genes cluster in c\n\nClaim. [src: c]\n"),
+        "c--22222222": ("c", "# Unlisted in c\n\nClaim. [src: c]\n"),
+        "a--33333333": ("a", "# Same project result\n\nClaim. [src: a]\n"),
+    }
+    for fid, (sid, text) in extra.items():
+        (kb / "wiki/findings" / f"{fid}.md").write_text(
+            join({"source": sid, "result": "observation"}, text)
+        )
+    gists = {f: {"gist": f"Gist {f}", "case": ""} for f in (FID, other, "c--11111111")}
+    set_state(kb, "gists.json", gists | {"a--33333333": {"gist": "g", "case": ""}})
+    link = {"level": "finding", "label": "x"}
+    similar = "similar comparison, different scope"
+    set_state(
+        kb,
+        "links.json",
+        {
+            "links": [
+                link | {"a": "c--11111111", "b": FID, "type": similar},
+                link | {"a": FID, "b": other, "type": "same result"},
+                link | {"a": FID, "b": "c--22222222", "type": "same result"},
+                link | {"a": FID, "b": "a--33333333", "type": "same result"},
+                link | {"a": FID, "b": "gone--00000000", "type": "same result"},
+                {"level": "project", "a": "a", "b": "b", "type": "corrects it", "label": "y"},
+            ]
+        },
+    )
+    return kb, other
+
+
+def test_result_page_lists_related_results_in_other_projects(tmp_path):
+    kb, other = related_corpus(tmp_path)
+    fields, body = split(finding_page(FID, Corpus(kb)))
+    assert headings(body)[-3:] == [
+        "Open questions that build on this",
+        "Related results in other projects",
+        "Related conflicts",
+    ]
+    section = body.split("## Related results in other projects\n\n")[1].split("\n\n")[0]
+    # By report title; the unlisted, same-project and missing partners are left out.
+    assert section.splitlines() == [
+        f"- [[findings/{other}|Dark genes are rare in b]] · Report B · Same result in each project",
+        "- [[findings/c--11111111|Dark genes cluster in c]] · Report C · "
+        "A similar comparison on different data",
+    ]
+    assert fields["related"] == [other, "c--11111111"]
+    assert "confirm" not in section.lower()
+    # The link works from the other end too.
+    fields, body = split(finding_page("c--11111111", Corpus(kb)))
+    assert fields["related"] == [FID]
+    assert "[[findings/a--1a2b3c4d|" in body and "· Report A ·" in body
+
+
+def test_no_related_section_without_a_cross_project_link(tmp_path):
+    kb, _ = related_corpus(tmp_path)
+    fields, body = split(finding_page("a--33333333", Corpus(kb)))
+    # Its only link is to a result in its own project.
+    assert "related" not in fields and "Related results in other projects" not in body
+    set_state(kb, "links.json", {"links": []})
+    fields, body = split(finding_page(FID, Corpus(kb)))
+    assert "related" not in fields and "Related results in other projects" not in body

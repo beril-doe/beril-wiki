@@ -1,7 +1,6 @@
-// The home page swaps the record for the corpus in figures, a map of it, and
-// the topic table. When finding records are published, two
-// boxes join Find your way in, and three results and three questions follow it,
-// each with a topic strip.
+// The home page: the opening with the corpus in figures; then, when finding records are
+// published, Highlights (the topic-strip key, three results and three questions, each with
+// a topic strip); then Find your way in, the map of the corpus, and the topic table.
 import type { FullSlug } from "@quartz-community/types"
 import { resolveRelative } from "@quartz-community/utils"
 import type { ElementContent, Root } from "hast"
@@ -12,6 +11,15 @@ import { FindingCard, type FindingFm, directionsOf, findingsOf, resultsIndex } f
 import { CrossQuestions } from "./Questions"
 import { TopicKey } from "./Strip"
 import { Topics } from "./Topics"
+
+function SubHead({ title, deck }: { title: string; deck?: string }) {
+  return (
+    <div class="sechead sub">
+      <h3>{title}</h3>
+      {deck && <p>{deck}</p>}
+    </div>
+  )
+}
 
 function SecHead({ title, deck }: { title: string; deck?: string }) {
   return (
@@ -43,7 +51,7 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
   const unmatched = resultsIndex(c).compare_order?.[0]
   const picksDeck =
     picks.length > 0 && picks.every((f) => (f.frontmatter as FindingFm | undefined)?.compare_text === unmatched)
-      ? "Results from different topics with no close match in PubMed abstracts."
+      ? "New results from different topics."
       : "Results from different topics with the least published work like them."
   const kinds = [
     ["topics/index", "Topics", "What the corpus says about one research area. Start here if you are new to an area.", `${n.topics} topics`],
@@ -104,6 +112,34 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
           ))}
         </dl>
       </section>
+      {/* Highlights come right after the opening, so a reader meets what the projects
+          found before the reference sections; every section of the page stays. */}
+      {published && (
+        <section class="band highlights" aria-label="Highlights">
+          <SecHead title="Highlights" deck="Three results from different topics and three questions that join projects." />
+          <TopicKey c={c} from={slug} blurbs={blurbs} />
+          <div class="hlpart" data-cards data-tstrips aria-label="What the projects found">
+            <SubHead title="What the projects found" deck={picksDeck} />
+            {picks.length > 0 && (
+              <div class="grid2 grid3">
+                {picks.map((f) => (
+                  <FindingCard f={f} from={slug} c={c} strip />
+                ))}
+              </div>
+            )}
+            <p class="c-more">
+              <a href={resolveRelative(slug, "findings/index" as FullSlug)}>All {findings.length} results</a>
+            </p>
+          </div>
+          <div class="hlpart" data-tstrips aria-label="Questions still open">
+            <SubHead title="Questions still open" deck="Questions that draw on results from more than one project." />
+            <CrossQuestions c={c} from={slug} />
+            <p class="c-more">
+              <a href={resolveRelative(slug, "directions/index" as FullSlug)}>All {questions} questions</a>
+            </p>
+          </div>
+        </section>
+      )}
       {/* Each kind of page answers a different question; the cards say which. */}
       <section class="band">
         <SecHead title="Find your way in" />
@@ -122,31 +158,6 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
           </nav>
         )}
       </section>
-      {published && (
-        <>
-          <TopicKey c={c} from={slug} blurbs={blurbs} />
-          <section class="band" data-cards data-tstrips aria-label="What the projects found">
-            <SecHead title="What the projects found" deck={picksDeck} />
-            {picks.length > 0 && (
-              <div class="grid2 grid3">
-                {picks.map((f) => (
-                  <FindingCard f={f} from={slug} c={c} strip />
-                ))}
-              </div>
-            )}
-            <p class="c-more">
-              <a href={resolveRelative(slug, "findings/index" as FullSlug)}>All {findings.length} results</a>
-            </p>
-          </section>
-          <section class="band" data-tstrips aria-label="Questions still open">
-            <SecHead title="Questions still open" deck="Questions that draw on results from more than one project." />
-            <CrossQuestions c={c} from={slug} />
-            <p class="c-more">
-              <a href={resolveRelative(slug, "directions/index" as FullSlug)}>All {questions} questions</a>
-            </p>
-          </section>
-        </>
-      )}
       <section class="band" aria-label="Map of the corpus">
         <SecHead
           title="The map"

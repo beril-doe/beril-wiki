@@ -51,6 +51,8 @@ def test_schedule_runs_stale_stages_in_table_order(tmp_path, monkeypatch):
         "gists",
         "links",
         "shared",
+        "outcomes",
+        "followups",
     ]
     assert set(state) == set(C.EDITORIAL)
     # Literature owns its section; its insertion must not dirty topic synthesis.
@@ -67,6 +69,8 @@ def test_schedule_runs_stale_stages_in_table_order(tmp_path, monkeypatch):
         "gists",
         "links",
         "shared",
+        "outcomes",
+        "followups",
     ]
     assert all(r["result"] == "completed" for r in receipts)
     calls.clear()
@@ -123,6 +127,8 @@ def test_schedule_integrates_changed_sources_first(tmp_path, monkeypatch):
         "gists",
         "links",
         "shared",
+        "outcomes",
+        "followups",
     ]
 
 

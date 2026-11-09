@@ -1,12 +1,15 @@
-// The open-questions grid: topics down the side, what answering a question needs
-// across the top, one dot per question. Every word comes from the question's
-// frontmatter (publish/cards.py wrote it); only the dot shape keys on the raw
-// `approach` value. The dots are links, so the grid works without JavaScript;
-// src/client/questions.ts adds the tap-to-pin behaviour.
+// The open-questions grid: topics down the side, what following a question up needs across
+// the top (least effort first), one dot per question. Every word comes from frontmatter
+// publish/cards.py wrote. Position carries the topic and the need; a half-filled dot starts
+// with existing data before its experiment, a dashed dot leaves data availability unclear,
+// a ring marks a question that builds on results from two or more projects, and orange a
+// question that builds on a result in the Results map's first (New direction) column. The
+// dots are links, so the grid works without JavaScript; src/client/questions.ts adds the
+// tap-to-pin behaviour.
 import type { FullSlug } from "@quartz-community/types"
 import { resolveRelative } from "@quartz-community/utils"
 import { type Corpus, type File, slugOf, titleOf } from "../page"
-import { directionsOf } from "./Cards"
+import { Board, type BoardConfig, type FindingFm, FollowTags, directionsOf, resultsIndex } from "./Cards"
 import { TopicStrip, topicList } from "./Strip"
 
 interface CrossProject {
@@ -17,27 +20,49 @@ interface CrossProject {
 }
 
 interface QuestionFm {
-  need?: string
-  need_text?: string
-  approach?: string
-  approach_text?: string
+  follow?: string
+  follow_text?: string
+  first_step?: boolean
+  data_unclear?: boolean
   topic?: string
   readiness_basis?: string
   cross?: CrossProject[]
   cross_topics?: string[]
   home_question_rank?: number
+  findings?: string[]
 }
 
-/** Column order and the fallback header text when no question in the grid supplies its own. */
-export const NEEDS: [string, string][] = [
-  ["data", "Data already in the lakehouse"],
-  ["build", "Analysis to build"],
-  ["measure", "New measurements"],
-  ["unclear", "Not yet clear"],
-]
+/** What publish writes on the open-questions index page for the grid's columns. */
+interface QuestionsIndexFm {
+  follow_order?: string[]
+  follow_text?: Record<string, string>
+  follow_notes?: Record<string, string>
+}
 
-// Raw approach values in legend order; the shape CSS keys on the same strings.
-const APPROACHES = ["lakehouse analysis", "experiment", "analysis then experiment"]
+/** Column order, least effort first, with the header text publish supplies. */
+export function follows(c: Corpus): { key: string; label: string; note: string }[] {
+  const idx = (c.bySlug.get("directions/index")?.frontmatter ?? {}) as QuestionsIndexFm
+  return (idx.follow_order ?? ["existing", "outside", "experiment"]).map((key) => ({
+    key,
+    label: idx.follow_text?.[key] ?? key,
+    note: idx.follow_notes?.[key] ?? "",
+  }))
+}
+
+/** The words a question carries when it builds on a result in the New direction column. */
+export const NOVEL_WORDS = "Builds on a new-direction result"
+const FIRST_WORDS = "Starts with existing data"
+const UNCLEAR_WORDS = "Data availability unclear"
+
+/** Whether a question cites a listed result in the Results map's first (New direction) column. */
+export function citesNovel(c: Corpus, q: File): boolean {
+  const novel = resultsIndex(c).compare_order?.[0]
+  if (!novel) return false
+  return (fmOf(q).findings ?? []).some((id) => {
+    const m = c.bySlug.get(`findings/${id}`)?.frontmatter as FindingFm | undefined
+    return !!m && m.listed !== false && m.compare_text === novel
+  })
+}
 
 const fmOf = (f: File) => (f.frontmatter ?? {}) as QuestionFm
 const topicSlug = (t: File) => slugOf(t).replace(/^topics\//, "")
@@ -102,26 +127,47 @@ const topicName = (c: Corpus, slug: string) => {
 }
 
 /** The dot is the link; the pop-up is its sibling so it can hold its own "Open the question" link.
- * Its name carries the approach, which the dot's shape shows to sighted readers. */
-function Dot({ q, c, from, hue }: { q: File; c: Corpus; from: FullSlug; hue: string }) {
+ * Its name carries what the ring and the colour show to sighted readers. */
+function Dot({ q, c, from }: { q: File; c: Corpus; from: FullSlug }) {
   const m = fmOf(q)
   const href = resolveRelative(from, slugOf(q) as FullSlug)
-  const label = [titleOf(q), m.approach_text, m.cross ? joinsText(m.cross.length, m.cross_topics?.length ?? 0) : ""]
+  const novel = citesNovel(c, q)
+  const label = [
+    titleOf(q),
+    m.follow_text,
+    m.first_step ? FIRST_WORDS : "",
+    m.data_unclear ? UNCLEAR_WORDS : "",
+    novel ? NOVEL_WORDS : "",
+    m.cross ? joinsText(m.cross.length, m.cross_topics?.length ?? 0) : "",
+  ]
     .filter(Boolean)
     .join(". ")
+    .replace(/([?!])\. /g, "$1 ")
+  const cls = [m.cross && "cross", novel && "novel", m.first_step && "half", m.data_unclear && "unclear"].filter(Boolean).join(" ")
   return (
-    <span class={`qd${m.cross ? " cross" : ""}`} style={`--hue:${hue}`}>
-      <a class="qdot" href={href} data-shape={m.approach} aria-label={label} aria-describedby={popId(q)} />
+    <span class={`qd${cls ? ` ${cls}` : ""}`} data-id={slugOf(q)}>
+      <a class="qdot" href={href} aria-label={label} aria-describedby={popId(q)} />
       <span class="qpop" id={popId(q)}>
         <strong>{titleOf(q)}</strong>
+        {novel && <span class="qnovel">{NOVEL_WORDS}.</span>}
         <span class="qneed">
-          {m.approach_text && `${m.approach_text}. `}Needs: {m.need_text}. {m.readiness_basis}
+          {m.follow_text}.{m.first_step && ` ${FIRST_WORDS}.`}
+          {m.data_unclear && ` ${UNCLEAR_WORDS}.`} {m.readiness_basis}
         </span>
         <Bridge c={c} m={m} from={from} href={href} />
         <a class="qopen" href={href}>
           Open the question
         </a>
       </span>
+    </span>
+  )
+}
+
+/** A legend mark drawn by the same classes as the grid's dots. */
+function LegendDot({ cls }: { cls?: string }) {
+  return (
+    <span class={`qd key${cls ? ` ${cls}` : ""}`} aria-hidden="true">
+      <span class="qdot" />
     </span>
   )
 }
@@ -151,51 +197,48 @@ export function CrossQuestions({ c, from }: { c: Corpus; from: FullSlug }) {
   )
 }
 
-// A need outside the four known keys reads as "not yet clear" so no question drops out of the grid.
-const needKey = (q: File) => {
-  const n = fmOf(q).need ?? ""
-  return NEEDS.some(([k]) => k === n) ? n : "unclear"
-}
-
-/** A topic by need grid. `topic` keeps one row (the topic hub). */
+/** A topic by follow-up grid. `topic` keeps one row (the topic hub). */
 export function QuestionGrid({ c, from, topic }: { c: Corpus; from: FullSlug; topic?: string }) {
   const rows = rowsOf(c, directionsOf(c), topic)
   const all = rows.flatMap((r) => r.items)
   if (all.length === 0) return null
-  const cols = NEEDS.map(([key, fallback]) => {
-    const n = all.filter((q) => needKey(q) === key).length
-    const label = all.find((q) => fmOf(q).need === key && fmOf(q).need_text)
-    return { key, n, label: label ? fmOf(label).need_text! : fallback }
-  })
-  const seen = new Map<string, string>()
-  for (const q of all) if (fmOf(q).approach && fmOf(q).approach_text) seen.set(fmOf(q).approach!, fmOf(q).approach_text!)
-  const qcols = cols.map((col) => `minmax(9rem,${Math.max(col.n, 1)}fr)`).join(" ")
+  const cols = follows(c).map((col) => ({ ...col, n: all.filter((q) => followKey(c, q) === col.key).length }))
+  const qcols = cols.map((col) => `minmax(9rem,${Math.max(col.n, 8)}fr)`).join(" ")
   return (
     <div class="qwrap">
       <div class="qgrid" data-single={topic ? "1" : undefined} style={`--qcols:${qcols}`}>
-        <div class="qrow qhead">
+        <div class="qrow qeffort">
           {!topic && <span class="qcorner" />}
+          <span class="qeffortline" style={`grid-column: span ${cols.length}`}>
+            <span class="qaxend">Less effort to follow up</span>
+            <span class="qaxarrow" aria-hidden="true" />
+            <span class="qaxend">More effort</span>
+          </span>
+        </div>
+        <div class="qrow qhead">
+          {!topic && <span class="qcorner qaxis">Topic</span>}
           {cols.map((col) => (
             <span class="qcolh">
               {col.label} <span class="qn">{col.n}</span>
+              {col.note && <span class="qcoln">{col.note}</span>}
             </span>
           ))}
         </div>
         {rows.map((r) => (
           <div class="qrow">
             {!topic && (
-              <span class="qrowh">
+              <span class="qrowh" style={r.file && c.hueOf(r.file) ? `--d:${c.hueOf(r.file)}` : undefined}>
                 {r.file ? <a href={resolveRelative(from, slugOf(r.file) as FullSlug)}>{titleOf(r.file)}</a> : r.slug || "Other"}
               </span>
             )}
             {cols.map((col) => {
-              const cell = r.items.filter((q) => needKey(q) === col.key)
+              const cell = r.items.filter((q) => followKey(c, q) === col.key)
               return (
                 <div class="qcell" data-empty={cell.length === 0 ? "1" : undefined}>
                   <span class="qlab">{col.label}</span>
                   <div class="qdots">
                     {cell.map((q) => (
-                      <Dot q={q} c={c} from={from} hue={r.file ? (c.hueOf(r.file) ?? "var(--mute)") : "var(--mute)"} />
+                      <Dot q={q} c={c} from={from} />
                     ))}
                   </div>
                 </div>
@@ -205,48 +248,121 @@ export function QuestionGrid({ c, from, topic }: { c: Corpus; from: FullSlug; to
         ))}
       </div>
       <p class="qlegend">
-        {APPROACHES.filter((a) => seen.has(a)).map((a) => (
+        <span class="qkey">
+          <LegendDot /> One question
+        </span>
+        {all.some((q) => fmOf(q).first_step) && (
           <span class="qkey">
-            <i class="qdot-key" data-shape={a} aria-hidden="true" /> {seen.get(a)}
-          </span>
-        ))}
-        {all.some((q) => fmOf(q).cross) && (
-          <span class="qkey">
-            <i class="qdot-key ring" aria-hidden="true" /> Builds on results from two or more projects
+            <LegendDot cls="half" /> {FIRST_WORDS}
           </span>
         )}
-        <span class="qkey">Colour is the topic.</span>
+        {all.some((q) => fmOf(q).data_unclear) && (
+          <span class="qkey">
+            <LegendDot cls="unclear" /> {UNCLEAR_WORDS}
+          </span>
+        )}
+        {all.some((q) => citesNovel(c, q)) && (
+          <span class="qkey">
+            <LegendDot cls="novel" /> {NOVEL_WORDS}
+          </span>
+        )}
+        {all.some((q) => fmOf(q).cross) && (
+          <span class="qkey">
+            <LegendDot cls="cross" /> Builds on results from two or more projects
+          </span>
+        )}
         <span class="qkey">Hover or tap a dot to read it.</span>
       </p>
     </div>
   )
 }
 
-/** The /directions/ page below its intro: the full grid, then every question as a plain list. */
+// A key outside publish's order reads as the last column, so no question drops out of the grid.
+function followKey(c: Corpus, q: File): string {
+  const order = follows(c).map((col) => col.key)
+  const k = fmOf(q).follow ?? ""
+  return order.includes(k) ? k : order[order.length - 1]
+}
+
+/** A question in the concepts card look: what it still needs, in its own words. */
+function QuestionCard({ q, c, from, ranks }: { q: File; c: Corpus; from: FullSlug; ranks: Record<string, number> }) {
+  const m = fmOf(q)
+  const novel = citesNovel(c, q)
+  return (
+    <article
+      class="card qcard"
+      style={m.topic ? `--d:${c.hue(`topics/${m.topic}`)}` : undefined}
+      data-id={slugOf(q)}
+      data-f-topic={m.topic}
+      data-f-follow={followKey(c, q)}
+      data-t-first={m.first_step ? "1" : undefined}
+      data-t-cross={m.cross ? "1" : undefined}
+      data-t-novel={novel ? "1" : undefined}
+      data-text={[titleOf(q), m.readiness_basis, m.follow_text].filter(Boolean).join(" ").toLowerCase()}
+      {...Object.fromEntries(Object.entries(ranks).map(([k, v]) => [`data-s-${k}`, String(v)]))}
+    >
+      <b>
+        <a class="ct" href={resolveRelative(from, slugOf(q) as FullSlug)}>
+          {titleOf(q)}
+        </a>
+      </b>
+      <span class="ctags">
+        <FollowTags m={m} />
+      </span>
+      {m.readiness_basis && <span class="desc">{m.readiness_basis}</span>}
+      {novel && <span class="cnovel">{NOVEL_WORDS}</span>}
+      <span class="meta">
+        {m.cross && <span>{joinsText(m.cross.length, m.cross_topics?.length ?? 0)}</span>}
+        {m.topic && <span>{topicName(c, m.topic)}</span>}
+      </span>
+    </article>
+  )
+}
+
+/** The /directions/ page below its intro: the full grid, then every question as a card with the filter bar. */
 export function QuestionsPage({ c, from }: { c: Corpus; from: FullSlug }) {
   const qs = directionsOf(c)
   const rows = rowsOf(c, qs)
+  const topicIx = new Map(rows.map((r, i) => [r.slug, i]))
+  const cols = follows(c)
+  const needIx = (q: File) => cols.findIndex((col) => col.key === followKey(c, q))
+  const byTopic = [...qs].sort((a, b) => (topicIx.get(fmOf(a).topic ?? "") ?? 99) - (topicIx.get(fmOf(b).topic ?? "") ?? 99) || needIx(a) - needIx(b) || titleOf(a).localeCompare(titleOf(b)))
+  const byNeed = [...qs].sort((a, b) => needIx(a) - needIx(b) || (topicIx.get(fmOf(a).topic ?? "") ?? 99) - (topicIx.get(fmOf(b).topic ?? "") ?? 99) || titleOf(a).localeCompare(titleOf(b)))
+  const cfg: BoardConfig = {
+    noun: "questions",
+    facets: [
+      {
+        key: "topic",
+        label: "Topic",
+        chips: rows.filter((r) => r.file).map((r) => ({ v: r.slug, label: titleOf(r.file!), hue: c.hue(slugOf(r.file!)) })),
+      },
+      {
+        key: "follow",
+        label: "What following up needs",
+        chips: cols.filter((col) => qs.some((q) => followKey(c, q) === col.key)).map((col) => ({ v: col.key, label: col.label, note: col.note })),
+      },
+    ],
+    toggles: [
+      ...(qs.some((q) => fmOf(q).first_step) ? [{ key: "first", label: FIRST_WORDS }] : []),
+      ...(qs.some((q) => fmOf(q).cross) ? [{ key: "cross", label: "Builds on results from two or more projects" }] : []),
+      ...(qs.some((q) => citesNovel(c, q)) ? [{ key: "novel", label: NOVEL_WORDS }] : []),
+    ],
+    sorts: [
+      { key: "topic", label: "Topic" },
+      { key: "need", label: "Least effort first" },
+    ],
+  }
+  const rank = (xs: File[]) => new Map(xs.map((q, i) => [q, i]))
+  const rt = rank(byTopic)
+  const rn = rank(byNeed)
   return (
     <section class="cards-board qpage">
       <QuestionGrid c={c} from={from} />
-      <details class="qall">
-        <summary>All {qs.length} as a list</summary>
-        {rows.map((r) => (
-          <div>
-            <h3>{r.file ? titleOf(r.file) : r.slug || "Other"}</h3>
-            <ul class="qlist">
-              {r.items.map((q) => (
-                <li>
-                  <a href={resolveRelative(from, slugOf(q) as FullSlug)}>{titleOf(q)}</a>
-                  {fmOf(q).approach_text && <span class="n"> {fmOf(q).approach_text}.</span>}
-                  {fmOf(q).need_text && <span class="n"> Needs: {fmOf(q).need_text}.</span>}
-                  {fmOf(q).cross && <span class="n"> {joinsText(fmOf(q).cross!.length, fmOf(q).cross_topics?.length ?? 0)}.</span>}
-                </li>
-              ))}
-            </ul>
-          </div>
+      <Board cfg={cfg} label="Every open question">
+        {byTopic.map((q) => (
+          <QuestionCard q={q} c={c} from={from} ranks={{ topic: rt.get(q)!, need: rn.get(q)! }} />
         ))}
-      </details>
+      </Board>
     </section>
   )
 }

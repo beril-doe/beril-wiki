@@ -23,6 +23,8 @@ SCOPE = "contract/cards.yaml"
 FINDINGS = Path("wiki/findings")
 # Collection pages built from the observatory's docs, not project reports.
 DIGESTS = ("discoveries", "pitfalls")
+# A null result a home or topic card may show: only the ones that measured something.
+SHOWN_CASES = ("measured absence", "inconclusive test")
 SRC = re.compile(r"\[src:\s*([^\]]+)\]")
 H1 = re.compile(r"^# +(.+)$", re.M)
 ITEM = re.compile(r"^(?:[-*]|\d+[.)])\s+(.*)$")

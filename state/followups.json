@@ -1,0 +1,546 @@
+{
+  "are-conserved-genes-costly-only-under-conditions-where-their--47be8f": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "d7df1d7a5fcf1f1338081c2eb86291f227e98b1d0d453f5a1f693d97e36cf656",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Existing Fitness Browser experiments linked to pangenome core status can decide it, if growth medium and mode can label function use."
+  },
+  "are-conserved-proteins-with-few-sequence-relatives-young-lin--70f0be": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "4a6180c3a2b5c4cccd8c8eb7862ca36e9e1737e424ef5eb106de372b6f2efac7",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Counting which genera, families and phyla hold each shallow core cluster, plus mobile-element annotation, needs only the existing pangenome and UniRef collections."
+  },
+  "are-dark-carbon-compounds-consumed-by-consortia-rather-than--61c469": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "9bc41a22b77f2235d2ea8b9ed5b5b554ac61836e45004cb83abeb139e50fccdb",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Deciding the hypothesis needs new enrichment cultures, isolate growth tests and chemical measurements of compound loss, which only lab work can provide."
+  },
+  "are-gapfilled-reactions-without-ec-numbers-carried-by-promis--e27895": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "35814bbc9d4b7bc915b7dad7b617189d28ac4f8ac305db0328403f0db29f5668",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Catalysis by a candidate enzyme family is only shown by in vitro activity, so the hypothesis needs a lab assay after a lakehouse analysis narrows the candidates."
+  },
+  "are-latent-biosynthetic-and-catabolic-pathways-the-ones-lost--756b4d": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "abdc30f573d32570be8033a8c24f00c1517fc82aab45748393071af86412a950",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Decided by whether latent pathways are absent from more same-species genomes than active ones, most for carbon versus amino acid pathways, plus whether latent-rich species vary more."
+  },
+  "are-nitrogen-fixation-and-acc-deaminase-fixed-within-species--9ba3a1": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "914c641d1ce1da2df9c1d95c080a3d38fbf0224b8af9512111a6a1b5f7054dfd",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Within-species carriage and sister-species presence are decided by pangenome calls, but identifying sister pairs needs phylogenetic tree coverage that is limited."
+  },
+  "are-replication-and-repair-ecotype-differences-really-mobile--ccdc0f": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "d760f6e05b1104351890a430172cdbdc0ecf61b1dcde6f0883a05694e6cf8d09",
+    "model": "claude-haiku-5-5",
+    "need": "outside",
+    "reason": "Deciding it needs gene positions within genomes, which the cluster annotations and presence/absence table alone do not give."
+  },
+  "could-iron-sulfur-cluster-damage-underlie-the-cross-resistan--187f17": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "f66fa44e4267c862337792fb5707c369f0360563d0945889f1192df203e3ebc6",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Existing Fitness Browser fitness data from organisms tested under both zinc and iron can test whether iron-sulfur gene losses weaken the shared metal response."
+  },
+  "could-the-weak-co-inheritance-of-accessory-fitness-modules-r--a1069a": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "ecd74165b9c9a8989b1ffc61b3abda5f667e56fb0b06b052e3c2ebd81773e7dc",
+    "model": "claude-haiku-5-5",
+    "need": "outside",
+    "reason": "Whether module genes sit together near mobile-element genes is decided by annotating transposase, integrase and phage genes onto the genomes, which the named collections do not clearly hold."
+  },
+  "do-accessory-genes-show-strong-phenotypes-only-when-the-cond--b20478": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "e56cd1ae10e71c25ca97350a4f5831c36ad2b4aef8d8baae006f72e77de00444",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Fitness Browser mutant growth data and pangenome core labels in the KBase Data Lakehouse decide it, needing new condition-matching curation."
+  },
+  "do-alkaline-soils-hold-lineages-that-have-no-sequenced-genom--1c61f5": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "79d47a99af81ce4ba9b3a87b0addbc337fb36b7228cac8a85368293fa5e90749",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Deciding it needs soil taxa from NMDC samples matched to pangenome genomes, then unmatched taxa compared across pH ranges at equal sample counts per region."
+  },
+  "do-catalase-and-urease-status-predict-measured-metal-toleran--b07873": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "4a97b97b1c55a774f97e73672ff0fbeccf0f9c63b30b6d1aa102b2dbceda6bb0",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Growth tests of copper, nickel, zinc and cadmium on paired strains decide it; the Fitness Browser checks only overlapping organisms, so new strain measurements are needed."
+  },
+  "do-commensal-strains-inhibit-cystic-fibrosis-type-pseudomona--3b151b": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "2f32eadfde649dd7355ad4e1953af3005abcc4808f3a2005fb6fccd397216db5",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Inhibition of each target strain must be measured in new assays; BERDL genome toxin calls can pick the ExoS-positive isolates first."
+  },
+  "do-communities-short-on-amino-acid-synthesis-live-where-free--183264": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "3ae38ef5efd48f5655942e50e8d6f71b394357b849d24229b98c46937b7f2fec",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Deciding it needs a leucine-addition microcosm tracking synthesis-capable community members; BERDL analysis first narrows which pathways to test."
+  },
+  "do-costly-dispensable-genes-with-condition-specific-phenotyp--52ce2e": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "bba3bdd4dc43a1210f95a02151660888e9558db6057b7904a1caeec708dfde8e",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether conditional benefit slows loss is decided by Fitness Browser phenotype labels joined to pangenome gene carriage already in the KBase Data Lakehouse."
+  },
+  "do-deep-clay-bacillota-b-reduce-iron-through-flavin-based-el--2a1c5b": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "1f7fb3412f64b0f437b91ef4cb1aa72350e6ea667b6e487adafa3942e9fb5ddd",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Whether flavin pathways drive iron reduction is decided by a cultured clay isolate's Fe(III) reduction with and without pathway knockout; genome searches can only narrow candidates."
+  },
+  "do-efflux-genes-matter-under-antibiotics-only-when-the-drug--1019ce": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "87b496c99e5b5608724c65c06cf92317d34bcaa58096d2a2624faf6f20c62ab4",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Existing gene-drug pairs are too few to decide, so competition experiments with matched drugs are needed to test whether efflux knockouts gain importance only under their own drug."
+  },
+  "do-iron-scavenging-gene-clusters-give-escherichia-coli-a-gro--5de199": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "0476ff674e48d3b981ceb8da385f4ed72cf29f497ce4b46231b4863895904cf7",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Growth advantage under iron limitation needs new pairwise competition assays; scoring genome carriage in the KBase Data Lakehouse narrows which strain pairs to test."
+  },
+  "do-larger-deep-clay-bacillota-b-genomes-trade-biosynthesis-f--4551ea": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "7226f444a7adab29a39c882aab58cdff32da8438edf0c8164b77c32926b056b0",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Growing a cultured Desulfosporosinus isolate with and without single amino acids decides whether it needs supplied amino acids; BERDL analysis first narrows which amino acids to test."
+  },
+  "do-metal-sensitive-genes-of-unknown-function-protect-through--8e78ec": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "71fc8df7fe455420742d7961b4aa9b663c8b8bd673d5c9bea1b03a2754ec6ce2",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether candidate genes act through envelope integrity or metal binding is decided by fitness profiles across existing Fitness Browser experiments plus sequence-based binding predictions."
+  },
+  "do-newly-acquired-resistance-genes-pay-a-cost-that-fades-as--e042b6": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "fdc1b774e45c2fec533d42f640459e10309464f4157195fb9214b19707e56d9a",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Fitness Browser knockout data and genome sequences in BERDL can test whether host-like composition predicts lower resistance-gene cost."
+  },
+  "do-orphan-essential-genes-substitute-for-universal-functions--e0d011": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "e108171ec9705b9849259f59fa6b204dfde060be16ad7ad3d1ac3eec3a3c4427",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Only a rescue experiment in a tractable host can decide it, after analysis of Fitness Browser and pangenome data picks which orphan to test."
+  },
+  "do-phyla-without-phb-carry-other-carbon-storage-systems-inst--af73d6": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "f3c16746af476353f60f135dd2faf0b5e3a20b575b91bf75b3cb03b2faddb620",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Scoring glycogen, polyphosphate and lipid storage genes across BERDL pangenome species decides it, needing only existing annotations and genome sizes."
+  },
+  "do-plant-growth-gene-copies-near-transposases-form-a-separat--4a1088": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "e784a531bf481ea9e65e7f593f3ce2b4e6b30c4059c60c347867cba9f8add124",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Decided by classifying existing pangenome gene clusters and their transposase neighbours in KBase Data Lakehouse genome contigs."
+  },
+  "do-pqq-and-iron-acquisition-defects-on-quinate-reflect-diffe--1956da": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "8ff900fbcf823c40db29d9c16c654a2578d1e2fa7b2b5ff537193c1200390e61",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Rescue by PQQ or iron of ADP1 deletion mutants on quinate can only be decided by new growth measurements with added cofactors."
+  },
+  "do-prophage-rich-species-carry-more-resistance-genes-through--5c1eef": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "55c8713ee2e7d84dc711db7b56dee61a9e60e949735c8e5ad030b6a048773392",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Re-calling prophages, plasmids and integrative elements on existing BERDL genomes and placing AMR genes by base-pair position decides the hypothesis."
+  },
+  "do-rare-earth-rich-acid-sites-use-lanthanide-binding-protein--bf402f": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "3632787922907f61acb299e0643695bab02f124ebdbdc856ee6221fa7510eef8",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Whether candidates bind lanthanides more strongly than calcium needs a lab binding measurement; BERDL genomes can first pick the candidates to test."
+  },
+  "do-rare-earth-rich-sites-select-lanthanide-dependent-methylo--0d6359": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "49018fdfabbcfff71573ec89e6eeb29439bdbebd6776e77443728b1c3cb116fa",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Only lab cultures with added lanthanum, measuring xoxF expression and uptake, can decide the hypothesis; BERDL metagenomes come first to narrow it."
+  },
+  "do-resistance-islands-spread-as-clonal-passengers-or-hop-bet--160118": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "6228ff2e0b229598d5d39881f2a6e4e2972fa5b52d2d0b9ac4ce687c0bb46924",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether islands move as units or as clonal passengers is decided by comparing their gain history and lineage spread with other gene sets, using already-loaded pangenome data."
+  },
+  "do-soil-bacteria-with-indole-pyruvate-decarboxylase-skip-mak--0ef4dd": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "1ab5b7887d039def2dc4d0cf786090e25a715cbd15cef675219ce9aec3d472d8",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Growth and auxin output of soil isolates decide it, so a lab experiment is required after a BERDL genome comparison selects strains."
+  },
+  "do-soil-metals-select-metal-specific-gene-programs-or-one-sh--2d0444": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "693a976694d9e7eee87c5107c4043799a34fa426ec4f0eaf4eb3dd74f5a58244",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Deciding it needs soil gene-category hits re-checked after removing the shared metal pattern, then compared with metal-fitness genes of organisms in BERDL."
+  },
+  "do-species-from-varied-environments-gain-resistance-genes-be--fbd14b": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "381c581672ca79be64084beb2ce1b505a1a447eb5fdc29dbab39d82a98559712",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether resistance genes gain faster with environmental diversity than other accessory genes is decided by pangenome data already in BERDL, but genome-to-embedding joins remain unverified."
+  },
+  "do-the-crohn-s-linked-pathobionts-themselves-make-the-metabo--ce8337": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "0ce94862b1214b45e981307307e871efe6d8ffd856d581fdda76c3f0cbcc3215",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Only cultured pathobionts, singly and in a pooled community with and without them, profiled by metabolomics can show which axis metabolites they make."
+  },
+  "do-the-metabolic-ecotypes-within-a-bacterial-species-track-w--464f53": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "55093177f3c92abc095a6adfafa77d3d8960ce5acb03fb55a6cb434193d1746e",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Ecotype-versus-subclade matching to isolation environment, using BERDL pathway and metadata, decides it, including whether variable pathways are nutrient routes tied to each habitat's nutrient sources."
+  },
+  "do-truly-dark-genes-hold-nutrient-acquisition-roles-that-rar--fb448f": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "c3dae9aa7f8b02161620a792716d4516b722a951207870853c79538c3cd2981e",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Fitness Browser phenotypes and Pangenome gene neighbours decide it, but transporter, regulator and catabolic annotations are needed to classify neighbours."
+  },
+  "do-water-table-layers-not-lateral-distance-organize-subsurfa--21c218": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "fbc993f7a16ce5ff88ece96cdb523fcd02bdbea56fa87837c8aa58b5959cd607",
+    "model": "claude-haiku-5-5",
+    "need": "outside",
+    "reason": "Depth versus lateral position needs existing community data; whether chemistry tracks community turnover needs registered geochemistry measurements not yet loaded."
+  },
+  "does-a-dark-gene-keep-the-same-phenotype-in-a-distant-non-pr--ea89e8": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "33f4a88b84bb9feb93048a94825d5f8784bc791b7204b963d618bc22cc099dfa",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether dark gene phenotypes match across organisms is decided by fitness and ortholog records already in BERDL, needing only a new scoring analysis."
+  },
+  "does-carrying-both-aromatic-and-non-aromatic-carbon-capaciti--f13bf8": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "83fcd9f4ce2a93a4f60bd620be88424493e2510fc322c5d7127029849976dece",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Co-carriage can be checked in existing genome calls, but whether generalists grow slower than same-genus specialists and use mixtures in sequence needs new growth assays."
+  },
+  "does-carrying-many-metal-resistance-types-let-lineages-widen--9dacde": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "43eee8535fa0c168693b6ab0368d66c330950c6ffa3fa7c7bc141aeed9aefe23",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Gain ordering of metal types and habitat categories on the existing Pangenome tree decides the hypothesis, using isolation-source metadata already held."
+  },
+  "does-carrying-the-cyanide-operon-impair-nitrogen-fixation-in--499eb8": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "86a7b0a88d1dbf0906892b640cf32dbcc47821bbc955b02e74c25dd0a05e1f1d",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Only a deletion experiment in a diazotroph can show whether losing the cyanide operon raises nitrogenase activity and nitrogen-free growth; a genome analysis first picks the strain."
+  },
+  "does-desulfovibrio-vulgaris-make-serine-by-a-route-that-path--6f62df": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "2c0610eac5177e23736057bff077a5398c3a0feb25ae14ccfd779dfcfe47a66c",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Growth without added serine and labelled serine in defined medium decide the hypothesis, and only a new lab experiment can supply them."
+  },
+  "does-essential-metal-cofactor-handling-not-toxicity-defense--a31c50": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "6b743387d659a54d3767d819d31922d3481b5fb6844e19046940deca7392fbba",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether uptake and cofactor genes are more often core than detoxification genes, using existing Fitness Browser and Pangenome data."
+  },
+  "does-gene-content-growth-prediction-work-mainly-by-recognizi--046cb5": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "cf94b808e7d2011eb04074a34ef2a436240368335cf5529420624ed1261b773f",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether predictions fail within a genus is decided by comparing growth records of strains in BERDL, already joined across the three collections."
+  },
+  "does-long-term-warming-raise-methane-oxidation-activity-in-f--6e9596": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "75e15f9e54595f38181bfca75a3c62ee5fd7e02d1070377f23416272797a5b30",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Decided by replicated seasonal field sampling that measures methane oxidation rates and pmoA DNA and RNA, since existing warming data have only one date."
+  },
+  "does-silencing-the-cbb3-respiratory-operon-let-caulobacter-s--8a44a0": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "a553bec9cbe043ed0b7bf92e796a4215f65aed49fc73a26bb29a762b43b4f6e8",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Deciding it needs new Caulobacter strains with altered cbb3 operon expression, measured for viability and oxygen use, because existing BERDL data cannot change that expression."
+  },
+  "does-soil-carbon-pathway-completeness-rise-with-substrate-le--248abf": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "78911604d4b14be8e300ce5bf49f3f82981b1631bb37a9e7646a3b62874b738e",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Deciding it needs paired taxonomy and metabolomics from at least two soil studies, which BERDL may already hold."
+  },
+  "does-the-butyrate-producer-anaerostipes-caccae-live-on-lacta--0b3aef": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "f3a204a5f8968ce4a616b0abf052c0a8367284517cbd7122104fa55491acf833",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Only anaerobic co-culture and defined-community add/remove assays measuring lactate, butyrate and growth can decide whether pathobionts change Anaerostipes caccae lactate use or butyrate output."
+  },
+  "does-the-mobile-element-signature-of-novel-genes-fade-as-the--8fd870": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "17a03c848d0baa431077e344e7ff17146d67d4f87fd94abd8af34cf27f5d0b0d",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Deciding this needs gain depth joined to mobile-element neighbourhoods for singleton clusters; the findings do not show that join."
+  },
+  "does-the-same-gut-species-become-crohn-s-associated-only-ins--e4d82a": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "27a7422f25e30eaf633500f590b9a0fdb79acbf01ea89f7bf86fabb7901be387",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Only a gnotobiotic mouse experiment can decide whether candidate expansion depends on community state, after a BERDL cohort analysis narrows the candidates."
+  },
+  "does-warming-deplete-labile-carbon-in-mineral-soil-and-leave--b57835": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "21eb7d8e445b2ddb569e091d34dd2bd84b6e4d08674132ddea0967e659a683ff",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Respiration after labile substrate addition needs new incubations of heated and control soil, and existing metabolite lists cannot measure it."
+  },
+  "is-a-resistance-gene-s-conservation-set-by-how-embedded-it-i--bbe780": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "ba5a6762971e6e0359ddc05c471e4892d132d4d66be5ab6e34ff3cf40e566c80",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Core versus accessory resistance genes within each mechanism class, judged by non-antibiotic stress fitness and how closely their fitness tracks non-resistance genes, decides it."
+  },
+  "is-disagreement-between-metabolic-model-and-transposon-data--11421d": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "30e03c6ae9bf6363485d306729cb02980b0db0fa0d4835a5a68e7518f596947a",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Existing BERDL annotations, paralog counts and model reactions can decide the hypothesis; the double-deletion tests only confirm later."
+  },
+  "is-environment-s-effect-on-gene-content-hidden-in-a-few-func--1cfd24": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "ec4752dbad8201077871020da594d3849f4dc3b863e4a3b6b43a57cfa1be71c3",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether environment shapes gene content in particular functional groups is decided by gene-cluster and isolation-source data already in the KBase Data Lakehouse."
+  },
+  "is-fungal-variability-in-lignin-enrichments-chance-seeding-o--cf6259": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "7cdac8f8da2b22510805d796e0f95921eb8f60641901011e418cee866d1de10e",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Only new enrichment cultures at several inoculum sizes, with and without an early colonist, can show whether the variation comes from sampling or priority effects."
+  },
+  "is-one-denitrifier-s-costly-dispensable-gene-set-a-lab-misma--0c1a00": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "5f56f4ebc37ae2d918289962038f9b88d471c5d43358f8ed83e4845e220ebcae",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Decided by new pooled mutant competition under aerobic and anaerobic nitrate growth, since existing RCH2 oxygen data are confounded with metal salt."
+  },
+  "is-phac-gained-by-lineages-that-already-live-in-fluctuating--253cac": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "39c30e33afe578857b7ac72dcb5bc7aa569f6b916e112887fd7e2004dc237f88",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether phaC gains track variable habitats needs gene trees, reconciliation and sister-lineage habitat labels; BERDL holds gene clusters and labels, but the analysis is unbuilt."
+  },
+  "is-soil-habitat-associated-with-xoxf-gain-inside-single-line--69023b": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "47372a4a728e39fcc9b9fca1b383d36b5866b9436e105305d5640333a5054377",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Within-genus habitat comparisons and gain/loss mapping on genome trees use existing pangenome and habitat data in the lakehouse, though habitat coverage per genome is uncertain."
+  },
+  "is-the-acetate-specific-defect-of-aciad3522-a-respiratory-ro--043493": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "1794f56aad49d67c5bcd005a676656339f581a1bfe88981d1df5c55f6b4e103f",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Deciding it needs new growth, redox and rescue measurements on ADP1 deletion strains, since BERDL lacks these phenotypes."
+  },
+  "is-the-acid-and-warmth-niche-split-between-two-oak-ridge-gen--8e0d48": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "27de398577f52d8a702628dad0536db88128b07294dd2ae8c21360000bf3e079",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Growth in monoculture and co-culture across a pH series must be measured in the lab; BERDL sample data cannot separate competition from tolerance."
+  },
+  "is-the-groundwater-versus-sediment-split-in-oak-ridge-taxa-r--641fb4": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "e869d43661295190a7698112480f0d605e591b54b7c7114da27d9e91d5d72f92",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Only simultaneous sampling of groundwater and sediment from the same wells can show whether the partition persists or was caused by timing."
+  },
+  "is-the-metal-resistance-share-of-soil-resistomes-co-selectio--7ffaff": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "c659c267db65ceec0fbac2e5b559a62d614271eac2dcecbf56a0ade34b20efc5",
+    "model": "claude-haiku-5-5",
+    "need": "outside",
+    "reason": "Deciding it needs gene positions plus species environment labels, which may have to come from public metadata outside BERDL; no lab work is needed."
+  },
+  "is-the-metal-tolerance-advantage-of-contaminated-site-bacter--d1d9f2": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "987366b4289ec77020b37ae62da575d3090317f78b9113fb8ce674e059893290",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether the advantage sits in accessory or core metal clusters across isolate groups decides it, using pangenome and isolation-source joins already in the KBase Data Lakehouse."
+  },
+  "is-uranium-itself-or-acidity-and-nitrate-what-removes-caulob--254df0": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "43942bcdfa5871a6e500b1effdf303e9afa08eda3d35113643035f37cd4b9d5a",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Separating uranium from acidity and nitrate needs controlled microcosms, because field samples confound these causes and cannot isolate uranium."
+  },
+  "is-xoxf-mostly-a-methanol-enzyme-or-does-it-serve-other-alco--9dd64a": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "ed2f301316c8decb91eff63471c176add7e7f3ffe039261079265798eb4ac3d0",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Deciding whether XoxF serves other alcohols needs enzyme assays, but a BERDL genome analysis of methylotrophy genes must first narrow which carriers to test."
+  },
+  "was-lanmodulin-spread-by-horizontal-transfer-among-alpha-pro--fab55d": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "9b829d64cc1b66d063cf88af731d014905fd2ac0d69896fb822900464b4ece16",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Gene-tree versus species-tree conflict, flanking mobile-element genes and base composition versus host decide transfer, using existing pangenome genomes and new analysis."
+  },
+  "were-sugar-pathways-lost-repeatedly-within-lung-adapted-pseu--06109c": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "b8f707a127a71e93446a73a2d86beb8f7817acfdcc596269011e281470acfa7c",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Growth of CF and environmental isolates on sorbitol, mannitol and gluconate decides it, after a pangenome analysis of lung-branch pathway losses."
+  },
+  "what-do-lanmodulin-carrying-bacteria-without-a-confirmed-xox--2dafa3": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "abd8e737c0d3291dc141c45e24a4ba7fb0105201bb8f55c17a1e2384e72cdfe5",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Deciding it needs growth and metal-uptake tests in a xoxF-free strain; BERDL screening first narrows which strain to use."
+  },
+  "why-is-the-model-sulfate-reducer-desulfovibrio-nearly-absent--bc3e92": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "8d407d092e85b77b7b6350d0804e508e11944c75926545d80285d7acc5c69c31",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Deciding it needs a new dsrAB assay on anaerobic-well sediment and groundwater, after existing ENIGMA CORAL profile comparison narrows the targets."
+  }
+}

@@ -1,6 +1,6 @@
 // ---- top bar -----------------------------------------------------------------
-// Every tab stays on one row down to 961px: the name shortens, then the search
-// field narrows and Ask drops its label. Measured at 1440, 1180, 1100 and 980px.
+// The bar stays on one row down to 961px: the name shortens, then the search
+// field narrows and Ask drops its label.
 @media (max-width: 1320px) {
   .bar {
     gap: 20px;
@@ -17,7 +17,7 @@
 }
 @media (max-width: 1100px) {
   .bar {
-    nav {
+    .barnav {
       gap: 14px;
     }
     .search-button {
@@ -109,9 +109,31 @@
     .wordmark .name .short {
       display: none;
     }
-    nav {
+    // The links take a row of their own; Browse opens below that whole row, so
+    // its list never runs off the right edge of a phone.
+    // A full row of its own: the desktop rule's flex: 1 would squeeze it beside the name.
+    .barnav {
+      position: relative;
+      flex: 0 0 100%;
       width: 100%;
       gap: 4px 16px;
+    }
+    // On a phone About stays on the row of links.
+    .barabout {
+      margin-left: 0;
+    }
+    .barmenu {
+      position: static;
+    }
+    .barmenu-list {
+      left: 0;
+      right: 0;
+      min-width: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      a {
+        padding: 10px 14px;
+      }
     }
     .search-button {
       flex: 1;

@@ -1,4 +1,7 @@
-"""Done checks for the result and question reader pages (spec 2026-11-04-reader-overhaul-design.md).
+"""Done checks for the reader pages (reader-overhaul and reader-consistency specs).
+
+The specs are 2026-11-04-reader-overhaul-design.md and, for marks, filters and related,
+docs/drafts/2026-11-07-reader-consistency/design-marks.md and build-plan.md.
 
 Run against a build, either the one `quartz build --serve` serves on 8080 or
 `--serve quartz/public`, which serves the built folder with clean URLs (a plain
@@ -7,6 +10,29 @@ Run against a build, either the one `quartz build --serve` serves on 8080 or
     WIKI_BASE_URL=localhost:8096 CBORG_API_KEY= scripts/build_quartz.sh
     uv run --with playwright python scripts/check_reader.py grid \
         --base http://localhost:8096 --serve quartz/public
+
+Checks, each run by name:
+
+- home: the home page's title, three doors and reference line, the top bar (at most 7
+  controls after the wordmark at 1440 px, every collection within two clicks, the Browse
+  menu by mouse, keyboard and tap), where the CBORG key is entered, and the strips check.
+- strips: the topic key, map and table on /topics/, and cards that take their topic's colour.
+- plain: reader text carries no pipeline terms, statistics or "caveat".
+- grid: open-question dots sit in their records' topic rows and follow-up columns, under
+  the effort line and the column notes, say what following up needs, and their pop-ups work.
+- pages: result page sections, the type chips, square cards, the type and follow-up tags on
+  cards and pages, and contrast.
+- contrast: small labels reach 4.5:1 in light mode.
+- cross: the Results map matches the records, its "Something new" group header, hover
+  cards, related-result lines and the box list, column notes, Compare panels, and ringed
+  question bridges.
+- marks: the marks of both maps (design-marks.md, option M2), in light and dark, at 1280
+  and 390 px, with two negative controls the check must catch.
+- filters: each board's facet, toggle and sort words, chips, toggles, count, URL state,
+  list view and map fading.
+- related: each result page lists its related results in other projects.
+- connections: results and open questions on topic, report and concept pages, the
+  concepts on result and question pages, the topic board links, and About's reading guide.
 
 Exit 0 when the check passes, 1 with one line per failure otherwise. Notes (lines
 starting "note:") never fail a check. Uses the installed Chrome, so no browser download.
@@ -20,35 +46,71 @@ import re
 import sys
 import urllib.error
 import urllib.request
-from functools import partial
+from collections import Counter
+from functools import cache, partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from threading import Thread
-from urllib.parse import urlparse
+from urllib.parse import parse_qs, urlparse
 
 # Supplied at run time by `uv run --with playwright`; not a project dependency.
-from playwright.sync_api import Page, sync_playwright  # ty: ignore[unresolved-import]
+from playwright.sync_api import (  # ty: ignore[unresolved-import]
+    Page,
+    sync_playwright,
+)
+from playwright.sync_api import TimeoutError as PlaywrightTimeout  # ty: ignore[unresolved-import]
 
 from beril_wiki.wording import CONFIRMING, statistical
 
 ROOT = Path(__file__).resolve().parent.parent
+CONTENT = ROOT / "quartz" / "content"
 PHONE = {"width": 390, "height": 844}
 DESKTOP = {"width": 1280, "height": 900}
+WIDE = {"width": 1440, "height": 900}
 
-HOME_HEADINGS = [
-    "BERIL Knowledge Wiki",
-    "Find your way in",
-    "What the projects found",
-    "Questions still open",
-    "The map",
-    "Topics",
+# The home outline (design-home.md, Markup B): headings outside the result cards, in order.
+HOME_OUTLINE = [
+    ["H1", "BERIL Knowledge Wiki"],
+    ["H2", "Highlights"],
+    ["H3", "What the projects found"],
+    ["H3", "Questions still open"],
+    ["H2", "Find your way in"],
+    ["H2", "The map"],
+    ["H2", "Topics"],
 ]
+HIGHLIGHTS_DECK = "Three results from different topics and three questions that join projects."
 HOME_ABSENT = [
     "What BERIL found",
     "Plan your next project",
     "checked against PubMed",
     "change the picture",
 ]
+BAR_LINKS = ["Results", "Open questions", "Topics", "About"]
+BROWSE_ITEMS = ["Concepts", "Entities", "Conflicts", "Reports", "Authors"]
+# The kind cards under "Find your way in", by the collection each opens.
+KIND_CARDS = [
+    "topics/",
+    "concepts/",
+    "entities/",
+    "conflicts/",
+    "summaries/",
+    "findings/",
+    "directions/",
+]
+# Every collection index a reader reaches from home within two clicks.
+COLLECTIONS = [
+    "findings/",
+    "directions/",
+    "topics/",
+    "concepts/",
+    "entities/",
+    "conflicts/",
+    "summaries/",
+    "authors/",
+    "about",
+]
+# The maintainer asked for About as its own tab after Browse, which makes 8 controls.
+BAR_MAX = 8
 PIPELINE_TERMS = [
     "Candidate novel",
     "Insufficient literature evidence",
@@ -59,22 +121,97 @@ PIPELINE_TERMS = [
     "Research direction",
     "headline finding",
 ]
-NEED_COLUMN = {
-    "data in the lakehouse": 0,
-    "needs compute": 1,
-    "needs new measurements": 2,
-    "unknown": 3,
+# A listed null result must have measured something (records.py SHOWN_CASES).
+SHOWN_CASES = ("measured absence", "inconclusive test")
+# Kind words the reader pages no longer show anywhere a result's type is named.
+GONE_KIND_WORDS = {
+    "Result",
+    "No effect found",
+    "Inconclusive test",
+    "Interpretation",
+    "Correction",
+    "No effect found, or inconclusive",
+    "Null or missing result",
 }
-BAD_NULL_CASES = ("missing data", "unperformed analysis")
-LIGHT_LABELS = [".rt", ".fcard .meta", ".qcolh", ".qlab", ".skicker", ".nvcolh", ".ready.part"]
-KIND_CHIPS = ["All", "Results", "Interpretations", "Null or missing results", "Corrections"]
+# What open questions no longer say: the readiness columns and the "Needs:" line.
+GONE_NEED_WORDS = [
+    "Needs:",
+    "Data already in the lakehouse",
+    "Analysis to build",
+    "New measurements",
+    "Not yet clear",
+    "Analysis of existing data",
+    "Analysis, then experiment",
+]
+# Result types publish keeps off every list (publish/cards/text.py OFF_TYPES).
+OFF_TYPES = ("bookkeeping", "untested")
+LIGHT_LABELS = [
+    ".rt",
+    ".card .meta",
+    ".fcard .meta",  # topic pages
+    ".qcolh",
+    ".qcoln",
+    ".qeffortline",
+    ".qcorner.qaxis",
+    ".nvcorner",
+    ".nvcolh",
+    ".nvgroup",
+    ".nvgroup.rest",
+    ".ready.f-existing",
+    ".ready.f-experiment",
+    ".px-facet-lbl",
+    ".crel",
+    ".cnovel",
+]
+# Shown only at phone width.
+PHONE_LABELS = [".qlab", ".nvlab"]
 FINDING_HEADINGS = [
     "What the report measured",
     "Limits",
     "Compared with published work",
     "Open questions that build on this",
+    "Related results in other projects",
     "Related conflicts",
 ]
+RELATED_HEADING = "Related results in other projects"
+# A result's type key, read from `rtype`, with its legend and chip words (Cards.tsx
+# TYPE_WORDS), in legend order.
+TYPE_WORDS = {
+    "positive": "Positive result",
+    "negative": "Negative result",
+    "inconclusive": "Inconclusive",
+    "data": "About the data",
+}
+UPDATES_WORDS = "Revises an earlier claim"
+# How a Results box's label counts each type (Novelty.tsx COUNT_WORDS): one, many.
+BOX_COUNT_WORDS = {
+    "positive": ("positive result", "positive results"),
+    "negative": ("negative result", "negative results"),
+    "inconclusive": ("inconclusive result", "inconclusive results"),
+    "data": ("result about the data", "results about the data"),
+}
+# How each type is drawn (design: positive filled, negative hollow, inconclusive dashed,
+# about the data a small grey square).
+MARK_LOOK = {
+    "positive": ("circle", "solid"),
+    "negative": ("circle", "hollow"),
+    "inconclusive": ("circle", "dashed"),
+    "data": ("square", "grey"),
+}
+GROUP_REST = "Compared with published work"
+NOVEL_WORDS = "Builds on a new-direction result"
+FIRST_WORDS = "Starts with existing data"
+UNCLEAR_WORDS = "Data availability unclear"
+# The x axis: its two ends, read left to right, around an arrow across every column.
+EFFORT_LINE = "Less effort to follow up → More effort"
+# The y axis: the corner over the row labels on both maps.
+ROW_AXIS = "Topic"
+GONE_FAMILIES = ["Cited by the same open question", "One project uses or cites another"]
+# The design's tokens (design-marks.md "Geometry"): Novel orange and the box border grey.
+TOKENS = {
+    "light": {"nv-new": (194, 65, 12), "nv-box": (135, 142, 148)},
+    "dark": {"nv-new": (217, 89, 38), "nv-box": (107, 112, 117)},
+}
 
 
 def frontmatter(path: Path) -> dict:
@@ -94,8 +231,93 @@ def ids(kind: str) -> list[str]:
     return sorted(p.stem for p in (ROOT / "wiki" / kind).glob("*.md") if p.stem != "index")
 
 
+@cache
+def records() -> dict:
+    """The published records the checks compute their expectations from."""
+    findings = {
+        p.stem: frontmatter(p)
+        for p in sorted((CONTENT / "findings").glob("*.md"))
+        if p.stem != "index"
+    }
+    directions = {
+        p.stem: frontmatter(p)
+        for p in sorted((CONTENT / "directions").glob("*.md"))
+        if p.stem != "index"
+    }
+    index = frontmatter(CONTENT / "findings" / "index.md")
+    listed = {i for i, fm in findings.items() if fm.get("listed") is not False}
+    order = index.get("compare_order") or []
+    used = {findings[i].get("compare_text") for i in listed}
+    cols = [c for c in order if c != order[-1] or c in used]
+    links = [
+        lk
+        for lk in index.get("links") or []
+        if lk.get("family") == "r" and lk.get("a") in listed and lk.get("b") in listed
+    ]
+    novel = order[0] if order else ""
+    results = {
+        i: {
+            # An rtype outside the four reads as positive, as Cards.tsx kindKey does.
+            "kind": next((k for k in TYPE_WORDS if k == findings[i].get("rtype")), "positive"),
+            "updates": findings[i].get("updates_claim") is True,
+            "col": findings[i].get("compare_text", ""),
+            "topic": findings[i].get("topic", ""),
+            "source": findings[i].get("source", ""),
+            "rel": any(i in (lk["a"], lk["b"]) for lk in links),
+        }
+        for i in sorted(listed)
+    }
+    qindex = frontmatter(CONTENT / "directions" / "index.md")
+    follow_order: list[str] = qindex.get("follow_order") or []
+    questions = {}
+    for stem, fm in directions.items():
+        # A key outside publish's order reads as the last column (Questions.tsx followKey).
+        raw = fm.get("follow")
+        follow = raw if raw in follow_order else (follow_order[-1] if follow_order else "")
+        questions[f"directions/{stem}"] = {
+            "novel": any(
+                f in listed and findings[f].get("compare_text") == novel
+                for f in fm.get("findings") or []
+            ),
+            "cross": bool(fm.get("cross")),
+            "follow": follow,
+            "follow_text": fm.get("follow_text", ""),
+            "col": follow_order.index(follow) if follow in follow_order else -1,
+            "first": fm.get("first_step") is True,
+            "unclear": fm.get("data_unclear") is True,
+            "topic": fm.get("topic", ""),
+        }
+    boxes: dict[tuple[str, str, str], list[str]] = {}
+    for i, r in results.items():
+        boxes.setdefault((str(r["topic"]), str(r["col"]), str(r["source"])), []).append(i)
+    return {
+        "findings": findings,
+        "directions": directions,
+        "index": index,
+        "qindex": qindex,
+        "follow_order": follow_order,
+        "listed": listed,
+        "order": order,
+        "cols": cols,
+        "novel": novel,
+        "links": links,
+        "results": results,
+        "questions": questions,
+        "boxes": boxes,
+    }
+
+
 def new_page(browser, viewport=DESKTOP, js=True) -> Page:
     ctx = browser.new_context(viewport=viewport, java_script_enabled=js)
+    return ctx.new_page()
+
+
+def themed(browser, theme: str, viewport=DESKTOP, touch=False) -> Page:
+    """A page in `theme`: Quartz reads localStorage "theme" before the system scheme."""
+    ctx = browser.new_context(
+        viewport=viewport, color_scheme=theme, has_touch=touch, is_mobile=touch
+    )
+    ctx.add_init_script(f"try {{ localStorage.setItem('theme', '{theme}') }} catch (e) {{}}")
     return ctx.new_page()
 
 
@@ -103,17 +325,222 @@ def go(page: Page, url: str) -> None:
     page.goto(url, wait_until="networkidle")
 
 
+def http_status(url: str) -> int:
+    try:
+        return urllib.request.urlopen(url, timeout=20).status
+    except urllib.error.HTTPError as e:
+        return e.code
+
+
+def walk_onto(page: Page, mark, card, want: str | None = None, aim: str = "link") -> str:
+    """Hover `mark`, then move to its `card` in 2 px steps, as a hand would.
+
+    `aim` is "link" (the card's "Open" link) or "head" (the card's title, across neighbours).
+
+    Returns "" when the card is still open there and links to `want` (when given), else
+    the failure. Coarser steps jump over gaps and neighbouring marks a real pointer meets.
+    """
+    mark.scroll_into_view_if_needed()
+    r = mark.bounding_box()
+    x0, y0 = r["x"] + r["width"] / 2, r["y"] + r["height"] / 2
+    page.mouse.move(x0, y0)
+    page.wait_for_timeout(150)
+    if not card.is_visible():
+        return "hover does not open the card"
+    c = card.bounding_box()
+    link = card.locator("a.nvopen, a.qopen").first
+    box = link.bounding_box() if link.count() else None
+    inside = box and c["y"] <= box["y"] and box["y"] + box["height"] <= c["y"] + c["height"]
+    if aim == "link" and inside:
+        x1, y1 = box["x"] + min(30, box["width"] / 2), box["y"] + box["height"] / 2
+    else:
+        x1, y1 = c["x"] + c["width"] / 2, c["y"] + min(20, c["height"] / 2)
+    page.mouse.move(x1, y1, steps=max(4, int(((x1 - x0) ** 2 + (y1 - y0) ** 2) ** 0.5 / 2)))
+    page.wait_for_timeout(400)
+    if not card.is_visible():
+        return "the card closes while the pointer moves onto it"
+    if not card.locator("a").count():
+        return "the card holds no link"
+    if want is not None and card.locator("a.nvopen").get_attribute("href") != want:
+        return "the card switched to another result on the way"
+    return ""
+
+
+def jump_to(page: Page, a, b) -> str:
+    """Hover mark `a`, then move to mark `b` in one step and rest there for 900 ms."""
+    a.scroll_into_view_if_needed()
+    ra = a.bounding_box()
+    page.mouse.move(ra["x"] + ra["width"] / 2, ra["y"] + ra["height"] / 2)
+    page.wait_for_timeout(200)
+    b.scroll_into_view_if_needed()
+    rb = b.bounding_box()
+    page.mouse.move(rb["x"] + rb["width"] / 2, rb["y"] + rb["height"] / 2)
+    page.wait_for_timeout(900)
+    return f"from ({ra['x']:.0f}, {ra['y']:.0f}) to ({rb['x']:.0f}, {rb['y']:.0f})"
+
+
 def collapse(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
+
+
+def last_part(href: str) -> str:
+    return urlparse(href).path.rstrip("/").rsplit("/", 1)[-1]
+
+
+# ---------------------------------------------------------------- colours
+
+
+def rgba(c: str) -> tuple[float, float, float, float]:
+    """A computed CSS colour as (r, g, b, a) on 0-255, from rgb(), rgba() or color(srgb)."""
+    c = c.strip()
+    if c == "transparent":
+        return (0.0, 0.0, 0.0, 0.0)
+    if m := re.match(r"rgba?\(([^)]*)\)", c):
+        p = [float(x) for x in re.split(r"[,\s/]+", m[1].strip()) if x]
+        return (p[0], p[1], p[2], p[3] if len(p) > 3 else 1.0)
+    if m := re.match(r"color\(srgb\s+([^)]*)\)", c):
+        p = [float(x) for x in re.split(r"[\s/]+", m[1].strip()) if x]
+        return (p[0] * 255, p[1] * 255, p[2] * 255, p[3] if len(p) > 3 else 1.0)
+    raise ValueError(f"unparsed colour '{c}'")
+
+
+def colours_in(text: str) -> list[tuple[float, float, float, float]]:
+    return [rgba(m) for m in re.findall(r"(?:rgba?|color)\([^)]*\)", text)]
+
+
+def same(a, b, tol: float = 2.0) -> bool:
+    return all(abs(x - y) <= tol for x, y in zip(a[:3], b[:3], strict=True)) and (
+        abs((a[3] if len(a) > 3 else 1) - (b[3] if len(b) > 3 else 1)) < 0.02
+    )
+
+
+def blend(fg, bg, op: float = 1.0) -> tuple[float, float, float, float]:
+    a = (fg[3] if len(fg) > 3 else 1.0) * op
+    return (*(a * f + (1 - a) * b for f, b in zip(fg[:3], bg[:3], strict=True)), 1.0)
+
+
+def surface(stack: list[str]) -> tuple[float, float, float, float]:
+    """The colour under an element: its ancestors' backgrounds, nearest first, down to an
+    opaque one (white when none is), composited."""
+    layers = []
+    for c in stack:
+        col = rgba(c)
+        if col[3] == 0:
+            continue
+        layers.append(col)
+        if col[3] >= 1:
+            break
+    out: tuple[float, float, float, float] = (255.0, 255.0, 255.0, 1.0)
+    for col in reversed(layers):
+        out = blend(col, out)
+    return out
+
+
+def luminance(rgb: tuple[float, ...]) -> float:
+    def ch(v: float) -> float:
+        v /= 255
+        return v / 12.92 if v <= 0.03928 else ((v + 0.055) / 1.055) ** 2.4
+
+    r, g, b = (ch(v) for v in rgb[:3])
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+
+def ratio(a, b) -> float:
+    hi, lo = sorted((luminance(a), luminance(b)), reverse=True)
+    return (hi + 0.05) / (lo + 0.05)
+
+
+def neutral(c) -> bool:
+    """A grey: its channels lie within 10% of each other."""
+    return max(c[:3]) - min(c[:3]) <= 25.5
+
+
+def show(c) -> str:
+    return "rgb(" + ", ".join(f"{v:.0f}" for v in c[:3]) + ")"
+
+
+# Shared by the page scripts below: the backgrounds under an element, nearest first, and the
+# opacity that reaches it from its ancestors below the first opaque background.
+JS_LIB = """
+const alphaOf = c => {
+  const m = c.match(/rgba?\\(([^)]+)\\)/)
+  if (m) { const p = m[1].split(/[\\s,/]+/).filter(Boolean); return p.length > 3 ? +p[3] : 1 }
+  const k = c.match(/color\\([^)]*\\/\\s*([\\d.]+)\\)/)
+  return c === 'transparent' ? 0 : k ? +k[1] : 1
+}
+const under = e => {
+  const stack = []
+  let op = +getComputedStyle(e).opacity
+  for (let n = e.parentElement; n; n = n.parentElement) {
+    const c = getComputedStyle(n).backgroundColor
+    stack.push(c)
+    if (alphaOf(c) >= 1) break
+    op *= +getComputedStyle(n).opacity
+  }
+  return { stack, op }
+}
+const tok = name => {
+  const e = document.createElement('i')
+  e.style.color = `var(${name})`
+  document.body.append(e)
+  const c = getComputedStyle(e).color
+  e.remove()
+  return c
+}
+const ndFeat = e => {
+  const s = getComputedStyle(e)
+  const b = getComputedStyle(e, '::before'), a = getComputedStyle(e, '::after')
+  const r = e.getBoundingClientRect()
+  return {
+    id: e.dataset.id || '', k: e.dataset.k || '', rel: e.classList.contains('rel'),
+    color: s.color, shadow: s.boxShadow, outline: s.outlineStyle, w: r.width, h: r.height,
+    b: { content: b.content, bg: b.backgroundColor, img: b.backgroundImage, clip: b.clipPath,
+         radius: b.borderTopLeftRadius, shadow: b.boxShadow, bstyle: b.borderTopStyle,
+         bwidth: b.borderTopWidth, bcolor: b.borderTopColor, w: b.width, h: b.height },
+    a: { content: a.content, style: a.borderTopStyle, width: a.borderTopWidth,
+         color: a.borderTopColor, radius: a.borderTopLeftRadius, top: a.top },
+    under: under(e),
+  }
+}
+const qdFeat = q => {
+  const d = q.querySelector(':scope > .qdot')
+  const s = getComputedStyle(q), b = getComputedStyle(d, '::before')
+  const r = d.getBoundingClientRect()
+  return {
+    id: q.dataset.id || '', novel: q.classList.contains('novel'),
+    cross: q.classList.contains('cross'), half: q.classList.contains('half'),
+    unclear: q.classList.contains('unclear'),
+    color: s.color, op: +getComputedStyle(d).opacity, shape: d.dataset.shape || null,
+    label: d.getAttribute('aria-label') || '', pop: q.querySelector('.qpop')?.textContent || '',
+    w: parseFloat(b.width), h: parseFloat(b.height), x: r.x, y: r.y,
+    b: { bg: b.backgroundColor, img: b.backgroundImage, clip: b.clipPath,
+         radius: b.borderTopLeftRadius, shadow: b.boxShadow, bstyle: b.borderTopStyle,
+         bwidth: b.borderTopWidth, bcolor: b.borderTopColor },
+    under: under(q),
+  }
+}
+"""
+
+
+def lib(body: str) -> str:
+    return f"() => {{ {JS_LIB}\n{body} }}"
+
+
+# ---------------------------------------------------------------- home and bar
 
 
 def check_home(browser, base: str) -> list[str]:
     fails: list[str] = []
     page = new_page(browser)
     go(page, base + "/")
-    heads = page.eval_on_selector_all("h1, h2", "els => els.map(e => e.textContent.trim())")
-    if heads != HOME_HEADINGS:
-        fails.append(f"home: headings {heads} != {HOME_HEADINGS}")
+    heads = page.eval_on_selector_all(
+        "h1, h2, h3",
+        "els => els.filter(e => !e.closest('.fcard')).map(e => [e.tagName, e.textContent.trim()])",
+    )
+    if heads != HOME_OUTLINE:
+        fails.append(f"home: outline {heads} != {HOME_OUTLINE}")
+    fails += highlight_fails(page)
+    fails += home_layout_fails(browser, base)
     text = page.inner_text("body")
     fails += [f"home: contains '{s}'" for s in HOME_ABSENT if s.lower() in text.lower()]
 
@@ -134,7 +561,12 @@ def check_home(browser, base: str) -> list[str]:
     have = sum(1 for g in gists.values() if g.get("gist"))
     if not cards and not have:
         print("note: home: 0 cards (no summaries yet)")
-        return fails
+        return [
+            *fails,
+            *kind_card_fails(page),
+            *check_bar(browser, base),
+            *key_entry_fails(browser, base),
+        ]
     if have and len(cards) != 3:
         fails.append(f"home: {len(cards)} cards, expected 3 ({have} summaries exist)")
     fid = [c["href"].rsplit("/", 1)[-1] for c in cards]
@@ -145,11 +577,384 @@ def check_home(browser, base: str) -> list[str]:
     ):
         if len(set(vals)) != len(vals):
             fails.append(f"home: card {label} not distinct: {vals}")
+    rec = records()
     for c, i in zip(cards, fid, strict=True):
-        case = gists.get(i, {}).get("case", "")
-        if c["kind"] == "null" and (not case or case in BAD_NULL_CASES):
-            fails.append(f"home: null-result card {i} has case '{case or 'none'}'")
+        fm = rec["findings"].get(i, {})
+        if i not in rec["listed"]:
+            fails.append(f"home: card {i} is not a listed result")
+        elif c["kind"] != rec["results"][i]["kind"]:
+            fails.append(f"home: card {i} has kind '{c['kind']}', record '{fm.get('rtype')}'")
+        if fm.get("result") == "null result" and fm.get("gist_case") not in SHOWN_CASES:
+            fails.append(f"home: null-result card {i} has case '{fm.get('gist_case') or 'none'}'")
+    # Home.tsx calls the picks new only when every one sits in the first column.
+    deck = page.evaluate(
+        "() => document.querySelector('.hlpart[data-cards] > .sechead.sub > p')"
+        "?.textContent.trim() || ''"
+    )
+    all_new = all(rec["findings"].get(i, {}).get("compare_text") == rec["novel"] for i in fid)
+    want_deck = (
+        "New results from different topics."
+        if all_new
+        else "Results from different topics with the least published work like them."
+    )
+    if deck != want_deck:
+        fails.append(f"home: the results deck reads '{deck}', expected '{want_deck}'")
+    fails += kind_card_fails(page)
+    fails += check_bar(browser, base)
+    fails += key_entry_fails(browser, base)
     return fails
+
+
+HIGHLIGHTS_JS = """() => {
+    const hl = document.querySelector('section.band.highlights[aria-label="Highlights"]')
+    if (!hl) return null
+    const kids = [...hl.children]
+    const key = hl.querySelector(':scope > section.tkeysec[aria-label="Topic strips"]')
+    const found = hl.querySelector(
+        ':scope > div.hlpart[data-cards][data-tstrips][aria-label="What the projects found"]')
+    const open = hl.querySelector(
+        ':scope > div.hlpart[data-tstrips][aria-label="Questions still open"]')
+    const at = e => e ? kids.indexOf(e) : -1
+    return {
+        head: hl.querySelector(':scope > .sechead > h2')?.textContent.trim(),
+        deck: hl.querySelector(':scope > .sechead > p')?.textContent.trim(),
+        order: [at(key), at(found), at(open)],
+        keyBand: !!key && key.classList.contains('band'),
+        foundHead: found?.querySelector(':scope > .sechead.sub > h3')?.textContent.trim(),
+        openHead: open?.querySelector(':scope > .sechead.sub > h3')?.textContent.trim(),
+        cards: found ? found.querySelectorAll('.fcard').length : 0,
+        questions: open ? open.querySelectorAll('ul.xqlist > li').length : 0,
+        tkey: !!key?.querySelector('[data-tkey]'),
+        why: key?.querySelector('details.twhy > summary')?.textContent.trim(),
+        intro: !!key?.querySelector('details.twhy > .tintro'),
+        after: [...document.querySelectorAll('h2')].map(h => h.textContent.trim())
+            .filter(t => ['Find your way in', 'The map', 'Topics'].includes(t)).length,
+        hlFirst: [...document.querySelectorAll('section.band')].indexOf(hl),
+    }
+}"""
+
+
+def highlight_fails(page: Page) -> list[str]:
+    """Highlights holds, in order, the topic key, the three results and the three questions."""
+    got = page.evaluate(HIGHLIGHTS_JS)
+    if got is None:
+        return ['home: no section.band.highlights[aria-label="Highlights"]']
+    fails: list[str] = []
+    if got["head"] != "Highlights" or got["deck"] != HIGHLIGHTS_DECK:
+        fails.append(f"home: Highlights reads '{got['head']}' / '{got['deck']}'")
+    o = got["order"]
+    if -1 in o or o != sorted(o):
+        fails.append(f"home: Highlights holds key, results, questions at positions {o}")
+    if got["keyBand"]:
+        fails.append("home: the topic key is still a .band of its own")
+    if (got["foundHead"], got["openHead"]) != ("What the projects found", "Questions still open"):
+        fails.append(f"home: Highlights parts are headed {got['foundHead']}, {got['openHead']}")
+    if (got["cards"], got["questions"]) != (3, 3):
+        fails.append(f"home: Highlights holds {got['cards']} results, {got['questions']} questions")
+    if not got["tkey"] or got["why"] != "What do the colours mean?" or not got["intro"]:
+        fails.append(f"home: the key lacks [data-tkey] or details.twhy '{got['why']}' with .tintro")
+    if got["hlFirst"] != 1:
+        fails.append(f"home: Highlights is band {got['hlFirst']}, expected right after the hero")
+    return fails
+
+
+def twhy_fails(page: Page, where: str) -> list[str]:
+    """The key's explanation is closed at first and opens and closes on its summary."""
+    fails: list[str] = []
+    why = page.locator("section.tkeysec details.twhy")
+    intro = why.locator(".tintro")
+    if why.count() != 1:
+        return [f"home: {where}: {why.count()} details.twhy"]
+    if why.evaluate("d => d.open") or intro.is_visible():
+        fails.append(f"home: {where}: the key's explanation starts open")
+    why.locator("summary").click()
+    if not intro.is_visible() or "15 topics" not in (intro.text_content() or ""):
+        fails.append(f"home: {where}: opening 'What do the colours mean?' does not show .tintro")
+    why.locator("summary").click()
+    if intro.is_visible():
+        fails.append(f"home: {where}: a second click leaves the explanation open")
+    return fails
+
+
+LAYOUT_JS = """() => {
+    const r = s => {
+        const e = document.querySelector(s); return e ? e.getBoundingClientRect() : null }
+    const lefts = s => [...document.querySelectorAll(s)].map(e => {
+        const b = e.getBoundingClientRect(); return [b.left, b.top] })
+    const about = document.querySelector('.barnav > a.barlink.barabout')
+    const row = ['.tkeylabel', '.tkeyslots', '.tread'].map(s => r('.tkeysec ' + s))
+    return {
+        cards: lefts('.hlpart[data-cards] .fcard'), qs: lefts('ul.xqlist > li'),
+        aboutLast: !!about && about === document.querySelector('.barnav').lastElementChild,
+        about: about?.getBoundingClientRect().toJSON(), browse: r('.barmenu')?.toJSON(),
+        search: r('header.bar .search-button')?.toJSON(), first: r('.barnav > a.barlink')?.toJSON(),
+        aboutMargin: about ? getComputedStyle(about).marginLeft : '',
+        nav: [...document.querySelectorAll('.barnav > *')].map(e => [e.textContent.trim()
+            .split('\\n')[0], e.getBoundingClientRect().right]),
+        keyRow: row.every(Boolean)
+            && row.every(b => b.top < row[0].bottom && b.bottom > row[0].top),
+        width: innerWidth,
+    }
+}"""
+
+
+# The highlights grids: three columns at 900 px and up, one below (.grid2.grid3 rules).
+GRID_WIDTHS = [1440, 1280, 960, 900, 899, 390]
+
+
+def home_layout_fails(browser, base: str) -> list[str]:
+    """Question cards follow the result grid: three columns from 900 px, each question card
+    starting where the result card above it starts, and one column below 900 px. The key
+    sits on one row at desktop; About sits just before Search at 1440 px and on the row of
+    links at 390 px; the key's explanation opens with and without the script."""
+    fails: list[str] = []
+    for w in GRID_WIDTHS:
+        page = new_page(browser, {"width": w, "height": 900})
+        go(page, base + "/")
+        g = page.evaluate(LAYOUT_JS)
+        fails += grid_fails(g, w)
+        if w >= DESKTOP["width"] and not g["keyRow"]:
+            fails.append(f"home: at {w} px the key's label, slots and readout are not on one row")
+        if not g["aboutLast"]:
+            fails.append(f"home: at {w} px About is not the last .barnav link with class barabout")
+        elif w == WIDE["width"]:
+            fails += about_wide_fails(g)
+        elif w == PHONE["width"]:
+            fails += about_phone_fails(g)
+        if w == DESKTOP["width"]:
+            fails += twhy_fails(page, "with the script")
+        page.context.close()
+    nojs = new_page(browser, js=False)
+    go(nojs, base + "/")
+    fails += twhy_fails(nojs, "without the script")
+    nojs.context.close()
+    return fails
+
+
+def grid_fails(g: dict, w: int) -> list[str]:
+    cards, qs = g["cards"], g["qs"]
+    if len(cards) != 3 or len(qs) != 3:
+        return [f"home: at {w} px {len(cards)} result cards, {len(qs)} question cards"]
+    where = f"question cards at x {[round(x, 1) for x, _ in qs]}, results at " + str(
+        [round(x, 1) for x, _ in cards]
+    )
+    if w >= 900:
+        off = max(abs(q[0] - c[0]) for q, c in zip(qs, cards, strict=True))
+        rows = {round(y) for _, y in qs}
+        if len({round(x) for x, _ in qs}) != 3 or len(rows) != 1 or off > 1:
+            return [f"home: at {w} px {where}, off by up to {off:.1f} px (three columns expected)"]
+        return []
+    one = {round(x) for x, _ in qs} | {round(x) for x, _ in cards}
+    stacked = [y for _, y in qs] == sorted(y for _, y in qs) and len({y for _, y in qs}) == 3
+    if len(one) != 1 or not stacked:
+        return [f"home: at {w} px {where}, expected one column for both"]
+    return []
+
+
+def about_wide_fails(g: dict) -> list[str]:
+    a, b, s_ = g["about"], g["browse"], g["search"]
+    gap = s_["left"] - a["right"]
+    if a["left"] > b["right"] and 0 <= gap <= 48:
+        return []
+    return [
+        f"home: at 1440 px About spans x {a['left']:.0f}-{a['right']:.0f}, Browse ends at "
+        f"{b['right']:.0f}, Search starts at {s_['left']:.0f} ({gap:.0f} px after About)"
+    ]
+
+
+def about_phone_fails(g: dict) -> list[str]:
+    fails: list[str] = []
+    a, f = g["about"], g["first"]
+    if not (a["top"] < f["bottom"] and a["bottom"] > f["top"]) or g["aboutMargin"] != "0px":
+        fails.append(
+            f"home: at 390 px About sits at y {a['top']:.0f}, the first bar link at "
+            f"y {f['top']:.0f} (About margin-left {g['aboutMargin']}); not on the links row"
+        )
+    if out := [n for n, right in g["nav"] if right > g["width"] + 0.5]:
+        fails.append(f"home: at 390 px bar links run past the screen's right edge: {out}")
+    return fails
+
+
+def kind_card_fails(page: Page) -> list[str]:
+    """The "Find your way in" kind cards open each collection."""
+    hrefs = page.eval_on_selector_all("a.kindcard", "els => els.map(e => e.getAttribute('href'))")
+    got = sorted(h.removeprefix("./") for h in hrefs)
+    if got != sorted(KIND_CARDS):
+        return [f"home: kind cards link to {got}, expected {sorted(KIND_CARDS)}"]
+    return []
+
+
+def key_entry_fails(browser, base: str) -> list[str]:
+    """The CBORG key is entered where it is used: on Ask and in search's meaning control."""
+    fails: list[str] = []
+    page = new_page(browser)
+    go(page, base + "/")
+    if page.locator(".px-keybtn").count():
+        fails.append("home: the bar still has the CBORG key button")
+    page.locator("header.bar .search-button").click()
+    page.wait_for_timeout(400)
+    meaning = page.locator(".px-meaning-ctl .px-meaning-key, .px-meaning-ctl [data-act=key]")
+    if not meaning.count():
+        ctl = page.locator(".px-meaning-ctl")
+        fails.append(
+            "home: search's meaning control offers no key entry: "
+            f"'{ctl.first.inner_text() if ctl.count() else 'no control'}'"
+        )
+    page.keyboard.press("Escape")
+    go(page, base + "/ask")
+    if not page.locator(".px-aistatus .px-keyentry").count():
+        fails.append("home: the Ask page has no CBORG key entry in .px-aistatus")
+    page.context.close()
+    return fails
+
+
+def check_bar(browser, base: str) -> list[str]:
+    """At 1440 px the bar holds at most 8 controls after the wordmark; every collection is
+    within two clicks of home; the Browse menu works by mouse, keyboard and tap."""
+    fails: list[str] = []
+    page = new_page(browser, WIDE)
+    go(page, base + "/")
+    controls = page.evaluate(
+        """() => [...document.querySelectorAll('header.bar a, header.bar button,'
+            + ' header.bar input, header.bar select')]
+            .filter(e => !e.matches('.wordmark') && e.getClientRects().length
+                     && getComputedStyle(e).visibility !== 'hidden')
+            .map(e => e.getAttribute('aria-label') || e.textContent.trim().split('\\n')[0])"""
+    )
+    if not controls or len(controls) > BAR_MAX:
+        fails.append(f"home: at 1440 px the bar has {len(controls)} controls: {controls}")
+    navs = page.eval_on_selector_all(
+        "header.bar .barnav > a.barlink", "els => els.map(e => e.textContent.trim())"
+    )
+    if navs != BAR_LINKS:
+        fails.append(f"home: bar links {navs}, expected {BAR_LINKS}")
+    # About is a tab of its own after the Browse menu, then the tools.
+    order = page.evaluate(
+        """() => [...document.querySelector('header.bar .barnav').children,
+                  ...document.querySelector('header.bar .tools').children]
+            .map(e => e.matches('.barmenu') ? 'Browse' : e.matches('.search-button') ? 'Search'
+                 : e.matches('.darkmode') ? 'theme' : e.textContent.trim())"""
+    )
+    want_order = [*BAR_LINKS[:3], "Browse", "About", "Search", "Ask", "theme"]
+    if order != want_order:
+        fails.append(f"home: the bar reads {order}, expected {want_order}")
+    browse = page.eval_on_selector_all(
+        "#barmenu-list a", "els => els.map(e => [e.textContent.trim(), e.getAttribute('href')])"
+    )
+    if [b[0] for b in browse] != BROWSE_ITEMS:
+        fails.append(f"home: Browse menu lists {[b[0] for b in browse]}")
+
+    # Two clicks: a link shown on home is one click; a Browse item is two.
+    def target_of(href: str) -> str:
+        return urlparse(href).path.strip("/").removeprefix(urlparse(base).path.strip("/"))
+
+    btn = page.locator("header.bar .barmenu-btn")
+    for coll in COLLECTIONS:
+        go(page, base + "/")
+        want = coll.rstrip("/")
+        shown = page.locator("header.bar .barnav > a.barlink, a.kindcard")
+        hrefs = shown.evaluate_all("els => els.map(e => e.href)")
+        hit = next((i for i, h in enumerate(hrefs) if target_of(h).strip("/") == want), None)
+        clicks = 1
+        if hit is not None:
+            shown.nth(hit).click()
+        else:
+            items = page.locator("#barmenu-list a")
+            ih = items.evaluate_all("els => els.map(e => e.href)")
+            j = next((i for i, h in enumerate(ih) if target_of(h).strip("/") == want), None)
+            if j is None:
+                fails.append(f"home: {coll} is not linked from the bar, a kind card or Browse")
+                continue
+            btn.click()
+            items.nth(j).click()
+            clicks = 2
+        try:
+            page.wait_for_url(lambda u, w=want: target_of(u).strip("/") == w, timeout=8000)
+        except PlaywrightTimeout:
+            fails.append(f"home: {clicks} click(s) toward {coll} land on {page.url}")
+            continue
+        page.wait_for_load_state("networkidle")
+        if not page.locator("h1").count():
+            fails.append(f"home: {coll} has no title after {clicks} click(s)")
+
+    # The menu by mouse: a click opens it, a second closes it, a click outside closes it.
+    go(page, base + "/")
+    lst = page.locator("#barmenu-list")
+
+    def state() -> tuple[str | None, bool]:
+        return btn.get_attribute("aria-expanded"), lst.is_visible()
+
+    if state() != ("false", False):
+        fails.append(f"home: the Browse menu starts {state()}")
+    btn.click()
+    if state() != ("true", True):
+        fails.append(f"home: a click on Browse leaves {state()}")
+    btn.click()
+    if state() != ("false", False):
+        fails.append(f"home: a second click on Browse leaves {state()}")
+    btn.click()
+    page.mouse.click(700, 600)
+    if state() != ("false", False):
+        fails.append(f"home: a click outside the Browse menu leaves {state()}")
+    # The keyboard: Enter opens, arrows move through the items, Escape closes and refocuses.
+    btn.focus()
+    page.keyboard.press("Enter")
+    if state() != ("true", True):
+        fails.append(f"home: Enter on Browse leaves {state()}")
+    page.keyboard.press("Escape")
+    focused = page.evaluate("document.activeElement?.matches('.barmenu-btn')")
+    if state() != ("false", False) or not focused:
+        fails.append(f"home: Escape after Enter leaves {state()}, focus on Browse {focused}")
+    page.keyboard.press("ArrowDown")
+    first = page.evaluate("document.activeElement?.textContent.trim()")
+    page.keyboard.press("ArrowDown")
+    second = page.evaluate("document.activeElement?.textContent.trim()")
+    page.keyboard.press("ArrowUp")
+    page.keyboard.press("ArrowUp")
+    wrapped = page.evaluate("document.activeElement?.textContent.trim()")
+    labels = [b[0] for b in browse]
+    if state() != ("true", True) or [first, second, wrapped] != [
+        labels[0],
+        labels[1],
+        labels[-1],
+    ]:
+        fails.append(
+            f"home: arrows on Browse focus {[first, second, wrapped]}, menu {state()}; "
+            f"expected {labels[0]}, {labels[1]}, then {labels[-1]}"
+        )
+    page.keyboard.press("Escape")
+    if state() != ("false", False) or not page.evaluate(
+        "document.activeElement?.matches('.barmenu-btn')"
+    ):
+        fails.append("home: Escape inside the Browse menu does not close it and refocus Browse")
+    # A tap opens it and a tap outside closes it.
+    tap = browser.new_context(viewport=WIDE, has_touch=True, is_mobile=True).new_page()
+    go(tap, base + "/")
+    tbtn = tap.locator("header.bar .barmenu-btn")
+    tlist = tap.locator("#barmenu-list")
+    if tbtn.is_visible():
+        tbtn.tap()
+        opened = (tbtn.get_attribute("aria-expanded"), tlist.is_visible())
+        tap.touchscreen.tap(700, 700)
+        tap.wait_for_timeout(200)
+        closed = (tbtn.get_attribute("aria-expanded"), tlist.is_visible())
+        if opened != ("true", True) or closed != ("false", False):
+            fails.append(f"home: a tap on Browse gives {opened}, a tap outside {closed}")
+    else:
+        fails.append("home: the Browse button is hidden on a touch screen at 1440 px")
+    return fails
+
+
+# Resolves once the page has not scrolled for six animation frames.
+SCROLL_SETTLED_JS = """() => new Promise((done) => {
+    let y = scrollY, still = 0
+    const tick = () => {
+        if (Math.abs(scrollY - y) >= 1) { still = 0; y = scrollY }
+        else if (++still > 5) return done()
+        requestAnimationFrame(tick)
+    }
+    tick()
+})"""
 
 
 def check_strips(browser, base: str, page: Page) -> list[str]:
@@ -167,6 +972,11 @@ def check_strips(browser, base: str, page: Page) -> list[str]:
     )
     if not entries:
         return ["home: no result or question has a topic strip"]
+    hue = dict(
+        page.eval_on_selector_all(
+            ".tkeyslot", "els => els.map(e => [e.dataset.t, e.style.getPropertyValue('--h')])"
+        )
+    )
     keys = page.locator(".tkeyslot").count()
     for i, e in enumerate(entries):
         if e["slots"] != keys:
@@ -211,12 +1021,14 @@ def check_strips(browser, base: str, page: Page) -> list[str]:
     if readout() != "idle|":
         fails.append(f"home: the key opens showing {readout()}")
     hover = entries[-1]["topics"][0]
-    page.locator(f'.tkeyslot[data-t="{hover}"]').hover()
+    if why := rest_on(page, f'.tkeyslot[data-t="{hover}"]'):
+        fails.append(f"home: pointing at the {hover} key slot: {why}")
     if readout() != f"{hover}|":
         fails.append(f"home: pointing at {hover} shows {readout()}")
     page.mouse.move(0, 0)
     topic = entries[0]["topics"][0]
-    page.locator(f'.tkeyslot[data-t="{topic}"]').click()
+    if why := rest_on(page, f'.tkeyslot[data-t="{topic}"]', click=True):
+        fails.append(f"home: clicking the {topic} key slot: {why}")
     if (got := settled()) != want(topic):
         fails.append(f"home: picking {topic} shows {got}, expected {want(topic)}")
     page.mouse.move(0, 0)
@@ -242,6 +1054,9 @@ def check_strips(browser, base: str, page: Page) -> list[str]:
         fails.append("home: Escape does not return focus to the topic's key slot")
     if len(got := page.evaluate(lit_map)) != page.locator("[data-tmap] .cluster").count():
         fails.append(f"home: Escape leaves only map clusters {got} bright")
+    # Escape returns focus to the key slot, which scrolls the page back up; a click
+    # during that scroll lands on whatever passes under the pointer.
+    page.evaluate(SCROLL_SETTLED_JS)
     page.locator(f"{entries_js} .tstrip summary").last.click()
     name = page.locator(f"{entries_js} .tstrip[open] .tname").first
     picked = name.get_attribute("data-t") or ""
@@ -258,14 +1073,96 @@ def check_strips(browser, base: str, page: Page) -> list[str]:
     go(nojs, base + "/")
     if nojs.locator(".tkey").is_visible():
         fails.append("home: the topic key shows without the script")
+    # The explanation sits in a closed details; opening it shows the words.
+    nojs.locator("details.twhy > summary").click()
     if not nojs.locator(".tintro").is_visible():
         fails.append("home: the topic-strip explanation is missing without the script")
     if nojs.locator(f"{entries_js} .tstrip").count() != len(entries):
         fails.append("home: strips missing without the script")
     if nojs.locator(".tname:not([disabled])").count():
         fails.append("home: topic names are live buttons without the script")
+    # A page of its own, so the caller's home page stays on home.
+    other = new_page(browser)
+    fails += board_colour_fails(other, base, hue)
+    # /topics/ is a plain listing again: the key, the map and the table live on home.
+    go(other, base + "/topics/")
+    for sel in ("[data-tkey]", "[data-tmap]", ".topictable"):
+        if n := other.locator(sel).count():
+            fails.append(f"home: /topics/ shows {n} '{sel}'; it belongs on the home page")
     return fails
 
+
+def board_colour_fails(page: Page, base: str, hue: dict[str, str]) -> list[str]:
+    """Each board card and map row takes its topic's colour from the home key."""
+    fails: list[str] = []
+    seen = 0
+    if not hue:
+        return ["strips: the home key has no topic colours"]
+    for path, card in (("/findings/", ".rcard"), ("/directions/", ".qcard")):
+        go(page, base + path)
+        cards = page.eval_on_selector_all(
+            f".board .cards > {card}",
+            "els => els.map(e => [e.dataset.fTopic, e.style.getPropertyValue('--d')])",
+        )
+        heads = page.eval_on_selector_all(
+            ".nvrowh, .qrowh",
+            """els => els.map(e => [
+                (e.matches('a') ? e : e.querySelector('a'))?.getAttribute('href') || '',
+                e.style.getPropertyValue('--d')])""",
+        )
+        for t, d in cards:
+            seen += 1
+            if hue.get(t) != d:
+                fails.append(f"strips: {path} a {t} card has colour '{d}', the key '{hue.get(t)}'")
+                break
+        for h, d in heads:
+            t = last_part(h)
+            if t in hue and hue[t] != d:
+                fails.append(f"strips: {path} row {t} has colour '{d}', the key '{hue[t]}'")
+    if not seen:
+        fails.append("strips: no board card to compare with the key")
+    return fails
+
+
+def rest_on(page: Page, sel: str, click: bool = False) -> str:
+    """Rest the pointer on `sel`'s centre, as a hand would, and report if the element moves
+    out from under it. With `click`, then click it there."""
+    target = page.locator(sel)
+    target.scroll_into_view_if_needed()
+    r = target.bounding_box()
+    x, y = r["x"] + r["width"] / 2, r["y"] + r["height"] / 2
+    page.mouse.move(x, y)
+    # Sampled, since an element that slips away can slip back and oscillate.
+    why = ""
+    for _ in range(8):
+        page.wait_for_timeout(60)
+        now = target.bounding_box()
+        under = page.evaluate(
+            "([x, y, s]) => !!document.elementFromPoint(x, y)?.closest(s)", [x, y, sel]
+        )
+        if abs(now["x"] - r["x"]) > 1 or abs(now["y"] - r["y"]) > 1 or not under:
+            why = (
+                f"it moves from ({r['x']:.0f}, {r['y']:.0f}) to ({now['x']:.0f}, {now['y']:.0f}) "
+                f"under a resting pointer, which is {'still' if under else 'no longer'} on it"
+            )
+            break
+    if click and why:
+        # A slot that will not hold still under the pointer is picked by keyboard, so the
+        # checks after it still test picking; the movement is already a failure.
+        target.focus()
+        page.keyboard.press("Enter")
+    elif click:
+        page.mouse.click(x, y)
+    return why
+
+
+def check_strips_page(browser, base: str) -> list[str]:
+    page = new_page(browser)
+    go(page, base + "/")
+    return check_strips(browser, base, page)
+
+
+# ---------------------------------------------------------------- plain words
 
 PLAIN_COUNTS: dict[str, int] = {}
 
@@ -279,6 +1176,9 @@ def hit_lines(label: str, where: str, text: str) -> list[str]:
     if re.search(r"\bcaveat\b", t, re.I):
         out.append(f"{label}: {where}: 'Caveat' in '{t[:90]}'")
     return out
+
+
+CARDS = ".fcard, .cards > .card.rcard, .cards > .card.qcard"
 
 
 def check_plain(browser, base: str) -> list[str]:
@@ -296,9 +1196,11 @@ def check_plain(browser, base: str) -> list[str]:
             fails.append(f"plain: {path}: HTTP {resp.status if resp else 'none'}")
             continue
         body = page.inner_text("body")
-        # Pop-ups and folded details hold text a reader reveals; check it too (review F6).
+        # Pop-ups, folded details and column notes hold text a reader reveals; check it too.
         body += " ".join(
-            page.eval_on_selector_all(".qpop, details", "els => els.map(e => e.textContent)")
+            page.eval_on_selector_all(
+                ".qpop, details, .nvnote", "els => els.map(e => e.textContent)"
+            )
         )
         for term in PIPELINE_TERMS:
             if term.lower() in body.lower():
@@ -315,30 +1217,32 @@ def check_plain(browser, base: str) -> list[str]:
                 counts["question page"] += 1
                 fails += hit_lines("question page", path, t)
         # Titles are checked apart from bodies so a stored statistic title shows as its own finding.
-        for t in page.eval_on_selector_all(".fcard h3", "els => els.map(e => e.textContent)"):
+        for t in page.eval_on_selector_all(
+            ".fcard h3, .rcard .ct, .qcard .ct", "els => els.map(e => e.textContent)"
+        ):
             fails += hit_lines("title", path, t)
         for sel, name in (
-            (".fcard", "card"),
+            (CARDS, "card"),
             (".chip, .chipwrap .note", "chip"),
             (".qpop", "pop-up"),
         ):
             texts = page.eval_on_selector_all(
                 sel,
-                """(els, sel) => els.map(e => {
+                """(els, name) => els.map(e => {
                     const c = e.cloneNode(true);
-                    // The footer and topic strip name reports and topics, not the card's words.
-                    const skip = 'h3, .meta, .tstrip';
-                    if (sel === '.fcard') c.querySelectorAll(skip).forEach(h => h.remove());
+                    // The title and footer name results, reports and topics, not the card's words.
+                    const skip = 'h3, .ct, .meta, .tstrip';
+                    if (name === 'card') c.querySelectorAll(skip).forEach(h => h.remove());
                     // So do a pop-up's project and topic labels, such as "Statistical Confounding".
                     const labels = '.qpname, .qptopic';
-                    if (sel === '.qpop') c.querySelectorAll(labels).forEach(h => h.remove());
+                    if (name === 'pop-up') c.querySelectorAll(labels).forEach(h => h.remove());
                     return c.textContent;
                 })""",
-                sel,
+                name,
             )
             counts[name] += len(texts)
-            if path == "/findings/" and name == "card" and not texts:
-                fails.append("plain: /findings/ has no .fcard to inspect")
+            if path in ("/findings/", "/directions/") and name == "card" and not texts:
+                fails.append(f"plain: {path} has no board card to inspect")
             if path == "/directions/" and name == "pop-up" and not texts:
                 fails.append("plain: /directions/ has no .qpop to inspect")
             for t in texts:
@@ -347,74 +1251,169 @@ def check_plain(browser, base: str) -> list[str]:
     return fails
 
 
-BAD: list[str] = []
+# ---------------------------------------------------------------- questions grid
 
 
 def dot_expectations() -> dict[str, tuple[str, int]]:
-    """Each question's topic slug and column index, from its record file."""
-    out = {}
-    for did in ids("directions"):
-        fm = frontmatter(ROOT / "wiki" / "directions" / f"{did}.md")
-        topics = fm.get("topics") or [""]
-        readiness = fm.get("readiness", "unknown")
-        if readiness not in NEED_COLUMN:
-            print(f"grid: {did}: unknown readiness '{readiness}'")
-            BAD.append(did)
-        out[did] = (topics[0], NEED_COLUMN.get(readiness, -1))
+    """Each question's topic slug and follow-up column index, from its published record."""
+    return {
+        q.removeprefix("directions/"): (e["topic"], e["col"])
+        for q, e in records()["questions"].items()
+    }
+
+
+DOTS_JS = """() => [...document.querySelectorAll('.qgrid a.qdot')].map(e => {
+    const cell = e.closest('.qcell')
+    const row = e.closest('.qrow')
+    const cells = [...row.querySelectorAll('.qcell')]
+    const h = row.querySelector('.qrowh a')
+    return {
+        id: e.getAttribute('href').split('/').pop(),
+        col: cells.indexOf(cell),
+        topic: h ? h.getAttribute('href').split('/').pop() : '',
+    }
+})"""
+
+
+def dot_place_fails(page: Page, want: dict[str, tuple[str, int]]) -> list[tuple[str, str]]:
+    """(question id, why) for each dot outside its record's topic row and follow-up column."""
+    dots = page.evaluate(DOTS_JS)
+    out: list[tuple[str, str]] = []
+    if len(dots) != len(want):
+        out.append(("grid", f"{len(dots)} dots, expected {len(want)}"))
+    for d in dots:
+        exp = want.get(d["id"])
+        if exp is None:
+            out.append((d["id"], "has no record"))
+            continue
+        topic, col = exp
+        if d["topic"] != topic:
+            out.append((d["id"], f"in row '{d['topic']}', record says '{topic}'"))
+        if d["col"] != col:
+            out.append((d["id"], f"in column {d['col']}, record says {col}"))
     return out
+
+
+QHEAD_JS = """() => {
+    const head = document.querySelector('.qgrid .qrow.qhead')
+    const effort = document.querySelectorAll('.qgrid .qrow.qeffort')
+    const line = effort[0]?.querySelector('.qeffortline')
+    const lr = line?.getBoundingClientRect()
+    return {
+        efforts: effort.length,
+        before: !!head && head.previousElementSibling === effort[0],
+        line: [...(line?.querySelectorAll('.qaxend') || [])]
+            .map(e => e.textContent.trim()).join(' → '),
+        arrow: (() => {
+            const a = line?.querySelector('.qaxarrow')?.getBoundingClientRect()
+            return !!a && !!lr && a.width >= lr.width / 3 && a.height >= 1.5
+        })(),
+        corner: (head?.querySelector('.qcorner')?.textContent || '').trim(),
+        heads: [...(head?.querySelectorAll('.qcolh') || [])].map(h => {
+            const r = h.getBoundingClientRect()
+            return {
+                label: (h.childNodes[0]?.textContent || '').trim(),
+                n: h.querySelector('.qn')?.textContent.trim() || '',
+                note: h.querySelector('.qcoln')?.textContent.trim() || '',
+                notes: h.querySelectorAll('.qcoln').length,
+                inLine: !!lr && lr.left <= (r.left + r.right) / 2
+                    && (r.left + r.right) / 2 <= lr.right,
+            }
+        }),
+    }
+}"""
+
+
+def qhead_fails(page: Page) -> list[str]:
+    """The grid's columns are publish's follow-up order, each header naming its column,
+    its count and its note, under one effort line spanning them all."""
+    rec = records()
+    qi = rec["qindex"]
+    got = page.evaluate(QHEAD_JS)
+    fails: list[str] = []
+    if got["efforts"] != 1 or not got["before"] or got["line"] != EFFORT_LINE:
+        fails.append(
+            f"grid: {got['efforts']} effort rows, right before the header {got['before']}, "
+            f"reading '{got['line']}'; expected one reading '{EFFORT_LINE}'"
+        )
+    if not got["arrow"]:
+        fails.append("grid: the effort axis has no arrow spanning a third of its width")
+    if got["corner"] != ROW_AXIS:
+        fails.append(f"grid: the row-label corner reads '{got['corner']}', not '{ROW_AXIS}'")
+    count = Counter(e["follow"] for e in rec["questions"].values())
+    want = [
+        {
+            "label": (qi.get("follow_text") or {}).get(k, ""),
+            "n": str(count[k]),
+            "note": (qi.get("follow_notes") or {}).get(k, ""),
+            "notes": 1,
+            "inLine": True,
+        }
+        for k in rec["follow_order"]
+    ]
+    if got["heads"] != want or not want:
+        fails.append(f"grid: column headers {got['heads']}, records give {want}")
+    return fails
+
+
+def dot_word_fails(names: list, qs: dict) -> list[str]:
+    """Each dot's name and pop-up name its follow-up need and say "Starts with existing
+    data" and "Data availability unclear" exactly when its record sets them; the dot carries
+    no approach shape and the pop-up no "Needs:" line."""
+    fails: list[str] = []
+    for qid, name, need, shaped in names:
+        e = qs.get(qid)
+        if e is None:
+            continue
+        name = name or ""
+        if shaped:
+            fails.append(f"grid: dot {qid} still carries an approach shape")
+        if not e["follow_text"] or e["follow_text"] not in name or e["follow_text"] not in need:
+            fails.append(f"grid: dot '{name[:50]}' does not say '{e['follow_text']}'")
+        for words, on in ((FIRST_WORDS, e["first"]), (UNCLEAR_WORDS, e["unclear"])):
+            for where, said in (("name", name), ("pop-up", need)):
+                if (words in said) != on:
+                    fails.append(f"grid: dot {qid} {where} says '{words}' {not on}, record {on}")
+        if "Needs:" in need:
+            fails.append(f"grid: dot {qid} pop-up still has a 'Needs:' line")
+    if not names:
+        fails.append("grid: no dot to read")
+    return fails[:12]
 
 
 def check_grid(browser, base: str) -> list[str]:
     fails: list[str] = []
+    rec = records()
     want = dot_expectations()
-    fails += [f"grid: {d}: unknown readiness in record" for d in BAD]
     if not want:
-        return ["grid: no direction records under wiki/directions"]
+        return ["grid: no published open questions under quartz/content/directions"]
+    if not rec["follow_order"]:
+        fails.append("grid: the open-questions index has no follow_order")
+    for stem, fm in rec["directions"].items():
+        if fm.get("follow") not in rec["follow_order"]:
+            fails.append(f"grid: {stem}: follow '{fm.get('follow')}' is not a known column")
 
     nojs = new_page(browser, js=False)
     go(nojs, base + "/directions/")
-    hrefs = nojs.eval_on_selector_all("a.qdot", "els => els.map(e => e.href)")
+    hrefs = nojs.eval_on_selector_all(".qgrid a.qdot", "els => els.map(e => e.href)")
     if len(hrefs) != len(want):
         fails.append(f"grid: no-JS page has {len(hrefs)} dots, expected {len(want)}")
     for h in hrefs:
-        try:
-            code = urllib.request.urlopen(h, timeout=20).status
-        except urllib.error.HTTPError as e:
-            code = e.code
-        if code != 200:
+        if (code := http_status(h)) != 200:
             fails.append(f"grid: dot link {h} returned HTTP {code}")
 
     page = new_page(browser)
     go(page, base + "/directions/")
-    dots = page.eval_on_selector_all(
-        ".qgrid a.qdot",
-        """els => els.map(e => {
-            const cell = e.closest('.qcell');
-            const row = e.closest('.qrow');
-            const cells = [...row.querySelectorAll('.qcell')];
-            const h = row.querySelector('.qrowh a');
-            return {
-                id: e.getAttribute('href').split('/').pop(),
-                col: cells.indexOf(cell),
-                topic: h ? h.getAttribute('href').split('/').pop() : '',
-            };
-        })""",
+    fails += [f"grid: {i} {why}" for i, why in dot_place_fails(page, want)]
+    fails += qhead_fails(page)
+    body = page.inner_text("body") + " ".join(
+        page.eval_on_selector_all(".qpop", "els => els.map(e => e.textContent)")
     )
-    if len(dots) != len(want):
-        fails.append(f"grid: {len(dots)} dots, expected {len(want)}")
-    for d in dots:
-        exp = want.get(d["id"])
-        if exp is None:
-            fails.append(f"grid: dot {d['id']} has no record")
-            continue
-        topic, col = exp
-        if d["topic"] != topic:
-            fails.append(f"grid: {d['id']} in row '{d['topic']}', record says '{topic}'")
-        if d["col"] != col:
-            fails.append(f"grid: {d['id']} in column {d['col']}, record says {col}")
+    if gone := [w for w in GONE_NEED_WORDS if w in body]:
+        fails.append(f"grid: /directions/ still says {gone}")
 
     # Hover, focus and tap each open a pop-up holding the title; Escape closes it.
-    # The first plain (unringed) dot, whose fading must not reach its pop-up.
+    # The first unringed dot: no fading reaches its pop-up.
     first = page.locator(".qgrid .qd:not(.cross)").first
     dot = first.locator("a.qdot")
     pop = first.locator(".qpop")
@@ -454,6 +1453,30 @@ def check_grid(browser, base: str) -> list[str]:
     if pop.is_visible():
         fails.append("grid: Escape does not close a pinned pop-up")
 
+    # The pointer can move from any dot onto its pop-up. Ringed pop-ups scroll, which
+    # once clipped the CSS bridge across the gap and closed them on the way. Focus left
+    # on a dot after Escape keeps its pop-up shut, so it is cleared first.
+    page.evaluate("document.activeElement.blur()")
+    for sel in (".qgrid .qd.cross", ".qgrid .qd:not(.cross)"):
+        wraps = page.locator(sel)
+        if not wraps.count():
+            fails.append(f"grid: no '{sel}' dot to walk onto")
+        for i in range(min(8, wraps.count())):
+            wrap = wraps.nth(i)
+            why = walk_onto(page, wrap.locator("a.qdot"), wrap.locator(".qpop"))
+            # Let the last pop-up close: a dot entered within 250 ms counts as a neighbour.
+            page.mouse.move(0, 0)
+            page.wait_for_timeout(400)
+            if why:
+                fails.append(f"grid: {sel.split()[-1]} dot {i + 1}: {why}")
+                break
+    # A pointer that jumps straight from one dot to another, outside the corridor to the
+    # first pop-up, gets the second dot's pop-up and keeps it.
+    a, z = page.locator(".qgrid .qd").nth(0), page.locator(".qgrid .qd").nth(12)
+    jump = jump_to(page, a.locator("a.qdot"), z.locator("a.qdot"))
+    if not z.locator(".qpop").is_visible() or a.locator(".qpop").is_visible():
+        fails.append(f"grid: a jump between dots leaves the wrong pop-up ({jump})")
+
     # Tab from a focus-opened pop-up reaches its "Open the question" link (review F10).
     page.evaluate("document.activeElement.blur()")
     page.mouse.move(0, 0)
@@ -467,21 +1490,43 @@ def check_grid(browser, base: str) -> list[str]:
         page.keyboard.press("Escape")
         if not page.evaluate("document.activeElement?.matches('a.qdot')") or pop.is_visible():
             fails.append("grid: Escape inside a pop-up does not close it and refocus its dot")
-    # Each dot's accessible name carries its approach (review F12).
+    # Each dot's name and pop-up say what following up needs and carry exactly the
+    # markers its record sets.
+    qs = rec["questions"]
     names = page.eval_on_selector_all(
         ".qgrid .qd",
-        "els => els.map(e => [e.querySelector('a.qdot').getAttribute('aria-label'), "
-        "e.querySelector('a.qdot').dataset.shape])",
+        "els => els.map(e => [e.dataset.id, e.querySelector('a.qdot').getAttribute('aria-label'),"
+        " e.querySelector('.qpop .qneed')?.textContent || '',"
+        " e.querySelector('a.qdot').hasAttribute('data-shape')])",
     )
-    approaches = {
-        "lakehouse analysis": "Analysis of existing data",
-        "experiment": "Experiment",
-        "analysis then experiment": "Analysis, then experiment",
-    }
-    for name, shape in names:
-        if shape in approaches and approaches[shape] not in (name or ""):
-            fails.append(f"grid: dot '{(name or '')[:50]}' does not name its approach")
-            break
+    fails += dot_word_fails(names, qs)
+    # Control: a dot moved to another follow-up column, and a first-step marker dropped from
+    # its words, must each be caught on that dot alone.
+    moved = page.evaluate(
+        """() => { for (const row of document.querySelectorAll('.qgrid .qrow')) {
+            const cells = [...row.querySelectorAll('.qcell')]
+            const from = cells.findIndex(c => c.querySelector('.qd'))
+            if (from < 0 || cells.length < 2) continue
+            const d = cells[from].querySelector('.qd'), to = cells[(from + 1) % cells.length]
+            to.append(d)
+            return d.dataset.id.split('/').pop()
+        } return '' }"""
+    )
+    caught = {i for i, _ in dot_place_fails(page, want)}
+    if not moved or caught != {moved}:
+        fails.append(
+            f"grid: control 'dot in the wrong column' caught {sorted(caught)}, moved {moved}"
+        )
+    firsts = [n for n in names if qs.get(n[0], {}).get("first")]
+    if firsts:
+        qid, name, need, shaped = firsts[0]
+        cut = [(qid, (name or "").replace(FIRST_WORDS, ""), need, shaped)]
+        if not dot_word_fails(cut, qs):
+            fails.append(f"grid: control 'first-step words dropped' passed unnoticed on {qid}")
+    else:
+        print("note: grid: no question starts with existing data, so no first-step control")
+
+    fails += question_legend_fails(browser, base)
 
     touch = browser.new_context(viewport=PHONE, has_touch=True, is_mobile=True).new_page()
     go(touch, base + "/directions/")
@@ -492,8 +1537,30 @@ def check_grid(browser, base: str) -> list[str]:
     ttitle = tpop.locator("strong").first.text_content() or ""
     if not ttitle or not tpop.is_visible() or ttitle not in tpop.inner_text():
         fails.append("grid: tap does not open the pop-up with the title")
+    # On a narrow phone a pop-up taller than the room above and below scrolls instead of
+    # covering its dot, so a second tap on the dot closes it.
+    small = browser.new_context(
+        viewport={"width": 320, "height": 568}, has_touch=True, is_mobile=True
+    ).new_page()
+    go(small, base + "/directions/")
+    small.wait_for_timeout(500)
+    dots = small.locator(".qgrid .qd:visible a.qdot")
+    for i in range(0, min(60, dots.count()), 5):
+        d = dots.nth(i)
+        d.scroll_into_view_if_needed()
+        small.evaluate("y => scrollBy({top: y, behavior: 'instant'})", d.bounding_box()["y"] - 300)
+        r = d.bounding_box()
+        x, y = r["x"] + r["width"] / 2, r["y"] + r["height"] / 2
+        small.touchscreen.tap(x, y)
+        small.wait_for_timeout(250)
+        small.touchscreen.tap(x, y)
+        small.wait_for_timeout(250)
+        if small.locator(".qd[data-open]").count():
+            fails.append(f"grid: at 320 px a second tap on dot {i + 1} does not close its pop-up")
+            break
+        small.keyboard.press("Escape")
 
-    for path in ("/", "/findings/", "/directions/"):
+    for path in ("/", "/findings/", "/directions/", "/topics/"):
         narrow = new_page(browser, PHONE)
         go(narrow, base + path)
         sw, iw = narrow.evaluate("[document.documentElement.scrollWidth, window.innerWidth]")
@@ -502,10 +1569,146 @@ def check_grid(browser, base: str) -> list[str]:
     return fails
 
 
+def question_legend_fails(browser, base: str) -> list[str]:
+    """Legend dots share the grid's classes but are not questions: hovering or clicking one
+    opens nothing and raises no page error (a click once threw a TypeError)."""
+    fails: list[str] = []
+    page, errors = watched(browser)
+    go(page, base + "/directions/")
+    keys = page.locator(".qlegend .qd.key")
+    if not keys.count():
+        return ["grid: the questions legend has no dot to try"]
+    url = page.url
+    for i in range(keys.count()):
+        dot = keys.nth(i).locator(".qdot")
+        dot.scroll_into_view_if_needed()
+        dot.hover()
+        page.wait_for_timeout(150)
+        dot.click()
+        page.wait_for_timeout(200)
+        shown = page.evaluate(
+            "() => [document.querySelectorAll('.qd[data-open], .qd[data-hover]').length,"
+            " [...document.querySelectorAll('.qpop')].filter(e => e.getClientRects().length"
+            " && getComputedStyle(e).display !== 'none').length]"
+        )
+        if shown != [0, 0] or page.url != url:
+            fails.append(f"grid: legend dot {i + 1} opens {shown} (open, pop-ups), URL {page.url}")
+        page.mouse.move(0, 0)
+    fails += [f"grid: clicking a legend dot raises '{e}'" for e in errors]
+    return fails
+
+
+# ---------------------------------------------------------------- result pages and labels
+
+
+def type_record_fails(rec: dict) -> list[str]:
+    """Each listed result's type comes from `rtype` in the reader's words, a listed
+    correction says it revises an earlier claim, a listed null result measured something,
+    and bookkeeping and untested results stay off the lists."""
+    fails: list[str] = []
+    for i, fm in sorted(rec["findings"].items()):
+        listed = i in rec["listed"]
+        if fm.get("rtype") in OFF_TYPES and listed:
+            fails.append(f"pages: {fm.get('rtype')} result {i} is listed")
+        if not listed:
+            continue
+        rtype = fm.get("rtype")
+        if rtype not in TYPE_WORDS or fm.get("kind_text") != TYPE_WORDS[rtype]:
+            fails.append(
+                f"pages: listed {i} has rtype '{rtype}', kind_text '{fm.get('kind_text')}'"
+            )
+        if (fm.get("updates_claim") is True) != (fm.get("result") == "correction"):
+            fails.append(
+                f"pages: listed {i} ({fm.get('result')}) has updates_claim "
+                f"{fm.get('updates_claim')}"
+            )
+        if fm.get("result") == "null result" and fm.get("gist_case") not in SHOWN_CASES:
+            fails.append(f"pages: listed null {i} has case '{fm.get('gist_case')}'")
+    return fails
+
+
+def type_tag_fails(words: list, rec: dict, where: str) -> list[str]:
+    """Each result's tags: its type tag (class t-<rtype>, the type's words), then "Revises an
+    earlier claim" exactly when its record says so. `words` holds [id, [[class, text]]]."""
+    for cid, tags in words:
+        r = rec["results"].get(cid)
+        if r is None:
+            return [f"pages: {where} card {cid} has no listed record"]
+        want = [[f"rt t-{r['kind']}", TYPE_WORDS[r["kind"]]]]
+        if r["updates"]:
+            want.append(["rt upd", UPDATES_WORDS])
+        if [list(t) for t in tags] != want:
+            gone = [t for _, t in tags if t in GONE_KIND_WORDS]
+            return [f"pages: {where} {cid} tags {tags}, expected {want}; old words {gone}"]
+    return []
+
+
+def mark_word_fails(marks: list, rec: dict) -> list[str]:
+    """Each map mark's words: its type, then "Revises an earlier claim" when the record says so."""
+    fails = []
+    for mid, said in marks:
+        r = rec["results"].get(mid)
+        if r is None:
+            continue
+        want = ". ".join([TYPE_WORDS[r["kind"]], *([UPDATES_WORDS] if r["updates"] else [])])
+        if said != want:
+            fails.append(f"pages: map mark {mid} reads '{said}', expected '{want}'")
+    return fails[:5]
+
+
+def question_tag_fails(page: Page, base: str, rec: dict) -> list[str]:
+    """Question cards and pages show what following up needs, then the two markers, with
+    no approach and no "Needs:" line; the cards carry the board's follow and first keys."""
+    fails: list[str] = []
+
+    def want(qid: str) -> list[list[str]]:
+        e, fm = rec["questions"][qid], rec["directions"][qid.removeprefix("directions/")]
+        out = [[f"ready f-{fm.get('follow') or 'existing'}", e["follow_text"]]]
+        out += [["c-kind", FIRST_WORDS]] if e["first"] else []
+        return out + ([["c-kind", UNCLEAR_WORDS]] if e["unclear"] else [])
+
+    tags_js = "[...e.querySelectorAll(':scope > span')].map(t => [t.className, t.textContent])"
+    go(page, base + "/directions/")
+    cards = page.eval_on_selector_all(
+        ".board .cards > .qcard",
+        f"els => els.map(c => {{ const e = c.querySelector('.ctags'); return [c.dataset.id,"
+        f" e ? {tags_js} : [], c.dataset.fFollow || '', c.dataset.tFirst === '1'] }})",
+    )
+    if len(cards) != len(rec["questions"]):
+        fails.append(f"pages: /directions/ has {len(cards)} cards, {len(rec['questions'])} records")
+
+    def card_fails(rows: list) -> list[str]:
+        for qid, tags, follow, first in rows:
+            e = rec["questions"].get(qid)
+            if e is None:
+                return [f"pages: /directions/ card {qid} has no record"]
+            if tags != want(qid) or follow != e["follow"] or first != e["first"]:
+                return [
+                    f"pages: /directions/ card {qid} tags {tags}, data-f-follow '{follow}', "
+                    f"data-t-first {first}; expected {want(qid)}, {e['follow']}, {e['first']}"
+                ]
+        return []
+
+    fails += card_fails(cards)
+    # Control: a first-step card that loses its marker tag must be caught.
+    firsts = [c for c in cards if rec["questions"].get(c[0], {}).get("first")]
+    if firsts and not card_fails([[firsts[0][0], firsts[0][1][:1], *firsts[0][2:]]]):
+        fails.append(f"pages: control 'first-step tag dropped' passed unnoticed on {firsts[0][0]}")
+    for stem in sorted(rec["directions"])[:10]:
+        go(page, f"{base}/directions/{stem}")
+        bar = page.eval_on_selector_all(".cardbar", f"els => els.map(e => {tags_js})")
+        exp = want(f"directions/{stem}")
+        if not bar or bar[0] != exp:
+            fails.append(f"pages: /directions/{stem} bar reads {bar[:1]}, expected {exp}")
+    return fails
+
+
 def check_pages(browser, base: str) -> list[str]:
     fails: list[str] = []
+    rec = records()
     page = new_page(browser)
     full = 0
+    always = [h for h in FINDING_HEADINGS if h != RELATED_HEADING]
     for fid in ids("findings")[:10]:
         go(page, f"{base}/findings/{fid}")
         heads = page.eval_on_selector_all("h2", "els => els.map(e => e.textContent.trim())")
@@ -515,95 +1718,203 @@ def check_pages(browser, base: str) -> list[str]:
         for required in FINDING_HEADINGS[:3]:
             if required not in heads:
                 fails.append(f"pages: {fid}: lacks '{required}': {heads}")
-        full += all(h in heads for h in FINDING_HEADINGS)
+        full += all(h in heads for h in always)
     if not full:
-        fails.append("pages: no checked finding page has all five section headings")
+        fails.append(f"pages: no checked finding page has all of {always}")
 
     go(page, base + "/findings/")
     h1 = page.eval_on_selector_all("h1", "els => els.map(e => e.textContent.trim())")
     if h1 != ["Results"]:
         fails.append(f"pages: /findings/ title {h1}, expected ['Results']")
+    if page.locator(".c-chips").count():
+        fails.append("pages: /findings/ still has the old .c-chips filter")
+    # The board's type chips, in legend order, for the types the listed results hold.
+    kinds = {r["kind"] for r in rec["results"].values()}
+    want = ["All"] + [w for k, w in TYPE_WORDS.items() if k in kinds]
+    row = ".board .px-tools .facets[data-k=kind]"
     chips = page.eval_on_selector_all(
-        ".c-chips .c-chip", "els => els.map(e => e.textContent.trim())"
+        f"{row} .px-chip",
+        "els => els.map(e => e.childNodes[0].textContent.trim()"
+        " || e.textContent.replace(/\\d+$/, '').trim())",
     )
-    if chips != KIND_CHIPS:
-        fails.append(f"pages: /findings/ filter chips {chips}, expected {KIND_CHIPS}")
-    groups = page.eval_on_selector_all(".c-chips", "els => els.map(e => e.dataset.filterGroup)")
-    if "label" in groups:
-        fails.append(f"pages: /findings/ still has a label chip group: {groups}")
+    if chips != want:
+        fails.append(f"pages: /findings/ type chips {chips}, expected {want}")
+    keys = page.eval_on_selector_all(f"{row} .px-chip", "els => els.map(e => e.dataset.f)")
+    if keys != [""] + [k for k in TYPE_WORDS if k in kinds]:
+        fails.append(f"pages: /findings/ type chips are keyed {keys}")
+    lbl = page.eval_on_selector_all(f"{row} .px-facet-lbl", "els => els.map(e => e.textContent)")
+    if lbl != ["Type of result"]:
+        fails.append(f"pages: /findings/ type facet is labelled {lbl}, expected 'Type of result'")
     # Filter chips say which is on and the group has a name (review F11).
     state = page.eval_on_selector_all(
-        ".c-chips[data-filter-group=kind]",
+        row,
         "els => els.map(g => [g.getAttribute('aria-label'), "
-        "[...g.querySelectorAll('.c-chip')].map(b => b.getAttribute('aria-pressed'))])",
+        "[...g.querySelectorAll('.px-chip')].map(b => b.getAttribute('aria-pressed'))])",
     )
     if not state or not state[0][0] or state[0][1][:1] != ["true"]:
         fails.append(f"pages: kind chips lack a group name or aria-pressed: {state}")
-    page.locator(".c-chips .c-chip").nth(1).click()
+    page.locator(f"{row} .px-chip").nth(1).click()
     pressed = page.eval_on_selector_all(
-        ".c-chips .c-chip", "els => els.map(b => b.getAttribute('aria-pressed'))"
+        f"{row} .px-chip", "els => els.map(b => b.getAttribute('aria-pressed'))"
     )
     if pressed[:2] != ["false", "true"]:
         fails.append(f"pages: aria-pressed does not follow the chosen chip: {pressed}")
-    fails += contrast(browser, base)
+
+    fails += type_record_fails(rec)
+    go(page, base + "/findings/")
+    words = page.eval_on_selector_all(
+        ".board .cards > .rcard",
+        "els => els.map(e => [e.dataset.id, [...e.querySelectorAll('.ctags > .rt')]"
+        ".map(t => [t.className, t.textContent.trim()])])",
+    )
+    if len(words) != len(rec["listed"]):
+        fails.append(f"pages: /findings/ has {len(words)} cards, records list {len(rec['listed'])}")
+    fails += type_tag_fails(words, rec, "/findings/")
+    # Control: a card that loses its "Revises an earlier claim" tag must be caught.
+    upd = next((w for w in words if rec["results"].get(w[0], {}).get("updates")), None)
+    if upd and not type_tag_fails([[upd[0], upd[1][:1]]], rec, "control"):
+        fails.append(f"pages: control 'revision tag dropped' passed unnoticed on {upd[0]}")
+    # The map's preview and box list read a mark's data-kind, so a correction's note rides there.
+    marks = page.eval_on_selector_all(
+        ".nvgrid .nd[data-id]", "els => els.map(e => [e.dataset.id, e.dataset.kind || ''])"
+    )
+    fails += mark_word_fails(marks, rec)
+    if upd and not mark_word_fails([[upd[0], TYPE_WORDS[rec["results"][upd[0]]["kind"]]]], rec):
+        fails.append(f"pages: control 'map note dropped' passed unnoticed on {upd[0]}")
+    # The first ten pages, plus every unlisted one: a page off the lists shows no type tag
+    # and no revision note, and an unlisted correction no PubMed chip.
+    unlisted = [f for f in ids("findings") if f not in rec["listed"]]
+    for fid in ids("findings")[:10] + unlisted:
+        go(page, f"{base}/findings/{fid}")
+        bar = page.eval_on_selector_all(
+            ".cardbar",
+            "els => els.map(e => [...e.querySelectorAll(':scope > .rt, :scope .chip')]"
+            ".map(t => [t.className, t.textContent.trim()]))",
+        )
+        tags = [t for t in (bar[0] if bar else []) if t[0] != "chip"]
+        if fid in rec["listed"]:
+            fails += type_tag_fails([[fid, tags]], rec, f"/findings/{fid}")
+        elif rec["findings"][fid].get("rtype") in ("bookkeeping", "untested"):
+            # A correction's chip would read as a verdict on the fix; other chips may stay.
+            fix = rec["findings"][fid].get("result") == "correction"
+            shown = [t for t in (bar[0] if bar else []) if t[0] != "chip" or fix]
+            if shown:
+                fails.append(f"pages: unlisted /findings/{fid} shows tags {shown}")
+    fails += question_tag_fails(page, base, rec)
+
+    # Both boards use the concepts card with square corners (6A).
+    for path, n in (("/findings/", len(rec["listed"])), ("/directions/", len(rec["directions"]))):
+        go(page, base + path)
+        radii = page.eval_on_selector_all(
+            ".board .cards > .card",
+            "els => els.map(e => { const s = getComputedStyle(e); return [s.borderTopLeftRadius,"
+            " s.borderTopRightRadius, s.borderBottomLeftRadius, s.borderBottomRightRadius] })",
+        )
+        if len(radii) != n:
+            fails.append(f"pages: {path} has {len(radii)} .cards .card, expected {n}")
+        rounded = [r for r in radii if any(v != "0px" for v in r)]
+        if rounded:
+            fails.append(f"pages: {path} {len(rounded)} cards have rounded corners {rounded[0]}")
+    go(page, base + "/findings/")
+    fails += chip_title_fails(page, "/findings/", minimum=1)
+    for fid in ids("findings")[:10]:
+        go(page, f"{base}/findings/{fid}")
+        fails += chip_title_fails(page, f"/findings/{fid}")
+    fails += contrast(browser, base, "pages")
     # No card footer shows its separator alone on a line at phone width (review P3c).
     narrow = new_page(browser, PHONE)
-    go(narrow, base + "/findings/")
-    lone = narrow.evaluate(
-        "[...document.querySelectorAll('.fcard .meta > *')]"
-        ".filter(e => e.textContent.trim() === '·').length"
-    )
-    if lone:
-        fails.append(f"pages: {lone} card footers have a separator on its own")
+    for path in ("/findings/", "/directions/"):
+        go(narrow, base + path)
+        lone = narrow.evaluate(
+            "[...document.querySelectorAll('.board .card .meta > span')]"
+            ".filter(e => !e.textContent.trim()).length"
+        )
+        if lone:
+            fails.append(f"pages: {path} {lone} card footers have a separator with no words")
+    topic = next(iter(ids("topics")), None) if (ROOT / "wiki" / "topics").exists() else None
+    if topic:
+        go(narrow, f"{base}/topics/{topic}")
+        lone = narrow.evaluate(
+            "[...document.querySelectorAll('.fcard .meta > *')]"
+            ".filter(e => e.textContent.trim() === '·').length"
+        )
+        if lone:
+            fails.append(f"pages: /topics/{topic} {lone} card footers have a separator on its own")
     return fails
 
 
-def luminance(rgb: tuple[float, ...]) -> float:
-    def ch(v: float) -> float:
-        v /= 255
-        return v / 12.92 if v <= 0.03928 else ((v + 0.055) / 1.055) ** 2.4
+def chip_title_fails(page: Page, where: str, minimum: int = 0) -> list[str]:
+    """Every comparison chip button with a note carries the note as its title (hover), and on
+    a board the note is the card's record chip_note."""
+    fails: list[str] = []
+    rec = records()
+    chips = page.eval_on_selector_all(
+        ".chipwrap:has(> .note)",
+        "els => els.map(e => [e.querySelector(':scope > button.chip')?.getAttribute('title'),"
+        " e.querySelector(':scope > .note').textContent, e.closest('.card')?.dataset.id || ''])",
+    )
+    for title, note, cid in chips:
+        if title is None or collapse(title) != collapse(note):
+            fails.append(f"pages: {where} a chip's title '{title}' is not its note '{note[:60]}'")
+            break
+        want = rec["findings"].get(cid, {}).get("chip_note") if cid else None
+        if want is not None and collapse(want) != collapse(note):
+            fails.append(f"pages: {where} card {cid} chip note differs from its record")
+            break
+    if len(chips) < minimum:
+        fails.append(f"pages: {where} has {len(chips)} chips with a note, expected some")
+    return fails
 
-    r, g, b = (ch(v) for v in rgb)
-    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+def check_contrast(browser, base: str) -> list[str]:
+    return contrast(browser, base, "contrast")
 
 
-def contrast(browser, base: str) -> list[str]:
+def contrast(browser, base: str, label: str) -> list[str]:
     """Small labels reach 4.5:1 against their background in light mode (review F13)."""
     fails = []
-    page = browser.new_context(viewport=DESKTOP, color_scheme="light").new_page()
-    seen = 0
-    for path in ("/", "/findings/", "/directions/"):
-        go(page, base + path)
-        pairs = page.evaluate(
-            """sels => sels.flatMap(sel => [...document.querySelectorAll(sel)]
-              .slice(0, 3).map(e => {
-                if (!e.offsetParent) return null;
-                // The first opaque background up the tree; tints with alpha are skipped.
-                let bg = 'rgb(255, 255, 255)', n = e;
-                while (n) {
-                    const c = getComputedStyle(n).backgroundColor;
-                    const alpha = c.match(/[\\d.]+(?=\\)$)/);
-                    const opaque = c.startsWith('rgb(') || (alpha && Number(alpha[0]) === 1);
-                    if (opaque) { bg = c; break; }
-                    n = n.parentElement;
-                }
-                return [sel, getComputedStyle(e).color, bg];
-            }))""",
-            LIGHT_LABELS,
+    found: set[str] = set()
+    probe = """sels => sels.flatMap(sel => [...document.querySelectorAll(sel)]
+      .filter(e => e.getClientRects().length && getComputedStyle(e).visibility !== 'hidden')
+      .slice(0, 3).map(e => {
+        // The first opaque background up the tree; tints with alpha are skipped.
+        let bg = 'rgb(255, 255, 255)', n = e;
+        while (n) {
+            const c = getComputedStyle(n).backgroundColor;
+            const alpha = c.match(/[\\d.]+(?=\\)$)/);
+            const opaque = c.startsWith('rgb(') || (alpha && Number(alpha[0]) === 1);
+            if (opaque) { bg = c; break; }
+            n = n.parentElement;
+        }
+        return [sel, getComputedStyle(e).color, bg];
+    }))"""
+    rec = records()
+    # Tags that only exist when some record uses them.
+    light = LIGHT_LABELS + [
+        sel
+        for sel, on in (
+            (".ready.f-outside", any(e["follow"] == "outside" for e in rec["questions"].values())),
+            (".rt.upd", any(r["updates"] for r in rec["results"].values())),
         )
-        for sel, fg, bg in [x for x in pairs if x]:
-            nums = [tuple(float(x) for x in re.findall(r"[\d.]+", c)[:3]) for c in (fg, bg)]
-            if len(nums[0]) < 3 or len(nums[1]) < 3:
-                continue
-            a, b = sorted((luminance(nums[0]), luminance(nums[1])), reverse=True)
-            ratio = (a + 0.05) / (b + 0.05)
-            seen += 1
-            if ratio < 4.5:
-                fails.append(f"pages: {path} {sel} contrast {ratio:.2f}:1 ({fg} on {bg})")
-    if not seen:
-        fails.append("pages: no small label found to measure")
+        if on
+    ]
+    for viewport, sels in ((DESKTOP, light), (PHONE, PHONE_LABELS)):
+        page = browser.new_context(viewport=viewport, color_scheme="light").new_page()
+        topic = next(iter(ids("topics")), "") if (ROOT / "wiki" / "topics").exists() else ""
+        for path in ("/", "/findings/", "/directions/", f"/topics/{topic}"):
+            go(page, base + path)
+            for sel, fg, bg in page.evaluate(probe, sels):
+                found.add(sel)
+                r = ratio(rgba(fg), rgba(bg))
+                if r < 4.5:
+                    fails.append(f"{label}: {path} {sel} contrast {r:.2f}:1 ({fg} on {bg})")
+    missing = [s for s in light + PHONE_LABELS if s not in found]
+    if missing:
+        fails.append(f"{label}: no label found to measure for {missing}")
     return sorted(set(fails))
 
+
+# ---------------------------------------------------------------- the Results map
 
 # Quartz's own diagram script looks for a `.center` element this theme does not render;
 # that error predates these pages and is reported apart from theirs.
@@ -621,60 +1932,189 @@ def watched(browser, viewport=DESKTOP, scheme="light") -> tuple[Page, list[str]]
     return page, errors
 
 
+BOXES_JS = """() => {
+    const out = []
+    let topic = ''
+    for (const ch of document.querySelector('.nvgrid').children) {
+        if (ch.matches('.nvrowh'))
+            topic = new URL(ch.href).pathname.replace(/\\/$/, '').split('/').pop()
+        if (!ch.matches('.nvcell')) continue
+        const lab = ch.querySelector('.nvlab')
+        const text = lab?.textContent || ''
+        const col = (lab?.querySelector('.nvnoteb')?.childNodes[0].textContent
+            ?? text.split(' · ')[0]).trim()
+        const n = text.split(' · ').pop()
+        for (const b of ch.querySelectorAll('.nbead'))
+            out.push({p: b.dataset.p, topic, col, n, label: b.getAttribute('aria-label') || '',
+                      ids: [...b.querySelectorAll('.nd')].map(d => d.dataset.id)})
+    }
+    return out
+}"""
+
+
+GROUP_JS = """() => {
+    const mid = r => (r.left + r.right) / 2
+    const heads = [...document.querySelectorAll('.nvgrid > .nvcolh')]
+        .map(h => h.getBoundingClientRect())
+    const top = heads.length ? Math.min(...heads.map(r => r.top)) : 0
+    return [...document.querySelectorAll('.nvgrid > .nvgroup')].map(g => {
+        const r = g.getBoundingClientRect()
+        return { rest: g.matches('.rest'), text: g.textContent.replace(/\\s+/g, ' ').trim(),
+                 over: heads.map((h, i) => [i, h]).filter(([, h]) => r.left <= mid(h)
+                     && mid(h) <= r.right).map(([i]) => i), above: r.bottom <= top + 1 }
+    })
+}"""
+CORNER_JS = "() => (document.querySelector('.nvgrid > .nvcorner')?.textContent || '').trim()"
+
+
+def group_fails(page: Page) -> list[str]:
+    """The "Something new N" header spans the two kinds of new and "Compared with published
+    work" the other columns, both above the column headers."""
+    rec = records()
+    group = rec["index"].get("something_new") or []
+    if len(group) < 2:
+        return [f"cross: the results index names no something_new group: {group}"]
+    name, cols = group[0], group[1:]
+    if rec["cols"][: len(cols)] != cols:
+        return [f"cross: something_new {cols} are not the first columns {rec['cols']}"]
+    n = sum(r["col"] in cols for r in rec["results"].values())
+    want = [
+        {"rest": False, "text": f"{name} {n}", "over": list(range(len(cols))), "above": True},
+        {
+            "rest": True,
+            "text": GROUP_REST,
+            "over": list(range(len(cols), len(rec["cols"]))),
+            "above": True,
+        },
+    ]
+    got = page.evaluate(GROUP_JS)
+    fails = [] if got == want else [f"cross: group headers {got}, records give {want}"]
+    corner = page.evaluate(CORNER_JS)
+    if corner != ROW_AXIS:
+        fails.append(f"cross: the row-label corner reads '{corner}', not '{ROW_AXIS}'")
+    return fails
+
+
+def box_fails(page: Page, label: str) -> list[str]:
+    """Each project box sits in its records' row and column and holds exactly their results."""
+    rec = records()
+    got = page.evaluate(BOXES_JS)
+    fails = []
+    seen = set()
+    for b in got:
+        key = (b["topic"], b["col"], b["p"])
+        seen.add(key)
+        want = sorted(rec["boxes"].get(key, []))
+        if sorted(b["ids"]) != want:
+            fails.append(f"{label}: box {key} holds {sorted(b['ids'])}, records give {want}")
+    missing = set(rec["boxes"]) - seen
+    if missing:
+        fails.append(
+            f"{label}: {len(missing)} record boxes have no box on the map: {sorted(missing)[:3]}"
+        )
+    if not got:
+        fails.append(f"{label}: the map has no project box")
+    return fails
+
+
 def check_cross(browser, base: str) -> list[str]:
-    """The shared-result cards, question bridges and Results picture (done check 4)."""
+    """The Results map against its records, hover cards, related-result lines (4B), the box
+    list, column notes, Compare panels and ringed question bridges (done check 4)."""
     fails: list[str] = []
+    rec = records()
     page, errors = watched(browser)
     go(page, base + "/findings/")
-    cards = page.locator(".scard")
-    n = cards.count()
-    accepted = sum(
-        1
-        for g in json.loads((ROOT / "state/shared.json").read_text()).values()
-        if not g.get("failed")
+    heads = page.eval_on_selector_all("h2", "els => els.map(e => e.textContent.trim())")
+    if "How new is each result?" not in heads:
+        fails.append(f"cross: /findings/ headings {heads} lack 'How new is each result?'")
+    text = page.inner_text("body")
+    for gone in ["Results several projects reached", *GONE_FAMILIES]:
+        if gone in text:
+            fails.append(f"cross: /findings/ still says '{gone}'")
+    for sel in (".scard", ".fcard"):
+        if n := page.locator(sel).count():
+            fails.append(f"cross: /findings/ still has {n} '{sel}'")
+    cols = page.eval_on_selector_all(
+        ".nvcolh",
+        "els => els.map(e => (e.querySelector('.nvnoteb')?.childNodes[0].textContent"
+        " || e.childNodes[1]?.textContent || '').trim())",
     )
-    if not 1 <= n <= accepted:
-        fails.append(f"cross: Results page has {n} shared cards, expected 1 to {accepted}")
-    index = ROOT / "quartz/content/findings/index.md"
-    titles = sorted(
-        (frontmatter(index).get("project_titles") or {}).values(), key=len, reverse=True
+    if cols != rec["cols"]:
+        fails.append(f"cross: map columns {cols}, records give {rec['cols']}")
+    fails += group_fails(page)
+    # Control: the group header spanning one column too few must be caught.
+    page.evaluate(
+        "() => document.querySelectorAll('.nvgroup').forEach(g => g.style.gridColumn ="
+        " g.matches('.rest') ? `span ${parseInt(g.style.gridColumn.split(' ')[1]) + 1}`"
+        " : `span ${parseInt(g.style.gridColumn.split(' ')[1]) - 1}`)"
     )
-    for i in range(n):
-        card = cards.nth(i)
-        kicker = card.locator(".skicker").inner_text()
-        m = re.search(r"(\d+) projects · (\d+) topics", kicker, re.I)
-        if not m or int(m[1]) < 2 or int(m[2]) < 2:
-            fails.append(f"cross: shared card {i + 1} kicker '{kicker}'")
-        card.locator(".scmp").click()
+    if not group_fails(page):
+        fails.append("cross: control 'group header one column short' passed unnoticed")
+    go(page, base + "/findings/")
+
+    # Compare buttons: one on each listed member of a shared group with two or more.
+    groups = [
+        g
+        for g in rec["index"].get("shared") or []
+        if sum(m["id"] in rec["listed"] for m in g["members"]) >= 2
+    ]
+    sharing = {m["id"] for g in groups for m in g["members"] if m["id"] in rec["listed"]}
+    with_cmp = page.eval_on_selector_all(
+        ".board .cards > .rcard:has(.ccmp)", "els => els.map(e => e.dataset.id)"
+    )
+    if set(with_cmp) != sharing or not sharing:
+        fails.append(
+            f"cross: {len(with_cmp)} cards have Compare, the records share {len(sharing)}; "
+            f"extra {sorted(set(with_cmp) - sharing)[:3]}, "
+            f"missing {sorted(sharing - set(with_cmp))[:3]}"
+        )
+    titles = sorted((rec["index"].get("project_titles") or {}).values(), key=len, reverse=True)
+    buttons = page.locator(".board .cards > .rcard .ccmp")
+    for i in range(buttons.count()):
+        b = buttons.nth(i)
+        cid = b.evaluate("e => e.closest('.card').dataset.id")
+        card = page.locator(f'.board .cards > .rcard[data-id="{cid}"]')
+        b.scroll_into_view_if_needed()
+        b.click()
         panel = page.locator(".spanel:not([hidden])")
         if panel.count() != 1:
-            fails.append(f"cross: shared card {i + 1} opens {panel.count()} panels")
+            fails.append(f"cross: Compare {i + 1} opens {panel.count()} panels")
             continue
+        if panel.get_attribute("id") != b.get_attribute("aria-controls"):
+            fails.append(f"cross: Compare {i + 1} opens another group's panel")
+        if b.get_attribute("aria-expanded") != "true":
+            fails.append(f"cross: Compare {i + 1} does not say it is expanded")
         # The panel opens under its card's row: no card sits between the two.
         top = panel.bounding_box()["y"]
-        mine = card.bounding_box()["y"]
+        cb = card.bounding_box()
         between = page.evaluate(
-            "([lo, hi]) => [...document.querySelectorAll('.scard')]"
+            "([lo, hi]) => [...document.querySelectorAll('.board .cards > .card:not(.px-hidden)')]"
             ".map(c => c.getBoundingClientRect().y).filter(y => y > lo && y < hi).length",
-            [mine + 1, top],
+            [cb["y"] + 1, top],
         )
-        if between:
-            fails.append(f"cross: shared card {i + 1} panel opens {between} cards below it")
+        if top < cb["y"] + cb["height"] - 1 or between:
+            fails.append(f"cross: Compare {i + 1} panel opens {between} cards below its card")
         lanes = panel.locator(".slane").count()
-        if lanes < 2:
-            fails.append(f"cross: shared card {i + 1} panel has {lanes} lanes")
+        projects = len(set(panel.locator(".ssrc").evaluate_all("els => els.map(e => e.href)")))
+        if lanes < 2 or projects < 2:
+            fails.append(f"cross: Compare {i + 1} panel has {lanes} lanes from {projects} projects")
         # The statement's own words, not its member results' titles and summaries, which
         # can say "independent" about biology.
         own = panel.evaluate(
             "e => { const c = e.cloneNode(true); c.querySelectorAll('.smini')"
             ".forEach(m => m.remove()); return c.textContent }"
         )
-        said = card.inner_text() + " " + own
+        said = card.locator(".crel").inner_text() + " " + own
         # Report titles name methods ("Independent Component Analysis"), not a relation.
         for title in titles:
             said = said.replace(title, "")
         if hit := CONFIRMING.search(said):
-            fails.append(f"cross: shared card {i + 1} says '{hit[0]}'")
+            fails.append(f"cross: Compare {i + 1} says '{hit[0]}'")
+        b.click()
+        if page.locator(".spanel:not([hidden])").count():
+            fails.append(f"cross: a second click on Compare {i + 1} leaves its panel open")
+
+    # The home page names three cross-project questions, no project in two of them.
     go(page, base + "/")
     qs = page.eval_on_selector_all(".xqlist li .xqp", "els => els.map(e => e.textContent)")
     if len(qs) != 3:
@@ -684,13 +2124,11 @@ def check_cross(browser, base: str) -> list[str]:
         fails.append("cross: a project appears in two home questions")
 
     go(page, base + "/directions/")
+    if page.locator("details.qall").count() or "as a list" in page.inner_text("body"):
+        fails.append("cross: /directions/ still has the 'All N as a list' details")
     rings = page.locator(".qgrid .qd.cross")
-    crossing = sum(
-        bool(frontmatter(p).get("cross"))
-        for p in (ROOT / "quartz/content/directions").glob("*.md")
-        if p.stem != "index"
-    )
-    if rings.count() != crossing:
+    crossing = sum(q["cross"] for q in rec["questions"].values())
+    if rings.count() != crossing or not crossing:
         fails.append(f"cross: {rings.count()} ringed questions, the records give {crossing}")
     for i in range(rings.count()):
         projects = rings.nth(i).locator(".qproj")
@@ -699,80 +2137,149 @@ def check_cross(browser, base: str) -> list[str]:
             fails.append(f"cross: ringed question {i + 1} bridge has projects {links}")
 
     go(page, base + "/findings/")
-    # Expected counts come from the published records: publish marks some findings
-    # unlisted, and those stay off the picture.
-    listed = [
-        fm
-        for p in sorted((ROOT / "quartz/content/findings").glob("*.md"))
-        if p.stem != "index" and (fm := frontmatter(p)).get("listed") is not False
-    ]
-    too_little = sum(fm.get("label") == "Insufficient literature evidence" for fm in listed)
-    dots = page.locator(".nvmap .nd").count()
-    none = page.locator(".nvmap .nbead.nv-none .nd").count()
-    if dots != len(listed) or none != too_little:
-        fails.append(
-            f"cross: picture has {dots} dots and {none} with too little evidence; "
-            f"the records list {len(listed)} and {too_little}"
-        )
+    dots = page.locator(".nvgrid .nd").count()
+    if dots != len(rec["listed"]):
+        fails.append(f"cross: picture has {dots} marks; the records list {len(rec['listed'])}")
+    fails += box_fails(page, "cross")
+    # Each cell's label counts the marks in it.
+    cells = page.eval_on_selector_all(
+        ".nvgrid .nvcell",
+        "els => els.map(e => [e.querySelector('.nvlab')?.textContent || '',"
+        " e.querySelectorAll('.nd').length])",
+    )
+    for lab, n in cells:
+        if not lab.endswith(f"· {n}"):
+            fails.append(f"cross: a cell labelled '{lab}' holds {n} marks")
+            break
     if page.locator("svg.nvlinks path").count():
         fails.append("cross: links are drawn before any interaction")
+    # A result's card follows the questions grid: it stays, on the same result, while the
+    # pointer moves onto it past neighbouring dots; a click pins it without pinning the
+    # project; a pinned card survives hovering other dots and a resize, until Escape.
+    card = page.locator(".nvtip:not(.pin)")
+    pinned = page.locator(".nvtip.pin")
+    marks = page.locator(".nvgrid .nd")
+    href_of = "id => JSON.parse(document.querySelector('.nvdata').textContent).findings[id]"
+    why, aim = "", "link"
+    for i in range(0, min(60, marks.count()), 3):
+        want = page.evaluate(href_of, marks.nth(i).get_attribute("data-id"))
+        for aim in ("link", "head"):
+            why = walk_onto(page, marks.nth(i), card, want, aim)
+            page.mouse.move(0, 0)
+            page.wait_for_timeout(400)
+            if why:
+                break
+        if why:
+            fails.append(f"cross: result dot {i + 1}, walking to the {aim}: {why}")
+            break
+    first, second = marks.nth(0), marks.nth(1)
+    want = page.evaluate(href_of, first.get_attribute("data-id"))
+    first.click()
+    page.mouse.move(0, 0)
+    page.wait_for_timeout(400)
+    if not pinned.is_visible():
+        fails.append("cross: clicking a result dot does not pin its card")
+    elif pinned.locator("a.nvopen").get_attribute("href") != want:
+        fails.append("cross: a result card's link does not open its result")
+    if page.locator(".nvpanel:not([hidden])").count():
+        fails.append("cross: clicking a result dot also pins its project's links")
+    second.hover()
+    page.mouse.move(0, 0)
+    page.wait_for_timeout(400)
+    if not pinned.is_visible() or pinned.locator("a.nvopen").get_attribute("href") != want:
+        fails.append("cross: hovering another dot replaces or closes a pinned card")
+    page.set_viewport_size({"width": 900, "height": 900})
+    page.wait_for_timeout(300)
+    b = pinned.bounding_box() if pinned.count() else None
+    if not b or b["x"] < 0 or b["x"] + b["width"] > 900:
+        fails.append(f"cross: a pinned card leaves the screen after a resize: {b}")
+    page.set_viewport_size(DESKTOP)
+    page.keyboard.press("Escape")
+    if pinned.is_visible():
+        fails.append("cross: Escape does not close a pinned result card")
+    # The target must lie outside the first card: a pointer landing on the card keeps it.
+    marks.nth(0).hover()
+    page.wait_for_timeout(200)
+    t = card.bounding_box()
+    far = next(
+        marks.nth(i)
+        for i in range(1, marks.count())
+        if (b := marks.nth(i).bounding_box())
+        and not (t["x"] - 20 < b["x"] < t["x"] + t["width"] + 20)
+        and abs(b["y"] - t["y"]) < 300
+    )
+    jump = jump_to(page, marks.nth(0), far)
+    want = page.evaluate(href_of, far.get_attribute("data-id"))
+    if not card.is_visible() or card.locator("a.nvopen").get_attribute("href") != want:
+        fails.append(f"cross: a jump between result dots leaves the wrong card ({jump})")
+    page.mouse.move(0, 0)
+    page.wait_for_timeout(400)
+    # On a narrow phone a pinned card must not cover its dot: a second tap closes it.
+    small = browser.new_context(
+        viewport={"width": 320, "height": 568}, has_touch=True, is_mobile=True
+    ).new_page()
+    go(small, base + "/findings/")
+    small.wait_for_timeout(500)
+    sdot = small.locator(".nvgrid .nd").first
+    sdot.scroll_into_view_if_needed()
+    small.evaluate("y => scrollBy(0, y)", sdot.bounding_box()["y"] - 450)
+    sdot.tap()
+    small.wait_for_timeout(300)
+    url = small.url
+    # Tap the screen point, as a finger does; a locator tap would route around a covering card.
+    r = sdot.bounding_box()
+    small.touchscreen.tap(r["x"] + r["width"] / 2, r["y"] + r["height"] / 2)
+    small.wait_for_timeout(500)
+    if small.url != url or small.locator(".nvtip.pin").is_visible():
+        fails.append("cross: at 320 px a second tap on a result dot does not close its card")
+    tap = browser.new_context(viewport=PHONE, has_touch=True, is_mobile=True).new_page()
+    go(tap, base + "/findings/")
+    tap.wait_for_timeout(500)
+    dot = tap.locator(".nvgrid .nd").first
+    dot.scroll_into_view_if_needed()
+    dot.tap()
+    tap.wait_for_timeout(300)
+    tcard = tap.locator(".nvtip.pin")
+    if not tcard.is_visible() or not tcard.locator("a.nvopen").count():
+        fails.append("cross: a tap on a result dot does not open its card, as on questions")
     rows = page.eval_on_selector_all(".nvrowh", "els => els.map(e => e.textContent.trim())")
     infra = [r for r in rows if r.startswith("Data Infrastructure")]
     filed = sum(
-        fm.get("topic") == "data-infrastructure-provenance-and-research-practice" for fm in listed
+        r["topic"] == "data-infrastructure-provenance-and-research-practice"
+        for r in rec["results"].values()
     )
     if not infra or not infra[0].endswith(f" {filed}"):
         fails.append(f"cross: Data Infrastructure row reads {infra}, expected {filed}")
-    expected = page.evaluate(
-        """() => {
-            const data = JSON.parse(document.querySelector('.nvdata').textContent);
-            const groups = [...document.querySelectorAll('.nbead')];
-            const has = id => groups.some(g => g.querySelector(`.nd[data-id="${id}"]`));
-            const hasP = sid => groups.some(g => g.dataset.p === sid);
-            const sid = 'conservation_fitness_synthesis';
-            const mine = data.links.filter(l => l.pa === sid || l.pb === sid);
-            const drawable = mine.filter(l =>
-                (l.a ? has(l.a) : hasP(l.pa)) && (l.b ? has(l.b) : hasP(l.pb)));
-            return drawable.length;
-        }"""
-    )
-    group = page.locator(".nbead[data-p=conservation_fitness_synthesis]").first
-    group.scroll_into_view_if_needed()
-    group.hover()
-    hovered = page.locator("svg.nvlinks path").count()
-    page.mouse.move(0, 0)
-    group.focus()
-    focused = page.locator("svg.nvlinks path").count()
-    if not hovered or not hovered == expected == focused:
-        fails.append(f"cross: hover drew {hovered}, focus {focused}, of {expected} drawable links")
-    page.keyboard.press("Escape")
-    off = page.locator(".nbead[data-p=nmdc_context_audit]").first
-    if off.count():
-        off.click()
-        if "(no results in this picture)" not in page.locator(".nvpanel").inner_text():
-            fails.append("cross: the audit of a project without results is not listed")
-    else:
-        fails.append("cross: no group for nmdc_context_audit")
+    fails += line_fails(page, "cross")
+    fails += note_fails(page, "cross")
+    fails += pinned_note_fails(page, "cross")
+    fails += legend_inert_fails(page, "cross")
+    fails += heading_link_fails(page, base, "cross")
+    fails += compare_place_fails(browser, base, "cross")
+    fails += phone_note_fails(browser, base, "cross")
+    fails += nojs_compare_fails(browser, base, "cross")
+
     # A comparison still opens after navigating away and back: Quartz reuses nodes,
     # so a second set of listeners would open and close it in one click.
     go(page, base + "/")
     page.locator("a.kindcard[href$='findings/']").first.click()
     page.wait_for_url("**/findings/**")
-    page.wait_for_selector(".scard")
+    page.wait_for_selector(".ccmp")
     page.locator("a.nvrowh").first.click()
     page.wait_for_url("**/topics/**")
     page.go_back()
-    page.wait_for_selector(".scard")
-    page.locator(".scmp").first.click()
+    page.wait_for_selector(".ccmp")
+    page.wait_for_timeout(300)
+    page.locator(".ccmp").first.click()
     if page.locator(".spanel:not([hidden])").count() != 1:
         fails.append("cross: a comparison does not open after navigating away and back")
     fails += [f"cross: light: {e}" for e in errors]
 
     dark, dark_errors = watched(browser, scheme="dark")
-    for path in ("/", "/findings/", "/directions/"):
+    for path in ("/", "/findings/", "/directions/", "/topics/"):
         go(dark, base + path)
     fails += [f"cross: dark: {e}" for e in dark_errors]
-    for path in ("/", "/findings/", "/directions/"):
+    for path in ("/", "/findings/", "/directions/", "/topics/"):
         narrow, narrow_errors = watched(browser, PHONE)
         go(narrow, base + path)
         sw, iw = narrow.evaluate("[document.documentElement.scrollWidth, window.innerWidth]")
@@ -798,12 +2305,2197 @@ def check_cross(browser, base: str) -> list[str]:
     return fails
 
 
+def line_fails(page: Page, label: str) -> list[str]:
+    """Hovering or focusing a box draws one solid line per related-result link of its
+    results, dot to dot; a click on its edge or Enter lists its results and their related
+    results; Escape clears."""
+    fails: list[str] = []
+    rec = records()
+    boxes = page.evaluate(BOXES_JS)
+    ringed = [b for b in boxes if any(rec["results"].get(i, {}).get("rel") for i in b["ids"])]
+    plain = [b for b in boxes if not any(rec["results"].get(i, {}).get("rel") for i in b["ids"])]
+    if not ringed:
+        return [f"{label}: no box holds a ringed result"]
+    titles = rec["index"].get("project_titles") or {}
+    for n, b in enumerate(ringed[:4]):
+        mine = set(b["ids"])
+        want = [lk for lk in rec["links"] if lk["a"] in mine or lk["b"] in mine]
+        loc = page.locator(".nvgrid .nbead").filter(
+            has=page.locator(f'.nd[data-id="{b["ids"][0]}"]')
+        )
+        loc.scroll_into_view_if_needed()
+        loc.hover(position={"x": 2, "y": 2})
+        page.wait_for_timeout(150)
+        drawn = page.evaluate(
+            """links => {
+            const box = document.querySelector('.nvbox'), f = box.getBoundingClientRect()
+            const at = id => { const r = document.querySelector(`.nvgrid .nd[data-id="${id}"]`)
+                .getBoundingClientRect(); return [r.left + r.width / 2 - f.left + box.scrollLeft,
+                r.top + r.height / 2 - f.top + box.scrollTop] }
+            const paths = [...document.querySelectorAll('svg.nvlinks path')]
+            return { paths: paths.map(p =>
+                         [p.getAttribute('d'), getComputedStyle(p).strokeDasharray]),
+                     want: links.map(l => [at(l.a), at(l.b)]) }
+        }""",
+            want,
+        )
+        hovered = len(drawn["paths"])
+        if hovered != len(want):
+            fails.append(
+                f"{label}: hovering box {b['p']} draws {hovered} lines, records give {len(want)}"
+            )
+        for (d, dash), (pa, pb) in zip(drawn["paths"], drawn["want"], strict=False):
+            nums = [float(x) for x in re.findall(r"-?[\d.]+", d)]
+            ends = (nums[:2], nums[-2:])
+            if any(abs(u - v) > 1 for u, v in zip([*ends[0], *ends[1]], [*pa, *pb], strict=True)):
+                fails.append(f"{label}: box {b['p']} line '{d[:40]}' does not run dot to dot")
+                break
+            if dash not in ("none", ""):
+                fails.append(f"{label}: box {b['p']} draws a dashed line ({dash})")
+                break
+        page.mouse.move(0, 0)
+        page.wait_for_timeout(150)
+        if page.locator("svg.nvlinks path").count():
+            fails.append(f"{label}: lines stay after the pointer leaves box {b['p']}")
+        loc.focus()
+        focused = page.locator("svg.nvlinks path").count()
+        if focused != len(want):
+            fails.append(f"{label}: focusing box {b['p']} draws {focused} lines of {len(want)}")
+        # Enter on the first box, a click on its edge for the others.
+        if n == 0:
+            page.keyboard.press("Enter")
+        else:
+            loc.click(position={"x": 2, "y": 2})
+        panel = page.locator(".nvpanel")
+        if not panel.is_visible():
+            fails.append(
+                f"{label}: {'Enter on' if n == 0 else 'a click on the edge of'} "
+                f"box {b['p']} lists nothing"
+            )
+            page.keyboard.press("Escape")
+            continue
+        listed = panel.locator("ul.nvresults li a").evaluate_all(
+            "els => els.map(e => e.getAttribute('href'))"
+        )
+        if sorted(last_part(h) for h in listed) != sorted(mine):
+            fails.append(f"{label}: box {b['p']} list shows {len(listed)} results of {len(mine)}")
+        if panel.locator("h4").inner_text().strip() != titles.get(b["p"], b["p"]):
+            fails.append(
+                f"{label}: box {b['p']} list is headed '{panel.locator('h4').inner_text()}'"
+            )
+        others = sorted(lk["b"] if lk["a"] in mine else lk["a"] for lk in want)
+        shown = panel.locator("ul.nvlist li > a").evaluate_all(
+            "els => els.map(e => e.getAttribute('href'))"
+        )
+        fam = panel.locator(".nvfam").text_content() if panel.locator(".nvfam").count() else ""
+        if (
+            sorted(last_part(h) for h in shown) != others
+            or fam != f"{RELATED_HEADING} · {len(want)}"
+        ):
+            fails.append(
+                f"{label}: box {b['p']} lists related {shown} under '{fam}', records give {others}"
+            )
+        page.keyboard.press("Escape")
+        back = page.evaluate("document.activeElement?.dataset?.p")
+        if panel.is_visible() or back != b["p"]:
+            fails.append(
+                f"{label}: Escape leaves box {b['p']}'s list open {panel.is_visible()}, "
+                f"focus on {back}"
+            )
+        page.evaluate("document.activeElement?.blur()")
+        page.wait_for_timeout(100)
+        if page.locator("svg.nvlinks path").count():
+            fails.append(f"{label}: box {b['p']}'s lines stay after Escape and blur")
+    if plain:
+        loc = page.locator(".nvgrid .nbead").filter(
+            has=page.locator(f'.nd[data-id="{plain[0]["ids"][0]}"]')
+        )
+        loc.scroll_into_view_if_needed()
+        loc.click(position={"x": 2, "y": 2})
+        said = (
+            page.locator(".nvpanel").text_content() if page.locator(".nvpanel").is_visible() else ""
+        )
+        if "No related result in another project yet." not in said:
+            fails.append(f"{label}: a box without related results lists '{said[:80]}'")
+        page.keyboard.press("Escape")
+    return fails
+
+
+LINES_JS = """links => {
+    const box = document.querySelector('.nvbox'), f = box.getBoundingClientRect()
+    const at = id => { const r = document.querySelector(`.nvgrid .nd[data-id="${id}"]`)
+        .getBoundingClientRect(); return [r.left + r.width / 2 - f.left + box.scrollLeft,
+        r.top + r.height / 2 - f.top + box.scrollTop] }
+    const paths = [...document.querySelectorAll('svg.nvlinks path')]
+    return { paths: paths.map(p =>
+                 [p.getAttribute('d'), getComputedStyle(p).strokeDasharray]),
+             want: links.map(l => [at(l.a), at(l.b)]) }
+}"""
+
+
+def line_offsets(page: Page, links: list[dict]) -> tuple[int, float]:
+    """How many lines are drawn, and the furthest any endpoint lies from its mark's centre."""
+    drawn = page.evaluate(LINES_JS, links)
+    worst = 0.0
+    for (d, _), (pa, pb) in zip(drawn["paths"], drawn["want"], strict=False):
+        nums = [float(x) for x in re.findall(r"-?[\d.]+", d)]
+        ends = [*nums[:2], *nums[-2:]]
+        worst = max(worst, *(abs(u - v) for u, v in zip(ends, [*pa, *pb], strict=True)))
+    return len(drawn["paths"]), worst
+
+
+def pinned_note_fails(page: Page, label: str) -> list[str]:
+    """With a box pinned, opening or closing a column note grows the header row; the box's
+    lines must still run from mark centre to mark centre (within 2 px)."""
+    fails: list[str] = []
+    rec = records()
+    ringed = [
+        b
+        for b in page.evaluate(BOXES_JS)
+        if any(rec["results"].get(i, {}).get("rel") for i in b["ids"])
+    ]
+    if not ringed:
+        return [f"{label}: no ringed box to pin"]
+    b = ringed[0]
+    want = [lk for lk in rec["links"] if lk["a"] in b["ids"] or lk["b"] in b["ids"]]
+    box = page.locator(".nvgrid .nbead").filter(has=page.locator(f'.nd[data-id="{b["ids"][0]}"]'))
+    box.scroll_into_view_if_needed()
+    box.click(position={"x": 2, "y": 2})
+    page.mouse.move(0, 0)
+    notes = page.locator(".nvcolh .nvnoteb")
+    if not notes.count():
+        fails.append(f"{label}: no column note to open with a box pinned")
+    for i in range(notes.count()):
+        for step in ("opening", "closing"):
+            notes.nth(i).click()
+            page.wait_for_timeout(150)
+            n, worst = line_offsets(page, want)
+            if n != len(want) or worst > 2:
+                fails.append(
+                    f"{label}: {step} column note {i + 1} with box {b['p']} pinned leaves "
+                    f"{n} of {len(want)} lines, an end {worst:.1f} px off its mark"
+                )
+    page.keyboard.press("Escape")
+    page.evaluate("document.activeElement?.blur()")
+    page.mouse.move(0, 0)
+    return fails
+
+
+MAP_STATE_JS = """() => ({
+    cards: [...document.querySelectorAll('.nvtip')].filter(e => !e.hidden).length,
+    panel: !document.querySelector('.nvpanel')?.hidden,
+    sel: document.querySelectorAll('.nvbox.sel, .nbead.me, .nbead.nb').length,
+    lines: document.querySelectorAll('svg.nvlinks path').length,
+    on: document.querySelectorAll('.nd.on').length,
+})"""
+
+
+def legend_inert_fails(page: Page, label: str) -> list[str]:
+    """The legend draws the map's marks and an example box, but they are not map items:
+    hovering or clicking any of them opens no card or panel and selects nothing."""
+    fails: list[str] = []
+    page.keyboard.press("Escape")
+    page.mouse.move(0, 0)
+    page.wait_for_timeout(300)
+    idle = {"cards": 0, "panel": False, "sel": 0, "lines": 0, "on": 0}
+    if (st := page.evaluate(MAP_STATE_JS)) != idle:
+        return [f"{label}: the map is not idle before the legend test: {st}"]
+    items = page.locator(".nvlegend .nd, .nvlegend .nbead.key")
+    if not items.count():
+        return [f"{label}: the Results legend has no mark to try"]
+    for i in range(items.count()):
+        item = items.nth(i)
+        what = item.evaluate("e => e.className + ' ' + (e.dataset.k || '')").strip()
+        item.scroll_into_view_if_needed()
+        for act in ("hover", "click"):
+            item.hover() if act == "hover" else item.click()
+            page.wait_for_timeout(200)
+            if (st := page.evaluate(MAP_STATE_JS)) != idle:
+                fails.append(f"{label}: a {act} on legend item '{what}' gives {st}")
+        page.mouse.move(0, 0)
+        page.keyboard.press("Escape")
+        page.wait_for_timeout(200)
+    return fails
+
+
+def heading_link_fails(page: Page, base: str, label: str) -> list[str]:
+    """Every box's list is headed by a link to its project's report page; plain text is
+    allowed only where no report page exists."""
+    fails: list[str] = []
+    boxes = page.locator(".nvgrid .nbead")
+    heads: dict[str, str | None] = {}
+    for i in range(boxes.count()):
+        b = boxes.nth(i)
+        sid = b.get_attribute("data-p") or ""
+        if sid in heads:
+            continue
+        b.scroll_into_view_if_needed()
+        b.click(position={"x": 2, "y": 2})
+        head = page.locator(".nvpanel h4")
+        if not page.locator(".nvpanel").is_visible() or not head.count():
+            fails.append(f"{label}: a click on box {sid} lists nothing")
+            continue
+        link = head.locator("a")
+        heads[sid] = link.evaluate("a => a.href") if link.count() else None
+    page.keyboard.press("Escape")
+    page.evaluate("document.activeElement?.blur()")
+    if len(heads) != len({k[2] for k in records()["boxes"]}):
+        fails.append(f"{label}: read {len(heads)} box headings, the records have more projects")
+    for sid, href in sorted(heads.items()):
+        if href is None:
+            if (code := http_status(f"{base}/summaries/{sid}")) == 200:
+                fails.append(f"{label}: box {sid} heading is plain text, but its report exists")
+            continue
+        path = urlparse(href).path.rstrip("/")
+        if href.endswith("#") or not path.endswith(f"summaries/{sid}"):
+            fails.append(f"{label}: box {sid} heading links to {href}")
+        elif (code := http_status(href)) != 200:
+            fails.append(f"{label}: box {sid} heading link {href} returned HTTP {code}")
+    return fails
+
+
+ROW_JS = """id => {
+    const card = document.querySelector(`.board .cards > .card[data-id="${id}"]`)
+    const kids = [...card.parentElement.children]
+    return kids.filter(c => c.matches('.card:not(.px-hidden)')
+        && Math.abs(c.offsetTop - card.offsetTop) < 1).map(c => c.dataset.id)
+}"""
+AFTER_JS = """id => {
+    const card = document.querySelector(`.board .cards > .card[data-id="${id}"]`)
+    const p = document.querySelector('.spanel:not([hidden])')
+    const kids = [...card.parentElement.children]
+    return { inGrid: !!p && p.parentElement === card.parentElement,
+             order: kids.map(c => c === p ? '#panel' : c.dataset.id || ''),
+             prev: p?.previousElementSibling?.dataset?.id || '',
+             cols: getComputedStyle(card.parentElement).gridTemplateColumns.split(' ').length }
+}"""
+
+
+def compare_place_fails(browser, base: str, label: str) -> list[str]:
+    """After each sort, Compare opens its panel right after the last card of the opener's
+    row, with no card of that row after it; resized from three columns to one, the panel
+    follows its opener."""
+    fails: list[str] = []
+    page = new_page(browser)
+    go(page, base + "/findings/")
+    buttons = page.locator(".board .cards > .rcard .ccmp")
+    ids_ = buttons.evaluate_all("els => els.map(e => e.closest('.card').dataset.id)")
+    if not ids_:
+        return [f"{label}: no Compare button to place"]
+    tested = 0
+    for sort in ("project", "topic"):
+        page.locator(".px-tools select").select_option(sort)
+        page.wait_for_timeout(200)
+        for cid in ids_:
+            row = page.evaluate(ROW_JS, cid)
+            btn = page.locator(f'.board .cards > .rcard[data-id="{cid}"] .ccmp')
+            btn.scroll_into_view_if_needed()
+            btn.click()
+            got = page.evaluate(AFTER_JS, cid)
+            at = got["order"].index("#panel") if "#panel" in got["order"] else -1
+            late = [c for c in row if c in got["order"][at + 1 :]]
+            if not got["inGrid"] or got["prev"] != row[-1] or late:
+                fails.append(
+                    f"{label}: sorted by {sort}, Compare on {cid} opens after {got['prev']}, "
+                    f"its row ends {row[-1]}; row cards after the panel {late}"
+                )
+            tested += 1
+            btn.click()
+    # Resize with a panel open, from an opener that is not last in its row.
+    page.locator(".px-tools select").select_option("project")
+    pick = next((c for c in ids_ if page.evaluate(ROW_JS, c)[-1] != c), ids_[0])
+    page.locator(f'.board .cards > .rcard[data-id="{pick}"] .ccmp').click()
+    before = page.evaluate(AFTER_JS, pick)
+    if before["cols"] != 3:
+        fails.append(f"{label}: the board has {before['cols']} columns at 1280 px, not 3")
+    page.set_viewport_size(PHONE)
+    page.wait_for_timeout(400)
+    after = page.evaluate(AFTER_JS, pick)
+    if after["cols"] != 1 or after["prev"] != pick:
+        fails.append(
+            f"{label}: resized to {after['cols']} column(s), the panel follows {after['prev']}, "
+            f"not its opener {pick}"
+        )
+    if not tested:
+        fails.append(f"{label}: no Compare placement tested")
+    page.context.close()
+    return fails
+
+
+def phone_note_fails(browser, base: str, label: str) -> list[str]:
+    """At 390 px the headers are hidden, so each cell label carries its column's note
+    button; every Novel cell's opens the Novel note."""
+    fails: list[str] = []
+    notes = records()["index"].get("compare_notes") or {}
+    novel = records()["novel"]
+    page = browser.new_context(viewport=PHONE, has_touch=True, is_mobile=True).new_page()
+    go(page, base + "/findings/")
+    labs = page.locator(".nvgrid .nvcell:not([data-empty]) .nvlab")
+    novel_seen = 0
+    for i in range(labs.count()):
+        lab = labs.nth(i)
+        if not lab.is_visible():
+            fails.append(f"{label}: at 390 px cell label {i + 1} is hidden")
+            continue
+        b = lab.locator(".nvnoteb")
+        col = (b.first.evaluate("e => e.childNodes[0].textContent") if b.count() else "").strip()
+        is_novel = "nv-new" in (lab.get_attribute("class") or "")
+        if b.count() != 1 or (notes.get(col) is None):
+            fails.append(
+                f"{label}: at 390 px cell label '{lab.text_content()[:30]}' has no note button"
+            )
+            continue
+        note = b.locator("xpath=following-sibling::*[1]")
+        if collapse(note.text_content() or "") != collapse(notes[col]):
+            fails.append(f"{label}: at 390 px the {col} cell note differs from the column's")
+        if not is_novel:
+            continue
+        novel_seen += 1
+        if col != novel:
+            fails.append(f"{label}: at 390 px a Novel cell label names '{col}'")
+        b.tap()
+        if not note.is_visible() or b.get_attribute("aria-expanded") != "true":
+            fails.append(
+                f"{label}: at 390 px a tap on Novel cell note {novel_seen} does not open it"
+            )
+        b.tap()
+        if note.is_visible():
+            fails.append(
+                f"{label}: at 390 px a second tap leaves Novel cell note {novel_seen} open"
+            )
+    want = len({topic for topic, col, _ in records()["boxes"] if col == novel})
+    if novel_seen != want or not want:
+        fails.append(f"{label}: at 390 px {novel_seen} Novel cell labels, the records fill {want}")
+    page.context.close()
+    return fails
+
+
+def nojs_compare_fails(browser, base: str, label: str) -> list[str]:
+    """Without the script every comparison is shown and its button says so."""
+    rec = records()
+    groups = [
+        g
+        for g in rec["index"].get("shared") or []
+        if sum(m["id"] in rec["listed"] for m in g["members"]) >= 2
+    ]
+    page = new_page(browser, js=False)
+    go(page, base + "/findings/")
+    fails: list[str] = []
+    panels = page.locator(".spanel")
+    shown = sum(panels.nth(i).is_visible() for i in range(panels.count()))
+    if panels.count() != len(groups) or shown != len(groups) or not groups:
+        fails.append(
+            f"{label}: without the script {shown} of {panels.count()} Compare panels show, "
+            f"the records share {len(groups)} groups"
+        )
+    states = page.eval_on_selector_all(
+        ".ccmp", "els => els.map(e => e.getAttribute('aria-expanded'))"
+    )
+    if not states or set(states) != {"true"}:
+        fails.append(f"{label}: without the script Compare buttons say aria-expanded {set(states)}")
+    page.context.close()
+    return fails
+
+
+def note_fails(page: Page, label: str) -> list[str]:
+    """Each column heading's note button shows its note from compare_notes, and hides it."""
+    fails: list[str] = []
+    notes = records()["index"].get("compare_notes") or {}
+    buttons = page.locator(".nvcolh .nvnoteb")
+    seen = 0
+    for i in range(buttons.count()):
+        b = buttons.nth(i)
+        col = (b.evaluate("e => e.childNodes[0].textContent") or "").strip()
+        note = b.locator("xpath=following-sibling::*[1]")
+        b.click()
+        if not note.is_visible() or collapse(note.inner_text()) != collapse(notes.get(col, "")):
+            fails.append(f"{label}: the {col} heading's note reads '{note.inner_text()[:60]}'")
+        if b.get_attribute("aria-expanded") != "true":
+            fails.append(f"{label}: the {col} note button does not say it is expanded")
+        b.click()
+        if note.is_visible():
+            fails.append(f"{label}: a second click leaves the {col} note open")
+        seen += 1
+    want = [c for c in records()["cols"] if notes.get(c)]
+    if seen != len(want):
+        fails.append(f"{label}: {seen} column notes, records give {len(want)}")
+    return fails
+
+
+# ---------------------------------------------------------------- marks (design-marks.md M2)
+
+RESULT_MARKS_JS = lib(
+    """return {
+    ink: tok('--ink'), card: tok('--card'), new: tok('--nv-new'), box: tok('--nv-box'),
+    builds: tok('--nv-builds'), match: tok('--nv-match'), none: tok('--nv-none'),
+    mute: tok('--mute-ink'),
+    marks: [...document.querySelectorAll('.nvgrid .nd')].map(ndFeat),
+    legend: [...document.querySelectorAll('.nvlegend .nd.key')].map(ndFeat),
+    legendBox: [...document.querySelectorAll('.nvlegend .nbead.key')].map(b => ({
+        border: getComputedStyle(b).borderTopColor,
+        marks: [...b.querySelectorAll('.nd')].map(ndFeat)})),
+    boxes: [...document.querySelectorAll('.nvgrid .nbead')].map(b => ({p: b.dataset.p,
+        border: getComputedStyle(b).borderTopColor, under: under(b)})),
+    heads: [...document.querySelectorAll('.nvcolh')].map(h => ({
+        novel: h.classList.contains('nv-new'),
+        col: (h.querySelector('.nvnoteb')?.childNodes[0].textContent
+              ?? h.childNodes[1]?.textContent ?? '').trim(),
+        text: h.textContent.trim(), bar: getComputedStyle(h.querySelector('i')).backgroundColor,
+        line: getComputedStyle(h).borderBottomColor, shown: !!h.getClientRects().length})),
+    labs: [...document.querySelectorAll('.nvgrid .nvlab')].map(l => ({
+        novel: l.classList.contains('nv-new'),
+        col: (l.querySelector('.nvnoteb')?.childNodes[0].textContent
+              ?? l.textContent.split(' · ')[0]).trim(),
+        color: getComputedStyle(l).color,
+        edge: [getComputedStyle(l).borderLeftWidth, getComputedStyle(l).borderLeftStyle,
+               getComputedStyle(l).borderLeftColor],
+        shown: !!l.getClientRects().length})),
+    cells: [...document.querySelectorAll('.nvgrid .nvcell')]
+        .map(c => getComputedStyle(c).backgroundColor),
+}"""
+)
+
+QUESTION_MARKS_JS = lib(
+    """return {
+    marks: [...document.querySelectorAll('.qgrid .qd')].map(qdFeat),
+    legend: [...document.querySelectorAll('.qlegend .qd.key')].map(qdFeat),
+    heads: [...document.querySelectorAll('.qcolh')].map(h => {
+        const s = getComputedStyle(h)
+        const b = getComputedStyle(h, '::before'), a = getComputedStyle(h, '::after')
+        const bar = h.querySelector('i')
+        return {bg: s.backgroundColor, line: s.borderBottomColor, before: b.backgroundColor,
+                after: a.backgroundColor, bar: bar ? getComputedStyle(bar).backgroundColor : 'none'}
+    }),
+    cells: [...document.querySelectorAll('.qgrid .qcell')]
+        .map(c => getComputedStyle(c).backgroundColor),
+}"""
+)
+
+RINGS_JS = """() => {
+    const marks = [...document.querySelectorAll('.nvgrid .nd')].map(e => {
+        const r = e.getBoundingClientRect()
+        return {id: e.dataset.id, rel: e.classList.contains('rel'), l: r.left, t: r.top, r: r.right,
+                b: r.bottom, grow: -parseFloat(getComputedStyle(e, '::after').top) || 0,
+                box: e.closest('.nbead')}
+    })
+    const out = []
+    for (const m of marks.filter(m => m.rel)) {
+        const cx = (m.l + m.r) / 2, cy = (m.t + m.b) / 2, rad = (m.r - m.l) / 2 + m.grow
+        const hit = []
+        for (const o of marks) {
+            if (o === m || Math.abs(o.t - m.t) > 40 || Math.abs(o.l - m.l) > 40) continue
+            const dx = Math.max(o.l - cx, 0, cx - o.r), dy = Math.max(o.t - cy, 0, cy - o.b)
+            if (dx * dx + dy * dy < rad * rad - 0.01) hit.push(o.id)
+        }
+        const br = m.box.getBoundingClientRect(), s = getComputedStyle(m.box)
+        const inner = {l: br.left + parseFloat(s.borderLeftWidth),
+                       t: br.top + parseFloat(s.borderTopWidth),
+                       r: br.right - parseFloat(s.borderRightWidth),
+                       b: br.bottom - parseFloat(s.borderBottomWidth)}
+        const border = cx - rad < inner.l - 0.01 || cy - rad < inner.t - 0.01
+            || cx + rad > inner.r + 0.01 || cy + rad > inner.b + 0.01
+        out.push({id: m.id, rad, hit, border, shown: m.r > m.l})
+    }
+    return out
+}"""
+
+
+def shadow_layers(text: str) -> list[str]:
+    """A computed box-shadow's layers (commas inside colour functions do not split)."""
+    if text in ("none", ""):
+        return []
+    out, depth, cur = [], 0, ""
+    for ch in text:
+        depth += ch == "("
+        depth -= ch == ")"
+        if ch == "," and depth == 0:
+            out.append(cur.strip())
+            cur = ""
+        else:
+            cur += ch
+    return [*out, cur.strip()]
+
+
+def lengths(layer: str) -> list[float]:
+    rest = re.sub(r"(?:rgba?|color)\([^)]*\)", "", layer)
+    return [float(x) for x in re.findall(r"(-?[\d.]+)px", rest)]
+
+
+def named(c, tk: dict) -> str:
+    if same(c, tk["ink"]):
+        return "ink"
+    if same(c, tk["new"]):
+        return "orange"
+    return show(c)
+
+
+def px(v: str) -> float:
+    try:
+        return float(v.removesuffix("px"))
+    except ValueError:
+        return 0.0
+
+
+def outline_of(b: dict, col) -> tuple[str, list[str], bool, bool]:
+    """A ::before's inset stroke ("none", "ok" for one 1.5 px or wider in the mark's colour,
+    else "bad"), its outer shadow layers, whether its border is a dashed line in that
+    colour, and whether it has any border at all."""
+    layers = shadow_layers(b["shadow"])
+    insets = [x for x in layers if "inset" in x]
+    good = [
+        x for x in insets if colours_in(x) and same(colours_in(x)[0], col) and lengths(x)[-1] >= 1.5
+    ]
+    stroke = "none" if not insets else "ok" if len(good) == len(insets) == 1 else "bad"
+    outer = [x for x in layers if "inset" not in x]
+    border = b["bstyle"] not in ("none", "") and px(b["bwidth"]) > 0
+    # 2 px: Chrome snaps a 1.5 px border to 1 px on a 1x screen, too thin beside the strokes.
+    dashed = border and b["bstyle"] == "dashed" and px(b["bwidth"]) >= 2
+    return stroke, outer, dashed and same(rgba(b["bcolor"]), col), border
+
+
+def result_features(m: dict, tk: dict) -> dict:
+    """What a Results mark shows, read from its computed style: shape, fill, ring, colour."""
+    col = rgba(m["color"])
+    b, a = m["b"], m["a"]
+    if b["clip"] != "none" or b["img"] != "none":
+        shape = f"other (clip {b['clip']}, image {b['img'][:30]})"
+    elif b["radius"] == "50%":
+        shape = "circle"
+    elif px(b["radius"]) <= 2 and abs(px(b["w"]) - px(b["h"])) < 0.5 and px(b["w"]) < m["w"]:
+        # Smaller than the mark's box, so it reads as a small square beside the circles.
+        shape = "square"
+    else:
+        shape = f"other (radius {b['radius']}, {b['w']} x {b['h']})"
+    under = surface(m["under"]["stack"])
+    bg = rgba(b["bg"])
+    stroke, outer, dashed, border = outline_of(b, col)
+    if same(bg, col):
+        plain = stroke == "none" and not outer and not border
+        fill = "solid" if plain else f"solid with shadow {b['shadow']} border {b['bstyle']}"
+    elif bg[3] == 0 or same(bg, under) or same(bg, tk["card"]):
+        if stroke == "ok" and not border and not outer:
+            fill = "hollow"
+        elif dashed and stroke == "none" and not outer:
+            fill = "dashed"
+        else:
+            fill = f"empty (shadow {b['shadow']}, border {b['bstyle']} {b['bwidth']})"
+    elif same(bg, tk["mute"]) and neutral(bg) and stroke == "none" and not outer and not border:
+        fill = "grey"
+    else:
+        fill = f"filled {b['bg']}"
+    ring = a["content"] not in ("none", "normal") and a["style"] != "none"
+    ring_ok = (
+        ring
+        and a["style"] == "solid"
+        and float(a["width"].removesuffix("px")) >= 1
+        and a["radius"] == "50%"
+        and same(rgba(a["color"]), col)
+    )
+    return {
+        "shape": shape,
+        "fill": fill,
+        "ring": "ring" if ring_ok else "bad ring" if ring else "none",
+        "colour": named(col, tk),
+        "halo": m["shadow"] != "none",
+    }
+
+
+def question_features(q: dict, tk: dict) -> dict:
+    """What a question dot shows: a circle, solid, half filled (with a stroke) or dashed,
+    with or without the cross-project ring, in ink or orange."""
+    col = rgba(q["color"])
+    b = q["b"]
+    half = b["img"].startswith("linear-gradient(") and "90deg" in b["img"]
+    shape = (
+        "circle"
+        if b["radius"] == "50%" and b["clip"] == "none" and (b["img"] == "none" or half)
+        else f"other (radius {b['radius']}, clip {b['clip']}, image {b['img'][:30]})"
+    )
+    bg = rgba(b["bg"])
+    stroke, outer, dashed, border = outline_of(b, col)
+    parts: list[str] = []
+    if half:
+        stops = colours_in(b["img"])
+        empty_half = len(stops) == 2 and (same(stops[1], tk["card"]) or stops[1][3] == 0)
+        # A dashed outline replaces the inner stroke when the data is also unclear.
+        drawn = stroke == "ok" or (stroke == "none" and dashed)
+        # A hard split at the midpoint: both colour stops sit at 50%.
+        split = re.findall(r"(\d+(?:\.\d+)?)%", b["img"]) == ["50", "50"]
+        ok = empty_half and split and same(stops[0], col) and drawn
+        parts.append("half" if ok else f"gradient {b['img']} stroke {stroke}")
+    elif stroke != "none":
+        parts.append(f"inset stroke {stroke}")
+    if dashed:
+        parts.append("dashed" if same(bg, tk["card"]) or bg[3] == 0 else f"dashed on {b['bg']}")
+    elif border:
+        parts.append(f"border {b['bstyle']} {b['bwidth']}")
+    if not parts:
+        parts.append("solid" if same(bg, col) else f"filled {b['bg']}")
+    if not outer:
+        ring = "none"
+    elif (
+        len(outer) == 2
+        and colours_in(outer[1])
+        and same(colours_in(outer[1])[0], col)
+        and lengths(outer[1])[-1] > lengths(outer[0])[-1]
+    ):
+        ring = "ring"
+    else:
+        ring = f"bad ring {b['shadow']}"
+    return {"shape": shape, "fill": " ".join(parts), "ring": ring, "colour": named(col, tk)}
+
+
+def expect_result(r: dict) -> dict:
+    shape, fill = MARK_LOOK[r["kind"]]
+    return {
+        "shape": shape,
+        "fill": fill,
+        "ring": "ring" if r["rel"] else "none",
+        # M2: Results marks stay ink; the first column's header carries the orange.
+        "colour": "ink",
+        "halo": False,
+    }
+
+
+def expect_question(q: dict) -> dict:
+    # A question with both markers would need both looks; the design draws neither alone.
+    fill = " ".join(w for w, on in (("half", q["first"]), ("dashed", q["unclear"])) if on)
+    return {
+        "shape": "circle",
+        "fill": fill or "solid",
+        "ring": "ring" if q["cross"] else "none",
+        "colour": "orange" if q["novel"] else "ink",
+    }
+
+
+MARK_TOKENS = ("ink", "card", "new", "box", "mute")
+
+
+def mark_diffs(page: Page, tk: dict | None = None) -> tuple[list[tuple[str, str]], dict, dict]:
+    """Done check 1: each mark's rendered features against the records. Returns (id, why)
+    pairs, plus the raw page data for the other checks."""
+    rec = records()
+    rd = page.evaluate(RESULT_MARKS_JS)
+    qd = page.evaluate(QUESTION_MARKS_JS) if page.locator(".qgrid").count() else None
+    tk = tk or {k: rgba(rd[k]) for k in MARK_TOKENS}
+    out: list[tuple[str, str]] = []
+    seen = set()
+    for m in rd["marks"]:
+        r = rec["results"].get(m["id"])
+        if r is None:
+            out.append((m["id"], "has no listed record"))
+            continue
+        seen.add(m["id"])
+        if m["k"] != r["kind"]:
+            out.append((m["id"], f"data-k '{m['k']}', record rtype '{r['kind']}'"))
+        got, want = result_features(m, tk), expect_result(r)
+        if got != want:
+            diff = {k: (got[k], want[k]) for k in want if got[k] != want[k]}
+            out.append((m["id"], f"shows {diff} (got, expected)"))
+    if rd["marks"] and (missing := set(rec["results"]) - seen):
+        out.append(("map", f"{len(missing)} listed results have no mark"))
+    for q in (qd or {}).get("marks", []):
+        e = rec["questions"].get(q["id"])
+        if e is None:
+            out.append((q["id"], "has no record"))
+            continue
+        got, want = question_features(q, tk), expect_question(e)
+        if got != want:
+            diff = {k: (got[k], want[k]) for k in want if got[k] != want[k]}
+            out.append((q["id"], f"shows {diff} (got, expected)"))
+    return out, rd, qd or {}
+
+
+def column_paint(rec: dict) -> tuple[str, list[str]]:
+    """Negative control 2: a style that colours every mark by its column, and the colours."""
+    paint = [
+        "var(--nv-new)",
+        "var(--nv-builds)",
+        "var(--nv-match)",
+        "rgb(128, 0, 128)",
+        "rgb(0, 128, 128)",
+        "rgb(160, 110, 0)",
+    ]
+    n = len(rec["cols"])
+    css = [
+        f".nvgrid > .nvcell:nth-of-type({n}n+{i + 1}) .nd {{ color: {c} !important; }}"
+        for i, c in enumerate(paint[:n])
+    ]
+    css += [
+        f".qgrid .qrow > .qcell:nth-of-type({i + 1}) .qd {{ color: {c} !important; }}"
+        for i, c in enumerate(paint[: len(rec["follow_order"])])
+    ]
+    return "\n".join(css), paint
+
+
+NO_MOTION = "*, *::before, *::after { transition: none !important; animation: none !important; }"
+FLUSH = """() => [...document.querySelectorAll('.nd, .qdot')]
+    .map(e => getComputedStyle(e, '::before').backgroundColor).length"""
+# Each control breaks one type's look; the check must catch exactly the marks of that type.
+RESULT_CONTROLS = [
+    (
+        "negative results drawn filled",
+        "negative",
+        '.nvgrid .nd[data-k="negative"]::before'
+        " { background: currentColor !important; box-shadow: none !important; }",
+    ),
+    (
+        "inconclusive results drawn with a solid border",
+        "inconclusive",
+        '.nvgrid .nd[data-k="inconclusive"]::before { border-style: solid !important; }',
+    ),
+    (
+        "results about the data drawn round",
+        "data",
+        '.nvgrid .nd[data-k="data"]::before { border-radius: 50% !important; }',
+    ),
+]
+UNCLEAR_SOLID = ".qgrid .qd.unclear .qdot::before { border-style: solid !important; }"
+# Nearly solid: the split moved from the midpoint to 99%.
+HALF_SKEWED = (
+    ".qgrid .qd.half .qdot::before { background: linear-gradient(90deg, currentColor 99%, "
+    "var(--card) 99%) !important; }"
+)
+HALF_JS = """on => document.querySelectorAll(on ? '.qgrid .qd[data-was-half]' : '.qgrid .qd.half')
+    .forEach(e => { e.classList.toggle('half', on); e.toggleAttribute('data-was-half', !on) })"""
+
+
+def control_fails(page: Page, tag: str, tk: dict, results_page: bool) -> list[str]:
+    """Done check 1's negative controls: each injected fault must make the check fail on
+    exactly the marks it changes."""
+    fails: list[str] = []
+    rec = records()
+    # Links ease their colour; without this the controls would be read, and leave the page,
+    # mid-transition.
+    still = page.add_style_tag(content=NO_MOTION)
+
+    def caught_by(css: str) -> set[str]:
+        style = page.add_style_tag(content=css)
+        caught = {i for i, _ in mark_diffs(page, tk)[0]}
+        style.evaluate("e => e.remove()")
+        return caught
+
+    def report(name: str, caught: set[str], want: set[str], noun: str) -> None:
+        if caught != want or not want:
+            fails.append(
+                f"{tag}: control '{name}' caught {len(caught)} marks, expected the {len(want)} "
+                f"{noun} (missed {sorted(want - caught)[:3]}, extra {sorted(caught - want)[:3]})"
+            )
+
+    if results_page:
+        for name, kind, css in RESULT_CONTROLS:
+            want = {i for i, r in rec["results"].items() if r["kind"] == kind}
+            if want:
+                report(name, caught_by(css), want, f"{kind} results")
+            else:
+                print(f"note: {tag}: no {kind} result, so control '{name}' did not run")
+    else:
+        firsts = {q for q, e in rec["questions"].items() if e["first"]}
+        if firsts:
+            page.evaluate(HALF_JS, False)
+            caught = {i for i, _ in mark_diffs(page, tk)[0]}
+            page.evaluate(HALF_JS, True)
+            report("first-step dots lose .half", caught, firsts, "first-step questions")
+            report(
+                "first-step dots split at 99%", caught_by(HALF_SKEWED), firsts, "first-step ones"
+            )
+        unclear = {q for q, e in rec["questions"].items() if e["unclear"]}
+        if unclear:
+            report("unclear dots drawn solid", caught_by(UNCLEAR_SOLID), unclear, "unclear ones")
+    css, paint = column_paint(rec)
+    probe = page.evaluate(
+        "cs => cs.map(c => { const e = document.createElement('i'); e.style.color = c;"
+        " document.body.append(e); const v = getComputedStyle(e).color; e.remove(); return v })",
+        paint,
+    )
+    colour = [rgba(c) for c in probe]
+    want = set()
+    if results_page:
+        want = {
+            i
+            for i, r in rec["results"].items()
+            if not same(colour[rec["cols"].index(r["col"])], tk["ink"])
+        }
+    else:
+        want = {
+            q
+            for q, e in rec["questions"].items()
+            if not same(colour[e["col"]], tk["new"] if e["novel"] else tk["ink"])
+        }
+    caught = caught_by(css)
+    if not want or not want <= caught:
+        fails.append(
+            f"{tag}: control 'marks coloured by column' caught {len(caught)} of {len(want)} "
+            f"recoloured marks (missed {sorted(want - caught)[:3]})"
+        )
+    # Reading a style settles the page before transitions come back.
+    page.evaluate(FLUSH)
+    still.evaluate("e => e.remove()")
+    return fails
+
+
+# The Results map's column colours by compare_order position (Novelty.tsx TONE).
+TONES = ["new", "builds", "match", "match", "none", "none"]
+
+
+def column_tone(rec: dict, col: str) -> str:
+    i = rec["order"].index(col) if col in rec["order"] else len(TONES) - 1
+    return TONES[min(i, len(TONES) - 1)]
+
+
+SIZE_JS = """() => {
+    const probe = v => { const e = document.createElement('span'); e.style.fontSize = v;
+        document.body.append(e); const px = getComputedStyle(e).fontSize; e.remove(); return px }
+    const font = e => { if (!e) return null; const s = getComputedStyle(e)
+        return [s.fontSize, s.fontWeight, s.letterSpacing, s.textTransform, s.color] }
+    const mute = (() => { const e = document.createElement('i'); e.style.color = 'var(--mute-ink)';
+        document.body.append(e); const c = getComputedStyle(e).color; e.remove(); return c })()
+    const box = e => { const r = e.getBoundingClientRect(); return [r.width, r.height] }
+    const pseudo = e => { const b = getComputedStyle(e, '::before')
+        return [parseFloat(b.width), parseFloat(b.height)] }
+    return {
+        ui: probe('var(--t-ui)'), label: probe('var(--t-label)'), mute,
+        nd: [...document.querySelectorAll('.nvgrid .nd, .nvlegend .nd')].map(box),
+        qd: [...document.querySelectorAll('.qgrid .qdot, .qlegend .qdot')].map(pseudo),
+        row: [...document.querySelectorAll('.nvrowh, .qrowh')]
+            .map(e => getComputedStyle(e).fontSize),
+        head: font(document.querySelector('.nvcolh, .qcolh')),
+    }
+}"""
+
+
+def typography_fails(browser, base: str) -> list[str]:
+    """At 1280 px both maps draw 10 px marks and share one row-label and column-header style;
+    under touch at 390 px both draw 12 px marks and share one row-label size."""
+    fails: list[str] = []
+    got = {}
+    for path in ("/findings/", "/directions/"):
+        page = new_page(browser)
+        go(page, base + path)
+        got[path] = page.evaluate(SIZE_JS)
+        page.context.close()
+    r, q = got["/findings/"], got["/directions/"]
+    for label, sizes in (("Results marks", r["nd"]), ("question dots", q["qd"])):
+        odd = {tuple(round(v, 1) for v in s) for s in sizes}
+        if odd != {(10.0, 10.0)}:
+            fails.append(f"marks: at 1280 px {label} measure {sorted(odd)}, expected 10 x 10")
+    rows = set(r["row"]) | set(q["row"])
+    if rows != {r["ui"]} or not r["row"] or not q["row"]:
+        fails.append(f"marks: row labels use {sorted(rows)}, --t-ui is {r['ui']}")
+    if r["head"] != q["head"] or not r["head"]:
+        fails.append(f"marks: column headers differ: Results {r['head']}, questions {q['head']}")
+    elif r["head"]:
+        size, weight, spacing, case, colour = r["head"]
+        em = (
+            float(spacing.removesuffix("px")) / float(size.removesuffix("px"))
+            if spacing != "normal"
+            else 0
+        )
+        if (size, weight, case) != (r["label"], "600", "uppercase") or abs(em - 0.04) > 0.002:
+            fails.append(
+                f"marks: column headers are {r['head']}, expected {r['label']} 600 0.04em uppercase"
+            )
+        if not same(rgba(colour), rgba(r["mute"])):
+            fails.append(f"marks: column header colour {colour}, --mute-ink is {r['mute']}")
+    # Under touch at phone width both maps draw 12 px marks and share one row-label size.
+    phone = {}
+    for path in ("/findings/", "/directions/"):
+        touch = browser.new_context(viewport=PHONE, has_touch=True, is_mobile=True).new_page()
+        go(touch, base + path)
+        phone[path] = touch.evaluate(SIZE_JS)
+        touch.context.close()
+    pr, pq = phone["/findings/"], phone["/directions/"]
+    for label, sizes in (("Results marks", pr["nd"]), ("question dots", pq["qd"])):
+        coarse = {tuple(round(v, 1) for v in s) for s in sizes}
+        if coarse != {(12.0, 12.0)}:
+            fails.append(
+                f"marks: under a coarse pointer {label} measure {sorted(coarse)}, expected 12 x 12"
+            )
+    phone_rows = set(pr["row"]) | set(pq["row"])
+    if len(phone_rows) != 1 or not pr["row"] or not pq["row"]:
+        fails.append(f"marks: at 390 px the two maps' row labels use {sorted(phone_rows)}")
+    return fails
+
+
+def check_marks(browser, base: str) -> list[str]:
+    """design-marks.md done checks 1 to 6 for option M2, in light and dark, at 1280 and 390 px."""
+    fails: list[str] = typography_fails(browser, base)
+    rec = records()
+    for theme in ("light", "dark"):
+        for viewport, touch in ((DESKTOP, False), (PHONE, True)):
+            tag = f"marks: {theme} {viewport['width']} px"
+            for path in ("/findings/", "/directions/"):
+                page = themed(browser, theme, viewport, touch)
+                go(page, base + path)
+                saved = page.evaluate("document.documentElement.getAttribute('saved-theme')")
+                if saved != theme:
+                    fails.append(f"{tag}: {path} renders saved-theme '{saved}'")
+                    continue
+                fails += marks_on(page, f"{tag} {path}", theme, rec, desktop=not touch)
+                page.context.close()
+    return fails
+
+
+def marks_on(page: Page, tag: str, theme: str, rec: dict, desktop: bool) -> list[str]:
+    fails: list[str] = []
+    results_page = page.locator(".nvgrid").count() > 0
+    diffs, rd, qd = mark_diffs(page)
+    tk = {k: rgba(rd[k]) for k in MARK_TOKENS}
+    for k, short in (("nv-new", "new"), ("nv-box", "box")):
+        if not same(tk[short], TOKENS[theme][k]):
+            fails.append(
+                f"{tag}: --{k} is {show(tk[short])}, the design gives {show(TOKENS[theme][k])}"
+            )
+    # 1. Marks match records.
+    counted = len(rd["marks"]) + len(qd.get("marks", []))
+    if results_page and len(rd["marks"]) != len(rec["results"]):
+        fails.append(f"{tag}: {len(rd['marks'])} result marks, {len(rec['results'])} listed")
+    if not results_page and len(qd.get("marks", [])) != len(rec["questions"]):
+        fails.append(
+            f"{tag}: {len(qd.get('marks', []))} question dots, {len(rec['questions'])} records"
+        )
+    if not counted:
+        return [*fails, f"{tag}: no mark to check"]
+    fails += [f"{tag}: mark {i} {why}" for i, why in diffs[:12]]
+    if len(diffs) > 12:
+        fails.append(f"{tag}: and {len(diffs) - 12} more marks differ from their records")
+    fails += control_fails(page, tag, tk, results_page)
+
+    # 2. Colour by position only where the column already names it: marks stay ink (orange
+    # for novel questions), boxes keep the neutral border, and each column header bar (and
+    # on phones each cell label's left edge) carries its column's colour.
+    colours = {named(rgba(m["color"]), tk) for m in rd["marks"] + qd.get("marks", [])}
+    if extra := colours - {"ink", "orange"}:
+        fails.append(f"{tag}: marks take colours {sorted(extra)}")
+    if results_page:
+        tone = {k: rgba(rd[k]) for k in ("new", "builds", "match", "none")}
+        if not neutral(tone["none"]) or len({show(c) for c in tone.values()}) != 4:
+            fails.append(f"{tag}: column colours {[show(c) for c in tone.values()]}")
+        if {named(rgba(m["color"]), tk) for m in rd["marks"]} != {"ink"}:
+            fails.append(f"{tag}: Results marks are not all ink")
+        heads = rd["heads"]
+        novel_heads = [h for h in heads if h["novel"]]
+        if len(novel_heads) != 1 or not heads or not heads[0]["novel"]:
+            fails.append(f"{tag}: first-column (nv-new) header flags {[h['novel'] for h in heads]}")
+        if [h["col"] for h in heads] != rec["cols"]:
+            fails.append(f"{tag}: headers {[h['col'] for h in heads]}, records {rec['cols']}")
+        for h in heads:
+            bar, line = rgba(h["bar"]), rgba(h["line"])
+            want = tone[column_tone(rec, h["col"])]
+            if not same(bar, want):
+                fails.append(
+                    f"{tag}: header '{h['col']}' bar is {show(bar)}, its column's "
+                    f"--nv-{column_tone(rec, h['col'])} is {show(want)}"
+                )
+            if not neutral(line):
+                fails.append(f"{tag}: header '{h['col']}' rule is coloured {show(line)}")
+        for b in rd["boxes"]:
+            c = rgba(b["border"])
+            if not same(c, tk["box"]) or not neutral(c):
+                fails.append(f"{tag}: box {b['p']} border is {show(c)}, not the neutral --nv-box")
+                break
+        if not rd["boxes"]:
+            fails.append(f"{tag}: no project box to measure")
+        shown = [lab for lab in rd["labs"] if lab["shown"]]
+        if not desktop:
+            if not shown:
+                fails.append(f"{tag}: no cell label shows on a phone")
+            for lab in shown:
+                c = rgba(lab["color"])
+                is_novel = lab["col"] == rec["novel"]
+                if lab["novel"] != is_novel:
+                    fails.append(f"{tag}: cell label '{lab['col']}' Novel flag {lab['novel']}")
+                if not same(c, rgba(rd["mute"])):
+                    fails.append(f"{tag}: cell label '{lab['col']}' text is {show(c)}, not mute")
+                width, style, edge = lab["edge"]
+                want = tone[column_tone(rec, lab["col"])]
+                if width != "4px" or style != "solid" or not same(rgba(edge), want):
+                    fails.append(
+                        f"{tag}: cell label '{lab['col']}' left edge {width} {style} "
+                        f"{show(rgba(edge))}, its column's colour is {show(want)}"
+                    )
+                    break
+        for c in rd["cells"]:
+            if not neutral(rgba(c)):
+                fails.append(f"{tag}: a map cell has a coloured background {c}")
+                break
+    else:
+        for h in qd["heads"]:
+            for part in ("bg", "line", "before", "after", "bar"):
+                if h[part] != "none" and not neutral(rgba(h[part])) and rgba(h[part])[3] > 0:
+                    fails.append(f"{tag}: a question column header {part} is coloured {h[part]}")
+        for c in qd["cells"]:
+            if not neutral(rgba(c)):
+                fails.append(f"{tag}: a question cell has a coloured background {c}")
+                break
+        # The 55% fade on unringed dots is gone.
+        faded = [q["id"] for q in qd["marks"] if q["op"] * q["under"]["op"] < 1]
+        if faded:
+            fails.append(f"{tag}: {len(faded)} question dots are faded, such as {faded[0]}")
+        shaped = [q["id"] for q in qd["marks"] if q["shape"]]
+        if shaped:
+            fails.append(f"{tag}: {len(shaped)} question dots still carry data-shape")
+
+    # 3. Each legend entry draws the map: the same features as a map mark of its class.
+    if results_page:
+        legend = rd["legend"] + [m for b in rd["legendBox"] for m in b["marks"]]
+        if not rd["legend"]:
+            fails.append(f"{tag}: the Results legend has no mark")
+        keys = {(m["k"], m["rel"]) for m in rd["legend"]}
+        if keys != {(r["kind"], False) for r in rec["results"].values()} | {("positive", True)}:
+            fails.append(f"{tag}: the legend draws {sorted(keys)}")
+        for m in legend:
+            twin = next((x for x in rd["marks"] if (x["k"], x["rel"]) == (m["k"], m["rel"])), None)
+            if twin is None:
+                fails.append(f"{tag}: legend mark {m['k']} ring {m['rel']} has no map twin")
+                continue
+            raw = ("color", "w", "h")
+            diff = [k for k in raw if m[k] != twin[k]]
+            diff += [f"::before {k}" for k in m["b"] if m["b"][k] != twin["b"][k]]
+            diff += [f"::after {k}" for k in m["a"] if m["a"][k] != twin["a"][k]]
+            got, want = result_features(m, tk), result_features(twin, tk)
+            if got != want or diff:
+                fails.append(
+                    f"{tag}: legend mark {m['k']} ring {m['rel']} {got} "
+                    f"differs from the map {want} in {diff}"
+                )
+        for b in rd["legendBox"]:
+            if rd["boxes"] and b["border"] != rd["boxes"][0]["border"]:
+                fails.append(f"{tag}: the legend box border {b['border']} differs from the map's")
+        if not rd["legendBox"]:
+            fails.append(f"{tag}: the legend has no project box")
+    else:
+        sizes: set[tuple[float, float]] = set()
+        if not qd["legend"]:
+            fails.append(f"{tag}: the questions legend has no dot")
+
+        # One plain dot, then one per marker some question carries (Questions.tsx legend).
+        def flag(x: dict) -> tuple[bool, bool, bool, bool]:
+            return (x["novel"], x["cross"], x["half"], x["unclear"])
+
+        qs = rec["questions"].values()
+        want_flags = {(False, False, False, False)}
+        for i, key in enumerate(("novel", "cross", "first", "unclear")):
+            if any(e[key] for e in qs):
+                want_flags.add(tuple(j == i for j in range(4)))
+        flags = {flag(q) for q in qd["legend"]}
+        if flags != want_flags or len(qd["legend"]) != len(want_flags):
+            fails.append(
+                f"{tag}: the questions legend draws {sorted(flags)} (novel, ring, half, "
+                f"unclear), records give {sorted(want_flags)}"
+            )
+        for q in qd["legend"]:
+            twin = next((x for x in qd["marks"] if flag(x) == flag(q)), None)
+            if twin is None:
+                fails.append(f"{tag}: legend dot {flag(q)} has no map twin")
+                continue
+            got, want = question_features(q, tk), question_features(twin, tk)
+            if (
+                got != want
+                or q["b"]["shadow"] != twin["b"]["shadow"]
+                or q["color"] != twin["color"]
+            ):
+                fails.append(f"{tag}: legend dot {flag(q)} {got} differs from the map {want}")
+            if desktop and (q["w"], q["h"]) != (twin["w"], twin["h"]):
+                sizes.add((q["w"], twin["w"]))
+        for small, big in sorted(sizes):
+            fails.append(f"{tag}: legend dots are {small} px, map dots {big} px")
+
+    # 4. Contrast: 3:1 against the map surface, opacity composited.
+    low: list[str] = []
+    for m in rd["marks"] if results_page else []:
+        under = surface(m["under"]["stack"])
+        for part, c in (("mark", m["color"]), ("ring", m["a"]["color"] if m["rel"] else None)):
+            if c is None:
+                continue
+            r = ratio(blend(rgba(c), under, m["under"]["op"]), under)
+            if r < 3:
+                low.append(f"{part} {m['id']} {r:.2f}:1")
+        if m["k"] in ("negative", "inconclusive"):
+            r = ratio(
+                blend(rgba(m["color"]), rgba(m["b"]["bg"]), m["under"]["op"]), rgba(m["b"]["bg"])
+            )
+            if r < 3:
+                low.append(f"{m['k']} stroke {m['id']} {r:.2f}:1")
+        if m["k"] == "data":
+            # The grey square is the mark a reader sees, not the ink it would ring in.
+            r = ratio(blend(rgba(m["b"]["bg"]), under, m["under"]["op"]), under)
+            if r < 3:
+                low.append(f"grey square {m['id']} {r:.2f}:1")
+    for b in rd["boxes"] if results_page else []:
+        under = surface(b["under"]["stack"])
+        r = ratio(blend(rgba(b["border"]), under, b["under"]["op"]), under)
+        if r < 3:
+            low.append(f"box {b['p']} border {r:.2f}:1")
+    for q in qd.get("marks", []):
+        under = surface(q["under"]["stack"])
+        c = blend(rgba(q["color"]), under, q["op"] * q["under"]["op"])
+        if (r := ratio(c, under)) < 3:
+            low.append(f"dot {q['id']} {r:.2f}:1")
+        layers = [x for x in shadow_layers(q["b"]["shadow"]) if "inset" not in x]
+        # A missing ring is check 1's failure; here only a drawn ring is measured.
+        if q["cross"] and len(layers) == 2 and colours_in(layers[0]):
+            gap = colours_in(layers[0])[0]
+            if (r := ratio(c, blend(gap, under))) < 3:
+                low.append(f"ring {q['id']} against its gap {r:.2f}:1")
+    if low:
+        fails.append(f"{tag}: {len(low)} below 3:1, such as {low[:3]}")
+    if (r := ratio(tk["new"], tk["ink"])) < 3:
+        fails.append(f"{tag}: orange against ink is {r:.2f}:1")
+
+    # 5. Words: questions on a new-direction result say so; each box label names its types.
+    if results_page:
+        fails += box_words(page, tag, rec)
+    else:
+        for q in qd["marks"]:
+            e = rec["questions"].get(q["id"])
+            if e is None:
+                continue
+            for where, said in (("name", q["label"]), ("pop-up", q["pop"])):
+                if (NOVEL_WORDS in said) != e["novel"]:
+                    fails.append(
+                        f"{tag}: dot {q['id']} {where} novel words {NOVEL_WORDS in said}, "
+                        f"record {e['novel']}"
+                    )
+
+    # 6. Rings do not touch another mark or their box border.
+    if results_page:
+        rings = page.evaluate(RINGS_JS)
+        if len(rings) != sum(r["rel"] for r in rec["results"].values()) or not rings:
+            fails.append(f"{tag}: {len(rings)} rings measured")
+        for r in rings:
+            if r["hit"] or r["border"] or not r["shown"]:
+                fails.append(
+                    f"{tag}: ring of {r['id']} (radius {r['rad']:.1f}) meets marks {r['hit']}, "
+                    f"box border {r['border']}"
+                )
+
+    # Hover gives a soft halo, never a ring.
+    if desktop:
+        fails += halo_fails(page, tag, tk, results_page)
+    return fails
+
+
+def box_words(page: Page, tag: str, rec: dict) -> list[str]:
+    fails: list[str] = []
+    titles = rec["index"].get("project_titles") or {}
+    named_boxes = 0
+    # The whole label is compared, so it names exactly the kinds the box holds.
+    for b in page.evaluate(BOXES_JS):
+        items = rec["boxes"].get((b["topic"], b["col"], b["p"]), [])
+        if not items:
+            continue
+        kinds = [(k, sum(rec["results"][i]["kind"] == k for i in items)) for k in TYPE_WORDS]
+        words = ", ".join(f"{n} {BOX_COUNT_WORDS[k][n != 1]}" for k, n in kinds if n)
+        n = len(items)
+        # Novelty.tsx names the project by its index title, else its first result's report.
+        name = titles.get(b["p"]) or rec["findings"][items[0]].get("report_title") or b["p"]
+        head = f"{name}: {n} {'result' if n == 1 else 'results'}, {b['col']}"
+        rel = sum(rec["results"][i]["rel"] for i in items)
+        want = ". ".join(
+            x
+            for x in (head, words, f"{rel} with a related result in another project" if rel else "")
+            if x
+        )
+        if b["label"] != want:
+            fails.append(f"{tag}: box label '{b['label']}', expected '{want}'")
+            break
+        named_boxes += 1
+    if not named_boxes:
+        fails.append(f"{tag}: no box label to read")
+    return fails
+
+
+def halo_fails(page: Page, tag: str, tk: dict, results_page: bool) -> list[str]:
+    fails: list[str] = []
+    if results_page:
+        m = page.locator(".nvgrid .nd.rel").first
+        m.scroll_into_view_if_needed()
+        before = m.evaluate("e => getComputedStyle(e, '::after').borderTopColor")
+        m.hover()
+        page.wait_for_timeout(200)
+        on = page.eval_on_selector_all(".nvgrid .nd.on", "els => els.map(e => e.dataset.id)")
+        got = m.evaluate(
+            "e => [getComputedStyle(e).boxShadow, getComputedStyle(e).outlineStyle,"
+            " getComputedStyle(e, '::after').borderTopColor]"
+        )
+        layers = shadow_layers(got[0])
+        soft = layers and colours_in(layers[0]) and colours_in(layers[0])[0][3] < 0.3
+        if on != [m.get_attribute("data-id")] or not soft or got[1] != "none" or got[2] != before:
+            fails.append(
+                f"{tag}: hovering a ringed mark gives marks {on} shadow '{got[0]}', "
+                f"outline {got[1]}"
+            )
+        page.mouse.move(0, 0)
+        page.wait_for_timeout(500)
+    else:
+        q = page.locator(".qgrid .qd.cross").first
+        dot = q.locator("a.qdot")
+        dot.scroll_into_view_if_needed()
+        ring = dot.evaluate("e => getComputedStyle(e, '::before').boxShadow")
+        dot.hover()
+        page.wait_for_timeout(200)
+        bg, ring2 = dot.evaluate(
+            "e => [getComputedStyle(e).backgroundColor, getComputedStyle(e, '::before').boxShadow]"
+        )
+        c = rgba(bg)
+        if not (0 < c[3] < 0.3) or ring2 != ring:
+            fails.append(f"{tag}: hovering a dot gives halo {bg}, ring '{ring2}' (was '{ring}')")
+        page.mouse.move(0, 0)
+        page.wait_for_timeout(500)
+    return fails
+
+
+# ---------------------------------------------------------------- filters (option 1B)
+
+
+def board_expectations() -> dict[str, dict]:
+    """Per board, each card's facet values and toggles, from the records."""
+    rec = records()
+    res = {
+        i: {
+            "f": {"topic": r["topic"], "compare": r["col"], "kind": r["kind"]},
+            "t": {"rel": r["rel"]},
+        }
+        for i, r in rec["results"].items()
+    }
+    qs = {
+        q: {
+            "f": {"topic": e["topic"], "follow": e["follow"]},
+            "t": {"first": e["first"], "cross": e["cross"], "novel": e["novel"]},
+        }
+        for q, e in rec["questions"].items()
+    }
+    qi = rec["qindex"]
+    used = {e["follow"] for e in rec["questions"].values()}
+    return {
+        "/findings/": {
+            "cards": res,
+            "marks": ".nvgrid .nd[data-id]",
+            "picks": [("topic", None), ("compare", rec["novel"]), ("kind", "negative")],
+            "toggles": ["rel"],
+            "facets": {"topic": "Topic", "compare": "How new", "kind": "Type of result"},
+            "chips": {},
+            "sorts": [["novel", "Most new first"], ["topic", "Topic"], ["project", "Project"]],
+        },
+        "/directions/": {
+            "cards": qs,
+            "marks": ".qgrid .qd[data-id]",
+            "picks": [("topic", None), ("follow", None)],
+            "toggles": [
+                t for t in ("first", "cross", "novel") if any(c["t"][t] for c in qs.values())
+            ],
+            "facets": {"topic": "Topic", "follow": "What following up needs"},
+            # Each follow chip, in column order, carries its column's note as its title.
+            "chips": {
+                "follow": [
+                    [
+                        k,
+                        (qi.get("follow_text") or {}).get(k, ""),
+                        (qi.get("follow_notes") or {}).get(k),
+                    ]
+                    for k in rec["follow_order"]
+                    if k in used
+                ]
+            },
+            "sorts": [["topic", "Topic"], ["need", "Least effort first"]],
+        },
+    }
+
+
+def board_state(page: Page, marks: str) -> dict:
+    return page.evaluate(
+        """marks => {
+        const board = document.querySelector('section.board[data-board]')
+        const cards = [...board.querySelectorAll(':scope > .cards > .card')]
+        return {
+            shown: cards.filter(c => !c.classList.contains('px-hidden')
+                && getComputedStyle(c).display !== 'none').map(c => c.dataset.id),
+            leaked: cards.filter(c => c.classList.contains('px-hidden')
+                && getComputedStyle(c).display !== 'none').length,
+            order: cards.map(c => c.dataset.id),
+            count: board.querySelector('.px-tools .row1 > .count:last-child')?.textContent.trim(),
+            pressed: [...board.querySelectorAll(
+                '.px-tools .facets[data-k] .px-chip[aria-pressed=true]')]
+                .map(b => [b.closest('.facets').dataset.k, b.dataset.f]),
+            checked: [...board.querySelectorAll('.px-tools input[data-t]')].filter(i => i.checked)
+                .map(i => i.dataset.t),
+            compact: board.classList.contains('px-compact'),
+            sort: board.querySelector('.px-tools select')?.value,
+            q: board.querySelector('.px-tools input[type=search]')?.value,
+            out: [...document.querySelectorAll(marks)].filter(m => m.classList.contains('out'))
+                .map(m => m.dataset.id),
+            marks: [...document.querySelectorAll(marks)].map(m => m.dataset.id),
+            fadedOut: [...document.querySelectorAll(marks)].filter(m => m.classList.contains('out'))
+                .every(m => { const t = m.matches('.qd') ? m.querySelector('.qdot') : m;
+                    return +getComputedStyle(t).opacity < 0.5 }),
+            beads: [...document.querySelectorAll('.nvgrid .nbead')].map(b =>
+                [b.classList.contains('out'),
+                 [...b.querySelectorAll('.nd')].every(d => d.classList.contains('out'))]),
+        }
+    }""",
+        marks,
+    )
+
+
+def filter_fails(st: dict, want: set[str], total: int, label: str) -> list[str]:
+    fails: list[str] = []
+    if set(st["shown"]) != want:
+        extra, missing = set(st["shown"]) - want, want - set(st["shown"])
+        fails.append(
+            f"{label}: shows {len(st['shown'])} cards, records give {len(want)} "
+            f"(extra {sorted(extra)[:2]}, missing {sorted(missing)[:2]})"
+        )
+    if st["leaked"]:
+        fails.append(f"{label}: {st['leaked']} hidden cards still display")
+    if st["count"] != f"{len(want)} of {total}":
+        fails.append(f"{label}: the count reads '{st['count']}', expected '{len(want)} of {total}'")
+    if not st["marks"]:
+        fails.append(f"{label}: the map has no marks to fade")
+    wrong = [m for m in st["marks"] if (m in st["out"]) == (m in want)]
+    if wrong:
+        fails.append(f"{label}: {len(wrong)} map marks fade the wrong way, such as {wrong[0]}")
+    if not st["fadedOut"]:
+        fails.append(f"{label}: a mark marked out is not drawn faded")
+    bad = [b for b in st["beads"] if b[0] != b[1]]
+    if bad:
+        fails.append(f"{label}: {len(bad)} boxes fade unlike their marks")
+    return fails
+
+
+def check_filters(browser, base: str) -> list[str]:
+    """Done check 4: on each board a topic chip, a category chip and each toggle leave only
+    matching cards, the count reads "N of M", the URL holds the state, a reload restores it,
+    list view toggles, and the map fades the marks outside the filter."""
+    fails: list[str] = []
+    for path, cfg in board_expectations().items():
+        page = new_page(browser)
+        go(page, base + path)
+        fails += board_fails(page, base, path, cfg)
+        page.context.close()
+    fails += stale_url_fails(browser, base)
+    fails += toggle_box_fails(browser, base)
+    return fails
+
+
+def toggle_box_fails(browser, base: str) -> list[str]:
+    """Each toggle's checkbox lies inside its filter bar (Quartz once pushed it 22.4 px out)."""
+    fails: list[str] = []
+    for viewport in (DESKTOP, PHONE):
+        for path in board_expectations():
+            page = new_page(browser, viewport)
+            go(page, base + path)
+            boxes = page.evaluate(
+                """() => [...document.querySelectorAll('.px-tog input')].map(i => {
+                    const r = i.getBoundingClientRect()
+                    const t = i.closest('.px-tools')?.getBoundingClientRect()
+                    return {t: i.dataset.t, inside: !!t && r.width > 0 && r.left >= t.left - 0.5
+                        && r.right <= t.right + 0.5 && r.top >= t.top - 0.5
+                        && r.bottom <= t.bottom + 0.5, left: r.left, bar: t ? t.left : null}
+                })"""
+            )
+            label = f"filters: {path} at {viewport['width']} px"
+            want = len(board_expectations()[path]["toggles"])
+            if len(boxes) != want:
+                fails.append(f"{label}: {len(boxes)} toggle boxes, expected {want}")
+            for b in boxes:
+                if not b["inside"]:
+                    fails.append(
+                        f"{label}: toggle {b['t']} box at x {b['left']:.1f} lies outside "
+                        f"the filter bar (x {b['bar']})"
+                    )
+            page.context.close()
+    return fails
+
+
+def stale_url_fails(browser, base: str) -> list[str]:
+    """A URL value no chip offers (a stale or edited link) is ignored: every card shows, only
+    the All chips are pressed, and no mark fades."""
+    fails: list[str] = []
+    for path, query in (
+        ("/findings/", "topic=nonexistent"),
+        ("/directions/", "follow=nonexistent"),
+    ):
+        cfg = board_expectations()[path]
+        page = new_page(browser)
+        go(page, f"{base}{path}?{query}")
+        st = board_state(page, cfg["marks"])
+        label = f"filters: {path}?{query}"
+        fails += filter_fails(st, set(cfg["cards"]), len(cfg["cards"]), label)
+        rows = page.locator(".px-tools .facets[data-k]").count()
+        if any(v for _, v in st["pressed"]) or len(st["pressed"]) != rows or not rows:
+            fails.append(
+                f"{label}: chips pressed {st['pressed']}, expected only the {rows} All chips"
+            )
+        if st["out"]:
+            fails.append(f"{label}: {len(st['out'])} marks fade")
+        page.context.close()
+    return fails
+
+
+BAR_WORDS_JS = """() => {
+    const tools = document.querySelector('section.board[data-board] > .px-tools')
+    return {
+        facets: Object.fromEntries([...tools.querySelectorAll('.facets[data-k]')].map(f =>
+            [f.dataset.k, f.querySelector('.px-facet-lbl')?.textContent || ''])),
+        chips: Object.fromEntries([...tools.querySelectorAll('.facets[data-k]')].map(f =>
+            [f.dataset.k, [...f.querySelectorAll('.px-chip:not([data-f=""])')].map(b =>
+                [b.dataset.f, b.childNodes[0].textContent.trim() || b.textContent.trim(),
+                 b.getAttribute('title')])])),
+        toggles: [...tools.querySelectorAll('.px-tog')].map(t =>
+            [t.querySelector('input').dataset.t, t.textContent.replace(/\\d+\\s*$/, '').trim()]),
+        sorts: [...tools.querySelectorAll('select option')].map(o => [o.value, o.textContent]),
+    }
+}"""
+# The toggles' words (Cards.tsx and Questions.tsx).
+TOGGLE_WORDS = {
+    "rel": "Related across projects",
+    "first": FIRST_WORDS,
+    "cross": "Builds on results from two or more projects",
+    "novel": NOVEL_WORDS,
+}
+
+
+def bar_word_fails(page: Page, path: str, cfg: dict) -> list[str]:
+    """The filter bar names its facets, toggles and sorts in the boards' current words, and
+    a follow-up chip carries its column's note."""
+    got = page.evaluate(BAR_WORDS_JS)
+    fails: list[str] = []
+    if got["facets"] != cfg["facets"]:
+        fails.append(f"filters: {path} facets {got['facets']}, expected {cfg['facets']}")
+    for k, want in cfg["chips"].items():
+        if got["chips"].get(k) != want:
+            fails.append(f"filters: {path} {k} chips {got['chips'].get(k)}, expected {want}")
+    want_toggles = [[t, TOGGLE_WORDS[t]] for t in cfg["toggles"]]
+    if got["toggles"] != want_toggles:
+        fails.append(f"filters: {path} toggles {got['toggles']}, expected {want_toggles}")
+    if got["sorts"] != cfg["sorts"]:
+        fails.append(f"filters: {path} sorts {got['sorts']}, expected {cfg['sorts']}")
+    return fails
+
+
+def board_fails(page: Page, base: str, path: str, cfg: dict) -> list[str]:
+    fails: list[str] = []
+    cards = cfg["cards"]
+    total = len(cards)
+    tools = page.locator("section.board[data-board] > .px-tools")
+    if tools.count() != 1:
+        fails.append(f"filters: {path} has {tools.count()} filter bars")
+        return fails
+    st = board_state(page, cfg["marks"])
+    fails += filter_fails(st, set(cards), total, f"filters: {path} unfiltered")
+    if st["out"]:
+        fails.append(f"filters: {path} fades {len(st['out'])} marks before any filter")
+    if set(st["marks"]) != set(cards):
+        fails.append(
+            f"filters: {path} map marks and records differ by {len(set(st['marks']) ^ set(cards))}"
+        )
+
+    def url_state() -> dict[str, list[str]]:
+        return parse_qs(urlparse(page.url).query)
+
+    def run(label: str, params: dict[str, str], want: set[str]) -> None:
+        nonlocal fails
+        st = board_state(page, cfg["marks"])
+        fails += filter_fails(st, want, total, label)
+        if (got := {k: v[0] for k, v in url_state().items()}) != params:
+            fails.append(f"{label}: the URL holds {got}, expected {params}")
+        page.reload(wait_until="networkidle")
+        again = board_state(page, cfg["marks"])
+        fails += [f"{x} after a reload" for x in filter_fails(again, want, total, label)]
+        keep = ("pressed", "checked", "compact", "sort", "q")
+        if {k: again[k] for k in keep} != {k: st[k] for k in keep}:
+            fails.append(
+                f"{label}: a reload restores {[again[k] for k in keep]}, "
+                f"not {[st[k] for k in keep]}"
+            )
+
+    def chip(k: str, v: str) -> None:
+        page.locator(f".px-tools .facets[data-k={k}] .px-chip[data-f='{v}']").click()
+
+    fails += bar_word_fails(page, path, cfg)
+    # An open pick takes the second most common value, so it neither matches all nor none.
+    picks: list[tuple[str, str]] = []
+    for k, v in cfg["picks"]:
+        if v is None:
+            tally = Counter(c["f"][k] for c in cards.values())
+            values = [x for x, _ in sorted(tally.items(), key=lambda kv: (-kv[1], kv[0]))]
+            v = values[min(1, len(values) - 1)]
+        picks.append((k, v))
+    for k, v in picks:
+        want = {i for i, c in cards.items() if c["f"][k] == v}
+        if not want or len(want) == total:
+            fails.append(f"filters: {path} {k} '{v}' matches {len(want)} of {total} cards")
+        chip(k, v)
+        run(f"filters: {path} {k} '{v}'", {k: v}, want)
+        pressed = page.locator(f".px-tools .facets[data-k={k}] .px-chip[aria-pressed=true]")
+        if pressed.count() != 1 or pressed.get_attribute("data-f") != v:
+            fails.append(f"filters: {path} {k} '{v}' chip is not the one pressed")
+        chip(k, v)
+        if url_state() or len(board_state(page, cfg["marks"])["shown"]) != total:
+            fails.append(f"filters: {path} a second click on {k} '{v}' does not clear it")
+    # A topic and a category together: both must hold.
+    (k1, _), (k2, v2) = picks[0], picks[1]
+    v1 = next(iter(sorted({c["f"][k1] for c in cards.values() if c["f"][k2] == v2})), "")
+    chip(k1, v1)
+    chip(k2, v2)
+    want = {i for i, c in cards.items() if c["f"][k1] == v1 and c["f"][k2] == v2}
+    run(f"filters: {path} {k1} '{v1}' and {k2} '{v2}'", {k1: v1, k2: v2}, want)
+    go(page, base + path)
+    for t in cfg["toggles"]:
+        box = page.locator(f".px-tools input[data-t={t}]")
+        if not box.count():
+            fails.append(f"filters: {path} has no '{t}' toggle")
+            continue
+        box.check()
+        want = {i for i, c in cards.items() if c["t"][t]}
+        if not want:
+            fails.append(f"filters: {path} toggle {t} matches no record")
+        run(f"filters: {path} toggle {t}", {t: "1"}, want)
+        page.locator(f".px-tools input[data-t={t}]").uncheck()
+        if url_state():
+            fails.append(f"filters: {path} unchecking {t} leaves {url_state()} in the URL")
+    # Sort and the list view are kept in the URL too.
+    sorts = page.eval_on_selector_all(".px-tools select option", "els => els.map(e => e.value)")
+    if len(sorts) > 1:
+        page.locator(".px-tools select").select_option(sorts[1])
+        st = board_state(page, cfg["marks"])
+        ranks = page.eval_on_selector_all(
+            "section.board[data-board] > .cards > .card",
+            f"els => els.map(e => +e.getAttribute('data-s-{sorts[1]}'))",
+        )
+        if ranks != sorted(ranks) or url_state() != {"sort": [sorts[1]]}:
+            fails.append(
+                f"filters: {path} sort {sorts[1]} gives URL {url_state()}, "
+                f"order sorted {ranks == sorted(ranks)}"
+            )
+        if sorts[1] == "need":
+            # Least effort first: the cards run through the follow-up columns in order.
+            order = records()["follow_order"]
+            seq = [order.index(cards[i]["f"]["follow"]) for i in st["order"] if i in cards]
+            if seq != sorted(seq) or len(seq) != total or not order:
+                fails.append(f"filters: {path} 'Least effort first' runs columns {seq[:40]}")
+        page.reload(wait_until="networkidle")
+        if board_state(page, cfg["marks"])["order"] != st["order"]:
+            fails.append(f"filters: {path} a reload does not restore sort {sorts[1]}")
+        page.locator(".px-tools select").select_option(sorts[0])
+    else:
+        fails.append(f"filters: {path} offers {len(sorts)} sorts")
+    page.locator(".px-tools .px-seg button[data-v=list]").click()
+    st = board_state(page, cfg["marks"])
+    display = page.locator("section.board[data-board] > .cards").evaluate(
+        "e => getComputedStyle(e).display"
+    )
+    if not st["compact"] or url_state() != {"view": ["list"]} or display != "block":
+        fails.append(
+            f"filters: {path} List gives compact {st['compact']}, URL {url_state()}, "
+            f"display {display}"
+        )
+    page.reload(wait_until="networkidle")
+    if not board_state(page, cfg["marks"])["compact"]:
+        fails.append(f"filters: {path} a reload does not restore the list view")
+    page.locator(".px-tools .px-seg button[data-v=cards]").click()
+    if board_state(page, cfg["marks"])["compact"] or url_state():
+        fails.append(f"filters: {path} Cards does not leave the list view")
+    # Words filter on what the card says.
+    if path == "/findings/":
+        rec = records()
+        word = "essential"
+        want = {
+            i
+            for i in cards
+            if word
+            in " ".join(
+                str(rec["findings"][i].get(k) or "") for k in ("title", "gist", "report_title")
+            ).lower()
+        }
+        page.locator(".px-tools input[type=search]").fill(word)
+        run(f"filters: {path} words '{word}'", {"q": word}, want)
+    return fails
+
+
+# ---------------------------------------------------------------- related results (done check 7)
+
+
+def check_related(browser, base: str) -> list[str]:
+    """Every listed result whose record lists related results shows them under "Related
+    results in other projects", one link per id; every result the map can draw a related
+    line for has the section; no other listed result has it."""
+    fails: list[str] = []
+    rec = records()
+    drawable = {i for i, r in rec["results"].items() if r["rel"]}
+    with_related = {i for i in rec["listed"] if rec["findings"][i].get("related")}
+    if not with_related:
+        return ["related: no listed result lists related results"]
+    if missing := drawable - with_related:
+        fails.append(
+            f"related: {len(missing)} results with a drawable related line list none: "
+            f"{sorted(missing)[:3]}"
+        )
+    for i in sorted(drawable):
+        partners = {
+            lk["b"] if lk["a"] == i else lk["a"] for lk in rec["links"] if i in (lk["a"], lk["b"])
+        }
+        if not partners <= set(rec["findings"][i].get("related") or []):
+            fails.append(
+                f"related: {i} lists {rec['findings'][i].get('related')}, "
+                f"its map lines reach {sorted(partners)}"
+            )
+    page = new_page(browser)
+    checked = 0
+    for i in sorted(with_related):
+        want = rec["findings"][i]["related"]
+        go(page, f"{base}/findings/{i}")
+        heads = page.eval_on_selector_all("h2", "els => els.map(e => e.textContent.trim())")
+        if heads.count(RELATED_HEADING) != 1:
+            fails.append(
+                f"related: {i} has {heads.count(RELATED_HEADING)} '{RELATED_HEADING}' sections"
+            )
+            continue
+        order = [FINDING_HEADINGS.index(h) for h in heads if h in FINDING_HEADINGS]
+        if order != sorted(order):
+            fails.append(f"related: {i} headings out of order: {heads}")
+        links = page.evaluate(
+            """h => {
+            const head = [...document.querySelectorAll('h2')].find(e => e.textContent.trim() === h)
+            const out = []
+            for (let n = head.nextElementSibling; n && !/^H[1-6]$/.test(n.tagName);
+                 n = n.nextElementSibling)
+                for (const li of n.querySelectorAll(':scope > li'))
+                    out.push([...li.querySelectorAll('a')]
+                    .map(a => a.getAttribute('href')).filter(Boolean))
+            return out }""",
+            RELATED_HEADING,
+        )
+        got = [last_part(x[0]) if x else "" for x in links]
+        if got != want:
+            fails.append(f"related: {i} section links {got}, record lists {want}")
+        if any(len(x) != 1 for x in links):
+            fails.append(
+                f"related: {i} has a list item with {[len(x) for x in links]} result links"
+            )
+        for o in want:
+            if o not in rec["listed"]:
+                fails.append(f"related: {i} lists {o}, which is not a listed result")
+        checked += 1
+    # The other listed results carry no such section (read from the built HTML).
+    for i in sorted(rec["listed"] - with_related):
+        try:
+            html = urllib.request.urlopen(f"{base}/findings/{i}", timeout=20).read().decode()
+        except urllib.error.HTTPError as e:
+            fails.append(f"related: /findings/{i} returned HTTP {e.code}")
+            continue
+        if RELATED_HEADING in html:
+            fails.append(f"related: {i} shows the section but its record lists no related results")
+        checked += 1
+    if checked != len(rec["listed"]):
+        fails.append(f"related: checked {checked} of {len(rec['listed'])} listed result pages")
+    print(
+        f"note: related: {len(with_related)} result pages with the section, "
+        f"{len(drawable)} on the map"
+    )
+    return fails
+
+
+# ---------------------------------------------------------------- connections
+
+
+def body_of(path: Path) -> str:
+    """A record's markdown after its frontmatter."""
+    text = path.read_text(encoding="utf-8")
+    end = text.find("\n---", 4) if text.startswith("---") else -1
+    return text[end + 4 :] if end >= 0 else text
+
+
+@cache
+def concept_cites() -> dict[str, set[str]]:
+    """Each concept page's cited project reports: its wikilinks to summaries/ (Quartz's links)."""
+    out = {}
+    for p in sorted((CONTENT / "concepts").glob("*.md")):
+        if p.stem == "index":
+            continue
+        found = re.findall(r"\[\[summaries/([^\]|#]+)", body_of(p))
+        out[p.stem] = {s.strip().removesuffix(".md") for s in found} - {"index"}
+    return out
+
+
+def results_of(sids: set[str]) -> set[str]:
+    rec = records()
+    return {i for i, r in rec["results"].items() if r["source"] in sids}
+
+
+def questions_of(sids: set[str]) -> set[str]:
+    rec = records()
+    return {
+        f"directions/{stem}"
+        for stem, fm in rec["directions"].items()
+        if sids & set(fm.get("projects") or [])
+    }
+
+
+def concepts_citing(sids: set[str]) -> set[str]:
+    return {f"concepts/{c}" for c, cited in concept_cites().items() if cited & sids}
+
+
+CONNECTIONS_JS = """() => {
+    const prose = document.querySelector('main .prose')
+    const kids = prose ? [...prose.children] : []
+    const tc = prose?.querySelector(':scope > .topic-cards')
+    const art = prose?.querySelector(':scope > article.popover-hint')
+    const cl = prose?.querySelector(':scope > section.conceptlinks')
+    const hrefs = els => [...els].map(a => a.getAttribute('href') || '')
+    return {
+        hasArt: !!art, tcCount: document.querySelectorAll('.topic-cards').length,
+        before: tc && art ? kids.indexOf(tc) < kids.indexOf(art) : null,
+        heads: tc ? [...tc.querySelectorAll('h2')].map(h => h.textContent.trim()) : [],
+        sections: tc ? [...tc.querySelectorAll(':scope > section')].map(s => ({
+            head: s.querySelector(':scope > .sechead h2')?.textContent.trim() || '',
+            cards: [...s.querySelectorAll(':scope > .grid2 > .fcard')].map(c =>
+                [c.querySelector('h3 a')?.getAttribute('href') || '', c.matches('.qfcard')]),
+            qwords: [...s.querySelectorAll(':scope > .grid2 > .qfcard')].map(c => [
+                c.querySelector('h3 a')?.getAttribute('href') || '',
+                [...c.querySelectorAll('.qfnovel')].map(e => e.textContent.trim()),
+                [...c.querySelectorAll('.meta.qfmeta > span')]
+                    .map(t => [t.className, t.textContent.trim()]),
+                c.textContent.includes('Needs:')]),
+            folded: hrefs(s.querySelectorAll(':scope > details.linkmore li a')),
+            summary: s.querySelector(':scope > details.linkmore > summary')?.textContent.trim()
+                || '',
+            more: [...s.querySelectorAll(':scope > .sechead p a')].map(a =>
+                [a.getAttribute('href') || '', a.textContent.trim()]),
+            empty: s.querySelector(':scope > .part-empty')?.textContent.trim() || '',
+        })) : [],
+        qgrid: document.querySelectorAll('.qgrid').length,
+        clCount: document.querySelectorAll('section.conceptlinks').length,
+        concepts: cl ? {
+            head: cl.querySelector(':scope > h2')?.textContent.trim() || '',
+            shown: hrefs(cl.querySelectorAll(':scope > ul > li a')),
+            folded: hrefs(cl.querySelectorAll(':scope > details.linkmore li a')),
+            summary: cl.querySelector(':scope > details.linkmore > summary')?.textContent.trim()
+                || '',
+            after: !!art && kids.indexOf(cl) > kids.indexOf(art),
+        } : null,
+    }
+}"""
+
+SPACING_JS = """() => [...document.querySelectorAll('.topic-cards .sechead')].map(s =>
+    [s.querySelector('h2')?.textContent.trim() || '', getComputedStyle(s).paddingTop,
+     getComputedStyle(s.querySelector('h2') || s).marginTop])"""
+
+
+def href_id(href: str, kind: str) -> str:
+    """The record id an in-page link points at: a result id, or directions/<stem>."""
+    stem = last_part(href)
+    return f"directions/{stem}" if kind == "q" else f"concepts/{stem}" if kind == "c" else stem
+
+
+def part_fails(got: dict, head: str, kind: str, want: set[str], label: str) -> list[str]:
+    """One "Part": the first 3 as cards, the rest folded, together exactly `want`."""
+    fails: list[str] = []
+    ids_ = [href_id(h, kind) for h, _ in got["cards"]] + [href_id(h, kind) for h in got["folded"]]
+    if len(ids_) != len(set(ids_)):
+        fails.append(f"{label}: '{head}' lists a {kind} twice: {sorted(ids_)}")
+    if set(ids_) != want:
+        fails.append(
+            f"{label}: '{head}' lists {len(set(ids_))}, records give {len(want)}; "
+            f"extra {sorted(set(ids_) - want)[:3]}, missing {sorted(want - set(ids_))[:3]}"
+        )
+    n = len(want)
+    if len(got["cards"]) != min(3, n) or len(got["folded"]) != max(0, n - 3):
+        fails.append(
+            f"{label}: '{head}' shows {len(got['cards'])} cards and {len(got['folded'])} folded "
+            f"for {n} items, expected {min(3, n)} and {max(0, n - 3)}"
+        )
+    if n > 3 and got["summary"] != f"{n - 3} more":
+        fails.append(f"{label}: '{head}' fold reads '{got['summary']}', expected '{n - 3} more'")
+    if any(q != (kind == "q") for _, q in got["cards"]):
+        fails.append(f"{label}: '{head}' mixes result and question cards")
+    # An empty part keeps its head and says it is empty; a full one never does.
+    if bool(got["empty"]) != (n == 0):
+        fails.append(f"{label}: '{head}' has {n} items and placeholder '{got['empty']}'")
+    return fails
+
+
+def connection_fails(
+    got: dict, want: list[tuple[str, str, set[str]]], tail: str, label: str
+) -> list[str]:
+    """`want` lists the expected Parts (heading, kind, ids) in order; `tail` the closing head.
+    Every topic, report and concept page shows every Part before its prose, empty or not."""
+    fails: list[str] = []
+    heads = [h for h, _, _ in want] + [tail]
+    if got["heads"] != heads:
+        fails.append(f"{label}: headings {got['heads']}, expected {heads}")
+    if not got["hasArt"] or got["before"] is None:
+        fails.append(f"{label}: no .topic-cards beside the page's prose")
+    elif not got["before"]:
+        fails.append(f"{label}: the results and questions sit after the prose")
+    by_head = {s["head"]: s for s in got["sections"]}
+    for head, kind, ids_ in want:
+        if head not in by_head:
+            continue
+        fails += part_fails(by_head[head], head, kind, ids_, label)
+        if kind == "q":
+            fails += qcard_word_fails(by_head[head]["qwords"], head, label)
+    return fails
+
+
+def qcard_word_fails(cards: list, head: str, label: str) -> list[str]:
+    """A question card says "Builds on a new-direction result" exactly when it does, then
+    its follow-up tags; it has no "Needs:" line."""
+    rec = records()
+    for href, novel, tags, needs in cards:
+        e = rec["questions"].get(href_id(href, "q"))
+        if e is None:
+            continue
+        fm = rec["directions"][href_id(href, "q").removeprefix("directions/")]
+        want = [[f"ready f-{fm.get('follow') or 'existing'}", e["follow_text"]]]
+        want += [["c-kind", FIRST_WORDS]] if e["first"] else []
+        want += [["c-kind", UNCLEAR_WORDS]] if e["unclear"] else []
+        if novel != ([NOVEL_WORDS] if e["novel"] else []) or tags != want or needs:
+            return [
+                f"{label}: '{head}' card {last_part(href)} says {novel}, tags {tags}, "
+                f"'Needs:' {needs}; expected novel {e['novel']}, tags {want}"
+            ]
+    return []
+
+
+def concept_list_fails(got: dict, head: str, want: set[str], label: str) -> list[str]:
+    cl = got["concepts"]
+    if not want:
+        return [f"{label}: lists concepts though none cites it"] if got["clCount"] else []
+    if cl is None or got["clCount"] != 1:
+        return [f"{label}: {got['clCount']} section.conceptlinks, {len(want)} concepts cite it"]
+    fails: list[str] = []
+    ids_ = [href_id(h, "c") for h in cl["shown"] + cl["folded"]]
+    if cl["head"] != head:
+        fails.append(f"{label}: concepts headed '{cl['head']}', expected '{head}'")
+    if len(ids_) != len(set(ids_)) or set(ids_) != want:
+        fails.append(
+            f"{label}: lists {len(ids_)} concepts, records give {len(want)}; "
+            f"extra {sorted(set(ids_) - want)[:3]}, missing {sorted(want - set(ids_))[:3]}"
+        )
+    n = len(want)
+    if len(cl["shown"]) != min(6, n) or len(cl["folded"]) != max(0, n - 6):
+        fails.append(
+            f"{label}: shows {len(cl['shown'])} concepts and folds {len(cl['folded'])} of {n}"
+        )
+    if n > 6 and cl["summary"] != f"{n - 6} more":
+        fails.append(f"{label}: concept fold reads '{cl['summary']}'")
+    if not cl["after"]:
+        fails.append(f"{label}: the concept list does not follow the prose")
+    return fails
+
+
+def topic_wants(t: str) -> tuple[list, list[str], list[tuple[str, str]]]:
+    rec = records()
+    order = rec["index"].get("compare_order") or []
+
+    def rank(i: str) -> float:
+        return (rec["findings"][i].get("topic_ranks") or {}).get(t, float("inf"))
+
+    def col(i: str) -> int:
+        text = rec["results"][i]["col"]
+        return order.index(text) if text in order else -1
+
+    # Connections.tsx picks from the topic's own results, so its board link shows every card
+    # again; a topic with none of its own shows the ranked results that touch it.
+    own = [i for i, r in rec["results"].items() if r["topic"] == t]
+    in_topic = len(own)
+    pool = own or [i for i in rec["results"] if rank(i) != float("inf")]
+    picks = sorted(pool, key=lambda i: (rank(i), col(i), f"findings/{i}"))[:3]
+    qs = {q for q, e in rec["questions"].items() if e["topic"] == t}
+    parts = [
+        ("Results from this topic", "r", set(picks)),
+        ("Open questions in this topic", "q", qs),
+    ]
+    more = []
+    # A topic with no results of its own has no board to link to.
+    if in_topic:
+        more.append((f"findings/?topic={t}", f"All {in_topic} results in this topic"))
+    if qs:
+        more.append((f"directions/?topic={t}", f"All {len(qs)} in the open questions"))
+    return parts, picks, more
+
+
+def check_connections(browser, base: str) -> list[str]:
+    """Results and open questions tied to topics, project reports and concepts, and the
+    concepts listed on result and question pages, against the records."""
+    fails: list[str] = []
+    rec = records()
+    page = new_page(browser, WIDE)
+    # Topic pages: every one, with board links followed.
+    topics = sorted(p.stem for p in (CONTENT / "topics").glob("*.md") if p.stem != "index")
+    spacing: list[list[str]] = []
+    controls_done = False
+    for t in topics:
+        label = f"connections: /topics/{t}"
+        go(page, f"{base}/topics/{t}")
+        got = page.evaluate(CONNECTIONS_JS)
+        parts, picks, more = topic_wants(t)
+        fails += connection_fails(got, parts, "Background", label)
+        if got["qgrid"]:
+            fails.append(f"{label}: still renders {got['qgrid']} .qgrid")
+        by_head = {s["head"]: s for s in got["sections"]}
+        res = by_head.get("Results from this topic")
+        if res and [last_part(h) for h, _ in res["cards"]] != picks:
+            fails.append(
+                f"{label}: result cards {[last_part(h) for h, _ in res['cards']]}, "
+                f"ranks give {picks}"
+            )
+        links = [a for s in got["sections"] for a in s["more"]]
+        for (href, text), (want_tail, want_text) in zip(links, more, strict=False):
+            if (
+                not href.rstrip("/").replace("/index?", "/?").endswith(want_tail)
+                or text != want_text
+            ):
+                fails.append(
+                    f"{label}: board link '{text}' -> {href}, expected '{want_text}' -> {want_tail}"
+                )
+        if len(links) != len(more):
+            fails.append(f"{label}: {len(links)} board links, expected {len(more)}")
+        spacing += page.evaluate(SPACING_JS)
+        if not controls_done and len(picks) == 3 and len(parts[1][2]) > 3:
+            fails += connection_controls(page, parts, label)
+            controls_done = True
+        # Following each board link shows exactly that topic's cards.
+        for i, (_, want_text) in enumerate(more):
+            go(page, f"{base}/topics/{t}")
+            page.locator(".topic-cards .sechead p a").nth(i).click()
+            page.wait_for_url("**/?topic=*")
+            page.wait_for_load_state("networkidle")
+            path = "/findings/" if "results" in want_text else "/directions/"
+            cfg = board_expectations()[path]
+            want = {k for k, v in cfg["cards"].items() if v["f"]["topic"] == t}
+            if path == "/findings/" and (lost := [p for p in picks if p not in want]):
+                fails.append(f"{label}: the results link hides the featured cards {lost}")
+            fails += filter_fails(
+                board_state(page, cfg["marks"]), want, len(cfg["cards"]), f"{label} -> {path}"
+            )
+    if not controls_done:
+        fails.append(
+            "connections: no topic page with 3 results and folded questions for the controls"
+        )
+    fails += connection_style_fails(browser, base, topics)
+    # Project report pages: every one.
+    for p in sorted((CONTENT / "summaries").glob("*.md")):
+        if p.stem == "index":
+            continue
+        sid = p.stem
+        go(page, f"{base}/summaries/{sid}")
+        got = page.evaluate(CONNECTIONS_JS)
+        if frontmatter(p).get("type") != "Project report":
+            # A cross-project digest has no project, so no project results or questions.
+            if got["tcCount"]:
+                fails.append(f"connections: digest /summaries/{sid} shows project sections")
+            continue
+        parts = [
+            ("Results from this project", "r", results_of({sid})),
+            ("Open questions that build on this project", "q", questions_of({sid})),
+        ]
+        fails += connection_fails(got, parts, "The report", f"connections: /summaries/{sid}")
+        spacing += page.evaluate(SPACING_JS)
+    loose = [s for s in spacing if s[1] != "0px" or s[2] != "0px"]
+    if not spacing or loose:
+        fails.append(
+            f"connections: at 1440 px {len(loose)} of {len(spacing)} section heads have top "
+            f"space, such as {loose[:2]}"
+        )
+    # Concept pages: the 12 with the most items, and 3 with the fewest.
+    cites = concept_cites()
+    load = {c: len(results_of(s)) + len(questions_of(s)) for c, s in cites.items()}
+    ranked = sorted(load, key=lambda c: (-load[c], c))
+    sample = ranked[:12] + ranked[-3:]
+    placeholder_done = False
+    for c in sample:
+        label = f"connections: /concepts/{c}"
+        go(page, f"{base}/concepts/{c}")
+        got = page.evaluate(CONNECTIONS_JS)
+        results = results_of(cites[c])
+        parts = [
+            ("Results from the projects this page cites", "r", results),
+            ("Open questions on these projects", "q", questions_of(cites[c])),
+        ]
+        fails += connection_fails(got, parts, "Background", label)
+        # A placeholder control: an empty part without its sentence must fail.
+        if not placeholder_done and not all(w[2] for w in parts):
+            page.evaluate("() => document.querySelector('.topic-cards .part-empty')?.remove()")
+            if not connection_fails(page.evaluate(CONNECTIONS_JS), parts, "Background", "control"):
+                fails.append(f"{label}: control 'placeholder removed' passed unnoticed")
+            placeholder_done = True
+        sec = next((s for s in got["sections"] if s["head"] == parts[0][0]), None)
+        if sec:
+            first = [rec["results"].get(last_part(h), {}).get("source") for h, _ in sec["cards"]]
+            projects = {rec["results"][i]["source"] for i in results}
+            if len(set(first)) != min(len(first), len(projects)):
+                fails.append(f"{label}: the first result cards repeat a project: {first}")
+    if not placeholder_done:
+        fails.append("connections: no sampled concept page has an empty part for the control")
+    # Result and question pages: the 12 (8) cited by the most concepts and 3 (2) by the fewest.
+    by_result = {i: concepts_citing({r["source"]}) for i, r in rec["results"].items()}
+    order = sorted(by_result, key=lambda i: (-len(by_result[i]), i))
+    for i in order[:12] + order[-3:]:
+        go(page, f"{base}/findings/{i}")
+        fails += concept_list_fails(
+            page.evaluate(CONNECTIONS_JS),
+            "Concepts that cite this project",
+            by_result[i],
+            f"connections: /findings/{i}",
+        )
+    by_q = {
+        q: concepts_citing(
+            set(rec["directions"][q.removeprefix("directions/")].get("projects") or [])
+        )
+        for q in rec["questions"]
+    }
+    order = sorted(by_q, key=lambda q: (-len(by_q[q]), q))
+    for q in order[:8] + order[-2:]:
+        go(page, f"{base}/{q}")
+        fails += concept_list_fails(
+            page.evaluate(CONNECTIONS_JS),
+            "Concepts that cite these projects",
+            by_q[q],
+            f"connections: /{q}",
+        )
+    # A concept-list control: one concept removed must fail.
+    top = order[0]
+    go(page, f"{base}/{top}")
+    page.evaluate("() => document.querySelector('section.conceptlinks li')?.remove()")
+    if not concept_list_fails(
+        page.evaluate(CONNECTIONS_JS), "Concepts that cite these projects", by_q[top], "control"
+    ):
+        fails.append("connections: control 'one concept removed' passed unnoticed")
+    fails += about_fails(page, base)
+    page.context.close()
+    return fails
+
+
+FOLDED = ".topic-cards details.linkmore li"
+
+
+def connection_controls(page: Page, parts: list, label: str) -> list[str]:
+    """Injected faults the topic comparison must catch: a card removed, a folded link
+    removed, a folded link repeated, and a question card's words changed."""
+    fails: list[str] = []
+    faults = {
+        "a result card removed": "document.querySelector('.topic-cards .grid2 > .fcard')?.remove()",
+        "a folded question removed": f"document.querySelector('{FOLDED}')?.remove()",
+        "a folded question repeated": (
+            f"const li = document.querySelector('{FOLDED}'); li?.after(li.cloneNode(true))"
+        ),
+        "a question card's new-direction line toggled": (
+            "const c = document.querySelector('.topic-cards .qfcard');"
+            " const n = c?.querySelector('.qfnovel');"
+            f" if (n) n.remove(); else c?.querySelector('h3')?.after(Object.assign("
+            f"document.createElement('p'), {{className: 'qfnovel', textContent: '{NOVEL_WORDS}'}}))"
+        ),
+        "a question card's follow-up tag removed": (
+            "document.querySelector('.topic-cards .qfcard .qfmeta > span')?.remove()"
+        ),
+    }
+    clean = page.evaluate("() => document.querySelector('.topic-cards').innerHTML")
+    for name, js in faults.items():
+        page.evaluate(f"() => {{ {js} }}")
+        if not connection_fails(page.evaluate(CONNECTIONS_JS), parts, "Background", "control"):
+            fails.append(f"{label}: control '{name}' passed unnoticed")
+        page.evaluate("h => { document.querySelector('.topic-cards').innerHTML = h }", clean)
+    return fails
+
+
+STYLE_JS = """() => {
+    const novel = document.querySelector('.topic-cards .qfnovel')
+    let bg = 'rgb(255, 255, 255)'
+    for (let n = novel; n; n = n.parentElement) {
+        const c = getComputedStyle(n).backgroundColor
+        if (c.startsWith('rgb(')) { bg = c; break }
+    }
+    const fold = document.querySelector('.topic-cards details.linkmore > summary')
+    return {
+        novel: novel && [getComputedStyle(novel).color, bg],
+        fold: fold && fold.getBoundingClientRect().height,
+    }
+}"""
+
+
+def connection_style_fails(browser, base: str, topics: list[str]) -> list[str]:
+    """The question cards' new-direction line reads at 4.5:1 in both themes, and a folded list's
+    "N more" is a 44 px tap target on a phone."""
+    fails: list[str] = []
+    for theme, viewport in (("light", WIDE), ("dark", WIDE), ("light", PHONE)):
+        page = themed(browser, theme, viewport, touch=viewport is PHONE)
+        novel = fold = None
+        for t in topics:
+            go(page, f"{base}/topics/{t}")
+            got = page.evaluate(STYLE_JS)
+            novel, fold = novel or got["novel"], fold or got["fold"]
+            if novel and fold:
+                break
+        page.context.close()
+        label = f"connections: {theme} at {viewport['width']} px"
+        if not novel or not fold:
+            fails.append(f"{label}: no topic page has a Novel line and a folded list to measure")
+            continue
+        if (r := ratio(rgba(novel[0]), rgba(novel[1]))) < 4.5:
+            fails.append(f"{label}: the Novel line {novel[0]} on {novel[1]} is {r:.2f}:1")
+        if viewport is PHONE and fold < 44:
+            fails.append(f"{label}: the folded list's summary is {fold:.0f} px tall")
+    return fails
+
+
+def about_fails(page: Page, base: str) -> list[str]:
+    """About's "What you are reading" names Results, how new a result is and Open questions,
+    with each type of result, comparison label and follow-up column."""
+    go(page, base + "/about")
+    got = page.evaluate(
+        """() => {
+        const h = [...document.querySelectorAll('h2')]
+            .find(e => e.textContent.trim() === 'What you are reading')
+        const strong = [], em = []
+        for (let n = h?.nextElementSibling; n && n.tagName !== 'H2'; n = n.nextElementSibling) {
+            n.querySelectorAll('strong').forEach(e => strong.push(e.textContent.trim()))
+            n.querySelectorAll('em')
+                .forEach(e => em.push(e.textContent.replace(/\\s+/g, ' ').trim()))
+        }
+        return {found: !!h, strong, em}
+    }"""
+    )
+    if not got["found"]:
+        return ["connections: /about has no 'What you are reading' section"]
+    fails: list[str] = []
+    for name in ("Results.", "How new a result is.", "Open questions."):
+        if name not in got["strong"]:
+            fails.append(
+                f"connections: /about 'What you are reading' has no '{name}' part: {got['strong']}"
+            )
+    # Every label the board can show, Not compared yet included while no result uses it.
+    labels = records()["index"].get("compare_order") or []
+    if missing := [lab for lab in labels if lab not in got["em"]]:
+        fails.append(f"connections: /about names comparison labels {got['em']}, missing {missing}")
+    # It names each type of result and each follow-up column in the boards' words.
+    rec = records()
+    follow = [(rec["qindex"].get("follow_text") or {}).get(k, k) for k in rec["follow_order"]]
+    words = [*TYPE_WORDS.values(), *follow, UNCLEAR_WORDS]
+    if missing := [w for w in words if w not in got["em"]]:
+        fails.append(f"connections: /about names {got['em']}, missing {missing}")
+    if len(labels) != 6:
+        fails.append(
+            f"connections: the records list {len(labels)} comparison labels, "
+            "expected New direction, four more and Not compared yet"
+        )
+    return fails
+
+
 CHECKS = {
     "home": check_home,
+    "strips": check_strips_page,
     "plain": check_plain,
     "grid": check_grid,
     "pages": check_pages,
+    "contrast": check_contrast,
     "cross": check_cross,
+    "marks": check_marks,
+    "filters": check_filters,
+    "related": check_related,
+    "connections": check_connections,
 }
 
 
@@ -835,6 +4527,8 @@ def main() -> int:
     ap.add_argument("check", choices=sorted(CHECKS))
     ap.add_argument("--base", default="http://localhost:8080")
     ap.add_argument("--serve", metavar="DIR", help="serve this built folder at the --base port")
+    # The marks check implements option M2 of design-marks.md, the one the site builds.
+    ap.add_argument("--option", choices=["M2"], default="M2", help="mark vocabulary to check")
     args = ap.parse_args()
     server = serve(args.serve, urlparse(args.base).port or 80) if args.serve else None
     with sync_playwright() as pw:

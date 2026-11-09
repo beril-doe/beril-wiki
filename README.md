@@ -47,7 +47,8 @@ uv run python -m beril_wiki.agentic plan
 Runs load the committed [model policy](agentic.yaml): Opus 5.5 plans and writes
 derived pages, Sonnet 5.5 writes integrated pages and the finding and research-direction
 records, and GPT-6.1 Sol extracts evidence, reviews, writes queries and selects
-figures.
+figures. Haiku 5.5 labels result types and follow-up needs, and GPT-6 Luna
+reviews most card records.
 Derived pages (conflicts, hubs, home, literature, authors) are written from
 evidence packed into one prompt, checked by code, reviewed in one turn and
 corrected by paragraph patches; a page that does not converge is recorded, not
@@ -58,7 +59,8 @@ retry, search, and recovery, or open the
 real-source update remains the acceptance step before a large compilation.
 `uv run python -m beril_wiki.agentic cards --max-tokens N --max-jobs M` runs
 only the finding, literature-label, research-direction, plain-summary,
-links and shared-result stages (or those named with `--stage`) for the reports
+links, shared-result, result-type (`outcomes`) and follow-up (`followups`)
+stages (or those named with `--stage`) for the reports
 and topics in `contract/cards.yaml`, then `check --strict`.
 `--stage-max-usd STAGE=USD` caps a stage's recorded Claude spend across runs,
 on `cards` and `run` alike.
@@ -152,8 +154,9 @@ vectors come from the `search-data` branch and need the checkout's `.git`.
 
 Search and Ask the wiki run in the reader's browser, so the Pages site needs
 no server. Keyword search needs nothing from the reader. Meaning search and Ask
-call CBORG with the reader's own CBORG key, which the reader enters through the
-key button in the top bar. The browser stores the key in localStorage (or in
+call CBORG with the reader's own CBORG key. The reader enters it on the Ask page
+or in the search box's meaning-search control, and asking without a key opens
+the same key dialog. The browser stores the key in localStorage (or in
 sessionStorage if the reader unticks "Remember on this device") and sends it
 only to `api.cborg.lbl.gov`. The site ships no maintainer key. Browser storage
 belongs to the origin, not the path, so every page under `beril-doe.org`,

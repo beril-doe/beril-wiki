@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from beril_wiki import records
-from beril_wiki.publish.cards.corpus import Corpus, finding_title
+from beril_wiki.publish.cards.corpus import Corpus, eligible, finding_title
 from beril_wiki.publish.cards.text import RELATION_TEXT, chip_note, chip_of
 from beril_wiki.records import title_of
 
@@ -77,8 +77,33 @@ def relation_of(c: Corpus, members: list[str]) -> str:
     return max(inner, key=order.index) if inner else ""
 
 
+def related_results(c: Corpus, fid: str) -> list[tuple[str, str]]:
+    """Listed results in other projects that a current related-result link joins to this
+    one, each with the relation's reader words, by project title, then result title.
+
+    Unlisted results keep their pages but are hidden from readers, so they are left out."""
+    sid = c.findings[fid][0].get("source", "")
+    others = {
+        x["b"] if x.get("a") == fid else x["a"]
+        for x in c.link_records
+        if x.get("level") == "finding"
+        and x.get("type") in RELATION_TEXT
+        and fid in (x.get("a"), x.get("b"))
+        and x.get("a") != x.get("b")
+    }
+    keep = [
+        o
+        for o in others
+        if o in c.findings and c.findings[o][0].get("source", "") != sid and eligible(c, o)
+    ]
+    keep.sort(
+        key=lambda o: (c.report_title(c.findings[o][0].get("source", "")), finding_title(c, o), o)
+    )
+    return [(o, RELATION_TEXT[relation_of(c, [fid, o])]) for o in keep]
+
+
 def shared_index(c: Corpus) -> list[dict]:
-    """Accepted shared results whose members still exist and still form one group of
+    """Accepted shared results whose members are all listed and still form one group of
     current related-result links, those spanning the most topics first. A links refresh
     that drops a link retires the statement at once, before the shared stage runs again."""
     groups = []
@@ -86,6 +111,9 @@ def shared_index(c: Corpus) -> list[dict]:
     for gid, g in sorted(c.shared_records.items()):
         members = g.get("members") or []
         if g.get("failed") or not members or any(m not in c.findings for m in members):
+            continue
+        # The statement speaks for every member, so one the Results page hides retires it.
+        if not all(eligible(c, m) for m in members):
             continue
         if frozenset(members) not in current:
             continue

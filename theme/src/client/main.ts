@@ -6,10 +6,10 @@
 import MiniSearch, { type SearchResult } from "minisearch"
 import { type IndexFile, PAGE_OPTIONS, type Page, type PagesFile, SEARCH_DEPTH, SECTION_OPTIONS, type Section, type SectionFile, processTerm, tokenize } from "../search/config"
 import { type ChatMessage, ensureKey, loadSettings, modelLabel, onSettingsChange, openSettings, statusLine, streamChat } from "./ai"
+import { wireBoards } from "./board"
 import { wireCards } from "./cards"
 import { wireNovelty } from "./novelty"
 import { wireQuestions } from "./questions"
-import { wireShared } from "./shared"
 import { wireStrips } from "./strips"
 import { fuse, meaningError, meaningLoading, meaningPaused, meaningProgress, meaningRank, meaningStatus, onMeaningChange, setMeaningWanted } from "./semantic"
 import { asset, currentSlug, esc, pageHref as href, session, slugOfHref, titleHtml as title } from "./site"
@@ -192,7 +192,8 @@ async function hybridSearch(
 }
 
 // The search box's meaning switch. Off by default; on, it sends each query (after
-// typing pauses) to CBORG with the reader's key, so it asks for a key first.
+// typing pauses) to CBORG with the reader's key, so it asks for a key first. The
+// key button beside it is where search readers add, change or forget the key.
 function meaningControl(el: HTMLElement, onChange: () => void) {
   const TITLE = "Also rank sections by meaning. Sends your query to CBORG with your own key."
   const paint = () => {
@@ -201,13 +202,19 @@ function meaningControl(el: HTMLElement, onChange: () => void) {
     const mb = (b: number) => (b / 1e6).toFixed(1)
     const button = (label: string, act: string, pressed: boolean) =>
       `<button type="button" class="px-meaning" aria-pressed="${pressed}" data-act="${act}" title="${TITLE}">${label}</button>`
+    const s = loadSettings()
+    const keyButton =
+      st === "nokey" || st === "loading" ? ""
+      : s.key ? `<button type="button" class="px-meaning-x px-meaning-key" title="Answers and meaning search use ${esc(modelLabel(s.model))}">Change CBORG key</button>`
+      : `<button type="button" class="px-meaning-x px-meaning-key">Add CBORG key</button>`
     el.innerHTML =
-      st === "loading" ? `<span class="px-meaning-status">Loading meaning search${total ? `: ${mb(loaded)} of ${mb(total)} MB` : "…"}</span>`
+      (st === "loading" ? `<span class="px-meaning-status">Loading meaning search${total ? `: ${mb(loaded)} of ${mb(total)} MB` : "…"}</span>`
       : st === "on" ? button("Meaning search: on", "off", true)
       : st === "nokey" ? button("Meaning search: add your CBORG key", "key", false)
       : st === "paused" ? button("Meaning search paused (CBORG rate limit)", "off", true)
       : st === "failed" ? button(`Meaning search unavailable: ${esc(meaningError())}. Retry`, "on", false)
-      : button("Meaning search: off", "on", false)
+      : button("Meaning search: off", "on", false)) + keyButton
+    el.querySelector<HTMLButtonElement>(".px-meaning-key")?.addEventListener("click", () => void openSettings())
     el.querySelector<HTMLButtonElement>("[data-act]")?.addEventListener("click", async (e) => {
       const act = (e.currentTarget as HTMLElement).dataset.act
       if ((act === "on" || act === "key") && !loadSettings().key) {
@@ -543,25 +550,74 @@ function landOn(anchor: string) {
 
 // ---------------------------------------------------------------- header bar
 
-// The bar's markup is server-rendered (components/Bar.tsx); this paints the key
-// button's state and opens the key dialog from it.
-function paintKeyButton() {
-  const k = document.querySelector<HTMLButtonElement>("header.bar .px-keybtn")
-  if (!k) return
-  const st = loadSettings()
-  k.classList.toggle("set", !!st.key)
-  const label = st.key ? `CBORG key set, answers use ${modelLabel(st.model)}. Change or forget it.` : "Add your CBORG key to ask the wiki"
-  k.setAttribute("aria-label", label)
-  k.title = label
+// The bar's markup is server-rendered (components/Bar.tsx); this makes its Browse
+// button a disclosure for the list after it.
+const barMenu = () => {
+  const box = document.querySelector<HTMLElement>("header.bar .barmenu")
+  const btn = box?.querySelector<HTMLButtonElement>(".barmenu-btn")
+  const list = box?.querySelector<HTMLElement>(".barmenu-list")
+  return box && btn && list ? { box, btn, list } : null
 }
-onSettingsChange(paintKeyButton)
+const menuLinks = (list: HTMLElement) => [...list.querySelectorAll<HTMLAnchorElement>("a")]
+
+function setMenu(open: boolean, focusBack = false) {
+  const m = barMenu()
+  if (!m) return
+  m.btn.setAttribute("aria-expanded", String(open))
+  m.list.hidden = !open
+  if (!open && focusBack) m.btn.focus()
+}
 
 function wireBar() {
-  const k = document.querySelector<HTMLButtonElement>("header.bar .px-keybtn")
-  if (!k) return
-  paintKeyButton()
-  on(k, "click", () => openSettings())
+  const m = barMenu()
+  if (!m) return
+  // Marks the menu as scripted, which turns off the stylesheet's focus-within fallback.
+  m.box.classList.add("js")
+  setMenu(false)
+  const { btn, list } = m
+  on(btn, "click", () => setMenu(btn.getAttribute("aria-expanded") !== "true"))
+  on(btn, "keydown", (e) => {
+    const k = (e as KeyboardEvent).key
+    if (k !== "ArrowDown" && k !== "ArrowUp") return
+    e.preventDefault()
+    setMenu(true)
+    const links = menuLinks(list)
+    links[k === "ArrowDown" ? 0 : links.length - 1]?.focus()
+  })
+  on(list, "keydown", (e) => {
+    const k = (e as KeyboardEvent).key
+    const links = menuLinks(list)
+    const i = links.indexOf(document.activeElement as HTMLAnchorElement)
+    const to =
+      k === "ArrowDown" ? (i + 1) % links.length
+      : k === "ArrowUp" ? (i - 1 + links.length) % links.length
+      : k === "Home" ? 0
+      : k === "End" ? links.length - 1
+      : -1
+    if (to < 0) return
+    e.preventDefault()
+    links[to]?.focus()
+  })
+  // The bar survives SPA navigation, so a chosen item must not leave the list open.
+  on(list, "click", (e) => (e.target as Element).closest("a") && setMenu(false))
+  // Tabbing past the last item, or back before the button, closes the menu.
+  on(m.box, "focusout", (e) => {
+    const next = (e as FocusEvent).relatedTarget as Node | null
+    if (next && !m.box.contains(next)) setMenu(false)
+  })
 }
+// Registered once, so SPA navigation does not stack them; each finds the menu now on the page.
+document.addEventListener("keydown", (e) => {
+  const m = barMenu()
+  if (e.key !== "Escape" || !m || m.btn.getAttribute("aria-expanded") !== "true") return
+  setMenu(false, m.box.contains(document.activeElement))
+})
+// A click or tap anywhere outside the menu closes it. iOS Safari fires no click on
+// plain page areas, so this listens for the pointer going down instead.
+document.addEventListener("pointerdown", (e) => {
+  const m = barMenu()
+  if (m && !m.box.contains(e.target as Node)) setMenu(false)
+})
 
 // ---------------------------------------------------------------- record header
 
@@ -1315,7 +1371,7 @@ async function enhance() {
   wireBar()
   wireCards()
   wireQuestions()
-  wireShared()
+  wireBoards()
   wireNovelty()
   wireStrips()
   if (!pal?.classList.contains("open")) document.documentElement.style.overflow = ""

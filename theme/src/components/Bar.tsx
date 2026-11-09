@@ -1,20 +1,28 @@
-// The top bar: the logo and name, the collections, then the tools: section
-// search, Ask, the CBORG key, and the stock theme toggle from the header slot.
-// src/client wires the search button, the key button's state and its dialog.
+// The top bar: the logo and name, the three ways in (results, open questions,
+// topics), a Browse menu holding the reference collections, About, then the tools:
+// section search, Ask, and the stock theme toggle from the header slot. The
+// CBORG key is entered where it is used, on the Ask page and in search.
+// src/client wires the search button and the Browse menu.
 import type { FullSlug, PageFrameProps, QuartzComponentProps } from "@quartz-community/types"
 import { resolveRelative } from "@quartz-community/utils"
 import { slot } from "../jsx"
 import { collectionOf } from "../page"
 
-const NAV: [string, string][] = [
-  ["Topics", "topics/index"],
+// Results and open questions lead the bar when the build has records.
+const RECORDS: [string, string][] = [
+  ["Results", "findings/index"],
+  ["Open questions", "directions/index"],
+]
+const DOORS: [string, string][] = [["Topics", "topics/index"]]
+const BROWSE: [string, string][] = [
   ["Concepts", "concepts/index"],
   ["Entities", "entities/index"],
   ["Conflicts", "conflicts/index"],
   ["Reports", "summaries/index"],
   ["Authors", "authors/index"],
-  ["About", "about"],
 ]
+// About the wiki is the last site link, pushed right so it sits just before Search.
+const ABOUT: [string, string] = ["About", "about"]
 
 // The mark: a dish holding a small knowledge graph. The accent node takes the
 // topic blue; everything else follows the ink colour, so it works in both themes.
@@ -31,18 +39,13 @@ function Logo() {
   )
 }
 
-// Results and open questions lead the bar when the build has records; every
-// collection keeps its own entry, so no part of the wiki is hidden.
-const RECORDS: [string, string][] = [
-  ["Results", "findings/index"],
-  ["Open questions", "directions/index"],
-]
-
 export function Bar({ cd, header }: { cd: QuartzComponentProps; header: PageFrameProps["header"] }) {
   const slug = cd.fileData.slug as FullSlug
   const here = collectionOf(slug)
   const published = new Set((cd.allFiles ?? []).map((f) => f.slug as string))
-  const nav = [...RECORDS.filter(([, target]) => published.has(target)), ...NAV]
+  const doors = [...RECORDS.filter(([, target]) => published.has(target)), ...DOORS]
+  const current = (target: string) => collectionOf(target) === here && here !== ""
+  const inBrowse = BROWSE.some(([, target]) => current(target))
   return (
     <header class="bar">
       <a class="wordmark" href={resolveRelative(slug, "index" as FullSlug)} aria-label={`${cd.cfg.pageTitle}, home`}>
@@ -53,15 +56,38 @@ export function Bar({ cd, header }: { cd: QuartzComponentProps; header: PageFram
           <span class="short">BERIL Wiki</span>
         </span>
       </a>
-      <nav aria-label="Collections">
-        {nav.map(([label, target]) => (
-          <a
-            href={resolveRelative(slug, target as FullSlug)}
-            aria-current={collectionOf(target) === here && here !== "" ? "page" : undefined}
-          >
+      <nav class="barnav" aria-label="Site">
+        {doors.map(([label, target]) => (
+          <a class="barlink" href={resolveRelative(slug, target as FullSlug)} aria-current={current(target) ? "page" : undefined}>
             {label}
           </a>
         ))}
+        {/* Without the script the list opens while focus is inside the menu. */}
+        <div class="barmenu">
+          <button
+            class={`barmenu-btn${inBrowse ? " here" : ""}`}
+            type="button"
+            aria-expanded="false"
+            aria-controls="barmenu-list"
+          >
+            Browse
+            <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+              <path d="M2 3.5 5 6.5 8 3.5" />
+            </svg>
+          </button>
+          <ul class="barmenu-list" id="barmenu-list">
+            {BROWSE.map(([label, target]) => (
+              <li>
+                <a href={resolveRelative(slug, target as FullSlug)} aria-current={current(target) ? "page" : undefined}>
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <a class="barlink barabout" href={resolveRelative(slug, ABOUT[1] as FullSlug)} aria-current={current(ABOUT[1]) ? "page" : undefined}>
+          {ABOUT[0]}
+        </a>
       </nav>
       <div class="tools">
         <button class="search-button" type="button" aria-label="Search the wiki">
@@ -79,13 +105,6 @@ export function Bar({ cd, header }: { cd: QuartzComponentProps; header: PageFram
           </svg>
           <span>Ask</span>
         </a>
-        <button class="px-keybtn" type="button" aria-label="CBORG key">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="6" cy="10" r="3.6" />
-            <path d="M9.6 10H18M15 10v3M17.6 10v2.2" />
-          </svg>
-          <span class="px-keydot" />
-        </button>
         {slot(header).map((H) => (
           <H {...cd} />
         ))}

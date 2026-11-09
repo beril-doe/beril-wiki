@@ -2,28 +2,13 @@
 
 from __future__ import annotations
 
-from beril_wiki.publish.cards.corpus import Corpus
+from beril_wiki.publish.cards.corpus import Corpus, eligible, result_type
 from beril_wiki.publish.cards.links import links_index
 from beril_wiki.publish.cards.text import INTEREST, compare_text
 
-# A null result a home or topic card may show: only the ones that measured something.
-SHOWN_CASES = ("measured absence", "inconclusive test")
-SPOTLIGHT = ("null result", "correction")
-
-
-def eligible(c: Corpus, fid: str) -> bool:
-    """Whether a finding is listed: on the Results page, in counts, the picture and picks.
-
-    It needs an accepted plain summary that does not repeat an earlier finding from its
-    report, and a null result must have measured something: missing data and an analysis
-    that never ran are not results. An unlisted finding keeps its page, so links to it
-    still resolve."""
-    gist = c.gists.get(fid, {})
-    if not gist.get("gist") or gist.get("repeats"):
-        return False
-    if c.findings[fid][0].get("result") == "null result":
-        return gist.get("case") in SHOWN_CASES
-    return True
+# A topic's three cards include one of these when the topic has one, so a negative
+# result is as easy to find as a positive one.
+SPOTLIGHT = ("negative",)
 
 
 def pick_lists(c: Corpus) -> tuple[list[str], dict[str, list[str]]]:
@@ -40,15 +25,13 @@ def pick_lists(c: Corpus) -> tuple[list[str], dict[str, list[str]]]:
             for f in members:
                 if len(picked) < 3 and project[f] not in {project[p] for p in picked}:
                     picked.append(f)
-            if len(picked) == 3 and not any(
-                c.findings[f][0].get("result") in SPOTLIGHT for f in picked
-            ):
+            if len(picked) == 3 and not any(result_type(c, f) in SPOTLIGHT for f in picked):
                 used = {project[f] for f in picked[:-1]}
                 swap = next(
                     (
                         f
                         for f in members
-                        if c.findings[f][0].get("result") in SPOTLIGHT and project[f] not in used
+                        if result_type(c, f) in SPOTLIGHT and project[f] not in used
                     ),
                     None,
                 )
@@ -62,9 +45,9 @@ def pick_lists(c: Corpus) -> tuple[list[str], dict[str, list[str]]]:
 def _home(c: Corpus, ids: list[str], project: dict[str, str], n: int = 3) -> list[str]:
     """The n most interesting results, each from its own project and topic.
 
-    Most interesting: furthest from PubMed abstracts (no close match, then differs, then
-    builds on), then linked to the most other projects, then a result before a null or
-    correction, then from the project in the most topics."""
+    Most interesting: furthest from PubMed abstracts (a new direction, then differs,
+    then adds to), then linked to the most other projects, then a positive result before
+    the other kinds, then from the project in the most topics."""
     tier = {text: i for i, text in enumerate(INTEREST)}
     others: dict[str, set[str]] = {}
     for link in links_index(c):
@@ -76,7 +59,7 @@ def _home(c: Corpus, ids: list[str], project: dict[str, str], n: int = 3) -> lis
         return (
             tier.get(compare_text(c.labels.get(f)), len(tier)),
             -len(others.get(f, ())),
-            c.findings[f][0].get("result") in SPOTLIGHT,
+            result_type(c, f) != "positive",
             -len(c.topics_of(project[f])),
             f,
         )

@@ -164,7 +164,7 @@ def test_links_is_scheduled_after_headlines_as_a_card_stage():
 
     assert "links" in cli.CARD_STAGES
     assert role_for("links/pairs-abc") == "cards"
-    assert role_for("links/pairs-abc/science-review") == "review"
+    assert role_for("links/pairs-abc/science-review") == "card_review"
 
 
 def test_a_stopped_run_keeps_the_links_still_current(tmp_path, monkeypatch):

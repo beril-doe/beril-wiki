@@ -87,6 +87,8 @@ CARD_OUTPUTS = (
     "state/gists.json",
     "state/links.json",
     "state/shared.json",
+    "state/outcomes.json",
+    "state/followups.json",
 )
 
 

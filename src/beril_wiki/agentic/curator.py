@@ -108,12 +108,37 @@ EDITORIAL = {
         ("links",),
         None,
     ),
+    # The kind of each listed result (positive, negative ...): the Results map's marks.
+    "outcomes": (
+        ("wiki/findings", "state/gists.json"),
+        ("state/outcomes.json",),
+        ("gists",),
+        None,
+    ),
+    # What following up each open question needs: the Open questions map's columns.
+    "followups": (
+        ("wiki/directions",),
+        ("state/followups.json",),
+        ("directions",),
+        None,
+    ),
 }
 # Stages that apply the shared card modules. Only they hash CARD_FILES, so the
 # revisions of the stages that predate them are unchanged, and a change to one of
 # those modules reschedules every card stage.
-CARD_STAGES = ("headlines", "novelty", "directions", "gists", "links", "shared")
+CARD_STAGES = (
+    "headlines",
+    "novelty",
+    "directions",
+    "gists",
+    "links",
+    "shared",
+    "outcomes",
+    "followups",
+)
 CARD_FILES = ("stages/cards.py", "records.py", "wording.py")
+# The one-label stages share stages/classify.py's loop and gists' retry helpers.
+LABEL_STAGES = ("outcomes", "followups")
 # Fail immediately if a future table edit would make freshness propagation order-dependent.
 for index, (action, (_, _, dependencies, _)) in enumerate(EDITORIAL.items()):
     if not set(dependencies) <= set(list(EDITORIAL)[:index]):
@@ -148,14 +173,18 @@ def stage_revision(root: Path, name: str, config: dict) -> str:
         "figures": ("figures",),
         "headlines": ("cards", "review"),
         "novelty": ("cards", "queries", "review"),
-        "directions": ("cards", "review"),
-        "gists": ("cards", "review"),
-        "links": ("cards", "review"),
-        "shared": ("cards", "review"),
+        "directions": ("cards", "card_review"),
+        "gists": ("cards", "card_review"),
+        "links": ("cards", "card_review"),
+        "shared": ("cards", "card_review"),
+        "outcomes": ("labels", "card_review"),
+        "followups": ("labels", "card_review"),
     }.get(name, ("writing", "review"))
     files = (f"stages/{name}.py", "agentic/prose.py", "compiler.py")
     if name in CARD_STAGES:
         files += CARD_FILES
+    if name in LABEL_STAGES:
+        files += ("stages/classify.py", "stages/gists.py")
     return digest(
         [
             model_signature(config, roles),

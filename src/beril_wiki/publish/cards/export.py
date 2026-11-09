@@ -5,11 +5,20 @@ from __future__ import annotations
 import json
 import pathlib
 
-from beril_wiki.publish.cards.corpus import ISSUES, Corpus, join
+from beril_wiki.publish.cards.corpus import ISSUES, Corpus, eligible, join, result_type
 from beril_wiki.publish.cards.links import links_index, shared_index
-from beril_wiki.publish.cards.pages import issues_page
-from beril_wiki.publish.cards.picks import eligible, home_picks, pick_lists
-from beril_wiki.publish.cards.text import COMPARE_ORDER, NOT_ASSESSED
+from beril_wiki.publish.cards.pages import follow_fields, issues_page
+from beril_wiki.publish.cards.picks import home_picks, pick_lists
+from beril_wiki.publish.cards.text import (
+    CHIP,
+    COMPARE_NOTES,
+    COMPARE_ORDER,
+    FOLLOW_NOTES,
+    FOLLOW_ORDER,
+    FOLLOW_TEXT,
+    NOT_ASSESSED,
+    SOMETHING_NEW,
+)
 from beril_wiki.records import title_of
 
 INDEXES = {
@@ -19,7 +28,7 @@ INDEXES = {
     ),
     "directions": (
         "Open questions",
-        "Questions the project results leave open, by topic and by what answering them needs.",
+        "Questions the project results leave open, by topic and by what following them up needs.",
     ),
 }
 
@@ -45,6 +54,8 @@ def export(c: Corpus) -> dict:
                 # An unconfirmed judgment's papers argued for the label that was rejected.
                 "closest": entry.get("closest", []) if entry.get("agreed") is not False else [],
                 "gist": c.gists.get(fid, {}).get("gist", ""),
+                "type": result_type(c, fid),
+                "listed": eligible(c, fid),
             }
         )
     directions = [
@@ -57,6 +68,7 @@ def export(c: Corpus) -> dict:
             k: fields.get(k, [])
             for k in ("collections", "findings", "conflicts", "papers", "projects", "topics")
         }
+        | follow_fields(fields | {"_id": d}, c)
         for d, (fields, body) in c.directions.items()
     ]
     issues = {sid: [b["text"] for b in items] for sid, items in c.issues.items()}
@@ -77,6 +89,9 @@ def picture_data(c: Corpus) -> dict:
     named = {x[k] for x in links for k in ("pa", "pb")}
     return {
         "compare_order": COMPARE_ORDER,
+        # The first two columns are the two kinds of new; the map heads them as a group.
+        "something_new": [SOMETHING_NEW, CHIP["Candidate novel"], CHIP["Extends retrieved work"]],
+        "compare_notes": {text: COMPARE_NOTES[text] for text in COMPARE_ORDER},
         "links": links,
         "shared": shared_index(c),
         "project_titles": {sid: c.report_title(sid) for sid in sorted(named)},
@@ -100,6 +115,12 @@ def write_extras(dst: pathlib.Path, c: Corpus, provenance: str) -> int:
             fields: dict = {"title": title}
             if folder == "findings":
                 fields |= picture_data(c)
+            else:
+                fields |= {
+                    "follow_order": FOLLOW_ORDER,
+                    "follow_text": FOLLOW_TEXT,
+                    "follow_notes": FOLLOW_NOTES,
+                }
             (dst / folder / "index.md").write_text(
                 join(fields, f"{provenance}\n\n{blurb}\n"), encoding="utf-8"
             )

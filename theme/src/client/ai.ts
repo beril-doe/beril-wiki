@@ -192,13 +192,13 @@ export async function ensureKey(reason: string): Promise<boolean> {
   return loadSettings().key ? true : openSettings(reason)
 }
 
-/** One line saying which key and model answers use, with a way to change them. */
+/** One line saying which key and model answers use, with the button that adds or changes the key. */
 export function statusLine(el: HTMLElement) {
   const paint = () => {
     const s = loadSettings()
     el.innerHTML = s.key
-      ? `Answers use your CBORG key with ${esc(modelLabel(s.model))}. <button type="button">Change</button>`
-      : `<button type="button">Add your CBORG key</button> to get answers.`
+      ? `Answers use your CBORG key with ${esc(modelLabel(s.model))}. <button type="button" class="px-keyentry">Change key</button>`
+      : `<button type="button" class="px-keyentry">Add your CBORG key</button> to get answers.`
     el.querySelector("button")!.addEventListener("click", () => openSettings())
   }
   paint()
@@ -209,7 +209,7 @@ export function statusLine(el: HTMLElement) {
 export async function streamChat(messages: ChatMessage[], onText: (t: string) => void, signal?: AbortSignal): Promise<ChatResult> {
   const s = loadSettings()
   // The key can be forgotten while sections are being retrieved.
-  if (!s.key) throw new Error("No CBORG key is set. Use the key button to add one.")
+  if (!s.key) throw new Error("No CBORG key is set. Add your key below the question box, then ask again.")
   const res = await fetch(`${CBORG}/v1/chat/completions`, {
     method: "POST",
     headers: { "content-type": "application/json", authorization: `Bearer ${s.key}` },

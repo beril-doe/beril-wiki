@@ -100,6 +100,8 @@ selected by `--root`. The committed policy explicitly assigns every role:
 | `queries` | GPT-6.1 Sol (Codex) | Construct literature search queries, including the PubMed queries for literature labels. |
 | `figures` | GPT-6.1 Sol (Codex) | Select figure placements. |
 | `cards` | Sonnet 5.5 | Choose headline findings, judge literature labels, write research directions and plain summaries, sort links between projects and write shared results (stages `headlines`, `novelty`, `directions`, `gists`, `links`, `shared`), at medium reasoning effort (`CARD_EFFORT` in `agentic/runtime.py`). |
+| `card_review` | GPT-6 Luna (Codex) | Review and verify the jobs of the stages `directions`, `gists`, `links`, `shared`, `outcomes` and `followups`. Headlines and novelty reviews stay on `review`. Unset, it takes the `review` model. |
+| `labels` | Haiku 5.5 | Label each result's type and each question's follow-up need (stages `outcomes`, `followups`), at the same effort as `cards`. Unset, it takes the `cards` model. |
 
 This is a deliberate hybrid, not a measured optimum: Claude plans and writes,
 a GPT model extracts and reviews, so no page is checked by the family that wrote
@@ -143,8 +145,18 @@ when `--model` replaces its policy. A checkout
 without the default file requires `--model`. Budgets remain required CLI flags.
 
 Repairs and paragraph patches keep the original role's model; every job ending
-in `/review` or `/science-review` uses `review`.
-Unspecified roles use the default, with no automatic fallback or escalation.
+in `/review`, `/science-review` or `/verify` uses `review`, or `card_review` for the
+stages that role names.
+Unspecified roles use the default, with no automatic fallback or escalation. The
+two exceptions are `card_review` and `labels`, which take `review` and `cards`
+when unset, so a policy written before they existed routes every job as before.
+
+Every card record's cache key holds the models of its stage's roles. The pins
+for `card_review` and `labels` are the models that judged the accepted records,
+so a default `agentic run` reuses them and asks only for new or failed records.
+`tests/test_outcomes.py` fails when `agentic.yaml` no longer matches the accepted
+result-type and follow-up labels. Changing a card role's model re-asks every
+record of the stages that use it.
 Use explicit model IDs available to the authenticated subscription; moving
 aliases may change their underlying model without changing a cache key.
 
@@ -164,21 +176,24 @@ applies only to reports extracted from then on: evidence already extracted stays
 valid, so switching the extraction model does not re-integrate the corpus.
 A `pages` change works the same way: it applies to pages written from then on,
 accepted pages stay, and neither integration nor any derived stage reruns.
-A `cards` change refreshes only the six card stages. Their fingerprints also
-take `review`, and `novelty` takes `queries`. A card stage's fingerprint also
-hashes its own module and the modules all six share (`CARD_FILES` in
-`agentic/curator.py`: `stages/cards.py`, `records.py`, which reads the corpus pages
-and card records, and `wording.py`, the wording rules), so editing a rule
-reschedules every card stage.
+A `cards` change refreshes only the card stages that write on it. Headlines and
+novelty fingerprints also take `review`, and `novelty` takes `queries`. The
+other card stages take `card_review`, and `outcomes` and `followups` take
+`labels` in place of `cards`. A card stage's fingerprint also hashes its own
+module and the modules all eight share (`CARD_FILES` in `agentic/curator.py`:
+`stages/cards.py`, `records.py`, which reads the corpus pages and card records,
+and `wording.py`, the wording rules), so editing a rule reschedules every card
+stage. The fingerprints of `outcomes` and `followups` also hash
+`stages/classify.py` and `stages/gists.py` (`LABEL_STAGES`).
 A reschedule clears none of the card stages' saved answers: each one's cache
 entry in `EDITORIAL` is `None`. A stage keeps a saved answer while its cache key
 is unchanged and the answer did not fail, and rechecks it with today's code:
-headlines, directions and gists rerun their reply checks (directions skips the
-3-to-8 count), and links and shared rerun their wording checks on the stored
-text. A rescheduled card stage therefore asks a model again only for records
-that are new, whose cache keys changed, whose last attempt failed, or whose
-saved answer an edited rule now rejects. Novelty rechecks no saved label, and it
-also asks again for a label older than `REFRESH_DAYS`.
+headlines, directions, gists, outcomes and followups rerun their reply checks
+(directions skips the 3-to-8 count), and links and shared rerun their wording
+checks on the stored text. A rescheduled card stage therefore asks a model again
+only for records that are new, whose cache keys changed, whose last attempt
+failed, or whose saved answer an edited rule now rejects. Novelty rechecks no
+saved label, and it also asks again for a label older than `REFRESH_DAYS`.
 
 ## Editorial schedule and required work
 
@@ -199,6 +214,8 @@ every stage that depends on it stale as well:
 | Plain summaries | After headlines, write a gist of at most 45 words for each finding (plus a plain replacement title when the stored title holds a statistic, statistical wording such as "significant" or jargon, and a case for null results) to `state/gists.json`. The writer also sees the report's other caveats and the other findings from the same report: a gist claims no more than the measurement and its limits allow, says when a sibling finding states the opposite, and may mark its finding as repeating an earlier one (`repeats`), which publish leaves off the lists. Code rejects statistics, statistical wording, jargon (`JARGON`: annotation systems, procedures, notebook codes; lineage names such as `Pseudomonas_E` are left to the prompt, since the reviewer requires the name the finding gives), more than two standalone numbers (the prompt asks for one), figures the claim, quote and caveat never state, and a `repeats` id that is not an earlier finding of the report; GPT reviews faithfulness. Keyed on the finding, its report title, caveats and siblings, and the prompt tag (`gists@4`), so a sibling's change reruns the report's gists. A saved gist stays while its input is unchanged and today's checks accept it, so a tightened rule re-asks only the gists it rejects. A refusal fails only that finding and keeps its previous gist in state for recovery; publish shows a failed finding's title only. A failed finding is asked again on the next run with `LAST_ATTEMPT`, the objections from `.agentic/failures.json` that rejected it, so the retry is a new question rather than a replay of the failed jobs; its saved key does not include them. |
 | Links | After headlines, find links between projects and write them to `state/links.json`. Code finds two kinds of candidate: pairs of results from different projects whose title and claim reach a TF-IDF cosine of 0.30 (`THRESHOLD`) and whose two projects a concept or conflict page cites together, and source-report lines that name another project by id or exact report title. The `cards` model sorts each candidate, 8 to a job, into a fixed relation (`same result`, `uses its data or methods`, ...) or drops it, and writes a label of at most 16 words. Code rejects a label with a statistic, a figure the inputs never state, wording that one project confirms, reproduces or agrees with another, file, table or column names, or an opening such as "Uses its ..." that leaves out whose data it is; GPT reviews every job. A stored label today's rules reject counts as stale, so a rule change re-asks only those candidates. Each candidate is cached under a digest of its own texts, so a corpus change re-asks only changed candidates. A failed job leaves its candidates without a current link, and a candidate whose results or projects are gone is pruned. |
 | Shared results | After links, group the related-result links into connected groups and write one statement per group to `state/shared.json`. A group qualifies with 2 to 4 results, from two or more projects whose main topics number two or more; a larger group is skipped. Code sets the group's relation to the weakest of its links. The `cards` model writes a title, a sentence, the question the projects asked, a short label per result and how the results relate, under the same rejections as Links; results that reach different conclusions are never presented as one result, and shared data is named in the sentence. GPT reviews faithfulness to every member. A failure fails only its group. A group whose links are gone is pruned. |
+| Result types | After gists, label every finding publish would list as a positive, negative or inconclusive result, a result about the data, a bookkeeping fix or an untested explanation, in `state/outcomes.json`. The extraction tag misfiles both ways, so every finding is read. The `labels` model writes the type and a one-sentence reason; the `card_review` model reviews it against the evidence quote. Publish unlists bookkeeping fixes and untested explanations and keeps their pages. A failure fails only its finding, and publish falls back to the tag. |
+| Follow-up needs | After directions, label every open question by what its deciding test needs (existing BERDL data, outside data, or an experiment), whether existing data comes first in an experiment, and whether data availability is unclear, in `state/followups.json`, written by the `labels` model. The direction's approach and readiness fields misfile both ways, so every question is read. The `card_review` model reviews each answer against the question. A failure fails only its question, and publish falls back to the approach. |
 
 Before writing hundreds of planned pages, measure a few: `--write-only
 concepts/a.md,summaries/b.md` writes only those pages and then stops before any
@@ -312,7 +329,7 @@ is. The stages list them as inputs instead, so widening the scope reruns only
 these stages.
 
 `agentic cards` runs `headlines`, `novelty`, `directions`, `gists`, `links`,
-`shared` and then `check --strict` in place (`--stage NAME`, repeatable, runs
+`shared`, `outcomes`, `followups` and then `check --strict` in place (`--stage NAME`, repeatable, runs
 only those), under the same ledger and budget flags as `run`, including
 `--stage-max-usd`. It does not promote or touch
 `state/agentic.json`, and it refuses while a promotion is pending. A later full `agentic run` adopts what it wrote from the stages' hash
@@ -320,54 +337,92 @@ caches. A card run's id hashes the stages' inputs and leaves out what the card
 stages write, so a run stopped after saving some records resumes under the same
 id, ceilings and recorded charges. `python -m beril_wiki.stages.links --status`
 and `python -m beril_wiki.stages.shared --status` count the current links and
-shared results without a model call.
+shared results without a model call; `outcomes --status` and `followups --status`
+count saved labels the same way.
 [`wiki.md`](wiki.md#rendering-the-accepted-corpus) describes how the
 records publish.
 
 ## Checking the reader pages
 
-`scripts/check_reader.py {home,plain,grid,pages,cross}` drives the installed Chrome
-through Playwright against a local build and exits 1 with one line per
-failure. Build with `WIKI_BASE_URL=localhost:8096
-CBORG_API_KEY= scripts/build_quartz.sh`, then run
+`scripts/check_reader.py
+{home,strips,plain,grid,pages,contrast,cross,marks,filters,related}` drives the
+installed Chrome through Playwright against a local build and exits 1 with one
+line per failure. Lines starting `note:` never fail a check. Build with
+`WIKI_BASE_URL=localhost:8096 CBORG_API_KEY= scripts/build_quartz.sh`, then run
 `uv run --with playwright python scripts/check_reader.py grid --base
 http://localhost:8096 --serve quartz/public`. `--serve` serves the built folder
 with clean URLs, which a plain `http.server` does not; without it, serve the
-site on `--base` yourself (default `http://localhost:8080`).
+site on `--base` yourself (default `http://localhost:8080`). The checks read
+their expected values from the records under `quartz/content/` and
+`wiki/directions/`, so they follow the current corpus.
 
-- `home` checks the heading order and the removed wording, that the home shows
-  no shared-result card, that every home result and question has a topic strip
-  that fills the topics it names, that pointing at a key slot names its topic,
-  that picking a topic in the key or a strip outlines exactly the entries that
-  share it, shows their counts and lights only that topic on the map (the key
-  row hidden without JavaScript),
-  and that its three result cards have distinct ids,
-  projects and topics and are not missing-data or unperformed null results. With no summaries yet it
-  prints a note and passes.
-- `plain` checks card, chip and pop-up text and the prose of the first 20
-  question pages for test statistics, statistical wording such as "significant"
-  (the gists stage's rule) and "Caveat", card titles separately (lines starting
-  `title:`; the gists stage replaces statistic titles), and that no visited page
-  shows a pipeline term such as
-  "Candidate novel" or "needs compute", including text inside pop-ups and
-  folded details.
+- `home` checks the home page's headings in order and the removed wording,
+  that the home shows no shared-result card, and that its three result cards
+  have distinct ids, projects and topics and are not missing-data or
+  unperformed null results. With no summaries yet it prints a note and skips
+  the card checks. It checks that the "Find your way in" cards open each
+  collection and runs the `strips` checks on the home page. It checks the top
+  bar: at most 8 controls after the wordmark at 1440 px, the order Results,
+  Open questions, Topics, Browse, About, Search, Ask and the theme toggle, the
+  Browse items, every collection within two clicks of home, and the Browse
+  menu by mouse, keyboard and tap. It checks that the bar has no CBORG key
+  button and that the search box's meaning-search control and the Ask page
+  each offer key entry.
+- `strips` checks that every home result and question has a topic strip that
+  fills the topics it names, that pointing at a key slot names its topic, and
+  that picking a topic in the key or in a strip outlines exactly the entries
+  that share it, shows their counts and lights only that topic on the map.
+  Without JavaScript the key row stays hidden and the strips still render. It
+  checks that cards and map rows on the boards carry their topic's key
+  colour, and that `/topics/` shows no topic key, map or topics table.
+- `plain` checks card, chip, pop-up and column-note text and the prose of the
+  first 20 question pages for test statistics, statistical wording such as
+  "significant" (the gists stage's rule) and "Caveat", card titles separately,
+  and that no visited page shows a pipeline term such as "Candidate novel" or
+  "needs compute".
 - `grid` loads `/directions/` without JavaScript and follows every dot link,
   compares each dot's row and column with its record under `wiki/directions/`,
   exercises hover, focus, click, Escape and tap, checks that Tab from a focused
-  dot reaches its pop-up's links and that each dot's name states its approach,
-  and checks for horizontal scroll at 390 px on `/`, `/findings/` and
-  `/directions/`.
-- `pages` checks the finding page headings, the Results index title and chips,
-  that the kind chips have a group name and follow `aria-pressed`, that small
-  labels reach 4.5:1 contrast in light mode, and that no card footer shows its
-  separator alone at phone width.
-- `cross` checks the Results page's shared cards and their comparison panels, the three
-  home questions with no project repeated, the ringed questions and their
-  bridges, and the Results picture: no links drawn before interaction, hover
-  and focus drawing a group's links, a project without results listed, phone
-  width and both colour themes. It fails on any page or console error except
-  the one Quartz's own diagram script raises, which predates these pages. Its
-  expected counts (16 ringed questions, for example) match the current corpus.
+  dot reaches its pop-up's links, that no dot carries an approach shape and
+  that each dot's name and pop-up still state its approach. It checks for
+  horizontal scroll at 390 px on `/`, `/findings/` and `/directions/`. It also
+  moves the pointer from ringed and plain dots onto each pop-up in 2 px steps
+  and checks that the pop-up stays open. A jump straight from one dot to
+  another must open the second dot's pop-up.
+- `pages` checks the result page headings and their order, the Results index
+  title and kind chips (group name, `aria-pressed`), that each listed null
+  reads "No effect found" or "Inconclusive test", that both boards use the
+  concepts card with square corners, that no card footer shows its separator
+  alone at phone width, and then runs the `contrast` check.
+- `contrast` checks that small labels reach 4.5:1 against their background in
+  light mode.
+- `cross` checks the Results map against the records, the hover cards (the
+  pointer walk onto each card, pinning, a resize, Escape, a jump between
+  marks, and taps at 390 and 320 px), that hovering a box draws only
+  related-result lines, the list a pinned box opens, the column notes, the
+  Compare panels, and the ringed questions and their bridges. It fails on any
+  page or console error except the one Quartz's own diagram script raises,
+  which predates these pages.
+- `marks` checks both maps against design option M2 (`--option M2`, the only
+  option it accepts and the default), in light and dark themes, at 1280 and
+  390 px. Each mark's fill, shape, ring and colour must match its record;
+  marks must be ink or the Novel orange; each Results column header's bar,
+  and at 390 px each cell label's left bar, must take its column's colour;
+  each legend entry must match a map mark of its class; marks, rings and box
+  borders must reach 3:1; novel questions and box labels must carry their
+  words; and no ring may touch another mark or its box. Two injected negative
+  controls, a solid null mark and marks coloured by column, must each fail.
+  At 1280 px both maps must draw 10 px marks, and Results marks must measure
+  12 px under a coarse pointer. Row labels on both maps must use one type
+  size, and column headers must share one type style.
+- `filters` checks on each board that a topic chip, a category chip and each
+  toggle leave only matching cards, that the count reads "N of M", that the
+  URL holds the state and a reload restores it, that list view toggles, and
+  that the map fades the marks outside the filter.
+- `related` checks that each listed result whose record lists related results
+  shows them under "Related results in other projects", one link per id, that
+  every result the map can draw a related line for has the section, and that
+  no other listed result has it.
 
 `scripts/check_links.py` checks the links and shared stages without a browser
 and exits 1 with one line per failure. `--shared` re-runs the code checks on

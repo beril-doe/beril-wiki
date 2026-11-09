@@ -57,14 +57,9 @@ export function TopicStrip({ c, topics, primary }: { c: Corpus; topics: string[]
  * the topic. The row and the readout stay hidden until the browser script wires them. */
 export function TopicKey({ c, from, blurbs }: { c: Corpus; from: FullSlug; blurbs: Map<string, ElementContent[]> }) {
   return (
-    <section class="band" aria-label="Topic strips">
+    <section class="tkeysec" aria-label="Topic strips">
       <div class="tkeybox">
         <p class="tkeylabel">Topic strips</p>
-        <p class="tintro">
-          The wiki sorts its pages into {c.topics.length} topics, each a broad research area. Every result and question
-          below has a strip with one slot per topic, in the order of these colours. A coloured slot is a topic the entry
-          touches, and the tall slot is its main topic.
-        </p>
         <div class="tkey" data-tkey hidden>
           <span class="tkeyslots" role="group" aria-label="Pick a topic" style={`--topics:${c.topics.length}`}>
             {c.topics.map((t) => (
@@ -103,6 +98,15 @@ export function TopicKey({ c, from, blurbs }: { c: Corpus; from: FullSlug; blurb
             </p>
           </div>
         </div>
+        {/* After the controls in the markup, so Tab reaches the colours first. */}
+        <details class="twhy">
+          <summary>What do the colours mean?</summary>
+          <p class="tintro">
+            The wiki sorts its pages into {c.topics.length} topics, each a broad research area. Every result and question
+            below has a strip with one slot per topic, in the order of these colours. A coloured slot is a topic the
+            entry touches, and the tall slot is its main topic.
+          </p>
+        </details>
       </div>
     </section>
   )
