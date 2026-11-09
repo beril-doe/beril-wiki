@@ -643,6 +643,148 @@
       ]
     }
   },
+  "amr_cofitness_networks": {
+    "input": "f67dfe5492b0af7e04a50a85ee62e875d4715bea0475a572b77d5cf14c5a30e1",
+    "pages": {
+      "amr_cofitness_networks--284c5695.md": "eb7b03f682db7c8ba1bce6bf714e0fbbc6c61e560170b10d2e22200501f4357e",
+      "amr_cofitness_networks--6571fdb3.md": "97fb182fd6a4a44e2189273bcbd502ce76c3d30e1a1cf1a6876c815f91a14b96",
+      "amr_cofitness_networks--8fa18a88.md": "b5fa7874250fd57b10fde2c1836835b248e4fcdb2942c1e7bc5bc05fd054c756",
+      "amr_cofitness_networks--9d334076.md": "11b4554ba2735c1b27e309987cfa28315ca5f0c48ed8fce35aa091d16ca856d6",
+      "amr_cofitness_networks--ca058750.md": "f815f327d73f5b51c163c8b75f651c21951ba8bde15c89e5c969e7be7013dc0f"
+    },
+    "render": "finding-page@4",
+    "reply": {
+      "headlines": [
+        {
+          "caveat": "The flagellar and biosynthesis enrichment may reflect shared dispensability under lab conditions (shaken liquid culture, supplemented media) rather than genuine co-regulation, and a fitness-matched permutation is needed to distinguish them.",
+          "caveat_evidence": "amr_cofitness_networks:0:13",
+          "claim": "Using InterProScan GO annotations (68% gene coverage, reported as 3.6\u00d7 better than old SEED annotations), the report detects significant functional enrichment in AMR cofitness neighborhoods, with the top 6 GO terms enriched in \u22653 organisms at FDR < 0.05.",
+          "evidence": "amr_cofitness_networks:0:5",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "%",
+              "value": "68%",
+              "what": "InterProScan GO gene coverage"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "",
+              "value": "3.6\u00d7",
+              "what": "coverage improvement reported over old SEED annotations"
+            },
+            {
+              "denominator": "",
+              "scope": "enriched in \u22653 organisms, FDR < 0.05",
+              "unit": "GO terms",
+              "value": "6",
+              "what": "top GO terms enriched in AMR cofitness neighborhoods"
+            }
+          ],
+          "result": "observation",
+          "title": "InterProScan GO annotations reveal AMR cofitness enrichment across organisms"
+        },
+        {
+          "caveat": "The permutation matched random genes by conservation class but not by mean fitness level, so the flagellar enrichment might disappear if fitness-matched genes were drawn.",
+          "caveat_evidence": "amr_cofitness_networks:0:42",
+          "claim": "Flagellum-dependent cell motility (GO:0071973) was enriched in 5 organisms, with mean odds ratio 4.7.",
+          "evidence": "amr_cofitness_networks:0:6",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "organisms",
+              "value": "5",
+              "what": "organisms with GO:0071973 enrichment"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "",
+              "value": "4.7",
+              "what": "mean odds ratio for flagellum-dependent cell motility"
+            }
+          ],
+          "result": "observation",
+          "title": "Flagellum-dependent motility GO term enriched across several organisms"
+        },
+        {
+          "caveat": "High cofitness implies shared fitness phenotypes, not direct transcriptional co-regulation, so the 'ancient regulatory relationships' reading is interpretive.",
+          "caveat_evidence": "amr_cofitness_networks:0:51",
+          "claim": "The report states that 99% (208/209) of AMR gene-module assignments are in cross-organism conserved module families, and interprets this as indicating ancient regulatory relationships.",
+          "evidence": "amr_cofitness_networks:0:2",
+          "quantities": [
+            {
+              "denominator": "209 AMR gene-module assignments",
+              "scope": "",
+              "unit": "%",
+              "value": "99%",
+              "what": "AMR gene-module assignments in cross-organism conserved module families"
+            },
+            {
+              "denominator": "209",
+              "scope": "",
+              "unit": "",
+              "value": "208/209",
+              "what": "assignments in conserved module families"
+            }
+          ],
+          "result": "inference",
+          "title": "AMR gene-module assignments fall almost entirely in conserved module families"
+        },
+        {
+          "caveat": "The absence of a network-size\u2013cost correlation may reflect insufficient variance in fitness cost across genes.",
+          "caveat_evidence": "amr_cofitness_networks:0:54",
+          "claim": "There was no correlation between cofitness support network size and AMR gene fitness cost (Spearman rho = \u22120.006, p = 0.87, N = 769).",
+          "evidence": "amr_cofitness_networks:0:25",
+          "quantities": [
+            {
+              "denominator": "N = 769",
+              "scope": "AMR genes",
+              "unit": "",
+              "value": "\u22120.006",
+              "what": "Spearman rho between support-network size and fitness cost"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "",
+              "value": "0.87",
+              "what": "p-value"
+            }
+          ],
+          "result": "null result",
+          "title": "Support-network size does not predict AMR gene fitness cost"
+        },
+        {
+          "caveat": "The only hint of mechanism specificity, histidine biosynthesis (efflux 68% vs metal 30%), had p = 0.013 uncorrected and q = 0.18 after FDR.",
+          "caveat_evidence": "amr_cofitness_networks:0:23",
+          "claim": "Efflux AMR genes showed histidine-biosynthesis enrichment in 6 organisms and tryptophan in 5, and metal-resistance genes showed stronger chemotaxis enrichment in 4, but no GO term was significantly mechanism-specific after FDR correction.",
+          "evidence": "amr_cofitness_networks:0:14",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "organisms",
+              "value": "6",
+              "what": "organisms with histidine biosynthesis enrichment in efflux AMR genes"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "organisms",
+              "value": "5",
+              "what": "organisms with tryptophan biosynthesis enrichment in efflux AMR genes"
+            }
+          ],
+          "result": "null result",
+          "title": "No GO term is mechanism-specific after FDR correction"
+        }
+      ]
+    }
+  },
   "amr_environmental_resistome": {
     "input": "81a8114ca58c58b8dcfc328b50fe650f3a66abee1943626fddb46c5b7e986a73",
     "pages": {
@@ -5289,6 +5431,222 @@
       ]
     }
   },
+  "gene_function_ecological_agora": {
+    "input": "82b5ea0c6023ac7dea6a8aea5cfd8ade18aaabffa1f9661b4cdd1adb9b483299",
+    "pages": {
+      "gene_function_ecological_agora--4ca87c61.md": "42e2c83729efbc16bfa67124e800d7efeb69ce82a5e9e995eea469556447e947",
+      "gene_function_ecological_agora--9a0435f6.md": "43e2785720c699984d3cb599fa4117b7323933c68d6f2d7acb0a64ab15adf7d6",
+      "gene_function_ecological_agora--a4ce9393.md": "ec4e756f473bd77688498bc64bfd99ce70b6732f16f9457a7dd417e82744a70b",
+      "gene_function_ecological_agora--c0bd8a1a.md": "457fd548df8c59b03503a35c10cb94c3108407e0f88ef2d755188ff27c5673ce",
+      "gene_function_ecological_agora--c2291337.md": "a518485668224c5bc96c1bdf127bf16db212b2040e5e7be511b3a8e2c0cde68e",
+      "gene_function_ecological_agora--e172b656.md": "3506a400db7862756cb2804e0460b0993bb01b54d2599d6cc9fd44b996a3e702"
+    },
+    "render": "finding-page@4",
+    "reply": {
+      "headlines": [
+        {
+          "caveat": "The report cautions that differences across KO categories are small, and that the ancient-skewed 'other' category may partly reflect accidental PROKKA-to-eggNOG mapping.",
+          "caveat_evidence": "gene_function_ecological_agora:112000:33",
+          "claim": "KOs annotated to both regulatory and metabolic pathways show 2\u00d7 the Innovator-Exchange rate (0.57%) of pure regulatory (0.27%) or pure metabolic (0.28%) KOs.",
+          "evidence": "gene_function_ecological_agora:112000:21",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "mixed regulatory-and-metabolic KOs",
+              "unit": "%",
+              "value": "0.57%",
+              "what": "Innovator-Exchange rate of mixed-category KOs"
+            },
+            {
+              "denominator": "",
+              "scope": "pure regulatory KOs",
+              "unit": "%",
+              "value": "0.27%",
+              "what": "Innovator-Exchange rate of pure regulatory KOs"
+            },
+            {
+              "denominator": "",
+              "scope": "pure metabolic KOs",
+              "unit": "%",
+              "value": "0.28%",
+              "what": "Innovator-Exchange rate of pure metabolic KOs"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "fold",
+              "value": "2\u00d7",
+              "what": "Fold difference of mixed versus pure categories"
+            }
+          ],
+          "result": "observation",
+          "title": "Mixed regulatory-and-metabolic KOs show the highest Innovator-Exchange rate"
+        },
+        {
+          "caveat": "M22 estimates gain location and depth, not donor\u2013recipient flow; the report cites compositional-signal degradation after ~10\u2013100 Myr and infeasible per-family DTL reconciliation as limits.",
+          "caveat_evidence": "gene_function_ecological_agora:96000:28",
+          "claim": "Across six functional classes, the genus-level (recent) gain percentage ranged from 24.7 for strict tRNA synthetases to 58.7 for CRISPR-Cas, while the ancient (phylum-or-above) gain percentage was 10.7 for tRNA synthetases and 2.4 for CRISPR-Cas.",
+          "evidence": "gene_function_ecological_agora:96000:9",
+          "quantities": [
+            {
+              "denominator": "20,898 total gains",
+              "scope": "CRISPR-Cas",
+              "unit": "%",
+              "value": "58.7",
+              "what": "recent (genus-level) gain share for pos_crispr_cas"
+            },
+            {
+              "denominator": "15,060 total gains",
+              "scope": "strict tRNA synthetases",
+              "unit": "%",
+              "value": "24.7",
+              "what": "recent (genus-level) gain share for neg_trna_synth_strict"
+            },
+            {
+              "denominator": "15,060 total gains",
+              "scope": "strict tRNA synthetases",
+              "unit": "%",
+              "value": "10.7",
+              "what": "ancient gain share for neg_trna_synth_strict"
+            },
+            {
+              "denominator": "20,898 total gains",
+              "scope": "CRISPR-Cas",
+              "unit": "%",
+              "value": "2.4",
+              "what": "ancient gain share for pos_crispr_cas"
+            }
+          ],
+          "result": "observation",
+          "title": "Function classes have distinct gene-acquisition depth profiles, CRISPR-Cas most recent-skewed"
+        },
+        {
+          "caveat": "Classification depends on rank: genus (n=2,350, d=0.08) is stable, class (n=21, d=1.50) is Innovator-Exchange, and phylum (d=1.60) is Innovator-Isolated, with the phylum reversal attributed to insufficient reference consumer data.",
+          "caveat_evidence": "gene_function_ecological_agora:0:26",
+          "claim": "PSII Innovator-Exchange was supported at class rank in Cyanobacteria, with producer d=+1.50, consumer d=+0.70, 2.77\u00d7 photic-aquatic enrichment at p<10\u207b\u2075\u00b2, and LC=0.88.",
+          "evidence": "gene_function_ecological_agora:0:14",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "Cyanobacteriia class rank, PSII",
+              "unit": "d",
+              "value": "+1.50",
+              "what": "producer Cohen's d"
+            },
+            {
+              "denominator": "",
+              "scope": "Cyanobacteriia class rank, PSII",
+              "unit": "d",
+              "value": "+0.70",
+              "what": "consumer Cohen's d"
+            },
+            {
+              "denominator": "",
+              "scope": "p<10\u207b\u2075\u00b2",
+              "unit": "fold",
+              "value": "2.77\u00d7",
+              "what": "photic aquatic biome enrichment"
+            },
+            {
+              "denominator": "",
+              "scope": "4.4\u00d7 atlas",
+              "unit": "",
+              "value": "0.88",
+              "what": "leaf consistency (LC)"
+            }
+          ],
+          "result": "observation",
+          "title": "Photosystem II innovation is exchange-type, but only at Cyanobacteriia class rank"
+        },
+        {
+          "caveat": "The change from d=0.146 to d=0.665+ was interpreted as potentially reflecting measurement-grain correction rather than aggregation itself, and the theoretical explanation remained incomplete.",
+          "caveat_evidence": "gene_function_ecological_agora:144000:7",
+          "claim": "Cohen's d was 0.146 at UniRef50 resolution (NB08c, positive versus all housekeeping controls) and 0.665\u20133.558 at KO level (NB09c, best pairs against the tRNA-synthetase and RNAP-core housekeeping controls), which the report describes as a 4\u201325\u00d7 amplification depending on positive class; the M18 gate passed.",
+          "evidence": "gene_function_ecological_agora:80000:31",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "NB08c",
+              "unit": "d",
+              "value": "0.146",
+              "what": "UniRef50 baseline Cohen's d (positive vs all housekeeping)"
+            },
+            {
+              "denominator": "",
+              "scope": "NB09c, tRNA-synthetase and RNAP-core controls",
+              "unit": "d",
+              "value": "0.665\u20133.558",
+              "what": "KO-level Cohen's d, best pairs"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "fold",
+              "value": "4\u201325\u00d7",
+              "what": "amplification depending on positive class, as described by the report"
+            }
+          ],
+          "result": "observation",
+          "title": "Horizontal-transfer effect size is larger at KO level than at UniRef50 level"
+        },
+        {
+          "caveat": "The report proposes substrate-scale heterogeneity, tree-aware versus paralog-count operationalization, and tree-rank granularity as reasons the point estimate did not survive scaling from 207 to 18,989 genomes.",
+          "caveat_evidence": "gene_function_ecological_agora:0:25",
+          "claim": "Alm 2006's r \u2248 0.74 was not reproduced across n=18,989 (r=0.10\u20130.29), although architectural concordance was r=0.67.",
+          "evidence": "gene_function_ecological_agora:0:15",
+          "quantities": [
+            {
+              "denominator": "n=18,989",
+              "scope": "P4-D3",
+              "unit": "r",
+              "value": "r=0.10\u20130.29",
+              "what": "observed correlation across four framings"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "r",
+              "value": "r \u2248 0.74",
+              "what": "Alm 2006 reported correlation"
+            },
+            {
+              "denominator": "",
+              "scope": "qualitative result holds",
+              "unit": "r",
+              "value": "r=0.67",
+              "what": "architectural concordance (NB17)"
+            }
+          ],
+          "result": "null result",
+          "title": "Alm's strong histidine-kinase correlation does not reproduce at GTDB scale"
+        },
+        {
+          "caveat": "g__Mycobacterium itself sat in the mycolic-low sub-clade (mean LC=0.36, median 0.08), which the report attributes to an 11-KO panel calibrated to M. tuberculosis-complex-style mycolate biosynthesis.",
+          "caveat_evidence": "gene_function_ecological_agora:240000:11",
+          "claim": "After leaf-consistency heterogeneity was found, the supported claim was refined to the mycolate-producing sub-clade of Mycobacteriaceae (10 of 13 genera; producer d=0.39 at genus rank), with the consumer-side Innovator-Isolated component weaker than the original family-rank framing implied.",
+          "evidence": "gene_function_ecological_agora:240000:14",
+          "quantities": [
+            {
+              "denominator": "13 Mycobacteriaceae genera",
+              "scope": "",
+              "unit": "genera",
+              "value": "10 of 13",
+              "what": "genera in the mycolic-positive sub-clade"
+            },
+            {
+              "denominator": "",
+              "scope": "genus rank",
+              "unit": "d",
+              "value": "0.39",
+              "what": "producer Cohen's d in the sub-clade"
+            }
+          ],
+          "result": "correction",
+          "title": "Mycolic-acid Innovator-Isolated claim narrows to a sub-clade of Mycobacteriaceae"
+        }
+      ]
+    }
+  },
   "genotype_to_phenotype_enigma": {
     "input": "a18152c9ce0e171aebe451ebc7831c6635bbf798b7a99a68acd4243799996c7d",
     "pages": {
@@ -8417,6 +8775,183 @@
       ]
     }
   },
+  "prophage_ecology": {
+    "input": "10fec4a4c3d613135b99ab0638541e9bb6ddec1c4721189f0b53487b08f55621",
+    "pages": {
+      "prophage_ecology--3c13d0b7.md": "69c8c0481b9b70ca513d7bbd54889f0bc314a533724b43bb8fa2f8abe5ed9195",
+      "prophage_ecology--967ce72a.md": "85e8160b023edf7f9a38434c46a4e4305ef08909756f2b19a5d45252a0f71143",
+      "prophage_ecology--9f2125cc.md": "e248f4068ee25ddacefd3dce92697f32fa7cfbcae590f4245c3a26e158935404",
+      "prophage_ecology--d880eadf.md": "ade2c59a2327b210582feace4e7a8465981d29690179bf3892d9504317193d70",
+      "prophage_ecology--fc67e694.md": "1178f58988d9e0444ddcad3646a49d02492f8a2f22642cc3050ef4f0ff0c9797"
+    },
+    "render": "finding-page@4",
+    "reply": {
+      "headlines": [
+        {
+          "caveat": "The all-species result is not an intact-prophage prevalence estimate, since individual prophage-associated gene clusters, including domesticated remnants, were counted, which likely explains why it far exceeds Touchon et al.'s (2016) estimate that ~46% of bacterial genomes harbor prophages.",
+          "caveat_evidence": "prophage_ecology:0:44",
+          "claim": "All 27,702 species in the pangenome carry prophage-associated gene clusters (4,005,537 in total, identified via eggNOG annotations); packaging (100%), lysis (99.9%) and lysogenic regulation (100%) are near-universal, while head morphogenesis (56.1%), tail (55.6%) and anti-defense (64.3%) are structurally variable, and 34.9% of species carry all 7 modules.",
+          "evidence": "prophage_ecology:0:0",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "pangenome species surveyed",
+              "unit": "species",
+              "value": "27,702",
+              "what": "species carrying prophage-associated gene clusters"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "gene clusters",
+              "value": "4,005,537",
+              "what": "total prophage gene clusters identified via eggNOG annotations"
+            },
+            {
+              "denominator": "species",
+              "scope": "",
+              "unit": "",
+              "value": "56.1%",
+              "what": "prevalence of head morphogenesis module (B)"
+            },
+            {
+              "denominator": "species",
+              "scope": "",
+              "unit": "",
+              "value": "34.9%",
+              "what": "species carrying all 7 modules"
+            }
+          ],
+          "result": "observation",
+          "title": "Prophage-associated gene clusters occur in every surveyed species, with modules varying"
+        },
+        {
+          "caveat": "Each predictor was tested independently; partial PERMANOVA to quantify the unique variance explained by environment after controlling for phylogeny and genome size simultaneously had not been implemented.",
+          "caveat_evidence": "prophage_ecology:16000:34",
+          "claim": "In the reported PERMANOVA of prophage module composition, the F-statistics were 212.99 for genome size quartile, 30.04 for environment and 6.17 for family-level phylogeny, each with p=0.01.",
+          "evidence": "prophage_ecology:0:4",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "p=0.01",
+              "unit": "",
+              "value": "212.99",
+              "what": "PERMANOVA F-statistic for genome size quartile"
+            },
+            {
+              "denominator": "",
+              "scope": "p=0.01",
+              "unit": "",
+              "value": "30.04",
+              "what": "PERMANOVA F-statistic for environment"
+            },
+            {
+              "denominator": "",
+              "scope": "p=0.01",
+              "unit": "",
+              "value": "6.17",
+              "what": "PERMANOVA F-statistic for phylogeny (family)"
+            }
+          ],
+          "result": "observation",
+          "title": "Genome size dwarfs environment and phylogeny as predictor of prophage module composition"
+        },
+        {
+          "caveat": "Sparse, inconsistently labeled NCBI isolation_source metadata was collapsed into 10 categories, and the \"other_unknown\" category (9,659 species, 35%) limits statistical power.",
+          "caveat_evidence": "prophage_ecology:16000:8",
+          "claim": "In constrained permutation tests, tail (log2 odds ratio 2.21, Z 10.86), head morphogenesis (1.98, 10.00) and anti-defense (1.70, 8.76) were enriched in human_associated species, while anti-defense was depleted in freshwater (-0.74, Z -4.74) and animal_associated (-0.24, Z -8.77).",
+          "evidence": "prophage_ecology:0:11",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "Z = 10.86",
+              "unit": "log2 odds ratio",
+              "value": "2.21",
+              "what": "log2 odds ratio for tail enrichment in human_associated"
+            },
+            {
+              "denominator": "",
+              "scope": "Z = 10.00",
+              "unit": "log2 odds ratio",
+              "value": "1.98",
+              "what": "log2 odds ratio for head morphogenesis enrichment in human_associated"
+            },
+            {
+              "denominator": "",
+              "scope": "Z = 8.76",
+              "unit": "log2 odds ratio",
+              "value": "1.70",
+              "what": "log2 odds ratio for anti-defense enrichment in human_associated"
+            },
+            {
+              "denominator": "",
+              "scope": "Z = -4.74",
+              "unit": "log2 odds ratio",
+              "value": "-0.74",
+              "what": "log2 odds ratio for anti-defense depletion in freshwater"
+            }
+          ],
+          "result": "observation",
+          "title": "Tail, head and anti-defense modules enriched in human-associated genomes against null models"
+        },
+        {
+          "caveat": "Taxonomy-based inference assumes genus-level conservation of prophage content, which may not hold for recently acquired or lost prophages, and the approach has not been independently validated for prophage genes.",
+          "caveat_evidence": "prophage_ecology:16000:9",
+          "claim": "Taxonomy-based inference of prophage burden across 6,365 NMDC metagenomic samples (87.2% median matching coverage) yielded 57 significant module-abiotic correlations at FDR < 0.05.",
+          "evidence": "prophage_ecology:0:18",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "samples",
+              "value": "6,365",
+              "what": "NMDC metagenomic samples analyzed"
+            },
+            {
+              "denominator": "",
+              "scope": "NMDC samples",
+              "unit": "",
+              "value": "87.2%",
+              "what": "median matching coverage of taxonomy-based inference"
+            },
+            {
+              "denominator": "",
+              "scope": "FDR < 0.05",
+              "unit": "correlations",
+              "value": "57",
+              "what": "significant module-abiotic correlations"
+            }
+          ],
+          "result": "inference",
+          "title": "Inferred prophage burden correlates with abiotic variables across NMDC metagenomes"
+        },
+        {
+          "caveat": "Prophage identification relied on eggNOG annotation proxies rather than dedicated detectors such as geNomad or VIBRANT, so domesticated remnants and bacterial homologs may inflate prevalence and the false positive rate is uncharacterized.",
+          "caveat_evidence": "prophage_ecology:16000:6",
+          "claim": "No individual TerL lineage showed significant environment-specific enrichment after FDR correction (0/500 tests), which the report takes to indicate that lineage-level environmental adaptation does not exceed what host phylogeny predicts.",
+          "evidence": "prophage_ecology:0:15",
+          "quantities": [
+            {
+              "denominator": "500 tests",
+              "scope": "",
+              "unit": "tests",
+              "value": "0/500",
+              "what": "TerL lineage-environment tests significant after FDR correction"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "lineages",
+              "value": "824",
+              "what": "lineages with \u22655 species analyzed for niche breadth by Shannon entropy"
+            }
+          ],
+          "result": "null result",
+          "title": "No individual TerL lineage shows environment-specific enrichment beyond host phylogeny"
+        }
+      ]
+    }
+  },
   "pseudomonas_carbon_ecology": {
     "input": "0067f2eb801f9e0c183ed5cf06d5ff895c6b9bf75c2ff784b3cf888bd8fb5629",
     "pages": {
@@ -8586,6 +9121,169 @@
           ],
           "result": "null result",
           "title": "Rhamnose and fucose differences were not significant after FDR correction"
+        }
+      ]
+    }
+  },
+  "respiratory_chain_wiring": {
+    "input": "6c465f40e14f12c7819c3292c0d526ca77ba5c3d740b0684f33fb7a98f62dbbe",
+    "pages": {
+      "respiratory_chain_wiring--6d65c6de.md": "0d4a43a257180dd4335ca0a15d89e96ba2b36291504047c875fd1d6c967e015f",
+      "respiratory_chain_wiring--7d7534df.md": "363281923d02d37f7f4568d5c42aa04f8d4d19892505b0e496b3070765d7c5ac",
+      "respiratory_chain_wiring--d117b49e.md": "b1b9bd21cba89055e02ddb4dc273049f6e00678ed7c1bf8e20a9e0a02e29189d",
+      "respiratory_chain_wiring--e16ee45a.md": "6d39823c890d449837fc71cb8891a511bdf3838432fdc6e3dd4d0d0f8fa578a6",
+      "respiratory_chain_wiring--fcdd6421.md": "3e719d48af7a279f45fdc84d772ba75206f7b0b914d1ea00538c6ae8b22597f4"
+    },
+    "render": "finding-page@4",
+    "reply": {
+      "headlines": [
+        {
+          "caveat": "NDH-2 has no growth data, so the central prediction that NDH-2 compensates on glucose cannot be directly tested with this dataset.",
+          "caveat_evidence": "respiratory_chain_wiring:0:23",
+          "claim": "ADP1's branched respiratory chain (62 genes across 8 subsystems) is described as wired in a condition-dependent manner: quinate requires only Complex I, acetate requires Complex I, cytochrome bo3, ACIAD3522, and more, and glucose requires no specific respiratory component, which the report calls qualitatively different configurations per substrate rather than a quantitative gradient.",
+          "evidence": "respiratory_chain_wiring:0:0",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "across 8 subsystems",
+              "unit": "genes",
+              "value": "62",
+              "what": "respiratory chain genes in ADP1"
+            },
+            {
+              "denominator": "",
+              "scope": "ADP1 respiratory chain",
+              "unit": "subsystems",
+              "value": "8",
+              "what": "respiratory subsystems"
+            }
+          ],
+          "result": "observation",
+          "title": "Respiratory requirements in ADP1 differ qualitatively by carbon source"
+        },
+        {
+          "caveat": "The stoichiometry analysis uses theoretical pathway biochemistry, not measured flux distributions.",
+          "caveat_evidence": "respiratory_chain_wiring:0:24",
+          "claim": "Although quinate produces fewer NADH per carbon atom (0.57) than glucose (1.50) or acetate (1.50), Complex I is more essential on quinate, and the report proposes that \u03b2-ketoadipate ring cleavage creates a concentrated TCA-cycle NADH burst exceeding NDH-2's reoxidation capacity.",
+          "evidence": "respiratory_chain_wiring:0:10",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "theoretical stoichiometry",
+              "unit": "NADH/carbon",
+              "value": "0.57",
+              "what": "NADH per carbon atom on quinate"
+            },
+            {
+              "denominator": "",
+              "scope": "theoretical stoichiometry",
+              "unit": "NADH/carbon",
+              "value": "1.50",
+              "what": "NADH per carbon atom on glucose (and on acetate)"
+            }
+          ],
+          "result": "inference",
+          "title": "Quinate Complex I dependence proposed to reflect NADH burst rate, not yield"
+        },
+        {
+          "caveat": "ACIAD3522 may not be a true respiratory NADH dehydrogenase, since NADH-FMN oxidoreductase could serve other metabolic functions.",
+          "caveat_evidence": "respiratory_chain_wiring:0:27",
+          "claim": "ACIAD3522, a one-subunit non-proton-pumping NADH-FMN oxidoreductase, has growth ratios of 1.39 on quinate, 1.39 on glucose, and 0.013 on acetate (lethal).",
+          "evidence": "respiratory_chain_wiring:0:8",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "lethal",
+              "unit": "",
+              "value": "0.013",
+              "what": "ACIAD3522 growth ratio on acetate"
+            },
+            {
+              "denominator": "",
+              "scope": "dispensable",
+              "unit": "",
+              "value": "1.39",
+              "what": "ACIAD3522 growth ratio on quinate and glucose"
+            }
+          ],
+          "result": "observation",
+          "title": "ACIAD3522 is lethal on acetate but dispensable on quinate and glucose"
+        },
+        {
+          "caveat": "Condition-specific upregulation of Complex I or NDH-2 has not been established here; reanalysis of quinate-versus-succinate proteomics is proposed.",
+          "caveat_evidence": "respiratory_chain_wiring:0:45",
+          "claim": "Under standard growth conditions, protein-abundance means are 27.6 for Complex I, 27.0 for NDH-2 and 26.2 for ACIAD3522 versus a genome median of 26.4, which the report interprets as metabolic rather than transcriptional wiring.",
+          "evidence": "respiratory_chain_wiring:0:16",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "standard growth conditions",
+              "unit": "",
+              "value": "27.6",
+              "what": "Complex I mean protein abundance"
+            },
+            {
+              "denominator": "",
+              "scope": "standard growth conditions",
+              "unit": "",
+              "value": "27.0",
+              "what": "NDH-2 mean protein abundance"
+            },
+            {
+              "denominator": "",
+              "scope": "standard growth conditions",
+              "unit": "",
+              "value": "26.2",
+              "what": "ACIAD3522 mean protein abundance"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "",
+              "value": "26.4",
+              "what": "genome median protein abundance"
+            }
+          ],
+          "result": "observation",
+          "title": "All three NADH dehydrogenases co-expressed, suggesting flux-based wiring"
+        },
+        {
+          "caveat": "The cross-species comparison has only 4 organisms without NDH-2, insufficient for statistical significance.",
+          "caveat_evidence": "respiratory_chain_wiring:0:25",
+          "claim": "After filtering likely misannotations, 5 of 14 organisms have validated NDH-2, and those with NDH-2 show larger Complex I aromatic deficits (mean = -0.297) than those without (mean = -0.156), opposite to the compensation prediction and not significant (p = 0.52).",
+          "evidence": "respiratory_chain_wiring:0:15",
+          "quantities": [
+            {
+              "denominator": "14 organisms",
+              "scope": "after filtering to 1-2 NDH-2 hits",
+              "unit": "organisms",
+              "value": "5 of 14",
+              "what": "organisms with validated NDH-2"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "",
+              "value": "-0.297",
+              "what": "mean Complex I aromatic deficit with NDH-2"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "",
+              "value": "-0.156",
+              "what": "mean Complex I aromatic deficit without NDH-2"
+            },
+            {
+              "denominator": "",
+              "scope": "not significant",
+              "unit": "",
+              "value": "0.52",
+              "what": "p-value of comparison"
+            }
+          ],
+          "result": "null result",
+          "title": "Alternative dehydrogenase presence does not predict Complex I dispensability across species"
         }
       ]
     }
@@ -9208,6 +9906,83 @@
           ],
           "result": "null result",
           "title": "Truly dark genes are depleted, not enriched, in stress conditions"
+        }
+      ]
+    }
+  },
+  "webofmicrobes_explorer": {
+    "input": "5c8af3997393c6c451af42d62107acd80a042156b566427cc8848292739b441f",
+    "pages": {
+      "webofmicrobes_explorer--6149b49e.md": "8de660c3f0ee2933d5586373b5241b727d03febd810ef755a70094e233e39cb3",
+      "webofmicrobes_explorer--ab7e4ba4.md": "73755fd5eb4dcce202c53d92dc8c2b3c5a15a80dc6717771ac07fff758567ba1",
+      "webofmicrobes_explorer--f572a74d.md": "a7dd46169cae0b92a8df52b72fa1fb3d3d8e0ebeba71819f5105d89255ccbd2c"
+    },
+    "render": "finding-page@4",
+    "reply": {
+      "headlines": [
+        {
+          "caveat": "The absence of consumption data prevents testing whether consumed metabolites predict gene essentiality, and the data are small (37 organisms, 5 projects) and from a single laboratory.",
+          "caveat_evidence": "webofmicrobes_explorer:0:23",
+          "claim": "The 2018 Web of Microbes snapshot has no \"Decreased\" (consumption) action for any organism, and all 742 'D' observations belong exclusively to the control; consumption data may exist in the newer GNPS2 version.",
+          "evidence": "webofmicrobes_explorer:0:3",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "2018 WoM snapshot",
+              "unit": "observations",
+              "value": "742",
+              "what": "'D' observations, all belonging to the control"
+            }
+          ],
+          "result": "null result",
+          "title": "No organism consumption data in the archived Web of Microbes export"
+        },
+        {
+          "caveat": "Exact names give definitive ModelSEED links for only 69 of 257 identified compounds, while formula-only links for 107 compounds average 8.4 ModelSEED molecules each and need manual curation.",
+          "caveat_evidence": "webofmicrobes_explorer:0:11",
+          "claim": "Among identified WoM compounds, 69 (26.8%) are exact-name matches to ModelSEED, 107 (41.6%) match by formula only (107 WoM to 900 MS molecules, 1:8.4 average expansion), 176 (68.5%) have any link, and 81 (31.5%) are unmatched.",
+          "evidence": "webofmicrobes_explorer:0:10",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "identified WoM compounds; 26.8%",
+              "unit": "compounds",
+              "value": "69",
+              "what": "exact name matches"
+            },
+            {
+              "denominator": "",
+              "scope": "41.6%; 107 WoM mapped to 900 ModelSEED molecules",
+              "unit": "compounds",
+              "value": "107",
+              "what": "formula-only matches"
+            },
+            {
+              "denominator": "",
+              "scope": "68.5%",
+              "unit": "compounds",
+              "value": "176",
+              "what": "compounds with any link"
+            },
+            {
+              "denominator": "",
+              "scope": "31.5%",
+              "unit": "compounds",
+              "value": "81",
+              "what": "unmatched compounds"
+            }
+          ],
+          "result": "observation",
+          "title": "Most Web of Microbes compounds lack definitive ModelSEED links"
+        },
+        {
+          "caveat": "The report judges its cross-collection integration hypothesis (H1) only partially supported, so the blocked GapMind link leaves that integration incomplete.",
+          "caveat_evidence": "webofmicrobes_explorer:0:22",
+          "claim": "Matching WoM metabolites to GapMind pathways was blocked by a naming mismatch because GapMind pathway names (internal IDs) do not contain simple metabolite names, so a lookup table of substrate/product metabolites is needed.",
+          "evidence": "webofmicrobes_explorer:0:20",
+          "quantities": [],
+          "result": "null result",
+          "title": "Direct metabolite-name matching to GapMind pathways failed"
         }
       ]
     }
