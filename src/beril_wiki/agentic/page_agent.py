@@ -390,7 +390,22 @@ def run(
         raise WorkflowError(f"{page.step}: page session {key} raced another worker")
     agent.jobs.append(key)
     workdir.mkdir(parents=True, exist_ok=True)
-    session = Session(page, workdir, max_reviews, task=task, root=agent.root)
+
+    def review(text: str, meta: dict | None) -> list[str]:
+        first = len(agent.jobs)
+        try:
+            return page.review(text, meta)
+        finally:
+            # The reviewer's source reads are recorded on its own jobs; the approval, and
+            # so the cached page, rests on them as much as on the writer's.
+            for job in agent.jobs[first:]:
+                row = agent.ledger.db.execute(
+                    "SELECT dependencies FROM jobs WHERE key=?", (job,)
+                ).fetchone()
+                session.deps |= json.loads(row[0] or "{}") if row else {}
+
+    reviewed = dataclasses.replace(page, review=review)
+    session = Session(reviewed, workdir, max_reviews, task=task, root=agent.root)
     resumed = _restore(session)
     how = "resuming its checked scratch" if resumed else "fresh"
     print(f"agentic: page session {page.step} model={model} {how} [{key[:12]}]", flush=True)

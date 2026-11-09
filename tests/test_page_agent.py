@@ -434,3 +434,62 @@ def test_a_wiki_search_does_not_make_the_session_rest_on_the_output_tree(tmp_pat
     asyncio.run(pre({"tool_name": "Grep", "tool_input": search}, None, None))
     (tmp_path / "wiki/concepts/a.md").write_text("The page this session wrote.")
     assert current_dependencies(tmp_path, s.deps) == s.deps
+
+
+def _ledger_agent(tmp_path, monkeypatch, model="m"):
+    """A real ledger and PA.run; the SDK session is the caller's fake _drive."""
+    from types import SimpleNamespace
+
+    from beril_wiki.agentic.runtime import Ledger
+
+    monkeypatch.setattr(PA, "check_auth", lambda cli: None)
+    (tmp_path / "contract").mkdir(exist_ok=True)
+    (tmp_path / "contract/AGENTS.md").write_text("rules")
+    (tmp_path / "staging").mkdir(exist_ok=True)
+    ledger = Ledger(tmp_path / "jobs.sqlite", "run", 10**9, 99, 1)
+    agent: Any = SimpleNamespace(
+        config={"model": model, "cli": "claude"},
+        root=tmp_path,
+        store=tmp_path,
+        ledger=ledger,
+        jobs=[],
+        effort=lambda step: None,
+    )
+    return agent
+
+
+USAGE = {"input_tokens": 1, "output_tokens": 1}
+
+
+def test_a_cached_page_is_rewritten_when_a_source_its_reviewer_read_changes(tmp_path, monkeypatch):
+    """Review finding B: the reviewer's reads key the cached page as the writer's do."""
+    from beril_wiki.agentic.runtime import file_hash
+
+    agent = _ledger_agent(tmp_path, monkeypatch)
+    source = tmp_path / "staging/r.md"
+    source.write_text("value=1")
+
+    def review(text, meta):
+        job = f"review-{len(agent.jobs)}"
+        agent.jobs.append(job)
+        agent.ledger.reserve(job, "write/concepts/a.md/science-review", "gpt-6-luna")
+        agent.ledger.finish(job, "{}", USAGE, "", {"staging/r.md": file_hash(source)})
+        return []
+
+    drives = []
+
+    async def drive(agent_, session, key, model, resumed):
+        drives.append(key)
+        (session.workdir / "page.md").write_text("Claims value=1. [src: x]")
+        assert session.do_check()["passed"] and session.do_review()["accepted"]
+        assert session.do_submit()["accepted"]
+        return "done", USAGE, 0.0, "", ""
+
+    monkeypatch.setattr(PA, "_drive", drive)
+    page = _page(tmp_path, review=review)
+    REAL_RUN(agent, page, tmp_path / "work")
+    REAL_RUN(agent, page, tmp_path / "work")
+    assert len(drives) == 1  # unchanged sources: the cached page
+    source.write_text("value=2")
+    REAL_RUN(agent, page, tmp_path / "work")
+    assert len(drives) == 2
