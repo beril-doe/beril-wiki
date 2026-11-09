@@ -1575,7 +1575,32 @@ def check_grid(browser, base: str) -> list[str]:
                 break
     # A pointer that jumps straight from one dot to another, outside the corridor to the
     # first pop-up, gets the second dot's pop-up and keeps it.
-    a, z = page.locator(".qgrid .qd").nth(0), page.locator(".qgrid .qd").nth(12)
+    # The target must sit outside the first pop-up: landing on that pop-up rightly keeps
+    # it open. Which dot that is depends on the corpus, so pick it from the layout.
+    dots = page.locator(".qgrid .qd")
+    a = dots.nth(0)
+    a.locator("a.qdot").scroll_into_view_if_needed()
+    ra = a.locator("a.qdot").bounding_box()
+    page.mouse.move(ra["x"] + ra["width"] / 2, ra["y"] + ra["height"] / 2)
+    page.wait_for_timeout(200)
+    first_pop = a.locator(".qpop").bounding_box()
+    page.mouse.move(0, 0)
+    page.wait_for_timeout(400)
+    height = page.viewport_size["height"] if page.viewport_size else 900
+
+    def clear(i: int) -> bool:
+        box = dots.nth(i).locator("a.qdot").bounding_box()
+        if not box or not first_pop:
+            return bool(box)
+        cx, cy = box["x"] + box["width"] / 2, box["y"] + box["height"] / 2
+        inside = (
+            first_pop["x"] <= cx <= first_pop["x"] + first_pop["width"]
+            and first_pop["y"] <= cy <= first_pop["y"] + first_pop["height"]
+        )
+        return 0 <= cy <= height and not inside
+
+    order = [*range(12, dots.count()), *range(1, min(12, dots.count()))]
+    z = dots.nth(next((i for i in order if clear(i)), 12))
     jump = jump_to(page, a.locator("a.qdot"), z.locator("a.qdot"))
     if not z.locator(".qpop").is_visible() or a.locator(".qpop").is_visible():
         fails.append(f"grid: a jump between dots leaves the wrong pop-up ({jump})")
