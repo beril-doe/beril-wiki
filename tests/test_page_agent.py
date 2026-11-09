@@ -281,6 +281,23 @@ def _result(cost=0.5):
     )
 
 
+def test_a_failed_re_review_voids_the_earlier_approval(tmp_path):
+    """Review finding E: submit takes nothing after a review that stopped the session."""
+    verdicts = [[], CandidateError("reviewer returned no usable verdict twice")]
+
+    def review(text, meta):
+        verdict = verdicts.pop(0)
+        if isinstance(verdict, Exception):
+            raise verdict
+        return verdict
+
+    s = _session(tmp_path, review=review)
+    (s.workdir / "page.md").write_text("A good claim. [src: x]")
+    assert s.do_check()["passed"] and s.do_review()["accepted"]
+    assert s.do_review()["stop"]
+    assert s.do_submit()["missing"] == ["review"]
+
+
 def test_the_review_tool_runs_a_claude_reviewer_inside_the_session_loop(tmp_path, monkeypatch):
     """Review finding G: the review tool's handler runs on the session's event loop, so a
     Claude reviewer's query cannot use asyncio.run there."""

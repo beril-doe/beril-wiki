@@ -175,6 +175,9 @@ class Session:
             self.fatal = f"review limit of {self.max_reviews} reached with issues open"
             return {"accepted": False, "stop": self.fatal, "issues": self.open}
         self.reviews += 1
+        # A review in progress voids any earlier approval: one that fails or stops must
+        # leave nothing submit could accept.
+        self.reviewed = ""
         try:
             self.open = self.page.review(text, meta)
         except CandidateError as exc:
