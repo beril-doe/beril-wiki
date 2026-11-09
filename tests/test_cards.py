@@ -16,12 +16,26 @@ def test_card_steps_route_to_their_roles():
     assert R.role_for("novelty/x--1a2b3c4d/judge") == "cards"
     assert R.role_for("novelty/x--1a2b3c4d/queries") == "queries"
     assert R.role_for("novelty/x--1a2b3c4d/agree") == "review"
+    assert R.role_for("headlines/truly_dark_genes/science-review") == "review"
     assert R.role_for("directions/topic") == "cards"
-    assert R.role_for("directions/topic/science-review") == "review"
-    assert R.role_for("directions/topic/verify") == "review"
+    assert R.role_for("directions/topic/science-review") == "card_review"
+    assert R.role_for("directions/topic/verify") == "card_review"
+    assert R.role_for("gists/x--1a2b3c4d/science-review") == "card_review"
+    assert R.role_for("outcomes/x--1a2b3c4d") == "labels"
+    assert R.role_for("outcomes/x--1a2b3c4d/repair") == "labels"
+    assert R.role_for("followups/q--abc123/science-review") == "card_review"
     # Existing routes are untouched.
     assert R.role_for("lit/hub/queries") == "queries"
     assert R.role_for("conflicts/conflict--x") == "writing"
+
+
+def test_new_roles_fall_back_to_the_roles_they_split_from():
+    """A policy written before card_review and labels existed routes their jobs as before."""
+    chosen = R.model_policy({"model": "m", "step_models": {"review": "r", "cards": "c"}})
+    assert chosen["card_review"] == "r" and chosen["labels"] == "c"
+    pinned = {"review": "r", "cards": "c", "card_review": "cr", "labels": "l"}
+    chosen = R.model_policy({"model": "m", "step_models": pinned})
+    assert chosen["card_review"] == "cr" and chosen["labels"] == "l"
 
 
 def test_card_files_do_not_rekey_jobs(tmp_path):
@@ -38,6 +52,7 @@ def test_cards_effort_is_medium(tmp_path):
         {"root": str(tmp_path), "store": str(tmp_path), "run": "r", "max_tokens": 1, "max_jobs": 1}
     )
     assert agent.effort("headlines/x") == "medium"
+    assert agent.effort("outcomes/x") == "medium"
     assert agent.effort("novelty/x/judge") == "medium"
     assert agent.effort("novelty/x/agree") is None
     assert agent.effort("conflicts/x") is None

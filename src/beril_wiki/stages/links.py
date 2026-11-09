@@ -328,7 +328,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
     entries: dict[str, dict] = state.get("candidates", {})
     config = cards.runtime().config
-    policy = cards.policy(config, ("cards", "review"))
+    policy = cards.policy(config, ("cards", "card_review"))
 
     findings = read_findings(root)
     titles = report_titles(root)

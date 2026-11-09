@@ -57,8 +57,8 @@ def run(
         return 0
     state = load(state_path)
     config = cards.runtime().config
-    policy = cards.policy(config, ("cards", "review"))
-    writer = model_policy(config)["cards"]
+    policy = cards.policy(config, ("labels", "card_review"))
+    writer = model_policy(config)["labels"]
 
     def passes(prev: dict, pack: dict) -> bool:
         stored = {k: v for k, v in prev.items() if k not in ("input", "model", "failed")}

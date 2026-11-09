@@ -171,12 +171,12 @@ def stage_revision(root: Path, name: str, config: dict) -> str:
         "figures": ("figures",),
         "headlines": ("cards", "review"),
         "novelty": ("cards", "queries", "review"),
-        "directions": ("cards", "review"),
-        "gists": ("cards", "review"),
-        "links": ("cards", "review"),
-        "shared": ("cards", "review"),
-        "outcomes": ("cards", "review"),
-        "followups": ("cards", "review"),
+        "directions": ("cards", "card_review"),
+        "gists": ("cards", "card_review"),
+        "links": ("cards", "card_review"),
+        "shared": ("cards", "card_review"),
+        "outcomes": ("labels", "card_review"),
+        "followups": ("labels", "card_review"),
     }.get(name, ("writing", "review"))
     files = (f"stages/{name}.py", "agentic/prose.py", "compiler.py")
     if name in CARD_STAGES:

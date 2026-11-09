@@ -1,11 +1,12 @@
 """The outcomes and followups stages: one label per record, checked by code, then a reviewer."""
 
 import json
+from pathlib import Path
 
 import pytest
 
 from beril_wiki.agentic import curator
-from beril_wiki.agentic.runtime import CONTENT_FLAG, CandidateError, JobFailed
+from beril_wiki.agentic.runtime import CONTENT_FLAG, CandidateError, JobFailed, digest
 from beril_wiki.stages import cards, followups, outcomes
 from card_fakes import FakeAgent, install
 
@@ -173,3 +174,24 @@ def test_a_failed_label_is_saved_before_a_budget_stop(tmp_path, monkeypatch, lis
         outcomes.main(tmp_path)
     saved = json.loads(path.read_text())[FID]
     assert saved["failed"] is True and saved["type"] == "negative"
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.mark.parametrize(("stage", "state"), [(outcomes, "outcomes"), (followups, "followups")])
+def test_the_committed_policy_keeps_the_accepted_labels(stage, state):
+    """A default run reuses every accepted label: the model policy in agentic.yaml is the
+    one the labels were judged with, so no run buys them again."""
+    from beril_wiki.agentic.__main__ import load_models
+
+    saved = json.loads((ROOT / f"state/{state}.json").read_text())
+    policy = cards.policy(load_models(ROOT, None, None, []), ("labels", "card_review"))
+    stale = [
+        item
+        for item, pack in stage.packs(ROOT).items()
+        if item in saved
+        and not saved[item].get("failed")
+        and saved[item].get("input") != digest([pack, stage.PROMPT_TAG, policy])
+    ]
+    assert saved and not stale

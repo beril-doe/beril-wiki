@@ -183,15 +183,20 @@ def test_plan_lists_stale_editorial_stages_without_model_calls(tmp_path):
     assert "gists" in shown["pending_editorial"]
 
 
-def test_gists_jobs_route_to_the_cards_and_review_roles():
+def test_gists_jobs_route_to_the_cards_and_card_review_roles():
     from beril_wiki.agentic.runtime import model_for, role_for
 
-    config = {"model": "claude-opus-5-5", "step_models": {"cards": "claude-sonnet-5-5"}}
+    config = {
+        "model": "claude-opus-5-5",
+        "step_models": {"cards": "claude-sonnet-5-5", "review": "gpt-6.1-sol"},
+    }
     for step in ("gists/x", "gists/x/repair"):
         assert role_for(step) == "cards"
         assert model_for(config, step) == "claude-sonnet-5-5"
-    assert role_for("gists/x/science-review") == "review"
-    assert role_for("gists/x/verify") == "review"
+    assert role_for("gists/x/science-review") == "card_review"
+    assert role_for("gists/x/verify") == "card_review"
+    # Unset, card_review takes the review model.
+    assert model_for(config, "gists/x/science-review") == "gpt-6.1-sol"
 
 
 def test_long_replacement_title_is_still_checked_for_statistics():

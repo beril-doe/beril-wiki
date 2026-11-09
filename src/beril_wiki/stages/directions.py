@@ -468,7 +468,7 @@ def main(root: Path = ROOT) -> int:
         # Other topics' directions steer the draft but stay out of the key: in it, each
         # topic's rewrite would make every other topic stale, and the topics would keep
         # rewriting one another.
-        key = digest([messages, cards.policy(agent.config, ("cards", "review"))])
+        key = digest([messages, cards.policy(agent.config, ("cards", "card_review"))])
         pack["OTHER_TOPICS"] = [
             {"topic": t, "title": d["title"]}
             | {"findings": d.get("findings", []), "conflicts": d.get("conflicts", [])}

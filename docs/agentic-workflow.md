@@ -99,7 +99,9 @@ selected by `--root`. The committed policy explicitly assigns every role:
 | `review` | GPT-6.1 Sol (Codex) | All separate scientific reviews and verifications, including extraction and repaired candidates, and the second opinion a "Candidate novel" or "In tension" literature label needs. |
 | `queries` | GPT-6.1 Sol (Codex) | Construct literature search queries, including the PubMed queries for literature labels. |
 | `figures` | GPT-6.1 Sol (Codex) | Select figure placements. |
-| `cards` | Sonnet 5.5 | Choose headline findings, judge literature labels, write research directions and plain summaries, sort links between projects, write shared results, and label each result's type and each question's follow-up need (stages `headlines`, `novelty`, `directions`, `gists`, `links`, `shared`, `outcomes`, `followups`), at medium reasoning effort (`CARD_EFFORT` in `agentic/runtime.py`). |
+| `cards` | Sonnet 5.5 | Choose headline findings, judge literature labels, write research directions and plain summaries, sort links between projects and write shared results (stages `headlines`, `novelty`, `directions`, `gists`, `links`, `shared`), at medium reasoning effort (`CARD_EFFORT` in `agentic/runtime.py`). |
+| `card_review` | GPT-6 Luna (Codex) | Review and verify the jobs of the stages `directions`, `gists`, `links`, `shared`, `outcomes` and `followups`. Headlines and novelty reviews stay on `review`. Unset, it takes the `review` model. |
+| `labels` | Haiku 5.5 | Label each result's type and each question's follow-up need (stages `outcomes`, `followups`), at the same effort as `cards`. Unset, it takes the `cards` model. |
 
 This is a deliberate hybrid, not a measured optimum: Claude plans and writes,
 a GPT model extracts and reviews, so no page is checked by the family that wrote
@@ -143,8 +145,18 @@ when `--model` replaces its policy. A checkout
 without the default file requires `--model`. Budgets remain required CLI flags.
 
 Repairs and paragraph patches keep the original role's model; every job ending
-in `/review` or `/science-review` uses `review`.
-Unspecified roles use the default, with no automatic fallback or escalation.
+in `/review`, `/science-review` or `/verify` uses `review`, or `card_review` for the
+stages that role names.
+Unspecified roles use the default, with no automatic fallback or escalation. The
+two exceptions are `card_review` and `labels`, which take `review` and `cards`
+when unset, so a policy written before they existed routes every job as before.
+
+Every card record's cache key holds the models of its stage's roles. The pins
+for `card_review` and `labels` are the models that judged the accepted records,
+so a default `agentic run` reuses them and asks only for new or failed records.
+`tests/test_outcomes.py` fails when `agentic.yaml` no longer matches the accepted
+result-type and follow-up labels. Changing a card role's model re-asks every
+record of the stages that use it.
 Use explicit model IDs available to the authenticated subscription; moving
 aliases may change their underlying model without changing a cache key.
 
@@ -164,8 +176,10 @@ applies only to reports extracted from then on: evidence already extracted stays
 valid, so switching the extraction model does not re-integrate the corpus.
 A `pages` change works the same way: it applies to pages written from then on,
 accepted pages stay, and neither integration nor any derived stage reruns.
-A `cards` change refreshes only the six card stages. Their fingerprints also
-take `review`, and `novelty` takes `queries`.
+A `cards` change refreshes only the card stages that write on it. Headlines and
+novelty fingerprints also take `review`, and `novelty` takes `queries`. The
+other card stages take `card_review`, and `outcomes` and `followups` take
+`labels` in place of `cards`.
 
 ## Editorial schedule and required work
 
@@ -186,8 +200,8 @@ every stage that depends on it stale as well:
 | Plain summaries | After headlines, write a gist of at most 45 words for each finding (plus a plain replacement title when the stored title holds a statistic, statistical wording such as "significant" or jargon, and a case for null results) to `state/gists.json`. The writer also sees the report's other caveats and the other findings from the same report: a gist claims no more than the measurement and its limits allow, says when a sibling finding states the opposite, and may mark its finding as repeating an earlier one (`repeats`), which publish leaves off the lists. Code rejects statistics, statistical wording, jargon (`JARGON`: annotation systems, procedures, notebook codes; lineage names such as `Pseudomonas_E` are left to the prompt, since the reviewer requires the name the finding gives), more than two standalone numbers (the prompt asks for one), figures the claim, quote and caveat never state, and a `repeats` id that is not an earlier finding of the report; GPT reviews faithfulness. Keyed on the finding, its report title, caveats and siblings, and the prompt tag (`gists@4`), so a sibling's change reruns the report's gists. A saved gist stays while its input is unchanged and today's checks accept it, so a tightened rule re-asks only the gists it rejects. A refusal fails only that finding and keeps its previous gist in state for recovery; publish shows a failed finding's title only. A failed finding is asked again on the next run with `LAST_ATTEMPT`, the objections from `.agentic/failures.json` that rejected it, so the retry is a new question rather than a replay of the failed jobs; its saved key does not include them. |
 | Links | After headlines, find links between projects and write them to `state/links.json`. Code finds two kinds of candidate: pairs of results from different projects whose title and claim reach a TF-IDF cosine of 0.30 (`THRESHOLD`) and whose two projects a concept or conflict page cites together, and source-report lines that name another project by id or exact report title. The `cards` model sorts each candidate, 8 to a job, into a fixed relation (`same result`, `uses its data or methods`, ...) or drops it, and writes a label of at most 16 words. Code rejects a label with a statistic, a figure the inputs never state, wording that one project confirms, reproduces or agrees with another, file, table or column names, or an opening such as "Uses its ..." that leaves out whose data it is; GPT reviews every job. A stored label today's rules reject counts as stale, so a rule change re-asks only those candidates. Each candidate is cached under a digest of its own texts, so a corpus change re-asks only changed candidates. A failed job leaves its candidates without a current link, and a candidate whose results or projects are gone is pruned. |
 | Shared results | After links, group the related-result links into connected groups and write one statement per group to `state/shared.json`. A group qualifies with 2 to 4 results, from two or more projects whose main topics number two or more; a larger group is skipped. Code sets the group's relation to the weakest of its links. The `cards` model writes a title, a sentence, the question the projects asked, a short label per result and how the results relate, under the same rejections as Links; results that reach different conclusions are never presented as one result, and shared data is named in the sentence. GPT reviews faithfulness to every member. A failure fails only its group. A group whose links are gone is pruned. |
-| Result types | After gists, label every finding publish would list as a positive, negative or inconclusive result, a result about the data, a bookkeeping fix or an untested explanation, in `state/outcomes.json`. The extraction tag misfiles both ways, so every finding is read. The `cards` model writes the type and a one-sentence reason; GPT reviews it against the evidence quote. Publish unlists bookkeeping fixes and untested explanations and keeps their pages. A failure fails only its finding, and publish falls back to the tag. |
-| Follow-up needs | After directions, label every open question by what its deciding test needs (existing BERDL data, outside data, or an experiment), whether existing data comes first in an experiment, and whether data availability is unclear, in `state/followups.json`. The direction's approach and readiness fields misfile both ways, so every question is read. GPT reviews each answer against the question. A failure fails only its question, and publish falls back to the approach. |
+| Result types | After gists, label every finding publish would list as a positive, negative or inconclusive result, a result about the data, a bookkeeping fix or an untested explanation, in `state/outcomes.json`. The extraction tag misfiles both ways, so every finding is read. The `labels` model writes the type and a one-sentence reason; the `card_review` model reviews it against the evidence quote. Publish unlists bookkeeping fixes and untested explanations and keeps their pages. A failure fails only its finding, and publish falls back to the tag. |
+| Follow-up needs | After directions, label every open question by what its deciding test needs (existing BERDL data, outside data, or an experiment), whether existing data comes first in an experiment, and whether data availability is unclear, in `state/followups.json`, written by the `labels` model. The direction's approach and readiness fields misfile both ways, so every question is read. The `card_review` model reviews each answer against the question. A failure fails only its question, and publish falls back to the approach. |
 
 Before writing hundreds of planned pages, measure a few: `--write-only
 concepts/a.md,summaries/b.md` writes only those pages and then stops before any

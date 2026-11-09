@@ -296,7 +296,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     state_path = root / STATE
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
     config = cards.runtime().config
-    policy = cards.policy(config, ("cards", "review"))
+    policy = cards.policy(config, ("cards", "card_review"))
     writer = model_policy(config)["cards"]
     findings: dict[str, tuple[dict, str, str]] = {}
     caveats: dict[str, list[str]] = {}

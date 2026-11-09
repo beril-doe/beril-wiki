@@ -71,7 +71,12 @@ MODEL_ROLES = (
     "queries",
     "figures",
     "cards",
+    "card_review",
+    "labels",
 )
+# A role a config leaves unset takes this role's model before the run-wide default, so a
+# policy written before the role existed keeps routing its jobs where it did.
+ROLE_FALLBACK = {"card_review": "review", "labels": "cards"}
 # The card stages (findings, labels, questions, summaries, links, shared results): each runs
 # its own judgment jobs, kept off the writing role so they never inherit a derived-page writer.
 CARD_STAGES = (
@@ -84,6 +89,11 @@ CARD_STAGES = (
     "outcomes/",
     "followups/",
 )
+# The card stages whose reviews run on card_review. Headlines and novelty stay on review:
+# their accepted records were judged there, and the model is part of every record's key.
+CARD_REVIEW_STAGES = ("directions/", "gists/", "links/", "shared/", "outcomes/", "followups/")
+# The one-label stages write on labels, a cheaper writer than the cards role.
+LABEL_STAGES = ("outcomes/", "followups/")
 CARD_EFFORT: Literal["medium"] = "medium"
 # The roles whose model decides whether integrated pages are current. Extraction and
 # pages are not: a new extraction model applies to reports extracted from then on, and a
@@ -162,7 +172,11 @@ def model_policy(config: dict) -> dict[str, str]:
         raise WorkflowError(f"step-model roles must be one of: {', '.join(MODEL_ROLES)}")
     if any(not isinstance(m, str) or not m.strip() for m in overrides.values()):
         raise WorkflowError("step-model values must be nonempty model IDs")
-    return {role: overrides.get(role, default).strip() for role in MODEL_ROLES}
+    chosen = {role: overrides.get(role, default).strip() for role in MODEL_ROLES}
+    for role, fallback in ROLE_FALLBACK.items():
+        if role not in overrides:
+            chosen[role] = chosen[fallback]
+    return chosen
 
 
 def role_for(step: str) -> str:
@@ -172,7 +186,7 @@ def role_for(step: str) -> str:
     if step.endswith(("/science-review", "/review", "/verify")) or (
         step.startswith("novelty/") and step.endswith("/agree")
     ):
-        role = "review"
+        role = "card_review" if step.startswith(CARD_REVIEW_STAGES) else "review"
     elif step.startswith("extract/"):
         role = "extraction"
     elif step.startswith("plan/") or step == "curator/topics":
@@ -183,6 +197,8 @@ def role_for(step: str) -> str:
         role = "figures"
     elif step.startswith("write/"):
         role = "pages"
+    elif step.startswith(LABEL_STAGES):
+        role = "labels"
     elif step.startswith(CARD_STAGES):
         role = "cards"
     else:
@@ -1008,7 +1024,7 @@ class Runtime:
         otherwise. Only the writer of a write/ job: derived pages are the writing role's,
         and a write/ job's review belongs to the reviewer."""
         role = role_for(step)
-        if role == "cards":
+        if role in ("cards", "labels"):
             return CARD_EFFORT
         return self.config.get("write_effort") if role == "pages" else None
 

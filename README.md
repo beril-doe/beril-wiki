@@ -47,7 +47,8 @@ uv run python -m beril_wiki.agentic plan
 Runs load the committed [model policy](agentic.yaml): Opus 5.5 plans and writes
 derived pages, Sonnet 5.5 writes integrated pages and the finding and research-direction
 records, and GPT-6.1 Sol extracts evidence, reviews, writes queries and selects
-figures.
+figures. Haiku 5.5 labels result types and follow-up needs, and GPT-6 Luna
+reviews most card records.
 Derived pages (conflicts, hubs, home, literature, authors) are written from
 evidence packed into one prompt, checked by code, reviewed in one turn and
 corrected by paragraph patches; a page that does not converge is recorded, not

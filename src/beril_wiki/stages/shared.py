@@ -203,7 +203,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         and x["b"] in findings
     ]
     config = cards.runtime().config
-    policy = cards.policy(config, ("cards", "review"))
+    policy = cards.policy(config, ("cards", "card_review"))
 
     todo = []
     groups: dict[str, dict] = {}
