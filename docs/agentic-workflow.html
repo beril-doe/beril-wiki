@@ -254,10 +254,10 @@ flowchart LR
 <summary>Follow one derived page from evidence pack to acceptance</summary>
 <ol>
 <li>Code packs the evidence: the tension paragraph with its tags, concept leads and the source paragraphs stating its figures for a conflict; member concept pages and linked conflict leads for a hub; abstracts for a literature section; summaries for an author.</li>
-<li>The writer receives the stage's rule list and the pack, and answers in one turn with no tools.</li>
+<li>The writer receives the stage's rule list and the pack in one page session. It edits the page file with the CLI's Edit and Write tools and calls the host's <code>check</code>, <code>review</code> and <code>submit</code> tools.</li>
 <li>Gates run in code: length, required headings, preamble, figures absent from the input, invalid tags, uncited or unsupported figures. Dead links and legacy platform names are repaired in code.</li>
 <li>The reviewer receives the same rules and pack plus the numbered candidate and returns one JSON verdict of paragraph-indexed issues.</li>
-<li>A rejection is patched by paragraph index against a base hash; only the replaced paragraphs are reviewed again. Two rounds, each seeing the latest verdict.</li>
+<li>After the first review, each review the writer asks for is a closed verification of the open objections. Each objection follows its paragraph through the writer's edits, and a new objection counts only against changed paragraphs. A session makes at most four reviewer calls, and the host accepts only the exact text that passed both the check and the latest review.</li>
 <li>A page that has not converged keeps its previous version and is listed in the run summary and <code>.agentic/failures.json</code>; the stage continues.</li>
 </ol>
 </details>
@@ -271,7 +271,7 @@ flowchart LR
 <tr><td>Unchanged-run check</td><td class="hot">Zero model calls when the accepted run fingerprint matches.</td><td>First adoption of a changed contract refreshes derived prose once.</td></tr>
 <tr><td>Durable job and page caches</td><td>Reuse saved outputs during resume; refresh affected work.</td><td>Source, model, scientific contract or relevant code changes invalidate results.</td></tr>
 <tr><td>Packed evidence, one-turn jobs</td><td>No tool loop re-reads context every turn; writer and reviewer share one pack, and a cache keys on the prompt alone.</td><td>Packs are bounded (hub member pages under 110KB with explicit truncation marks) and travel in the cached system prompt, so a page's review and patch jobs read the pack instead of re-sending it; requests and transcripts have size limits.</td></tr>
-<tr><td>Paragraph patches and closed verification</td><td>A correction replaces named paragraphs; an unsupported claim is deleted, not reworded. The reviewer then verifies its own issues against the revised paragraphs instead of reviewing the page again, so the open list can shrink but never grow.</td><td>Five patch rounds per page; a page still carrying an objection is salvaged (the paragraph removed, an editorial note left) rather than dropped.</td></tr>
+<tr><td>Page sessions and closed verification</td><td>The writer revises in one session that reads its cached conversation; an unsupported claim is deleted, not reworded. The reviewer then verifies its own issues against the changed paragraphs instead of reviewing the page again, so the open list can shrink but never grow.</td><td>Four reviewer calls per session; a page still carrying an objection is salvaged (the paragraph removed, an editorial note left) rather than dropped.</td></tr>
 <tr><td>Edits grouped by page</td><td>Combine evidence before writing a destination.</td><td>Validation and separate scientific review still consume resources.</td></tr>
 </tbody></table></div>
 </figure>
@@ -279,9 +279,9 @@ flowchart LR
 <details>
 <summary>Tools and limits available to model jobs</summary>
 <ul>
-<li>Only integration jobs have tools: <code>read_evidence</code> for extraction and its review; planners and page writers also get literal <code>search_evidence</code>, and page writers <code>validate_candidate</code>. Its feedback does not replace final host validation or scientific review.</li>
-<li>Derived-page writers, patchers and reviewers have no tools and one turn; their evidence arrives packed in the prompt.</li>
-<li>Default limits are 12 turns per tool-using job, 600 seconds per job, four hours per stage and four page workers. A page needs at most twelve jobs: a draft, one open review, and five patch rounds each with its own verification.</li>
+<li>Extraction and its review get <code>read_evidence</code>, and planners also get literal <code>search_evidence</code>. Page sessions get the CLI's Read, Edit, Write, Grep and Glob tools, fenced to the scratch directory and, for an integrated page, <code>staging/</code> and <code>wiki/</code>, plus the host's <code>check</code>, <code>review</code> and <code>submit</code>.</li>
+<li>Derived-page reviewers have no tools and one turn, and a derived-page writer reads nothing beyond its scratch directory; their evidence arrives packed in the prompt.</li>
+<li>Default limits are 12 turns per tool-using job, 600 seconds per job, four hours per stage and four page workers. A page session runs 20 to 60 turns, scaled to its brief, and makes at most four reviewer calls.</li>
 <li>The runtime checks direct subscription authentication and removes inherited API routing. This path uses no embedding API. PubMed remains an external data source.</li>
 </ul>
 </details>

@@ -401,8 +401,8 @@ with a warning. Code checks every PMID it names against the retrieved set. The l
 "Established in retrieved literature", "Extends retrieved work", "In tension
 with retrieved work", "Candidate novel", "Insufficient literature evidence" and
 "Not assessed", the last for a finding never labelled. "Candidate novel" and "In
-tension with retrieved work" stand only when the `review` model, from the other
-vendor, assigns the same label. Otherwise the finding takes "Extends retrieved
+tension with retrieved work" stand only when the `findings_review` model, from the
+other vendor, assigns the same label. Otherwise the finding takes "Extends retrieved
 work" if that model chose "Established" or "Extends", and "Insufficient
 literature evidence" for any other answer. A search that retrieves nothing gives
 "Insufficient literature evidence" without a judging call. A count, share or
@@ -410,12 +410,12 @@ inventory of the report's own data, such as how many genes fall in each class,
 is not a relationship and is never "Candidate novel"; it is labelled
 "Insufficient literature evidence" unless a retrieved paper reports the same
 pattern. A label is judged
-again when its finding changes, when the `cards`, `review` or `queries` model
-changes, or 90 days after retrieval (`REFRESH_DAYS`). An expired label makes every
+again when its finding changes, when the `cards`, `findings_review` or `queries`
+model changes, or 90 days after retrieval (`REFRESH_DAYS`). An expired label makes every
 `agentic run` schedule the novelty stage until a refresh succeeds. When retrieval
 fails, the previous label and date stay. A failed refresh does not hold up the
 run that attempted it: the label stays due, and the next run retries it.
-When the `review` model does not confirm a guarded label, the weaker label keeps
+When the `findings_review` model does not confirm a guarded label, the weaker label keeps
 neither the first judge's difference nor its closest papers, since both argued
 for the rejected label. Publish hides them on entries written before this rule.
 `contract/novelty-decisions.yaml` pins or withdraws a label with a person's
@@ -654,8 +654,14 @@ Python sets the bounds: turns and a USD ceiling scaled to the brief (see
 [Commands and limits](#commands-and-limits)), at most four reviewer calls per
 session (one review and three verifications, each retried once when the verdict
 is malformed), a loop guard that denies re-reading content still in context
-(keyed by content hash and cleared by an edit or a context compaction), and one
-blocked attempt to stop before submitting. An integrated pass keeps its progress
+(keyed by content hash; an edit clears every read or search that shows the edited
+file, and a context compaction clears all), and one blocked attempt to stop before
+submitting. A finished session is cached under its brief and is reused while the
+files its writer read and its reviewer's jobs read are unchanged. A search of
+`wiki/` records no dependency, since `wiki/` is the tree the run writes. A cached
+derived page meets today's gates again before it is published, and fails as a page
+when it no longer passes them. A page whose writer refused it once starts its later
+passes on the model that answered, as other jobs do. An integrated pass keeps its progress
 rule: after the first verification, a further round is allowed once, and only
 when that verification closed most objections (two or fewer left, at most half
 of what it answered); otherwise the session stops. In the first full compile 23
