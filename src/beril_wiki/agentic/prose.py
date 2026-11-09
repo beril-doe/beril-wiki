@@ -715,7 +715,13 @@ def agent_page(
         return text
     if contract.empty is not None and text.strip() == contract.empty:
         return contract.empty
-    return "\n\n".join(prepare(text))
+    # A session served from the ledger never met today's gates, which read inputs its key
+    # does not hold (the full sources, the allowed text, the gate code): run them, as the
+    # pipeline gated every draft, cached ones included.
+    parts, found = issues_of(text)
+    if found:
+        raise PageFailure(step, found, agent.jobs[first:])
+    return "\n\n".join(parts)
 
 
 def excerpts(pages: dict[str, str], budget: int, per_page: int = 12_000) -> str:

@@ -607,3 +607,18 @@ def test_open_objections_follow_their_paragraph_when_the_writer_inserts_one(monk
     assert "Yield was 42%. [src: a]" in out and "A neutral sentence" in out
     ledger = json.loads((tmp_path / "salvaged.json").read_text())
     assert ledger["x"]["removed"] == ["Yield was 56%. [src: b]"]
+
+
+def test_a_cached_derived_page_meets_todays_gates(monkeypatch, tmp_path):
+    """Review finding C: a page session served from the ledger is gated again, so a
+    figure the current sources no longer state is not published."""
+    from beril_wiki.agentic import page_agent as PA
+
+    configure(monkeypatch, tmp_path, {})
+    cached = GOOD.replace("Yield was 42%. [src: a]", "Yield was 43%. [src: a]")
+    monkeypatch.setattr(PA, "run", lambda agent, page, workdir: (cached, None))
+    with pytest.raises(P.PageFailure) as failed:
+        run("x")
+    assert any(i["category"] == "number" for i in failed.value.issues)
+    monkeypatch.setattr(PA, "run", lambda agent, page, workdir: (GOOD, None))
+    assert run("x") == GOOD
