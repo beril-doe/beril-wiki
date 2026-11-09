@@ -416,7 +416,7 @@ def run_job(agent: Runtime, payload: str, key: str, model: str) -> str:
         # configured model and the job is answered on the fallback, keyed to it, and
         # the rest of the page's review jobs go there directly.
         refused = f"refused on {model} [bio]; answered on {answers}"
-        usage = usage or {"input_tokens": agent.ledger.headroom, "output_tokens": 0}
+        usage = usage or {"input_tokens": agent.ledger.unreported(key), "output_tokens": 0}
         agent.ledger.finish(
             key, json.dumps({"refused_to": answers}), usage, refused, cost=None, status="rejected"
         )
@@ -426,7 +426,7 @@ def run_job(agent: Runtime, payload: str, key: str, model: str) -> str:
         # without reporting usage. Left unknown it would block every later job and stop
         # the run over one page; it is charged the reservation instead, as an interrupted
         # job without a usable transcript is, and fails only its page.
-        usage = {"input_tokens": agent.ledger.headroom, "output_tokens": 0}
+        usage = {"input_tokens": agent.ledger.unreported(key), "output_tokens": 0}
         error += "; no usage reported, charged the reservation"
     agent.ledger.finish(key, output, usage, error, reader.dependencies, cost=None)
     if error:

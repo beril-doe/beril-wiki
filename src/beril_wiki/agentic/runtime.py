@@ -635,6 +635,12 @@ class Ledger:
         if not changed:
             raise WorkflowError("job is not pending/unknown")
 
+    def unreported(self, key: str) -> int:
+        """The token charge for a job that reported no usage: the headroom, or the larger
+        Codex hold a capped run admitted it with, so the cap keeps counting it."""
+        row = self.db.execute("SELECT tokens FROM jobs WHERE key=?", (key,)).fetchone()
+        return max(self.headroom, (row and row[0]) or 0)
+
     def refused_model(self, scope: str, backend: str = "claude", model: str = "") -> str:
         """The model that answered the latest refusal in this scope on this backend,
         counting only refusals by ``model`` when one is named.
@@ -662,7 +668,7 @@ class Ledger:
             if found:
                 self.finish(key, "", found[0], "reconciled from transcript", cost=found[1])
             else:
-                self.account(key, self.headroom)
+                self.account(key, self.unreported(key))
             reconciled.append(key)
         return reconciled
 

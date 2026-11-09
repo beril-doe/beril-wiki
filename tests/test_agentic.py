@@ -1252,3 +1252,13 @@ def test_pilot_usd_cap_counts_claude_aliases(tmp_path):
     ledger.finish("a", "ok", {"input_tokens": 1, "output_tokens": 1}, cost=2.5)
     with pytest.raises(WorkflowError, match="Claude USD 2.50"):
         ledger.reserve("b", "write/y", "sonnet")
+
+
+def test_an_unmeasured_codex_job_keeps_its_hold_under_a_cap(tmp_path):
+    """Review finding J: reconciling a killed Codex job charges its hold, not less."""
+    caps = {"max_codex_tokens": 450_000}
+    ledger = Ledger(tmp_path / "jobs.sqlite", "pilot", 10**9, 99, 50_000, caps=caps)
+    ledger.reserve("a", "write/x/science-review", "gpt-6-luna")
+    ledger.reconcile_stale(tmp_path / "transcripts")
+    with pytest.raises(WorkflowError, match="Codex tokens 400000"):
+        ledger.reserve("b", "write/y/science-review", "gpt-6-luna")
