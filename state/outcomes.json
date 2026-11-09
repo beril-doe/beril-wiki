@@ -113,6 +113,30 @@
     "reason": "The evidence shows that core genes have much deeper protein-family alignments than accessory genes, a clear difference that was found.",
     "type": "positive"
   },
+  "amr_cofitness_networks--284c5695": {
+    "input": "99e65de9eee7251ec3544cf884a71b3dab4c7eea52728534a6e9dda5c4b858d6",
+    "model": "claude-haiku-5-5",
+    "reason": "Flagellum motility genes were over-represented among genes whose fitness tracks antibiotic-resistance genes, a pattern found in several bacteria.",
+    "type": "positive"
+  },
+  "amr_cofitness_networks--8fa18a88": {
+    "input": "28a052ed5eaef05db2c683ab5a177ca52821a6d450895ea2e527c513367a9d32",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that resistance-gene assignments fall in gene-group families shared across different bacteria, a pattern the analysis found; the regulatory reading stays interpretive.",
+    "type": "positive"
+  },
+  "amr_cofitness_networks--9d334076": {
+    "input": "767aa5deff249fdedcf06a4fb598eb603d854f9bff75dc341d33a036ebbecf55",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that several functional categories recur among genes whose fitness pattern tracks resistance genes, across several organisms, which is a pattern found.",
+    "type": "positive"
+  },
+  "amr_cofitness_networks--ca058750": {
+    "input": "c9a9ea84ddab3d3d8b55b0fb6d5d656718ed3d2edb39011f87cf391dcf22125b",
+    "model": "claude-haiku-5-5",
+    "reason": "Across 769 AMR genes, the analysis tested whether network size tracks fitness cost and found no link in either direction.",
+    "type": "negative"
+  },
   "amr_environmental_resistome--0cf37cb9": {
     "input": "b275e0b0be98cd9c898a3779c31dd1499a23f34364fc761449532ed725092e1a",
     "model": "claude-haiku-5-5",
@@ -488,6 +512,12 @@
     "reason": "The quote offers an interpretation of core gene functions as ancient and conserved, with no analysis of age or conservation shown.",
     "type": "untested"
   },
+  "conservation_fitness_synthesis--0c074210": {
+    "input": "557451da9a052e61d6ed30231309270388a4a5a27f9a65eac32cad3ab2db9a5e",
+    "model": "claude-haiku-5-5",
+    "reason": "Genes with strong condition-specific fitness effects were more often core than accessory, a pattern opposite to the expected niche link.",
+    "type": "positive"
+  },
   "conservation_fitness_synthesis--0c3c94d9": {
     "input": "24712c225e199805f31e2f43bebf65f13c75a10ea9b9b322271a66de9b869b67",
     "model": "claude-haiku-5-5",
@@ -601,6 +631,12 @@
     "model": "claude-haiku-5-5",
     "reason": "The test of whether shared genes track chloride from the metal salt found no such link, because zinc sulfate with no chloride matched or beat the chloride metals.",
     "type": "negative"
+  },
+  "counter_ion_effects--5a2d3c21": {
+    "input": "02c769f81b75038b5d34e568adbae795748c45556748bb71d4c530485604c76a",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that many metal-important genes were also important under salt stress, a shared pattern across metals and organisms.",
+    "type": "positive"
   },
   "counter_ion_effects--5a523214": {
     "input": "e9f0ede0a1bc5dd4d4e9c43d12391f0156acf630acd5b4e7cbebfeddfbc0b02f",
@@ -973,6 +1009,42 @@
     "model": "claude-haiku-5-5",
     "reason": "The result compares how a newer annotation tool labels genes with how an existing database labels them, describing annotation coverage rather than a biological result.",
     "type": "data"
+  },
+  "gene_function_ecological_agora--4ca87c61": {
+    "input": "a0d1c5edf13f1f6219de4cab507b97890791f1b2e20b3520a53e734077f7c961",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that cyanobacterial photosystem II genes fit the innovator-exchange pattern at class rank and occur more often in sunlit aquatic habitats.",
+    "type": "positive"
+  },
+  "gene_function_ecological_agora--9a0435f6": {
+    "input": "bb6551b8baa3a5529d7af6543026ef3c530b1bead9f2a7525fc5ffa313279cbd",
+    "model": "claude-haiku-5-5",
+    "reason": "The earlier strong link weakened at full genome scale, yet a separate comparison of gene architecture still agreed with the earlier work.",
+    "type": "positive"
+  },
+  "gene_function_ecological_agora--a4ce9393": {
+    "input": "c922980f4159fcf5251c07ae3589e09f5ef4c3b20f7ef590e447b36889516fbd",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows a biological link between mycolic-acid genes and a producing sub-clade of Mycobacteriaceae, with the wider family link weaker.",
+    "type": "positive"
+  },
+  "gene_function_ecological_agora--c0bd8a1a": {
+    "input": "fdbc94d962be71cfd21167a69be303916fb2b0e308e7726ce4e1167e7b83bfb9",
+    "model": "claude-haiku-5-5",
+    "reason": "The table shows the gene classes differ in where their gains sit, with CRISPR-Cas skewed recent and tRNA synthetases skewed ancient.",
+    "type": "positive"
+  },
+  "gene_function_ecological_agora--c2291337": {
+    "input": "42c222371e53de78c5ac5a2afcc4c6fe0d4a0080eea0138b1d9eee054fce6696",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports a larger difference between horizontal-transfer gene classes when grouped by functional category than by protein family, so the analysis found a pattern.",
+    "type": "positive"
+  },
+  "gene_function_ecological_agora--e172b656": {
+    "input": "7e4f60942eb62b27db59ddd50108e817cb98e1e9069db09a956ebda06c17012b",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows gene families tied to both regulatory and metabolic pathways are exchanged between lineages more often than families tied to only one of them.",
+    "type": "positive"
   },
   "genotype_to_phenotype_enigma--602fd76d": {
     "input": "21dec6d0c08c0ff8bda47677dfc213afebc636a8c683ecc5d8f926d5ed23cf8a",
@@ -1550,6 +1622,36 @@
     "reason": "The evidence reports that many species carry both resistance genes and prophage markers together, a biological co-occurrence pattern rather than a description of database contents.",
     "type": "positive"
   },
+  "prophage_ecology--3c13d0b7": {
+    "input": "932ac4c958c4265938ab6f0219dedd54178849a3812db8c0841ad2db0f566571",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis checked whether lineages favor particular environments and found none that did beyond what the host family tree predicts.",
+    "type": "negative"
+  },
+  "prophage_ecology--967ce72a": {
+    "input": "2f7bad0e9c11d9f0dc374df84a855b3263945783939a320c9caf533afc67eb4b",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that prophage gene module patterns vary with environmental chemistry, such as pH, across the sampled environments.",
+    "type": "positive"
+  },
+  "prophage_ecology--9f2125cc": {
+    "input": "6c1ad151bf7b56736ff854696abe22e7b515aca801616d363f729ce85445077b",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that prophage gene module makeup differed across genome size groups, environments and family relatedness, with genome size showing the strongest difference.",
+    "type": "positive"
+  },
+  "prophage_ecology--d880eadf": {
+    "input": "cb1816cc724861a44191f3a982eee6876ad9fc4fb877cd63f46c2bb8ebb5a70f",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows prophage-associated gene modules occur in nearly every species, with some modules varying widely across species, a biological pattern rather than a dataset description.",
+    "type": "positive"
+  },
+  "prophage_ecology--fc67e694": {
+    "input": "9975a62ff70729b623f1b02cab9cec5292a7c4f6e7eca2b88c38f52af8af216a",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows several gene modules occur more often in human-associated species than expected, and anti-defense modules occur less often in freshwater and animal-associated species.",
+    "type": "positive"
+  },
   "pseudomonas_carbon_ecology--0211e0cd": {
     "input": "68b15cd1a6fbf4192bdac005d0f4346bb7d913a873a4e58c9e39c5ccc4bf55a1",
     "model": "claude-haiku-5-5",
@@ -1580,6 +1682,36 @@
     "reason": "The evidence shows that species from the same isolation environment had more similar carbon pathway profiles than species from different environments.",
     "type": "positive"
   },
+  "respiratory_chain_wiring--6d65c6de": {
+    "input": "b443dc0c29264a8b29ea5492826d0540ab52e23a295951c82fd55289e390685e",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that the respiratory components needed differ by carbon source, a pattern of distinct configurations per substrate.",
+    "type": "positive"
+  },
+  "respiratory_chain_wiring--7d7534df": {
+    "input": "636757e4802f3360673155fa66b7f53c6da6b9ac7b03640dcfb6a7fc55f7a770",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows all three NADH-oxidizing enzymes present at similar protein levels under standard growth conditions, a measured pattern rather than an untested explanation.",
+    "type": "positive"
+  },
+  "respiratory_chain_wiring--d117b49e": {
+    "input": "1684e030b0e02525313d8fc1c7b75b686450829e759a9f63b7b6c39c83a9ebc7",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows the gene is essential only on acetate, a condition-specific difference in growth between carbon sources.",
+    "type": "positive"
+  },
+  "respiratory_chain_wiring--e16ee45a": {
+    "input": "c7d0baf1b13bc7070a677667a29b1153a666c066865a0858e7fdc4665b7c8da3",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that Complex I is more essential on quinate than on glucose or acetate, a pattern found in the data; the explanation for it is only proposed.",
+    "type": "positive"
+  },
+  "respiratory_chain_wiring--fcdd6421": {
+    "input": "ad3792da517d2c4ba7ba511db0517ee42ebb3d3626f65a1e8aa6684906b8e4c2",
+    "model": "claude-haiku-5-5",
+    "reason": "Organisms with the alternative dehydrogenase had larger Complex I deficits on aromatic compounds, but only four lacked it, so the comparison could not settle the direction.",
+    "type": "inconclusive"
+  },
   "soil_frontier_genomics--0fa73728": {
     "input": "7d10c4a2f9d5282262a6d887506d18f27f369b1ebdaa26443137803e837f48af",
     "model": "claude-haiku-5-5",
@@ -1590,6 +1722,12 @@
     "input": "8c284333b16461f9b61ac3e8f22c67b00087bda7818f80b3e304c97c85d129f0",
     "model": "claude-haiku-5-5",
     "reason": "The evidence shows frontier soil areas were measurably more alkaline than mapped areas, a difference the analysis found, though its cause remains untested.",
+    "type": "positive"
+  },
+  "soil_frontier_genomics--2ab586c6": {
+    "input": "e94de34883fa72fc2eb3a219f4efe6603135916084073a4e4d2d53e995050f9d",
+    "model": "claude-haiku-5-5",
+    "reason": "The reported index values separate two biomes clearly higher than two lower ones, though the order within the top pair is not decided.",
     "type": "positive"
   },
   "soil_frontier_genomics--a002c998": {
@@ -1681,5 +1819,11 @@
     "model": "claude-haiku-5-5",
     "reason": "The evidence shows a clear pattern: unexplained genes cluster in particular organisms, with archaea at the high end.",
     "type": "positive"
+  },
+  "webofmicrobes_explorer--ab7e4ba4": {
+    "input": "cad66b78d5fa1eb032947ac9cee6b46a4a38c9b720b752cf70e22d9cdd38e3a5",
+    "model": "claude-haiku-5-5",
+    "reason": "The finding states what the archived export lacks: it has no consumption entries, so it reports no biological result.",
+    "type": "data"
   }
 }

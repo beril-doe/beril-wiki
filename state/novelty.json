@@ -749,6 +749,281 @@
     "retrieved": 17,
     "retrieved_on": "2026-10-23"
   },
+  "amr_cofitness_networks--284c5695": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "21645016",
+      "23499305",
+      "28542589",
+      "28765215",
+      "29066549",
+      "29769716",
+      "34591012",
+      "38509362",
+      "41363471",
+      "42017662",
+      "42833075"
+    ],
+    "closest": [
+      {
+        "pmid": "29066549",
+        "relation": "related",
+        "title": "Selective Proteomic Analysis of Antibiotic-Tolerant Cellular Subpopulations in Pseudomonas aeruginosa Biofilms."
+      },
+      {
+        "pmid": "42833075",
+        "relation": "related",
+        "title": "Response mechanisms of marine microbial communities during sulfamethoxazole co-metabolic degradation."
+      },
+      {
+        "pmid": "41363471",
+        "relation": "related",
+        "title": "Genomic and functional characterization of the L\u2011sorbose phosphotransferase system in high-risk Escherichia coli lineages."
+      },
+      {
+        "pmid": "23499305",
+        "relation": "related",
+        "title": "Intrinsic antibiotic resistance: mechanisms, origins, challenges and solutions."
+      }
+    ],
+    "difference": "",
+    "input": "73852667a3205b45994a9f738f2b7c230a207cfe77c687568e447751e23b58a0",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(\"GO:0071973\" OR \"flagellum-dependent cell motility\" OR \"flagellar motility\") (cofitness OR \"co-fitness\")",
+      "(\"flagellar motility\" OR \"flagellar genes\") enrichment (\"antibiotic resistance\" OR \"antimicrobial resistance\")",
+      "(\"gene set enrichment\" OR \"Gene Ontology enrichment\") (permutation OR \"matched random genes\") (flagella OR motility)"
+    ],
+    "retrieved": 11,
+    "retrieved_on": "2026-11-09"
+  },
+  "amr_cofitness_networks--6571fdb3": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "21645016",
+      "23499305",
+      "24036273",
+      "28542589",
+      "28765215",
+      "29769716",
+      "32915193",
+      "34591012",
+      "34680156",
+      "35893593",
+      "36192482",
+      "36250047",
+      "36300935",
+      "38462620",
+      "38509362",
+      "38659243",
+      "38904328",
+      "39038993",
+      "41023381",
+      "41081627",
+      "41219214",
+      "41264395",
+      "41384457",
+      "41412125",
+      "41454130",
+      "42098099",
+      "42267631"
+    ],
+    "closest": [
+      {
+        "pmid": "23499305",
+        "relation": "related",
+        "title": "Intrinsic antibiotic resistance: mechanisms, origins, challenges and solutions."
+      },
+      {
+        "pmid": "21645016",
+        "relation": "related",
+        "title": "Metabolic regulation of antibiotic resistance."
+      },
+      {
+        "pmid": "39038993",
+        "relation": "related",
+        "title": "Tryptophan transport gene inactivation promotes the development of antibiotic resistance in Escherichia coli."
+      },
+      {
+        "pmid": "38659243",
+        "relation": "related",
+        "title": "Intestinal carbapenem-resistant Klebsiella pneumoniae undergoes complex transcriptional reprogramming following immune activation."
+      }
+    ],
+    "difference": "",
+    "input": "53433ba6a44dc5de64074880f870fe966e5064d3838f68793bbaea538ea54177",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(efflux OR multidrug resistance) (histidine biosynthesis OR his operon OR tryptophan biosynthesis OR trp operon)",
+      "(antibiotic resistance OR antimicrobial resistance OR metal resistance) (amino acid biosynthesis OR chemotaxis) functional enrichment",
+      "(cofitness OR co-fitness OR fitness correlation) resistance (Gene Ontology enrichment OR GO enrichment) (FDR OR false discovery rate)"
+    ],
+    "retrieved": 27,
+    "retrieved_on": "2026-11-09"
+  },
+  "amr_cofitness_networks--8fa18a88": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "21645016",
+      "23499305",
+      "28542589",
+      "28765215",
+      "29769716",
+      "34591012",
+      "38509362",
+      "42824066"
+    ],
+    "closest": [
+      {
+        "pmid": "28542589",
+        "relation": "related",
+        "title": "Validating regulatory predictions from diverse bacteria with mutant fitness data."
+      },
+      {
+        "pmid": "29769716",
+        "relation": "related",
+        "title": "Mutant phenotypes for thousands of bacterial genes of unknown function."
+      },
+      {
+        "pmid": "23499305",
+        "relation": "related",
+        "title": "Intrinsic antibiotic resistance: mechanisms, origins, challenges and solutions."
+      }
+    ],
+    "difference": "",
+    "input": "6524072e9e2815506e6abe81796b9924802b72570a2a8996129f30a5946904e9",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "antimicrobial resistance AMR antibiotic resistance genes conserved cofitness modules",
+      "cross-species conservation antibiotic resistance gene functional relationships shared fitness phenotypes",
+      "transposon sequencing Tn-seq RB-TnSeq cofitness networks conserved gene modules"
+    ],
+    "retrieved": 8,
+    "retrieved_on": "2026-11-09"
+  },
+  "amr_cofitness_networks--9d334076": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "21645016",
+      "23499305",
+      "28542589",
+      "28765215",
+      "29769716",
+      "34591012",
+      "38509362",
+      "42833075"
+    ],
+    "closest": [
+      {
+        "pmid": "29769716",
+        "relation": "related",
+        "title": "Mutant phenotypes for thousands of bacterial genes of unknown function."
+      },
+      {
+        "pmid": "28542589",
+        "relation": "related",
+        "title": "Validating regulatory predictions from diverse bacteria with mutant fitness data."
+      },
+      {
+        "pmid": "23499305",
+        "relation": "related",
+        "title": "Intrinsic antibiotic resistance: mechanisms, origins, challenges and solutions."
+      },
+      {
+        "pmid": "21645016",
+        "relation": "related",
+        "title": "Metabolic regulation of antibiotic resistance."
+      }
+    ],
+    "difference": "",
+    "input": "f4e8d34513873bdbce3a198ce6dd2664173c53d2b8fe58bde5f4ec4ac6fcdfb6",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(\"antimicrobial resistance\" OR \"antibiotic resistance\") cofitness (InterProScan OR \"Gene Ontology\" OR SEED)",
+      "bacterial resistance cofitness networks functional enrichment flagellar biosynthesis",
+      "(\"transposon sequencing\" OR \"RB-TnSeq\" OR \"fitness profiling\") cofitness \"Gene Ontology\" enrichment"
+    ],
+    "retrieved": 8,
+    "retrieved_on": "2026-11-09"
+  },
+  "amr_cofitness_networks--ca058750": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "21645016",
+      "22934640",
+      "23499305",
+      "28542589",
+      "28765215",
+      "29769716",
+      "32558904",
+      "34591012",
+      "34951063",
+      "38509362",
+      "39660328",
+      "39821165",
+      "40366507",
+      "41243382",
+      "41289530",
+      "42267276"
+    ],
+    "closest": [
+      {
+        "pmid": "38509362",
+        "relation": "related",
+        "title": "Compensatory evolution in NusG improves fitness of drug-resistant M. tuberculosis."
+      },
+      {
+        "pmid": "21645016",
+        "relation": "related",
+        "title": "Metabolic regulation of antibiotic resistance."
+      },
+      {
+        "pmid": "23499305",
+        "relation": "related",
+        "title": "Intrinsic antibiotic resistance: mechanisms, origins, challenges and solutions."
+      },
+      {
+        "pmid": "29769716",
+        "relation": "related",
+        "title": "Mutant phenotypes for thousands of bacterial genes of unknown function."
+      }
+    ],
+    "difference": "",
+    "input": "730fb60156d464072c64cb62c02d83a78b3612199af40ecb04d2ee50935d0470",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(antimicrobial resistance OR antibiotic resistance OR AMR) AND (cofitness OR co-fitness) AND (fitness cost OR fitness burden)",
+      "(genetic interaction network OR functional support network) AND (network size OR connectivity OR node degree) AND (fitness cost OR fitness effect)",
+      "(cofitness OR co-fitness) AND (Spearman correlation OR rank correlation) AND (fitness cost OR fitness effect)"
+    ],
+    "retrieved": 16,
+    "retrieved_on": "2026-11-09"
+  },
   "amr_environmental_resistome--0cf37cb9": {
     "abstracts_only": true,
     "agree_model": null,
@@ -8874,6 +9149,354 @@
     "retrieved": 15,
     "retrieved_on": "2026-10-23"
   },
+  "gene_function_ecological_agora--4ca87c61": {
+    "abstracts_only": true,
+    "agree_model": "gpt-6.1-sol",
+    "agreed": true,
+    "candidates": [
+      "10097118",
+      "19008448",
+      "22689773",
+      "23192387",
+      "23506074",
+      "24374164",
+      "26037118",
+      "27117338",
+      "28258977",
+      "30411862",
+      "31078729",
+      "31323028",
+      "31344362",
+      "32160912",
+      "32556852",
+      "36874978",
+      "37232518",
+      "37279472",
+      "38439684",
+      "9689094"
+    ],
+    "closest": [
+      {
+        "pmid": "30411862",
+        "relation": "related",
+        "title": "Early Archean origin of Photosystem II."
+      },
+      {
+        "pmid": "32556852",
+        "relation": "related",
+        "title": "The diversity and distribution of D1 proteins in cyanobacteria."
+      },
+      {
+        "pmid": "37232518",
+        "relation": "related",
+        "title": "Empirical Evidence That Complexity Limits Horizontal Gene Transfer."
+      },
+      {
+        "pmid": "10097118",
+        "relation": "related",
+        "title": "Horizontal gene transfer among genomes: the complexity hypothesis."
+      }
+    ],
+    "difference": "No retrieved abstract reports a rank-dependent Innovator-Exchange classification of PSII, nor its producer/consumer effect sizes (d=+1.50, d=+0.70) or 2.77\u00d7 photic-aquatic enrichment. PMID 30411862 dates PSII origin and PMID 32556852 maps D1 diversity in cyanobacteria, so both are related but do not test this relationship. PMID 37232518 and PMID 10097118 concern complexity limits on HGT, not PSII exchange.",
+    "input": "06d2cfc164ed99441fbfbd7491cde9bb43b37dcecc37451feea2a8660b212e30",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Candidate novel",
+    "label": "Candidate novel",
+    "pipeline_label": "Candidate novel",
+    "queries": [
+      "(Cyanobacteria OR Cyanobacteriia) (\"photosystem II\" OR PSII OR psbA OR psbD) evolution distribution",
+      "\"oxygenic photosynthesis\" \"evolutionary innovation\" aquatic ecology",
+      "\"photosystem II\" comparative genomics metagenomics phylogenetic enrichment"
+    ],
+    "retrieved": 20,
+    "retrieved_on": "2026-11-09"
+  },
+  "gene_function_ecological_agora--9a0435f6": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "10097118",
+      "17083272",
+      "22689773",
+      "24374164",
+      "30411862",
+      "31323028",
+      "32160912",
+      "37232518",
+      "37279472",
+      "38439684",
+      "9689094"
+    ],
+    "closest": [
+      {
+        "pmid": "17083272",
+        "relation": "related",
+        "title": "The evolution of two-component systems in bacteria reveals different strategies for niche adaptation."
+      },
+      {
+        "pmid": "37232518",
+        "relation": "related",
+        "title": "Empirical Evidence That Complexity Limits Horizontal Gene Transfer."
+      }
+    ],
+    "difference": "",
+    "input": "deba2c26a675177dcf27804a4d1d98a7554cfbddd69f26162ca0986f85130160",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "Alm 2006 bacteria \"two-component systems\" \"histidine kinases\"",
+      "bacterial signaling gene duplication horizontal gene transfer ecological adaptation correlation",
+      "comparative genomics phylogenetic reconstruction paralog counts gene family expansion correlation"
+    ],
+    "retrieved": 11,
+    "retrieved_on": "2026-11-09"
+  },
+  "gene_function_ecological_agora--a4ce9393": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "10097118",
+      "11288513",
+      "15958783",
+      "17600834",
+      "22659327",
+      "22689773",
+      "2429862",
+      "24374164",
+      "25238051",
+      "27345499",
+      "29435693",
+      "29703753",
+      "30411862",
+      "31323028",
+      "31833106",
+      "32160912",
+      "32407863",
+      "37171244",
+      "37232518",
+      "37279472",
+      "38439684",
+      "38534149",
+      "9689094"
+    ],
+    "closest": [
+      {
+        "pmid": "17600834",
+        "relation": "related",
+        "title": "Hallmarks of mycolic acid biosynthesis: a comparative genomics study."
+      },
+      {
+        "pmid": "24374164",
+        "relation": "related",
+        "title": "Mycolic acids: structures, biosynthesis, and beyond."
+      },
+      {
+        "pmid": "29435693",
+        "relation": "related",
+        "title": "The role of corynomycolic acids in Corynebacterium-host interaction."
+      },
+      {
+        "pmid": "27345499",
+        "relation": "related",
+        "title": "Mycoloyltransferases: A large and major family of enzymes shaping the cell envelope of Corynebacteriales."
+      }
+    ],
+    "difference": "",
+    "input": "d9c1eb0c52f60a5d8468f2ee1b1b6da8970ff121af6579a8b83a13557666a045",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(Mycobacteriaceae OR Mycobacterium OR mycobacteria) AND (\"mycolic acid\" OR mycolate) AND biosynthesis AND (phylogeny OR genera)",
+      "(\"mycolic acid\" OR mycolate) AND (\"metabolic specialization\" OR \"lineage-specific biosynthesis\" OR \"phylogenetic distribution\")",
+      "(\"comparative genomics\" OR \"metabolic reconstruction\") AND (\"pathway completeness\" OR \"KEGG orthologs\") AND (\"mycolic acid\" OR mycolate)"
+    ],
+    "retrieved": 23,
+    "retrieved_on": "2026-11-09"
+  },
+  "gene_function_ecological_agora--c0bd8a1a": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "10097118",
+      "11927775",
+      "14572543",
+      "18818872",
+      "19271202",
+      "20056882",
+      "22112233",
+      "22689773",
+      "23520078",
+      "24374164",
+      "27706829",
+      "28412903",
+      "29062071",
+      "29648539",
+      "29648541",
+      "30411862",
+      "31166168",
+      "31323028",
+      "31519332",
+      "32160912",
+      "33012528",
+      "36925473",
+      "37232518",
+      "37279472",
+      "38439684",
+      "38910035",
+      "39224035",
+      "40544537",
+      "40794765",
+      "9689094"
+    ],
+    "closest": [
+      {
+        "pmid": "10097118",
+        "relation": "related",
+        "title": "Horizontal gene transfer among genomes: the complexity hypothesis."
+      },
+      {
+        "pmid": "37232518",
+        "relation": "related",
+        "title": "Empirical Evidence That Complexity Limits Horizontal Gene Transfer."
+      },
+      {
+        "pmid": "29062071",
+        "relation": "related",
+        "title": "Anti-CRISPR: discovery, mechanism and function."
+      },
+      {
+        "pmid": "9689094",
+        "relation": "related",
+        "title": "Molecular archaeology of the Escherichia coli genome."
+      }
+    ],
+    "difference": "",
+    "input": "ddffb05dd6a8e597a0970eb7e6911cd05d2416f71975042463723cc0d49920a3",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(CRISPR-Cas OR CRISPR OR aminoacyl-tRNA synthetases OR aaRS) AND (horizontal gene transfer OR gene acquisition) AND (bacteria OR archaea)",
+      "(gene function OR functional class) AND (gene gain OR horizontal gene transfer) AND (recent OR ancient OR phylogenetic depth)",
+      "(ancestral gene content reconstruction OR phyletic patterns OR gene gain loss reconstruction) AND (CRISPR-Cas OR tRNA synthetases)"
+    ],
+    "retrieved": 30,
+    "retrieved_on": "2026-11-09"
+  },
+  "gene_function_ecological_agora--c2291337": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "10097118",
+      "22689773",
+      "24374164",
+      "30267129",
+      "30411862",
+      "31323028",
+      "32160912",
+      "37232518",
+      "37279472",
+      "38439684",
+      "9689094"
+    ],
+    "closest": [
+      {
+        "pmid": "37232518",
+        "relation": "related",
+        "title": "Empirical Evidence That Complexity Limits Horizontal Gene Transfer."
+      },
+      {
+        "pmid": "10097118",
+        "relation": "related",
+        "title": "Horizontal gene transfer among genomes: the complexity hypothesis."
+      }
+    ],
+    "difference": "",
+    "input": "364476b8d7c58b524042978d2c370a868cf6a53daa765e10113c805f308d4905",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(UniRef50 OR UniRef) AND (\"KEGG orthology\" OR \"KEGG orthologs\") AND (housekeeping OR \"aminoacyl-tRNA synthetase\" OR \"RNA polymerase\")",
+      "(microbial OR microbiome) AND (\"functional resolution\" OR \"functional aggregation\" OR \"sequence clustering\") AND (\"ecological signal\" OR \"ecological differentiation\" OR \"effect size\")",
+      "(\"Cohen's d\" OR \"standardized mean difference\") AND (\"gene families\" OR orthologs OR \"functional profiles\") AND (aggregation OR resolution OR granularity)"
+    ],
+    "retrieved": 11,
+    "retrieved_on": "2026-11-09"
+  },
+  "gene_function_ecological_agora--e172b656": {
+    "abstracts_only": true,
+    "agree_model": "gpt-6.1-sol",
+    "agreed": true,
+    "candidates": [
+      "10097118",
+      "16077904",
+      "17437147",
+      "22689773",
+      "24341913",
+      "24374164",
+      "25728596",
+      "25880171",
+      "27149698",
+      "30411862",
+      "30671042",
+      "31323028",
+      "32160912",
+      "35044532",
+      "35489476",
+      "37232518",
+      "37279472",
+      "37485539",
+      "38439684",
+      "42409253",
+      "9689094"
+    ],
+    "closest": [
+      {
+        "pmid": "16077904",
+        "relation": "related",
+        "title": "Identification and categorization of horizontally transferred genes in prokaryotic genomes."
+      },
+      {
+        "pmid": "37485539",
+        "relation": "related",
+        "title": "Dissecting the HGT network of carbon metabolic genes in soil-borne microbiota."
+      },
+      {
+        "pmid": "37232518",
+        "relation": "related",
+        "title": "Empirical Evidence That Complexity Limits Horizontal Gene Transfer."
+      },
+      {
+        "pmid": "10097118",
+        "relation": "related",
+        "title": "Horizontal gene transfer among genomes: the complexity hypothesis."
+      }
+    ],
+    "difference": "No retrieved paper compares transfer or exchange rates between KOs annotated to both regulatory and metabolic pathways and those in only one category. PMID 16077904 reports that regulatory and metabolic functions are enriched among transferred genes and maps transferred genes onto KEGG pathways. PMID 37485539 does the same for carbon-metabolic HGT genes. Neither tests a mixed-category effect.",
+    "input": "db591dd29df94677bb5ce713f42d1584c35e79f421593bcaf472520eee45f6d2",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Candidate novel",
+    "label": "Candidate novel",
+    "pipeline_label": "Candidate novel",
+    "queries": [
+      "(KEGG OR \"KEGG Orthology\" OR eggNOG) AND (\"horizontal gene transfer\" OR \"gene exchange\") AND (regulation OR regulatory) AND (metabolism OR metabolic)",
+      "(\"multifunctional genes\" OR pleiotropy OR \"pathway overlap\") AND (\"horizontal gene transfer\" OR \"gene transferability\")",
+      "(\"comparative genomics\" OR \"gene gain and loss\") AND \"horizontal gene transfer\" AND \"pathway annotation\""
+    ],
+    "retrieved": 21,
+    "retrieved_on": "2026-11-09"
+  },
   "genotype_to_phenotype_enigma--602fd76d": {
     "abstracts_only": true,
     "agree_model": null,
@@ -13993,6 +14616,308 @@
     "retrieved": 25,
     "retrieved_on": "2026-10-27"
   },
+  "prophage_ecology--3c13d0b7": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "25092302",
+      "26982729",
+      "27533034",
+      "28692019",
+      "29371424",
+      "29416123",
+      "31695182",
+      "32934113",
+      "33606979",
+      "39361891",
+      "40639337"
+    ],
+    "closest": [
+      {
+        "pmid": "28692019",
+        "relation": "related",
+        "title": "Bacteriophage evolution differs by host, lifestyle and genome."
+      },
+      {
+        "pmid": "25092302",
+        "relation": "related",
+        "title": "Pervasive domestication of defective prophages by bacteria."
+      },
+      {
+        "pmid": "27533034",
+        "relation": "related",
+        "title": "Uncovering Earth's virome."
+      }
+    ],
+    "difference": "",
+    "input": "6dbb3a604a4129a33b72f80c6648201ce04b24f1eae25100ce9bb8f42faff31c",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "prophage bacteriophage TerL large terminase subunit environmental distribution host phylogeny",
+      "phage environmental specificity host phylogeny lack of independent environmental association",
+      "prophage lineage environment enrichment phylogenetic correction false discovery rate Shannon entropy niche breadth"
+    ],
+    "retrieved": 11,
+    "retrieved_on": "2026-11-09"
+  },
+  "prophage_ecology--967ce72a": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "15109783",
+      "25092302",
+      "25381655",
+      "26982729",
+      "27533034",
+      "28692019",
+      "29371424",
+      "29378882",
+      "29416123",
+      "30709355",
+      "31584154",
+      "31695182",
+      "32934113",
+      "33606979",
+      "34121301",
+      "35323045",
+      "36874978",
+      "37165188",
+      "37310219",
+      "37495698",
+      "38366190",
+      "39090708",
+      "39174532",
+      "40639337",
+      "40881221",
+      "41174177",
+      "41285752",
+      "41315738",
+      "775313"
+    ],
+    "closest": [
+      {
+        "pmid": "35323045",
+        "relation": "related",
+        "title": "Deciphering Active Prophages from Metagenomes."
+      },
+      {
+        "pmid": "29416123",
+        "relation": "related",
+        "title": "Lysogeny is prevalent and widely distributed in the murine gut microbiota."
+      },
+      {
+        "pmid": "27533034",
+        "relation": "related",
+        "title": "Uncovering Earth's virome."
+      },
+      {
+        "pmid": "26982729",
+        "relation": "related",
+        "title": "Lytic to temperate switching of viral communities."
+      }
+    ],
+    "difference": "",
+    "input": "9681ee4532f7de37943f5b33647d4f861a3c853471508237671c4c7e5c2866f2",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(NMDC OR \"National Microbiome Data Collaborative\") AND (prophage OR prophages OR lysogeny) AND metagenomics",
+      "(prophage burden OR prophage abundance OR lysogeny) AND (environmental factors OR abiotic factors OR environmental gradients)",
+      "(taxonomy-based inference OR taxonomic imputation OR phylogenetic prediction) AND (prophage OR viral genes) AND metagenomics"
+    ],
+    "retrieved": 29,
+    "retrieved_on": "2026-11-09"
+  },
+  "prophage_ecology--9f2125cc": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "24621522",
+      "25092302",
+      "25406510",
+      "26465632",
+      "26982729",
+      "27533034",
+      "28692019",
+      "29371424",
+      "29416123",
+      "30094916",
+      "31695182",
+      "32456612",
+      "32934113",
+      "33109761",
+      "33606979",
+      "34100162",
+      "34410625",
+      "38051419",
+      "38260883",
+      "39449105",
+      "39549700",
+      "40639337",
+      "42418983"
+    ],
+    "closest": [
+      {
+        "pmid": "39549700",
+        "relation": "related",
+        "title": "Genome dynamics across the evolutionary transition to endosymbiosis."
+      },
+      {
+        "pmid": "28692019",
+        "relation": "related",
+        "title": "Bacteriophage evolution differs by host, lifestyle and genome."
+      },
+      {
+        "pmid": "25092302",
+        "relation": "related",
+        "title": "Pervasive domestication of defective prophages by bacteria."
+      }
+    ],
+    "difference": "",
+    "input": "095eb6ca10cbf18704dc488c21db1905e080a48e74a9c1b61d17958e120339ad",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(prophage OR \"temperate bacteriophage\" OR \"integrated phage\") AND bacteria AND \"genome size\" AND (environment OR habitat)",
+      "prophage AND (\"module composition\" OR \"functional composition\") AND (\"genome size\" OR environment OR phylogeny)",
+      "prophage AND (PERMANOVA OR \"permutational multivariate analysis of variance\") AND (\"genome size\" OR environment OR phylogeny)"
+    ],
+    "retrieved": 23,
+    "retrieved_on": "2026-11-09"
+  },
+  "prophage_ecology--d880eadf": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "25092302",
+      "26982729",
+      "27533034",
+      "28692019",
+      "29371424",
+      "29416123",
+      "31695182",
+      "32934113",
+      "33606979",
+      "40639337"
+    ],
+    "closest": [
+      {
+        "pmid": "25092302",
+        "relation": "related",
+        "title": "Pervasive domestication of defective prophages by bacteria."
+      },
+      {
+        "pmid": "29416123",
+        "relation": "related",
+        "title": "Lysogeny is prevalent and widely distributed in the murine gut microbiota."
+      },
+      {
+        "pmid": "28692019",
+        "relation": "related",
+        "title": "Bacteriophage evolution differs by host, lifestyle and genome."
+      },
+      {
+        "pmid": "29371424",
+        "relation": "related",
+        "title": "Systematic discovery of antiphage defense systems in the microbial pangenome."
+      }
+    ],
+    "difference": "",
+    "input": "ca7adbf0894cd1a30708cd40f48f165dfeab0899b124ba4698dd526dfeace3b7",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "prophage pangenome eggNOG orthologous gene clusters bacteria",
+      "prophage module conservation variation packaging lysis lysogeny head tail domesticated remnants",
+      "comparative genomics prophage functional annotation modular architecture"
+    ],
+    "retrieved": 10,
+    "retrieved_on": "2026-11-09"
+  },
+  "prophage_ecology--fc67e694": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "16820493",
+      "25092302",
+      "26151345",
+      "26982729",
+      "27533034",
+      "28692019",
+      "29371424",
+      "29416123",
+      "30217851",
+      "31695182",
+      "31795231",
+      "32934113",
+      "32957679",
+      "33606979",
+      "34232073",
+      "34727518",
+      "35143386",
+      "35215876",
+      "35216026",
+      "35900097",
+      "36146857",
+      "36656854",
+      "36833250",
+      "38531972",
+      "38940562",
+      "39604394",
+      "40639337",
+      "41060308",
+      "41188234"
+    ],
+    "closest": [
+      {
+        "pmid": "34232073",
+        "relation": "related",
+        "title": "Distribution of Antimicrobial Resistance and Virulence Genes within the Prophage-Associated Regions in Nosocomial Pathogens."
+      },
+      {
+        "pmid": "33606979",
+        "relation": "related",
+        "title": "Massive expansion of human gut bacteriophage diversity."
+      },
+      {
+        "pmid": "40639337",
+        "relation": "related",
+        "title": "Bacteriophage genomes encode both broad and specific counter-defense repertoires to overcome bacterial defense systems."
+      },
+      {
+        "pmid": "29416123",
+        "relation": "related",
+        "title": "Lysogeny is prevalent and widely distributed in the murine gut microbiota."
+      }
+    ],
+    "difference": "",
+    "input": "538726656420ec1dcad9e062d1626f6659e9a97cf77e49c4d4da97c27d62921e",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(bacteriophage OR phage OR prophage) (human microbiome OR human-associated OR freshwater OR animal-associated) (tail OR head morphogenesis OR capsid OR anti-defense OR anti-CRISPR)",
+      "(phage OR prophage) (habitat OR environment OR host association) (enrichment OR depletion OR distribution) (structural genes OR anti-defense genes)",
+      "(prophage OR bacteriophage) (constrained permutation OR restricted permutation OR permutation test) (habitat OR ecology) (gene enrichment OR functional enrichment)"
+    ],
+    "retrieved": 29,
+    "retrieved_on": "2026-11-09"
+  },
   "pseudomonas_carbon_ecology--0211e0cd": {
     "abstracts_only": true,
     "agree_model": "gpt-6.1-sol",
@@ -14367,6 +15292,246 @@
     ],
     "retrieved": 29,
     "retrieved_on": "2026-10-27"
+  },
+  "respiratory_chain_wiring--6d65c6de": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "17962815",
+      "18319726",
+      "19235764",
+      "22474332",
+      "23111869",
+      "25374488",
+      "2549865",
+      "2551369",
+      "25841981",
+      "25917910",
+      "27773694",
+      "2828338",
+      "28573336",
+      "30943427",
+      "31767778",
+      "33373698",
+      "34607451",
+      "35162964",
+      "36417754",
+      "37179969",
+      "39041812",
+      "39259908",
+      "3926746",
+      "39366321",
+      "614747",
+      "7065812",
+      "9143131",
+      "9143455"
+    ],
+    "closest": [
+      {
+        "pmid": "18319726",
+        "relation": "same relationship elsewhere",
+        "title": "A complete collection of single-gene deletion mutants of Acinetobacter baylyi ADP1."
+      },
+      {
+        "pmid": "25374488",
+        "relation": "related",
+        "title": "Novel metabolic features in Acinetobacter baylyi ADP1 revealed by a multiomics approach."
+      },
+      {
+        "pmid": "31767778",
+        "relation": "same relationship elsewhere",
+        "title": "Interdependency of Respiratory Metabolism and Phenazine-Associated Physiology in Pseudomonas aeruginosa PA14."
+      },
+      {
+        "pmid": "35162964",
+        "relation": "related",
+        "title": "Heme A Synthase Deficiency Affects the Ability of Bacillus cereus to Adapt to a Nutrient-Limited Environment."
+      }
+    ],
+    "difference": "PMID 18319726 phenotyped the ADP1 deletion collection on quinate, glucose and other carbon sources, and PMID 25374488 showed quinate-specific reorganization of ADP1 expression. Neither resolves respiratory components per substrate. This finding adds a substrate-by-substrate map of respiratory-gene requirements (quinate needs Complex I; acetate needs Complex I, cytochrome bo3 and ACIAD3522; glucose needs none). It is from fitness data only, and NDH-2 has no growth data.",
+    "input": "f7f4ba475bcbc4ff55d0f469d069180c7fa438f2f82379034693925583e293a2",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Extends retrieved work",
+    "label": "Extends retrieved work",
+    "pipeline_label": "Extends retrieved work",
+    "queries": [
+      "(\"Acinetobacter baylyi\" OR \"Acinetobacter calcoaceticus\" OR ADP1) AND (\"respiratory chain\" OR \"complex I\" OR \"cytochrome bo3\" OR ACIAD3522) AND (quinate OR acetate OR glucose)",
+      "(bacteria OR bacterial) AND (\"branched respiratory chain\" OR \"respiratory redundancy\" OR \"electron transport chain\") AND (\"carbon source\" OR \"substrate dependent\") AND (essentiality OR requirement OR compensation)",
+      "(\"transposon sequencing\" OR Tn-seq OR RB-TnSeq OR \"mutant fitness\" OR \"gene deletion\") AND (respiration OR \"NADH dehydrogenase\" OR \"terminal oxidase\") AND (quinate OR acetate OR glucose OR \"carbon source\")"
+    ],
+    "retrieved": 28,
+    "retrieved_on": "2026-11-09"
+  },
+  "respiratory_chain_wiring--7d7534df": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "14643408",
+      "15134882",
+      "18319726",
+      "25374488",
+      "29686076",
+      "33965488",
+      "36510260",
+      "36869445"
+    ],
+    "closest": [
+      {
+        "pmid": "25374488",
+        "relation": "related",
+        "title": "Novel metabolic features in Acinetobacter baylyi ADP1 revealed by a multiomics approach."
+      },
+      {
+        "pmid": "18319726",
+        "relation": "related",
+        "title": "A complete collection of single-gene deletion mutants of Acinetobacter baylyi ADP1."
+      },
+      {
+        "pmid": "14643408",
+        "relation": "related",
+        "title": "Proteomic analysis of the benzoate degradation pathway in Acinetobacter sp. KS-1."
+      },
+      {
+        "pmid": "15134882",
+        "relation": "related",
+        "title": "Proteomic analysis of Acinetobacter lwoffii K24 by 2-D gel electrophoresis and electrospray ionization quadrupole-time of flight mass spectrometry."
+      }
+    ],
+    "difference": "",
+    "input": "bf882039735ced888642d1b780a166b9dd9c0070077016f93052cd5ca5b8f39d",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(\"Acinetobacter baylyi\" OR \"Acinetobacter ADP1\") (\"NADH dehydrogenase\" OR \"complex I\" OR \"NDH-2\" OR nuo OR ndh OR ACIAD3522)",
+      "(\"NADH dehydrogenases\" OR \"respiratory chain\") (\"constitutive expression\" OR coexpression) (\"metabolic flux\" OR \"carbon source\")",
+      "Acinetobacter (\"quantitative proteomics\" OR \"mass spectrometry\") (\"NADH dehydrogenase\" OR quinate OR succinate)"
+    ],
+    "retrieved": 8,
+    "retrieved_on": "2026-11-09"
+  },
+  "respiratory_chain_wiring--d117b49e": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "17133620",
+      "18319726",
+      "25374488",
+      "8157582"
+    ],
+    "closest": [
+      {
+        "pmid": "18319726",
+        "relation": "same relationship elsewhere",
+        "title": "A complete collection of single-gene deletion mutants of Acinetobacter baylyi ADP1."
+      },
+      {
+        "pmid": "8157582",
+        "relation": "same relationship elsewhere",
+        "title": "Mutations in NADH:ubiquinone oxidoreductase of Escherichia coli affect growth on mixed amino acids."
+      },
+      {
+        "pmid": "17133620",
+        "relation": "related",
+        "title": "Substrate-inducible versions of internal alternative NADH: ubiquinone oxidoreductase from Yarrowia lipolytica."
+      },
+      {
+        "pmid": "25374488",
+        "relation": "related",
+        "title": "Novel metabolic features in Acinetobacter baylyi ADP1 revealed by a multiomics approach."
+      }
+    ],
+    "difference": "PMID 18319726 phenotyped the ADP1 deletion collection on quinate, glucose and other carbon sources, but its abstract gives no per-gene result for ACIAD3522. This finding adds a growth ratio for that gene: dispensable on quinate and glucose, lethal on acetate. PMID 8157582 reports acetate-specific growth defects in E. coli nuo (complex I) mutants, a related carbon-source pattern for a different enzyme.",
+    "input": "6551b823ede90991a807ebd8dd78ff12a336e4a026fbef71fdd17daa61c42e2d",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Extends retrieved work",
+    "label": "Extends retrieved work",
+    "pipeline_label": "Extends retrieved work",
+    "queries": [
+      "(ACIAD3522 OR \"Acinetobacter baylyi\" OR \"Acinetobacter calcoaceticus ADP1\") AND (\"NADH-FMN oxidoreductase\" OR \"NADH dehydrogenase\") AND acetate",
+      "(\"NADH oxidoreductase\" OR \"NADH dehydrogenase\") AND acetate AND (\"carbon source\" OR \"conditional essentiality\") AND growth",
+      "(\"gene deletion\" OR \"knockout mutant\") AND \"growth phenotype\" AND acetate AND (glucose OR quinate)"
+    ],
+    "retrieved": 4,
+    "retrieved_on": "2026-11-09"
+  },
+  "respiratory_chain_wiring--e16ee45a": {
+    "abstracts_only": true,
+    "agree_model": "gpt-6.1-sol",
+    "agreed": true,
+    "candidates": [
+      "18319726",
+      "25374488",
+      "3805038"
+    ],
+    "closest": [
+      {
+        "pmid": "18319726",
+        "relation": "related",
+        "title": "A complete collection of single-gene deletion mutants of Acinetobacter baylyi ADP1."
+      },
+      {
+        "pmid": "25374488",
+        "relation": "related",
+        "title": "Novel metabolic features in Acinetobacter baylyi ADP1 revealed by a multiomics approach."
+      },
+      {
+        "pmid": "3805038",
+        "relation": "related",
+        "title": "Purification and characterization of phthalate oxygenase and phthalate oxygenase reductase from Pseudomonas cepacia."
+      }
+    ],
+    "difference": "The retrieved ADP1 papers (PMID 18319726, PMID 25374488) cover quinate growth phenotypes and transcriptional/metabolomic responses, and PMID 3805038 covers NADH-dependent aromatic oxygenases. None reports Complex I being more essential on quinate than on glucose or acetate, or an NADH-burst explanation involving NDH-2 capacity. This finding is an inference from theoretical stoichiometry, not measured flux.",
+    "input": "e099862d0de31879f42b0ea7e67b522d70d647d32c7c63bd8bccdb75564c2ec9",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Candidate novel",
+    "label": "Candidate novel",
+    "pipeline_label": "Candidate novel",
+    "queries": [
+      "(quinate OR \"quinic acid\") (\"complex I\" OR \"NDH-1\" OR nuo) (\"NDH-2\" OR \"type II NADH dehydrogenase\")",
+      "(\"beta-ketoadipate pathway\" OR \"aromatic degradation\") NADH (\"respiratory capacity\" OR \"NADH oxidation\" OR \"carbon source dependent essentiality\")",
+      "(quinate OR \"quinic acid\") (\"stoichiometric analysis\" OR \"pathway stoichiometry\" OR \"metabolic modeling\") (NADH OR \"redox balance\")"
+    ],
+    "retrieved": 3,
+    "retrieved_on": "2026-11-09"
+  },
+  "respiratory_chain_wiring--fcdd6421": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "18319726",
+      "25374488"
+    ],
+    "closest": [
+      {
+        "pmid": "18319726",
+        "relation": "related",
+        "title": "A complete collection of single-gene deletion mutants of Acinetobacter baylyi ADP1."
+      },
+      {
+        "pmid": "25374488",
+        "relation": "related",
+        "title": "Novel metabolic features in Acinetobacter baylyi ADP1 revealed by a multiomics approach."
+      }
+    ],
+    "difference": "",
+    "input": "2d4bc50485f8daf17ebfd439847d22c6dc8c2c7c3af3d478a9eaae4eae6564bd",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(Acinetobacter baylyi OR ADP1) (NDH-2 OR ndh OR \"type II NADH dehydrogenase\") (\"complex I\" OR nuo)",
+      "\"NADH dehydrogenase\" \"complex I\" (compensation OR redundancy OR dispensability) (aromatic OR benzoate)",
+      "(RB-TnSeq OR TnSeq OR \"transposon sequencing\") (\"complex I\" OR \"NADH dehydrogenase\") (aromatic OR benzoate) fitness"
+    ],
+    "retrieved": 2,
+    "retrieved_on": "2026-11-09"
   },
   "soil_frontier_genomics--0fa73728": {
     "abstracts_only": true,
@@ -15304,5 +16469,111 @@
     ],
     "retrieved": 10,
     "retrieved_on": "2026-10-23"
+  },
+  "webofmicrobes_explorer--6149b49e": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "30208844",
+      "30576534",
+      "35694313",
+      "41157257"
+    ],
+    "closest": [
+      {
+        "pmid": "30208844",
+        "relation": "related",
+        "title": "Web of microbes (WoM): a curated microbial exometabolomics database for linking chemistry and microbes."
+      },
+      {
+        "pmid": "35694313",
+        "relation": "related",
+        "title": "A Defined Medium for Cultivation and Exometabolite Profiling of Soil Bacteria."
+      }
+    ],
+    "difference": "",
+    "input": "b9e936ae9b57cc9744b77b1b3c701ad782babfd2d0ff8777b93e3ab42f267a70",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(GapMind OR \"Web of Microbes\" OR WoM) metabolite pathway mapping",
+      "metabolite nomenclature mismatch pathway identifiers database integration",
+      "metabolite identifier mapping pathway annotation substrate product lookup table"
+    ],
+    "retrieved": 4,
+    "retrieved_on": "2026-11-09"
+  },
+  "webofmicrobes_explorer--ab7e4ba4": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "30208844",
+      "30576534",
+      "35694313"
+    ],
+    "closest": [
+      {
+        "pmid": "30208844",
+        "relation": "related",
+        "title": "Web of microbes (WoM): a curated microbial exometabolomics database for linking chemistry and microbes."
+      },
+      {
+        "pmid": "35694313",
+        "relation": "related",
+        "title": "A Defined Medium for Cultivation and Exometabolite Profiling of Soil Bacteria."
+      }
+    ],
+    "difference": "",
+    "input": "877dc62250f0dbe319183e1983402189b5a36060de846bc708bde44007810ce8",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "\"Web of Microbes\" Kosina 2018 GNPS2 metabolite consumption decrease",
+      "microbial extracellular metabolite consumption depletion control missing data",
+      "exometabolomics metabolite profiling microbial uptake uninoculated medium controls"
+    ],
+    "retrieved": 3,
+    "retrieved_on": "2026-11-09"
+  },
+  "webofmicrobes_explorer--f572a74d": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "30208844",
+      "30576534",
+      "35694313"
+    ],
+    "closest": [
+      {
+        "pmid": "30208844",
+        "relation": "related",
+        "title": "Web of microbes (WoM): a curated microbial exometabolomics database for linking chemistry and microbes."
+      },
+      {
+        "pmid": "35694313",
+        "relation": "related",
+        "title": "A Defined Medium for Cultivation and Exometabolite Profiling of Soil Bacteria."
+      }
+    ],
+    "difference": "",
+    "input": "361bc7560b88f679bf2613f717aa6f8fa304a7d017240f1c905547544bed758d",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(\"Web of Microbes\" OR WoM) (ModelSEED OR \"Model SEED\") metabolite mapping",
+      "metabolite database mapping molecular formula ambiguity isomers annotation coverage",
+      "metabolite identifier mapping exact name matching molecular formula matching manual curation"
+    ],
+    "retrieved": 3,
+    "retrieved_on": "2026-11-09"
   }
 }

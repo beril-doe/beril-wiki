@@ -159,6 +159,41 @@
     "repeats": "",
     "title": ""
   },
+  "amr_cofitness_networks--284c5695": {
+    "case": "",
+    "gist": "Genes for flagellum-dependent cell motility were over-represented among the genes that track antibiotic-resistance genes' fitness across conditions in 5 organisms. This suggests resistance genes and motility genes share fitness patterns in several bacteria.",
+    "input": "9ee6cbd615cc6ae9379daffea5661f0b77e820fae63a4edd9ecd70e0592ebcfc",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "amr_cofitness_networks--6571fdb3": {
+    "failed": true
+  },
+  "amr_cofitness_networks--8fa18a88": {
+    "case": "",
+    "gist": "Almost every antibiotic-resistance gene assignment to a co-varying gene group (99%) falls in group families found across different bacteria. The report reads this as suggesting ancient regulatory relationships, though the data show shared growth phenotypes, not direct co-regulation.",
+    "input": "f45585232b039cbc714046d64669d46af21840d8e56e6955b08d005689811997",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "amr_cofitness_networks--9d334076": {
+    "case": "",
+    "gist": "Genes whose fitness across growth conditions rises and falls together with antimicrobial-resistance genes share certain functions more often than expected. The six top function categories each recur in several bacterial organisms, suggesting a shared pattern beyond any one species.",
+    "input": "1b6b0e1d79e0f832b0282098d37e6ae17f9ba86cf40883e50e59c59296848dab",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "amr_cofitness_networks--ca058750": {
+    "case": "measured absence",
+    "gist": "Across 769 AMR genes, no detectable link appeared between the size of a gene's co-fitness support network (partner genes with similar fitness patterns) and how much fitness the gene cost. Larger networks did not go with higher or lower cost.",
+    "input": "b937e60150840b23a50ec74d47cbe458995d10a07e6add461825aaa34f636ee0",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
   "amr_environmental_resistome--0cf37cb9": {
     "case": "",
     "gist": "Metal resistance makes up a large share of antimicrobial-resistance gene clusters in aquatic and soil species but only 6% in human gut species, the biggest difference between environments among the resistance mechanisms compared.",
@@ -673,10 +708,10 @@
   },
   "conservation_fitness_synthesis--0c074210": {
     "case": "measured absence",
-    "failed": true,
-    "gist": "In these bacterial genomes, genes with strong condition-specific fitness effects were more likely to be core, with no detectable tendency toward accessory status. Condition-specific fitness effects therefore do not mark a gene as niche-specific.",
-    "input": "1fb25a24448a2d02b7afbf290e4bc5183edef7b29ecb6cc620f09fca2b9a9cbf",
+    "gist": "Among the bacterial genes studied, those with strong condition-specific fitness effects showed no detectable excess of accessory genes; they were more often core. A strong effect under particular conditions does not by itself point to a niche-specific gene.",
+    "input": "7d7e6f7b90830a996edc66d185ffe36170459ee163e74849219fa3521c0f5b29",
     "model": "claude-sonnet-5-5",
+    "repeats": "",
     "title": ""
   },
   "conservation_fitness_synthesis--0c3c94d9": {
@@ -857,10 +892,10 @@
   },
   "counter_ion_effects--5a2d3c21": {
     "case": "",
-    "failed": true,
-    "gist": "In gene-knockout screens across 19 bacteria, many genes needed to survive metals were also needed under salt stress, suggesting much of the apparent metal-specific signal reflects general vulnerability to ionic and osmotic stress. The overlap ranged from 9.2% for molybdenum to 57.6% for manganese.",
-    "input": "dd99fee2c0ca1417c03952676b5c6cdcaf04c4e02bc925ae72d870c0aba8d0de",
+    "gist": "In gene-knockout screens across 19 organisms, 39.8% of genes important for surviving metal exposure were also important under salt (NaCl) stress, for every metal tested. This suggests much of the metal signal reflects general cellular vulnerability.",
+    "input": "d3bb0495086cecad7e7732eee1bd31023684ad40894993926d48814724a749e5",
     "model": "claude-sonnet-5-5",
+    "repeats": "",
     "title": ""
   },
   "counter_ion_effects--5a523214": {
@@ -1411,6 +1446,54 @@
     "case": "",
     "gist": "Re-annotating dark genes that have pangenome links with an automated annotation tool gave 83.7% of them a specific product description, where the old labels said only 'hypothetical protein'. This suggests many dark genes are less unknown than their labels implied.",
     "input": "7a3b9e95b94d327f9d0d281ec3e449f120cf31f4aa054025394084ef03f014c6",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "gene_function_ecological_agora--4ca87c61": {
+    "case": "",
+    "gist": "At class level, cyanobacterial photosystem II genes (the light-driven water-splitting machinery) were classed as an 'innovator-exchange' function, a label that does not name a gene-transfer direction. They were also 2.77\u00d7 more enriched in sunlit aquatic environments.",
+    "input": "45c2c9041da5d136ac594f1ccce48dbfdc23b964a8a9e42c2be02e392fd58dac",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "gene_function_ecological_agora--9a0435f6": {
+    "case": "measured absence",
+    "gist": "No detectable reproduction of the strong correlation earlier reported for histidine protein kinase genes: across 18,989 genomes the relationship was much weaker, though a separate comparison of gene architecture still agreed closely with the earlier work.",
+    "input": "2eecc220f253e176968a9516b8e6bb9914972da36ad949eeab587db21ebd5fbb",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "gene_function_ecological_agora--a4ce9393": {
+    "case": "",
+    "gist": "Mycolic-acid genes were tied to the mycolate-producing branch of Mycobacteriaceae, covering 10 of 13 genera, rather than to the whole family. The pattern in the organisms that use these products was weaker than the family-wide view suggested.",
+    "input": "9bd34e371c09da05f27bcbc157343d7c43007c334c1c01e9c736c6382653e522",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "gene_function_ecological_agora--c0bd8a1a": {
+    "case": "",
+    "gist": "Gene classes differ in how deep in the tree their gains landed. CRISPR-Cas gains were the most skewed toward recent, genus-level events, while strict tRNA synthetase gains were the least recent and the most often ancient, in these genomes.",
+    "input": "14f55e989540ad95b3d3f8af7f2d9a9ce324687450b725ee904dc55c31e1b309",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "gene_function_ecological_agora--c2291337": {
+    "case": "",
+    "gist": "In horizontal-gene-transfer comparisons against core housekeeping genes (tRNA synthetases, RNA polymerase core), the difference between gene classes was much larger when genes were compared by functional category than by individual protein family. The report treats the pattern as holding at the coarser level.",
+    "input": "c87814db94374582ef4cf925b83ed6629720dcb93405197aa31f9b3545cf84fc",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": "Horizontal-transfer differences look larger at functional-category level than protein-family level"
+  },
+  "gene_function_ecological_agora--e172b656": {
+    "case": "",
+    "gist": "Gene families annotated to both regulatory and metabolic pathways were about twice as often exchanged between lineages as families annotated to only one of the two. The report finds the split lies between pathway-overlapping and pathway-pure gene families, not regulatory versus metabolic.",
+    "input": "131de48741ef964e847d5a130c75730e124ec89a62ddf19941dbe66d7d5d35cb",
     "model": "claude-sonnet-5-5",
     "repeats": "",
     "title": ""
@@ -2231,6 +2314,46 @@
     "repeats": "",
     "title": ""
   },
+  "prophage_ecology--3c13d0b7": {
+    "case": "measured absence",
+    "gist": "Testing viral terminase (DNA-packaging gene) lineages against environment types turned up no lineage with a clear environment preference beyond what the host bacteria's family tree already predicts. The analysis ran and found nothing, so lineage-level adaptation to environment is not apparent here.",
+    "input": "74ab7a1d386c6834dd247aae9c489d06345fc5eda5c9e061f27c66e2d77fe9f0",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "prophage_ecology--967ce72a": {
+    "case": "",
+    "gist": "Using bacterial genus matches to infer prophage content across 6,365 NMDC metagenomic samples, the analysis found 57 correlations between prophage gene modules and abiotic variables such as pH, suggesting that prophage module patterns vary with environmental chemistry in these samples.",
+    "input": "6c69ccc22bf201c1c78981d4cd57a6cc7b087d0568c1e90241a5fce45231c2cd",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "prophage_ecology--9f2125cc": {
+    "case": "",
+    "gist": "In the analyzed bacterial genomes, differences in prophage (integrated virus) gene module composition were associated most strongly with genome size group, less with the environment a genome came from, and least with family-level relatedness.",
+    "input": "1b1211df4550b1fbbb41de1a4aa4f79340d44b28c75299757c99dc9e142842e2",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "prophage_ecology--d880eadf": {
+    "case": "",
+    "gist": "Prophage-associated genes turned up in every bacterial species surveyed. Packaging, lysis and lysogeny-control modules are found in essentially all species, while head, tail and anti-defense modules vary, and 34.9% of species carry all seven modules.",
+    "input": "25db778337779428fae21a64cc3324d5e30473c26365aa53dafc54bfadf1d92b",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "prophage_ecology--fc67e694": {
+    "case": "",
+    "gist": "Across bacterial species, prophage tail, head-assembly and anti-defense gene modules were over-represented in human-associated species compared with null expectations, while anti-defense modules were under-represented in freshwater and animal-associated species.",
+    "input": "8230dea00c6079f0f0b72f497dd92caf269cf579377be75d78443d3d75fc30a0",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
   "pseudomonas_carbon_ecology--0211e0cd": {
     "case": "inconclusive test",
     "gist": "Differences in which carbon sources free-living species can use carry real ecological signal. Carbon-use profiles alone did not separate fine-grained environment types, so this test was inconclusive for telling those environments apart.",
@@ -2279,6 +2402,46 @@
     "repeats": "",
     "title": ""
   },
+  "respiratory_chain_wiring--6d65c6de": {
+    "case": "",
+    "gist": "In Acinetobacter baylyi ADP1, the respiratory chain is used differently depending on the carbon source: quinate growth needs only Complex I, acetate needs several components, and glucose needs none in particular. The report describes distinct configurations, not a gradient.",
+    "input": "0c8663b368bce6072bbb2f1938a5641bdcd617d9723fa7118aa5b229aa1dcadc",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "respiratory_chain_wiring--7d7534df": {
+    "case": "",
+    "gist": "In Acinetobacter ADP1 grown under standard conditions, the three NADH-oxidizing respiratory enzymes (Complex I, NDH-2 and ACIAD3522) are all present at protein levels close to the genome median, suggesting respiratory wiring is set by metabolism rather than gene switching.",
+    "input": "c5a5b8722c030f57d4747fc7b8bbfae08f0a2a66a23c264b4dfd86e7a68470d6",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "respiratory_chain_wiring--d117b49e": {
+    "case": "",
+    "gist": "In Acinetobacter ADP1, a single-subunit enzyme that oxidizes NADH without pumping protons (ACIAD3522) was lethal to lose when cells grew on acetate, but losing it did not hurt growth on quinate or glucose, where growth ratios were 1.39.",
+    "input": "8c057ca6f4191e3cd3d148e2d2f17cd3b39d20ac98013e511cc370d4edff81cb",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "respiratory_chain_wiring--e16ee45a": {
+    "case": "",
+    "gist": "In Acinetobacter ADP1, growth on quinate depends more on Complex I than growth on glucose or acetate does, even though quinate yields fewer NADH per carbon atom (0.57). The report proposes a sudden NADH burst from ring cleavage that outpaces the alternative enzyme.",
+    "input": "a71320926441d439ab503a62a1b19b25f3d7bb3226ef3cdc5a20e2902660b04a",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "respiratory_chain_wiring--fcdd6421": {
+    "case": "inconclusive test",
+    "gist": "Across 14 bacterial species, those with a validated alternative NADH dehydrogenase (NDH-2) showed larger, not smaller, Complex I growth deficits on aromatic compounds, opposite to the compensation idea. The comparison was inconclusive, so the idea was not supported.",
+    "input": "236d12de3fa7c8961e7e683ac695ea1fca0d263c1acc42efc0e384eab3b8a472",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
   "soil_frontier_genomics--0fa73728": {
     "case": "inconclusive test",
     "gist": "Models using climate and soil, geochemical, or industrial measurements to predict functional gene counts in soils worldwide each did worse on held-out samples than guessing the average. The comparison was inconclusive: it could not settle whether gene counts are predictable from these measurements.",
@@ -2297,10 +2460,10 @@
   },
   "soil_frontier_genomics--2ab586c6": {
     "case": "",
-    "failed": true,
-    "gist": "Forest and Cropland soils stand out as the least-mapped genomic frontier, with the highest genomic discovery index of the biomes compared, while Grassland and Wetland look relatively well mapped. This suggests where new soil sequencing could add the most.",
-    "input": "48a71c42827c65c32c582319d5eec2be8330043a58b2e0e0cc4a89d1d6c7ca6b",
+    "gist": "In this soil survey, forest and cropland soils scored highest on the genomic discovery index, a combined measure of sampling gap and richness, while grassland and wetland soils scored about half as high. The index flags where soil microbes may be least characterized.",
+    "input": "bc43c5d5599bb4df4ca6422d086bc68510654070708822889e98d29d25322ce9",
     "model": "claude-sonnet-5-5",
+    "repeats": "",
     "title": ""
   },
   "soil_frontier_genomics--a002c998": {
@@ -2438,5 +2601,24 @@
     "model": "claude-sonnet-5-5",
     "repeats": "",
     "title": ""
+  },
+  "webofmicrobes_explorer--6149b49e": {
+    "case": "unperformed analysis",
+    "gist": "Linking Web of Microbes metabolites to predicted bacterial pathways by name did not work, because pathway labels are internal IDs that lack simple metabolite names. This is an unperformed analysis; a lookup table of each pathway's substrates and products is needed.",
+    "input": "fd0e2b80fb00f8a57afe4f79c495c7b41f9ba15cc25e09e3e29186b2487c229c",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": "Direct metabolite-name matching to pathway predictions failed"
+  },
+  "webofmicrobes_explorer--ab7e4ba4": {
+    "case": "measured absence",
+    "gist": "In the archived 2018 Web of Microbes export, no organism has a 'Decreased' (consumption) entry, and all 742 'D' observations belong to the control. The analysis ran and found none, though the newer version may contain consumption data.",
+    "input": "195091fcd768e502121eaa767fd0be5ebd3422de12d337f089048550dfd4f17e",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "webofmicrobes_explorer--f572a74d": {
+    "failed": true
   }
 }
