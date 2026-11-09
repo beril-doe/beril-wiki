@@ -460,6 +460,8 @@ def test_shared_groups_need_living_members_two_projects_and_two_topics(tmp_path)
         "lanes": {FID: "Dark genes in a", other: "Dark genes in b"},
     } | {k: f"{k} text" for k in ("title", "sentence", "question", "how")}
     set_state(kb, "shared.json", {"g-1": group, "g-2": group | {"members": [FID, "gone--1"]}})
+    listed = {f: {"gist": "Dark genes were depleted.", "case": ""} for f in (FID, other)}
+    set_state(kb, "gists.json", listed)
     # Without a current related-result link joining the members, nothing is published.
     assert cards.shared_index(Corpus(kb)) == []
     link = {"a": FID, "b": other, "level": "finding", "type": "same result", "label": "Same"}
@@ -468,6 +470,10 @@ def test_shared_groups_need_living_members_two_projects_and_two_topics(tmp_path)
     assert g["id"] == "g-1" and "home_rank" not in g and g["sources"] == ["a", "b"]
     assert g["relation"] == "Same result in each project" and len(g["topics"]) == 2
     assert [m["lane"] for m in g["members"]] == ["Dark genes in a", "Dark genes in b"]
+    # A member the Results page hides retires the statement that speaks for it.
+    set_state(kb, "gists.json", listed | {other: listed[other] | {"repeats": FID}})
+    assert cards.shared_index(Corpus(kb)) == []
+    set_state(kb, "gists.json", listed)
     set_state(kb, "shared.json", {"g-1": group | {"failed": True}})
     assert cards.shared_index(Corpus(kb)) == []
     # A links refresh that changed how the results relate retires the old text.

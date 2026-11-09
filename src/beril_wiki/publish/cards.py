@@ -639,7 +639,7 @@ def related_results(c: Corpus, fid: str) -> list[tuple[str, str]]:
 
 
 def shared_index(c: Corpus) -> list[dict]:
-    """Accepted shared results whose members still exist and still form one group of
+    """Accepted shared results whose members are all listed and still form one group of
     current related-result links, those spanning the most topics first. A links refresh
     that drops a link retires the statement at once, before the shared stage runs again."""
     groups = []
@@ -647,6 +647,9 @@ def shared_index(c: Corpus) -> list[dict]:
     for gid, g in sorted(c.shared_records.items()):
         members = g.get("members") or []
         if g.get("failed") or not members or any(m not in c.findings for m in members):
+            continue
+        # The statement speaks for every member, so one the Results page hides retires it.
+        if not all(eligible(c, m) for m in members):
             continue
         if frozenset(members) not in current:
             continue
