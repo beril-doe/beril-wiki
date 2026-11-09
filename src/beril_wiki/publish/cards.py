@@ -996,7 +996,7 @@ def issues_page(sid: str, items: list[dict], provenance: str, titles: dict[str, 
 INDEXES = {
     "findings": (
         "Results",
-        "Results from the project reports, one per card.",
+        "Results from the project reports, by topic and by how new each one is.",
     ),
     "directions": (
         "Open questions",
