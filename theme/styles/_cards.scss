@@ -280,7 +280,6 @@
 .qgrid {
   display: grid;
   grid-template-columns: minmax(7.5rem, 11rem) var(--qcols);
-  border-top: 1px solid var(--line);
   &[data-single] {
     grid-template-columns: var(--qcols);
   }
@@ -443,8 +442,9 @@
 .qlegend {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 18px;
-  margin: 10px 0 0;
+  gap: 6px 18px;
+  align-items: center;
+  margin: 0 0 10px;
   font-size: var(--t-meta);
   color: var(--ink-2);
 }
@@ -493,7 +493,6 @@
   .qgrid,
   .qgrid[data-single] {
     display: block;
-    border-top: 0;
   }
   .qrow {
     display: block;

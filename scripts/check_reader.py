@@ -1320,6 +1320,12 @@ QHEAD_JS = """() => {
                 && a.left < first.right
         })(),
         corner: (head?.querySelector('.qcorner')?.textContent || '').trim(),
+        legendAbove: (() => {
+            const lg = document.querySelector('.qlegend')?.getBoundingClientRect()
+            const g = document.querySelector('.qgrid')?.getBoundingClientRect()
+            return !!lg && !!g && lg.bottom <= g.top
+        })(),
+        rule: getComputedStyle(document.querySelector('.qgrid')).borderTopStyle !== 'none',
         heads: [...(head?.querySelectorAll('.qcolh') || [])].map(h => {
             const r = h.getBoundingClientRect()
             return {
@@ -1337,7 +1343,7 @@ QHEAD_JS = """() => {
 
 def qhead_fails(page: Page) -> list[str]:
     """The grid's columns are publish's follow-up order, each header naming its column,
-    its count and its note, under one effort line spanning them all."""
+    its count and its note, under one effort line spanning them all, with the legend above."""
     rec = records()
     qi = rec["qindex"]
     got = page.evaluate(QHEAD_JS)
@@ -1353,6 +1359,11 @@ def qhead_fails(page: Page) -> list[str]:
         )
     if got["corner"] != ROW_AXIS:
         fails.append(f"grid: the row-label corner reads '{got['corner']}', not '{ROW_AXIS}'")
+    # The same order as the Results map: legend, then the grid, with no rule between.
+    if not got["legendAbove"]:
+        fails.append("grid: the legend is not above the grid")
+    if got["rule"]:
+        fails.append("grid: a rule still runs along the top of the grid")
     count = Counter(e["follow"] for e in rec["questions"].values())
     want = [
         {

@@ -205,48 +205,7 @@ export function QuestionGrid({ c, from, topic }: { c: Corpus; from: FullSlug; to
   const cols = follows(c).map((col) => ({ ...col, n: all.filter((q) => followKey(c, q) === col.key).length }))
   const qcols = cols.map((col) => `minmax(9rem,${Math.max(col.n, 8)}fr)`).join(" ")
   return (
-    <div class="qwrap">
-      <div class="qgrid" data-single={topic ? "1" : undefined} style={`--qcols:${qcols}`}>
-        <div class="qrow qeffort">
-          {!topic && <span class="qcorner" />}
-          <span class="qeffortline" style={`grid-column: span ${cols.length}`}>
-            <span class="qaxend">Less effort to follow up</span>
-            <span class="qaxarrow" aria-hidden="true" />
-            <span class="qaxend">More effort</span>
-          </span>
-        </div>
-        <div class="qrow qhead">
-          {!topic && <span class="qcorner qaxis">Topic</span>}
-          {cols.map((col) => (
-            <span class="qcolh">
-              {col.label} <span class="qn">{col.n}</span>
-              {col.note && <span class="qcoln">{col.note}</span>}
-            </span>
-          ))}
-        </div>
-        {rows.map((r) => (
-          <div class="qrow">
-            {!topic && (
-              <span class="qrowh" style={r.file && c.hueOf(r.file) ? `--d:${c.hueOf(r.file)}` : undefined}>
-                {r.file ? <a href={resolveRelative(from, slugOf(r.file) as FullSlug)}>{titleOf(r.file)}</a> : r.slug || "Other"}
-              </span>
-            )}
-            {cols.map((col) => {
-              const cell = r.items.filter((q) => followKey(c, q) === col.key)
-              return (
-                <div class="qcell" data-empty={cell.length === 0 ? "1" : undefined}>
-                  <span class="qlab">{col.label}</span>
-                  <div class="qdots">
-                    {cell.map((q) => (
-                      <Dot q={q} c={c} from={from} />
-                    ))}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        ))}
-      </div>
+    <>
       <p class="qlegend">
         <span class="qkey">
           <LegendDot /> One question
@@ -273,7 +232,50 @@ export function QuestionGrid({ c, from, topic }: { c: Corpus; from: FullSlug; to
         )}
         <span class="qkey">Hover or tap a dot to read it.</span>
       </p>
-    </div>
+      <div class="qwrap">
+        <div class="qgrid" data-single={topic ? "1" : undefined} style={`--qcols:${qcols}`}>
+          <div class="qrow qeffort">
+            {!topic && <span class="qcorner" />}
+            <span class="qeffortline" style={`grid-column: span ${cols.length}`}>
+              <span class="qaxend">Less effort to follow up</span>
+              <span class="qaxarrow" aria-hidden="true" />
+              <span class="qaxend">More effort</span>
+            </span>
+          </div>
+          <div class="qrow qhead">
+            {!topic && <span class="qcorner qaxis">Topic</span>}
+            {cols.map((col) => (
+              <span class="qcolh">
+                {col.label} <span class="qn">{col.n}</span>
+                {col.note && <span class="qcoln">{col.note}</span>}
+              </span>
+            ))}
+          </div>
+          {rows.map((r) => (
+            <div class="qrow">
+              {!topic && (
+                <span class="qrowh" style={r.file && c.hueOf(r.file) ? `--d:${c.hueOf(r.file)}` : undefined}>
+                  {r.file ? <a href={resolveRelative(from, slugOf(r.file) as FullSlug)}>{titleOf(r.file)}</a> : r.slug || "Other"}
+                </span>
+              )}
+              {cols.map((col) => {
+                const cell = r.items.filter((q) => followKey(c, q) === col.key)
+                return (
+                  <div class="qcell" data-empty={cell.length === 0 ? "1" : undefined}>
+                    <span class="qlab">{col.label}</span>
+                    <div class="qdots">
+                      {cell.map((q) => (
+                        <Dot q={q} c={c} from={from} />
+                      ))}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   )
 }
 
