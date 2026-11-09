@@ -81,7 +81,7 @@ COLLECTION_INDEX = {
         "Project reports",
         "One page per research project, summarising it and linking to "
         "its raw report. These are the evidence every other page on "
-        "the site cites. Two cross-project digests sit here too.",
+        "the site cites.",
     ),
     "sources": ("Raw reports", "The raw research reports this wiki is compiled from, unedited."),
 }

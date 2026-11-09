@@ -35,7 +35,7 @@ Checks, each run by name:
   concepts on result and question pages, the topic board links, and About's reading guide.
 - reference: the grouped Browse menu (headers, rules, keyboard, contrast, light and dark,
   wide to phone) and the reference pages around it: the two archives and the archive
-  label on the concepts that cite them.
+  label on the concepts that cite them, and the Reports listing of project reports only.
 
 Exit 0 when the check passes, 1 with one line per failure otherwise. Notes (lines
 starting "note:") never fail a check. Uses the installed Chrome, so no browser download.
@@ -115,6 +115,10 @@ ARCHIVE_PAGES = {
         "data-issues",
     ),
 }
+REPORTS_INTRO = (
+    "One page per research project, summarising it and linking to its raw report. These are "
+    "the evidence every other page on the site cites."
+)
 ARCHIVE_KIND_LINE = (
     "An archive collects discoveries or pitfalls gathered across projects until May 2026."
 )
@@ -4733,9 +4737,68 @@ def archive_fails(browser, base: str) -> list[str]:
     return fails
 
 
+def published_reports() -> set[str]:
+    """The project reports this build publishes: summaries publish stamped as reports."""
+    return {
+        p.stem
+        for p in (CONTENT / "summaries").glob("*.md")
+        if frontmatter(p).get("type") == "Project report"
+    }
+
+
+def reports_listing_fails(browser, base: str) -> list[str]:
+    """Reports lists exactly the published project reports and counts only them, and the home
+    topic table counts only the reports each topic links."""
+    fails: list[str] = []
+    want = published_reports()
+    page = new_page(browser, WIDE)
+    go(page, base + "/summaries/")
+    cards = page.eval_on_selector_all(
+        ".listing a.card", "els => els.map(e => e.getAttribute('href'))"
+    )
+    got = [last_part(h) for h in cards]
+    if sorted(got) != sorted(want):
+        extra = sorted(set(got) - want)
+        missing = sorted(want - set(got))
+        fails.append(
+            f"reference: Reports lists {len(got)} cards, expected the {len(want)} reports; "
+            f"extra {extra}, missing {missing[:5]}"
+        )
+    facts = page.eval_on_selector_all(
+        ".record dt",
+        "els => els.map(e => [e.textContent.trim(), e.nextElementSibling?.textContent.trim()])",
+    )
+    if facts != [["Project reports", str(len(want))]]:
+        fails.append(f"reference: Reports header facts {facts}")
+    intro = collapse(page.inner_text(".index-page > .prose"))
+    if intro != REPORTS_INTRO:
+        fails.append(f"reference: Reports intro reads '{intro}'")
+    go(page, base + "/")
+    rows = page.eval_on_selector_all(
+        ".topictable .trow",
+        """els => els.map(e => [e.querySelector('.name a').getAttribute('href'),
+            [...e.querySelectorAll('.c')].map(c => c.textContent.trim())[1]])""",
+    )
+    for href, shown in rows:
+        stem = last_part(href)
+        text = (CONTENT / "topics" / f"{stem}.md").read_text(encoding="utf-8")
+        linked = set(re.findall(r"\[\[summaries/([\w.-]+?)[|#\]]", text)) & want
+        if shown != str(len(linked)):
+            fails.append(
+                f"reference: home topic table shows {shown} reports for {stem}, "
+                f"its page links {len(linked)}"
+            )
+    page.context.close()
+    return fails
+
+
 def check_reference(browser, base: str) -> list[str]:
     """The grouped Browse menu and the reference pages around it."""
-    return [*browse_group_fails(browser, base), *archive_fails(browser, base)]
+    return [
+        *browse_group_fails(browser, base),
+        *archive_fails(browser, base),
+        *reports_listing_fails(browser, base),
+    ]
 
 
 CHECKS = {

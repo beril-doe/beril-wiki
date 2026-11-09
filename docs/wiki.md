@@ -74,7 +74,9 @@ from the accepted wiki without editing it:
   publish as archives titled "Earlier discoveries" and "Earlier pitfalls",
   with `type: "Archive"`. The theme labels them "Archive" and shows a note
   under each title: Earlier discoveries points to Results, and Earlier
-  pitfalls points to Data issues.
+  pitfalls points to Data issues. The Reports listing (`summaries/`) shows
+  and counts only the project reports, and so do the home topic table, the
+  topic and conflict listings, and the report slots of the local graph.
 - A `> **Erratum.**` callout under a paragraph means the cited report states
   that figure wrongly. The reports are archived unedited, so the correction is
   recorded in `contract/errata.yaml` and placed beside every claim that repeats

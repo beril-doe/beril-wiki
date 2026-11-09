@@ -402,7 +402,7 @@ export function topicBlurbs(nodes: ElementContent[] | undefined): Map<string, El
 // than read out of a sentence in the markdown.
 export interface Counts {
   reports: number
-  digests: number
+  archives: number
   concepts: number
   entities: number
   conflicts: number
@@ -411,19 +411,19 @@ export interface Counts {
 
 export function counts(c: Corpus): Counts {
   let reports = 0
-  let digests = 0
+  let archives = 0
   let concepts = 0
   let entities = 0
   for (const f of c.bySlug.values()) {
     const slug = slugOf(f)
     if (isIndex(slug)) continue
-    // "Project reports" means the projects. The two cross-project digests sit
+    // "Project reports" means the projects. The two cross-project archives sit
     // in the same collection and are counted apart from them.
-    if (collectionOf(slug) === "summaries") isReport(f) ? reports++ : digests++
+    if (collectionOf(slug) === "summaries") isReport(f) ? reports++ : archives++
     else if (collectionOf(slug) === "concepts") concepts++
     else if (collectionOf(slug) === "entities") entities++
   }
-  return { reports, digests, concepts, entities, conflicts: c.conflicts.length, topics: c.topics.length }
+  return { reports, archives, concepts, entities, conflicts: c.conflicts.length, topics: c.topics.length }
 }
 
 // Home page body, split at its h2s so the frame can lay the pieces out.

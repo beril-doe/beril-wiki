@@ -8,11 +8,14 @@ import { type Corpus, type File, collectionOf, fm, isIndex, isReport, kindOf, li
 // What a collection index can say about itself, in countable terms. Quartz
 // gives an index page no citations, so without this its byline is empty and
 // the page opens on a bare title.
+// The Reports collection is the project reports alone. The two archives share
+// summaries/ and keep their URLs there, but they report no project.
+export const listed = (f: File, here: string) =>
+  collectionOf(slugOf(f)) === here && !isIndex(slugOf(f)) && (here !== "summaries" || isReport(f))
+
 export function indexFigures(file: File, c: Corpus): [string, string][] {
   const here = collectionOf(slugOf(file))
-  const members = [...c.bySlug.values()].filter(
-    (f) => collectionOf(slugOf(f)) === here && !isIndex(slugOf(f)),
-  )
+  const members = [...c.bySlug.values()].filter((f) => listed(f, here))
   const n = members.length
   if (n === 0) return []
   const plural = (k: number, unit: string) => `${k} ${unit}${k === 1 ? "" : "s"}`
@@ -39,12 +42,9 @@ export function indexFigures(file: File, c: Corpus): [string, string][] {
       out.push(["Credited on", plural(reports.size, "project report")])
       break
     }
-    case "summaries": {
-      const reports = members.filter(isReport).length
-      out.push(["Project reports", String(reports)])
-      out.push(["Cross-project digests", String(n - reports)])
+    case "summaries":
+      out.push(["Project reports", String(n)])
       break
-    }
     case "conflicts":
       out.push(["Conflicts", plural(n, "recorded conflict")])
       break
@@ -79,7 +79,7 @@ const ENTITY_HUE: Record<string, string> = {
 export function Listing({ file, c }: { file: File; c: Corpus }) {
   const slug = slugOf(file) as FullSlug
   const here = collectionOf(slug)
-  const members = [...c.bySlug.values()].filter((f) => collectionOf(slugOf(f)) === here && !isIndex(slugOf(f)))
+  const members = [...c.bySlug.values()].filter((f) => listed(f, here))
   if (members.length === 0) return null
   const inbound = (f: File) =>
     (c.inbound.get(simplifySlug(slugOf(f))) ?? []).filter((k) => !isIndex(slugOf(k))).length
@@ -95,8 +95,15 @@ export function Listing({ file, c }: { file: File; c: Corpus }) {
   // What to count differs by collection: nothing links to an author page, so
   // "linked from" would read zero on every one of them, and a topic page is
   // measured by what it gathers rather than by what points at it.
+  // An archive is not a project, so it never counts as a report or a source project.
   const out = (f: File, collection: string) =>
-    new Set(linksOf(f).filter((l) => collectionOf(l) === collection)).size
+    new Set(
+      linksOf(f).filter((l) => {
+        if (collectionOf(l) !== collection) return false
+        const target = c.bySlug.get(l)
+        return collection !== "summaries" || (!!target && isReport(target))
+      }),
+    ).size
   const plural = (n: number, unit: string) => `${n} ${unit}${n === 1 ? "" : "s"}`
 
   const meta = (f: File): string | null => {

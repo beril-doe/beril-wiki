@@ -5,11 +5,11 @@ import type { FullSlug } from "@quartz-community/types"
 import { resolveRelative, simplifySlug } from "@quartz-community/utils"
 import type { ElementContent } from "hast"
 import { jsx } from "../jsx"
-import { type Corpus, type File, collectionOf, linksOf, slugOf, titleOf } from "../page"
+import { type Corpus, type File, collectionOf, isReport, linksOf, slugOf, titleOf } from "../page"
 
 const COLUMNS: [string, (l: string, f: File | undefined) => boolean][] = [
   ["Concepts", (l) => collectionOf(l) === "concepts"],
-  ["Reports", (l) => collectionOf(l) === "summaries"],
+  ["Reports", (l, f) => collectionOf(l) === "summaries" && !!f && isReport(f)],
   ["Conflicts", (l) => collectionOf(l) === "conflicts"],
   ["Entities", (l) => collectionOf(l) === "entities"],
 ]

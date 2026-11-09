@@ -58,7 +58,7 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
     ["concepts/index", "Concepts", "What several projects together show about one claim, and where they disagree.", `${n.concepts} concepts`],
     ["entities/index", "Entities", "Everything recorded about one organism, gene, compound, method or dataset.", `${n.entities} entities`],
     ["conflicts/index", "Conflicts", "Where projects disagree, the evidence on each side, and what would settle it.", `${n.conflicts} conflicts`],
-    ["summaries/index", "Reports", "What one project did and found, with exact numbers to cite.", `${n.reports} reports, ${n.digests} digests`],
+    ["summaries/index", "Reports", "What one project did and found, with exact numbers to cite.", `${n.reports} reports`],
   ] as [string, string, string, string][]
   if (published)
     kinds.push(
@@ -96,7 +96,7 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
           {(
             [
               [n.reports, "Project reports", "the primary evidence", "summaries/index"],
-              [n.digests, "Cross-project digests", "discoveries and pitfalls", "summaries/index"],
+              [n.archives, "Cross-project digests", "discoveries and pitfalls", "summaries/index"],
               [n.concepts, "Concepts", "synthesised across them", "concepts/index"],
               [n.entities, "Entities", "organisms, genes, datasets, methods", "entities/index"],
               [n.conflicts, "Recorded conflicts", "with the evidence on both sides", "conflicts/index"],

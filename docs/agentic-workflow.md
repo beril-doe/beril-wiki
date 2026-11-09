@@ -434,7 +434,9 @@ their expected values from the records under `quartz/content/` and
   its link, and that no "Projects cited" or author list shows. Every concept
   that cites only the archives must read "Cross-project archive" and never
   "source project", and concepts that cite an archive beside reports must
-  say "and a cross-project archive".
+  say "and a cross-project archive". The Reports listing must show exactly
+  the published project reports with the one header fact "Project reports",
+  and each home topic-table row must count only the reports its topic links.
 
 `scripts/check_links.py` checks the links and shared stages without a browser
 and exits 1 with one line per failure. `--shared` re-runs the code checks on
