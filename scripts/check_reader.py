@@ -33,6 +33,8 @@ Checks, each run by name:
 - related: each result page lists its related results in other projects.
 - connections: results and open questions on topic, report and concept pages, the
   concepts on result and question pages, the topic board links, and About's reading guide.
+- reference: the grouped Browse menu (headers, rules, keyboard, contrast, light and dark,
+  wide to phone) and the reference pages around it.
 
 Exit 0 when the check passes, 1 with one line per failure otherwise. Notes (lines
 starting "note:") never fail a check. Uses the installed Chrome, so no browser download.
@@ -88,7 +90,17 @@ HOME_ABSENT = [
     "change the picture",
 ]
 BAR_LINKS = ["Results", "Open questions", "Topics", "About"]
-BROWSE_ITEMS = ["Concepts", "Entities", "Conflicts", "Reports", "Authors"]
+# The Browse menu's groups in order: a header (None for the closing group) and its links.
+BROWSE_GROUPS = [
+    ("The wiki", ["Concepts", "Entities", "Conflicts"]),
+    ("Projects", ["Reports", "Authors"]),
+    ("Working with the data", ["Pitfalls", "Data collections", "Data issues"]),
+    (None, ["All pages"]),
+]
+BROWSE_ITEMS = [link for _, links in BROWSE_GROUPS for link in links]
+# Widths at which the Browse menu must keep its groups: wide, the bar's two narrow
+# breakpoints (it wraps at 960 px) and a phone.
+BROWSE_WIDTHS = [1440, 961, 960, 390]
 # The kind cards under "Find your way in", by the collection each opens.
 KIND_CARDS = [
     "topics/",
@@ -4510,6 +4522,141 @@ def about_fails(page: Page, base: str) -> list[str]:
     return fails
 
 
+BROWSE_JS = """() => {
+  const probe = document.createElement('div')
+  probe.style.color = 'var(--line)'
+  document.body.append(probe)
+  const line = getComputedStyle(probe).color
+  probe.remove()
+  return [...document.querySelectorAll('#barmenu-list .barmenu-group')].map(g => {
+    const head = g.querySelector('.barmenu-head')
+    const list = g.querySelector('ul')
+    const label = list?.getAttribute('aria-labelledby')
+    const first = g.querySelector('a')
+    const hs = head && getComputedStyle(head)
+    const bgOf = (e) => {
+        for (let x = e; x; x = x.parentElement) {
+            const c = getComputedStyle(x).backgroundColor
+            if (c !== 'rgba(0, 0, 0, 0)' && c !== 'transparent') return c
+        }
+        return 'rgb(255, 255, 255)'
+    }
+    return {
+        head: head ? head.textContent.trim() : null,
+        headTag: head ? head.tagName : null,
+        headFocusable: head ? (head.tabIndex >= 0 || head.matches('a, button, [tabindex]')) : false,
+        headColour: hs ? hs.color : null,
+        headTransform: hs ? hs.textTransform : null,
+        headSize: hs ? parseFloat(hs.fontSize) : null,
+        headCursor: hs ? hs.cursor : null,
+        headBg: head ? bgOf(head) : null,
+        linkColour: first ? getComputedStyle(first).color : null,
+        linkSize: first ? parseFloat(getComputedStyle(first).fontSize) : null,
+        role: list?.getAttribute('role') || null,
+        labelledBy: label ? (document.getElementById(label)?.textContent.trim() || '') : null,
+        ariaLabel: list?.getAttribute('aria-label') || null,
+        rule: getComputedStyle(g).borderTopWidth + ' ' + getComputedStyle(g).borderTopStyle,
+        ruleColour: getComputedStyle(g).borderTopColor,
+        line,
+        links: [...g.querySelectorAll('a')].map(a => a.textContent.trim()),
+        visible: !!g.getClientRects().length,
+    }
+  })
+}"""
+
+
+def browse_group_fails(browser, base: str) -> list[str]:
+    """The Browse menu holds its groups in order, each a labelled list; a 1px rule sits above
+    every group after the first; headers are small uppercase muted text that never takes
+    focus and reaches 4.5:1; arrows and Tab reach every link in order, skipping headers."""
+    fails: list[str] = []
+    for theme in ("light", "dark"):
+        for width in BROWSE_WIDTHS:
+            where = f"reference: Browse at {width} px, {theme}"
+            page = themed(browser, theme, {"width": width, "height": 900})
+            go(page, base + "/")
+            btn = page.locator("header.bar .barmenu-btn")
+            btn.click()
+            page.wait_for_timeout(150)
+            groups = page.evaluate(BROWSE_JS)
+            got = [(g["head"], g["links"]) for g in groups]
+            if got != [(h, list(links)) for h, links in BROWSE_GROUPS]:
+                fails.append(f"{where}: groups {got}, expected {BROWSE_GROUPS}")
+                page.context.close()
+                continue
+            for i, g in enumerate(groups):
+                name = g["head"] or g["links"][0]
+                if not g["visible"]:
+                    fails.append(f"{where}: group '{name}' is not visible with the menu open")
+                if g["role"] != "group":
+                    fails.append(f"{where}: group '{name}' list has role {g['role']}")
+                if g["head"] and g["labelledBy"] != g["head"]:
+                    fails.append(f"{where}: group '{name}' is labelled '{g['labelledBy']}'")
+                if not g["head"] and not g["ariaLabel"]:
+                    fails.append(f"{where}: the closing group has no accessible name")
+                if i > 0 and g["rule"] != "1px solid":
+                    fails.append(f"{where}: group '{name}' has top rule '{g['rule']}'")
+                if i > 0 and not same(rgba(g["ruleColour"]), rgba(g["line"])):
+                    fails.append(f"{where}: group '{name}' rule {g['ruleColour']} is not --line")
+                if i == 0 and g["rule"] == "1px solid":
+                    fails.append(f"{where}: the first group has a rule above it")
+                if not g["head"]:
+                    continue
+                if g["headTag"] in ("A", "BUTTON") or g["headFocusable"]:
+                    fails.append(f"{where}: header '{name}' can take focus")
+                if g["headTransform"] != "uppercase" or g["headCursor"] == "pointer":
+                    look = f"{g['headTransform']}, cursor {g['headCursor']}"
+                    fails.append(f"{where}: header '{name}' is {look}")
+                if g["headSize"] is not None and g["linkSize"] and g["headSize"] >= g["linkSize"]:
+                    fails.append(f"{where}: header '{name}' is not smaller than its links")
+                fg, link = rgba(g["headColour"]), rgba(g["linkColour"])
+                if same(fg, link):
+                    fails.append(f"{where}: header '{name}' has its links' colour")
+                r = ratio(fg, rgba(g["headBg"]))
+                if r < 4.5:
+                    fails.append(f"{where}: header '{name}' contrast {r:.2f}:1")
+            # Keyboard: arrows walk every link in order, then Tab does the same from Browse.
+            page.keyboard.press("Escape")
+            btn.focus()
+            page.keyboard.press("ArrowDown")
+            seen = []
+            for _ in BROWSE_ITEMS:
+                seen.append(page.evaluate("document.activeElement?.textContent.trim()"))
+                page.keyboard.press("ArrowDown")
+            if seen != BROWSE_ITEMS:
+                fails.append(f"{where}: arrows reach {seen}")
+            page.keyboard.press("Escape")
+            btn.focus()
+            page.keyboard.press("Enter")
+            seen = []
+            for _ in BROWSE_ITEMS:
+                page.keyboard.press("Tab")
+                seen.append(page.evaluate("document.activeElement?.textContent.trim()"))
+            if seen != BROWSE_ITEMS:
+                fails.append(f"{where}: Tab reaches {seen}")
+            page.keyboard.press("Escape")
+            page.context.close()
+    # The Browse button marks the page you are on for every target in the menu.
+    page = new_page(browser, WIDE)
+    for target in ("summaries/pitfalls", "data/", "data-issues/", "catalog", "summaries/"):
+        go(page, f"{base}/{target}")
+        if not page.locator("header.bar .barmenu-btn.here").count():
+            fails.append(f"reference: Browse is not marked as current on /{target}")
+    go(page, f"{base}/summaries/pitfalls")
+    cur = page.eval_on_selector_all(
+        "#barmenu-list a[aria-current=page]", "els => els.map(e => e.textContent.trim())"
+    )
+    if cur != ["Pitfalls"]:
+        fails.append(f"reference: on Pitfalls the menu marks {cur} as current")
+    page.context.close()
+    return fails
+
+
+def check_reference(browser, base: str) -> list[str]:
+    """The grouped Browse menu and the reference pages around it."""
+    return browse_group_fails(browser, base)
+
+
 CHECKS = {
     "home": check_home,
     "strips": check_strips_page,
@@ -4522,6 +4669,7 @@ CHECKS = {
     "filters": check_filters,
     "related": check_related,
     "connections": check_connections,
+    "reference": check_reference,
 }
 
 

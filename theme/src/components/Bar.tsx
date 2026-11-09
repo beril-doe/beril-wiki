@@ -1,12 +1,12 @@
 // The top bar: the logo and name, the three ways in (results, open questions,
-// topics), a Browse menu holding the reference collections, About, then the tools:
+// topics), a Browse menu holding the reference pages in groups, About, then the tools:
 // section search, Ask, and the stock theme toggle from the header slot. The
 // CBORG key is entered where it is used, on the Ask page and in search.
 // src/client wires the search button and the Browse menu.
 import type { FullSlug, PageFrameProps, QuartzComponentProps } from "@quartz-community/types"
 import { resolveRelative } from "@quartz-community/utils"
 import { slot } from "../jsx"
-import { collectionOf } from "../page"
+import { type File, collectionOf, isIndex, isReport } from "../page"
 
 // Results and open questions lead the bar when the build has records.
 const RECORDS: [string, string][] = [
@@ -14,12 +14,36 @@ const RECORDS: [string, string][] = [
   ["Open questions", "directions/index"],
 ]
 const DOORS: [string, string][] = [["Topics", "topics/index"]]
-const BROWSE: [string, string][] = [
-  ["Concepts", "concepts/index"],
-  ["Entities", "entities/index"],
-  ["Conflicts", "conflicts/index"],
-  ["Reports", "summaries/index"],
-  ["Authors", "authors/index"],
+interface Group {
+  /** Shown above the links; the closing group has none. */
+  label?: string
+  links: [string, string][]
+}
+const BROWSE: Group[] = [
+  {
+    label: "The wiki",
+    links: [
+      ["Concepts", "concepts/index"],
+      ["Entities", "entities/index"],
+      ["Conflicts", "conflicts/index"],
+    ],
+  },
+  {
+    label: "Projects",
+    links: [
+      ["Reports", "summaries/index"],
+      ["Authors", "authors/index"],
+    ],
+  },
+  {
+    label: "Working with the data",
+    links: [
+      ["Pitfalls", "summaries/pitfalls"],
+      ["Data collections", "data/index"],
+      ["Data issues", "data-issues/index"],
+    ],
+  },
+  { links: [["All pages", "catalog"]] },
 ]
 // About the wiki is the last site link, pushed right so it sits just before Search.
 const ABOUT: [string, string] = ["About", "about"]
@@ -44,8 +68,18 @@ export function Bar({ cd, header }: { cd: QuartzComponentProps; header: PageFram
   const here = collectionOf(slug)
   const published = new Set((cd.allFiles ?? []).map((f) => f.slug as string))
   const doors = [...RECORDS.filter(([, target]) => published.has(target)), ...DOORS]
-  const current = (target: string) => collectionOf(target) === here && here !== ""
-  const inBrowse = BROWSE.some(([, target]) => current(target))
+  // A collection index stands for every page in its collection, and any other
+  // target for itself alone. Reports and Pitfalls share summaries/, so Reports
+  // claims only the project reports.
+  const current = (target: string) => {
+    if (!isIndex(target)) return slug === target
+    if (collectionOf(target) !== here || here === "") return false
+    return here !== "summaries" || isIndex(slug) || isReport(cd.fileData as File)
+  }
+  const groups = BROWSE.map((g) => ({ ...g, links: g.links.filter(([, target]) => published.has(target)) })).filter(
+    (g) => g.links.length > 0,
+  )
+  const inBrowse = groups.some((g) => g.links.some(([, target]) => current(target)))
   return (
     <header class="bar">
       <a class="wordmark" href={resolveRelative(slug, "index" as FullSlug)} aria-label={`${cd.cfg.pageTitle}, home`}>
@@ -75,15 +109,32 @@ export function Bar({ cd, header }: { cd: QuartzComponentProps; header: PageFram
               <path d="M2 3.5 5 6.5 8 3.5" />
             </svg>
           </button>
-          <ul class="barmenu-list" id="barmenu-list">
-            {BROWSE.map(([label, target]) => (
-              <li>
-                <a href={resolveRelative(slug, target as FullSlug)} aria-current={current(target) ? "page" : undefined}>
-                  {label}
-                </a>
-              </li>
+          {/* Each group is a labelled list so a screen reader names it; the
+              labels are plain text and never take focus. */}
+          <div class="barmenu-list" id="barmenu-list">
+            {groups.map((g, i) => (
+              <div class="barmenu-group">
+                {g.label && (
+                  <p class="barmenu-head" id={`barmenu-head-${i}`}>
+                    {g.label}
+                  </p>
+                )}
+                <ul
+                  role="group"
+                  aria-labelledby={g.label ? `barmenu-head-${i}` : undefined}
+                  aria-label={g.label ? undefined : "Every page"}
+                >
+                  {g.links.map(([label, target]) => (
+                    <li>
+                      <a href={resolveRelative(slug, target as FullSlug)} aria-current={current(target) ? "page" : undefined}>
+                        {label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
         <a class="barlink barabout" href={resolveRelative(slug, ABOUT[1] as FullSlug)} aria-current={current(ABOUT[1]) ? "page" : undefined}>
           {ABOUT[0]}

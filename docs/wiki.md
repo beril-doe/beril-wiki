@@ -180,9 +180,14 @@ opportunities and negative results help readers find follow-up questions and
 avoid repeating unsuccessful analyses.
 
 The top bar holds Results and Open questions (when the corpus has findings),
-Topics, a Browse menu, About, Search, Ask and the theme toggle. Browse lists
-Concepts, Entities, Conflicts, Reports and Authors. Without JavaScript the
-Browse list opens while focus is inside the menu. About is the last site
+Topics, a Browse menu, About, Search, Ask and the theme toggle. Browse holds
+four groups, each a list labelled by its header: "The wiki" (Concepts,
+Entities, Conflicts), "Projects" (Reports, Authors), "Working with the data"
+(Pitfalls, Data collections, Data issues), and All pages with no header. A
+1px rule sits above every group after the first. The headers are small
+uppercase text that never takes focus, so the arrow keys and Tab move through
+the nine links only. Without JavaScript the Browse list opens while focus is
+inside the menu. About is the last site
 link. On a wide screen it sits at the right end of the links, just before
 Search. At 960 px and below the links take a row of their own, and About
 follows Browse on that row.

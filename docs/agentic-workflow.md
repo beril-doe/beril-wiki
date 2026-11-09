@@ -423,6 +423,13 @@ their expected values from the records under `quartz/content/` and
   shows them under "Related results in other projects", one link per id, that
   every result the map can draw a related line for has the section, and that
   no other listed result has it.
+- `reference` checks the Browse menu at 1440, 961, 960 and 390 px in light and
+  dark: its four groups and nine links in order, a role="group" list named by
+  each header, a 1px rule in the line colour above every group after the
+  first, headers that are uppercase, smaller than the links, a different
+  colour, never focusable and at least 4.5:1, and arrow keys and Tab reaching
+  the nine links in order. It checks that Browse marks the current page for
+  Pitfalls, Data collections, Data issues, All pages and Reports.
 
 `scripts/check_links.py` checks the links and shared stages without a browser
 and exits 1 with one line per failure. `--shared` re-runs the code checks on

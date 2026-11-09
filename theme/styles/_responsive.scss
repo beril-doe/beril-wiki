@@ -129,8 +129,10 @@
       left: 0;
       right: 0;
       min-width: 0;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      ul {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
       a {
         padding: 10px 14px;
       }
