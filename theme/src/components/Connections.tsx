@@ -5,7 +5,7 @@
 import type { FullSlug } from "@quartz-community/types"
 import type { JSX } from "preact"
 import { resolveRelative } from "@quartz-community/utils"
-import { type Corpus, type File, collectionOf, linksOf, slugOf, titleOf } from "../page"
+import { type Corpus, type File, collectionOf, isReport, linksOf, slugOf, titleOf } from "../page"
 import { type DirectionFm, type FindingFm, FindingCard, directionsOf, findingsOf, resultsIndex } from "./Cards"
 import { NOVEL_WORDS, citesNovel } from "./Questions"
 
@@ -38,16 +38,27 @@ export function QuestionCard({ q, c, from }: { q: File; c: Corpus; from: FullSlu
   )
 }
 
-/** Cards for the first few, and a folded list of the rest so nothing is out of reach. */
-function Part({ title, deck, more, items, card }: {
+/** Cards for the first few, and a folded list of the rest so nothing is out of reach. An
+ * empty part keeps its head and says so, so every page of a kind has the same sections. */
+function Part({ title, deck, more, items, card, empty }: {
   title: string
   deck?: string
   more?: { href: string; text: string }
   items: { file: File; href: string }[]
   card: (f: File) => JSX.Element
+  empty: string
 }) {
   const shown = 3
-  if (items.length === 0) return null
+  if (items.length === 0) {
+    return (
+      <section>
+        <div class="sechead">
+          <h2>{title}</h2>
+        </div>
+        <p class="part-empty">{empty}</p>
+      </section>
+    )
+  }
   const first = items.slice(0, shown)
   const rest = items.slice(shown)
   return (
@@ -79,7 +90,7 @@ function Part({ title, deck, more, items, card }: {
   )
 }
 
-/** The results and questions for one page; the frame places it before or after the prose. */
+/** The results and questions for one topic, report or concept page, before its prose. */
 export function Connections({ file, c }: { file: File; c: Corpus }) {
   const slug = slugOf(file)
   const kind = collectionOf(slug)
@@ -111,7 +122,6 @@ export function Connections({ file, c }: { file: File; c: Corpus }) {
     const questions = directionsOf(c)
       .filter((q) => fmOf<QuestionFm>(q).topic === topic)
       .sort((a, b) => titleOf(a).localeCompare(titleOf(b)))
-    if (picks.length === 0 && questions.length === 0) return null
     return (
       <div class="topic-cards">
         <Part
@@ -120,12 +130,14 @@ export function Connections({ file, c }: { file: File; c: Corpus }) {
           more={inTopic.length > 0 ? { href: board("findings", topic), text: `All ${inTopic.length} results in this topic` } : undefined}
           items={picks.map(link)}
           card={resultCard}
+          empty="No result is filed under this topic yet."
         />
         <Part
           title="Open questions in this topic"
-          more={{ href: board("directions", topic), text: `All ${questions.length} in the open questions` }}
+          more={questions.length > 0 ? { href: board("directions", topic), text: `All ${questions.length} in the open questions` } : undefined}
           items={questions.map(link)}
           card={questionCard}
+          empty="No open question is filed under this topic yet."
         />
         <div class="sechead background-head">
           <h2>Background</h2>
@@ -135,7 +147,8 @@ export function Connections({ file, c }: { file: File; c: Corpus }) {
     )
   }
 
-  if (kind === "summaries") {
+  // A cross-project digest is its own kind of page: no project, so no project results.
+  if (kind === "summaries" && isReport(file)) {
     const sid = sidOf(slug)
     const results = findingsOf(c)
       .filter((f) => fmOf<FindingFm>(f).source === sid)
@@ -143,11 +156,21 @@ export function Connections({ file, c }: { file: File; c: Corpus }) {
     const questions = directionsOf(c)
       .filter((q) => (fmOf<QuestionFm>(q).projects ?? []).includes(sid))
       .sort((a, b) => titleOf(a).localeCompare(titleOf(b)))
-    if (results.length === 0 && questions.length === 0) return null
     return (
       <div class="topic-cards">
-        <Part title="Results from this project" deck="What the project found, in plain words." items={results.map(link)} card={resultCard} />
-        <Part title="Open questions that build on this project" items={questions.map(link)} card={questionCard} />
+        <Part
+          title="Results from this project"
+          deck="What the project found, in plain words."
+          items={results.map(link)}
+          card={resultCard}
+          empty="This project has no listed result yet."
+        />
+        <Part
+          title="Open questions that build on this project"
+          items={questions.map(link)}
+          card={questionCard}
+          empty="No open question builds on this project yet."
+        />
         <div class="sechead background-head">
           <h2>The report</h2>
           <p>A summary of the project's report, with its numbers and limits.</p>
@@ -158,7 +181,6 @@ export function Connections({ file, c }: { file: File; c: Corpus }) {
 
   if (kind === "concepts") {
     const sids = new Set(linksOf(file).filter((l) => collectionOf(l) === "summaries").map(sidOf))
-    if (sids.size === 0) return null
     const topic = c.topicsOf(file)[0]
     const topicSlug = topic ? slugOf(topic).replace(/^topics\//, "") : ""
     const sorted = findingsOf(c)
@@ -177,16 +199,24 @@ export function Connections({ file, c }: { file: File; c: Corpus }) {
     const questions = directionsOf(c)
       .filter((q) => overlap(q) > 0)
       .sort((a, b) => overlap(b) - overlap(a) || titleOf(a).localeCompare(titleOf(b)))
-    if (results.length === 0 && questions.length === 0) return null
     return (
-      <div class="topic-cards connections-after">
+      <div class="topic-cards">
         <Part
           title="Results from the projects this page cites"
-          deck="From the project reports cited above."
           items={results.map(link)}
           card={resultCard}
+          empty={sids.size > 0 ? "The reports this page cites have no listed result yet." : "This page cites no report yet."}
         />
-        <Part title="Open questions on these projects" items={questions.map(link)} card={questionCard} />
+        <Part
+          title="Open questions on these projects"
+          items={questions.map(link)}
+          card={questionCard}
+          empty={sids.size > 0 ? "No open question builds on these projects yet." : "This page cites no report yet."}
+        />
+        <div class="sechead background-head">
+          <h2>Background</h2>
+          <p>What the cited reports say about this concept.</p>
+        </div>
       </div>
     )
   }

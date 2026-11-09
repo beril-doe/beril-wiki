@@ -228,12 +228,16 @@ gap between parts.
 - A project report opens with "Results from this project" (Novel first) and
   "Open questions that build on this project". A "The report" head then
   introduces the summary.
-- A concept page ends, above its sources, with "Results from the projects
-  this page cites" and "Open questions on these projects". The results take
-  one project at a time, so the first cards come from different projects.
-  Within each project, results filed under the concept's own topic come
-  first, then Novel first. Questions that build on more of the cited projects
-  come first.
+- A concept page opens with "Results from the projects this page cites" and
+  "Open questions on these projects". A "Background" head then introduces
+  the synthesis. The results take one project at a time, so the first cards
+  come from different projects. Within each project, results filed under the
+  concept's own topic come first, then Novel first. Questions that build on
+  more of the cited projects come first.
+- Every topic, report and concept page shows both parts, so pages of one
+  kind share one layout. An empty part keeps its head and shows one sentence
+  in a dashed box, such as "No open question builds on this project yet."
+  The two cross-project digests have no project, so they show neither part.
 
 A result card shows its kind in plain words (Result, Interpretation, No
 effect found, Inconclusive test, Correction), a title, a one or two sentence

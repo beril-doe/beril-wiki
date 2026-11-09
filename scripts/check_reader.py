@@ -3520,6 +3520,7 @@ CONNECTIONS_JS = """() => {
                 || '',
             more: [...s.querySelectorAll(':scope > .sechead p a')].map(a =>
                 [a.getAttribute('href') || '', a.textContent.trim()]),
+            empty: s.querySelector(':scope > .part-empty')?.textContent.trim() || '',
         })) : [],
         qgrid: document.querySelectorAll('.qgrid').length,
         clCount: document.querySelectorAll('section.conceptlinks').length,
@@ -3566,31 +3567,27 @@ def part_fails(got: dict, head: str, kind: str, want: set[str], label: str) -> l
         fails.append(f"{label}: '{head}' fold reads '{got['summary']}', expected '{n - 3} more'")
     if any(q != (kind == "q") for _, q in got["cards"]):
         fails.append(f"{label}: '{head}' mixes result and question cards")
+    # An empty part keeps its head and says it is empty; a full one never does.
+    if bool(got["empty"]) != (n == 0):
+        fails.append(f"{label}: '{head}' has {n} items and placeholder '{got['empty']}'")
     return fails
 
 
 def connection_fails(
-    got: dict, want: list[tuple[str, str, set[str]]], tail: str | None, place: str, label: str
+    got: dict, want: list[tuple[str, str, set[str]]], tail: str, label: str
 ) -> list[str]:
-    """`want` lists the expected Parts (heading, kind, ids) in order; `tail` the closing head."""
+    """`want` lists the expected Parts (heading, kind, ids) in order; `tail` the closing head.
+    Every topic, report and concept page shows every Part before its prose, empty or not."""
     fails: list[str] = []
-    parts = [w for w in want if w[2]]
-    heads = [h for h, _, _ in parts] + ([tail] if tail and parts else [])
+    heads = [h for h, _, _ in want] + [tail]
     if got["heads"] != heads:
         fails.append(f"{label}: headings {got['heads']}, expected {heads}")
-    if not parts:
-        if got["tcCount"]:
-            fails.append(f"{label}: shows {got['tcCount']} .topic-cards with nothing to list")
-        return fails
     if not got["hasArt"] or got["before"] is None:
         fails.append(f"{label}: no .topic-cards beside the page's prose")
-    elif got["before"] != (place == "before"):
-        fails.append(
-            f"{label}: the results and questions sit {'before' if got['before'] else 'after'} "
-            f"the prose, expected {place}"
-        )
+    elif not got["before"]:
+        fails.append(f"{label}: the results and questions sit after the prose")
     by_head = {s["head"]: s for s in got["sections"]}
-    for head, kind, ids_ in parts:
+    for head, kind, ids_ in want:
         if head not in by_head:
             continue
         fails += part_fails(by_head[head], head, kind, ids_, label)
@@ -3670,7 +3667,7 @@ def check_connections(browser, base: str) -> list[str]:
         go(page, f"{base}/topics/{t}")
         got = page.evaluate(CONNECTIONS_JS)
         parts, picks, more = topic_wants(t)
-        fails += connection_fails(got, parts, "Background", "before", label)
+        fails += connection_fails(got, parts, "Background", label)
         if got["qgrid"]:
             fails.append(f"{label}: still renders {got['qgrid']} .qgrid")
         by_head = {s["head"]: s for s in got["sections"]}
@@ -3721,13 +3718,16 @@ def check_connections(browser, base: str) -> list[str]:
         sid = p.stem
         go(page, f"{base}/summaries/{sid}")
         got = page.evaluate(CONNECTIONS_JS)
+        if frontmatter(p).get("type") != "Project report":
+            # A cross-project digest has no project, so no project results or questions.
+            if got["tcCount"]:
+                fails.append(f"connections: digest /summaries/{sid} shows project sections")
+            continue
         parts = [
             ("Results from this project", "r", results_of({sid})),
             ("Open questions that build on this project", "q", questions_of({sid})),
         ]
-        fails += connection_fails(
-            got, parts, "The report", "before", f"connections: /summaries/{sid}"
-        )
+        fails += connection_fails(got, parts, "The report", f"connections: /summaries/{sid}")
         spacing += page.evaluate(SPACING_JS)
     loose = [s for s in spacing if s[1] != "0px" or s[2] != "0px"]
     if not spacing or loose:
@@ -3740,6 +3740,7 @@ def check_connections(browser, base: str) -> list[str]:
     load = {c: len(results_of(s)) + len(questions_of(s)) for c, s in cites.items()}
     ranked = sorted(load, key=lambda c: (-load[c], c))
     sample = ranked[:12] + ranked[-3:]
+    placeholder_done = False
     for c in sample:
         label = f"connections: /concepts/{c}"
         go(page, f"{base}/concepts/{c}")
@@ -3749,13 +3750,21 @@ def check_connections(browser, base: str) -> list[str]:
             ("Results from the projects this page cites", "r", results),
             ("Open questions on these projects", "q", questions_of(cites[c])),
         ]
-        fails += connection_fails(got, parts, None, "after", label)
+        fails += connection_fails(got, parts, "Background", label)
+        # A placeholder control: an empty part without its sentence must fail.
+        if not placeholder_done and not all(w[2] for w in parts):
+            page.evaluate("() => document.querySelector('.topic-cards .part-empty')?.remove()")
+            if not connection_fails(page.evaluate(CONNECTIONS_JS), parts, "Background", "control"):
+                fails.append(f"{label}: control 'placeholder removed' passed unnoticed")
+            placeholder_done = True
         sec = next((s for s in got["sections"] if s["head"] == parts[0][0]), None)
         if sec:
             first = [rec["results"].get(last_part(h), {}).get("source") for h, _ in sec["cards"]]
             projects = {rec["results"][i]["source"] for i in results}
             if len(set(first)) != min(len(first), len(projects)):
                 fails.append(f"{label}: the first result cards repeat a project: {first}")
+    if not placeholder_done:
+        fails.append("connections: no sampled concept page has an empty part for the control")
     # Result and question pages: the 12 (8) cited by the most concepts and 3 (2) by the fewest.
     by_result = {i: concepts_citing({r["source"]}) for i, r in rec["results"].items()}
     order = sorted(by_result, key=lambda i: (-len(by_result[i]), i))
@@ -3812,9 +3821,7 @@ def connection_controls(page: Page, parts: list, label: str) -> list[str]:
     clean = page.evaluate("() => document.querySelector('.topic-cards').innerHTML")
     for name, js in faults.items():
         page.evaluate(f"() => {{ {js} }}")
-        if not connection_fails(
-            page.evaluate(CONNECTIONS_JS), parts, "Background", "before", "control"
-        ):
+        if not connection_fails(page.evaluate(CONNECTIONS_JS), parts, "Background", "control"):
             fails.append(f"{label}: control '{name}' passed unnoticed")
         page.evaluate("h => { document.querySelector('.topic-cards').innerHTML = h }", clean)
     return fails

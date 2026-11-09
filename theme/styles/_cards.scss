@@ -555,9 +555,13 @@
   > section {
     min-width: 0;
   }
-  // After the synthesis, on a concept page, the section starts a new part of the page.
-  &.connections-after {
-    margin-top: 40px;
+  // An empty part keeps the card area's outline so every page of a kind has the same shape.
+  .part-empty {
+    margin: 0;
+    padding: 14px 15px;
+    border: 1px dashed var(--line);
+    color: var(--ink-2);
+    font-size: var(--t-ui);
   }
 }
 .linkmore {

@@ -45,7 +45,7 @@ export const BerilFrame: PageFrame = {
     const kind = collectionOf(slug)
     const prose = (
       <>
-        {(kind === "topics" || kind === "summaries") && !index && <Connections file={file} c={c} />}
+        {(kind === "topics" || kind === "summaries" || kind === "concepts") && !index && <Connections file={file} c={c} />}
         {(kind === "findings" || kind === "directions") && !index && <RecordBar file={file} />}
         {slot(beforeBody).map((B) => (
           <B {...cd} />
@@ -81,7 +81,6 @@ export const BerilFrame: PageFrame = {
             <NavRail cd={cd} file={file} c={c} right={right} />
             <div class="prose">
               {prose}
-              {kind === "concepts" && !index && <Connections file={file} c={c} />}
               {(kind === "findings" || kind === "directions") && !index && <ConceptLinks file={file} c={c} />}
               <Sources cites={w.cites} c={c} from={slug as FullSlug} />
               {slot(afterBody).map((A) => (
