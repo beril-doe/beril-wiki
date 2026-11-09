@@ -14,7 +14,8 @@ import re
 import sqlite3
 import subprocess
 import textwrap
-from collections.abc import Callable
+from collections.abc import Callable, Coroutine
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any, Literal, TypeGuard, TypeVar
@@ -402,7 +403,9 @@ class Ledger:
         # job of that backend still in flight. A pilot sets them; usd_caps cap stages.
         self.caps = caps or {}
         path.parent.mkdir(parents=True, exist_ok=True)
-        self.db = sqlite3.connect(path, timeout=30)
+        # A page session's review tool runs a Claude reviewer's query on a helper thread
+        # (run_coroutine) while the session's thread waits, so access stays serial.
+        self.db = sqlite3.connect(path, timeout=30, check_same_thread=False)
         self.run, self.budget, self.max_jobs, self.headroom = run, budget, max_jobs, reserve
         self.stage_budget = stage_budget
         self.db.execute("PRAGMA journal_mode=WAL")
@@ -1074,7 +1077,7 @@ class Runtime:
         try:
             if backend == "codex":
                 return codex.run_job(self, payload, key, model)
-            output = asyncio.run(self._query(payload, key, model))
+            output = run_coroutine(self._query(payload, key, model))
             return self._screened(messages, step, model, key, output)
         except Refused as exc:
             if exc.fallback_model == model:
@@ -1436,6 +1439,17 @@ def record_pack(config: dict, step: str, payload: dict) -> None:
     path = Path(folder) / "packs" / (step.replace("/", "__") + ".json")
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps({"step": step} | payload, ensure_ascii=False), encoding="utf-8")
+
+
+def run_coroutine(coro: Coroutine[Any, Any, str]) -> str:
+    """asyncio.run, also from code a running event loop called, such as a page
+    session's review tool: the coroutine then runs on its own thread and loop."""
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        return asyncio.run(coro)
+    with ThreadPoolExecutor(1) as pool:
+        return pool.submit(lambda: asyncio.run(coro)).result()
 
 
 def configured() -> bool:

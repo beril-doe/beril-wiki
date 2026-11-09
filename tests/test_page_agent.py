@@ -264,3 +264,72 @@ def test_a_session_that_hits_its_turn_limit_ends_without_raising(tmp_path, monke
     session = _session(tmp_path)
     _, usage, cost, error, refused = asyncio.run(PA._drive(agent, session, "k", "m", False))
     assert (cost, error, refused) == (0.5, "SDK ended: error_max_turns", "")
+
+
+def _result(cost=0.5):
+    from claude_agent_sdk import ResultMessage
+
+    return ResultMessage(
+        subtype="success",
+        duration_ms=1,
+        duration_api_ms=1,
+        is_error=False,
+        num_turns=1,
+        session_id="s",
+        usage={"input_tokens": 1, "output_tokens": 1},
+        total_cost_usd=cost,
+    )
+
+
+def test_the_review_tool_runs_a_claude_reviewer_inside_the_session_loop(tmp_path, monkeypatch):
+    """Review finding G: the review tool's handler runs on the session's event loop, so a
+    Claude reviewer's query cannot use asyncio.run there."""
+    from beril_wiki.agentic import runtime as R
+
+    async def fake_query(self, payload, key, model):
+        return json.dumps({"accepted": True, "issues": []})
+
+    monkeypatch.setattr(R.Runtime, "_query", fake_query)
+    monkeypatch.setattr(R, "check_auth", lambda cli: None)
+    (tmp_path / "contract").mkdir()
+    (tmp_path / "contract/AGENTS.md").write_text("rules")
+    agent = R.Runtime(
+        dict(
+            root=str(tmp_path),
+            store=str(tmp_path / "store"),
+            run="t",
+            model="claude-opus-5-5",
+            cli="claude",
+            max_tokens=10**7,
+            max_jobs=50,
+            reserve_tokens=10,
+            step_models={"review": "claude-sonnet-5-5"},
+        )
+    )
+    messages = [{"role": "user", "content": "write page"}]
+
+    def review(text, meta):
+        agent.review(messages, text, "write/concepts/a.md")
+        return []
+
+    captured = {}
+    real_server = PA.create_sdk_mcp_server
+
+    def server(name, tools):
+        captured.update({t.name: t for t in tools})
+        return real_server(name, tools=tools)
+
+    monkeypatch.setattr(PA, "create_sdk_mcp_server", server)
+    replies = []
+
+    async def query(prompt, options):
+        (session.workdir / "page.md").write_text("A good claim. [src: x]")
+        replies.append(await captured["check"].handler({}))
+        replies.append(await captured["review"].handler({}))
+        yield _result()
+
+    monkeypatch.setattr(PA, "query", query)
+    session = _session(tmp_path, review=review)
+    asyncio.run(PA._drive(agent, session, "k", "claude-haiku-5-5", False))
+    verdict = json.loads(replies[1]["content"][0]["text"])
+    assert verdict == {"accepted": True, "next": "call submit"}
