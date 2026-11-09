@@ -669,6 +669,19 @@
     border-bottom: 5px solid transparent;
   }
 }
+// Narrower columns leave the arrow too little room between its labels: the labels share
+// one line and the arrow takes its own line under them, across every column.
+@media (max-width: 900px) {
+  .qeffortline {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 6px;
+  }
+  .qaxarrow {
+    order: 1;
+    flex: 0 0 calc(100% - 8px);
+  }
+}
 // The y axis: the corner over the row labels names them.
 .qcorner.qaxis,
 .nvcorner {
