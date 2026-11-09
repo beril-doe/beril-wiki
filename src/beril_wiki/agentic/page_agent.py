@@ -149,6 +149,7 @@ class Session:
                 "reviews": self.reviews,
                 "open": self.open,
                 "full_review": self.full_review,
+                "deps": self.deps,
             },
         )
 
@@ -445,6 +446,8 @@ def _restore(session: Session) -> bool:
             session.reviews = saved.get("reviews", 0)
             session.open = saved.get("open", [])
             session.full_review = saved.get("full_review", False)
+            # The restored approvals rest on what the crashed session read.
+            session.deps = saved.get("deps", {})
             return True
     page.write_text(session.page.text, encoding="utf-8")
     if session.page.meta is not None:

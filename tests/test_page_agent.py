@@ -108,8 +108,11 @@ def test_restore_continues_only_from_matching_scratch(tmp_path):
     s = _session(tmp_path)
     (s.workdir / "page.md").write_text("Checked. [src: x]")
     s.do_check()
+    s.deps["staging/r.md"] = "hash"  # finding B2: a resumed session keeps what it read
+    s.save()
     again = PA.Session(s.page, s.workdir, max_reviews=3)
     assert PA._restore(again) and again.checked == s.checked
+    assert again.deps == {"staging/r.md": "hash"}
     (s.workdir / "page.md").write_text("Changed after the check.")
     third = PA.Session(s.page, s.workdir, max_reviews=3)
     assert not PA._restore(third)
