@@ -347,3 +347,39 @@ def test_a_rerun_cell_replaces_the_pages_its_stopped_cell_never_ran(tmp_path):
     _manifest(tmp_path, "int-haiku-b", {"concepts/a.md": row | {"status": "written"}})
     merged = P.report(tmp_path)["models"]["int-haiku"]["concepts/a.md"]
     assert (merged["status"], merged["cell"]) == ("written", "int-haiku-b")
+
+
+def test_outcomes_match_each_stage_s_own_failure_and_salvage_keys(tmp_path):
+    """Review finding I1: authors file failures as authors/STEM.md, a lit/ failure is
+    not a topic's, and a salvage of topics/carbon-cycling is not topics/carbon's."""
+    tree, cell = tmp_path / "tree", tmp_path / "cell"
+    pages = {"authors/person.md": "a", "topics/foo.md": "f", "topics/carbon.md": "c"}
+    _tree(tree, pages)
+    _tree(cell / "root", pages)
+    (cell / "packs").mkdir(parents=True)
+    for pack in ("authors__person", "topics__foo", "topics__carbon"):
+        brief = {"messages": [{"role": "user", "content": "brief"}]}
+        (cell / "packs" / f"{pack}.json").write_text(json.dumps(brief))
+    failures = {"authors/person.md": {}, "lit/foo.md": {}}
+    (cell / "failures.json").write_text(json.dumps(failures))
+    (cell / "salvaged.json").write_text(json.dumps({"topics/carbon-cycling": {"removed": ["e"]}}))
+    got = P.outcomes(tree, cell, ["authors/person", "topics/foo", "topics/carbon"])
+    assert got["authors/person"]["status"] == "failed"
+    assert got["topics/foo"]["status"] == "unchanged"
+    assert got["topics/carbon"] == {"status": "unchanged", "dropped": [], "written": False}
+
+
+def test_the_home_page_and_claude_aliases_are_charged_to_their_page(tmp_path):
+    """Review findings I2 and K: index.md's jobs run as `home`, and a Claude alias's cost
+    is Claude spend."""
+    ledger = R.Ledger(tmp_path / ".agentic/jobs.sqlite", "p", 10**9, 10, 1)
+    for key, step, model, cost in (
+        ("h", "home", "sonnet", 1.25),
+        ("r", "home/agent/1/review", "gpt-6-luna", None),
+    ):
+        ledger.reserve(key, step, model)
+        ledger.finish(key, "", {"input_tokens": 100, "output_tokens": 0}, cost=cost)
+    row = {"status": "written", "dropped": [], "written": True}
+    _manifest(tmp_path, "der", {"index.md": row}, rows=(1, 2))
+    page = P.report(tmp_path)["cells"]["der"]["pages"]["index.md"]
+    assert (page["claude_usd"], page["codex_tokens"]) == (1.25, 100)

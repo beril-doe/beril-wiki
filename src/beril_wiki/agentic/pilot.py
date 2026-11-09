@@ -251,6 +251,18 @@ def page_text(root: Path, page: str) -> str:
     return text
 
 
+def job_stem(page: str) -> str:
+    """The step prefix of a page's derived jobs; the home page's jobs are `home`."""
+    return "home" if page == "index.md" else page.removesuffix(".md")
+
+
+def owns(page: str, step: str) -> bool:
+    """Whether a job step is this page's, by whole segments: topics/carbon does not own
+    topics/carbon-cycling."""
+    stem = job_stem(page)
+    return step in (f"write/{page}", stem) or step.startswith((f"write/{page}/", stem + "/"))
+
+
 def outcomes(tree: Path, cell: Path, pages: list[str]) -> dict:
     """What the host did with each page: failed, salvaged (with what it dropped),
     written, or left as it was."""
@@ -258,21 +270,23 @@ def outcomes(tree: Path, cell: Path, pages: list[str]) -> dict:
     salvaged = _json(cell / "salvaged.json")
     result = {}
     for page in pages:
-        stem = page.removesuffix(".md")
+        stem = job_stem(page)
         dropped = sorted(
             eid
             for step, entry in salvaged.items()
-            if step == f"write/{page}" or step.startswith((f"write/{page}/", stem + "/", stem))
+            if owns(page, step)
             for eid in (entry.get("removed") or [])
             if isinstance(eid, str)
         )
-        failed = any(k in failures for k in (page, stem, f"lit/{page.split('/')[-1]}.md"))
+        # Stages file a failure under the page, its stem, or the stem's file name
+        # (authors/STEM.md, lit/STEM.md).
+        failed = any(k in failures for k in (page, stem, stem + ".md"))
         changed = page_text(tree, page) != page_text(cell / "root", page)
         status = (
             "failed"
             if failed
             else "salvaged"
-            if any(s.startswith((f"write/{page}", stem)) for s in salvaged)
+            if any(owns(page, s) for s in salvaged)
             else "written"
             if changed
             else "unchanged"
@@ -616,7 +630,7 @@ def report(scratch: Path) -> dict:
         first, last = manifest["rows"]
         pages = {}
         for page, outcome in manifest.get("outcomes", {}).items():
-            stem = page.removesuffix(".md")
+            stem = job_stem(page)
             usd, codex = db.execute(
                 "SELECT coalesce(sum(CASE WHEN model NOT LIKE 'gpt-%' THEN cost END),0),"
                 "coalesce(sum(CASE WHEN model LIKE 'gpt-%' THEN tokens END),0) FROM jobs "
