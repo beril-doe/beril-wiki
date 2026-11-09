@@ -145,11 +145,18 @@ def numbered(parts: list[str]) -> str:
     return "\n\n".join(f"[{i}] {part}" for i, part in enumerate(parts))
 
 
-def moved(issue: Issue, remap: dict[int, list[int]]) -> Issue:
-    """The same objection pointing at where its paragraph landed after an edit."""
+def moved(issue: Issue, remap: dict[int, list[int]], parts: list[str]) -> Issue:
+    """The same objection pointing at where its paragraph landed after an edit.
+
+    A paragraph rewritten into a span of several lands on the one its quote names. When
+    the quote names no single one of them, the objection names no paragraph, so salvage
+    cannot discharge it by dropping a guess and the page fails instead."""
     if issue.paragraph is None:
         return issue
     landed = remap.get(issue.paragraph, [])
+    if len(landed) > 1:
+        quoted = [j for j in landed if issue.quote and issue.quote in parts[j]]
+        landed = quoted if len(quoted) == 1 else []
     return issue.model_copy(update={"paragraph": landed[0] if landed else None})
 
 
@@ -656,7 +663,7 @@ def agent_page(
             # Open objections follow their paragraphs to where the writer's edits moved
             # them, or the verifier and salvage would act on whatever now holds the index.
             remap = remapped(before, parts)
-            pending = [moved(i, remap) for i in state["pending"]]
+            pending = [moved(i, remap, parts) for i in state["pending"]]
             verdict = verify(contract, pack, parts, pending, f"{name}/verify", agent.ask, changed)
             if verdict is None:
                 verdict = verify(

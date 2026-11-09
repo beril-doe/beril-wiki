@@ -622,3 +622,35 @@ def test_a_cached_derived_page_meets_todays_gates(monkeypatch, tmp_path):
     assert any(i["category"] == "number" for i in failed.value.issues)
     monkeypatch.setattr(PA, "run", lambda agent, page, workdir: (GOOD, None))
     assert run("x") == GOOD
+
+
+STUCK = [{"paragraph": 4, "category": "unsupported", "quote": "56%", "note": "no evidence"}]
+# Paragraphs 3 to 5 (both yields and the closing) rewritten as two paragraphs.
+MERGED = GOOD.replace(
+    "Yield was 42%. [src: a]\n\nYield was 56%. [src: b]\n\nClosing words to reach the range now.",
+    "Yield was 42% here. [src: a]\n\nYield was 56%, and closing words to reach the range. [src: b]",
+)
+
+
+def test_an_objection_in_a_rewritten_span_lands_on_the_paragraph_its_quote_names(
+    monkeypatch, tmp_path
+):
+    """Review finding A2: three paragraphs rewritten as two leave the claim's position
+    ambiguous; the objection's quote places it, so salvage drops the claim."""
+    review = json.dumps({"accepted": False, "issues": STUCK})
+    configure(monkeypatch, tmp_path, rounds({"x": GOOD}, review, _still([]), MERGED))
+    out = run("x")
+    assert "56%" not in out and "Yield was 42% here. [src: a]" in out
+
+
+def test_an_objection_its_quote_cannot_place_in_a_rewritten_span_fails_the_page(
+    monkeypatch, tmp_path
+):
+    """Review finding A2: when no single paragraph of the span holds the quote, salvage
+    cannot discharge the objection, so the page fails rather than publish the claim."""
+    unplaced = [STUCK[0] | {"quote": "Yield was 56%."}]
+    review = json.dumps({"accepted": False, "issues": unplaced})
+    configure(monkeypatch, tmp_path, rounds({"x": GOOD}, review, _still([]), MERGED))
+    with pytest.raises(P.PageFailure):
+        run("x")
+    assert not (tmp_path / "salvaged.json").exists()
