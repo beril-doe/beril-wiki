@@ -654,3 +654,18 @@ def test_an_objection_its_quote_cannot_place_in_a_rewritten_span_fails_the_page(
     with pytest.raises(P.PageFailure):
         run("x")
     assert not (tmp_path / "salvaged.json").exists()
+
+
+def test_an_objection_follows_its_claim_when_the_writer_swaps_and_edits_two_paragraphs(
+    monkeypatch, tmp_path
+):
+    """Review finding A2b: two paragraphs swapped and both edited form an equal-length
+    rewritten span; the objection's quote, not its old position, places it."""
+    swapped = GOOD.replace(
+        "Yield was 42%. [src: a]\n\nYield was 56%. [src: b]",
+        "Yield reached 56%. [src: b]\n\nYield reached 42%. [src: a]",
+    )
+    review = json.dumps({"accepted": False, "issues": STUCK})
+    configure(monkeypatch, tmp_path, rounds({"x": GOOD}, review, _still([]), swapped))
+    out = run("x")
+    assert "56%" not in out and "Yield reached 42%. [src: a]" in out

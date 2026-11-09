@@ -161,11 +161,14 @@ def moved(issue: Issue, remap: dict[int, list[int]], parts: list[str]) -> Issue:
 
 
 def remapped(before: list[str], after: list[str]) -> dict[int, list[int]]:
-    """Where each paragraph of `before` landed in `after`; a deleted one maps nowhere."""
+    """Where each paragraph of `before` landed in `after`; a deleted one maps nowhere.
+
+    A rewritten span keeps positions only for one paragraph: in a longer one the writer
+    may have reordered what it rewrote, so each old paragraph maps to the whole span."""
     remap: dict[int, list[int]] = {}
     matcher = difflib.SequenceMatcher(a=before, b=after, autojunk=False)
     for tag, i1, i2, j1, j2 in matcher.get_opcodes():
-        if tag == "equal" or (tag == "replace" and i2 - i1 == j2 - j1):
+        if tag == "equal" or (tag == "replace" and i2 - i1 == j2 - j1 == 1):
             remap.update({i1 + k: [j1 + k] for k in range(i2 - i1)})
         elif tag == "replace":
             remap.update({i: list(range(j1, j2)) for i in range(i1, i2)})
