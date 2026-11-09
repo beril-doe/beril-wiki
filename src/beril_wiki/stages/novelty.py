@@ -403,7 +403,8 @@ def main(root: Path = ROOT) -> int:
         findings[page.stem] = finding_text(fields, body)
     # A new judge, reviewer or query model re-judges every label; the old one stays
     # as the fallback if retrieval then fails.
-    revision = digest([JUDGE_REVISION, cards.policy(cards.runtime().config)])
+    roles = ("cards", "findings_review", "queries")
+    revision = digest([JUDGE_REVISION, cards.policy(cards.runtime().config, roles)])
     for fid in decisions.keys() - findings.keys():
         print(f"  [WARN] {DECISIONS}: no finding {fid}")
     reports: dict[str, list[str]] = {}

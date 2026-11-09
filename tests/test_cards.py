@@ -16,8 +16,10 @@ def test_card_steps_route_to_their_roles():
     assert R.role_for("headlines/truly_dark_genes/repair") == "cards"
     assert R.role_for("novelty/x--1a2b3c4d/judge") == "cards"
     assert R.role_for("novelty/x--1a2b3c4d/queries") == "queries"
-    assert R.role_for("novelty/x--1a2b3c4d/agree") == "review"
-    assert R.role_for("headlines/truly_dark_genes/science-review") == "review"
+    assert R.role_for("novelty/x--1a2b3c4d/agree") == "findings_review"
+    assert R.role_for("headlines/truly_dark_genes/science-review") == "findings_review"
+    assert R.role_for("headlines/truly_dark_genes/verify") == "findings_review"
+    assert R.role_for("write/concepts/a.md/review") == "review"
     assert R.role_for("directions/topic") == "cards"
     assert R.role_for("directions/topic/science-review") == "card_review"
     assert R.role_for("directions/topic/verify") == "card_review"
@@ -31,12 +33,56 @@ def test_card_steps_route_to_their_roles():
 
 
 def test_new_roles_fall_back_to_the_roles_they_split_from():
-    """A policy written before card_review and labels existed routes their jobs as before."""
+    """A policy written before card_review, findings_review and labels existed routes
+    their jobs as before."""
     chosen = R.model_policy({"model": "m", "step_models": {"review": "r", "cards": "c"}})
-    assert chosen["card_review"] == "r" and chosen["labels"] == "c"
-    pinned = {"review": "r", "cards": "c", "card_review": "cr", "labels": "l"}
-    chosen = R.model_policy({"model": "m", "step_models": pinned})
+    assert chosen["card_review"] == chosen["findings_review"] == "r" and chosen["labels"] == "c"
+    pinned = {"review": "r", "cards": "c", "card_review": "cr", "findings_review": "fr"}
+    chosen = R.model_policy({"model": "m", "step_models": pinned | {"labels": "l"}})
     assert chosen["card_review"] == "cr" and chosen["labels"] == "l"
+    assert chosen["findings_review"] == "fr"
+
+
+def test_finding_reviews_keep_the_model_that_judged_the_accepted_records(tmp_path, monkeypatch):
+    """Headline and literature-label records are keyed on their stage's models. The
+    committed policy must key them on the models that judged the accepted records,
+    GPT-6.1 Sol for every review, or a default run re-asks all of them."""
+    from pathlib import Path
+
+    from beril_wiki.agentic.__main__ import load_models
+    from beril_wiki.stages import headlines, novelty
+    from test_headlines import headline
+    from test_headlines import setup as headline_setup
+    from test_novelty import FID, judgment
+    from test_novelty import run as novelty_run
+
+    committed = load_models(Path(__file__).resolve().parents[1], None, None, [])
+    judged = {"cards": "claude-sonnet-5-5", "review": "gpt-6.1-sol", "queries": "gpt-6.1-sol"}
+    judged_config = {"model": "unused", "step_models": judged}
+    asked: list[tuple[str, ...]] = []
+    real = cards.policy
+    monkeypatch.setattr(
+        cards, "policy", lambda config, roles: asked.append(roles) or real(config, roles)
+    )
+    reply = {"headlines": [headline()]}
+    agent = headline_setup(tmp_path / "h", monkeypatch, {"headlines/a": [json.dumps(reply)]})
+    agent.config = committed
+    assert headlines.main(tmp_path / "h") == 0
+    novelty_run(
+        tmp_path / "n",
+        monkeypatch,
+        {
+            f"novelty/{FID}/judge": [
+                judgment(novelty.EXTENDS, closest=(("111", "same relationship elsewhere"),))
+            ]
+        },
+        config=committed,
+    )
+    headline_roles, novelty_roles = asked
+    assert real(committed, headline_roles) == real(judged_config, ("cards", "review"))
+    assert real(committed, novelty_roles) == real(judged_config, ("cards", "review", "queries"))
+    for step in ("headlines/a/science-review", "headlines/a/verify", f"novelty/{FID}/agree"):
+        assert R.model_for(committed, step) == "gpt-6.1-sol"
 
 
 def test_card_files_do_not_rekey_jobs(tmp_path):

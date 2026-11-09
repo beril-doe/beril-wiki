@@ -72,11 +72,12 @@ MODEL_ROLES = (
     "figures",
     "cards",
     "card_review",
+    "findings_review",
     "labels",
 )
 # A role a config leaves unset takes this role's model before the run-wide default, so a
 # policy written before the role existed keeps routing its jobs where it did.
-ROLE_FALLBACK = {"card_review": "review", "labels": "cards"}
+ROLE_FALLBACK = {"card_review": "review", "findings_review": "review", "labels": "cards"}
 # The card stages (findings, labels, questions, summaries, links, shared results): each runs
 # its own judgment jobs, kept off the writing role so they never inherit a derived-page writer.
 CARD_STAGES = (
@@ -89,9 +90,13 @@ CARD_STAGES = (
     "outcomes/",
     "followups/",
 )
-# The card stages whose reviews run on card_review. Headlines and novelty stay on review:
-# their accepted records were judged there, and the model is part of every record's key.
+# The model of every role a card stage uses is part of each of its records' keys, so
+# each stage reviews on a role pinned to the model that judged its accepted records.
+# These stages review on card_review.
 CARD_REVIEW_STAGES = ("directions/", "gists/", "links/", "shared/", "outcomes/", "followups/")
+# Headlines and novelty review on findings_review: the review role's model judged
+# their records, and review is free to move to another model.
+FINDINGS_REVIEW_STAGES = ("headlines/", "novelty/")
 # The one-label stages write on labels, a cheaper writer than the cards role.
 LABEL_STAGES = ("outcomes/", "followups/")
 CARD_EFFORT: Literal["medium"] = "medium"
@@ -184,7 +189,12 @@ def role_for(step: str) -> str:
     if step.endswith(("/science-review", "/review", "/verify")) or (
         step.startswith("novelty/") and step.endswith("/agree")
     ):
-        role = "card_review" if step.startswith(CARD_REVIEW_STAGES) else "review"
+        if step.startswith(CARD_REVIEW_STAGES):
+            role = "card_review"
+        elif step.startswith(FINDINGS_REVIEW_STAGES):
+            role = "findings_review"
+        else:
+            role = "review"
     elif step.startswith("pilot/judge/"):
         role = "review"
     elif step.startswith("extract/"):

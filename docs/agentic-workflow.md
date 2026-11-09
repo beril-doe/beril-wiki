@@ -116,11 +116,12 @@ selected by `--root`. The committed policy explicitly assigns every role:
 | `planning` | Opus 5.5 | default | Plan evidence integration and propose topic groups. |
 | `pages` | Sonnet 5.5 | default | Write the concept, entity and summary pages integration produces: one page session per `write/` pass. Applies to pages written from now on; pages already accepted stay. |
 | `writing` | Opus 5.5 | default | Derived pages (conflicts, topics, literature, authors) as page sessions, home and entity merges; default for other generation jobs. Applies to pages written from now on. |
-| `review` | GPT-6.1 Sol (Codex) | default | All separate scientific reviews and verifications, including extraction and the reviews a page session asks for, and the second opinion a "Candidate novel" or "In tension" literature label needs. |
+| `review` | GPT-6.1 Sol (Codex) | default | All separate scientific reviews and verifications, including extraction and the reviews a page session asks for. |
 | `queries` | GPT-6.1 Sol (Codex) | default | Construct literature search queries, including the PubMed queries for literature labels. |
 | `figures` | GPT-6.1 Sol (Codex) | default | Select figure placements. |
 | `cards` | Sonnet 5.5 | `medium`, fixed | Choose headline findings, judge literature labels, write research directions and plain summaries, sort links between projects and write shared results (stages `headlines`, `novelty`, `directions`, `gists`, `links`, `shared`). The effort is `CARD_EFFORT` in `agentic/runtime.py`; `step_efforts` does not change it. |
-| `card_review` | GPT-6 Luna (Codex) | default | Review and verify the jobs of the stages `directions`, `gists`, `links`, `shared`, `outcomes` and `followups`. Headlines and novelty reviews stay on `review`. Unset, it takes the `review` model. |
+| `card_review` | GPT-6 Luna (Codex) | default | Review and verify the jobs of the stages `directions`, `gists`, `links`, `shared`, `outcomes` and `followups`. Unset, it takes the `review` model. |
+| `findings_review` | GPT-6.1 Sol (Codex) | default | Review and verify the jobs of the stages `headlines` and `novelty`, including the second opinion a "Candidate novel" or "In tension" literature label needs. Unset, it takes the `review` model. |
 | `labels` | Haiku 5.5 | `medium`, fixed | Label each result's type and each question's follow-up need (stages `outcomes`, `followups`). Unset, it takes the `cards` model. |
 
 This is a deliberate hybrid, not a measured optimum: Claude plans and writes,
@@ -179,16 +180,19 @@ without the default file requires `--model`. Budgets remain required CLI flags.
 A page session runs on its page's role (`pages` for `write/` steps, `writing`
 for derived pages), and repairs and the API pipeline's paragraph patches keep
 the original role's model. Every job ending in `/review`, `/science-review` or
-`/verify` uses `review`, or `card_review` for the stages that role names.
+`/verify` uses `review`, or `card_review` or `findings_review` for the stages
+those roles name.
 Unspecified roles use the default, with no automatic fallback or escalation. The
-two exceptions are `card_review` and `labels`, which take `review` and `cards`
-when unset, so a policy written before they existed routes every job as before.
+three exceptions are `card_review`, `findings_review` and `labels`, which take
+`review`, `review` and `cards` when unset, so a policy written before they
+existed routes every job as before.
 
 Every card record's cache key holds the models of its stage's roles. The pins
-for `card_review` and `labels` are the models that judged the accepted records,
-so a default `agentic run` reuses them and asks only for new or failed records.
-`tests/test_outcomes.py` fails when `agentic.yaml` no longer matches the accepted
-result-type and follow-up labels. Changing a card role's model re-asks every
+for `card_review`, `findings_review` and `labels` are the models that judged the
+accepted records, so a default `agentic run` reuses them and asks only for new or
+failed records. `tests/test_outcomes.py` fails when `agentic.yaml` no longer
+matches the accepted result-type and follow-up labels, and `tests/test_cards.py`
+fails when the headline and literature-label keys stop using GPT-6.1 Sol. Changing a card role's model re-asks every
 record of the stages that use it the next time each stage runs.
 Use explicit model IDs available to the authenticated subscription; moving
 aliases may change their underlying model without changing a cache key.
