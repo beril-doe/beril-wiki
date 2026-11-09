@@ -304,7 +304,7 @@ def test_home_picks_and_ranks_reach_frontmatter_and_export(tmp_path):
 def test_index_blurbs_use_reader_words():
     assert INDEXES["findings"] == (
         "Results",
-        "Results from the project reports, one per card.",
+        "Results from the project reports, by topic and by how new each one is.",
     )
     assert INDEXES["directions"] == (
         "Open questions",

@@ -122,13 +122,6 @@ export function NoveltyMap({ c, from }: { c: Corpus; from: FullSlug }) {
   const groupSpan = groupCols.every((col, i) => cols[i] === col) ? groupCols.length : 0
   return (
     <section class="nvmap" data-novelty aria-label="How new each result is, by topic">
-      <div class="sechead">
-        <h2>How new is each result?</h2>
-        <p>
-          Each mark is one result, placed by topic and by what an AI search of PubMed abstracts found for it. The first two columns are
-          the two kinds of new. The mark says what kind of result it is.
-        </p>
-      </div>
       <p class="nvlegend">
         {MARK_WORDS.filter(([k]) => used.has(k)).map(([k, w]) => (
           <span class="nvkey">

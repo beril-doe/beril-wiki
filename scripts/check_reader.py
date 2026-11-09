@@ -201,6 +201,7 @@ MARK_LOOK = {
     "data": ("square", "grey"),
 }
 GROUP_REST = "Compared with published work"
+RESULTS_INTRO = "Results from the project reports, by topic and by how new each one is."
 NOVEL_WORDS = "Builds on a new-direction result"
 FIRST_WORDS = "Starts with existing data"
 UNCLEAR_WORDS = "Data availability unclear"
@@ -2034,9 +2035,13 @@ def check_cross(browser, base: str) -> list[str]:
     rec = records()
     page, errors = watched(browser)
     go(page, base + "/findings/")
-    heads = page.eval_on_selector_all("h2", "els => els.map(e => e.textContent.trim())")
-    if "How new is each result?" not in heads:
-        fails.append(f"cross: /findings/ headings {heads} lack 'How new is each result?'")
+    # One plain line introduces the map, as on Open questions; the column notes name the
+    # AI search of PubMed abstracts.
+    intro = page.inner_text(".index-page > .prose").strip()
+    if intro != RESULTS_INTRO or page.locator(".nvmap .sechead").count():
+        fails.append(
+            f"cross: /findings/ opens with '{intro}' and a map heading, not '{RESULTS_INTRO}'"
+        )
     text = page.inner_text("body")
     for gone in ["Results several projects reached", *GONE_FAMILIES]:
         if gone in text:

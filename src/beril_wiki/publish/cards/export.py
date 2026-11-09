@@ -24,7 +24,7 @@ from beril_wiki.records import title_of
 INDEXES = {
     "findings": (
         "Results",
-        "Results from the project reports, one per card.",
+        "Results from the project reports, by topic and by how new each one is.",
     ),
     "directions": (
         "Open questions",
