@@ -437,6 +437,12 @@ their expected values from the records under `quartz/content/` and
   say "and a cross-project archive". The Reports listing must show exactly
   the published project reports with the one header fact "Project reports",
   and each home topic-table row must count only the reports its topic links.
+  All pages at `/catalog` must be titled "All pages" with kind "Index", list
+  every published page of each kind exactly once under its heading and count,
+  in the order of `ALL_PAGES`, against the build's own pages under
+  `quartz/content/`, and show no citations, author lists or Ask button. No
+  page may list All pages under "Linked from", and search must index All
+  pages and every Data issues page.
 
 `scripts/check_links.py` checks the links and shared stages without a browser
 and exits 1 with one line per failure. `--shared` re-runs the code checks on

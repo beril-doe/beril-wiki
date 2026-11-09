@@ -207,6 +207,100 @@ This page needs JavaScript and your own CBORG key. Without them, use the search 
     return 2
 
 
+# All pages, by kind, in the order a reader meets them: the section heading and the
+# folder whose published pages it lists.
+ALL_PAGES = [
+    ("Topics", "topics"),
+    ("Results", "findings"),
+    ("Open questions", "directions"),
+    ("Concepts", "concepts"),
+    ("Entities", "entities"),
+    ("Conflicts", "conflicts"),
+    ("Project reports", "summaries"),
+    ("Authors", "authors"),
+    ("Data collections", "data"),
+    ("Data issues", "data-issues"),
+]
+SITE_PAGES = (
+    "summaries/discoveries",
+    "summaries/pitfalls",
+    "negative-results",
+    "opportunities",
+    "guide",
+    "about",
+    "sources/index",
+)
+SITE_HEADING = "Archives and site pages"
+TITLE_LINE = re.compile(r"^title:\s*(.+?)\s*$", re.M)
+
+
+def page_title(path: pathlib.Path) -> str:
+    """A published page's title: its frontmatter `title:`, else its H1, else its name."""
+    text = path.read_text(encoding="utf-8", errors="replace")
+    fm = FM.match(text)
+    m = TITLE_LINE.search(fm.group(1)) if fm else None
+    if m:
+        raw = m.group(1)
+        try:
+            return str(json.loads(raw))
+        except ValueError:
+            return raw.strip("'\"")
+    h1 = re.search(r"^# +(.+?)\s*$", text, re.M)
+    return h1.group(1) if h1 else path.stem
+
+
+def page_link(slug: str, title: str) -> str:
+    """A link by title. A wikilink alias cannot hold brackets, # or |, so such a
+    title takes a markdown link with its brackets escaped."""
+    if re.search(r"[\[\]#|]", title):
+        return "[" + re.sub(r"([\[\]])", r"\\\1", title) + f"]({slug})"
+    return f"[[{slug}|{title}]]"
+
+
+def write_all_pages(dst: pathlib.Path, provenance: str) -> int:
+    """All pages, at /catalog: every published page by kind, titles only.
+
+    Built from the pages this build wrote, so it can name nothing unpublished and
+    misses nothing published. Titles only, so no description can carry a source
+    tag into the page and give it citations it does not make."""
+    sections: list[tuple[str, list[tuple[str, str]]]] = []
+    for heading, folder in ALL_PAGES:
+        entries = []
+        for f in sorted((dst / folder).glob("*.md")):
+            if f.stem == "index":
+                continue
+            if folder == "summaries" and 'type: "Project report"' not in f.read_text(
+                encoding="utf-8", errors="replace"
+            ):
+                continue
+            entries.append((page_title(f), f"{folder}/{f.stem}"))
+        if entries:
+            sections.append((heading, sorted(entries, key=lambda e: (e[0].casefold(), e[1]))))
+    site = [(page_title(dst / f"{s}.md"), s) for s in SITE_PAGES if (dst / f"{s}.md").exists()]
+    if site:
+        sections.append((SITE_HEADING, site))
+    jump = " · ".join(f"[{h}](#{slugify_heading(h)})" for h, _ in sections)
+    body = [
+        '---\ntitle: "All pages"\ntype: "Index"\n---',
+        provenance,
+        "",
+        "Every page on the site, by kind.",
+        "",
+        jump,
+    ]
+    for heading, entries in sections:
+        n = len(entries)
+        body += ["", f"## {heading}", "", f"{n} {'page' if n == 1 else 'pages'}.", ""]
+        body += [f"- {page_link(slug, title)}" for title, slug in entries]
+    (dst / "catalog.md").write_text("\n".join(body) + "\n", encoding="utf-8")
+    return 1
+
+
+def slugify_heading(text: str) -> str:
+    """The anchor Quartz gives a heading (github-slugger, for plain words)."""
+    return re.sub(r"[^\w\s-]", "", text.lower()).strip().replace(" ", "-")
+
+
 # A markdown link whose target is a path in the observatory checkout, not a page
 # in this wiki: notebooks, ../schemas/, ../references. The raw reports are
 # written to sit inside that repository, so published standalone these lead
@@ -456,7 +550,8 @@ def main() -> None:
     n = 0
     for src in root.rglob("*.md"):
         rel = src.relative_to(root)
-        if src.name in SKIP or rel.parts[0] == "reports":
+        # The catalog is a pipeline index; All pages takes its place below.
+        if src.name in SKIP or rel.parts[0] == "reports" or rel == pathlib.Path("catalog.md"):
             continue
         if rel.parts[0] == "entities" and src.stem in skip_entities:
             continue
@@ -533,6 +628,7 @@ def main() -> None:
     n += cards.write_extras(dst, records, provenance_block(None))
     n += write_collection_indexes(dst)
     n += write_reader_pages(dst)
+    n += write_all_pages(dst, provenance_block(None))
 
     images = kb / "wiki" / "sources" / "images"
     if images.is_dir():

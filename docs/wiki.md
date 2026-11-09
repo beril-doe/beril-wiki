@@ -81,6 +81,15 @@ from the accepted wiki without editing it:
   that figure wrongly. The reports are archived unedited, so the correction is
   recorded in `contract/errata.yaml` and placed beside every claim that repeats
   the figure; the paragraph above it copies the report faithfully.
+- All pages replaces the published copy of `wiki/catalog.md` at `/catalog`.
+  The wiki file stays as the compiler writes it. Publish builds the page from
+  the pages that build actually wrote: a jump row, then one section per kind
+  (Topics, Results, Open questions, Concepts, Entities, Conflicts, Project
+  reports, Authors, Data collections, Data issues, then "Archives and site
+  pages") with a count and every title. It lists titles only, so it carries
+  no citations, and the theme names its kind "Index". It never counts in a
+  page's "Linked from" or in "Most linked" sorting. Search indexes it and the
+  Data issues pages.
 - Two reader pages are written at publish time and never into `wiki/`:
   `guide.md` ("How to read this wiki", a table of page kinds with their page
   counts) and `ask.md`, which the theme's browser script fills with the Ask

@@ -35,7 +35,8 @@ Checks, each run by name:
   concepts on result and question pages, the topic board links, and About's reading guide.
 - reference: the grouped Browse menu (headers, rules, keyboard, contrast, light and dark,
   wide to phone) and the reference pages around it: the two archives and the archive
-  label on the concepts that cite them, and the Reports listing of project reports only.
+  label on the concepts that cite them, the Reports listing of project reports only, and
+  All pages at /catalog against the build's own page list.
 
 Exit 0 when the check passes, 1 with one line per failure otherwise. Notes (lines
 starting "note:") never fail a check. Uses the installed Chrome, so no browser download.
@@ -119,6 +120,29 @@ REPORTS_INTRO = (
     "One page per research project, summarising it and linking to its raw report. These are "
     "the evidence every other page on the site cites."
 )
+# All pages (/catalog): its sections in order, by the folder each lists, then the archive
+# and site pages section.
+ALL_PAGES = [
+    ("Topics", "topics"),
+    ("Results", "findings"),
+    ("Open questions", "directions"),
+    ("Concepts", "concepts"),
+    ("Entities", "entities"),
+    ("Conflicts", "conflicts"),
+    ("Project reports", "summaries"),
+    ("Authors", "authors"),
+    ("Data collections", "data"),
+    ("Data issues", "data-issues"),
+]
+SITE_PAGES = [
+    "summaries/discoveries",
+    "summaries/pitfalls",
+    "negative-results",
+    "opportunities",
+    "guide",
+    "about",
+    "sources/index",
+]
 ARCHIVE_KIND_LINE = (
     "An archive collects discoveries or pitfalls gathered across projects until May 2026."
 )
@@ -4792,12 +4816,124 @@ def reports_listing_fails(browser, base: str) -> list[str]:
     return fails
 
 
+def all_pages_want() -> list[tuple[str, list[str]]]:
+    """What All pages must list, read off this build's own published pages."""
+    out = []
+    for heading, folder in ALL_PAGES:
+        stems = sorted(
+            p.stem
+            for p in (CONTENT / folder).glob("*.md")
+            if p.stem != "index"
+            and (folder != "summaries" or frontmatter(p).get("type") == "Project report")
+        )
+        if stems:
+            out.append((heading, [f"{folder}/{s}" for s in stems]))
+    site = [s for s in SITE_PAGES if (CONTENT / f"{s}.md").exists()]
+    if site:
+        out.append(("Archives and site pages", site))
+    return out
+
+
+ALL_PAGES_JS = """() => {
+  const art = document.querySelector('article')
+  const out = []
+  let cur = null
+  for (const el of art.querySelectorAll('h2, li > a, li > p > a')) {
+    if (el.tagName === 'H2') { cur = [el.textContent.trim(), el.id, []]; out.push(cur); continue }
+    if (cur) cur[2].push(el.getAttribute('data-slug') || el.getAttribute('href'))
+  }
+  const jump = [...art.querySelectorAll('p a[href^="#"]')].map(a => a.getAttribute('href'))
+  return {sections: out, jump}
+}"""
+
+
+def all_pages_fails(browser, base: str) -> list[str]:
+    """All pages at /catalog lists every published page of each kind exactly once, under its
+    kind's heading with a count, carries no citation, author or evidence rail, opens no page
+    it does not list, and counts in no page's "Linked from" or "Most linked"."""
+    fails: list[str] = []
+    page = new_page(browser, WIDE)
+    go(page, base + "/catalog")
+    title = page.inner_text(".record h1").strip()
+    kind = page.inner_text(".record .kind b").strip()
+    if (title, kind) != ("All pages", "Index"):
+        fails.append(f"reference: /catalog is titled '{title}', kind '{kind}'")
+    intro = collapse(page.inner_text("article p")) if page.locator("article p").count() else ""
+    if intro != "Every page on the site, by kind.":
+        fails.append(f"reference: All pages opens with '{intro}'")
+    got = page.evaluate(ALL_PAGES_JS)
+    want = all_pages_want()
+    heads = [s[0] for s in got["sections"]]
+    if heads != [h for h, _ in want]:
+        fails.append(f"reference: All pages sections {heads}, expected {[h for h, _ in want]}")
+    if got["jump"] != [f"#{s[1]}" for s in got["sections"]]:
+        fails.append(f"reference: All pages jump row {got['jump']}")
+    seen: Counter = Counter()
+    for (heading, _anchor, links), (_, slugs) in zip(got["sections"], want, strict=False):
+        listed = [urlparse(h).path.strip("/").removeprefix("./") for h in links]
+        seen.update(listed)
+        missing = sorted(set(slugs) - set(listed))
+        extra = sorted(set(listed) - set(slugs))
+        if missing or extra:
+            fails.append(
+                f"reference: All pages '{heading}' misses {len(missing)} {missing[:3]} and "
+                f"lists {len(extra)} unexpected {extra[:3]}"
+            )
+        count = page.evaluate(
+            "(h) => [...document.querySelectorAll('article h2')].find(e => "
+            "e.textContent.trim() === h)?.nextElementSibling?.textContent.trim()",
+            heading,
+        )
+        n = len(slugs)
+        if count != f"{n} {'page' if n == 1 else 'pages'}.":
+            fails.append(f"reference: All pages '{heading}' count reads '{count}', expected {n}")
+    twice = sorted(s for s, k in seen.items() if k > 1)
+    if twice:
+        fails.append(f"reference: All pages lists {len(twice)} pages twice: {twice[:3]}")
+    heads = page.evaluate(RAIL_HEADS_JS)
+    bad = [h for h in heads if h in ("Projects cited", "Sources cited", "Linked from")]
+    bad += [h for h in heads if "uthor" in h]
+    if bad or page.locator("sub.src, .px-askpage").count():
+        fails.append(f"reference: All pages shows {bad} or a citation or Ask button")
+    # As a backlink All pages says nothing, so no page names it under "Linked from".
+    for slug in (
+        "concepts/gene-essentiality",
+        "entities/escherichia-coli",
+        "summaries/fitness_modules",
+    ):
+        if not (CONTENT / f"{slug}.md").exists():
+            continue
+        go(page, f"{base}/{slug}")
+        rail = page.evaluate(
+            """() => [...document.querySelectorAll('.evidence-rail section')]
+                .filter(s => s.querySelector('h3')?.textContent.trim() === 'Linked from')
+                .flatMap(s => [...s.querySelectorAll('a')].map(a => a.getAttribute('href')))"""
+        )
+        if any(last_part(h) == "catalog" for h in rail):
+            fails.append(f"reference: /{slug} lists All pages under 'Linked from'")
+    page.context.close()
+    # Search finds All pages and every data-issues page.
+    with urllib.request.urlopen(base + "/static/search/pages.json", timeout=30) as r:
+        pages = json.loads(r.read())
+    rows = pages.get("pages", pages) if isinstance(pages, dict) else pages
+    slugs = {r.get("slug") for r in rows if isinstance(r, dict)}
+    issues = {f"data-issues/{p.stem}" for p in (CONTENT / "data-issues").glob("*.md")}
+    issues.discard("data-issues/index")
+    if "catalog" not in slugs or not issues <= slugs:
+        fails.append(
+            f"reference: search indexes catalog {'catalog' in slugs}, "
+            f"data issues {len(issues & slugs)} of {len(issues)}"
+        )
+    return fails
+
+
 def check_reference(browser, base: str) -> list[str]:
     """The grouped Browse menu and the reference pages around it."""
     return [
         *browse_group_fails(browser, base),
         *archive_fails(browser, base),
         *reports_listing_fails(browser, base),
+        *all_pages_fails(browser, base),
     ]
 
 

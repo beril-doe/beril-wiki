@@ -170,3 +170,38 @@ def test_digests_publish_as_titled_archives(tmp_path, monkeypatch):
     assert "Common Pitfalls" not in page
     # The wiki file keeps its own title and type; only the published copy changes.
     assert "# Common Pitfalls" in (tmp_path / "kb/wiki/summaries/pitfalls.md").read_text()
+
+
+def test_all_pages_lists_every_published_page_by_kind(tmp_path):
+    from beril_wiki.publish.ingest import write_all_pages
+
+    def page(rel, title, extra=""):
+        path = tmp_path / f"{rel}.md"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(f"---\n{extra}title: {title}\n---\nBody [[concepts/b]].\n")
+
+    page("topics/t", '"Topic T"')
+    page("topics/index", '"Topics"')
+    page("concepts/b", '"Beta"')
+    page("concepts/a", '"alpha"')
+    page("entities/nife", '"[NiFe]-hydrogenase"')
+    page("summaries/r", '"Report R"', 'type: "Project report"\n')
+    page("summaries/pitfalls", '"Earlier pitfalls"', 'type: "Archive"\n')
+    page("guide", '"How to read this wiki"')
+    assert write_all_pages(tmp_path, "> [!info] Provenance\n> x") == 1
+    text = (tmp_path / "catalog.md").read_text()
+    assert text.startswith('---\ntitle: "All pages"\ntype: "Index"\n---')
+    assert "Every page on the site, by kind." in text
+    heads = [line[3:] for line in text.splitlines() if line.startswith("## ")]
+    assert heads == ["Topics", "Concepts", "Entities", "Project reports", "Archives and site pages"]
+    assert "[Topics](#topics) · [Concepts](#concepts)" in text
+    # Titles sort without regard to case; index pages and archives stay out of their kinds.
+    assert text.index("[[concepts/a|alpha]]") < text.index("[[concepts/b|Beta]]")
+    assert "[[topics/index" not in text and "2 pages." in text and "1 page." in text
+    assert "[\\[NiFe\\]-hydrogenase](entities/nife)" in text
+    reports = text.split("## Project reports")[1].split("## ")[0]
+    assert "summaries/r" in reports and "pitfalls" not in reports
+    site = text.split("## Archives and site pages")[1]
+    assert "[[summaries/pitfalls|Earlier pitfalls]]" in site and "[[guide|" in site
+    # Titles only: no description, so no source tag can reach the page.
+    assert "Body" not in text and "[src:" not in text

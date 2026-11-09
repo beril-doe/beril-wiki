@@ -37,6 +37,8 @@ export const titleOf = (f: File) => fm(f)?.title ?? slugOf(f)
 export const linksOf = (f: File) => (f.links ?? []) as string[]
 export const collectionOf = (slug: string) => slug.split("/")[0]
 export const isIndex = (slug: string) => slug === "index" || slug.endsWith("/index")
+/** All pages (publish/ingest.py write_all_pages), served where the old catalog was. */
+export const ALL_PAGES = "catalog"
 /** A project report, as opposed to one of the cross-project archives. The
  *  publish step stamps this type on the summaries that have a raw report. */
 export const isReport = (f: File) => fm(f)?.type === "Project report"
@@ -68,6 +70,7 @@ export const ARCHIVE_NOTES: Record<string, ArchiveNote> = {
 export function kindOf(f: File): Kind {
   const slug = slugOf(f)
   if (isIndex(slug)) return { label: "Collection", cls: "collection" }
+  if (slug === ALL_PAGES) return { label: "Index", cls: "plain" }
   switch (collectionOf(slug)) {
     case "concepts":
       return { label: "Concept", cls: "concept" }
@@ -124,6 +127,9 @@ export function corpus(allFiles: File[]): Corpus {
   const bySlug = new Map(allFiles.map((f) => [slugOf(f), f]))
   const inbound = new Map<string, File[]>()
   for (const f of allFiles) {
+    // All pages links to every page, so as a backlink it would say nothing and
+    // would lift every page by one in "Most linked".
+    if (slugOf(f) === ALL_PAGES) continue
     for (const l of new Set(linksOf(f))) {
       const arr = inbound.get(l) ?? []
       arr.push(f)
