@@ -1,6 +1,7 @@
 """Offline checks for the page agent's host state and hooks (no model calls)."""
 
 import asyncio
+import dataclasses
 import json
 from typing import Any
 
@@ -415,8 +416,6 @@ def test_each_session_message_reaches_the_transcript_before_the_next(tmp_path, m
 def test_a_wiki_search_does_not_make_the_session_rest_on_the_output_tree(tmp_path):
     """Review finding D: a page written after a writer searched wiki/ must not make that
     writer's finished session stale, or every replay buys it again."""
-    import dataclasses
-
     from beril_wiki.agentic.runtime import current_dependencies
 
     (tmp_path / "wiki/concepts").mkdir(parents=True)
@@ -443,6 +442,7 @@ def _ledger_agent(tmp_path, monkeypatch, model="m"):
     from beril_wiki.agentic.runtime import Ledger
 
     monkeypatch.setattr(PA, "check_auth", lambda cli: None)
+    monkeypatch.setattr(PA, "run", REAL_RUN)  # run() retries a refusal through itself
     (tmp_path / "contract").mkdir(exist_ok=True)
     (tmp_path / "contract/AGENTS.md").write_text("rules")
     (tmp_path / "staging").mkdir(exist_ok=True)
@@ -493,3 +493,24 @@ def test_a_cached_page_is_rewritten_when_a_source_its_reviewer_read_changes(tmp_
     source.write_text("value=2")
     REAL_RUN(agent, page, tmp_path / "work")
     assert len(drives) == 2
+
+
+def test_a_later_pass_goes_straight_to_the_model_that_answered_a_refusal(tmp_path, monkeypatch):
+    """Review finding P: a writer that refused one pass of a page is not asked again for
+    the next pass, as Runtime.ask already rules for other jobs."""
+    agent = _ledger_agent(tmp_path, monkeypatch, model="claude-haiku-5-5")
+    models = []
+
+    async def drive(agent_, session, key, model, resumed):
+        models.append(model)
+        if model == "claude-haiku-5-5":
+            return "I can't help with that.", USAGE, 0.01, "", "claude-sonnet-5-5"
+        (session.workdir / "page.md").write_text("A good claim. [src: x]")
+        session.do_check(), session.do_review(), session.do_submit()
+        return "done", USAGE, 0.0, "", ""
+
+    monkeypatch.setattr(PA, "_drive", drive)
+    for n in (0, 1):
+        page = dataclasses.replace(_page(tmp_path), step=f"write/concepts/a.md/pass/{n}")
+        REAL_RUN(agent, page, tmp_path / f"work{n}")
+    assert models == ["claude-haiku-5-5", "claude-sonnet-5-5", "claude-sonnet-5-5"]

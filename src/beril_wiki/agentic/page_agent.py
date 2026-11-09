@@ -39,6 +39,7 @@ from beril_wiki.agentic.runtime import (
     Runtime,
     WorkflowError,
     atomic_json,
+    backend_for,
     check_auth,
     contract_manifest,
     current_dependencies,
@@ -48,6 +49,7 @@ from beril_wiki.agentic.runtime import (
     looks_refused,
     model_for,
     prompt,
+    refusal_scope,
     search_inventory,
     subscription_env,
     valid_usage,
@@ -357,6 +359,7 @@ def run(
         ]
     )
     task = key
+    redirected = False
     for attempt in range(MAX_SESSIONS):
         row = agent.ledger.db.execute(
             "SELECT status,output,dependencies FROM jobs WHERE key=?", (key,)
@@ -380,6 +383,16 @@ def run(
             # files when they still match what its host state recorded.
             key = digest([key, "again", attempt])
             continue
+        if not redirected:
+            # Runtime.ask's rule: once nothing is cached, a page this writer refused
+            # before, in an earlier pass or on other inputs, goes to the model that answered.
+            redirected = True
+            answers = agent.ledger.refused_model(
+                refusal_scope(page.step), backend_for(model), model
+            )
+            if answers and answers != model:
+                model, key = answers, digest([key, answers])
+                continue
         break
     else:
         # Recorded as a failed page, as an exhausted session is, rather than a run stop.
