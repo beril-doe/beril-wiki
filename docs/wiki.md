@@ -214,9 +214,10 @@ follows Browse on that row.
 
 The home page opens with the wiki's title, the introduction from
 `wiki/index.md`, the search box and an "Ask the wiki" button. Beside the
-introduction, "The corpus" gives the number of project reports,
-cross-project digests, concepts, entities, recorded conflicts and topics.
-Each figure links to its collection. The sections that follow are
+introduction, "The corpus" gives the number of project reports, archives
+("Archives: earlier discoveries and pitfalls"), concepts, entities, recorded
+conflicts and topics. Each figure links to its collection; the archive
+figure links to the archive section of All pages. The sections that follow are
 "Highlights", "Find your way in", "The map" and "Topics". "Highlights"
 appears only when the corpus has findings. It holds the "Topic strips" key,
 then "What the projects found" and "Questions still open".
@@ -224,8 +225,11 @@ then "What the projects found" and "Questions still open".
 "Find your way in" holds one card per kind of page: Topics, Concepts,
 Entities, Conflicts and Reports, then Results and Open questions when the
 corpus has findings. Each card states which question that kind of page
-answers, and gives its page count. A row of links follows, taken from the
-Browse list in `wiki/index.md`.
+answers, and gives its page count; the Reports card counts project reports
+only. A row of links follows, drawn by the theme: All pages, Pitfalls, Earlier
+discoveries, Data collections and Authors, each shown when its page is
+published. The `## Browse` list that the topics stage writes into
+`wiki/index.md` no longer renders, so changing the row needs no stage rerun.
 
 "What the projects found" shows the three result cards that publish ranks
 for the home page, as the rendering section above describes. "Questions

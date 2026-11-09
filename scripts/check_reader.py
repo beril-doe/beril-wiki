@@ -36,8 +36,8 @@ Checks, each run by name:
 - reference: the grouped Browse menu (headers, rules, keyboard, contrast, light and dark,
   wide to phone) and the reference pages around it: the two archives and the archive
   label on the concepts that cite them, the Reports listing of project reports only, and
-  All pages at /catalog against the build's own page list, and the related-page lines on
-  Results and Open questions.
+  All pages at /catalog against the build's own page list, the related-page lines on
+  Results and Open questions, and home's link row, Reports card and archive figure.
 
 Exit 0 when the check passes, 1 with one line per failure otherwise. Notes (lines
 starting "note:") never fail a check. Uses the installed Chrome, so no browser download.
@@ -155,6 +155,15 @@ ALSO_LINES = {
         ("Data issues", "data-issues/index"),
     ],
 }
+# The theme-drawn link row under the home kind cards, each link shown when published.
+HOME_ROW = [
+    ("All pages", "catalog"),
+    ("Pitfalls", "summaries/pitfalls"),
+    ("Earlier discoveries", "summaries/discoveries"),
+    ("Data collections", "data/index"),
+    ("Authors", "authors/index"),
+]
+HOME_ARCHIVES = "Archives: earlier discoveries and pitfalls"
 ARCHIVE_KIND_LINE = (
     "An archive collects discoveries or pitfalls gathered across projects until May 2026."
 )
@@ -4966,6 +4975,49 @@ def also_line_fails(browser, base: str) -> list[str]:
     return fails
 
 
+def home_row_fails(browser, base: str) -> list[str]:
+    """Home's "Find your way in" ends with the theme's link row, the Reports card counts
+    reports only, and the corpus figures name the archives and link All pages."""
+    fails: list[str] = []
+    page = new_page(browser, WIDE)
+    go(page, base + "/")
+    want = [(label, t) for label, t in HOME_ROW if (CONTENT / f"{t}.md").exists()]
+    row = page.eval_on_selector_all(
+        "nav.browse.also a", "els => els.map(e => [e.textContent.trim(), e.href])"
+    )
+    got = [(label, urlparse(href).path.strip("/")) for label, href in row]
+    expected = [(label, t.removesuffix("index").strip("/")) for label, t in want]
+    if got != expected:
+        fails.append(f"reference: home link row {got}, expected {expected}")
+    card = page.evaluate(
+        """() => [...document.querySelectorAll('a.kindcard')]
+            .find(a => a.querySelector('b')?.textContent.trim() === 'Reports')
+            ?.querySelector('.n')?.textContent.trim()"""
+    )
+    n = len(published_reports())
+    if card != f"{n} reports":
+        fails.append(f"reference: the home Reports card reads '{card}', expected '{n} reports'")
+    rows = page.eval_on_selector_all(
+        "dl.figures .frow",
+        """els => els.map(e => [e.querySelector('dt').textContent.trim(),
+            e.querySelector('dd').textContent.trim(), e.querySelector('dd a').href])""",
+    )
+    archive = [r for r in rows if r[1].startswith("Archives")]
+    if (
+        not archive
+        or archive[0][1] != HOME_ARCHIVES
+        or urlparse(archive[0][2]).path.strip("/") != "catalog"
+        or urlparse(archive[0][2]).fragment != "archives-and-site-pages"
+    ):
+        fails.append(f"reference: home corpus figures {rows}")
+    text = page.inner_text("body")
+    for gone in ("Cross-project digests", "Full page catalog", "Discoveries digest"):
+        if gone in text:
+            fails.append(f"reference: home still shows '{gone}'")
+    page.context.close()
+    return fails
+
+
 def check_reference(browser, base: str) -> list[str]:
     """The grouped Browse menu and the reference pages around it."""
     return [
@@ -4974,6 +5026,7 @@ def check_reference(browser, base: str) -> list[str]:
         *reports_listing_fails(browser, base),
         *all_pages_fails(browser, base),
         *also_line_fails(browser, base),
+        *home_row_fails(browser, base),
     ]
 
 

@@ -444,7 +444,11 @@ their expected values from the records under `quartz/content/` and
   page may list All pages under "Linked from", and search must index All
   pages and every Data issues page. Results must show "Also: Negative results
   · Earlier discoveries" under its unchanged intro, and Open questions "Also:
-  Research opportunities · Data issues", each link opening its page.
+  Research opportunities · Data issues", each link opening its page. The home
+  link row must read All pages, Pitfalls, Earlier discoveries, Data
+  collections and Authors, the Reports card must count reports only, and the
+  corpus figures must read "Archives: earlier discoveries and pitfalls" with a
+  link to the archive section of All pages.
 
 `scripts/check_links.py` checks the links and shared stages without a browser
 and exits 1 with one line per failure. `--shared` re-runs the code checks on
