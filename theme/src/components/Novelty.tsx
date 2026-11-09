@@ -167,7 +167,7 @@ export function NoveltyMap({ c, from }: { c: Corpus; from: FullSlug }) {
               </span>
             </>
           )}
-          <span class="nvcorner" />
+          <span class="nvcorner">Topic</span>
           {cols.map((col) => (
             <span class={`nvcolh nv-${TONE[order.indexOf(col)] ?? "none"}`}>
               <i aria-hidden="true" />

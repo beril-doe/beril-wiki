@@ -158,6 +158,8 @@ LIGHT_LABELS = [
     ".qcolh",
     ".qcoln",
     ".qeffortline",
+    ".qcorner.qaxis",
+    ".nvcorner",
     ".nvcolh",
     ".nvgroup",
     ".nvgroup.rest",
@@ -206,7 +208,10 @@ GROUP_REST = "Compared with published work"
 NOVEL_WORDS = "Builds on a new-direction result"
 FIRST_WORDS = "Starts with existing data"
 UNCLEAR_WORDS = "Data availability unclear"
-EFFORT_LINE = "Less effort to follow up → more effort"
+# The x axis: its two ends, read left to right, around an arrow across every column.
+EFFORT_LINE = "Less effort to follow up → More effort"
+# The y axis: the corner over the row labels on both maps.
+ROW_AXIS = "Topic"
 GONE_FAMILIES = ["Cited by the same open question", "One project uses or cites another"]
 # The design's tokens (design-marks.md "Geometry"): Novel orange and the box border grey.
 TOKENS = {
@@ -1303,7 +1308,13 @@ QHEAD_JS = """() => {
     return {
         efforts: effort.length,
         before: !!head && head.previousElementSibling === effort[0],
-        line: (line?.textContent || '').replace(/\\s+/g, ' ').trim(),
+        line: [...(line?.querySelectorAll('.qaxend') || [])]
+            .map(e => e.textContent.trim()).join(' → '),
+        arrow: (() => {
+            const a = line?.querySelector('.qaxarrow')?.getBoundingClientRect()
+            return !!a && !!lr && a.width >= lr.width / 3 && a.height >= 1.5
+        })(),
+        corner: (head?.querySelector('.qcorner')?.textContent || '').trim(),
         heads: [...(head?.querySelectorAll('.qcolh') || [])].map(h => {
             const r = h.getBoundingClientRect()
             return {
@@ -1331,6 +1342,10 @@ def qhead_fails(page: Page) -> list[str]:
             f"grid: {got['efforts']} effort rows, right before the header {got['before']}, "
             f"reading '{got['line']}'; expected one reading '{EFFORT_LINE}'"
         )
+    if not got["arrow"]:
+        fails.append("grid: the effort axis has no arrow spanning a third of its width")
+    if got["corner"] != ROW_AXIS:
+        fails.append(f"grid: the row-label corner reads '{got['corner']}', not '{ROW_AXIS}'")
     count = Counter(e["follow"] for e in rec["questions"].values())
     want = [
         {
@@ -1955,6 +1970,7 @@ GROUP_JS = """() => {
                      && mid(h) <= r.right).map(([i]) => i), above: r.bottom <= top + 1 }
     })
 }"""
+CORNER_JS = "() => (document.querySelector('.nvgrid > .nvcorner')?.textContent || '').trim()"
 
 
 def group_fails(page: Page) -> list[str]:
@@ -1978,7 +1994,11 @@ def group_fails(page: Page) -> list[str]:
         },
     ]
     got = page.evaluate(GROUP_JS)
-    return [] if got == want else [f"cross: group headers {got}, records give {want}"]
+    fails = [] if got == want else [f"cross: group headers {got}, records give {want}"]
+    corner = page.evaluate(CORNER_JS)
+    if corner != ROW_AXIS:
+        fails.append(f"cross: the row-label corner reads '{corner}', not '{ROW_AXIS}'")
+    return fails
 
 
 def box_fails(page: Page, label: str) -> list[str]:

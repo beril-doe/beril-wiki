@@ -210,11 +210,13 @@ export function QuestionGrid({ c, from, topic }: { c: Corpus; from: FullSlug; to
         <div class="qrow qeffort">
           {!topic && <span class="qcorner" />}
           <span class="qeffortline" style={`grid-column: span ${cols.length}`}>
-            Less effort to follow up <span aria-hidden="true">→</span> more effort
+            <span class="qaxend">Less effort to follow up</span>
+            <span class="qaxarrow" aria-hidden="true" />
+            <span class="qaxend">More effort</span>
           </span>
         </div>
         <div class="qrow qhead">
-          {!topic && <span class="qcorner" />}
+          {!topic && <span class="qcorner qaxis">Topic</span>}
           {cols.map((col) => (
             <span class="qcolh">
               {col.label} <span class="qn">{col.n}</span>
