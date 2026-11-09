@@ -66,6 +66,8 @@ ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "quartz" / "content"
 PHONE = {"width": 390, "height": 844}
 DESKTOP = {"width": 1280, "height": 900}
+# The narrowest viewport that still shows the open-questions columns (phones stack them).
+NARROW_COLUMNS = {"width": 641, "height": 900}
 WIDE = {"width": 1440, "height": 900}
 
 # The home outline (design-home.md, Markup B): headings outside the result cards, in order.
@@ -1312,7 +1314,9 @@ QHEAD_JS = """() => {
             .map(e => e.textContent.trim()).join(' → '),
         arrow: (() => {
             const a = line?.querySelector('.qaxarrow')?.getBoundingClientRect()
-            return !!a && !!lr && a.width >= lr.width / 3 && a.height >= 1.5
+            const first = head?.querySelector('.qcolh')?.getBoundingClientRect()
+            return !!a && !!lr && !!first && a.width >= lr.width / 3 && a.height >= 1.5
+                && a.left < first.right
         })(),
         corner: (head?.querySelector('.qcorner')?.textContent || '').trim(),
         heads: [...(head?.querySelectorAll('.qcolh') || [])].map(h => {
@@ -1343,7 +1347,9 @@ def qhead_fails(page: Page) -> list[str]:
             f"reading '{got['line']}'; expected one reading '{EFFORT_LINE}'"
         )
     if not got["arrow"]:
-        fails.append("grid: the effort axis has no arrow spanning a third of its width")
+        fails.append(
+            "grid: the effort arrow does not start in the first column and span a third of the axis"
+        )
     if got["corner"] != ROW_AXIS:
         fails.append(f"grid: the row-label corner reads '{got['corner']}', not '{ROW_AXIS}'")
     count = Counter(e["follow"] for e in rec["questions"].values())
@@ -1412,6 +1418,10 @@ def check_grid(browser, base: str) -> list[str]:
     go(page, base + "/directions/")
     fails += [f"grid: {i} {why}" for i, why in dot_place_fails(page, want)]
     fails += qhead_fails(page)
+    # Just above the phone breakpoint the columns are at their narrowest.
+    narrow = new_page(browser, viewport=NARROW_COLUMNS)
+    go(narrow, base + "/directions/")
+    fails += [f"{why} at {NARROW_COLUMNS['width']}px" for why in qhead_fails(narrow)]
     body = page.inner_text("body") + " ".join(
         page.eval_on_selector_all(".qpop", "els => els.map(e => e.textContent)")
     )
