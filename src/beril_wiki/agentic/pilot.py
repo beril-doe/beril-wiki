@@ -29,7 +29,13 @@ from beril_wiki.agentic.batch import (
     sid_for,
 )
 from beril_wiki.agentic.runner import checkout_inputs, run_stage
-from beril_wiki.agentic.runtime import JobFailed, Runtime, WorkflowError, atomic_json
+from beril_wiki.agentic.runtime import (
+    JobFailed,
+    Runtime,
+    WorkflowError,
+    atomic_json,
+    model_policy,
+)
 from beril_wiki.agentic.topics import propose_topics
 from beril_wiki.compiler import parse_json_reply
 
@@ -552,7 +558,7 @@ def judge(scratch: Path, name: str, config: dict) -> dict:
     cell = scratch / "cells" / name
     manifest = _json(cell / "manifest.json")
     agent = Runtime(cell_config(scratch, cell, config))
-    model = config["step_models"]["review"]
+    model = model_policy(config)["review"]  # a policy may leave review to its default
     if manifest["kind"] == "extraction":
         units, rubric = _extraction_units(agent, cell), EXTRACTION_RUBRIC
         axes = ("fidelity", "coverage", "precision")

@@ -383,3 +383,10 @@ def test_the_home_page_and_claude_aliases_are_charged_to_their_page(tmp_path):
     _manifest(tmp_path, "der", {"index.md": row}, rows=(1, 2))
     page = P.report(tmp_path)["cells"]["der"]["pages"]["index.md"]
     assert (page["claude_usd"], page["codex_tokens"]) == (1.25, 100)
+
+
+def test_judge_takes_the_review_model_a_policy_leaves_to_its_default(tmp_path):
+    """Review finding M: a policy with no review role still judges on its default model."""
+    _manifest(tmp_path, "x", {})
+    config = {"model": "gpt-6.1-sol", "step_models": {}, "cli": "claude", "run": "p"}
+    assert P.judge(tmp_path, "x", config) == {}
