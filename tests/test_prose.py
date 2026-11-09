@@ -591,3 +591,19 @@ def test_verification_raises_new_objections_only_on_changed_paragraphs(monkeypat
     assert "Yield fell to 56%" in out and "Lead sentence" in out  # accepted text untouched
     assert "The writer changed paragraphs [4]" in stub.prompts[-1][1]
     assert [s for s, _ in stub.prompts].count("x/repair") == 1
+
+
+def test_open_objections_follow_their_paragraph_when_the_writer_inserts_one(monkeypatch, tmp_path):
+    """Review finding A: an objection keeps naming its claim after an edit above it, so
+    salvage drops the rejected claim, not the paragraph that moved into its index."""
+    stuck = [{"paragraph": 4, "category": "unsupported", "quote": "56%", "note": "no evidence"}]
+    inserted = GOOD.replace("## Sides", "A neutral sentence on both sides.\n\n## Sides")
+    script = rounds(
+        {"x": GOOD}, json.dumps({"accepted": False, "issues": stuck}), _still([]), inserted
+    )
+    configure(monkeypatch, tmp_path, script)
+    out = run("x")
+    assert "Yield was 56%" not in out
+    assert "Yield was 42%. [src: a]" in out and "A neutral sentence" in out
+    ledger = json.loads((tmp_path / "salvaged.json").read_text())
+    assert ledger["x"]["removed"] == ["Yield was 56%. [src: b]"]

@@ -11,6 +11,7 @@ moves on.
 
 from __future__ import annotations
 
+import difflib
 import json
 import re
 import threading
@@ -142,6 +143,26 @@ def blocks(text: str) -> list[str]:
 
 def numbered(parts: list[str]) -> str:
     return "\n\n".join(f"[{i}] {part}" for i, part in enumerate(parts))
+
+
+def moved(issue: Issue, remap: dict[int, list[int]]) -> Issue:
+    """The same objection pointing at where its paragraph landed after an edit."""
+    if issue.paragraph is None:
+        return issue
+    landed = remap.get(issue.paragraph, [])
+    return issue.model_copy(update={"paragraph": landed[0] if landed else None})
+
+
+def remapped(before: list[str], after: list[str]) -> dict[int, list[int]]:
+    """Where each paragraph of `before` landed in `after`; a deleted one maps nowhere."""
+    remap: dict[int, list[int]] = {}
+    matcher = difflib.SequenceMatcher(a=before, b=after, autojunk=False)
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag == "equal" or (tag == "replace" and i2 - i1 == j2 - j1):
+            remap.update({i1 + k: [j1 + k] for k in range(i2 - i1)})
+        elif tag == "replace":
+            remap.update({i: list(range(j1, j2)) for i in range(i1, i2)})
+    return remap
 
 
 def clean(raw: str, targets: set[str] | None) -> str:
@@ -632,18 +653,14 @@ def agent_page(
             # objections: the closed-question rule that lets the open list converge.
             before = state["reviewed_parts"]
             changed = {i for i, part in enumerate(parts) if i >= len(before) or before[i] != part}
-            verdict = verify(
-                contract, pack, parts, state["pending"], f"{name}/verify", agent.ask, changed
-            )
+            # Open objections follow their paragraphs to where the writer's edits moved
+            # them, or the verifier and salvage would act on whatever now holds the index.
+            remap = remapped(before, parts)
+            pending = [moved(i, remap) for i in state["pending"]]
+            verdict = verify(contract, pack, parts, pending, f"{name}/verify", agent.ask, changed)
             if verdict is None:
                 verdict = verify(
-                    contract,
-                    pack,
-                    parts,
-                    state["pending"],
-                    f"{name}/verify/again",
-                    agent.ask,
-                    changed,
+                    contract, pack, parts, pending, f"{name}/verify/again", agent.ask, changed
                 )
         if verdict is None:
             state["unusable"] = True
