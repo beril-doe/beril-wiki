@@ -54,7 +54,7 @@ export interface ArchiveNote {
 // Each archive says where the newer material it no longer collects now lives.
 export const ARCHIVE_NOTES: Record<string, ArchiveNote> = {
   "summaries/discoveries": {
-    before: "This list stopped growing in May 2026. Newer results from every project are on the ",
+    before: "This list stopped growing in May 2026. Newer results are on the ",
     link: "Results",
     target: "findings/index",
     after: " page.",

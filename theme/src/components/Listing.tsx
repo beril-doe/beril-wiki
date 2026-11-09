@@ -3,7 +3,8 @@
 // these pages already carries a description and a type, so use them.
 import type { FullSlug } from "@quartz-community/types"
 import { resolveRelative, simplifySlug } from "@quartz-community/utils"
-import { type Corpus, type File, collectionOf, fm, isIndex, isReport, kindOf, linksOf, slugOf, titleOf } from "../page"
+import { sourceSummary } from "../cites"
+import { type Corpus, type File, collectionOf, fm, isArchive, isIndex, isReport, kindOf, linksOf, slugOf, titleOf } from "../page"
 
 // What a collection index can say about itself, in countable terms. Quartz
 // gives an index page no citations, so without this its byline is empty and
@@ -117,10 +118,16 @@ export function Listing({ file, c }: { file: File; c: Corpus }) {
       return c > 0 || r > 0 ? `${plural(c, "concept")} · ${plural(r, "report")}` : null
     }
     // A conflict page carries no description, and how many pages link to it
-    // says nothing about it; the projects that disagree do.
+    // says nothing about it; the sources that disagree do, named as its own header names them.
     if (here === "conflicts") {
-      const n = out(f, "summaries")
-      return n > 0 ? `${plural(n, "source project")} disagree` : null
+      const reports = out(f, "summaries")
+      const archives = new Set(linksOf(f).filter((l) => {
+        const target = c.bySlug.get(l)
+        return !!target && isArchive(target)
+      })).size
+      const summary = sourceSummary(reports, archives)
+      if (!summary) return null
+      return reports + archives > 1 ? `${summary} disagree` : summary
     }
     const n = inbound(f)
     return n > 0 ? `linked from ${plural(n, "page")}` : null

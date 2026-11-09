@@ -448,7 +448,11 @@ their expected values from the records under `quartz/content/` and
   link row must read All pages, Pitfalls, Earlier discoveries, Data
   collections and Authors, the Reports card must count reports only, and the
   corpus figures must read "Archives: earlier discoveries and pitfalls" with a
-  link to the archive section of All pages.
+  link to the archive section of All pages. Each Conflicts card must name the
+  reports and archives its page cites, as the page header does, and both
+  result parts on an archive-only concept must read "This page cites no
+  report yet." Link paths are compared with the `--base` path removed, so the
+  check also runs against a site served under `/wiki`.
 
 `scripts/check_links.py` checks the links and shared stages without a browser
 and exits 1 with one line per failure. `--shared` re-runs the code checks on

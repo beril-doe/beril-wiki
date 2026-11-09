@@ -158,7 +158,13 @@ def write_reader_pages(dst: pathlib.Path) -> int:
     """
 
     def count(folder: str) -> int:
-        return sum(1 for f in (dst / folder).glob("*.md") if f.name != "index.md")
+        # The two archives share summaries/ with the reports but are not reports.
+        return sum(
+            1
+            for f in (dst / folder).glob("*.md")
+            if f.name != "index.md"
+            and (folder != "summaries" or 'type: "Project report"' in f.read_text(encoding="utf-8"))
+        )
 
     rows = "\n".join(
         f"| [{label}]({folder}/) | {count(folder)} | {answers} | {when} |"
@@ -217,6 +223,7 @@ ALL_PAGES = [
     ("Entities", "entities"),
     ("Conflicts", "conflicts"),
     ("Project reports", "summaries"),
+    ("Raw reports", "sources"),
     ("Authors", "authors"),
     ("Data collections", "data"),
     ("Data issues", "data-issues"),

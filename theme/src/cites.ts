@@ -41,6 +41,14 @@ export interface Cited {
   summary: string
 }
 
+/** "3 project reports and a cross-project archive": a page's sources, archives last. */
+export function sourceSummary(reports: number, archives: number): string {
+  const parts = []
+  if (reports > 0) parts.push(`${reports} ${reports === 1 ? "project report" : "project reports"}`)
+  if (archives > 0) parts.push(archives === 1 ? "a cross-project archive" : `${archives} cross-project archives`)
+  return parts.join(" and ")
+}
+
 export function cited(cites: Cite[], c: Corpus): Cited {
   const isArchive = (k: Cite) => {
     const f = c.bySlug.get(k.slug)
@@ -48,8 +56,5 @@ export function cited(cites: Cite[], c: Corpus): Cited {
   }
   const archives = cites.filter(isArchive).length
   const reports = cites.length - archives
-  const parts = []
-  if (reports > 0) parts.push(`${reports} ${reports === 1 ? "project report" : "project reports"}`)
-  if (archives > 0) parts.push(archives === 1 ? "a cross-project archive" : `${archives} cross-project archives`)
-  return { archives, reports, projectsOnly: archives === 0, isArchive, summary: parts.join(" and ") }
+  return { archives, reports, projectsOnly: archives === 0, isArchive, summary: sourceSummary(reports, archives) }
 }

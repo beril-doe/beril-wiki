@@ -187,13 +187,24 @@ def test_all_pages_lists_every_published_page_by_kind(tmp_path):
     page("entities/nife", '"[NiFe]-hydrogenase"')
     page("summaries/r", '"Report R"', 'type: "Project report"\n')
     page("summaries/pitfalls", '"Earlier pitfalls"', 'type: "Archive"\n')
+    page("sources/r", '"Raw R"')
+    page("sources/index", '"Raw reports"')
     page("guide", '"How to read this wiki"')
     assert write_all_pages(tmp_path, "> [!info] Provenance\n> x") == 1
     text = (tmp_path / "catalog.md").read_text()
     assert text.startswith('---\ntitle: "All pages"\ntype: "Index"\n---')
     assert "Every page on the site, by kind." in text
     heads = [line[3:] for line in text.splitlines() if line.startswith("## ")]
-    assert heads == ["Topics", "Concepts", "Entities", "Project reports", "Archives and site pages"]
+    assert heads == [
+        "Topics",
+        "Concepts",
+        "Entities",
+        "Project reports",
+        "Raw reports",
+        "Archives and site pages",
+    ]
+    raw = text.split("## Raw reports")[1].split("## ")[0]
+    assert "[[sources/r|Raw R]]" in raw and "sources/index" not in raw
     assert "[Topics](#topics) · [Concepts](#concepts)" in text
     # Titles sort without regard to case; index pages and archives stay out of their kinds.
     assert text.index("[[concepts/a|alpha]]") < text.index("[[concepts/b|Beta]]")
@@ -203,5 +214,15 @@ def test_all_pages_lists_every_published_page_by_kind(tmp_path):
     assert "summaries/r" in reports and "pitfalls" not in reports
     site = text.split("## Archives and site pages")[1]
     assert "[[summaries/pitfalls|Earlier pitfalls]]" in site and "[[guide|" in site
+    assert "[[sources/index|Raw reports]]" in site
     # Titles only: no description, so no source tag can reach the page.
     assert "Body" not in text and "[src:" not in text
+
+
+def test_guide_counts_only_project_reports(tmp_path):
+    """The two archives share summaries/ but are not project reports."""
+    (tmp_path / "summaries").mkdir()
+    (tmp_path / "summaries/r.md").write_text('---\ntype: "Project report"\n---\nx')
+    (tmp_path / "summaries/pitfalls.md").write_text('---\ntype: "Archive"\n---\nx')
+    write_reader_pages(tmp_path)
+    assert "| [Project report](summaries/) | 1 |" in (tmp_path / "guide.md").read_text()

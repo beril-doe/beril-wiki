@@ -85,11 +85,16 @@ from the accepted wiki without editing it:
   The wiki file stays as the compiler writes it. Publish builds the page from
   the pages that build actually wrote: a jump row, then one section per kind
   (Topics, Results, Open questions, Concepts, Entities, Conflicts, Project
-  reports, Authors, Data collections, Data issues, then "Archives and site
-  pages") with a count and every title. It lists titles only, so it carries
+  reports, Raw reports, Authors, Data collections, Data issues, then
+  "Archives and site pages") with a count and every title. It lists titles only, so it carries
   no citations, and the theme names its kind "Index". It never counts in a
   page's "Linked from" or in "Most linked" sorting. Search indexes it and the
   Data issues pages.
+- An archive is never counted as a project report. The guide's Project report
+  row counts reports only. A Conflicts card names its sources the way the
+  conflict page's header does, for example "1 project report and a
+  cross-project archive disagree". On a concept page that cites only archives,
+  both result parts read "This page cites no report yet."
 - Two reader pages are written at publish time and never into `wiki/`:
   `guide.md` ("How to read this wiki", a table of page kinds with their page
   counts) and `ask.md`, which the theme's browser script fills with the Ask

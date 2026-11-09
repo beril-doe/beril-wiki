@@ -106,8 +106,7 @@ BROWSE_ITEMS = [link for _, links in BROWSE_GROUPS for link in links]
 ARCHIVE_PAGES = {
     "discoveries": (
         "Earlier discoveries",
-        "This list stopped growing in May 2026. Newer results from every project are on the "
-        "Results page.",
+        "This list stopped growing in May 2026. Newer results are on the Results page.",
         "findings",
     ),
     "pitfalls": (
@@ -131,6 +130,7 @@ ALL_PAGES = [
     ("Entities", "entities"),
     ("Conflicts", "conflicts"),
     ("Project reports", "summaries"),
+    ("Raw reports", "sources"),
     ("Authors", "authors"),
     ("Data collections", "data"),
     ("Data issues", "data-issues"),
@@ -4768,6 +4768,15 @@ def archive_fails(browser, base: str) -> list[str]:
     print(f"note: reference: {len(only)} concepts cite only the archives")
     for stem in only:
         go(page, f"{base}/concepts/{stem}")
+        # An archive is not a cited report, so both result parts say the page cites none.
+        empty = page.eval_on_selector_all(
+            ".topic-cards .part-empty",
+            "els => els.map(e => e.textContent.trim())",
+        )
+        if empty.count("This page cites no report yet.") != 2:
+            fails.append(
+                f"reference: /concepts/{stem} cites only archives but its parts read {empty}"
+            )
         text = page.inner_text(".record")
         if "Cross-project archive" not in text or "source project" in text:
             fails.append(
@@ -4835,6 +4844,12 @@ def reports_listing_fails(browser, base: str) -> list[str]:
             )
     page.context.close()
     return fails
+
+
+def site_path(href: str, base: str) -> str:
+    """A link's page path with the --base path removed, so a /wiki-prefixed site checks."""
+    path = urlparse(href).path.strip("/")
+    return path.removeprefix(urlparse(base).path.strip("/")).strip("/")
 
 
 def all_pages_want() -> list[tuple[str, list[str]]]:
@@ -4964,7 +4979,7 @@ def also_line_fails(browser, base: str) -> list[str]:
             continue
         hrefs = line.locator("a").evaluate_all("els => els.map(e => e.href)")
         for (label, target), href in zip(want, hrefs, strict=True):
-            path = urlparse(href).path.strip("/")
+            path = site_path(href, base)
             if path != target.removesuffix("/index").removesuffix("index").strip("/"):
                 fails.append(f"reference: /{board}/ '{label}' opens /{path}, not /{target}")
     go(page, f"{base}/findings/")
@@ -4985,7 +5000,7 @@ def home_row_fails(browser, base: str) -> list[str]:
     row = page.eval_on_selector_all(
         "nav.browse.also a", "els => els.map(e => [e.textContent.trim(), e.href])"
     )
-    got = [(label, urlparse(href).path.strip("/")) for label, href in row]
+    got = [(label, site_path(href, base)) for label, href in row]
     expected = [(label, t.removesuffix("index").strip("/")) for label, t in want]
     if got != expected:
         fails.append(f"reference: home link row {got}, expected {expected}")
@@ -5006,7 +5021,7 @@ def home_row_fails(browser, base: str) -> list[str]:
     if (
         not archive
         or archive[0][1] != HOME_ARCHIVES
-        or urlparse(archive[0][2]).path.strip("/") != "catalog"
+        or site_path(archive[0][2], base) != "catalog"
         or urlparse(archive[0][2]).fragment != "archives-and-site-pages"
     ):
         fails.append(f"reference: home corpus figures {rows}")
@@ -5015,6 +5030,48 @@ def home_row_fails(browser, base: str) -> list[str]:
         if gone in text:
             fails.append(f"reference: home still shows '{gone}'")
     page.context.close()
+    return fails
+
+
+def source_summary(reports: int, archives: int) -> str:
+    """The attribution theme/src/cites.ts gives a page: its reports, then any archive."""
+    parts = []
+    if reports:
+        parts.append(f"{reports} project report{'s' if reports != 1 else ''}")
+    if archives:
+        parts.append(
+            "a cross-project archive" if archives == 1 else f"{archives} cross-project archives"
+        )
+    return " and ".join(parts)
+
+
+def conflict_card_fails(browser, base: str) -> list[str]:
+    """Each Conflicts card names the reports and archives its page cites, the way the page's
+    own header does, so an archive on one side is never dropped."""
+    fails: list[str] = []
+    reports = published_reports()
+    page = new_page(browser, WIDE)
+    go(page, base + "/conflicts/")
+    cards = page.eval_on_selector_all(
+        ".listing a.card",
+        "els => els.map(e => [e.getAttribute('href'),"
+        " e.querySelector('.meta .n')?.textContent.trim() || ''])",
+    )
+    page.context.close()
+    if not cards:
+        return ["reference: /conflicts/ lists no cards"]
+    wrong = []
+    for href, meta in cards:
+        stem = last_part(href)
+        text = (CONTENT / "conflicts" / f"{stem}.md").read_text(encoding="utf-8")
+        linked = set(re.findall(r"\[\[summaries/([\w.-]+?)[|#\]]", text))
+        n_rep, n_arc = len(linked & reports), len(linked & ARCHIVES)
+        summary = source_summary(n_rep, n_arc)
+        want = f"{summary} disagree" if n_rep + n_arc > 1 else summary
+        if meta != want:
+            wrong.append(f"{stem}: '{meta}' (expected '{want}')")
+    if wrong:
+        fails.append(f"reference: {len(wrong)} Conflicts cards misattribute: {wrong[:3]}")
     return fails
 
 
@@ -5027,6 +5084,7 @@ def check_reference(browser, base: str) -> list[str]:
         *all_pages_fails(browser, base),
         *also_line_fails(browser, base),
         *home_row_fails(browser, base),
+        *conflict_card_fails(browser, base),
     ]
 
 
