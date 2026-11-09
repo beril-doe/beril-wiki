@@ -27,6 +27,7 @@ from beril_wiki.agentic.runtime import (
     Runtime,
     WorkflowError,
     atomic_json,
+    check_page_writers,
     contract_manifest,
     digest,
     manifest,
@@ -440,6 +441,7 @@ def main() -> int:
                 "pass_records": 60,
             } | load_models(scratch / "derived", None, None, args.step_model, args.effort)
             if args.action == "cell":
+                check_page_writers(config)
                 pages = [p for p in args.pages.split(",") if p]
                 P.run_cell(scratch, args.name, args.kind, pages, config)
             else:
@@ -545,6 +547,7 @@ def main() -> int:
             config.update(
                 load_models(root, args.model_config, args.model, args.step_model, args.effort)
             )
+            check_page_writers(config)
             print(json.dumps({"models": model_policy(config)}, indent=2))
             run(root, args.checkout.resolve(), config, args.staged)
     except (WorkflowError, OSError, ValueError) as exc:

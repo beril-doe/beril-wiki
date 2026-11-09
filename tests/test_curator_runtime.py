@@ -1017,3 +1017,23 @@ def test_contract_change_rewrites_derived_stages(tmp_path):
     (tmp_path / "contract/AGENTS.md").write_text("A new rule.")
     for name in EDITORIAL:
         assert stage_revision(tmp_path, name) != before[name]
+
+
+@pytest.mark.parametrize("role", ["pages", "writing"])
+def test_run_refuses_a_gpt_page_writer_before_any_job(tmp_path, monkeypatch, capsys, role):
+    """PR #21 review: page sessions run only on the Claude SDK, so a run refuses a GPT
+    model for a page-writing role before it reserves or charges any job."""
+    import sys
+    from pathlib import Path
+
+    from beril_wiki.agentic import __main__ as cli
+
+    (tmp_path / "agentic.yaml").write_text((Path(__file__).parents[1] / "agentic.yaml").read_text())
+    argv = ["agentic", "--root", str(tmp_path), "run", "--max-tokens", "100", "--max-jobs", "3"]
+    argv += ["--cli", "unused", "--step-model", f"{role}=gpt-6.1-sol"]
+    monkeypatch.setattr(sys, "argv", argv)
+    started = []
+    monkeypatch.setattr(cli, "run", lambda *args: started.append(args))
+    assert cli.main() == 1 and not started
+    out = capsys.readouterr().out
+    assert f"role {role} is gpt-6.1-sol: page sessions need a Claude model" in out

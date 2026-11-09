@@ -183,6 +183,18 @@ def model_policy(config: dict) -> dict[str, str]:
     return chosen
 
 
+# Roles whose jobs are page sessions (page_agent), which run only on the Claude SDK.
+PAGE_ROLES = ("pages", "writing")
+
+
+def check_page_writers(config: dict) -> None:
+    """Refuse a non-Claude model for a page-writing role before a run reserves any job."""
+    chosen = model_policy(config)
+    for role in PAGE_ROLES:
+        if backend_for(chosen[role]) != "claude":
+            raise WorkflowError(f"role {role} is {chosen[role]}: page sessions need a Claude model")
+
+
 def role_for(step: str) -> str:
     """Route by job role; a repair, retry or patch keeps its role. Review and verify
     are the reviewer's own jobs and route to it, as a pilot's judgements do."""

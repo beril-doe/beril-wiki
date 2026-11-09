@@ -11,6 +11,7 @@ model: claude-opus-5-5
 step_models:
   extraction: gpt-6.1-sol
   planning: claude-sonnet-5-5
+  # pages and writing run page sessions, which need a Claude model; run refuses gpt-*.
   pages: claude-haiku-5-5
   writing: claude-sonnet-5-5
   review: gpt-6-luna

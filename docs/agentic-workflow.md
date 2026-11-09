@@ -114,8 +114,8 @@ selected by `--root`. The committed policy explicitly assigns every role:
 | --- | --- | --- | --- |
 | `extraction` | GPT-6.1 Sol (Codex) | default | Extract source evidence, retaining scientific qualifiers. Applies to reports extracted from now on; evidence already extracted by GPT-6 Sol stays. |
 | `planning` | Sonnet 5.5 | `high` | Plan evidence integration and propose topic groups. |
-| `pages` | Haiku 5.5 | `medium` | Write the concept, entity and summary pages integration produces: one page session per `write/` pass. Applies to pages written from now on; pages already accepted stay. |
-| `writing` | Sonnet 5.5 | `medium` | Derived pages (conflicts, topics, literature, authors) as page sessions, home and entity merges; default for other generation jobs. Applies to pages written from now on. |
+| `pages` | Haiku 5.5 | `medium` | Write the concept, entity and summary pages integration produces: one page session per `write/` pass. Applies to pages written from now on; pages already accepted stay. Must be a Claude model. |
+| `writing` | Sonnet 5.5 | `medium` | Derived pages (conflicts, topics, literature, authors) as page sessions, home and entity merges; default for other generation jobs. Applies to pages written from now on. Must be a Claude model. |
 | `review` | GPT-6 Luna (Codex) | `high` | All separate scientific reviews and verifications, including extraction and the reviews a page session asks for. |
 | `queries` | GPT-6.1 Sol (Codex) | default | Construct literature search queries, including the PubMed queries for literature labels. |
 | `figures` | GPT-6.1 Sol (Codex) | default | Select figure placements. |
@@ -177,7 +177,8 @@ every card record's key.
 The CLI prints the resolved model policy before execution. Invalid file shapes,
 unknown roles, duplicate CLI role overrides, empty model IDs, a `step_efforts`
 that is not a map, and an unknown effort role or level are rejected before the
-runner starts. An explicitly named file must exist and validate even
+runner starts. `run` and `pilot cell` also refuse a `gpt-*` model for `pages` or
+`writing`, since page sessions run only on the Claude SDK. An explicitly named file must exist and validate even
 when `--model` replaces its policy. A checkout
 without the default file requires `--model`. Budgets remain required CLI flags.
 
