@@ -514,3 +514,27 @@ def test_a_later_pass_goes_straight_to_the_model_that_answered_a_refusal(tmp_pat
         page = dataclasses.replace(_page(tmp_path), step=f"write/concepts/a.md/pass/{n}")
         REAL_RUN(agent, page, tmp_path / f"work{n}")
     assert models == ["claude-haiku-5-5", "claude-sonnet-5-5", "claude-sonnet-5-5"]
+
+
+def test_a_re_review_that_crashes_cannot_restore_the_voided_approval(tmp_path):
+    """PR #21 review: the approval a re-review voids is voided on disk before the
+    reviewer runs, so an operational error mid-review leaves nothing to resume."""
+    from beril_wiki.agentic.runtime import WorkflowError
+
+    verdicts: list = [[], WorkflowError("Codex transport failed")]
+
+    def review(text, meta):
+        verdict = verdicts.pop(0)
+        if isinstance(verdict, Exception):
+            raise verdict
+        return verdict
+
+    s = _session(tmp_path, review=review)
+    (s.workdir / "page.md").write_text("A good claim. [src: x]")
+    assert s.do_check()["passed"] and s.do_review()["accepted"]
+    with pytest.raises(WorkflowError):
+        s.do_review()
+    resumed = PA.Session(s.page, s.workdir, max_reviews=3)
+    assert PA._restore(resumed)
+    assert resumed.do_submit()["missing"] == ["review"]
+    assert resumed.reviews == 2  # the failed review still counts against the limit

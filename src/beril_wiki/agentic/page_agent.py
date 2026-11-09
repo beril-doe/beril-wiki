@@ -181,6 +181,9 @@ class Session:
         # A review in progress voids any earlier approval: one that fails or stops must
         # leave nothing submit could accept.
         self.reviewed = ""
+        # Saved before the reviewer runs, so a crash or an operational error during the
+        # review cannot let _restore bring the voided approval back.
+        self.save()
         try:
             self.open = self.page.review(text, meta)
         except CandidateError as exc:
