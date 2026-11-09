@@ -289,10 +289,17 @@ def hooks_for(session: Session) -> dict:
             scope = rel.parts[0]
             session.deps[f"inventory:{scope}"] = digest(search_inventory(session.root, scope))
 
+    def covers(key: str, edited: Path) -> bool:
+        """Whether a recorded read or search shows the edited file, in any path form."""
+        args = json.loads(key)[1]
+        scope = under_work(str(args.get("file_path") or args.get("path") or work)).resolve()
+        return scope == edited or scope in edited.parents
+
     async def post_tool(data: Any, tool_use_id: str | None, context: Any) -> Any:
         if data.get("tool_name") in ("Edit", "Write"):
             target = str((data.get("tool_input") or {}).get("file_path", ""))
-            session.seen = {k: v for k, v in session.seen.items() if target not in k}
+            edited = under_work(target).resolve()
+            session.seen = {k: v for k, v in session.seen.items() if not covers(k, edited)}
         return {}
 
     async def pre_compact(data: Any, tool_use_id: str | None, context: Any) -> Any:

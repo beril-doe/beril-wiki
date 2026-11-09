@@ -352,6 +352,39 @@ def test_the_review_tool_runs_a_claude_reviewer_inside_the_session_loop(tmp_path
     assert verdict == {"accepted": True, "next": "call submit"}
 
 
+def test_an_edit_clears_searches_and_reads_of_the_page_in_any_path_form(tmp_path):
+    """Review finding N: a search of the working directory, or a read of page.md under
+    another path form, may run again after an edit; a search elsewhere stays denied."""
+    (tmp_path / "staging").mkdir()
+    (tmp_path / "staging/r.md").write_text("report claim")
+    s = _session(tmp_path)
+    hooks = PA.hooks_for(s)
+    pre, post = hooks["PreToolUse"][0].hooks[0], hooks["PostToolUse"][0].hooks[0]
+
+    def denied(data):
+        out = asyncio.run(pre(data, None, None))
+        return out.get("hookSpecificOutput", {}).get("permissionDecision") == "deny"
+
+    page = s.workdir / "page.md"
+    calls = [
+        {"tool_name": "Grep", "tool_input": {"pattern": "claim"}},
+        {"tool_name": "Glob", "tool_input": {"pattern": "*.json", "path": "."}},
+        {"tool_name": "Read", "tool_input": {"file_path": "page.md"}},
+    ]
+    staging = str(tmp_path / "staging")
+    elsewhere = {"tool_name": "Grep", "tool_input": {"pattern": "claim", "path": staging}}
+    for data in [*calls, elsewhere]:
+        assert not denied(data) and denied(data)
+    before = page.read_text()
+    page.write_text("A new claim.")
+    edit = {"tool_name": "Edit", "tool_input": {"file_path": str(page)}}
+    asyncio.run(post(edit, None, None))
+    page.write_text(before)  # the read's content hash alone would still deny it
+    asyncio.run(post(edit, None, None))
+    assert not any(denied(data) for data in calls)
+    assert denied(elsewhere)
+
+
 def test_each_session_message_reaches_the_transcript_before_the_next(tmp_path, monkeypatch):
     """Review finding O: a killed worker is charged from its transcript, so a turn that
     arrived must be on disk, not in a write buffer."""
