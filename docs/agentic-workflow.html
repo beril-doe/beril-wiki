@@ -258,7 +258,7 @@ flowchart LR
 <li>Gates run in code: length, required headings, preamble, figures absent from the input, invalid tags, uncited or unsupported figures. Dead links and legacy platform names are repaired in code.</li>
 <li>The reviewer receives the same rules and pack plus the numbered candidate and returns one JSON verdict of paragraph-indexed issues.</li>
 <li>After the first review, each review the writer asks for is a closed verification of the open objections. Each objection follows its paragraph through the writer's edits, and a new objection counts only against changed paragraphs. A session makes at most four reviewer calls, and the host accepts only the exact text that passed both the check and the latest review.</li>
-<li>A page that has not converged keeps its previous version and is listed in the run summary and <code>.agentic/failures.json</code>; the stage continues.</li>
+<li>A page that has not converged after a full review is salvaged when dropping its objected paragraphs leaves a page that passes the gates: the paragraphs are removed, an editorial note is left and the removal is recorded in <code>.agentic/salvaged.json</code>. Otherwise the page keeps its previous version and is listed in the run summary and <code>.agentic/failures.json</code>; the stage continues.</li>
 </ol>
 </details>
 
@@ -270,7 +270,7 @@ flowchart LR
 <tbody>
 <tr><td>Unchanged-run check</td><td class="hot">Zero model calls when the accepted run fingerprint matches.</td><td>First adoption of a changed contract refreshes derived prose once.</td></tr>
 <tr><td>Durable job and page caches</td><td>Reuse saved outputs during resume; refresh affected work.</td><td>Source, model, scientific contract or relevant code changes invalidate results.</td></tr>
-<tr><td>Packed evidence, one-turn jobs</td><td>No tool loop re-reads context every turn; writer and reviewer share one pack, and a cache keys on the prompt alone.</td><td>Packs are bounded (hub member pages under 110KB with explicit truncation marks) and travel in the cached system prompt, so a page session's later turns and its review jobs read the pack instead of re-sending it; requests and transcripts have size limits.</td></tr>
+<tr><td>Packed evidence in a cached prompt</td><td>Writer and reviewer share one pack, so neither searches the sources for what it already holds, and the session's loop guard denies re-reading content still in context.</td><td>Packs are bounded (hub member pages under 110KB with explicit truncation marks) and travel in the cached system prompt, so a page session's later turns and its review jobs read the pack instead of re-sending it; requests and transcripts have size limits.</td></tr>
 <tr><td>Page sessions and closed verification</td><td>The writer revises in one session that reads its cached conversation; an unsupported claim is deleted, not reworded. The reviewer then verifies its own issues against the changed paragraphs instead of reviewing the page again, so the open list can shrink but never grow.</td><td>Four reviewer calls per session; a page still carrying an objection is salvaged (the paragraph removed, an editorial note left) rather than dropped.</td></tr>
 <tr><td>Edits grouped by page</td><td>Combine evidence before writing a destination.</td><td>Validation and separate scientific review still consume resources.</td></tr>
 </tbody></table></div>
