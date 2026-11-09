@@ -407,3 +407,27 @@ def test_each_session_message_reaches_the_transcript_before_the_next(tmp_path, m
     )
     asyncio.run(PA._drive(agent, _session(tmp_path), "k", "m", False))
     assert '"input_tokens": 7' in seen[0]
+
+
+def test_a_wiki_search_does_not_make_the_session_rest_on_the_output_tree(tmp_path):
+    """Review finding D: a page written after a writer searched wiki/ must not make that
+    writer's finished session stale, or every replay buys it again."""
+    import dataclasses
+
+    from beril_wiki.agentic.runtime import current_dependencies
+
+    (tmp_path / "wiki/concepts").mkdir(parents=True)
+    (tmp_path / "wiki/concepts/b.md").write_text("A sibling page.")
+    page = _page(tmp_path)
+    s = PA.Session(
+        dataclasses.replace(page, reads=[tmp_path / "wiki"]),
+        tmp_path / "work",
+        max_reviews=3,
+        root=tmp_path,
+    )
+    (tmp_path / "work").mkdir()
+    pre = PA.hooks_for(s)["PreToolUse"][0].hooks[0]
+    search = {"pattern": "sibling", "path": str(tmp_path / "wiki")}
+    asyncio.run(pre({"tool_name": "Grep", "tool_input": search}, None, None))
+    (tmp_path / "wiki/concepts/a.md").write_text("The page this session wrote.")
+    assert current_dependencies(tmp_path, s.deps) == s.deps

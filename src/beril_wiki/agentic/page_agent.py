@@ -285,9 +285,10 @@ def hooks_for(session: Session) -> dict:
             return  # the working directory: the page's own scratch
         if name == "Read" and path.is_file():
             session.deps[rel.as_posix()] = file_hash(path)
-        elif rel.parts and rel.parts[0] in ("wiki", "staging"):
-            scope = rel.parts[0]
-            session.deps[f"inventory:{scope}"] = digest(search_inventory(session.root, scope))
+        elif rel.parts and rel.parts[0] == "staging":
+            # Not wiki/: it is the output tree, so its inventory changes with every page
+            # a run writes, this one included, and a finished session would never replay.
+            session.deps["inventory:staging"] = digest(search_inventory(session.root, "staging"))
 
     def covers(key: str, edited: Path) -> bool:
         """Whether a recorded read or search shows the edited file, in any path form."""
