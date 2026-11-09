@@ -153,16 +153,19 @@ avoid repeating unsuccessful analyses.
 The top bar holds Results and Open questions (when the corpus has findings),
 Topics, a Browse menu, About, Search, Ask and the theme toggle. Browse lists
 Concepts, Entities, Conflicts, Reports and Authors. Without JavaScript the
-Browse list opens while focus is inside the menu.
+Browse list opens while focus is inside the menu. About is the last site
+link. On a wide screen it sits at the right end of the links, just before
+Search. At 960 px and below the links take a row of their own, and About
+follows Browse on that row.
 
 The home page opens with the wiki's title, the introduction from
 `wiki/index.md`, the search box and an "Ask the wiki" button. Beside the
 introduction, "The corpus" gives the number of project reports,
 cross-project digests, concepts, entities, recorded conflicts and topics.
-Each figure links to its collection. The sections that follow are "Find your
-way in", "What the projects found", "Questions still open", "The map" and
-"Topics". The two sections on results and questions appear only when the
-corpus has findings.
+Each figure links to its collection. The sections that follow are
+"Highlights", "Find your way in", "The map" and "Topics". "Highlights"
+appears only when the corpus has findings. It holds the "Topic strips" key,
+then "What the projects found" and "Questions still open".
 
 "Find your way in" holds one card per kind of page: Topics, Concepts,
 Entities, Conflicts and Reports, then Results and Open questions when the
@@ -172,24 +175,29 @@ Browse list in `wiki/index.md`.
 
 "What the projects found" shows the three result cards that publish ranks
 for the home page, as the rendering section above describes. "Questions
-still open" lists the three questions that publish ranks for the home page.
-Each question names the projects it builds on. Each section ends with a link
-to all results or all questions.
+still open" shows the three questions that publish ranks for the home page.
+Each question is a card that names the projects it builds on. The question
+cards use the same three-column grid as the result cards, so their topic
+strips line up. Below 900 px both take one column. Each part
+ends with a link to all results or all questions.
 
 Each home result and question carries a topic strip: one slot per topic, in
 the same order on every strip, filled for each topic the entry touches. The
 taller slot is the entry's main topic. Opening a strip lists its topic names.
-A "Topic strips" panel above both sections says what a topic is and holds a
-row of the same slots. Pointing at a slot shows that topic's name, linked to
-its page, and its sentence from the topic list in `wiki/index.md`. Picking a
+A "Topic strips" key above both parts is one row: its label, the same slots
+and a readout. "What do the colours mean?" opens the explanation of what a
+topic is and how a strip reads. Pointing at a slot shows that topic's name,
+linked to its page, and its sentence from the topic list in `wiki/index.md`.
+Picking a
 topic in the row or in a strip's list outlines every home result and
 question that has it. The other entries lose their card background and
-their strips fade. The panel keeps the picked topic and says how many
+their strips fade. The readout keeps the picked topic and says how many
 results and questions on the page share it. The pick also lights that
 topic's cluster on the home map and fades the others. "See it on the map"
 scrolls down to the map, whose legend says its colours are the same topics
 as the strips. Escape or "Show all" clears the pick. Without JavaScript the
-panel keeps its explanation, the row stays hidden, and the strips still open.
+key keeps its label and its explanation, the row of slots stays hidden, and
+the strips still open.
 
 "The map" draws the topics and the concepts they gather. A click on a point
 opens its page. "Topics" is a table with one row per topic: its name, its

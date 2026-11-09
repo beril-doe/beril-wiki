@@ -592,21 +592,42 @@
   margin-top: 3px;
   color: var(--method);
 }
+// The three questions use the result cards' three-column grid, so their strips line up.
 .xqlist {
   list-style: none;
   padding: 0;
   margin: 0 0 16px;
+  // The same columns, gap and breakpoint as .grid2.grid3, so every strip lines up.
   display: grid;
-  gap: 8px;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
   > li {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 8px;
     background: var(--card);
     border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 10px 14px;
+    padding: 14px 15px;
+    .tstrip {
+      margin-top: auto;
+    }
   }
+}
+// The sub-heads inside Highlights.
+.highlights .hlpart {
+  margin-top: 28px;
+}
+.sechead.sub {
+  padding-top: 8px;
+}
+.sechead.sub h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: var(--t-sub);
+  margin: 0;
 }
 .xqt {
   font-family: var(--serif);
@@ -1155,15 +1176,33 @@ svg.nvlinks {
 }
 // The key above both sections: what a topic is, the row of topics in strip order,
 // and a readout naming the topic under the pointer or the one picked.
+// One row: the label, the colours and the readout; the explanation folds below them.
 .tkeybox {
-  margin-top: 36px;
-  padding: 14px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  // Top-aligned: a readout that grows must not move the slots under the pointer.
+  align-items: flex-start;
+  gap: 8px 18px;
+  padding: 10px 14px;
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 8px;
+}
+.twhy {
+  flex-basis: 100%;
+  font-size: var(--t-meta);
+  color: var(--ink-2);
+  > summary {
+    width: max-content;
+    cursor: pointer;
+  }
+  .tintro {
+    margin: 6px 0 2px;
+  }
 }
 .tkeylabel {
   margin: 0;
+  // The slots' height, so the label sits level with them in the top-aligned row.
+  line-height: 28px;
   font-size: var(--t-meta);
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -1177,16 +1216,17 @@ svg.nvlinks {
   color: var(--ink-2);
 }
 .tkey {
-  display: grid;
-  grid-template-columns: min(100%, 360px) 1fr;
-  gap: 10px 20px;
-  align-items: start;
+  flex: 1 1 520px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px 16px;
   &[hidden] {
     display: none;
   }
 }
 .tkeyslots {
-  width: 100%;
+  flex: 0 0 min(100%, 300px);
 }
 .tkeyslot {
   height: 28px;
@@ -1201,7 +1241,8 @@ svg.nvlinks {
 }
 // The readout keeps its height so the cards below do not jump as the pointer moves.
 .tread {
-  min-height: 4.8em;
+  flex: 1 1 240px;
+  min-height: 3em;
   font-size: var(--t-ui);
   p {
     margin: 0;
@@ -1266,8 +1307,8 @@ svg.nvlinks {
   color: var(--ink);
 }
 @media (max-width: 700px) {
-  .tkey {
-    grid-template-columns: 1fr;
+  .tkeyslots {
+    flex-basis: 100%;
   }
   // Two rows of eight and seven keep each topic button wide enough to tap; the
   // order still reads left to right, then on to the second row.

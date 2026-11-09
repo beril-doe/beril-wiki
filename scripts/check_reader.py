@@ -62,14 +62,17 @@ PHONE = {"width": 390, "height": 844}
 DESKTOP = {"width": 1280, "height": 900}
 WIDE = {"width": 1440, "height": 900}
 
-HOME_HEADINGS = [
-    "BERIL Knowledge Wiki",
-    "Find your way in",
-    "What the projects found",
-    "Questions still open",
-    "The map",
-    "Topics",
+# The home outline (design-home.md, Markup B): headings outside the result cards, in order.
+HOME_OUTLINE = [
+    ["H1", "BERIL Knowledge Wiki"],
+    ["H2", "Highlights"],
+    ["H3", "What the projects found"],
+    ["H3", "Questions still open"],
+    ["H2", "Find your way in"],
+    ["H2", "The map"],
+    ["H2", "Topics"],
 ]
+HIGHLIGHTS_DECK = "Three results from different topics and three questions that join projects."
 HOME_ABSENT = [
     "What BERIL found",
     "Plan your next project",
@@ -487,9 +490,14 @@ def check_home(browser, base: str) -> list[str]:
     fails: list[str] = []
     page = new_page(browser)
     go(page, base + "/")
-    heads = page.eval_on_selector_all("h1, h2", "els => els.map(e => e.textContent.trim())")
-    if heads != HOME_HEADINGS:
-        fails.append(f"home: headings {heads} != {HOME_HEADINGS}")
+    heads = page.eval_on_selector_all(
+        "h1, h2, h3",
+        "els => els.filter(e => !e.closest('.fcard')).map(e => [e.tagName, e.textContent.trim()])",
+    )
+    if heads != HOME_OUTLINE:
+        fails.append(f"home: outline {heads} != {HOME_OUTLINE}")
+    fails += highlight_fails(page)
+    fails += home_layout_fails(browser, base)
     text = page.inner_text("body")
     fails += [f"home: contains '{s}'" for s in HOME_ABSENT if s.lower() in text.lower()]
 
@@ -533,6 +541,176 @@ def check_home(browser, base: str) -> list[str]:
     fails += kind_card_fails(page)
     fails += check_bar(browser, base)
     fails += key_entry_fails(browser, base)
+    return fails
+
+
+HIGHLIGHTS_JS = """() => {
+    const hl = document.querySelector('section.band.highlights[aria-label="Highlights"]')
+    if (!hl) return null
+    const kids = [...hl.children]
+    const key = hl.querySelector(':scope > section.tkeysec[aria-label="Topic strips"]')
+    const found = hl.querySelector(
+        ':scope > div.hlpart[data-cards][data-tstrips][aria-label="What the projects found"]')
+    const open = hl.querySelector(
+        ':scope > div.hlpart[data-tstrips][aria-label="Questions still open"]')
+    const at = e => e ? kids.indexOf(e) : -1
+    return {
+        head: hl.querySelector(':scope > .sechead > h2')?.textContent.trim(),
+        deck: hl.querySelector(':scope > .sechead > p')?.textContent.trim(),
+        order: [at(key), at(found), at(open)],
+        keyBand: !!key && key.classList.contains('band'),
+        foundHead: found?.querySelector(':scope > .sechead.sub > h3')?.textContent.trim(),
+        openHead: open?.querySelector(':scope > .sechead.sub > h3')?.textContent.trim(),
+        cards: found ? found.querySelectorAll('.fcard').length : 0,
+        questions: open ? open.querySelectorAll('ul.xqlist > li').length : 0,
+        tkey: !!key?.querySelector('[data-tkey]'),
+        why: key?.querySelector('details.twhy > summary')?.textContent.trim(),
+        intro: !!key?.querySelector('details.twhy > .tintro'),
+        after: [...document.querySelectorAll('h2')].map(h => h.textContent.trim())
+            .filter(t => ['Find your way in', 'The map', 'Topics'].includes(t)).length,
+        hlFirst: [...document.querySelectorAll('section.band')].indexOf(hl),
+    }
+}"""
+
+
+def highlight_fails(page: Page) -> list[str]:
+    """Highlights holds, in order, the topic key, the three results and the three questions."""
+    got = page.evaluate(HIGHLIGHTS_JS)
+    if got is None:
+        return ['home: no section.band.highlights[aria-label="Highlights"]']
+    fails: list[str] = []
+    if got["head"] != "Highlights" or got["deck"] != HIGHLIGHTS_DECK:
+        fails.append(f"home: Highlights reads '{got['head']}' / '{got['deck']}'")
+    o = got["order"]
+    if -1 in o or o != sorted(o):
+        fails.append(f"home: Highlights holds key, results, questions at positions {o}")
+    if got["keyBand"]:
+        fails.append("home: the topic key is still a .band of its own")
+    if (got["foundHead"], got["openHead"]) != ("What the projects found", "Questions still open"):
+        fails.append(f"home: Highlights parts are headed {got['foundHead']}, {got['openHead']}")
+    if (got["cards"], got["questions"]) != (3, 3):
+        fails.append(f"home: Highlights holds {got['cards']} results, {got['questions']} questions")
+    if not got["tkey"] or got["why"] != "What do the colours mean?" or not got["intro"]:
+        fails.append(f"home: the key lacks [data-tkey] or details.twhy '{got['why']}' with .tintro")
+    if got["hlFirst"] != 1:
+        fails.append(f"home: Highlights is band {got['hlFirst']}, expected right after the hero")
+    return fails
+
+
+def twhy_fails(page: Page, where: str) -> list[str]:
+    """The key's explanation is closed at first and opens and closes on its summary."""
+    fails: list[str] = []
+    why = page.locator("section.tkeysec details.twhy")
+    intro = why.locator(".tintro")
+    if why.count() != 1:
+        return [f"home: {where}: {why.count()} details.twhy"]
+    if why.evaluate("d => d.open") or intro.is_visible():
+        fails.append(f"home: {where}: the key's explanation starts open")
+    why.locator("summary").click()
+    if not intro.is_visible() or "15 topics" not in (intro.text_content() or ""):
+        fails.append(f"home: {where}: opening 'What do the colours mean?' does not show .tintro")
+    why.locator("summary").click()
+    if intro.is_visible():
+        fails.append(f"home: {where}: a second click leaves the explanation open")
+    return fails
+
+
+LAYOUT_JS = """() => {
+    const r = s => {
+        const e = document.querySelector(s); return e ? e.getBoundingClientRect() : null }
+    const lefts = s => [...document.querySelectorAll(s)].map(e => {
+        const b = e.getBoundingClientRect(); return [b.left, b.top] })
+    const about = document.querySelector('.barnav > a.barlink.barabout')
+    const row = ['.tkeylabel', '.tkeyslots', '.tread'].map(s => r('.tkeysec ' + s))
+    return {
+        cards: lefts('.hlpart[data-cards] .fcard'), qs: lefts('ul.xqlist > li'),
+        aboutLast: !!about && about === document.querySelector('.barnav').lastElementChild,
+        about: about?.getBoundingClientRect().toJSON(), browse: r('.barmenu')?.toJSON(),
+        search: r('header.bar .search-button')?.toJSON(), first: r('.barnav > a.barlink')?.toJSON(),
+        aboutMargin: about ? getComputedStyle(about).marginLeft : '',
+        nav: [...document.querySelectorAll('.barnav > *')].map(e => [e.textContent.trim()
+            .split('\\n')[0], e.getBoundingClientRect().right]),
+        keyRow: row.every(Boolean)
+            && row.every(b => b.top < row[0].bottom && b.bottom > row[0].top),
+        width: innerWidth,
+    }
+}"""
+
+
+# The highlights grids: three columns at 900 px and up, one below (.grid2.grid3 rules).
+GRID_WIDTHS = [1440, 1280, 960, 900, 899, 390]
+
+
+def home_layout_fails(browser, base: str) -> list[str]:
+    """Question cards follow the result grid: three columns from 900 px, each question card
+    starting where the result card above it starts, and one column below 900 px. The key
+    sits on one row at desktop; About sits just before Search at 1440 px and on the row of
+    links at 390 px; the key's explanation opens with and without the script."""
+    fails: list[str] = []
+    for w in GRID_WIDTHS:
+        page = new_page(browser, {"width": w, "height": 900})
+        go(page, base + "/")
+        g = page.evaluate(LAYOUT_JS)
+        fails += grid_fails(g, w)
+        if w >= DESKTOP["width"] and not g["keyRow"]:
+            fails.append(f"home: at {w} px the key's label, slots and readout are not on one row")
+        if not g["aboutLast"]:
+            fails.append(f"home: at {w} px About is not the last .barnav link with class barabout")
+        elif w == WIDE["width"]:
+            fails += about_wide_fails(g)
+        elif w == PHONE["width"]:
+            fails += about_phone_fails(g)
+        if w == DESKTOP["width"]:
+            fails += twhy_fails(page, "with the script")
+        page.context.close()
+    nojs = new_page(browser, js=False)
+    go(nojs, base + "/")
+    fails += twhy_fails(nojs, "without the script")
+    nojs.context.close()
+    return fails
+
+
+def grid_fails(g: dict, w: int) -> list[str]:
+    cards, qs = g["cards"], g["qs"]
+    if len(cards) != 3 or len(qs) != 3:
+        return [f"home: at {w} px {len(cards)} result cards, {len(qs)} question cards"]
+    where = f"question cards at x {[round(x, 1) for x, _ in qs]}, results at " + str(
+        [round(x, 1) for x, _ in cards]
+    )
+    if w >= 900:
+        off = max(abs(q[0] - c[0]) for q, c in zip(qs, cards, strict=True))
+        rows = {round(y) for _, y in qs}
+        if len({round(x) for x, _ in qs}) != 3 or len(rows) != 1 or off > 1:
+            return [f"home: at {w} px {where}, off by up to {off:.1f} px (three columns expected)"]
+        return []
+    one = {round(x) for x, _ in qs} | {round(x) for x, _ in cards}
+    stacked = [y for _, y in qs] == sorted(y for _, y in qs) and len({y for _, y in qs}) == 3
+    if len(one) != 1 or not stacked:
+        return [f"home: at {w} px {where}, expected one column for both"]
+    return []
+
+
+def about_wide_fails(g: dict) -> list[str]:
+    a, b, s_ = g["about"], g["browse"], g["search"]
+    gap = s_["left"] - a["right"]
+    if a["left"] > b["right"] and 0 <= gap <= 48:
+        return []
+    return [
+        f"home: at 1440 px About spans x {a['left']:.0f}-{a['right']:.0f}, Browse ends at "
+        f"{b['right']:.0f}, Search starts at {s_['left']:.0f} ({gap:.0f} px after About)"
+    ]
+
+
+def about_phone_fails(g: dict) -> list[str]:
+    fails: list[str] = []
+    a, f = g["about"], g["first"]
+    if not (a["top"] < f["bottom"] and a["bottom"] > f["top"]) or g["aboutMargin"] != "0px":
+        fails.append(
+            f"home: at 390 px About sits at y {a['top']:.0f}, the first bar link at "
+            f"y {f['top']:.0f} (About margin-left {g['aboutMargin']}); not on the links row"
+        )
+    if out := [n for n, right in g["nav"] if right > g["width"] + 0.5]:
+        fails.append(f"home: at 390 px bar links run past the screen's right edge: {out}")
     return fails
 
 
@@ -706,6 +884,18 @@ def check_bar(browser, base: str) -> list[str]:
     return fails
 
 
+# Resolves once the page has not scrolled for six animation frames.
+SCROLL_SETTLED_JS = """() => new Promise((done) => {
+    let y = scrollY, still = 0
+    const tick = () => {
+        if (Math.abs(scrollY - y) >= 1) { still = 0; y = scrollY }
+        else if (++still > 5) return done()
+        requestAnimationFrame(tick)
+    }
+    tick()
+})"""
+
+
 def check_strips(browser, base: str, page: Page) -> list[str]:
     """Every home result and question has a topic strip; picking a topic marks those sharing it."""
     fails: list[str] = []
@@ -770,12 +960,14 @@ def check_strips(browser, base: str, page: Page) -> list[str]:
     if readout() != "idle|":
         fails.append(f"home: the key opens showing {readout()}")
     hover = entries[-1]["topics"][0]
-    page.locator(f'.tkeyslot[data-t="{hover}"]').hover()
+    if why := rest_on(page, f'.tkeyslot[data-t="{hover}"]'):
+        fails.append(f"home: pointing at the {hover} key slot: {why}")
     if readout() != f"{hover}|":
         fails.append(f"home: pointing at {hover} shows {readout()}")
     page.mouse.move(0, 0)
     topic = entries[0]["topics"][0]
-    page.locator(f'.tkeyslot[data-t="{topic}"]').click()
+    if why := rest_on(page, f'.tkeyslot[data-t="{topic}"]', click=True):
+        fails.append(f"home: clicking the {topic} key slot: {why}")
     if (got := settled()) != want(topic):
         fails.append(f"home: picking {topic} shows {got}, expected {want(topic)}")
     page.mouse.move(0, 0)
@@ -801,6 +993,9 @@ def check_strips(browser, base: str, page: Page) -> list[str]:
         fails.append("home: Escape does not return focus to the topic's key slot")
     if len(got := page.evaluate(lit_map)) != page.locator("[data-tmap] .cluster").count():
         fails.append(f"home: Escape leaves only map clusters {got} bright")
+    # Escape returns focus to the key slot, which scrolls the page back up; a click
+    # during that scroll lands on whatever passes under the pointer.
+    page.evaluate(SCROLL_SETTLED_JS)
     page.locator(f"{entries_js} .tstrip summary").last.click()
     name = page.locator(f"{entries_js} .tstrip[open] .tname").first
     picked = name.get_attribute("data-t") or ""
@@ -817,6 +1012,8 @@ def check_strips(browser, base: str, page: Page) -> list[str]:
     go(nojs, base + "/")
     if nojs.locator(".tkey").is_visible():
         fails.append("home: the topic key shows without the script")
+    # The explanation sits in a closed details; opening it shows the words.
+    nojs.locator("details.twhy > summary").click()
     if not nojs.locator(".tintro").is_visible():
         fails.append("home: the topic-strip explanation is missing without the script")
     if nojs.locator(f"{entries_js} .tstrip").count() != len(entries):
@@ -864,6 +1061,38 @@ def board_colour_fails(page: Page, base: str, hue: dict[str, str]) -> list[str]:
     if not seen:
         fails.append("strips: no board card to compare with the key")
     return fails
+
+
+def rest_on(page: Page, sel: str, click: bool = False) -> str:
+    """Rest the pointer on `sel`'s centre, as a hand would, and report if the element moves
+    out from under it. With `click`, then click it there."""
+    target = page.locator(sel)
+    target.scroll_into_view_if_needed()
+    r = target.bounding_box()
+    x, y = r["x"] + r["width"] / 2, r["y"] + r["height"] / 2
+    page.mouse.move(x, y)
+    # Sampled, since an element that slips away can slip back and oscillate.
+    why = ""
+    for _ in range(8):
+        page.wait_for_timeout(60)
+        now = target.bounding_box()
+        under = page.evaluate(
+            "([x, y, s]) => !!document.elementFromPoint(x, y)?.closest(s)", [x, y, sel]
+        )
+        if abs(now["x"] - r["x"]) > 1 or abs(now["y"] - r["y"]) > 1 or not under:
+            why = (
+                f"it moves from ({r['x']:.0f}, {r['y']:.0f}) to ({now['x']:.0f}, {now['y']:.0f}) "
+                f"under a resting pointer, which is {'still' if under else 'no longer'} on it"
+            )
+            break
+    if click and why:
+        # A slot that will not hold still under the pointer is picked by keyboard, so the
+        # checks after it still test picking; the movement is already a failure.
+        target.focus()
+        page.keyboard.press("Enter")
+    elif click:
+        page.mouse.click(x, y)
+    return why
 
 
 def check_strips_page(browser, base: str) -> list[str]:

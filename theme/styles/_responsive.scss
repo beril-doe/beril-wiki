@@ -111,10 +111,16 @@
     }
     // The links take a row of their own; Browse opens below that whole row, so
     // its list never runs off the right edge of a phone.
+    // A full row of its own: the desktop rule's flex: 1 would squeeze it beside the name.
     .barnav {
       position: relative;
+      flex: 0 0 100%;
       width: 100%;
       gap: 4px 16px;
+    }
+    // On a phone About stays on the row of links.
+    .barabout {
+      margin-left: 0;
     }
     .barmenu {
       position: static;

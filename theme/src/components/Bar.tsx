@@ -21,7 +21,7 @@ const BROWSE: [string, string][] = [
   ["Reports", "summaries/index"],
   ["Authors", "authors/index"],
 ]
-// About the wiki is its own tab, after Browse, at the maintainer's request.
+// About the wiki is the last site link, pushed right so it sits just before Search.
 const ABOUT: [string, string] = ["About", "about"]
 
 // The mark: a dish holding a small knowledge graph. The accent node takes the
@@ -85,7 +85,7 @@ export function Bar({ cd, header }: { cd: QuartzComponentProps; header: PageFram
             ))}
           </ul>
         </div>
-        <a class="barlink" href={resolveRelative(slug, ABOUT[1] as FullSlug)} aria-current={current(ABOUT[1]) ? "page" : undefined}>
+        <a class="barlink barabout" href={resolveRelative(slug, ABOUT[1] as FullSlug)} aria-current={current(ABOUT[1]) ? "page" : undefined}>
           {ABOUT[0]}
         </a>
       </nav>

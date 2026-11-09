@@ -36,6 +36,11 @@
     flex-wrap: wrap;
     row-gap: 2px;
     min-width: 0;
+    // The nav fills the row so About can sit at its right end, just before Search.
+    flex: 1;
+  }
+  .barabout {
+    margin-left: auto;
   }
   .barlink,
   .barmenu-btn {
