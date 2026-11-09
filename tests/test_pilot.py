@@ -329,3 +329,21 @@ def test_a_failing_source_keeps_the_sources_extracted_before_it(tmp_path, monkey
     manifest = P.run_cell(scratch, "x", "extraction", ["s.md", "t.md"], config)
     assert "Codex token cap reached" in manifest["error"]
     assert list(manifest["outcomes"]) == ["extract/s.md/0"]
+
+
+def _manifest(scratch, name, outcomes, rows=(1, 0)):
+    cell = scratch / "cells" / name
+    cell.mkdir(parents=True)
+    fields = dict(kind="derived", models={}, seconds=0, error="", usage={}, detail={})
+    manifest = fields | {"cell": name, "rows": list(rows), "outcomes": outcomes}
+    (cell / "manifest.json").write_text(json.dumps(manifest))
+
+
+def test_a_rerun_cell_replaces_the_pages_its_stopped_cell_never_ran(tmp_path):
+    """Review finding H: the per-model view keeps the rerun's row, not "not run"."""
+    R.Ledger(tmp_path / ".agentic/jobs.sqlite", "p", 10, 10, 1)
+    row = {"dropped": [], "written": False}
+    _manifest(tmp_path, "int-haiku", {"concepts/a.md": row | {"status": "not run"}})
+    _manifest(tmp_path, "int-haiku-b", {"concepts/a.md": row | {"status": "written"}})
+    merged = P.report(tmp_path)["models"]["int-haiku"]["concepts/a.md"]
+    assert (merged["status"], merged["cell"]) == ("written", "int-haiku-b")

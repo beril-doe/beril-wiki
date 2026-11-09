@@ -636,7 +636,7 @@ def report(scratch: Path) -> dict:
         merged = models.setdefault(group, {})
         for page, row in pages.items():
             # A page a later cell reached replaces the earlier cell's untouched copy.
-            if page not in merged or merged[page]["status"] == "unchanged":
+            if page not in merged or merged[page]["status"] in ("unchanged", "not run"):
                 merged[page] = row | {"cell": manifest["cell"]}
     report = {"cells": cells, "models": models}
     atomic_json(scratch / "report.json", report)
