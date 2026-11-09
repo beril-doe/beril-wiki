@@ -1243,3 +1243,12 @@ def test_stored_content_flag_replays_as_that_jobs_failure(tmp_path):
     with pytest.raises(WorkflowError, match="inspect saved job") as caught:
         ledger.reserve("broken")
     assert not isinstance(caught.value, JobFailed)
+
+
+def test_pilot_usd_cap_counts_claude_aliases(tmp_path):
+    """Review finding K: a Claude model named by alias counts against a pilot's USD cap."""
+    ledger = Ledger(tmp_path / "jobs.sqlite", "pilot", 10**9, 99, 10, caps={"max_usd": 3})
+    ledger.reserve("a", "write/x", "sonnet")
+    ledger.finish("a", "ok", {"input_tokens": 1, "output_tokens": 1}, cost=2.5)
+    with pytest.raises(WorkflowError, match="Claude USD 2.50"):
+        ledger.reserve("b", "write/y", "sonnet")

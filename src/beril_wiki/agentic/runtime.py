@@ -535,7 +535,8 @@ class Ledger:
         if backend_for(model) == "claude" and self.caps.get("max_usd"):
             held = float(hold if hold is not None else self.caps.get("usd_headroom", 2.0))
             (spent,) = self.db.execute(
-                "SELECT coalesce(sum(cost),0) FROM jobs WHERE run=? AND model LIKE 'claude%'",
+                # Every non-GPT model is served by Claude, aliases such as `sonnet` included.
+                "SELECT coalesce(sum(cost),0) FROM jobs WHERE run=? AND model NOT LIKE 'gpt-%'",
                 (self.run,),
             ).fetchone()
             if spent + held > float(self.caps["max_usd"]):

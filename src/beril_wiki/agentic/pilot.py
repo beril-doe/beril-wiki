@@ -618,7 +618,7 @@ def report(scratch: Path) -> dict:
         for page, outcome in manifest.get("outcomes", {}).items():
             stem = page.removesuffix(".md")
             usd, codex = db.execute(
-                "SELECT coalesce(sum(CASE WHEN model LIKE 'claude%' THEN cost END),0),"
+                "SELECT coalesce(sum(CASE WHEN model NOT LIKE 'gpt-%' THEN cost END),0),"
                 "coalesce(sum(CASE WHEN model LIKE 'gpt-%' THEN tokens END),0) FROM jobs "
                 "WHERE rowid BETWEEN ? AND ? AND (step IN (?, ?) OR step LIKE ? OR step LIKE ?)",
                 (first, last, f"write/{page}", stem, f"write/{page}/%", f"{stem}/%"),
