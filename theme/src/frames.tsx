@@ -11,7 +11,8 @@
 import type { FullSlug, PageFrame } from "@quartz-community/types"
 import type { Root } from "hast"
 import { Bar } from "./components/Bar"
-import { RecordBar, ResultsBoard, TopicCards } from "./components/Cards"
+import { RecordBar, ResultsBoard } from "./components/Cards"
+import { ConceptLinks, Connections } from "./components/Connections"
 import { EvidenceRail } from "./components/EvidenceRail"
 import { Home } from "./components/Home"
 import { Listing, indexFigures } from "./components/Listing"
@@ -44,7 +45,7 @@ export const BerilFrame: PageFrame = {
     const kind = collectionOf(slug)
     const prose = (
       <>
-        {kind === "topics" && !index && <TopicCards file={file} c={c} />}
+        {(kind === "topics" || kind === "summaries") && !index && <Connections file={file} c={c} />}
         {(kind === "findings" || kind === "directions") && !index && <RecordBar file={file} />}
         {slot(beforeBody).map((B) => (
           <B {...cd} />
@@ -80,6 +81,8 @@ export const BerilFrame: PageFrame = {
             <NavRail cd={cd} file={file} c={c} right={right} />
             <div class="prose">
               {prose}
+              {kind === "concepts" && !index && <Connections file={file} c={c} />}
+              {(kind === "findings" || kind === "directions") && !index && <ConceptLinks file={file} c={c} />}
               <Sources cites={w.cites} c={c} from={slug as FullSlug} />
               {slot(afterBody).map((A) => (
                 <A {...cd} />

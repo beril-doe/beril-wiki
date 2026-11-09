@@ -207,8 +207,33 @@ reports, conflicts and entities.
 The Topics index (`/topics/`) lists the topic cards, each with its concept
 and report counts.
 
-A topic hub shows "Results from this topic" (up to three cards) and "Open
-questions in this topic" (that topic's row of the grid) above its synthesis.
+Topic hubs, project reports and concept pages list the results and open
+questions that belong to them, in the card style of the Results page. A part
+shows its first three entries as cards. A "N more" fold lists the rest by
+title. An open-question card shows its title, its approach, what it needs and
+why, and the Novel words when they apply. A part with no entries
+does not appear. The heads in these parts add no space above them beyond the
+gap between parts.
+
+- A topic hub opens with "Results from this topic" and "Open questions in
+  this topic" (every question filed under the topic, by title). The results
+  part shows up to three cards from the results filed under the topic, ordered
+  by their rank for that topic, then by comparison label. Each part links to
+  the Results or Open questions page with its Topic chip set to that topic,
+  so the results link shows every card again. A topic with no results of its
+  own shows its top-ranked results from other topics, with no results link.
+  A "Background" head
+  then introduces the synthesis. Topic hubs do not show the open-questions
+  grid.
+- A project report opens with "Results from this project" (Novel first) and
+  "Open questions that build on this project". A "The report" head then
+  introduces the summary.
+- A concept page ends, above its sources, with "Results from the projects
+  this page cites" and "Open questions on these projects". The results take
+  one project at a time, so the first cards come from different projects.
+  Within each project, results filed under the concept's own topic come
+  first, then Novel first. Questions that build on more of the cited projects
+  come first.
 
 A result card shows its kind in plain words (Result, Interpretation, No
 effect found, Inconclusive test, Correction), a title, a one or two sentence
@@ -310,7 +335,11 @@ hidden. Cards render without JavaScript; the bar needs it.
   they apply, how many projects and topics it joins, and its topic.
 
 A result page lists "Related results in other projects" when a listed result
-in another project relates to it. On a direction, "Copy BERIL prompt" copies a
+in another project relates to it. A result page lists "Concepts that cite this
+project", and a question page lists "Concepts that cite these projects": the
+concept pages that cite the project reports behind it. The concepts that cite
+those reports most come first. The list shows six, and a "N more" fold holds
+the rest. On a direction, "Copy BERIL prompt" copies a
 prompt to paste into BERIL and "Copy handoff brief" copies Markdown for a
 collaborator or a lab.
 `scripts/check_reader.py` checks these pages (see

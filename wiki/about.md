@@ -50,6 +50,31 @@ literature-context section whose citations were checked against PubMed.
 **Conflicts.** Places where projects in the corpus disagree, with the evidence
 on each side and the work that would settle it.
 
+**Results.** Single findings from one project, in plain words: what it measured,
+what it found missing, what it inferred, or what it corrected. An AI model picks
+up to six results from each report and writes each summary, and a second AI
+model reviews it. Each result page links to its project report, to the open
+questions that build on it, and to related results in other projects. The
+Results page maps every result by topic and by how it compares with PubMed.
+
+**Comparison with PubMed.** Once an AI search of PubMed abstracts has assessed a
+result, the result carries one of five labels: *Novel* (the search found nothing
+close, so the result could be new), *Builds on PubMed work*, *Differs from
+PubMed abstracts*, *Similar result in PubMed*, or *Too little published evidence
+to compare*. A result still waiting for its search, or whose label was
+withdrawn, reads *Not compared yet*. Corrections carry no label. The label
+reflects abstracts only, and it does not establish novelty or correctness.
+
+**Open questions.** Research questions that the results leave open. Each states
+a hypothesis, the test that would settle it, the results it builds on, and what
+answering it needs: data already in the lakehouse, an analysis to build, new
+measurements, or *not yet clear* when the records cannot tell. An AI model drafts them from the results and a second AI model
+reviews them. No scientist has rated them yet.
+
+Topic pages, project reports and concept pages each list the results and open
+questions that belong to them, so you can move between a synthesis, the projects
+it rests on, and what those projects found and left open.
+
 ## What the evidence label means
 
 Synthesis pages carry a computed line under the title:
@@ -90,6 +115,8 @@ Nothing checks these:
 - Whether a statistical method suited its data.
 - Whether the underlying research report reached a sound conclusion.
 - Whether a synthesis fairly represents the projects it draws on.
+- Whether a result's PubMed comparison is right. It rests on an AI reading of
+  abstracts, not of the full literature.
 
 One check runs when a page is written and not again at publication: the pipeline
 verifies literature-context citations against PubMed by PMID at that point. The

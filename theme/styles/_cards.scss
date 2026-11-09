@@ -17,6 +17,8 @@
   --nv-none: #868d94;
   // A project's box on the Results map: 3:1 against the page, so the grouping reads.
   --nv-box: #878e94;
+  // Novel orange for small text: 4.5:1 on cards in both themes (the mark orange is 3:1).
+  --nv-new-text: #c2410c;
 }
 :root[saved-theme="dark"] {
   --v-new: #57a8ba;
@@ -28,6 +30,7 @@
   --nv-match: #199e70;
   --nv-none: #7c848c;
   --nv-box: #6b7075;
+  --nv-new-text: #f08a4b;
 }
 
 // The home search's button, outside the home band: the open-question
@@ -535,13 +538,63 @@
 
 .topic-cards {
   display: grid;
-  gap: 26px;
-  margin: 0 0 22px;
-  .sechead p {
-    max-width: 60ch;
+  gap: 32px;
+  margin: 0 0 4px;
+  // The page header above already spaces the first section; heads inside need no
+  // extra padding or heading margin on top of the grid gap.
+  .sechead {
+    padding-top: 0;
+    h2 {
+      margin-top: 0;
+    }
+    p {
+      max-width: 60ch;
+      margin-bottom: 0;
+    }
   }
   > section {
     min-width: 0;
+  }
+  // After the synthesis, on a concept page, the section starts a new part of the page.
+  &.connections-after {
+    margin-top: 40px;
+  }
+}
+.linkmore {
+  margin-top: 4px;
+  font-size: var(--t-ui);
+  // A 44 px tap target on a phone; the padding keeps the native marker and keyboard use.
+  > summary {
+    cursor: pointer;
+    color: var(--method);
+    width: max-content;
+    padding: 11px 0;
+  }
+  ul {
+    margin: 8px 0 0;
+    padding-left: 18px;
+  }
+  li {
+    margin: 4px 0;
+  }
+}
+.qfcard .qfnovel {
+  font-size: var(--t-meta);
+  font-weight: 600;
+  color: var(--nv-new-text);
+}
+.conceptlinks {
+  margin-top: 36px;
+  h2 {
+    font-size: var(--t-sub);
+    margin: 0 0 8px;
+  }
+  ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+  li {
+    margin: 4px 0;
   }
 }
 

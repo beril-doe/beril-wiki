@@ -6,7 +6,6 @@ import type { FullSlug } from "@quartz-community/types"
 import type { ComponentChildren } from "preact"
 import { resolveRelative } from "@quartz-community/utils"
 import { type Corpus, type File, collectionOf, isIndex, slugOf, titleOf } from "../page"
-import { QuestionGrid } from "./Questions"
 import { TopicStrip, topicList } from "./Strip"
 
 export interface FindingFm {
@@ -355,53 +354,6 @@ export function ResultsBoard({ c, from }: { c: Corpus; from: FullSlug }) {
         <SharedPanel g={g} from={from} />
       ))}
     </>
-  )
-}
-
-/** "Results from this topic" on a topic hub, above its synthesis. */
-export function TopicCards({ file, c }: { file: File; c: Corpus }) {
-  const from = slugOf(file) as FullSlug
-  const topic = topicSlug(file)
-  const rankOf = (f: File) => fmOf<FindingFm>(f).topic_ranks?.[topic]
-  const picks = findingsOf(c)
-    .filter((f) => rankOf(f) !== undefined)
-    .sort((a, b) => rankOf(a)! - rankOf(b)! || slugOf(a).localeCompare(slugOf(b)))
-    .slice(0, 3)
-  const hasQuestions = directionsOf(c).some((q) => fmOf<DirectionFm>(q).topic === topic)
-  if (picks.length === 0 && !hasQuestions) return null
-  return (
-    <div class="topic-cards">
-      {picks.length > 0 && (
-      <section>
-        <div class="sechead">
-          <h2>Results from this topic</h2>
-          <p>
-            <a href={resolveRelative(from, "findings/index" as FullSlug)}>All results</a>
-          </p>
-        </div>
-        <div class="grid2">
-          {picks.map((f) => (
-            <FindingCard f={f} from={from} c={c} />
-          ))}
-        </div>
-      </section>
-      )}
-      {hasQuestions && (
-        <section>
-          <div class="sechead">
-            <h2>Open questions in this topic</h2>
-            <p>
-              <a href={resolveRelative(from, "directions/index" as FullSlug)}>All open questions</a>
-            </p>
-          </div>
-          <QuestionGrid c={c} from={from} topic={topic} />
-        </section>
-      )}
-      <div class="sechead background-head">
-        <h2>Background</h2>
-        <p>The topic synthesis, its literature context and the concepts it gathers.</p>
-      </div>
-    </div>
   )
 }
 

@@ -27,6 +27,8 @@ Checks, each run by name:
   and 390 px, with two negative controls the check must catch.
 - filters: each board's chips, toggles, count, URL state, list view and map fading.
 - related: each result page lists its related results in other projects.
+- connections: results and open questions on topic, report and concept pages, the
+  concepts on result and question pages, the topic board links, and About's reading guide.
 
 Exit 0 when the check passes, 1 with one line per failure otherwise. Notes (lines
 starting "note:") never fail a check. Uses the installed Chrome, so no browser download.
@@ -3458,6 +3460,442 @@ def check_related(browser, base: str) -> list[str]:
     return fails
 
 
+# ---------------------------------------------------------------- connections
+
+
+def body_of(path: Path) -> str:
+    """A record's markdown after its frontmatter."""
+    text = path.read_text(encoding="utf-8")
+    end = text.find("\n---", 4) if text.startswith("---") else -1
+    return text[end + 4 :] if end >= 0 else text
+
+
+@cache
+def concept_cites() -> dict[str, set[str]]:
+    """Each concept page's cited project reports: its wikilinks to summaries/ (Quartz's links)."""
+    out = {}
+    for p in sorted((CONTENT / "concepts").glob("*.md")):
+        if p.stem == "index":
+            continue
+        found = re.findall(r"\[\[summaries/([^\]|#]+)", body_of(p))
+        out[p.stem] = {s.strip().removesuffix(".md") for s in found} - {"index"}
+    return out
+
+
+def results_of(sids: set[str]) -> set[str]:
+    rec = records()
+    return {i for i, r in rec["results"].items() if r["source"] in sids}
+
+
+def questions_of(sids: set[str]) -> set[str]:
+    rec = records()
+    return {
+        f"directions/{stem}"
+        for stem, fm in rec["directions"].items()
+        if sids & set(fm.get("projects") or [])
+    }
+
+
+def concepts_citing(sids: set[str]) -> set[str]:
+    return {f"concepts/{c}" for c, cited in concept_cites().items() if cited & sids}
+
+
+CONNECTIONS_JS = """() => {
+    const prose = document.querySelector('main .prose')
+    const kids = prose ? [...prose.children] : []
+    const tc = prose?.querySelector(':scope > .topic-cards')
+    const art = prose?.querySelector(':scope > article.popover-hint')
+    const cl = prose?.querySelector(':scope > section.conceptlinks')
+    const hrefs = els => [...els].map(a => a.getAttribute('href') || '')
+    return {
+        hasArt: !!art, tcCount: document.querySelectorAll('.topic-cards').length,
+        before: tc && art ? kids.indexOf(tc) < kids.indexOf(art) : null,
+        heads: tc ? [...tc.querySelectorAll('h2')].map(h => h.textContent.trim()) : [],
+        sections: tc ? [...tc.querySelectorAll(':scope > section')].map(s => ({
+            head: s.querySelector(':scope > .sechead h2')?.textContent.trim() || '',
+            cards: [...s.querySelectorAll(':scope > .grid2 > .fcard')].map(c =>
+                [c.querySelector('h3 a')?.getAttribute('href') || '', c.matches('.qfcard')]),
+            folded: hrefs(s.querySelectorAll(':scope > details.linkmore li a')),
+            summary: s.querySelector(':scope > details.linkmore > summary')?.textContent.trim()
+                || '',
+            more: [...s.querySelectorAll(':scope > .sechead p a')].map(a =>
+                [a.getAttribute('href') || '', a.textContent.trim()]),
+        })) : [],
+        qgrid: document.querySelectorAll('.qgrid').length,
+        clCount: document.querySelectorAll('section.conceptlinks').length,
+        concepts: cl ? {
+            head: cl.querySelector(':scope > h2')?.textContent.trim() || '',
+            shown: hrefs(cl.querySelectorAll(':scope > ul > li a')),
+            folded: hrefs(cl.querySelectorAll(':scope > details.linkmore li a')),
+            summary: cl.querySelector(':scope > details.linkmore > summary')?.textContent.trim()
+                || '',
+            after: !!art && kids.indexOf(cl) > kids.indexOf(art),
+        } : null,
+    }
+}"""
+
+SPACING_JS = """() => [...document.querySelectorAll('.topic-cards .sechead')].map(s =>
+    [s.querySelector('h2')?.textContent.trim() || '', getComputedStyle(s).paddingTop,
+     getComputedStyle(s.querySelector('h2') || s).marginTop])"""
+
+
+def href_id(href: str, kind: str) -> str:
+    """The record id an in-page link points at: a result id, or directions/<stem>."""
+    stem = last_part(href)
+    return f"directions/{stem}" if kind == "q" else f"concepts/{stem}" if kind == "c" else stem
+
+
+def part_fails(got: dict, head: str, kind: str, want: set[str], label: str) -> list[str]:
+    """One "Part": the first 3 as cards, the rest folded, together exactly `want`."""
+    fails: list[str] = []
+    ids_ = [href_id(h, kind) for h, _ in got["cards"]] + [href_id(h, kind) for h in got["folded"]]
+    if len(ids_) != len(set(ids_)):
+        fails.append(f"{label}: '{head}' lists a {kind} twice: {sorted(ids_)}")
+    if set(ids_) != want:
+        fails.append(
+            f"{label}: '{head}' lists {len(set(ids_))}, records give {len(want)}; "
+            f"extra {sorted(set(ids_) - want)[:3]}, missing {sorted(want - set(ids_))[:3]}"
+        )
+    n = len(want)
+    if len(got["cards"]) != min(3, n) or len(got["folded"]) != max(0, n - 3):
+        fails.append(
+            f"{label}: '{head}' shows {len(got['cards'])} cards and {len(got['folded'])} folded "
+            f"for {n} items, expected {min(3, n)} and {max(0, n - 3)}"
+        )
+    if n > 3 and got["summary"] != f"{n - 3} more":
+        fails.append(f"{label}: '{head}' fold reads '{got['summary']}', expected '{n - 3} more'")
+    if any(q != (kind == "q") for _, q in got["cards"]):
+        fails.append(f"{label}: '{head}' mixes result and question cards")
+    return fails
+
+
+def connection_fails(
+    got: dict, want: list[tuple[str, str, set[str]]], tail: str | None, place: str, label: str
+) -> list[str]:
+    """`want` lists the expected Parts (heading, kind, ids) in order; `tail` the closing head."""
+    fails: list[str] = []
+    parts = [w for w in want if w[2]]
+    heads = [h for h, _, _ in parts] + ([tail] if tail and parts else [])
+    if got["heads"] != heads:
+        fails.append(f"{label}: headings {got['heads']}, expected {heads}")
+    if not parts:
+        if got["tcCount"]:
+            fails.append(f"{label}: shows {got['tcCount']} .topic-cards with nothing to list")
+        return fails
+    if not got["hasArt"] or got["before"] is None:
+        fails.append(f"{label}: no .topic-cards beside the page's prose")
+    elif got["before"] != (place == "before"):
+        fails.append(
+            f"{label}: the results and questions sit {'before' if got['before'] else 'after'} "
+            f"the prose, expected {place}"
+        )
+    by_head = {s["head"]: s for s in got["sections"]}
+    for head, kind, ids_ in parts:
+        if head not in by_head:
+            continue
+        fails += part_fails(by_head[head], head, kind, ids_, label)
+    return fails
+
+
+def concept_list_fails(got: dict, head: str, want: set[str], label: str) -> list[str]:
+    cl = got["concepts"]
+    if not want:
+        return [f"{label}: lists concepts though none cites it"] if got["clCount"] else []
+    if cl is None or got["clCount"] != 1:
+        return [f"{label}: {got['clCount']} section.conceptlinks, {len(want)} concepts cite it"]
+    fails: list[str] = []
+    ids_ = [href_id(h, "c") for h in cl["shown"] + cl["folded"]]
+    if cl["head"] != head:
+        fails.append(f"{label}: concepts headed '{cl['head']}', expected '{head}'")
+    if len(ids_) != len(set(ids_)) or set(ids_) != want:
+        fails.append(
+            f"{label}: lists {len(ids_)} concepts, records give {len(want)}; "
+            f"extra {sorted(set(ids_) - want)[:3]}, missing {sorted(want - set(ids_))[:3]}"
+        )
+    n = len(want)
+    if len(cl["shown"]) != min(6, n) or len(cl["folded"]) != max(0, n - 6):
+        fails.append(
+            f"{label}: shows {len(cl['shown'])} concepts and folds {len(cl['folded'])} of {n}"
+        )
+    if n > 6 and cl["summary"] != f"{n - 6} more":
+        fails.append(f"{label}: concept fold reads '{cl['summary']}'")
+    if not cl["after"]:
+        fails.append(f"{label}: the concept list does not follow the prose")
+    return fails
+
+
+def topic_wants(t: str) -> tuple[list, list[str], list[tuple[str, str]]]:
+    rec = records()
+    order = rec["index"].get("compare_order") or []
+
+    def rank(i: str) -> float:
+        return (rec["findings"][i].get("topic_ranks") or {}).get(t, float("inf"))
+
+    def col(i: str) -> int:
+        text = rec["results"][i]["col"]
+        return order.index(text) if text in order else -1
+
+    # Connections.tsx picks from the topic's own results, so its board link shows every card
+    # again; a topic with none of its own shows the ranked results that touch it.
+    own = [i for i, r in rec["results"].items() if r["topic"] == t]
+    in_topic = len(own)
+    pool = own or [i for i in rec["results"] if rank(i) != float("inf")]
+    picks = sorted(pool, key=lambda i: (rank(i), col(i), f"findings/{i}"))[:3]
+    qs = {q for q, e in rec["questions"].items() if e["topic"] == t}
+    parts = [
+        ("Results from this topic", "r", set(picks)),
+        ("Open questions in this topic", "q", qs),
+    ]
+    more = []
+    # A topic with no results of its own has no board to link to.
+    if in_topic:
+        more.append((f"findings/?topic={t}", f"All {in_topic} results in this topic"))
+    if qs:
+        more.append((f"directions/?topic={t}", f"All {len(qs)} in the open questions"))
+    return parts, picks, more
+
+
+def check_connections(browser, base: str) -> list[str]:
+    """Results and open questions tied to topics, project reports and concepts, and the
+    concepts listed on result and question pages, against the records."""
+    fails: list[str] = []
+    rec = records()
+    page = new_page(browser, WIDE)
+    # Topic pages: every one, with board links followed.
+    topics = sorted(p.stem for p in (CONTENT / "topics").glob("*.md") if p.stem != "index")
+    spacing: list[list[str]] = []
+    controls_done = False
+    for t in topics:
+        label = f"connections: /topics/{t}"
+        go(page, f"{base}/topics/{t}")
+        got = page.evaluate(CONNECTIONS_JS)
+        parts, picks, more = topic_wants(t)
+        fails += connection_fails(got, parts, "Background", "before", label)
+        if got["qgrid"]:
+            fails.append(f"{label}: still renders {got['qgrid']} .qgrid")
+        by_head = {s["head"]: s for s in got["sections"]}
+        res = by_head.get("Results from this topic")
+        if res and [last_part(h) for h, _ in res["cards"]] != picks:
+            fails.append(
+                f"{label}: result cards {[last_part(h) for h, _ in res['cards']]}, "
+                f"ranks give {picks}"
+            )
+        links = [a for s in got["sections"] for a in s["more"]]
+        for (href, text), (want_tail, want_text) in zip(links, more, strict=False):
+            if (
+                not href.rstrip("/").replace("/index?", "/?").endswith(want_tail)
+                or text != want_text
+            ):
+                fails.append(
+                    f"{label}: board link '{text}' -> {href}, expected '{want_text}' -> {want_tail}"
+                )
+        if len(links) != len(more):
+            fails.append(f"{label}: {len(links)} board links, expected {len(more)}")
+        spacing += page.evaluate(SPACING_JS)
+        if not controls_done and len(picks) == 3 and len(parts[1][2]) > 3:
+            fails += connection_controls(page, parts, label)
+            controls_done = True
+        # Following each board link shows exactly that topic's cards.
+        for i, (_, want_text) in enumerate(more):
+            go(page, f"{base}/topics/{t}")
+            page.locator(".topic-cards .sechead p a").nth(i).click()
+            page.wait_for_url("**/?topic=*")
+            page.wait_for_load_state("networkidle")
+            path = "/findings/" if "results" in want_text else "/directions/"
+            cfg = board_expectations()[path]
+            want = {k for k, v in cfg["cards"].items() if v["f"]["topic"] == t}
+            if path == "/findings/" and (lost := [p for p in picks if p not in want]):
+                fails.append(f"{label}: the results link hides the featured cards {lost}")
+            fails += filter_fails(
+                board_state(page, cfg["marks"]), want, len(cfg["cards"]), f"{label} -> {path}"
+            )
+    if not controls_done:
+        fails.append(
+            "connections: no topic page with 3 results and folded questions for the controls"
+        )
+    fails += connection_style_fails(browser, base, topics)
+    # Project report pages: every one.
+    for p in sorted((CONTENT / "summaries").glob("*.md")):
+        if p.stem == "index":
+            continue
+        sid = p.stem
+        go(page, f"{base}/summaries/{sid}")
+        got = page.evaluate(CONNECTIONS_JS)
+        parts = [
+            ("Results from this project", "r", results_of({sid})),
+            ("Open questions that build on this project", "q", questions_of({sid})),
+        ]
+        fails += connection_fails(
+            got, parts, "The report", "before", f"connections: /summaries/{sid}"
+        )
+        spacing += page.evaluate(SPACING_JS)
+    loose = [s for s in spacing if s[1] != "0px" or s[2] != "0px"]
+    if not spacing or loose:
+        fails.append(
+            f"connections: at 1440 px {len(loose)} of {len(spacing)} section heads have top "
+            f"space, such as {loose[:2]}"
+        )
+    # Concept pages: the 12 with the most items, and 3 with the fewest.
+    cites = concept_cites()
+    load = {c: len(results_of(s)) + len(questions_of(s)) for c, s in cites.items()}
+    ranked = sorted(load, key=lambda c: (-load[c], c))
+    sample = ranked[:12] + ranked[-3:]
+    for c in sample:
+        label = f"connections: /concepts/{c}"
+        go(page, f"{base}/concepts/{c}")
+        got = page.evaluate(CONNECTIONS_JS)
+        results = results_of(cites[c])
+        parts = [
+            ("Results from the projects this page cites", "r", results),
+            ("Open questions on these projects", "q", questions_of(cites[c])),
+        ]
+        fails += connection_fails(got, parts, None, "after", label)
+        sec = next((s for s in got["sections"] if s["head"] == parts[0][0]), None)
+        if sec:
+            first = [rec["results"].get(last_part(h), {}).get("source") for h, _ in sec["cards"]]
+            projects = {rec["results"][i]["source"] for i in results}
+            if len(set(first)) != min(len(first), len(projects)):
+                fails.append(f"{label}: the first result cards repeat a project: {first}")
+    # Result and question pages: the 12 (8) cited by the most concepts and 3 (2) by the fewest.
+    by_result = {i: concepts_citing({r["source"]}) for i, r in rec["results"].items()}
+    order = sorted(by_result, key=lambda i: (-len(by_result[i]), i))
+    for i in order[:12] + order[-3:]:
+        go(page, f"{base}/findings/{i}")
+        fails += concept_list_fails(
+            page.evaluate(CONNECTIONS_JS),
+            "Concepts that cite this project",
+            by_result[i],
+            f"connections: /findings/{i}",
+        )
+    by_q = {
+        q: concepts_citing(
+            set(rec["directions"][q.removeprefix("directions/")].get("projects") or [])
+        )
+        for q in rec["questions"]
+    }
+    order = sorted(by_q, key=lambda q: (-len(by_q[q]), q))
+    for q in order[:8] + order[-2:]:
+        go(page, f"{base}/{q}")
+        fails += concept_list_fails(
+            page.evaluate(CONNECTIONS_JS),
+            "Concepts that cite these projects",
+            by_q[q],
+            f"connections: /{q}",
+        )
+    # A concept-list control: one concept removed must fail.
+    top = order[0]
+    go(page, f"{base}/{top}")
+    page.evaluate("() => document.querySelector('section.conceptlinks li')?.remove()")
+    if not concept_list_fails(
+        page.evaluate(CONNECTIONS_JS), "Concepts that cite these projects", by_q[top], "control"
+    ):
+        fails.append("connections: control 'one concept removed' passed unnoticed")
+    fails += about_fails(page, base)
+    page.context.close()
+    return fails
+
+
+FOLDED = ".topic-cards details.linkmore li"
+
+
+def connection_controls(page: Page, parts: list, label: str) -> list[str]:
+    """Injected faults the topic comparison must catch: a card removed, a folded link
+    removed, and a folded link repeated."""
+    fails: list[str] = []
+    faults = {
+        "a result card removed": "document.querySelector('.topic-cards .grid2 > .fcard')?.remove()",
+        "a folded question removed": f"document.querySelector('{FOLDED}')?.remove()",
+        "a folded question repeated": (
+            f"const li = document.querySelector('{FOLDED}'); li?.after(li.cloneNode(true))"
+        ),
+    }
+    clean = page.evaluate("() => document.querySelector('.topic-cards').innerHTML")
+    for name, js in faults.items():
+        page.evaluate(f"() => {{ {js} }}")
+        if not connection_fails(
+            page.evaluate(CONNECTIONS_JS), parts, "Background", "before", "control"
+        ):
+            fails.append(f"{label}: control '{name}' passed unnoticed")
+        page.evaluate("h => { document.querySelector('.topic-cards').innerHTML = h }", clean)
+    return fails
+
+
+STYLE_JS = """() => {
+    const novel = document.querySelector('.topic-cards .qfnovel')
+    let bg = 'rgb(255, 255, 255)'
+    for (let n = novel; n; n = n.parentElement) {
+        const c = getComputedStyle(n).backgroundColor
+        if (c.startsWith('rgb(')) { bg = c; break }
+    }
+    const fold = document.querySelector('.topic-cards details.linkmore > summary')
+    return {
+        novel: novel && [getComputedStyle(novel).color, bg],
+        fold: fold && fold.getBoundingClientRect().height,
+    }
+}"""
+
+
+def connection_style_fails(browser, base: str, topics: list[str]) -> list[str]:
+    """The question cards' Novel line reads at 4.5:1 in both themes, and a folded list's
+    "N more" is a 44 px tap target on a phone."""
+    fails: list[str] = []
+    for theme, viewport in (("light", WIDE), ("dark", WIDE), ("light", PHONE)):
+        page = themed(browser, theme, viewport, touch=viewport is PHONE)
+        novel = fold = None
+        for t in topics:
+            go(page, f"{base}/topics/{t}")
+            got = page.evaluate(STYLE_JS)
+            novel, fold = novel or got["novel"], fold or got["fold"]
+            if novel and fold:
+                break
+        page.context.close()
+        label = f"connections: {theme} at {viewport['width']} px"
+        if not novel or not fold:
+            fails.append(f"{label}: no topic page has a Novel line and a folded list to measure")
+            continue
+        if (r := ratio(rgba(novel[0]), rgba(novel[1]))) < 4.5:
+            fails.append(f"{label}: the Novel line {novel[0]} on {novel[1]} is {r:.2f}:1")
+        if viewport is PHONE and fold < 44:
+            fails.append(f"{label}: the folded list's summary is {fold:.0f} px tall")
+    return fails
+
+
+def about_fails(page: Page, base: str) -> list[str]:
+    """About's "What you are reading" names Results, Open questions and each comparison label."""
+    go(page, base + "/about")
+    got = page.evaluate(
+        """() => {
+        const h = [...document.querySelectorAll('h2')]
+            .find(e => e.textContent.trim() === 'What you are reading')
+        const strong = [], em = []
+        for (let n = h?.nextElementSibling; n && n.tagName !== 'H2'; n = n.nextElementSibling) {
+            n.querySelectorAll('strong').forEach(e => strong.push(e.textContent.trim()))
+            n.querySelectorAll('em')
+                .forEach(e => em.push(e.textContent.replace(/\\s+/g, ' ').trim()))
+        }
+        return {found: !!h, strong, em}
+    }"""
+    )
+    if not got["found"]:
+        return ["connections: /about has no 'What you are reading' section"]
+    fails: list[str] = []
+    for name in ("Results.", "Open questions.", "Comparison with PubMed."):
+        if name not in got["strong"]:
+            fails.append(
+                f"connections: /about 'What you are reading' has no '{name}' part: {got['strong']}"
+            )
+    # Every label the board can show, Not compared yet included while no result uses it.
+    labels = records()["index"].get("compare_order") or []
+    if missing := [lab for lab in labels if lab not in got["em"]]:
+        fails.append(f"connections: /about names comparison labels {got['em']}, missing {missing}")
+    if len(labels) != 6:
+        fails.append(
+            f"connections: the records list {len(labels)} comparison labels, "
+            "expected Novel, four more and Not compared yet"
+        )
+    return fails
+
+
 CHECKS = {
     "home": check_home,
     "strips": check_strips_page,
@@ -3469,6 +3907,7 @@ CHECKS = {
     "marks": check_marks,
     "filters": check_filters,
     "related": check_related,
+    "connections": check_connections,
 }
 
 
