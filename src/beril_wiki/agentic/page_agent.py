@@ -521,6 +521,8 @@ async def _drive(
                             )
                             + "\n"
                         )
+                        # A killed worker is charged from this file; a buffered turn is lost.
+                        out.flush()
                         if isinstance(message, SystemMessage) and message.subtype == "init":
                             if message.data.get("apiKeySource") not in ("none", None):
                                 raise WorkflowError("SDK initialized with an API credential")

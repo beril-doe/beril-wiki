@@ -350,3 +350,27 @@ def test_the_review_tool_runs_a_claude_reviewer_inside_the_session_loop(tmp_path
     asyncio.run(PA._drive(agent, session, "k", "claude-haiku-5-5", False))
     verdict = json.loads(replies[1]["content"][0]["text"])
     assert verdict == {"accepted": True, "next": "call submit"}
+
+
+def test_each_session_message_reaches_the_transcript_before_the_next(tmp_path, monkeypatch):
+    """Review finding O: a killed worker is charged from its transcript, so a turn that
+    arrived must be on disk, not in a write buffer."""
+    from types import SimpleNamespace
+
+    from claude_agent_sdk import AssistantMessage
+
+    seen = []
+
+    async def query(prompt, options):
+        yield AssistantMessage(content=[], model="m", usage={"input_tokens": 7})
+        seen.append((tmp_path / "transcripts/k.jsonl").read_text())
+        yield _result()
+
+    monkeypatch.setattr(PA, "query", query)
+    (tmp_path / "contract").mkdir()
+    (tmp_path / "contract/AGENTS.md").write_text("rules")
+    agent: Any = SimpleNamespace(
+        config={"cli": "claude"}, store=tmp_path, root=tmp_path, effort=lambda step: None
+    )
+    asyncio.run(PA._drive(agent, _session(tmp_path), "k", "m", False))
+    assert '"input_tokens": 7' in seen[0]
