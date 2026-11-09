@@ -36,7 +36,8 @@ Checks, each run by name:
 - reference: the grouped Browse menu (headers, rules, keyboard, contrast, light and dark,
   wide to phone) and the reference pages around it: the two archives and the archive
   label on the concepts that cite them, the Reports listing of project reports only, and
-  All pages at /catalog against the build's own page list.
+  All pages at /catalog against the build's own page list, and the related-page lines on
+  Results and Open questions.
 
 Exit 0 when the check passes, 1 with one line per failure otherwise. Notes (lines
 starting "note:") never fail a check. Uses the installed Chrome, so no browser download.
@@ -143,6 +144,17 @@ SITE_PAGES = [
     "about",
     "sources/index",
 ]
+# The related-page line under each board's intro: label and target, each shown when published.
+ALSO_LINES = {
+    "findings": [
+        ("Negative results", "negative-results"),
+        ("Earlier discoveries", "summaries/discoveries"),
+    ],
+    "directions": [
+        ("Research opportunities", "opportunities"),
+        ("Data issues", "data-issues/index"),
+    ],
+}
 ARCHIVE_KIND_LINE = (
     "An archive collects discoveries or pitfalls gathered across projects until May 2026."
 )
@@ -4927,6 +4939,33 @@ def all_pages_fails(browser, base: str) -> list[str]:
     return fails
 
 
+def also_line_fails(browser, base: str) -> list[str]:
+    """Results and Open questions name their related pages under the intro, which stays
+    one plain line."""
+    fails: list[str] = []
+    page = new_page(browser, WIDE)
+    for board, links in ALSO_LINES.items():
+        want = [(label, target) for label, target in links if (CONTENT / f"{target}.md").exists()]
+        go(page, f"{base}/{board}/")
+        line = page.locator(".index-page > .also-line")
+        text = collapse(line.inner_text()) if line.count() else ""
+        expected = "Also: " + " · ".join(label for label, _ in want)
+        if text != expected:
+            fails.append(f"reference: /{board}/ related line reads '{text}', expected '{expected}'")
+            continue
+        hrefs = line.locator("a").evaluate_all("els => els.map(e => e.href)")
+        for (label, target), href in zip(want, hrefs, strict=True):
+            path = urlparse(href).path.strip("/")
+            if path != target.removesuffix("/index").removesuffix("index").strip("/"):
+                fails.append(f"reference: /{board}/ '{label}' opens /{path}, not /{target}")
+    go(page, f"{base}/findings/")
+    intro = page.inner_text(".index-page > .prose").strip()
+    if intro != RESULTS_INTRO:
+        fails.append(f"reference: /findings/ intro reads '{intro}'")
+    page.context.close()
+    return fails
+
+
 def check_reference(browser, base: str) -> list[str]:
     """The grouped Browse menu and the reference pages around it."""
     return [
@@ -4934,6 +4973,7 @@ def check_reference(browser, base: str) -> list[str]:
         *archive_fails(browser, base),
         *reports_listing_fails(browser, base),
         *all_pages_fails(browser, base),
+        *also_line_fails(browser, base),
     ]
 
 

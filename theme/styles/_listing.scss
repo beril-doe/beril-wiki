@@ -10,6 +10,16 @@
   .sechead {
     padding-top: 30px;
   }
+  // The related-page line under a collection's intro: quieter than the intro itself.
+  .also-line {
+    margin: 0.5rem 0 0;
+    max-width: 70ch;
+    font: 400 var(--t-ui) / 1.5 var(--sans);
+    color: var(--ink-2);
+    a {
+      color: var(--secondary);
+    }
+  }
 }
 .listing {
   margin-top: 26px;

@@ -11,7 +11,7 @@
 import type { FullSlug, PageFrame } from "@quartz-community/types"
 import type { Root } from "hast"
 import { Bar } from "./components/Bar"
-import { RecordBar, ResultsBoard } from "./components/Cards"
+import { AlsoLine, RecordBar, ResultsBoard } from "./components/Cards"
 import { ConceptLinks, Connections } from "./components/Connections"
 import { EvidenceRail } from "./components/EvidenceRail"
 import { Home } from "./components/Home"
@@ -64,6 +64,7 @@ export const BerilFrame: PageFrame = {
           <main class="band index-page" style={accent ? `--accent:${accent}` : undefined}>
             <Record file={file} c={c} tree={tree} terms={w.terms} standing={w.standing} orcid={w.orcid} cites={w.cites} rels={w.rels} t={t} figures={indexFigures(file, c)} />
             <div class="prose">{prose}</div>
+            <AlsoLine c={c} from={slug as FullSlug} />
             {slug === "findings/index" ? (
               <>
                 <NoveltyMap c={c} from={slug as FullSlug} />

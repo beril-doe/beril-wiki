@@ -308,6 +308,11 @@ shows no type, no revision note and no PubMed chip. A card has no test statistic
 and no caveat; the page holds the numbers and the Limits section. A finding
 without an accepted summary shows only title and footer.
 
+Under its one-line intro, the Results index names two related pages:
+"Also: Negative results · Earlier discoveries". The Open questions index does
+the same with "Also: Research opportunities · Data issues". The theme draws
+these lines and shows a link only when its page is published.
+
 The Results index (`/findings/`) opens with a map headed "How new is each
 result?". A mark's position shows the topic (rows) and how the result
 compares with PubMed (columns: New direction, Adds to published work,
