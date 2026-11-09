@@ -118,8 +118,15 @@
   text-transform: uppercase;
   color: var(--mute-ink);
 }
-.rt.null {
+// A positive result is the usual case; the other kinds read in ink so they stand out.
+.rt.t-negative,
+.rt.t-inconclusive,
+.rt.t-data {
   color: var(--ink);
+}
+.rt.upd {
+  font-weight: 400;
+  margin-left: 8px;
 }
 
 
@@ -185,18 +192,17 @@
     margin-top: auto;
   }
 }
+// What following up a question needs, least effort first: existing data, outside data,
+// an experiment.
 .ready {
   font-size: var(--t-meta);
   font-weight: 600;
   color: var(--supports);
-  &.part {
+  &.f-outside {
     color: var(--ready-part);
   }
-  &.lab {
+  &.f-experiment {
     color: var(--method);
-  }
-  &.no {
-    color: var(--mute-ink);
   }
 }
 .c-more {
@@ -602,6 +608,52 @@
   }
 }
 
+// Starts with existing data: the left half filled. Data availability unclear: dashed.
+.qd.half .qdot::before {
+  background: linear-gradient(90deg, currentColor 50%, var(--card) 50%);
+  box-shadow: inset 0 0 0 1.5px currentColor;
+}
+.qd.unclear .qdot::before {
+  background: var(--card);
+  border: 2px dashed currentColor;
+  box-sizing: border-box;
+}
+.qd.cross.half .qdot::before {
+  box-shadow:
+    inset 0 0 0 1.5px currentColor,
+    0 0 0 2px var(--card),
+    0 0 0 3.5px currentColor;
+}
+// Both markers: the half fill inside the dashed outline, which replaces the inner stroke;
+// a question joining projects keeps its ring.
+.qd.half.unclear .qdot::before {
+  background: linear-gradient(90deg, currentColor 50%, var(--card) 50%);
+  box-shadow: none;
+}
+.qd.cross.half.unclear .qdot::before {
+  box-shadow:
+    0 0 0 2px var(--card),
+    0 0 0 3.5px currentColor;
+}
+// The effort line over the columns, and each column's definition under its name.
+.qeffortline {
+  padding: 6px 10px 2px;
+  font-size: var(--t-meta);
+  color: var(--mute-ink);
+}
+.qrow.qeffort .qcorner {
+  border-bottom: 0;
+  padding: 0;
+}
+.qcoln {
+  display: block;
+  margin-top: 4px;
+  font-size: var(--t-meta);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
 // ---- questions that join projects ----------------------------------------
 // A ring marks a question citing results from two or more projects.
 .qd.cross .qdot::before {
@@ -792,6 +844,26 @@
   display: grid;
   grid-template-columns: var(--nvtpl);
 }
+// "Something new" over the first two columns, then the rest under a quieter head.
+.nvgroupcorner {
+  grid-column: 1;
+}
+.nvgroup {
+  font-size: var(--t-meta);
+  font-weight: 600;
+  padding: 4px 6px 6px;
+  margin: 0 6px;
+  border-bottom: 2px solid var(--ink);
+  .n {
+    color: var(--mute-ink);
+    font-weight: 400;
+  }
+  &.rest {
+    color: var(--mute-ink);
+    font-weight: 400;
+    border-bottom: 1px solid var(--line-2);
+  }
+}
 .nvcolh {
   font-size: var(--t-label);
   font-weight: 600;
@@ -940,19 +1012,20 @@
     border-radius: 50%;
     background: currentColor;
   }
-  &[data-k="null"]::before {
+  // Positive: filled. Negative: hollow. Inconclusive: dashed. About the data: a grey square.
+  &[data-k="negative"]::before {
     background: var(--card);
     box-shadow: inset 0 0 0 1.5px currentColor;
   }
-  &[data-k="interpretation"]::before {
-    border-radius: 0;
-    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  // 2 px: Chrome draws a 1.5 px dashed border at 1 px on a 1x screen.
+  &[data-k="inconclusive"]::before {
+    background: var(--card);
+    border: 2px dashed currentColor;
   }
-  &[data-k="correction"]::before {
-    border-radius: 0;
-    background:
-      linear-gradient(45deg, transparent 38%, currentColor 38% 62%, transparent 62%),
-      linear-gradient(-45deg, transparent 38%, currentColor 38% 62%, transparent 62%);
+  &[data-k="data"]::before {
+    inset: 1px;
+    border-radius: 1px;
+    background: var(--mute-ink);
   }
   &.rel::after {
     content: "";
@@ -1093,7 +1166,9 @@ svg.nvlinks {
     display: block;
   }
   .nvcorner,
-  .nvcolh {
+  .nvcolh,
+  .nvgroupcorner,
+  .nvgroup {
     display: none;
   }
   .nvrowh {

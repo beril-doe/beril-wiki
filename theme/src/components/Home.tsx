@@ -51,7 +51,7 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
   const unmatched = resultsIndex(c).compare_order?.[0]
   const picksDeck =
     picks.length > 0 && picks.every((f) => (f.frontmatter as FindingFm | undefined)?.compare_text === unmatched)
-      ? "Novel results from different topics."
+      ? "New results from different topics."
       : "Results from different topics with the least published work like them."
   const kinds = [
     ["topics/index", "Topics", "What the corpus says about one research area. Start here if you are new to an area.", `${n.topics} topics`],

@@ -1,13 +1,14 @@
 // The Results picture: how new each result is, by topic, with each project's results in a
-// box. Position carries the topic (row) and the PubMed comparison (column); a mark's fill
-// and shape carry the kind of result, and a ring marks a result with a related result in
-// another project on this map. Hovering a box draws those related-result lines
+// box. Position carries the topic (row) and the PubMed comparison (column), whose first two
+// columns are the two kinds of new; a mark's fill and shape carry the type of result
+// (positive, negative, inconclusive, about the data), and a ring marks a result with a
+// related result in another project on this map. Hovering a box draws those related-result lines
 // (src/client/novelty.ts). Links and project names come from the results index page that
 // publish/cards.py wrote.
 import type { FullSlug } from "@quartz-community/types"
 import { resolveRelative } from "@quartz-community/utils"
 import { type Corpus, type File, slugOf, titleOf } from "../page"
-import { type FindingFm, findingsOf, kindKey, resultsIndex } from "./Cards"
+import { type FindingFm, TYPE_WORDS, UPDATES_WORDS, findingsOf, kindKey, resultsIndex } from "./Cards"
 
 const fmOf = (f: File) => (f.frontmatter ?? {}) as FindingFm
 const topicSlug = (t: File) => slugOf(t).replace(/^topics\//, "")
@@ -19,19 +20,14 @@ const TONE = ["new", "builds", "match", "match", "none", "unset"]
 // Column widths follow the usual counts: the "too little evidence" column holds most results.
 const WIDTH = [1.1, 1.4, 0.6, 0.6, 2.2, 0.8]
 
-/** Legend words for each mark kind, in legend order; the map's marks use the same classes. */
-export const MARK_WORDS: [string, string][] = [
-  ["result", "Result"],
-  ["null", "No effect found, or inconclusive"],
-  ["interpretation", "Interpretation"],
-  ["correction", "Correction"],
-]
-// How a box's label counts each kind.
+/** Legend words for each mark type, in legend order; the map's marks use the same keys. */
+export const MARK_WORDS = TYPE_WORDS
+// How a box's label counts each type.
 const COUNT_WORDS: Record<string, [string, string]> = {
-  result: ["result", "results"],
-  null: ["found no effect or was inconclusive", "found no effect or were inconclusive"],
-  interpretation: ["interpretation", "interpretations"],
-  correction: ["correction", "corrections"],
+  positive: ["positive result", "positive results"],
+  negative: ["negative result", "negative results"],
+  inconclusive: ["inconclusive result", "inconclusive results"],
+  data: ["result about the data", "results about the data"],
 }
 
 /** The ids of listed results joined by a related-result link whose other end is also listed,
@@ -69,7 +65,8 @@ function Group({ sid, items, title, col, related }: { sid: string; items: File[]
             data-t={titleOf(f)}
             data-g={m.gist ?? ""}
             data-r={m.report_title ?? sid}
-            data-kind={m.kind_text ?? ""}
+            // The preview and the box list show this text, so a correction carries its note.
+            data-kind={[m.kind_text, m.updates_claim ? UPDATES_WORDS : ""].filter(Boolean).join(". ")}
             aria-hidden="true"
           />
         )
@@ -120,11 +117,17 @@ export function NoveltyMap({ c, from }: { c: Corpus; from: FullSlug }) {
     return f ? titleOf(f) : t.replace(/-/g, " ")
   })
   const used = new Set(all.map((f) => kindKey(fmOf(f))))
+  // The two kinds of new head the first columns as one group, when publish names them.
+  const [groupName, ...groupCols] = idx.something_new ?? []
+  const groupSpan = groupCols.every((col, i) => cols[i] === col) ? groupCols.length : 0
   return (
     <section class="nvmap" data-novelty aria-label="How new each result is, by topic">
       <div class="sechead">
         <h2>How new is each result?</h2>
-        <p>Each mark is one result, placed by topic and by what an AI search of PubMed abstracts found for it.</p>
+        <p>
+          Each mark is one result, placed by topic and by what an AI search of PubMed abstracts found for it. The first two columns are
+          the two kinds of new. The mark says what kind of result it is.
+        </p>
       </div>
       <p class="nvlegend">
         {MARK_WORDS.filter(([k]) => used.has(k)).map(([k, w]) => (
@@ -135,7 +138,7 @@ export function NoveltyMap({ c, from }: { c: Corpus; from: FullSlug }) {
         ))}
         {related.ids.size > 0 && (
           <span class="nvkey">
-            <i class="nd key rel" data-k="result" aria-hidden="true" />
+            <i class="nd key rel" data-k="positive" aria-hidden="true" />
             Related result in another project
             <svg width="28" height="10" aria-hidden="true">
               <path d="M1 5 H27" />
@@ -145,14 +148,25 @@ export function NoveltyMap({ c, from }: { c: Corpus; from: FullSlug }) {
         )}
         <span class="nvkey">
           <span class="nbead key" aria-hidden="true">
-            <i class="nd" data-k="result" />
-            <i class="nd" data-k="result" />
+            <i class="nd" data-k="positive" />
+            <i class="nd" data-k="positive" />
           </span>
           One project's results in this cell
         </span>
       </p>
       <div class="nvbox">
         <div class="nvgrid" style={`--nvtpl:minmax(8rem,11rem) ${cols.map((col) => `minmax(3.5rem,${WIDTH[order.indexOf(col)] ?? 1}fr)`).join(" ")}`}>
+          {groupSpan > 0 && (
+            <>
+              <span class="nvgroupcorner" />
+              <span class="nvgroup" style={`grid-column: span ${groupSpan}`}>
+                {groupName} <span class="n">{cols.slice(0, groupSpan).reduce((n, col) => n + count(col), 0)}</span>
+              </span>
+              <span class="nvgroup rest" style={`grid-column: span ${cols.length - groupSpan}`}>
+                Compared with published work
+              </span>
+            </>
+          )}
           <span class="nvcorner" />
           {cols.map((col) => (
             <span class={`nvcolh nv-${TONE[order.indexOf(col)] ?? "none"}`}>

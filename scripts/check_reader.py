@@ -18,14 +18,18 @@ Checks, each run by name:
   menu by mouse, keyboard and tap), where the CBORG key is entered, and the strips check.
 - strips: the topic key, map and table on /topics/, and cards that take their topic's colour.
 - plain: reader text carries no pipeline terms, statistics or "caveat".
-- grid: open-question dots sit in their records' rows and columns, and their pop-ups work.
-- pages: result page sections, the kind chips, square cards, kind words, and contrast.
+- grid: open-question dots sit in their records' topic rows and follow-up columns, under
+  the effort line and the column notes, say what following up needs, and their pop-ups work.
+- pages: result page sections, the type chips, square cards, the type and follow-up tags on
+  cards and pages, and contrast.
 - contrast: small labels reach 4.5:1 in light mode.
-- cross: the Results map matches the records, hover cards, related-result lines and the
-  box list, column notes, Compare panels, and ringed question bridges.
+- cross: the Results map matches the records, its "Something new" group header, hover
+  cards, related-result lines and the box list, column notes, Compare panels, and ringed
+  question bridges.
 - marks: the marks of both maps (design-marks.md, option M2), in light and dark, at 1280
   and 390 px, with two negative controls the check must catch.
-- filters: each board's chips, toggles, count, URL state, list view and map fading.
+- filters: each board's facet, toggle and sort words, chips, toggles, count, URL state,
+  list view and map fading.
 - related: each result page lists its related results in other projects.
 - connections: results and open questions on topic, report and concept pages, the
   concepts on result and question pages, the topic board links, and About's reading guide.
@@ -117,14 +121,30 @@ PIPELINE_TERMS = [
     "Research direction",
     "headline finding",
 ]
-NEED_COLUMN = {
-    "data in the lakehouse": 0,
-    "needs compute": 1,
-    "needs new measurements": 2,
-    "unknown": 3,
+# A listed null result must have measured something (publish/cards.py SHOWN_CASES).
+SHOWN_CASES = ("measured absence", "inconclusive test")
+# Kind words the reader pages no longer show anywhere a result's type is named.
+GONE_KIND_WORDS = {
+    "Result",
+    "No effect found",
+    "Inconclusive test",
+    "Interpretation",
+    "Correction",
+    "No effect found, or inconclusive",
+    "Null or missing result",
 }
-BAD_NULL_CASES = ("missing data", "unperformed analysis")
-NULL_WORDS = {"No effect found", "Inconclusive test"}
+# What open questions no longer say: the readiness columns and the "Needs:" line.
+GONE_NEED_WORDS = [
+    "Needs:",
+    "Data already in the lakehouse",
+    "Analysis to build",
+    "New measurements",
+    "Not yet clear",
+    "Analysis of existing data",
+    "Analysis, then experiment",
+]
+# Result types publish keeps off every list (publish/cards.py OFF_TYPES).
+OFF_TYPES = ("bookkeeping", "untested")
 # Wording that would read as one project confirming another (the links stage's list).
 CONFIRM = re.compile(
     r"\b(?:confirm\w*|corroborat\w*|validat\w*|reproduc\w*|replicat\w*|independen\w*|agree\w*)\b"
@@ -136,8 +156,13 @@ LIGHT_LABELS = [
     ".card .meta",
     ".fcard .meta",  # topic pages
     ".qcolh",
+    ".qcoln",
+    ".qeffortline",
     ".nvcolh",
-    ".ready.part",
+    ".nvgroup",
+    ".nvgroup.rest",
+    ".ready.f-existing",
+    ".ready.f-experiment",
     ".px-facet-lbl",
     ".crel",
     ".cnovel",
@@ -153,29 +178,35 @@ FINDING_HEADINGS = [
     "Related conflicts",
 ]
 RELATED_HEADING = "Related results in other projects"
-# Filter and mark key for a result's kind, from the raw `result` field (Cards.tsx kindKey).
-KIND_KEY = {
-    "observation": "result",
-    "inference": "interpretation",
-    "null result": "null",
-    "correction": "correction",
+# A result's type key, read from `rtype`, with its legend and chip words (Cards.tsx
+# TYPE_WORDS), in legend order.
+TYPE_WORDS = {
+    "positive": "Positive result",
+    "negative": "Negative result",
+    "inconclusive": "Inconclusive",
+    "data": "About the data",
 }
-# How a Results box's label counts each kind (Novelty.tsx COUNT_WORDS): one, many.
+UPDATES_WORDS = "Revises an earlier claim"
+# How a Results box's label counts each type (Novelty.tsx COUNT_WORDS): one, many.
 BOX_COUNT_WORDS = {
-    "result": ("result", "results"),
-    "null": ("found no effect or was inconclusive", "found no effect or were inconclusive"),
-    "interpretation": ("interpretation", "interpretations"),
-    "correction": ("correction", "corrections"),
+    "positive": ("positive result", "positive results"),
+    "negative": ("negative result", "negative results"),
+    "inconclusive": ("inconclusive result", "inconclusive results"),
+    "data": ("result about the data", "results about the data"),
 }
-KIND_WORDS = {
-    "result": "Result",
-    "null": "No effect found, or inconclusive",
-    "interpretation": "Interpretation",
-    "correction": "Correction",
+# How each type is drawn (design: positive filled, negative hollow, inconclusive dashed,
+# about the data a small grey square).
+MARK_LOOK = {
+    "positive": ("circle", "solid"),
+    "negative": ("circle", "hollow"),
+    "inconclusive": ("circle", "dashed"),
+    "data": ("square", "grey"),
 }
-SHAPE = {"result": "circle", "null": "circle", "interpretation": "triangle", "correction": "cross"}
-NEEDS = ["data", "build", "measure", "unclear"]
-NOVEL_WORDS = "Cites a result in the Novel column"
+GROUP_REST = "Compared with published work"
+NOVEL_WORDS = "Builds on a new-direction result"
+FIRST_WORDS = "Starts with existing data"
+UNCLEAR_WORDS = "Data availability unclear"
+EFFORT_LINE = "Less effort to follow up → more effort"
 GONE_FAMILIES = ["Cited by the same open question", "One project uses or cites another"]
 # The design's tokens (design-marks.md "Geometry"): Novel orange and the box border grey.
 TOKENS = {
@@ -227,7 +258,9 @@ def records() -> dict:
     novel = order[0] if order else ""
     results = {
         i: {
-            "kind": KIND_KEY.get(findings[i].get("result", ""), "result"),
+            # An rtype outside the four reads as positive, as Cards.tsx kindKey does.
+            "kind": next((k for k in TYPE_WORDS if k == findings[i].get("rtype")), "positive"),
+            "updates": findings[i].get("updates_claim") is True,
             "col": findings[i].get("compare_text", ""),
             "topic": findings[i].get("topic", ""),
             "source": findings[i].get("source", ""),
@@ -235,21 +268,25 @@ def records() -> dict:
         }
         for i in sorted(listed)
     }
+    qindex = frontmatter(CONTENT / "directions" / "index.md")
+    follow_order: list[str] = qindex.get("follow_order") or []
     questions = {}
     for stem, fm in directions.items():
-        raw = fm.get("need")
-        need: str = raw if isinstance(raw, str) and raw in NEEDS else "unclear"
+        # A key outside publish's order reads as the last column (Questions.tsx followKey).
+        raw = fm.get("follow")
+        follow = raw if raw in follow_order else (follow_order[-1] if follow_order else "")
         questions[f"directions/{stem}"] = {
             "novel": any(
                 f in listed and findings[f].get("compare_text") == novel
                 for f in fm.get("findings") or []
             ),
             "cross": bool(fm.get("cross")),
-            "need": need,
-            "col": NEEDS.index(need),
+            "follow": follow,
+            "follow_text": fm.get("follow_text", ""),
+            "col": follow_order.index(follow) if follow in follow_order else -1,
+            "first": fm.get("first_step") is True,
+            "unclear": fm.get("data_unclear") is True,
             "topic": fm.get("topic", ""),
-            "approach": fm.get("approach", ""),
-            "approach_text": fm.get("approach_text", ""),
         }
     boxes: dict[tuple[str, str, str], list[str]] = {}
     for i, r in results.items():
@@ -258,6 +295,8 @@ def records() -> dict:
         "findings": findings,
         "directions": directions,
         "index": index,
+        "qindex": qindex,
+        "follow_order": follow_order,
         "listed": listed,
         "order": order,
         "cols": cols,
@@ -457,7 +496,8 @@ const ndFeat = e => {
     id: e.dataset.id || '', k: e.dataset.k || '', rel: e.classList.contains('rel'),
     color: s.color, shadow: s.boxShadow, outline: s.outlineStyle, w: r.width, h: r.height,
     b: { content: b.content, bg: b.backgroundColor, img: b.backgroundImage, clip: b.clipPath,
-         radius: b.borderTopLeftRadius, shadow: b.boxShadow },
+         radius: b.borderTopLeftRadius, shadow: b.boxShadow, bstyle: b.borderTopStyle,
+         bwidth: b.borderTopWidth, bcolor: b.borderTopColor, w: b.width, h: b.height },
     a: { content: a.content, style: a.borderTopStyle, width: a.borderTopWidth,
          color: a.borderTopColor, radius: a.borderTopLeftRadius, top: a.top },
     under: under(e),
@@ -469,12 +509,14 @@ const qdFeat = q => {
   const r = d.getBoundingClientRect()
   return {
     id: q.dataset.id || '', novel: q.classList.contains('novel'),
-    cross: q.classList.contains('cross'),
+    cross: q.classList.contains('cross'), half: q.classList.contains('half'),
+    unclear: q.classList.contains('unclear'),
     color: s.color, op: +getComputedStyle(d).opacity, shape: d.dataset.shape || null,
     label: d.getAttribute('aria-label') || '', pop: q.querySelector('.qpop')?.textContent || '',
     w: parseFloat(b.width), h: parseFloat(b.height), x: r.x, y: r.y,
     b: { bg: b.backgroundColor, img: b.backgroundImage, clip: b.clipPath,
-         radius: b.borderTopLeftRadius, shadow: b.boxShadow },
+         radius: b.borderTopLeftRadius, shadow: b.boxShadow, bstyle: b.borderTopStyle,
+         bwidth: b.borderTopWidth, bcolor: b.borderTopColor },
     under: under(q),
   }
 }
@@ -536,10 +578,28 @@ def check_home(browser, base: str) -> list[str]:
     ):
         if len(set(vals)) != len(vals):
             fails.append(f"home: card {label} not distinct: {vals}")
+    rec = records()
     for c, i in zip(cards, fid, strict=True):
-        case = gists.get(i, {}).get("case", "")
-        if c["kind"] == "null" and (not case or case in BAD_NULL_CASES):
-            fails.append(f"home: null-result card {i} has case '{case or 'none'}'")
+        fm = rec["findings"].get(i, {})
+        if i not in rec["listed"]:
+            fails.append(f"home: card {i} is not a listed result")
+        elif c["kind"] != rec["results"][i]["kind"]:
+            fails.append(f"home: card {i} has kind '{c['kind']}', record '{fm.get('rtype')}'")
+        if fm.get("result") == "null result" and fm.get("gist_case") not in SHOWN_CASES:
+            fails.append(f"home: null-result card {i} has case '{fm.get('gist_case') or 'none'}'")
+    # Home.tsx calls the picks new only when every one sits in the first column.
+    deck = page.evaluate(
+        "() => document.querySelector('.hlpart[data-cards] > .sechead.sub > p')"
+        "?.textContent.trim() || ''"
+    )
+    all_new = all(rec["findings"].get(i, {}).get("compare_text") == rec["novel"] for i in fid)
+    want_deck = (
+        "New results from different topics."
+        if all_new
+        else "Results from different topics with the least published work like them."
+    )
+    if deck != want_deck:
+        fails.append(f"home: the results deck reads '{deck}', expected '{want_deck}'")
     fails += kind_card_fails(page)
     fails += check_bar(browser, base)
     fails += key_entry_fails(browser, base)
@@ -1194,29 +1254,135 @@ def check_plain(browser, base: str) -> list[str]:
 
 # ---------------------------------------------------------------- questions grid
 
-BAD: list[str] = []
-
 
 def dot_expectations() -> dict[str, tuple[str, int]]:
-    """Each question's topic slug and column index, from its record file."""
-    out = {}
-    for did in ids("directions"):
-        fm = frontmatter(ROOT / "wiki" / "directions" / f"{did}.md")
-        topics = fm.get("topics") or [""]
-        readiness = fm.get("readiness", "unknown")
-        if readiness not in NEED_COLUMN:
-            print(f"grid: {did}: unknown readiness '{readiness}'")
-            BAD.append(did)
-        out[did] = (topics[0], NEED_COLUMN.get(readiness, -1))
+    """Each question's topic slug and follow-up column index, from its published record."""
+    return {
+        q.removeprefix("directions/"): (e["topic"], e["col"])
+        for q, e in records()["questions"].items()
+    }
+
+
+DOTS_JS = """() => [...document.querySelectorAll('.qgrid a.qdot')].map(e => {
+    const cell = e.closest('.qcell')
+    const row = e.closest('.qrow')
+    const cells = [...row.querySelectorAll('.qcell')]
+    const h = row.querySelector('.qrowh a')
+    return {
+        id: e.getAttribute('href').split('/').pop(),
+        col: cells.indexOf(cell),
+        topic: h ? h.getAttribute('href').split('/').pop() : '',
+    }
+})"""
+
+
+def dot_place_fails(page: Page, want: dict[str, tuple[str, int]]) -> list[tuple[str, str]]:
+    """(question id, why) for each dot outside its record's topic row and follow-up column."""
+    dots = page.evaluate(DOTS_JS)
+    out: list[tuple[str, str]] = []
+    if len(dots) != len(want):
+        out.append(("grid", f"{len(dots)} dots, expected {len(want)}"))
+    for d in dots:
+        exp = want.get(d["id"])
+        if exp is None:
+            out.append((d["id"], "has no record"))
+            continue
+        topic, col = exp
+        if d["topic"] != topic:
+            out.append((d["id"], f"in row '{d['topic']}', record says '{topic}'"))
+        if d["col"] != col:
+            out.append((d["id"], f"in column {d['col']}, record says {col}"))
     return out
+
+
+QHEAD_JS = """() => {
+    const head = document.querySelector('.qgrid .qrow.qhead')
+    const effort = document.querySelectorAll('.qgrid .qrow.qeffort')
+    const line = effort[0]?.querySelector('.qeffortline')
+    const lr = line?.getBoundingClientRect()
+    return {
+        efforts: effort.length,
+        before: !!head && head.previousElementSibling === effort[0],
+        line: (line?.textContent || '').replace(/\\s+/g, ' ').trim(),
+        heads: [...(head?.querySelectorAll('.qcolh') || [])].map(h => {
+            const r = h.getBoundingClientRect()
+            return {
+                label: (h.childNodes[0]?.textContent || '').trim(),
+                n: h.querySelector('.qn')?.textContent.trim() || '',
+                note: h.querySelector('.qcoln')?.textContent.trim() || '',
+                notes: h.querySelectorAll('.qcoln').length,
+                inLine: !!lr && lr.left <= (r.left + r.right) / 2
+                    && (r.left + r.right) / 2 <= lr.right,
+            }
+        }),
+    }
+}"""
+
+
+def qhead_fails(page: Page) -> list[str]:
+    """The grid's columns are publish's follow-up order, each header naming its column,
+    its count and its note, under one effort line spanning them all."""
+    rec = records()
+    qi = rec["qindex"]
+    got = page.evaluate(QHEAD_JS)
+    fails: list[str] = []
+    if got["efforts"] != 1 or not got["before"] or got["line"] != EFFORT_LINE:
+        fails.append(
+            f"grid: {got['efforts']} effort rows, right before the header {got['before']}, "
+            f"reading '{got['line']}'; expected one reading '{EFFORT_LINE}'"
+        )
+    count = Counter(e["follow"] for e in rec["questions"].values())
+    want = [
+        {
+            "label": (qi.get("follow_text") or {}).get(k, ""),
+            "n": str(count[k]),
+            "note": (qi.get("follow_notes") or {}).get(k, ""),
+            "notes": 1,
+            "inLine": True,
+        }
+        for k in rec["follow_order"]
+    ]
+    if got["heads"] != want or not want:
+        fails.append(f"grid: column headers {got['heads']}, records give {want}")
+    return fails
+
+
+def dot_word_fails(names: list, qs: dict) -> list[str]:
+    """Each dot's name and pop-up name its follow-up need and say "Starts with existing
+    data" and "Data availability unclear" exactly when its record sets them; the dot carries
+    no approach shape and the pop-up no "Needs:" line."""
+    fails: list[str] = []
+    for qid, name, need, shaped in names:
+        e = qs.get(qid)
+        if e is None:
+            continue
+        name = name or ""
+        if shaped:
+            fails.append(f"grid: dot {qid} still carries an approach shape")
+        if not e["follow_text"] or e["follow_text"] not in name or e["follow_text"] not in need:
+            fails.append(f"grid: dot '{name[:50]}' does not say '{e['follow_text']}'")
+        for words, on in ((FIRST_WORDS, e["first"]), (UNCLEAR_WORDS, e["unclear"])):
+            for where, said in (("name", name), ("pop-up", need)):
+                if (words in said) != on:
+                    fails.append(f"grid: dot {qid} {where} says '{words}' {not on}, record {on}")
+        if "Needs:" in need:
+            fails.append(f"grid: dot {qid} pop-up still has a 'Needs:' line")
+    if not names:
+        fails.append("grid: no dot to read")
+    return fails[:12]
 
 
 def check_grid(browser, base: str) -> list[str]:
     fails: list[str] = []
+    rec = records()
     want = dot_expectations()
-    fails += [f"grid: {d}: unknown readiness in record" for d in BAD]
     if not want:
-        return ["grid: no direction records under wiki/directions"]
+        return ["grid: no published open questions under quartz/content/directions"]
+    if not rec["follow_order"]:
+        fails.append("grid: the open-questions index has no follow_order")
+    for stem, fm in rec["directions"].items():
+        if fm.get("follow") not in rec["follow_order"]:
+            fails.append(f"grid: {stem}: follow '{fm.get('follow')}' is not a known column")
 
     nojs = new_page(browser, js=False)
     go(nojs, base + "/directions/")
@@ -1229,32 +1395,13 @@ def check_grid(browser, base: str) -> list[str]:
 
     page = new_page(browser)
     go(page, base + "/directions/")
-    dots = page.eval_on_selector_all(
-        ".qgrid a.qdot",
-        """els => els.map(e => {
-            const cell = e.closest('.qcell');
-            const row = e.closest('.qrow');
-            const cells = [...row.querySelectorAll('.qcell')];
-            const h = row.querySelector('.qrowh a');
-            return {
-                id: e.getAttribute('href').split('/').pop(),
-                col: cells.indexOf(cell),
-                topic: h ? h.getAttribute('href').split('/').pop() : '',
-            };
-        })""",
+    fails += [f"grid: {i} {why}" for i, why in dot_place_fails(page, want)]
+    fails += qhead_fails(page)
+    body = page.inner_text("body") + " ".join(
+        page.eval_on_selector_all(".qpop", "els => els.map(e => e.textContent)")
     )
-    if len(dots) != len(want):
-        fails.append(f"grid: {len(dots)} dots, expected {len(want)}")
-    for d in dots:
-        exp = want.get(d["id"])
-        if exp is None:
-            fails.append(f"grid: dot {d['id']} has no record")
-            continue
-        topic, col = exp
-        if d["topic"] != topic:
-            fails.append(f"grid: {d['id']} in row '{d['topic']}', record says '{topic}'")
-        if d["col"] != col:
-            fails.append(f"grid: {d['id']} in column {d['col']}, record says {col}")
+    if gone := [w for w in GONE_NEED_WORDS if w in body]:
+        fails.append(f"grid: /directions/ still says {gone}")
 
     # Hover, focus and tap each open a pop-up holding the title; Escape closes it.
     # The first unringed dot: no fading reaches its pop-up.
@@ -1334,28 +1481,41 @@ def check_grid(browser, base: str) -> list[str]:
         page.keyboard.press("Escape")
         if not page.evaluate("document.activeElement?.matches('a.qdot')") or pop.is_visible():
             fails.append("grid: Escape inside a pop-up does not close it and refocus its dot")
-    # The approach left the dot's shape (M2); each dot's name and pop-up still carry it.
-    qs = records()["questions"]
+    # Each dot's name and pop-up say what following up needs and carry exactly the
+    # markers its record sets.
+    qs = rec["questions"]
     names = page.eval_on_selector_all(
         ".qgrid .qd",
         "els => els.map(e => [e.dataset.id, e.querySelector('a.qdot').getAttribute('aria-label'),"
         " e.querySelector('.qpop .qneed')?.textContent || '',"
         " e.querySelector('a.qdot').hasAttribute('data-shape')])",
     )
-    with_approach = 0
-    for qid, name, need, shaped in names:
-        approach = qs.get(qid, {}).get("approach_text", "")
-        if shaped:
-            fails.append(f"grid: dot {qid} still carries an approach shape")
-            break
-        if not approach:
-            continue
-        with_approach += 1
-        if approach not in (name or "") or approach not in need:
-            fails.append(f"grid: dot '{(name or '')[:50]}' does not name its approach")
-            break
-    if not with_approach:
-        fails.append("grid: no dot has an approach to name")
+    fails += dot_word_fails(names, qs)
+    # Control: a dot moved to another follow-up column, and a first-step marker dropped from
+    # its words, must each be caught on that dot alone.
+    moved = page.evaluate(
+        """() => { for (const row of document.querySelectorAll('.qgrid .qrow')) {
+            const cells = [...row.querySelectorAll('.qcell')]
+            const from = cells.findIndex(c => c.querySelector('.qd'))
+            if (from < 0 || cells.length < 2) continue
+            const d = cells[from].querySelector('.qd'), to = cells[(from + 1) % cells.length]
+            to.append(d)
+            return d.dataset.id.split('/').pop()
+        } return '' }"""
+    )
+    caught = {i for i, _ in dot_place_fails(page, want)}
+    if not moved or caught != {moved}:
+        fails.append(
+            f"grid: control 'dot in the wrong column' caught {sorted(caught)}, moved {moved}"
+        )
+    firsts = [n for n in names if qs.get(n[0], {}).get("first")]
+    if firsts:
+        qid, name, need, shaped = firsts[0]
+        cut = [(qid, (name or "").replace(FIRST_WORDS, ""), need, shaped)]
+        if not dot_word_fails(cut, qs):
+            fails.append(f"grid: control 'first-step words dropped' passed unnoticed on {qid}")
+    else:
+        print("note: grid: no question starts with existing data, so no first-step control")
 
     fails += question_legend_fails(browser, base)
 
@@ -1432,6 +1592,108 @@ def question_legend_fails(browser, base: str) -> list[str]:
 # ---------------------------------------------------------------- result pages and labels
 
 
+def type_record_fails(rec: dict) -> list[str]:
+    """Each listed result's type comes from `rtype` in the reader's words, a listed
+    correction says it revises an earlier claim, a listed null result measured something,
+    and bookkeeping and untested results stay off the lists."""
+    fails: list[str] = []
+    for i, fm in sorted(rec["findings"].items()):
+        listed = i in rec["listed"]
+        if fm.get("rtype") in OFF_TYPES and listed:
+            fails.append(f"pages: {fm.get('rtype')} result {i} is listed")
+        if not listed:
+            continue
+        rtype = fm.get("rtype")
+        if rtype not in TYPE_WORDS or fm.get("kind_text") != TYPE_WORDS[rtype]:
+            fails.append(
+                f"pages: listed {i} has rtype '{rtype}', kind_text '{fm.get('kind_text')}'"
+            )
+        if (fm.get("updates_claim") is True) != (fm.get("result") == "correction"):
+            fails.append(
+                f"pages: listed {i} ({fm.get('result')}) has updates_claim "
+                f"{fm.get('updates_claim')}"
+            )
+        if fm.get("result") == "null result" and fm.get("gist_case") not in SHOWN_CASES:
+            fails.append(f"pages: listed null {i} has case '{fm.get('gist_case')}'")
+    return fails
+
+
+def type_tag_fails(words: list, rec: dict, where: str) -> list[str]:
+    """Each result's tags: its type tag (class t-<rtype>, the type's words), then "Revises an
+    earlier claim" exactly when its record says so. `words` holds [id, [[class, text]]]."""
+    for cid, tags in words:
+        r = rec["results"].get(cid)
+        if r is None:
+            return [f"pages: {where} card {cid} has no listed record"]
+        want = [[f"rt t-{r['kind']}", TYPE_WORDS[r["kind"]]]]
+        if r["updates"]:
+            want.append(["rt upd", UPDATES_WORDS])
+        if [list(t) for t in tags] != want:
+            gone = [t for _, t in tags if t in GONE_KIND_WORDS]
+            return [f"pages: {where} {cid} tags {tags}, expected {want}; old words {gone}"]
+    return []
+
+
+def mark_word_fails(marks: list, rec: dict) -> list[str]:
+    """Each map mark's words: its type, then "Revises an earlier claim" when the record says so."""
+    fails = []
+    for mid, said in marks:
+        r = rec["results"].get(mid)
+        if r is None:
+            continue
+        want = ". ".join([TYPE_WORDS[r["kind"]], *([UPDATES_WORDS] if r["updates"] else [])])
+        if said != want:
+            fails.append(f"pages: map mark {mid} reads '{said}', expected '{want}'")
+    return fails[:5]
+
+
+def question_tag_fails(page: Page, base: str, rec: dict) -> list[str]:
+    """Question cards and pages show what following up needs, then the two markers, with
+    no approach and no "Needs:" line; the cards carry the board's follow and first keys."""
+    fails: list[str] = []
+
+    def want(qid: str) -> list[list[str]]:
+        e, fm = rec["questions"][qid], rec["directions"][qid.removeprefix("directions/")]
+        out = [[f"ready f-{fm.get('follow') or 'existing'}", e["follow_text"]]]
+        out += [["c-kind", FIRST_WORDS]] if e["first"] else []
+        return out + ([["c-kind", UNCLEAR_WORDS]] if e["unclear"] else [])
+
+    tags_js = "[...e.querySelectorAll(':scope > span')].map(t => [t.className, t.textContent])"
+    go(page, base + "/directions/")
+    cards = page.eval_on_selector_all(
+        ".board .cards > .qcard",
+        f"els => els.map(c => {{ const e = c.querySelector('.ctags'); return [c.dataset.id,"
+        f" e ? {tags_js} : [], c.dataset.fFollow || '', c.dataset.tFirst === '1'] }})",
+    )
+    if len(cards) != len(rec["questions"]):
+        fails.append(f"pages: /directions/ has {len(cards)} cards, {len(rec['questions'])} records")
+
+    def card_fails(rows: list) -> list[str]:
+        for qid, tags, follow, first in rows:
+            e = rec["questions"].get(qid)
+            if e is None:
+                return [f"pages: /directions/ card {qid} has no record"]
+            if tags != want(qid) or follow != e["follow"] or first != e["first"]:
+                return [
+                    f"pages: /directions/ card {qid} tags {tags}, data-f-follow '{follow}', "
+                    f"data-t-first {first}; expected {want(qid)}, {e['follow']}, {e['first']}"
+                ]
+        return []
+
+    fails += card_fails(cards)
+    # Control: a first-step card that loses its marker tag must be caught.
+    firsts = [c for c in cards if rec["questions"].get(c[0], {}).get("first")]
+    if firsts and not card_fails([[firsts[0][0], firsts[0][1][:1], *firsts[0][2:]]]):
+        fails.append(f"pages: control 'first-step tag dropped' passed unnoticed on {firsts[0][0]}")
+    for stem in sorted(rec["directions"])[:10]:
+        go(page, f"{base}/directions/{stem}")
+        bar = page.eval_on_selector_all(".cardbar", f"els => els.map(e => {tags_js})")
+        exp = want(f"directions/{stem}")
+        if not bar or bar[0] != exp:
+            fails.append(f"pages: /directions/{stem} bar reads {bar[:1]}, expected {exp}")
+    return fails
+
+
 def check_pages(browser, base: str) -> list[str]:
     fails: list[str] = []
     rec = records()
@@ -1457,9 +1719,9 @@ def check_pages(browser, base: str) -> list[str]:
         fails.append(f"pages: /findings/ title {h1}, expected ['Results']")
     if page.locator(".c-chips").count():
         fails.append("pages: /findings/ still has the old .c-chips filter")
-    # The board's kind chips, in legend order, for the kinds the listed results hold.
+    # The board's type chips, in legend order, for the types the listed results hold.
     kinds = {r["kind"] for r in rec["results"].values()}
-    want = ["All"] + [w for k, w in KIND_WORDS.items() if k in kinds]
+    want = ["All"] + [w for k, w in TYPE_WORDS.items() if k in kinds]
     row = ".board .px-tools .facets[data-k=kind]"
     chips = page.eval_on_selector_all(
         f"{row} .px-chip",
@@ -1467,7 +1729,13 @@ def check_pages(browser, base: str) -> list[str]:
         " || e.textContent.replace(/\\d+$/, '').trim())",
     )
     if chips != want:
-        fails.append(f"pages: /findings/ kind chips {chips}, expected {want}")
+        fails.append(f"pages: /findings/ type chips {chips}, expected {want}")
+    keys = page.eval_on_selector_all(f"{row} .px-chip", "els => els.map(e => e.dataset.f)")
+    if keys != [""] + [k for k in TYPE_WORDS if k in kinds]:
+        fails.append(f"pages: /findings/ type chips are keyed {keys}")
+    lbl = page.eval_on_selector_all(f"{row} .px-facet-lbl", "els => els.map(e => e.textContent)")
+    if lbl != ["Type of result"]:
+        fails.append(f"pages: /findings/ type facet is labelled {lbl}, expected 'Type of result'")
     # Filter chips say which is on and the group has a name (review F11).
     state = page.eval_on_selector_all(
         row,
@@ -1483,31 +1751,47 @@ def check_pages(browser, base: str) -> list[str]:
     if pressed[:2] != ["false", "true"]:
         fails.append(f"pages: aria-pressed does not follow the chosen chip: {pressed}")
 
-    # Each card's kind words come from its record; listed nulls read as one of two kinds.
-    for i in sorted(rec["listed"]):
-        fm = rec["findings"][i]
-        if rec["results"][i]["kind"] != "null":
-            continue
-        if fm.get("kind_text") not in NULL_WORDS:
-            fails.append(f"pages: listed null {i} reads '{fm.get('kind_text')}'")
-        if fm.get("gist_case") in BAD_NULL_CASES:
-            fails.append(f"pages: listed null {i} has case '{fm.get('gist_case')}'")
+    fails += type_record_fails(rec)
     go(page, base + "/findings/")
     words = page.eval_on_selector_all(
         ".board .cards > .rcard",
-        "els => els.map(e => [e.dataset.id, e.querySelector('.rt')?.textContent.trim(),"
-        " !!e.querySelector('.rt.null')])",
+        "els => els.map(e => [e.dataset.id, [...e.querySelectorAll('.ctags > .rt')]"
+        ".map(t => [t.className, t.textContent.trim()])])",
     )
     if len(words) != len(rec["listed"]):
         fails.append(f"pages: /findings/ has {len(words)} cards, records list {len(rec['listed'])}")
-    for cid, said, hollow in words:
-        fm = rec["findings"].get(cid, {})
-        is_null = rec["results"].get(cid, {}).get("kind") == "null"
-        if said != fm.get("kind_text") or hollow != is_null:
-            fails.append(
-                f"pages: card {cid} reads '{said}' (null {hollow}), record '{fm.get('kind_text')}'"
-            )
-            break
+    fails += type_tag_fails(words, rec, "/findings/")
+    # Control: a card that loses its "Revises an earlier claim" tag must be caught.
+    upd = next((w for w in words if rec["results"].get(w[0], {}).get("updates")), None)
+    if upd and not type_tag_fails([[upd[0], upd[1][:1]]], rec, "control"):
+        fails.append(f"pages: control 'revision tag dropped' passed unnoticed on {upd[0]}")
+    # The map's preview and box list read a mark's data-kind, so a correction's note rides there.
+    marks = page.eval_on_selector_all(
+        ".nvgrid .nd[data-id]", "els => els.map(e => [e.dataset.id, e.dataset.kind || ''])"
+    )
+    fails += mark_word_fails(marks, rec)
+    if upd and not mark_word_fails([[upd[0], TYPE_WORDS[rec["results"][upd[0]]["kind"]]]], rec):
+        fails.append(f"pages: control 'map note dropped' passed unnoticed on {upd[0]}")
+    # The first ten pages, plus every unlisted one: a page off the lists shows no type tag
+    # and no revision note, and an unlisted correction no PubMed chip.
+    unlisted = [f for f in ids("findings") if f not in rec["listed"]]
+    for fid in ids("findings")[:10] + unlisted:
+        go(page, f"{base}/findings/{fid}")
+        bar = page.eval_on_selector_all(
+            ".cardbar",
+            "els => els.map(e => [...e.querySelectorAll(':scope > .rt, :scope .chip')]"
+            ".map(t => [t.className, t.textContent.trim()]))",
+        )
+        tags = [t for t in (bar[0] if bar else []) if t[0] != "chip"]
+        if fid in rec["listed"]:
+            fails += type_tag_fails([[fid, tags]], rec, f"/findings/{fid}")
+        elif rec["findings"][fid].get("rtype") in ("bookkeeping", "untested"):
+            # A correction's chip would read as a verdict on the fix; other chips may stay.
+            fix = rec["findings"][fid].get("result") == "correction"
+            shown = [t for t in (bar[0] if bar else []) if t[0] != "chip" or fix]
+            if shown:
+                fails.append(f"pages: unlisted /findings/{fid} shows tags {shown}")
+    fails += question_tag_fails(page, base, rec)
 
     # Both boards use the concepts card with square corners (6A).
     for path, n in (("/findings/", len(rec["listed"])), ("/directions/", len(rec["directions"]))):
@@ -1595,7 +1879,17 @@ def contrast(browser, base: str, label: str) -> list[str]:
         }
         return [sel, getComputedStyle(e).color, bg];
     }))"""
-    for viewport, sels in ((DESKTOP, LIGHT_LABELS), (PHONE, PHONE_LABELS)):
+    rec = records()
+    # Tags that only exist when some record uses them.
+    light = LIGHT_LABELS + [
+        sel
+        for sel, on in (
+            (".ready.f-outside", any(e["follow"] == "outside" for e in rec["questions"].values())),
+            (".rt.upd", any(r["updates"] for r in rec["results"].values())),
+        )
+        if on
+    ]
+    for viewport, sels in ((DESKTOP, light), (PHONE, PHONE_LABELS)):
         page = browser.new_context(viewport=viewport, color_scheme="light").new_page()
         topic = next(iter(ids("topics")), "") if (ROOT / "wiki" / "topics").exists() else ""
         for path in ("/", "/findings/", "/directions/", f"/topics/{topic}"):
@@ -1605,7 +1899,7 @@ def contrast(browser, base: str, label: str) -> list[str]:
                 r = ratio(rgba(fg), rgba(bg))
                 if r < 4.5:
                     fails.append(f"{label}: {path} {sel} contrast {r:.2f}:1 ({fg} on {bg})")
-    missing = [s for s in LIGHT_LABELS + PHONE_LABELS if s not in found]
+    missing = [s for s in light + PHONE_LABELS if s not in found]
     if missing:
         fails.append(f"{label}: no label found to measure for {missing}")
     return sorted(set(fails))
@@ -1647,6 +1941,44 @@ BOXES_JS = """() => {
     }
     return out
 }"""
+
+
+GROUP_JS = """() => {
+    const mid = r => (r.left + r.right) / 2
+    const heads = [...document.querySelectorAll('.nvgrid > .nvcolh')]
+        .map(h => h.getBoundingClientRect())
+    const top = heads.length ? Math.min(...heads.map(r => r.top)) : 0
+    return [...document.querySelectorAll('.nvgrid > .nvgroup')].map(g => {
+        const r = g.getBoundingClientRect()
+        return { rest: g.matches('.rest'), text: g.textContent.replace(/\\s+/g, ' ').trim(),
+                 over: heads.map((h, i) => [i, h]).filter(([, h]) => r.left <= mid(h)
+                     && mid(h) <= r.right).map(([i]) => i), above: r.bottom <= top + 1 }
+    })
+}"""
+
+
+def group_fails(page: Page) -> list[str]:
+    """The "Something new N" header spans the two kinds of new and "Compared with published
+    work" the other columns, both above the column headers."""
+    rec = records()
+    group = rec["index"].get("something_new") or []
+    if len(group) < 2:
+        return [f"cross: the results index names no something_new group: {group}"]
+    name, cols = group[0], group[1:]
+    if rec["cols"][: len(cols)] != cols:
+        return [f"cross: something_new {cols} are not the first columns {rec['cols']}"]
+    n = sum(r["col"] in cols for r in rec["results"].values())
+    want = [
+        {"rest": False, "text": f"{name} {n}", "over": list(range(len(cols))), "above": True},
+        {
+            "rest": True,
+            "text": GROUP_REST,
+            "over": list(range(len(cols), len(rec["cols"]))),
+            "above": True,
+        },
+    ]
+    got = page.evaluate(GROUP_JS)
+    return [] if got == want else [f"cross: group headers {got}, records give {want}"]
 
 
 def box_fails(page: Page, label: str) -> list[str]:
@@ -1695,6 +2027,16 @@ def check_cross(browser, base: str) -> list[str]:
     )
     if cols != rec["cols"]:
         fails.append(f"cross: map columns {cols}, records give {rec['cols']}")
+    fails += group_fails(page)
+    # Control: the group header spanning one column too few must be caught.
+    page.evaluate(
+        "() => document.querySelectorAll('.nvgroup').forEach(g => g.style.gridColumn ="
+        " g.matches('.rest') ? `span ${parseInt(g.style.gridColumn.split(' ')[1]) + 1}`"
+        " : `span ${parseInt(g.style.gridColumn.split(' ')[1]) - 1}`)"
+    )
+    if not group_fails(page):
+        fails.append("cross: control 'group header one column short' passed unnoticed")
+    go(page, base + "/findings/")
 
     # Compare buttons: one on each listed member of a shared group with two or more.
     groups = [
@@ -2443,8 +2785,6 @@ RINGS_JS = """() => {
     return out
 }"""
 
-TRIANGLE = ["50%", "0", "100%", "100%", "0", "100%"]
-
 
 def shadow_layers(text: str) -> list[str]:
     """A computed box-shadow's layers (commas inside colour functions do not split)."""
@@ -2475,36 +2815,60 @@ def named(c, tk: dict) -> str:
     return show(c)
 
 
+def px(v: str) -> float:
+    try:
+        return float(v.removesuffix("px"))
+    except ValueError:
+        return 0.0
+
+
+def outline_of(b: dict, col) -> tuple[str, list[str], bool, bool]:
+    """A ::before's inset stroke ("none", "ok" for one 1.5 px or wider in the mark's colour,
+    else "bad"), its outer shadow layers, whether its border is a dashed line in that
+    colour, and whether it has any border at all."""
+    layers = shadow_layers(b["shadow"])
+    insets = [x for x in layers if "inset" in x]
+    good = [
+        x for x in insets if colours_in(x) and same(colours_in(x)[0], col) and lengths(x)[-1] >= 1.5
+    ]
+    stroke = "none" if not insets else "ok" if len(good) == len(insets) == 1 else "bad"
+    outer = [x for x in layers if "inset" not in x]
+    border = b["bstyle"] not in ("none", "") and px(b["bwidth"]) > 0
+    # 2 px: Chrome snaps a 1.5 px border to 1 px on a 1x screen, too thin beside the strokes.
+    dashed = border and b["bstyle"] == "dashed" and px(b["bwidth"]) >= 2
+    return stroke, outer, dashed and same(rgba(b["bcolor"]), col), border
+
+
 def result_features(m: dict, tk: dict) -> dict:
     """What a Results mark shows, read from its computed style: shape, fill, ring, colour."""
     col = rgba(m["color"])
     b, a = m["b"], m["a"]
-    clip = b["clip"]
-    if clip.startswith("polygon("):
-        pts = ["0" if t in ("0px", "0%") else t for t in re.findall(r"[\d.]+(?:px|%)?", clip)]
-        shape = "triangle" if pts == TRIANGLE else f"polygon {clip}"
-    elif b["img"].count("linear-gradient(") == 2 and "-45deg" in b["img"]:
-        shape = "cross"
-    elif clip == "none" and b["img"] == "none" and b["radius"] == "50%":
+    if b["clip"] != "none" or b["img"] != "none":
+        shape = f"other (clip {b['clip']}, image {b['img'][:30]})"
+    elif b["radius"] == "50%":
         shape = "circle"
+    elif px(b["radius"]) <= 2 and abs(px(b["w"]) - px(b["h"])) < 0.5 and px(b["w"]) < m["w"]:
+        # Smaller than the mark's box, so it reads as a small square beside the circles.
+        shape = "square"
     else:
-        shape = f"other (radius {b['radius']}, clip {clip}, image {b['img'][:30]})"
+        shape = f"other (radius {b['radius']}, {b['w']} x {b['h']})"
     under = surface(m["under"]["stack"])
-    if shape == "cross":
-        inks = [c for c in colours_in(b["img"]) if c[3] > 0]
-        fill = "solid" if inks and all(same(c, col) for c in inks) else "other"
-    else:
-        bg = rgba(b["bg"])
-        layers = shadow_layers(b["shadow"])
-        if same(bg, col):
-            fill = "solid" if not layers else f"solid with shadow {b['shadow']}"
-        elif bg[3] == 0 or same(bg, under) or same(bg, tk["card"]):
-            stroke = [
-                x for x in layers if "inset" in x and colours_in(x) and same(colours_in(x)[0], col)
-            ]
-            fill = "hollow" if stroke and lengths(stroke[0])[-1] >= 1.5 else "empty"
+    bg = rgba(b["bg"])
+    stroke, outer, dashed, border = outline_of(b, col)
+    if same(bg, col):
+        plain = stroke == "none" and not outer and not border
+        fill = "solid" if plain else f"solid with shadow {b['shadow']} border {b['bstyle']}"
+    elif bg[3] == 0 or same(bg, under) or same(bg, tk["card"]):
+        if stroke == "ok" and not border and not outer:
+            fill = "hollow"
+        elif dashed and stroke == "none" and not outer:
+            fill = "dashed"
         else:
-            fill = f"filled {b['bg']}"
+            fill = f"empty (shadow {b['shadow']}, border {b['bstyle']} {b['bwidth']})"
+    elif same(bg, tk["mute"]) and neutral(bg) and stroke == "none" and not outer and not border:
+        fill = "grey"
+    else:
+        fill = f"filled {b['bg']}"
     ring = a["content"] not in ("none", "normal") and a["style"] != "none"
     ring_ok = (
         ring
@@ -2523,46 +2887,74 @@ def result_features(m: dict, tk: dict) -> dict:
 
 
 def question_features(q: dict, tk: dict) -> dict:
+    """What a question dot shows: a circle, solid, half filled (with a stroke) or dashed,
+    with or without the cross-project ring, in ink or orange."""
     col = rgba(q["color"])
     b = q["b"]
+    half = b["img"].startswith("linear-gradient(") and "90deg" in b["img"]
     shape = (
         "circle"
-        if b["radius"] == "50%" and b["clip"] == "none" and b["img"] == "none"
-        else f"other (radius {b['radius']}, clip {b['clip']})"
+        if b["radius"] == "50%" and b["clip"] == "none" and (b["img"] == "none" or half)
+        else f"other (radius {b['radius']}, clip {b['clip']}, image {b['img'][:30]})"
     )
-    fill = "solid" if same(rgba(b["bg"]), col) else f"filled {b['bg']}"
-    layers = shadow_layers(b["shadow"])
-    if not layers:
+    bg = rgba(b["bg"])
+    stroke, outer, dashed, border = outline_of(b, col)
+    parts: list[str] = []
+    if half:
+        stops = colours_in(b["img"])
+        empty_half = len(stops) == 2 and (same(stops[1], tk["card"]) or stops[1][3] == 0)
+        # A dashed outline replaces the inner stroke when the data is also unclear.
+        drawn = stroke == "ok" or (stroke == "none" and dashed)
+        # A hard split at the midpoint: both colour stops sit at 50%.
+        split = re.findall(r"(\d+(?:\.\d+)?)%", b["img"]) == ["50", "50"]
+        ok = empty_half and split and same(stops[0], col) and drawn
+        parts.append("half" if ok else f"gradient {b['img']} stroke {stroke}")
+    elif stroke != "none":
+        parts.append(f"inset stroke {stroke}")
+    if dashed:
+        parts.append("dashed" if same(bg, tk["card"]) or bg[3] == 0 else f"dashed on {b['bg']}")
+    elif border:
+        parts.append(f"border {b['bstyle']} {b['bwidth']}")
+    if not parts:
+        parts.append("solid" if same(bg, col) else f"filled {b['bg']}")
+    if not outer:
         ring = "none"
     elif (
-        len(layers) == 2
-        and same(colours_in(layers[1])[0], col)
-        and lengths(layers[1])[-1] > lengths(layers[0])[-1]
+        len(outer) == 2
+        and colours_in(outer[1])
+        and same(colours_in(outer[1])[0], col)
+        and lengths(outer[1])[-1] > lengths(outer[0])[-1]
     ):
         ring = "ring"
     else:
         ring = f"bad ring {b['shadow']}"
-    return {"shape": shape, "fill": fill, "ring": ring, "colour": named(col, tk)}
+    return {"shape": shape, "fill": " ".join(parts), "ring": ring, "colour": named(col, tk)}
 
 
 def expect_result(r: dict) -> dict:
+    shape, fill = MARK_LOOK[r["kind"]]
     return {
-        "shape": SHAPE[r["kind"]],
-        "fill": "hollow" if r["kind"] == "null" else "solid",
+        "shape": shape,
+        "fill": fill,
         "ring": "ring" if r["rel"] else "none",
-        # M2: Results marks stay ink; the Novel column header carries the orange.
+        # M2: Results marks stay ink; the first column's header carries the orange.
         "colour": "ink",
         "halo": False,
     }
 
 
 def expect_question(q: dict) -> dict:
+    # A question with both markers would need both looks; the design draws neither alone.
+    fill = " ".join(w for w, on in (("half", q["first"]), ("dashed", q["unclear"])) if on)
     return {
         "shape": "circle",
-        "fill": "solid",
+        "fill": fill or "solid",
         "ring": "ring" if q["cross"] else "none",
         "colour": "orange" if q["novel"] else "ink",
     }
+
+
+MARK_TOKENS = ("ink", "card", "new", "box", "mute")
 
 
 def mark_diffs(page: Page, tk: dict | None = None) -> tuple[list[tuple[str, str]], dict, dict]:
@@ -2571,7 +2963,7 @@ def mark_diffs(page: Page, tk: dict | None = None) -> tuple[list[tuple[str, str]
     rec = records()
     rd = page.evaluate(RESULT_MARKS_JS)
     qd = page.evaluate(QUESTION_MARKS_JS) if page.locator(".qgrid").count() else None
-    tk = tk or {k: rgba(rd[k]) for k in ("ink", "card", "new", "box")}
+    tk = tk or {k: rgba(rd[k]) for k in MARK_TOKENS}
     out: list[tuple[str, str]] = []
     seen = set()
     for m in rd["marks"]:
@@ -2581,7 +2973,7 @@ def mark_diffs(page: Page, tk: dict | None = None) -> tuple[list[tuple[str, str]
             continue
         seen.add(m["id"])
         if m["k"] != r["kind"]:
-            out.append((m["id"], f"data-k '{m['k']}', record kind '{r['kind']}'"))
+            out.append((m["id"], f"data-k '{m['k']}', record rtype '{r['kind']}'"))
         got, want = result_features(m, tk), expect_result(r)
         if got != want:
             diff = {k: (got[k], want[k]) for k in want if got[k] != want[k]}
@@ -2617,7 +3009,7 @@ def column_paint(rec: dict) -> tuple[str, list[str]]:
     ]
     css += [
         f".qgrid .qrow > .qcell:nth-of-type({i + 1}) .qd {{ color: {c} !important; }}"
-        for i, c in enumerate(paint[: len(NEEDS)])
+        for i, c in enumerate(paint[: len(rec["follow_order"])])
     ]
     return "\n".join(css), paint
 
@@ -2625,30 +3017,77 @@ def column_paint(rec: dict) -> tuple[str, list[str]]:
 NO_MOTION = "*, *::before, *::after { transition: none !important; animation: none !important; }"
 FLUSH = """() => [...document.querySelectorAll('.nd, .qdot')]
     .map(e => getComputedStyle(e, '::before').backgroundColor).length"""
-NULL_SOLID = (
-    '.nvgrid .nd[data-k="null"]::before'
-    " { background: currentColor !important; box-shadow: none !important; }"
+# Each control breaks one type's look; the check must catch exactly the marks of that type.
+RESULT_CONTROLS = [
+    (
+        "negative results drawn filled",
+        "negative",
+        '.nvgrid .nd[data-k="negative"]::before'
+        " { background: currentColor !important; box-shadow: none !important; }",
+    ),
+    (
+        "inconclusive results drawn with a solid border",
+        "inconclusive",
+        '.nvgrid .nd[data-k="inconclusive"]::before { border-style: solid !important; }',
+    ),
+    (
+        "results about the data drawn round",
+        "data",
+        '.nvgrid .nd[data-k="data"]::before { border-radius: 50% !important; }',
+    ),
+]
+UNCLEAR_SOLID = ".qgrid .qd.unclear .qdot::before { border-style: solid !important; }"
+# Nearly solid: the split moved from the midpoint to 99%.
+HALF_SKEWED = (
+    ".qgrid .qd.half .qdot::before { background: linear-gradient(90deg, currentColor 99%, "
+    "var(--card) 99%) !important; }"
 )
+HALF_JS = """on => document.querySelectorAll(on ? '.qgrid .qd[data-was-half]' : '.qgrid .qd.half')
+    .forEach(e => { e.classList.toggle('half', on); e.toggleAttribute('data-was-half', !on) })"""
 
 
 def control_fails(page: Page, tag: str, tk: dict, results_page: bool) -> list[str]:
-    """Done check 1's negative controls: each injected style must make the check fail on
+    """Done check 1's negative controls: each injected fault must make the check fail on
     exactly the marks it changes."""
     fails: list[str] = []
     rec = records()
     # Links ease their colour; without this the controls would be read, and leave the page,
     # mid-transition.
     still = page.add_style_tag(content=NO_MOTION)
-    if results_page:
-        nulls = {i for i, r in rec["results"].items() if r["kind"] == "null"}
-        style = page.add_style_tag(content=NULL_SOLID)
+
+    def caught_by(css: str) -> set[str]:
+        style = page.add_style_tag(content=css)
         caught = {i for i, _ in mark_diffs(page, tk)[0]}
         style.evaluate("e => e.remove()")
-        if caught != nulls or not nulls:
+        return caught
+
+    def report(name: str, caught: set[str], want: set[str], noun: str) -> None:
+        if caught != want or not want:
             fails.append(
-                f"{tag}: control 'nulls drawn solid' caught {len(caught)} marks, "
-                f"expected the {len(nulls)} nulls (missed {sorted(nulls - caught)[:3]})"
+                f"{tag}: control '{name}' caught {len(caught)} marks, expected the {len(want)} "
+                f"{noun} (missed {sorted(want - caught)[:3]}, extra {sorted(caught - want)[:3]})"
             )
+
+    if results_page:
+        for name, kind, css in RESULT_CONTROLS:
+            want = {i for i, r in rec["results"].items() if r["kind"] == kind}
+            if want:
+                report(name, caught_by(css), want, f"{kind} results")
+            else:
+                print(f"note: {tag}: no {kind} result, so control '{name}' did not run")
+    else:
+        firsts = {q for q, e in rec["questions"].items() if e["first"]}
+        if firsts:
+            page.evaluate(HALF_JS, False)
+            caught = {i for i, _ in mark_diffs(page, tk)[0]}
+            page.evaluate(HALF_JS, True)
+            report("first-step dots lose .half", caught, firsts, "first-step questions")
+            report(
+                "first-step dots split at 99%", caught_by(HALF_SKEWED), firsts, "first-step ones"
+            )
+        unclear = {q for q, e in rec["questions"].items() if e["unclear"]}
+        if unclear:
+            report("unclear dots drawn solid", caught_by(UNCLEAR_SOLID), unclear, "unclear ones")
     css, paint = column_paint(rec)
     probe = page.evaluate(
         "cs => cs.map(c => { const e = document.createElement('i'); e.style.color = c;"
@@ -2669,9 +3108,7 @@ def control_fails(page: Page, tag: str, tk: dict, results_page: bool) -> list[st
             for q, e in rec["questions"].items()
             if not same(colour[e["col"]], tk["new"] if e["novel"] else tk["ink"])
         }
-    style = page.add_style_tag(content=css)
-    caught = {i for i, _ in mark_diffs(page, tk)[0]}
-    style.evaluate("e => e.remove()")
+    caught = caught_by(css)
     if not want or not want <= caught:
         fails.append(
             f"{tag}: control 'marks coloured by column' caught {len(caught)} of {len(want)} "
@@ -2789,7 +3226,7 @@ def marks_on(page: Page, tag: str, theme: str, rec: dict, desktop: bool) -> list
     fails: list[str] = []
     results_page = page.locator(".nvgrid").count() > 0
     diffs, rd, qd = mark_diffs(page)
-    tk = {k: rgba(rd[k]) for k in ("ink", "card", "new", "box")}
+    tk = {k: rgba(rd[k]) for k in MARK_TOKENS}
     for k, short in (("nv-new", "new"), ("nv-box", "box")):
         if not same(tk[short], TOKENS[theme][k]):
             fails.append(
@@ -2825,7 +3262,7 @@ def marks_on(page: Page, tag: str, theme: str, rec: dict, desktop: bool) -> list
         heads = rd["heads"]
         novel_heads = [h for h in heads if h["novel"]]
         if len(novel_heads) != 1 or not heads or not heads[0]["novel"]:
-            fails.append(f"{tag}: Novel header flags {[h['novel'] for h in heads]}; only the first")
+            fails.append(f"{tag}: first-column (nv-new) header flags {[h['novel'] for h in heads]}")
         if [h["col"] for h in heads] != rec["cols"]:
             fails.append(f"{tag}: headers {[h['col'] for h in heads]}, records {rec['cols']}")
         for h in heads:
@@ -2891,7 +3328,7 @@ def marks_on(page: Page, tag: str, theme: str, rec: dict, desktop: bool) -> list
         if not rd["legend"]:
             fails.append(f"{tag}: the Results legend has no mark")
         keys = {(m["k"], m["rel"]) for m in rd["legend"]}
-        if keys != {(r["kind"], False) for r in rec["results"].values()} | {("result", True)}:
+        if keys != {(r["kind"], False) for r in rec["results"].values()} | {("positive", True)}:
             fails.append(f"{tag}: the legend draws {sorted(keys)}")
         for m in legend:
             twin = next((x for x in rd["marks"] if (x["k"], x["rel"]) == (m["k"], m["rel"])), None)
@@ -2917,18 +3354,26 @@ def marks_on(page: Page, tag: str, theme: str, rec: dict, desktop: bool) -> list
         sizes: set[tuple[float, float]] = set()
         if not qd["legend"]:
             fails.append(f"{tag}: the questions legend has no dot")
-        flags = {(q["novel"], q["cross"]) for q in qd["legend"]}
-        if flags != {(False, False), (True, False), (False, True)}:
-            fails.append(f"{tag}: the questions legend draws {sorted(flags)}")
-        for q in qd["legend"]:
-            twin = next(
-                (x for x in qd["marks"] if (x["novel"], x["cross"]) == (q["novel"], q["cross"])),
-                None,
+
+        # One plain dot, then one per marker some question carries (Questions.tsx legend).
+        def flag(x: dict) -> tuple[bool, bool, bool, bool]:
+            return (x["novel"], x["cross"], x["half"], x["unclear"])
+
+        qs = rec["questions"].values()
+        want_flags = {(False, False, False, False)}
+        for i, key in enumerate(("novel", "cross", "first", "unclear")):
+            if any(e[key] for e in qs):
+                want_flags.add(tuple(j == i for j in range(4)))
+        flags = {flag(q) for q in qd["legend"]}
+        if flags != want_flags or len(qd["legend"]) != len(want_flags):
+            fails.append(
+                f"{tag}: the questions legend draws {sorted(flags)} (novel, ring, half, "
+                f"unclear), records give {sorted(want_flags)}"
             )
+        for q in qd["legend"]:
+            twin = next((x for x in qd["marks"] if flag(x) == flag(q)), None)
             if twin is None:
-                fails.append(
-                    f"{tag}: legend dot novel {q['novel']} ring {q['cross']} has no map twin"
-                )
+                fails.append(f"{tag}: legend dot {flag(q)} has no map twin")
                 continue
             got, want = question_features(q, tk), question_features(twin, tk)
             if (
@@ -2936,10 +3381,7 @@ def marks_on(page: Page, tag: str, theme: str, rec: dict, desktop: bool) -> list
                 or q["b"]["shadow"] != twin["b"]["shadow"]
                 or q["color"] != twin["color"]
             ):
-                fails.append(
-                    f"{tag}: legend dot novel {q['novel']} ring {q['cross']} {got} "
-                    f"differs from the map {want}"
-                )
+                fails.append(f"{tag}: legend dot {flag(q)} {got} differs from the map {want}")
             if desktop and (q["w"], q["h"]) != (twin["w"], twin["h"]):
                 sizes.add((q["w"], twin["w"]))
         for small, big in sorted(sizes):
@@ -2955,12 +3397,17 @@ def marks_on(page: Page, tag: str, theme: str, rec: dict, desktop: bool) -> list
             r = ratio(blend(rgba(c), under, m["under"]["op"]), under)
             if r < 3:
                 low.append(f"{part} {m['id']} {r:.2f}:1")
-        if m["k"] == "null":
+        if m["k"] in ("negative", "inconclusive"):
             r = ratio(
                 blend(rgba(m["color"]), rgba(m["b"]["bg"]), m["under"]["op"]), rgba(m["b"]["bg"])
             )
             if r < 3:
-                low.append(f"hollow stroke {m['id']} {r:.2f}:1")
+                low.append(f"{m['k']} stroke {m['id']} {r:.2f}:1")
+        if m["k"] == "data":
+            # The grey square is the mark a reader sees, not the ink it would ring in.
+            r = ratio(blend(rgba(m["b"]["bg"]), under, m["under"]["op"]), under)
+            if r < 3:
+                low.append(f"grey square {m['id']} {r:.2f}:1")
     for b in rd["boxes"] if results_page else []:
         under = surface(b["under"]["stack"])
         r = ratio(blend(rgba(b["border"]), under, b["under"]["op"]), under)
@@ -2971,7 +3418,7 @@ def marks_on(page: Page, tag: str, theme: str, rec: dict, desktop: bool) -> list
         c = blend(rgba(q["color"]), under, q["op"] * q["under"]["op"])
         if (r := ratio(c, under)) < 3:
             low.append(f"dot {q['id']} {r:.2f}:1")
-        layers = shadow_layers(q["b"]["shadow"])
+        layers = [x for x in shadow_layers(q["b"]["shadow"]) if "inset" not in x]
         # A missing ring is check 1's failure; here only a drawn ring is measured.
         if q["cross"] and len(layers) == 2 and colours_in(layers[0]):
             gap = colours_in(layers[0])[0]
@@ -2982,7 +3429,7 @@ def marks_on(page: Page, tag: str, theme: str, rec: dict, desktop: bool) -> list
     if (r := ratio(tk["new"], tk["ink"])) < 3:
         fails.append(f"{tag}: orange against ink is {r:.2f}:1")
 
-    # 5. Words: novel questions say so; each box label names the kinds it holds.
+    # 5. Words: questions on a new-direction result say so; each box label names its types.
     if results_page:
         fails += box_words(page, tag, rec)
     else:
@@ -3024,7 +3471,7 @@ def box_words(page: Page, tag: str, rec: dict) -> list[str]:
         items = rec["boxes"].get((b["topic"], b["col"], b["p"]), [])
         if not items:
             continue
-        kinds = [(k, sum(rec["results"][i]["kind"] == k for i in items)) for k in KIND_WORDS]
+        kinds = [(k, sum(rec["results"][i]["kind"] == k for i in items)) for k in TYPE_WORDS]
         words = ", ".join(f"{n} {BOX_COUNT_WORDS[k][n != 1]}" for k, n in kinds if n)
         n = len(items)
         # Novelty.tsx names the project by its index title, else its first result's report.
@@ -3100,23 +3547,44 @@ def board_expectations() -> dict[str, dict]:
     }
     qs = {
         q: {
-            "f": {"topic": e["topic"], "need": e["need"], "approach": e["approach"]},
-            "t": {"cross": e["cross"], "novel": e["novel"]},
+            "f": {"topic": e["topic"], "follow": e["follow"]},
+            "t": {"first": e["first"], "cross": e["cross"], "novel": e["novel"]},
         }
         for q, e in rec["questions"].items()
     }
+    qi = rec["qindex"]
+    used = {e["follow"] for e in rec["questions"].values()}
     return {
         "/findings/": {
             "cards": res,
             "marks": ".nvgrid .nd[data-id]",
-            "picks": [("topic", None), ("compare", rec["novel"]), ("kind", "null")],
+            "picks": [("topic", None), ("compare", rec["novel"]), ("kind", "negative")],
             "toggles": ["rel"],
+            "facets": {"topic": "Topic", "compare": "How new", "kind": "Type of result"},
+            "chips": {},
+            "sorts": [["novel", "Most new first"], ["topic", "Topic"], ["project", "Project"]],
         },
         "/directions/": {
             "cards": qs,
             "marks": ".qgrid .qd[data-id]",
-            "picks": [("topic", None), ("need", "measure"), ("approach", None)],
-            "toggles": ["cross", "novel"],
+            "picks": [("topic", None), ("follow", None)],
+            "toggles": [
+                t for t in ("first", "cross", "novel") if any(c["t"][t] for c in qs.values())
+            ],
+            "facets": {"topic": "Topic", "follow": "What following up needs"},
+            # Each follow chip, in column order, carries its column's note as its title.
+            "chips": {
+                "follow": [
+                    [
+                        k,
+                        (qi.get("follow_text") or {}).get(k, ""),
+                        (qi.get("follow_notes") or {}).get(k),
+                    ]
+                    for k in rec["follow_order"]
+                    if k in used
+                ]
+            },
+            "sorts": [["topic", "Topic"], ["need", "Least effort first"]],
         },
     }
 
@@ -3230,7 +3698,10 @@ def stale_url_fails(browser, base: str) -> list[str]:
     """A URL value no chip offers (a stale or edited link) is ignored: every card shows, only
     the All chips are pressed, and no mark fades."""
     fails: list[str] = []
-    for path, query in (("/findings/", "topic=nonexistent"), ("/directions/", "need=nonexistent")):
+    for path, query in (
+        ("/findings/", "topic=nonexistent"),
+        ("/directions/", "follow=nonexistent"),
+    ):
         cfg = board_expectations()[path]
         page = new_page(browser)
         go(page, f"{base}{path}?{query}")
@@ -3245,6 +3716,47 @@ def stale_url_fails(browser, base: str) -> list[str]:
         if st["out"]:
             fails.append(f"{label}: {len(st['out'])} marks fade")
         page.context.close()
+    return fails
+
+
+BAR_WORDS_JS = """() => {
+    const tools = document.querySelector('section.board[data-board] > .px-tools')
+    return {
+        facets: Object.fromEntries([...tools.querySelectorAll('.facets[data-k]')].map(f =>
+            [f.dataset.k, f.querySelector('.px-facet-lbl')?.textContent || ''])),
+        chips: Object.fromEntries([...tools.querySelectorAll('.facets[data-k]')].map(f =>
+            [f.dataset.k, [...f.querySelectorAll('.px-chip:not([data-f=""])')].map(b =>
+                [b.dataset.f, b.childNodes[0].textContent.trim() || b.textContent.trim(),
+                 b.getAttribute('title')])])),
+        toggles: [...tools.querySelectorAll('.px-tog')].map(t =>
+            [t.querySelector('input').dataset.t, t.textContent.replace(/\\d+\\s*$/, '').trim()]),
+        sorts: [...tools.querySelectorAll('select option')].map(o => [o.value, o.textContent]),
+    }
+}"""
+# The toggles' words (Cards.tsx and Questions.tsx).
+TOGGLE_WORDS = {
+    "rel": "Related across projects",
+    "first": FIRST_WORDS,
+    "cross": "Builds on results from two or more projects",
+    "novel": NOVEL_WORDS,
+}
+
+
+def bar_word_fails(page: Page, path: str, cfg: dict) -> list[str]:
+    """The filter bar names its facets, toggles and sorts in the boards' current words, and
+    a follow-up chip carries its column's note."""
+    got = page.evaluate(BAR_WORDS_JS)
+    fails: list[str] = []
+    if got["facets"] != cfg["facets"]:
+        fails.append(f"filters: {path} facets {got['facets']}, expected {cfg['facets']}")
+    for k, want in cfg["chips"].items():
+        if got["chips"].get(k) != want:
+            fails.append(f"filters: {path} {k} chips {got['chips'].get(k)}, expected {want}")
+    want_toggles = [[t, TOGGLE_WORDS[t]] for t in cfg["toggles"]]
+    if got["toggles"] != want_toggles:
+        fails.append(f"filters: {path} toggles {got['toggles']}, expected {want_toggles}")
+    if got["sorts"] != cfg["sorts"]:
+        fails.append(f"filters: {path} sorts {got['sorts']}, expected {cfg['sorts']}")
     return fails
 
 
@@ -3287,11 +3799,16 @@ def board_fails(page: Page, base: str, path: str, cfg: dict) -> list[str]:
     def chip(k: str, v: str) -> None:
         page.locator(f".px-tools .facets[data-k={k}] .px-chip[data-f='{v}']").click()
 
+    fails += bar_word_fails(page, path, cfg)
+    # An open pick takes the second most common value, so it neither matches all nor none.
+    picks: list[tuple[str, str]] = []
     for k, v in cfg["picks"]:
         if v is None:
             tally = Counter(c["f"][k] for c in cards.values())
             values = [x for x, _ in sorted(tally.items(), key=lambda kv: (-kv[1], kv[0]))]
             v = values[min(1, len(values) - 1)]
+        picks.append((k, v))
+    for k, v in picks:
         want = {i for i, c in cards.items() if c["f"][k] == v}
         if not want or len(want) == total:
             fails.append(f"filters: {path} {k} '{v}' matches {len(want)} of {total} cards")
@@ -3304,7 +3821,7 @@ def board_fails(page: Page, base: str, path: str, cfg: dict) -> list[str]:
         if url_state() or len(board_state(page, cfg["marks"])["shown"]) != total:
             fails.append(f"filters: {path} a second click on {k} '{v}' does not clear it")
     # A topic and a category together: both must hold.
-    (k1, _), (k2, v2) = cfg["picks"][0], cfg["picks"][1]
+    (k1, _), (k2, v2) = picks[0], picks[1]
     v1 = next(iter(sorted({c["f"][k1] for c in cards.values() if c["f"][k2] == v2})), "")
     chip(k1, v1)
     chip(k2, v2)
@@ -3338,6 +3855,12 @@ def board_fails(page: Page, base: str, path: str, cfg: dict) -> list[str]:
                 f"filters: {path} sort {sorts[1]} gives URL {url_state()}, "
                 f"order sorted {ranks == sorted(ranks)}"
             )
+        if sorts[1] == "need":
+            # Least effort first: the cards run through the follow-up columns in order.
+            order = records()["follow_order"]
+            seq = [order.index(cards[i]["f"]["follow"]) for i in st["order"] if i in cards]
+            if seq != sorted(seq) or len(seq) != total or not order:
+                fails.append(f"filters: {path} 'Least effort first' runs columns {seq[:40]}")
         page.reload(wait_until="networkidle")
         if board_state(page, cfg["marks"])["order"] != st["order"]:
             fails.append(f"filters: {path} a reload does not restore sort {sorts[1]}")
@@ -3515,6 +4038,12 @@ CONNECTIONS_JS = """() => {
             head: s.querySelector(':scope > .sechead h2')?.textContent.trim() || '',
             cards: [...s.querySelectorAll(':scope > .grid2 > .fcard')].map(c =>
                 [c.querySelector('h3 a')?.getAttribute('href') || '', c.matches('.qfcard')]),
+            qwords: [...s.querySelectorAll(':scope > .grid2 > .qfcard')].map(c => [
+                c.querySelector('h3 a')?.getAttribute('href') || '',
+                [...c.querySelectorAll('.qfnovel')].map(e => e.textContent.trim()),
+                [...c.querySelectorAll('.meta.qfmeta > span')]
+                    .map(t => [t.className, t.textContent.trim()]),
+                c.textContent.includes('Needs:')]),
             folded: hrefs(s.querySelectorAll(':scope > details.linkmore li a')),
             summary: s.querySelector(':scope > details.linkmore > summary')?.textContent.trim()
                 || '',
@@ -3591,7 +4120,29 @@ def connection_fails(
         if head not in by_head:
             continue
         fails += part_fails(by_head[head], head, kind, ids_, label)
+        if kind == "q":
+            fails += qcard_word_fails(by_head[head]["qwords"], head, label)
     return fails
+
+
+def qcard_word_fails(cards: list, head: str, label: str) -> list[str]:
+    """A question card says "Builds on a new-direction result" exactly when it does, then
+    its follow-up tags; it has no "Needs:" line."""
+    rec = records()
+    for href, novel, tags, needs in cards:
+        e = rec["questions"].get(href_id(href, "q"))
+        if e is None:
+            continue
+        fm = rec["directions"][href_id(href, "q").removeprefix("directions/")]
+        want = [[f"ready f-{fm.get('follow') or 'existing'}", e["follow_text"]]]
+        want += [["c-kind", FIRST_WORDS]] if e["first"] else []
+        want += [["c-kind", UNCLEAR_WORDS]] if e["unclear"] else []
+        if novel != ([NOVEL_WORDS] if e["novel"] else []) or tags != want or needs:
+            return [
+                f"{label}: '{head}' card {last_part(href)} says {novel}, tags {tags}, "
+                f"'Needs:' {needs}; expected novel {e['novel']}, tags {want}"
+            ]
+    return []
 
 
 def concept_list_fails(got: dict, head: str, want: set[str], label: str) -> list[str]:
@@ -3809,13 +4360,22 @@ FOLDED = ".topic-cards details.linkmore li"
 
 def connection_controls(page: Page, parts: list, label: str) -> list[str]:
     """Injected faults the topic comparison must catch: a card removed, a folded link
-    removed, and a folded link repeated."""
+    removed, a folded link repeated, and a question card's words changed."""
     fails: list[str] = []
     faults = {
         "a result card removed": "document.querySelector('.topic-cards .grid2 > .fcard')?.remove()",
         "a folded question removed": f"document.querySelector('{FOLDED}')?.remove()",
         "a folded question repeated": (
             f"const li = document.querySelector('{FOLDED}'); li?.after(li.cloneNode(true))"
+        ),
+        "a question card's new-direction line toggled": (
+            "const c = document.querySelector('.topic-cards .qfcard');"
+            " const n = c?.querySelector('.qfnovel');"
+            f" if (n) n.remove(); else c?.querySelector('h3')?.after(Object.assign("
+            f"document.createElement('p'), {{className: 'qfnovel', textContent: '{NOVEL_WORDS}'}}))"
+        ),
+        "a question card's follow-up tag removed": (
+            "document.querySelector('.topic-cards .qfcard .qfmeta > span')?.remove()"
         ),
     }
     clean = page.evaluate("() => document.querySelector('.topic-cards').innerHTML")
@@ -3843,7 +4403,7 @@ STYLE_JS = """() => {
 
 
 def connection_style_fails(browser, base: str, topics: list[str]) -> list[str]:
-    """The question cards' Novel line reads at 4.5:1 in both themes, and a folded list's
+    """The question cards' new-direction line reads at 4.5:1 in both themes, and a folded list's
     "N more" is a 44 px tap target on a phone."""
     fails: list[str] = []
     for theme, viewport in (("light", WIDE), ("dark", WIDE), ("light", PHONE)):
@@ -3868,7 +4428,8 @@ def connection_style_fails(browser, base: str, topics: list[str]) -> list[str]:
 
 
 def about_fails(page: Page, base: str) -> list[str]:
-    """About's "What you are reading" names Results, Open questions and each comparison label."""
+    """About's "What you are reading" names Results, how new a result is and Open questions,
+    with each type of result, comparison label and follow-up column."""
     go(page, base + "/about")
     got = page.evaluate(
         """() => {
@@ -3886,7 +4447,7 @@ def about_fails(page: Page, base: str) -> list[str]:
     if not got["found"]:
         return ["connections: /about has no 'What you are reading' section"]
     fails: list[str] = []
-    for name in ("Results.", "Open questions.", "Comparison with PubMed."):
+    for name in ("Results.", "How new a result is.", "Open questions."):
         if name not in got["strong"]:
             fails.append(
                 f"connections: /about 'What you are reading' has no '{name}' part: {got['strong']}"
@@ -3895,10 +4456,16 @@ def about_fails(page: Page, base: str) -> list[str]:
     labels = records()["index"].get("compare_order") or []
     if missing := [lab for lab in labels if lab not in got["em"]]:
         fails.append(f"connections: /about names comparison labels {got['em']}, missing {missing}")
+    # It names each type of result and each follow-up column in the boards' words.
+    rec = records()
+    follow = [(rec["qindex"].get("follow_text") or {}).get(k, k) for k in rec["follow_order"]]
+    words = [*TYPE_WORDS.values(), *follow, UNCLEAR_WORDS]
+    if missing := [w for w in words if w not in got["em"]]:
+        fails.append(f"connections: /about names {got['em']}, missing {missing}")
     if len(labels) != 6:
         fails.append(
             f"connections: the records list {len(labels)} comparison labels, "
-            "expected Novel, four more and Not compared yet"
+            "expected New direction, four more and Not compared yet"
         )
     return fails
 

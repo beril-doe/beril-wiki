@@ -50,26 +50,54 @@ literature-context section whose citations were checked against PubMed.
 **Conflicts.** Places where projects in the corpus disagree, with the evidence
 on each side and the work that would settle it.
 
-**Results.** Single findings from one project, in plain words: what it measured,
-what it found missing, what it inferred, or what it corrected. An AI model picks
+**Results.** Single findings from one project, in plain words. An AI model picks
 up to six results from each report and writes each summary, and a second AI
-model reviews it. Each result page links to its project report, to the open
-questions that build on it, and to related results in other projects. The
-Results page maps every result by topic and by how it compares with PubMed.
+model reviews it. Each result is one of four kinds:
 
-**Comparison with PubMed.** Once an AI search of PubMed abstracts has assessed a
-result, the result carries one of five labels: *Novel* (the search found nothing
-close, so the result could be new), *Builds on PubMed work*, *Differs from
-PubMed abstracts*, *Similar result in PubMed*, or *Too little published evidence
-to compare*. A result still waiting for its search, or whose label was
-withdrawn, reads *Not compared yet*. Corrections carry no label. The label
-reflects abstracts only, and it does not establish novelty or correctness.
+- *Positive result*: the project found a pattern, difference or link.
+- *Negative result*: the project tested for a difference or link and found none.
+- *Inconclusive*: the test ran but could not decide.
+- *About the data*: what the shared data holds or lacks, rather than biology.
 
-**Open questions.** Research questions that the results leave open. Each states
-a hypothesis, the test that would settle it, the results it builds on, and what
-answering it needs: data already in the lakehouse, an analysis to build, new
-measurements, or *not yet clear* when the records cannot tell. An AI model drafts them from the results and a second AI model
-reviews them. No scientist has rated them yet.
+An AI model sorts each result into its kind, and a second AI model checks it. A
+result that revises the project's own earlier claim says so on its card. Each
+result page links to its project report, to the open questions that build on
+it, and to related results in other projects. The Results page maps every
+result by topic and by how new it is.
+
+**How new a result is.** Once an AI search of PubMed abstracts has assessed a
+result, the result carries one of five labels. The first two are the two kinds
+of new:
+
+- *New direction*: the search found nothing close, so the result could open new
+  ground.
+- *Adds to published work*: abstracts report related work, and the result adds
+  to it.
+- *Differs from published work*: abstracts report something different.
+- *Similar to published work*: abstracts report a similar result.
+- *No clear comparison*: abstracts held too little on it, or the comparison did
+  not settle.
+
+A result still waiting for its search, or whose label was withdrawn, reads *Not
+compared yet*. The label reflects abstracts only, and it does not establish
+novelty or correctness.
+
+**Open questions.** Research questions that the results leave open, for anyone
+to take up. Each states a hypothesis, the test that would settle it and the
+results it builds on. The Open questions page groups them by what following up
+needs, least effort first:
+
+- *Analyze existing data*: BERDL, the shared database the projects query,
+  already holds what the answer needs.
+- *Add outside data*: public genomes, metagenomes or another study's
+  measurements, with no new lab work.
+- *Run an experiment*: only a new lab or field measurement can test the
+  hypothesis. Some of these *start with existing data*, which narrows what the
+  experiment tests.
+
+A question whose data cannot yet be shown to exist or join reads *Data
+availability unclear*. An AI model drafts the questions and sorts them, and a
+second AI model reviews both. No scientist has rated them yet.
 
 Topic pages, project reports and concept pages each list the results and open
 questions that belong to them, so you can move between a synthesis, the projects

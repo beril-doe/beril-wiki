@@ -6,7 +6,7 @@ import type { FullSlug } from "@quartz-community/types"
 import type { JSX } from "preact"
 import { resolveRelative } from "@quartz-community/utils"
 import { type Corpus, type File, collectionOf, isReport, linksOf, slugOf, titleOf } from "../page"
-import { type DirectionFm, type FindingFm, FindingCard, directionsOf, findingsOf, resultsIndex } from "./Cards"
+import { type DirectionFm, type FindingFm, FindingCard, FollowTags, directionsOf, findingsOf, resultsIndex } from "./Cards"
 import { NOVEL_WORDS, citesNovel } from "./Questions"
 
 interface QuestionFm extends DirectionFm {
@@ -30,9 +30,8 @@ export function QuestionCard({ q, c, from }: { q: File; c: Corpus; from: FullSlu
       </h3>
       {m.readiness_basis && <p class="gist">{m.readiness_basis}</p>}
       {citesNovel(c, q) && <p class="qfnovel">{NOVEL_WORDS}</p>}
-      <div class="meta">
-        {m.approach_text && <span>{m.approach_text}</span>}
-        {m.need_text && <span class={m.approach_text ? "sep" : undefined}>Needs: {m.need_text.toLowerCase()}</span>}
+      <div class="meta qfmeta">
+        <FollowTags m={m} />
       </div>
     </article>
   )

@@ -18,8 +18,8 @@ the schedule runs and what validates each page.
 | `wiki/authors/` | Attribution and project lists from observatory metadata, plus model-written, reviewed Contributions sections. |
 | `wiki/data/` | Data-collection metadata joined to the projects that mention each collection. |
 | `wiki/opportunities.md` and `wiki/negative-results.md` | Deterministic digests of Open Directions and report caveats or null results. |
-| `wiki/findings/` | At most 6 headline findings per report in `contract/cards.yaml`, each with Key figures, the verbatim Evidence quote, its Caveat and the report's other caveats. The literature label lives in `state/novelty.json` and joins the page at publish. |
-| `wiki/directions/` | Research directions for each topic in `contract/cards.yaml`, written from the topic's findings, literature labels and conflicts: the question, Hypothesis, Why it matters, How to test it, What would support or refute it, Data, Builds on and Closest published work. Proposals that would repeat or correct existing work are not directions; they are listed per report for maintainers at publish. |
+| `wiki/findings/` | At most 6 headline findings per report in `contract/cards.yaml`, each with Key figures, the verbatim Evidence quote, its Caveat and the report's other caveats. The literature label lives in `state/novelty.json` and joins the page at publish. The `outcomes` stage, which runs after `gists`, reads every finding publish would list and writes its result type to `state/outcomes.json`. Claude names one type, GPT reviews it, and the answer is cached per finding on its inputs. The stage reads every finding because the extraction tag misfiles in both directions. |
+| `wiki/directions/` | Research directions for each topic in `contract/cards.yaml`, written from the topic's findings, literature labels and conflicts: the question, Hypothesis, Why it matters, How to test it, What would support or refute it, Data, Builds on and Closest published work. Proposals that would repeat or correct existing work are not directions; they are listed per report for maintainers at publish. The `followups` stage, which runs after `directions`, reads every direction and writes what following it up needs to `state/followups.json`. Claude names one answer, GPT reviews it, and the answer is cached per direction on its inputs. The stage reads every direction because its `approach` and `readiness` fields misfile in both directions. The two stages share one loop in `stages/classify.py`. A failed item keeps its old answer in state for recovery, and publish falls back as described below. |
 
 Topic membership is saved in `state/curator-topics.json`. The host rejects
 unknown or duplicated concepts, missing memberships, unsafe titles and stale
@@ -93,7 +93,8 @@ from the accepted wiki without editing it:
     (each project, its topic and its results) and `cross_topics`.
   - `findings/index.md` carries the Results map's data in its frontmatter:
     the comparison columns (`compare_order`), the note for each column
-    (`compare_notes`), the links, the shared results (most topics first),
+    (`compare_notes`), `something_new` (the "Something new" head and the two
+    columns it spans), the links, the shared results (most topics first),
     project titles and the topics with no results. Links come in three
     families: `r`, related results from `state/links.json`; `p`, one
     project's report uses or cites another's, also from `state/links.json`;
@@ -110,18 +111,40 @@ from the accepted wiki without editing it:
     build on several projects (`home_question_rank`) for the home page.
     The home results come only from projects that feed two or more topics,
     and each comes from its own project and topic. Results rank by their
-    PubMed comparison (novel, then differs, then builds on, then the rest),
-    then by how many other projects they link to, then a result before a
-    null or correction, then by the project's topic count. The home
+    PubMed comparison (new direction, then differs, then adds to, then the
+    rest), then by how many other projects they link to, then a positive
+    result before the other types, then by the project's topic count. The home
     questions rank by how many projects they build on, then by how many
     topics. No project appears in two home questions.
-  - Each shared result in `state/shared.json` whose listed members number two
-    or more gives each of those members' cards a Compare button on the
-    Results page.
-  - A finding's `kind_text` is its kind in reader words: Result,
-    Interpretation, Correction, or for a null result its summary's case, "No
-    effect found" or "Inconclusive test". A null result without one of those
-    cases is unlisted and keeps "Null or missing result".
+  - Each shared result in `state/shared.json` with two or more members gives
+    each member's card a Compare button on the Results page. A shared result
+    retires when any member is unlisted, because its statement speaks for
+    every member.
+  - A finding's `rtype` is its result type from `state/outcomes.json`:
+    `positive`, `negative`, `inconclusive` or `data`. Its `kind_text` gives
+    the type in reader words: Positive result, Negative result, Inconclusive
+    or About the data. Publish ignores a failed label. Before the `outcomes`
+    stage has read a finding, or when its label failed, publish takes the type
+    from the extraction tag. An observation, inference or correction becomes
+    positive, a measured absence becomes negative, and an inconclusive test or
+    any other null result becomes inconclusive.
+  - A listed correction gains `updates_claim`, and its card shows "Revises an
+    earlier claim" beside its type.
+  - A question page's frontmatter gains `follow`, what following it up needs
+    from `state/followups.json`: `existing`, `outside` or `experiment`. Its
+    `follow_text` gives that in reader words: Analyze existing data, Add
+    outside data or Run an experiment. An experiment question whose first
+    step analyzes existing data gains `first_step` ("Starts with existing
+    data"). A question that may not find or join its data gains
+    `data_unclear` ("Data availability unclear"). Before the `followups`
+    stage has read a question, or when its label failed, publish takes these
+    from the direction's own fields. A lakehouse analysis becomes existing
+    data and any other approach an experiment. "Analysis then experiment"
+    sets `first_step`, and an unknown readiness sets `data_unclear`. The
+    question page's Data line reads "Following up: …" in the same words.
+  - `directions/index.md` carries the grid's columns, least effort first, in
+    `follow_order`, their words in `follow_text` and each column's
+    definition in `follow_notes`.
   - Free text a stage wrote, such as a readiness explanation or a question's
     body, passes through one map of reader terms, so "needs compute" reads
     "needs a new analysis" and a label name reads as its chip text.
@@ -129,10 +152,12 @@ from the accepted wiki without editing it:
     Results page, in counts, the map and the home and topic hub picks) only
     with an accepted plain summary that does not repeat an earlier finding of
     its report, and a null result only when it measured something; missing
-    data and an analysis that never ran are not results. An unlisted finding
-    keeps its page, so links to it still resolve.
-  - A correction carries no PubMed chip: it revises the project's own work.
-    A label whose searches found no abstracts says so instead of the
+    data and an analysis that never ran are not results. A finding the
+    `outcomes` stage types as `bookkeeping` (a fix to the project's own list
+    or rule) or `untested` (an explanation the project never tested) is not
+    listed either. An unlisted finding keeps its page, so links to it still
+    resolve.
+  - A listed correction carries its PubMed chip like any other result. A label whose searches found no abstracts says so instead of the
     comparison note. A result page's report-wide caveats fold under "Other
     caveats in this report, not specific to this result".
   - A project link whose only relation is "lists it as a reference only" is
@@ -210,61 +235,71 @@ and report counts.
 Topic hubs, project reports and concept pages list the results and open
 questions that belong to them, in the card style of the Results page. A part
 shows its first three entries as cards. A "N more" fold lists the rest by
-title. An open-question card shows its title, its approach, what it needs and
-why, and the Novel words when they apply. A part with no entries
+title. An open-question card shows its title, why, "Builds on a
+new-direction result" when that applies, and what following it up needs. It
+adds "Starts with existing data" and "Data availability unclear" when they
+apply. A part with no entries
 does not appear. The heads in these parts add no space above them beyond the
 gap between parts.
 
 - A topic hub opens with "Results from this topic" and "Open questions in
   this topic" (every question filed under the topic, by title). The results
   part shows up to three cards from the results filed under the topic, ordered
-  by their rank for that topic, then by comparison label. Each part links to
+  by their rank for that topic, then by comparison label. When a topic's top
+  three ranked results hold no negative result, publish swaps the third for
+  the topic's first negative result from another project, if it has one.
+  Each part links to
   the Results or Open questions page with its Topic chip set to that topic,
   so the results link shows every card again. A topic with no results of its
   own shows its top-ranked results from other topics, with no results link.
   A "Background" head
   then introduces the synthesis. Topic hubs do not show the open-questions
   grid.
-- A project report opens with "Results from this project" (Novel first) and
+- A project report opens with "Results from this project" (New direction first) and
   "Open questions that build on this project". A "The report" head then
   introduces the summary.
 - A concept page opens with "Results from the projects this page cites" and
   "Open questions on these projects". A "Background" head then introduces
   the synthesis. The results take one project at a time, so the first cards
   come from different projects. Within each project, results filed under the
-  concept's own topic come first, then Novel first. Questions that build on
+  concept's own topic come first, then New direction first. Questions that build on
   more of the cited projects come first.
 - Every topic, report and concept page shows both parts, so pages of one
   kind share one layout. An empty part keeps its head and shows one sentence
   in a dashed box, such as "No open question builds on this project yet."
   The two cross-project digests have no project, so they show neither part.
 
-A result card shows its kind in plain words (Result, Interpretation, No
-effect found, Inconclusive test, Correction), a title, a one or two sentence
+A result card shows its type in plain words (Positive result, Negative
+result, Inconclusive, About the data), a title, a one or two sentence
 summary from `state/gists.json`, and a footer naming the source report and
-the topic whose concepts cite that report most. A card has no test statistics
+the topic whose concepts cite that report most. A result that revises the
+project's own earlier claim also shows "Revises an earlier claim", on its card,
+its page bar and its map preview and box list. An unlisted bookkeeping fix's page
+shows no type, no revision note and no PubMed chip. A card has no test statistics
 and no caveat; the page holds the numbers and the Limits section. A finding
 without an accepted summary shows only title and footer.
 
 The Results index (`/findings/`) opens with a map headed "How new is each
 result?". A mark's position shows the topic (rows) and how the result
-compares with PubMed (columns: Novel, Builds on PubMed work, Differs from
-PubMed abstracts, Similar result in PubMed, Too little published evidence to
-compare, then Not compared yet when any result lacks a comparison). Every
+compares with PubMed (columns: New direction, Adds to published work,
+Differs from published work, Similar to published work, No clear comparison,
+then Not compared yet when any result lacks a comparison). A "Something new"
+head with its result count spans the first two columns, the two kinds of
+new. A "Compared with published work" head spans the rest. Every
 column heading carries the note `compare_notes` gives it, shown on hover or
-on a click or tap. The Novel note says that an AI search of PubMed abstracts
-found nothing close, so the results could be new, and that the search does
-not establish novelty or correctness.
+on a click or tap. The New direction note says that an AI search of PubMed
+abstracts found nothing close, so the results could open a new direction,
+and that the search does not establish novelty or correctness.
 
-A mark's fill and shape show the kind of result: a solid circle for a
-result, a hollow circle for no effect found or an inconclusive test, a
-triangle for an interpretation and a cross for a correction. A ring marks a
+A mark's fill and shape show the type of result: a solid circle for a
+positive result, a hollow circle for a negative result, a dashed circle for
+an inconclusive result and a grey square for a result about the data. A ring marks a
 result that has a related result in another project, where that result also
 has a mark. Marks are ink and 10 px across, and no mark takes a column's
-colour. Each column header has a coloured bar: orange for Novel, blue for
-Builds on PubMed work, green for Differs from PubMed abstracts and Similar
-result in PubMed, and grey for Too little published evidence to compare and
-Not compared yet. A square
+colour. Each column header has a coloured bar: orange for New direction,
+blue for Adds to published work, green for Differs from published work and
+Similar to published work, and grey for No clear comparison and Not compared
+yet. A square
 box holds one project's results in one cell. The square beside each row's
 topic label is the topic's colour, the same colour its cards and chips use;
 no mark takes it. The legend draws the kinds, the ring and the box with the
@@ -293,27 +328,35 @@ and a tap on the box's edge opens the list under the cell. Touch screens show
 larger marks. A note under the map names topics with no results.
 
 A comparison chip appears on a card only when the PubMed comparison gave one
-of four labels: Novel, Builds on PubMed work, Differs from PubMed abstracts
-or Similar result in PubMed. Tap or focus it to read its note: an AI
-comparison with PubMed abstracts, dated, that does not establish novelty or
-correctness. The Novel chip's note says the search found nothing close to
-the result, so it could be new. "Too little published evidence" and "Not
-assessed" show no chip, and neither does a correction.
+of four labels: New direction, Adds to published work, Differs from
+published work or Similar to published work. Tap or focus it to read its
+note: an AI comparison with PubMed abstracts, dated, that does not establish
+novelty or correctness. The New direction chip's note says the search found
+nothing close to the result, so it could open a new direction. "No clear
+comparison" and "Not assessed" show no chip.
 
-`/directions/` is the open-questions grid: topics down the side, what answering
-a question needs across the top (data already in the lakehouse, analysis to
-build, new measurements, not yet clear), one dot per question. Every dot is an
+`/directions/` is the open-questions grid: topics down the side, what
+following up a question needs across the top, one dot per question. The
+columns run least effort first: Analyze existing data, Add outside data, Run
+an experiment. A line above them reads "Less effort to follow up → more
+effort". Each column header shows its definition from `follow_notes` under
+its name. Every dot is an
 ink circle, 10 px across like the Results map's marks. Both maps use one type
 size for row labels and one for column headers. A dot is orange when the
-question cites a listed result in the Results map's Novel column, and ringed when it builds on results from two or
-more projects. The square beside each row's topic label is the topic's
-colour. Hover, focus or tap a dot for a pop-up with the question, "Cites a
-result in the Novel column" when that applies, its approach, what it needs
-and why, and an "Open the question" link. A ringed dot's pop-up also names
+question cites a listed result in the Results map's New direction column, and
+ringed when it builds on results from two or more projects. A half-filled dot
+starts with existing data. A dashed dot marks a question whose data
+availability is unclear. The legend shows each of these two marks only when a
+question in the grid has it. The square beside each row's topic label is the topic's
+colour. Hover, focus or tap a dot for a pop-up with the question, "Builds on
+a new-direction result" when that applies, what following it up needs, "Starts
+with existing data" and "Data availability unclear" when they apply, why, and
+an "Open the question" link. A ringed dot's pop-up also names
 the projects it builds on, their topics and the results it builds on. The
 pop-up stays, pins and closes as a result's card does on the Results map.
-The dot's accessible name carries the question, its approach, the Novel
-words and how many projects and topics it joins. The dot is a link, so the
+The dot's accessible name carries the question, what following it up needs,
+the two markers and the new-direction words when they apply, and how many
+projects and topics it joins. The dot is a link, so the
 grid works without JavaScript. Under 640 px each topic becomes one block.
 
 Under each map, every listed result or question is a card in the concepts
@@ -324,19 +367,23 @@ row and per toggle), so a link or a reload restores the filter. Filtering
 fades the map marks that the filter hides, and each box whose marks are all
 hidden. Cards render without JavaScript; the bar needs it.
 
-- On Results, the chip rows are Topic, How new and Kind, and the sorts are
-  Novel first, Topic and Project. The "Related across projects" toggle keeps
+- On Results, the chip rows are Topic, How new and Type of result, and the
+  sorts are Most new first, Topic and Project. The "Related across projects" toggle keeps
   the results that have a related result in another project, and those cards
   say so. A result that belongs to a shared result names the relation and has
   a Compare button. Compare opens a panel
   under the last card of its row, holding the question the projects asked,
   each project's own result with its summary, and a paragraph on how they
   relate. Without JavaScript every panel shows below the cards.
-- On Open questions, the chip rows are Topic, What it needs and Approach, and
-  the sorts are Topic and What it needs. The toggles are "Builds on results
-  from two or more projects" and "Cites a result in the Novel column". A
-  question card shows its approach, what it needs, why, the Novel words when
-  they apply, how many projects and topics it joins, and its topic.
+- On Open questions, the chip rows are Topic and What following up needs, and
+  the sorts are Topic and Least effort first. Each What following up needs
+  chip carries its column's note. The toggles are "Starts with existing
+  data", "Builds on results from two or more projects" and "Builds on a
+  new-direction result". Each toggle appears only when a question has it. A
+  question card shows what following it up needs, "Starts with existing data"
+  and "Data availability unclear" when they apply, why, "Builds on a
+  new-direction result" when that applies, how many projects and topics it
+  joins, and its topic.
 
 A result page lists "Related results in other projects" when a listed result
 in another project relates to it. A result page lists "Concepts that cite this

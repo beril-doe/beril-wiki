@@ -88,13 +88,14 @@ def test_chip_only_for_informative_pipeline_labels(tmp_path):
         return cards.split(page)
 
     f, _ = fields_for()
-    assert f["chip"] == "Novel"
+    assert f["chip"] == "New direction"
     assert f["chip_note"] == (
         "An AI search of PubMed abstracts, retrieved on 2026-10-23, found nothing close to "
-        "this result, so it could be new. It does not establish novelty or correctness."
+        "this result, so it could open a new direction. It does not establish novelty or "
+        "correctness."
     )
     f, _ = fields_for(label="Extends retrieved work")
-    assert f["chip"] == "Builds on PubMed work"
+    assert f["chip"] == "Adds to published work"
     assert f["chip_note"] == cards.CHIP_NOTE.format(date="2026-10-23")
     for label in ("Insufficient literature evidence", "Not assessed"):
         f, _ = fields_for(label=label)
@@ -125,12 +126,19 @@ def test_listing_skips_non_results_repeats_and_title_only_cards(tmp_path):
         assert listed(gist, "null result") == (shown, shown)
 
 
-def test_a_correction_carries_no_pubmed_chip(tmp_path):
+def test_a_listed_correction_carries_its_chip_and_says_it_revises(tmp_path):
+    """A listed correction reports a result; only bookkeeping fixes leave the lists."""
     kb = build(tmp_path)
     page = kb / "wiki/findings" / f"{FID}.md"
     fields, body = cards.split(page.read_text())
     page.write_text(cards.join(fields | {"result": "correction"}, body))
+    set_state(kb, "gists.json", {FID: {"gist": "Dark genes were depleted.", "case": ""}})
     f, _ = cards.split(finding_page(FID, Corpus(kb)))
+    assert f["chip"] == "New direction" and f["updates_claim"] is True and f["listed"]
+    set_state(kb, "outcomes.json", {FID: {"type": "bookkeeping", "reason": "r"}})
+    f, _ = cards.split(finding_page(FID, Corpus(kb)))
+    # A bookkeeping fix keeps its page without a type, a revision note or a PubMed verdict.
+    assert f["listed"] is False and f["kind_text"] == "" and f["updates_claim"] is False
     assert f["chip"] == "" and f["chip_note"] == ""
 
 
@@ -147,7 +155,7 @@ def test_an_empty_search_says_no_abstracts_were_found(tmp_path):
 def test_literature_provenance_is_collapsed_not_dropped(tmp_path):
     kb = build(tmp_path)
     body = cards.split(finding_page(FID, Corpus(kb)))[1]
-    assert "**Novel.** " + cards.NOVEL_NOTE.format(date="2026-10-23") in body
+    assert "**New direction.** " + cards.NOVEL_NOTE.format(date="2026-10-23") in body
     assert "[PMID 111](https://pubmed.ncbi.nlm.nih.gov/111/)" in body
     details = body.split("<details><summary>How this was checked</summary>")[1].split("</details>")[
         0
@@ -169,12 +177,30 @@ def test_direction_page_uses_reader_words(tmp_path):
     )
     page.write_text(cards.join(fields, body))
     fields, text = cards.split(cards.direction_page("transport--abc123", Corpus(kb)))
-    assert "Approach: Analysis of existing data. Needs: Analysis to build. Data exists." in text
-    assert "|Dark]] (Novel)" in text
+    # Before the followups stage reads it, the planned approach stands in.
+    assert "Following up: analyze existing data. Data exists." in text
+    assert "|Dark]] (New direction)" in text
     assert "|Other]]\n" in text and "(Insufficient" not in text
-    assert fields["need"] == "build" and fields["need_text"] == "Analysis to build"
-    assert fields["approach_text"] == "Analysis of existing data"
-    assert fields["topic"] == "dark-matter"
+    assert fields["follow"] == "existing" and fields["follow_text"] == "Analyze existing data"
+    assert fields["first_step"] is False and fields["topic"] == "dark-matter"
+    set_state(
+        kb,
+        "followups.json",
+        {
+            "transport--abc123": {
+                "need": "experiment",
+                "first_step_existing": True,
+                "data_unclear": True,
+                "reason": "r",
+            }
+        },
+    )
+    fields, text = cards.split(cards.direction_page("transport--abc123", Corpus(kb)))
+    assert fields["follow"] == "experiment" and fields["first_step"] and fields["data_unclear"]
+    assert (
+        "Following up: run an experiment. Starts with existing data. "
+        "Data availability unclear. Data exists." in text
+    )
 
 
 def make_picks_corpus(tmp_path, specs, broad=True):
@@ -270,7 +296,7 @@ def test_index_blurbs_use_reader_words():
     )
     assert cards.INDEXES["directions"] == (
         "Open questions",
-        "Questions the project results leave open, by topic and by what answering them needs.",
+        "Questions the project results leave open, by topic and by what following them up needs.",
     )
 
 
@@ -337,9 +363,9 @@ def test_compare_text_names_unlabelled_results():
     assert cards.compare_text(None) == cards.NOT_COMPARED
     assert cards.compare_text({"label": cards.NOT_ASSESSED, "override": "x"}) == cards.NOT_COMPARED
     assert cards.compare_text({"label": "Insufficient literature evidence"}) == (
-        "Too little published evidence to compare"
+        "No clear comparison"
     )
-    assert cards.compare_text({"label": "Candidate novel"}) == "Novel"
+    assert cards.compare_text({"label": "Candidate novel"}) == "New direction"
 
 
 def test_readiness_explanations_and_check_notes_use_reader_words(tmp_path):
@@ -365,7 +391,7 @@ def test_readiness_explanations_and_check_notes_use_reader_words(tmp_path):
     }
     section = cards.literature_section(entry)
     assert "Candidate novel" not in section
-    assert "**Builds on PubMed work.**" in section and "“Novel”, which" in section
+    assert "**Adds to published work.**" in section and "“New direction”, which" in section
     # F4: the unconfirmed judge's difference and papers argued for the rejected label.
     assert "No retrieved paper reports it." not in section and "PMID 1" not in section
 
@@ -501,30 +527,38 @@ def test_export_leaves_out_papers_an_unconfirmed_label_rested_on(tmp_path):
     assert row["closest"] == []
 
 
-def test_null_results_are_named_by_their_summary_case(tmp_path):
+def test_result_types_come_from_the_outcomes_stage_else_the_tag(tmp_path):
     kb = build(tmp_path)
     page = kb / "wiki/findings" / f"{FID}.md"
     fields, body = cards.split(page.read_text())
 
-    def kind(result, case):
+    def kind(result, case, outcome=None):
         page.write_text(cards.join(fields | {"result": result}, body))
         set_state(kb, "gists.json", {FID: {"gist": "g", "case": case}})
-        return cards.split(finding_page(FID, Corpus(kb)))[0]["kind_text"]
+        set_state(kb, "outcomes.json", {FID: outcome} if outcome else {})
+        f = cards.split(finding_page(FID, Corpus(kb)))[0]
+        return f["rtype"], f["kind_text"]
 
-    assert kind("null result", "measured absence") == "No effect found"
-    assert kind("null result", "inconclusive test") == "Inconclusive test"
-    # Unlisted nulls keep the general words.
-    assert kind("null result", "missing data") == "Null or missing result"
-    assert kind("null result", "") == "Null or missing result"
-    assert kind("observation", "measured absence") == "Result"
-    assert kind("correction", "") == "Correction"
+    assert kind("null result", "measured absence") == ("negative", "Negative result")
+    assert kind("null result", "inconclusive test") == ("inconclusive", "Inconclusive")
+    assert kind("null result", "missing data")[0] == "inconclusive"
+    assert kind("observation", "") == ("positive", "Positive result")
+    assert kind("inference", "") == ("positive", "Positive result")
+    # The stage's reading wins over the tag, in both directions; a failed answer does not.
+    assert kind("inference", "", {"type": "negative", "reason": "r"})[0] == "negative"
+    assert kind("null result", "measured absence", {"type": "positive", "reason": "r"})[0] == (
+        "positive"
+    )
+    assert kind("observation", "", {"type": "data", "reason": "r"}) == ("data", "About the data")
+    assert kind("observation", "", {"type": "negative", "failed": True})[0] == "positive"
 
 
 def test_every_results_picture_column_has_a_reader_note(tmp_path):
     data = cards.picture_data(Corpus(build(tmp_path)))
     assert list(data["compare_notes"]) == data["compare_order"] == cards.COMPARE_ORDER
     assert all(note.strip() for note in data["compare_notes"].values())
-    assert data["compare_notes"]["Novel"].startswith("An AI search of PubMed abstracts found")
+    assert data["compare_notes"]["New direction"].startswith("An AI search of PubMed abstracts")
+    assert data["something_new"] == ["Something new", "New direction", "Adds to published work"]
     assert not any(cards.STATS.search(note) for note in data["compare_notes"].values())
 
 

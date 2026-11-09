@@ -31,25 +31,46 @@ PUBMED = "https://pubmed.ncbi.nlm.nih.gov/{}/"
 # The guarded labels name the agreement that let them stand.
 GUARDED = ("Candidate novel", "In tension with retrieved work")
 
-# Reader-facing words for pipeline terms; record files keep the pipeline's own.
-KIND_TEXT = {
-    "observation": "Result",
-    "inference": "Interpretation",
-    "null result": "Null or missing result",
-    "correction": "Correction",
+# What kind of result a listed finding is (stages/outcomes.py), in the reader's words.
+TYPE_TEXT = {
+    "positive": "Positive result",
+    "negative": "Negative result",
+    "inconclusive": "Inconclusive",
+    "data": "About the data",
 }
-# A listed null result is named by what its summary found; other nulls keep KIND_TEXT's.
-NULL_CASE_TEXT = {
-    "measured absence": "No effect found",
-    "inconclusive test": "Inconclusive test",
+# Types that are not results a reader browses: their pages stay, off the lists.
+OFF_TYPES = ("bookkeeping", "untested")
+# Before the outcomes stage has read a finding, its extraction tag stands in.
+TYPE_FALLBACK = {
+    "observation": "positive",
+    "inference": "positive",
+    "correction": "positive",
+    "measured absence": "negative",
+    "inconclusive test": "inconclusive",
 }
+# What following up an open question needs (stages/followups.py), least effort first.
+FOLLOW_TEXT = {
+    "existing": "Analyze existing data",
+    "outside": "Add outside data",
+    "experiment": "Run an experiment",
+}
+FOLLOW_NOTES = {
+    "existing": "BERDL already holds what the answer needs. Some questions need a new "
+    "analysis written.",
+    "outside": "Public genomes, metagenomes or another study's measurements, with no new lab work.",
+    "experiment": "Only a new lab or field measurement can test the hypothesis.",
+}
+FIRST_STEP_TEXT = "Starts with existing data"
+UNCLEAR_TEXT = "Data availability unclear"
+# The first two are the two kinds of new: a new direction, and new on published ground.
 CHIP = {
-    "Candidate novel": "Novel",
-    "Extends retrieved work": "Builds on PubMed work",
-    "In tension with retrieved work": "Differs from PubMed abstracts",
-    "Established in retrieved literature": "Similar result in PubMed",
+    "Candidate novel": "New direction",
+    "Extends retrieved work": "Adds to published work",
+    "In tension with retrieved work": "Differs from published work",
+    "Established in retrieved literature": "Similar to published work",
 }
-LABEL_TEXT = CHIP | {"Insufficient literature evidence": "Too little published evidence to compare"}
+LABEL_TEXT = CHIP | {"Insufficient literature evidence": "No clear comparison"}
+SOMETHING_NEW = "Something new"
 # Home order: results PubMed abstracts hold least like them first.
 INTEREST = [CHIP[k] for k in ("Candidate novel", "In tension with retrieved work")] + [
     CHIP["Extends retrieved work"]
@@ -58,22 +79,12 @@ CHIP_NOTE = (
     "An AI comparison with PubMed abstracts retrieved on {date}. "
     "It does not establish novelty or correctness."
 )
-# "Novel" alone would read as a verdict, so its note says what the search did and did not show.
+# "New direction" alone would read as a verdict, so its note says what the search did and
+# did not show.
 NOVEL_NOTE = (
     "An AI search of PubMed abstracts, retrieved on {date}, found nothing close to this "
-    "result, so it could be new. It does not establish novelty or correctness."
+    "result, so it could open a new direction. It does not establish novelty or correctness."
 )
-NEED = {
-    "data in the lakehouse": ("data", "Data already in the lakehouse"),
-    "needs compute": ("build", "Analysis to build"),
-    "needs new measurements": ("measure", "New measurements"),
-    "unknown": ("unclear", "Not yet clear"),
-}
-APPROACH_TEXT = {
-    "lakehouse analysis": "Analysis of existing data",
-    "experiment": "Experiment",
-    "analysis then experiment": "Analysis, then experiment",
-}
 NOT_COMPARED = "Not compared yet"
 # The Results picture's columns, most novel first; the last shows only when non-empty.
 COMPARE_ORDER = [*CHIP.values(), LABEL_TEXT["Insufficient literature evidence"], NOT_COMPARED]
@@ -81,7 +92,7 @@ COMPARE_ORDER = [*CHIP.values(), LABEL_TEXT["Insufficient literature evidence"],
 COMPARE_NOTES = {
     CHIP["Candidate novel"]: (
         "An AI search of PubMed abstracts found nothing close to these results, so they "
-        "could be new. It does not establish novelty or correctness."
+        "could open a new direction. It does not establish novelty or correctness."
     ),
     CHIP["Extends retrieved work"]: (
         "PubMed abstracts report related work, and these results add to it."
@@ -91,7 +102,8 @@ COMPARE_NOTES = {
     ),
     CHIP["Established in retrieved literature"]: "PubMed abstracts report a similar result.",
     LABEL_TEXT["Insufficient literature evidence"]: (
-        "PubMed abstracts hold too little on these topics to compare."
+        "PubMed abstracts held too little on these results to compare, or the comparison "
+        "did not settle."
     ),
     NOT_COMPARED: "These results are waiting for their PubMed search.",
 }
@@ -117,7 +129,9 @@ STATS = re.compile(
 )
 # A null result a home or topic card may show: only the ones that measured something.
 SHOWN_CASES = ("measured absence", "inconclusive test")
-SPOTLIGHT = ("null result", "correction")
+# A topic's three cards include one of these when the topic has one, so a negative
+# result is as easy to find as a positive one.
+SPOTLIGHT = ("negative",)
 
 
 def reader_terms(text: str) -> str:
@@ -127,11 +141,11 @@ def reader_terms(text: str) -> str:
     return text
 
 
-def kind_text(result: str, case: str = "") -> str:
-    """The reader's words for a record's kind; a null result's come from its summary's case."""
-    if result == "null result" and case in NULL_CASE_TEXT:
-        return NULL_CASE_TEXT[case]
-    return KIND_TEXT.get(result, result)
+def follow_of(entry: dict | None, approach: str) -> str:
+    """What following up a question needs; before the followups stage, its approach."""
+    if entry and entry.get("need") in FOLLOW_TEXT:
+        return entry["need"]
+    return "existing" if approach == "lakehouse analysis" else "experiment"
 
 
 def compare_text(entry: dict | None) -> str:
@@ -200,6 +214,9 @@ class Corpus:
             ).items()
             if not g.get("failed")
         }
+        # A failed label keeps its old value for recovery; the fallback stands in for it.
+        self.outcomes = accepted(kb / "state" / "outcomes.json")
+        self.followups = accepted(kb / "state" / "followups.json")
         links_path = kb / "state" / "links.json"
         self.link_records: list[dict] = (
             json.loads(links_path.read_text()).get("links", []) if links_path.exists() else []
@@ -287,6 +304,21 @@ class Corpus:
         ]
 
 
+def accepted(path: pathlib.Path) -> dict[str, dict]:
+    """A one-label stage's saved answers, without the failed ones."""
+    saved = json.loads(path.read_text()) if path.exists() else {}
+    return {k: v for k, v in saved.items() if not v.get("failed")}
+
+
+def result_type(c: Corpus, fid: str) -> str:
+    """The kind of result a finding is: the outcomes stage's answer, else its tag's."""
+    if t := c.outcomes.get(fid, {}).get("type"):
+        return t
+    result = c.findings[fid][0].get("result", "")
+    key = c.gists.get(fid, {}).get("case", "") if result == "null result" else result
+    return TYPE_FALLBACK.get(key, "inconclusive" if result == "null result" else "positive")
+
+
 def data_issues(kb: pathlib.Path) -> dict[str, list[dict]]:
     """Report id -> the in-scope proposals that would redo or correct its work."""
     # Imported here: stages.topics imports this module through publish.ingest.
@@ -330,9 +362,10 @@ def label_note(entry: dict) -> str:
 def chip_of(entry: dict | None, result: str = "") -> str:
     """The comparison chip a card shows; empty unless a pipeline label says something.
 
-    A correction revises the project's own earlier analysis, so how PubMed relates to it
-    says nothing a reader can use, and a chip there reads as a verdict on the error."""
-    if not entry or entry.get("override") or result == "correction":
+    A correction that is only bookkeeping is unlisted, so a listed correction reports a
+    result and carries its chip like any other. `result` stays for callers' symmetry."""
+    del result
+    if not entry or entry.get("override"):
         return ""
     return CHIP.get(entry.get("label", NOT_ASSESSED), "")
 
@@ -445,10 +478,12 @@ def eligible(c: Corpus, fid: str) -> bool:
 
     It needs an accepted plain summary that does not repeat an earlier finding from its
     report, and a null result must have measured something: missing data and an analysis
-    that never ran are not results. An unlisted finding keeps its page, so links to it
-    still resolve."""
+    that never ran are not results. Bookkeeping fixes and untested explanations are not
+    results either. An unlisted finding keeps its page, so links to it still resolve."""
     gist = c.gists.get(fid, {})
     if not gist.get("gist") or gist.get("repeats"):
+        return False
+    if c.outcomes.get(fid, {}).get("type") in OFF_TYPES:
         return False
     if c.findings[fid][0].get("result") == "null result":
         return gist.get("case") in SHOWN_CASES
@@ -469,15 +504,13 @@ def _picks(c: Corpus) -> tuple[list[str], dict[str, list[str]]]:
             for f in members:
                 if len(picked) < 3 and project[f] not in {project[p] for p in picked}:
                     picked.append(f)
-            if len(picked) == 3 and not any(
-                c.findings[f][0].get("result") in SPOTLIGHT for f in picked
-            ):
+            if len(picked) == 3 and not any(result_type(c, f) in SPOTLIGHT for f in picked):
                 used = {project[f] for f in picked[:-1]}
                 swap = next(
                     (
                         f
                         for f in members
-                        if c.findings[f][0].get("result") in SPOTLIGHT and project[f] not in used
+                        if result_type(c, f) in SPOTLIGHT and project[f] not in used
                     ),
                     None,
                 )
@@ -491,9 +524,9 @@ def _picks(c: Corpus) -> tuple[list[str], dict[str, list[str]]]:
 def _home(c: Corpus, ids: list[str], project: dict[str, str], n: int = 3) -> list[str]:
     """The n most interesting results, each from its own project and topic.
 
-    Most interesting: furthest from PubMed abstracts (novel, then differs, then
-    builds on), then linked to the most other projects, then a result before a null or
-    correction, then from the project in the most topics."""
+    Most interesting: furthest from PubMed abstracts (a new direction, then differs,
+    then adds to), then linked to the most other projects, then a positive result before
+    the other kinds, then from the project in the most topics."""
     tier = {text: i for i, text in enumerate(INTEREST)}
     others: dict[str, set[str]] = {}
     for link in links_index(c):
@@ -505,7 +538,7 @@ def _home(c: Corpus, ids: list[str], project: dict[str, str], n: int = 3) -> lis
         return (
             tier.get(compare_text(c.labels.get(f)), len(tier)),
             -len(others.get(f, ())),
-            c.findings[f][0].get("result") in SPOTLIGHT,
+            result_type(c, f) != "positive",
             -len(c.topics_of(project[f])),
             f,
         )
@@ -717,18 +750,25 @@ def finding_page(fid: str, c: Corpus) -> str:
     sid = fields.get("source", "")
     topics = c.topics_of(sid)
     gist = c.gists.get(fid, {})
-    chip = chip_of(entry, fields.get("result", ""))
+    listed = eligible(c, fid)
+    # An unlisted correction is a bookkeeping fix: no revision note and no PubMed verdict.
+    revises = fields.get("result") == "correction"
+    shown = listed or not revises
+    chip = chip_of(entry, fields.get("result", "")) if shown else ""
     home, by_topic = _picks(c)
     ranks = {t: ids.index(fid) + 1 for t, ids in by_topic.items() if fid in ids}
     fields = fields | {
         "label": (entry or {}).get("label", NOT_ASSESSED),
         "label_date": (entry or {}).get("retrieved_on", ""),
         "topics": topics,
-        "kind_text": kind_text(fields.get("result", ""), gist.get("case", "")),
+        "rtype": result_type(c, fid),
+        "kind_text": TYPE_TEXT.get(result_type(c, fid), ""),
+        # A listed correction reports a result; its card says it revises an earlier claim.
+        "updates_claim": listed and revises,
         "chip": chip,
         "compare_text": compare_text(entry),
-        "chip_note": chip_note(entry, fields.get("result", "")),
-        "listed": eligible(c, fid),
+        "chip_note": chip_note(entry, fields.get("result", "")) if shown else "",
+        "listed": listed,
         "gist": gist.get("gist", ""),
         "gist_case": gist.get("case", ""),
         "topic": c.display_topic(sid),
@@ -806,8 +846,8 @@ def beril_prompt(fields: dict, body: str, c: Corpus) -> str:
         f"Hypothesis: {fields.get('hypothesis', '')}",
         f"Proposed test: {sec.get('How to test it', '')}",
         f"What would support or refute it: {sec.get('What would support or refute it', '')}",
-        f"Collections: {data} (readiness: {fields.get('readiness', 'unknown')}; "
-        f"{fields.get('readiness_basis', '')})",
+        f"Collections: {data}. {follow_line(follow_fields(fields, c))} "
+        f"{fields.get('readiness_basis', '')}",
         "",
         "It builds on these results from the BERIL wiki:",
         *grounding(fields, c),
@@ -834,8 +874,8 @@ def brief(fields: dict, body: str, c: Corpus) -> str:
         "",
         f"**What would support or refute it.** {sec.get('What would support or refute it', '')}",
         "",
-        f"**Approach and data.** {fields.get('approach', '')}; readiness: "
-        f"{fields.get('readiness', 'unknown')}. {fields.get('readiness_basis', '')}",
+        f"**What following up needs.** {follow_line(follow_fields(fields, c))} "
+        f"{fields.get('readiness_basis', '')}",
         "",
         "**Builds on**",
         *grounding(fields, c),
@@ -851,17 +891,28 @@ def brief(fields: dict, body: str, c: Corpus) -> str:
 
 
 APPROACH_LINE = re.compile(r"^Approach: (.+?)\. Readiness: (.+?)\. ", re.M)
+# Questions on the directions index frontmatter: the columns, least effort first.
+FOLLOW_ORDER = list(FOLLOW_TEXT)
 LABEL_SUFFIX = re.compile(
     r"^(- Finding: .*) \((" + "|".join(map(re.escape, [*LABEL_TEXT, NOT_ASSESSED])) + r")\)$", re.M
 )
 
 
-def reader_words(body: str) -> str:
+def follow_line(follow: dict) -> str:
+    """What following up needs, as the question page's Data section states it."""
+    parts = [f"Following up: {FOLLOW_TEXT[follow['follow']].lower()}."]
+    if follow.get("first_step"):
+        parts.append(f"{FIRST_STEP_TEXT}.")
+    if follow.get("data_unclear"):
+        parts.append(f"{UNCLEAR_TEXT}.")
+    return " ".join(parts)
+
+
+def reader_words(body: str, follow: dict | None = None) -> str:
     """The generated body with pipeline terms replaced by the reader-facing ones."""
 
     def approach(m: re.Match) -> str:
-        need = NEED.get(m.group(2), (None, m.group(2)))[1]
-        return f"Approach: {APPROACH_TEXT.get(m.group(1), m.group(1))}. Needs: {need}. "
+        return follow_line(follow) + " " if follow else ""
 
     def suffix(m: re.Match) -> str:
         chip = CHIP.get(m.group(2))
@@ -870,16 +921,33 @@ def reader_words(body: str) -> str:
     return LABEL_SUFFIX.sub(suffix, APPROACH_LINE.sub(approach, body))
 
 
+def follow_fields(fields: dict, c: Corpus) -> dict:
+    """A question's follow-up need for its page: column, words and the two markers."""
+    entry = c.followups.get(fields.get("_id", ""))
+    follow = follow_of(entry, fields.get("approach", ""))
+    first = (
+        bool(entry.get("first_step_existing"))
+        if entry
+        else (follow == "experiment" and fields.get("approach") == "analysis then experiment")
+    )
+    unclear = bool(entry.get("data_unclear")) if entry else fields.get("readiness") == "unknown"
+    return {
+        "follow": follow,
+        "follow_text": FOLLOW_TEXT[follow],
+        "first_step": first and follow == "experiment",
+        "data_unclear": unclear,
+    }
+
+
 def direction_page(did: str, c: Corpus) -> str:
     fields, body = c.directions[did]
     topics = fields.get("topics") or []
-    need = NEED.get(fields.get("readiness", "unknown"), NEED["unknown"])
+    keyed = fields | {"_id": did}
+    follow = follow_fields(keyed, c)
     extra = {
-        "beril_prompt": beril_prompt(fields, body, c),
-        "brief": brief(fields, body, c),
-        "need": need[0],
-        "need_text": need[1],
-        "approach_text": APPROACH_TEXT.get(fields.get("approach", ""), fields.get("approach", "")),
+        "beril_prompt": beril_prompt(keyed, body, c),
+        "brief": brief(keyed, body, c),
+        **follow,
         "topic": topics[0] if topics else "",
     }
     if fields.get("readiness_basis"):
@@ -898,7 +966,7 @@ def direction_page(did: str, c: Corpus) -> str:
         extra["cross_topics"] = c.group_topics(sorted(by))
     if did in home_questions(c):
         extra["home_question_rank"] = home_questions(c).index(did) + 1
-    return join(fields | extra, reader_terms(reader_words(body)).rstrip() + "\n")
+    return join(fields | extra, reader_terms(reader_words(body, follow)).rstrip() + "\n")
 
 
 def issues_page(sid: str, items: list[dict], provenance: str, titles: dict[str, str]) -> str:
@@ -932,7 +1000,7 @@ INDEXES = {
     ),
     "directions": (
         "Open questions",
-        "Questions the project results leave open, by topic and by what answering them needs.",
+        "Questions the project results leave open, by topic and by what following them up needs.",
     ),
 }
 
@@ -958,6 +1026,8 @@ def export(c: Corpus) -> dict:
                 # An unconfirmed judgment's papers argued for the label that was rejected.
                 "closest": entry.get("closest", []) if entry.get("agreed") is not False else [],
                 "gist": c.gists.get(fid, {}).get("gist", ""),
+                "type": result_type(c, fid),
+                "listed": eligible(c, fid),
             }
         )
     directions = [
@@ -970,6 +1040,7 @@ def export(c: Corpus) -> dict:
             k: fields.get(k, [])
             for k in ("collections", "findings", "conflicts", "papers", "projects", "topics")
         }
+        | follow_fields(fields | {"_id": d}, c)
         for d, (fields, body) in c.directions.items()
     ]
     issues = {sid: [b["text"] for b in items] for sid, items in c.issues.items()}
@@ -995,6 +1066,8 @@ def picture_data(c: Corpus) -> dict:
     named = {x[k] for x in links for k in ("pa", "pb")}
     return {
         "compare_order": COMPARE_ORDER,
+        # The first two columns are the two kinds of new; the map heads them as a group.
+        "something_new": [SOMETHING_NEW, CHIP["Candidate novel"], CHIP["Extends retrieved work"]],
         "compare_notes": {text: COMPARE_NOTES[text] for text in COMPARE_ORDER},
         "links": links,
         "shared": shared_index(c),
@@ -1019,6 +1092,12 @@ def write_extras(dst: pathlib.Path, c: Corpus, provenance: str) -> int:
             fields: dict = {"title": title}
             if folder == "findings":
                 fields |= picture_data(c)
+            else:
+                fields |= {
+                    "follow_order": FOLLOW_ORDER,
+                    "follow_text": FOLLOW_TEXT,
+                    "follow_notes": FOLLOW_NOTES,
+                }
             (dst / folder / "index.md").write_text(
                 join(fields, f"{provenance}\n\n{blurb}\n"), encoding="utf-8"
             )

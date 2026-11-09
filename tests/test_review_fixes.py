@@ -162,7 +162,7 @@ def test_pin_without_retrieval_publishes_and_checks(tmp_path):
     decision = novelty.Decision(finding="x", label=novelty.EXTENDS, reason="checked by hand")
     entry = novelty.apply_decision({"label": novelty.NOT_ASSESSED, "failed": True}, decision)
     text = literature_section(entry)
-    assert "checked by hand" in text and "Builds on PubMed work" in text
+    assert "checked by hand" in text and "Adds to published work" in text
     (tmp_path / "state").mkdir()
     (tmp_path / "wiki/findings").mkdir(parents=True)
     (tmp_path / "wiki/findings/x.md").write_text("---\nfinding_id: x\nsource: a\n---\n# X\n")

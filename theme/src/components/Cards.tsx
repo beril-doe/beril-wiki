@@ -13,7 +13,9 @@ export interface FindingFm {
   compare_text?: string
   source?: string
   topics?: string[]
+  rtype?: string
   kind_text?: string
+  updates_claim?: boolean
   chip?: string
   chip_note?: string
   gist?: string
@@ -67,32 +69,55 @@ export interface ResultsIndexFm {
   shared?: SharedGroup[]
   project_titles?: Record<string, string>
   empty_topics?: string[]
+  something_new?: string[]
 }
 
 export const resultsIndex = (c: Corpus): ResultsIndexFm =>
   (c.bySlug.get("findings/index")?.frontmatter ?? {}) as ResultsIndexFm
 
 export interface DirectionFm {
-  need?: string
-  need_text?: string
-  approach_text?: string
+  follow?: string
+  follow_text?: string
+  first_step?: boolean
+  data_unclear?: boolean
   topic?: string
   beril_prompt?: string
   brief?: string
 }
 
-// Filter keys for the kind chips, keyed on the raw `result` so a wording change in
-// publish cannot misfilter; the words shown come from kind_text.
-const KIND_KEY: Record<string, string> = {
-  observation: "result",
-  inference: "interpretation",
-  "null result": "null",
-  correction: "correction",
-}
-/** The filter and mark key for a result's kind: result, interpretation, null or correction. */
-export const kindKey = (m: FindingFm) => KIND_KEY[m.result ?? ""] ?? "result"
+/** The kinds of result publish writes as `rtype`, with the words the legend and chips show.
+ * Keyed on `rtype` so a wording change in publish cannot misfilter. */
+export const TYPE_WORDS: [string, string][] = [
+  ["positive", "Positive result"],
+  ["negative", "Negative result"],
+  ["inconclusive", "Inconclusive"],
+  ["data", "About the data"],
+]
+/** The filter and mark key for a result's kind: positive, negative, inconclusive or data. */
+export const kindKey = (m: FindingFm) => (TYPE_WORDS.some(([k]) => k === m.rtype) ? m.rtype! : "positive")
 const kindOf = kindKey
-const NEED_CLASS: Record<string, string> = { data: "", build: "part", measure: "lab", unclear: "no" }
+export const UPDATES_WORDS = "Revises an earlier claim"
+
+/** The kind tag, and a second tag when the result revises the project's earlier claim. */
+function TypeTags({ m }: { m: FindingFm }) {
+  return (
+    <>
+      {m.kind_text && <span class={`rt t-${kindOf(m)}`}>{m.kind_text}</span>}
+      {m.updates_claim && <span class="rt upd">{UPDATES_WORDS}</span>}
+    </>
+  )
+}
+
+/** A question's follow-up tags: what following up needs, then its two markers. */
+export function FollowTags({ m }: { m: DirectionFm }) {
+  return (
+    <>
+      {m.follow_text && <span class={`ready f-${m.follow ?? "existing"}`}>{m.follow_text}</span>}
+      {m.first_step && <span class="c-kind">Starts with existing data</span>}
+      {m.data_unclear && <span class="c-kind">Data availability unclear</span>}
+    </>
+  )
+}
 
 const fmOf = <T,>(f: File) => (f.frontmatter ?? {}) as T
 const searchText = (...parts: (string | undefined)[]) => parts.filter(Boolean).join(" ").toLowerCase()
@@ -153,7 +178,7 @@ export function FindingCard({ f, from, c, strip }: { f: File; from: FullSlug; c?
       {strip && c && <TopicStrip c={c} topics={m.topics} primary={m.topic} />}
       {m.gist && (
         <div class="tags">
-          <span class={`rt${kind === "null" ? " null" : ""}`}>{m.kind_text}</span>
+          <TypeTags m={m} />
         </div>
       )}
       <h3>
@@ -192,13 +217,6 @@ export function Board({ cfg, children, label }: { cfg: BoardConfig; children: Co
   )
 }
 
-const KIND_WORDS: [string, string][] = [
-  ["result", "Result"],
-  ["null", "No effect found, or inconclusive"],
-  ["interpretation", "Interpretation"],
-  ["correction", "Correction"],
-]
-
 const panelId = (g: SharedGroup) => `sp-${g.id}`
 
 /** A result in the concepts card look. It is a container, not a link, so it can hold the
@@ -232,7 +250,7 @@ function ResultCard({ f, c, from, group, related, ranks }: {
         </a>
       </b>
       <span class="ctags">
-        <span class={`rt${kind === "null" ? " null" : ""}`}>{m.kind_text}</span>
+        <TypeTags m={m} />
         <Chip m={m} />
       </span>
       {m.gist && <span class="desc">{m.gist}</span>}
@@ -324,11 +342,11 @@ export function ResultsBoard({ c, from }: { c: Corpus; from: FullSlug }) {
         label: "How new",
         chips: order.filter((o) => byCompare(o) > 0).map((o) => ({ v: o, label: o, note: idx.compare_notes?.[o] })),
       },
-      { key: "kind", label: "Kind", chips: KIND_WORDS.filter(([k]) => byKind(k) > 0).map(([v, label]) => ({ v, label })) },
+      { key: "kind", label: "Type of result", chips: TYPE_WORDS.filter(([k]) => byKind(k) > 0).map(([v, label]) => ({ v, label })) },
     ],
     toggles: related.size > 0 ? [{ key: "rel", label: "Related across projects" }] : [],
     sorts: [
-      { key: "novel", label: "Novel first" },
+      { key: "novel", label: "Most new first" },
       { key: "topic", label: "Topic" },
       { key: "project", label: "Project" },
     ],
@@ -364,7 +382,7 @@ export function RecordBar({ file }: { file: File }) {
     const m = fmOf<FindingFm>(file)
     return (
       <div class="cardbar">
-        <span class={`rt${kindOf(m) === "null" ? " null" : ""}`}>{m.kind_text}</span>
+        <TypeTags m={m} />
         <Chip m={m} />
       </div>
     )
@@ -372,8 +390,7 @@ export function RecordBar({ file }: { file: File }) {
   const m = fmOf<DirectionFm>(file)
   return (
     <div class="cardbar">
-      {m.approach_text && <span class="c-kind">{m.approach_text}</span>}
-      {m.need_text && <span class={`ready ${NEED_CLASS[m.need ?? "unclear"] ?? "no"}`}>{m.need_text}</span>}
+      <FollowTags m={m} />
       {m.beril_prompt && (
         <button class="btn sm px-copy" type="button" data-copy={m.beril_prompt} title="A prompt to paste into BERIL">
           Copy BERIL prompt
