@@ -404,7 +404,8 @@ the reader turns on "Meaning search" in the search palette, which also ranks
 sections by meaning. Ask the wiki (`/ask`) answers a question from the 8
 best-matching sections, at most 3 from one page, and cites each claim to its
 section. Ask never draws on author pages, so an answer cannot turn into a claim
-about a person. Every knowledge page except author pages has an "Ask about this
+about a person. Ask tells the model that an Open question source proposes
+untested work, so an answer never reports its hypothesis as a finding. Every knowledge page except author pages has an "Ask about this
 page" button that answers from that page only. Meaning search and Ask use the
 reader's own CBORG key. The reader adds, changes or forgets it under the
 question box on the Ask page and in "Ask about this page", or in the search
