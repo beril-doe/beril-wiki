@@ -168,7 +168,12 @@
     "title": ""
   },
   "amr_cofitness_networks--6571fdb3": {
-    "failed": true
+    "case": "measured absence",
+    "gist": "Antibiotic-efflux genes had histidine-biosynthesis genes among their co-fitness partners in 6 organisms, and metal-resistance genes showed more chemotaxis partners in 4. In this gene-ontology analysis, no term was specific to one resistance mechanism once the many terms tested were allowed for.",
+    "input": "e2533e5b23decafbae55af777422388c84c231b4fdc8ec3df9c8877cdc637791",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": "No gene-ontology term was specific to one resistance mechanism in this analysis"
   },
   "amr_cofitness_networks--8fa18a88": {
     "case": "",
@@ -1876,10 +1881,10 @@
   },
   "metal_specificity--1f6b00a4": {
     "case": "",
-    "failed": true,
-    "gist": "In gene-knockout screens of bacteria such as Desulfovibrio vulgaris and Bacteroides thetaiotaomicron, newly proposed metal-related gene families are less often metal-specific than annotated ones; only 45.6% mainly affect growth under metal stress.",
-    "input": "9737554c5fda1babd861f509e5bbbe098b0400e94778d5b64009e79f36e9671d",
+    "gist": "Candidate metal-tolerance gene families with no existing annotation were less often classed as mainly metal-specific (45.6%) than annotated families. This suggests the proposed families more often show effects beyond metal stress alone.",
+    "input": "cb1572a8df06857f81a368ba65c5e66247416e7411d4db1a6647ee1ae664d75a",
     "model": "claude-sonnet-5-5",
+    "repeats": "",
     "title": ""
   },
   "metal_specificity--83d867cf": {
@@ -2194,6 +2199,38 @@
     "repeats": "",
     "title": ""
   },
+  "phage_defense_arsenal--40a9f7b2": {
+    "case": "",
+    "gist": "Among the bacterial defense systems compared, Type II restriction-modification and the Gabija anti-phage system showed the strongest tendency to occur in the same species, appearing together in 2,429 species, far more often than chance pairing would produce.",
+    "input": "b78f38f499679987b08aa36b246ac03fb9e7ddba40e91f14556421de8a73cfd0",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "phage_defense_arsenal--47aaf35d": {
+    "case": "",
+    "gist": "Among the 7,323 bacterial species with at least five sequenced genomes, species with more anti-phage defense systems also tend to have more predicted prophage clusters. The link weakens but persists after accounting for genome size and phylum, suggesting the two go together in these species.",
+    "input": "8602a3dc1e6f18f4b1a621abc1b6729802e49dd6efc6e61509f18af3f0da1172",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "phage_defense_arsenal--707f57b3": {
+    "case": "measured absence",
+    "gist": "In a survey of anti-phage defense genes across bacterial genomes, one protein-domain annotation table showed no detectable hits for Cas1, a classic CRISPR marker, while a second annotation source reported ~25K hits. That table therefore under-detects classical defense markers.",
+    "input": "562bec68502c3b84cc4bae014ccb75a34d98f783ce42f0a9bb080c6ea5d92009",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "phage_defense_arsenal--8c6a7f5f": {
+    "case": "measured absence",
+    "gist": "Among the anti-phage defense system pairs tested across bacterial species, CRISPR-Cas and CBASS were the only pair with no detectable tendency to occur together. CBASS appeared essentially independent of CRISPR-Cas, even though CRISPR-Cas is far more common.",
+    "input": "0e015dff09a1e142cbc069283696adae47eae8d7c63b214ec3121bdaf7171ca1",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": "CRISPR-Cas and CBASS are the one defense pair with no co-occurrence pattern"
+  },
   "phb_granule_ecology--0215baea": {
     "case": "measured absence",
     "gist": "In these genomes, no PHB (a carbon-storage polymer) production genes were reported for Campylobacterota, Gemmatimonadota, Nanoarchaeota or Marinisomatota, and Patescibacteria was near zero at 0.4%, suggesting the pathway is rare or absent in these major lineages.",
@@ -2442,6 +2479,41 @@
     "repeats": "",
     "title": ""
   },
+  "snipe_defense_system--5727ec31": {
+    "case": "",
+    "gist": "A survey of bacterial and archaeal pangenomes found the SNIPE phage-defense domain DUF4041 across 33 phyla, a far wider spread than the original paper's report of homologues. This suggests the domain is common across prokaryotic lineages.",
+    "input": "7c3b80117ad69cf976600d30536bbadfb5aad37af0c38a9e35a4eb9ea4594948",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "snipe_defense_system--69396dc3": {
+    "case": "",
+    "gist": "In E. coli K-12 gene-knockout screens, losing the transporter genes manX, manY or manZ caused very severe growth defects in only four conditions each, and growth was affected far less in most other conditions tested.",
+    "input": "70c1c4ccd6a08d2ee3eb3f0bf5d3fb22e4b61f1fd637aaf434b3218cc7994c02",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "snipe_defense_system--792b9ec1": {
+    "case": "missing data",
+    "gist": "In Klebsiella, the PhageFoundry collection has ManYZ sugar-transport annotations, including 28 ManZ proteins, but only genome annotations and no gene-knockout fitness data. Whether SNIPE and ManYZ interact in Klebsiella is therefore unmeasured; the analysis was not possible with these data.",
+    "input": "383f58f1b48cc41ec01bd07a555f3edc64f52566de6c0bbd11b03f5c6b6307a0",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "snipe_defense_system--a878d018": {
+    "case": "",
+    "gist": "Protein-family lookups for the E. coli SNIPE defence protein show its nuclease domain belongs to a family named Mug113 (PF13455), not the canonical GIY-YIG family PF01541. Both families sit in the same broader GIY-YIG group.",
+    "input": "9b738595f124fa3b3e44a7fa527ba9e22d4b3daef4a00bd48e939bb932fb2561",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "snipe_defense_system--b2833f06": {
+    "failed": true
+  },
   "soil_frontier_genomics--0fa73728": {
     "case": "inconclusive test",
     "gist": "Models using climate and soil, geochemical, or industrial measurements to predict functional gene counts in soils worldwide each did worse on held-out samples than guessing the average. The comparison was inconclusive: it could not settle whether gene counts are predictable from these measurements.",
@@ -2619,6 +2691,11 @@
     "title": ""
   },
   "webofmicrobes_explorer--f572a74d": {
-    "failed": true
+    "case": "",
+    "gist": "In the Web of Microbes metabolite data, only 26.8% of identified compounds match a reference growth-model compound by exact name. Many others match by molecular formula alone, which gives only candidate sets of possible compounds, and some have no match.",
+    "input": "90070ab904214a104b009d09cf66e89464143d68d436092fa554b1db2f1cf73f",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
   }
 }
