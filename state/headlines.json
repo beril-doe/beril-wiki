@@ -8309,6 +8309,137 @@
       ]
     }
   },
+  "phage_defense_arsenal": {
+    "input": "cd232361727ff92c4a581f1ef5c967574eea8e24fc390638058ee8e50b8efd70",
+    "pages": {
+      "phage_defense_arsenal--40a9f7b2.md": "6e7896ddc7324692318ed47fa8c48c644454d9030a99dda01f5c799b954ce44f",
+      "phage_defense_arsenal--47aaf35d.md": "5a4c3e8d27b53620d60d7abbccdc9153de6fea950ef7c12298bec40e97c2f500",
+      "phage_defense_arsenal--707f57b3.md": "8c31f123ec496fc453c337eb5efca4a10a54c2610d84d83080ffbacff6828f81",
+      "phage_defense_arsenal--8c6a7f5f.md": "21d09782c93f7d0f99cf56a4e39f8bd128f67a86a5048e94e93723e489a2d2f7"
+    },
+    "render": "finding-page@4",
+    "reply": {
+      "headlines": [
+        {
+          "caveat": "Phylum is controlled only categorically, not finer phylogenetic structure, so the results are consistent with but not a formal test of a phylogenetically independent arms race.",
+          "caveat_evidence": "phage_defense_arsenal:16000:8",
+          "claim": "Across the 7,323 species in the analysis set (species with at least five sequenced genomes), the Spearman correlation between per-species defense-system count and n_prophage_clusters is \u03c1 = 0.609, and the partial \u03c1 remains 0.301 after residualizing on log\u2081\u2080(median genome size) and phylum; this is an association, not a direct measurement of phage pressure.",
+          "evidence": "phage_defense_arsenal:0:5",
+          "quantities": [
+            {
+              "denominator": "7,323 species",
+              "scope": "species with at least five sequenced genomes",
+              "unit": "",
+              "value": "0.609",
+              "what": "Marginal Spearman \u03c1 between defense-system count and n_prophage_clusters"
+            },
+            {
+              "denominator": "",
+              "scope": "n = 7,323 species",
+              "unit": "",
+              "value": "0.301",
+              "what": "Partial \u03c1 after residualizing on log\u2081\u2080(median genome size) and phylum"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "",
+              "value": "1.6 \u00d7 10\u207b\u00b9\u2075\u00b3",
+              "what": "p-value of the partial correlation"
+            }
+          ],
+          "result": "observation",
+          "title": "Defense-system count tracks prophage burden beyond genome size and phylum"
+        },
+        {
+          "caveat": "The report only proposes that the pairing may reflect complementary layered defense against different phage life-cycle stages; no mechanism is established.",
+          "caveat_evidence": "phage_defense_arsenal:0:41",
+          "claim": "R-M Type II \u00d7 Gabija is the leading co-occurring defense-system pair in the table, with 2,429 observed co-occurrences versus a null mean of 1,555, z = 46.1 and odds ratio 24.0.",
+          "evidence": "phage_defense_arsenal:0:12",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "species",
+              "value": "2,429",
+              "what": "Observed R-M Type II \u00d7 Gabija co-occurrences"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "species",
+              "value": "1,555",
+              "what": "Null mean co-occurrence"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "",
+              "value": "46.1",
+              "what": "z-score"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "",
+              "value": "24.0",
+              "what": "Odds ratio"
+            }
+          ],
+          "result": "observation",
+          "title": "R-M Type II and Gabija co-occur far more than the permutation null"
+        },
+        {
+          "caveat": "The 96 % CRISPR-Cas prevalence is an upper bound from permissive eggNOG matching (Cas1 PF01867 is present in only 55 % of species); the syndrome analysis uses eggNOG OR Pfam, which favours recall, so CRISPR-Cas syndromes may be slightly underestimated in specificity but not in significance.",
+          "caveat_evidence": "phage_defense_arsenal:16000:2",
+          "claim": "CRISPR-Cas \u00d7 CBASS was the only tested pair not reaching significance (z = 0.21, p_emp = 0.98), with CBASS essentially independent of CRISPR-Cas presence despite the largest prevalence gap (96 % vs 7 %).",
+          "evidence": "phage_defense_arsenal:0:13",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "",
+              "value": "0.21",
+              "what": "z-score for CRISPR-Cas \u00d7 CBASS co-occurrence"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "",
+              "value": "0.98",
+              "what": "Empirical p-value"
+            }
+          ],
+          "result": "null result",
+          "title": "CRISPR-Cas and CBASS are the one pair without significant co-occurrence"
+        },
+        {
+          "caveat": "The two tables use different Pfam accession formats (version-free PF01867 in InterProScan, versioned PF01867.29 in Bakta), so cross-database joins must strip versions on the Bakta side.",
+          "caveat_evidence": "phage_defense_arsenal:0:28",
+          "claim": "bakta_pfam_domains misses classical defense markers: CRISPR Cas1 PF01867 returns 0 there but ~25K in InterProScan.",
+          "evidence": "phage_defense_arsenal:0:27",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "hits",
+              "value": "0",
+              "what": "Cas1 PF01867 hits in bakta_pfam_domains"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "hits",
+              "value": "~25K",
+              "what": "Cas1 PF01867 hits in InterProScan"
+            }
+          ],
+          "result": "null result",
+          "title": "Bakta Pfam table misses classical defense markers such as Cas1"
+        }
+      ]
+    }
+  },
   "phb_granule_ecology": {
     "input": "d12b0514f2f506eefc77be2d68382e4a0461ff2fe2a5c1499cc8afd0904af293",
     "pages": {
@@ -9284,6 +9415,161 @@
           ],
           "result": "null result",
           "title": "Alternative dehydrogenase presence does not predict Complex I dispensability across species"
+        }
+      ]
+    }
+  },
+  "snipe_defense_system": {
+    "input": "7a84568e8aed3124aac482577dd09f404b6a91587ea7d8abb969d906d330af4c",
+    "pages": {
+      "snipe_defense_system--5727ec31.md": "992cfef2a1fceb435f94edd00d594ab39d4d96ebde568fd94e65679815d2d073",
+      "snipe_defense_system--69396dc3.md": "7a786f1c2556b594d7a6fddd82a7552b759e0cb4e2679e3f7db4a2d07ce74e4f",
+      "snipe_defense_system--792b9ec1.md": "e73b561dcdbc3c6ead2fe932c72b7e50cf83855e60a0c91569a075ce6603cd62",
+      "snipe_defense_system--a878d018.md": "724f44859d463700dc966662449dd7db1a5d61139e7d1c9d0cf8b645dc832a8e",
+      "snipe_defense_system--b2833f06.md": "b62e934ebcc13bdc6769d34c4d9df53aaa62e2bb80a48a60ae54713b41ee93da"
+    },
+    "render": "finding-page@4",
+    "reply": {
+      "headlines": [
+        {
+          "caveat": "The report estimates that 3,675/4,572 (80.4%) of DUF4041 clusters are SNIPE-family proteins, while the remaining ~20% (897 clusters) may be non-SNIPE multi-domain proteins or annotation noise.",
+          "caveat_evidence": "snipe_defense_system:16000:14",
+          "claim": "The survey detected DUF4041 (PF13250, InterPro IPR025280), the diagnostic SNIPE domain, in 4,572 gene clusters across 1,696 species spanning 33 bacterial and archaeal phyla, which substantially expands the >500 homologues reported in the original paper.",
+          "evidence": "snipe_defense_system:0:39",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "pangenome survey",
+              "unit": "gene clusters",
+              "value": "4,572",
+              "what": "DUF4041 gene clusters detected"
+            },
+            {
+              "denominator": "",
+              "scope": "33 bacterial and archaeal phyla",
+              "unit": "species",
+              "value": "1,696",
+              "what": "species carrying DUF4041"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "phyla",
+              "value": "33",
+              "what": "bacterial and archaeal phyla with DUF4041"
+            },
+            {
+              "denominator": "",
+              "scope": "original paper",
+              "unit": "homologues",
+              "value": ">500",
+              "what": "homologues reported in the original paper"
+            }
+          ],
+          "result": "observation",
+          "title": "DUF4041 SNIPE domain is far more widespread than originally reported"
+        },
+        {
+          "caveat": "AlphaEarth coverage is 28.4% of genomes and is biased toward environmental isolates with lat/lon data.",
+          "caveat_evidence": "snipe_defense_system:16000:9",
+          "claim": "Comparing AlphaEarth 64-dimensional environmental embeddings between SNIPE-bearing (n=1,069) and non-SNIPE species (n=13,977), 22 of 64 dimensions were significantly different (Bonferroni-corrected p < 0.05).",
+          "evidence": "snipe_defense_system:16000:5",
+          "quantities": [
+            {
+              "denominator": "64 dimensions",
+              "scope": "Bonferroni-corrected p < 0.05",
+              "unit": "dimensions",
+              "value": "22 of 64",
+              "what": "AlphaEarth dimensions significantly different"
+            },
+            {
+              "denominator": "",
+              "scope": "versus non-SNIPE species",
+              "unit": "species",
+              "value": "n=1,069",
+              "what": "SNIPE-bearing species compared"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "species",
+              "value": "n=13,977",
+              "what": "non-SNIPE species compared"
+            }
+          ],
+          "result": "observation",
+          "title": "SNIPE-bearing species differ from others in environmental embeddings"
+        },
+        {
+          "caveat": "eggNOG Pfam annotations may miss divergent SNIPE homologues, and only 54/4,572 DUF4041 clusters show Mug113 co-annotation, suggesting many SNIPE nuclease domains go undetected.",
+          "caveat_evidence": "snipe_defense_system:16000:19",
+          "claim": "InterPro/UniProt analysis of the E. coli SNIPE protein (A0A0A1A5Z2) shows its nuclease domain is PF13455 (Mug113), not PF01541; both belong to GIY-YIG clan CL0418 but are distinct Pfam families.",
+          "evidence": "snipe_defense_system:16000:1",
+          "quantities": [],
+          "result": "correction",
+          "title": "SNIPE nuclease is Mug113 (PF13455), not canonical GIY-YIG PF01541"
+        },
+        {
+          "caveat": "Among the 48 Fitness Browser organisms ManXYZ by gene name is present only in E. coli K-12, and no Klebsiella strain carries it by gene name.",
+          "caveat_evidence": "snipe_defense_system:0:24",
+          "claim": "In E. coli K-12 (Keio collection) Fitness Browser RB-TnSeq data, across 168 experiments per gene, worst fitness was -3.93 for manX, -3.82 for manY and -4.14 for manZ, with 4 conditions below -2 for each gene.",
+          "evidence": "snipe_defense_system:0:10",
+          "quantities": [
+            {
+              "denominator": "168 experiments",
+              "scope": "E. coli K-12, Fitness Browser",
+              "unit": "log2 ratio",
+              "value": "-3.93",
+              "what": "worst fitness for manX"
+            },
+            {
+              "denominator": "168 experiments",
+              "scope": "E. coli K-12, Fitness Browser",
+              "unit": "log2 ratio",
+              "value": "-3.82",
+              "what": "worst fitness for manY"
+            },
+            {
+              "denominator": "168 experiments",
+              "scope": "E. coli K-12, Fitness Browser",
+              "unit": "log2 ratio",
+              "value": "-4.14",
+              "what": "worst fitness for manZ"
+            },
+            {
+              "denominator": "168 experiments",
+              "scope": "E. coli K-12, Fitness Browser",
+              "unit": "conditions",
+              "value": "4",
+              "what": "conditions with fitness < -2 for each of manX, manY, manZ"
+            }
+          ],
+          "result": "observation",
+          "title": "E. coli K-12 ManXYZ genes show severe fitness defects in few conditions"
+        },
+        {
+          "caveat": "Generating Klebsiella-specific SNIPE or ManYZ fitness data would require new mutant libraries in natural SNIPE-carrying strains such as K. pneumoniae NCTC9140 or HS11286.",
+          "caveat_evidence": "snipe_defense_system:0:38",
+          "claim": "PhageFoundry has ManYZ annotations in Klebsiella (28 ManZ proteins, 4,619 PTS_EIIC Pfam hits) but is GenomeDepot format with genome annotations only and no fitness/TnSeq tables, so Klebsiella-specific fitness remains unmeasured there.",
+          "evidence": "snipe_defense_system:0:37",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "PhageFoundry",
+              "unit": "proteins",
+              "value": "28",
+              "what": "ManZ proteins annotated in Klebsiella"
+            },
+            {
+              "denominator": "",
+              "scope": "PhageFoundry",
+              "unit": "annotations",
+              "value": "4,619",
+              "what": "PTS_EIIC Pfam hits in Klebsiella"
+            }
+          ],
+          "result": "null result",
+          "title": "PhageFoundry has no Klebsiella fitness tables to test SNIPE\u2013ManYZ interplay"
         }
       ]
     }

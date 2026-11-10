@@ -154,6 +154,14 @@ def test_new_figures_flags_new_numbers():
     assert cards.new_figures("OR 0.61 in 7,609 genes", pool) == ["0.61"]
 
 
+def test_new_figures_reads_strain_names_as_names():
+    pool = "ManXYZ knockouts in E. coli had defects."
+    assert cards.new_figures("ManXYZ knockouts in E. coli K-12 had defects.", pool) == []
+    assert cards.new_figures("SARS-CoV-2 reads were absent.", "Reads were absent.") == []
+    assert cards.new_figures("E. coli K-12 had 12 defects.", pool) == ["12"]
+    assert cards.new_figures("In 100 species.", "In the top-100 species.") == []
+
+
 def test_topic_concepts_reads_curator_groups(tmp_path):
     (tmp_path / "state").mkdir()
     (tmp_path / "state/curator-topics.json").write_text(

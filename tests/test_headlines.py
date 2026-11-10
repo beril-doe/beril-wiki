@@ -94,6 +94,23 @@ def test_headlines_rejects_figure_absent_from_quote(tmp_path, monkeypatch):
     assert not list((tmp_path / "wiki/findings").glob("*.md"))
 
 
+def test_headlines_drop_a_failing_headline_after_the_strict_rounds(tmp_path, monkeypatch):
+    null = headline("a:0:1", "null result", "No effect of copper was detected (p = 0.41).", "0.41")
+    bad = headline(claim="Dark genes were depleted under stress (odds ratio 0.61).")
+    mixed = json.dumps({"headlines": [bad, null]})
+    agent = setup(
+        tmp_path,
+        monkeypatch,
+        {"headlines/a": [mixed], "headlines/a/repair": [mixed] * 3},
+    )
+    assert headlines.main(tmp_path) == 0
+    pages = list((tmp_path / "wiki/findings").glob("*.md"))
+    assert len(pages) == 1 and "0.41" in pages[0].read_text()
+    # The two strict rounds asked for a repair; the reviewer read the trimmed reply.
+    assert agent.asked.count("headlines/a/repair") >= 2
+    assert "headlines/a/science-review" in agent.asked
+
+
 def test_headlines_null_must_come_from_null_record(tmp_path, monkeypatch):
     parse = headlines.checker(RECORDS)
     wrong = {"headlines": [headline(result="null result")]}

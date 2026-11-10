@@ -50,6 +50,8 @@ MAX_FINDINGS = 4  # observations and inferences per report
 MAX_NULLS = 2  # null results and corrections per report
 OTHER_CAVEATS = 5
 TITLE_WORDS = 12
+# Rejected candidates the model may repair whole before failing headlines are dropped.
+STRICT_ROUNDS = 2
 # Bump when render() changes: pages re-render from the cached replies at no cost.
 RENDER = "finding-page@4"
 Result = Literal["observation", "inference", "null result", "correction"]
@@ -119,55 +121,72 @@ def pack(sid: str, title: str, records: list[dict]) -> dict:
     }
 
 
-def checker(records: list[dict]) -> Callable[[str], Reply]:
-    """Code-side checks on a reply; each failure goes back to the model to correct."""
-    by_id = {r["id"]: r for r in records}
+def checker(records: list[dict], strict_rounds: int | None = None) -> Callable[[str], Reply]:
+    """Code-side checks on a reply; each failure goes back to the model to correct.
 
-    def parse(raw: str) -> Reply:
-        reply = cards.parse_reply(raw, Reply)
-        assert isinstance(reply, Reply)
-        problems: list[str] = []
+    After `strict_rounds` rejected candidates, a candidate's failing headlines are
+    dropped instead, provided the rest passes every check. The reviewer still reads
+    what remains, so one headline that cites another passage no longer costs the
+    report all of its cards."""
+    by_id = {r["id"]: r for r in records}
+    rejected = 0
+
+    def problems_of(reply: Reply) -> tuple[dict[int, list[str]], list[str]]:
+        per: dict[int, list[str]] = {}
         seen: set[str] = set()
         for n, h in enumerate(reply.headlines):
+            mine = per.setdefault(n, [])
             record = by_id.get(h.evidence)
             if record is None or record["kind"] not in ("finding", "null"):
-                problems.append(f"headline {n}: evidence {h.evidence!r} is not a FINDINGS id")
+                mine.append(f"headline {n}: evidence {h.evidence!r} is not a FINDINGS id")
                 continue
             if h.evidence in seen:
-                problems.append(f"headline {n}: evidence {h.evidence!r} is used twice")
+                mine.append(f"headline {n}: evidence {h.evidence!r} is used twice")
             seen.add(h.evidence)
             if (record["kind"] == "null") != (h.result == "null result"):
-                problems.append(
-                    f"headline {n}: result 'null result' must match a record of kind null"
-                )
+                mine.append(f"headline {n}: result 'null result' must match a record of kind null")
             quote = record["quote"]
             if bad := cards.new_figures(h.claim, quote):
-                problems.append(f"headline {n}: claim figures {bad} are not in the quote")
+                mine.append(f"headline {n}: claim figures {bad} are not in the quote")
             if bad := cards.new_figures(h.title, ""):
-                problems.append(f"headline {n}: the title carries figures {bad}")
+                mine.append(f"headline {n}: the title carries figures {bad}")
             if len(h.title.split()) > TITLE_WORDS:
-                problems.append(f"headline {n}: the title has more than {TITLE_WORDS} words")
+                mine.append(f"headline {n}: the title has more than {TITLE_WORDS} words")
             for q in h.quantities:
                 text = " ".join((q.value, q.what, q.unit, q.denominator, q.scope))
                 if bad := cards.new_figures(text, quote):
-                    problems.append(f"headline {n}: quantity figures {bad} are not in the quote")
+                    mine.append(f"headline {n}: quantity figures {bad} are not in the quote")
                 elif not cards.in_quote(q.value, quote):
-                    problems.append(f"headline {n}: quantity value {q.value!r} is not in the quote")
+                    mine.append(f"headline {n}: quantity value {q.value!r} is not in the quote")
             caveat = by_id.get(h.caveat_evidence)
             if caveat is None or caveat["kind"] != "caveat":
-                problems.append(f"headline {n}: caveat_evidence is not a CAVEATS id")
+                mine.append(f"headline {n}: caveat_evidence is not a CAVEATS id")
             elif bad := cards.new_figures(h.caveat, caveat["quote"]):
-                problems.append(f"headline {n}: caveat figures {bad} are not in its quote")
+                mine.append(f"headline {n}: caveat figures {bad} are not in its quote")
+        overall: list[str] = []
         main = sum(h.result in ("observation", "inference") for h in reply.headlines)
         nulls = len(reply.headlines) - main
         if main > MAX_FINDINGS:
-            problems.append(f"{main} observations or inferences; at most {MAX_FINDINGS}")
+            overall.append(f"{main} observations or inferences; at most {MAX_FINDINGS}")
         if nulls > MAX_NULLS:
-            problems.append(f"{nulls} null results or corrections; at most {MAX_NULLS}")
+            overall.append(f"{nulls} null results or corrections; at most {MAX_NULLS}")
         if not reply.headlines:
-            problems.append("no headline chosen; the report has findings")
-        if problems:
-            raise CandidateError("; ".join(problems))
+            overall.append("no headline chosen; the report has findings")
+        return {n: p for n, p in per.items() if p}, overall
+
+    def parse(raw: str) -> Reply:
+        nonlocal rejected
+        reply = cards.parse_reply(raw, Reply)
+        assert isinstance(reply, Reply)
+        per, overall = problems_of(reply)
+        if per and strict_rounds is not None and rejected >= strict_rounds:
+            keep = Reply(headlines=[h for n, h in enumerate(reply.headlines) if n not in per])
+            if keep.headlines and problems_of(keep) == ({}, []):
+                print(f"  [TRIMMED] dropped {len(per)} headline(s) that failed their checks")
+                return keep
+        if per or overall:
+            rejected += 1
+            raise CandidateError("; ".join([p for n in sorted(per) for p in per[n]] + overall))
         return reply
 
     return parse
@@ -342,7 +361,11 @@ def main(root: Path = ROOT) -> int:
     def write(item: tuple, agent: Runtime) -> Reply:
         sid, records, messages, _ = item
         return cards.reviewed(
-            messages, f"headlines/{sid}", checker(records), agent=agent, salvage=salvager(records)
+            messages,
+            f"headlines/{sid}",
+            checker(records, strict_rounds=STRICT_ROUNDS),
+            agent=agent,
+            salvage=salvager(records),
         )
 
     today = datetime.date.today().isoformat()
