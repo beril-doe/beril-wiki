@@ -146,9 +146,8 @@ def test_label_stages_are_registered_after_their_inputs(tmp_path):
     for name, dep in (("outcomes", "gists"), ("followups", "directions")):
         assert name in curator.CARD_STAGES and curator.EDITORIAL[name][2] == (dep,)
         assert curator.EDITORIAL[name][3] is None
-    config = {"model": "claude-haiku-5-5", "step_models": {"review": "gpt-6-luna"}}
-    assert curator.stage_revision(tmp_path, "outcomes", config) != curator.stage_revision(
-        tmp_path, "followups", config
+    assert curator.stage_revision(tmp_path, "outcomes") != curator.stage_revision(
+        tmp_path, "followups"
     )
 
 

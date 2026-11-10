@@ -344,8 +344,8 @@ def main(root: Path = ROOT) -> int:
         records = evidence[sid]
         body = pack(sid, source_title(root, sid), records)
         messages = [{"role": "user", "content": PROMPT + json.dumps(body)}]
-        # The models are part of the key: a new cards or review model re-judges.
-        key = digest([messages, cards.policy(agent.config, ("cards", "review"))])
+        # The models are part of the key: a new cards or findings_review model re-judges.
+        key = digest([messages, cards.policy(agent.config, ("cards", "findings_review"))])
         saved = state.get(sid, {})
         on_disk = {p.name: file_hash(p) for p in pages_of(out, sid)}
         # A saved reply stays while its input is unchanged and today's checks accept it,

@@ -35,7 +35,7 @@ rendering them.
 
 ## Update the wiki (maintainers)
 
-A fixed Python schedule drives Claude Agent SDK writer and reviewer jobs; the
+A fixed Python schedule drives Claude page sessions and GPT reviewer jobs; the
 only structural model call chooses topic groups. Python enforces coverage,
 scientific review, token budgets, and recoverable promotion. Start by listing
 changed staged sources and stale editorial stages without inference:
@@ -44,15 +44,16 @@ changed staged sources and stale editorial stages without inference:
 uv run python -m beril_wiki.agentic plan
 ```
 
-Runs load the committed [model policy](agentic.yaml): Opus 5.5 plans and writes
-derived pages, Sonnet 5.5 writes integrated pages and the finding and research-direction
-records, and GPT-6.1 Sol extracts evidence, reviews, writes queries and selects
-figures. Haiku 5.5 labels result types and follow-up needs, and GPT-6 Luna
-reviews most card records.
-Derived pages (conflicts, hubs, home, literature, authors) are written from
-evidence packed into one prompt, checked by code, reviewed in one turn and
-corrected by paragraph patches; a page that does not converge is recorded, not
-a run stop. See the [operating guide](docs/agentic-workflow.md) for
+Runs load the committed [model policy](agentic.yaml): GPT-6.1 Sol extracts
+evidence, writes queries and selects figures, Sonnet 5.5 plans and writes
+derived pages, Haiku 5.5 writes integrated pages, and GPT-6 Luna reviews them.
+Sonnet 5.5 writes the finding and research-direction records, Haiku 5.5 labels
+result types and follow-up needs, and GPT-6 Luna and GPT-6.1 Sol review those
+records. Every page is written in one Claude session: the writer edits the page
+file, runs the host's checks and asks the GPT reviewer through tools, and the
+host accepts only the exact text both approved. A page that does not converge
+is recorded, not a run stop. Model changes apply to pages written from then on;
+`pilot` measures a model on named pages first. See the [operating guide](docs/agentic-workflow.md) for
 subscription login, the observatory checkout, run budgets, workers, failed-page
 retry, search, and recovery, or open the
 [HTML walkthrough](docs/agentic-workflow.html) for the control flow. A capped
@@ -101,8 +102,8 @@ with `npm --prefix theme run typecheck` once `scripts/build_quartz.sh` has insta
 
 ## Learn more
 
-- [`docs/agentic-workflow.md`](docs/agentic-workflow.md), commands, editorial
-  actions, caching, budgets, validation, and recovery
+- [`docs/agentic-workflow.md`](docs/agentic-workflow.md), commands, model
+  policy, page sessions, pilots, caching, budgets, validation, and recovery
 - [`docs/agentic-workflow.html`](docs/agentic-workflow.html), visual walkthrough
 - [`docs/wiki.md`](docs/wiki.md), how the wiki itself is structured and how
   to read it

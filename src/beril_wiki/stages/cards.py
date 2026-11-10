@@ -162,7 +162,7 @@ def in_quote(value: str, quote: str) -> bool:
     return re.search(rf"(?<!\w){re.escape(value.strip())}(?!\w)", quote) is not None
 
 
-def policy(config: dict, roles: tuple[str, ...] = ("cards", "review", "queries")) -> str:
+def policy(config: dict, roles: tuple[str, ...]) -> str:
     """The models a card record was judged with: a change re-judges it, as a change
     to the curator's stage revision does for the stages that predate these."""
     chosen = model_policy(config)

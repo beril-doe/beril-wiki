@@ -206,7 +206,7 @@ button.theme { position: fixed; right: 16px; top: 16px; z-index: 3; font: 400 11
   <main>
     <p class="meta">2026-09-16 · BERIL wiki · Workflow and model routing</p>
     <h1>The agentic wiki workflow</h1>
-    <p class="lead">A fixed Python schedule drives subscription-backed writer and reviewer jobs that update the wiki. Every derived page receives its complete evidence in one prompt, is checked by code before a one-turn review, and is corrected by paragraph patches. Python keeps the work bounded, reviewable and recoverable.</p>
+    <p class="lead">A fixed Python schedule drives subscription-backed writer and reviewer jobs that update the wiki. Every page is written in one Claude page session: the writer edits the page, the host's gates check it, a GPT reviewer reviews it, and the host accepts only the exact text both approved. Python keeps the work bounded, reviewable and recoverable.</p>
     <h2 id="control" data-toc="The schedule">A fixed schedule runs stale stages; Python controls acceptance</h2>
 <figure>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Workflow diagram, scroll horizontally on narrow screens">
@@ -244,7 +244,7 @@ flowchart LR
 <ol>
 <li>Extract exact quotes and offsets from overlapping ranges across the whole report, including caveats and null results.</li>
 <li>Plan coverage for every evidence record and combine changes by destination page.</li>
-<li>Write anchored patches or justified rewrites. Integration writers may retrieve source passages; derived-page writers get their evidence packed instead.</li>
+<li>Write each page in a page session that edits the page file. Integration writers may read and search source passages; derived-page writers get their evidence packed instead.</li>
 <li>Check structure, links, citations, quantities and retained evidence, including evidence from absorbed pages.</li>
 <li>Run a separate scientific review for support and lost meaning, then resolve entities and refresh metadata.</li>
 </ol>
@@ -254,11 +254,11 @@ flowchart LR
 <summary>Follow one derived page from evidence pack to acceptance</summary>
 <ol>
 <li>Code packs the evidence: the tension paragraph with its tags, concept leads and the source paragraphs stating its figures for a conflict; member concept pages and linked conflict leads for a hub; abstracts for a literature section; summaries for an author.</li>
-<li>The writer receives the stage's rule list and the pack, and answers in one turn with no tools.</li>
+<li>The writer receives the stage's rule list and the pack in one page session. It edits the page file with the CLI's Edit and Write tools and calls the host's <code>check</code>, <code>review</code> and <code>submit</code> tools.</li>
 <li>Gates run in code: length, required headings, preamble, figures absent from the input, invalid tags, uncited or unsupported figures. Dead links and legacy platform names are repaired in code.</li>
 <li>The reviewer receives the same rules and pack plus the numbered candidate and returns one JSON verdict of paragraph-indexed issues.</li>
-<li>A rejection is patched by paragraph index against a base hash; only the replaced paragraphs are reviewed again. Two rounds, each seeing the latest verdict.</li>
-<li>A page that has not converged keeps its previous version and is listed in the run summary and <code>.agentic/failures.json</code>; the stage continues.</li>
+<li>After the first review, each review the writer asks for is a closed verification of the open objections. Each objection follows its paragraph through the writer's edits, and a new objection counts only against changed paragraphs. A session makes at most four reviewer calls, and the host accepts only the exact text that passed both the check and the latest review.</li>
+<li>A page that has not converged after a full review is salvaged when dropping its objected paragraphs leaves a page that passes the gates: the paragraphs are removed, an editorial note is left and the removal is recorded in <code>.agentic/salvaged.json</code>. Otherwise the page keeps its previous version and is listed in the run summary and <code>.agentic/failures.json</code>; the stage continues.</li>
 </ol>
 </details>
 
@@ -270,27 +270,27 @@ flowchart LR
 <tbody>
 <tr><td>Unchanged-run check</td><td class="hot">Zero model calls when the accepted run fingerprint matches.</td><td>First adoption of a changed contract refreshes derived prose once.</td></tr>
 <tr><td>Durable job and page caches</td><td>Reuse saved outputs during resume; refresh affected work.</td><td>Source, model, scientific contract or relevant code changes invalidate results.</td></tr>
-<tr><td>Packed evidence, one-turn jobs</td><td>No tool loop re-reads context every turn; writer and reviewer share one pack, and a cache keys on the prompt alone.</td><td>Packs are bounded (hub member pages under 110KB with explicit truncation marks) and travel in the cached system prompt, so a page's review and patch jobs read the pack instead of re-sending it; requests and transcripts have size limits.</td></tr>
-<tr><td>Paragraph patches and closed verification</td><td>A correction replaces named paragraphs; an unsupported claim is deleted, not reworded. The reviewer then verifies its own issues against the revised paragraphs instead of reviewing the page again, so the open list can shrink but never grow.</td><td>Five patch rounds per page; a page still carrying an objection is salvaged (the paragraph removed, an editorial note left) rather than dropped.</td></tr>
+<tr><td>Packed evidence in a cached prompt</td><td>Writer and reviewer share one pack, so neither searches the sources for what it already holds, and the session's loop guard denies re-reading content still in context.</td><td>Packs are bounded (hub member pages under 110KB with explicit truncation marks) and travel in the cached system prompt, so a page session's later turns and its review jobs read the pack instead of re-sending it; requests and transcripts have size limits.</td></tr>
+<tr><td>Page sessions and closed verification</td><td>The writer revises in one session that reads its cached conversation; an unsupported claim is deleted, not reworded. The reviewer then verifies its own issues against the changed paragraphs instead of reviewing the page again, so the open list can shrink but never grow.</td><td>Four reviewer calls per session; a page still carrying an objection is salvaged (the paragraph removed, an editorial note left) rather than dropped.</td></tr>
 <tr><td>Edits grouped by page</td><td>Combine evidence before writing a destination.</td><td>Validation and separate scientific review still consume resources.</td></tr>
 </tbody></table></div>
 </figure>
-<p>The shared ledger records raw generation, review, patch and provider cache tokens and admits on an effective figure (cache writes at 1.25, cache reads at 0.1). It reserves headroom for every job in flight. The configured token budget and an optional per-stage ceiling control admission; an in-flight job can exceed its reservation, after which new jobs stop. Killed jobs are charged from their transcripts automatically. These counts do not report remaining subscription allowance.</p>
+<p>The shared ledger records raw page-session, review and provider cache tokens and admits on an effective figure (cache writes at 1.25, cache reads at 0.1). It reserves headroom for every job in flight. The configured token budget and an optional per-stage ceiling control admission; an in-flight job can exceed its reservation, after which new jobs stop. Killed jobs are charged from their transcripts automatically. These counts do not report remaining subscription allowance.</p>
 <details>
 <summary>Tools and limits available to model jobs</summary>
 <ul>
-<li>Only integration jobs have tools: <code>read_evidence</code> for extraction and its review; planners and page writers also get literal <code>search_evidence</code>, and page writers <code>validate_candidate</code>. Its feedback does not replace final host validation or scientific review.</li>
-<li>Derived-page writers, patchers and reviewers have no tools and one turn; their evidence arrives packed in the prompt.</li>
-<li>Default limits are 12 turns per tool-using job, 600 seconds per job, four hours per stage and four page workers. A page needs at most twelve jobs: a draft, one open review, and five patch rounds each with its own verification.</li>
+<li>Extraction and its review get <code>read_evidence</code>, and planners also get literal <code>search_evidence</code>. Page sessions get the CLI's Read, Edit, Write, Grep and Glob tools, fenced to the scratch directory and, for an integrated page, <code>staging/</code> and <code>wiki/</code>, plus the host's <code>check</code>, <code>review</code> and <code>submit</code>.</li>
+<li>Derived-page reviewers have no tools and one turn, and a derived-page writer reads nothing beyond its scratch directory; their evidence arrives packed in the prompt.</li>
+<li>Default limits are 12 turns per tool-using job, 600 seconds per job, four hours per stage and four page workers. A page session runs 20 to 60 turns, scaled to its brief, and makes at most four reviewer calls.</li>
 <li>The runtime checks direct subscription authentication and removes inherited API routing. This path uses no embedding API. PubMed remains an external data source.</li>
 </ul>
 </details>
 
 <details>
 <summary>Choose models by job role</summary>
-<p>The committed <a href="../agentic.yaml"><code>agentic.yaml</code></a> is loaded automatically. <b>Opus 5.5</b> handles extraction, planning, writing and scientific review. <b>Sonnet 5</b> handles literature queries and figure selection. This policy protects scientific fidelity while assigning bounded selection tasks to Sonnet; it has not yet been benchmarked on the corpus.</p>
+<p>The committed <a href="../agentic.yaml"><code>agentic.yaml</code></a> is loaded automatically. <b>GPT-6.1 Sol</b> extracts evidence and handles literature queries and figure selection. <b>Sonnet 5.5</b> plans and writes derived pages, <b>Haiku 5.5</b> writes integrated pages, and <b>GPT-6 Luna</b> reviews every page. The same file sets each role&#39;s reasoning effort. The October 2026 model-mix and extraction pilots chose this policy; see the operating guide&#39;s Pilots section.</p>
 <p>Use <code>--model-config PATH</code> for a replacement policy or <code>--step-model ROLE=MODEL_ID</code> for an individual override. <code>--model MODEL_ID</code> replaces the whole policy with one model before individual overrides apply. The CLI prints the resolved policy; token and job ceilings remain explicit run flags.</p>
-<p>Repairs and paragraph patches retain their role's model; separate reviews use the review model. Every role shares the ledger and budget, and changing models on the same interrupted input snapshot preserves earlier charges. Jobs record their configured model, and accepted state records the complete policy. Cache invalidation follows the affected roles. See the <a href="agentic-workflow.md#per-step-models">model-routing guide</a> for details.</p>
+<p>A page session runs on its page's role (<code>pages</code> for integrated pages, <code>writing</code> for derived pages); every review and verification uses the review model, or <code>card_review</code> or <code>findings_review</code> for the card stages those roles name. Every role shares the ledger and budget, and changing models on the same interrupted input snapshot preserves earlier charges. Jobs record their configured model, and accepted state records the complete policy. A model change rewrites no accepted page; it applies to pages written from then on. See the <a href="agentic-workflow.md#per-step-models">model-routing guide</a> for details.</p>
 </details>
 
 <h2 id="failure" data-toc="Failure and recovery">Failed work stays inspectable without replacing the wiki</h2>
@@ -300,7 +300,7 @@ flowchart LR
 <thead><tr><th scope="col">Trigger</th><th scope="col">Response</th></tr></thead>
 <tbody>
 <tr><td>Invalid integration plan, topic proposal or integration candidate</td><td>At most one targeted correction in the shared generation helper; corrected scientific prose gets another review.</td></tr>
-<tr><td>Derived page fails a gate or its review</td><td>Up to two paragraph patches, each seeing the latest verdict, with only the changed paragraphs reviewed again. A page that does not converge keeps its previous version, is recorded in the run summary and <code>.agentic/failures.json</code>, and the stage continues (<code>--strict-pages</code> stops instead). <code>retry --page</code> or <code>--all-failed</code> re-issues those pages.<sup>a</sup></td></tr>
+<tr><td>Derived page fails a gate or its review</td><td>The writer fixes what the check and the reviewer report in the same page session; after the first review, each review verifies the open objections, and only changed paragraphs may draw new ones. A session makes at most four reviewer calls. A page that does not converge is salvaged when dropping its objected paragraphs leaves a page that passes, and otherwise keeps its previous version, is recorded in the run summary and <code>.agentic/failures.json</code>, and the stage continues (<code>--strict-pages</code> stops instead). <code>retry --page</code> or <code>--all-failed</code> re-issues those pages.<sup>a</sup></td></tr>
 <tr><td>Budget exhaustion, authentication failure or rejected extraction</td><td>Stop before promotion; retain completed results. Inspect the failed job before an explicit retry.</td></tr>
 <tr><td>Job killed by a clock or a crash</td><td>Charge it from its transcript automatically; only a result without usable usage blocks new calls until reconciled by hand.</td></tr>
 <tr><td>Changed inputs or failed final validation</td><td>Refuse promotion and keep the candidate for inspection.</td></tr>
@@ -310,7 +310,7 @@ flowchart LR
 </figure>
 
 <h2 id="readiness" data-toc="Evidence and use">A capped real-source update remains the acceptance step</h2>
-<div class="callout warn" data-label="Validation boundary">Recorded-response tests exercise the pipeline, cache reuse, dependencies, gates, patches, recorded failures and recovery. They do not establish scientific quality. The first derived-prose adoption ran live on 2026-09-15/16 with zero changed sources; a real source update has not yet been accepted.</div>
+<div class="callout warn" data-label="Validation boundary">Recorded-response tests exercise the pipeline, cache reuse, dependencies, gates, page sessions replayed from recorded replies, the API pipeline's paragraph patches, recorded failures and recovery. They do not establish scientific quality. The first derived-prose adoption ran live on 2026-09-15/16 with zero changed sources; a real source update has not yet been accepted.</div>
 <p>The implementation lets the model write, review and organize knowledge under a fixed schedule. Its domain operations and mandatory checks remain deliberate boundaries. Read-only wiki search is available as a CLI; BERIL or OpenViking integration has not been installed.</p>
 <p>Start with <code>uv run python -m beril_wiki.agentic plan</code> to inspect staged changes without inference. Use the <a href="agentic-workflow.md">operating guide</a> for run budgets, status, retry and recovery commands. Local promotion leaves committing, pushing and publishing as separate actions.</p>
 <p class="meta">Implementation sources: <a href="../src/beril_wiki/agentic/curator.py">schedule</a> · <a href="../src/beril_wiki/agentic/prose.py">derived prose</a> · <a href="../src/beril_wiki/agentic/batch.py">integration</a> · <a href="../src/beril_wiki/agentic/runtime.py">runtime and ledger</a> · <a href="../src/beril_wiki/agentic/runner.py">runner and promotion</a> · <a href="../src/beril_wiki/agentic/topics.py">topic decisions</a></p>
