@@ -119,6 +119,12 @@
     "reason": "Flagellum motility genes were over-represented among genes whose fitness tracks antibiotic-resistance genes, a pattern found in several bacteria.",
     "type": "positive"
   },
+  "amr_cofitness_networks--6571fdb3": {
+    "input": "4b7cf4d5235f36140268422aae7570598bf00495fa9c966852aa0bb9b6fda7f0",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found gene groups linked to each resistance mechanism in several organisms, while no single term was specific to one mechanism.",
+    "type": "positive"
+  },
   "amr_cofitness_networks--8fa18a88": {
     "input": "28a052ed5eaef05db2c683ab5a177ca52821a6d450895ea2e527c513367a9d32",
     "model": "claude-haiku-5-5",
@@ -378,7 +384,10 @@
     "type": "positive"
   },
   "bacillota_b_subsurface_accessory--2f0dbfa7": {
-    "failed": true
+    "input": "209d1a6c159d7cb5eca78fa8fcc7a954ceed290a4d59b6ed456061cb7638450d",
+    "model": "claude-haiku-5-5",
+    "reason": "After the mismatched markers were replaced, the groups no longer clearly differ, but the proportions reverse, with the deep group showing the higher share.",
+    "type": "positive"
   },
   "bacillota_b_subsurface_accessory--b2fd7eb1": {
     "input": "423ec0ccc2f63d0caf19550776655578f0b443bf9e57c21d5af1aabf89ba203a",
@@ -1322,6 +1331,12 @@
     "reason": "The analysis found that most metal-important genes show defects specifically under metal stress rather than in general conditions, which is a pattern in the data.",
     "type": "positive"
   },
+  "metal_specificity--1f6b00a4": {
+    "input": "233116d5081c595dc5cab697de5c0af6b8c0c18bc323010d45cc0f48f81540bd",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that novel candidate families were less often classed as mainly metal-specific than annotated families, a real difference between the two groups.",
+    "type": "positive"
+  },
   "metal_specificity--83d867cf": {
     "input": "115928a660053b9a8ca758de6832f125757e22b1614f50920ba3e607e75ddf1b",
     "model": "claude-haiku-5-5",
@@ -1538,6 +1553,30 @@
     "reason": "The tyrosine pathway, meant as a negative control, predicted which species carry ipdC about as well as tryptophan did, so an unexpected link was found.",
     "type": "positive"
   },
+  "phage_defense_arsenal--40a9f7b2": {
+    "input": "347164c0cc061c7a94071e5a8368a57acc02a57380179d0b05369bdecdcd7529",
+    "model": "claude-haiku-5-5",
+    "reason": "Type II restriction-modification and Gabija systems are found together in 2,429 species, a clear pattern of co-occurrence that ranks strongest among the pairs compared.",
+    "type": "positive"
+  },
+  "phage_defense_arsenal--47aaf35d": {
+    "input": "0cae077872a9c2d5261a3b2688bc339520904bf3c73d7f909c1033b4a2bb47dd",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that species with more defense systems also tend to have more prophage clusters, and that link remains after accounting for genome size and phylum.",
+    "type": "positive"
+  },
+  "phage_defense_arsenal--707f57b3": {
+    "input": "13dd3f14d2873f384cb63e32d35dc2d00742afd29b2aff1f402884fc400ae911",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows one annotation table lacks entries for a known defense marker that another source contains, a coverage gap rather than a biological result.",
+    "type": "data"
+  },
+  "phage_defense_arsenal--8c6a7f5f": {
+    "input": "4d9156e2a14794d65d5685df070f028e61f6e2f4295052615c80bf8e67e31c54",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis tested whether CRISPR-Cas and CBASS occur together across species and found no tendency for them to co-occur.",
+    "type": "negative"
+  },
   "phb_granule_ecology--0215baea": {
     "input": "4058af7b02f9ff7bbab6d53c893d323978596b03c462c90bb26504ee4db6de05",
     "model": "claude-haiku-5-5",
@@ -1712,6 +1751,24 @@
     "reason": "Organisms with the alternative dehydrogenase had larger Complex I deficits on aromatic compounds, but only four lacked it, so the comparison could not settle the direction.",
     "type": "inconclusive"
   },
+  "snipe_defense_system--5727ec31": {
+    "input": "7329a5f0edd09396616c1041ef6d4e8fc4403f21e187fe29a759526739c407a9",
+    "model": "claude-haiku-5-5",
+    "reason": "The survey found the SNIPE domain across many bacterial and archaeal phyla, a wider spread than earlier reports, though some detections may be annotation noise.",
+    "type": "positive"
+  },
+  "snipe_defense_system--69396dc3": {
+    "input": "ed02d6135ad641d25edd1de83dcc14c19439aa6782f0e753347cee38135a733e",
+    "model": "claude-haiku-5-5",
+    "reason": "Knocking out each of the three transporter genes caused severe growth defects in four conditions, a clear biological pattern rather than an absence of effect.",
+    "type": "positive"
+  },
+  "snipe_defense_system--a878d018": {
+    "input": "155a1c04a2e45c0052bfb5876cd7222ee0fe2ed6d20bdfd77c4bd4e9f5309768",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows which protein-family entry the SNIPE nuclease domain is listed under in InterPro and UniProt, a database naming fact rather than a biological result.",
+    "type": "data"
+  },
   "soil_frontier_genomics--0fa73728": {
     "input": "7d10c4a2f9d5282262a6d887506d18f27f369b1ebdaa26443137803e837f48af",
     "model": "claude-haiku-5-5",
@@ -1824,6 +1881,12 @@
     "input": "cad66b78d5fa1eb032947ac9cee6b46a4a38c9b720b752cf70e22d9cdd38e3a5",
     "model": "claude-haiku-5-5",
     "reason": "The finding states what the archived export lacks: it has no consumption entries, so it reports no biological result.",
+    "type": "data"
+  },
+  "webofmicrobes_explorer--f572a74d": {
+    "input": "fb48e20ec0271098ed92b0d04a2f7fda062a72b69ae22bfe503a87f6a6428cc1",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows how many Web of Microbes compounds have a ModelSEED name or formula link, which describes database coverage rather than a biological result.",
     "type": "data"
   }
 }
