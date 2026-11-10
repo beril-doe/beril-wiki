@@ -4,6 +4,7 @@ import json
 
 import pytest
 
+from beril_wiki import records
 from beril_wiki.agentic import curator
 from beril_wiki.agentic.runtime import CONTENT_FLAG, CandidateError, JobFailed
 from beril_wiki.stages import cards, gists
@@ -139,9 +140,9 @@ def test_new_failed_finding_is_marked_failed_only(tmp_path, monkeypatch):
 def test_caveat_quote_and_report_title(tmp_path):
     page(tmp_path)
     _, body = cards.read_page(tmp_path / "wiki/findings" / f"{FID}.md")
-    assert gists.caveat_quote(body) == "Only strain X was tested."
-    assert gists.report_title(tmp_path, "a") == "Archaeal stress"
-    assert gists.report_title(tmp_path, "missing") == "missing"
+    assert records.caveat_quote(body) == "Only strain X was tested."
+    assert records.summary_title(tmp_path, "a") == "Archaeal stress"
+    assert records.summary_title(tmp_path, "missing") == "missing"
 
 
 def test_card_stage_revisions_ignore_other_stage_files_but_not_shared_ones(tmp_path, monkeypatch):

@@ -26,6 +26,7 @@ import sys
 import yaml
 
 from beril_wiki.paths import ROOT
+from beril_wiki.wording import asks_to_redo
 
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
 WIKILINK = re.compile(r"\[\[([^\]|#]+?)(?:[|#][^\]]*)?\]\]")
@@ -118,7 +119,9 @@ def numbers_in(text: str) -> set[str]:
 # Integers below four digits, which NUMBER leaves out on purpose for prose checks.
 # Card records promise every figure is in their quote, counts included, so their
 # checks add these; the guards keep them out of identifiers and larger numbers.
-SMALL_INT = re.compile(r"(?<![\w.,])\d{1,3}(?!\d|[,.]\d)")
+# A hyphen after a capital marks a name ("E. coli K-12", "SARS-CoV-2"); after a
+# lowercase word it is still a count ("the top-100 species").
+SMALL_INT = re.compile(r"(?<![\w.,])(?<![A-Z]-)\d{1,3}(?!\d|[,.]\d)")
 PMID_MENTION = re.compile(
     r"PMIDs?\s*:?\s*((?:\d+(?:\s*(?:,|and|&)\s*)?)+)|pubmed\.ncbi\.nlm\.nih\.gov/(\d+)"
 )
@@ -331,7 +334,6 @@ def card_errors(kb: pathlib.Path, sources: dict[str, str]) -> list[str]:
     it retrieved. A research direction must rest on findings or conflicts that exist,
     read data from collections under wiki/data, cite only papers the novelty stage
     retrieved, and not be a request to redo existing work."""
-    from beril_wiki.stages.cards import asks_to_redo
     from beril_wiki.stages.novelty import LABELS, NOT_ASSESSED
 
     wiki = kb / "wiki"

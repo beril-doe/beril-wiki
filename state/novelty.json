@@ -13661,6 +13661,221 @@
     "retrieved": 16,
     "retrieved_on": "2026-10-27"
   },
+  "phage_defense_arsenal--40a9f7b2": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "17379808",
+      "24617569",
+      "25452304",
+      "26953603",
+      "29085076",
+      "29371424",
+      "31533127",
+      "34049176",
+      "35764643"
+    ],
+    "closest": [
+      {
+        "pmid": "29371424",
+        "relation": "related",
+        "title": "Systematic discovery of antiphage defense systems in the microbial pangenome."
+      },
+      {
+        "pmid": "29085076",
+        "relation": "related",
+        "title": "DISARM is a widespread bacterial defence system with broad anti-phage activities."
+      }
+    ],
+    "difference": "",
+    "input": "34b08db5217286dc351c1d66bf20a2fa2a1be2f48aa59a7f9e337b7382c4d1d9",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(Gabija OR GajA OR GajB) AND (\"type II restriction modification\" OR \"type II restriction-modification\" OR \"type II R-M\")",
+      "bacterial antiphage defense systems co-occurrence association enrichment",
+      "comparative genomics phage defense system co-occurrence null model statistical enrichment"
+    ],
+    "retrieved": 9,
+    "retrieved_on": "2026-11-09"
+  },
+  "phage_defense_arsenal--47aaf35d": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "17379808",
+      "23628424",
+      "24617569",
+      "25452304",
+      "26953603",
+      "28652353",
+      "29085076",
+      "29371424",
+      "31533127",
+      "34049176",
+      "35764643",
+      "35850148",
+      "35868367",
+      "36123438",
+      "37004306",
+      "38583547",
+      "38643972",
+      "39016539",
+      "39174532",
+      "39515326",
+      "40042988",
+      "40409266",
+      "41468513",
+      "41606329",
+      "41639445",
+      "42149652",
+      "42438737",
+      "42862627"
+    ],
+    "closest": [
+      {
+        "pmid": "42862627",
+        "relation": "same relationship elsewhere",
+        "title": "Members of the Lactococcus-Pseudolactococcus clade exhibit extensive genomic diversity in features associated with phage-host co-adaptation."
+      },
+      {
+        "pmid": "42438737",
+        "relation": "same relationship elsewhere",
+        "title": "Host breed and geography shape the antiviral defense landscape of the bovine rumen microbiome."
+      },
+      {
+        "pmid": "38643972",
+        "relation": "related",
+        "title": "Defence systems and horizontal gene transfer in bacteria."
+      },
+      {
+        "pmid": "41468513",
+        "relation": "related",
+        "title": "Ecological ubiquity and phylogeny drive nestedness in phages-bacteria networks and shape the bacterial defensome."
+      }
+    ],
+    "difference": "PMID 42862627 reports positive strain-level correlation of defence-system and prophage abundance within the Lactococcus-Pseudolactococcus clade, and PMID 42438737 reports positive correlation between defence systems and prophage abundance in rumen MAGs. This finding carries the relationship to a pan-bacterial species-level analysis of 7,323 species (\u03c1 = 0.609), where partial \u03c1 stays at 0.301 after controlling for genome size and phylum. PMID 38643972 links a few defence systems to fewer phage-related genes in 12 species, which is a partial counterpoint.",
+    "input": "ccc31ee0ea99ba8566ad0e34b7787b4e4d26e59167d1b6663034a068c2642813",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Extends retrieved work",
+    "label": "Extends retrieved work",
+    "pipeline_label": "Extends retrieved work",
+    "queries": [
+      "(bacteria OR archaea) (\"antiphage defense\" OR \"anti-phage defense\" OR \"defence systems\") (prophages OR \"integrated bacteriophages\")",
+      "(\"defense repertoire\" OR \"defense system abundance\" OR \"defence systems\") (\"prophage abundance\" OR \"prophage number\" OR \"prophage content\") (association OR correlation)",
+      "\"comparative genomics\" prophage defense (\"Spearman correlation\" OR \"partial correlation\") \"genome size\""
+    ],
+    "retrieved": 28,
+    "retrieved_on": "2026-11-09"
+  },
+  "phage_defense_arsenal--707f57b3": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "17379808",
+      "24617569",
+      "25452304",
+      "26953603",
+      "29085076",
+      "29371424",
+      "31533127",
+      "34049176",
+      "35764643"
+    ],
+    "closest": [
+      {
+        "pmid": "17379808",
+        "relation": "related",
+        "title": "CRISPR provides acquired resistance against viruses in prokaryotes."
+      },
+      {
+        "pmid": "29371424",
+        "relation": "related",
+        "title": "Systematic discovery of antiphage defense systems in the microbial pangenome."
+      },
+      {
+        "pmid": "29085076",
+        "relation": "related",
+        "title": "DISARM is a widespread bacterial defence system with broad anti-phage activities."
+      },
+      {
+        "pmid": "31533127",
+        "relation": "related",
+        "title": "Cyclic GMP-AMP signalling protects bacteria against viral infection."
+      }
+    ],
+    "difference": "",
+    "input": "53aa20fa804a41b6e8228e4097e4ca79c75966cf0cdde579db650fa445ec8641",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "CRISPR Cas1 PF01867 Bakta InterProScan Pfam",
+      "bacterial defense gene annotation missing protein domains false negatives",
+      "Bakta InterProScan Pfam annotation comparison sensitivity accession versioning"
+    ],
+    "retrieved": 9,
+    "retrieved_on": "2026-11-09"
+  },
+  "phage_defense_arsenal--8c6a7f5f": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "17379808",
+      "24617569",
+      "25452304",
+      "26953603",
+      "29085076",
+      "29371424",
+      "31533127",
+      "34049176",
+      "35764643",
+      "42464358",
+      "42725772"
+    ],
+    "closest": [
+      {
+        "pmid": "42464358",
+        "relation": "related",
+        "title": "Interactions of antiphage defense systems in the ESKAPE pathogen plasmids."
+      },
+      {
+        "pmid": "31533127",
+        "relation": "related",
+        "title": "Cyclic GMP-AMP signalling protects bacteria against viral infection."
+      },
+      {
+        "pmid": "29371424",
+        "relation": "related",
+        "title": "Systematic discovery of antiphage defense systems in the microbial pangenome."
+      },
+      {
+        "pmid": "17379808",
+        "relation": "related",
+        "title": "CRISPR provides acquired resistance against viruses in prokaryotes."
+      }
+    ],
+    "difference": "",
+    "input": "cd8ca86ed882ae871fb3e1fc6cca4a3a742bad89e3c3b2485e7fe181139e20ee",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(CRISPR-Cas OR CRISPR) (CBASS OR \"cyclic oligonucleotide-based antiphage signaling\") co-occurrence",
+      "bacterial antiphage defense systems independent distribution lack association",
+      "antiphage defense systems comparative genomics co-occurrence permutation test"
+    ],
+    "retrieved": 11,
+    "retrieved_on": "2026-11-09"
+  },
   "phb_granule_ecology--0215baea": {
     "abstracts_only": true,
     "agree_model": null,
@@ -15531,6 +15746,211 @@
       "(RB-TnSeq OR TnSeq OR \"transposon sequencing\") (\"complex I\" OR \"NADH dehydrogenase\") (aromatic OR benzoate) fitness"
     ],
     "retrieved": 2,
+    "retrieved_on": "2026-11-09"
+  },
+  "snipe_defense_system--5727ec31": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "25015235",
+      "26586272",
+      "27821631",
+      "31945428",
+      "32945579",
+      "33822895",
+      "33989454",
+      "34032565",
+      "34452362",
+      "37090588",
+      "38750653",
+      "39482383",
+      "39529233",
+      "40673408",
+      "40821787",
+      "41184258",
+      "41361167",
+      "41741653",
+      "42548023",
+      "7149278",
+      "7745607"
+    ],
+    "closest": [
+      {
+        "pmid": "41741653",
+        "relation": "related",
+        "title": "A membrane-bound nuclease directly cleaves phage DNA during genome injection."
+      },
+      {
+        "pmid": "42548023",
+        "relation": "related",
+        "title": "Recent Advances in the Molecular Mechanisms of Bacterial Anti-Phage Defence Systems."
+      },
+      {
+        "pmid": "25015235",
+        "relation": "related",
+        "title": "A phage tail-derived element with wide distribution among both prokaryotic domains: a comparative genomic and phylogenetic study."
+      }
+    ],
+    "difference": "",
+    "input": "45557a60ed033262f26150ac2d6dc20d7fef71a00ceb8d2198679c9e37a58afe",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(SNIPE OR DUF4041 OR PF13250 OR IPR025280) (bacteria OR archaea)",
+      "protein domain homologs widespread phylogenetic distribution bacteria archaea",
+      "(SNIPE OR DUF4041) (pangenome OR comparative genomics OR protein domain survey)"
+    ],
+    "retrieved": 21,
+    "retrieved_on": "2026-11-09"
+  },
+  "snipe_defense_system--69396dc3": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "23340801",
+      "23838442",
+      "25968644",
+      "33805191",
+      "34032565",
+      "35039522",
+      "38008597",
+      "38314762",
+      "38742872",
+      "39358514",
+      "39482383",
+      "40338999",
+      "41741653",
+      "42561074"
+    ],
+    "closest": [
+      {
+        "pmid": "34032565",
+        "relation": "related",
+        "title": "Sustained coevolution of phage Lambda and Escherichia coli involves inner- as well as outer-membrane defences and counter-defences."
+      },
+      {
+        "pmid": "25968644",
+        "relation": "related",
+        "title": "Rapid quantification of mutant fitness in diverse bacteria by sequencing randomly bar-coded transposons."
+      },
+      {
+        "pmid": "41741653",
+        "relation": "related",
+        "title": "A membrane-bound nuclease directly cleaves phage DNA during genome injection."
+      }
+    ],
+    "difference": "",
+    "input": "623f5e321344b00e6a777f3991e95df9a1c592c41e62e6c64f15698239c268ad",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(Escherichia coli OR E. coli) (manX OR manY OR manZ OR manXYZ) (fitness OR Keio OR Fitness Browser)",
+      "mannose phosphotransferase system mutants condition-dependent fitness growth defects",
+      "(RB-TnSeq OR random barcode transposon sequencing OR barcoded transposon sequencing) (mannose OR manXYZ OR manX) fitness"
+    ],
+    "retrieved": 14,
+    "retrieved_on": "2026-11-09"
+  },
+  "snipe_defense_system--792b9ec1": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "34032565",
+      "39482383",
+      "41741653"
+    ],
+    "closest": [
+      {
+        "pmid": "34032565",
+        "relation": "related",
+        "title": "Sustained coevolution of phage Lambda and Escherichia coli involves inner- as well as outer-membrane defences and counter-defences."
+      },
+      {
+        "pmid": "41741653",
+        "relation": "related",
+        "title": "A membrane-bound nuclease directly cleaves phage DNA during genome injection."
+      }
+    ],
+    "difference": "",
+    "input": "20e073c39eb2d00e15da7acd32d00d826734a6190167819d96cce9156848d777",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "Klebsiella (ManYZ OR manY OR manZ OR PTS_EIIC) (PhageFoundry OR GenomeDepot)",
+      "mannose phosphotransferase transporter phage defense mutant fitness",
+      "Klebsiella (SNIPE OR ManYZ OR manZ) (TnSeq OR \"Tn-seq\" OR \"transposon sequencing\" OR \"mutant fitness\")"
+    ],
+    "retrieved": 3,
+    "retrieved_on": "2026-11-09"
+  },
+  "snipe_defense_system--a878d018": {
+    "abstracts_only": true,
+    "agree_model": "gpt-6.1-sol",
+    "agreed": false,
+    "candidates": [
+      "34032565",
+      "39482383",
+      "41741653"
+    ],
+    "closest": [],
+    "difference": "",
+    "input": "8957bd5788770bca0537a0fbc49b57ef36bc9f99fdce396a4d2988f985e4cff3",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Candidate novel",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(SNIPE OR DUF4041 OR A0A0A1A5Z2) AND (Escherichia coli OR E. coli) AND (Mug113 OR PF13455 OR GIY-YIG)",
+      "nuclease AND divergent homologs AND (domain misclassification OR missed annotation OR Pfam family assignment)",
+      "(InterPro OR UniProt OR eggNOG) AND Pfam AND (GIY-YIG OR Mug113 OR DUF4041) AND domain annotation"
+    ],
+    "retrieved": 3,
+    "retrieved_on": "2026-11-09"
+  },
+  "snipe_defense_system--b2833f06": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "34032565",
+      "39482383",
+      "41741653",
+      "42584065",
+      "42725772"
+    ],
+    "closest": [
+      {
+        "pmid": "41741653",
+        "relation": "related",
+        "title": "A membrane-bound nuclease directly cleaves phage DNA during genome injection."
+      },
+      {
+        "pmid": "42725772",
+        "relation": "related",
+        "title": "Landscape of retron diversity across the SPIRE microbial metagenome resource reveals candidate novel type XI-like lineages."
+      }
+    ],
+    "difference": "",
+    "input": "dc0d5c025c9cd7a39b319bb52310131cc54035c1f55b395377c1d8728d2c26da",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "SNIPE bacterial defense system environmental distribution habitat",
+      "(bacterial OR prokaryotic) antiphage defense systems ecological niche environmental association",
+      "(AlphaEarth OR environmental embeddings OR remote sensing) microbial comparative genomics habitat association"
+    ],
+    "retrieved": 5,
     "retrieved_on": "2026-11-09"
   },
   "soil_frontier_genomics--0fa73728": {

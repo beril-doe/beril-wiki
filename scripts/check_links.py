@@ -17,8 +17,10 @@ import json
 import sys
 from pathlib import Path
 
-from beril_wiki.publish.cards import STATS, Corpus, links_index
+from beril_wiki.publish.cards import Corpus
+from beril_wiki.publish.cards.links import links_index
 from beril_wiki.stages import cards, links, shared
+from beril_wiki.wording import LINK_BANNED, STAT_WORDS, STATS
 
 ROOT = Path(__file__).resolve().parent.parent
 SEEN = 0.90
@@ -87,7 +89,7 @@ def shared_texts() -> list[str]:
             failures.append(f"{name}: {exc}")
     for x in json.loads((ROOT / links.STATE).read_text(encoding="utf-8"))["links"]:
         label = x["label"]
-        if links.BANNED.search(label) or STATS.search(label) or links.STAT_WORDS.search(label):
+        if LINK_BANNED.search(label) or STATS.search(label) or STAT_WORDS.search(label):
             failures.append(f"link label {x['a']} {x['b']}: {label}")
     return failures
 

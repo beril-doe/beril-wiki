@@ -76,14 +76,18 @@ from the accepted wiki without editing it:
   interface. A record page shows its one-line brief, when the page has one,
   and a line naming its kind that links to the guide.
 - Finding and research-direction records publish with every build.
-  [`publish/cards.py`](../src/beril_wiki/publish/cards.py) joins each finding's
+  [`publish/cards/`](../src/beril_wiki/publish/cards/__init__.py) joins each finding's
   literature label, topics, related conflicts and the research directions that
   build on it, and gives each direction a BERIL prompt and a handoff brief. It
   also writes `findings/index.md`, `directions/index.md`, a `cards.json`
   export, and one `data-issues/<report>.md` page per report listing the
   in-scope proposals that would repeat, correct or reconcile its work; each
-  report summary links to its list.
-- `publish/cards.py` also places and joins results across
+  report summary links to its list. `corpus.py` loads what the joins read
+  and decides which results are listed and what type each is, `picks.py` chooses the home and topic results, `links.py` builds the link
+  and shared-result indexes, `pages.py` writes the record pages, `export.py`
+  writes the index pages and `cards.json`, and `text.py` holds the reader
+  words for pipeline terms.
+- `publish/cards/` also places and joins results across
   projects:
   - Each result sits under the main topic whose concepts cite its project
     most; ties go alphabetically.

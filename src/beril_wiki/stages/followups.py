@@ -27,9 +27,9 @@ from pydantic import BaseModel, ConfigDict
 
 from beril_wiki.agentic.runtime import CandidateError, prompt
 from beril_wiki.paths import ROOT
-from beril_wiki.publish.cards import title_of
+from beril_wiki.records import title_of
 from beril_wiki.stages import cards, classify
-from beril_wiki.stages.gists import statistical
+from beril_wiki.wording import statistical
 
 STATE = Path("state/followups.json")
 DIRECTIONS = Path("wiki/directions")

@@ -279,16 +279,19 @@
       "relation": "uses its data or methods"
     },
     "ref:cofitness_coinheritance>conservation_vs_fitness": {
-      "failed": true,
-      "input": "bd8623262c92f7bb350651211d04abfa462b4314961b1a4cded64f1807abf3f8"
+      "input": "bd8623262c92f7bb350651211d04abfa462b4314961b1a4cded64f1807abf3f8",
+      "label": "Uses the other project's mapping of fitness-assay genes to pangenome gene clusters and its functional annotations",
+      "relation": "uses its data or methods"
     },
     "ref:cofitness_coinheritance>fitness_modules": {
-      "failed": true,
-      "input": "faeab31ec85b65064a7569f33e9ed02312c223e9a047cebe02b59b29c8388a9b"
+      "input": "faeab31ec85b65064a7569f33e9ed02312c223e9a047cebe02b59b29c8388a9b",
+      "label": "Uses the other project's co-regulated gene modules derived from fitness data",
+      "relation": "uses its data or methods"
     },
     "ref:cofitness_coinheritance>module_conservation": {
-      "failed": true,
-      "input": "2c50895aba65254c38816786fbed7acad212b7a604f20c3b20bef5fe7d278025"
+      "input": "2c50895aba65254c38816786fbed7acad212b7a604f20c3b20bef5fe7d278025",
+      "label": "Builds on the other project's co-regulated gene modules and its accessory modules in the pangenome",
+      "relation": "uses its data or methods"
     },
     "ref:conservation_fitness_synthesis>conservation_vs_fitness": {
       "input": "7add0af6ff324373687c71bfb05a9c643a6a1bfa300142728358221bb4c632e9",
@@ -356,8 +359,9 @@
       "relation": "lists it as a reference only"
     },
     "ref:env_embedding_explorer>ecotype_analysis": {
-      "failed": true,
-      "input": "57a70c8761b5f36f56713bc4d45999aef475f23eab68f2595c2581fca37a0709"
+      "input": "57a70c8761b5f36f56713bc4d45999aef475f23eab68f2595c2581fca37a0709",
+      "label": "Relates its clinical-bias finding to the other project's weak link between environment similarity and gene content",
+      "relation": "compares with its results"
     },
     "ref:essential_genome>conservation_vs_fitness": {
       "input": "8f7572903eab7e0bdf89fa143b8187291cc2ddd23a5d7f68967a9ed1b6b448c3",
@@ -455,20 +459,24 @@
       "relation": "not a reference"
     },
     "ref:metal_cross_resistance>bacdive_metal_validation": {
-      "failed": true,
-      "input": "e6c0f7684f42565c0150467e4704de0217a4c3da1b8d0fb2a8c3a503a6747a30"
+      "input": "e6c0f7684f42565c0150467e4704de0217a4c3da1b8d0fb2a8c3a503a6747a30",
+      "label": "Attributes its weak test to small sample size, citing the other project's larger-scale metal tolerance work",
+      "relation": "applies its warning"
     },
     "ref:metal_cross_resistance>counter_ion_effects": {
-      "failed": true,
-      "input": "f1bfb157ec3c4d6c548eb6695bf37055b02ca36d1a1eb8ba0883cf686111241c"
+      "input": "f1bfb157ec3c4d6c548eb6695bf37055b02ca36d1a1eb8ba0883cf686111241c",
+      "label": "Compares its metal-metal patterns with the other project's finding that metal-salt correlations follow toxicity mechanism",
+      "relation": "compares with its results"
     },
     "ref:metal_cross_resistance>fitness_modules": {
-      "failed": true,
-      "input": "09e1a1fac730976145b63c432383d02b0bb037893e75c27d0496a72efa18e759"
+      "input": "09e1a1fac730976145b63c432383d02b0bb037893e75c27d0496a72efa18e759",
+      "label": "",
+      "relation": "not a reference"
     },
     "ref:metal_cross_resistance>metal_fitness_atlas": {
-      "failed": true,
-      "input": "8a848c3c1c0eece455f61a42546a3a8947f31b069c744b7c9cb2f2fe7802ee46"
+      "input": "8a848c3c1c0eece455f61a42546a3a8947f31b069c744b7c9cb2f2fe7802ee46",
+      "label": "Compares metal-gene conservation with the other project's result; proposes reusing its pangenome mapping approach",
+      "relation": "compares with its results"
     },
     "ref:metal_fitness_atlas>field_vs_lab_fitness": {
       "input": "780baabc8e51e940654e1746296cb4d58ee7e95d20c9ee519a288a59f3e249a9",
@@ -486,12 +494,14 @@
       "relation": "not a reference"
     },
     "ref:metal_specificity>counter_ion_effects": {
-      "failed": true,
-      "input": "505efebc0c0133e24a6f4cde5ca1cb47b46598df6f7954b3bf60c204873d6edb"
+      "input": "505efebc0c0133e24a6f4cde5ca1cb47b46598df6f7954b3bf60c204873d6edb",
+      "label": "Compares its osmotic-stress overlap among metal genes with the other project's higher NaCl-stress overlap",
+      "relation": "compares with its results"
     },
     "ref:metal_specificity>metal_fitness_atlas": {
-      "failed": true,
-      "input": "3fdfb0ae444c5f6674a8d9cc0881f830242b5403ee595ac7f8ba49101b0a7af0"
+      "input": "3fdfb0ae444c5f6674a8d9cc0881f830242b5403ee595ac7f8ba49101b0a7af0",
+      "label": "Cited in the reference list as a related project in the same observatory",
+      "relation": "lists it as a reference only"
     },
     "ref:microbeatlas_metal_ecology>pangenome_openness": {
       "input": "294f3cd9deb66cfb046d5653c85671ac38be85be048f948ce56e4b06c48c14d5",
@@ -514,8 +524,9 @@
       "relation": "audits it"
     },
     "ref:pangenome_openness>ecotype_analysis": {
-      "failed": true,
-      "input": "c4b1f5740245b155ab37afa43f817af6b5a00c8710074791c0bb3959713f7484"
+      "input": "c4b1f5740245b155ab37afa43f817af6b5a00c8710074791c0bb3959713f7484",
+      "label": "Builds on the other project's environment and phylogeny effect estimates, merged with pangenome openness.",
+      "relation": "uses its data or methods"
     },
     "ref:pathway_capability_dependency>cofitness_coinheritance": {
       "input": "f42e63a0027ac726594e6898a8716290965513693220c386bbfa414e498e33ac",
@@ -858,6 +869,27 @@
       "type": "uses its data or methods"
     },
     {
+      "a": "cofitness_coinheritance",
+      "b": "conservation_vs_fitness",
+      "label": "Uses the other project's mapping of fitness-assay genes to pangenome gene clusters and its functional annotations",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "cofitness_coinheritance",
+      "b": "fitness_modules",
+      "label": "Uses the other project's co-regulated gene modules derived from fitness data",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
+      "a": "cofitness_coinheritance",
+      "b": "module_conservation",
+      "label": "Builds on the other project's co-regulated gene modules and its accessory modules in the pangenome",
+      "level": "project",
+      "type": "uses its data or methods"
+    },
+    {
       "a": "conservation_fitness_synthesis",
       "b": "conservation_vs_fitness",
       "label": "Builds on the other project's gene-cluster conservation and per-gene fitness findings across bacterial species.",
@@ -933,6 +965,13 @@
       "label": "Cites the other project's earlier ecotype analysis of 172 species as prior work.",
       "level": "project",
       "type": "lists it as a reference only"
+    },
+    {
+      "a": "env_embedding_explorer",
+      "b": "ecotype_analysis",
+      "label": "Relates its clinical-bias finding to the other project's weak link between environment similarity and gene content",
+      "level": "project",
+      "type": "compares with its results"
     },
     {
       "a": "essential_genome",
@@ -1040,11 +1079,46 @@
       "type": "applies its warning"
     },
     {
+      "a": "metal_cross_resistance",
+      "b": "bacdive_metal_validation",
+      "label": "Attributes its weak test to small sample size, citing the other project's larger-scale metal tolerance work",
+      "level": "project",
+      "type": "applies its warning"
+    },
+    {
+      "a": "metal_cross_resistance",
+      "b": "counter_ion_effects",
+      "label": "Compares its metal-metal patterns with the other project's finding that metal-salt correlations follow toxicity mechanism",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "metal_cross_resistance",
+      "b": "metal_fitness_atlas",
+      "label": "Compares metal-gene conservation with the other project's result; proposes reusing its pangenome mapping approach",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
       "a": "metal_fitness_atlas",
       "b": "field_vs_lab_fitness",
       "label": "Other project found heavy-metal resistance genes least conserved; atlas's broader gene definition explains why.",
       "level": "project",
       "type": "compares with its results"
+    },
+    {
+      "a": "metal_specificity",
+      "b": "counter_ion_effects",
+      "label": "Compares its osmotic-stress overlap among metal genes with the other project's higher NaCl-stress overlap",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "metal_specificity",
+      "b": "metal_fitness_atlas",
+      "label": "Cited in the reference list as a related project in the same observatory",
+      "level": "project",
+      "type": "lists it as a reference only"
     },
     {
       "a": "module_conservation",
@@ -1066,6 +1140,13 @@
       "label": "Flags its tagging of Rhea/GO reference ontologies as NMDC integrated; recommends retagging them as external reference.",
       "level": "project",
       "type": "audits it"
+    },
+    {
+      "a": "pangenome_openness",
+      "b": "ecotype_analysis",
+      "label": "Builds on the other project's environment and phylogeny effect estimates, merged with pangenome openness.",
+      "level": "project",
+      "type": "uses its data or methods"
     },
     {
       "a": "pathway_capability_dependency",

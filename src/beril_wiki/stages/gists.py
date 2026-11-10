@@ -28,30 +28,33 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
-from beril_wiki.agentic.prose import (
-    PageFailure,
-    failures_path,
-    parallel,
-    prune_failures,
-    record_failure,
-    strict_pages,
-    workers,
+from beril_wiki.agentic.prose import PageFailure, failures_path, prune_failures, record_failure
+from beril_wiki.agentic.runtime import (
+    CandidateError,
+    Runtime,
+    atomic_json,
+    digest,
+    model_policy,
+    prompt,
 )
-from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, model_policy, prompt
 from beril_wiki.paths import ROOT
-from beril_wiki.publish.cards import STATS, title_of
+from beril_wiki.records import (
+    FINDINGS,
+    caveat_quote,
+    finding_text,
+    report_caveats,
+    summary_title,
+    title_of,
+)
 from beril_wiki.stages import cards
-from beril_wiki.stages.links import STAT_WORDS
-from beril_wiki.stages.novelty import finding_text
+from beril_wiki.wording import GIST_BANNED, JARGON, statistical, words
 
 STATE = Path("state/gists.json")
-FINDINGS = Path("wiki/findings")
 PROMPT_TAG = "gists@4"
 MAX_GIST_WORDS = 45
 MIN_GIST_WORDS = 6
 MAX_TITLE_WORDS = 12
 MAX_SENTENCES = 2
-BANNED = re.compile(r"\b(novel|first|breakthrough|confirms|caveats?|limitations?|however)\b", re.I)
 SENTENCE_END = re.compile(r"(?<=[.!?])\s+(?=[A-Z])")
 NULL_RESULT = "null result"
 MAX_NUMBERS = 1
@@ -60,22 +63,6 @@ MAX_NUMBERS = 1
 CHECK_NUMBERS = 2
 # A standalone number: "68.9%", "14,768", "-1.55"; not the digits in "16S", "K-12" or "GT2".
 NUMBER = re.compile(r"(?<![\w.])(?<!\w-)-?\d[\d,]*(?:\.\d+)?%?(?![\w-])")
-MULTIPLE_TESTING = re.compile(r"\bmultiple[- ]testing\b", re.I)
-# Names a reader outside the project cannot decode: an annotation system or database, a
-# statistical procedure or a notebook code. Lineage names such as Pseudomonas_E are left
-# to the prompt: the reviewer requires the name the finding gives, so code rejecting it
-# made those gists unresolvable. Hypothesis codes (H2) too: hydrogen is also H2.
-JARGON = re.compile(
-    r"\b(?:SEED|COGs?|KEGG|GapMind|ICA|PERMANOVA|Procrustes|Mantel|D'Agostino|"
-    r"Black Queen|preregistered|pre-registered|Tier[- ]?[A-C]|NB\d+)\b"
-)
-
-
-def statistical(text: str) -> bool:
-    """A statistic or statistical wording, such as 'significant' or 'multiple-testing'."""
-    return any(p.search(text) for p in (STATS, STAT_WORDS, MULTIPLE_TESTING))
-
-
 Case = Literal["measured absence", "inconclusive test", "missing data", "unperformed analysis", ""]
 
 
@@ -163,44 +150,6 @@ def last_objections(step: str) -> str:
     return " ".join(notes)[:1500]
 
 
-def words(text: str) -> int:
-    return len(text.split())
-
-
-def caveat_quote(body: str) -> str:
-    """The blockquote lines under `## Caveat`, source tags removed."""
-    section = re.search(r"^## Caveat\s*\n(.*?)(?=^## |\Z)", body, re.M | re.S)
-    if not section:
-        return ""
-    quoted = [
-        re.sub(r"\s*\[src: [^\]]+\]", "", line[1:]).strip()
-        for line in section.group(1).splitlines()
-        if line.startswith(">")
-    ]
-    return " ".join(q for q in quoted if q)
-
-
-def report_caveats(body: str) -> list[str]:
-    """The bullets under `## Other caveats in this report`, source tags removed."""
-    section = re.search(r"^## Other caveats in this report\s*\n(.*?)(?=^## |\Z)", body, re.M | re.S)
-    if not section:
-        return []
-    return [
-        re.sub(r"\s*\[src: [^\]]+\]", "", line[2:]).strip()
-        for line in section.group(1).splitlines()
-        if line.startswith("- ")
-    ]
-
-
-def report_title(root: Path, sid: str) -> str:
-    """The report's H1, from its summary page, else the report id."""
-    for name in (f"{sid}__REPORT.md", f"{sid}.md"):
-        path = root / "wiki" / "summaries" / name
-        if path.exists():
-            return title_of(path.read_text(encoding="utf-8", errors="replace"), sid)
-    return sid
-
-
 def plain_title(title: str) -> bool:
     return not statistical(title) and not JARGON.search(title)
 
@@ -222,7 +171,7 @@ def checker(finding: dict, title: str, earlier: Sequence[str] = ()) -> Callable[
             out.append(f"{label} uses figures the claim, quote and caveat never state: {extra}")
         if jargon := JARGON.search(text):
             out.append(f"{label} uses '{jargon.group(0)}'; say what it stands for in plain words")
-        if banned := BANNED.search(text):
+        if banned := GIST_BANNED.search(text):
             out.append(
                 f"{label} uses '{banned.group(0)}'; the page shows limits separately, "
                 "so leave caveats out"
@@ -275,8 +224,7 @@ def checker(finding: dict, title: str, earlier: Sequence[str] = ()) -> Callable[
 
 def status(root: Path = ROOT) -> int:
     """Print accepted, failed and pending counts; touches neither the runtime nor state."""
-    path = root / STATE
-    state = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    state = cards.load_state(root / STATE)
     ids = [page.stem for page in (root / FINDINGS).glob("*.md")]
     entries = [state.get(fid) for fid in ids]
     failed = sum(1 for e in entries if e and e.get("failed"))
@@ -294,7 +242,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     if not cards.require_runtime("gists"):
         return 0
     state_path = root / STATE
-    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+    state = cards.load_state(state_path)
     config = cards.runtime().config
     policy = cards.policy(config, ("cards", "card_review"))
     writer = model_policy(config)["cards"]
@@ -304,7 +252,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         fields, body = cards.read_page(page)
         finding = finding_text(fields, body) | {"caveat_quote": caveat_quote(body)}
         heading = title_of(body, "")
-        findings[page.stem] = (finding, heading, report_title(root, finding["report"]))
+        findings[page.stem] = (finding, heading, summary_title(root, finding["report"]))
         caveats[page.stem] = report_caveats(body)
     by_report: dict[str, list[str]] = {}
     for fid, (finding, _, _) in findings.items():
@@ -345,21 +293,17 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
             continue
         todo.append((fid, pack, key, last_objections(f"gists/{fid}") if prev.get("failed") else ""))
 
-    def write(item: tuple) -> dict:
+    def write(item: tuple, agent: Runtime) -> dict:
         fid, pack, _, objections = item
         finding, heading, _ = findings[fid]
-        mine = cards.runtime()  # a ledger connection belongs to the thread that opened it
         sent = pack | {"LAST_ATTEMPT": objections} if objections else pack
         content = PROMPT + json.dumps(sent, ensure_ascii=False) + (RETRY if objections else "")
-        try:
-            reply = cards.reviewed(
-                [{"role": "user", "content": content}],
-                f"gists/{fid}",
-                checker(finding, heading, pack["EARLIER"]),
-                agent=mine,
-            )
-        except CandidateError as exc:
-            raise cards.failure(f"gists/{fid}", exc, mine) from exc
+        reply = cards.reviewed(
+            [{"role": "user", "content": content}],
+            f"gists/{fid}",
+            checker(finding, heading, pack["EARLIER"]),
+            agent=agent,
+        )
         return {
             "gist": reply.gist,
             "case": reply.case,
@@ -368,11 +312,9 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         }
 
     done = failed = 0
-    for (fid, _, key, _), result in parallel(todo, write, workers()):
+    for (fid, _, key, _), result in cards.each_job(todo, lambda item: f"gists/{item[0]}", write):
         if isinstance(result, PageFailure):
             failed += 1
-            record_failure(f"gists/{fid}", result)
-            print(f"  [FAILED] gists/{fid}: {result}")
             state[fid] = (state.get(fid) or {}) | {"failed": True}
             continue
         state[fid] = {"input": key, **result, "model": writer}
@@ -385,7 +327,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     atomic_json(state_path, dict(sorted(state.items())))
     prune_failures("gists/", {f"gists/{fid}" for fid in findings})
     print(f"gists: {done} written, {len(findings) - len(todo)} current, {failed} failed")
-    return 1 if failed and strict_pages() else 0
+    return cards.exit_code(failed)
 
 
 if __name__ == "__main__":

@@ -247,8 +247,34 @@
     "input": "f8c23936966e40421f2707b705987996d2763bb516f194a08aa0622a0c629d9d"
   },
   "g-c47e07c21c": {
-    "failed": true,
-    "input": "2a9edaaf22984d94f07f2cf42ac4ba0991849143533a7f9b95797cefea46cf7c"
+    "how": "Two results come from the Metabolic Capability vs Metabolic Dependency project, which splits pathways by category and tests conservation. The third tallies latent and active pathways across seven model organisms, a similar comparison with a different scope.",
+    "input": "2a9edaaf22984d94f07f2cf42ac4ba0991849143533a7f9b95797cefea46cf7c",
+    "lanes": {
+      "metabolic_capability_dependency--88a382b0": "Latent versus active share by pathway category",
+      "metabolic_capability_dependency--b6cd74ee": "Conservation of latent versus active pathways",
+      "pathway_capability_dependency--250e9510": "Pathway classes tallied across seven model bacteria"
+    },
+    "members": [
+      "metabolic_capability_dependency--88a382b0",
+      "metabolic_capability_dependency--b6cd74ee",
+      "pathway_capability_dependency--250e9510"
+    ],
+    "projects": [
+      "metabolic_capability_dependency",
+      "pathway_capability_dependency"
+    ],
+    "question": "How common are latent pathways, and are they less conserved?",
+    "relation": "similar comparison, different scope",
+    "sentence": "Pathways that are complete in the genome but show no fitness defect under the tested standard conditions are common. They are most frequent among carbon-source utilization pathways, and latent pathways were not less conserved than active ones.",
+    "title": "Latent pathways vary by type and are not less conserved",
+    "topics": [
+      "ecotypes-and-environmental-gene-content-differentiation",
+      "gene-fitness-landscapes-and-cofitness-modules",
+      "laboratory-fitness-versus-natural-selection-and-gene-conservation",
+      "metabolic-models-and-pathway-level-evidence",
+      "metabolic-traits-auxotrophy-and-community-dependence",
+      "pangenome-structure-and-genome-evolution"
+    ]
   },
   "g-d1a6fa579d": {
     "how": "The results run in the same direction but define their gene groups differently: the cross-resistance project sorts genes by how many metals they matter for, the other by metal-stress versus non-metal sickness defects. Only the cross-resistance project adds a metal-shared middle tier.",

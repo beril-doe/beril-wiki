@@ -29,22 +29,29 @@ from pydantic import BaseModel, ConfigDict, Field
 from beril_wiki.agentic.prose import (
     PLATFORM,
     PageFailure,
-    parallel,
     prune_failures,
     record_failure,
-    strict_pages,
-    workers,
 )
-from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, file_hash, prompt
+from beril_wiki.agentic.runtime import (
+    CandidateError,
+    Runtime,
+    atomic_json,
+    digest,
+    file_hash,
+    prompt,
+)
 from beril_wiki.paths import ROOT
+from beril_wiki.records import FINDINGS, load_scope, source_path, source_title
 from beril_wiki.stages import cards
 
-OUT = Path("wiki/findings")
+OUT = FINDINGS
 STATE = Path("state/headlines.json")
 MAX_FINDINGS = 4  # observations and inferences per report
 MAX_NULLS = 2  # null results and corrections per report
 OTHER_CAVEATS = 5
 TITLE_WORDS = 12
+# Rejected candidates the model may repair whole before failing headlines are dropped.
+STRICT_ROUNDS = 2
 # Bump when render() changes: pages re-render from the cached replies at no cost.
 RENDER = "finding-page@4"
 Result = Literal["observation", "inference", "null result", "correction"]
@@ -114,55 +121,72 @@ def pack(sid: str, title: str, records: list[dict]) -> dict:
     }
 
 
-def checker(records: list[dict]) -> Callable[[str], Reply]:
-    """Code-side checks on a reply; each failure goes back to the model to correct."""
-    by_id = {r["id"]: r for r in records}
+def checker(records: list[dict], strict_rounds: int | None = None) -> Callable[[str], Reply]:
+    """Code-side checks on a reply; each failure goes back to the model to correct.
 
-    def parse(raw: str) -> Reply:
-        reply = cards.parse_reply(raw, Reply)
-        assert isinstance(reply, Reply)
-        problems: list[str] = []
+    After `strict_rounds` rejected candidates, a candidate's failing headlines are
+    dropped instead, provided the rest passes every check. The reviewer still reads
+    what remains, so one headline that cites another passage no longer costs the
+    report all of its cards."""
+    by_id = {r["id"]: r for r in records}
+    rejected = 0
+
+    def problems_of(reply: Reply) -> tuple[dict[int, list[str]], list[str]]:
+        per: dict[int, list[str]] = {}
         seen: set[str] = set()
         for n, h in enumerate(reply.headlines):
+            mine = per.setdefault(n, [])
             record = by_id.get(h.evidence)
             if record is None or record["kind"] not in ("finding", "null"):
-                problems.append(f"headline {n}: evidence {h.evidence!r} is not a FINDINGS id")
+                mine.append(f"headline {n}: evidence {h.evidence!r} is not a FINDINGS id")
                 continue
             if h.evidence in seen:
-                problems.append(f"headline {n}: evidence {h.evidence!r} is used twice")
+                mine.append(f"headline {n}: evidence {h.evidence!r} is used twice")
             seen.add(h.evidence)
             if (record["kind"] == "null") != (h.result == "null result"):
-                problems.append(
-                    f"headline {n}: result 'null result' must match a record of kind null"
-                )
+                mine.append(f"headline {n}: result 'null result' must match a record of kind null")
             quote = record["quote"]
             if bad := cards.new_figures(h.claim, quote):
-                problems.append(f"headline {n}: claim figures {bad} are not in the quote")
+                mine.append(f"headline {n}: claim figures {bad} are not in the quote")
             if bad := cards.new_figures(h.title, ""):
-                problems.append(f"headline {n}: the title carries figures {bad}")
+                mine.append(f"headline {n}: the title carries figures {bad}")
             if len(h.title.split()) > TITLE_WORDS:
-                problems.append(f"headline {n}: the title has more than {TITLE_WORDS} words")
+                mine.append(f"headline {n}: the title has more than {TITLE_WORDS} words")
             for q in h.quantities:
                 text = " ".join((q.value, q.what, q.unit, q.denominator, q.scope))
                 if bad := cards.new_figures(text, quote):
-                    problems.append(f"headline {n}: quantity figures {bad} are not in the quote")
+                    mine.append(f"headline {n}: quantity figures {bad} are not in the quote")
                 elif not cards.in_quote(q.value, quote):
-                    problems.append(f"headline {n}: quantity value {q.value!r} is not in the quote")
+                    mine.append(f"headline {n}: quantity value {q.value!r} is not in the quote")
             caveat = by_id.get(h.caveat_evidence)
             if caveat is None or caveat["kind"] != "caveat":
-                problems.append(f"headline {n}: caveat_evidence is not a CAVEATS id")
+                mine.append(f"headline {n}: caveat_evidence is not a CAVEATS id")
             elif bad := cards.new_figures(h.caveat, caveat["quote"]):
-                problems.append(f"headline {n}: caveat figures {bad} are not in its quote")
+                mine.append(f"headline {n}: caveat figures {bad} are not in its quote")
+        overall: list[str] = []
         main = sum(h.result in ("observation", "inference") for h in reply.headlines)
         nulls = len(reply.headlines) - main
         if main > MAX_FINDINGS:
-            problems.append(f"{main} observations or inferences; at most {MAX_FINDINGS}")
+            overall.append(f"{main} observations or inferences; at most {MAX_FINDINGS}")
         if nulls > MAX_NULLS:
-            problems.append(f"{nulls} null results or corrections; at most {MAX_NULLS}")
+            overall.append(f"{nulls} null results or corrections; at most {MAX_NULLS}")
         if not reply.headlines:
-            problems.append("no headline chosen; the report has findings")
-        if problems:
-            raise CandidateError("; ".join(problems))
+            overall.append("no headline chosen; the report has findings")
+        return {n: p for n, p in per.items() if p}, overall
+
+    def parse(raw: str) -> Reply:
+        nonlocal rejected
+        reply = cards.parse_reply(raw, Reply)
+        assert isinstance(reply, Reply)
+        per, overall = problems_of(reply)
+        if per and strict_rounds is not None and rejected >= strict_rounds:
+            keep = Reply(headlines=[h for n, h in enumerate(reply.headlines) if n not in per])
+            if keep.headlines and problems_of(keep) == ({}, []):
+                print(f"  [TRIMMED] dropped {len(per)} headline(s) that failed their checks")
+                return keep
+        if per or overall:
+            rejected += 1
+            raise CandidateError("; ".join([p for n in sorted(per) for p in per[n]] + overall))
         return reply
 
     return parse
@@ -295,12 +319,6 @@ def render(sid: str, h: Headline, records: list[dict], first_added: str, source_
     return fid, fields, "\n".join(lines)
 
 
-def report_title(root: Path, sid: str) -> str:
-    text = cards.source_path(root, sid).read_text(encoding="utf-8", errors="replace")
-    m = re.search(r"^# +(.+)$", text, re.M)
-    return m.group(1).strip() if m else sid
-
-
 def pages_of(out: Path, sid: str) -> list[Path]:
     return sorted(out.glob(f"{sid}--*.md"))
 
@@ -308,12 +326,12 @@ def pages_of(out: Path, sid: str) -> list[Path]:
 def main(root: Path = ROOT) -> int:
     if not cards.require_runtime("headlines"):
         return 0
-    scope = cards.load_scope(root)
+    scope = load_scope(root)
     reports = scope.reports if scope else []
     out = root / OUT
     out.mkdir(parents=True, exist_ok=True)
     state_path = root / STATE
-    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+    state = cards.load_state(state_path)
     agent = cards.runtime()
     evidence = cards.source_evidence(agent.store, root, reports)
 
@@ -324,7 +342,7 @@ def main(root: Path = ROOT) -> int:
             print(f"  headlines/{sid}: no evidence extracted from the current text; skipped")
             continue
         records = evidence[sid]
-        body = pack(sid, report_title(root, sid), records)
+        body = pack(sid, source_title(root, sid), records)
         messages = [{"role": "user", "content": PROMPT + json.dumps(body)}]
         # The models are part of the key: a new cards or review model re-judges.
         key = digest([messages, cards.policy(agent.config, ("cards", "review"))])
@@ -340,26 +358,22 @@ def main(root: Path = ROOT) -> int:
             continue
         todo.append((sid, records, messages, key))
 
-    def write(item: tuple) -> Reply:
+    def write(item: tuple, agent: Runtime) -> Reply:
         sid, records, messages, _ = item
-        mine = cards.runtime()  # a ledger connection belongs to the thread that opened it
-        try:
-            return cards.reviewed(
-                messages,
-                f"headlines/{sid}",
-                checker(records),
-                agent=mine,
-                salvage=salvager(records),
-            )
-        except CandidateError as exc:
-            raise cards.failure(f"headlines/{sid}", exc, mine) from exc
+        return cards.reviewed(
+            messages,
+            f"headlines/{sid}",
+            checker(records, strict_rounds=STRICT_ROUNDS),
+            agent=agent,
+            salvage=salvager(records),
+        )
 
     today = datetime.date.today().isoformat()
     written = failed = 0
 
     def publish(sid: str, records: list[dict], key: str, result: Reply) -> None:
         previous = {p.stem: cards.read_page(p)[0] for p in pages_of(out, sid)}
-        source_hash = file_hash(cards.source_path(root, sid))
+        source_hash = file_hash(source_path(root, sid))
         names = set()
         for h in result.headlines:
             fid = cards.finding_id(sid, next(r for r in records if r["id"] == h.evidence)["quote"])
@@ -382,11 +396,11 @@ def main(root: Path = ROOT) -> int:
 
     for sid, records, key, reply in accepted:
         publish(sid, records, key, reply)
-    for (sid, records, _, key), result in parallel(todo, write, workers()):
+    for (sid, records, _, key), result in cards.each_job(
+        todo, lambda item: f"headlines/{item[0]}", write
+    ):
         if isinstance(result, PageFailure):
             failed += 1
-            record_failure(f"headlines/{sid}", result)
-            print(f"  [FAILED] headlines/{sid}: {result}")
             continue
         publish(sid, records, key, result)
         written += 1
@@ -404,7 +418,7 @@ def main(root: Path = ROOT) -> int:
         f"headlines: {written} report(s) written, {len(reports) - len(todo)} unchanged or "
         f"skipped, {failed} failed, {retired} page(s) retired"
     )
-    return 1 if failed and strict_pages() else 0
+    return cards.exit_code(failed)
 
 
 if __name__ == "__main__":

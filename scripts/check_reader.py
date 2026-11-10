@@ -60,7 +60,7 @@ from playwright.sync_api import (  # ty: ignore[unresolved-import]
 )
 from playwright.sync_api import TimeoutError as PlaywrightTimeout  # ty: ignore[unresolved-import]
 
-from beril_wiki.stages.gists import statistical
+from beril_wiki.wording import CONFIRMING, statistical
 
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "quartz" / "content"
@@ -123,7 +123,7 @@ PIPELINE_TERMS = [
     "Research direction",
     "headline finding",
 ]
-# A listed null result must have measured something (publish/cards.py SHOWN_CASES).
+# A listed null result must have measured something (records.py SHOWN_CASES).
 SHOWN_CASES = ("measured absence", "inconclusive test")
 # Kind words the reader pages no longer show anywhere a result's type is named.
 GONE_KIND_WORDS = {
@@ -145,14 +145,8 @@ GONE_NEED_WORDS = [
     "Analysis of existing data",
     "Analysis, then experiment",
 ]
-# Result types publish keeps off every list (publish/cards.py OFF_TYPES).
+# Result types publish keeps off every list (publish/cards/text.py OFF_TYPES).
 OFF_TYPES = ("bookkeeping", "untested")
-# Wording that would read as one project confirming another (the links stage's list).
-CONFIRM = re.compile(
-    r"\b(?:confirm\w*|corroborat\w*|validat\w*|reproduc\w*|replicat\w*|independen\w*|agree\w*)\b"
-    r"|support(?:s|ed)? each other",
-    re.I,
-)
 LIGHT_LABELS = [
     ".rt",
     ".card .meta",
@@ -2140,7 +2134,7 @@ def check_cross(browser, base: str) -> list[str]:
         # Report titles name methods ("Independent Component Analysis"), not a relation.
         for title in titles:
             said = said.replace(title, "")
-        if hit := CONFIRM.search(said):
+        if hit := CONFIRMING.search(said):
             fails.append(f"cross: Compare {i + 1} says '{hit[0]}'")
         b.click()
         if page.locator(".spanel:not([hidden])").count():

@@ -179,7 +179,21 @@ accepted pages stay, and neither integration nor any derived stage reruns.
 A `cards` change refreshes only the card stages that write on it. Headlines and
 novelty fingerprints also take `review`, and `novelty` takes `queries`. The
 other card stages take `card_review`, and `outcomes` and `followups` take
-`labels` in place of `cards`.
+`labels` in place of `cards`. A card stage's fingerprint also hashes its own
+module and the modules all eight share (`CARD_FILES` in `agentic/curator.py`:
+`stages/cards.py`, `records.py`, which reads the corpus pages and card records,
+and `wording.py`, the wording rules), so editing a rule reschedules every card
+stage. The fingerprints of `outcomes` and `followups` also hash
+`stages/classify.py` and `stages/gists.py` (`LABEL_STAGES`).
+A reschedule clears none of the card stages' saved answers: each one's cache
+entry in `EDITORIAL` is `None`. A stage keeps a saved answer while its cache key
+is unchanged and the answer did not fail, and rechecks it with today's code:
+headlines, directions, gists, outcomes and followups rerun their reply checks
+(directions skips the 3-to-8 count), and links and shared rerun their wording
+checks on the stored text. A rescheduled card stage therefore asks a model again
+only for records that are new, whose cache keys changed, whose last attempt
+failed, or whose saved answer an edited rule now rejects. Novelty rechecks no
+saved label, and it also asks again for a label older than `REFRESH_DAYS`.
 
 ## Editorial schedule and required work
 
@@ -194,7 +208,7 @@ every stage that depends on it stale as well:
 | Topics | Choose concept groups and titles, then write hubs/home after conflicts are current. Every concept must occur exactly once. |
 | Literature | Add supported external context after topics are current. |
 | Authors | Update contributions from current summaries and metadata; independent of topics. |
-| Headlines | For each report in `contract/cards.yaml`, choose up to 4 observations or inferences and up to 2 null results or corrections from its accepted evidence records, and write each to `wiki/findings/<id>.md`. Cached per report in `state/headlines.json`; a saved reply stays while its input is unchanged and today's checks accept it, and the curator never clears it, since the run that wrote the records may have used another job store. A report whose evidence snapshot does not match its current text is skipped and keeps its previous pages. |
+| Headlines | For each report in `contract/cards.yaml`, choose up to 4 observations or inferences and up to 2 null results or corrections from its accepted evidence records, and write each to `wiki/findings/<id>.md`. Cached per report in `state/headlines.json`; a saved reply stays while its input is unchanged and today's checks accept it, and the curator never clears it, since the run that wrote the records may have used another job store. Every figure in a headline must appear in its record's quote. After two rejected replies, the headlines that still fail are dropped and the rest go to the reviewer, so one headline citing another passage no longer costs the report its cards. A report whose evidence snapshot does not match its current text is skipped and keeps its previous pages. |
 | Novelty | Label each finding against PubMed after headlines; labels go to `state/novelty.json`, not to the finding page. |
 | Research directions | After conflicts, topics, headlines and novelty, write 3 to 8 research directions for each topic in `contract/cards.yaml` into `wiki/directions/<slug>.md`. Cached per topic in `state/directions.json`, with the accepted reply kept so a page re-renders without a model call. Code rejects a title that is not a question, test statistics or statistical wording, snake_case table names and other identifiers, prose about what "the report" says, and a direction that shares at least 3 cited findings or conflicts, and 60% of them, with another direction in the reply or in another topic. The draft sees the other topics' directions (`OTHER_TOPICS`), but they stay out of the topic's cache key, so one topic's rewrite never makes another stale. A saved reply stays while its input is unchanged and today's checks accept it; the curator never clears `state/directions.json`, because clearing it would empty the other topics' context, change the drafts' text and buy them again. A topic whose redraft fails keeps its earlier pages, except a page that builds on a finding or conflict that no longer exists. Two topics that accept the same direction each keep a page; the second page's name ends in its topic. |
 | Plain summaries | After headlines, write a gist of at most 45 words for each finding (plus a plain replacement title when the stored title holds a statistic, statistical wording such as "significant" or jargon, and a case for null results) to `state/gists.json`. The writer also sees the report's other caveats and the other findings from the same report: a gist claims no more than the measurement and its limits allow, says when a sibling finding states the opposite, and may mark its finding as repeating an earlier one (`repeats`), which publish leaves off the lists. Code rejects statistics, statistical wording, jargon (`JARGON`: annotation systems, procedures, notebook codes; lineage names such as `Pseudomonas_E` are left to the prompt, since the reviewer requires the name the finding gives), more than two standalone numbers (the prompt asks for one), figures the claim, quote and caveat never state, and a `repeats` id that is not an earlier finding of the report; GPT reviews faithfulness. Keyed on the finding, its report title, caveats and siblings, and the prompt tag (`gists@4`), so a sibling's change reruns the report's gists. A saved gist stays while its input is unchanged and today's checks accept it, so a tightened rule re-asks only the gists it rejects. A refusal fails only that finding and keeps its previous gist in state for recovery; publish shows a failed finding's title only. A failed finding is asked again on the next run with `LAST_ATTEMPT`, the objections from `.agentic/failures.json` that rejected it, so the retry is a new question rather than a replay of the failed jobs; its saved key does not include them. |
@@ -287,7 +301,7 @@ why it matters, the decisive test, what would support or refute it, an
 approach, the data and its readiness, and the findings, conflicts and closest
 papers it rests on. A direction is a biological question, never a request to
 repeat, correct, reconcile, recount or audit existing work: code rejects a
-title or question that opens that way (`REANALYSIS` in `stages/cards.py`). Those
+title or question that opens that way (`REANALYSIS` in `wording.py`). Those
 proposals are listed for the reports' maintainers at publish instead. Code also
 checks that each direction rests on a finding or conflict of the topic, cites
 only PMIDs the topic's findings retrieved, names collections under

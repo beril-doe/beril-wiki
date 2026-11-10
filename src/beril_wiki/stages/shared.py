@@ -21,19 +21,12 @@ from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict
 
-from beril_wiki.agentic.prose import (
-    PageFailure,
-    parallel,
-    prune_failures,
-    record_failure,
-    strict_pages,
-    workers,
-)
-from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, prompt
+from beril_wiki import records
+from beril_wiki.agentic.prose import PageFailure, prune_failures, record_failure
+from beril_wiki.agentic.runtime import CandidateError, Runtime, atomic_json, digest, prompt
 from beril_wiki.paths import ROOT
-from beril_wiki.publish.cards import STATS
 from beril_wiki.stages import cards, links
-from beril_wiki.stages.gists import report_title
+from beril_wiki.wording import LINK_BANNED, STAT_WORDS, STATS, words
 
 STATE = Path("state/shared.json")
 LINKS = Path("state/links.json")
@@ -86,33 +79,11 @@ PROMPT = prompt(
 )
 
 
-def words(text: str) -> int:
-    return len(text.split())
-
-
-def components(edges: list[tuple[str, str]]) -> list[list[str]]:
-    parent: dict[str, str] = {}
-
-    def find(x: str) -> str:
-        parent.setdefault(x, x)
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-
-    for a, b in edges:
-        parent[find(a)] = find(b)
-    groups: dict[str, list[str]] = {}
-    for x in parent:
-        groups.setdefault(find(x), []).append(x)
-    return sorted(sorted(g) for g in groups.values())
-
-
 def group_topics(root: Path, projects: list[str]) -> list[str]:
     """The union of the projects' main topics."""
-    groups = cards.topic_groups(root)
-    cites = cards.concept_citations(root)
-    return sorted({t for sid in projects for t in cards.main_topics(sid, groups, cites)})
+    groups = records.topic_groups(root)
+    cites = records.concept_citations(root)
+    return sorted({t for sid in projects for t in records.main_topics(sid, groups, cites)})
 
 
 def checker(members: dict[str, dict]) -> Callable[[str], Group]:
@@ -141,9 +112,9 @@ def checker(members: dict[str, dict]) -> Callable[[str], Group]:
                 problems.append(f"{field} contains a statistic; say it in words")
             if extra := cards.new_figures(text, pool):
                 problems.append(f"{field} uses figures the results never state: {extra}")
-            if links.STAT_WORDS.search(text):
+            if STAT_WORDS.search(text):
                 problems.append(f"{field} uses significance or power wording; say it in words")
-            if banned := links.BANNED.search(text):
+            if banned := LINK_BANNED.search(text):
                 problems.append(
                     f"{field} says '{banned.group(0)}'; say how the results relate without "
                     "claiming one confirms or matches the other"
@@ -161,14 +132,12 @@ def checker(members: dict[str, dict]) -> Callable[[str], Group]:
 def reads_badly(group: dict) -> bool:
     """Accepted text that today's word checks would reject."""
     texts = [str(group.get(k, "")) for k in LIMITS] + list((group.get("lanes") or {}).values())
-    return any(
-        STATS.search(t) or links.STAT_WORDS.search(t) or links.BANNED.search(t) for t in texts
-    )
+    return any(STATS.search(t) or STAT_WORDS.search(t) or LINK_BANNED.search(t) for t in texts)
 
 
 def status(root: Path = ROOT) -> int:
     path = root / STATE
-    state = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    state = cards.load_state(path)
     accepted = [g for g in state.values() if not g.get("failed")]
     failed = len(state) - len(accepted)
     print(f"shared: {len(accepted)} accepted, {failed} failed")
@@ -185,9 +154,9 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     if not cards.require_runtime("shared"):
         return 0
     state_path = root / STATE
-    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+    state = cards.load_state(state_path)
     link_path = root / LINKS
-    saved_links = json.loads(link_path.read_text(encoding="utf-8")) if link_path.exists() else {}
+    saved_links = cards.load_state(link_path)
     if "links" not in saved_links:
         # No finished links checkpoint yet: building groups from none would prune them all.
         print("shared: no current links to group; nothing changed")
@@ -207,7 +176,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
 
     todo = []
     groups: dict[str, dict] = {}
-    for members in components([(x["a"], x["b"]) for x in related]):
+    for members in records.components([(x["a"], x["b"]) for x in related]):
         projects = sorted({findings[f]["report"] for f in members})
         if len(members) > MAX_MEMBERS:
             print(f"  shared: skipped a group of {len(members)} results: {members}")
@@ -222,7 +191,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         gid = "g-" + digest(members)[:10]
         texts = {
             f: {k: findings[f][k] for k in ("title", "claim", "quote", "quantities")}
-            | {"project": report_title(root, findings[f]["report"])}
+            | {"project": records.summary_title(root, findings[f]["report"])}
             for f in members
         }
         pack = {"RESULTS": texts, "RELATION": relation, "LINKS": [x["label"] for x in inner]}
@@ -243,27 +212,19 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
             state[gid] = {"input": "", "failed": True}
     atomic_json(state_path, dict(sorted(state.items())))
 
-    def write(item: tuple) -> dict:
+    def write(item: tuple, agent: Runtime) -> dict:
         gid, pack, members = item
-        mine = cards.runtime()  # a ledger connection belongs to the thread that opened it
-        step = f"shared/{gid}"
-        try:
-            reply = cards.reviewed(
-                [{"role": "user", "content": PROMPT + json.dumps(pack, ensure_ascii=False)}],
-                step,
-                checker(members),
-                agent=mine,
-            )
-        except CandidateError as exc:
-            raise cards.failure(step, exc, mine) from exc
-        return reply.model_dump()
+        return cards.reviewed(
+            [{"role": "user", "content": PROMPT + json.dumps(pack, ensure_ascii=False)}],
+            f"shared/{gid}",
+            checker(members),
+            agent=agent,
+        ).model_dump()
 
     done = failed = 0
-    for (gid, *_), result in parallel(todo, write, workers()):
+    for (gid, *_), result in cards.each_job(todo, lambda item: f"shared/{item[0]}", write):
         if isinstance(result, PageFailure):
             failed += 1
-            record_failure(f"shared/{gid}", result)
-            print(f"  [FAILED] shared/{gid}: {result}")
             state[gid] = {"input": groups[gid]["input"], "failed": True}
         else:
             state[gid] = groups[gid] | result
@@ -280,7 +241,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     atomic_json(state_path, dict(sorted(state.items())))
     prune_failures("shared/", {f"shared/{gid}" for gid in groups})
     print(f"shared: {done} written, {len(groups) - len(todo)} current, {failed} failed")
-    return 1 if failed and strict_pages() else 0
+    return cards.exit_code(failed)
 
 
 if __name__ == "__main__":

@@ -123,8 +123,9 @@ EDITORIAL = {
         None,
     ),
 }
-# Stages that also read the shared card helpers; only they hash stages/cards.py, so
-# the revisions of the stages that predate it are unchanged.
+# Stages that apply the shared card modules. Only they hash CARD_FILES, so the
+# revisions of the stages that predate them are unchanged, and a change to one of
+# those modules reschedules every card stage.
 CARD_STAGES = (
     "headlines",
     "novelty",
@@ -135,6 +136,7 @@ CARD_STAGES = (
     "outcomes",
     "followups",
 )
+CARD_FILES = ("stages/cards.py", "records.py", "wording.py")
 # The one-label stages share stages/classify.py's loop and gists' retry helpers.
 LABEL_STAGES = ("outcomes", "followups")
 # Fail immediately if a future table edit would make freshness propagation order-dependent.
@@ -180,7 +182,7 @@ def stage_revision(root: Path, name: str, config: dict) -> str:
     }.get(name, ("writing", "review"))
     files = (f"stages/{name}.py", "agentic/prose.py", "compiler.py")
     if name in CARD_STAGES:
-        files += ("stages/cards.py",)
+        files += CARD_FILES
     if name in LABEL_STAGES:
         files += ("stages/classify.py", "stages/gists.py")
     return digest(

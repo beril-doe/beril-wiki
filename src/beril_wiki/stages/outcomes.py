@@ -26,10 +26,9 @@ from pydantic import BaseModel, ConfigDict
 
 from beril_wiki.agentic.runtime import CandidateError, prompt
 from beril_wiki.paths import ROOT
-from beril_wiki.publish.cards import SHOWN_CASES, title_of
+from beril_wiki.records import SHOWN_CASES, caveat_quote, finding_text, title_of
 from beril_wiki.stages import cards, classify
-from beril_wiki.stages.gists import caveat_quote, statistical
-from beril_wiki.stages.novelty import finding_text
+from beril_wiki.wording import statistical
 
 STATE = Path("state/outcomes.json")
 GISTS = Path("state/gists.json")
@@ -97,7 +96,7 @@ def checker(_pack: dict) -> Callable[[str], Outcome]:
 
 
 def listed(gist: dict | None, result: str) -> bool:
-    """publish.cards.eligible on the state alone: what the Results page would list."""
+    """publish.cards.corpus.eligible on the state alone: what the Results page would list."""
     if not gist or gist.get("failed") or not gist.get("gist") or gist.get("repeats"):
         return False
     return result != "null result" or gist.get("case") in SHOWN_CASES

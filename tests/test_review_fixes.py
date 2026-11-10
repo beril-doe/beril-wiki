@@ -157,7 +157,7 @@ def test_any_retrieval_fault_is_a_per_finding_failure(tmp_path, monkeypatch, err
 
 def test_pin_without_retrieval_publishes_and_checks(tmp_path):
     from beril_wiki.check import card_errors
-    from beril_wiki.publish.cards import literature_section
+    from beril_wiki.publish.cards.pages import literature_section
 
     decision = novelty.Decision(finding="x", label=novelty.EXTENDS, reason="checked by hand")
     entry = novelty.apply_decision({"label": novelty.NOT_ASSESSED, "failed": True}, decision)

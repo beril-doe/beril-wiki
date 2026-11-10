@@ -6,6 +6,7 @@ import re
 
 import pytest
 
+from beril_wiki import records
 from beril_wiki.agentic import runtime as R
 from beril_wiki.stages import cards
 
@@ -97,7 +98,7 @@ def test_bullets_reads_numbered_and_dashed_items():
         "# R\n\n## Future Directions\n\n1. **Structure**: run ESMFold\n   on 100 genes.\n"
         "2. Assay growth.\n\n## References\n\n- Price 2018\n\n## Open Directions\n- Re-run it.\n"
     )
-    found = cards.bullets(text, re.compile(r"Future Directions|Open Directions"))
+    found = records.bullets(text, re.compile(r"Future Directions|Open Directions"))
     assert found == ["**Structure**: run ESMFold on 100 genes.", "Assay growth.", "Re-run it."]
 
 
@@ -107,13 +108,21 @@ def test_new_figures_flags_new_numbers():
     assert cards.new_figures("OR 0.61 in 7,609 genes", pool) == ["0.61"]
 
 
+def test_new_figures_reads_strain_names_as_names():
+    pool = "ManXYZ knockouts in E. coli had defects."
+    assert cards.new_figures("ManXYZ knockouts in E. coli K-12 had defects.", pool) == []
+    assert cards.new_figures("SARS-CoV-2 reads were absent.", "Reads were absent.") == []
+    assert cards.new_figures("E. coli K-12 had 12 defects.", pool) == ["12"]
+    assert cards.new_figures("In 100 species.", "In the top-100 species.") == []
+
+
 def test_topic_concepts_reads_curator_groups(tmp_path):
     (tmp_path / "state").mkdir()
     (tmp_path / "state/curator-topics.json").write_text(
         json.dumps({"groups": [{"title": "Functional Dark Matter", "concepts": ["b", "a"]}]})
     )
-    assert cards.topic_concepts(tmp_path, "functional-dark-matter") == ["a", "b"]
-    assert cards.topic_concepts(tmp_path, "other") == []
+    assert records.topic_concepts(tmp_path, "functional-dark-matter") == ["a", "b"]
+    assert records.topic_concepts(tmp_path, "other") == []
 
 
 def test_check_flags_card_errors(tmp_path):
@@ -153,8 +162,10 @@ def test_check_flags_card_errors(tmp_path):
     assert "quote is not verbatim" not in errors
 
 
-def test_existing_stage_revisions_ignore_cards_module(tmp_path, monkeypatch):
-    """Editing the card helpers must not make conflicts, topics, literature or authors stale."""
+@pytest.mark.parametrize("module", ["stages/cards.py", "records.py", "wording.py"])
+def test_shared_card_modules_reschedule_only_card_stages(tmp_path, monkeypatch, module):
+    """Editing a module every card stage applies (a wording rule, say) makes each card
+    stage stale, and leaves conflicts, topics, literature and authors current."""
     from beril_wiki.agentic import curator as C
 
     (tmp_path / "contract").mkdir()
@@ -164,7 +175,7 @@ def test_existing_stage_revisions_ignore_cards_module(tmp_path, monkeypatch):
 
     def edited(self, *args, **kwargs):
         text = real(self, *args, **kwargs)
-        return text + "\nEDITED = 1\n" if self.name == "cards.py" else text
+        return text + "\nEDITED = 1\n" if self.as_posix().endswith(module) else text
 
     monkeypatch.setattr(C.Path, "read_text", edited)
     after = {name: C.stage_revision(tmp_path, name, config) for name in C.EDITORIAL}
@@ -235,7 +246,7 @@ def test_scope_all_resolves_to_every_report_and_topic(tmp_path):
     )
     (tmp_path / "contract").mkdir()
     (tmp_path / "contract/cards.yaml").write_text("topics: all\nreports: all\n")
-    scope = cards.load_scope(tmp_path)
+    scope = records.load_scope(tmp_path)
     assert scope is not None
     assert scope.reports == ["a", "b"] and scope.topics == ["dark-matter"]
 
@@ -299,3 +310,34 @@ def test_run_rejects_a_usd_cap_on_a_stage_it_never_runs(tmp_path, monkeypatch):
     called.clear()
     monkeypatch.setattr(sys, "argv", [*base, "lit=5"])
     assert cli.main() == 0 and called
+
+
+def test_each_job_records_unconverged_items_and_stops_on_other_errors(
+    tmp_path, monkeypatch, capsys
+):
+    """An item whose reply never converges fails alone, recorded under its step; the
+    item that converged is left for the caller to clear after it saves; any other
+    error stops the stage."""
+    config = tmp_path / "config.json"
+    config.write_text(json.dumps({"store": str(tmp_path), "workers": 2}))
+    monkeypatch.setenv("BERIL_AGENTIC_CONFIG", str(config))
+    monkeypatch.setattr(cards, "runtime", lambda: type("Agent", (), {"jobs": ["j1"]})())
+    (tmp_path / "failures.json").write_text(json.dumps({"s/ok": {"issues": []}}))
+
+    def job(item, agent):
+        if item == "bad":
+            raise R.CandidateError("objections still open")
+        return item.upper()
+
+    results = dict(cards.each_job(["ok", "bad"], lambda item: f"s/{item}", job))
+    assert results["ok"] == "OK"
+    assert isinstance(results["bad"], cards.PageFailure)
+    failures = json.loads((tmp_path / "failures.json").read_text())
+    assert set(failures) == {"s/ok", "s/bad"}
+    assert "[FAILED] s/bad" in capsys.readouterr().out
+
+    def broken(item, agent):
+        raise R.WorkflowError("budget admission refused")
+
+    with pytest.raises(R.WorkflowError):
+        list(cards.each_job(["x"], lambda item: f"s/{item}", broken))
