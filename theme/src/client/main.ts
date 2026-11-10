@@ -968,6 +968,7 @@ Rules:
 - If the sources do not answer the question, reply with NO_ANSWER on the first line, then one sentence on what the sources do cover, and stop.
 - Earlier answers in this conversation used different source numbers. Do not comment on earlier citations.
 - Do not add confidence labels, and make no claims about what named people work on or care about.
+- A source labelled Open question proposes work that has not been done. Present its hypothesis as untested, never as a finding.
 - Write at most ${words} words of plain prose. No headings. You may bold a short lead-in phrase. Use a short "- " list only when comparing more than three items.${
   pageTitle ? `\n- The reader is on the page "${pageTitle}". Every source is a section of that page.` : ""
 }`
@@ -1272,12 +1273,34 @@ function renderAskPage() {
 
 let drawer: HTMLElement | null = null
 
+// Result and open-question pages share fixed headings, which read badly through the rules below.
+const ASKS: Record<string, Record<string, string>> = {
+  finding: {
+    "what the report measured": "What did the report measure?",
+    limits: "What are the limits of this result?",
+    "compared with published work": "How does this compare with published work?",
+    "open questions that build on this": "Which open questions build on this result?",
+    "related conflicts": "Which conflicts involve this result?",
+  },
+  direction: {
+    hypothesis: "What is the hypothesis?",
+    "why it matters": "Why does this question matter?",
+    "how to test it": "How could this be tested?",
+    "what would support or refute it": "What would support or refute it?",
+    data: "What data would this need?",
+    "builds on": "Which results does this build on?",
+    "closest published work": "What is the closest published work?",
+  },
+}
+
 function suggestions(page: Page): string[] {
   const skip = /^(sources?|related pages|references|see also|what this entity is)$/i
   return page.headings
     .filter((h) => !skip.test(h))
     .slice(0, 5)
     .map((h) => {
+      const fixed = ASKS[page.group]?.[h.toLowerCase()]
+      if (fixed) return fixed
       if (/^(why|how|what|is|are|do|does|can|which|when|where)\b/i.test(h)) return h.endsWith("?") ? h : `${h}?`
       if (/^findings in /i.test(h)) return `What did ${h.replace(/^findings in /i, "")} find?`
       if (/^(tensions|limitations|caveats)/i.test(h)) return `What are the ${h.toLowerCase()} here?`
