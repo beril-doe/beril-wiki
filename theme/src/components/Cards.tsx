@@ -27,6 +27,35 @@ export interface FindingFm {
   listed?: boolean
 }
 
+// Pages that sit beside Results and Open questions but in no top-bar link, named
+// under each one's intro. A page this build did not publish is left out.
+const ALSO: Record<string, [string, string][]> = {
+  "findings/index": [
+    ["Negative results", "negative-results"],
+    ["Earlier discoveries", "summaries/discoveries"],
+  ],
+  "directions/index": [
+    ["Research opportunities", "opportunities"],
+    ["Data issues", "data-issues/index"],
+  ],
+}
+
+export function AlsoLine({ c, from }: { c: Corpus; from: FullSlug }) {
+  const links = (ALSO[from] ?? []).filter(([, target]) => c.bySlug.has(target))
+  if (links.length === 0) return null
+  return (
+    <p class="also-line">
+      Also:{" "}
+      {links.map(([label, target], i) => (
+        <>
+          {i > 0 && " · "}
+          <a href={resolveRelative(from, target as FullSlug)}>{label}</a>
+        </>
+      ))}
+    </p>
+  )
+}
+
 export interface SharedMember {
   id: string
   title: string

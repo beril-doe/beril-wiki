@@ -33,6 +33,11 @@ Checks, each run by name:
 - related: each result page lists its related results in other projects.
 - connections: results and open questions on topic, report and concept pages, the
   concepts on result and question pages, the topic board links, and About's reading guide.
+- reference: the grouped Browse menu (headers, rules, keyboard, contrast, light and dark,
+  wide to phone) and the reference pages around it: the two archives and the archive
+  label on the concepts that cite them, the Reports listing of project reports only, and
+  All pages at /catalog against the build's own page list, the related-page lines on
+  Results and Open questions, and home's link row, Reports card and archive figure.
 
 Exit 0 when the check passes, 1 with one line per failure otherwise. Notes (lines
 starting "note:") never fail a check. Uses the installed Chrome, so no browser download.
@@ -60,6 +65,7 @@ from playwright.sync_api import (  # ty: ignore[unresolved-import]
 )
 from playwright.sync_api import TimeoutError as PlaywrightTimeout  # ty: ignore[unresolved-import]
 
+from beril_wiki.evidence import ARCHIVES, page_sources
 from beril_wiki.wording import CONFIRMING, statistical
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -88,7 +94,82 @@ HOME_ABSENT = [
     "change the picture",
 ]
 BAR_LINKS = ["Results", "Open questions", "Topics", "About"]
-BROWSE_ITEMS = ["Concepts", "Entities", "Conflicts", "Reports", "Authors"]
+# The Browse menu's groups in order: a header (None for the closing group) and its links.
+BROWSE_GROUPS = [
+    ("The wiki", ["Concepts", "Entities", "Conflicts"]),
+    ("Projects", ["Reports", "Authors"]),
+    ("Working with the data", ["Pitfalls", "Data collections", "Data issues"]),
+    (None, ["All pages"]),
+]
+BROWSE_ITEMS = [link for _, links in BROWSE_GROUPS for link in links]
+# The two cross-project archives: title, the note under it, and the page its link opens.
+ARCHIVE_PAGES = {
+    "discoveries": (
+        "Earlier discoveries",
+        "This list stopped growing in May 2026. Newer results are on the Results page.",
+        "findings",
+    ),
+    "pitfalls": (
+        "Earlier pitfalls",
+        "This list stopped growing in May 2026. Problems found in each project's data are "
+        "listed under Data issues.",
+        "data-issues",
+    ),
+}
+REPORTS_INTRO = (
+    "One page per research project, summarising it and linking to its raw report. These are "
+    "the evidence every other page on the site cites."
+)
+# All pages (/catalog): its sections in order, by the folder each lists, then the archive
+# and site pages section.
+ALL_PAGES = [
+    ("Topics", "topics"),
+    ("Results", "findings"),
+    ("Open questions", "directions"),
+    ("Concepts", "concepts"),
+    ("Entities", "entities"),
+    ("Conflicts", "conflicts"),
+    ("Project reports", "summaries"),
+    ("Raw reports", "sources"),
+    ("Authors", "authors"),
+    ("Data collections", "data"),
+    ("Data issues", "data-issues"),
+]
+SITE_PAGES = [
+    "summaries/discoveries",
+    "summaries/pitfalls",
+    "negative-results",
+    "opportunities",
+    "guide",
+    "about",
+    "sources/index",
+]
+# The related-page line under each board's intro: label and target, each shown when published.
+ALSO_LINES = {
+    "findings": [
+        ("Negative results", "negative-results"),
+        ("Earlier discoveries", "summaries/discoveries"),
+    ],
+    "directions": [
+        ("Research opportunities", "opportunities"),
+        ("Data issues", "data-issues/index"),
+    ],
+}
+# The theme-drawn link row under the home kind cards, each link shown when published.
+HOME_ROW = [
+    ("All pages", "catalog"),
+    ("Pitfalls", "summaries/pitfalls"),
+    ("Earlier discoveries", "summaries/discoveries"),
+    ("Data collections", "data/index"),
+    ("Authors", "authors/index"),
+]
+HOME_ARCHIVES = "Archives: earlier discoveries and pitfalls"
+ARCHIVE_KIND_LINE = (
+    "An archive collects discoveries or pitfalls gathered across projects until May 2026."
+)
+# Widths at which the Browse menu must keep its groups: wide, the bar's two narrow
+# breakpoints (it wraps at 960 px) and a phone.
+BROWSE_WIDTHS = [1440, 961, 960, 390]
 # The kind cards under "Find your way in", by the collection each opens.
 KIND_CARDS = [
     "topics/",
@@ -1494,7 +1575,32 @@ def check_grid(browser, base: str) -> list[str]:
                 break
     # A pointer that jumps straight from one dot to another, outside the corridor to the
     # first pop-up, gets the second dot's pop-up and keeps it.
-    a, z = page.locator(".qgrid .qd").nth(0), page.locator(".qgrid .qd").nth(12)
+    # The target must sit outside the first pop-up: landing on that pop-up rightly keeps
+    # it open. Which dot that is depends on the corpus, so pick it from the layout.
+    dots = page.locator(".qgrid .qd")
+    a = dots.nth(0)
+    a.locator("a.qdot").scroll_into_view_if_needed()
+    ra = a.locator("a.qdot").bounding_box()
+    page.mouse.move(ra["x"] + ra["width"] / 2, ra["y"] + ra["height"] / 2)
+    page.wait_for_timeout(200)
+    first_pop = a.locator(".qpop").bounding_box()
+    page.mouse.move(0, 0)
+    page.wait_for_timeout(400)
+    height = page.viewport_size["height"] if page.viewport_size else 900
+
+    def clear(i: int) -> bool:
+        box = dots.nth(i).locator("a.qdot").bounding_box()
+        if not box or not first_pop:
+            return bool(box)
+        cx, cy = box["x"] + box["width"] / 2, box["y"] + box["height"] / 2
+        inside = (
+            first_pop["x"] <= cx <= first_pop["x"] + first_pop["width"]
+            and first_pop["y"] <= cy <= first_pop["y"] + first_pop["height"]
+        )
+        return 0 <= cy <= height and not inside
+
+    order = [*range(12, dots.count()), *range(1, min(12, dots.count()))]
+    z = dots.nth(next((i for i in order if clear(i)), 12))
     jump = jump_to(page, a.locator("a.qdot"), z.locator("a.qdot"))
     if not z.locator(".qpop").is_visible() or a.locator(".qpop").is_visible():
         fails.append(f"grid: a jump between dots leaves the wrong pop-up ({jump})")
@@ -4510,6 +4616,503 @@ def about_fails(page: Page, base: str) -> list[str]:
     return fails
 
 
+BROWSE_JS = """() => {
+  const probe = document.createElement('div')
+  probe.style.color = 'var(--line)'
+  document.body.append(probe)
+  const line = getComputedStyle(probe).color
+  probe.remove()
+  return [...document.querySelectorAll('#barmenu-list .barmenu-group')].map(g => {
+    const head = g.querySelector('.barmenu-head')
+    const list = g.querySelector('ul')
+    const label = list?.getAttribute('aria-labelledby')
+    const first = g.querySelector('a')
+    const hs = head && getComputedStyle(head)
+    const bgOf = (e) => {
+        for (let x = e; x; x = x.parentElement) {
+            const c = getComputedStyle(x).backgroundColor
+            if (c !== 'rgba(0, 0, 0, 0)' && c !== 'transparent') return c
+        }
+        return 'rgb(255, 255, 255)'
+    }
+    return {
+        head: head ? head.textContent.trim() : null,
+        headTag: head ? head.tagName : null,
+        headFocusable: head ? (head.tabIndex >= 0 || head.matches('a, button, [tabindex]')) : false,
+        headColour: hs ? hs.color : null,
+        headTransform: hs ? hs.textTransform : null,
+        headSize: hs ? parseFloat(hs.fontSize) : null,
+        headCursor: hs ? hs.cursor : null,
+        headBg: head ? bgOf(head) : null,
+        linkColour: first ? getComputedStyle(first).color : null,
+        linkSize: first ? parseFloat(getComputedStyle(first).fontSize) : null,
+        role: list?.getAttribute('role') || null,
+        labelledBy: label ? (document.getElementById(label)?.textContent.trim() || '') : null,
+        ariaLabel: list?.getAttribute('aria-label') || null,
+        rule: getComputedStyle(g).borderTopWidth + ' ' + getComputedStyle(g).borderTopStyle,
+        ruleColour: getComputedStyle(g).borderTopColor,
+        line,
+        links: [...g.querySelectorAll('a')].map(a => a.textContent.trim()),
+        visible: !!g.getClientRects().length,
+    }
+  })
+}"""
+
+
+def browse_group_fails(browser, base: str) -> list[str]:
+    """The Browse menu holds its groups in order, each a labelled list; a 1px rule sits above
+    every group after the first; headers are small uppercase muted text that never takes
+    focus and reaches 4.5:1; arrows and Tab reach every link in order, skipping headers."""
+    fails: list[str] = []
+    for theme in ("light", "dark"):
+        for width in BROWSE_WIDTHS:
+            where = f"reference: Browse at {width} px, {theme}"
+            page = themed(browser, theme, {"width": width, "height": 900})
+            go(page, base + "/")
+            btn = page.locator("header.bar .barmenu-btn")
+            btn.click()
+            page.wait_for_timeout(150)
+            groups = page.evaluate(BROWSE_JS)
+            got = [(g["head"], g["links"]) for g in groups]
+            if got != [(h, list(links)) for h, links in BROWSE_GROUPS]:
+                fails.append(f"{where}: groups {got}, expected {BROWSE_GROUPS}")
+                page.context.close()
+                continue
+            for i, g in enumerate(groups):
+                name = g["head"] or g["links"][0]
+                if not g["visible"]:
+                    fails.append(f"{where}: group '{name}' is not visible with the menu open")
+                if g["role"] != "group":
+                    fails.append(f"{where}: group '{name}' list has role {g['role']}")
+                if g["head"] and g["labelledBy"] != g["head"]:
+                    fails.append(f"{where}: group '{name}' is labelled '{g['labelledBy']}'")
+                if not g["head"] and not g["ariaLabel"]:
+                    fails.append(f"{where}: the closing group has no accessible name")
+                if i > 0 and g["rule"] != "1px solid":
+                    fails.append(f"{where}: group '{name}' has top rule '{g['rule']}'")
+                if i > 0 and not same(rgba(g["ruleColour"]), rgba(g["line"])):
+                    fails.append(f"{where}: group '{name}' rule {g['ruleColour']} is not --line")
+                if i == 0 and g["rule"] == "1px solid":
+                    fails.append(f"{where}: the first group has a rule above it")
+                if not g["head"]:
+                    continue
+                if g["headTag"] in ("A", "BUTTON") or g["headFocusable"]:
+                    fails.append(f"{where}: header '{name}' can take focus")
+                if g["headTransform"] != "uppercase" or g["headCursor"] == "pointer":
+                    look = f"{g['headTransform']}, cursor {g['headCursor']}"
+                    fails.append(f"{where}: header '{name}' is {look}")
+                if g["headSize"] is not None and g["linkSize"] and g["headSize"] >= g["linkSize"]:
+                    fails.append(f"{where}: header '{name}' is not smaller than its links")
+                fg, link = rgba(g["headColour"]), rgba(g["linkColour"])
+                if same(fg, link):
+                    fails.append(f"{where}: header '{name}' has its links' colour")
+                r = ratio(fg, rgba(g["headBg"]))
+                if r < 4.5:
+                    fails.append(f"{where}: header '{name}' contrast {r:.2f}:1")
+            # Keyboard: arrows walk every link in order, then Tab does the same from Browse.
+            page.keyboard.press("Escape")
+            btn.focus()
+            page.keyboard.press("ArrowDown")
+            seen = []
+            for _ in BROWSE_ITEMS:
+                seen.append(page.evaluate("document.activeElement?.textContent.trim()"))
+                page.keyboard.press("ArrowDown")
+            if seen != BROWSE_ITEMS:
+                fails.append(f"{where}: arrows reach {seen}")
+            page.keyboard.press("Escape")
+            btn.focus()
+            page.keyboard.press("Enter")
+            seen = []
+            for _ in BROWSE_ITEMS:
+                page.keyboard.press("Tab")
+                seen.append(page.evaluate("document.activeElement?.textContent.trim()"))
+            if seen != BROWSE_ITEMS:
+                fails.append(f"{where}: Tab reaches {seen}")
+            page.keyboard.press("Escape")
+            page.context.close()
+    # The Browse button marks the page you are on for every target in the menu.
+    page = new_page(browser, WIDE)
+    for target in ("summaries/pitfalls", "data/", "data-issues/", "catalog", "summaries/"):
+        go(page, f"{base}/{target}")
+        if not page.locator("header.bar .barmenu-btn.here").count():
+            fails.append(f"reference: Browse is not marked as current on /{target}")
+    go(page, f"{base}/summaries/pitfalls")
+    cur = page.eval_on_selector_all(
+        "#barmenu-list a[aria-current=page]", "els => els.map(e => e.textContent.trim())"
+    )
+    if cur != ["Pitfalls"]:
+        fails.append(f"reference: on Pitfalls the menu marks {cur} as current")
+    page.context.close()
+    return fails
+
+
+RAIL_HEADS_JS = """() => [...document.querySelectorAll(
+    '.evidence-rail h3, .record dt, .sources h2')].map(e => e.textContent.trim())"""
+
+
+def archive_fails(browser, base: str) -> list[str]:
+    """Both archives carry their title, the Archive kind, the kind line and the note with its
+    link, and no "Projects cited" or author list. A concept citing only archives reads
+    "Cross-project archive" and never "source project"; a mixed one names the archive."""
+    fails: list[str] = []
+    page = new_page(browser, WIDE)
+    for stem, (title, note, target) in ARCHIVE_PAGES.items():
+        where = f"reference: /summaries/{stem}"
+        go(page, f"{base}/summaries/{stem}")
+        h1 = page.inner_text(".record h1").strip()
+        kind = page.inner_text(".record .kind b").strip()
+        line = collapse(page.inner_text(".record .kindline"))
+        got = (
+            collapse(page.inner_text(".record .archnote"))
+            if page.locator(".archnote").count()
+            else ""
+        )
+        if (h1, kind) != (title, "Archive"):
+            fails.append(f"{where}: title '{h1}', kind '{kind}'")
+        if not line.startswith(ARCHIVE_KIND_LINE):
+            fails.append(f"{where}: kind line reads '{line}'")
+        if got != note:
+            fails.append(f"{where}: note reads '{got}'")
+        else:
+            href = page.get_attribute(".record .archnote a", "href") or ""
+            if target not in href:
+                fails.append(f"{where}: the note links to '{href}', not /{target}/")
+        heads = page.evaluate(RAIL_HEADS_JS)
+        bad = [h for h in heads if h in ("Projects cited", "Project authors", "Authors")]
+        bad += [h for h in heads if h.startswith("Authors of")]
+        if bad:
+            fails.append(f"{where}: shows {bad}")
+    concepts = {
+        p.stem: page_sources(p.read_text(encoding="utf-8", errors="replace"))
+        for p in sorted((ROOT / "wiki" / "concepts").glob("*.md"))
+    }
+    only = [s for s, ids in concepts.items() if ids and ids <= ARCHIVES]
+    mixed = [s for s, ids in concepts.items() if ids & ARCHIVES and ids - ARCHIVES]
+    if not only:
+        fails.append("reference: no concept cites only the archives; the check has nothing to test")
+    print(f"note: reference: {len(only)} concepts cite only the archives")
+    for stem in only:
+        go(page, f"{base}/concepts/{stem}")
+        # An archive is not a cited report, so both result parts say the page cites none.
+        empty = page.eval_on_selector_all(
+            ".topic-cards .part-empty",
+            "els => els.map(e => e.textContent.trim())",
+        )
+        if empty.count("This page cites no report yet.") != 2:
+            fails.append(
+                f"reference: /concepts/{stem} cites only archives but its parts read {empty}"
+            )
+        text = page.inner_text(".record")
+        if "Cross-project archive" not in text or "source project" in text:
+            fails.append(
+                f"reference: /concepts/{stem} cites only archives but reads "
+                f"'{collapse(page.inner_text('.record .standing'))[:120]}'"
+            )
+    for stem in mixed[:3]:
+        go(page, f"{base}/concepts/{stem}")
+        if "and a cross-project archive" not in page.inner_text(".record"):
+            fails.append(f"reference: /concepts/{stem} cites an archive but does not say so")
+    page.context.close()
+    return fails
+
+
+def published_reports() -> set[str]:
+    """The project reports this build publishes: summaries publish stamped as reports."""
+    return {
+        p.stem
+        for p in (CONTENT / "summaries").glob("*.md")
+        if frontmatter(p).get("type") == "Project report"
+    }
+
+
+def reports_listing_fails(browser, base: str) -> list[str]:
+    """Reports lists exactly the published project reports and counts only them, and the home
+    topic table counts only the reports each topic links."""
+    fails: list[str] = []
+    want = published_reports()
+    page = new_page(browser, WIDE)
+    go(page, base + "/summaries/")
+    cards = page.eval_on_selector_all(
+        ".listing a.card", "els => els.map(e => e.getAttribute('href'))"
+    )
+    got = [last_part(h) for h in cards]
+    if sorted(got) != sorted(want):
+        extra = sorted(set(got) - want)
+        missing = sorted(want - set(got))
+        fails.append(
+            f"reference: Reports lists {len(got)} cards, expected the {len(want)} reports; "
+            f"extra {extra}, missing {missing[:5]}"
+        )
+    facts = page.eval_on_selector_all(
+        ".record dt",
+        "els => els.map(e => [e.textContent.trim(), e.nextElementSibling?.textContent.trim()])",
+    )
+    if facts != [["Project reports", str(len(want))]]:
+        fails.append(f"reference: Reports header facts {facts}")
+    intro = collapse(page.inner_text(".index-page > .prose"))
+    if intro != REPORTS_INTRO:
+        fails.append(f"reference: Reports intro reads '{intro}'")
+    go(page, base + "/")
+    rows = page.eval_on_selector_all(
+        ".topictable .trow",
+        """els => els.map(e => [e.querySelector('.name a').getAttribute('href'),
+            [...e.querySelectorAll('.c')].map(c => c.textContent.trim())[1]])""",
+    )
+    for href, shown in rows:
+        stem = last_part(href)
+        text = (CONTENT / "topics" / f"{stem}.md").read_text(encoding="utf-8")
+        linked = set(re.findall(r"\[\[summaries/([\w.-]+?)[|#\]]", text)) & want
+        if shown != str(len(linked)):
+            fails.append(
+                f"reference: home topic table shows {shown} reports for {stem}, "
+                f"its page links {len(linked)}"
+            )
+    page.context.close()
+    return fails
+
+
+def site_path(href: str, base: str) -> str:
+    """A link's page path with the --base path removed, so a /wiki-prefixed site checks."""
+    path = urlparse(href).path.strip("/")
+    return path.removeprefix(urlparse(base).path.strip("/")).strip("/")
+
+
+def all_pages_want() -> list[tuple[str, list[str]]]:
+    """What All pages must list, read off this build's own published pages."""
+    out = []
+    for heading, folder in ALL_PAGES:
+        stems = sorted(
+            p.stem
+            for p in (CONTENT / folder).glob("*.md")
+            if p.stem != "index"
+            and (folder != "summaries" or frontmatter(p).get("type") == "Project report")
+        )
+        if stems:
+            out.append((heading, [f"{folder}/{s}" for s in stems]))
+    site = [s for s in SITE_PAGES if (CONTENT / f"{s}.md").exists()]
+    if site:
+        out.append(("Archives and site pages", site))
+    return out
+
+
+ALL_PAGES_JS = """() => {
+  const art = document.querySelector('article')
+  const out = []
+  let cur = null
+  for (const el of art.querySelectorAll('h2, li > a, li > p > a')) {
+    if (el.tagName === 'H2') { cur = [el.textContent.trim(), el.id, []]; out.push(cur); continue }
+    if (cur) cur[2].push(el.getAttribute('data-slug') || el.getAttribute('href'))
+  }
+  const jump = [...art.querySelectorAll('p a[href^="#"]')].map(a => a.getAttribute('href'))
+  return {sections: out, jump}
+}"""
+
+
+def all_pages_fails(browser, base: str) -> list[str]:
+    """All pages at /catalog lists every published page of each kind exactly once, under its
+    kind's heading with a count, carries no citation, author or evidence rail, opens no page
+    it does not list, and counts in no page's "Linked from" or "Most linked"."""
+    fails: list[str] = []
+    page = new_page(browser, WIDE)
+    go(page, base + "/catalog")
+    title = page.inner_text(".record h1").strip()
+    kind = page.inner_text(".record .kind b").strip()
+    if (title, kind) != ("All pages", "Index"):
+        fails.append(f"reference: /catalog is titled '{title}', kind '{kind}'")
+    intro = collapse(page.inner_text("article p")) if page.locator("article p").count() else ""
+    if intro != "Every page on the site, by kind.":
+        fails.append(f"reference: All pages opens with '{intro}'")
+    got = page.evaluate(ALL_PAGES_JS)
+    want = all_pages_want()
+    heads = [s[0] for s in got["sections"]]
+    if heads != [h for h, _ in want]:
+        fails.append(f"reference: All pages sections {heads}, expected {[h for h, _ in want]}")
+    if got["jump"] != [f"#{s[1]}" for s in got["sections"]]:
+        fails.append(f"reference: All pages jump row {got['jump']}")
+    seen: Counter = Counter()
+    for (heading, _anchor, links), (_, slugs) in zip(got["sections"], want, strict=False):
+        listed = [urlparse(h).path.strip("/").removeprefix("./") for h in links]
+        seen.update(listed)
+        missing = sorted(set(slugs) - set(listed))
+        extra = sorted(set(listed) - set(slugs))
+        if missing or extra:
+            fails.append(
+                f"reference: All pages '{heading}' misses {len(missing)} {missing[:3]} and "
+                f"lists {len(extra)} unexpected {extra[:3]}"
+            )
+        count = page.evaluate(
+            "(h) => [...document.querySelectorAll('article h2')].find(e => "
+            "e.textContent.trim() === h)?.nextElementSibling?.textContent.trim()",
+            heading,
+        )
+        n = len(slugs)
+        if count != f"{n} {'page' if n == 1 else 'pages'}.":
+            fails.append(f"reference: All pages '{heading}' count reads '{count}', expected {n}")
+    twice = sorted(s for s, k in seen.items() if k > 1)
+    if twice:
+        fails.append(f"reference: All pages lists {len(twice)} pages twice: {twice[:3]}")
+    heads = page.evaluate(RAIL_HEADS_JS)
+    bad = [h for h in heads if h in ("Projects cited", "Sources cited", "Linked from")]
+    bad += [h for h in heads if "uthor" in h]
+    if bad or page.locator("sub.src, .px-askpage").count():
+        fails.append(f"reference: All pages shows {bad} or a citation or Ask button")
+    # As a backlink All pages says nothing, so no page names it under "Linked from".
+    for slug in (
+        "concepts/gene-essentiality",
+        "entities/escherichia-coli",
+        "summaries/fitness_modules",
+    ):
+        if not (CONTENT / f"{slug}.md").exists():
+            continue
+        go(page, f"{base}/{slug}")
+        rail = page.evaluate(
+            """() => [...document.querySelectorAll('.evidence-rail section')]
+                .filter(s => s.querySelector('h3')?.textContent.trim() === 'Linked from')
+                .flatMap(s => [...s.querySelectorAll('a')].map(a => a.getAttribute('href')))"""
+        )
+        if any(last_part(h) == "catalog" for h in rail):
+            fails.append(f"reference: /{slug} lists All pages under 'Linked from'")
+    page.context.close()
+    # Search finds All pages and every data-issues page.
+    with urllib.request.urlopen(base + "/static/search/pages.json", timeout=30) as r:
+        pages = json.loads(r.read())
+    rows = pages.get("pages", pages) if isinstance(pages, dict) else pages
+    slugs = {r.get("slug") for r in rows if isinstance(r, dict)}
+    issues = {f"data-issues/{p.stem}" for p in (CONTENT / "data-issues").glob("*.md")}
+    issues.discard("data-issues/index")
+    if "catalog" not in slugs or not issues <= slugs:
+        fails.append(
+            f"reference: search indexes catalog {'catalog' in slugs}, "
+            f"data issues {len(issues & slugs)} of {len(issues)}"
+        )
+    return fails
+
+
+def also_line_fails(browser, base: str) -> list[str]:
+    """Results and Open questions name their related pages under the intro, which stays
+    one plain line."""
+    fails: list[str] = []
+    page = new_page(browser, WIDE)
+    for board, links in ALSO_LINES.items():
+        want = [(label, target) for label, target in links if (CONTENT / f"{target}.md").exists()]
+        go(page, f"{base}/{board}/")
+        line = page.locator(".index-page > .also-line")
+        text = collapse(line.inner_text()) if line.count() else ""
+        expected = "Also: " + " · ".join(label for label, _ in want)
+        if text != expected:
+            fails.append(f"reference: /{board}/ related line reads '{text}', expected '{expected}'")
+            continue
+        hrefs = line.locator("a").evaluate_all("els => els.map(e => e.href)")
+        for (label, target), href in zip(want, hrefs, strict=True):
+            path = site_path(href, base)
+            if path != target.removesuffix("/index").removesuffix("index").strip("/"):
+                fails.append(f"reference: /{board}/ '{label}' opens /{path}, not /{target}")
+    go(page, f"{base}/findings/")
+    intro = page.inner_text(".index-page > .prose").strip()
+    if intro != RESULTS_INTRO:
+        fails.append(f"reference: /findings/ intro reads '{intro}'")
+    page.context.close()
+    return fails
+
+
+def home_row_fails(browser, base: str) -> list[str]:
+    """Home's "Find your way in" ends with the theme's link row, the Reports card counts
+    reports only, and the corpus figures name the archives and link All pages."""
+    fails: list[str] = []
+    page = new_page(browser, WIDE)
+    go(page, base + "/")
+    want = [(label, t) for label, t in HOME_ROW if (CONTENT / f"{t}.md").exists()]
+    row = page.eval_on_selector_all(
+        "nav.browse.also a", "els => els.map(e => [e.textContent.trim(), e.href])"
+    )
+    got = [(label, site_path(href, base)) for label, href in row]
+    expected = [(label, t.removesuffix("index").strip("/")) for label, t in want]
+    if got != expected:
+        fails.append(f"reference: home link row {got}, expected {expected}")
+    card = page.evaluate(
+        """() => [...document.querySelectorAll('a.kindcard')]
+            .find(a => a.querySelector('b')?.textContent.trim() === 'Reports')
+            ?.querySelector('.n')?.textContent.trim()"""
+    )
+    n = len(published_reports())
+    if card != f"{n} reports":
+        fails.append(f"reference: the home Reports card reads '{card}', expected '{n} reports'")
+    rows = page.eval_on_selector_all(
+        "dl.figures .frow",
+        """els => els.map(e => [e.querySelector('dt').textContent.trim(),
+            e.querySelector('dd').textContent.trim(), e.querySelector('dd a').href])""",
+    )
+    archive = [r for r in rows if r[1].startswith("Archives")]
+    if (
+        not archive
+        or archive[0][1] != HOME_ARCHIVES
+        or site_path(archive[0][2], base) != "catalog"
+        or urlparse(archive[0][2]).fragment != "archives-and-site-pages"
+    ):
+        fails.append(f"reference: home corpus figures {rows}")
+    text = page.inner_text("body")
+    for gone in ("Cross-project digests", "Full page catalog", "Discoveries digest"):
+        if gone in text:
+            fails.append(f"reference: home still shows '{gone}'")
+    page.context.close()
+    return fails
+
+
+def source_summary(reports: int, archives: int) -> str:
+    """The attribution theme/src/cites.ts gives a page: its reports, then any archive."""
+    parts = []
+    if reports:
+        parts.append(f"{reports} project report{'s' if reports != 1 else ''}")
+    if archives:
+        parts.append(
+            "a cross-project archive" if archives == 1 else f"{archives} cross-project archives"
+        )
+    return " and ".join(parts)
+
+
+def conflict_card_fails(browser, base: str) -> list[str]:
+    """Each Conflicts card names the reports and archives its page cites, the way the page's
+    own header does, so an archive on one side is never dropped."""
+    fails: list[str] = []
+    reports = published_reports()
+    page = new_page(browser, WIDE)
+    go(page, base + "/conflicts/")
+    cards = page.eval_on_selector_all(
+        ".listing a.card",
+        "els => els.map(e => [e.getAttribute('href'),"
+        " e.querySelector('.meta .n')?.textContent.trim() || ''])",
+    )
+    page.context.close()
+    if not cards:
+        return ["reference: /conflicts/ lists no cards"]
+    wrong = []
+    for href, meta in cards:
+        stem = last_part(href)
+        text = (CONTENT / "conflicts" / f"{stem}.md").read_text(encoding="utf-8")
+        linked = set(re.findall(r"\[\[summaries/([\w.-]+?)[|#\]]", text))
+        n_rep, n_arc = len(linked & reports), len(linked & ARCHIVES)
+        summary = source_summary(n_rep, n_arc)
+        want = f"{summary} disagree" if n_rep + n_arc > 1 else summary
+        if meta != want:
+            wrong.append(f"{stem}: '{meta}' (expected '{want}')")
+    if wrong:
+        fails.append(f"reference: {len(wrong)} Conflicts cards misattribute: {wrong[:3]}")
+    return fails
+
+
+def check_reference(browser, base: str) -> list[str]:
+    """The grouped Browse menu and the reference pages around it."""
+    return [
+        *browse_group_fails(browser, base),
+        *archive_fails(browser, base),
+        *reports_listing_fails(browser, base),
+        *all_pages_fails(browser, base),
+        *also_line_fails(browser, base),
+        *home_row_fails(browser, base),
+        *conflict_card_fails(browser, base),
+    ]
+
+
 CHECKS = {
     "home": check_home,
     "strips": check_strips_page,
@@ -4522,6 +5125,7 @@ CHECKS = {
     "filters": check_filters,
     "related": check_related,
     "connections": check_connections,
+    "reference": check_reference,
 }
 
 

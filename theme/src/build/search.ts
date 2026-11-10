@@ -29,8 +29,8 @@ const EMBED_INPUT = join(REPO, "quartz/search-embed-input.json")
 const DIM = 768
 
 // findings and directions exist when the corpus has records (publish/cards.py).
-const DIRS = ["topics", "concepts", "conflicts", "entities", "summaries", "sources", "authors", "data", "findings", "directions"]
-const ROOT_PAGES = ["about", "negative-results", "opportunities"]
+const DIRS = ["topics", "concepts", "conflicts", "entities", "summaries", "sources", "authors", "data", "findings", "directions", "data-issues"]
+const ROOT_PAGES = ["about", "negative-results", "opportunities", "catalog"]
 const ENTITY = new Set(["organism", "gene", "compound", "method", "dataset", "entity"])
 // Sections longer than this are cut into chunks small enough to cite.
 const MAX_WORDS = 420
@@ -127,7 +127,8 @@ for (const [dir, slug] of files) {
     title: clean(record?.querySelector("h1")?.text ?? root.querySelector("title")?.text ?? slug),
     cls,
     label: record?.querySelector(".kind b")?.text.trim() ?? "",
-    group: groupOf(dir, cls),
+    // An archive shares summaries/ with the reports but is not one.
+    group: record?.querySelector(".kind b")?.text.trim() === "Archive" ? "other" : groupOf(dir, cls),
     desc: fm.description ?? "",
     topic: clean(topicA?.text ?? ""),
     topicSlug: (topicA?.getAttribute("href") ?? "").replace(/^(\.\.\/|\.\/)+/, ""),

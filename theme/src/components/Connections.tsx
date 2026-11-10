@@ -146,7 +146,7 @@ export function Connections({ file, c }: { file: File; c: Corpus }) {
     )
   }
 
-  // A cross-project digest is its own kind of page: no project, so no project results.
+  // A cross-project archive is its own kind of page: no project, so no project results.
   if (kind === "summaries" && isReport(file)) {
     const sid = sidOf(slug)
     const results = findingsOf(c)
@@ -179,7 +179,12 @@ export function Connections({ file, c }: { file: File; c: Corpus }) {
   }
 
   if (kind === "concepts") {
-    const sids = new Set(linksOf(file).filter((l) => collectionOf(l) === "summaries").map(sidOf))
+    // An archive is cited like a report but is not one, so it brings no project with it.
+    const isCitedReport = (l: string) => {
+      const target = c.bySlug.get(l)
+      return collectionOf(l) === "summaries" && !!target && isReport(target)
+    }
+    const sids = new Set(linksOf(file).filter(isCitedReport).map(sidOf))
     const topic = c.topicsOf(file)[0]
     const topicSlug = topic ? slugOf(topic).replace(/^topics\//, "") : ""
     const sorted = findingsOf(c)

@@ -97,9 +97,36 @@
     background: var(--card);
     border: 1px solid var(--line-2);
     box-shadow: 0 6px 18px color-mix(in srgb, var(--ink) 12%, transparent);
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
     li {
       margin: 0;
     }
+  }
+  // A rule above every group after the first keeps the groups apart.
+  .barmenu-group + .barmenu-group {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid var(--line);
+  }
+  // A group's name: small, uppercase and muted, with no hover or focus state,
+  // so it never reads as one more link.
+  .barmenu-head {
+    margin: 0;
+    padding: 8px 14px 4px;
+    font-size: var(--t-label);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mute-ink);
+    white-space: nowrap;
+    cursor: default;
+    user-select: none;
+  }
+  .barmenu-list {
     a {
       display: block;
       padding: 7px 14px;

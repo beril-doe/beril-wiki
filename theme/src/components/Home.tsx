@@ -1,6 +1,17 @@
 // The home page: the opening with the corpus in figures; then, when finding records are
 // published, Highlights (the topic-strip key, three results and three questions, each with
 // a topic strip); then Find your way in, the map of the corpus, and the topic table.
+
+// The link row under the kind cards. The theme draws it rather than taking the Browse list
+// that stages/topics.py asks the model to write into wiki/index.md, so the row can change
+// without rerunning that stage.
+const MORE: [string, string][] = [
+  ["All pages", "catalog"],
+  ["Pitfalls", "summaries/pitfalls"],
+  ["Earlier discoveries", "summaries/discoveries"],
+  ["Data collections", "data/index"],
+  ["Authors", "authors/index"],
+]
 import type { FullSlug } from "@quartz-community/types"
 import { resolveRelative } from "@quartz-community/utils"
 import type { ElementContent, Root } from "hast"
@@ -36,9 +47,9 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
   const firstPara = intro.findIndex((n) => n.type === "element" && n.tagName === "p")
   const lead = firstPara >= 0 ? [intro[firstPara]] : intro
   const after = firstPara >= 0 ? intro.filter((_, i) => i !== firstPara) : []
-  const browse = byHeading.get("browse")
   const blurbs = topicBlurbs(byHeading.get("topics"))
   const n = counts(c)
+  const more = MORE.filter(([, target]) => c.bySlug.has(target))
   const stats = mapStats(c)
   const findings = findingsOf(c)
   const published = findings.length > 0
@@ -58,7 +69,7 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
     ["concepts/index", "Concepts", "What several projects together show about one claim, and where they disagree.", `${n.concepts} concepts`],
     ["entities/index", "Entities", "Everything recorded about one organism, gene, compound, method or dataset.", `${n.entities} entities`],
     ["conflicts/index", "Conflicts", "Where projects disagree, the evidence on each side, and what would settle it.", `${n.conflicts} conflicts`],
-    ["summaries/index", "Reports", "What one project did and found, with exact numbers to cite.", `${n.reports} reports, ${n.digests} digests`],
+    ["summaries/index", "Reports", "What one project did and found, with exact numbers to cite.", `${n.reports} reports`],
   ] as [string, string, string, string][]
   if (published)
     kinds.push(
@@ -95,21 +106,24 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
           <p class="lbl">The corpus</p>
           {(
             [
-              [n.reports, "Project reports", "the primary evidence", "summaries/index"],
-              [n.digests, "Cross-project digests", "discoveries and pitfalls", "summaries/index"],
-              [n.concepts, "Concepts", "synthesised across them", "concepts/index"],
-              [n.entities, "Entities", "organisms, genes, datasets, methods", "entities/index"],
-              [n.conflicts, "Recorded conflicts", "with the evidence on both sides", "conflicts/index"],
-              [n.topics, "Topics", "gathering the rest", "topics/index"],
-            ] as [number, string, string, string][]
-          ).map(([value, label, tail, target]) => (
-            <div class="frow">
-              <dt>{value}</dt>
-              <dd>
-                <a href={resolveRelative(slug, target as FullSlug)}>{label}</a> {tail}
-              </dd>
-            </div>
-          ))}
+              [n.reports, "Project reports", " the primary evidence", "summaries/index"],
+              [n.archives, "Archives", ": earlier discoveries and pitfalls", "catalog", "archives-and-site-pages"],
+              [n.concepts, "Concepts", " synthesised across them", "concepts/index"],
+              [n.entities, "Entities", " organisms, genes, datasets, methods", "entities/index"],
+              [n.conflicts, "Recorded conflicts", " with the evidence on both sides", "conflicts/index"],
+              [n.topics, "Topics", " gathering the rest", "topics/index"],
+            ] as [number, string, string, string, string?][]
+          )
+            .filter(([value, , , target]) => value > 0 || target !== "catalog")
+            .map(([value, label, tail, target, anchor]) => (
+              <div class="frow">
+                <dt>{value}</dt>
+                <dd>
+                  <a href={resolveRelative(slug, target as FullSlug) + (anchor ? `#${anchor}` : "")}>{label}</a>
+                  {tail}
+                </dd>
+              </div>
+            ))}
         </dl>
       </section>
       {/* Highlights come right after the opening, so a reader meets what the projects
@@ -152,9 +166,15 @@ export function Home({ file, c, tree, standing }: { file: File; c: Corpus; tree:
             </a>
           ))}
         </nav>
-        {browse && (
-          <nav class="browse also" aria-label="Also">
-            {jsx(browse)}
+        {more.length > 0 && (
+          <nav class="browse also" aria-label="More pages">
+            <ul>
+              {more.map(([label, target]) => (
+                <li>
+                  <a href={resolveRelative(slug, target as FullSlug)}>{label}</a>
+                </li>
+              ))}
+            </ul>
           </nav>
         )}
       </section>

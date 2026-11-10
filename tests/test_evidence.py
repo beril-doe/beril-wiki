@@ -96,3 +96,28 @@ def test_label_never_claims_review():
     line = labelled(text, "topics", CONFLICTS).lower()
     for word in ("confidence", "reviewed by", "verified", "approved", "accurate"):
         assert word not in line, f"label implies review: {word!r}"
+
+
+def test_archives_never_count_as_source_projects():
+    """The two archives gather many projects, so citing one is not a source project."""
+    only = "Claim. [src: pitfalls] Claim. [src: discoveries]"
+    assert labelled(only, "concepts", []) == "Cross-project archive"
+    mixed = "Claim. [src: p1] Claim. [src: pitfalls]"
+    assert labelled(mixed, "concepts", []) == (
+        "1 source project and a cross-project archive · single-source"
+    )
+    two = "Claim. [src: p1, p2, discoveries]"
+    assert "2 source projects and a cross-project archive · corroborated" in labelled(
+        two, "concepts", []
+    )
+    lit = "Claim. [src: pitfalls]\n\n## Literature Context\n\nPMID stuff."
+    assert labelled(lit, "topics", []) == "Cross-project archive · literature context"
+
+
+def test_archives_never_make_a_conflict_on_record(tmp_path):
+    conflicts = tmp_path / "wiki" / "conflicts"
+    conflicts.mkdir(parents=True)
+    (conflicts / "conflict--x--1.md").write_text("A. [src: p1] B. [src: pitfalls]")
+    assert conflict_sources(tmp_path) == []
+    page = "Claim. [src: p1, pitfalls]"
+    assert "conflict on record" not in labelled(page, "concepts", [{"p1", "pitfalls"}])

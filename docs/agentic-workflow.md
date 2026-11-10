@@ -556,6 +556,36 @@ their expected values from the records under `quartz/content/` and
   shows them under "Related results in other projects", one link per id, that
   every result the map can draw a related line for has the section, and that
   no other listed result has it.
+- `reference` checks the Browse menu at 1440, 961, 960 and 390 px in light and
+  dark: its four groups and nine links in order, a role="group" list named by
+  each header, a 1px rule in the line colour above every group after the
+  first, headers that are uppercase, smaller than the links, a different
+  colour, never focusable and at least 4.5:1, and arrow keys and Tab reaching
+  the nine links in order. It checks that Browse marks the current page for
+  Pitfalls, Data collections, Data issues, All pages and Reports. On both
+  archives it checks the title, the Archive kind and kind line, the note and
+  its link, and that no "Projects cited" or author list shows. Every concept
+  that cites only the archives must read "Cross-project archive" and never
+  "source project", and concepts that cite an archive beside reports must
+  say "and a cross-project archive". The Reports listing must show exactly
+  the published project reports with the one header fact "Project reports",
+  and each home topic-table row must count only the reports its topic links.
+  All pages at `/catalog` must be titled "All pages" with kind "Index", list
+  every published page of each kind exactly once under its heading and count,
+  in the order of `ALL_PAGES`, against the build's own pages under
+  `quartz/content/`, and show no citations, author lists or Ask button. No
+  page may list All pages under "Linked from", and search must index All
+  pages and every Data issues page. Results must show "Also: Negative results
+  · Earlier discoveries" under its unchanged intro, and Open questions "Also:
+  Research opportunities · Data issues", each link opening its page. The home
+  link row must read All pages, Pitfalls, Earlier discoveries, Data
+  collections and Authors, the Reports card must count reports only, and the
+  corpus figures must read "Archives: earlier discoveries and pitfalls" with a
+  link to the archive section of All pages. Each Conflicts card must name the
+  reports and archives its page cites, as the page header does, and both
+  result parts on an archive-only concept must read "This page cites no
+  report yet." Link paths are compared with the `--base` path removed, so the
+  check also runs against a site served under `/wiki`.
 
 `scripts/check_links.py` checks the links and shared stages without a browser
 and exits 1 with one line per failure. `--shared` re-runs the code checks on

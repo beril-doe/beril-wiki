@@ -35,6 +35,10 @@ SKIP = {"AGENTS.md", "log.md"}
 # said overlapping things and read as a disclaimer stack; "partially reviewed"
 # carries the same fact in two words. The About page defines what "partially"
 # covers, which is the right split: the badge is short, the About page precise.
+# The two cross-project digests stopped growing upstream in May 2026. They keep
+# their files and URLs, because concept pages cite them over a thousand times,
+# and publish as labelled archives under these titles.
+ARCHIVES = {"discoveries": "Earlier discoveries", "pitfalls": "Earlier pitfalls"}
 PROVENANCE = (
     "AI-generated wiki from AI-conducted research reports. Partially "
     "reviewed by scientists. See [[about|About This Wiki]]."
@@ -77,7 +81,7 @@ COLLECTION_INDEX = {
         "Project reports",
         "One page per research project, summarising it and linking to "
         "its raw report. These are the evidence every other page on "
-        "the site cites. Two cross-project digests sit here too.",
+        "the site cites.",
     ),
     "sources": ("Raw reports", "The raw research reports this wiki is compiled from, unedited."),
 }
@@ -154,7 +158,13 @@ def write_reader_pages(dst: pathlib.Path) -> int:
     """
 
     def count(folder: str) -> int:
-        return sum(1 for f in (dst / folder).glob("*.md") if f.name != "index.md")
+        # The two archives share summaries/ with the reports but are not reports.
+        return sum(
+            1
+            for f in (dst / folder).glob("*.md")
+            if f.name != "index.md"
+            and (folder != "summaries" or 'type: "Project report"' in f.read_text(encoding="utf-8"))
+        )
 
     rows = "\n".join(
         f"| [{label}]({folder}/) | {count(folder)} | {answers} | {when} |"
@@ -203,6 +213,101 @@ This page needs JavaScript and your own CBORG key. Without them, use the search 
     return 2
 
 
+# All pages, by kind, in the order a reader meets them: the section heading and the
+# folder whose published pages it lists.
+ALL_PAGES = [
+    ("Topics", "topics"),
+    ("Results", "findings"),
+    ("Open questions", "directions"),
+    ("Concepts", "concepts"),
+    ("Entities", "entities"),
+    ("Conflicts", "conflicts"),
+    ("Project reports", "summaries"),
+    ("Raw reports", "sources"),
+    ("Authors", "authors"),
+    ("Data collections", "data"),
+    ("Data issues", "data-issues"),
+]
+SITE_PAGES = (
+    "summaries/discoveries",
+    "summaries/pitfalls",
+    "negative-results",
+    "opportunities",
+    "guide",
+    "about",
+    "sources/index",
+)
+SITE_HEADING = "Archives and site pages"
+TITLE_LINE = re.compile(r"^title:\s*(.+?)\s*$", re.M)
+
+
+def page_title(path: pathlib.Path) -> str:
+    """A published page's title: its frontmatter `title:`, else its H1, else its name."""
+    text = path.read_text(encoding="utf-8", errors="replace")
+    fm = FM.match(text)
+    m = TITLE_LINE.search(fm.group(1)) if fm else None
+    if m:
+        raw = m.group(1)
+        try:
+            return str(json.loads(raw))
+        except ValueError:
+            return raw.strip("'\"")
+    h1 = re.search(r"^# +(.+?)\s*$", text, re.M)
+    return h1.group(1) if h1 else path.stem
+
+
+def page_link(slug: str, title: str) -> str:
+    """A link by title. A wikilink alias cannot hold brackets, # or |, so such a
+    title takes a markdown link with its brackets escaped."""
+    if re.search(r"[\[\]#|]", title):
+        return "[" + re.sub(r"([\[\]])", r"\\\1", title) + f"]({slug})"
+    return f"[[{slug}|{title}]]"
+
+
+def write_all_pages(dst: pathlib.Path, provenance: str) -> int:
+    """All pages, at /catalog: every published page by kind, titles only.
+
+    Built from the pages this build wrote, so it can name nothing unpublished and
+    misses nothing published. Titles only, so no description can carry a source
+    tag into the page and give it citations it does not make."""
+    sections: list[tuple[str, list[tuple[str, str]]]] = []
+    for heading, folder in ALL_PAGES:
+        entries = []
+        for f in sorted((dst / folder).glob("*.md")):
+            if f.stem == "index":
+                continue
+            if folder == "summaries" and 'type: "Project report"' not in f.read_text(
+                encoding="utf-8", errors="replace"
+            ):
+                continue
+            entries.append((page_title(f), f"{folder}/{f.stem}"))
+        if entries:
+            sections.append((heading, sorted(entries, key=lambda e: (e[0].casefold(), e[1]))))
+    site = [(page_title(dst / f"{s}.md"), s) for s in SITE_PAGES if (dst / f"{s}.md").exists()]
+    if site:
+        sections.append((SITE_HEADING, site))
+    jump = " · ".join(f"[{h}](#{slugify_heading(h)})" for h, _ in sections)
+    body = [
+        '---\ntitle: "All pages"\ntype: "Index"\n---',
+        provenance,
+        "",
+        "Every page on the site, by kind.",
+        "",
+        jump,
+    ]
+    for heading, entries in sections:
+        n = len(entries)
+        body += ["", f"## {heading}", "", f"{n} {'page' if n == 1 else 'pages'}.", ""]
+        body += [f"- {page_link(slug, title)}" for title, slug in entries]
+    (dst / "catalog.md").write_text("\n".join(body) + "\n", encoding="utf-8")
+    return 1
+
+
+def slugify_heading(text: str) -> str:
+    """The anchor Quartz gives a heading (github-slugger, for plain words)."""
+    return re.sub(r"[^\w\s-]", "", text.lower()).strip().replace(" ", "-")
+
+
 # A markdown link whose target is a path in the observatory checkout, not a page
 # in this wiki: notebooks, ../schemas/, ../references. The raw reports are
 # written to sit inside that repository, so published standalone these lead
@@ -245,6 +350,11 @@ def promote_title(text: str) -> str:
     if fm:  # splice into the existing block, before its closing ---
         return text[: fm.end() - 4] + f"title: {title}\n" + text[fm.end() - 4 :]
     return f"---\ntitle: {title}\n---\n" + text
+
+
+def retitle(text: str, title: str) -> str:
+    """Replace the `title:` that promote_title wrote."""
+    return re.sub(r"^title: .*$", f"title: {json.dumps(title)}", text, count=1, flags=re.M)
 
 
 def insert_after_fm(text: str, block: str) -> str:
@@ -447,7 +557,8 @@ def main() -> None:
     n = 0
     for src in root.rglob("*.md"):
         rel = src.relative_to(root)
-        if src.name in SKIP or rel.parts[0] == "reports":
+        # The catalog is a pipeline index; All pages takes its place below.
+        if src.name in SKIP or rel.parts[0] == "reports" or rel == pathlib.Path("catalog.md"):
             continue
         if rel.parts[0] == "entities" and src.stem in skip_entities:
             continue
@@ -493,6 +604,8 @@ def main() -> None:
                 text = re.sub(
                     r'^type: "Summary"$', 'type: "Project report"', text, count=1, flags=re.M
                 )
+            elif rel.stem in ARCHIVES:
+                text = re.sub(r'^type: "Summary"$', 'type: "Archive"', text, count=1, flags=re.M)
             if (root / "sources" / src.name).exists():
                 raw = f"sources/{pub.stem}"
                 text = text.replace(f"[[summaries/{pub.stem}|", f"[[{raw}|")
@@ -512,6 +625,8 @@ def main() -> None:
         # Title must move into frontmatter before the blocks go in, since
         # this is what removes the H1 they would otherwise sit under.
         text = promote_title(text)
+        if rel.parts[0] == "summaries" and rel.stem in ARCHIVES:
+            text = retitle(text, ARCHIVES[rel.stem])
         if head:
             text = insert_after_fm(text, "\n\n".join(head))
         out.write_text(text, encoding="utf-8")
@@ -520,6 +635,7 @@ def main() -> None:
     n += cards.write_extras(dst, records, provenance_block(None))
     n += write_collection_indexes(dst)
     n += write_reader_pages(dst)
+    n += write_all_pages(dst, provenance_block(None))
 
     images = kb / "wiki" / "sources" / "images"
     if images.is_dir():

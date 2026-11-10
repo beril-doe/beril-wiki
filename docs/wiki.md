@@ -29,7 +29,7 @@ concept fingerprints. The number of hubs follows the accepted grouping.
 
 `[src: project_id]` identifies evidence supporting a paragraph. IDs resolve to
 source report stems, with `discoveries` and `pitfalls` identifying the
-cross-project digests. `[[wikilinks]]` connect concepts, entities, summaries
+two cross-project archives. `[[wikilinks]]` connect concepts, entities, summaries
 and other pages. Literature Context sections cite external papers with
 `[PMID nnnn](PubMed URL)` links checked against retrieved PubMed results.
 
@@ -65,11 +65,36 @@ from the accepted wiki without editing it:
   become plain text; those entities remain in the source corpus.
 - Saved figure placements use committed files under `wiki/figures/`.
 - Pages receive provenance callouts and evidence counts. These counts do not
-  represent human review or confidence ratings.
+  represent human review or confidence ratings. The two archives never count
+  as source projects: a page that cites only them reads "Cross-project
+  archive", and a page that also cites reports reads, for example, "2 source
+  projects and a cross-project archive".
+- The digests `wiki/summaries/discoveries.md` and `wiki/summaries/pitfalls.md`
+  stopped growing upstream in May 2026. They keep their files and URLs and
+  publish as archives titled "Earlier discoveries" and "Earlier pitfalls",
+  with `type: "Archive"`. The theme labels them "Archive" and shows a note
+  under each title: Earlier discoveries points to Results, and Earlier
+  pitfalls points to Data issues. The Reports listing (`summaries/`) shows
+  and counts only the project reports, and so do the home topic table, the
+  topic and conflict listings, and the report slots of the local graph.
 - A `> **Erratum.**` callout under a paragraph means the cited report states
   that figure wrongly. The reports are archived unedited, so the correction is
   recorded in `contract/errata.yaml` and placed beside every claim that repeats
   the figure; the paragraph above it copies the report faithfully.
+- All pages replaces the published copy of `wiki/catalog.md` at `/catalog`.
+  The wiki file stays as the compiler writes it. Publish builds the page from
+  the pages that build actually wrote: a jump row, then one section per kind
+  (Topics, Results, Open questions, Concepts, Entities, Conflicts, Project
+  reports, Raw reports, Authors, Data collections, Data issues, then
+  "Archives and site pages") with a count and every title. It lists titles only, so it carries
+  no citations, and the theme names its kind "Index". It never counts in a
+  page's "Linked from" or in "Most linked" sorting. Search indexes it and the
+  Data issues pages.
+- An archive is never counted as a project report. The guide's Project report
+  row counts reports only. A Conflicts card names its sources the way the
+  conflict page's header does, for example "1 project report and a
+  cross-project archive disagree". On a concept page that cites only archives,
+  both result parts read "This page cites no report yet."
 - Two reader pages are written at publish time and never into `wiki/`:
   `guide.md` ("How to read this wiki", a table of page kinds with their page
   counts) and `ask.md`, which the theme's browser script fills with the Ask
@@ -180,18 +205,24 @@ opportunities and negative results help readers find follow-up questions and
 avoid repeating unsuccessful analyses.
 
 The top bar holds Results and Open questions (when the corpus has findings),
-Topics, a Browse menu, About, Search, Ask and the theme toggle. Browse lists
-Concepts, Entities, Conflicts, Reports and Authors. Without JavaScript the
-Browse list opens while focus is inside the menu. About is the last site
+Topics, a Browse menu, About, Search, Ask and the theme toggle. Browse holds
+four groups, each a list labelled by its header: "The wiki" (Concepts,
+Entities, Conflicts), "Projects" (Reports, Authors), "Working with the data"
+(Pitfalls, Data collections, Data issues), and All pages with no header. A
+1px rule sits above every group after the first. The headers are small
+uppercase text that never takes focus, so the arrow keys and Tab move through
+the nine links only. Without JavaScript the Browse list opens while focus is
+inside the menu. About is the last site
 link. On a wide screen it sits at the right end of the links, just before
 Search. At 960 px and below the links take a row of their own, and About
 follows Browse on that row.
 
 The home page opens with the wiki's title, the introduction from
 `wiki/index.md`, the search box and an "Ask the wiki" button. Beside the
-introduction, "The corpus" gives the number of project reports,
-cross-project digests, concepts, entities, recorded conflicts and topics.
-Each figure links to its collection. The sections that follow are
+introduction, "The corpus" gives the number of project reports, archives
+("Archives: earlier discoveries and pitfalls"), concepts, entities, recorded
+conflicts and topics. Each figure links to its collection; the archive
+figure links to the archive section of All pages. The sections that follow are
 "Highlights", "Find your way in", "The map" and "Topics". "Highlights"
 appears only when the corpus has findings. It holds the "Topic strips" key,
 then "What the projects found" and "Questions still open".
@@ -199,8 +230,11 @@ then "What the projects found" and "Questions still open".
 "Find your way in" holds one card per kind of page: Topics, Concepts,
 Entities, Conflicts and Reports, then Results and Open questions when the
 corpus has findings. Each card states which question that kind of page
-answers, and gives its page count. A row of links follows, taken from the
-Browse list in `wiki/index.md`.
+answers, and gives its page count; the Reports card counts project reports
+only. A row of links follows, drawn by the theme: All pages, Pitfalls, Earlier
+discoveries, Data collections and Authors, each shown when its page is
+published. The `## Browse` list that the topics stage writes into
+`wiki/index.md` no longer renders, so changing the row needs no stage rerun.
 
 "What the projects found" shows the three result cards that publish ranks
 for the home page, as the rendering section above describes. "Questions
@@ -271,7 +305,7 @@ gap between parts.
 - Every topic, report and concept page shows both parts, so pages of one
   kind share one layout. An empty part keeps its head and shows one sentence
   in a dashed box, such as "No open question builds on this project yet."
-  The two cross-project digests have no project, so they show neither part.
+  The two cross-project archives have no project, so they show neither part.
 
 A result card shows its type in plain words (Positive result, Negative
 result, Inconclusive, About the data), a title, a one or two sentence
@@ -282,6 +316,11 @@ its page bar and its map preview and box list. An unlisted bookkeeping fix's pag
 shows no type, no revision note and no PubMed chip. A card has no test statistics
 and no caveat; the page holds the numbers and the Limits section. A finding
 without an accepted summary shows only title and footer.
+
+Under its one-line intro, the Results index names two related pages:
+"Also: Negative results · Earlier discoveries". The Open questions index does
+the same with "Also: Research opportunities · Data issues". The theme draws
+these lines and shows a link only when its page is published.
 
 The Results index (`/findings/`) opens with a map headed "How new is each
 result?". A mark's position shows the topic (rows) and how the result

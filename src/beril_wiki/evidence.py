@@ -20,7 +20,10 @@ Everything here is countable instead, and the label never claims anyone read
 the page — the site-wide banner says the opposite, once, on every page.
 
 Applies to synthesis pages (concepts, entities, topic hubs, conflicts), where
-"how much backs this" is a real question. Summaries and raw reports are 1:1
+"how much backs this" is a real question. The two cross-project archives
+(`discoveries`, `pitfalls`) are cited like reports but gather many projects, so
+they never count as a source project or toward a corroboration tier: a page
+resting on them alone reads "Cross-project archive". Summaries and raw reports are 1:1
 with a single project by construction, so a label there would say nothing.
 
     uv run python -m beril_wiki.evidence          # print the label for every page
@@ -33,6 +36,9 @@ import re
 import sys
 
 from beril_wiki.paths import ROOT
+from beril_wiki.records import DIGESTS
+
+ARCHIVES = frozenset(DIGESTS)
 
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
 LABELLED = ("concepts", "entities", "topics", "conflicts")
@@ -62,7 +68,7 @@ def conflict_sources(kb: pathlib.Path) -> list[set[str]]:
     special cases entirely."""
     out = []
     for f in sorted((kb / "wiki" / "conflicts").glob("conflict--*.md")):
-        srcs = page_sources(f.read_text(encoding="utf-8", errors="replace"))
+        srcs = page_sources(f.read_text(encoding="utf-8", errors="replace")) - ARCHIVES
         if len(srcs) > 1:  # a one-project set can never meet the two-source test
             out.append(srcs)
     return out
@@ -75,12 +81,18 @@ def label(text: str, collection: str, conflicts: list[set[str]]) -> str | None:
     renders them as the title of a callout under the page's H1)."""
     if collection not in LABELLED:
         return None
-    srcs = page_sources(text)
+    cited = page_sources(text)
+    srcs = cited - ARCHIVES
+    archive = bool(cited & ARCHIVES)
     if not srcs:
+        bits = ["Cross-project archive"] if archive else []
+    else:
+        n = len(srcs)
+        tier = "single-source" if n == 1 else "corroborated" if n < 4 else "well corroborated"
+        count = f"{n} source project{'s' if n != 1 else ''}"
+        bits = [f"{count} and a cross-project archive" if archive else count, tier]
+    if not bits:
         return None
-    n = len(srcs)
-    tier = "single-source" if n == 1 else "corroborated" if n < 4 else "well corroborated"
-    bits = [f"{n} source project{'s' if n != 1 else ''}", tier]
     # A conflict page is itself the record of the disagreement; saying it has
     # one on record is circular.
     if collection != "conflicts" and any(len(srcs & c) >= 2 for c in conflicts):
@@ -97,7 +109,8 @@ def main() -> int:
     for f in sorted((kb / "wiki").rglob("*.md")):
         line = label(f.read_text(encoding="utf-8", errors="replace"), f.parent.name, conflicts)
         if line:
-            tier = line.split("·")[1].strip()
+            parts = [b.strip() for b in line.split("·")]
+            tier = parts[1] if len(parts) > 1 else parts[0]
             counts[tier] = counts.get(tier, 0) + 1
             print(f"{f.relative_to(kb)}: {line}")
     print(

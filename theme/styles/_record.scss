@@ -294,6 +294,18 @@
   font: 400 var(--t-read) / 1.5 var(--serif);
   color: var(--ink-2);
 }
+// An archive says, right under its title, that it stopped growing and where to look instead.
+.record .archnote {
+  margin: 0.6rem 0 0.2rem;
+  max-width: 68ch;
+  padding: 2px 0 2px 12px;
+  border-left: 3px solid var(--line-2);
+  font: 400 var(--t-ui) / 1.5 var(--sans);
+  color: var(--ink);
+  a {
+    color: var(--secondary);
+  }
+}
 .record .kindline {
   margin: 0.6rem 0 0;
   max-width: 68ch;
