@@ -96,7 +96,6 @@ def test_proposal_repairs_membership_and_supplies_existing_hubs(tmp_path, monkey
     (tmp_path / "wiki/topics").mkdir()
     (tmp_path / "wiki/topics/old.md").write_text("# Old Name\n\n[[concepts/a]]")
     agent = R.Runtime.__new__(R.Runtime)
-    agent._validator = agent._validation_context = None
     calls = []
 
     def ask(messages, step):
@@ -134,7 +133,6 @@ def test_invalid_proposal_stops_after_one_repair_without_replacing_state(
     save(tmp_path)
     previous = (tmp_path / "state/curator-topics.json").read_bytes()
     agent = R.Runtime.__new__(R.Runtime)
-    agent._validator = agent._validation_context = None
     calls = []
 
     def ask(messages, step):

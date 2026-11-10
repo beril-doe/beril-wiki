@@ -150,9 +150,8 @@ def test_card_stage_revisions_ignore_other_stage_files_but_not_shared_ones(tmp_p
     and directions untouched; a change to the shared stages/cards.py reschedules them."""
     import pathlib
 
-    config = {"model": "claude-sonnet-5-5", "step_models": {"review": "gpt-6.1-sol"}}
     names = ("headlines", "novelty", "directions")
-    before = {n: curator.stage_revision(tmp_path, n, config) for n in names}
+    before = {n: curator.stage_revision(tmp_path, n) for n in names}
     real = pathlib.Path.read_text
 
     def edited(target):
@@ -163,9 +162,9 @@ def test_card_stage_revisions_ignore_other_stage_files_but_not_shared_ones(tmp_p
         return read_text
 
     monkeypatch.setattr(pathlib.Path, "read_text", edited("stages/gists.py"))
-    assert {n: curator.stage_revision(tmp_path, n, config) for n in names} == before
+    assert {n: curator.stage_revision(tmp_path, n) for n in names} == before
     monkeypatch.setattr(pathlib.Path, "read_text", edited("stages/cards.py"))
-    after = {n: curator.stage_revision(tmp_path, n, config) for n in names}
+    after = {n: curator.stage_revision(tmp_path, n) for n in names}
     assert all(after[n] != before[n] for n in names)
     monkeypatch.undo()
     assert curator.EDITORIAL["gists"][3] is None

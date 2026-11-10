@@ -1,9 +1,17 @@
 """Synthetic recorded replies used only by offline end-to-end tests."""
 
+from __future__ import annotations
+
 import json
+from pathlib import Path
+from typing import TYPE_CHECKING
 
 from beril_wiki.agentic.runtime import digest
 from beril_wiki.check import all_paragraphs
+
+if TYPE_CHECKING:
+    from beril_wiki.agentic.page_agent import Page
+    from beril_wiki.agentic.runtime import Runtime
 
 FACTS = "Yield was 42%. [src: a]\n\nYield was 56%. [src: b]"
 PAD = "Growth conditions were compared across the two projects without new figures. "
@@ -152,9 +160,11 @@ def install():
 
     import litellm
 
+    from beril_wiki.agentic import page_agent
     from beril_wiki.agentic.runtime import Runtime
 
     Runtime.ask = reply
+    patch.object(page_agent, "run", page_session).start()
     patch.object(litellm, "completion", side_effect=forbid_api).start()
     patch.object(litellm, "embedding", side_effect=forbid_api).start()
 
@@ -171,3 +181,55 @@ def install():
         raise AssertionError(f"Unexpected network call: {url}")
 
     patch.object(urllib.request, "urlopen", side_effect=recorded_url).start()
+
+
+def page_session(
+    agent: Runtime, page: Page, workdir: Path, *, max_reviews: int = 4
+) -> tuple[str, dict | None]:
+    """A page session replayed from recorded replies, for offline tests.
+
+    The writer's draft is the reply to the page's step; each correction is the reply to
+    the step plus /repair, asked with the open issues, as a session would revise after
+    a failed check or review. For an integrated page a reply is the candidate JSON the
+    recorded writers return (content or anchored edits); for a derived page it is the
+    Markdown. Check and review are the stage's own, so gates, review, verification and
+    the stage's stop rules run unchanged."""
+    from beril_wiki.agentic import page_agent as PA
+    from beril_wiki.agentic.batch import reconstruct
+    from beril_wiki.agentic.runtime import CandidateError
+
+    def parse(raw):
+        if page.meta is None:
+            return raw, None
+        candidate = json.loads(raw)
+        meta = {
+            "description": candidate.get("description"),
+            "accounted_evidence": candidate.get("accounted_evidence") or {},
+        }
+        return reconstruct(page.text, candidate), meta
+
+    raw = agent.ask(page.messages, page.step)
+    reviewed, issues = False, []
+    for attempt in range(max_reviews + 1):
+        try:
+            text, meta = parse(raw)
+            issues = page.check(text, meta)
+        except (CandidateError, ValueError) as exc:
+            issues = [str(exc)]
+        if not issues:
+            try:
+                issues = page.review(text, meta)
+            except CandidateError as exc:
+                raise PA.Exhausted(str(exc), exc.objections, True) from exc
+            reviewed = True
+            if not issues:
+                return text, meta
+        if attempt == max_reviews:
+            break
+        raw = agent.ask(
+            page.messages + [{"role": "user", "content": "ISSUES " + json.dumps(issues)}],
+            page.step + "/repair",
+        )
+    raise PA.Exhausted(
+        f"{page.step}: rounds spent; still open: {'; '.join(issues)}", issues, reviewed
+    )

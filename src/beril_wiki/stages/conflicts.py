@@ -30,6 +30,7 @@ from beril_wiki.agentic.prose import (
     blocks,
     derived_page,
     limit,
+    only,
     parallel,
     prune_failures,
     record_failure,
@@ -181,11 +182,16 @@ def main() -> int:
         if m:
             existing[f.stem] = m.group(1)
 
+    named = only(sys.argv)
     todo, live, skipped = [], set(), 0
     for group in merge_similar_groups(tension_blocks()):
         slug = conflict_slug(group)
         live.add(slug)
         digest = hashlib.sha256("\n".join(b["text"] for b in group).encode()).hexdigest()[:16]
+        if named is not None:
+            if f"conflicts/{slug}" in named:
+                todo.append((slug, group, digest))
+            continue
         if existing.get(slug) == digest:
             skipped += 1
             continue
@@ -247,7 +253,7 @@ def main() -> int:
     reaped = 0
     if failed:
         print(f"  {failed} page(s) failed: retiring nothing this pass")
-    for stale in [] if cap is not None or failed else sorted(OUT.glob("*.md")):
+    for stale in [] if cap is not None or named is not None or failed else sorted(OUT.glob("*.md")):
         if stale.stem not in live:
             stale.unlink()
             reaped += 1
