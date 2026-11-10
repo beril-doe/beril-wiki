@@ -667,12 +667,16 @@ def test_cli_loads_committed_policy_without_model_flag(tmp_path, monkeypatch):
     monkeypatch.setattr(cli, "run", lambda root, checkout, config, staged: configs.append(config))
     assert cli.main() == 0
     claude_roles = {"planning", "writing"}
+    pinned = {"card_review": "gpt-6-luna", "labels": "claude-haiku-5-5"}
     assert R.model_policy(configs[0]) == {
-        role: "claude-sonnet-5-5"
-        if role == "pages"
-        else "claude-opus-5-5"
-        if role in claude_roles
-        else "gpt-6.1-sol"
+        role: pinned.get(role)
+        or (
+            "claude-sonnet-5-5"
+            if role in ("pages", "cards")
+            else "claude-opus-5-5"
+            if role in claude_roles
+            else "gpt-6.1-sol"
+        )
         for role in R.MODEL_ROLES
     }
     # Replacement file paths resolve against the chosen root, and a role flag wins.

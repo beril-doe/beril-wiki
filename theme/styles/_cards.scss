@@ -1,0 +1,1683 @@
+// ---- finding and next-step cards (preview builds) ------------------------
+// Label colours mean one thing each: teal for candidate novel, amber for
+// extends, the conflict red for in tension, grey for established, a dashed
+// outline for insufficient or not assessed. Chip fills are mixed from the
+// text colour so dark mode needs no second palette.
+:root {
+  --v-new: #0e5a6b;
+  --v-ext: #8a5d08;
+  // Small card labels need 4.5:1 on white; the palette grey reaches about 4.2.
+  --mute-ink: #5c636a;
+  --ready-part: #8a5d08;
+  // The Results picture's comparison colours: three hues that stay apart for
+  // colour-blind readers (checked with the dataviz palette validator), then grey.
+  --nv-new: #c2410c;
+  --nv-builds: #2a78d6;
+  --nv-match: #138a60;
+  --nv-none: #868d94;
+  // A project's box on the Results map: 3:1 against the page, so the grouping reads.
+  --nv-box: #878e94;
+  // Novel orange for small text: 4.5:1 on cards in both themes (the mark orange is 3:1).
+  --nv-new-text: #c2410c;
+}
+:root[saved-theme="dark"] {
+  --v-new: #57a8ba;
+  --v-ext: #e2a94a;
+  --mute-ink: var(--mute);
+  --ready-part: var(--refines);
+  --nv-new: #d95926;
+  --nv-builds: #3987e5;
+  --nv-match: #199e70;
+  --nv-none: #7c848c;
+  --nv-box: #6b7075;
+  --nv-new-text: #f08a4b;
+}
+
+// The home search's button, outside the home band: the open-question
+// record bar uses it.
+.cardbar .btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 16px;
+  border: 1px solid var(--secondary);
+  border-radius: 6px;
+  background: var(--secondary);
+  color: var(--light);
+  font: 500 var(--t-ui) / 1.3 var(--sans);
+  cursor: pointer;
+  &:hover {
+    filter: brightness(1.08);
+  }
+  &.sm {
+    padding: 5px 10px;
+    font-size: var(--t-meta);
+  }
+  &.ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line-2);
+  }
+}
+.v {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--t-label);
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 2px 7px;
+  color: var(--mute-ink);
+  border: 1px dashed var(--line-2);
+  &::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  &.new,
+  &.ext,
+  &.con,
+  &.conf {
+    border: 0;
+    background: color-mix(in srgb, currentColor 13%, transparent);
+  }
+  &.new {
+    color: var(--v-new);
+  }
+  &.ext {
+    color: var(--v-ext);
+  }
+  &.con {
+    color: var(--conflict);
+  }
+  &.conf {
+    color: var(--ink-2);
+  }
+}
+
+.tags,
+.cardbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.cardbar {
+  margin: 0 0 18px;
+  .when {
+    font-size: var(--t-meta);
+    color: var(--mute-ink);
+  }
+}
+.rt,
+.c-kind {
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mute-ink);
+}
+// A positive result is the usual case; the other kinds read in ink so they stand out.
+.rt.t-negative,
+.rt.t-inconclusive,
+.rt.t-data {
+  color: var(--ink);
+}
+.rt.upd {
+  font-weight: 400;
+  margin-left: 8px;
+}
+
+
+// Two columns at desktop width: four home cards fill two rows, not three and one.
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  gap: 12px;
+}
+// The home page shows three results: one row of three on wide screens, one column below.
+.grid2.grid3 {
+  grid-template-columns: 1fr;
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.stack {
+  display: grid;
+  gap: 10px;
+}
+.fcard {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 15px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  &[hidden] {
+    display: none;
+  }
+  h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: var(--t-sub);
+    line-height: 1.3;
+    margin: 0;
+    a {
+      color: var(--ink);
+    }
+  }
+  p {
+    margin: 0;
+    font-size: var(--t-ui);
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+}
+.fcard .meta .sep::before {
+  // The separator belongs to the topic, so a wrapped footer never leaves it alone on a line.
+  content: "·";
+  margin-right: 0.5em;
+}
+.fcard {
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    font-size: var(--t-meta);
+    color: var(--mute-ink);
+    border-top: 1px solid var(--line);
+    padding-top: 8px;
+    margin-top: auto;
+  }
+}
+// What following up a question needs, least effort first: existing data, outside data,
+// an experiment.
+.ready {
+  font-size: var(--t-meta);
+  font-weight: 600;
+  color: var(--supports);
+  &.f-outside {
+    color: var(--ready-part);
+  }
+  &.f-experiment {
+    color: var(--method);
+  }
+}
+.c-more {
+  margin: 12px 0 0;
+  font-size: var(--t-ui);
+}
+.gist {
+  color: var(--ink);
+}
+.chipwrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+}
+.chipwrap button,
+.chipwrap > span:first-child {
+  font: inherit;
+  font-size: var(--t-meta);
+  border: 1px solid var(--line-2);
+  padding: 2px 10px;
+  color: var(--ink-2);
+  background: transparent;
+  cursor: pointer;
+  &[aria-expanded="true"] {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--method);
+    outline-offset: 2px;
+  }
+}
+.chipwrap > span:first-child {
+  cursor: default;
+}
+.chipwrap .note {
+  font-size: var(--t-meta);
+  color: var(--ink-2);
+  line-height: 1.45;
+  &[hidden] {
+    display: none;
+  }
+}
+.c-select {
+  display: inline-block;
+  max-width: 100%;
+  margin: 0 0 12px;
+  font-size: var(--t-meta);
+  color: var(--ink-2);
+  select {
+    font: inherit;
+    max-width: 100%;
+    min-width: 0;
+    margin-left: 4px;
+    border: 1px solid var(--line-2);
+    border-radius: 6px;
+    padding: 3px 8px;
+    background: var(--card);
+    color: var(--ink);
+  }
+}
+// ---- open-questions grid ------------------------------------------------
+// Rows are `display: contents`, so every cell sits in one grid and the columns
+// line up. The column widths follow the dot counts (set inline as --qcols).
+.qwrap {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  --hit: 28px;
+  // The same mark size as the Results map's dots.
+  --mark: 10px;
+  margin: 0 0 18px;
+}
+.qgrid {
+  display: grid;
+  grid-template-columns: minmax(7.5rem, 11rem) var(--qcols);
+  &[data-single] {
+    grid-template-columns: var(--qcols);
+  }
+}
+.qrow {
+  display: contents;
+}
+.qcolh,
+.qcorner {
+  padding: 10px 10px 8px;
+  border-bottom: 1px solid var(--line-2);
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mute-ink);
+  line-height: 1.3;
+}
+.qn {
+  color: var(--ink);
+  margin-left: 4px;
+}
+.qrowh {
+  padding: 12px 10px 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--serif);
+  // One row-label size on both maps.
+  font-size: var(--t-ui);
+  line-height: 1.3;
+  a {
+    color: var(--ink);
+  }
+}
+.qcell {
+  border-bottom: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  padding: 4px 6px;
+  min-height: calc(var(--hit) + 8px);
+  &[data-empty] {
+    background: color-mix(in srgb, var(--mute) 6%, transparent);
+  }
+}
+.qlab {
+  display: none;
+}
+.qdots {
+  display: flex;
+  flex-wrap: wrap;
+}
+.qd {
+  position: relative;
+  display: block;
+  color: var(--ink);
+  // Cites a result in the Novel column: the one colour on this map.
+  &.novel {
+    color: var(--nv-new);
+  }
+}
+.qdot {
+  display: grid;
+  place-items: center;
+  width: var(--hit);
+  height: var(--hit);
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 50%;
+  &::before {
+    content: "";
+    width: var(--mark);
+    height: var(--mark);
+    border-radius: 50%;
+    background: currentColor;
+  }
+  // A soft halo for hover, focus and pin, which never reads as the ring.
+  .qd[data-open] &,
+  .qd[data-hover] & {
+    background: color-mix(in srgb, var(--ink) 14%, transparent);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--method);
+    outline-offset: -2px;
+    border-radius: 6px;
+  }
+}
+.qpop {
+  // Border and padding count inside the width, so the viewport cap below holds.
+  box-sizing: border-box;
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  width: min(18rem, calc(100vw - 16px));
+  padding: 10px 12px;
+  text-align: left;
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--line-2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  font-size: var(--t-meta);
+  line-height: 1.4;
+  // Bridges the gap to the dot so the pointer can reach the link inside.
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 10px;
+  }
+  &::before {
+    top: -10px;
+  }
+  &::after {
+    bottom: -10px;
+  }
+  strong {
+    display: block;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: var(--t-ui);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .qneed {
+    display: block;
+    color: var(--ink-2);
+  }
+  .qopen {
+    display: block;
+    margin-top: 6px;
+    font-weight: 600;
+    color: var(--method);
+  }
+}
+// Hover reveals only for pointers that hover: on touch a tap would otherwise
+// be consumed as hover and the open/close sequence breaks.
+@media (hover: hover) {
+  // questions.ts sets data-qhover and drives data-hover itself, with a grace period.
+  html:not([data-qhover]) .qd:hover .qpop,
+  .qd[data-hover] .qpop {
+    display: block;
+  }
+  html:not([data-qhover]) .qd:hover .qdot {
+    background: color-mix(in srgb, var(--ink) 14%, transparent);
+  }
+}
+.qd:has(:focus-visible) .qpop,
+.qd[data-focused] .qpop,
+.qd[data-open] .qpop {
+  display: block;
+}
+.qd[data-closed]:not([data-open]) .qpop {
+  display: none;
+}
+.qpop[style*="position: fixed"] {
+  transform: none;
+}
+.qlegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  align-items: center;
+  margin: 0 0 10px;
+  font-size: var(--t-meta);
+  color: var(--ink-2);
+}
+.qkey {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.qd.key {
+  display: inline-block;
+  vertical-align: middle;
+  --hit: 18px;
+  --mark: 10px;
+}
+.qnovel {
+  display: block;
+  color: var(--nv-new);
+  font-weight: 600;
+}
+.qall {
+  margin: 22px 0 0;
+  summary {
+    cursor: pointer;
+    font-size: var(--t-ui);
+    color: var(--ink-2);
+    padding: 6px 0;
+  }
+  h3 {
+    font-size: var(--t-ui-lg);
+    margin: 14px 0 4px;
+  }
+}
+@media (pointer: coarse), (max-width: 640px) {
+  .qwrap {
+    --hit: 44px;
+  }
+}
+// Touch draws question dots at the Results map's touch size.
+@media (pointer: coarse) {
+  .qwrap,
+  .qd.key {
+    --mark: 12px;
+  }
+}
+@media (max-width: 640px) {
+  .qgrid,
+  .qgrid[data-single] {
+    display: block;
+  }
+  .qrow {
+    display: block;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  // Stacked cells have no columns for the effort arrow to run across.
+  .qhead,
+  .qrow.qeffort {
+    display: none;
+  }
+  // The same phone row label as the Results map's.
+  .qrowh {
+    display: block;
+    border: 0;
+    padding: 0 0 6px;
+    font-size: var(--t-ui);
+    font-weight: 600;
+  }
+  .qcell {
+    border: 0;
+    padding: 2px 0;
+    &[data-empty] {
+      display: none;
+    }
+  }
+  .qlab {
+    display: block;
+    font-size: var(--t-label);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--mute-ink);
+  }
+}
+.qlist {
+  padding-left: 18px;
+  .n {
+    font-size: var(--t-meta);
+    color: var(--mute-ink);
+  }
+}
+.px-nomatch {
+  font-size: var(--t-ui);
+  color: var(--mute-ink);
+}
+.cards-board {
+  margin-top: 20px;
+}
+
+.topic-cards {
+  display: grid;
+  gap: 32px;
+  margin: 0 0 4px;
+  // The page header above already spaces the first section; heads inside need no
+  // extra padding or heading margin on top of the grid gap.
+  .sechead {
+    padding-top: 0;
+    h2 {
+      margin-top: 0;
+    }
+    p {
+      max-width: 60ch;
+      margin-bottom: 0;
+    }
+  }
+  > section {
+    min-width: 0;
+  }
+  // An empty part keeps the card area's outline so every page of a kind has the same shape.
+  .part-empty {
+    margin: 0;
+    padding: 14px 15px;
+    border: 1px dashed var(--line);
+    color: var(--ink-2);
+    font-size: var(--t-ui);
+  }
+}
+.linkmore {
+  margin-top: 4px;
+  font-size: var(--t-ui);
+  // A 44 px tap target on a phone; the padding keeps the native marker and keyboard use.
+  > summary {
+    cursor: pointer;
+    color: var(--method);
+    width: max-content;
+    padding: 11px 0;
+  }
+  ul {
+    margin: 8px 0 0;
+    padding-left: 18px;
+  }
+  li {
+    margin: 4px 0;
+  }
+}
+.qfcard .qfnovel {
+  font-size: var(--t-meta);
+  font-weight: 600;
+  color: var(--nv-new-text);
+}
+.conceptlinks {
+  margin-top: 36px;
+  h2 {
+    font-size: var(--t-sub);
+    margin: 0 0 8px;
+  }
+  ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+  li {
+    margin: 4px 0;
+  }
+}
+
+// Starts with existing data: the left half filled. Data availability unclear: dashed.
+.qd.half .qdot::before {
+  background: linear-gradient(90deg, currentColor 50%, var(--card) 50%);
+  box-shadow: inset 0 0 0 1.5px currentColor;
+}
+.qd.unclear .qdot::before {
+  background: var(--card);
+  border: 2px dashed currentColor;
+  box-sizing: border-box;
+}
+.qd.cross.half .qdot::before {
+  box-shadow:
+    inset 0 0 0 1.5px currentColor,
+    0 0 0 2px var(--card),
+    0 0 0 3.5px currentColor;
+}
+// Both markers: the half fill inside the dashed outline, which replaces the inner stroke;
+// a question joining projects keeps its ring.
+.qd.half.unclear .qdot::before {
+  background: linear-gradient(90deg, currentColor 50%, var(--card) 50%);
+  box-shadow: none;
+}
+.qd.cross.half.unclear .qdot::before {
+  box-shadow:
+    0 0 0 2px var(--card),
+    0 0 0 3.5px currentColor;
+}
+// The effort line over the columns, and each column's definition under its name.
+// The x axis: an arrow across every column, from the least effort to the most.
+.qeffortline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px 4px;
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.qaxend {
+  flex: none;
+}
+.qaxarrow {
+  flex: 1;
+  position: relative;
+  height: 2px;
+  margin-right: 6px;
+  background: var(--ink);
+  &::after {
+    content: "";
+    position: absolute;
+    right: -7px;
+    top: -4px;
+    border-left: 8px solid var(--ink);
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+  }
+}
+// Narrower columns leave the arrow too little room between its labels: the labels share
+// one line and the arrow takes its own line under them, across every column.
+@media (max-width: 900px) {
+  .qeffortline {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 6px;
+  }
+  .qaxarrow {
+    order: 1;
+    flex: 0 0 calc(100% - 8px);
+  }
+}
+// The y axis: the corner over the row labels names them.
+.qcorner.qaxis,
+.nvcorner {
+  align-self: stretch;
+  display: flex;
+  align-items: flex-end;
+  padding-left: 0;
+  color: var(--ink);
+}
+.nvcorner {
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 8px 6px 8px 0;
+  border-bottom: 1px solid var(--line-2);
+  line-height: 1.3;
+}
+.qrow.qeffort .qcorner {
+  border-bottom: 0;
+  padding: 0;
+}
+.qcoln {
+  display: block;
+  margin-top: 4px;
+  font-size: var(--t-meta);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+// ---- questions that join projects ----------------------------------------
+// A ring marks a question citing results from two or more projects.
+.qd.cross .qdot::before {
+  box-shadow:
+    0 0 0 2px var(--card),
+    0 0 0 3.5px currentColor;
+}
+.qd.cross .qpop {
+  width: min(24rem, calc(100vw - 16px));
+  max-height: min(60vh, 32rem);
+  overflow-y: auto;
+}
+.qbridge {
+  display: block;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+.qjoins {
+  display: block;
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mute-ink);
+  margin-bottom: 4px;
+}
+.qproj {
+  display: block;
+  padding: 6px 0 6px 10px;
+  border-left: 2px solid var(--line-2);
+  margin-top: 6px;
+}
+.qpname {
+  display: block;
+  font-weight: 600;
+  color: var(--ink);
+}
+.qptopic {
+  display: block;
+  color: var(--mute-ink);
+}
+.qpres a {
+  display: block;
+  margin-top: 3px;
+  color: var(--method);
+}
+// The three questions use the result cards' three-column grid, so their strips line up.
+.xqlist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  // The same columns, gap and breakpoint as .grid2.grid3, so every strip lines up.
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  > li {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 14px 15px;
+    .tstrip {
+      margin-top: auto;
+    }
+  }
+}
+// The sub-heads inside Highlights.
+.highlights .hlpart {
+  margin-top: 28px;
+}
+.sechead.sub {
+  padding-top: 8px;
+}
+.sechead.sub h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: var(--t-sub);
+  margin: 0;
+}
+.xqt {
+  font-family: var(--serif);
+  font-size: var(--t-sub);
+  line-height: 1.3;
+  color: var(--ink);
+}
+.xqp {
+  font-size: var(--t-meta);
+  color: var(--ink-2);
+}
+// ---- the comparison a result card's Compare button opens ------------------
+.spanel {
+  margin-top: 12px;
+  // Placed inside the card grid under the clicked card's row, it spans every column.
+  .cards > & {
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
+  background: var(--card);
+  border: 1px solid var(--method);
+  padding: 14px 15px;
+  &[hidden] {
+    display: none;
+  }
+  h4 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: var(--t-sub);
+    margin: 0 0 10px;
+  }
+}
+.slanes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 10px;
+}
+.slabel {
+  display: block;
+  font-size: var(--t-meta);
+  font-weight: 600;
+  color: var(--ink-2);
+  margin-bottom: 4px;
+}
+.smini {
+  border: 1px solid var(--line);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  p {
+    margin: 0;
+    font-size: var(--t-meta);
+    color: var(--ink-2);
+    line-height: 1.45;
+  }
+}
+.stitle {
+  font-family: var(--serif);
+  color: var(--ink);
+  line-height: 1.3;
+}
+.ssrc {
+  font-size: var(--t-meta);
+}
+.show {
+  margin: 12px 0 0;
+  font-size: var(--t-ui);
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+
+// ---- the Results picture -------------------------------------------------
+.nvmap {
+  position: relative;
+  margin: 0 0 28px;
+}
+.nvlegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  align-items: center;
+  font-size: var(--t-meta);
+  color: var(--ink-2);
+  margin: 0 0 10px;
+  svg path {
+    stroke: var(--ink-2);
+    stroke-width: 2;
+    stroke-linecap: round;
+    fill: none;
+  }
+}
+.nvkey {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.nvhint {
+  color: var(--mute-ink);
+}
+.nvbox {
+  position: relative;
+}
+.nvgrid {
+  display: grid;
+  grid-template-columns: var(--nvtpl);
+}
+// "Something new" over the first two columns, then the rest under a quieter head.
+.nvgroupcorner {
+  grid-column: 1;
+}
+.nvgroup {
+  font-size: var(--t-meta);
+  font-weight: 600;
+  padding: 4px 6px 6px;
+  margin: 0 6px;
+  border-bottom: 2px solid var(--ink);
+  .n {
+    color: var(--mute-ink);
+    font-weight: 400;
+  }
+  &.rest {
+    color: var(--mute-ink);
+    font-weight: 400;
+    border-bottom: 1px solid var(--line-2);
+  }
+}
+.nvcolh {
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mute-ink);
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--line-2);
+  line-height: 1.3;
+  i {
+    display: block;
+    height: 4px;
+    background: var(--nv);
+    margin-bottom: 6px;
+  }
+  .n {
+    color: var(--ink);
+  }
+}
+.nvnotewrap {
+  position: relative;
+}
+.nvnoteb {
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: help;
+  text-align: left;
+}
+.nvnote {
+  display: block;
+  margin-top: 4px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink-2);
+  &[hidden] {
+    display: none;
+  }
+}
+// The square beside a topic is the topic's colour on cards and chips; no mark takes it.
+.nvrowh::before,
+.qrowh::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  background: var(--d, var(--line-2));
+  vertical-align: 1px;
+}
+.nvrowh {
+  font-family: var(--serif);
+  font-size: var(--t-ui);
+  line-height: 1.3;
+  color: var(--ink);
+  padding: 6px 8px 6px 0;
+  border-bottom: 1px solid var(--line);
+  .n {
+    color: var(--mute-ink);
+    font-family: var(--sans);
+  }
+}
+.nvcell {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 4px;
+  padding: 5px;
+  border-bottom: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.nvlab {
+  display: none;
+}
+.nv-new {
+  --nv: var(--nv-new);
+}
+.nv-builds {
+  --nv: var(--nv-builds);
+}
+.nv-match {
+  --nv: var(--nv-match);
+}
+.nv-none,
+.nv-unset {
+  --nv: var(--nv-none);
+}
+.nbead {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  min-width: 24px;
+  min-height: 24px;
+  align-items: center;
+  max-width: 100%;
+  padding: 4px 5px;
+  border: 1px solid var(--nv-box);
+  background: var(--card);
+  cursor: pointer;
+  transition: opacity 0.15s;
+  // A ring sits 3px outside its mark; the wider pitch keeps rings off neighbours and the box.
+  &:has(.rel) {
+    gap: 7px;
+    padding: 6px 7px;
+  }
+  &.key {
+    display: inline-flex;
+    min-width: 0;
+    min-height: 0;
+    cursor: default;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--method);
+    outline-offset: 2px;
+  }
+  &.me {
+    outline: 2px solid var(--ink);
+    outline-offset: 1px;
+  }
+  &.nb {
+    outline: 2px dashed var(--method);
+    outline-offset: 1px;
+  }
+}
+.nd {
+  // The shape is drawn in ::before, so a clipped triangle never clips the ring in ::after.
+  position: relative;
+  display: block;
+  flex: none;
+  // The same mark size as the Open questions dots.
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  color: var(--ink);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  // Positive: filled. Negative: hollow. Inconclusive: dashed. About the data: a grey square.
+  &[data-k="negative"]::before {
+    background: var(--card);
+    box-shadow: inset 0 0 0 1.5px currentColor;
+  }
+  // 2 px: Chrome draws a 1.5 px dashed border at 1 px on a 1x screen.
+  &[data-k="inconclusive"]::before {
+    background: var(--card);
+    border: 2px dashed currentColor;
+  }
+  &[data-k="data"]::before {
+    inset: 1px;
+    border-radius: 1px;
+    background: var(--mute-ink);
+  }
+  &.rel::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border: 1.2px solid currentColor;
+    border-radius: 50%;
+  }
+  &.on {
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--ink) 16%, transparent);
+  }
+}
+.nvkey .nd.key {
+  margin: 0 2px;
+}
+.nvbox.sel .nbead:not(.me):not(.nb) {
+  opacity: 0.4;
+}
+svg.nvlinks {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: visible;
+  path {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 1.8;
+    opacity: 0.85;
+  }
+}
+.nvempty {
+  font-size: var(--t-meta);
+  color: var(--mute-ink);
+  margin: 8px 0 0;
+}
+.nvpanel {
+  margin-top: 12px;
+  background: var(--card);
+  border: 1px solid var(--line-2);
+  padding: 14px 15px;
+  font-size: var(--t-meta);
+  &[hidden] {
+    display: none;
+  }
+  h4 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: var(--t-sub);
+    margin: 0;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 0;
+    display: grid;
+    gap: 6px;
+  }
+}
+.nvsub,
+.nvfam {
+  margin: 12px 0 2px;
+  font-size: var(--t-label);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--mute-ink);
+}
+.nvlist li {
+  border-left: 2px solid var(--line-2);
+  padding-left: 8px;
+}
+.nvgo {
+  font: 600 var(--t-meta) / 1.4 var(--sans);
+  color: var(--method);
+  background: none;
+  border: 0;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+  text-align: left;
+}
+.nvline {
+  display: block;
+  color: var(--ink-2);
+}
+.nvtip {
+  // Padding inside the width, so the viewport cap holds and the measured size is the drawn one.
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 40;
+  max-width: min(22rem, calc(100vw - 16px));
+  padding: 9px 11px;
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--line-2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  font-size: var(--t-meta);
+  line-height: 1.45;
+  strong {
+    display: block;
+    font-family: var(--serif);
+    font-weight: 500;
+    margin-bottom: 3px;
+  }
+  span {
+    display: block;
+    color: var(--ink-2);
+  }
+  .nvtipsrc {
+    margin-top: 4px;
+    color: var(--method);
+  }
+  .nvtipkind {
+    font-size: var(--t-label);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--mute-ink);
+    margin-bottom: 2px;
+  }
+  .nvtiprel {
+    margin-top: 4px;
+  }
+  .nvopen {
+    display: block;
+    margin-top: 6px;
+    font-weight: 600;
+    color: var(--method);
+  }
+  &[hidden] {
+    display: none;
+  }
+}
+// Phones: the picture becomes a list by topic, each cell named, and no lines.
+@media (max-width: 700px) {
+  .nvgrid {
+    display: block;
+  }
+  .nvcorner,
+  .nvcolh,
+  .nvgroupcorner,
+  .nvgroup {
+    display: none;
+  }
+  .nvrowh {
+    display: block;
+    margin-top: 12px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--line-2);
+  }
+  .nvcell {
+    border: 0;
+    padding: 4px 0;
+    &[data-empty] {
+      display: none;
+    }
+  }
+  // The phone label carries its column's colour as a bar, like the desktop header.
+  .nvlab {
+    display: block;
+    width: 100%;
+    border-left: 4px solid var(--nv);
+    padding-left: 6px;
+    font-size: var(--t-label);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--mute-ink);
+  }
+  .nbead {
+    min-height: 32px;
+    min-width: 32px;
+  }
+  svg.nvlinks {
+    display: none;
+  }
+}
+// A finger needs a bigger dot than a pointer: a tap on a dot opens its card.
+@media (pointer: coarse) {
+  .nbead {
+    gap: 7px;
+  }
+  .nd {
+    width: 12px;
+    height: 12px;
+  }
+  .nbead:has(.rel) {
+    gap: 9px;
+  }
+}
+
+// ---- home topic strips ---------------------------------------------------
+// One slot per topic, in the same order on every strip, so shared topics line
+// up across the cards and the questions. The main topic's slot stands taller.
+.tstrip > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  &::-webkit-details-marker {
+    display: none;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--method);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+.tslots,
+.tkeyslots {
+  display: grid;
+  grid-template-columns: repeat(var(--topics, 15), 1fr);
+  gap: 2px;
+}
+.tslots {
+  flex: 1;
+  max-width: 260px;
+  align-items: center;
+}
+.tslot {
+  height: 12px;
+  border-radius: 2px;
+  background: var(--line);
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+  &.on {
+    background: var(--h);
+  }
+  &.main {
+    height: 18px;
+  }
+}
+.tcap {
+  font-size: var(--t-meta);
+  color: var(--ink-2);
+  white-space: nowrap;
+  &::after {
+    content: " \25B8";
+  }
+  .tstrip[open] &::after {
+    content: " \25BE";
+  }
+}
+.tnames {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 2px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.tname,
+.tkeyslot,
+.tclear {
+  font: inherit;
+  cursor: pointer;
+  &:focus-visible {
+    outline: 2px solid var(--method);
+    outline-offset: 2px;
+  }
+}
+.tname {
+  font-size: var(--t-meta);
+  border: 1px solid var(--line-2);
+  border-left: 4px solid var(--h);
+  border-radius: 4px;
+  padding: 2px 8px;
+  background: var(--card);
+  color: var(--ink);
+  &[aria-pressed="true"] {
+    background: color-mix(in srgb, var(--h) 16%, var(--card));
+    border-color: var(--h);
+  }
+  &:disabled {
+    cursor: default;
+  }
+}
+// The key above both sections: what a topic is, the row of topics in strip order,
+// and a readout naming the topic under the pointer or the one picked.
+// One row: the label, the colours and the readout; the explanation folds below them.
+.tkeybox {
+  display: flex;
+  flex-wrap: wrap;
+  // Top-aligned: a readout that grows must not move the slots under the pointer.
+  align-items: flex-start;
+  gap: 8px 18px;
+  padding: 10px 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+.twhy {
+  flex-basis: 100%;
+  font-size: var(--t-meta);
+  color: var(--ink-2);
+  > summary {
+    width: max-content;
+    cursor: pointer;
+  }
+  .tintro {
+    margin: 6px 0 2px;
+  }
+}
+.tkeylabel {
+  margin: 0;
+  // The slots' height, so the label sits level with them in the top-aligned row.
+  line-height: 28px;
+  font-size: var(--t-meta);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.tintro {
+  margin: 4px 0 12px;
+  max-width: 75ch;
+  font-size: var(--t-ui);
+  color: var(--ink-2);
+}
+.tkey {
+  flex: 1 1 520px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px 16px;
+  &[hidden] {
+    display: none;
+  }
+}
+.tkeyslots {
+  flex: 0 0 min(100%, 300px);
+}
+.tkeyslot {
+  height: 28px;
+  border: 0;
+  border-radius: 3px;
+  padding: 0;
+  background: var(--h);
+  &[aria-pressed="true"] {
+    outline: 2px solid var(--ink);
+    outline-offset: 1px;
+  }
+}
+// The readout keeps its height so the cards below do not jump as the pointer moves.
+.tread {
+  flex: 1 1 240px;
+  min-height: 3em;
+  font-size: var(--t-ui);
+  p {
+    margin: 0;
+  }
+}
+.tidle {
+  color: var(--ink-2);
+}
+.tinfo {
+  a {
+    font-weight: 600;
+    color: var(--ink);
+    border-left: 4px solid var(--h);
+    padding-left: 6px;
+    text-decoration: underline;
+    text-decoration-color: var(--line-2);
+    text-underline-offset: 3px;
+    &:hover {
+      text-decoration-color: currentColor;
+    }
+  }
+}
+.tabout {
+  color: var(--ink-2);
+}
+.tstate {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  margin-top: 6px !important;
+  &[hidden] {
+    display: none;
+  }
+}
+.tkcount {
+  font-weight: 600;
+}
+.tmapgo {
+  font: inherit;
+  font-size: var(--t-meta);
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--method);
+  cursor: pointer;
+  text-decoration: underline;
+  &[hidden] {
+    display: none;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--method);
+    outline-offset: 2px;
+  }
+}
+.tclear {
+  font-size: var(--t-meta);
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  padding: 2px 10px;
+  background: var(--card);
+  color: var(--ink);
+}
+@media (max-width: 700px) {
+  .tkeyslots {
+    flex-basis: 100%;
+  }
+  // Two rows of eight and seven keep each topic button wide enough to tap; the
+  // order still reads left to right, then on to the second row.
+  .tkeyslots {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 4px 3px;
+  }
+  .tkeyslot {
+    height: 32px;
+  }
+}
+// A picked topic outlines every entry with it and marks its slot on each strip.
+// Entries without it lose their card and their strip fades; their text keeps its
+// colour so it stays readable.
+[data-tstrips] [data-topics] {
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
+}
+[data-tstrips][data-pick] [data-topics] {
+  &.hit {
+    border-color: var(--ink);
+    box-shadow: inset 0 0 0 1px var(--ink);
+  }
+  &:not(.hit) {
+    background: transparent;
+    border-style: dashed;
+    .tslots {
+      opacity: 0.35;
+    }
+  }
+}
+[data-tstrips][data-pick] .tslot.pick {
+  transform: scaleY(1.5);
+  outline: 2px solid var(--ink);
+}
+// The home map fades every topic cluster but the picked one, and the lines between them.
+[data-tmap] .cluster,
+[data-tmap] .ties,
+[data-tmap] .links {
+  transition: opacity 0.2s;
+}
+[data-tmap][data-pick] {
+  .cluster:not(.hit) {
+    opacity: 0.15;
+  }
+  .ties,
+  .links {
+    opacity: 0.25;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tslot,
+  [data-tmap] .cluster,
+  [data-tmap] .ties,
+  [data-tmap] .links,
+  [data-tstrips] [data-topics] {
+    transition: none;
+  }
+}
+
+// ---- the boards under both maps --------------------------------------------
+// Result and question cards use the concepts card (.cards .card in _listing.scss). They
+// are containers, not links, so the title link stretches over the card and the chip and
+// Compare buttons sit above it.
+.board {
+  margin-top: 28px;
+  .px-nomatch[hidden] {
+    display: none;
+  }
+  .toggles {
+    gap: 6px 18px;
+  }
+}
+.px-tog {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--t-ui);
+  color: var(--ink-2);
+  cursor: pointer;
+  // Quartz pulls task-list checkboxes 1.4rem left, which put this one outside the bar.
+  input {
+    margin: 0;
+  }
+  .n {
+    color: var(--mute);
+    font: 400 0.75rem var(--mono);
+  }
+}
+.cards .rcard,
+.cards .qcard {
+  .ct {
+    color: inherit;
+    text-decoration: none;
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
+  }
+  .ctags,
+  .crel {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
+    font-size: var(--t-meta);
+  }
+  .crel {
+    color: var(--ink-2);
+  }
+  .desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .cnovel {
+    font-size: var(--t-meta);
+    font-weight: 600;
+    color: var(--nv-new);
+  }
+  .meta span + span::before {
+    content: "·";
+    margin-right: 8px;
+  }
+  &:hover .ct {
+    color: var(--method);
+  }
+}
+.ccmp {
+  font: 500 var(--t-meta) / 1.3 var(--sans);
+  color: var(--method);
+  background: transparent;
+  border: 1px solid var(--line-2);
+  padding: 2px 9px;
+  cursor: pointer;
+  &[aria-expanded="true"] {
+    border-color: var(--method);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--method);
+    outline-offset: 2px;
+  }
+}
+.board.px-compact > .cards {
+  display: block;
+}
+.board.px-compact > .cards > .card:not(.px-hidden) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px 16px;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--line);
+  .desc,
+  .crel,
+  .cnovel {
+    display: none;
+  }
+  .ctags {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .meta {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding-top: 0;
+  }
+}
+// The filter fades the map marks it hides (option 1B); the marks stay where they are.
+.nd.out {
+  opacity: 0.15;
+}
+.nbead.out {
+  opacity: 0.35;
+}
+.qd.out > .qdot {
+  opacity: 0.18;
+}

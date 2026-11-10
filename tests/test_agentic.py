@@ -74,6 +74,45 @@ def test_effective_tokens_drive_admission_and_stage_ceiling(tmp_path, monkeypatc
     assert ledger.reserve("two", "topics/b") is None
 
 
+def test_usd_cap_counts_every_run_and_open_paid_jobs(tmp_path):
+    db = tmp_path / "jobs.sqlite"
+    usage = {"input_tokens": 1, "output_tokens": 1}
+    caps = {"links": 1.0}
+    first = Ledger(db, "run-a", 10**9, 99, 1, usd_caps=caps, usd_reserve=0.4)
+    first.reserve("a", "links/p1", "claude-sonnet-5-5")
+    first.finish("a", "ok", usage, cost=0.25)
+    # A resumed run under a new id still sees the first run's spend.
+    second = Ledger(db, "run-b", 10**9, 99, 1, usd_caps=caps, usd_reserve=0.4)
+    second.reserve("b", "links/p2", "claude-sonnet-5-5")  # 0.25 + 0.4 * 1 <= 1.0
+    with pytest.raises(WorkflowError, match="USD cap admission refused: links"):
+        # 0.25 spent + 0.4 for b in flight + 0.4 for this job > 1.0
+        second.reserve("c", "links/p3", "claude-sonnet-5-5")
+    # Reviewers on the subscription and other stages are not capped.
+    assert second.reserve("r", "links/p3/science-review", "gpt-6.1-sol") is None
+    assert second.reserve("g", "gists/x", "claude-sonnet-5-5") is None
+    # A finished paid job with no recorded cost keeps counting its reserve.
+    second.finish("b", "ok", usage)
+    with pytest.raises(WorkflowError, match="open=1"):
+        second.reserve("c", "links/p3", "claude-sonnet-5-5")
+    assert second.stage_usd("links") == 0.25
+    with pytest.raises(ValueError):
+        Ledger(db, "run-c", 10, 9, 1, usd_caps={"links": 0})
+    for bad in ({"links": float("nan")}, {"links": float("inf")}):
+        with pytest.raises(ValueError):
+            Ledger(db, "run-c", 10, 9, 1, usd_caps=bad)
+    with pytest.raises(ValueError):
+        Ledger(db, "run-c", 10, 9, 1, usd_caps=caps, usd_reserve=float("nan"))
+
+
+def test_usd_cap_counts_claude_aliases(tmp_path):
+    """A Claude model named by alias is served and billed like a claude- ID."""
+    ledger = Ledger(tmp_path / "j.sqlite", "r", 10**9, 99, 1, usd_caps={"links": 1.0})
+    ledger.reserve("a", "links/p1", "sonnet")
+    ledger.finish("a", "ok", {"input_tokens": 1, "output_tokens": 1}, cost=0.9)
+    with pytest.raises(WorkflowError, match="USD cap"):
+        ledger.reserve("b", "links/p2", "sonnet")
+
+
 def test_read_tools_bound_ranges_and_reject_escape(tmp_path):
     (tmp_path / "staging").mkdir()
     (tmp_path / "staging/a.md").write_text("0123456789")
@@ -448,6 +487,14 @@ def test_runner_stage_order_noop_and_failed_gate(tmp_path, monkeypatch, failed_s
         "topics",
         "literature",
         "authors",
+        "headlines",
+        "novelty",
+        "directions",
+        "gists",
+        "links",
+        "shared",
+        "outcomes",
+        "followups",
         "titles",
         "names",
         "errata",
@@ -1041,3 +1088,24 @@ def test_links_to_pages_never_written_keep_their_label(tmp_path):
     )
     unlink_missing(tmp_path)
     assert page.read_text() == "Links [[concepts/kept]], the lost page and gone."
+
+
+def test_stored_content_flag_replays_as_that_jobs_failure(tmp_path):
+    from beril_wiki.agentic.runtime import JobFailed
+
+    db = tmp_path / "jobs.sqlite"
+    ledger = Ledger(db, "batch", 1000, 9, 20)
+    ledger.reserve("flagged")
+    ledger.finish(
+        "flagged",
+        "",
+        {"input_tokens": 20, "output_tokens": 0},
+        "flagged for possible biological risk",
+    )
+    ledger.reserve("broken")
+    ledger.finish("broken", "", {"input_tokens": 20, "output_tokens": 0}, "Codex transport failed")
+    with pytest.raises(JobFailed, match="biological risk"):
+        ledger.reserve("flagged")
+    with pytest.raises(WorkflowError, match="inspect saved job") as caught:
+        ledger.reserve("broken")
+    assert not isinstance(caught.value, JobFailed)

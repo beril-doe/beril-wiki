@@ -16,7 +16,7 @@ subscription. The runner removes inherited API credentials and provider routing;
 each SDK job verifies subscription authentication. There is no API fallback.
 
 ```sh
-# Inspect staged changes, without fetching or inference.
+# List changed staged sources and stale editorial stages, without fetching or inference.
 uv run python -m beril_wiki.agentic plan
 
 # Use the committed model policy and explicit budgets appropriate to the update.
@@ -26,9 +26,17 @@ uv run python -m beril_wiki.agentic run \
 
 # Search accepted wiki Markdown without inference.
 uv run python -m beril_wiki.agentic search 'carbon yield'
+
+# Run only the card stages (findings to shared results), then check --strict.
+uv run python -m beril_wiki.agentic cards --max-tokens 200000 --max-jobs 40 \
+  --stage-max-usd links=5 --stage-max-usd shared=8
 ```
 
 These budgets illustrate syntax, not measured requirements for this corpus.
+`plan` prints `changed_sources` (staged reports that are new or differ from
+their integrated copy, empty when nothing is staged) and `pending_editorial` (the editorial
+stages whose fingerprint no longer matches `state/agentic.json`). It makes no
+model call.
 `--root PATH` precedes the subcommand. `--staged` uses current staging; an
 observatory checkout is still required for metadata and figure context.
 Individual jobs have `--max-turns` (default 12, applying to the tool-using
@@ -61,7 +69,20 @@ in-flight job can exceed its reservation, and subsequent jobs stop.
 `--stage-max-tokens` adds a per-stage effective ceiling (0, the default, applies
 only the run ceiling). `status` and the run summary print the raw total, the
 effective total and the sum of the SDK's own `total_cost_usd` estimates. None of
-these measure remaining subscription allowance. Account billing settings remain
+these measure remaining subscription allowance.
+
+Token ceilings cannot bound spend in USD: GPT review rows record no cost, and
+the USD per token differs from job to job. `--stage-max-usd STAGE=USD`
+(repeatable, on `run` and `cards`) caps one stage's recorded Claude cost.
+`STAGE` is the part of a job's step name before the first `/`, which for a
+card stage is the stage name. Literature jobs are filed as `lit/` and entity
+merges as `merge/`, so `run` refuses `literature=` and `entities=` and names the
+prefix to use. The cap counts that stage's jobs across every
+run in the ledger, so a resume or retry cannot reset it. Admission refuses a
+Claude job when the recorded cost, plus `--usd-reserve` (default USD 0.40) for
+each Claude job in flight or finished without a cost and for the job itself,
+would pass the cap. GPT jobs are never refused by a USD cap. `agentic cards`
+prints each capped stage's recorded USD against its cap at the end. Account billing settings remain
 provider-owned; the runner does not purchase credits.
 
 ### Per-step models
@@ -75,9 +96,12 @@ selected by `--root`. The committed policy explicitly assigns every role:
 | `planning` | Opus 5.5 | Plan evidence integration and propose topic groups. |
 | `pages` | Sonnet 5.5 | Write and repair the concept, entity and summary pages integration produces (`write/` jobs, every pass). Applies to pages written from now on; pages already accepted stay. |
 | `writing` | Opus 5.5 | Derived prose (conflicts, topics, literature, authors), home and entity merges; default for other generation jobs. |
-| `review` | GPT-6.1 Sol (Codex) | All separate scientific reviews and verifications, including extraction and repaired candidates. |
-| `queries` | GPT-6.1 Sol (Codex) | Construct literature search queries. |
+| `review` | GPT-6.1 Sol (Codex) | All separate scientific reviews and verifications, including extraction and repaired candidates, and the second opinion a "Candidate novel" or "In tension" literature label needs. |
+| `queries` | GPT-6.1 Sol (Codex) | Construct literature search queries, including the PubMed queries for literature labels. |
 | `figures` | GPT-6.1 Sol (Codex) | Select figure placements. |
+| `cards` | Sonnet 5.5 | Choose headline findings, judge literature labels, write research directions and plain summaries, sort links between projects and write shared results (stages `headlines`, `novelty`, `directions`, `gists`, `links`, `shared`), at medium reasoning effort (`CARD_EFFORT` in `agentic/runtime.py`). |
+| `card_review` | GPT-6 Luna (Codex) | Review and verify the jobs of the stages `directions`, `gists`, `links`, `shared`, `outcomes` and `followups`. Headlines and novelty reviews stay on `review`. Unset, it takes the `review` model. |
+| `labels` | Haiku 5.5 | Label each result's type and each question's follow-up need (stages `outcomes`, `followups`), at the same effort as `cards`. Unset, it takes the `cards` model. |
 
 This is a deliberate hybrid, not a measured optimum: Claude plans and writes,
 a GPT model extracts and reviews, so no page is checked by the family that wrote
@@ -121,8 +145,18 @@ when `--model` replaces its policy. A checkout
 without the default file requires `--model`. Budgets remain required CLI flags.
 
 Repairs and paragraph patches keep the original role's model; every job ending
-in `/review` or `/science-review` uses `review`.
-Unspecified roles use the default, with no automatic fallback or escalation.
+in `/review`, `/science-review` or `/verify` uses `review`, or `card_review` for the
+stages that role names.
+Unspecified roles use the default, with no automatic fallback or escalation. The
+two exceptions are `card_review` and `labels`, which take `review` and `cards`
+when unset, so a policy written before they existed routes every job as before.
+
+Every card record's cache key holds the models of its stage's roles. The pins
+for `card_review` and `labels` are the models that judged the accepted records,
+so a default `agentic run` reuses them and asks only for new or failed records.
+`tests/test_outcomes.py` fails when `agentic.yaml` no longer matches the accepted
+result-type and follow-up labels. Changing a card role's model re-asks every
+record of the stages that use it.
 Use explicit model IDs available to the authenticated subscription; moving
 aliases may change their underlying model without changing a cache key.
 
@@ -142,6 +176,10 @@ applies only to reports extracted from then on: evidence already extracted stays
 valid, so switching the extraction model does not re-integrate the corpus.
 A `pages` change works the same way: it applies to pages written from then on,
 accepted pages stay, and neither integration nor any derived stage reruns.
+A `cards` change refreshes only the card stages that write on it. Headlines and
+novelty fingerprints also take `review`, and `novelty` takes `queries`. The
+other card stages take `card_review`, and `outcomes` and `followups` take
+`labels` in place of `cards`.
 
 ## Editorial schedule and required work
 
@@ -152,16 +190,24 @@ every stage that depends on it stale as well:
 | Stage | Work and completion condition |
 |---|---|
 | Integrate | Runs first when sources changed: extract changed reports, route every evidence record to concept pages, group edits by destination, validate and review pages; resolve entities and refresh deterministic metadata. A writer receives the evidence assigned to its page with quotes packed, not every finding its sources yielded; an existing entity with nothing assigned and no revised source is skipped. It accounts for each assigned record by the index of the paragraph carrying it, not by repeating the paragraph, since a page assigned three hundred records could not otherwise finish its answer; the validator resolves the index against every paragraph of the body, including Open Directions, and the reviewer sees the resolved text. The writer drafts with no tools, in one turn: the page, absorbed pages and quotes are packed, and the prompt states the host gates it will meet. A repair may read and search the sources, as the review it answers did; drafted and repaired without them, pages scored about a point lower on fidelity in a blind judge. A page assigned more than `--pass-records` records is written in near-equal passes in evidence-id order, each a full write, review and repair of its slice against the page the previous pass left, so no single job integrates hundreds of records; the retention gate keeps every earlier pass's citations and figures. A pass that will not converge is dropped rather than the page, which keeps every accepted pass; its records, objections and job keys go to `.agentic/salvaged.json`, as a salvaged derived page's paragraphs do. At nine passes in ten accepted in the pilot, a seven-pass page failing whole would publish under half the time. Only a page whose every pass fails keeps its previous version. |
+| Conflicts | Reconcile tensions after integration. |
+| Topics | Choose concept groups and titles, then write hubs/home after conflicts are current. Every concept must occur exactly once. |
+| Literature | Add supported external context after topics are current. |
+| Authors | Update contributions from current summaries and metadata; independent of topics. |
+| Headlines | For each report in `contract/cards.yaml`, choose up to 4 observations or inferences and up to 2 null results or corrections from its accepted evidence records, and write each to `wiki/findings/<id>.md`. Cached per report in `state/headlines.json`; a saved reply stays while its input is unchanged and today's checks accept it, and the curator never clears it, since the run that wrote the records may have used another job store. A report whose evidence snapshot does not match its current text is skipped and keeps its previous pages. |
+| Novelty | Label each finding against PubMed after headlines; labels go to `state/novelty.json`, not to the finding page. |
+| Research directions | After conflicts, topics, headlines and novelty, write 3 to 8 research directions for each topic in `contract/cards.yaml` into `wiki/directions/<slug>.md`. Cached per topic in `state/directions.json`, with the accepted reply kept so a page re-renders without a model call. Code rejects a title that is not a question, test statistics or statistical wording, snake_case table names and other identifiers, prose about what "the report" says, and a direction that shares at least 3 cited findings or conflicts, and 60% of them, with another direction in the reply or in another topic. The draft sees the other topics' directions (`OTHER_TOPICS`), but they stay out of the topic's cache key, so one topic's rewrite never makes another stale. A saved reply stays while its input is unchanged and today's checks accept it; the curator never clears `state/directions.json`, because clearing it would empty the other topics' context, change the drafts' text and buy them again. A topic whose redraft fails keeps its earlier pages, except a page that builds on a finding or conflict that no longer exists. Two topics that accept the same direction each keep a page; the second page's name ends in its topic. |
+| Plain summaries | After headlines, write a gist of at most 45 words for each finding (plus a plain replacement title when the stored title holds a statistic, statistical wording such as "significant" or jargon, and a case for null results) to `state/gists.json`. The writer also sees the report's other caveats and the other findings from the same report: a gist claims no more than the measurement and its limits allow, says when a sibling finding states the opposite, and may mark its finding as repeating an earlier one (`repeats`), which publish leaves off the lists. Code rejects statistics, statistical wording, jargon (`JARGON`: annotation systems, procedures, notebook codes; lineage names such as `Pseudomonas_E` are left to the prompt, since the reviewer requires the name the finding gives), more than two standalone numbers (the prompt asks for one), figures the claim, quote and caveat never state, and a `repeats` id that is not an earlier finding of the report; GPT reviews faithfulness. Keyed on the finding, its report title, caveats and siblings, and the prompt tag (`gists@4`), so a sibling's change reruns the report's gists. A saved gist stays while its input is unchanged and today's checks accept it, so a tightened rule re-asks only the gists it rejects. A refusal fails only that finding and keeps its previous gist in state for recovery; publish shows a failed finding's title only. A failed finding is asked again on the next run with `LAST_ATTEMPT`, the objections from `.agentic/failures.json` that rejected it, so the retry is a new question rather than a replay of the failed jobs; its saved key does not include them. |
+| Links | After headlines, find links between projects and write them to `state/links.json`. Code finds two kinds of candidate: pairs of results from different projects whose title and claim reach a TF-IDF cosine of 0.30 (`THRESHOLD`) and whose two projects a concept or conflict page cites together, and source-report lines that name another project by id or exact report title. The `cards` model sorts each candidate, 8 to a job, into a fixed relation (`same result`, `uses its data or methods`, ...) or drops it, and writes a label of at most 16 words. Code rejects a label with a statistic, a figure the inputs never state, wording that one project confirms, reproduces or agrees with another, file, table or column names, or an opening such as "Uses its ..." that leaves out whose data it is; GPT reviews every job. A stored label today's rules reject counts as stale, so a rule change re-asks only those candidates. Each candidate is cached under a digest of its own texts, so a corpus change re-asks only changed candidates. A failed job leaves its candidates without a current link, and a candidate whose results or projects are gone is pruned. |
+| Shared results | After links, group the related-result links into connected groups and write one statement per group to `state/shared.json`. A group qualifies with 2 to 4 results, from two or more projects whose main topics number two or more; a larger group is skipped. Code sets the group's relation to the weakest of its links. The `cards` model writes a title, a sentence, the question the projects asked, a short label per result and how the results relate, under the same rejections as Links; results that reach different conclusions are never presented as one result, and shared data is named in the sentence. GPT reviews faithfulness to every member. A failure fails only its group. A group whose links are gone is pruned. |
+| Result types | After gists, label every finding publish would list as a positive, negative or inconclusive result, a result about the data, a bookkeeping fix or an untested explanation, in `state/outcomes.json`. The extraction tag misfiles both ways, so every finding is read. The `labels` model writes the type and a one-sentence reason; the `card_review` model reviews it against the evidence quote. Publish unlists bookkeeping fixes and untested explanations and keeps their pages. A failure fails only its finding, and publish falls back to the tag. |
+| Follow-up needs | After directions, label every open question by what its deciding test needs (existing BERDL data, outside data, or an experiment), whether existing data comes first in an experiment, and whether data availability is unclear, in `state/followups.json`, written by the `labels` model. The direction's approach and readiness fields misfile both ways, so every question is read. The `card_review` model reviews each answer against the question. A failure fails only its question, and publish falls back to the approach. |
 
 Before writing hundreds of planned pages, measure a few: `--write-only
 concepts/a.md,summaries/b.md` writes only those pages and then stops before any
 source is recorded as integrated, so the ledger shows what an accepted page
 costs and the work tree holds the pages for inspection. A partial run must never
 mark the corpus integrated, or the next run would believe the work done.
-| Conflicts | Reconcile tensions after integration. |
-| Topics | Choose concept groups and titles, then write hubs/home after conflicts are current. Every concept must occur exactly once. |
-| Literature | Add supported external context after topics are current. |
-| Authors | Update contributions from current summaries and metadata; independent of topics. |
 
 Every stage writes a receipt (`.agentic/curator-receipts.json`) with the paths
 it changed, so the audit trail of the earlier action loop survives without a
@@ -190,6 +236,189 @@ as 31 pages from the October 2026 compile did. The batch writer also inserts the
 planned title when a candidate has no H1, and `beril_wiki.check` fails on any
 generated page still without one. `scripts/run_pipeline.sh` runs the same
 stage before `names`.
+
+### Finding and research-direction records
+
+`contract/cards.yaml` names the topics and reports these stages cover. Either
+key takes a list or `all`, which means every report under `wiki/sources` and
+every topic in `state/curator-topics.json`, read at each run. Both are `all`
+since the first full-corpus run (October 2026, USD 84 of Claude). Each stage writes only its own outputs, so topic and literature
+fingerprints stay unchanged. The stages need the agentic runtime: run without it,
+as from `scripts/run_pipeline.sh`, they print a notice and write nothing.
+
+The novelty stage labels each finding in `wiki/findings`. The `queries` model
+writes up to 3 PubMed queries, NCBI eutils retrieves at most 30 abstracts from
+those queries and the papers the report cites, and the `cards` model picks one
+label. Abstracts are fetched 10 records at a time; a batch over the 2 MB response
+cap is fetched one record at a time, and a single record over the cap is left out
+with a warning. Code checks every PMID it names against the retrieved set. The labels are
+"Established in retrieved literature", "Extends retrieved work", "In tension
+with retrieved work", "Candidate novel", "Insufficient literature evidence" and
+"Not assessed", the last for a finding never labelled. "Candidate novel" and "In
+tension with retrieved work" stand only when the `review` model, from the other
+vendor, assigns the same label. Otherwise the finding takes "Extends retrieved
+work" if that model chose "Established" or "Extends", and "Insufficient
+literature evidence" for any other answer. A search that retrieves nothing gives
+"Insufficient literature evidence" without a judging call. A count, share or
+inventory of the report's own data, such as how many genes fall in each class,
+is not a relationship and is never "Candidate novel"; it is labelled
+"Insufficient literature evidence" unless a retrieved paper reports the same
+pattern. A label is judged
+again when its finding changes, when the `cards`, `review` or `queries` model
+changes, or 90 days after retrieval (`REFRESH_DAYS`). An expired label makes every
+`agentic run` schedule the novelty stage until a refresh succeeds. When retrieval
+fails, the previous label and date stay. A failed refresh does not hold up the
+run that attempted it: the label stays due, and the next run retries it.
+When the `review` model does not confirm a guarded label, the weaker label keeps
+neither the first judge's difference nor its closest papers, since both argued
+for the rejected label. Publish hides them on entries written before this rule.
+`contract/novelty-decisions.yaml` pins or withdraws a label with a person's
+reason; a withdrawn label shows as "Not assessed". The stage applies these
+decisions to every saved label before any job, and again to each new label
+before it is saved, so a run stopped by its budget never leaves a model label on
+disk for a withdrawn finding.
+
+The directions stage writes one reviewed job per topic. The `cards` model reads
+the topic's findings with their literature labels and closest papers, its
+conflict pages, the proposals its pages already make, and the collection list.
+It proposes 3 to 8 directions, each with an id (D1, D2, ...) that repairs keep
+even when they rewrite the direction, a question, a falsifiable hypothesis,
+why it matters, the decisive test, what would support or refute it, an
+approach, the data and its readiness, and the findings, conflicts and closest
+papers it rests on. A direction is a biological question, never a request to
+repeat, correct, reconcile, recount or audit existing work: code rejects a
+title or question that opens that way (`REANALYSIS` in `stages/cards.py`). Those
+proposals are listed for the reports' maintainers at publish instead. Code also
+checks that each direction rests on a finding or conflict of the topic, cites
+only PMIDs the topic's findings retrieved, names collections under
+`wiki/data/`, and states no result figure the evidence it cites lacks.
+Directions carry no score.
+
+When a headline or direction job does not converge, the stage keeps the last
+candidate the reviewer judged, minus the headlines or directions an open
+objection names. Each objection is read against the candidate it was raised on: a
+headline by its evidence id, a direction by its id. An open objection that opens
+with "Issue N" restates issue N of the list the verifier was given, so salvage also
+drops what issue N named; an "issue N" elsewhere in the text is context only. If
+any objection names none, the record fails. `.agentic/salvaged.json` lists what was
+dropped.
+
+When the GPT reviewer refuses a card job's content as possible biological risk on
+its fallback model too, only that report, finding or topic fails, without salvage
+since the refused verification gave no verdict on the repair, and the ledger
+replays the stored refusal on later runs instead of asking again. Any other job
+failure still stops the stage.
+
+`contract/cards.yaml` and `contract/novelty-decisions.yaml` are left out of job
+cache keys (`UNKEYED_CONTRACT` in `agentic/runtime.py`), as `contract/errata.yaml`
+is. The stages list them as inputs instead, so widening the scope reruns only
+these stages.
+
+`agentic cards` runs `headlines`, `novelty`, `directions`, `gists`, `links`,
+`shared`, `outcomes`, `followups` and then `check --strict` in place (`--stage NAME`, repeatable, runs
+only those), under the same ledger and budget flags as `run`, including
+`--stage-max-usd`. It does not promote or touch
+`state/agentic.json`, and it refuses while a promotion is pending. A later full `agentic run` adopts what it wrote from the stages' hash
+caches. A card run's id hashes the stages' inputs and leaves out what the card
+stages write, so a run stopped after saving some records resumes under the same
+id, ceilings and recorded charges. `python -m beril_wiki.stages.links --status`
+and `python -m beril_wiki.stages.shared --status` count the current links and
+shared results without a model call; `outcomes --status` and `followups --status`
+count saved labels the same way.
+[`wiki.md`](wiki.md#rendering-the-accepted-corpus) describes how the
+records publish.
+
+## Checking the reader pages
+
+`scripts/check_reader.py
+{home,strips,plain,grid,pages,contrast,cross,marks,filters,related}` drives the
+installed Chrome through Playwright against a local build and exits 1 with one
+line per failure. Lines starting `note:` never fail a check. Build with
+`WIKI_BASE_URL=localhost:8096 CBORG_API_KEY= scripts/build_quartz.sh`, then run
+`uv run --with playwright python scripts/check_reader.py grid --base
+http://localhost:8096 --serve quartz/public`. `--serve` serves the built folder
+with clean URLs, which a plain `http.server` does not; without it, serve the
+site on `--base` yourself (default `http://localhost:8080`). The checks read
+their expected values from the records under `quartz/content/` and
+`wiki/directions/`, so they follow the current corpus.
+
+- `home` checks the home page's headings in order and the removed wording,
+  that the home shows no shared-result card, and that its three result cards
+  have distinct ids, projects and topics and are not missing-data or
+  unperformed null results. With no summaries yet it prints a note and skips
+  the card checks. It checks that the "Find your way in" cards open each
+  collection and runs the `strips` checks on the home page. It checks the top
+  bar: at most 8 controls after the wordmark at 1440 px, the order Results,
+  Open questions, Topics, Browse, About, Search, Ask and the theme toggle, the
+  Browse items, every collection within two clicks of home, and the Browse
+  menu by mouse, keyboard and tap. It checks that the bar has no CBORG key
+  button and that the search box's meaning-search control and the Ask page
+  each offer key entry.
+- `strips` checks that every home result and question has a topic strip that
+  fills the topics it names, that pointing at a key slot names its topic, and
+  that picking a topic in the key or in a strip outlines exactly the entries
+  that share it, shows their counts and lights only that topic on the map.
+  Without JavaScript the key row stays hidden and the strips still render. It
+  checks that cards and map rows on the boards carry their topic's key
+  colour, and that `/topics/` shows no topic key, map or topics table.
+- `plain` checks card, chip, pop-up and column-note text and the prose of the
+  first 20 question pages for test statistics, statistical wording such as
+  "significant" (the gists stage's rule) and "Caveat", card titles separately,
+  and that no visited page shows a pipeline term such as "Candidate novel" or
+  "needs compute".
+- `grid` loads `/directions/` without JavaScript and follows every dot link,
+  compares each dot's row and column with its record under `wiki/directions/`,
+  exercises hover, focus, click, Escape and tap, checks that Tab from a focused
+  dot reaches its pop-up's links, that no dot carries an approach shape and
+  that each dot's name and pop-up still state its approach. It checks for
+  horizontal scroll at 390 px on `/`, `/findings/` and `/directions/`. It also
+  moves the pointer from ringed and plain dots onto each pop-up in 2 px steps
+  and checks that the pop-up stays open. A jump straight from one dot to
+  another must open the second dot's pop-up.
+- `pages` checks the result page headings and their order, the Results index
+  title and kind chips (group name, `aria-pressed`), that each listed null
+  reads "No effect found" or "Inconclusive test", that both boards use the
+  concepts card with square corners, that no card footer shows its separator
+  alone at phone width, and then runs the `contrast` check.
+- `contrast` checks that small labels reach 4.5:1 against their background in
+  light mode.
+- `cross` checks the Results map against the records, the hover cards (the
+  pointer walk onto each card, pinning, a resize, Escape, a jump between
+  marks, and taps at 390 and 320 px), that hovering a box draws only
+  related-result lines, the list a pinned box opens, the column notes, the
+  Compare panels, and the ringed questions and their bridges. It fails on any
+  page or console error except the one Quartz's own diagram script raises,
+  which predates these pages.
+- `marks` checks both maps against design option M2 (`--option M2`, the only
+  option it accepts and the default), in light and dark themes, at 1280 and
+  390 px. Each mark's fill, shape, ring and colour must match its record;
+  marks must be ink or the Novel orange; each Results column header's bar,
+  and at 390 px each cell label's left bar, must take its column's colour;
+  each legend entry must match a map mark of its class; marks, rings and box
+  borders must reach 3:1; novel questions and box labels must carry their
+  words; and no ring may touch another mark or its box. Two injected negative
+  controls, a solid null mark and marks coloured by column, must each fail.
+  At 1280 px both maps must draw 10 px marks, and Results marks must measure
+  12 px under a coarse pointer. Row labels on both maps must use one type
+  size, and column headers must share one type style.
+- `filters` checks on each board that a topic chip, a category chip and each
+  toggle leave only matching cards, that the count reads "N of M", that the
+  URL holds the state and a reload restores it, that list view toggles, and
+  that the map fades the marks outside the filter.
+- `related` checks that each listed result whose record lists related results
+  shows them under "Related results in other projects", one link per id, that
+  every result the map can draw a related line for has the section, and that
+  no other listed result has it.
+
+`scripts/check_links.py` checks the links and shared stages without a browser
+and exits 1 with one line per failure. `--shared` re-runs the code checks on
+every accepted shared result and link label, and needs at least 3 accepted
+shared results. `--reference PATH` compares `state/links.json` with a hand
+audit of the same candidates: the stage must have seen 90% of the audited
+candidates and agree on keep or drop for 85% of those it answered. When a
+`links.json` sits beside the audit, the same-question pairs publish computes
+must match its `shared-question` pairs. Run it with
+`uv run python scripts/check_links.py --shared`.
 
 ## Evidence, correction and token reuse
 
@@ -357,7 +586,7 @@ later job carrying that text, the rest of a source's chunks or the rest of a
 page's rounds, goes straight to the model that answered instead of buying the
 same refusal again, unless the configured model already answered that job, whose
 result stands rather than being discarded and bought again. The GPT reviewer has
-the same arrangement: a GPT-6.1 Sol turn the server refuses as possible biological
+the same arrangement: a GPT-6.1 Sol or GPT-6 Luna turn the server refuses as possible biological
 risk, which reports no usage, is charged the reservation, recorded as a refusal and
 answered on GPT-5.6 Sol, and refusal memory sends the rest of that page's review jobs
 there. The memory is per backend, so a refused Claude writer never redirects the
@@ -473,7 +702,8 @@ page; this is a file cursor, not a result count. Search is literal and excludes
 copied raw sources. This CLI is a retrieval boundary, **not an installed BERIL or
 OpenViking integration**.
 
-After local acceptance, `scripts/build_quartz.sh` renders the existing format.
+After local acceptance, `scripts/build_quartz.sh` renders the site, including the
+finding and research-direction records and the maintainers' data-issue lists.
 With `CBORG_API_KEY` set, it also embeds the sections that have no vector yet.
 Then run `uv run python -m beril_wiki.publish.search_data push` before opening
 the pull request: the vectors live on the `search-data` branch, and a pull
@@ -486,8 +716,8 @@ promotion.
 Offline tests exercise the actual subprocess pipeline with recorded model and
 PubMed replies: the stage schedule, dependency enforcement, gates, paragraph
 patches, closed verification, salvage, recorded page failures, errata
-placement, topic decisions, cache invalidation, subscription setup and
-promotion recovery. They do not establish model quality or real subscription
+placement, topic decisions, the card stages from findings to shared results,
+the USD caps, cache invalidation, subscription setup and promotion recovery. They do not establish model quality or real subscription
 savings. The tests workflow runs them, with ruff and ty, on every pull request
 and on `main`; the publish workflow validates the committed wiki, renders it and
 type-checks the theme, and neither needs a key or an observatory checkout. The

@@ -6,6 +6,11 @@
 import MiniSearch, { type SearchResult } from "minisearch"
 import { type IndexFile, PAGE_OPTIONS, type Page, type PagesFile, SEARCH_DEPTH, SECTION_OPTIONS, type Section, type SectionFile, processTerm, tokenize } from "../search/config"
 import { type ChatMessage, ensureKey, loadSettings, modelLabel, onSettingsChange, openSettings, statusLine, streamChat } from "./ai"
+import { wireBoards } from "./board"
+import { wireCards } from "./cards"
+import { wireNovelty } from "./novelty"
+import { wireQuestions } from "./questions"
+import { wireStrips } from "./strips"
 import { fuse, meaningError, meaningLoading, meaningPaused, meaningProgress, meaningRank, meaningStatus, onMeaningChange, setMeaningWanted } from "./semantic"
 import { asset, currentSlug, esc, pageHref as href, session, slugOfHref, titleHtml as title } from "./site"
 
@@ -104,15 +109,20 @@ const GROUPS: [string, string][] = [
   ["concept", "Concepts"],
   ["entity", "Entities"],
   ["conflict", "Conflicts"],
+  ["finding", "Results"],
+  ["direction", "Open questions"],
   ["report", "Reports"],
   ["source", "Raw reports"],
   ["other", "Other pages"],
 ]
 const TAG: Record<string, string> = {
-  topic: "Topic", concept: "Concept", entity: "Entity", conflict: "Conflict", report: "Report", source: "Raw report", other: "Page",
+  topic: "Topic", concept: "Concept", entity: "Entity", conflict: "Conflict", finding: "Result", direction: "Open question",
+  report: "Report", source: "Raw report", other: "Page",
 }
 // Synthesis pages answer most questions; raw reports repeat them at length.
-const GROUP_BOOST: Record<string, number> = { topic: 1.1, concept: 1.15, entity: 1.1, conflict: 1, report: 1, source: 0.7, other: 0.6 }
+const GROUP_BOOST: Record<string, number> = {
+  topic: 1.1, concept: 1.15, entity: 1.1, conflict: 1, finding: 1.1, direction: 1.05, report: 1, source: 0.7, other: 0.6,
+}
 
 const here = currentSlug
 const route = () => (["ask", "guide"].includes(here()) ? here() : "")
@@ -182,7 +192,8 @@ async function hybridSearch(
 }
 
 // The search box's meaning switch. Off by default; on, it sends each query (after
-// typing pauses) to CBORG with the reader's key, so it asks for a key first.
+// typing pauses) to CBORG with the reader's key, so it asks for a key first. The
+// key button beside it is where search readers add, change or forget the key.
 function meaningControl(el: HTMLElement, onChange: () => void) {
   const TITLE = "Also rank sections by meaning. Sends your query to CBORG with your own key."
   const paint = () => {
@@ -191,13 +202,19 @@ function meaningControl(el: HTMLElement, onChange: () => void) {
     const mb = (b: number) => (b / 1e6).toFixed(1)
     const button = (label: string, act: string, pressed: boolean) =>
       `<button type="button" class="px-meaning" aria-pressed="${pressed}" data-act="${act}" title="${TITLE}">${label}</button>`
+    const s = loadSettings()
+    const keyButton =
+      st === "nokey" || st === "loading" ? ""
+      : s.key ? `<button type="button" class="px-meaning-x px-meaning-key" title="Answers and meaning search use ${esc(modelLabel(s.model))}">Change CBORG key</button>`
+      : `<button type="button" class="px-meaning-x px-meaning-key">Add CBORG key</button>`
     el.innerHTML =
-      st === "loading" ? `<span class="px-meaning-status">Loading meaning search${total ? `: ${mb(loaded)} of ${mb(total)} MB` : "…"}</span>`
+      (st === "loading" ? `<span class="px-meaning-status">Loading meaning search${total ? `: ${mb(loaded)} of ${mb(total)} MB` : "…"}</span>`
       : st === "on" ? button("Meaning search: on", "off", true)
       : st === "nokey" ? button("Meaning search: add your CBORG key", "key", false)
       : st === "paused" ? button("Meaning search paused (CBORG rate limit)", "off", true)
       : st === "failed" ? button(`Meaning search unavailable: ${esc(meaningError())}. Retry`, "on", false)
-      : button("Meaning search: off", "on", false)
+      : button("Meaning search: off", "on", false)) + keyButton
+    el.querySelector<HTMLButtonElement>(".px-meaning-key")?.addEventListener("click", () => void openSettings())
     el.querySelector<HTMLButtonElement>("[data-act]")?.addEventListener("click", async (e) => {
       const act = (e.currentTarget as HTMLElement).dataset.act
       if ((act === "on" || act === "key") && !loadSettings().key) {
@@ -338,7 +355,10 @@ function ensurePalette(): HTMLElement {
 
 function scopesFor(): [string, string][] {
   const p = bySlug.get(here())
-  const s: [string, string][] = [["all", "All"], ...GROUPS.slice(0, 6)]
+  // Finding and research-direction groups only where the build published records.
+  const present = new Set(pages.map((x) => x.group))
+  const groups = GROUPS.filter(([g]) => g !== "other" && (!["finding", "direction"].includes(g) || present.has(g)))
+  const s: [string, string][] = [["all", "All"], ...groups]
   if (p && p.group !== "other") s.splice(1, 0, ["page", "This page"])
   return s
 }
@@ -530,25 +550,74 @@ function landOn(anchor: string) {
 
 // ---------------------------------------------------------------- header bar
 
-// The bar's markup is server-rendered (components/Bar.tsx); this paints the key
-// button's state and opens the key dialog from it.
-function paintKeyButton() {
-  const k = document.querySelector<HTMLButtonElement>("header.bar .px-keybtn")
-  if (!k) return
-  const st = loadSettings()
-  k.classList.toggle("set", !!st.key)
-  const label = st.key ? `CBORG key set, answers use ${modelLabel(st.model)}. Change or forget it.` : "Add your CBORG key to ask the wiki"
-  k.setAttribute("aria-label", label)
-  k.title = label
+// The bar's markup is server-rendered (components/Bar.tsx); this makes its Browse
+// button a disclosure for the list after it.
+const barMenu = () => {
+  const box = document.querySelector<HTMLElement>("header.bar .barmenu")
+  const btn = box?.querySelector<HTMLButtonElement>(".barmenu-btn")
+  const list = box?.querySelector<HTMLElement>(".barmenu-list")
+  return box && btn && list ? { box, btn, list } : null
 }
-onSettingsChange(paintKeyButton)
+const menuLinks = (list: HTMLElement) => [...list.querySelectorAll<HTMLAnchorElement>("a")]
+
+function setMenu(open: boolean, focusBack = false) {
+  const m = barMenu()
+  if (!m) return
+  m.btn.setAttribute("aria-expanded", String(open))
+  m.list.hidden = !open
+  if (!open && focusBack) m.btn.focus()
+}
 
 function wireBar() {
-  const k = document.querySelector<HTMLButtonElement>("header.bar .px-keybtn")
-  if (!k) return
-  paintKeyButton()
-  on(k, "click", () => openSettings())
+  const m = barMenu()
+  if (!m) return
+  // Marks the menu as scripted, which turns off the stylesheet's focus-within fallback.
+  m.box.classList.add("js")
+  setMenu(false)
+  const { btn, list } = m
+  on(btn, "click", () => setMenu(btn.getAttribute("aria-expanded") !== "true"))
+  on(btn, "keydown", (e) => {
+    const k = (e as KeyboardEvent).key
+    if (k !== "ArrowDown" && k !== "ArrowUp") return
+    e.preventDefault()
+    setMenu(true)
+    const links = menuLinks(list)
+    links[k === "ArrowDown" ? 0 : links.length - 1]?.focus()
+  })
+  on(list, "keydown", (e) => {
+    const k = (e as KeyboardEvent).key
+    const links = menuLinks(list)
+    const i = links.indexOf(document.activeElement as HTMLAnchorElement)
+    const to =
+      k === "ArrowDown" ? (i + 1) % links.length
+      : k === "ArrowUp" ? (i - 1 + links.length) % links.length
+      : k === "Home" ? 0
+      : k === "End" ? links.length - 1
+      : -1
+    if (to < 0) return
+    e.preventDefault()
+    links[to]?.focus()
+  })
+  // The bar survives SPA navigation, so a chosen item must not leave the list open.
+  on(list, "click", (e) => (e.target as Element).closest("a") && setMenu(false))
+  // Tabbing past the last item, or back before the button, closes the menu.
+  on(m.box, "focusout", (e) => {
+    const next = (e as FocusEvent).relatedTarget as Node | null
+    if (next && !m.box.contains(next)) setMenu(false)
+  })
 }
+// Registered once, so SPA navigation does not stack them; each finds the menu now on the page.
+document.addEventListener("keydown", (e) => {
+  const m = barMenu()
+  if (e.key !== "Escape" || !m || m.btn.getAttribute("aria-expanded") !== "true") return
+  setMenu(false, m.box.contains(document.activeElement))
+})
+// A click or tap anywhere outside the menu closes it. iOS Safari fires no click on
+// plain page areas, so this listens for the pointer going down instead.
+document.addEventListener("pointerdown", (e) => {
+  const m = barMenu()
+  if (m && !m.box.contains(e.target as Node)) setMenu(false)
+})
 
 // ---------------------------------------------------------------- record header
 
@@ -899,6 +968,7 @@ Rules:
 - If the sources do not answer the question, reply with NO_ANSWER on the first line, then one sentence on what the sources do cover, and stop.
 - Earlier answers in this conversation used different source numbers. Do not comment on earlier citations.
 - Do not add confidence labels, and make no claims about what named people work on or care about.
+- A source labelled Open question proposes work that has not been done. Present its hypothesis as untested, never as a finding.
 - Write at most ${words} words of plain prose. No headings. You may bold a short lead-in phrase. Use a short "- " list only when comparing more than three items.${
   pageTitle ? `\n- The reader is on the page "${pageTitle}". Every source is a section of that page.` : ""
 }`
@@ -1031,6 +1101,10 @@ function renderAskPage() {
   const scoped = bySlug.get(params.get("page") ?? "")
   const pageScope = scoped && askable(scoped) ? scoped.slug : ""
   const topics = pages.filter((p) => p.group === "topic")
+  // Planning reads only the records a project is chosen from.
+  const PLAN = new Set(["finding", "direction", "conflict"])
+  const canPlan = pages.some((p) => p.group === "finding" || p.group === "direction")
+  const planScope = canPlan && params.get("scope") === "plan"
   main.className = "px-askpage-main"
   main.innerHTML = `<div class="px-askhead">
       <div class="eyebrow">Ask the wiki</div>
@@ -1051,6 +1125,8 @@ function renderAskPage() {
           <div class="opts">
             <label>Scope <select aria-label="Scope"><option value="">All of the wiki</option>${
               pageScope && bySlug.get(pageScope) ? `<option value="page:${esc(pageScope)}" selected>This page: ${esc(bySlug.get(pageScope)!.title)}</option>` : ""
+            }${
+              canPlan ? `<option value="plan"${planScope ? " selected" : ""}>Results, open questions and conflicts</option>` : ""
             }${topics.map((t) => `<option value="topic:${esc(t.slug)}">Topic: ${esc(t.title)}</option>`).join("")}</select></label>
             <span class="px-aistatus"></span>
             <span class="px-askrank px-meaning-status" aria-live="polite"></span>
@@ -1112,6 +1188,7 @@ function renderAskPage() {
       const slug = v.slice(5)
       return { filter: (p) => p.slug === slug, page: bySlug.get(slug), perPage: Infinity }
     }
+    if (v === "plan") return { filter: (p) => PLAN.has(p.group), perPage: 2 }
     if (v.startsWith("topic:")) {
       const slug = v.slice(6)
       return { filter: (p) => p.slug === slug || p.topicSlugs.includes(slug) }
@@ -1196,12 +1273,34 @@ function renderAskPage() {
 
 let drawer: HTMLElement | null = null
 
+// Result and open-question pages share fixed headings, which read badly through the rules below.
+const ASKS: Record<string, Record<string, string>> = {
+  finding: {
+    "what the report measured": "What did the report measure?",
+    limits: "What are the limits of this result?",
+    "compared with published work": "How does this compare with published work?",
+    "open questions that build on this": "Which open questions build on this result?",
+    "related conflicts": "Which conflicts involve this result?",
+  },
+  direction: {
+    hypothesis: "What is the hypothesis?",
+    "why it matters": "Why does this question matter?",
+    "how to test it": "How could this be tested?",
+    "what would support or refute it": "What would support or refute it?",
+    data: "What data would this need?",
+    "builds on": "Which results does this build on?",
+    "closest published work": "What is the closest published work?",
+  },
+}
+
 function suggestions(page: Page): string[] {
   const skip = /^(sources?|related pages|references|see also|what this entity is)$/i
   return page.headings
     .filter((h) => !skip.test(h))
     .slice(0, 5)
     .map((h) => {
+      const fixed = ASKS[page.group]?.[h.toLowerCase()]
+      if (fixed) return fixed
       if (/^(why|how|what|is|are|do|does|can|which|when|where)\b/i.test(h)) return h.endsWith("?") ? h : `${h}?`
       if (/^findings in /i.test(h)) return `What did ${h.replace(/^findings in /i, "")} find?`
       if (/^(tensions|limitations|caveats)/i.test(h)) return `What are the ${h.toLowerCase()} here?`
@@ -1293,6 +1392,11 @@ function openDrawer(page: Page) {
 
 async function enhance() {
   wireBar()
+  wireCards()
+  wireQuestions()
+  wireBoards()
+  wireNovelty()
+  wireStrips()
   if (!pal?.classList.contains("open")) document.documentElement.style.overflow = ""
   // The keyword index (about 6 MB gzipped) loads in the background once the page is idle,
   // so the first search is quick. Meaning vectors load only when meaning search or Ask needs them.

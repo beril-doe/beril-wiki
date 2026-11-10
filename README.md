@@ -37,15 +37,18 @@ rendering them.
 
 A fixed Python schedule drives Claude Agent SDK writer and reviewer jobs; the
 only structural model call chooses topic groups. Python enforces coverage,
-scientific review, token budgets, and recoverable promotion. Start by inspecting
-staged changes without inference:
+scientific review, token budgets, and recoverable promotion. Start by listing
+changed staged sources and stale editorial stages without inference:
 
 ```sh
 uv run python -m beril_wiki.agentic plan
 ```
 
-Runs load the committed [model policy](agentic.yaml): Opus 5.5 for scientific
-work and Sonnet 5 for queries and figure selection.
+Runs load the committed [model policy](agentic.yaml): Opus 5.5 plans and writes
+derived pages, Sonnet 5.5 writes integrated pages and the finding and research-direction
+records, and GPT-6.1 Sol extracts evidence, reviews, writes queries and selects
+figures. Haiku 5.5 labels result types and follow-up needs, and GPT-6 Luna
+reviews most card records.
 Derived pages (conflicts, hubs, home, literature, authors) are written from
 evidence packed into one prompt, checked by code, reviewed in one turn and
 corrected by paragraph patches; a page that does not converge is recorded, not
@@ -54,6 +57,13 @@ subscription login, the observatory checkout, run budgets, workers, failed-page
 retry, search, and recovery, or open the
 [HTML walkthrough](docs/agentic-workflow.html) for the control flow. A capped
 real-source update remains the acceptance step before a large compilation.
+`uv run python -m beril_wiki.agentic cards --max-tokens N --max-jobs M` runs
+only the finding, literature-label, research-direction, plain-summary,
+links, shared-result, result-type (`outcomes`) and follow-up (`followups`)
+stages (or those named with `--stage`) for the reports
+and topics in `contract/cards.yaml`, then `check --strict`.
+`--stage-max-usd STAGE=USD` caps a stage's recorded Claude spend across runs,
+on `cards` and `run` alike.
 The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 
 ## Repository layout
@@ -65,7 +75,7 @@ The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 | `scripts/` | `setup.sh`, `run_pipeline.sh` and `build_quartz.sh` |
 | `tests/` | deterministic checks and recorded-response workflow tests |
 | `theme/` | the Quartz page frame (one component per page region), the stylesheet (one partial per region), and the browser script and index builder for search and Ask |
-| `contract/` | the editorial contract injected into every compile, the concept decisions manifest, and the errata a person has recorded against the source reports |
+| `contract/` | the editorial contract injected into every compile, the concept decisions manifest, the errata a person has recorded against the source reports, the scope of finding and research-direction records (`cards.yaml`), and human decisions on literature labels (`novelty-decisions.yaml`) |
 | `state/` | per-stage caches that make the pipeline incremental |
 | `search/` | ignored local copy of the section vectors for meaning search; the shared copy lives on the `search-data` branch |
 | `.agentic/` | ignored runtime ledger, raw results, receipts, and candidate workspace; preserve when resuming |
@@ -106,6 +116,9 @@ Pushing to `main` rebuilds and deploys the site to
 build without deploying, so the Linux-only parts of the render are checked
 before they reach the live site.
 
+The site publishes the finding and research-direction records under
+`wiki/findings/` and `wiki/directions/` as its Results and Open questions pages.
+
 The job is render-only. It needs no API key, because `wiki/` and every
 figure are committed. Refreshing the *content* is still a maintainer
 running the curator and committing the accepted result. The curator does not
@@ -141,8 +154,9 @@ vectors come from the `search-data` branch and need the checkout's `.git`.
 
 Search and Ask the wiki run in the reader's browser, so the Pages site needs
 no server. Keyword search needs nothing from the reader. Meaning search and Ask
-call CBORG with the reader's own CBORG key, which the reader enters through the
-key button in the top bar. The browser stores the key in localStorage (or in
+call CBORG with the reader's own CBORG key. The reader enters it on the Ask page
+or in the search box's meaning-search control, and asking without a key opens
+the same key dialog. The browser stores the key in localStorage (or in
 sessionStorage if the reader unticks "Remember on this device") and sends it
 only to `api.cborg.lbl.gov`. The site ships no maintainer key. Browser storage
 belongs to the origin, not the path, so every page under `beril-doe.org`,

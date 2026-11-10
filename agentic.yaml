@@ -13,3 +13,14 @@ step_models:
   review: gpt-6.1-sol
   queries: gpt-6.1-sol
   figures: gpt-6.1-sol
+  # Finding cards, literature labels and research directions (stages headlines,
+  # novelty, directions). Their reviews, queries and the cross-vendor label check run on
+  # review and queries, so a GPT model checks every card a Claude model writes.
+  cards: claude-sonnet-5-5
+  # Reviews of the stages directions, gists, links, shared, outcomes and followups.
+  # Headlines and novelty keep review. The model is part of every card record's key,
+  # so these pins match the models that judged the accepted records; changing one
+  # re-asks every record of the stages that use it.
+  card_review: gpt-6-luna
+  # The one-label stages outcomes and followups (result type, follow-up need).
+  labels: claude-haiku-5-5

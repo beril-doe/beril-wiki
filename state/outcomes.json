@@ -1,0 +1,1829 @@
+{
+  "acinetobacter_adp1_explorer--1cfedc83": {
+    "input": "a62e8fa2c76202b465580ba60b8443a3f7cf1b6c2b8d9782f904ed30c5f50885",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that growth-model essentiality calls matched knockout screen results for most shared genes, a clear pattern of agreement rather than no effect.",
+    "type": "positive"
+  },
+  "acinetobacter_adp1_explorer--4460d103": {
+    "input": "2e18b28cdf74b8d05aff7bfcbedc79756b4ff22701423709b647b2cbb1aff3f2",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that essential genes carry functional and pathway annotations far more often than dispensable genes in one bacterium.",
+    "type": "positive"
+  },
+  "acinetobacter_adp1_explorer--886c47ff": {
+    "input": "79d38abdd2879c30d69c10f8ebf613a7d84a37ba5be83758359cafe4453cb258",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows the Fitness Browser database has no entry for this strain, so it describes dataset coverage rather than a biological result.",
+    "type": "data"
+  },
+  "acinetobacter_adp1_explorer--c925d9c6": {
+    "input": "6c607c682630453d76c9a6bc9e4e5dcc1478e308f227f3d87e7c5981bfcec497",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that a substantial set of genes switches predicted flux class between rich and minimal media, a clear condition-dependent pattern that the analysis found.",
+    "type": "positive"
+  },
+  "acinetobacter_adp1_explorer--df385e36": {
+    "input": "a2638457fa1ec28c416cde915e30c7d6a7db8aa0ee5f696b892e713b8721b341",
+    "model": "claude-haiku-5-5",
+    "reason": "Mutant growth on urea barely resembled growth on quinate or the other carbon sources, showing a clear separation from the rest.",
+    "type": "positive"
+  },
+  "acinetobacter_adp1_explorer--ef9044ba": {
+    "input": "754d5b35a405c0d1e95e25b1fd797457b12e129af53e8f01ef8498028e511e26",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence describes how much of each data type exists for genes, with no biological result about the genes themselves.",
+    "type": "data"
+  },
+  "adp1_deletion_phenotypes--69241676": {
+    "input": "eaaa0bdf4fe4b2ba3a8919483bb7375545d25d1ec3a534cdafc4a9de97bc9634",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found many genes whose growth importance concentrates on one carbon source, and the top genes for each source match the expected pathways.",
+    "type": "positive"
+  },
+  "adp1_deletion_phenotypes--86a03233": {
+    "input": "c36d9901d6eb12afd6c7f6981a1a42566b655a5b33e23fd70567fd19d209d876",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows genes grouping into two broad sensitive and tolerant sets, a pattern found, though no specific functional theme appeared.",
+    "type": "positive"
+  },
+  "adp1_deletion_phenotypes--e7f5d7d3": {
+    "input": "af4b05ea95875cef2be83b2821dbac65f947651e6b23aa89c90681393f1e7407",
+    "model": "claude-haiku-5-5",
+    "reason": "Growth on the eight carbon sources varied largely separately from one another, so the conditions reveal more distinct kinds of information than a two-group split would.",
+    "type": "positive"
+  },
+  "adp1_deletion_phenotypes--ec39f324": {
+    "input": "404b4c54c236e7cd60ca0d9410d96594654d8dc781842eb12ae4fa2d80fad3de",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports a distinct group of 24 aromatic-degradation genes with severe defects only on quinate and near-zero effects elsewhere, a pattern the analysis found.",
+    "type": "positive"
+  },
+  "adp1_deletion_phenotypes--f675f8be": {
+    "input": "7cd0f48c17bc467d37101df4d154a275e52766833428095a354e25e9e19f00cf",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that carbon sources form distinct groups by how many genes they disrupt growth for, and the grouping holds at several cutoffs.",
+    "type": "positive"
+  },
+  "adp1_triple_essentiality--19478689": {
+    "input": "6c16e24a2a57487bac7d54d32117e069038e568a9c51154a8ab925a93406eaa4",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that genes with higher protein levels were more often essential, and protein levels sorted essential from non-essential genes fairly well.",
+    "type": "positive"
+  },
+  "adp1_triple_essentiality--45426cbd": {
+    "input": "7f7b2add3503d36321c5d627a0e8de95da0d9c0825cd9401103e2a75c3e5c567",
+    "model": "claude-haiku-5-5",
+    "reason": "Deleting genes that the growth model assigned zero activity still impaired growth, and this pattern made up most of the model-knockout mismatches.",
+    "type": "positive"
+  },
+  "adp1_triple_essentiality--73c3cad3": {
+    "input": "a523532d195f43d4a008f3f4275e5ed6c5e5e7eca70ef0c0230383c176fe5c67",
+    "model": "claude-haiku-5-5",
+    "reason": "A continuous gene-fitness score tracked knockout essentiality in both media, while the simple essentiality fraction did worse than chance.",
+    "type": "positive"
+  },
+  "adp1_triple_essentiality--93d338c1": {
+    "input": "b518ae11c4317766f9ce67bd7f0e107589ede612db036ebc41864da904dc8ab9",
+    "model": "claude-haiku-5-5",
+    "reason": "Defect rates were nearly identical across the three model classes, and a continuous-rate comparison also showed no link.",
+    "type": "negative"
+  },
+  "adp1_triple_essentiality--b191b064": {
+    "input": "954b78b670a86d7572781dac7a5475afd0a09bb682a3bf4bcb3cc3487f8e5e73",
+    "model": "claude-haiku-5-5",
+    "reason": "Transposon-screen essential-gene calls failed to match which genes were essential in full knockouts, and the match was poor at every cutoff tried.",
+    "type": "negative"
+  },
+  "alphafold_msa_annotation--3386d12a": {
+    "input": "4aadcec5f1de252009154b93b51d83500ebb071f681ffd64c102bea49e276f57",
+    "model": "claude-haiku-5-5",
+    "reason": "The table shows protein domain annotations rising steadily as alignment depth increases across core gene clusters, a clear pattern in the data.",
+    "type": "positive"
+  },
+  "alphafold_msa_annotation--b7b252bd": {
+    "input": "2d28a8aefd4fbeb8fa4dfcf3cac7bfa1e85d17236e2597301765fdd5d4fddb2b",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence tallies how many conserved gene clusters lack functional annotation or enzyme and pathway labels, which describes annotation coverage rather than a biological result.",
+    "type": "data"
+  },
+  "alphafold_msa_annotation--f4d7e00d": {
+    "input": "82cb0eaa011c7628d8b1b63122da18b753ffb0696232d4eb186eeeebe522bd34",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that core genes have much deeper protein-family alignments than accessory genes, a clear difference that was found.",
+    "type": "positive"
+  },
+  "amr_cofitness_networks--284c5695": {
+    "input": "99e65de9eee7251ec3544cf884a71b3dab4c7eea52728534a6e9dda5c4b858d6",
+    "model": "claude-haiku-5-5",
+    "reason": "Flagellum motility genes were over-represented among genes whose fitness tracks antibiotic-resistance genes, a pattern found in several bacteria.",
+    "type": "positive"
+  },
+  "amr_cofitness_networks--8fa18a88": {
+    "input": "28a052ed5eaef05db2c683ab5a177ca52821a6d450895ea2e527c513367a9d32",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that resistance-gene assignments fall in gene-group families shared across different bacteria, a pattern the analysis found; the regulatory reading stays interpretive.",
+    "type": "positive"
+  },
+  "amr_cofitness_networks--9d334076": {
+    "input": "767aa5deff249fdedcf06a4fb598eb603d854f9bff75dc341d33a036ebbecf55",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that several functional categories recur among genes whose fitness pattern tracks resistance genes, across several organisms, which is a pattern found.",
+    "type": "positive"
+  },
+  "amr_cofitness_networks--ca058750": {
+    "input": "c9a9ea84ddab3d3d8b55b0fb6d5d656718ed3d2edb39011f87cf391dcf22125b",
+    "model": "claude-haiku-5-5",
+    "reason": "Across 769 AMR genes, the analysis tested whether network size tracks fitness cost and found no link in either direction.",
+    "type": "negative"
+  },
+  "amr_environmental_resistome--0cf37cb9": {
+    "input": "b275e0b0be98cd9c898a3779c31dd1499a23f34364fc761449532ed725092e1a",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows metal resistance makes up a far larger share of resistance genes in aquatic and soil species than in human gut species.",
+    "type": "positive"
+  },
+  "amr_environmental_resistome--4d34e715": {
+    "input": "609f2f05390450b2c30f2e9202808171268b204ce78a9c51caa731c015a33c35",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows clinical species carry more resistance gene clusters than soil, aquatic or host-associated species, a clear difference between environments.",
+    "type": "positive"
+  },
+  "amr_environmental_resistome--96de8ae3": {
+    "input": "b74f8dae859600e4fe9b38d0fc4c9d39a13946c708d5994d536b6c07f07ae54d",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows species with mostly clinical genomes carry several times more resistance gene clusters than species with mostly environmental genomes.",
+    "type": "positive"
+  },
+  "amr_environmental_resistome--e39caf4e": {
+    "input": "a7a44c50150345a5b412905fd6a9daab3c450ff3dcefd789d1d3606b797fdf17",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that clinical species carry a larger share of accessory resistance genes than soil species, so the analysis found a clear pattern between environments.",
+    "type": "positive"
+  },
+  "amr_fitness_cost--104baecc": {
+    "input": "e8ae73b39bdb2bd8e0f80b31bc3853cc7a1514e4fcf9ac0d2a8af0de9ddf1b72",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis checked whether fitness cost differed across resistance mechanisms and found no difference between the four groups in these genes.",
+    "type": "negative"
+  },
+  "amr_fitness_cost--4f2f8508": {
+    "input": "376c238835db6fa62b0521fee96894c06092d757446fbe987076c07747312093",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that across 25 organisms, mutants lacking resistance genes grew better than other mutants when no antibiotics were present.",
+    "type": "positive"
+  },
+  "amr_fitness_cost--67395444": {
+    "input": "7d2a8361651ebf410da0ebf804b9a21d27aa9fadb1db3763b4dc58a830128e30",
+    "model": "claude-haiku-5-5",
+    "reason": "The quoted evidence reports that resistance mechanism type tracks whether a gene is core or accessory, a pattern the analysis found.",
+    "type": "positive"
+  },
+  "amr_fitness_cost--7ffc7d6b": {
+    "input": "10578801783f04b46c0c679857c87730bbb1fd729d2179c1b6837f0c0384933e",
+    "model": "claude-haiku-5-5",
+    "reason": "Efflux-pump genes shifted toward importance under antibiotics while enzyme-inactivation genes did not, a mechanism-dependent contrast the evidence reports directly.",
+    "type": "positive"
+  },
+  "amr_fitness_cost--95a8021f": {
+    "input": "e6337021ef3e7fe7e42c94abd4982ce34cea90022b69c1ee3bc22fca84733f1e",
+    "model": "claude-haiku-5-5",
+    "reason": "Intrinsic and acquired resistance genes showed the same fitness cost when knocked out, so gene origin did not separate them.",
+    "type": "negative"
+  },
+  "amr_pangenome_atlas--1e435872": {
+    "input": "13f514ae58db9c0e11f727a3d61d37788c49b4032f7e7a55d44d28e657130f3f",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows antibiotic-resistance genes sit less often in the conserved core and more often in the variable genome, across most species examined.",
+    "type": "positive"
+  },
+  "amr_pangenome_atlas--9947286c": {
+    "input": "9f7b56a6dcb2b7a2f98a2a3df57e9432a2cbfbd73c4d8ab6b99289c023226e80",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that resistance mechanism separates gene core status: beta-lactamases and intrinsic efflux pumps are mostly core, while regulatory and mobile genes are rarely or never core.",
+    "type": "positive"
+  },
+  "amr_pangenome_atlas--9f045e80": {
+    "input": "45a5626570bac7a250ea666dc7d1e6adf1c3512680ee9ba41a2593d9613ddb8e",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports which annotation sources cover the resistance clusters, a coverage fact about the Pfam table rather than a biological comparison.",
+    "type": "data"
+  },
+  "amr_pangenome_atlas--b878500b": {
+    "input": "0558bf787e0a291f9469d2195f159d331f922b787ade488737b815b4ebfbd244",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports a clear pattern: species from more varied environments carry more resistance genes, and those genes are less often core.",
+    "type": "positive"
+  },
+  "amr_pangenome_atlas--ee1ea51b": {
+    "input": "dc26e7e165475f458c6a2165637bc757bf940129697ccac95e4f359b91e4ce25",
+    "model": "claude-haiku-5-5",
+    "reason": "Within 8 of 10 tested phyla, species with more open gene pools tend to have more resistance genes, despite almost no overall link.",
+    "type": "positive"
+  },
+  "amr_strain_variation--065d36b5": {
+    "input": "fcf9871b6a55c60817b2012ecdc59b6bc93c11b17e1e0f220d7e71234c565b54",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found antimicrobial-resistance genes grouped into tightly co-occurring clusters across many species, with genes in each cluster tending to appear in the same strains.",
+    "type": "positive"
+  },
+  "amr_strain_variation--1d3c3dfa": {
+    "input": "e3bbeb2f8278dcc96b2a65441241afa68de9b71cac64a68b48d60595ead2296c",
+    "model": "claude-haiku-5-5",
+    "reason": "Across the species tested, the analysis found no clear change over time in resistance gene counts, though the evidence does not prove no change occurred.",
+    "type": "negative"
+  },
+  "amr_strain_variation--6ebb7e8b": {
+    "input": "49ea0811719529f68fb41a32e942fd62c45cc34fd38ac04d04a35f83a8a0c9cf",
+    "model": "claude-haiku-5-5",
+    "reason": "In many species, more closely related genomes carry more similar resistance gene sets, so the analysis found a pattern.",
+    "type": "positive"
+  },
+  "amr_strain_variation--e349ed14": {
+    "input": "f3c9f1daa870324c814e553236b047ab24cad8e9237781c4440ff73989728317",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that acquired resistance genes track strain relatedness more closely than near-universal core resistance genes do.",
+    "type": "positive"
+  },
+  "amr_strain_variation--f9cc56e8": {
+    "input": "348ab79aaab34ad0791de7c0b12d92811cdf494493cae21df539931d9f0aeddc",
+    "model": "claude-haiku-5-5",
+    "reason": "Gene presence across many genomes shows most resistance genes within a species occur in only some strains, not nearly all, a biological pattern rather than a database fact.",
+    "type": "positive"
+  },
+  "annotation_gap_discovery--12a061bc": {
+    "input": "9b9c4e54a7757f2737ee7285588d2bcc593eaea779958967047cc8b004a73b4d",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows the share of reactions resolved to a gene differed between organisms, lowest in a Bacteroidetes. The explanations the report offers were not tested.",
+    "type": "positive"
+  },
+  "annotation_gap_discovery--41b7c54a": {
+    "input": "e7ce6762ac2823da7298c175eb19b099d6db7dcc7785468d937834b6ead68107",
+    "model": "claude-haiku-5-5",
+    "reason": "Simulated knockouts gave zero wildtype growth because the models need the gapfilled reactions to grow on those carbon sources, so the test could not confirm or reject the assignments.",
+    "type": "inconclusive"
+  },
+  "annotation_gap_discovery--61f3d4be": {
+    "input": "3348a66a7879669799c13797cbfa0a9cddc8961e598a844065d6bbc812cce1a1",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows dark reactions were resolved far less often than reactions with enzyme numbers, a clear pattern of lower resolution for that group.",
+    "type": "positive"
+  },
+  "annotation_gap_discovery--ccaed616": {
+    "input": "4cb116f955ff07b0b8ba8b97513aace17580ee76c3bdf4b52a97d423d8f01923",
+    "model": "claude-haiku-5-5",
+    "reason": "The combined evidence did not single out a convincing gene for these pairs, so the analysis could not decide which gene is responsible.",
+    "type": "inconclusive"
+  },
+  "annotation_gap_discovery--ea6047b9": {
+    "input": "d647195a010e07b92f331d25e7a1b409094f1542f1d0ddc11b069b7a1a64096d",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that sequence-similarity search was the most useful single stream and that combining all streams improved results beyond it.",
+    "type": "positive"
+  },
+  "annotation_gap_discovery--fa3a9dc4": {
+    "input": "5ceee755b0881a453be2bdd5fd76a42ef190217d0c5c90831dedb2469ee2bb48",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows candidate genes were assigned to many tested reaction-organism pairs, beating the target set in advance.",
+    "type": "positive"
+  },
+  "aromatic_catabolism_network--3128e9e3": {
+    "input": "548cee2f8c3b4354c8f5d4015160b589a8086dda421ae23c80c7628ae57a2800",
+    "model": "claude-haiku-5-5",
+    "reason": "The cross-species fitness data show that Complex I gene orthologs cost more fitness on aromatic compounds than on comparison conditions.",
+    "type": "positive"
+  },
+  "aromatic_catabolism_network--3a51f6c6": {
+    "input": "eef26176ecf9da48a0c425807ccc006a44cc93bfce00b20f8a5961bf03232ab3",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows the largest Complex I defects fall on non-aromatic acetate and succinate, a condition-level pattern that was found rather than absent.",
+    "type": "positive"
+  },
+  "aromatic_catabolism_network--7d6bd2aa": {
+    "input": "ffb23390483e9163fcac9bfa83d90731805704f177b587351b61fb2ff7f69d4d",
+    "model": "claude-haiku-5-5",
+    "reason": "The model reproduced a higher Complex I flux on aromatic substrates, a real pattern, even though it predicted no essentiality for that enzyme.",
+    "type": "positive"
+  },
+  "aromatic_catabolism_network--8650ba38": {
+    "input": "dc67c69d42d4fb85e51faab499b45d46b7b690131039f77cca1ff22fddacc7fb",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that gene-knockout growth patterns group most quinate-specific genes into a few shared support systems, a biological pattern rather than a description of data coverage.",
+    "type": "positive"
+  },
+  "bacdive_metal_validation--09db2bda": {
+    "input": "cfcc8c9b467019b6051968096f5f02033f0859aa189fcb2db3d405d53622e612",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that isolates from heavy-metal contamination sites score higher on predicted metal tolerance than isolates from environmental baseline sites.",
+    "type": "positive"
+  },
+  "bacdive_metal_validation--1ac30de6": {
+    "input": "0ad7a3c4b07ca18202977d6ada079c76a9a74b6553ca7d964029d00b60ea485e",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows contamination isolates score higher on predicted metal tolerance than environmental isolates within the same dominant bacterial group.",
+    "type": "positive"
+  },
+  "bacdive_metal_validation--2a7f4c05": {
+    "input": "23c00f60eb22a43bebc5aac767611910f4cd8c03a90a49d0f8f8fb60a53b08de",
+    "model": "claude-haiku-5-5",
+    "reason": "The comparison ran, but too few strains were tested to tell whether metal users differ in predicted tolerance score.",
+    "type": "inconclusive"
+  },
+  "bacdive_metal_validation--60f073d0": {
+    "input": "2e609664a8feb6a7d31308945a8610e808bcc4dff9527b98487247433bb7b560",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports an ordered pattern in metal-tolerance rise across contamination categories, largest at heavy-metal sites and smallest at industrial sites.",
+    "type": "positive"
+  },
+  "bacdive_metal_validation--894e1826": {
+    "input": "c59a299b436674de72a23f6761ac030610a7f8284fbb0fd9a2886335a58e57a4",
+    "model": "claude-haiku-5-5",
+    "reason": "The comparison found host-associated isolates scoring higher on predicted metal tolerance than environmental ones, the reverse of the expected direction.",
+    "type": "positive"
+  },
+  "bacdive_phenotype_metal_tolerance--202a67ef": {
+    "input": "f185ada0e8b31dba669fa9b3deed5f26330857e578352aa2210accb30540b292",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found urease producers scoring lower on predicted metal tolerance, the opposite of the nickel-import expectation, and the pattern was concentrated in one lineage.",
+    "type": "positive"
+  },
+  "bacdive_phenotype_metal_tolerance--885a4ca9": {
+    "input": "989ae6bccfc91cf5101a042aac317b2adf1b0eabb0d2b4f95000fdb61043db0c",
+    "model": "claude-haiku-5-5",
+    "reason": "The report shows phenotype data added nothing beyond taxonomy, but adding a count of metal-resistance gene clusters clearly improved predictions of metal tolerance.",
+    "type": "positive"
+  },
+  "bacdive_phenotype_metal_tolerance--9b04bc8d": {
+    "input": "3bfb2116d61d3cb60ed5b6ba1a47d0ed62a6af3b2895f63cb03ff1ecec9e821d",
+    "model": "claude-haiku-5-5",
+    "reason": "Gram-negative species showed higher metal tolerance scores than Gram-positive ones, a clear difference, though it cannot be separated from phylogeny.",
+    "type": "positive"
+  },
+  "bacdive_phenotype_metal_tolerance--a1b67557": {
+    "input": "618f5ca38dec32909431936c90fb90b0f3cc0ce7bf1d166e97f75b70d9a82a06",
+    "model": "claude-haiku-5-5",
+    "reason": "Within each major bacterial class, catalase-negative species scored higher on predicted metal tolerance, the reverse of the overall trend.",
+    "type": "positive"
+  },
+  "bacdive_phenotype_metal_tolerance--c1e60f42": {
+    "input": "3a3dbbd883a247005dd9e94824edc688db1ef069c4f6e251a5f47acf56687240",
+    "model": "claude-haiku-5-5",
+    "reason": "Facultative anaerobes scored slightly highest in metal tolerance, a pattern found alongside a negligible anaerobe-aerobe gap.",
+    "type": "positive"
+  },
+  "bacillota_b_subsurface_accessory--0b68d03d": {
+    "input": "9a86699672c46b7c2b05b8f220b713c232619f957128044191ae59a1955920ca",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows deep-clay Bacillota_B genomes are larger than soil relatives, the opposite of the expected compact pattern.",
+    "type": "positive"
+  },
+  "bacillota_b_subsurface_accessory--2f0dbfa7": {
+    "failed": true
+  },
+  "bacillota_b_subsurface_accessory--b2fd7eb1": {
+    "input": "423ec0ccc2f63d0caf19550776655578f0b443bf9e57c21d5af1aabf89ba203a",
+    "model": "claude-haiku-5-5",
+    "reason": "The comparison found many gene families that appear far more often in deep-clay bacteria than in soil relatives, well beyond the predicted count.",
+    "type": "positive"
+  },
+  "bacillota_b_subsurface_accessory--bbe885ea": {
+    "input": "bc4a2dedbc83862045eb64b6a3f684c13265ba160ba4a13102e92d0d75d73a09",
+    "model": "claude-haiku-5-5",
+    "reason": "After the detector was corrected, genomes from deep clay, shallow clay and soil carried these genes at similar rates, so no difference was found.",
+    "type": "negative"
+  },
+  "bacillota_b_subsurface_accessory--f9a4cc6b": {
+    "input": "cbd203dcec21efc6818f659557870811e95d045db64ef1340b242fcfa13e1ded",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that deep-clay genomes carry sulfate-reduction genes far more often than rock-attached samples, so a real pattern is found.",
+    "type": "positive"
+  },
+  "caulobacter_fur_lipida_loss--088e2303": {
+    "input": "22484355bf860656b238d5f610c50c7481444ec610b910603157794bd43d5d3b",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that most genes expected to drop in the \u0394fur strain stayed flat when sspB was also absent, a pattern the analysis found in the data.",
+    "type": "positive"
+  },
+  "caulobacter_fur_lipida_loss--75b18331": {
+    "input": "3e8ae6416239c0f1c5928200173dbe217a2df75c7bebe2a972ea79e7734297b5",
+    "model": "claude-haiku-5-5",
+    "reason": "Beyond the absence of upregulation, the evidence shows two sphingolipid genes, spt and sphk, were clearly lower in the mutant than in the comparison, which is a pattern found.",
+    "type": "positive"
+  },
+  "cf_formulation_design--1799127b": {
+    "input": "e4a1bca1f9d7fea2476220efe4e4e918fa48feb87840a7a7cc38cd8153035d6d",
+    "model": "claude-haiku-5-5",
+    "reason": "The genome survey shows the toxin gene pattern differs across isolation sources, with cystic fibrosis isolates carrying ExoS far more often than ExoU, so a real pattern was found.",
+    "type": "positive"
+  },
+  "cf_formulation_design--460ed03a": {
+    "input": "c51555bfe04e5995a98ae34b27b18aa2631e0fb28cb4196bf1013985448fc6be",
+    "model": "claude-haiku-5-5",
+    "reason": "Lung-source genomes score lower than non-lung genomes on several predicted sugar-use pathways, a pattern found in the comparison; the streamlining explanation is interpretation only.",
+    "type": "positive"
+  },
+  "cf_formulation_design--8bf20af1": {
+    "input": "a4897ae27bf8bc4c46d8f399bbadb807805566701a44906feddac8c5feb7bf41",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows PA14 outgrew the average commensal on every substrate tested, a consistent pattern, while no substrate favored commensals.",
+    "type": "positive"
+  },
+  "cf_formulation_design--94972e2b": {
+    "input": "40b384057c72b6f090d3c22b5ac3eaaa07b298139e17710950c225a0d0f0508b",
+    "model": "claude-haiku-5-5",
+    "reason": "The model found that adding one member closes every remaining gap in the target's preferred nutrient coverage, a clear modeled effect of the addition.",
+    "type": "positive"
+  },
+  "cf_formulation_design--951bde52": {
+    "input": "07c9a89cb6a8895af81a150d69b0d4330fc54b3b8c7d0b91bcec804229ba4d0c",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that isolates whose nutrient use overlapped more with PA14's preferred substrates also inhibited PA14 more strongly.",
+    "type": "positive"
+  },
+  "cf_formulation_design--c513d6f7": {
+    "input": "08f3aae089f0af57570b9ea20a2f9ecffd99ddc507b5ffea6920dbb20834ecfc",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that mixtures of two to five species scored about the same, with no difference found between the sizes tested.",
+    "type": "negative"
+  },
+  "clay_confined_subsurface--0265377f": {
+    "input": "e63c899866e7ca72d377193a2ffabe2c7f3f6adce9cb2801254d4edbdf855848",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows only that every isolate came from borehole sources, so the cultivation-bias reading was proposed but never tested.",
+    "type": "untested"
+  },
+  "clay_confined_subsurface--10b5365e": {
+    "input": "83304c2b043051adc799841d606e6645a5ba5873aef8dd2c129a01046b53edf6",
+    "model": "claude-haiku-5-5",
+    "reason": "The quality-filtered comparison shows the deep-clay genomes have fewer complete amino-acid pathways than the soil baseline genomes.",
+    "type": "positive"
+  },
+  "clay_confined_subsurface--208cd800": {
+    "input": "c8b168bad50b6c4700971d1309a36b624f60174d482baa3f5743e9283a7349b0",
+    "model": "claude-haiku-5-5",
+    "reason": "Corrected markers reversed the earlier pattern, with deep genomes slightly higher than shallow, though no cohort comparison showed a clear difference.",
+    "type": "positive"
+  },
+  "clay_confined_subsurface--eb9811c0": {
+    "input": "af3aefa0762ed7d0addeb4855d6a4534eddd7d1c7cbb605737ca91c8b2ab075b",
+    "model": "claude-haiku-5-5",
+    "reason": "Within one phylum, soil genomes carry the same markers at high rates as deep-clay genomes, so the traits follow lineage rather than habitat.",
+    "type": "positive"
+  },
+  "cofitness_coinheritance--0fab94f0": {
+    "input": "c83afa4559b937d80a1984b3b5bb6e56bd71718b36935fa55a7bb4af1e6c5fb8",
+    "model": "claude-haiku-5-5",
+    "reason": "Gene groups with similar fitness patterns are more often found together in the same genomes than comparable gene sets, across several organisms.",
+    "type": "positive"
+  },
+  "cofitness_coinheritance--179c7596": {
+    "input": "52f691cdf84e8dd861b5f929d581aac414c3397c050b3be495e0163bc8679171",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows functionally linked gene pairs were inherited together more often in one nearly clonal genome, a positive result.",
+    "type": "positive"
+  },
+  "cofitness_coinheritance--67c8c90f": {
+    "input": "b85394fdacdf96c08f57238b698a94234f10441e17a7b27fb86c5530b694abe2",
+    "model": "claude-haiku-5-5",
+    "reason": "Co-fit gene pairs co-occur across genomes more often than matched random pairs in most organisms, though the effect is small and varies.",
+    "type": "positive"
+  },
+  "cog_analysis--62995938": {
+    "input": "30f4fd40c4fb728362c769a084edf75e8a129e988ff9226cdb483c0a423d1c88",
+    "model": "claude-haiku-5-5",
+    "reason": "The quoted result reports that genes unique to single genomes carried defense-function genes more often than other genes across the sampled species.",
+    "type": "positive"
+  },
+  "cog_analysis--73ed94e8": {
+    "input": "b481657fb73080dc602c0a653603df01a7fa6eaef803253d4ce03f7846b9fcf1",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows translation genes are the most under-represented category among single-genome genes, a difference the report found when comparing categories.",
+    "type": "positive"
+  },
+  "cog_analysis--7a21065f": {
+    "input": "aed48b53b6361c8d4cf954117c947cb21dae3d2fb19f4d776135ce63cd031fed",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that genes present in only one genome were more common for mobile-element functions, and this held in every sampled species.",
+    "type": "positive"
+  },
+  "cog_analysis--ddfb9269": {
+    "input": "5a9960c35e009e2611b2245b943da51ad1bbb7cbd10d7e745bdac2f0c724ec9b",
+    "model": "claude-haiku-5-5",
+    "reason": "The quote offers an interpretation of core gene functions as ancient and conserved, with no analysis of age or conservation shown.",
+    "type": "untested"
+  },
+  "conservation_fitness_synthesis--0c074210": {
+    "input": "557451da9a052e61d6ed30231309270388a4a5a27f9a65eac32cad3ab2db9a5e",
+    "model": "claude-haiku-5-5",
+    "reason": "Genes with strong condition-specific fitness effects were more often core than accessory, a pattern opposite to the expected niche link.",
+    "type": "positive"
+  },
+  "conservation_fitness_synthesis--0c3c94d9": {
+    "input": "24712c225e199805f31e2f43bebf65f13c75a10ea9b9b322271a66de9b869b67",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows accessory genes were less costly to carry than core genes, the reverse of the expected streamlining pattern.",
+    "type": "positive"
+  },
+  "conservation_fitness_synthesis--ae15e56e": {
+    "input": "f57f40e60a5ea4cf042083a79b89c0542287ea74e3d75d8130666921ec29ca9a",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows a clear gradient in which more important genes are more often shared across strains, so a pattern was found.",
+    "type": "positive"
+  },
+  "conservation_fitness_synthesis--b05bd909": {
+    "input": "691525be18973714fe90e60c501be19ef63317465bb51e61e0733d048b5de468",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports a pattern: 28,017 genes are both costly in the lab and conserved across pangenomes, with selection only inferred.",
+    "type": "positive"
+  },
+  "conservation_fitness_synthesis--d115e8ed": {
+    "input": "7fec4c2c59fa3f110d3673b58aae5347912f7a1a1a18135d0baac624e2446e27",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows a costly-gene excess concentrated in specific functional categories, so a pattern was found across functions.",
+    "type": "positive"
+  },
+  "conservation_vs_fitness--23e6bd24": {
+    "input": "49f20926a1c92e712fcbefb7de01360c9460da53e373f4d534c6c9dd58bac168",
+    "model": "claude-haiku-5-5",
+    "reason": "Essential genes were more often among shared core genes in many of the organisms examined, so a pattern was found rather than none.",
+    "type": "positive"
+  },
+  "conservation_vs_fitness--4e694a06": {
+    "input": "d7b28a01ad5b618a1143ccff32c32cf5d107d3129ba06dbbc3f5112df7b94c96",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports essential-core genes differing from non-essential genes across functional categories, with more protein metabolism genes and fewer carbohydrate and amino acid genes.",
+    "type": "positive"
+  },
+  "conservation_vs_fitness--e95508d3": {
+    "input": "7f225ef7bbaf2f5698f8d5e7f584f98e8419ad875bb2a6e9531e70d537a85d84",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that genes flagged as putatively essential were more often core genes than non-essential genes, so the analysis found a real difference in the expected direction.",
+    "type": "positive"
+  },
+  "conservation_vs_fitness--f320d5c5": {
+    "input": "934a8af29f3ff7c91703239ca90ad28588c7e8e4a4a27a7627540856989e623c",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports a pattern: these essential genes are less often characterized or enzymes, and they cluster in specific functional categories.",
+    "type": "positive"
+  },
+  "core_gene_tradeoffs--26e4ba12": {
+    "input": "bbf80ef5dd512ff5d749b3116c9acc7317a1905501cdc3ac3be8a1ef3183d986",
+    "model": "claude-haiku-5-5",
+    "reason": "The selection-signature table assigns most conserved and dispensable genes to neutral, so no burden was detected, though only under lab conditions.",
+    "type": "negative"
+  },
+  "core_gene_tradeoffs--a0b96f0f": {
+    "input": "73fa4b020d9850e4a0f00e05adc6561f00dcac8bbab03e942ab6d82894b57938",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows many genes help fitness under some conditions and cost it under others, a pattern found across the dataset.",
+    "type": "positive"
+  },
+  "core_gene_tradeoffs--c29ab7fa": {
+    "input": "8c2a009f33927fb1106af4f7d5f99d9e9d2f22d1cb35c5fa5bba399af686a306",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that trade-off genes are more often part of the shared core set, so a pattern was found.",
+    "type": "positive"
+  },
+  "core_gene_tradeoffs--fbfb5326": {
+    "input": "031a08439a94ecf1885a8e49e80ead9f0f7a235e830ec6099f2b161edebae557",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows non-core cell wall genes cost more to carry than core genes, reversing the usual pattern seen elsewhere.",
+    "type": "positive"
+  },
+  "core_gene_tradeoffs--fef60979": {
+    "input": "7cf98362461f75a6def13573100402db83df23cfe12c523ea64c6bd2789869c5",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that core genes carry more burden than strain-specific genes in three functional categories, so a difference was found rather than absent.",
+    "type": "positive"
+  },
+  "costly_dispensable_genes--31cecf6a": {
+    "input": "7b5620c9c5f7f7cda87064b647c716a71c14cf9da740db78f763ba3abad7e8ad",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that costly, dispensable genes mention mobile-element keywords in their descriptions far more often than costly, conserved genes do, a clear pattern.",
+    "type": "positive"
+  },
+  "costly_dispensable_genes--7f8211ca": {
+    "input": "acaf18d838d787e479c1998bdefc9d3526eed2ba17ce567f9f4cee3d2a259e5a",
+    "model": "claude-haiku-5-5",
+    "reason": "Burdensome dispensable genes show condition-specific phenotypes far more often than neutral dispensable genes, which is a pattern the evidence reports directly.",
+    "type": "positive"
+  },
+  "costly_dispensable_genes--81b8bf3d": {
+    "input": "93a7046e4f9323678105c70a69333f26a0358e8c707748be958c5db2259f6eb1",
+    "model": "claude-haiku-5-5",
+    "reason": "The comparison shows one organism with a far higher share of costly dispensable genes than every other organism tested.",
+    "type": "positive"
+  },
+  "costly_dispensable_genes--f3a85492": {
+    "input": "c1fab5b3c657b0f7373af71ab2717562a1da8459ccd2c39cbf155c0ec8d59c27",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that non-conserved growth-hindering genes carry more phage, mobile-element and virulence functions than conserved ones.",
+    "type": "positive"
+  },
+  "costly_dispensable_genes--f4e2ff44": {
+    "input": "631efbc9929e4ef784e0c58494bfa4785fb8f74b2bafe813039ee8aea1347d2f",
+    "model": "claude-haiku-5-5",
+    "reason": "Costly genes not conserved across genomes were sometimes singletons, while costly conserved genes never were, a contrast the evidence supports despite a structural caveat.",
+    "type": "positive"
+  },
+  "counter_ion_effects--482d2003": {
+    "input": "9e49fc0d79b12b2e2adcfb557c7eb40eda011580bd81b6d4dddb773300ac64ec",
+    "model": "claude-haiku-5-5",
+    "reason": "The test of whether shared genes track chloride from the metal salt found no such link, because zinc sulfate with no chloride matched or beat the chloride metals.",
+    "type": "negative"
+  },
+  "counter_ion_effects--5a2d3c21": {
+    "input": "02c769f81b75038b5d34e568adbae795748c45556748bb71d4c530485604c76a",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that many metal-important genes were also important under salt stress, a shared pattern across metals and organisms.",
+    "type": "positive"
+  },
+  "counter_ion_effects--5a523214": {
+    "input": "e9f0ede0a1bc5dd4d4e9c43d12391f0156acf630acd5b4e7cbebfeddfbc0b02f",
+    "model": "claude-haiku-5-5",
+    "reason": "Gene fitness profiles under the two copper salts matched less closely than within each salt, a difference found though a growth-condition mismatch blocks attributing it to the salt.",
+    "type": "positive"
+  },
+  "counter_ion_effects--5c39821b": {
+    "input": "a4f63ccefd70bdc7afd1f9214c9c4f8c686d0871a2e53f6a817d80641275b1ad",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports a clear ranking of how closely each metal's gene-fitness profile matches the salt-stress profile, with zinc highest and iron lowest.",
+    "type": "positive"
+  },
+  "counter_ion_effects--e835d451": {
+    "input": "e8c1991dea9f1b1777bed8915c2dda8fbe32245824169982af35180ab0ea8bcc",
+    "model": "claude-haiku-5-5",
+    "reason": "The predicted weakening did not occur, and the core-genome pattern instead grew stronger for essential metals.",
+    "type": "positive"
+  },
+  "ecotype_analysis--38d98bec": {
+    "input": "1ba2c0c2251ff4bb1835728f566fdc28e1df2b284dbd9584ed684fd5cd6b028a",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that shared ancestry, rather than environment, was the stronger pattern across most species, so a clear pattern was found.",
+    "type": "positive"
+  },
+  "ecotype_analysis--9366534f": {
+    "input": "ceaa8f5e39a5c65bb534f6a7afe25f35489b73b5a81c58141749eb444af85d60",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows environment gave no clear signal in most species, and the test did not settle whether environment matters.",
+    "type": "inconclusive"
+  },
+  "ecotype_analysis--aa4707c1": {
+    "input": "8dede02a7d4a188a7e80bba385dff8dcdeb1f80bf1bca28d7cb1bd8c7da3a07c",
+    "model": "claude-haiku-5-5",
+    "reason": "The comparison found the two lifestyle groups similar on this measure, with no detectable difference in how strongly environment relates to gene content.",
+    "type": "negative"
+  },
+  "ecotype_env_reanalysis--1cadc0c9": {
+    "input": "fa2085c2f518db5fe7bd92db3194fccf84f1a7409423e0e8c647d42f2505dffd",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis compared environment-associated and human-associated species and found no difference in how closely gene content tracked environment, so the predicted effect did not appear.",
+    "type": "negative"
+  },
+  "ecotype_env_reanalysis--ebb50481": {
+    "input": "725a6bd3d5f5b1fcf8d637a8c8400e401f98003074a2037c45e372841d03c102",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence only counts how the selected species are classified by isolation source, describing the composition of the sample rather than any biological result.",
+    "type": "data"
+  },
+  "ecotype_functional_differentiation--667d861b": {
+    "input": "d2c76975fc8d032f4c2f61757b7df8791ad6f7c111c9d30ee8ee74e96c72c455",
+    "model": "claude-haiku-5-5",
+    "reason": "Gene-content differences between ecotype groups were larger for adaptive functional categories than for housekeeping categories, a clear pattern in the reported comparison.",
+    "type": "positive"
+  },
+  "ecotype_functional_differentiation--69a046fd": {
+    "input": "a74d7f8389ac108902142aba6bb01329cb00d408a96363a648cccdea342054b3",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that gene groups of unknown function and replication and repair genes differ in proportion between ecotypes across many species.",
+    "type": "positive"
+  },
+  "ecotype_functional_differentiation--7fe6d42b": {
+    "input": "6a3126be221cd04ed07ed1615cd42b5fb489c451d9d49a6e447e81eecc05a16a",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that genomes grouped into distinct gene-content groups in most sampled species, so a pattern was found rather than absent.",
+    "type": "positive"
+  },
+  "ecotype_functional_differentiation--840b73cb": {
+    "input": "7b37abecb64ac1bc8c8f464951a860f749262be34ec2a137102bcb93c60ec620",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found ecotype gene-content differences across most species and functional categories, with every species showing at least one difference.",
+    "type": "positive"
+  },
+  "enigma_carbon_census_1--16f93626": {
+    "input": "02736bc6f254f9eed2d6fb1ed609dcbb5a4b3b4c211b44b4cc0c8a4274925127",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found a clear pattern: genomes that carry one of the two capacities almost never carry the other.",
+    "type": "positive"
+  },
+  "enigma_carbon_census_1--5022536d": {
+    "input": "8db754ae8c83c433be618f19fb6b7076463a7cf7aafb76a7f0aa6799367cbb1f",
+    "model": "claude-haiku-5-5",
+    "reason": "The central result reports which census compounds lack utilizer calls and how those gaps fall across chemical classes, a coverage pattern in the dataset rather than a biological result.",
+    "type": "data"
+  },
+  "enigma_carbon_census_1--8512f374": {
+    "input": "6a7db3167c3ccfaa29345e592562f61203e16d73ac4f7f65ce5aa4c3eb9326a8",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows several named genera recur across most freshwater biofilm samples, a biological occurrence pattern rather than a description of dataset contents.",
+    "type": "positive"
+  },
+  "enigma_carbon_census_1--8b8214bb": {
+    "input": "9711d63cf03108804aa456a25f3546447a42eb63c26b5020b6c4f9eb8f210f08",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows generalist genomes concentrate in a few named genera rather than spreading evenly, a clade-linked pattern that answers the question.",
+    "type": "positive"
+  },
+  "enigma_carbon_census_1--bc52527b": {
+    "input": "89bdc267f0f2239c5d62d6b9dcf79675f28faa230afb8c6285d42b98c1c5dff6",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows phenylethylamine enters the phenylacetyl-CoA ring-cleavage route while xanthine is a purine nitrogen pathway compound, a biological pathway contrast.",
+    "type": "positive"
+  },
+  "enigma_carbon_census_1--f8b7ca8b": {
+    "input": "613e247e8acc4d3485e8fa34d025b5abc4086358af447a74aae40970944e938f",
+    "model": "claude-haiku-5-5",
+    "reason": "The check ran on the isolate-callable compounds, but the sample was too small to choose between an even spread across chemical classes and a class gradient.",
+    "type": "inconclusive"
+  },
+  "enigma_contamination_functional_potential--606b2ef6": {
+    "input": "4223b4ecde5aee5e9ea62b75c49fc64b9fd84c1e299ef92efbb2017139b9baed",
+    "model": "claude-haiku-5-5",
+    "reason": "Every contamination index, including uranium alone, showed no link to inferred defense-related gene content across both mapping modes.",
+    "type": "negative"
+  },
+  "enigma_contamination_functional_potential--a97faeef": {
+    "input": "9e62a98306849fa7efc7da808c1ce6a8830b17902c552dc4279fbc0f9a248d10",
+    "model": "claude-haiku-5-5",
+    "reason": "Defense-gene scores rose with contamination under relaxed mapping, a pattern found even though the main defense check showed no link.",
+    "type": "positive"
+  },
+  "enigma_contamination_functional_potential--f4cd1747": {
+    "input": "b7cf1a1b0b8ac678f4930aa9ad0e1db1ce02ddd5aa298de7e82c99a1c05886ae",
+    "model": "claude-haiku-5-5",
+    "reason": "The quoted result shows that predicted defense gene content had no detectable link to contamination level under the relaxed genus mapping.",
+    "type": "negative"
+  },
+  "enigma_sso_asv_ecology--51556105": {
+    "input": "ce612d1f08d13eff1810fe101054c735e117bd3d0c09c8943ddd3761dc44da02",
+    "model": "claude-haiku-5-5",
+    "reason": "The table shows several genera at clearly different levels in groundwater and sediment from the same wells, with some higher in each material.",
+    "type": "positive"
+  },
+  "enigma_sso_asv_ecology--519fc7f6": {
+    "input": "e574df3344ad3dc743b4888bc71dcac90b3e155d8186eb66665dc0a7bf425774",
+    "model": "claude-haiku-5-5",
+    "reason": "The uphill-downhill link is absent, but turnover leans toward the east-west direction instead, which the project reads as lateral structuring.",
+    "type": "positive"
+  },
+  "enigma_sso_asv_ecology--6ee64744": {
+    "input": "35af9a9b22e4462b17f778064fc28b019e1141e6048e4079fac3f7daa9502ffd",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that the pairs of wells resembling each other stayed nearly the same across the two sampling dates, a real spatial pattern that persisted over time.",
+    "type": "positive"
+  },
+  "enigma_sso_asv_ecology--7ffad219": {
+    "input": "ff04560638d9b98bfa5be3616be026abb77ab9510f49a3e2528df47f64226e68",
+    "model": "claude-haiku-5-5",
+    "reason": "Communities from the same well at different depths differed far more than samples from the same depth zone in different wells, pointing to depth over horizontal position.",
+    "type": "positive"
+  },
+  "enigma_sso_asv_ecology--9b46b768": {
+    "input": "c747e0733fa0fd54b4583639d11c75ea425bd37dd5a6eb181a281733bdf80ad9",
+    "model": "claude-haiku-5-5",
+    "reason": "The sediment microbial communities differ between hydrogeological zones, so the analysis found a clear association with zone.",
+    "type": "positive"
+  },
+  "enigma_sso_asv_ecology--ab22d581": {
+    "input": "9c6efa4ef7b1aa794a94dd3b7779f899c83a5864b8d49b5551640bebb87360b0",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis tested for community change across sampling dates and detected none, which does not establish stability; groundwater data covered only 5 of 9 wells.",
+    "type": "negative"
+  },
+  "env_embedding_explorer--0ef24a89": {
+    "input": "5ed4855f3cb18ef7ef1fc85c15b6e8d39b7fb5dceab03fe37cd4065449c29350",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows the composition of the embedded genome collection, dominated by human-associated sources, rather than a biological result.",
+    "type": "data"
+  },
+  "env_embedding_explorer--1251a078": {
+    "input": "76095dad0f27c794e67fd86cb1652eb17df28b6c9b6ae9cc11e0aa30e3bc2b76",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that embedding distance grows with geographic distance and levels off far apart, a pattern the report links to environment only as a suggestion.",
+    "type": "positive"
+  },
+  "env_embedding_explorer--7dd94f0f": {
+    "input": "aa3c87381b0ada8d2f36d6dd613bd2d00d6d65b9aa4c6f694bbbc3749298d7e3",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence only proposes that clinical bias may have diluted an earlier weak link and suggests a rerun, with no test run here.",
+    "type": "untested"
+  },
+  "env_embedding_explorer--974280a5": {
+    "input": "503d42a8ddc1bc613eb857f06d0220abb73f6cc20e7b678ef4fa52906efc7858",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that environmental genomes differ much more between distant and nearby sites than human-associated genomes do, a clear geographic pattern.",
+    "type": "positive"
+  },
+  "essential_genome--2c306756": {
+    "input": "dc1f054ad25d9cacca7abd59920dc35fe5c3ad85c7f528b200e3cb2c8ae583ed",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows the analysis linked hypothetical essential genes to specific protein families and functions, a found link rather than a failed test.",
+    "type": "positive"
+  },
+  "essential_genome--5e670ea8": {
+    "input": "9e6e38ffd56ed7a5235b85e50d98921e66281f17feb28998e398b920a51d43b9",
+    "model": "claude-haiku-5-5",
+    "reason": "The knockout data show that most ortholog families are never essential or only variably essential across the 48 bacteria, so essentiality is patchy.",
+    "type": "positive"
+  },
+  "essential_genome--876909a2": {
+    "input": "0fe42fd6e4cf70a8d2bb3ee6b39b3a49a4018243617376342fa5fbdec230b6c9",
+    "model": "claude-haiku-5-5",
+    "reason": "Gene families essential in more organisms are slightly more likely to be core, while clade size shows no link to essentiality.",
+    "type": "positive"
+  },
+  "essential_genome--8a3a7af5": {
+    "input": "d36dee810ef82fed33eb8282699dd1fc5963c0b6986551e35c1688cafb051eba",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows the same set of essential gene families was found essential in every organism tested, a consistent pattern across all of them.",
+    "type": "positive"
+  },
+  "essential_genome--a70d258c": {
+    "input": "22413ef41518b80869be5042af581bbbc1240b1e44815c47f4f89024fdb7b71f",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports a clear difference: orphan essential genes are far more often uncharacterized than universally essential genes.",
+    "type": "positive"
+  },
+  "essential_metabolome--04b688de": {
+    "input": "2b066d9458a1afc01fe52ed230b6e4d337e70dbe82b3b92e37f234e6413cbf80",
+    "model": "claude-haiku-5-5",
+    "reason": "The comparison found one organism, Desulfovibrio vulgaris, differing from the other six in predicted serine pathway completeness.",
+    "type": "positive"
+  },
+  "essential_metabolome--6a696123": {
+    "input": "f2c528ab580dc103a7516b087d2577027318b746ae77c66fd3ddee5e29b7ecd3",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports which amino-acid pathways are predicted complete in each of seven organisms, a pattern found across the sample.",
+    "type": "positive"
+  },
+  "essential_metabolome--79f760d7": {
+    "input": "2a50a324234b7a1534724b15f9b4116a6c8f037c5e89ac2a74a7805ff8422f8d",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports organism-specific pathway gaps, such as a missing serine pathway in Desulfovibrio vulgaris, which is a pattern found rather than an absence of effect.",
+    "type": "positive"
+  },
+  "essential_metabolome--a8599193": {
+    "input": "aa6e84e79bd068227fe893d7759841625773d141ee53c5eeaf934bde6ba04d6b",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports a found pattern: pathway completeness is near-universal, with some metabolic diversity remaining among the organisms examined.",
+    "type": "positive"
+  },
+  "euk_in_prok_correlates--34c5889f": {
+    "input": "87bc9e97ae4387e65cb2426591898b145a7e0ab069abbc55182817f9af4bf8be",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows the environment model did worse than a plain average when whole studies were held out, so the prediction failed to transfer.",
+    "type": "negative"
+  },
+  "euk_in_prok_correlates--59085a38": {
+    "input": "a98570c41d95567db0cad0ecac6967cef324b2371d24da2eb24e683a9acd6a5c",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows a consistent pattern: most eukaryotic reads in these prokaryote-targeted runs come from plant or algal chloroplast DNA rather than animal host DNA.",
+    "type": "positive"
+  },
+  "euk_in_prok_correlates--77a05e86": {
+    "input": "ff7d2bcca7f5f3add21fc6ed20ec5426b217dfe3a20a5af17dd92502c880a9f9",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows plant root samples consistently yielded eukaryotic reads dominated by non-plastid fungi and protists rather than plastids, a pattern in the sample contents.",
+    "type": "positive"
+  },
+  "euk_in_prok_correlates--d08fdf8f": {
+    "input": "272ac1dbeafbb7cb9b4d96c13c32b2590fb42eb84cefcf43625264c68899b19e",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows local environment and geography predict eukaryotic fraction within one soil study, though they failed when whole studies were held out.",
+    "type": "positive"
+  },
+  "field_vs_lab_fitness--252d6ff5": {
+    "input": "2173cb9e30d057a2cd3413af8477ae546bc0863e7d8ed6afb2b2911cbb575cc5",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence counts how many genes in the defined modules lack annotations, describing what those gene sets hold rather than reporting a tested biological effect.",
+    "type": "data"
+  },
+  "field_vs_lab_fitness--296eadf6": {
+    "input": "cc1d2bb46ac978ed6a5022e135d6132b13f275f1f5e248287334c400e4cec55a",
+    "model": "claude-haiku-5-5",
+    "reason": "The core share of these genes sat below baseline, but the evidence could not confirm that gap, so the question stays undecided.",
+    "type": "inconclusive"
+  },
+  "field_vs_lab_fitness--571f3f78": {
+    "input": "13cd26d26b628e2719662ff3caaf65bad34202613d71feea77171f10a0764bd6",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that field-stress, field-core and lab-nutrient gene groups occur in the core genome more often than expected, while heavy-metal and antibiotic groups show no clear difference.",
+    "type": "positive"
+  },
+  "field_vs_lab_fitness--73215ec1": {
+    "input": "6cc9c269a17ede4f55f34abb6d2c845d4b927c10ea018b37a73409de86b3c2d7",
+    "model": "claude-haiku-5-5",
+    "reason": "Most gene modules were made mostly of core genes, a pattern found, even though module activity showed no link to conservation.",
+    "type": "positive"
+  },
+  "field_vs_lab_fitness--d31622df": {
+    "input": "b2e30db3f56bf32256e2b0233b0d9b4af06daac41180b40a0163f3acf01ee29d",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that gene length tracks core-genome membership strongly, while growth fitness in either setting tells core genes apart little.",
+    "type": "positive"
+  },
+  "fitness_effects_conservation--13498333": {
+    "input": "812c68bd0750eb84f2378f98a6d937607f8516c9cfae96da44431f351779f463",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that condition-specific genes were not skewed toward the accessory genome and were instead somewhat more often core, so a pattern was found alongside the missing effect.",
+    "type": "positive"
+  },
+  "fitness_effects_conservation--6e6a4a45": {
+    "input": "56b4243fc4b70f6e5c9b1ebfb8ca08139eedd68a49263e22916cd01cebf744c8",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows core genes were more often beneficial to delete than auxiliary genes, which is opposite to the expected direction.",
+    "type": "positive"
+  },
+  "fitness_effects_conservation--87474237": {
+    "input": "d6969b49d6de2945946946eb81f4d1e7b0c3a74631871ef622ee0d6b75ccb48b",
+    "model": "claude-haiku-5-5",
+    "reason": "Genes found in only one genome showed no measurable fitness benefit or harm in knockout screens under the tested lab conditions.",
+    "type": "negative"
+  },
+  "fitness_effects_conservation--e831e5ad": {
+    "input": "411ae1d5860c40cd26284552b3aa214b20f1c2e244e1f1581d3cf4ce3d3c7dfc",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that genes more important for growth were more often shared across strains, a link found across many bacteria.",
+    "type": "positive"
+  },
+  "fitness_effects_conservation--e931cad7": {
+    "input": "0afb2b6808eaf58e0f4acb146850267d0edbd807cefb8b48e2d6618fd1177fcb",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that the condition-critical pattern appears more often in core genes than in auxiliary or singleton genes.",
+    "type": "positive"
+  },
+  "fitness_modules--86f7465d": {
+    "input": "7e2a2bf175f70bd2d76205d0f5391c58a284c3d058914e8eeca632395873eacd",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows how many gene groups received a functional label after the annotation method changed, which describes annotation coverage rather than a biological result.",
+    "type": "data"
+  },
+  "fitness_modules--c9df945b": {
+    "input": "c7f1fa6b2d2e44808e35b79f6eff294fcdeeab152ee59d47d31f12b254eecf61",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows groups of genes that shift together recur across several bacteria, a pattern found rather than a missing effect.",
+    "type": "positive"
+  },
+  "fitness_modules--e06e01e0": {
+    "input": "ee5371fffc62190b6382b84e4c61e51b1cec713e65e928136e84b0b7369dff57",
+    "model": "claude-haiku-5-5",
+    "reason": "Switching the grouping rule made gene groups respond together more strongly and match shared biology more often than before.",
+    "type": "positive"
+  },
+  "fitness_modules--e33de0ee": {
+    "input": "e854141ecc52a1b0a383561f6e3bd91439d6bba96f41aa377ea976f239840144",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that most gene groups co-vary more strongly among their own members than unrelated groups do.",
+    "type": "positive"
+  },
+  "functional_dark_matter--1e0e1f03": {
+    "input": "6f883676ca3404324f3f615b0bc6f4be8bc582396b4fdebb0342ccc620e9ce4d",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows many genes lacking functional annotation have measurable growth effects in knockout screens or are essential, a biological result rather than annotation coverage alone.",
+    "type": "positive"
+  },
+  "functional_dark_matter--b069dc6a": {
+    "input": "908fc080eef087bb90dc764f8698233b0a3a6e31f90c1da5e359dc5c54226f17",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that genes of unknown function belong to ortholog groups spanning multiple bacterial phyla, so their conservation is broad rather than a narrow annotation gap.",
+    "type": "positive"
+  },
+  "functional_dark_matter--cefca00d": {
+    "input": "fedeeb5be74ac0dcbcb850414d1281eace3e9420be09c4109171c6cb4e034800",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows stress-condition genes were less often accessory than carbon or nitrogen genes, the reverse of the predicted pattern, so a real difference was found.",
+    "type": "positive"
+  },
+  "functional_dark_matter--edbf95bc": {
+    "input": "720cb17e7a30636c49da8885da7404482f760efcf1f1f19402db156ed97a84b8",
+    "model": "claude-haiku-5-5",
+    "reason": "The result compares how a newer annotation tool labels genes with how an existing database labels them, describing annotation coverage rather than a biological result.",
+    "type": "data"
+  },
+  "gene_function_ecological_agora--4ca87c61": {
+    "input": "a0d1c5edf13f1f6219de4cab507b97890791f1b2e20b3520a53e734077f7c961",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that cyanobacterial photosystem II genes fit the innovator-exchange pattern at class rank and occur more often in sunlit aquatic habitats.",
+    "type": "positive"
+  },
+  "gene_function_ecological_agora--9a0435f6": {
+    "input": "bb6551b8baa3a5529d7af6543026ef3c530b1bead9f2a7525fc5ffa313279cbd",
+    "model": "claude-haiku-5-5",
+    "reason": "The earlier strong link weakened at full genome scale, yet a separate comparison of gene architecture still agreed with the earlier work.",
+    "type": "positive"
+  },
+  "gene_function_ecological_agora--a4ce9393": {
+    "input": "c922980f4159fcf5251c07ae3589e09f5ef4c3b20f7ef590e447b36889516fbd",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows a biological link between mycolic-acid genes and a producing sub-clade of Mycobacteriaceae, with the wider family link weaker.",
+    "type": "positive"
+  },
+  "gene_function_ecological_agora--c0bd8a1a": {
+    "input": "fdbc94d962be71cfd21167a69be303916fb2b0e308e7726ce4e1167e7b83bfb9",
+    "model": "claude-haiku-5-5",
+    "reason": "The table shows the gene classes differ in where their gains sit, with CRISPR-Cas skewed recent and tRNA synthetases skewed ancient.",
+    "type": "positive"
+  },
+  "gene_function_ecological_agora--c2291337": {
+    "input": "42c222371e53de78c5ac5a2afcc4c6fe0d4a0080eea0138b1d9eee054fce6696",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports a larger difference between horizontal-transfer gene classes when grouped by functional category than by protein family, so the analysis found a pattern.",
+    "type": "positive"
+  },
+  "gene_function_ecological_agora--e172b656": {
+    "input": "7e4f60942eb62b27db59ddd50108e817cb98e1e9069db09a956ebda06c17012b",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows gene families tied to both regulatory and metabolic pathways are exchanged between lineages more often than families tied to only one of them.",
+    "type": "positive"
+  },
+  "genotype_to_phenotype_enigma--602fd76d": {
+    "input": "21dec6d0c08c0ff8bda47677dfc213afebc636a8c683ecc5d8f926d5ed23cf8a",
+    "model": "claude-haiku-5-5",
+    "reason": "Gene content predicted growth on amino acids, nucleosides and some carbon sources, while metals, antibiotics and nitrogen sources showed no such pattern.",
+    "type": "positive"
+  },
+  "genotype_to_phenotype_enigma--a6ede42b": {
+    "input": "8d68305b4f0205c8073cf7471ab8946e508be4e2687eb76f8f395d0741dcafdc",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that one genus group occupies more acidic and warmer environments than another across a large sample set, so a real difference was found.",
+    "type": "positive"
+  },
+  "genotype_to_phenotype_enigma--ad8903f3": {
+    "input": "a88d4cf37408838c03f45211e9d12caed36257bed9dbd5b76b6e40a7d5184c59",
+    "model": "claude-haiku-5-5",
+    "reason": "Training on the full set of strain-condition pairs brought out condition-specific catabolic genes, a pattern that was absent when the model used only seven strains.",
+    "type": "positive"
+  },
+  "genotype_to_phenotype_enigma--ccab2bff": {
+    "input": "56954f15c5d5eeab5d93d215a12a081ca1009a22ea04d57130aa62122afae1d0",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows gene content tracks genus differences, with large-genome Pseudomonas growing fast and small-genome Pedobacter growing slowly, even though cross-genus predictions failed.",
+    "type": "positive"
+  },
+  "harvard_forest_warming--4fcaf7c4": {
+    "input": "f76e5ae3021a22ea364e6e870c910a8d19573f91656c7050a006b7e7869599f5",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence lists higher RNA levels for methane-oxidation and glyoxylate-cycle genes under warming, a pattern found but only tentatively supported.",
+    "type": "positive"
+  },
+  "harvard_forest_warming--5dcb42f7": {
+    "input": "db5542becd51c8e17581666e96671106eb24346decd49529bd838eadd8749479",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows two bacterial groups in heated organic-layer soil differ from controls in opposite directions, while the other groups show no clear difference.",
+    "type": "positive"
+  },
+  "harvard_forest_warming--664ecd79": {
+    "input": "91f4487fe108e6346268812ae32e8deb42cc8e1e96ea9104020db3b4c6a3408b",
+    "model": "claude-haiku-5-5",
+    "reason": "Heated mineral soil had fewer detectable metabolites than unheated soil, a direct difference found between the two groups.",
+    "type": "positive"
+  },
+  "harvard_forest_warming--8f0aae96": {
+    "input": "4a2d8eaadc71e15280ee84ea18e49fdd778aa355b068fbab058b09e361b70efa",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that RNA and DNA pools responded to heating similarly once a mixed-up factor was removed, so no greater transcript sensitivity was found.",
+    "type": "negative"
+  },
+  "harvard_forest_warming--d1815e53": {
+    "input": "930c04cccef8c1f7b1eac85f9723a0263c23b12d02d0e33749bb435febe3bd34",
+    "model": "claude-haiku-5-5",
+    "reason": "Carbon-cycling genes appear more often among the DNA functions that rose with heating in organic soil than among the rest, while mineral soil and RNA show none.",
+    "type": "positive"
+  },
+  "ibd_phage_targeting--218b95c7": {
+    "input": "22a9607475e5fa58e185bb222043b88f7bdca4789a8d0ccda9df8d9993cf1fec",
+    "model": "claude-haiku-5-5",
+    "reason": "The pilot analysis found a single composite species-metabolite axis that separated Crohn's disease from non-IBD subjects, with six pathobionts loading CD-positive and commensals loading CD-negative.",
+    "type": "positive"
+  },
+  "ibd_phage_targeting--446eca8c": {
+    "input": "d9a3c952ddcdef8170fc573c829fa03428d9d15464069d74c27c25d623053f6f",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows iron-grabbing and DNA-damaging gene clusters appear more often among the core clusters than in the full catalog.",
+    "type": "positive"
+  },
+  "ibd_phage_targeting--56e3bb7d": {
+    "input": "87f94e2239e20a4d40b10ed4cb08238d6e2de9ee6901963b452cae8b43eee11c",
+    "model": "claude-haiku-5-5",
+    "reason": "The phage-target lists for the two gut-community types overlap less than lists drawn with shuffled group labels, so the difference between the types is real.",
+    "type": "positive"
+  },
+  "ibd_phage_targeting--6d9fa20c": {
+    "input": "3652acab7f04d6e52d2ff3e425ed3746a6cc516686ccaaa331a036f15b9909ee",
+    "model": "claude-haiku-5-5",
+    "reason": "E. coli turned up in fewer Crohn's patients than the literature's framing of it as a typical pathobiont predicts.",
+    "type": "positive"
+  },
+  "ibd_phage_targeting--d7f80dce": {
+    "input": "7336c7e4c82775c27259e7854a7fb9b9095d6e69bbaa14d4d4e9cb1b23c0b8f4",
+    "model": "claude-haiku-5-5",
+    "reason": "In a separate cohort, most candidate gut bacteria showed the same difference, being more abundant in Crohn's samples than in non-IBD samples.",
+    "type": "positive"
+  },
+  "ibd_phage_targeting--f8d4a8f9": {
+    "input": "027967664b78b25a369d0c462ac41df9b255f9076d7139b1f3772efa32e21193",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows lactate tracked in opposite directions with A. caccae versus two other species, which the report reads as arguing against cross-feeding.",
+    "type": "positive"
+  },
+  "lab_field_ecology--0a8de054": {
+    "input": "f28bbf96e467211f3b67c00445304c5b5bb6adbf69e476b25a57371708021236",
+    "model": "claude-haiku-5-5",
+    "reason": "Twelve genera showed a suggestive trend toward higher field abundance with greater lab tolerance, but the small number of genera could not decide whether the link is real.",
+    "type": "inconclusive"
+  },
+  "lab_field_ecology--20abf7b5": {
+    "input": "17baee4df5670120bd4bda3918d9457ade906b3ac7a391aaaf9c1c2f4c200f08",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that several testable bacterial genera had abundance tracking uranium levels across Oak Ridge sites, with some rising and others falling, so a pattern was found.",
+    "type": "positive"
+  },
+  "lab_field_ecology--7268dc9b": {
+    "input": "72299420af4f503d6af4b7fa28cc8339db34152bb4fe56f3a2ec65a121c0d2a1",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows Caulobacter is less abundant at high-uranium sites, a pattern linking the genus to uranium levels.",
+    "type": "positive"
+  },
+  "lab_field_ecology--94b20be5": {
+    "input": "699f89663b91b53591d53608b10fb00d193b2c47882e7e279375cb499792cedb",
+    "model": "claude-haiku-5-5",
+    "reason": "Pseudomonas showed no link to uranium levels, while the Desulfovibrio test was too unreliable to show a pattern either way.",
+    "type": "negative"
+  },
+  "lab_field_ecology--c4028be7": {
+    "input": "7aede03bb356c1171422bb66ddc21aac1acd889aa23e7c9315678c05e8eee221",
+    "model": "claude-haiku-5-5",
+    "reason": "The table shows the genus is more abundant at high-uranium sites than at low-uranium sites in the field samples.",
+    "type": "positive"
+  },
+  "lab_field_ecology--d16a3056": {
+    "input": "a4a30ace12e075afe8ab49f71037660825c048416161d05b211b886b73c31a31",
+    "model": "claude-haiku-5-5",
+    "reason": "The sequencing survey shows the organism is found at only some sites and always at very low abundance, describing the community itself rather than the dataset.",
+    "type": "positive"
+  },
+  "lanthanide_methylotrophy_atlas--4129a02d": {
+    "input": "84c010e9972c06629fecb0b92d1e23dc248a8bf28e07d1da863702255ee58877",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows the methanol enzyme xoxF outnumbers mxaF across genomes, and this pattern persisted under several relatedness corrections.",
+    "type": "positive"
+  },
+  "lanthanide_methylotrophy_atlas--4c03dc0b": {
+    "input": "e24f39b803cbc5976db7ec7668ad3c033e55b0ffec02a5b22fb8875da79a2a29",
+    "model": "claude-haiku-5-5",
+    "reason": "The lanthanide-enzyme genes were mostly absent, but the genomes also showed a clear acid and metal stress gene pattern instead.",
+    "type": "positive"
+  },
+  "lanthanide_methylotrophy_atlas--6465f1d3": {
+    "input": "3d5229c60264c64e480b26d7f93925109a074ada405fd9ad5caed1c7d7ef8c4a",
+    "model": "claude-haiku-5-5",
+    "reason": "xoxF genes were annotated far more often than mxaF genes across the collection, so the predicted pattern held.",
+    "type": "positive"
+  },
+  "lanthanide_methylotrophy_atlas--6543a6a6": {
+    "input": "0666559812159874ecc210492b442ccaa345290ec0a247e86427912006c19bac",
+    "model": "claude-haiku-5-5",
+    "reason": "The preregistered prediction that at least 80% of lanmodulin genomes carry xoxF was not met; the observed share fell just short.",
+    "type": "negative"
+  },
+  "lanthanide_methylotrophy_atlas--73b82896": {
+    "input": "e6a2a065d8dd8dafab273488c2186b39623a73ee3bb7c778ae303f430b211aa8",
+    "model": "claude-haiku-5-5",
+    "reason": "Within Acidobacteriota, soil and sediment genomes still carried xoxF more often than reference genomes, so an association remained after the phylum comparison.",
+    "type": "positive"
+  },
+  "lanthanide_methylotrophy_atlas--d54adcf1": {
+    "input": "5001521e6dd713d932f9e9f71e04ded3f12604d6c8b7e12dec52befc58e3885e",
+    "model": "claude-haiku-5-5",
+    "reason": "Every detected lanmodulin genome belonged to three predicted methylotroph families, which supported the expected pattern.",
+    "type": "positive"
+  },
+  "lignin_community_enrichment--0c3cdb00": {
+    "input": "c99bc3878f455047b4376542032c79e17e0883b711c518a5dccbacd6f730bf55",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports bacterial replicates responding consistently while fungal replicates varied widely; only the mechanism is suggested, not tested.",
+    "type": "positive"
+  },
+  "lignin_community_enrichment--8b7c9a44": {
+    "input": "8acbfc274c3a07a567bd314f6454094374d401d52ee20e1328376bc5d27f98a0",
+    "model": "claude-haiku-5-5",
+    "reason": "The ecological memory signal was not found in the fungal samples; poor replicate agreement does not make the result undecided.",
+    "type": "negative"
+  },
+  "metabolic_capability_dependency--6a369153": {
+    "input": "3bbf1e162abf266fb114f1ca3aaa4661186ff4e59288dfc438ae5acca79a0051",
+    "model": "claude-haiku-5-5",
+    "reason": "Across 22 species clades, those with more complete but fitness-neutral pathways had more open, variable pangenomes, which is a pattern the data found.",
+    "type": "positive"
+  },
+  "metabolic_capability_dependency--88a382b0": {
+    "input": "809e81d934d9ff99609a484a8f7817723e19ca3311a2a65085797a243eabd558",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that pathway category differs in how often pathways show no fitness importance, with carbon-use pathways most often latent.",
+    "type": "positive"
+  },
+  "metabolic_capability_dependency--b6cd74ee": {
+    "input": "e9718e52a6f88dc070c95fce557b5e850d043ccc31ae31d9e6818b2751914ce1",
+    "model": "claude-haiku-5-5",
+    "reason": "Latent pathways were slightly more conserved than active ones, the opposite of the expected direction, though the gap is negligible.",
+    "type": "positive"
+  },
+  "metabolic_capability_dependency--f41ac91a": {
+    "input": "6eba44e55f238df9d08e72acf6ea7e5011666a6fd58d80d8111136a64816ef64",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows many complete pathways lack detectable fitness importance, with carbon pathways most affected, so a pattern was found rather than an absent effect.",
+    "type": "positive"
+  },
+  "metal_cross_resistance--109ca8e4": {
+    "input": "09738479f40aada03b7fa6db81c5317962b26851c411571b6dddd4a5f3b21ac7",
+    "model": "claude-haiku-5-5",
+    "reason": "The test ran, but only 20 independent species remained after matching, which was too few to tell whether metal tolerance and isolation are related.",
+    "type": "inconclusive"
+  },
+  "metal_cross_resistance--8b1ef6ba": {
+    "input": "b333ae943ea957d39b2644ed5f082b9b9ae3c56d70f4c44afc4f9ed1a073cd5e",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that genes affecting iron resistance also tend to affect zinc resistance across organisms, a pattern found in the data, though the mechanism is only proposed.",
+    "type": "positive"
+  },
+  "metal_cross_resistance--fbb37c50": {
+    "input": "9cf22c4a15f12e60418cd691e72e569eef79afb89571d08115d6628e05d2e135",
+    "model": "claude-haiku-5-5",
+    "reason": "Across many diverse bacteria, genes that matter for surviving one metal almost always matter for surviving the other metals too.",
+    "type": "positive"
+  },
+  "metal_cross_resistance--fdba2abe": {
+    "input": "a31147fd71617cf0906fb994142687ce81e703cc51058cee6ff40762e1ad7d41",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that genes needed under more stress conditions were more often conserved across genomes, following the predicted order across the organisms.",
+    "type": "positive"
+  },
+  "metal_cross_resistance--fe1c0679": {
+    "input": "217992b0754e2e432fed4c103a6e9721735b9a90a45ad274610e62dc499b15ef",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows the same positive direction of cross-resistance in every organism-metal comparison reported, with a moderately similar strength across organisms.",
+    "type": "positive"
+  },
+  "metal_fitness_atlas--33814a75": {
+    "input": "e1a787bd33a118c07a5674b8f743948cdff23431483840a59ee8bd4353db461a",
+    "model": "claude-haiku-5-5",
+    "reason": "Individual bioleaching genera such as Leptospirillum ranked high after normalization, though the group as a whole did not stand out from other bacteria.",
+    "type": "positive"
+  },
+  "metal_fitness_atlas--e9d8e5b4": {
+    "input": "07e23d0d3f74fde280c5972d5625503d46a5fb32319584e121e98b4059c966ca",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found 149 gene families whose metal fitness phenotypes match across at least two organisms; the predictions for those genes themselves remain untested.",
+    "type": "positive"
+  },
+  "metal_resistance_global_biogeography--181dc531": {
+    "input": "1641cab2b2dbfc44849dba0c10db040e528e6c83ca2e4b646e5e0b6cb38badae",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found metal resistance clearly concentrated in one map region, more common there than in other regions of the dataset.",
+    "type": "positive"
+  },
+  "metal_resistance_global_biogeography--2ac1d00b": {
+    "input": "49b8f8909fd2ade0fdff0a42eb94b0c3d397f25ef3c882a1df7e5ee9d0ab5f1c",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that few geolocated environmental genomes carry any metal resistance type, a biological pattern across the sampled genomes.",
+    "type": "positive"
+  },
+  "metal_resistance_global_biogeography--9181c949": {
+    "input": "bb510e3a40bc99a8052ff4b7acb73cf053fe22ebb8919b536b3eaa97b0e0d13e",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows metal resistance is found in far more soil-derived genomes than marine ones, a clear difference between habitats.",
+    "type": "positive"
+  },
+  "metal_resistance_global_biogeography--a6cb44ef": {
+    "input": "17f993d0363bb2244bbad1da1289f4d481b9d4dddb34ec827db2755fd5cac402",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows which archive records lack coordinates and that every map grid cell with samples has coordinates, describing dataset coverage rather than a biological result.",
+    "type": "data"
+  },
+  "metal_resistance_global_biogeography--a8d92f5f": {
+    "input": "82a7df1b9e941a82fe46f366d6e99baacb1dfe115358bde3445c1e743cf00d6e",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found some grid cells with a clearly higher share of metal-resistant genomes and others with a lower share than elsewhere.",
+    "type": "positive"
+  },
+  "metal_specificity--0f40573a": {
+    "input": "a1a67a70156eba4ea9e99f05c5790397e5c70ed7b60bc305c1780a83f1bfdbc1",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that most metal-important genes show defects specifically under metal stress rather than in general conditions, which is a pattern in the data.",
+    "type": "positive"
+  },
+  "metal_specificity--83d867cf": {
+    "input": "115928a660053b9a8ca758de6832f125757e22b1614f50920ba3e607e75ddf1b",
+    "model": "claude-haiku-5-5",
+    "reason": "The module-level test found no metal-specific modules, but it could not tell absent modules from missed ones because metal experiments were a small share of the data.",
+    "type": "inconclusive"
+  },
+  "metal_specificity--94cbeb4a": {
+    "input": "4f12272c8742b3029d0e2782c31b33998f391164eb06425302c9714590426982",
+    "model": "claude-haiku-5-5",
+    "reason": "Genes needed specifically under metal stress more often carry metal-handling keywords in their annotations than genes needed under general stress.",
+    "type": "positive"
+  },
+  "metal_specificity--fed6dcbd": {
+    "input": "7b9a2d10b1b0ca571afdbe9628a36cce5f3feaec552cb20ee1925b8e55185dec",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows metal-specific genes sit less often in the core genome than general fitness genes across the organisms compared.",
+    "type": "positive"
+  },
+  "microbeatlas_metal_ecology--012a4b6c": {
+    "input": "f1b2e32949cce769f33cb4bfb56a6c018e35be2826e8fa6aa1d38cf3035c53a9",
+    "model": "claude-haiku-5-5",
+    "reason": "The number of metal types a genus resists tracks broader niche breadth after relatedness is accounted for, so a pattern was found.",
+    "type": "positive"
+  },
+  "microbeatlas_metal_ecology--1e5f530e": {
+    "input": "fd1a78c3f97c13d9fc1144407da8f7c67bb8629c032ceec0b03b9a27ddc2e3dc",
+    "model": "claude-haiku-5-5",
+    "reason": "Against the original link, the filtered rerun's reported figures cannot show whether the link is absent or merely missed after dropping most taxa.",
+    "type": "inconclusive"
+  },
+  "microbeatlas_metal_ecology--8da311a7": {
+    "input": "a204258a68652454ed3ba0a7b356c12a56156c43df7e066f1c98c9288d252768",
+    "model": "claude-haiku-5-5",
+    "reason": "Genera with broader metal-resistance repertoires were more prevalent in groundwater, a pattern the evidence confirms, while groundwater-specific enrichment was not found.",
+    "type": "positive"
+  },
+  "microbeatlas_metal_ecology--b38d81d3": {
+    "input": "906f4f7c43ce5827b6f749e3f1edf5281c744bb1f64b329052e961c56d08daf0",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports a clear pattern: related genera have similar habitat breadth, and habitat range follows the family tree even more closely.",
+    "type": "positive"
+  },
+  "microbeatlas_metal_ecology--e5de5df1": {
+    "input": "d0475a4b67c53e28d8a21eae4cb73df80edafd04a382f7f50877fa0be0098d8f",
+    "model": "claude-haiku-5-5",
+    "reason": "Across 133 samples, communities from later time points tended to show a wider range of metal-resistance types, so the analysis found a link to sampling time.",
+    "type": "positive"
+  },
+  "module_conservation--ba3f89b5": {
+    "input": "5b87f48984ecc579cb734db8f031d233327cf08df9dfd8077272cd8b72f857cb",
+    "model": "claude-haiku-5-5",
+    "reason": "Genes in co-varying fitness modules sit in the shared core genome more often than genes overall, a real but modest difference.",
+    "type": "positive"
+  },
+  "module_conservation--d13bfcb2": {
+    "input": "ee74baf62db9bf68b92198c20bf5c0f1ec2dba2f20d82c7b6dc0d342a0591299",
+    "model": "claude-haiku-5-5",
+    "reason": "The quote reports a pattern: many gene module families are mostly accessory and recur across organisms, though the transfer link is only hypothesized.",
+    "type": "positive"
+  },
+  "module_conservation--ef29c9c3": {
+    "input": "71cf9d51b89094374ea86e32a8cce49ebed8d852b0b8cde4a224686ee4f2e498",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis checked whether broader module families had more core genes and found no link between the two.",
+    "type": "negative"
+  },
+  "nmdc_community_metabolic_ecology--4a766ba0": {
+    "input": "76773b1f940c30a5120b5170286ecd2d93cbd2a370830e5eabb37d95ed49dc4d",
+    "model": "claude-haiku-5-5",
+    "reason": "The test found that community completeness differed across ecosystem categories for 17 of 18 amino-acid pathways, but only among the samples that could be tested.",
+    "type": "positive"
+  },
+  "nmdc_community_metabolic_ecology--6853a137": {
+    "input": "8cc37664a529163cdc2e1d9341e6c60a7bdafbe3476a1702050f48392399dbae",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows tyrosine pathway completeness moving opposite to the expected direction, which is a pattern even though it is weak and the isoleucine check found nothing.",
+    "type": "positive"
+  },
+  "nmdc_community_metabolic_ecology--7d46eb90": {
+    "input": "6801beb8bb230146110ebd9926f578642cf6b89aac677c881337933a454d8f0d",
+    "model": "claude-haiku-5-5",
+    "reason": "Within soil samples only, the leucine link between pathway completeness and metabolite levels persisted, so a pattern survives removing the ecosystem difference.",
+    "type": "positive"
+  },
+  "nmdc_community_metabolic_ecology--dcef6254": {
+    "input": "b6b6945fddcde0c06f47daa23a579232d71add4f696a2fbeb6cabe9181f2d119",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows most amino acid pathways are less complete where their amino acid is more abundant, with leucine and arginine clearest.",
+    "type": "positive"
+  },
+  "nmdc_community_metabolic_ecology--fb740bf4": {
+    "input": "c9e94c5b9a950cc7fa0d63b2ab757634ea1599140293a8f056d065cf89f590b5",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows carbon-use pathways mainly separate soil from freshwater communities, and the report reads this as soil having more complete carbon substrate use.",
+    "type": "positive"
+  },
+  "nmdc_context_audit--10a5a668": {
+    "input": "075f7da696d3b0db179faf067ea25e26ba955cfb914eb5d4556a647d91e7c840",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence lists last-commit dates for each NMDC-labeled resource, which describes how current those snapshots are rather than any biological result.",
+    "type": "data"
+  },
+  "nmdc_context_audit--7809faa5": {
+    "input": "e915ef417d926f3c46ef196c37416ff129f5f095bda04ff26f7db99deef6e965",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows what the lakehouse catalog holds: many database names share a label but resolve to few real resources with differing origins.",
+    "type": "data"
+  },
+  "nmdc_context_audit--99bbd8c1": {
+    "input": "3c4ed493f9a9dc9364c1b0bc7f4b36ba439ddb81777a1ab4ac4e91b5cadfbef6",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence describes what the lakehouse catalog lacks: its tables carry no comments and its databases have empty properties, a fact about the dataset rather than a biological result.",
+    "type": "data"
+  },
+  "nmdc_context_audit--b3940fd4": {
+    "input": "a97180352e3691f90e824c9ad8d95a75447bb64e523af23bbfa19075fe993bae",
+    "model": "claude-haiku-5-5",
+    "reason": "The finding describes which databases in the catalog are copied external data and where NMDC databases are stored, which is provenance and catalog layout rather than a biological result.",
+    "type": "data"
+  },
+  "nmdc_context_audit--d8ef5d8f": {
+    "input": "44fa06c55a8ec7e3c3a45b6fac43878b08de1d1b62d3ce111c4c4b5e02a3f25b",
+    "model": "claude-haiku-5-5",
+    "reason": "The finding describes how large two database collections are and that their names hide the difference, rather than reporting a biological result.",
+    "type": "data"
+  },
+  "pangenome_openness--0e2125d9": {
+    "input": "dfe50a4a2f27a3ffb8ed5f0a37e5a965238e7beb8443982ca4a63292d5df45a3",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis tested whether pangenome openness is linked to the environment effect and found no detectable link in these species.",
+    "type": "negative"
+  },
+  "pangenome_openness--737ca282": {
+    "input": "14f85c94ef12a2de643e5db047c222f8235b93db0ba2caa1302a0a68514427df",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis tested whether pangenome openness tracks the phylogeny effect and found no detectable link between them.",
+    "type": "negative"
+  },
+  "paperblast_explorer--15fe9e7d": {
+    "input": "5a2b8184712ece52372f8ca7ad912b3cd4894996b84aa93abade320cf97e7346",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence describes how unevenly a literature database covers organisms, with a few well-studied pathogens and model strains dominating, not a biological result.",
+    "type": "data"
+  },
+  "paperblast_explorer--3dc1e920": {
+    "input": "23adff3ee47eefad2d9e27663100477d491aeafac7b395bf5bd3db7004bec041",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence describes how unevenly text-mined paper links are spread across genes in the literature database, not a biological result.",
+    "type": "data"
+  },
+  "paperblast_explorer--415e8345": {
+    "input": "4ec160215fc75d0a3a63feac2aec4f453657ec9d778f081ebc4607228de9d54f",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows how PaperBLAST's literature records are spread across organisms, describing the database's coverage rather than any biological result.",
+    "type": "data"
+  },
+  "paperblast_explorer--9d3f88b4": {
+    "input": "fce9cc80facaba0aa9f8ac2518dc7e39b6c273e6afb2a20eb3996d0dc4299b88",
+    "model": "claude-haiku-5-5",
+    "reason": "The finding describes how much literature is attached to protein families in the text-mined paper set, which is a gap in what the database holds, not a biological result.",
+    "type": "data"
+  },
+  "pathway_capability_dependency--250e9510": {
+    "input": "b98b1c2dba2b62dcae9633b02d3b040ee4888a763b765a03754501b18417eed6",
+    "model": "claude-haiku-5-5",
+    "reason": "The largest group of organism-pathway pairs is fully encoded, yet its genes showed no detected fitness defects under standard conditions, outnumbering pairs with fitness-important genes.",
+    "type": "positive"
+  },
+  "pathway_capability_dependency--4df15631": {
+    "input": "a9f7375955d883e17d76de2126450ef007b174cc92b8793841ddacb2afa81803",
+    "model": "claude-haiku-5-5",
+    "reason": "Grouping genomes by their pathway profiles in species with many genomes revealed a few distinct metabolic groups per species, which is a real pattern in the data.",
+    "type": "positive"
+  },
+  "pathway_capability_dependency--61e28c8b": {
+    "input": "d36291e9de5e3f194a706b0f72f0ab1e839e37b89c12c64b67431782cf0b80f7",
+    "model": "claude-haiku-5-5",
+    "reason": "Separating fitness effects by condition type shows that every one of the 66 pathway-organism pairs becomes important under at least one condition type.",
+    "type": "positive"
+  },
+  "pathway_capability_dependency--84c4b29b": {
+    "input": "ad6181b5fe287974da91b53f77ec502c9e33bd4bed1a85403c56137833f6a1ff",
+    "model": "claude-haiku-5-5",
+    "reason": "Across 2,810 species, more variable pathways go with more open pangenomes, and that link holds more strongly after accounting for sequencing depth.",
+    "type": "positive"
+  },
+  "pgp_pangenome_ecology--45e0cc45": {
+    "input": "2e9e8257f2610dbf95718d99776bd2dbeb4265f1b8832470fcd20426d968ef57",
+    "model": "claude-haiku-5-5",
+    "reason": "Plant-growth genes sat less often in the variable accessory genome than genes overall, the opposite of what horizontal transfer predicts.",
+    "type": "positive"
+  },
+  "pgp_pangenome_ecology--6ad3c804": {
+    "input": "5a071bb9b83136459ab77f7d68aa9f8161fa28c4f5081da2ba1c984fbd398618",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found a positive link between the pathway and the gene in non-soil species and an opposite link in soil species, which is a pattern in the data.",
+    "type": "positive"
+  },
+  "pgp_pangenome_ecology--6ef7f988": {
+    "input": "74b8c849519a8674e78751ee0069baa66123627669a7045586220c0101b77e70",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows the gene is more common in soil and rhizosphere species, and this holds after accounting for phylum and in a stricter root-associated subset.",
+    "type": "positive"
+  },
+  "pgp_pangenome_ecology--7e9e60f9": {
+    "input": "4485947f70291cc72e82de4967320a99695e740a0232e4bdb6d1428766359ee8",
+    "model": "claude-haiku-5-5",
+    "reason": "The genomes show nifH turning up less often alongside hcnC and pqqC, which is a pattern found, not a missing effect.",
+    "type": "positive"
+  },
+  "pgp_pangenome_ecology--ac2bd4ee": {
+    "input": "cb3334f48ff2d3330be982395c285438cacd99584a2d9d34cb4512028336614c",
+    "model": "claude-haiku-5-5",
+    "reason": "The tyrosine pathway, meant as a negative control, predicted which species carry ipdC about as well as tryptophan did, so an unexpected link was found.",
+    "type": "positive"
+  },
+  "phb_granule_ecology--0215baea": {
+    "input": "4058af7b02f9ff7bbab6d53c893d323978596b03c462c90bb26504ee4db6de05",
+    "model": "claude-haiku-5-5",
+    "reason": "Grouping the genomes by lineage shows a clear pattern: PHB genes were not reported in several major lineages and were nearly absent in Patescibacteria.",
+    "type": "positive"
+  },
+  "phb_granule_ecology--1de7b86b": {
+    "input": "78cf3b3ad07082da6f0a0d1968b87c4b0197fc265513da59ab1d6476910d810a",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that the gene is much more common in some phyla than others, a clear pattern across microbial lineages.",
+    "type": "positive"
+  },
+  "phb_granule_ecology--589de302": {
+    "input": "491f573809d834f8fed5b1bc8e87d97d70889e88f7da8933edc621d7e8c3a55f",
+    "model": "claude-haiku-5-5",
+    "reason": "Within every genome-size group, the PHB gene was more common in highly variable environments than in stable ones.",
+    "type": "positive"
+  },
+  "phb_granule_ecology--5e2bc604": {
+    "input": "f7c89d95138a6f1a7008fe9fa27aa409c17e4749f5efc2bd43f14328ff44fc94",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows the phaC gene is found in very different shares of species depending on their environment, forming a clear pattern across environment types.",
+    "type": "positive"
+  },
+  "phb_granule_ecology--ef20cc78": {
+    "input": "db1c25ad110373d78b79b87ca3fb38b71a1c14c6fa8e1d00370466f5d6bc198e",
+    "model": "claude-haiku-5-5",
+    "reason": "Once genome size is accounted for, the apparent link between PHB and niche breadth largely disappears, so it gives no independent support.",
+    "type": "negative"
+  },
+  "phb_granule_ecology--f9008fe7": {
+    "input": "67d1ed8ba18726a85f68ad6010bc419390d403a5e8e3c8d834de83f7375c3316",
+    "model": "claude-haiku-5-5",
+    "reason": "The comparison found that phaC sits in the accessory genome far more often in discordant species than across phaC carriers generally.",
+    "type": "positive"
+  },
+  "plant_microbiome_ecotypes--223dadd3": {
+    "input": "1e4072c3404da4689639ab590668aca845fbbf0f59175462c4fd2ccd7f3c9f6a",
+    "model": "claude-haiku-5-5",
+    "reason": "Within-genus comparisons show nitrogen fixation, ACC deaminase and type III secretion remain tied to plant association, while other markers do not.",
+    "type": "positive"
+  },
+  "plant_microbiome_ecotypes--64143b61": {
+    "input": "921dc31cf6ee886999258791d71ab72217b350760110549758c36255c1392d67",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows two Xanthomonas species whose genomes come almost entirely from one host plant within a specific subclade, a host-linked pattern that was found.",
+    "type": "positive"
+  },
+  "plant_microbiome_ecotypes--8106ac12": {
+    "input": "c17c5ca0f40d18281156e8fdb73b7febfcaf5ffd3b6dd91160a482dcd89cd867",
+    "model": "claude-haiku-5-5",
+    "reason": "Most top plant-enriched gene families stayed more common in plant-associated genomes after controlling for phylum and genome size.",
+    "type": "positive"
+  },
+  "plant_microbiome_ecotypes--de6d574e": {
+    "input": "92893d7ca1e5ef1ed8f8318fc2f5d80b9ef7fe1cc8fb8ca5179049c6b680e1a4",
+    "model": "claude-haiku-5-5",
+    "reason": "After the three most dominant species per compartment were removed, a difference between plant compartments remained, though much smaller than the original.",
+    "type": "positive"
+  },
+  "prophage_amr_comobilization--02e63b0a": {
+    "input": "ad53e43c80f17d687ab9696575ae89475480979018f0d83480e793475370b31b",
+    "model": "claude-haiku-5-5",
+    "reason": "Species with higher prophage marker density carry broader antibiotic-resistance gene sets, and this pattern holds after accounting for genome count.",
+    "type": "positive"
+  },
+  "prophage_amr_comobilization--4cead8a0": {
+    "input": "8325af2c1d594c99e722c8e32b227cae99883c263064bf52e1741ff3c6181fe4",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that resistance genes near a prophage marker were more often accessory than distant ones, a real pattern though modest and varying across species.",
+    "type": "positive"
+  },
+  "prophage_amr_comobilization--7802d299": {
+    "input": "85c5128da083705156b78fde66e8373a7534790d11e1b554a0021a8bb391ecb4",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that many resistance genes lie on the same DNA contigs as prophage marker genes, a direct co-location pattern.",
+    "type": "positive"
+  },
+  "prophage_amr_comobilization--f3c69b78": {
+    "input": "cb1ae8c27f4c15c265be19084128f310567f678d6e8b5bac59f41f2cbaa1663f",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that many species carry both resistance genes and prophage markers together, a biological co-occurrence pattern rather than a description of database contents.",
+    "type": "positive"
+  },
+  "prophage_ecology--3c13d0b7": {
+    "input": "932ac4c958c4265938ab6f0219dedd54178849a3812db8c0841ad2db0f566571",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis checked whether lineages favor particular environments and found none that did beyond what the host family tree predicts.",
+    "type": "negative"
+  },
+  "prophage_ecology--967ce72a": {
+    "input": "2f7bad0e9c11d9f0dc374df84a855b3263945783939a320c9caf533afc67eb4b",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that prophage gene module patterns vary with environmental chemistry, such as pH, across the sampled environments.",
+    "type": "positive"
+  },
+  "prophage_ecology--9f2125cc": {
+    "input": "6c1ad151bf7b56736ff854696abe22e7b515aca801616d363f729ce85445077b",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that prophage gene module makeup differed across genome size groups, environments and family relatedness, with genome size showing the strongest difference.",
+    "type": "positive"
+  },
+  "prophage_ecology--d880eadf": {
+    "input": "cb1816cc724861a44191f3a982eee6876ad9fc4fb877cd63f46c2bb8ebb5a70f",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows prophage-associated gene modules occur in nearly every species, with some modules varying widely across species, a biological pattern rather than a dataset description.",
+    "type": "positive"
+  },
+  "prophage_ecology--fc67e694": {
+    "input": "9975a62ff70729b623f1b02cab9cec5292a7c4f6e7eca2b88c38f52af8af216a",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows several gene modules occur more often in human-associated species than expected, and anti-defense modules occur less often in freshwater and animal-associated species.",
+    "type": "positive"
+  },
+  "pseudomonas_carbon_ecology--0211e0cd": {
+    "input": "68b15cd1a6fbf4192bdac005d0f4346bb7d913a873a4e58c9e39c5ccc4bf55a1",
+    "model": "claude-haiku-5-5",
+    "reason": "Carbon-use profiles carried real ecological signal, yet they failed to separate fine-grained environment types within free-living species.",
+    "type": "positive"
+  },
+  "pseudomonas_carbon_ecology--24adcf2d": {
+    "input": "c690ecb8664f2beec641752a81d7dd76851159ef3325ac26c66ebeb2b45a5c11",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports a directional gap: rhamnose and fucose pathways are more often complete in P. aeruginosa than in the P. fluorescens group.",
+    "type": "positive"
+  },
+  "pseudomonas_carbon_ecology--9c42f41a": {
+    "input": "d45be6b13d36e7651360e03ebee27a0fc9de7b669e8fb4000af9fb36b7a45eae",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports a clear pattern: the two Pseudomonas groups differ in most of the carbon pathways compared.",
+    "type": "positive"
+  },
+  "pseudomonas_carbon_ecology--cbe7e256": {
+    "input": "3562a9153d9e55144961188fc335166da60c6fc7dc5cf7d19c0c4e2f63513e92",
+    "model": "claude-haiku-5-5",
+    "reason": "The model predicted environment type from carbon-use pathways better than guessing would, so those pathways appear to carry some ecological signal.",
+    "type": "positive"
+  },
+  "pseudomonas_carbon_ecology--eb1d58ae": {
+    "input": "85f69f34acfb2e8b3016d290bfaf8695a49a8d59665c9ed4620f6e1d4ee095f0",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that species from the same isolation environment had more similar carbon pathway profiles than species from different environments.",
+    "type": "positive"
+  },
+  "respiratory_chain_wiring--6d65c6de": {
+    "input": "b443dc0c29264a8b29ea5492826d0540ab52e23a295951c82fd55289e390685e",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that the respiratory components needed differ by carbon source, a pattern of distinct configurations per substrate.",
+    "type": "positive"
+  },
+  "respiratory_chain_wiring--7d7534df": {
+    "input": "636757e4802f3360673155fa66b7f53c6da6b9ac7b03640dcfb6a7fc55f7a770",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows all three NADH-oxidizing enzymes present at similar protein levels under standard growth conditions, a measured pattern rather than an untested explanation.",
+    "type": "positive"
+  },
+  "respiratory_chain_wiring--d117b49e": {
+    "input": "1684e030b0e02525313d8fc1c7b75b686450829e759a9f63b7b6c39c83a9ebc7",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows the gene is essential only on acetate, a condition-specific difference in growth between carbon sources.",
+    "type": "positive"
+  },
+  "respiratory_chain_wiring--e16ee45a": {
+    "input": "c7d0baf1b13bc7070a677667a29b1153a666c066865a0858e7fdc4665b7c8da3",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that Complex I is more essential on quinate than on glucose or acetate, a pattern found in the data; the explanation for it is only proposed.",
+    "type": "positive"
+  },
+  "respiratory_chain_wiring--fcdd6421": {
+    "input": "ad3792da517d2c4ba7ba511db0517ee42ebb3d3626f65a1e8aa6684906b8e4c2",
+    "model": "claude-haiku-5-5",
+    "reason": "Organisms with the alternative dehydrogenase had larger Complex I deficits on aromatic compounds, but only four lacked it, so the comparison could not settle the direction.",
+    "type": "inconclusive"
+  },
+  "soil_frontier_genomics--0fa73728": {
+    "input": "7d10c4a2f9d5282262a6d887506d18f27f369b1ebdaa26443137803e837f48af",
+    "model": "claude-haiku-5-5",
+    "reason": "Every predictive model did worse on held-out samples than predicting the average, so the models failed to work, though the cause is unresolved.",
+    "type": "negative"
+  },
+  "soil_frontier_genomics--25df967c": {
+    "input": "8c284333b16461f9b61ac3e8f22c67b00087bda7818f80b3e304c97c85d129f0",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows frontier soil areas were measurably more alkaline than mapped areas, a difference the analysis found, though its cause remains untested.",
+    "type": "positive"
+  },
+  "soil_frontier_genomics--2ab586c6": {
+    "input": "e94de34883fa72fc2eb3a219f4efe6603135916084073a4e4d2d53e995050f9d",
+    "model": "claude-haiku-5-5",
+    "reason": "The reported index values separate two biomes clearly higher than two lower ones, though the order within the top pair is not decided.",
+    "type": "positive"
+  },
+  "soil_frontier_genomics--a002c998": {
+    "input": "b1aa3fa766686222e3de2a02c5690c53eb507643bec9042e56f0612271cacf40",
+    "model": "claude-haiku-5-5",
+    "reason": "Both soil groups were predicted poorly, and the test could not tell whether clay content matters or whether the models simply failed.",
+    "type": "inconclusive"
+  },
+  "soil_metal_functional_genomics--129a64ad": {
+    "input": "30ef8502f0b7c39dd83da2d75e871a3e44010603cec589ba661e4065ea69589e",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports many gene-function links to metal levels in soil samples, with chromium and lead strongest, so a pattern was found.",
+    "type": "positive"
+  },
+  "soil_metal_functional_genomics--2a80fc76": {
+    "input": "03525b0b3f187f063e14755e9f7c2581b3bab1b752da7cc2c086b7320cc54bcb",
+    "model": "claude-haiku-5-5",
+    "reason": "The copper-specific analysis found gene categories for cell division and nucleotide transport ranking highest among those tracking copper, and energy production ranking lowest, which is a pattern in the data.",
+    "type": "positive"
+  },
+  "soil_metal_functional_genomics--becb7d4e": {
+    "input": "9ea96756a471d54d5abcb85120623e47741c9ed33bc3b85ebfb0c731cc402023",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that metal-gene function links look different across soil, marine and wastewater samples, so a difference was found rather than absent.",
+    "type": "positive"
+  },
+  "soil_metal_functional_genomics--fd9b94cc": {
+    "input": "8d946ecb2ebb122526bcf0f32fe02c33372e66001677386e8c0960fa61e25c34",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that metal levels are linked to community gene-function profiles after differences between sampling projects were removed, though the unadjusted figure is unreported.",
+    "type": "positive"
+  },
+  "t4ss_cazy_environmental_hgt--44ad24db": {
+    "input": "df2ea0ac67c43bffb3416320b7be3c94025d9f3f0939b6a4601e6a0078872889",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows that genomes with a GT2 gene near a secretion system carry more metal resistance genes than other genomes.",
+    "type": "positive"
+  },
+  "t4ss_cazy_environmental_hgt--5d73bfde": {
+    "input": "acdbdb6c60743f275173ee54cf65610f453091e1b7ead3a9511a707c828ddce7",
+    "model": "claude-haiku-5-5",
+    "reason": "Searches found no plasmid-borne carbohydrate-active enzyme genes, but genomes with type IV secretion machinery had a higher density of mobile genetic elements.",
+    "type": "positive"
+  },
+  "t4ss_cazy_environmental_hgt--91e33b0b": {
+    "input": "f66d31724ffc4b63daa955a0114f8b83f5bca4cd9532c6be31314edb599aa3a8",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports that many carbohydrate-enzyme families sit near secretion genes more often than expected, so a pattern was found, though its validation is still pending.",
+    "type": "positive"
+  },
+  "t4ss_cazy_environmental_hgt--a2b33180": {
+    "input": "d0daa35cbc96f2301e8d52cf6f3d18fda7d0ffd4010475ee9e98d6d82391d358",
+    "model": "claude-haiku-5-5",
+    "reason": "The gene tree analysis detected many transfer events between distant bacterial phyla, a pattern the evidence reports directly, though validation checks remain pending.",
+    "type": "positive"
+  },
+  "t4ss_cazy_environmental_hgt--a744bbc9": {
+    "input": "11a98ac47ad4f0a640c70ad86ffa8a8793f77c999e8f08c8c9e16507e2632d90",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows type IV secretion and conjugation machinery turns up in many high-quality environmental genomes, a biological result rather than a dataset description.",
+    "type": "positive"
+  },
+  "truly_dark_genes--8c818410": {
+    "input": "0e93aa417bce2c96dc2f4c463d276e8ce3378869e6293ac23809ec5444acb296",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows a clear pattern: dark genes with strong fitness effects appear less often under stress and more often under nutrient, community and iron conditions.",
+    "type": "positive"
+  },
+  "truly_dark_genes--92c362cf": {
+    "input": "9aa764a177e002d86640d5ecafaf8fee3ff4a667e615fa15da333e2975a4aa3f",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence reports how many Fitness Browser gene annotations a newer tool changed and how many remain hypothetical, which describes annotation coverage rather than a biological result.",
+    "type": "data"
+  },
+  "truly_dark_genes--947aec4f": {
+    "input": "8663a05fd5a57a4205780eb613911f2c90bf538a7dfa2d243d15c2800a644f7c",
+    "model": "claude-haiku-5-5",
+    "reason": "The comparison shows unexplained genes are shorter, less often in the core genome, and mostly lack orthologs in other organisms than re-annotated genes.",
+    "type": "positive"
+  },
+  "truly_dark_genes--ba47a194": {
+    "input": "88f080d7d611d3af58baf149eb7c8aa5ee6ee196d26e5dcdc7d9703b5fd58e89",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence is a tier breakdown of how much annotation each unannotated gene carries, which describes annotation coverage rather than a biological result.",
+    "type": "data"
+  },
+  "truly_dark_genes--d1b84273": {
+    "input": "d9c4521795f304eb1e3414351699e31483bf7f63231c38d4018b7f2efb632f8c",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows a clear pattern: unexplained genes cluster in particular organisms, with archaea at the high end.",
+    "type": "positive"
+  },
+  "webofmicrobes_explorer--ab7e4ba4": {
+    "input": "cad66b78d5fa1eb032947ac9cee6b46a4a38c9b720b752cf70e22d9cdd38e3a5",
+    "model": "claude-haiku-5-5",
+    "reason": "The finding states what the archived export lacks: it has no consumption entries, so it reports no biological result.",
+    "type": "data"
+  }
+}
