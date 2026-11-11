@@ -3,6 +3,7 @@
 import argparse
 import json
 import math
+import os
 import shutil
 import signal
 import sys
@@ -10,17 +11,11 @@ from pathlib import Path
 
 import yaml
 
+from beril_wiki.agentic.admission import admit
 from beril_wiki.agentic.batch import changed_sources
-from beril_wiki.agentic.curator import CARD_STAGES, EDITORIAL, pending_actions
+from beril_wiki.agentic.curator import CARD_STAGES, EDITORIAL
 from beril_wiki.agentic.prose import owning_stage
-from beril_wiki.agentic.runner import (
-    adopt_editorial,
-    adopts,
-    locked,
-    recover,
-    run,
-    run_stage,
-)
+from beril_wiki.agentic.runner import due_editorial, locked, recover, run, run_stage
 from beril_wiki.agentic.runtime import (
     MODEL_ROLES,
     EvidenceTools,
@@ -28,7 +23,6 @@ from beril_wiki.agentic.runtime import (
     WorkflowError,
     atomic_json,
     check_page_writers,
-    contract_manifest,
     digest,
     manifest,
     model_policy,
@@ -184,33 +178,53 @@ def run_cards(root: Path, config: dict, stages: list[str] | None = None) -> dict
     return totals
 
 
-def plan(root: Path) -> dict:
+def plan(root: Path, checkout: Path | None = None, expect: str | None = None) -> dict:
     """What the next run would do, without model calls: changed staged sources and the
     editorial stages whose fingerprint no longer matches the accepted state. A state
-    accepted under an earlier revision scheme is compared as the next run adopts it."""
-    accepted_path = root / "state/agentic.json"
-    accepted = (
-        json.loads(accepted_path.read_text(encoding="utf-8")) if accepted_path.exists() else {}
-    )
+    accepted under an earlier revision scheme is compared as the next run adopts it.
+
+    With `expect`, the admission check of a run from `checkout` (default: the corpus)
+    that may add or update only that project; see `admission.admit`."""
     # Validates the policy a run would load, though no stage fingerprint holds a model.
     load_models(root, None, None, [])
-    prior = accepted.get("editorial", {})
-    if adopts(accepted, digest(contract_manifest(root))):
-        prior = adopt_editorial(root, prior)
+    if expect is not None:
+        return admit(root, checkout or CHECKOUT, expect)
     staged = any((root / "staging").glob("*.md"))
     return {
         "changed_sources": changed_sources(root) if staged else [],
-        "pending_editorial": pending_actions(root, prior, integrated=True),
+        "pending_editorial": due_editorial(root),
     }
+
+
+def admission_text(verdict: dict) -> str:
+    lines = [f"admitted: {'yes' if verdict['admitted'] else 'no'}"]
+    lines += [f"reason: {reason}" for reason in verdict["reasons"]]
+    for key, value in verdict.items():
+        if key not in ("admitted", "reasons"):
+            shown = ", ".join(value) if isinstance(value, list) else value
+            lines.append(f"{key}: {shown if shown not in ('', None) else '-'}")
+    return "\n".join(lines)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=ROOT)
     commands = parser.add_subparsers(dest="command", required=True)
-    commands.add_parser(
+    inspect = commands.add_parser(
         "plan",
         help="list changed staged sources and stale editorial stages; no network/model calls",
+    )
+    inspect.add_argument(
+        "--checkout", type=Path, help="with --expect-source: the tree to import (default: corpus/)"
+    )
+    inspect.add_argument(
+        "--expect-source",
+        metavar="ID",
+        help="admit only a run that adds or updates this project; exit 1 with the reasons",
+    )
+    inspect.add_argument("--json", action="store_true", help="print the admission as JSON")
+    inspect.add_argument(
+        "--progress", type=Path, metavar="FILE", help="export FILE as BERIL_WIKI_PROGRESS"
     )
     search = commands.add_parser("search", help="search accepted wiki text; no model calls")
     search.add_argument("query")
@@ -296,6 +310,11 @@ def main() -> int:
     execute.add_argument(
         "--staged", action="store_true", help="use current staging instead of fetching"
     )
+    execute.add_argument(
+        "--expect-source",
+        metavar="ID",
+        help="refuse unless the run adds or updates only this project (see plan)",
+    )
     execute.add_argument("--cli", default=shutil.which("claude"))
     account = commands.add_parser("account", help="reconcile unknown usage; does not retry")
     account.add_argument("--job", required=True)
@@ -378,7 +397,18 @@ def main() -> int:
         if args.command == "plan":
             if (root / ".agentic/promotion.json").exists():
                 raise WorkflowError("promotion pending; run recover before inspection")
-            print(json.dumps(plan(root), indent=2))
+            if args.checkout and not args.expect_source:
+                raise WorkflowError("plan --checkout needs --expect-source")
+            if args.progress:
+                os.environ["BERIL_WIKI_PROGRESS"] = str(args.progress.resolve())
+            checkout = args.checkout.resolve() if args.checkout else None
+            result = plan(root, checkout, args.expect_source)
+            if args.expect_source and not args.json:
+                print(admission_text(result))
+            else:
+                print(json.dumps(result, indent=2))
+            if args.expect_source and not result["admitted"]:
+                return 1
         elif args.command == "search":
             with locked(root):
                 if (root / ".agentic/promotion.json").exists():
@@ -548,6 +578,12 @@ def main() -> int:
                 load_models(root, args.model_config, args.model, args.step_model, args.effort)
             )
             check_page_writers(config)
+            if args.expect_source:
+                if args.staged:
+                    raise WorkflowError("--expect-source fetches the checkout; drop --staged")
+                verdict = admit(root, args.checkout.resolve(), args.expect_source)
+                if not verdict["admitted"]:
+                    raise WorkflowError("not admitted: " + "; ".join(verdict["reasons"]))
             print(json.dumps({"models": model_policy(config)}, indent=2))
             run(root, args.checkout.resolve(), config, args.staged)
     except (WorkflowError, OSError, ValueError) as exc:

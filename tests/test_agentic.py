@@ -1265,3 +1265,257 @@ def test_an_unmeasured_codex_job_keeps_its_hold_under_a_cap(tmp_path):
     ledger.reconcile_stale(tmp_path / "transcripts")
     with pytest.raises(WorkflowError, match="Codex tokens 400000"):
         ledger.reserve("b", "write/y/science-review", "gpt-6-luna")
+
+
+SOURCES = ("a__REPORT.md", "discoveries.md", "pitfalls.md")
+
+
+def admission_base(tmp_path):
+    """A settled wiki repository: project `a` is integrated from the corpus committed at
+    HEAD, and the accepted state owes no editorial stage. Returns it and a checkout
+    copied from that corpus."""
+    import json
+    import shutil
+    import subprocess
+
+    from beril_wiki import corpus
+    from beril_wiki.agentic import curator as C
+    from beril_wiki.agentic import runner
+    from beril_wiki.agentic.runtime import contract_manifest, digest, file_hash, manifest
+    from beril_wiki.stages.fetch import fetch_local
+
+    root = tmp_path / "repo"
+    source = root / "corpus"
+    files = {
+        "projects/a/README.md": "# A\n\n## Authors\n\n- Ada\n",
+        "projects/a/REPORT.md": "# A report\n\nYield was 42%.\n",
+        "ui/config/collections.yaml": "collections: []\n",
+        "docs/discoveries.md": "# Discoveries\n",
+        "docs/pitfalls.md": "# Pitfalls\n",
+    }
+    for rel, text in {
+        **files,
+        "contract/AGENTS.md": "Contract",
+        "agentic.yaml": "model: m\n",
+        "wiki/concepts/c.md": "# C\n",
+        "wiki/sources/a__REPORT.md": files["projects/a/REPORT.md"],
+        "wiki/sources/discoveries.md": files["docs/discoveries.md"],
+        "wiki/sources/pitfalls.md": files["docs/pitfalls.md"],
+        **{f"wiki/summaries/{n}": "# Summary\n" for n in SOURCES},
+    }.items():
+        path = (source if rel in files else root) / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text)
+    corpus.save(
+        {
+            "version": 1,
+            "shared": {rel: corpus.sha256(source / rel) for rel in corpus.SHARED},
+            "projects": {"a": corpus.entry(source / "projects/a", "workbench")},
+        },
+        source,
+    )
+    fetch_local(root / "staging", source)
+    state = root / "state"
+    state.mkdir()
+    (state / "hashes.json").write_text(
+        json.dumps({n: file_hash(root / "staging" / n) for n in SOURCES})
+    )
+    (state / "curator-topics.json").write_text(
+        json.dumps(
+            {
+                "version": 1,
+                "reason": "One group",
+                "groups": [{"title": "C studies", "concepts": ["c"]}],
+                "concepts": manifest(root, ("wiki/concepts",)),
+            }
+        )
+    )
+    (state / "agentic.json").write_text(
+        json.dumps(
+            {
+                "version": 2,
+                "revision": runner.scientific_revision(root),
+                "revision_scheme": runner.REVISION_SCHEME,
+                "contract": digest(contract_manifest(root)),
+                "core_outputs": manifest(root, runner.CORE_OUTPUTS),
+                "editorial": {name: C.stage_snapshot(root, name) for name in C.EDITORIAL},
+            }
+        )
+    )
+    git = ["git", "-C", str(root), "-c", "user.name=t", "-c", "user.email=t@example.org"]
+    subprocess.run([*git, "init", "-q"], check=True)
+    subprocess.run([*git, "add", "-A"], check=True)
+    subprocess.run([*git, "commit", "-qm", "base"], check=True)
+    checkout = tmp_path / "checkout"
+    shutil.copytree(source, checkout)
+    return root, checkout
+
+
+def add_project(checkout, pid, report="# New report\n\nGrowth was 7%.\n"):
+    from beril_wiki import corpus
+
+    project = checkout / "projects" / pid
+    project.mkdir(parents=True, exist_ok=True)
+    (project / "README.md").write_text(f"# {pid}\n\n## Authors\n\n- Ada\n")
+    (project / "REPORT.md").write_text(report)
+    manifest = corpus.load(checkout)
+    manifest["projects"][pid] = corpus.entry(project, "workbench")
+    corpus.save(manifest, checkout)
+
+
+def ledger_rows(root):
+    import sqlite3
+
+    path = root / ".agentic/jobs.sqlite"
+    if not path.exists():
+        return None
+    with sqlite3.connect(path) as db:
+        return db.execute("SELECT key,status FROM jobs ORDER BY rowid").fetchall()
+
+
+def test_expect_source_admits_one_added_report(tmp_path):
+    from beril_wiki.agentic import __main__ as cli
+    from beril_wiki.agentic import runner
+    from beril_wiki.agentic.runtime import manifest
+
+    root, checkout = admission_base(tmp_path)
+    add_project(checkout, "b")
+    before = manifest(root, (*runner.TREES, "contract"))
+    verdict = cli.plan(root, checkout, "b")
+    assert verdict["admitted"], verdict["reasons"]
+    assert verdict["changed_sources"] == ["b__REPORT.md"]
+    assert verdict["base_pending"] == [] and verdict["invalidation"] is None
+    # The import stages a new source, which the per-source stages then owe.
+    assert "conflicts" in verdict["pending_editorial"]
+    assert manifest(root, (*runner.TREES, "contract")) == before
+    assert not (root / ".agentic").exists()
+    assert set(cli.plan(root)) == {"changed_sources", "pending_editorial"}
+
+
+def test_expect_source_admits_a_readme_only_update(tmp_path):
+    from beril_wiki import corpus
+    from beril_wiki.agentic import __main__ as cli
+
+    root, checkout = admission_base(tmp_path)
+    (checkout / "projects/a/README.md").write_text("# A\n\n## Authors\n\n- Ada\n- Grace\n")
+    manifest = corpus.load(checkout)
+    manifest["projects"]["a"] = corpus.entry(checkout / "projects/a", "workbench")
+    corpus.save(manifest, checkout)
+    verdict = cli.plan(root, checkout, "a")
+    assert verdict["admitted"], verdict["reasons"]
+    assert verdict["changed_sources"] == []
+
+
+def adopted_revision(root, checkout):
+    import json
+
+    path = root / "state/agentic.json"
+    state = json.loads(path.read_text())
+    path.write_text(json.dumps(state | {"revision": "older", "revision_scheme": 4}))
+
+
+def current_revision(root, checkout):
+    import json
+
+    path = root / "state/agentic.json"
+    path.write_text(json.dumps(json.loads(path.read_text()) | {"revision": "older"}))
+
+
+def second_report(root, checkout):
+    add_project(checkout, "c")
+
+
+def edited_concept(root, checkout):
+    (root / "wiki/concepts/c.md").write_text("# C\n\nEdited by hand.\n")
+
+
+def expired_labels(root, checkout):
+    import json
+
+    (root / "state/novelty.json").write_text(json.dumps({"f1": {"retrieved_on": "2020-01-01"}}))
+
+
+def stale_stage(root, checkout):
+    import json
+
+    path = root / "state/agentic.json"
+    state = json.loads(path.read_text())
+    del state["editorial"]["authors"]
+    path.write_text(json.dumps(state))
+
+
+def unknown_job(root, checkout):
+    ledger = Ledger(root / ".agentic/jobs.sqlite", "earlier", 100, 5, 10)
+    ledger.reserve("conflicts/x")
+    with pytest.raises(WorkflowError, match="unknown token usage"):
+        ledger.finish("conflicts/x", "", None)
+
+
+def other_manifest_entry(root, checkout):
+    from beril_wiki import corpus
+
+    manifest = corpus.load(checkout)
+    manifest["projects"]["a"]["origin"] = "v1@elsewhere"
+    corpus.save(manifest, checkout)
+
+
+def other_readme(root, checkout):
+    (checkout / "projects/a/README.md").write_text("# A\n\n## Authors\n\n- Someone else\n")
+
+
+def test_expect_source_adopts_an_older_revision_scheme(tmp_path):
+    from beril_wiki.agentic import __main__ as cli
+
+    root, checkout = admission_base(tmp_path)
+    add_project(checkout, "b")
+    adopted_revision(root, checkout)
+    verdict = cli.plan(root, checkout, "b")
+    assert verdict["admitted"], verdict["reasons"]
+
+
+@pytest.mark.parametrize(
+    ("mutate", "reason"),
+    [
+        (second_report, "c__REPORT.md"),
+        (edited_concept, "accepted core_outputs"),
+        (current_revision, "accepted revision"),
+        (expired_labels, "novelty labels"),
+        (stale_stage, "main owes editorial stages: authors"),
+        (unknown_job, "conflicts/x"),
+        (other_manifest_entry, "manifest.json differs from HEAD outside projects/b: projects/a"),
+        (other_readme, "projects/a/README.md"),
+    ],
+)
+def test_expect_source_refuses_work_beyond_one_project(tmp_path, mutate, reason):
+    from beril_wiki.agentic import __main__ as cli
+
+    root, checkout = admission_base(tmp_path)
+    add_project(checkout, "b")
+    mutate(root, checkout)
+    rows = ledger_rows(root)
+    verdict = cli.plan(root, checkout, "b")
+    assert not verdict["admitted"]
+    assert any(reason in r for r in verdict["reasons"]), verdict["reasons"]
+    assert ledger_rows(root) == rows
+
+
+def test_expect_source_cli_exits_on_refusal_before_run(tmp_path, monkeypatch, capsys):
+    import json
+    import sys
+
+    from beril_wiki.agentic import __main__ as cli
+
+    root, checkout = admission_base(tmp_path)
+    add_project(checkout, "b")
+    add_project(checkout, "c")
+    common = ["agentic", "--root", str(root)]
+    plan = [*common, "plan", "--checkout", str(checkout), "--expect-source", "b", "--json"]
+    monkeypatch.setattr(sys, "argv", plan)
+    assert cli.main() == 1
+    assert not json.loads(capsys.readouterr().out)["admitted"]
+    monkeypatch.setattr(cli, "run", lambda *a, **k: pytest.fail("run started"))
+    flags = ["--max-tokens", "10", "--max-jobs", "1", "--cli", "claude", "--model", "m"]
+    run = [*common, "run", *flags, "--checkout", str(checkout), "--expect-source", "b"]
+    monkeypatch.setattr(sys, "argv", run)
+    assert cli.main() == 1
+    assert "c__REPORT.md" in capsys.readouterr().out
