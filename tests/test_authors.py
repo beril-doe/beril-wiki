@@ -1,6 +1,8 @@
 """The subjectivity guard on author pages: it must catch the phrasings the
 pre-rev-2 prompt produced, and leave factual contribution prose alone."""
 
+import json
+
 from beril_wiki.stages.authors import subjective_hits
 
 # Real sentences from the rev-1 pages (wiki/authors/), which asserted
@@ -64,3 +66,36 @@ def test_catches_characterising_sentences():
 def test_passes_factual_reporting():
     for s in FACTUAL:
         assert not subjective_hits(s), f"false positive: {s}"
+
+
+def test_removed_author_page_is_deleted(tmp_path, monkeypatch):
+    from beril_wiki.stages import extras
+
+    checkout = tmp_path / "checkout"
+    readmes = {"p1": "Alice Smith", "p2": "Bob Jones"}
+    for pid, author in readmes.items():
+        (checkout / "projects" / pid).mkdir(parents=True)
+        (checkout / "projects" / pid / "REPORT.md").write_text("r\n")
+        (checkout / "projects" / pid / "README.md").write_text(
+            f"# {pid}\n\n## Authors\n- {author}\n"
+        )
+    (tmp_path / "staging").mkdir()
+    (tmp_path / "state").mkdir()
+    monkeypatch.setattr(extras, "CHECKOUT", checkout)
+    monkeypatch.setattr(extras, "ROOT", tmp_path)
+    monkeypatch.setattr(extras, "OUT", tmp_path / "wiki")
+    authors = tmp_path / "wiki/authors"
+    extras.write_authors()
+    (authors / "index.md").write_text("index\n")
+    state = tmp_path / "state/authors.json"
+    state.write_text(json.dumps({"alice-smith.md": "h1", "bob-jones.md": "h2"}))
+
+    (checkout / "projects/p2/README.md").write_text("# p2\n\n## Authors\n- Alicia Smith\n")
+    extras.write_authors()
+
+    assert sorted(p.name for p in authors.glob("*.md")) == [
+        "alice-smith.md",
+        "alicia-smith.md",
+        "index.md",
+    ]
+    assert json.loads(state.read_text()) == {"alice-smith.md": "h1"}
