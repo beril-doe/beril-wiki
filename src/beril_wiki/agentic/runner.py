@@ -5,7 +5,6 @@ from __future__ import annotations
 import fcntl
 import json
 import os
-import re
 import shutil
 import signal
 import subprocess
@@ -31,6 +30,7 @@ from beril_wiki.agentic.runtime import (
     model_policy,
     model_signature,
 )
+from beril_wiki.corpus import FIG_EMBED
 from beril_wiki.stages.novelty import labels_due
 
 TREES = ("wiki", "state", "staging")
@@ -122,9 +122,7 @@ def checkout_inputs(checkout: Path) -> dict[str, str]:
     paths |= {checkout / "docs" / name for name in ("discoveries.md", "pitfalls.md")}
     for report in list(paths):
         if report.name == "REPORT.md":
-            for figure in re.findall(
-                r"!\[[^\]]*\]\((figures/[^)]+)\)", report.read_text(encoding="utf-8")
-            ):
+            for figure in FIG_EMBED.findall(report.read_text(encoding="utf-8")):
                 rel = Path(figure)
                 if ".." in rel.parts or rel.is_absolute():
                     raise WorkflowError(f"unsafe figure reference in {report}")

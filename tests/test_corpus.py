@@ -5,6 +5,7 @@ import subprocess
 import pytest
 
 from beril_wiki import corpus
+from beril_wiki.agentic import runner
 from beril_wiki.agentic.batch import changed_sources
 from beril_wiki.agentic.runtime import WorkflowError
 from beril_wiki.stages import fetch
@@ -58,3 +59,24 @@ def test_fetch_drops_a_report_the_checkout_no_longer_has(tmp_path, monkeypatch):
     assert not (root / "staging/b__REPORT.md").exists()
     with pytest.raises(WorkflowError, match="source deletion requires explicit retraction"):
         changed_sources(root)
+
+
+def test_run_output_figures_are_vendored_and_fetched(tmp_path, monkeypatch):
+    src = checkout(tmp_path, ["p"])
+    project = src / "projects/p"
+    (project / "REPORT.md").write_text("![a](figures/f.png)\n![b](runs/r1/out/figures/b.png)\n")
+    run_fig = project / "runs/r1/out/figures/b.png"
+    run_fig.parent.mkdir(parents=True)
+    run_fig.write_bytes(b"run")
+    assert corpus.project_files(project) == [
+        "README.md",
+        "REPORT.md",
+        "figures/f.png",
+        "runs/r1/out/figures/b.png",
+    ]
+    root = tmp_path / "wiki-root"
+    monkeypatch.setattr(fetch, "CHECKOUT", src)
+    fetch.fetch_local(root / "staging")
+    assert (root / "wiki/figures/p/f.png").read_bytes() == b"p"
+    assert (root / "wiki/figures/p/runs/r1/out/figures/b.png").read_bytes() == b"run"
+    assert "projects/p/runs/r1/out/figures/b.png" in runner.checkout_inputs(src)

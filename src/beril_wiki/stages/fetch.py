@@ -17,17 +17,14 @@ from __future__ import annotations
 
 import os
 import pathlib
-import re
 import shutil
 import sys
 
+from beril_wiki.corpus import FIG_EMBED, figure_destination
 from beril_wiki.paths import ROOT
 
 CHECKOUT = pathlib.Path(os.environ.get("BERIL_CHECKOUT", ROOT / "corpus"))
 BACKEND = os.environ.get("FETCH_BACKEND", "local")
-
-
-FIG_EMBED = re.compile(r"!\[[^\]]*\]\((figures/[^)]+)\)")
 
 
 def fetch_local(staging: pathlib.Path) -> int:
@@ -44,10 +41,12 @@ def fetch_local(staging: pathlib.Path) -> int:
         # Figures referenced by the report travel with the wiki repo, so the
         # site is fully renderable from a clone; the checkout is fetch-only.
         for rel in set(FIG_EMBED.findall(text)):
+            if ".." in pathlib.PurePosixPath(rel).parts:
+                continue
             src = report.parent / rel
             if not src.exists():
                 continue
-            dst = figroot / report.parent.name / re.sub(r"^figures/", "", rel)
+            dst = figroot / figure_destination(report.parent.name, rel)
             if not dst.exists() or dst.read_bytes() != src.read_bytes():
                 dst.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(src, dst)

@@ -19,6 +19,7 @@ import subprocess
 import sys
 
 from beril_wiki import evidence
+from beril_wiki.corpus import FIG_EMBED, figure_destination
 from beril_wiki.publish import cards
 
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
@@ -387,8 +388,8 @@ def split_paragraphs(body: str) -> list[str]:
 
 
 def fig_src(kb: pathlib.Path, project: str, rel: str) -> pathlib.Path:
-    """A figure's committed location: wiki/figures/<project>/<path-under-figures/>."""
-    return kb / "wiki" / "figures" / project / re.sub(r"^figures/", "", rel)
+    """A figure's committed location under wiki/figures/ (see ``corpus.figure_destination``)."""
+    return kb / "wiki" / "figures" / figure_destination(project, rel)
 
 
 def splice_figures(text: str, entry: dict, kb: pathlib.Path, dst_root: pathlib.Path) -> str:
@@ -417,14 +418,16 @@ def rewrite_source_figures(
     text: str, project: str, kb: pathlib.Path, dst_root: pathlib.Path
 ) -> str:
     def repl(m: re.Match) -> str:
-        src = fig_src(kb, project, m.group(2))
+        alt, rel = m.group(0)[2 : m.group(0).index("](")], m.group(1)
+        src = fig_src(kb, project, rel)
         if not src.exists():
-            return m.group(1)  # drop the broken embed, keep the alt text
-        name = pathlib.Path(m.group(2)).name
+            return alt  # drop the broken embed, keep the alt text
+        # Run-output embeds keep their path: two runs may both write figures/a.png.
+        name = pathlib.Path(rel).name if rel.startswith("figures/") else rel
         copy_figure(src, dst_root / "figures" / project / name)
-        return f"![{m.group(1)}](../figures/{project}/{name})"
+        return f"![{alt}](../figures/{project}/{name})"
 
-    return re.sub(r"!\[([^\]]*)\]\((figures/[^)]+)\)", repl, text)
+    return FIG_EMBED.sub(repl, text)
 
 
 def linkify_src(text: str, summary_pages: set[str]) -> str:
