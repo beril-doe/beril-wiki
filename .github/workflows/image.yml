@@ -12,11 +12,12 @@ name: Build wiki image
 # The site is built here on the runner, not in the Dockerfile, because the
 # search vectors come from the search-data branch and need the checkout's .git.
 #
-# This only publishes images. The spin_*_deploy.yml workflows run when a build
-# here completes and restart the matching SPIN deployment, which pulls the new
-# :latest / :develop; nothing in this file touches the cluster.
-# A pull request from a fork runs with a read-only token, so it builds the
-# develop image as a check but cannot push it.
+# Once the image is pushed, the deploy job hands the channel to
+# spin_deploy.yml, which restarts the matching SPIN deployment so it pulls the
+# new tag. The channel travels as a job output rather than being inferred from
+# the branch or event, so a dispatch of :develop from main restarts dev, not
+# production. A pull request from a fork runs with a read-only token: it builds
+# the develop image as a check, pushes nothing, and so deploys nothing.
 on:
   push:
     branches: [main]
@@ -65,6 +66,9 @@ env:
 jobs:
   image:
     runs-on: ubuntu-latest
+    outputs:
+      channel: ${{ steps.pick.outputs.channel }}
+      pushed: ${{ steps.pick.outputs.pushed }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -75,7 +79,10 @@ jobs:
           enable-cache: true
 
       - name: Pick the host for the channel
+        id: pick
         run: |
+          echo "channel=$CHANNEL" >> "$GITHUB_OUTPUT"
+          echo "pushed=$PUSH" >> "$GITHUB_OUTPUT"
           case "$CHANNEL" in
             latest)  echo "HOST=beril.kbase.us" >> "$GITHUB_ENV" ;;
             develop) echo "HOST=beril-dev.kbase.us" >> "$GITHUB_ENV" ;;
@@ -126,3 +133,13 @@ jobs:
             GIT_COMMIT=${{ github.sha }}
           cache-from: type=gha,scope=${{ env.CHANNEL }}
           cache-to: type=gha,mode=max,scope=${{ env.CHANNEL }}
+
+  # Runs only after the image job succeeded, so `pushed` being true means the
+  # push step completed and the tag now holds this build.
+  deploy:
+    needs: image
+    if: needs.image.outputs.pushed == 'true'
+    uses: ./.github/workflows/spin_deploy.yml
+    with:
+      channel: ${{ needs.image.outputs.channel }}
+    secrets: inherit

@@ -1,0 +1,58 @@
+name: Deploy to SPIN
+
+# Restarts a SPIN deployment so it pulls the image image.yml just pushed.
+# Called by image.yml after a successful push, with the channel that run built,
+# so the deployment always matches the image: :latest restarts production,
+# :develop restarts the dev environment. Dispatching it by hand restarts one
+# environment against whatever its tag currently holds.
+on:
+  workflow_call:
+    inputs:
+      channel:
+        description: Image tag that was pushed, latest or develop
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: Environment to restart, by the image tag it runs
+        type: choice
+        options: [latest, develop]
+        default: develop
+
+env:
+  RANCHER_URL: https://rancher2.spin.nersc.gov/v3
+  RANCHER_CLI_VERSION: v2.13.2
+  RANCHER_NAMESPACE: ${{ inputs.channel == 'latest' && 'beril' || 'knowledge-engine' }}
+  DEPLOYMENT_NAME: ${{ inputs.channel == 'latest' && 'beril-wiki' || 'beril-wiki-dev' }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Two builds of the same channel finishing together must not restart the
+    # same deployment at once; the second queues behind the first. The other
+    # channel is a different deployment and never waits.
+    concurrency:
+      group: spin-deploy-${{ inputs.channel }}
+
+    steps:
+      - name: Install Rancher CLI
+        run: |
+          wget -q https://github.com/rancher/cli/releases/download/${{ env.RANCHER_CLI_VERSION }}/rancher-linux-amd64-${{ env.RANCHER_CLI_VERSION }}.tar.gz
+          tar -xzf rancher-linux-amd64-${{ env.RANCHER_CLI_VERSION }}.tar.gz
+          sudo mv rancher-${{ env.RANCHER_CLI_VERSION }}/rancher /usr/local/bin/
+          rancher --version
+
+      - name: Login to SPIN Rancher
+        env:
+          CONTEXT: ${{ inputs.channel == 'latest' && secrets.RANCHER_PROD_PROJECT_ID || secrets.RANCHER_DEV_PROJECT_ID }}
+        run: |
+          rancher login --token ${{ secrets.SPIN_RANCHER_API_KEY }} --context "$CONTEXT" ${{ env.RANCHER_URL }}
+
+      - name: Restart deployment
+        run: |
+          rancher kubectl -n ${{ env.RANCHER_NAMESPACE }} rollout restart deploy/${{ env.DEPLOYMENT_NAME }}
+
+      - name: Verify deployment
+        run: |
+          rancher kubectl -n ${{ env.RANCHER_NAMESPACE }} rollout status deploy/${{ env.DEPLOYMENT_NAME }} --timeout=5m
