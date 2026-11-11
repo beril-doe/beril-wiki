@@ -24,6 +24,9 @@ uv run python -m beril_wiki.agentic plan
 uv run python -m beril_wiki.agentic run \
   --max-tokens 500000 --max-jobs 40
 
+# Check that a run from this checkout adds or updates one project and nothing else.
+uv run python -m beril_wiki.agentic plan --checkout corpus --expect-source ID --json
+
 # Search accepted wiki Markdown without inference.
 uv run python -m beril_wiki.agentic search 'carbon yield'
 
@@ -39,6 +42,31 @@ stages whose fingerprint no longer matches `state/agentic.json`). It makes no
 model call.
 `--root PATH` precedes the subcommand. `--staged` uses current staging; the
 checkout is still read for metadata and figure context.
+
+`plan --expect-source ID` admits a run that adds or updates project `ID` and
+owes no other work, so a researcher's run never pays for maintenance the
+repository already owed. It reads `--checkout` (default `corpus/`), makes no
+model call, and writes nothing to `wiki/`, `state/`, `staging/` or the job
+ledger. It checks two scratch copies of the trees. The base copy fetches
+`corpus/` as committed at `HEAD` and refuses when an editorial stage is
+pending, when a novelty label is due for refresh, or when
+`.agentic/jobs.sqlite` holds a job with unknown usage. The import copy fetches
+the checkout and refuses when:
+
+- a staged source other than `ID__REPORT.md` would integrate;
+- the accepted `revision` differs and the state is not adopted from an earlier
+  scheme, or `core_outputs` differs, either of which re-integrates every source;
+- a checkout input outside `projects/ID/` differs from `HEAD`'s corpus;
+- `manifest.json` differs from `HEAD`'s anywhere but `projects.ID`.
+
+A README-only or figure-only update is admitted with an empty
+`changed_sources`. The result lists `admitted`, `reasons`, `changed_sources`,
+`pending_editorial` (the stages the import makes due), `base_pending`,
+`labels_due`, `unknown_usage` and `invalidation`. `--json` prints it as one
+JSON object; without it, one line per field. `plan` exits 1 when the run is
+not admitted. `run --expect-source ID` makes the same check before the run
+starts and stops with the reasons; it cannot be combined with `--staged`.
+`--progress FILE` sets `BERIL_WIKI_PROGRESS` for the plan.
 
 The checkout defaults to the repository's own `corpus/`, a copy of every
 input a run reads, laid out like an observatory checkout: `projects/<id>/`

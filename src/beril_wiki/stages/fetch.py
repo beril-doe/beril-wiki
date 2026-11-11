@@ -27,14 +27,15 @@ CHECKOUT = pathlib.Path(os.environ.get("BERIL_CHECKOUT", ROOT / "corpus"))
 BACKEND = os.environ.get("FETCH_BACKEND", "local")
 
 
-def fetch_local(staging: pathlib.Path) -> int:
+def fetch_local(staging: pathlib.Path, checkout: pathlib.Path | None = None) -> int:
+    checkout = checkout or CHECKOUT
     staging.mkdir(parents=True, exist_ok=True)
     # A report left from an earlier fetch would hide its deletion from changed_sources.
     for stale in staging.glob("*.md"):
         stale.unlink()
     figroot = staging.parent / "wiki" / "figures"
     n = nf = 0
-    for report in sorted(CHECKOUT.glob("projects/*/REPORT.md")):
+    for report in sorted(checkout.glob("projects/*/REPORT.md")):
         text = report.read_text(encoding="utf-8", errors="replace")
         shutil.copy2(report, staging / f"{report.parent.name}__REPORT.md")
         n += 1
@@ -52,7 +53,7 @@ def fetch_local(staging: pathlib.Path) -> int:
                 shutil.copy2(src, dst)
                 nf += 1
     for digest in ("discoveries.md", "pitfalls.md"):
-        src = CHECKOUT / "docs" / digest
+        src = checkout / "docs" / digest
         if src.exists():
             shutil.copy2(src, staging / digest)
             n += 1
