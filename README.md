@@ -54,7 +54,7 @@ file, runs the host's checks and asks the GPT reviewer through tools, and the
 host accepts only the exact text both approved. A page that does not converge
 is recorded, not a run stop. Model changes apply to pages written from then on;
 `pilot` measures a model on named pages first. See the [operating guide](docs/agentic-workflow.md) for
-subscription login, the observatory checkout, run budgets, workers, failed-page
+subscription login, the vendored `corpus/`, run budgets, workers, failed-page
 retry, search, and recovery, or open the
 [HTML walkthrough](docs/agentic-workflow.html) for the control flow. A capped
 real-source update remains the acceptance step before a large compilation.
@@ -77,6 +77,7 @@ The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 | `tests/` | deterministic checks and recorded-response workflow tests |
 | `theme/` | the Quartz page frame (one component per page region), the stylesheet (one partial per region), and the browser script and index builder for search and Ask |
 | `contract/` | the editorial contract injected into every compile, the concept decisions manifest, the errata a person has recorded against the source reports, the scope of finding and research-direction records (`cards.yaml`), and human decisions on literature labels (`novelty-decisions.yaml`) |
+| `corpus/` | every source a run reads, laid out like an observatory checkout, with `manifest.json` recording each file's hash and origin (`beril_wiki.corpus`) |
 | `state/` | per-stage caches that make the pipeline incremental |
 | `search/` | ignored local copy of the section vectors for meaning search; the shared copy lives on the `search-data` branch |
 | `.agentic/` | ignored runtime ledger, raw results, receipts, and candidate workspace; preserve when resuming |

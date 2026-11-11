@@ -22,8 +22,7 @@ uv run python -m beril_wiki.agentic plan
 
 # Use the committed model policy and explicit budgets appropriate to the update.
 uv run python -m beril_wiki.agentic run \
-  --max-tokens 500000 --max-jobs 40 \
-  --checkout /path/to/BERIL-research-observatory
+  --max-tokens 500000 --max-jobs 40
 
 # Search accepted wiki Markdown without inference.
 uv run python -m beril_wiki.agentic search 'carbon yield'
@@ -38,8 +37,18 @@ These budgets illustrate syntax, not measured requirements for this corpus.
 their integrated copy, empty when nothing is staged) and `pending_editorial` (the editorial
 stages whose fingerprint no longer matches `state/agentic.json`). It makes no
 model call.
-`--root PATH` precedes the subcommand. `--staged` uses current staging; an
-observatory checkout is still required for metadata and figure context.
+`--root PATH` precedes the subcommand. `--staged` uses current staging; the
+checkout is still read for metadata and figure context.
+
+The checkout defaults to the repository's own `corpus/`, a copy of every
+input a run reads, laid out like an observatory checkout: `projects/<id>/`
+(`README.md`, `REPORT.md` and the figures the report embeds),
+`ui/config/collections.yaml` and `docs/{discoveries,pitfalls}.md`.
+`corpus/manifest.json` records each file's SHA-256 and each project's origin.
+`uv run python -m beril_wiki.corpus verify` checks the two agree, and the
+tests run it. `uv run python -m beril_wiki.corpus import-v1 --checkout PATH`
+rebuilds `corpus/` from an observatory checkout. Pass `--checkout` (or set
+`BERIL_CHECKOUT`) only to compile from another tree.
 Individual jobs have `--max-turns` (default 12, applying to tool-using jobs
 other than page sessions), `--timeout` (600 seconds), and `--max-output-tokens`
 (32,768). A page session is bounded by its brief instead: 20 turns plus one per
@@ -163,7 +172,7 @@ then repeat `--step-model ROLE=MODEL_ID` for individual overrides. Without
 ```sh
 # Keep the repository policy, changing only scientific review.
 uv run python -m beril_wiki.agentic run --step-model review=MODEL_ID \
-  --max-tokens 500000 --max-jobs 40 --checkout /path/to/BERIL-research-observatory
+  --max-tokens 500000 --max-jobs 40
 ```
 
 `step_efforts` maps a role to a reasoning effort (`low`, `medium`, `high`,
@@ -246,7 +255,7 @@ policy changes, as a tracked operation (`agentic/pilot.py`):
 ```sh
 # Freeze the starting trees and copy the ledger the pilot charges to.
 uv run python -m beril_wiki.agentic pilot setup --scratch /path/to/scratch \
-  --store .agentic --before COMMIT --checkout /path/to/BERIL-research-observatory
+  --store .agentic --before COMMIT
 
 # One cell: one model policy over one set of pages, under spend caps.
 uv run python -m beril_wiki.agentic pilot cell --scratch /path/to/scratch \
