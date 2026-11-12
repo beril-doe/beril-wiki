@@ -9,6 +9,10 @@ name: Build wiki image
 #   push to main      -> :latest   for beril.kbase.us
 #   workflow_dispatch -> whichever the `channel` input names (default :latest)
 #
+# Only main may produce :latest. A dispatch from any other ref that asks for
+# it, or defaults to it, fails before building, so no branch can replace the
+# production image or restart production.
+#
 # The site is built here on the runner, not in the Dockerfile, because the
 # search vectors come from the search-data branch and need the checkout's .git.
 #
@@ -21,18 +25,7 @@ name: Build wiki image
 on:
   push:
     branches: [main]
-    paths: &build_paths
-      - "wiki/**"
-      - "src/**"
-      - "scripts/**"
-      - "theme/**"
-      - "pyproject.toml"
-      - "uv.lock"
-      - "Dockerfile"
-      - ".dockerignore"
-      - ".github/workflows/image.yml"
   pull_request:
-    paths: *build_paths
   # Also dispatched by `search_data push` (beril_wiki.publish.search_data),
   # which passes no input and so refreshes :latest.
   workflow_dispatch:
@@ -46,10 +39,6 @@ on:
 permissions:
   contents: read
   packages: write
-
-concurrency:
-  group: image-${{ github.ref }}
-  cancel-in-progress: true
 
 env:
   REGISTRY: ghcr.io
@@ -66,6 +55,14 @@ env:
 jobs:
   image:
     runs-on: ubuntu-latest
+    # A newer build of the same ref and channel supersedes this one. The group
+    # is on this job, not the workflow, so a deploy that is already running
+    # after its image was pushed is never cancelled; spin_deploy.yml queues
+    # deploys of one channel behind each other. The channel expression repeats
+    # env.CHANNEL because job concurrency cannot read env.
+    concurrency:
+      group: image-${{ github.ref }}-${{ github.event_name == 'pull_request' && 'develop' || inputs.channel || 'latest' }}
+      cancel-in-progress: true
     outputs:
       channel: ${{ steps.pick.outputs.channel }}
       pushed: ${{ steps.pick.outputs.pushed }}
@@ -81,6 +78,10 @@ jobs:
       - name: Pick the host for the channel
         id: pick
         run: |
+          if [ "$CHANNEL" = latest ] && [ "$GITHUB_REF" != refs/heads/main ]; then
+            echo "refusing to build :latest from $GITHUB_REF; only main may" >&2
+            exit 1
+          fi
           echo "channel=$CHANNEL" >> "$GITHUB_OUTPUT"
           echo "pushed=$PUSH" >> "$GITHUB_OUTPUT"
           case "$CHANNEL" in
