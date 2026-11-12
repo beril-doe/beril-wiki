@@ -65,6 +65,10 @@ stages (or those named with `--stage`) for the reports
 and topics in `contract/cards.yaml`, then `check --strict`.
 `--stage-max-usd STAGE=USD` caps a stage's recorded Claude spend across runs,
 on `cards` and `run` alike.
+`uv run python -m beril_wiki.stages.lakehouse --check` checks the committed
+lakehouse catalog in `state/lakehouse/`; the
+[operating guide](docs/agentic-workflow.md#lakehouse-catalog) gives the snapshots
+it is built from and what a refresh costs.
 The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 
 ## Repository layout
@@ -77,7 +81,7 @@ The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 | `tests/` | deterministic checks and recorded-response workflow tests |
 | `theme/` | the Quartz page frame (one component per page region), the stylesheet (one partial per region), and the browser script and index builder for search and Ask |
 | `contract/` | the editorial contract injected into every compile, the concept decisions manifest, the errata a person has recorded against the source reports, the scope of finding and research-direction records (`cards.yaml`), and human decisions on literature labels (`novelty-decisions.yaml`) |
-| `state/` | per-stage caches that make the pipeline incremental |
+| `state/` | per-stage caches that make the pipeline incremental, and the lakehouse catalog under `lakehouse/` |
 | `search/` | ignored local copy of the section vectors for meaning search; the shared copy lives on the `search-data` branch |
 | `.agentic/` | ignored runtime ledger, raw results, receipts, and candidate workspace; preserve when resuming |
 | `docs/` | curator operating guide, HTML walkthrough, and wiki-format reference |

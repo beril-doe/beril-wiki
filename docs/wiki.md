@@ -19,7 +19,7 @@ the schedule runs and what validates each page.
 | `wiki/data/` | Data-collection metadata joined to the projects that mention each collection. |
 | `wiki/opportunities.md` and `wiki/negative-results.md` | Deterministic digests of Open Directions and report caveats or null results. |
 | `wiki/findings/` | At most 6 headline findings per report in `contract/cards.yaml`, each with Key figures, the verbatim Evidence quote, its Caveat and the report's other caveats. The literature label lives in `state/novelty.json` and joins the page at publish. The `outcomes` stage, which runs after `gists`, reads every finding publish would list and writes its result type to `state/outcomes.json`. Claude names one type, GPT reviews it, and the answer is cached per finding on its inputs. The stage reads every finding because the extraction tag misfiles in both directions. |
-| `wiki/directions/` | Research directions for each topic in `contract/cards.yaml`, written from the topic's findings, literature labels and conflicts: the question, Hypothesis, Why it matters, How to test it, What would support or refute it, Data, Builds on and Closest published work. Proposals that would repeat or correct existing work are not directions; they are listed per report for maintainers at publish. The `followups` stage, which runs after `directions`, reads every direction and writes what following it up needs to `state/followups.json`. Claude names one answer, GPT reviews it, and the answer is cached per direction on its inputs. The stage reads every direction because its `approach` and `readiness` fields misfile in both directions. The two stages share one loop in `stages/classify.py`. A failed item keeps its old answer in state for recovery, and publish falls back as described below. |
+| `wiki/directions/` | Research directions for each topic in `contract/cards.yaml`, written from the topic's findings, literature labels and conflicts and the lakehouse catalog in `state/lakehouse/`: the question, Hypothesis, Why it matters, How to test it, What would support or refute it, Data, Builds on and Closest published work. The `databases` and `tables` frontmatter names the catalog tables the test reads; pages written before the catalog carry a `collections` field instead, which nothing reads. Proposals that would repeat or correct existing work are not directions; they are listed per report for maintainers at publish. The `followups` stage, which runs after `directions`, reads every direction with the catalog directory and the tables matched to it, and writes what following it up needs, with the catalog tables an `existing` answer relies on, to `state/followups.json`. Claude names one answer, GPT reviews it, and the answer is cached per direction on its inputs. The stage reads every direction because its `approach` and `readiness` fields misfile in both directions. The two stages share one loop in `stages/classify.py`. A failed item keeps its old answer in state for recovery, and publish shows its question as Not checked yet, as described below. |
 
 Topic membership is saved in `state/curator-topics.json`. The host rejects
 unknown or duplicated concepts, missing memberships, unsafe titles and stale
@@ -46,8 +46,9 @@ one. For finding and research-direction records the check also requires that a
 finding's Evidence quote appear verbatim in its report and its key figures in
 that report. A literature label must be one of the six, carry a retrieval date
 unless it is "Not assessed", and name only PMIDs it retrieved. A research
-direction must build on findings or conflicts that exist, name collections
-that are pages under `wiki/data/`, cite only papers a finding's literature
+direction must build on findings or conflicts that exist, name in its
+`databases` and `tables` frontmatter only names the lakehouse catalog
+(`state/lakehouse/`) holds, cite only papers a finding's literature
 check retrieved, and not have a title that asks to redo existing work.
 Separate model review assesses scientific
 support and lost meaning. Neither establishes that the underlying research is
@@ -109,9 +110,10 @@ from the accepted wiki without editing it:
   in-scope proposals that would repeat, correct or reconcile its work; each
   report summary links to its list. `corpus.py` loads what the joins read
   and decides which results are listed and what type each is, `picks.py` chooses the home and topic results, `links.py` builds the link
-  and shared-result indexes, `pages.py` writes the record pages, `export.py`
-  writes the index pages and `cards.json`, and `text.py` holds the reader
-  words for pipeline terms.
+  and shared-result indexes, `pages.py` writes the record pages, `data.py`
+  builds the lakehouse table lists, generated data pages and coverage note,
+  `export.py` writes the index pages, generated data pages and `cards.json`,
+  and `text.py` holds the reader words for pipeline terms.
 - `publish/cards/` also places and joins results across
   projects:
   - Each result sits under the main topic whose concepts cite its project
@@ -160,20 +162,51 @@ from the accepted wiki without editing it:
   - A listed correction gains `updates_claim`, and its card shows "Revises an
     earlier claim" beside its type.
   - A question page's frontmatter gains `follow`, what following it up needs
-    from `state/followups.json`: `existing`, `outside` or `experiment`. Its
-    `follow_text` gives that in reader words: Analyze existing data, Add
-    outside data or Run an experiment. An experiment question whose first
-    step analyzes existing data gains `first_step` ("Starts with existing
-    data"). A question that may not find or join its data gains
-    `data_unclear` ("Data availability unclear"). Before the `followups`
-    stage has read a question, or when its label failed, publish takes these
-    from the direction's own fields. A lakehouse analysis becomes existing
-    data and any other approach an experiment. "Analysis then experiment"
-    sets `first_step`, and an unknown readiness sets `data_unclear`. The
-    question page's Data line reads "Following up: …" in the same words.
-  - `directions/index.md` carries the grid's columns, least effort first, in
-    `follow_order`, their words in `follow_text` and each column's
-    definition in `follow_notes`.
+    from `state/followups.json`: `existing`, `outside`, `experiment` or
+    `unchecked`. Its `follow_text` gives that in reader words: Analyze
+    existing data, Add outside data, Run an experiment or Not checked yet.
+    `existing` needs a followup answer that names at least one table the
+    committed lakehouse catalog (`state/lakehouse/`) lists. A missing or
+    failed answer, an `existing` answer with no listed table, and an answer
+    without a `tables` field (written by `followups@1`, before the catalog)
+    read `unchecked`. The direction's own approach and readiness place
+    nothing. An experiment question whose first step analyzes a listed table
+    gains `first_step` ("Starts with existing data"). A question whose
+    answer says it may not find or join its data gains `data_unclear`
+    ("Data availability unclear"). The question page's Data line reads
+    "Following up: …" in the same words, and an outside or experiment
+    question adds "Not found in the N tenants the catalog covers", with N
+    from `coverage.json`.
+  - A question page's frontmatter also gains `databases` and `tables`: the
+    direction's tables, then its followup's, each checked with
+    `Catalog.exists()`, in canonical dotted form. The BERIL prompt and the
+    `cards.json` entry carry the same lists. The Data section ends with one
+    line per table (database link, table name, row count or "row count
+    unknown", and "schema only, May 2026" or "schema only, semcat
+    2026-11-04" for tables those sources supply), the catalog date with a
+    hedge that no one has run the analysis, and a link to the About page's
+    coverage section. `publish/cards/data.py` builds these lines. An
+    `unchecked` question makes no data claim: it names no database or table,
+    its Data section keeps only the coverage link, and its direction's
+    `readiness_basis` stays out of the Data line, the frontmatter, the BERIL
+    prompt, the brief and `cards.json`.
+  - Each database the BERIL prompt and `cards.json` name, with or without a
+    table, whose `Catalog.route()` is not a curated page under `wiki/data/`
+    gets a generated `data/<slug>.md`: the tenant, the catalog date and
+    source (hub catalog export, semcat snapshot or BERDL Data Atlas), and
+    each table with its row count, description and first 30 column names.
+    Catalog text on these pages, column names included, is escaped so
+    Markdown and HTML in it render as text. Ingest adds the generated routes
+    to its link targets, so links to them survive.
+  - The About page's `<!-- lakehouse-coverage -->`,
+    `<!-- lakehouse-tenants -->` and `<!-- lakehouse-date -->` markers take
+    the coverage section (covered tenants with source and date, then the
+    uncovered tenants or a sentence that the lakehouse holds others), the
+    covered-tenant count and the catalog date. Publish stops when a marker
+    is missing.
+  - `directions/index.md` carries the grid's columns, least effort first and
+    Not checked yet last, in `follow_order`, their words in `follow_text`
+    and each column's definition in `follow_notes`.
   - Free text a stage wrote, such as a readiness explanation or a question's
     body, passes through one map of reader terms, so "needs compute" reads
     "needs a new analysis" and a label name reads as its chip text.
@@ -381,7 +414,8 @@ comparison" and "Not assessed" show no chip.
 `/directions/` is the open-questions grid: topics down the side, what
 following up a question needs across the top, one dot per question. The
 columns run least effort first: Analyze existing data, Add outside data, Run
-an experiment. A line above them reads "Less effort to follow up → more
+an experiment, then Not checked yet for the questions no check has placed. A
+line above them reads "Less effort to follow up → more
 effort". Each column header shows its definition from `follow_notes` under
 its name. Every dot is an
 ink circle, 10 px across like the Results map's marks. Both maps use one type

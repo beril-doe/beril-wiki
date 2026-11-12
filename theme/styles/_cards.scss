@@ -193,7 +193,7 @@
   }
 }
 // What following up a question needs, least effort first: existing data, outside data,
-// an experiment.
+// an experiment; then a question no check has placed.
 .ready {
   font-size: var(--t-meta);
   font-weight: 600;
@@ -203,6 +203,9 @@
   }
   &.f-experiment {
     color: var(--method);
+  }
+  &.f-unchecked {
+    color: var(--mute-ink);
   }
 }
 .c-more {

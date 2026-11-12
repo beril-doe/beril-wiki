@@ -683,8 +683,11 @@ def test_actual_pipeline_with_recorded_replies(tmp_path, monkeypatch):
     from agentic_recording import reply
     from beril_wiki.agentic.runner import run
     from beril_wiki.agentic.runtime import Runtime
+    from card_fakes import lakehouse
 
     root, checkout = tmp_path / "repo", tmp_path / "observatory"
+    # The directions stage refuses to run without the committed catalog.
+    lakehouse(root)
     (root / "contract").mkdir(parents=True)
     (root / "contract/AGENTS.md").write_text("Cite exact measurements; preserve caveats.")
     for sid, value in (("a", "42"), ("b", "56")):

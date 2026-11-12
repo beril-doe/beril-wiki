@@ -25,6 +25,7 @@ import sys
 
 import yaml
 
+from beril_wiki import lakehouse
 from beril_wiki.paths import ROOT
 from beril_wiki.wording import asks_to_redo
 
@@ -332,8 +333,10 @@ def card_errors(kb: pathlib.Path, sources: dict[str, str]) -> list[str]:
     A finding's quote must be verbatim in its report and its key figures in that
     report; a literature label must be one of the six, dated, and name only papers
     it retrieved. A research direction must rest on findings or conflicts that exist,
-    read data from collections under wiki/data, cite only papers the novelty stage
-    retrieved, and not be a request to redo existing work."""
+    name only databases and tables the lakehouse catalog holds, cite only papers the
+    novelty stage retrieved, and not be a request to redo existing work. A page without
+    `databases` or `tables` passes; its `collections` field, written before the catalog,
+    is not read."""
     from beril_wiki.stages.novelty import LABELS, NOT_ASSESSED
 
     wiki = kb / "wiki"
@@ -379,7 +382,7 @@ def card_errors(kb: pathlib.Path, sources: dict[str, str]) -> list[str]:
         named |= pmids_in(entry.get("difference") or "")
         for pmid in sorted(n for n in named if n not in retrieved):
             errors.append(f"{where}: PMID {pmid} was not retrieved")
-    data = {p.stem for p in (wiki / "data").glob("*.md")}
+    catalog = lakehouse.load(kb)
     papers = {p.get("pmid") for entry in labels.values() for p in entry.get("closest") or []}
     for page in sorted((wiki / "directions").glob("*.md")):
         text = page.read_text(encoding="utf-8", errors="replace")
@@ -389,9 +392,11 @@ def card_errors(kb: pathlib.Path, sources: dict[str, str]) -> list[str]:
         title = re.search(r"^# +(.+)$", text, re.M)
         if title and asks_to_redo(title.group(1)):
             errors.append(f"{rel}: the title asks to redo existing work, not a research question")
-        for c in meta.get("collections") or []:
-            if c not in data:
-                errors.append(f"{rel}: collection {c!r} is not a page under wiki/data")
+        for kind, key in (("database", "databases"), ("table", "tables")):
+            for n in meta.get(key) or []:
+                row = catalog.exists(str(n))
+                if row is None or ("table" in row) != (kind == "table"):
+                    errors.append(f"{rel}: {kind} {n!r} is not in the lakehouse catalog")
         refs = meta.get("builds_on") or []
         if not refs:
             errors.append(f"{rel}: builds on no finding or conflict")
