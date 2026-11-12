@@ -1645,6 +1645,36 @@ def test_sigterm_to_run_kills_the_stage_group(tmp_path):
         runner.wait()
 
 
+def test_retry_failed_jobs_reissues_all_but_content_refusals(tmp_path, monkeypatch, capsys):
+    """A job interrupted by Cancel ends as failed, and reserve refuses a failed key on
+    every resume until something moves it to the retry path."""
+    import json
+    import sys
+
+    from beril_wiki.agentic import __main__ as cli
+    from beril_wiki.agentic.runtime import CONTENT_FLAG
+
+    store = tmp_path / ".agentic"
+    store.mkdir()
+    config: dict[str, object] = {"root": str(tmp_path), "store": str(store), "run": "r"}
+    config |= {"cli": "claude", "max_tokens": 10**6, "max_jobs": 9, "reserve_tokens": 10}
+    (store / "config.json").write_text(json.dumps(config))
+    ledger = Ledger(store / "jobs.sqlite", "r", 10**6, 9, 10)
+    usage = {"input_tokens": 1, "output_tokens": 1}
+    for key, error in (("cut", "interrupted"), ("flagged", f"{CONTENT_FLAG} refusal"), ("ok", "")):
+        ledger.reserve(key, "write/x")
+        ledger.finish(key, "out", usage, error=error)
+    with pytest.raises(WorkflowError, match="job cut: failed"):
+        ledger.reserve("cut", "write/x")
+    monkeypatch.setattr(sys, "argv", ["agentic", "--root", str(tmp_path), "retry", "--failed-jobs"])
+    assert cli.main() == 0
+    assert "retry: cut" in capsys.readouterr().out
+    rows = dict(ledger.db.execute("SELECT key,status FROM jobs").fetchall())
+    assert rows == {"cut": "rejected", "flagged": "failed", "ok": "done"}
+    assert cli.main() == 0
+    assert "no failed jobs" in capsys.readouterr().out
+
+
 def test_run_caps_reach_the_ledger(tmp_path, monkeypatch):
     import sys
 
