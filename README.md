@@ -144,10 +144,14 @@ ingress routes `/wiki` to it without rewriting the path. The container runs a
 small server ([`src/beril_wiki/serve.py`](src/beril_wiki/serve.py)) that resolves
 extensionless page URLs as Pages does.
 [`.github/workflows/image.yml`](.github/workflows/image.yml) runs the same render
-and checks, then pushes `ghcr.io/beril-doe/beril-wiki:latest` (built for
-`beril.kbase.us/wiki`) and `:develop` (built for `beril-dev.kbase.us/wiki`).
-The host is baked into absolute links, so each environment has its own tag.
-Restarting the deployment on SPIN picks up the new image.
+and checks, then pushes one image: every pull request pushes
+`ghcr.io/beril-doe/beril-wiki:develop` (built for `beril-dev.kbase.us/wiki`),
+and a merge to main pushes `:latest` (built for `beril.kbase.us/wiki`). A
+manual run takes the tag as an input. The host is baked into absolute links,
+so each environment has its own tag. Once the image is pushed, the same run
+calls [`spin_deploy.yml`](.github/workflows/spin_deploy.yml) with that tag,
+which restarts the matching SPIN deployment so it pulls the new image. The
+deploy workflow can also be run by hand to restart one environment.
 
 To run the image locally:
 
