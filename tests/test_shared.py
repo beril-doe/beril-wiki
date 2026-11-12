@@ -192,3 +192,32 @@ def test_a_run_for_one_project_leaves_another_projects_failed_group(
         assert agent.asked and next(iter(json.loads(after).values()))["title"] == GOOD["title"]
     else:
         assert agent.asked == [] and after == before
+
+
+@pytest.mark.parametrize("expect", ["gamma", None])
+def test_a_failed_group_that_falls_out_of_the_topic_filter(tmp_path, monkeypatch, expect):
+    """Sol review of edcce0b: the group left the eligibility filters before the rule that
+    keeps other projects' failures ran, so a run for gamma deleted the failed alpha and
+    beta group. A run for gamma keeps it as saved; a maintainer run still prunes it."""
+    corpus(tmp_path)
+
+    def refuse(step, content):
+        raise JobFailed(f"Codex turn failed: {CONTENT_FLAG}")
+
+    install(monkeypatch, Scripted(tmp_path / "store", refuse))
+    assert shared.main(tmp_path) == 0
+    before = (tmp_path / "state/shared.json").read_text()
+    assert all(g["failed"] for g in json.loads(before).values())
+    # alpha and beta now share a single main topic, so the group is not eligible.
+    (tmp_path / "wiki/concepts/fit.md").write_text("# Fit\n\nNo citation.\n")
+    agent = Scripted(tmp_path / "store", lambda step, content: json.dumps(GOOD))
+    if expect:
+        agent.config["expect_source"] = expect
+    install(monkeypatch, agent)
+    assert shared.main(tmp_path) == 0
+    after = (tmp_path / "state/shared.json").read_text()
+    assert agent.asked == []
+    if expect:
+        assert after == before
+    else:
+        assert json.loads(after) == {}
