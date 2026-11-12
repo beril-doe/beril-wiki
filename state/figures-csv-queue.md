@@ -450,9 +450,7 @@ Pages the placement pass flagged as needing a chart for evidence with no figure.
 - Visualize pangenome genome counts by taxon, labeling species-clade counts as top-5-capped rather than exhaustive totals.
 
 ## topics/data-infrastructure-provenance-and-research-practice.md
-- Visualize the provenance audit mapping 20 names containing "nmdc" to 7 maintained resources across six provenance classes, distinguishing names from resource identities.
-- Visualize validated-join coverage separately from concordance: 21/58 metabolites were testable, and 17/21 (81%) testable metabolites were fully concordant. This prevents concordance from obscuring coverage gaps.
-- Compare routine review's "no critical issues" with adversarial review's 5 critical and 6 important issues for the same notebooks, making the quality-assurance contrast explicit.
+- Visualize the provenance audit mapping 20 database names to 7 maintained resources in six provenance classes, with a separate comparison of 16,640 genuine NMDC samples versus 51,711,888 NCBI-mirror biosamples, to clarify why names and scale do not establish provenance.
 
 ## topics/ecotypes-and-environmental-gene-content-differentiation.md
 - Visualize gene-content ecotype silhouette-score distributions (mean 0.215, median 0.174) to show cluster overlap; no candidate directly covers this evidence.
@@ -473,15 +471,15 @@ Pages the placement pass flagged as needing a chart for evidence with no figure.
 - Visualize dark-gene lab–field concordance: 29 of 47 testable clusters (61.7%), with the one-sided binomial p = 0.072 and Fisher's combined p = 0.031 shown separately to preserve the differing statistical evidence.
 
 ## topics/lanthanide-dependent-methylotrophy.md
-- Visualize habitat-specific xoxF carrier rates and odds ratios with adjusted p values, including null mining and volcanic/geothermal results and the 37-genome REE-impacted subgroup; cassette presence is not equivalent to xoxF enrichment.
-- Visualize marker prevalence and reported stress-function counts across the 37 REE-AMD MAGs to support the contrast between few known lanthanide markers and the stress profile.
+- Plot xoxF habitat-enrichment odds ratios with adjusted p-values and sample sizes, retaining null mining and volcanic/geothermal results and the non-significant REE-impacted result, to distinguish broad habitat associations from REE-specific enrichment.
 
 ## topics/metabolic-models-and-pathway-level-evidence.md
 - Visualize baseline FBA performance across 574 organism–carbon-source combinations: 42.5% overall accuracy and 330 false positives, highlighting the validation gap.
 - Compare assignment success by EC-number availability: 8/50 (16%) without EC numbers versus 88/151 (58.3%) with EC numbers, showing the reaction-to-gene mapping barrier.
 
 ## topics/metabolic-traits-auxotrophy-and-community-dependence.md
-- Visualize the per-genome distribution of the 8 ENIGMA-isolate-callable catabolic capacities among genomes carrying at least one: 675 carried exactly 1, 18 carried at least 3, and the maximum was 4. This directly supports the specialist-capacity claim; the candidate captions do not identify this dist
+- Visualize amino-acid pathway–metabolite associations underlying the 11-of-13 negative-direction result, including uncertainty and untestable pathways, to distinguish directional consistency from statistical support.
+- Plot latent-capability fractions across all 16 threshold combinations to show the reported sensitivity from 4.7% to 21.1%.
 
 ## topics/pangenome-structure-and-genome-evolution.md
 - Visualize COG functional enrichment across core, accessory and novel/singleton genes by species to show the two-speed genome pattern and its consistency.
@@ -494,14 +492,13 @@ Pages the placement pass flagged as needing a chart for evidence with no figure.
 - Visualize prophage-marker density versus AMR repertoire breadth alongside local proximity odds ratios at 3 and 5 genes, distinguishing species-scale association from local genomic proximity.
 
 ## topics/sampling-coverage-and-statistical-confounding.md
-- Visualize eukaryotic detection across GOTTCHA2, Kraken2 and Centrifuge to show how reference-database coverage changes the measurable space.
-- Visualize biome–study nesting alongside random versus held-out-study validation performance to expose study confounding; retain negative R² values.
-- Visualize geographic sampling coverage alongside GDI and metal-resistance hotspot estimates, retaining sample sizes and marking sampling-effort correction as untested.
+- Visualize environment versus study-only predictive performance under random and held-out-study validation, alongside biome–study nesting, to expose study confounding.
+- Compare eukaryotic detection across GOTTCHA2, Kraken2 and Centrifuge, distinguishing run-level detection from domain-level signal and annotating database scope.
+- Plot held-out-species Jaccard overlaps for E1 (0.230) and E3 (0.064) against the 0.3 leakage bound to illustrate the analysis-design caveat.
 
 ## topics/subsurface-and-soil-community-ecology.md
-- Visualize the global soil analysis's low-clay versus high-clay cross-validation R² values (−0.268 and −0.292) and the 95% CI for their difference (−0.423, 0.161), showing poor out-of-sample prediction and no detected clay-group difference.
+- Visualize the low-clay versus high-clay cross-validation difference across 5,441 soil samples: 0.024 (95% CI: −0.423, 0.161), with a zero reference line to show the uncertainty underlying the null predictive result.
 
 ## topics/translational-microbiome-and-phage-therapeutics.md
-- Visualize carriage associations alongside within-carrier pathway results to show where species-level and functional evidence diverge.
-- Visualize iron/heme pathway enrichment and annotation coverage, separating the unmatched genomic comparator from the pathway evidence.
-- Compare within-ecotype candidate counts and filtering criteria across the digest and revised meta-analysis to expose the unresolved disagreement.
+- Visualize within-carrier pathway results by Tier-A species, including 33 passing pathways for H. hathewayi and 20 for E. coli, alongside iron/heme enrichment (OR 8.1; FDR 7e-6), to distinguish functional shifts from target-ranking evidence.
+- Visualize the reported bile-acid substrate–product correlations across 468 paired CSM* HMP2 samples to show the evidence underlying potential community costs of target removal, retaining the single-cohort and non-causal caveats.

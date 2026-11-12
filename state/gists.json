@@ -551,6 +551,28 @@
     "repeats": "",
     "title": ""
   },
+  "berdl_data_atlas--113f874a": {
+    "case": "measured absence",
+    "gist": "Several pairs of lakehouse data collections share 9 to 12 identifiers, such as AlphaFold protein-structure IDs and genome taxonomy, yet no project had recorded use of these links at audit time, leaving them open for new analyses.",
+    "input": "1182351a2a1883d6572c0355aee95b4b72e62c6a43ff2910e299e85fcf314904",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
+  "berdl_data_atlas--5f0ea1fc": {
+    "failed": true
+  },
+  "berdl_data_atlas--82c709b1": {
+    "failed": true
+  },
+  "berdl_data_atlas--a65ca624": {
+    "case": "",
+    "gist": "In an audit of 66 BERIL projects, 77% already drew on data from more than one lakehouse tenant (data-provider collection). Most of that cross-collection use pairs the kbase tenant with kescience, suggesting that combining programs is already routine in practice.",
+    "input": "7255154bf828ed180c0acf3542c820548e65eb74e5f79948e8374a2df3b6923c",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
+  },
   "caulobacter_fur_lipida_loss--088e2303": {
     "case": "",
     "gist": "In Caulobacter, 53 of the Fur-regulated genes that fall sharply in a \u0394fur strain showed little change when sspB was also absent. Most belong to a low-oxygen respiratory operon (cbb3 and cyd oxidases, fix genes), suggesting sspB loss buffers their drop.",
@@ -1961,10 +1983,10 @@
   },
   "module_conservation--b36fddee": {
     "case": "",
-    "failed": true,
-    "gist": "Grouping gene-knockout fitness data into functional modules showed that most modules are built almost entirely from core genes shared across a species' genomes, while only a small fraction are mostly accessory genes. About 59% of modules were core.",
-    "input": "e41f2f5f58092a7c6693c1d059f51f11ebc0319cf59240657899ba19d467af5e",
+    "gist": "Grouping genes by shared fitness patterns into modules, most modules turned out to be made almost entirely of core genes, meaning genes shared across the organisms' genomes. Only a small fraction were mostly accessory genes, which are not shared across them.",
+    "input": "56242636955b18e46d1a15122c90d8433001d3c4215b3ffc61e44ae6a857aee3",
     "model": "claude-sonnet-5-5",
+    "repeats": "",
     "title": ""
   },
   "module_conservation--ba3f89b5": {
