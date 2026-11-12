@@ -1537,6 +1537,63 @@ def test_expect_source_cli_exits_on_refusal_before_run(tmp_path, monkeypatch, ca
     assert "c__REPORT.md" in capsys.readouterr().out
 
 
+STAGE_DRIVER = """
+import sys
+from pathlib import Path
+
+from beril_wiki.agentic import __main__ as cli
+from beril_wiki.agentic import runner
+
+d = Path(sys.argv[1])
+inert = ["/bin/sh", "-c", f"echo $$ > {d}/stage.pid; exec sleep 300"]
+
+
+def run(root, checkout, config, staged):
+    runner._run_stage(d, {"PATH": "/usr/bin:/bin"}, d / "stage.log", inert, "inert", 600)
+
+
+cli.run = run
+sys.argv = ["agentic", "--root", str(d), "run", "--max-tokens", "10", "--max-jobs", "1"]
+sys.argv += ["--cli", "claude", "--model", "m"]
+sys.exit(cli.main())
+"""
+
+
+def test_sigterm_to_run_kills_the_stage_group(tmp_path):
+    """Cancel sends SIGTERM to the runner; a stage runs in its own session, so only
+    run_stage's cleanup can stop it."""
+    import contextlib
+    import os
+    import signal
+    import subprocess
+    import sys
+    import time
+
+    driver = tmp_path / "driver.py"
+    driver.write_text(STAGE_DRIVER)
+    runner = subprocess.Popen(
+        [sys.executable, str(driver), str(tmp_path)], start_new_session=True, cwd=tmp_path
+    )
+    pidfile = tmp_path / "stage.pid"
+    stage = None
+    try:
+        deadline = time.monotonic() + 30
+        while not (pidfile.exists() and pidfile.read_text().strip()):
+            assert runner.poll() is None and time.monotonic() < deadline, "stage never started"
+            time.sleep(0.05)
+        stage = int(pidfile.read_text())
+        os.killpg(runner.pid, signal.SIGTERM)
+        assert runner.wait(timeout=20) == 143
+        with pytest.raises(ProcessLookupError):
+            os.kill(stage, 0)
+    finally:
+        for pid in (runner.pid, stage):
+            if pid is not None:
+                with contextlib.suppress(ProcessLookupError, PermissionError):
+                    os.killpg(pid, signal.SIGKILL)
+        runner.wait()
+
+
 def test_run_caps_reach_the_ledger(tmp_path, monkeypatch):
     import sys
 
