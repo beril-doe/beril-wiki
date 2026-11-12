@@ -46,9 +46,19 @@ def repo(tmp_path, monkeypatch):
     return tmp_path
 
 
-def commit(repo):
+def rev(repo, ref):
+    done = subprocess.run(
+        ["git", "-C", str(repo), "rev-parse", ref], check=True, capture_output=True, text=True
+    )
+    return done.stdout.strip()
+
+
+def commit(repo, base="main"):
+    """Commit as the Workbench publisher does, naming its compile base in a trailer;
+    `base=None` commits without one."""
     sh(repo, "add", "-A")
-    sh(repo, "commit", "-qm", "work")
+    trailer = f"\n\nBase {rev(repo, base)}" if base else ""
+    sh(repo, "commit", "-qm", f"work{trailer}")
 
 
 def add_new_project(repo):
@@ -137,6 +147,42 @@ def test_branch_behind_base_fails(repo, capsys):
     sh(repo, "switch", "-q", "wiki/new")
     code, out = run(capsys)
     assert code == 1 and "not an ancestor" in out
+
+
+def test_merging_main_without_recompiling_fails(repo, capsys):
+    add_new_project(repo)
+    commit(repo)
+    sh(repo, "switch", "-q", "main")
+    write(repo, "README.md", "later")
+    commit(repo, base=None)
+    sh(repo, "switch", "-q", "wiki/new")
+    tip = rev(repo, "HEAD")
+    sh(repo, "merge", "-q", "--no-edit", "main")
+    code, out = run(capsys)
+    assert code == 1 and "compiled on base" in out and "not an ancestor" not in out
+    # The publisher's refresh is a merge too, of the old tip and the new base, as
+    # commit-tree builds it, and its trailer names the new base.
+    write(repo, "wiki/summaries/new__REPORT.md", "recompiled")
+    sh(repo, "add", "-A")
+    tree = subprocess.run(
+        ["git", "-C", str(repo), "write-tree"], check=True, capture_output=True, text=True
+    ).stdout.strip()
+    message = f"refresh\n\nBase {rev(repo, 'main')}"
+    new = subprocess.run(
+        ["git", "-C", str(repo), "commit-tree", tree, "-p", tip, "-p", "main", "-m", message],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    sh(repo, "reset", "-q", "--hard", new)
+    assert run(capsys) == (0, "")
+
+
+def test_branch_without_receipt_fails(repo, capsys):
+    add_new_project(repo)
+    commit(repo, base=None)
+    code, out = run(capsys)
+    assert code == 1 and "publisher receipt missing" in out
 
 
 def test_non_publisher_branch_passes(repo, capsys):

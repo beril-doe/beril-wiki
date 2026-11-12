@@ -7,6 +7,9 @@ The branch comes from `--branch` or `GITHUB_HEAD_REF`. A branch that does not st
 the project id is the rest of the name, and the check fails when:
 
 - `--base` is not an ancestor of `--head`;
+- the newest commit in `--base..--head` with a `Base <sha>` trailer (the receipt the
+  Workbench publisher writes on its commit) names another commit than `--base`, or no
+  commit carries one, so a branch updated by merging main without recompiling fails;
 - `corpus/` changes outside `corpus/projects/ID/` and the `ID` entry of `manifest.json`;
 - `wiki/sources`, `wiki/summaries` or `wiki/figures` change outside `ID`;
 - `state/{headlines,novelty,gists,outcomes}.json` change an entry that belongs to no
@@ -32,6 +35,7 @@ from collections.abc import Callable
 PREFIX = "wiki/"
 ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")
 FINDING = re.compile(r"^(.+)--[0-9a-f]+$")
+TRAILER = re.compile(r"^Base ([0-9a-f]{7,64})$", re.M)
 
 
 def git(*args: str) -> str:
@@ -92,10 +96,33 @@ def manifest_stale(base: object, head: object, ids: set[str]) -> list[str]:
     return bad
 
 
+def commit_of(ref: str) -> str | None:
+    found = subprocess.run(
+        ["git", "rev-parse", "--verify", "-q", f"{ref}^{{commit}}"], capture_output=True, text=True
+    )
+    return found.stdout.strip() if found.returncode == 0 else None
+
+
+def compile_base(base: str, head: str) -> str | None:
+    """The `Base` trailer of the newest commit after `base` that carries one."""
+    # Merges count: the publisher's own refresh commit has the old branch tip as a
+    # parent, while a merge GitHub makes to update the branch carries no trailer.
+    log = git("log", "--topo-order", "--format=%B%x00", f"{base}..{head}")
+    for body in log.split("\0"):
+        if found := TRAILER.findall(body):
+            return found[-1]
+    return None
+
+
 def violations(base: str, head: str, ids: set[str]) -> list[str]:
     out: list[str] = []
     if subprocess.run(["git", "merge-base", "--is-ancestor", base, head]).returncode != 0:
         out.append(f"{base} is not an ancestor of {head}; rebase the branch onto it")
+    recorded = compile_base(base, head)
+    if recorded is None:
+        out.append(f"publisher receipt missing: no commit after {base} has a `Base <sha>` trailer")
+    elif (compiled := commit_of(recorded)) is None or compiled != commit_of(base):
+        out.append(f"compiled on base {recorded}, not {base}; refresh the run onto it")
     changed = git("diff", "--name-only", "--no-renames", "-z", base, head).split("\0")
     for path in sorted(p for p in changed if p):
         if path == "corpus/manifest.json":

@@ -120,7 +120,10 @@ published source digest with its own.
 `scripts/check_update.py --base REF --head REF [--branch NAME]` is the model-free
 scope check for a publisher branch. The branch comes from `--branch` or
 `GITHUB_HEAD_REF`; one that does not start with `wiki/` passes. On `wiki/ID` it
-fails when `REF` is not an ancestor of the head, when `corpus/` changes outside
+fails when `REF` is not an ancestor of the head; when the newest commit after
+`REF` with a `Base <sha>` trailer, which the Workbench publisher writes on its
+commit, names another commit than `REF`, or no commit has one, so merging main
+into the branch without recompiling fails; when `corpus/` changes outside
 `projects/ID/` and the `ID` entry of `manifest.json`, when `wiki/sources`,
 `wiki/summaries` or `wiki/figures` change outside `ID`, or when an entry of
 `state/{headlines,novelty,gists,outcomes}.json` changes for no project of `ID`.
