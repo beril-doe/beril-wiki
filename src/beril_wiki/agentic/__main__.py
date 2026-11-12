@@ -19,6 +19,7 @@ from beril_wiki.agentic.curator import CARD_STAGES, EDITORIAL
 from beril_wiki.agentic.prose import owning_stage
 from beril_wiki.agentic.runner import due_editorial, locked, recover, run, run_stage
 from beril_wiki.agentic.runtime import (
+    CONTENT_FLAG,
     MODEL_ROLES,
     EvidenceTools,
     Runtime,
@@ -387,6 +388,11 @@ def main() -> int:
         "--page", action="append", default=[], help="page key from failures.json; repeatable"
     )
     retry.add_argument("--all-failed", action="store_true", help="every page in failures.json")
+    retry.add_argument(
+        "--failed-jobs",
+        action="store_true",
+        help="every failed ledger job not refused for its content; prints their keys",
+    )
     cards = commands.add_parser(
         "cards",
         help="run only the finding, label and direction stages in place, then check --strict",
@@ -578,8 +584,26 @@ def main() -> int:
                     if unknown := [p for p in pages if p not in failures]:
                         raise WorkflowError(f"not in failures.json: {unknown}")
                     keys = args.job + [k for p in pages for k in failures[p]["jobs"]]
+                    if args.failed_jobs:
+                        # A content refusal would be refused again; reserve fails only its item.
+                        failed = [
+                            key
+                            for (key,) in agent.ledger.db.execute(
+                                "SELECT key FROM jobs WHERE status='failed' "
+                                "AND instr(coalesce(error,''), ?)=0 ORDER BY rowid",
+                                (CONTENT_FLAG,),
+                            )
+                        ]
+                        for key in failed:
+                            print(f"retry: {key}")
+                        if not failed and not keys:
+                            print("retry: no failed jobs")
+                            return 0
+                        keys += failed
                     if not keys:
-                        raise WorkflowError("retry needs --job, --page or --all-failed")
+                        raise WorkflowError(
+                            "retry needs --job, --page, --all-failed or --failed-jobs"
+                        )
                     with agent.ledger.db:
                         changed = sum(
                             agent.ledger.db.execute(

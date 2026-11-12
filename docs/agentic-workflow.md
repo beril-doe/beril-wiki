@@ -1016,7 +1016,14 @@ uv run python -m beril_wiki.agentic status
 uv run python -m beril_wiki.agentic retry --job FULL_JOB_ID
 uv run python -m beril_wiki.agentic retry --page conflicts/conflict--stem--1a2b3c4d
 uv run python -m beril_wiki.agentic retry --all-failed
+uv run python -m beril_wiki.agentic retry --failed-jobs
 ```
+
+A job interrupted by a cancel or a killed stage ends as `failed`, and the next
+run stops at it ("inspect saved job before retrying"). `retry --failed-jobs`
+marks every failed job rejected, as `retry --job` does, and prints each key. It
+skips jobs refused for their content, which a retry would only repeat, and exits
+0 when no job failed.
 
 For a capped acceptance pass, invoke a stage directly with `--limit N`
 (conflicts and topics): it writes at most N new pages and retires none, so a
