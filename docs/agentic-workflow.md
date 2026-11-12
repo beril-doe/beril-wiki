@@ -67,7 +67,9 @@ the checkout and refuses when:
 
 A README-only or figure-only update is admitted with an empty
 `changed_sources`. The result lists `admitted`, `reasons`, `changed_sources`,
-`pending_editorial` (the stages the import makes due), `base_pending`,
+`pending_editorial` (the stages the import makes due, judged after the
+deterministic extras stage rewrites author and collection pages on the import
+copy, as a run's curator does first), `base_pending`,
 `labels_due`, `unknown_usage` and `invalidation`. `--json` prints it as one
 JSON object; without it, one line per field. `plan` exits 1 when the run is
 not admitted. `run --expect-source ID` makes the same check before the run
