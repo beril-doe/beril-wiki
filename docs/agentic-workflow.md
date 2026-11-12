@@ -109,6 +109,10 @@ input a run reads, laid out like an observatory checkout: `projects/<id>/`
 tests run it. `uv run python -m beril_wiki.corpus import-v1 --checkout PATH`
 rebuilds `corpus/` from an observatory checkout. Pass `--checkout` (or set
 `BERIL_CHECKOUT`) only to compile from another tree.
+
+`beril_wiki.publish.ingest` copies `corpus/manifest.json` byte for byte to the
+site root as `corpus-manifest.json`, so a client can compare a project's
+published source digest with its own.
 Individual jobs have `--max-turns` (default 12, applying to tool-using jobs
 other than page sessions), `--timeout` (600 seconds), and `--max-output-tokens`
 (32,768). A page session is bounded by its brief instead: 20 turns plus one per

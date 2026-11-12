@@ -653,6 +653,12 @@ def main() -> None:
     if assets.is_dir():
         shutil.copytree(assets, dst / "assets", dirs_exist_ok=True)
 
+    # Byte-identical copy: the Workbench compares source digests against it to
+    # tell a researcher whether the live page is current.
+    manifest = kb / "corpus" / "manifest.json"
+    if manifest.is_file():
+        shutil.copyfile(manifest, dst / "corpus-manifest.json")
+
     print(f"wrote {n} pages -> {dst}")
 
 
