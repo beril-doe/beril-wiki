@@ -392,6 +392,12 @@ def fig_src(kb: pathlib.Path, project: str, rel: str) -> pathlib.Path:
     return kb / "wiki" / "figures" / figure_destination(project, rel)
 
 
+def published_name(rel: str) -> str:
+    """A figure's path under the site's figures/<project>/."""
+    # Run-output embeds keep their path: two runs may both write figures/a.png.
+    return pathlib.Path(rel).name if rel.startswith("figures/") else rel
+
+
 def splice_figures(text: str, entry: dict, kb: pathlib.Path, dst_root: pathlib.Path) -> str:
     if hashlib.sha256(text.encode()).hexdigest()[:16] != entry.get("page_hash"):
         return text  # page changed since placement; stages.figures will re-run
@@ -402,7 +408,7 @@ def splice_figures(text: str, entry: dict, kb: pathlib.Path, dst_root: pathlib.P
         src = fig_src(kb, pl["project"], pl["file"])
         if not src.exists():
             continue
-        name = pathlib.Path(pl["file"]).name
+        name = published_name(pl["file"])
         copy_figure(src, dst_root / "figures" / pl["project"] / name)
         block = (
             f"![{pl['caption']}](../figures/{pl['project']}/{name})\n"
@@ -422,8 +428,7 @@ def rewrite_source_figures(
         src = fig_src(kb, project, rel)
         if not src.exists():
             return alt  # drop the broken embed, keep the alt text
-        # Run-output embeds keep their path: two runs may both write figures/a.png.
-        name = pathlib.Path(rel).name if rel.startswith("figures/") else rel
+        name = published_name(rel)
         copy_figure(src, dst_root / "figures" / project / name)
         return f"![{alt}](../figures/{project}/{name})"
 
