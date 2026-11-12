@@ -200,7 +200,10 @@ has no such cap. A resume of the same inputs keeps the ledger run, so its
 earlier spend still counts against the caps. `run --budget-run NAME` names the
 ledger run that caps, totals and progress counts use, so runs on different
 inputs, such as a publication refreshed onto a moved main, share one cap; job
-cache keys do not change. Account billing settings remain
+cache keys do not change. Under `--budget-run`, `--max-jobs` and `--max-tokens`
+count only the jobs this invocation reserves, so a resume gets a fresh job and
+token allowance while the USD and Codex caps keep counting every invocation's
+spend. Account billing settings remain
 provider-owned; the runner does not purchase credits.
 
 ### Per-step models
