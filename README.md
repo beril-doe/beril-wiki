@@ -77,7 +77,7 @@ The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 | `tests/` | deterministic checks and recorded-response workflow tests |
 | `theme/` | the Quartz page frame (one component per page region), the stylesheet (one partial per region), and the browser script and index builder for search and Ask |
 | `contract/` | the editorial contract injected into every compile, the concept decisions manifest, the errata a person has recorded against the source reports, the scope of finding and research-direction records (`cards.yaml`), and human decisions on literature labels (`novelty-decisions.yaml`) |
-| `corpus/` | every source a run reads, laid out like an observatory checkout, with `manifest.json` recording each file's hash and origin (`beril_wiki.corpus`) |
+| `corpus/` | every source a run reads, laid out like an observatory checkout, with `manifest.json` recording each file's hash and origin (`beril_wiki.corpus`); the site serves the manifest as `corpus-manifest.json` |
 | `state/` | per-stage caches that make the pipeline incremental |
 | `search/` | ignored local copy of the section vectors for meaning search; the shared copy lives on the `search-data` branch |
 | `.agentic/` | ignored runtime ledger, raw results, receipts, and candidate workspace; preserve when resuming |
@@ -96,7 +96,9 @@ uv run ty check              # type check
 The same four commands run in CI on every pull request and on `main`
 ([`.github/workflows/tests.yml`](.github/workflows/tests.yml)); the publish
 workflow separately validates the committed wiki, renders it, and type-checks
-the theme. Use `uv run python -m beril_wiki.agentic` for curator operations.
+the theme. A `scope` job also runs `scripts/check_update.py`, which keeps a
+`wiki/<id>` publisher branch inside its own project
+([details](docs/agentic-workflow.md)). Use `uv run python -m beril_wiki.agentic` for curator operations.
 Direct stage invocations are maintenance tools and do not establish the
 curator's shared budget or isolated promotion context. The theme type-checks
 with `npm --prefix theme run typecheck` once `scripts/build_quartz.sh` has installed it.
