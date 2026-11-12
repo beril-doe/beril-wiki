@@ -585,6 +585,9 @@ def main() -> int:
                         raise WorkflowError(f"not in failures.json: {unknown}")
                     keys = args.job + [k for p in pages for k in failures[p]["jobs"]]
                     if args.failed_jobs:
+                        # A hard kill leaves its jobs pending; charge them as the next run
+                        # would, so they are retried now instead of failing one Resume.
+                        agent.ledger.reconcile_stale(agent.store / "transcripts")
                         # A content refusal would be refused again; reserve fails only its item.
                         failed = [
                             key
