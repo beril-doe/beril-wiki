@@ -212,16 +212,7 @@ ROOT = Path(__file__).resolve().parents[1]
     ("stage", "state"),
     [
         (outcomes, "outcomes"),
-        pytest.param(
-            followups,
-            "followups",
-            # Strict, so the paid rerun that rekeys them makes this fail until it is removed.
-            marks=pytest.mark.xfail(
-                strict=True,
-                raises=AssertionError,
-                reason="the followups pack names catalog tables; saved answers predate it",
-            ),
-        ),
+        (followups, "followups"),
     ],
 )
 def test_the_committed_policy_keeps_the_accepted_labels(stage, state):

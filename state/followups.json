@@ -1,586 +1,908 @@
 {
-  "are-accessory-essential-genes-mobile-element-addictions-or-s--e81e72": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "5e5690db7249b6dd1ab25c6c643748e0f6571fb9f433ab57bdefd730c8277417",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Curing the element in host strains and measuring growth decides it; BERDL neighbourhood analysis only narrows which genes to test."
-  },
-  "are-conserved-genes-that-help-when-deleted-in-rich-medium-ne--9f8d23": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "a196294ba099cdb5bf2ec9f1876ca03bb88301f5f3046210a2a170792cbd76a9",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Deciding it needs new gene fitness measurements in sand, soil and competition cultures, which only new library experiments can provide."
-  },
-  "are-exou-carrying-cystic-fibrosis-pseudomonas-recent-arrival--4e6d63": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "9fa59900be0ed985c39c6920b48d781992cf6e32d91fa92791ff30645d171c2e",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Whether ExoU and ExoS carriers sit in environmental clades and diverge in accessory genes is decided by a core-genome tree and accessory-gene comparison on existing pangenome genomes."
-  },
-  "are-gapfilled-reactions-without-ec-numbers-carried-by-promis--e27895": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "35814bbc9d4b7bc915b7dad7b617189d28ac4f8ac305db0328403f0db29f5668",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Catalysis by a candidate enzyme family is only shown by in vitro activity, so the hypothesis needs a lab assay after a lakehouse analysis narrows the candidates."
-  },
-  "are-genes-essential-in-some-bacteria-but-not-others-rescued--feedd5": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "b78a9024a2933873a2b102262f5ec19a854ed6dacea2f0475193d8985b6ec0dc",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Deciding needs a paralog deletion experiment in a dispensable organism, with candidates first chosen from existing Fitness Browser and pangenome comparisons."
-  },
-  "are-human-associated-prophage-tail-and-anti-defense-modules--3b110e": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "79c937dc7a051c993c77d6870ce9cf02084852227e1dcc50aa41588831ec43fe",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Deciding it needs prophage calls on genomes already in the KBase Data Lakehouse to see whether the human-associated gene pattern sits in intact, complete prophage regions."
-  },
-  "are-latent-biosynthetic-and-catabolic-pathways-the-ones-lost--756b4d": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "abdc30f573d32570be8033a8c24f00c1517fc82aab45748393071af86412a950",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Decided by whether latent pathways are absent from more same-species genomes than active ones, most for carbon versus amino acid pathways, plus whether latent-rich species vary more."
-  },
-  "are-metal-specific-genes-kept-patchily-in-the-accessory-geno--d7baba": {
+  "are-conserved-core-proteins-with-shallow-sequence-alignments--f3fe1a": {
     "data_unclear": true,
     "first_step_existing": false,
-    "input": "5d8ec681de65884da6d7aa32d25160fbd1279790e902f8db38526162f6a09901",
+    "input": "f2a4facf1774dadf19dac679797459b16415012f66f4da0749c3f7fdd2143228",
     "model": "claude-haiku-5-5",
     "need": "existing",
-    "reason": "Decided by whether metal-specific gene presence across same-species genomes tracks contaminated isolation habitats, using KBase Data Lakehouse gene, pangenome and habitat records."
+    "reason": "Whether shallow-alignment core clusters sit within one lineage is decided by computing clade and phylum reach across pangenome clusters in the KBase Data Lakehouse.",
+    "tables": [
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1",
+      "kescience.alphafold.alphafold_msa_depths"
+    ]
   },
-  "are-open-pangenomes-a-general-permissive-state-for-mobile-dn--97ee38": {
+  "are-enigma-model-organisms-rare-in-the-field-because-they-bl--59bca2": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "dd1a1467c0681f5d79f8fc1e1e6b8652c65d14b170c346c1b6edb83188a93d4c",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Carbon-driven rise needs a timed microcosm test; existing KBase Data Lakehouse ENIGMA community tables may first show whether carbon-amended samples and these genera already exist.",
+    "tables": [
+      "enigma.coral.sdt_community",
+      "enigma.coral.ddt_brick0000476",
+      "enigma.coral.sdt_sample",
+      "enigma.coral.sdt_location"
+    ]
+  },
+  "are-essential-genes-outside-the-core-genome-stand-ins-for-mi--f60078": {
     "data_unclear": true,
     "first_step_existing": false,
-    "input": "3a71c5894f95d935be203380923fdd7f8ab1e825990b1ed3df51b64f30805d6b",
+    "input": "1c775edc4c3121ae7336e411719f52d876ee64aff5cc40152d69c8872d224179",
     "model": "claude-haiku-5-5",
     "need": "existing",
-    "reason": "Existing pangenome tables in the Pangenome Collection can decide it, once a non-mobile accessory category and the species tree are joined."
+    "reason": "Whether essential genes have same-function core paralogs in genomes lacking them decides it; needs gene-to-cluster and Fitness Browser-to-pangenome links in the KBase Data Lakehouse.",
+    "tables": [
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.seedannotation",
+      "kescience.fitnessbrowser.seedroles",
+      "kescience.fitnessbrowser.seedannotationtoroles",
+      "kescience.fitnessbrowser.genefitness",
+      "kescience.fitnessbrowser.organism",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_species_clade"
+    ]
   },
-  "are-persistently-unannotated-genes-young-lineage-specific-in--77391c": {
+  "are-fungal-lignin-enrichment-communities-variable-because-of--be21b0": {
     "data_unclear": false,
     "first_step_existing": false,
-    "input": "1b8d0d2e7fce8746dad55482bf443a270e4bb43387a4d4cbe16d5fbcadf0a700",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Composition, presence and remote-relative searches over KBase Data Lakehouse pangenome and UniRef data decide it, for linked dark genes only; 17,479 unlinked genes stay unassessed."
-  },
-  "are-singleton-genes-neutral-in-the-lab-because-they-act-only--5ed8c4": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "8db900627019793ca9375123e249e31a39c8c9268868f9eef8abf666e2618c05",
+    "input": "35c803bded3e4b1c91b783e6f6737ab792aa5b8048a80bba7800d162431ce6bd",
     "model": "claude-haiku-5-5",
     "need": "experiment",
-    "reason": "Only transposon fitness measurements under phage challenge can decide it; BERDL predictions of phage-related singletons come first to choose which genes to test."
+    "reason": "Only new replicated lignin enrichments with deep fungal sequencing and a mock community can decide whether early colonisers drive the divergence.",
+    "tables": []
   },
-  "can-fitness-module-transfer-correctly-predict-functions-of-e--574127": {
-    "data_unclear": false,
+  "are-gapfilled-reactions-without-enzyme-numbers-done-by-known--b1aa37": {
+    "data_unclear": true,
     "first_step_existing": true,
-    "input": "728bcb641522e254e739cd9c4fa45dc4c704f61c63ebb6dcfc1b0c3696c079d7",
+    "input": "d7ed6749932494b65ca16e9e02b591e471b43fc233c6e5303f24f3145b282532",
     "model": "claude-haiku-5-5",
     "need": "experiment",
-    "reason": "An existing-data benchmark of hidden essential-gene functions comes first, then depletion experiments on top predictions are needed to decide the hypothesis."
+    "reason": "Fitness-linked candidate genes must first be narrowed with lakehouse reaction and annotation data, then purified-enzyme assays on predicted substrates decide the hypothesis.",
+    "tables": [
+      "kescience.fitnessbrowser.genefitness",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.besthitkegg",
+      "kescience.fitnessbrowser.seedannotation",
+      "kescience.fitnessbrowser.keggmember",
+      "kescience.fitnessbrowser.kgroupec",
+      "kbase.msd_biochemistry.reaction",
+      "kbase.msd_biochemistry.molecule"
+    ]
   },
-  "do-alkaline-soils-hold-lineages-that-have-no-sequenced-genom--1c61f5": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "79d47a99af81ce4ba9b3a87b0addbc337fb36b7228cac8a85368293fa5e90749",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Deciding it needs soil taxa from NMDC samples matched to pangenome genomes, then unmatched taxa compared across pH ranges at equal sample counts per region."
-  },
-  "do-catalase-and-urease-status-predict-measured-metal-toleran--b07873": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "4a97b97b1c55a774f97e73672ff0fbeccf0f9c63b30b6d1aa102b2dbceda6bb0",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Growth tests of copper, nickel, zinc and cadmium on paired strains decide it; the Fitness Browser checks only overlapping organisms, so new strain measurements are needed."
-  },
-  "do-conserved-proteins-with-almost-no-relatives-elsewhere-mat--fcc2aa": {
+  "are-lab-latent-metabolic-pathways-the-ones-that-vary-most-wi--8a3476": {
     "data_unclear": true,
     "first_step_existing": false,
-    "input": "ac6917b992aa0ca8a4ec18de689bb2b866fc6a847784ad146c392b2a1820649d",
+    "input": "7b77e8c5c261bc229f225a03fc20b40fc76a2098889729e07f8433ebe552a579",
     "model": "claude-haiku-5-5",
     "need": "existing",
-    "reason": "Deciding it needs core gene clusters joined to Fitness Browser phenotypes, plus gene lengths, which the note does not confirm are available."
+    "reason": "Per-genome pathway calls across conspecific genomes and per-gene fitness values can decide whether latent pathways vary more within species.",
+    "tables": [
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.genome",
+      "kescience.fitnessbrowser.organism",
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.genefitness"
+    ]
   },
-  "do-cystic-fibrosis-commensals-suppress-pseudomonas-by-deplet--c1b9a4": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "b633daddd03ea8ea7b1bd6d8031ab74674e7b563aa56899468b510874f7ec646",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Deciding needs new co-culture and spent-medium experiments, since only lab measurements separate cell-dependent suppression from secreted inhibitors."
-  },
-  "do-deep-clay-bacillota-b-reduce-iron-through-flavin-based-el--2a1c5b": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "1f7fb3412f64b0f437b91ef4cb1aa72350e6ea667b6e487adafa3942e9fb5ddd",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Whether flavin pathways drive iron reduction is decided by a cultured clay isolate's Fe(III) reduction with and without pathway knockout; genome searches can only narrow candidates."
-  },
-  "do-efflux-genes-matter-under-antibiotics-only-when-the-drug--353450": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "73e3f92afc3f11568b84c8b11d5a6ef72865c07a1d9e833b873b980d196e30e1",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Knockout fitness of resistance genes across existing Fitness Browser experiments decides it, needing drug-spectrum labels from annotations."
-  },
-  "do-genes-bridging-regulation-and-metabolism-cross-lineages-m--6bd02a": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "f6509636bebd23943ebd7c17449d46f0ede8757cc0203bf861795d8c07780fee",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Existing BERDL pangenome, domain and exchange data can decide whether architecture count explains the bridging excess; the census needs more compute."
-  },
-  "do-glycosyltransferase-genes-near-secretion-loci-travel-on-i--168a8d": {
+  "are-large-bacterial-genomes-rich-in-prophage-modules-because--3e281b": {
     "data_unclear": true,
     "first_step_existing": false,
-    "input": "2682d2d11e2da790129c2e6ef24a56dabc4add098f0b1dfe25e59e89feaea605",
+    "input": "15cc47a4a743743d244c25211a9103dc2a3d56991dd9ca63923627e7c9508918",
     "model": "claude-haiku-5-5",
     "need": "existing",
-    "reason": "Whether the metal-resistance genes sit on the same element as the glycosyltransferase is decided by checking contigs in pangenome genomes, which needs element and mobile-element calls not yet produced."
+    "reason": "Core, accessory and singleton status of prophage-annotated clusters, linked to genome size, can decide it in the KBase Data Lakehouse; dedicated prophage calls are a secondary check.",
+    "tables": [
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.pangenome",
+      "kbase.ke_pangenome.gtdb_metadata"
+    ]
   },
-  "do-host-associated-bacteria-track-host-body-site-rather-than--efeb1c": {
+  "are-metal-resistance-hotspots-in-environmental-genomes-set-b--631e2d": {
     "data_unclear": true,
     "first_step_existing": false,
-    "input": "b0016532a75cebb7e61a179296475d82e4878bec45691746124a56db945a066d",
+    "input": "dbca2db2fdccb8b0034447f1680d468c1d48b4824595d74c5cc8e619e78df7f5",
     "model": "claude-haiku-5-5",
     "need": "existing",
-    "reason": "Body-site labels harmonised from BioSamples text and gene content across pangenome genomes, both already in BERDL, decide the hypothesis."
+    "reason": "Whether ore and rock distances or industrial release distances better predict hotspot genomes decides it; the KBase Data Lakehouse catalogs the inputs.",
+    "tables": [
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.alphaearth_embeddings_all_years",
+      "kbase.ke_pangenome.bakta_amr",
+      "kescience.mgnify.gene_amr",
+      "arkinlab.envdbs.cmmi_ores",
+      "arkinlab.envdbs.epa_tri_metals",
+      "arkinlab.microbeatlas.enriched_metadata"
+    ]
   },
-  "do-iron-scavenging-gene-clusters-give-escherichia-coli-a-gro--5de199": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "0476ff674e48d3b981ceb8da385f4ed72cf29f497ce4b46231b4863895904cf7",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Growth advantage under iron limitation needs new pairwise competition assays; scoring genome carriage in the KBase Data Lakehouse narrows which strain pairs to test."
-  },
-  "do-larger-deep-clay-bacillota-b-genomes-trade-biosynthesis-f--4551ea": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "7226f444a7adab29a39c882aab58cdff32da8438edf0c8164b77c32926b056b0",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Growing a cultured Desulfosporosinus isolate with and without single amino acids decides whether it needs supplied amino acids; BERDL analysis first narrows which amino acids to test."
-  },
-  "do-metal-resistance-hotspots-in-environmental-genomes-follow--ae806a": {
+  "are-metal-specific-fitness-genes-accessory-because-they-serv--64c5d6": {
     "data_unclear": true,
     "first_step_existing": false,
-    "input": "4f090604773cb45719b7bee2a74a1ca8ab8c0f65f508e09b9bc2c9e1ac73e4b9",
+    "input": "f86ec51671fffa55c02434fc3b81aa409a62b899740c037920f7db5355c872aa",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether metal-specific fitness genes sit in accessory clusters more often in metal-impacted genomes needs lakehouse fitness, pangenome and isolation-source tables joined.",
+    "tables": [
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.organism",
+      "kescience.fitnessbrowser.genefitness",
+      "kescience.fitnessbrowser.experiment",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.ncbi_env",
+      "kescience.bacdive.isolation"
+    ]
+  },
+  "are-phage-tail-and-anti-defense-genes-enriched-in-human-asso--c17562": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "c07a43101d2629a19e7a3d8c467d9aaa91736c5120ea8f6beef12777402b7235",
     "model": "claude-haiku-5-5",
     "need": "outside",
-    "reason": "Deciding it needs measured metal concentrations at matched sites, which are not confirmed in BERDL and must be gathered from other studies."
+    "reason": "Whether human-associated genomes carry more intact prophage per megabase than soil or marine genomes needs public genome collections with habitat labels and prophage calls.",
+    "tables": []
   },
-  "do-newly-acquired-resistance-genes-pay-a-cost-that-fades-as--e042b6": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "fdc1b774e45c2fec533d42f640459e10309464f4157195fb9214b19707e56d9a",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Fitness Browser knockout data and genome sequences in BERDL can test whether host-like composition predicts lower resistance-gene cost."
-  },
-  "do-phyla-without-phb-carry-other-carbon-storage-systems-inst--af73d6": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "f3c16746af476353f60f135dd2faf0b5e3a20b575b91bf75b3cb03b2faddb620",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Scoring glycogen, polyphosphate and lipid storage genes across BERDL pangenome species decides it, needing only existing annotations and genome sizes."
-  },
-  "do-rare-earth-rich-acid-sites-use-lanthanide-binding-protein--bf402f": {
+  "are-the-missing-phages-for-three-gut-anaerobes-absent-becaus--4c4663": {
     "data_unclear": true,
     "first_step_existing": true,
-    "input": "3632787922907f61acb299e0643695bab02f124ebdbdc856ee6221fa7510eef8",
+    "input": "9af47fcb4361077d76c58c6658f1ee34f573d4297f730351771e80540f07afea",
     "model": "claude-haiku-5-5",
     "need": "experiment",
-    "reason": "Whether candidates bind lanthanides more strongly than calcium needs a lab binding measurement; BERDL genomes can first pick the candidates to test."
+    "reason": "Whether these phages are temperate or lytic needs lifestyle calls from lakehouse viral host tables, then stool enrichment cultures on each host.",
+    "tables": [
+      "refdata.jgi_virus.metavr_main",
+      "refdata.jgi_virus.imgvr_sequence_info_high_confidence",
+      "refdata.smag.virus_host",
+      "kbase.nmdc_mags.mag_catalog"
+    ]
   },
-  "do-rare-earth-rich-sites-select-lanthanide-dependent-methylo--0d6359": {
-    "data_unclear": true,
-    "first_step_existing": true,
-    "input": "49018fdfabbcfff71573ec89e6eeb29439bdbebd6776e77443728b1c3cb116fa",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Only lab cultures with added lanthanum, measuring xoxF expression and uptake, can decide the hypothesis; BERDL metagenomes come first to narrow it."
-  },
-  "do-the-crohn-s-linked-pathobionts-themselves-make-the-metabo--ce8337": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "0ce94862b1214b45e981307307e871efe6d8ffd856d581fdda76c3f0cbcc3215",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Only cultured pathobionts, singly and in a pooled community with and without them, profiled by metabolomics can show which axis metabolites they make."
-  },
-  "do-the-metabolic-ecotypes-within-a-bacterial-species-track-w--464f53": {
+  "do-accessory-fitness-modules-move-between-genomes-as-intact--0de585": {
     "data_unclear": true,
     "first_step_existing": false,
-    "input": "55093177f3c92abc095a6adfafa77d3d8960ce5acb03fb55a6cb434193d1746e",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Ecotype-versus-subclade matching to isolation environment, using BERDL pathway and metadata, decides it, including whether variable pathways are nutrient routes tied to each habitat's nutrient sources."
-  },
-  "do-trace-aromatics-in-growth-media-explain-model-mismatches--6225d9": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "2e815079cd7bbabf878be13fabff04bec14ea7bcf1c414f5254c63d65ab2b4aa",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Only new growth assays of ADP1 deletion mutants in scrubbed media, with and without trace aromatics, can decide it."
-  },
-  "do-truly-dark-genes-act-in-nutrient-and-iron-acquisition-mor--3c4962": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "58232a21e513c9072b897e04b13744653f05a12eafd7b0c47b4b7e9011249518",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Existing Fitness Browser phenotype and co-fitness data across deep-panel organisms can decide it; new iron, alternative-nitrogen and mixed-carbon screens would only confirm."
-  },
-  "do-truncated-proteins-explain-genes-lethal-when-deleted-but--1e85a6": {
-    "data_unclear": true,
-    "first_step_existing": true,
-    "input": "a7ecf195423c1e8d7a265d5f8c5023d32ebfb1730352ffcd331ce40e3ef80b2b",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Only new growth tests of truncated ADP1 alleles in rich medium can show whether partial proteins survive; insertion mapping narrows which genes to truncate."
-  },
-  "do-unannotated-genes-in-field-relevant-conserved-modules-mat--4d99dc": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "b2b8a1593ca6b2978b5e46ed68a80ac877238eaecab6b2a3ecf15accedbed74a",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Only growing the mutants in groundwater-like and standard lab medium decides whether defects are specific to groundwater conditions; the lakehouse lacks that chemistry."
-  },
-  "do-water-table-layers-not-lateral-distance-organize-subsurfa--21c218": {
-    "data_unclear": true,
-    "first_step_existing": false,
-    "input": "fbc993f7a16ce5ff88ece96cdb523fcd02bdbea56fa87837c8aa58b5959cd607",
+    "input": "e1118ff1ff4cbd72d430a68b4cd585f9472148f5b9454bcf5afe280893545b76",
     "model": "claude-haiku-5-5",
     "need": "outside",
-    "reason": "Depth versus lateral position needs existing community data; whether chemistry tracks community turnover needs registered geochemistry measurements not yet loaded."
+    "reason": "Module membership lists from the project's own outputs, plus gene coordinates and cluster and genome tables from the KBase Data Lakehouse, decide whether accessory modules move intact.",
+    "tables": []
   },
-  "does-a-burst-of-nadh-from-quinate-breakdown-overwhelm-the-al--7bc8f1": {
-    "data_unclear": true,
-    "first_step_existing": true,
-    "input": "9e7e7fd3a475f5d39cf5d3364d06633bf8de6ac78092a60578f19f9575a26df5",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Only new ADP1 deletion and overexpression strains, grown on quinate at lowered uptake, glucose and acetate, can decide all three predictions."
-  },
-  "does-adp1-stay-a-continuous-gradient-when-probed-with-stress--d46aa1": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "e22c4c5a2549a8d784514952fbf136fff1ad482c517a0bb24c1fe4d1ee24160e",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Only new growth measurements on the ADP1 deletion collection and wild-type chemical exposures can decide whether the structure stays continuous; existing data serve only as reference."
-  },
-  "does-amino-acid-biosynthesis-shape-how-much-efflux-pumps-mat--43ebc0": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "c7f4a467518d62360d31eba3729abad157f4e106f0e84f0e603150ce120d7191",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Deciding the hypothesis needs new fitness runs with and without histidine and tryptophan under antibiotic; existing Fitness Browser data lack that supplementation contrast."
-  },
-  "does-carrying-both-aromatic-and-non-aromatic-carbon-capaciti--f13bf8": {
-    "data_unclear": true,
-    "first_step_existing": true,
-    "input": "83fcd9f4ce2a93a4f60bd620be88424493e2510fc322c5d7127029849976dece",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Co-carriage can be checked in existing genome calls, but whether generalists grow slower than same-genus specialists and use mixtures in sequence needs new growth assays."
-  },
-  "does-carrying-many-metal-resistance-types-let-lineages-widen--9dacde": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "43eee8535fa0c168693b6ab0368d66c330950c6ffa3fa7c7bc141aeed9aefe23",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Gain ordering of metal types and habitat categories on the existing Pangenome tree decides the hypothesis, using isolation-source metadata already held."
-  },
-  "does-carrying-the-cyanide-operon-impair-nitrogen-fixation-in--499eb8": {
-    "data_unclear": true,
-    "first_step_existing": true,
-    "input": "86a7b0a88d1dbf0906892b640cf32dbcc47821bbc955b02e74c25dd0a05e1f1d",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Only a deletion experiment in a diazotroph can show whether losing the cyanide operon raises nitrogenase activity and nitrogen-free growth; a genome analysis first picks the strain."
-  },
-  "does-contamination-select-defense-genes-within-genera-rather--7b7167": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "48ed8f218be9b828177bfcddf4d15965f7b1f548f8dde4805359eac2d0153d4e",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Within-genus defense content across a contamination gradient needs new well metagenomes, since BERDL genus-level data cannot separate strains."
-  },
-  "does-desulfovibrio-vulgaris-make-serine-by-a-route-that-path--6f62df": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "2c0610eac5177e23736057bff077a5398c3a0feb25ae14ccfd779dfcfe47a66c",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Growth without added serine and labelled serine in defined medium decide the hypothesis, and only a new lab experiment can supply them."
-  },
-  "does-essential-metal-cofactor-handling-not-toxicity-defense--a31c50": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "6b743387d659a54d3767d819d31922d3481b5fb6844e19046940deca7392fbba",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Whether uptake and cofactor genes are more often core than detoxification genes, using existing Fitness Browser and Pangenome data."
-  },
-  "does-gene-length-predict-core-status-because-short-genes-are--55068d": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "d8223c74cfe9e048b3d7f496cd4c9263001d7ed6ae89f978845526c31475ca2b",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Whether length still predicts core status within matched gene ages and dense insertion coverage, using Fitness Browser, pangenome and UniRef data already in the lakehouse."
-  },
-  "does-soil-carbon-pathway-completeness-rise-with-substrate-le--248abf": {
+  "do-accessory-genes-look-condition-neutral-because-labs-never--5a2900": {
     "data_unclear": true,
     "first_step_existing": false,
-    "input": "78911604d4b14be8e300ce5bf49f3f82981b1631bb37a9e7646a3b62874b738e",
+    "input": "b80fa7498e8038362e355eab297cb2ab06d6565b5c59013f6f29296b325b5bec",
     "model": "claude-haiku-5-5",
     "need": "existing",
-    "reason": "Deciding it needs paired taxonomy and metabolomics from at least two soil studies, which BERDL may already hold."
+    "reason": "The lakehouse fitness experiments, SEED annotations, specific-phenotype calls and pangenome core flags decide it, once genes are joined to clusters.",
+    "tables": [
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.seedannotation",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.specificphenotype",
+      "kescience.fitnessbrowser.specog",
+      "kbase.ke_pangenome.gene_cluster"
+    ]
   },
-  "does-the-butyrate-producer-anaerostipes-caccae-live-on-lacta--0b3aef": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "f3a204a5f8968ce4a616b0abf052c0a8367284517cbd7122104fa55491acf833",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Only anaerobic co-culture and defined-community add/remove assays measuring lactate, butyrate and growth can decide whether pathobionts change Anaerostipes caccae lactate use or butyrate output."
-  },
-  "does-the-same-gut-species-become-crohn-s-associated-only-ins--e4d82a": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "27a7422f25e30eaf633500f590b9a0fdb79acbf01ea89f7bf86fabb7901be387",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Only a gnotobiotic mouse experiment can decide whether candidate expansion depends on community state, after a BERDL cohort analysis narrows the candidates."
-  },
-  "does-the-snipe-anti-phage-nuclease-depend-on-the-mannose-tra--e8aa21": {
+  "do-aromatic-and-non-aromatic-catabolic-capacities-avoid-each--c93d33": {
     "data_unclear": true,
     "first_step_existing": true,
-    "input": "079b84edac9a6a0a117fd09e7d32a165fc7871a7e39ed18c23c99d65e066ee36",
+    "input": "6555efdb1fc36bef001fab52b60aa7f11d55d8e0efb7f762282d5db375fb8135",
     "model": "claude-haiku-5-5",
     "need": "experiment",
-    "reason": "Whether manYZ deletion removes SNIPE protection needs a new E. coli experiment, while species co-occurrence across Pangenome clusters needs an existing analysis."
+    "reason": "Co-occurrence of capacities needs lakehouse genome data first, but growth of isolates on mixed carbon sources needs new lab measurements to decide.",
+    "tables": [
+      "arkinlab.enigma_comparative.isolate_og_presence",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1"
+    ]
   },
-  "does-warming-deplete-labile-carbon-in-mineral-soil-and-leave--b57835": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "21eb7d8e445b2ddb569e091d34dd2bd84b6e4d08674132ddea0967e659a683ff",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Respiration after labile substrate addition needs new incubations of heated and control soil, and existing metabolite lists cannot measure it."
-  },
-  "does-warming-raise-methane-oxidation-by-activating-existing--600abb": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "77cdb97c5bd344ca2693367cb4c458dd744d0d431f461e0efed2bf29cc31ee87",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Decided by paired measurements of methane uptake and pmoA transcript-to-DNA ratios in heated versus control soils, which need new sampling."
-  },
-  "does-zinc-excess-kill-bacteria-by-damaging-iron-sulfur-prote--f18542": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "1c1e59af0df42f1335b68f3cd5c42949bc6666f537aa88d873343569f2457d13",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Only a new iron-rescue experiment under zinc can decide whether iron selectively rescues iron-sulfur gene defects; existing overlap data narrow the genes first."
-  },
-  "is-a-protein-s-abundance-a-bet-on-how-much-its-loss-would-hu--e6812a": {
+  "do-bioleaching-bacteria-carry-different-metal-resistance-fam--e591a6": {
     "data_unclear": true,
     "first_step_existing": false,
-    "input": "846c131674577d56707259bea2cad134fd9bda6c29c0db777756d264e5c6417f",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Deciding it needs ADP1 proteins measured under the eight carbon sources, because existing proteomes mix seven strains and cannot isolate ADP1."
-  },
-  "is-a-resistance-gene-s-conservation-set-by-how-embedded-it-i--bbe780": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "ba5a6762971e6e0359ddc05c471e4892d132d4d66be5ab6e34ff3cf40e566c80",
+    "input": "b200d9f1ec1bc47fb8c553b2f4435078e43ca960cc08ba8e81a5a0294438e74a",
     "model": "claude-haiku-5-5",
     "need": "existing",
-    "reason": "Core versus accessory resistance genes within each mechanism class, judged by non-antibiotic stress fitness and how closely their fitness tracks non-resistance genes, decides it."
+    "reason": "Testing each metal-handling family against size-matched background species needs annotated gene clusters from the KBase Data Lakehouse.",
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.pangenome"
+    ]
   },
-  "is-environmental-adaptation-hidden-in-a-few-gene-categories--95226f": {
-    "data_unclear": true,
-    "first_step_existing": false,
-    "input": "54145e060c962f31dde8858e43a5881cccb0773449b84fbaad81ebbc9c48fb20",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Whether accessory defense and mobile-element genes track isolation environment within environment-blind species is decided by existing pangenome gene-cluster and isolation-source data."
-  },
-  "is-fungal-variability-in-lignin-enrichments-chance-seeding-o--cf6259": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "7cdac8f8da2b22510805d796e0f95921eb8f60641901011e418cee866d1de10e",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Only new enrichment cultures at several inoculum sizes, with and without an early colonist, can show whether the variation comes from sampling or priority effects."
-  },
-  "is-one-denitrifier-s-costly-dispensable-gene-set-a-lab-misma--0c1a00": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "5f56f4ebc37ae2d918289962038f9b88d471c5d43358f8ed83e4845e220ebcae",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Decided by new pooled mutant competition under aerobic and anaerobic nitrate growth, since existing RCH2 oxygen data are confounded with metal salt."
-  },
-  "is-polyhydroxybutyrate-storage-gained-repeatedly-by-transfer--abe2d1": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "6e5719a0ff4f0db519ab04c4c64de8f1a61b58216cbb63ecb29e52bb67285e79",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Within-genus habitat variability, genome size, accessory phaC occurrence, and phaC gene-tree versus species-tree incongruence, all in existing KBase Data Lakehouse pangenome records, decide it."
-  },
-  "is-recent-gain-of-defense-systems-fast-turnover-rather-than--362e69": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "819950e99779c08cad50e3c44e17fea49678af191e8cd38f1f6ecd33b27d58c5",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Deciding it needs only gene presence across descendant genomes on the species tree, already held in the lakehouse, plus existing gain-depth estimates."
-  },
-  "is-soil-habitat-associated-with-xoxf-gain-inside-single-line--69023b": {
-    "data_unclear": true,
-    "first_step_existing": false,
-    "input": "47372a4a728e39fcc9b9fca1b383d36b5866b9436e105305d5640333a5054377",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Within-genus habitat comparisons and gain/loss mapping on genome trees use existing pangenome and habitat data in the lakehouse, though habitat coverage per genome is uncertain."
-  },
-  "is-the-acetate-specific-defect-of-aciad3522-a-respiratory-ro--043493": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "1794f56aad49d67c5bcd005a676656339f581a1bfe88981d1df5c55f6b4e103f",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Deciding it needs new growth, redox and rescue measurements on ADP1 deletion strains, since BERDL lacks these phenotypes."
-  },
-  "is-the-acid-and-warmth-niche-split-between-two-oak-ridge-gen--8e0d48": {
+  "do-catalase-negative-bacteria-use-other-oxidative-defences-t--159a1a": {
     "data_unclear": true,
     "first_step_existing": true,
-    "input": "27de398577f52d8a702628dad0536db88128b07294dd2ae8c21360000bf3e079",
+    "input": "241630c43b83f6c7127d7fa33412d1724275e9c5768fa7e673549960021615ad",
     "model": "claude-haiku-5-5",
     "need": "experiment",
-    "reason": "Growth in monoculture and co-culture across a pH series must be measured in the lab; BERDL sample data cannot separate competition from tolerance."
+    "reason": "Measured metal tolerance of catalase-negative and catalase-positive strains decides it, which only new growth experiments can generate; lakehouse enzyme and genome data choose the strains.",
+    "tables": [
+      "kescience.bacdive.enzyme",
+      "kescience.bacdive.taxonomy",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gtdb_metadata"
+    ]
   },
-  "is-the-fur-controlled-respiratory-operon-needed-for-lipid-a--41def4": {
+  "do-commensals-inhibit-lung-adapted-pseudomonas-by-competing--5545fd": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "43c465a8ee3cd79b54140df0fc006adabf67420067fc60a18cb0af33561cf388",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Deciding needs new co-culture inhibition and per-isolate sugar and amino acid growth measurements; KBase Data Lakehouse tables can first pick candidate isolates.",
+    "tables": [
+      "protect.formulation.competition_screen",
+      "protect.curated.silver_competition",
+      "protect.genome_analysis.isolate_virulence_factors",
+      "kbase.ke_pangenome.gapmind_pathways"
+    ]
+  },
+  "do-conserved-motility-genes-that-cost-growth-in-liquid-pay-b--107a67": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "fee8a3cfe82309014d771e2a4099bf68ebff18e54af6f6d8d3476ccce3863e09",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Soft-agar fitness of costly motility genes can be checked in lakehouse data; a soil or plant-root test needs new measurements.",
+    "tables": [
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.seedroles",
+      "kescience.fitnessbrowser.organism"
+    ]
+  },
+  "do-conserved-resistance-genes-persist-because-they-serve-non--dc6173": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "12b2601dedf832599169506d488db6c8a3135569808ec7aa76bbd5e4929140d0",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether core resistance genes carry more non-antibiotic condition phenotypes is decided by lakehouse fitness and pangenome tables, once gene links are rebuilt.",
+    "tables": [
+      "kescience.fitnessbrowser.specificphenotype",
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.gene",
+      "kbase.ke_pangenome.bakta_amr",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.bakta_annotations"
+    ]
+  },
+  "do-conserved-unannotated-genes-keep-their-phenotype-type-acr--7449a7": {
     "data_unclear": false,
     "first_step_existing": false,
-    "input": "19061d8a3d6b23844811c475ebd2dd7f0db1ca806528830b6dbd742619d19f02",
+    "input": "cff547e3ada20385f5a52a811301c2f29543babbb5d07b46e7ae728df324315b",
     "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Deciding it requires new Caulobacter strain constructions and oxygen measurements, since existing transcript data cannot show these genes are required for rescue."
+    "need": "existing",
+    "reason": "Whether condition classes match across phyla decides the hypothesis; the Fitness Browser ortholog, phenotype, condition-group and gene tables supply the pairs and classes.",
+    "tables": [
+      "kescience.fitnessbrowser.ortholog",
+      "kescience.fitnessbrowser.specificphenotype",
+      "kescience.fitnessbrowser.specog",
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.organism"
+    ]
   },
-  "is-the-groundwater-versus-sediment-split-in-oak-ridge-taxa-r--641fb4": {
-    "data_unclear": false,
+  "do-core-and-accessory-copies-of-plant-growth-genes-differ-in--ebcaeb": {
+    "data_unclear": true,
     "first_step_existing": false,
-    "input": "e869d43661295190a7698112480f0d605e591b54b7c7114da27d9e91d5d72f92",
+    "input": "74610c11a33c696fdc15d3dc33d378d3cea4f43846e50c23d27765c5945b0461",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether accessory and core plant-growth gene copies sit near mobile elements decides it, needing gene positions joined to element coordinates in the KBase Data Lakehouse.",
+    "tables": [
+      "kescience.mgnify.gene_eggnog",
+      "kescience.mgnify.gene_mobilome",
+      "kescience.mgnify.genome",
+      "kescience.mgnify.gene"
+    ]
+  },
+  "do-deep-clay-bacillota-b-genomes-grow-large-by-keeping-extra--9a28dc": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "6eda7fc7acd0f3d8baaadf77e6c1242a48969e66c4c438a79f81142e950412c2",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "The hypothesis is decided by genome sizes and gene functions of Bacillota_B genomes from deep-subsurface and soil isolates, compared within genera, already in the KBase Data Lakehouse.",
+    "tables": [
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1",
+      "kbase.ke_pangenome.ncbi_env",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kescience.bacdive.isolation",
+      "kescience.bacdive.taxonomy"
+    ]
+  },
+  "do-freshwater-biofilm-comamonadaceae-isolates-consume-compou--080ddc": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "b7b9f9e45876a0cead48cf9df2faac054e18c183c3de7693b94d6a42af5c674e",
     "model": "claude-haiku-5-5",
     "need": "experiment",
-    "reason": "Only simultaneous sampling of groundwater and sediment from the same wells can show whether the partition persists or was caused by timing."
+    "reason": "Isolate depletion and isotope labelling need new lab measurements; a lakehouse analysis first narrows which compounds the experiment tests.",
+    "tables": [
+      "kbase.nmdc_arkin.metabolomics_gold",
+      "kbase.nmdc_arkin.centrifuge_gold",
+      "kbase.nmdc_arkin.omics_files_table",
+      "kbase.nmdc_arkin.study_table",
+      "kbase.nmdc_arkin.taxonomy_dim"
+    ]
   },
-  "is-the-overlap-between-metal-and-salt-stress-genes-ionic-or--6dea43": {
+  "do-groundwater-enriched-and-sediment-enriched-genera-differ--200b29": {
     "data_unclear": false,
     "first_step_existing": true,
-    "input": "8b397dcc4c11ba71af0577d6d33c1b6c016cc1520ecf146a6aa9bca7ea2339af",
+    "input": "5d8dfb24ff7a3d698d43c15dad090114486fde7c560a881b5de5a50b5dc1c992",
     "model": "claude-haiku-5-5",
     "need": "experiment",
-    "reason": "Only new transposon-library fitness assays with matched sorbitol, KCl and choline chloride controls can separate osmotic from ionic causes."
+    "reason": "Genome and marker-gene analysis of the named genera can narrow the hypothesis, but same-well, same-date sediment and groundwater shotgun metagenomes are needed to test habitat differences and the time effect.",
+    "tables": [
+      "kbase.nmdc_mags.mag_catalog",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene_cluster"
+    ]
   },
-  "is-the-resistance-gene-excess-in-clinical-species-specific-o--1dc886": {
-    "data_unclear": false,
+  "do-pseudomonas-from-different-habitats-differ-in-how-fast-th--2dbc47": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "d7d03763d5aad0c5cddc0678aa63fa103a4790673efbac91c7143a6f4eda2247",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Habitat differences in growth need new plate-reader measurements; lakehouse pathway and source tables first choose species with enough isolates per habitat.",
+    "tables": [
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.ncbi_env"
+    ]
+  },
+  "do-resistance-genes-share-neighbors-with-flagellar-genes-bec--6cd46e": {
+    "data_unclear": true,
     "first_step_existing": false,
-    "input": "1eda1e582de95d3c19d6b9f3f534510d958e123a08d8f93dfbc3e2ad4551aa34",
+    "input": "2c1a108009b02c82c2f1fd6c5b3f3ced4f87f2cfb097142e3766a6dc2610554d",
     "model": "claude-haiku-5-5",
     "need": "outside",
-    "reason": "Deciding it needs public antibiotic-resistance ontology terms to classify clusters, alongside existing pangenome and environment data from BERDL."
+    "reason": "Gene-level fitness under surface and liquid conditions, and random-gene controls, are not shown in the catalog; they may need public fitness data or a new soft-agar experiment.",
+    "tables": []
   },
-  "is-tryptophan-growth-prediction-capturing-biosynthesis-rathe--03e8fa": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "b9f3a542e56cb8ea5b0acd04a4404662c70a96c85c74b0e837b404d088d444f4",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Existing BERDL growth labels and Fitness Browser tryptophan genes can decide it by rerunning gene-family and carbon-only label analyses."
-  },
-  "is-uranium-itself-or-acidity-and-nitrate-what-removes-caulob--254df0": {
-    "data_unclear": true,
-    "first_step_existing": false,
-    "input": "43942bcdfa5871a6e500b1effdf303e9afa08eda3d35113643035f37cd4b9d5a",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Separating uranium from acidity and nitrate needs controlled microcosms, because field samples confound these causes and cannot isolate uranium."
-  },
-  "is-xoxf-mostly-a-methanol-enzyme-or-does-it-serve-other-alco--9dd64a": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "ed2f301316c8decb91eff63471c176add7e7f3ffe039261079265798eb4ac3d0",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Deciding whether XoxF serves other alcohols needs enzyme assays, but a BERDL genome analysis of methylotrophy genes must first narrow which carriers to test."
-  },
-  "was-lanmodulin-spread-by-horizontal-transfer-among-alpha-pro--fab55d": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "9b829d64cc1b66d063cf88af731d014905fd2ac0d69896fb822900464b4ece16",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Gene-tree versus species-tree conflict, flanking mobile-element genes and base composition versus host decide transfer, using existing pangenome genomes and new analysis."
-  },
-  "were-sugar-pathways-lost-repeatedly-within-lung-adapted-pseu--06109c": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "b8f707a127a71e93446a73a2d86beb8f7817acfdcc596269011e281470acfa7c",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Growth of CF and environmental isolates on sorbitol, mannitol and gluconate decides it, after a pangenome analysis of lung-branch pathway losses."
-  },
-  "what-do-lanmodulin-carrying-bacteria-without-a-confirmed-xox--2dafa3": {
+  "do-restriction-modification-and-gabija-defenses-pair-up-beca--563b91": {
     "data_unclear": true,
     "first_step_existing": true,
-    "input": "abd8e737c0d3291dc141c45e24a4ba7fb0105201bb8f55c17a1e2384e72cdfe5",
+    "input": "168742e25320a296aa3e7d1ad8e87a0ed74b91825098d8c005769009d1c2efe9",
     "model": "claude-haiku-5-5",
     "need": "experiment",
-    "reason": "Deciding it needs growth and metal-uptake tests in a xoxF-free strain; BERDL screening first narrows which strain to use."
+    "reason": "Phage-challenge assays of each system alone and together decide layered protection and need new strains; lakehouse genome data first narrows which pairings to test.",
+    "tables": [
+      "kescience.mgnify.gene_eggnog",
+      "kescience.mgnify.gene_mobilome",
+      "kescience.mgnify.genome"
+    ]
   },
-  "why-is-the-model-sulfate-reducer-desulfovibrio-nearly-absent--bc3e92": {
+  "do-siderophores-let-crohn-s-pathobionts-out-compete-commensa--6b2e10": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "9b07dc0ba44d8920031622f2f11501228cdf30ada57afffad6f0475c9a45211d",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Only mutant and parent competition in iron-limited anaerobic chemostats, with iron rescue, can decide it; it needs new mutant construction and community cultures.",
+    "tables": []
+  },
+  "do-soil-bacteria-with-the-auxin-gene-ipdc-give-up-tryptophan--d38f82": {
     "data_unclear": false,
     "first_step_existing": true,
-    "input": "8d407d092e85b77b7b6350d0804e508e11944c75926545d80285d7acc5c69c31",
+    "input": "ec9f439712c4dd41045eabf2f0a67a6f0ea8597db92a3483e48df8f65c3d7e31",
     "model": "claude-haiku-5-5",
     "need": "experiment",
-    "reason": "Deciding it needs a new dsrAB assay on anaerobic-well sediment and groundwater, after existing ENIGMA CORAL profile comparison narrows the targets."
+    "reason": "Genome-matched pathway and annotation analysis in the KBase Data Lakehouse narrows which ipdC carriers to test; defined-medium growth and auxin measurements require new experiments.",
+    "tables": [
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.ncbi_env",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1"
+    ]
+  },
+  "do-soil-microbes-lose-amino-acid-synthesis-genes-where-free--d65307": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "645c9c95f2b2e6c60dbc60cec700ed5021b1c1aa23c92e88cd45f615cb2b8aeb",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Only an amendment experiment with sequencing can decide it; lakehouse analysis first narrows which soils and amino acids to test.",
+    "tables": [
+      "kbase.nmdc_arkin.metabolomics_gold",
+      "kbase.nmdc_arkin.study_table",
+      "kbase.nmdc_arkin.omics_files_table",
+      "kbase.nmdc_arkin.centrifuge_gold",
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata"
+    ]
+  },
+  "do-species-from-diverse-environments-gain-resistance-genes-t--cd6026": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "e42efcab1edd695cae915fbe7fbc42fdf4c7facc9bc7c1a9db2f5fcd99c002d9",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether mobile-element flanking of resistance genes rises with environmental diversity needs gene neighbour and environment joins from the KBase Data Lakehouse.",
+    "tables": [
+      "kbase.ke_pangenome.bakta_amr",
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.bakta_pfam_domains",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1",
+      "kbase.ke_pangenome.pangenome",
+      "kbase.ke_pangenome.alphaearth_embeddings_all_years"
+    ]
+  },
+  "do-species-with-more-metabolic-ecotypes-live-across-a-wider--6e2966": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "af89073f1c2ad40ca79358150c12f5f83e2fbe33fe039cc990b16e1909f0eaf7",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Pathway presence and genome-to-species links in the KBase Data Lakehouse decide whether ecotype counts follow breadth within families; embedding join unverified.",
+    "tables": [
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.pangenome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.ncbi_env",
+      "kbase.ke_pangenome.alphaearth_embeddings_all_years"
+    ]
+  },
+  "do-the-unannotated-genes-of-methanococcus-belong-to-methanog--ead835": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "092b21d025794acc301cc075e649a34ff818fb84dcf1e232e7f90de086876291",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Co-fitness partners of the dark Methanococcus genes decide it; the KBase Data Lakehouse fitness tables and uniref50 cluster lookups supply both inputs.",
+    "tables": [
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.cofit",
+      "kescience.fitnessbrowser.conservedcofit",
+      "kescience.fitnessbrowser.besthitkegg",
+      "kescience.fitnessbrowser.besthitmetacyc",
+      "kescience.fitnessbrowser.seedroles",
+      "kescience.fitnessbrowser.specog",
+      "kescience.fitnessbrowser.experiment",
+      "kbase.uniref50.clustermember",
+      "kbase.uniref50.crossreference",
+      "kbase.uniref50.entity"
+    ]
+  },
+  "do-transposon-insertions-miss-essential-genes-because-trunca--f6894a": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "5749efab0dbb61e172b07614fbecb04c555bd3ed90813e5d76a02f89725591a0",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Whether truncated genes keep function is decided only by building truncation alleles and testing growth; the lakehouse catalog does not show ADP1 insertion positions.",
+    "tables": []
+  },
+  "do-truly-dark-genes-with-nutrient-phenotypes-encode-unrecogn--6f7601": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "3fac80ef908f68736ff56c6076e7ce3c6e782542c9e5069e31bf4686793b011f",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether substrate-matched partners of dark nutrient genes outnumber those of annotation-lag genes needs co-fitness and annotation tables already in the KBase Data Lakehouse.",
+    "tables": [
+      "kescience.fitnessbrowser.specog",
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.seedannotation",
+      "kescience.fitnessbrowser.genefitness",
+      "kescience.fitnessbrowser.cofit",
+      "kescience.fitnessbrowser.besthitkegg",
+      "kescience.fitnessbrowser.besthitmetacyc",
+      "kescience.fitnessbrowser.besthitswissprot",
+      "kescience.fitnessbrowser.compounds",
+      "kescience.fitnessbrowser.organism"
+    ]
+  },
+  "do-xoxf-carriers-without-their-own-pqq-synthesis-depend-on-n--5acd1f": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "5675842baa058a19020413cc898e150a823f4579adb820881e90667783cf709f",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Whether PQQ-lacking xoxF carriers sit with PQQ producers is first checked in lakehouse MAG samples; spent-medium growth needs a new lab test.",
+    "tables": [
+      "kbase.nmdc_mags.mag_catalog",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.genome"
+    ]
+  },
+  "does-anaerostipes-caccae-live-on-lactate-from-bacteroides-ra--9a0303": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "83cd0b729433dc4b1b74bc68c3cb3a95d56a94b0c9938313be60a2039f3e306f",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Decided by lactate, butyrate and A. caccae growth in anaerobic co-culture with each partner, which only new lab work can measure.",
+    "tables": []
+  },
+  "does-ca-methanoperedens-in-sediment-indicate-nitrate-driven--4f8fef": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "c36032b05ad867dbad746b5e91fe644038d0c237922373f1f70682c647a59a85",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Only labelled-methane incubations of cores can show methane oxidation depends on nitrate, while lakehouse gas and anion tables can pick which zones to incubate.",
+    "tables": [
+      "enigma.sso_staging.picarro_gas",
+      "enigma.sso_staging.toc_tn_anions",
+      "enigma.sso_staging.sample_registry"
+    ]
+  },
+  "does-complex-i-matter-on-quinate-because-ring-cleavage-overl--acbab4": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "526e434f5283fe189d110b10712c741bf9d577836e8bdc15ffe46e9782a9371e",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Deciding whether Complex I essentiality follows NADH production rate needs growth and NADH ratio measurements under controlled quinate supply, which only a new lab experiment provides.",
+    "tables": []
+  },
+  "does-conjugative-element-load-more-than-prophage-density-pre--bb182d": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "c152ba81fd2236e25782d3fbd8632644dfe510a0a9127ff2d830099e9a2f4ade",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Counting each mobile-element type and distinct resistance genes per genome in the lakehouse decides it; genome and biome identifiers allow joining.",
+    "tables": [
+      "kescience.mgnify.gene_mobilome",
+      "kescience.mgnify.gene_amr",
+      "kescience.mgnify.genome",
+      "kescience.mgnify.biome"
+    ]
+  },
+  "does-desulfovibrio-vulgaris-make-serine-by-a-route-that-path--233058": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "b272ed32c2d3ae2e190f56c8ae4171f8dca757e11c97a9262d9253d2c5f7eb4f",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Only labeled-glycine tracing and serine-free growth can decide the route; lakehouse fitness tables can first list candidate genes.",
+    "tables": [
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.besthitkegg",
+      "kescience.fitnessbrowser.reannotation",
+      "kescience.fitnessbrowser.organism",
+      "kbase.ke_pangenome.gapmind_pathways"
+    ]
+  },
+  "does-groundwater-community-turnover-occur-only-after-recharg--ab61fe": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "a4620982bd5ac511126638037dd463452f5884bf7a0d0b1b198bd2c94730cb51",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Water-level, conductivity and rainfall sensor records plus SSO amplicon count tables in the KBase Data Lakehouse can decide it, if sample dates link.",
+    "tables": [
+      "enigma.continuous_monitoring.hazen_aquatroll600_sso_l7_sz1",
+      "enigma.continuous_monitoring.hazen_aquatroll600_sso_l9_sz1",
+      "enigmay12.weather.ddt_weather_hourly_temperature_rain",
+      "enigma.coral.ddt_brick0000476",
+      "enigma.coral.sdt_sample"
+    ]
+  },
+  "does-iron-and-zinc-cross-resistance-run-through-shared-iron--d66cc5": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "ac7cf4f208d91f9814a066c2b4a1c4c7d640d0ac13d80f69f85cc5c2290fd4ee",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Fitness scores across iron and zinc experiments in the KBase Data Lakehouse can decide whether iron-sulfur genes drive shared sensitivity.",
+    "tables": [
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.genefitness",
+      "kescience.fitnessbrowser.kgroupdesc",
+      "kescience.fitnessbrowser.seedroles",
+      "kescience.fitnessbrowser.reannotation"
+    ]
+  },
+  "does-long-term-warming-favor-soil-bacteria-that-carry-fast-g--33f26b": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "8edac64e5a9cf186fedfdc40d0d67262a710fe0a5cc005dff725bf53790a755e",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Whether winners respond more to acetate in heated soil needs new heated and control cores; the KBase Data Lakehouse first shows which genera rose and their gene content.",
+    "tables": [
+      "nmdc.results.kraken2_classification_report",
+      "nmdc.metadata.study_set",
+      "kbase.nmdc_mags.bin_catalog",
+      "kbase.nmdc_mags.mag_catalog",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "nmdc.results.annotation_kegg_orthology"
+    ]
+  },
+  "does-photosystem-ii-exchange-signal-vanish-at-finer-ranks-th--934bae": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "6aab797ca52db1cc8cae44890455443f01fdb6c6be30842d5408683b3e8d2e7a",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "The hypothesis is decided by photosystem II gene presence and photic-aquatic habitat labels across genera, which the lakehouse annotation and genome tables can supply.",
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.ncbi_env",
+      "kescience.mgnify.genome"
+    ]
+  },
+  "does-plant-derived-carbon-input-not-ecosystem-label-set-comm--fb99ea": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "5466ae8562ac0d85a4b6709577532567c7b72b5ebc21f37b14190f570382bfab",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether plant-derived carbon or ecosystem label sets pathway completeness is decided by joining lakehouse metabolomics, taxonomy and sample metadata.",
+    "tables": [
+      "kbase.nmdc_arkin.centrifuge_gold",
+      "kbase.nmdc_arkin.metabolomics_gold",
+      "kbase.nmdc_arkin.omics_files_table",
+      "kbase.nmdc_arkin.study_table",
+      "kbase.nmdc_arkin.taxonomy_dim",
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1",
+      "nmdc.metadata.biosample_set"
+    ]
+  },
+  "does-soil-acidity-which-frees-lanthanides-explain-xoxf-enric--6240a9": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "3e5a43b236b54114df3c361d4043dc98d75b04a573f517ccfd1619076fd163bd",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "The hypothesis is decided by soil pH and xoxF presence per genome, which the lakehouse genome, gene, annotation and biosample tables can link.",
+    "tables": [
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.ncbi_env",
+      "nmdc.ncbi_biosamples.biosamples_attributes",
+      "nmdc.ncbi_biosamples.attribute_harmonized_pairings",
+      "kbase.nmdc_mags.mag_catalog"
+    ]
+  },
+  "does-the-contaminant-plume-not-lateral-distance-organize-sub--9edeae": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "1b0130c348365737e6d44097b9b20c24df8c4a937abc214a008cc6a13d4e64fd",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Deciding this needs community counts, sample tables and chemistry concentrations already in the KBase Data Lakehouse; whether chemistry and community samples match is unresolved.",
+    "tables": [
+      "enigma.coral.ddt_brick0000459",
+      "enigma.coral.ddt_brick0000476",
+      "enigma.coral.sdt_sample",
+      "enigma.coral.sdt_community",
+      "enigma.coral.sdt_location",
+      "enigma.coral.ddt_brick0000010",
+      "enigma.sso_staging.toc_tn_anions",
+      "enigma.sso_staging.picarro_gas",
+      "enigma.sso_staging.sample_registry"
+    ]
+  },
+  "does-urea-use-in-acinetobacter-depend-on-genes-outside-the-c--7cba38": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "977bb7d15a18d087c9e3cfbaf3a16055d151ad4bc0c0dfa3317a97b5abacce46",
+    "model": "claude-haiku-5-5",
+    "need": "outside",
+    "reason": "Whether non-urease genes drive urea-specific growth needs the ADP1 mutant growth matrix, which the catalog did not show; pangenome conservation and BacDive urea calls then compare.",
+    "tables": []
+  },
+  "is-acidity-rather-than-temperature-what-separates-two-oak-ri--69ab90": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "431c1fd66a747669d7f996c11be333ac7855d5db9830ff1f523c7c6f5a7d184d",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Acidity versus temperature is decided by culture growth across pH and temperature, which needs new measurements after a lakehouse survey analysis.",
+    "tables": [
+      "arkinlab.microbeatlas.otu_counts_long",
+      "arkinlab.microbeatlas.enriched_metadata_gee",
+      "arkinlab.microbeatlas.otu_metadata"
+    ]
+  },
+  "is-field-uranium-association-in-oak-ridge-genera-really-a-re--d24a67": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "e1c34e6e92d1166c2139ae88e12a4e10b0165fbb24772a10bec1807cba103ec7",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Only isolate growth in crossed uranium, pH and nitrate conditions decides it; KBase Data Lakehouse field tables may first narrow which conditions to cross.",
+    "tables": [
+      "enigma.coral.sdt_sample",
+      "enigma.coral.sdt_community",
+      "enigma.coral.ddt_brick0000459",
+      "enigma.coral.ddt_brick0000476",
+      "enigma.coral.ddt_brick0000010"
+    ]
+  },
+  "is-host-specialization-in-xanthomonas-carried-by-a-small-sha--7376af": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "1ee24a0408e853ad9b5257ec68980f04e2bc58b215dba2c083f6895165ae5092",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "A plant transfer experiment decides whether moving subclade genes shifts colonization; lakehouse gene-cluster analysis must come first to pick the genes.",
+    "tables": [
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.phylogenetic_tree",
+      "kbase.ke_pangenome.gtdb_metadata"
+    ]
+  },
+  "is-lanmodulin-an-ancient-methylotroph-lineage-tool-or-a-lant--6f5a5e": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "e3aa2f47719fd50672e36b34ff79863dff13ba21f71f9cc8790b7dc8ce579451",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Lanthanide handling after lanmodulin deletion needs a lab experiment; annotation and cluster tables may first help identify xoxF-lacking carriers, but gene positions are unshown.",
+    "tables": [
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1"
+    ]
+  },
+  "is-metal-and-antibiotic-tolerance-unpredictable-from-gene-co--0bfdb1": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "fef6ae02df57330361a1094eaeda5278bbbf477a836dac8779e4becbd20630f5",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Only new graded-dose growth assays on sequenced strains, with copy-number and promoter-variant calls, can decide whether these features beat presence-only prediction.",
+    "tables": []
+  },
+  "is-smooth-module-free-gene-importance-an-acinetobacter-trait--d2a672": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "7b0fc83bafda077fcb4f7f78dbad7e382fa875a487eadb8be8abc795e8fa7af2",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Deciding the hypothesis needs new barcoded ADP1 mutant measurements; a lakehouse analysis of carbon-source experiment metadata first narrows the matched comparison.",
+    "tables": [
+      "kescience.fitnessbrowser.experiment"
+    ]
+  },
+  "is-the-cost-of-dispensable-genes-carried-by-whole-mobile-isl--543e3e": {
+    "data_unclear": true,
+    "first_step_existing": true,
+    "input": "0c3e0b9eee1b9c0de2e89dfa1b586eecd2f753e4de22bff87f71b0dd9795441b",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "The whole-element versus single-gene growth comparison needs new deletion measurements, after lakehouse gene coordinates and fitness narrow which islands to test.",
+    "tables": [
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.seedannotation",
+      "kescience.fitnessbrowser.seedroles",
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.cofit",
+      "kescience.fitnessbrowser.conservedcofit",
+      "kescience.fitnessbrowser.fitbyexp_btheta"
+    ]
+  },
+  "is-the-crohn-s-link-of-escherichia-coli-carried-by-a-small-s--2fe795": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "7205af8f766be858495842a5ed1575e39544709aaf484a9f48909f1d35fee789",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Cohort E. coli abundance and per-sample marker calls in the lakehouse can test whether siderophore and genotoxin carriers alone show the disease link.",
+    "tables": [
+      "arkinlab.cmd_reference.ecoli_relab_by_cohort",
+      "arkinlab.cmd_reference.mge_markers_by_sample",
+      "arkinlab.cmd_reference.mobility_marker_panel",
+      "arkinlab.cmd_reference.mge_disease_effects",
+      "arkinlab.cmd_reference.sample_metadata"
+    ]
+  },
+  "is-the-link-between-polyhydroxybutyrate-genes-and-variable-h--eb5075": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "36c02ce0ef27696974e74856f12aa14abc4750dcf8a08e9572f420d622b0c712",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Carrier and non-carrier genomes within shared genera in the KBase Data Lakehouse hold the annotations, habitat coordinates and genome size needed to decide the hypothesis.",
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1",
+      "kbase.ke_pangenome.alphaearth_embeddings_all_years",
+      "kbase.ke_pangenome.gtdb_metadata"
+    ]
+  },
+  "is-the-shared-metal-and-salt-gene-set-an-osmotic-response-ra--7efaee": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "8fa8feacc4326fef1c721398a33a6db45eb35f740479077c64821fd2bd441231",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "The hypothesis is decided by fitness scores across organisms under sodium, potassium, choline and non-ionic osmolyte experiments, which the Fitness Browser tables can supply.",
+    "tables": [
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.specog",
+      "kescience.fitnessbrowser.specificphenotype",
+      "kescience.fitnessbrowser.gene"
+    ]
+  },
+  "is-the-snipe-phage-defense-nuclease-tied-to-hosts-that-carry--dffbb3": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "b8a14a17e1acada85c47aef0ff9ca0a37b750f4687b14145be388fe11e17cf5a",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Only building manYZ deletion mutants in a SNIPE-carrying strain can decide the causal effect; lakehouse analyses first pick the strain.",
+    "tables": [
+      "kbase.ke_pangenome.bakta_pfam_domains",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.genome",
+      "phagefoundry.phage_host_interactions.strainmodelling_interaction",
+      "phagefoundry.phage_host_interactions.strainmodelling_genome"
+    ]
+  },
+  "is-xoxf-in-non-methylotrophs-a-methanol-enzyme-or-a-general--125baa": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "fe1d94e66cde8b0e0171fd9db9aaa938a60765507ff19cf56c601515a1e4b7d4",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Growth tests on methanol and other alcohols, with and without lanthanum, in carrier isolates decide it; lakehouse pathway annotations of xoxF carriers choose which to test.",
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1"
+    ]
+  },
+  "might-buffered-respiratory-genes-not-sphingolipid-induction--c4aef4": {
+    "data_unclear": false,
+    "first_step_existing": false,
+    "input": "256b2c8a7b9f8387f0f4bc864986e277b9940464b1c1708a67cf6448dc251c03",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Only new strain construction, viability scoring and lipidomics under low oxygen and iron limitation can decide whether the operon is required.",
+    "tables": []
   }
 }
