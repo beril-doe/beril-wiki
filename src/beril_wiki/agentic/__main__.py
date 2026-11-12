@@ -364,6 +364,12 @@ def main() -> int:
         "--max-codex-tokens", type=int, help="cap the run's raw Codex tokens (default: no cap)"
     )
     execute.add_argument(
+        "--budget-run",
+        metavar="NAME",
+        help="ledger run id the caps, totals and progress counts use, kept across runs "
+        "on different inputs (default: a digest of the inputs)",
+    )
+    execute.add_argument(
         "--progress",
         type=Path,
         metavar="FILE",
@@ -639,9 +645,11 @@ def main() -> int:
                     "usd_reserve",
                 )
             } | {"stage_max_usd": usd_caps(args.stage_max_usd)}
+            if args.budget_run is not None and not args.budget_run.strip():
+                raise WorkflowError("budget_run must not be empty")
             config |= {
                 key: getattr(args, key)
-                for key in ("max_usd", "max_codex_tokens")
+                for key in ("max_usd", "max_codex_tokens", "budget_run")
                 if getattr(args, key) is not None
             }
             known = (set(EDITORIAL) | set(RUN_PREFIXES)) - FILED_AS.keys()

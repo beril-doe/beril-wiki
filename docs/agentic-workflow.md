@@ -195,7 +195,10 @@ admitted only if its hold still fits. A job that ends without a reported cost (a
 kill, a timeout) keeps its hold, so an interrupted job still counts. `run` and
 `pilot` set them with `--max-usd` and `--max-codex-tokens`; `run` without them
 has no such cap. A resume of the same inputs keeps the ledger run, so its
-earlier spend still counts against the caps. Account billing settings remain
+earlier spend still counts against the caps. `run --budget-run NAME` names the
+ledger run that caps, totals and progress counts use, so runs on different
+inputs, such as a publication refreshed onto a moved main, share one cap; job
+cache keys do not change. Account billing settings remain
 provider-owned; the runner does not purchase credits.
 
 ### Per-step models

@@ -379,7 +379,7 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
             "root": str(work),
             "store": str(store),
             "revision": rev,
-            "run": budget_run(root, base, external, staged),
+            "run": config.get("budget_run") or budget_run(root, base, external, staged),
             "run_inputs": digest([base, external, staged]),
         }
         config_path = store / "config.json"

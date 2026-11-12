@@ -668,6 +668,54 @@ def test_a_recorded_contract_change_is_not_adopted(tmp_path, monkeypatch):
     assert {"conflicts", "topics", "literature", "authors"} <= set(calls)
 
 
+def test_budget_run_keeps_one_cap_across_bases(tmp_path, monkeypatch):
+    """A refresh onto a moved main changes the input digest, which named a new ledger
+    run and let the earlier spend stop counting against the cap."""
+    import json
+    from types import SimpleNamespace
+
+    from beril_wiki.agentic import runner
+
+    root, checkout = tmp_path / "repo", tmp_path / "checkout"
+    for folder in (*runner.TREES, "contract"):
+        (root / folder).mkdir(parents=True)
+    (root / "contract/AGENTS.md").write_text("Contract")
+    (checkout / "ui/config").mkdir(parents=True)
+    (checkout / "ui/config/collections.yaml").write_text("collections: []")
+    config: dict[str, object] = {"cli": "claude", "model": "test", "max_tokens": 10**9}
+    config |= {"max_jobs": 50, "reserve_tokens": 10, "max_usd": 30.0, "budget_run": "wiki/p"}
+    monkeypatch.setattr(
+        runner.subprocess, "run", lambda *a, **k: SimpleNamespace(stdout="test CLI")
+    )
+    seen = []
+
+    def recorded_stage(work, config_path, name, module, args):
+        (work / "wiki" / f"{name}.md").write_text(name)
+        if name != "fetch":
+            return
+        stored = json.loads(config_path.read_text())
+        ledger = runner.Runtime(stored).ledger
+        key = f"job-{len(seen)}"
+        try:
+            ledger.reserve(key, "write/x", "claude-sonnet-5-5")
+        except WorkflowError:
+            seen.append((stored["run"], stored["run_inputs"], "refused"))
+            return
+        ledger.finish(key, "ok", {"input_tokens": 1, "output_tokens": 1}, cost=29.0)
+        seen.append((stored["run"], stored["run_inputs"], "admitted"))
+
+    from agentic_recording import reply
+
+    monkeypatch.setattr(runner.Runtime, "ask", reply)
+    monkeypatch.setattr(runner, "run_stage", recorded_stage)
+    runner.run(root, checkout, config)
+    (root / "wiki/other.md").write_text("another project merged to main\n")
+    runner.run(root, checkout, config)
+    (first_run, first_inputs, first), (second_run, second_inputs, second) = seen
+    assert first_run == second_run == "wiki/p" and first_inputs != second_inputs
+    assert (first, second) == ("admitted", "refused")
+
+
 def test_source_numbers_invalidates_same_length_revision():
     from beril_wiki.check import source_numbers
 
@@ -1604,9 +1652,10 @@ def test_run_caps_reach_the_ledger(tmp_path, monkeypatch):
     monkeypatch.setattr(cli, "run", lambda root, checkout, config, staged: captured.update(config))
     common = ["agentic", "--root", str(tmp_path), "run", "--max-tokens", "10000000"]
     common += ["--max-jobs", "99", "--cli", "claude", "--model", "m"]
-    caps = ["--max-usd", "3", "--max-codex-tokens", "500000"]
+    caps = ["--max-usd", "3", "--max-codex-tokens", "500000", "--budget-run", "wiki/p"]
     monkeypatch.setattr(sys, "argv", [*common, *caps])
     assert cli.main() == 0
+    assert captured["budget_run"] == "wiki/p"
     store = tmp_path / ".agentic"
     ledger = Runtime(captured | {"root": str(tmp_path), "store": str(store), "run": "r"}).ledger
     usage = {"input_tokens": 1, "output_tokens": 1}
