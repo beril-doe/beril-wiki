@@ -52,11 +52,15 @@ repository already owed. It reads `--checkout` (default `corpus/`), makes no
 model call, and writes nothing to `wiki/`, `state/`, `staging/` or the job
 ledger. It checks two scratch copies of the trees. The base copy fetches
 `corpus/` as committed at `HEAD` and refuses when an editorial stage is
-pending, when a novelty label is due for refresh, when an entry of
-`state/{gists,links,shared,headlines,novelty,outcomes,followups,directions}.json`
-is saved with `failed: true` (a card stage re-asks it, whichever project it
-belongs to), or when `.agentic/jobs.sqlite` holds a job with unknown usage. The
-import copy fetches
+pending, when a novelty label is due for refresh, when an entry of project `ID`
+in `state/{gists,links,shared,headlines,novelty,outcomes}.json` is saved with
+`failed: true`, or when `.agentic/jobs.sqlite` holds a job with unknown usage.
+An entry belongs to `ID` when its key is `ID` or starts `ID--` (a finding of
+`ID`), when a `pair:` or `ref:` links candidate names `ID` as an endpoint, or
+when a shared group, whose members admission rebuilds from the saved links,
+holds a result of `ID`. Other projects' failed entries, and every failed entry
+of the topic-keyed `state/followups.json` and `state/directions.json`, do not
+refuse; the result lists them in `maintenance_failed`. The import copy fetches
 the checkout and refuses when:
 
 - a staged source other than `ID__REPORT.md` would integrate;
@@ -70,10 +74,17 @@ A README-only or figure-only update is admitted with an empty
 `pending_editorial` (the stages the import makes due, judged after the
 deterministic extras stage rewrites author and collection pages on the import
 copy, as a run's curator does first), `base_pending`,
-`labels_due`, `unknown_usage` and `invalidation`. `--json` prints it as one
-JSON object; without it, one line per field. `plan` exits 1 when the run is
-not admitted. `run --expect-source ID` makes the same check before the run
-starts and stops with the reasons; it cannot be combined with `--staged`.
+`labels_due`, `unknown_usage`, `maintenance_failed` and `invalidation`. `--json`
+prints it as one JSON object; without it, one line per field. `plan` exits 1
+when the run is not admitted. `run --expect-source ID` makes the same check
+before the run starts and stops with the reasons; it cannot be combined with
+`--staged`. An admitted run passes `ID` to its stages as `expect_source` in
+`.agentic/config.json`. The card stages then leave each failed entry that does
+not belong to `ID`, and each failed topic of directions or followups (for
+directions, a topic listed in `.agentic/failures.json`), as saved: they make no
+model call for it and do not count it as failed, so `--strict-pages` does not
+stop the run for it. They re-ask `ID`'s own failed entries as before. A run
+without `--expect-source` re-asks every failed entry.
 
 `check-auth` runs the Claude subscription check (`claude auth status`) and the
 Codex ChatGPT-login check in a session whose Codex home is a temporary

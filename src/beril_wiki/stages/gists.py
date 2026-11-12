@@ -287,6 +287,8 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         pack = pack_of(fid)
         key = digest([pack, PROMPT_TAG, policy])
         prev = state.get(fid, {})
+        if cards.leaves_failed(config, prev.get("failed") is True, cards.owners("gists", fid)):
+            continue
         # A saved gist stays while its input is unchanged and today's checks accept it,
         # so a tightened rule re-asks only the gists it now rejects.
         if prev.get("input") == key and not prev.get("failed") and passes(fid, prev, pack):

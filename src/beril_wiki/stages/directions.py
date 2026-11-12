@@ -30,7 +30,7 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 from beril_wiki import lakehouse, records
-from beril_wiki.agentic.prose import PLATFORM, prune_failures, record_failure
+from beril_wiki.agentic.prose import PLATFORM, failed_pages, prune_failures, record_failure
 from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, file_hash, prompt
 from beril_wiki.check import numbers_in, pmids_in, prose_only
 from beril_wiki.lakehouse import Catalog, absence_claims
@@ -519,6 +519,16 @@ def pages_for(out: Path, topic: str) -> list[Path]:
     return [p for p in sorted(out.glob("*.md")) if topic in cards.read_page(p)[0].get("topics", [])]
 
 
+def retire_broken(root: Path, out: Path, topic: str) -> None:
+    """Delete a kept page that builds on a finding or conflict now gone, which the strict
+    check would reject for the whole run."""
+    for page in pages_for(out, topic):
+        refs = cards.read_page(page)[0].get("builds_on", [])
+        if any(not (root / "wiki" / f"{ref}.md").exists() for ref in refs):
+            page.unlink()
+            print(f"  directions/{topic}: retired {page.name}; it builds on removed work")
+
+
 def topic_key(public: dict, policy: str) -> str:
     """Return a topic's cache key: the prompt with its public pack, and the model policy.
 
@@ -612,6 +622,8 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     state_path = root / STATE
     state = cards.load_state(state_path)
     policy = cards.policy(agent.config, ("cards", "card_review"))
+    # A topic's failure is kept in the failure list only; its state keeps the last reply.
+    last_failed = failed_pages()
     written = failed = 0
     for topic in topics:
         # A topic's failure lists only its own jobs: a retry of it rejects every job
@@ -640,6 +652,9 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
                 record_failure(f"directions/{topic}", None)
                 print(f"  directions/{topic}: no findings or conflicts; no directions")
                 continue
+            if cards.leaves_failed(agent.config, f"directions/{topic}" in last_failed, None):
+                retire_broken(root, out, topic)
+                continue
             parse = checker(pack, cat)
             try:
                 reply = cards.reviewed(
@@ -654,15 +669,8 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
                 result = cards.failure(f"directions/{topic}", exc, agent)
                 record_failure(f"directions/{topic}", result)
                 print(f"  [FAILED] directions/{topic}: {result}")
-                # The last accepted pages stay, except one that builds on a finding or
-                # conflict now gone, which the strict check would reject for the whole run.
-                for page in pages_for(out, topic):
-                    refs = cards.read_page(page)[0].get("builds_on", [])
-                    if any(not (root / "wiki" / f"{ref}.md").exists() for ref in refs):
-                        page.unlink()
-                        print(
-                            f"  directions/{topic}: retired {page.name}; it builds on removed work"
-                        )
+                # The last accepted pages stay, except one that builds on removed work.
+                retire_broken(root, out, topic)
                 continue
         names = set()
         for d in reply.directions:

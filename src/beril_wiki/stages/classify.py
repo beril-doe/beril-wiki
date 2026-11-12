@@ -155,6 +155,8 @@ def run(
     todo = []
     for item_id, pack in items.items():
         prev = state.get(item_id, {})
+        if cards.leaves_failed(config, prev.get("failed") is True, cards.owners(name, item_id)):
+            continue
         if is_current(prev, pack, prompt_tag, policy, parse):
             continue
         key = item_key(pack, prompt_tag, policy)

@@ -568,3 +568,17 @@ def test_a_question_title_may_run_a_few_words_past_the_prompt_limit(tmp_path):
         " community?"
     )
     assert parse(reply(items[0] | {"title": long}, items[1], items[2]))
+
+
+@pytest.mark.parametrize(("expect", "asked"), [("a", False), (None, True)])
+def test_a_run_for_one_project_leaves_a_failed_topic(tmp_path, monkeypatch, expect, asked):
+    """Topics belong to no one project, so no run for one project re-asks a topic whose
+    last attempt failed; a maintainer run does."""
+    corpus(tmp_path)
+    monkeypatch.setattr(directions, "failed_pages", lambda: {f"directions/{TOPIC}"})
+    agent = FakeAgent(tmp_path / "store", {f"directions/{TOPIC}": [THREE]})
+    if expect:
+        agent.config["expect_source"] = expect
+    install(monkeypatch, agent)
+    assert directions.main(tmp_path) == 0
+    assert bool(agent.asked) is asked

@@ -2,10 +2,11 @@
 
 Two passes, each over a scratch copy of the live trees. The base pass fetches the
 corpus committed at HEAD and refuses when `main` already owes editorial stages,
-label refreshes, failed card entries or a ledger reconciliation, since a researcher's
-run would pay for them. The import pass fetches the given checkout and refuses when
-anything but the expected project would change, or when the run would re-integrate
-every source.
+label refreshes, failed card entries of the project or a ledger reconciliation, since
+a researcher's run would pay for them. Other projects' failed card entries do not
+refuse: a run for one project leaves them as saved. The import pass fetches the given
+checkout and refuses when anything but the expected project would change, or when the
+run would re-integrate every source.
 Nothing is written to the live trees or the job ledger.
 """
 
@@ -35,11 +36,13 @@ from beril_wiki.agentic.runner import (
     snapshot_trees,
 )
 from beril_wiki.agentic.runtime import WorkflowError, contract_manifest, digest
+from beril_wiki.stages.cards import owners
 from beril_wiki.stages.fetch import fetch_local
 from beril_wiki.stages.novelty import labels_due
+from beril_wiki.stages.shared import group_members
 
 PROJECT_ID = r"[A-Za-z0-9][A-Za-z0-9_-]*"
-# Card stages re-ask every entry saved as failed, whichever project it belongs to.
+# Card stages re-ask an entry saved as failed; a run for one project only its own.
 CARD_STATE = (
     "gists",
     "links",
@@ -116,9 +119,12 @@ def unknown_usage(root: Path) -> list[str]:
         raise WorkflowError(f"cannot read the job ledger {path}: {exc}") from exc
 
 
-def failed_entries(root: Path) -> list[str]:
-    """`<state>:<key>` for each card entry saved with `failed: true`."""
-    found: list[str] = []
+def failed_entries(root: Path, expect: str) -> tuple[list[str], list[str]]:
+    """`<state>:<key>` for each card entry saved with `failed: true`: those of project
+    `expect`, then the rest, which a topic-keyed store's entries always are."""
+    own: list[str] = []
+    others: list[str] = []
+    members = group_members(root)
     for name in CARD_STATE:
         path = root / "state" / f"{name}.json"
         if not path.is_file():
@@ -129,13 +135,14 @@ def failed_entries(root: Path) -> list[str]:
             raise WorkflowError(f"cannot read {path}: {exc}") from exc
         if name == "links" and isinstance(data, dict):
             data = data.get("candidates", {})
-        if isinstance(data, dict):
-            found += [
-                f"{name}:{key}"
-                for key, entry in data.items()
-                if isinstance(entry, dict) and entry.get("failed") is True
-            ]
-    return found
+        if not isinstance(data, dict):
+            continue
+        for key, entry in data.items():
+            if isinstance(entry, dict) and entry.get("failed") is True:
+                projects = owners(name, key, members.get(key, ()))
+                mine = projects is not None and expect in projects
+                (own if mine else others).append(f"{name}:{key}")
+    return own, others
 
 
 def outside(paths: set[str], expect: str) -> list[str]:
@@ -162,7 +169,8 @@ def admit(root: Path, checkout: Path, expect: str) -> dict:
     """Whether a run from `checkout` adds or updates project `expect` and nothing else.
 
     `pending_editorial` lists the stages the import makes due; `base_pending`,
-    `labels_due` and `unknown_usage` describe what the base owes before it."""
+    `labels_due` and `unknown_usage` describe what the base owes before it, and
+    `maintenance_failed` the other projects' failed card entries, which do not refuse."""
     if not re.fullmatch(PROJECT_ID, expect):
         raise WorkflowError(f"--expect-source must match {PROJECT_ID}, got {expect!r}")
     if (root / ".agentic/promotion.json").exists():
@@ -180,11 +188,11 @@ def admit(root: Path, checkout: Path, expect: str) -> dict:
         base_pending = due_editorial(base)
         due = labels_due(base)
         unknown = unknown_usage(root)
-        failed = failed_entries(base)
+        failed, maintenance = failed_entries(base, expect)
         if base_pending:
             reasons.append(f"main owes editorial stages: {', '.join(base_pending)}")
         if failed:
-            reasons.append(f"main owes maintenance: failed card entries {listed(failed)}")
+            reasons.append(f"main has failed card entries of {expect}: {listed(failed)}")
         if due:
             reasons.append("main owes a refresh of novelty labels past their age")
         if unknown:
@@ -224,5 +232,6 @@ def admit(root: Path, checkout: Path, expect: str) -> dict:
         "base_pending": base_pending,
         "labels_due": due,
         "unknown_usage": unknown,
+        "maintenance_failed": maintenance,
         "invalidation": reason,
     }
