@@ -332,9 +332,7 @@ def fixture_inputs(tmp_path: Path) -> lakehouse.Inputs:
                 "values",
                 ["Cadmium chloride", "https://example.org/x", None],
             ),
-            profile(
-                "kescience.fitnessbrowser", "experiment", "note", "top_values", [long_a, long_b]
-            ),
+            profile("kescience.fitnessbrowser", "experiment", "note", "values", [long_a, long_b]),
             # Synthetic stand-ins for person names, which only the column and table rules drop.
             profile(
                 "kescience.fitnessbrowser",
@@ -454,7 +452,8 @@ def test_build_merges_sources_by_rule(tmp_path):
     assert ("user", "full_name") not in values
     cond = values[("experiment", "condition_1")]
     assert cond["values"] == ["Cadmium chloride"] and cond["complete"] is False
-    assert values[("experiment", "note")]["values"] == ["a" * 60]
+    note = values[("experiment", "note")]
+    assert note["values"] == ["a" * 60] and note["complete"] is False
 
     texts = output_texts(out)
     assert not any("someowner" in t or "u_someone" in t for t in texts.values())

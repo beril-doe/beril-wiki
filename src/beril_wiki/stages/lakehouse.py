@@ -384,6 +384,9 @@ def values_line(p: Profile) -> dict | None:
         if shaped(value):
             complete = False
             continue
+        if len(value) > MAX_VALUE:
+            # A cut value no longer lists the column's real values exhaustively.
+            complete = False
         cut = value[:MAX_VALUE]
         if cut not in kept:
             kept.append(cut)
