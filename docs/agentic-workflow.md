@@ -27,6 +27,9 @@ uv run python -m beril_wiki.agentic run \
 # Check that a run from this checkout adds or updates one project and nothing else.
 uv run python -m beril_wiki.agentic plan --checkout corpus --expect-source ID --json
 
+# Check both subscription logins and count a README's authors, without a model call.
+uv run python -m beril_wiki.agentic check-auth --authors corpus/projects/ID/README.md
+
 # Search accepted wiki Markdown without inference.
 uv run python -m beril_wiki.agentic search 'carbon yield'
 
@@ -66,7 +69,36 @@ A README-only or figure-only update is admitted with an empty
 JSON object; without it, one line per field. `plan` exits 1 when the run is
 not admitted. `run --expect-source ID` makes the same check before the run
 starts and stops with the reasons; it cannot be combined with `--staged`.
-`--progress FILE` sets `BERIL_WIKI_PROGRESS` for the plan.
+
+`check-auth` runs the Claude subscription check (`claude auth status`) and the
+Codex ChatGPT-login check in a session whose Codex home is a temporary
+directory, so it writes nothing under `.agentic/`. With `--authors README` it
+also counts the authors under the README's `## Authors` heading. It prints one
+JSON object, `{"claude": "ok", "codex": "ok", "authors": 2}`, where a failed
+check holds its error text in place of `"ok"` or the count, and it exits 1 when
+any check fails. Without `--authors` the `authors` key is absent.
+
+### Progress lines
+
+`plan --progress FILE` and `run --progress FILE` append one JSON object per line
+to `FILE` and export it as `BERIL_WIKI_PROGRESS`, so stage subprocesses write to
+the same file. Every line carries `ts` (UTC, ISO 8601), `"source": "wiki"` and
+`event`:
+
+| `event` | Written by | Other fields |
+|---|---|---|
+| `plan_start` | `plan` | `expect_source` (the ID or `null`) |
+| `plan_end` | `plan` | with `--expect-source`: `admitted`, `reasons`; without it: `changed_sources`, `pending_editorial`; on an error: `error`, plus `admitted: false` and `reasons` with `--expect-source` |
+| `stage_start` | `run`, before each stage subprocess | `stage`, `jobs`, `usd`, `codex_tokens`, `failed_pages` |
+| `stage_end` | `run`, after each stage subprocess | the `stage_start` fields, `ok`, and `error` (the last 500 characters of the failure) when `ok` is false |
+| `job` | the ledger, when a job records its final charge | `stage` (empty for jobs the runner itself issues), `step`, `jobs`, `usd`, `codex_tokens`, `failed_pages` |
+
+`jobs` counts the ledger run's finished jobs, `usd` sums their recorded Claude
+cost and `codex_tokens` their raw Codex tokens, the same per-run units the
+`--max-usd` and `--max-codex-tokens` caps use. Pending jobs are left out, because
+their figures are admission holds. `failed_pages` is the number of pages in
+`.agentic/failures.json`. A ledger or failures file that cannot be read gives
+`null`. A line that cannot be written is dropped, and the run goes on.
 
 The checkout defaults to the repository's own `corpus/`, a copy of every
 input a run reads, laid out like an observatory checkout: `projects/<id>/`
@@ -131,15 +163,16 @@ each Claude job in flight or finished without a cost and for the job itself,
 would pass the cap. GPT jobs are never refused by a USD cap. `agentic cards`
 prints each capped stage's recorded USD against its cap at the end.
 
-A pilot has two more caps, per ledger run, in the units a person approves:
+Two more caps apply per ledger run, in the units a person approves:
 `max_usd` on the SDK's cost estimate for Claude jobs and `max_codex_tokens` on
 raw Codex tokens. A capped run counts each finished job at its recorded charge
 and each pending one at a hold: a page session holds its whole session USD
 ceiling, any other Claude job USD 2, a Codex job 400,000 tokens. A job is
 admitted only if its hold still fits. A job that ends without a reported cost (a
-kill, a timeout) keeps its hold, so an interrupted job still counts. Only the
-`pilot` command sets them (`--max-usd`, `--max-codex-tokens`); `run` has no flag
-for them. Account billing settings remain
+kill, a timeout) keeps its hold, so an interrupted job still counts. `run` and
+`pilot` set them with `--max-usd` and `--max-codex-tokens`; `run` without them
+has no such cap. A resume of the same inputs keeps the ledger run, so its
+earlier spend still counts against the caps. Account billing settings remain
 provider-owned; the runner does not purchase credits.
 
 ### Per-step models

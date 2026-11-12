@@ -7,10 +7,12 @@ import os
 import shutil
 import signal
 import sys
+import tempfile
 from pathlib import Path
 
 import yaml
 
+from beril_wiki.agentic import progress
 from beril_wiki.agentic.admission import admit
 from beril_wiki.agentic.batch import changed_sources
 from beril_wiki.agentic.curator import CARD_STAGES, EDITORIAL
@@ -196,6 +198,40 @@ def plan(root: Path, checkout: Path | None = None, expect: str | None = None) ->
     }
 
 
+def check_logins(cli: str | None, readme: Path | None) -> dict:
+    """Each login's status, "ok" or the error, and the README's author count, without
+    a model call or a ledger row."""
+    from beril_wiki.agentic import codex, runtime
+    from beril_wiki.stages.people import parse_authors
+
+    report: dict[str, str | int] = {}
+    try:
+        if not cli:
+            raise WorkflowError("install Claude Code and log in with a subscription first")
+        runtime.check_auth(cli)
+        report["claude"] = "ok"
+    except Exception as exc:  # an unknown status is a failure, never an "ok"
+        report["claude"] = str(exc) or type(exc).__name__
+    try:
+        # A throwaway store keeps the Codex home out of .agentic. Built directly, not
+        # through codex.session(), so it closes here rather than at exit, after cleanup.
+        with tempfile.TemporaryDirectory() as store:
+            current = codex.CodexSession(Path(store))
+            try:
+                codex.check_auth(current.client)
+            finally:
+                current.close()
+        report["codex"] = "ok"
+    except Exception as exc:
+        report["codex"] = str(exc) or type(exc).__name__
+    if readme is not None:
+        try:
+            report["authors"] = len(parse_authors(readme.read_text(encoding="utf-8")))
+        except (OSError, ValueError) as exc:
+            report["authors"] = str(exc) or type(exc).__name__
+    return report
+
+
 def admission_text(verdict: dict) -> str:
     lines = [f"admitted: {'yes' if verdict['admitted'] else 'no'}"]
     lines += [f"reason: {reason}" for reason in verdict["reasons"]]
@@ -224,8 +260,14 @@ def main() -> int:
     )
     inspect.add_argument("--json", action="store_true", help="print the admission as JSON")
     inspect.add_argument(
-        "--progress", type=Path, metavar="FILE", help="export FILE as BERIL_WIKI_PROGRESS"
+        "--progress", type=Path, metavar="FILE", help="append JSON progress lines to FILE"
     )
+    logins = commands.add_parser(
+        "check-auth",
+        help="check the Claude and Codex subscription logins; no model calls or ledger rows",
+    )
+    logins.add_argument("--authors", type=Path, metavar="README", help="also count its authors")
+    logins.add_argument("--cli", default=shutil.which("claude"))
     search = commands.add_parser("search", help="search accepted wiki text; no model calls")
     search.add_argument("query")
     search.add_argument("--offset", type=int, default=0)
@@ -315,6 +357,18 @@ def main() -> int:
         metavar="ID",
         help="refuse unless the run adds or updates only this project (see plan)",
     )
+    execute.add_argument(
+        "--max-usd", type=float, help="cap the run's recorded Claude USD (default: no cap)"
+    )
+    execute.add_argument(
+        "--max-codex-tokens", type=int, help="cap the run's raw Codex tokens (default: no cap)"
+    )
+    execute.add_argument(
+        "--progress",
+        type=Path,
+        metavar="FILE",
+        help="append JSON progress lines to FILE, from the run and its stages",
+    )
     execute.add_argument("--cli", default=shutil.which("claude"))
     account = commands.add_parser("account", help="reconcile unknown usage; does not retry")
     account.add_argument("--job", required=True)
@@ -394,15 +448,32 @@ def main() -> int:
     args = parser.parse_args()
     root = args.root.resolve()
     try:
-        if args.command == "plan":
-            if (root / ".agentic/promotion.json").exists():
-                raise WorkflowError("promotion pending; run recover before inspection")
-            if args.checkout and not args.expect_source:
-                raise WorkflowError("plan --checkout needs --expect-source")
+        if args.command == "check-auth":
+            report = check_logins(args.cli, args.authors)
+            print(json.dumps(report))
+            if any(report[k] != "ok" for k in ("claude", "codex")) or isinstance(
+                report.get("authors", 0), str
+            ):
+                return 1
+        elif args.command == "plan":
             if args.progress:
-                os.environ["BERIL_WIKI_PROGRESS"] = str(args.progress.resolve())
-            checkout = args.checkout.resolve() if args.checkout else None
-            result = plan(root, checkout, args.expect_source)
+                os.environ[progress.ENV] = str(args.progress.resolve())
+            progress.emit("plan_start", expect_source=args.expect_source)
+            try:
+                if (root / ".agentic/promotion.json").exists():
+                    raise WorkflowError("promotion pending; run recover before inspection")
+                if args.checkout and not args.expect_source:
+                    raise WorkflowError("plan --checkout needs --expect-source")
+                checkout = args.checkout.resolve() if args.checkout else None
+                result = plan(root, checkout, args.expect_source)
+            except (WorkflowError, OSError, ValueError) as exc:
+                refused = {"admitted": False, "reasons": [str(exc)]} if args.expect_source else {}
+                progress.emit("plan_end", error=str(exc), **refused)
+                raise
+            if args.expect_source:
+                progress.emit("plan_end", admitted=result["admitted"], reasons=result["reasons"])
+            else:
+                progress.emit("plan_end", **result)
             if args.expect_source and not args.json:
                 print(admission_text(result))
             else:
@@ -543,6 +614,11 @@ def main() -> int:
                 raise WorkflowError("pass_records must not be negative")
             if args.stage_max_tokens < 0:
                 raise WorkflowError("stage_max_tokens must not be negative")
+            # nan never compares greater and inf never refuses: either would disable a cap.
+            if args.max_usd is not None and not (math.isfinite(args.max_usd) and args.max_usd > 0):
+                raise WorkflowError("max_usd must be positive and finite")
+            if args.max_codex_tokens is not None and args.max_codex_tokens <= 0:
+                raise WorkflowError("max_codex_tokens must be positive")
             config = {
                 key: getattr(args, key)
                 for key in (
@@ -563,6 +639,11 @@ def main() -> int:
                     "usd_reserve",
                 )
             } | {"stage_max_usd": usd_caps(args.stage_max_usd)}
+            config |= {
+                key: getattr(args, key)
+                for key in ("max_usd", "max_codex_tokens")
+                if getattr(args, key) is not None
+            }
             known = (set(EDITORIAL) | set(RUN_PREFIXES)) - FILED_AS.keys()
             if unknown := set(config["stage_max_usd"]) - known:
                 hints = [
@@ -584,6 +665,8 @@ def main() -> int:
                 verdict = admit(root, args.checkout.resolve(), args.expect_source)
                 if not verdict["admitted"]:
                     raise WorkflowError("not admitted: " + "; ".join(verdict["reasons"]))
+            if args.progress:
+                os.environ[progress.ENV] = str(args.progress.resolve())
             print(json.dumps({"models": model_policy(config)}, indent=2))
             run(root, args.checkout.resolve(), config, args.staged)
     except (WorkflowError, OSError, ValueError) as exc:

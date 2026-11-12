@@ -15,6 +15,7 @@ from importlib.metadata import version
 from pathlib import Path
 
 from beril_wiki import compiler as C
+from beril_wiki.agentic import progress
 from beril_wiki.agentic.batch import INTEGRATION_REVISION, changed_sources, retryable
 from beril_wiki.agentic.curator import (
     EDITORIAL,
@@ -174,9 +175,28 @@ def run_stage(work: Path, config_path: Path, name: str, module: str, args: list[
         FETCH_BACKEND="local",
     )
     logfile = config_path.parent / f"stage-{name}.log"
-    limit = json.loads(config_path.read_text(encoding="utf-8")).get("stage_timeout", 14400)
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    limit = config.get("stage_timeout", 14400)
     command = [sys.executable, "-m", f"beril_wiki.{module}", *args]
     print(f"agentic stage: {name}", flush=True)
+
+    def report(event: str, **extra: object) -> None:
+        if progress.enabled():
+            totals = progress.snapshot(config_path.parent, config.get("run", ""))
+            progress.emit(event, stage=name, **totals, **extra)
+
+    report("stage_start")
+    try:
+        _run_stage(work, env, logfile, command, name, limit)
+    except BaseException as exc:
+        report("stage_end", ok=False, error=str(exc)[-500:])
+        raise
+    report("stage_end", ok=True)
+
+
+def _run_stage(
+    work: Path, env: dict[str, str], logfile: Path, command: list[str], name: str, limit: float
+) -> None:
     with logfile.open("w") as output:
         process = subprocess.Popen(
             command,
