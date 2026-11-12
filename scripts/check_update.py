@@ -60,11 +60,13 @@ def changed_keys(base: dict, head: dict) -> set[str]:
     return {k for k in base.keys() | head.keys() if base.get(k) != head.get(k)}
 
 
-def by_key(ids: set[str]) -> Callable[[dict, dict], list[str]]:
-    """Entries keyed by project id (headlines) or by `<project>--<hash>` (finding records)."""
+def by_key(ids: set[str], *, findings: bool = True) -> Callable[[dict, dict], list[str]]:
+    """Entries keyed by `<project>--<hash>` (finding records), or by project id."""
+    # A project id may itself end in `--<hex>`, so project-keyed stores compare exactly.
+    owner = project_of if findings else (lambda key: key)
 
     def check(base: dict, head: dict) -> list[str]:
-        return [k for k in sorted(changed_keys(base, head)) if project_of(k) not in ids]
+        return [k for k in sorted(changed_keys(base, head)) if owner(k) not in ids]
 
     return check
 
@@ -135,7 +137,7 @@ def violations(base: str, head: str, ids: set[str]) -> list[str]:
         elif re.match(r"wiki/(sources|summaries|figures)/", path) and not wiki_path(path, ids):
             out.append(f"{path} belongs to a project outside {sorted(ids)}")
     checks = {
-        "headlines": by_key(ids),
+        "headlines": by_key(ids, findings=False),
         "novelty": by_key(ids),
         "gists": by_key(ids),
         "outcomes": by_key(ids),

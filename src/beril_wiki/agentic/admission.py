@@ -185,6 +185,8 @@ def admit(root: Path, checkout: Path, expect: str) -> dict:
         head = head_corpus(root, scratch / "head")
         base = scratch / "base"
         base_inputs = prepare(root, base, head)
+        # Author pages HEAD's corpus would rewrite are main's debt, not this project's.
+        write_extras(base, base / "reference")
         base_pending = due_editorial(base)
         due = labels_due(base)
         unknown = unknown_usage(root)

@@ -1341,6 +1341,7 @@ def admission_base(tmp_path):
     from beril_wiki import corpus
     from beril_wiki.agentic import curator as C
     from beril_wiki.agentic import runner
+    from beril_wiki.agentic.admission import write_extras
     from beril_wiki.agentic.runtime import contract_manifest, digest, file_hash, manifest
     from beril_wiki.stages.fetch import fetch_local
 
@@ -1390,6 +1391,8 @@ def admission_base(tmp_path):
             }
         )
     )
+    # A run's curator runs extras first, so a settled base holds its author pages.
+    write_extras(root, source)
     (state / "agentic.json").write_text(
         json.dumps(
             {
@@ -1469,24 +1472,13 @@ def test_expect_source_admits_a_readme_only_update(tmp_path):
 def test_expect_source_plans_the_authors_stage_a_readme_change_makes_due(tmp_path):
     """A run's curator runs extras before anything else, so an added author rewrites
     the author pages and the authors stage spends; the plan must list it."""
-    import json
     import subprocess
 
     from beril_wiki import corpus
     from beril_wiki.agentic import __main__ as cli
-    from beril_wiki.agentic import curator as C
-    from beril_wiki.agentic.admission import write_extras
 
     root, checkout = admission_base(tmp_path)
-    # Settle the base as a run leaves it: extras wrote its pages, then the snapshot.
-    write_extras(root, root / "corpus")
-    path = root / "state/agentic.json"
-    state = json.loads(path.read_text())
-    state["editorial"] = {n: C.stage_snapshot(root, n) for n in C.EDITORIAL}
-    path.write_text(json.dumps(state))
     git = ["git", "-C", str(root), "-c", "user.name=t", "-c", "user.email=t@example.org"]
-    subprocess.run([*git, "add", "-A"], check=True)
-    subprocess.run([*git, "commit", "-qm", "extras"], check=True)
     assert "authors" not in cli.plan(root, checkout, "a")["pending_editorial"]
     (checkout / "projects/a/README.md").write_text("# A\n\n## Authors\n\n- Ada\n- Grace\n")
     manifest = corpus.load(checkout)
@@ -1495,6 +1487,13 @@ def test_expect_source_plans_the_authors_stage_a_readme_change_makes_due(tmp_pat
     verdict = cli.plan(root, checkout, "a")
     assert verdict["admitted"], verdict["reasons"]
     assert "authors" in verdict["pending_editorial"]
+    # The same README committed to HEAD without a run is main's debt, not the publisher's.
+    for name in ("projects/a/README.md", corpus.MANIFEST):
+        (root / "corpus" / name).write_bytes((checkout / name).read_bytes())
+    subprocess.run([*git, "commit", "-qam", "readme without a run"], check=True)
+    verdict = cli.plan(root, checkout, "a")
+    owed = [r for r in verdict["reasons"] if r.startswith("main owes editorial stages:")]
+    assert owed and "authors" in owed[0], verdict["reasons"]
 
 
 def adopted_revision(root, checkout):

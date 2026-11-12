@@ -107,6 +107,8 @@ def test_other_projects_summary_edit_fails_naming_it(repo, capsys):
 def test_other_projects_card_state_and_manifest_entry_fail(repo, capsys):
     add_new_project(repo)
     write(repo, "state/novelty.json", {"old--aaaa1111": {"label": "changed"}, "new--bbbb2222": {}})
+    # Headlines are keyed by project id, and `new--abc123` is another valid project id.
+    write(repo, "state/headlines.json", {"new": {}, "new--abc123": {}})
     write(
         repo,
         "corpus/manifest.json",
@@ -115,6 +117,7 @@ def test_other_projects_card_state_and_manifest_entry_fail(repo, capsys):
     commit(repo)
     code, out = run(capsys)
     assert code == 1 and "novelty.json: entry old--aaaa1111" in out and "projects.old" in out
+    assert "headlines.json: entry new--abc123" in out and "entry new " not in out
 
 
 def test_cross_project_links_and_shared_groups_may_change(repo, capsys):
