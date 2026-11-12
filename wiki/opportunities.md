@@ -49,7 +49,7 @@ Open Directions, gathered in one place. Follow a link for the evidence.
 - Extend the synthetic-data ordering test to the other phylogeny-aware models in the corpus, then report which fitted results depend on input row order. [src: microbeatlas_metal_ecology]
 - Populate phylogenetic-tree distances for the 47 uncovered candidate species and re-run the within-species subclade scan, then report the H7 effect across the full 65-species candidate set. [src: plant_microbiome_ecotypes]
 
-## [[concepts/analysis-provenance-and-reproducible-outputs|analysis-provenance-and-reproducible-outputs]]
+## [[concepts/analysis-provenance-and-reproducible-outputs|Committed Artifacts Are Not Provenance: Code History and Retained Outputs Are]]
 
 - Audit cited notebooks against git history. For every notebook name cited in project REPORTs and READMEs, check whether `git log` shows committed history. This would establish whether the outputs-only gap documented for NB08/NB09/NB10 is isolated or recurrent [src: pitfalls].
 - Flag committed notebooks that lack outputs. Scan committed `.ipynb` files for notebooks that have execution metadata but zero cell outputs, and treat the hits only as candidates for investigation. The scan alone cannot show which executor or options were used, or why the outputs are missing. Attributing any case to the `--inplace` failure would need execution logs or a controlled rerun of that notebook [src: pitfalls].
@@ -334,7 +334,7 @@ A reported positive or negative transposon fitness contrast should state its per
 - Build RB-TnSeq libraries for *Acidithiobacillus ferrooxidans* under Fe, Cu, Co, Ni, and Zn. Separately, run the Co, Ni, Cu, Zn, Al, Cr, U panel on *P. putida*. Together these would test whether normalized and repertoire-score ranks predict measured metal fitness. [src: metal_fitness_atlas]
 - Formally validate the MicrobeAtlas metal-type assignments with AMRFinderPlus, expand the metal-type vocabulary, and test genetic co-resistance groupings (e.g., Cu-Zn versus Hg-As). This would distinguish a distributed breadth signal from a near-threshold result. [src: microbeatlas_metal_ecology]
 
-## [[concepts/compositional-robustness-of-differential-abundance-calls|compositional-robustness-of-differential-abundance-calls]]
+## [[concepts/compositional-robustness-of-differential-abundance-calls|Compositional Transformation and Design Stratification Reverse Abundance Contrasts]]
 
 - Obtain a second cMD-IBD sub-study that populates E3 with ≥ 10 CD and ≥ 10 nonIBD samples and re-run the E3 × within-substudy test, to convert the 40 provisional E3 candidates into replicated calls or retire them [src: ibd_phage_targeting].
 - Re-test the former E3 triad under the stricter design on new data, since *F. plautii* replicates at +2.26 (FDR 0.02) while *B. wexlerae* does not (+0.25, FDR 0.80), to establish which of the digest's three candidates survive at all [src: ibd_phage_targeting].
@@ -653,7 +653,7 @@ Related: [[concepts/join-strategy-and-table-partitioning-cost]], [[concepts/vect
 - Join the unresolved EC-less candidates to AlphaFold MSA depth and InterPro domain counts, asking whether low structural-sequence representation predicts failure of EC-independent functional assignment without conflating that proxy with biochemical validation. [src: alphafold_msa_annotation]
 - Extend the pathway test beyond the 7 mapped organisms and validate the apparent *D. vulgaris* serine gap on serine-free defined medium, asking whether improved coverage and experiment distinguish a true auxotrophy from a missed or divergent pathway. [src: essential_metabolome]
 
-## [[concepts/ecological-cost-of-microbiome-target-depletion|ecological-cost-of-microbiome-target-depletion]]
+## [[concepts/ecological-cost-of-microbiome-target-depletion|Depleting a Target Taxon Carries Measurable Ecological Costs]]
 
 - Test the depletion prediction directly rather than by correlation: in a gnotobiotic or *ex vivo* community, remove an active dehydroxylator (*F. plautii*, *E. lenta* or *E. bolteae*) and measure whether the bile-acid pool shifts toward primary tauro-conjugated forms, closing the gap between a substrate–product correlation and a causal ecological cost [src: ibd_phage_targeting].
 - Rank the three annotation axes against each other by scoring the same candidate target list on iron/AIEC mechanism, bile-acid coupling and species-abundance-versus-strain-content mediation, and checking whether they reorder targets concordantly or pull in different directions — the digest requires all three but does not say which binds [src: discoveries].
@@ -860,7 +860,7 @@ See the project summaries: [[summaries/amr_environmental_resistome__REPORT]], [[
 
 See the source summaries: [[summaries/annotation_gap_discovery__REPORT]], [[summaries/pangenome_openness__REPORT]], [[summaries/pathway_capability_dependency__REPORT]], [[summaries/functional_dark_matter__REPORT]], and [[summaries/discoveries]].
 
-## [[concepts/execution-environment-dependent-access-paths|execution-environment-dependent-access-paths]]
+## [[concepts/execution-environment-dependent-access-paths|The Same Analysis Needs Different Access Paths and Hits Different Limits in Each Execution Environment]]
 
 - Run the same table counts and `DESCRIBE` calls through REST `/count`, `/schema` and `/query` and through direct Spark SQL, on tables of increasing size, and log the status codes and timeouts for each path. Measured failure rates per path would replace the qualitative description "frequently times out" and would test whether direct Spark also fails at scale [src: pitfalls].
 - Add a check before submission that flags `--` in query text bound for the REST API, and record in each project's provenance which access path it used, so results can be traced to the environment that produced them [src: pitfalls].
@@ -953,7 +953,7 @@ See the source summaries: [[summaries/annotation_gap_discovery__REPORT]], [[summ
 - Rebuild module families from BBH pairs extracted for growing organism subsets to quantify how family counts depend on orthology scope, given the 6x shortfall from a 5-organism pilot. [src: pitfalls]
 - Re-run module membership with a relaxed 50-gene cap to test whether AMR-containing modules (median 46 vs 27) are truncated by the cap. [src: discoveries]
 
-## [[concepts/foreign-dump-ingestion-fidelity|foreign-dump-ingestion-fidelity]]
+## [[concepts/foreign-dump-ingestion-fidelity|Ingesting Foreign Database Dumps Requires Schema and Encoding Repair Before Any Analysis]]
 
 - Post-ingest table-count audit: compare the set of `CREATE TABLE` names in each source dump against the tables actually loaded. This would detect the silent whole-table skips caused by comment misparsing, which currently leave no error or quarantine entry [src: pitfalls].
 - Replacement-character census: count U+FFFD occurrences per column after permissive SQLite decoding. This would show how much text was altered and whether affected columns (such as `comment`) matter for any analysis [src: pitfalls].
@@ -1139,7 +1139,7 @@ See the source summaries: [[summaries/annotation_gap_discovery__REPORT]], [[summ
 - Apply the annotation-gap resolution pipeline to non-Proteobacterial organisms beyond *B. thetaiotaomicron*, asking whether low resolution is a clade-level property or a single-organism result. [src: annotation_gap_discovery]
 - Annotate a sample of clusters lacking a non-UPI UniProt accession with sequence-only methods, asking whether the excluded fraction really carries a larger annotation gap than the analysed subset. [src: alphafold_msa_annotation]
 
-## [[concepts/gut-microbiome-ecotypes-as-patient-strata|gut-microbiome-ecotypes-as-patient-strata]]
+## [[concepts/gut-microbiome-ecotypes-as-patient-strata|Reproducible Gut Community Ecotypes as Candidate Patient Strata]]
 
 - Settle whether K = 4 states are reproducible at all before using them as strata: re-select K with resampling and report cross-method agreement and leave-one-study-out ARI per candidate K, since the chosen K = 4 rests on a cross-method ARI of 0.131 against a 0.140 peak at K = 7 and a 48.9 % per-sample agreement [src: ibd_phage_targeting].
 - Quantify intra-patient state stability with a cohort designed for it: 6967 is the only UC Davis patient with biological multi-timepoint samples, so the single observed E1 ↔ E3 flip cannot bound a per-patient switching rate or a dosing interval [src: ibd_phage_targeting].
@@ -1148,7 +1148,7 @@ See the source summaries: [[summaries/annotation_gap_discovery__REPORT]], [[summ
 - Probe the absence of E2 as a portability limit: E2 holds 16.9 % of healthy controls and ~0 % disease in the cross-study consensus, and 0 of the 26 UC Davis samples fall in it, so this cohort cannot test whether a *P. copri*-dominant patient would need a different cocktail at all [src: discoveries, ibd_phage_targeting].
 - Check whether the Bacteroides2-with-metabolic-disease pattern (100 % T1D, 97 % T2D in E1) survives per-study stratification, since those diagnosis fractions could reflect single contributing cohorts rather than a cross-population association [src: discoveries].
 
-## [[concepts/habitat-structured-community-metabolic-potential|habitat-structured-community-metabolic-potential]]
+## [[concepts/habitat-structured-community-metabolic-potential|Habitat Separates Community-Level Metabolic Potential Along Carbon and Amino-Acid Axes]]
 
 - **Separate habitat from composition.** Regress per-sample completeness scores on measured physicochemical covariates, such as carbon and nutrient measurements where available, while conditioning on taxonomic composition. This would test whether habitat selects metabolic configurations beyond taxon turnover, which the current habitat-label contrast cannot do. [src: nmdc_community_metabolic_ecology]
 - **Test the carbon-axis claim directly.** Correlate PC1 scores with measured organic-carbon or substrate data from the same samples. This would turn the proposed primary carbon axis from a loading-based interpretation into a tested association. [src: nmdc_community_metabolic_ecology]
@@ -1270,7 +1270,7 @@ See [[summaries/field_vs_lab_fitness__REPORT]] for the DvH analysis details, [[s
 - Map xoxF carriage (102/209 *Methylobacterium* genomes) and lanmodulin carriage (46/209) onto a *Methylobacterium* phylogeny. This would show whether lanmodulin gain or loss is clade-structured and whether the chelator-dehydrogenase mismatch has a phylogenetic basis [src: lanthanide_methylotrophy_atlas].
 - Screen the uncharacterised Acetobacteraceae genus `g__BOG-930` (12 lanmodulin genomes) for methylotrophy genes and environmental origin. This would test whether lanmodulin carriage outside *Methylobacterium* also tracks a methylotrophic lifestyle [src: lanthanide_methylotrophy_atlas].
 
-## [[concepts/lanthanide-dependent-methanol-dehydrogenase-predominance|lanthanide-dependent-methanol-dehydrogenase-predominance]]
+## [[concepts/lanthanide-dependent-methanol-dehydrogenase-predominance|Lanthanide-Dependent Methanol Dehydrogenases Predominate Over Calcium-Dependent Ones]]
 
 - **Split xoxF calls by clade.** Run phylogenetic placement of the 3,690 `K00114` hits against characterized XoxF clades. This would test whether the KO lumps distinct dehydrogenase families together, which could inflate the ratio [src: lanthanide_methylotrophy_atlas].
 - **Test whether lineage composition drives the ratio.** Recompute the ratio at genus level within the zero-mxaF phyla, and again with *Pseudomonadaceae* excluded. That family contributes 566 of the xoxF genomes against 1 mxaF, so this would check whether the global ratio depends on a few heavily sampled lineages [src: lanthanide_methylotrophy_atlas].
@@ -1283,7 +1283,7 @@ See [[summaries/field_vs_lab_fitness__REPORT]] for the DvH analysis details, [[s
 - Audit existing long-running project notebooks for stage-level checkpoint files and `_finalize.py`-style recovery scripts. This would identify which pipelines cannot currently resume after a silent kernel loss [src: pitfalls].
 - Compare `nbconvert` runs that set an explicit `--ExecutePreprocessor.timeout` against `nohup` script runs for the same long Spark job. This would test whether headless notebook execution avoids idle termination and can substitute for the terminal-script workaround [src: pitfalls].
 
-## [[concepts/long-term-soil-warming-microbial-response|long-term-soil-warming-microbial-response]]
+## [[concepts/long-term-soil-warming-microbial-response|Long-Term Soil Warming Shifts Community Composition More Clearly Than Gene Content]]
 
 - Test whether the heated-mineral pmoA/pmoB and aceA/aceB transcript increases come from Actinobacteria-assigned reads. Taxonomically binned RNA KO counts would show whether these reflect a single ruderal subset or separate responses that happen to co-occur [src: harvard_forest_warming].
 - Cross-link the warming-responsive phyla with Choudoir et al. 2025 pangenome data, as the report proposes. This would test whether genomes of warming-enriched taxa carry glyoxylate-shunt and methanotrophy genes [src: harvard_forest_warming].
@@ -1335,7 +1335,7 @@ Source summary: [[summaries/harvard_forest_warming__REPORT]].
 - Extend GapMind with toluene, naphthalene, benzoate, and other aromatic pathways; apply PGLS or phylogenetic logistic regression using the GTDB tree and balanced sampling. [src: pseudomonas_carbon_ecology]
 - Use the 789,012-row carbon-pathway matrix to model within-species variation in *P. fluorescens* and *P. putida* and cross-reference ecotypes with RB-TnSeq fitness data. [src: pseudomonas_carbon_ecology]
 
-## [[concepts/metabolite-class-signatures-of-gut-inflammation|metabolite-class-signatures-of-gut-inflammation]]
+## [[concepts/metabolite-class-signatures-of-gut-inflammation|Chemical-Class Enrichment in Paired Metabolomics]]
 
 - Re-run the identical 11-theme Fisher screen with the same gate (FDR < 0.10 and OR > 1.5) on an independent paired metagenome-metabolome cohort, to test whether the polyamine (OR 14.6) and long-chain-PUFA (OR 7.9) axes are cohort-specific or portable; this closes the replication gap left by a single cohort-level contrast [src: ibd_phage_targeting].
 - Separate the three explanations the report leaves open for the 0-of-14 SCFA null by pairing a GC-based or derivatized SCFA assay with the sample-level within-subject paired test the report names as the natural follow-up, since LC-MS undersampling, subject-averaging, and genuinely small pool differences are currently indistinguishable [src: ibd_phage_targeting].
@@ -1418,7 +1418,7 @@ Source summary: [[summaries/harvard_forest_warming__REPORT]].
 - Sample Harvard Forest RNA across multiple dates and horizons to test whether the comparable 10-13% DNA and RNA treatment R² conceals an earlier transient, and replace contig-annotation KO counts with directly quantified transcript expression; separately, add the excluded `nmdc_arkin` quantitative metabolomics, natural organic matter, and proteomics layers, which supply chemical and protein measurements rather than RNA quantification. [src: harvard_forest_warming]
 - Replace the CCA pilot with a sparsity-gated MOFA+ decomposition on more than the n=106 subjects, and refit without the 30-component per-modality PCA reduction suspected of over-aligning the modalities, to test whether CC1's Cliff +0.498 separation persists while CC2-CC4 remain non-discriminating; test the CC1 polyamine and bile-acid loadings against paired flux or substrate-product measurements. [src: ibd_phage_targeting]
 
-## [[concepts/null-results-under-limited-statistical-resolution|null-results-under-limited-statistical-resolution]]
+## [[concepts/null-results-under-limited-statistical-resolution|Design-Limited Nulls Versus Genuine Absence of Effect]]
 
 - Re-run the AMR temporal regressions using only genomes with parseable dates, and stratify species by date completeness to test whether date sparsity explains the null. The report says only 70% of genomes had parseable dates [src: amr_strain_variation].
 - Use a positive control. Check whether the date-filtered pipeline recovers the expected AMR expansion in *S. aureus* and *K. pneumoniae* before treating the corrected null across 513 species as uninformative [src: amr_strain_variation].
@@ -1886,7 +1886,7 @@ See [[summaries/cf_formulation_design__REPORT]] for the project this concept dra
 - Record paired `/count` and `/query` responses, with retry timestamps, for databases queried cold and warm. This would turn the qualitative warm-up delay of "several minutes" into an observed distribution and would test whether `/count` reliably flags data that `/query` has not yet returned [src: pitfalls].
 - Build a lookup that maps S3 and Spark catalog error strings (`S3 access denied`, `403 Forbidden`, `Token denied`, `AccessControlException`) to confirmed causes from resolved access tickets. This would show how often each string actually reflects table permissions rather than other storage faults [src: pitfalls].
 
-## [[concepts/soil-horizon-response-heterogeneity|soil-horizon-response-heterogeneity]]
+## [[concepts/soil-horizon-response-heterogeneity|Depth Horizon Dominates and Reshapes Treatment Responses in Soil]]
 
 - Re-run the organic-only, mineral-only and sign-flip classification on the RNA cohort, restricted to direct samples in both horizons. That cohort includes organic direct samples, so the comparison would test whether horizon specificity holds once incubation is removed from the horizon contrast [src: harvard_forest_warming].
 - Fit a formal treatment-by-horizon interaction test for ChEBI richness and per-KO fold changes, and compare pooled with stratified analyses. This would directly test whether pooling hides signals, instead of inferring it from separate within-horizon p-values [src: harvard_forest_warming].
@@ -1904,7 +1904,7 @@ See [[summaries/cf_formulation_design__REPORT]] for the project this concept dra
 - Cross-reference the metal-resistance hotspot grid cells against the coordinate QC classes (good, suspicious cluster, low precision), and ask whether any hotspot is driven by institutional or integer-degree coordinates. [src: env_embedding_explorer, metal_resistance_global_biogeography]
 - Run Moran's I on the residuals of the hotspot and soil models, followed by SEVM if the result is significant. Also re-run the models with spatial blocking, and ask whether the associations and the negative R² hold once spatial non-independence is modelled. [src: soil_metal_functional_genomics, soil_frontier_genomics, metal_resistance_global_biogeography]
 
-## [[concepts/species-cooccurrence-modules-as-intervention-units|species-cooccurrence-modules-as-intervention-units]]
+## [[concepts/species-cooccurrence-modules-as-intervention-units|Species Co-occurrence Modules as Candidate Intervention Units]]
 
 - Rebuild the four subnet networks under alternative edge estimators — FastSpar and SpiecEasi, which the project deliberately did not install, the latter targeting conditional independence rather than marginal correlation — on the same CLR matrices, and report whether the single-pathobiont-module concentration of 4-5 of the 6 Tier-A candidates is stable across estimators; this measures how far the module definition depends on the CLR-Spearman edge definition, without assuming any one estimator removes indirect association [src: ibd_phage_targeting].
 - Define the module-enrichment criterion over target-containing modules only, with a permutation null that reassigns Tier-A labels across nodes, so the reported 1.38 mean and the per-subnet concentration can be judged against the same prespecified test rather than one before and one after inspection [src: ibd_phage_targeting].

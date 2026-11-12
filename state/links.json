@@ -221,12 +221,14 @@
       "relation": "not a reference"
     },
     "ref:amr_strain_variation>ecotype_analysis": {
-      "failed": true,
-      "input": "2b15afaeffe8920f8c8ecb7152983d5aa2317d55b2c2d3936b2cce0a76a4d989"
+      "input": "2b15afaeffe8920f8c8ecb7152983d5aa2317d55b2c2d3936b2cce0a76a4d989",
+      "label": "",
+      "relation": "not a reference"
     },
     "ref:amr_strain_variation>pangenome_openness": {
-      "failed": true,
-      "input": "03310e421877924db2de2bd43b7e4316758ced32be256ceb7c3aae8cc290338b"
+      "input": "03310e421877924db2de2bd43b7e4316758ced32be256ceb7c3aae8cc290338b",
+      "label": "Compares its AMR variability index with the other project's pangenome openness; finds a weak negative association.",
+      "relation": "compares with its results"
     },
     "ref:aromatic_catabolism_network>adp1_deletion_phenotypes": {
       "input": "9e688cd5f7a4db6df647d45ab39b5373beb37b177189efe8a7bf4617fb12a908",
@@ -795,6 +797,13 @@
       "a": "amr_pangenome_atlas",
       "b": "core_gene_tradeoffs",
       "label": "Relates intrinsic AMR genes' fitness neutrality to its core-gene burden finding, as an exception",
+      "level": "project",
+      "type": "compares with its results"
+    },
+    {
+      "a": "amr_strain_variation",
+      "b": "pangenome_openness",
+      "label": "Compares its AMR variability index with the other project's pangenome openness; finds a weak negative association.",
       "level": "project",
       "type": "compares with its results"
     },
