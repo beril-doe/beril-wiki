@@ -407,6 +407,18 @@
     "reason": "The evidence shows that deep-clay genomes carry sulfate-reduction genes far more often than rock-attached samples, so a real pattern is found.",
     "type": "positive"
   },
+  "berdl_data_atlas--113f874a": {
+    "input": "df7f5c650e7938ca8599e1a36b0b5376d1dfe9df4140acabb7f5dd2cef2fbaa7",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows shared identifiers linking data collections and an audit finding no recorded project use at audit time, a coverage fact limited by README-based search.",
+    "type": "data"
+  },
+  "berdl_data_atlas--a65ca624": {
+    "input": "f5769c24c458b310f4351ce1a50d2a2fe71f6d5643cd2040f2f040dbb7b89e6f",
+    "model": "claude-haiku-5-5",
+    "reason": "The audit found a pattern: most projects drew on several collections, concentrated on one pair of tenants, rather than describing dataset contents.",
+    "type": "positive"
+  },
   "caulobacter_fur_lipida_loss--088e2303": {
     "input": "22484355bf860656b238d5f610c50c7481444ec610b910603157794bd43d5d3b",
     "model": "claude-haiku-5-5",
@@ -1383,6 +1395,12 @@
     "input": "d0475a4b67c53e28d8a21eae4cb73df80edafd04a382f7f50877fa0be0098d8f",
     "model": "claude-haiku-5-5",
     "reason": "Across 133 samples, communities from later time points tended to show a wider range of metal-resistance types, so the analysis found a link to sampling time.",
+    "type": "positive"
+  },
+  "module_conservation--b36fddee": {
+    "input": "a15a0f54edca7cb87a1563cbb0a7714d047f4b0df0a20c9224fb758089c3ad30",
+    "model": "claude-haiku-5-5",
+    "reason": "The analysis found that most gene modules are built almost entirely from genes shared across the organisms' genomes, a pattern in the organisms rather than a fact about a database.",
     "type": "positive"
   },
   "module_conservation--ba3f89b5": {

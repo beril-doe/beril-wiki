@@ -87,7 +87,7 @@ to take up. Each states a hypothesis, the test that would settle it and the
 results it builds on. The Open questions page groups them by what following up
 needs, least effort first:
 
-- *Analyze existing data*: BERDL, the shared database the projects query,
+- *Analyze existing data*: KBase Data Lakehouse, the shared database the projects query,
   already holds what the answer needs.
 - *Add outside data*: public genomes, metagenomes or another study's
   measurements, with no new lab work.

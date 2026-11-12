@@ -2198,6 +2198,158 @@
       ]
     }
   },
+  "berdl_data_atlas": {
+    "input": "8521e96ba0a400e15794a03888ed790949e012e48f8c003ecf15fa43f425d4f7",
+    "pages": {
+      "berdl_data_atlas--113f874a.md": "14ca3e005f78241fce59aa2d428d68d73d77fd93c2171bb45fbb92de99ba6218",
+      "berdl_data_atlas--5f0ea1fc.md": "1bd005d07a1284c5901f7cb6c9ceaa2d4e54ae4c46555908c76dd61d9a78e6b3",
+      "berdl_data_atlas--82c709b1.md": "3e60408938944f2c326bc4a7a72748474477a18b2c2f5ed430e1238b9d77bd5f",
+      "berdl_data_atlas--a65ca624.md": "762b959c08aa9caceefd8035d5759a0fe6bfb46dafa8994c0346c894bd76a4dd"
+    },
+    "render": "finding-page@4",
+    "reply": {
+      "headlines": [
+        {
+          "caveat": "The realized-use audit is README-based, so mentions in research plans or notebook source may have been missed and true per-project tenant breadth is a lower bound.",
+          "caveat_evidence": "berdl_data_atlas:16000:7",
+          "claim": "Cross-tenant analyses occur in 77% (51/66) of audited BERIL projects, and realized use is concentrated on the kbase \u00d7 kescience axis (36 projects).",
+          "evidence": "berdl_data_atlas:0:3",
+          "quantities": [
+            {
+              "denominator": "66 audited BERIL projects",
+              "scope": "README-based audit",
+              "unit": "percent",
+              "value": "77%",
+              "what": "share of audited BERIL projects spanning multiple tenants"
+            },
+            {
+              "denominator": "66 audited BERIL projects",
+              "scope": "",
+              "unit": "projects",
+              "value": "51",
+              "what": "audited projects that span multiple tenants"
+            },
+            {
+              "denominator": "",
+              "scope": "realized use concentrated on this axis",
+              "unit": "projects",
+              "value": "36",
+              "what": "projects using the kbase \u00d7 kescience bridge"
+            }
+          ],
+          "result": "observation",
+          "title": "Most audited BERIL projects already span multiple tenants, mainly kbase with kescience"
+        },
+        {
+          "caveat": "The realized-use audit is README-based and may miss mentions in plans or notebooks, so per-project tenant breadth is a lower bound.",
+          "caveat_evidence": "berdl_data_atlas:16000:7",
+          "claim": "The report observes that heavy-in-lakehouse is not heavy-in-reuse: ENIGMA holds 36% of tables but appears in only 6 projects, PhageFoundry holds 14% / 5 projects, and PROTECT holds 4% / 2 projects, while kbase appears in 53/66 projects (80%).",
+          "evidence": "berdl_data_atlas:0:9",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "appears in only 6 projects",
+              "unit": "percent",
+              "value": "36%",
+              "what": "share of tables held by ENIGMA"
+            },
+            {
+              "denominator": "",
+              "scope": "appears in 5 projects",
+              "unit": "percent",
+              "value": "14%",
+              "what": "share of tables held by PhageFoundry"
+            },
+            {
+              "denominator": "66 projects",
+              "scope": "80%",
+              "unit": "projects",
+              "value": "53/66",
+              "what": "audited projects using kbase"
+            },
+            {
+              "denominator": "",
+              "scope": "appears in 2 projects",
+              "unit": "percent",
+              "value": "4%",
+              "what": "share of tables held by PROTECT"
+            }
+          ],
+          "result": "observation",
+          "title": "Tenant table shares and project reuse are sharply unequal across tenants"
+        },
+        {
+          "caveat": "The validated 55,454-gene cohort lacks structural features because kescience_alphafold.alphafold_entries does not carry per-residue pLDDT or structural-feature data.",
+          "caveat_evidence": "berdl_data_atlas:16000:56",
+          "claim": "UC1 was sample-validated on the live cluster after its proposed protein_id join was corrected (FitnessBrowser exposes (orgId, locusId); the bridge runs through besthitswissprot.sprotAccession), yielding 55,454 FitnessBrowser genes across 48 organisms with fitness measurements and an AlphaFold model, and SwissProt-best-hit coverage of AlphaFold of 99.5%.",
+          "evidence": "berdl_data_atlas:0:5",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "48 organisms",
+              "unit": "genes",
+              "value": "55,454",
+              "what": "FitnessBrowser genes with both fitness data and an AlphaFold model"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "organisms",
+              "value": "48",
+              "what": "organisms in the joined cohort"
+            },
+            {
+              "denominator": "",
+              "scope": "live cluster",
+              "unit": "percent",
+              "value": "99.5%",
+              "what": "SwissProt-best-hit coverage of AlphaFold"
+            }
+          ],
+          "result": "correction",
+          "title": "Corrected join links fitness genes to AlphaFold models via SwissProt best hits"
+        },
+        {
+          "caveat": "The realized-use audit is README-based, so use mentioned only in research plans or notebook source may have been missed and per-project tenant breadth is a lower bound.",
+          "caveat_evidence": "berdl_data_atlas:16000:7",
+          "claim": "At audit time, five high-leverage bridges had zero realized use: kescience \u2194 refdata (12 keys, including AlphaFold IDs), enigma \u2194 phagefoundry (11), kbase \u2194 refdata (11, including gtdb_taxonomy), nmdc \u2194 protect (10), and nmdc \u2194 refdata (9).",
+          "evidence": "berdl_data_atlas:0:4",
+          "quantities": [
+            {
+              "denominator": "",
+              "scope": "zero realized use at audit time",
+              "unit": "keys",
+              "value": "12",
+              "what": "shared keys in kescience \u2194 refdata bridge"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "keys",
+              "value": "11",
+              "what": "shared keys in enigma \u2194 phagefoundry bridge"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "keys",
+              "value": "11",
+              "what": "shared keys in kbase \u2194 refdata bridge"
+            },
+            {
+              "denominator": "",
+              "scope": "",
+              "unit": "keys",
+              "value": "10",
+              "what": "shared keys in nmdc \u2194 protect bridge"
+            }
+          ],
+          "result": "null result",
+          "title": "Five high-leverage schema bridges had no recorded use at audit"
+        }
+      ]
+    }
+  },
   "caulobacter_fur_lipida_loss": {
     "input": "cadcdba72aefcff9e461f5bc72cfcfd3c94b0e1794de5a59a568ac8cda99aff2",
     "pages": {
