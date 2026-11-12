@@ -24,7 +24,14 @@ from beril_wiki.agentic.prose import (
     strict_pages,
     workers,
 )
-from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, model_policy
+from beril_wiki.agentic.runtime import (
+    CandidateError,
+    atomic_json,
+    configured,
+    digest,
+    model_policy,
+    runtime_config,
+)
 from beril_wiki.stages import cards
 from beril_wiki.stages.gists import RETRY, last_objections
 
@@ -33,15 +40,100 @@ def load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
 
 
-def status(name: str, state_path: Path, ids: list[str]) -> int:
-    """Print accepted, failed and pending counts; touches neither the runtime nor state."""
+def status_config(root: Path) -> dict:
+    """Return the model config a ``--status`` count keys with, without a runtime.
+
+    Parameters
+    ----------
+    root : Path
+        The checkout whose ``agentic.yaml`` a default run would use.
+
+    Returns
+    -------
+    dict
+        The agentic run's config when one is set, else the repository's model policy.
+    """
+    if configured():
+        return runtime_config()
+    # The CLI module loads the curator and runner; only a status count needs it.
+    from beril_wiki.agentic.__main__ import load_models
+
+    return load_models(root, None, None, [])
+
+
+def item_key(pack: dict, prompt_tag: str, policy: str) -> str:
+    """Return the cache key of one item: its pack, the prompt tag and the model policy."""
+    return digest([pack, prompt_tag, policy])
+
+
+def is_current(
+    prev: dict,
+    pack: dict,
+    prompt_tag: str,
+    policy: str,
+    parse: Callable[[dict], Callable[[str], BaseModel]],
+) -> bool:
+    """Whether a saved answer is kept: unfailed, keyed for today's pack, and still accepted."""
+    if prev.get("failed") or prev.get("input") != item_key(pack, prompt_tag, policy):
+        return False
+    stored = {k: v for k, v in prev.items() if k not in ("input", "model", "failed")}
+    try:
+        parse(pack)(json.dumps(stored))
+    except CandidateError:
+        return False
+    return True
+
+
+def status(
+    name: str,
+    state_path: Path,
+    items: dict[str, dict],
+    prompt_tag: str,
+    parse: Callable[[dict], Callable[[str], BaseModel]],
+    policy: str,
+) -> int:
+    """Print how many saved answers a run would keep; touches neither the runtime nor a model.
+
+    An answer is current when it is not failed, its key equals today's ``item_key`` and
+    today's checks accept it; stale when it exists but is not current; pending when absent.
+
+    Parameters
+    ----------
+    name : str
+        The stage name shown in the count.
+    state_path : Path
+        The stage's state file.
+    items : dict[str, dict]
+        Item id to today's pack.
+    prompt_tag : str
+        The stage's prompt tag.
+    parse : Callable
+        ``parse(pack)`` returns the code check for one reply.
+    policy : str
+        The model policy the run keys with.
+
+    Returns
+    -------
+    int
+        1 when any item is stale, failed or pending, else 0.
+    """
     state = load(state_path)
-    entries = [state.get(i) for i in ids]
-    failed = sum(1 for e in entries if e and e.get("failed"))
-    accepted = sum(1 for e in entries if e and not e.get("failed"))
-    pending = sum(1 for e in entries if not e)
-    print(f"{name}: {accepted} accepted, {failed} failed, {pending} pending, {len(ids)} total")
-    return 0
+    current = stale = failed = pending = 0
+    for item_id, pack in items.items():
+        prev = state.get(item_id)
+        if not prev:
+            pending += 1
+        elif prev.get("failed"):
+            failed += 1
+        elif is_current(prev, pack, prompt_tag, policy, parse):
+            current += 1
+        else:
+            stale += 1
+    print(
+        f"{name}: {current} current, {stale} stale, {failed} failed, {pending} pending, "
+        f"{len(items)} total"
+    )
+    return 1 if stale or failed or pending else 0
 
 
 def run(
@@ -60,20 +152,12 @@ def run(
     policy = cards.policy(config, ("labels", "card_review"))
     writer = model_policy(config)["labels"]
 
-    def passes(prev: dict, pack: dict) -> bool:
-        stored = {k: v for k, v in prev.items() if k not in ("input", "model", "failed")}
-        try:
-            parse(pack)(json.dumps(stored))
-        except CandidateError:
-            return False
-        return True
-
     todo = []
     for item_id, pack in items.items():
-        key = digest([pack, prompt_tag, policy])
         prev = state.get(item_id, {})
-        if prev.get("input") == key and not prev.get("failed") and passes(prev, pack):
+        if is_current(prev, pack, prompt_tag, policy, parse):
             continue
+        key = item_key(pack, prompt_tag, policy)
         step = f"{name}/{item_id}"
         todo.append((item_id, pack, key, last_objections(step) if prev.get("failed") else ""))
 

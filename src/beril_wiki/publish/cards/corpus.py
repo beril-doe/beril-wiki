@@ -1,8 +1,9 @@
 """What the publish-time joins read: the records, their labels and topic membership.
 
 Corpus loads the finding and direction records, the stage state that joins them
-(literature labels, plain summaries, links and shared results) and the topic and
-citation data that place them. Nothing here writes a file.
+(literature labels, plain summaries, links and shared results), the lakehouse catalog
+that checks the tables a question names, and the topic and citation data that place
+them. Nothing here writes a file.
 """
 
 from __future__ import annotations
@@ -13,7 +14,7 @@ import re
 
 import yaml
 
-from beril_wiki import records
+from beril_wiki import lakehouse, records
 from beril_wiki.publish.cards.text import OFF_TYPES, TYPE_FALLBACK
 from beril_wiki.records import DIGESTS, SHOWN_CASES, title_of
 from beril_wiki.wording import is_reanalysis
@@ -66,7 +67,12 @@ class Corpus:
         }
         # A failed label keeps its old value for recovery; the fallback stands in for it.
         self.outcomes = accepted(kb / "state" / "outcomes.json")
-        self.followups = accepted(kb / "state" / "followups.json")
+        # An answer without a tables field predates the catalog check (followups@1), so its
+        # outside or experiment verdict never saw the catalog and places nothing.
+        self.followups = {
+            k: v for k, v in accepted(kb / "state" / "followups.json").items() if "tables" in v
+        }
+        self.catalog = lakehouse.load(kb)
         links_path = kb / "state" / "links.json"
         self.link_records: list[dict] = (
             json.loads(links_path.read_text()).get("links", []) if links_path.exists() else []

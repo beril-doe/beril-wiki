@@ -240,8 +240,6 @@ LIGHT_LABELS = [
     ".nvcolh",
     ".nvgroup",
     ".nvgroup.rest",
-    ".ready.f-existing",
-    ".ready.f-experiment",
     ".px-facet-lbl",
     ".crel",
     ".cnovel",
@@ -2017,11 +2015,12 @@ def contrast(browser, base: str, label: str) -> list[str]:
         return [sel, getComputedStyle(e).color, bg];
     }))"""
     rec = records()
+    follows = {e["follow"] for e in rec["questions"].values()}
     # Tags that only exist when some record uses them.
     light = LIGHT_LABELS + [
         sel
         for sel, on in (
-            (".ready.f-outside", any(e["follow"] == "outside" for e in rec["questions"].values())),
+            *((f".ready.f-{key}", key in follows) for key in rec["follow_order"]),
             (".rt.upd", any(r["updates"] for r in rec["results"].values())),
         )
         if on

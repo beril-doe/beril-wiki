@@ -1,0 +1,145 @@
+{
+  "covered": [
+    {
+      "name": "aiale",
+      "display_name": "aiale",
+      "source": "semcat-2026-11-04",
+      "date": "2026-11-04"
+    },
+    {
+      "name": "aimbiocm",
+      "display_name": "aimbiocm",
+      "source": "semcat-2026-11-04",
+      "date": "2026-11-04"
+    },
+    {
+      "name": "arkinlab",
+      "display_name": "LBNL Arkin Lab",
+      "source": "semcat-2026-11-04",
+      "date": "2026-11-04"
+    },
+    {
+      "name": "conwaylab",
+      "display_name": "conwaylab",
+      "source": "semcat-2026-11-04",
+      "date": "2026-11-04"
+    },
+    {
+      "name": "enigma",
+      "display_name": "ENIGMA",
+      "source": "packet-2026-11-11",
+      "date": "2026-11-11"
+    },
+    {
+      "name": "enigmay12",
+      "display_name": "enigmay12",
+      "source": "semcat-2026-11-04",
+      "date": "2026-11-04"
+    },
+    {
+      "name": "ese",
+      "display_name": "OPAL platform",
+      "source": "semcat-2026-11-04",
+      "date": "2026-11-04"
+    },
+    {
+      "name": "evaluation",
+      "display_name": "evaluation",
+      "source": "semcat-2026-11-04",
+      "date": "2026-11-04"
+    },
+    {
+      "name": "globalusers",
+      "display_name": "Global Users",
+      "source": "packet-2026-11-11",
+      "date": "2026-11-11"
+    },
+    {
+      "name": "kbase",
+      "display_name": "KBase",
+      "source": "packet-2026-11-11",
+      "date": "2026-11-11"
+    },
+    {
+      "name": "kbaseincubator",
+      "display_name": "KBase Incubator",
+      "source": "packet-2026-11-11",
+      "date": "2026-11-11"
+    },
+    {
+      "name": "kescience",
+      "display_name": "KBase Knowledge Engine Science",
+      "source": "packet-2026-11-11",
+      "date": "2026-11-11"
+    },
+    {
+      "name": "lambda",
+      "display_name": "lambda",
+      "source": "semcat-2026-11-04",
+      "date": "2026-11-04"
+    },
+    {
+      "name": "msyscolo",
+      "display_name": "Microbial Ecosystems Lab",
+      "source": "packet-2026-11-11",
+      "date": "2026-11-11"
+    },
+    {
+      "name": "netl",
+      "display_name": "NETL Produced Water DNA",
+      "source": "semcat-2026-11-04",
+      "date": "2026-11-04"
+    },
+    {
+      "name": "nmdc",
+      "display_name": "National Microbiome Data Collaborative",
+      "source": "packet-2026-11-11",
+      "date": "2026-11-11"
+    },
+    {
+      "name": "phagefoundry",
+      "display_name": "BRaVE (Phage Foundry)",
+      "source": "semcat-2026-11-04",
+      "date": "2026-11-04"
+    },
+    {
+      "name": "planetmicrobe",
+      "display_name": "Planet Microbe",
+      "source": "packet-2026-11-11",
+      "date": "2026-11-11"
+    },
+    {
+      "name": "plantmicrobeinterfaces",
+      "display_name": "Plant Microbe Interfaces",
+      "source": "packet-2026-11-11",
+      "date": "2026-11-11"
+    },
+    {
+      "name": "protect",
+      "display_name": "PROTECT",
+      "source": "semcat-2026-11-04",
+      "date": "2026-11-04"
+    },
+    {
+      "name": "refdata",
+      "display_name": "Reference Data",
+      "source": "packet-2026-11-11",
+      "date": "2026-11-11"
+    },
+    {
+      "name": "usgs",
+      "display_name": "USGS Produced Waters / River Geochem",
+      "source": "semcat-2026-11-04",
+      "date": "2026-11-04"
+    },
+    {
+      "name": "wintr",
+      "display_name": "WINTR",
+      "source": "packet-2026-11-11",
+      "date": "2026-11-11"
+    }
+  ],
+  "uncovered": [],
+  "listing_date": null,
+  "listing": "none"
+}

@@ -552,6 +552,7 @@ def main() -> None:
     records = cards.Corpus(kb)
     # Maintainer lists are written straight to the site, so no wiki page backs them.
     targets |= {f"{cards.ISSUES}/{_slug(sid)}" for sid in records.issues}
+    targets |= cards.generated_routes(records)
     shutil.rmtree(dst, ignore_errors=True)
 
     n = 0
@@ -568,6 +569,8 @@ def main() -> None:
         text = src.read_text(encoding="utf-8", errors="replace")
         if rel.parts[0] in cards.DIRS:
             text = cards.record(rel, records)
+        if rel == pathlib.Path("about.md"):
+            text = cards.about_text(text, records.catalog)
         if rel.parts[0] == "sources" and rel.stem.endswith("__REPORT"):
             text = rewrite_source_figures(text, re.sub(r"__REPORT$", "", rel.stem), kb, dst)
         # Report prose carries links into the observatory checkout and

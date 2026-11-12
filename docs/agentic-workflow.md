@@ -348,7 +348,7 @@ every stage that depends on it stale as well:
 | Links | After headlines, find links between projects and write them to `state/links.json`. Code finds two kinds of candidate: pairs of results from different projects whose title and claim reach a TF-IDF cosine of 0.30 (`THRESHOLD`) and whose two projects a concept or conflict page cites together, and source-report lines that name another project by id or exact report title. The `cards` model sorts each candidate, 8 to a job, into a fixed relation (`same result`, `uses its data or methods`, ...) or drops it, and writes a label of at most 16 words. Code rejects a label with a statistic, a figure the inputs never state, wording that one project confirms, reproduces or agrees with another, file, table or column names, or an opening such as "Uses its ..." that leaves out whose data it is; GPT reviews every job. A stored label today's rules reject counts as stale, so a rule change re-asks only those candidates. Each candidate is cached under a digest of its own texts, so a corpus change re-asks only changed candidates. A failed job leaves its candidates without a current link, and a candidate whose results or projects are gone is pruned. |
 | Shared results | After links, group the related-result links into connected groups and write one statement per group to `state/shared.json`. A group qualifies with 2 to 4 results, from two or more projects whose main topics number two or more; a larger group is skipped. Code sets the group's relation to the weakest of its links. The `cards` model writes a title, a sentence, the question the projects asked, a short label per result and how the results relate, under the same rejections as Links; results that reach different conclusions are never presented as one result, and shared data is named in the sentence. GPT reviews faithfulness to every member. A failure fails only its group. A group whose links are gone is pruned. |
 | Result types | After gists, label every finding publish would list as a positive, negative or inconclusive result, a result about the data, a bookkeeping fix or an untested explanation, in `state/outcomes.json`. The extraction tag misfiles both ways, so every finding is read. The `labels` model writes the type and a one-sentence reason; the `card_review` model reviews it against the evidence quote. Publish unlists bookkeeping fixes and untested explanations and keeps their pages. A failure fails only its finding, and publish falls back to the tag. |
-| Follow-up needs | After directions, label every open question by what its deciding test needs (existing BERDL data, outside data, or an experiment), whether existing data comes first in an experiment, and whether data availability is unclear, in `state/followups.json`, written by the `labels` model. The direction's approach and readiness fields misfile both ways, so every question is read. The `card_review` model reviews each answer against the question. A failure fails only its question, and publish falls back to the approach. |
+| Follow-up needs | After directions, label every open question by what its deciding test needs (existing lakehouse data, outside data, or an experiment), whether existing data comes first in an experiment, and whether data availability is unclear, in `state/followups.json`, written by the `labels` model. The pack carries the question, the tables its direction names, the catalog directory and up to 20 catalog tables matched to the question. A reply names the tables it relies on (`tables`, at most 12). Code rejects a table the catalog lacks, `existing` or a first analysis that names no table, a reason that says BERDL, and a reason that says the lakehouse lacks data. The direction's approach and readiness fields misfile both ways, so every question is read. The `card_review` model reviews each answer against the question. A failure fails only its question, and publish shows that question as *Not checked yet*. |
 
 Before writing hundreds of planned pages, measure a few: `--write-only
 concepts/a.md,summaries/b.md` writes only those pages and then stops before any
@@ -427,19 +427,37 @@ disk for a withdrawn finding.
 
 The directions stage writes one reviewed job per topic. The `cards` model reads
 the topic's findings with their literature labels and closest papers, its
-conflict pages, the proposals its pages already make, and the collection list.
+conflict pages, the proposals its pages already make, and two views of the
+lakehouse catalog (`beril_wiki/lakehouse.py`). DATABASES is the directory of
+every covered database with its first table names. TABLES holds up to 40 tables
+matched to the topic, with columns and sample values: first the tables the
+topic's projects used, then the tables whose names, columns or values share
+words with the findings' and conflicts' titles and text.
 It proposes 3 to 8 directions, each with an id (D1, D2, ...) that repairs keep
 even when they rewrite the direction, a question, a falsifiable hypothesis,
 why it matters, the decisive test, what would support or refute it, an
-approach, the data and its readiness, and the findings, conflicts and closest
-papers it rests on. A direction is a biological question, never a request to
+approach, the databases and tables the test reads (`<database>.<table>`), the
+readiness, and the findings, conflicts and closest papers it rests on. A direction is a biological question, never a request to
 repeat, correct, reconcile, recount or audit existing work: code rejects a
 title or question that opens that way (`REANALYSIS` in `wording.py`). Those
 proposals are listed for the reports' maintainers at publish instead. Code also
 checks that each direction rests on a finding or conflict of the topic, cites
-only PMIDs the topic's findings retrieved, names collections under
-`wiki/data/`, and states no result figure the evidence it cites lacks.
-Directions carry no score.
+only PMIDs the topic's findings retrieved, names only databases and tables
+that the whole catalog holds (not only those in TABLES), and states no result
+figure the evidence it cites lacks. A direction whose readiness is "data in the
+lakehouse" or "needs compute", or whose approach is "lakehouse analysis" or
+"analysis then experiment", must name at least one table. A readiness note that
+says the lakehouse lacks data goes back: the catalog covers some tenants, so the
+note says the catalog did not show the data. Reader prose names no database or
+table. The page's frontmatter keeps the canonical dotted `tables` and their
+`databases`, and publish writes the table list. Directions carry no score.
+
+The catalog directory is part of every topic's cache key, so a catalog rebuild
+that changes a table name makes every topic's directions stale and the next run
+buys them again. The curator reads `state/lakehouse/` as a directions input in
+place of `wiki/data/`, so a data page edit never makes directions stale.
+Pages written before the catalog keep a `collections` field until that rerun;
+nothing reads it.
 
 When a headline or direction job does not converge, the stage keeps the last
 candidate the reviewer judged, minus the headlines or directions an open
@@ -470,10 +488,74 @@ caches. A card run's id hashes the stages' inputs and leaves out what the card
 stages write, so a run stopped after saving some records resumes under the same
 id, ceilings and recorded charges. `python -m beril_wiki.stages.links --status`
 and `python -m beril_wiki.stages.shared --status` count the current links and
-shared results without a model call; `outcomes --status` and `followups --status`
-count saved labels the same way.
+shared results without a model call. `outcomes --status` and `followups --status`
+print current, stale, failed and pending labels and exit 1 when any is stale, failed
+or pending: a label is current when its key equals today's `classify.item_key` and
+today's checks accept it, so a changed pack or prompt tag counts as stale, not
+accepted. `python -m beril_wiki.stages.directions --status`
+builds each topic's key from today's pack and compares it with
+`state/directions.json`. It prints current, stale, failed and skipped topics
+(skipped: no findings and no conflicts) and exits 1 when any is stale or failed.
+It keys with the agentic run's config when one is set, else with `agentic.yaml`.
 [`wiki.md`](wiki.md#rendering-the-accepted-corpus) describes how the
 records publish.
+
+### Lakehouse catalog
+
+`state/lakehouse/` lists the KBase Data Lakehouse tables, columns and values
+that question records may cite. `beril_wiki.stages.lakehouse` builds it from
+three local snapshots, with no model call and no network:
+
+- the hub catalog packet of 2026-11-11 (`--packet`, a folder whose `.zip` sits
+  beside it), which gives schema, row counts and value profiles for the 11
+  tenants the exporting account reads;
+- a pinned semcat snapshot (`--semcat`, commit `e3a8b81`, harvested 2026-11-04),
+  which gives production tables, columns, types, row counts and
+  producer-written descriptions for 12 more tenants, checked against its
+  `SHA256SUMS`;
+- the May 2026 BERDL Data Atlas table map (`--atlas`), which adds the tables
+  of 8 of those tenants that semcat lacks, schema only.
+
+```sh
+uv run python -m beril_wiki.stages.lakehouse \
+  --packet docs/drafts/lakehouse-catalog/beril-lakehouse-catalog-20261111 \
+  --semcat docs/drafts/semcat-e3a8b81 \
+  --atlas "$BERIL_CHECKOUT/projects/berdl_data_atlas/data/table_topic_map.csv"
+uv run python -m beril_wiki.stages.lakehouse --check
+```
+
+The build writes `catalog.jsonl` (one row per table, at most 200 columns),
+`values.jsonl.gz` (profiled values of the shared tenants kbase, kescience, nmdc,
+refdata, globalusers and planetmicrobe only), `databases.jsonl`, `usage.json`
+(the databases and tables each observatory project's report and code name),
+`coverage.json` (the covered tenants, with source and date) and `manifest.json`
+(input digests, the observatory commit, counts and the redaction rules). It
+drops personal namespaces (`u`, `u_*`), values under people or secret column
+names (such as `email`, `user`, `agent`, `expert`, `owner` or `first_name`),
+every value of a table named for people (such as `user`, `authors` or
+`experts`), and email-, ORCID- or URL-shaped values. It writes the six files to
+a sibling folder, runs the check there, and replaces `state/lakehouse/` only when
+the check passes, so a failed refresh leaves the committed files as they were
+and exits 1. `--tenants <jsonl>` adds a hub tenant listing, so `coverage.json`
+can name the tenants the catalog does not cover; the listing's
+`tenants_all.manifest.json` must give a `snapshot_utc` date, or the build stops
+with exit 2. Without `--tenants` that list stays empty and `listing` is
+`"none"`. The inputs stay in the ignored `docs/drafts/`; only the outputs are
+committed.
+
+`--check` re-reads the committed files and exits 1 on any failure: a file over
+its cap (3 MB for `catalog.jsonl`, 4 MB for `values.jsonl.gz`), an unsorted or
+repeated table, a database or table name with a character other than letters,
+digits, `_` and the dots between database parts, a value outside the shared
+tenants, under a redacted column name or in a table named for people, a kept
+email-, ORCID- or URL-shaped value, a personal namespace anywhere, a tenant both
+covered and uncovered, or a description holding an email or ORCID. When `docs/drafts/semcat-<commit>/` is present it also fails on any
+semcat `owner` value in any output; otherwise it prints that the owner scan was
+skipped.
+
+The build costs nothing, but a changed `catalog.jsonl` makes directions rerun
+for every topic (about USD 22 to 38) and then followups, and the build says so
+when the file changes. Refresh it only from a new snapshot.
 
 ## Checking the reader pages
 
@@ -517,7 +599,7 @@ their expected values from the records under `quartz/content/` and
   compares each dot's row and column with its record under `wiki/directions/`,
   exercises hover, focus, click, Escape and tap, checks that Tab from a focused
   dot reaches its pop-up's links, that no dot carries an approach shape and
-  that each dot's name and pop-up still state its approach. It checks for
+  that each dot's name and pop-up name its follow-up need. It checks for
   horizontal scroll at 390 px on `/`, `/findings/` and `/directions/`. It also
   moves the pointer from ringed and plain dots onto each pop-up in 2 px steps
   and checks that the pop-up stays open. A jump straight from one dot to

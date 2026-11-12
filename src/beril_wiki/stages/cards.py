@@ -44,7 +44,7 @@ from beril_wiki.agentic.runtime import (
     runtime,
 )
 from beril_wiki.check import figures_in, prose_only
-from beril_wiki.records import source_path, title_of
+from beril_wiki.records import source_path
 
 T = TypeVar("T")
 M = TypeVar("M", bound=BaseModel)
@@ -134,19 +134,6 @@ def write_page(path: Path, fields: dict, body: str) -> None:
 
 def read_page(path: Path) -> tuple[dict, str]:
     return C.parse_fm(path.read_text(encoding="utf-8"))
-
-
-def collections(root: Path) -> dict[str, str]:
-    """Collection page stem -> its title, from wiki/data/."""
-    out = {}
-    for path in sorted((root / "wiki/data").glob("*.md")):
-        if path.stem != "index":
-            out[path.stem] = title_of(path.read_text(encoding="utf-8"), path.stem)
-    return out
-
-
-def collection_id(name: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
 
 
 def new_figures(text: str, pool: str) -> list[str]:
