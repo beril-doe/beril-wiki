@@ -1444,6 +1444,14 @@ def stale_stage(root, checkout):
     path.write_text(json.dumps(state))
 
 
+def failed_link_on_main(root, checkout):
+    import json
+
+    (root / "state/links.json").write_text(
+        json.dumps({"candidates": {"ref:x__REPORT.md>y": {"failed": True}}, "links": []})
+    )
+
+
 def unknown_job(root, checkout):
     ledger = Ledger(root / ".agentic/jobs.sqlite", "earlier", 100, 5, 10)
     ledger.reserve("conflicts/x")
@@ -1481,6 +1489,7 @@ def test_expect_source_adopts_an_older_revision_scheme(tmp_path):
         (current_revision, "accepted revision"),
         (expired_labels, "novelty labels"),
         (stale_stage, "main owes editorial stages: authors"),
+        (failed_link_on_main, "failed card entries links:ref:x__REPORT.md>y"),
         (unknown_job, "conflicts/x"),
         (other_manifest_entry, "manifest.json differs from HEAD outside projects/b: projects/a"),
         (other_readme, "projects/a/README.md"),

@@ -107,6 +107,27 @@ def test_other_projects_card_state_and_manifest_entry_fail(repo, capsys):
     assert code == 1 and "novelty.json: entry old--aaaa1111" in out and "projects.old" in out
 
 
+def test_cross_project_links_and_shared_groups_may_change(repo, capsys):
+    # links.py keys reference candidates `ref:<sid>><target>`, which a pair-only parser
+    # read as no project; a new finding also moves unrelated pairs and regroups topics.
+    add_new_project(repo)
+    write(
+        repo,
+        "state/links.json",
+        {
+            "candidates": {
+                "ref:new__REPORT.md>old": {"relation": "uses its data"},
+                "ref:old__REPORT.md>other": {"relation": "extends"},
+                "pair:old--aaaa1111|other--cccc3333": {},
+            },
+            "links": [{"a": "old--aaaa1111", "b": "other--cccc3333", "level": "finding"}],
+        },
+    )
+    write(repo, "state/shared.json", {"g-1": {"projects": ["old", "other"], "input": "k"}})
+    commit(repo)
+    assert run(capsys) == (0, "")
+
+
 def test_branch_behind_base_fails(repo, capsys):
     add_new_project(repo)
     commit(repo)
