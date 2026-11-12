@@ -1451,6 +1451,37 @@ def test_expect_source_admits_a_readme_only_update(tmp_path):
     assert verdict["changed_sources"] == []
 
 
+def test_expect_source_plans_the_authors_stage_a_readme_change_makes_due(tmp_path):
+    """A run's curator runs extras before anything else, so an added author rewrites
+    the author pages and the authors stage spends; the plan must list it."""
+    import json
+    import subprocess
+
+    from beril_wiki import corpus
+    from beril_wiki.agentic import __main__ as cli
+    from beril_wiki.agentic import curator as C
+    from beril_wiki.agentic.admission import write_extras
+
+    root, checkout = admission_base(tmp_path)
+    # Settle the base as a run leaves it: extras wrote its pages, then the snapshot.
+    write_extras(root, root / "corpus")
+    path = root / "state/agentic.json"
+    state = json.loads(path.read_text())
+    state["editorial"] = {n: C.stage_snapshot(root, n) for n in C.EDITORIAL}
+    path.write_text(json.dumps(state))
+    git = ["git", "-C", str(root), "-c", "user.name=t", "-c", "user.email=t@example.org"]
+    subprocess.run([*git, "add", "-A"], check=True)
+    subprocess.run([*git, "commit", "-qm", "extras"], check=True)
+    assert "authors" not in cli.plan(root, checkout, "a")["pending_editorial"]
+    (checkout / "projects/a/README.md").write_text("# A\n\n## Authors\n\n- Ada\n- Grace\n")
+    manifest = corpus.load(checkout)
+    manifest["projects"]["a"] = corpus.entry(checkout / "projects/a", "workbench")
+    corpus.save(manifest, checkout)
+    verdict = cli.plan(root, checkout, "a")
+    assert verdict["admitted"], verdict["reasons"]
+    assert "authors" in verdict["pending_editorial"]
+
+
 def adopted_revision(root, checkout):
     import json
 

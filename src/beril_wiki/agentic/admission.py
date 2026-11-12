@@ -14,6 +14,7 @@ from __future__ import annotations
 import contextlib
 import io
 import json
+import os
 import re
 import shutil
 import sqlite3
@@ -80,6 +81,23 @@ def prepare(root: Path, work: Path, checkout: Path) -> dict[str, str]:
     with contextlib.redirect_stdout(sys.stderr):
         fetch_local(work / "staging", work / "reference")
     return external
+
+
+def write_extras(work: Path, checkout: Path) -> None:
+    """Run the extras stage on `work` as a run's curator does first, so the author pages
+    a README change rewrites make the authors stage due here too."""
+    # extras reads ROOT and CHECKOUT at import, so it needs its own process.
+    env = os.environ | {"BERIL_WIKI_ROOT": str(work), "BERIL_CHECKOUT": str(checkout)}
+    done = subprocess.run(
+        [sys.executable, "-m", "beril_wiki.stages.extras"],
+        cwd=work,
+        env=env,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if done.returncode:
+        raise WorkflowError(f"extras failed in the admission scratch: {done.stderr[-1000:]}")
 
 
 def unknown_usage(root: Path) -> list[str]:
@@ -196,6 +214,7 @@ def admit(root: Path, checkout: Path, expect: str) -> dict:
             reasons.append(
                 f"{corpus.MANIFEST} differs from HEAD outside projects/{expect}: {listed(entries)}"
             )
+        write_extras(work, work / "reference")
         pending = due_editorial(work)
     return {
         "admitted": not reasons,
