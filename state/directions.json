@@ -102,172 +102,132 @@
     }
   },
   "ecotypes-and-environmental-gene-content-differentiation": {
-    "input": "79f6660aadb001d03f7addecbf1d3756bdea2accb1bbdfd2f4bd9ce32e491130",
+    "input": "a4e1cc2462b5b2669cd6629ad4ab0ee2cd99a4b2902aa835f9a3e7a758e575df",
     "pages": {
-      "are-phage-tail-and-anti-defense-genes-enriched-in-human-asso--c17562.md": "c215e51ab45b1e4837984f4c3890dc12e944aac22550f43913785ead93268464",
-      "do-commensals-inhibit-lung-adapted-pseudomonas-by-competing--5545fd.md": "b4550dc7964faf88cb3f1d2b6f6648a7f62c1f7130ef381a8359528b8d206436",
-      "do-pseudomonas-from-different-habitats-differ-in-how-fast-th--2dbc47.md": "6e30491c8f710b019f33acc1771f56961e7393c2eb4d1534032acce24a1d74ed",
-      "does-long-term-warming-favor-soil-bacteria-that-carry-fast-g--33f26b.md": "75583516be1064f16881fe254a3a007f6fd2506db23080b0d7670f64b4a3302b",
-      "is-host-specialization-in-xanthomonas-carried-by-a-small-sha--7376af.md": "628b6a0e434dc40e78022f4a687269cc659839cf277c6f2e57ade94dd315fc9b"
+      "are-anti-defense-modules-enriched-in-human-associated-genome--775f74.md": "564d1144848caaf41bd5923c9a09628997054a33135761d48277f82c00e4bca3",
+      "do-commensal-mixtures-suppress-pseudomonas-aeruginosa-beyond--4e889d.md": "d86e9b619675734ed10277f47b5ec80593a8e0e7c00c5f1d6c6923d1a2040130",
+      "do-cystic-fibrosis-lung-pseudomonas-aeruginosa-lose-sugar-pa--100d0a.md": "14102fe6e4853a9c00b63fb16767b67981f5fbed7fb99e3a9e549d829e6e68b3",
+      "does-measured-soil-acidity-predict-accessory-gene-content-wh--2cda68.md": "c4d32465e8ffe2fb020b491a4d089944760a375391a16b4d42cadfbab409ce11",
+      "does-warming-raise-methane-oxidation-transcripts-by-increasi--2a6edb.md": "dad95ad3167504b79e9ceb3c274b5615e5e0441c4009579847377378665faaa1",
+      "is-acquired-resistance-spread-by-repeated-gene-gain-rather-t--e32cad.md": "eb9a729b8673b3c5e96b9d9bd56da771726b7a3d5beb80f14fb34df49f626a5a"
     },
     "render": "direction-page@2",
     "reply": {
       "directions": [
         {
           "approach": "analysis then experiment",
-          "conflicts": [],
-          "databases": [
-            "nmdc.results",
-            "kbase.nmdc_mags",
-            "kbase.ke_pangenome",
-            "nmdc.metadata"
-          ],
-          "findings": [
-            "harvard_forest_warming--5dcb42f7",
-            "harvard_forest_warming--d1815e53",
-            "harvard_forest_warming--4fcaf7c4",
-            "harvard_forest_warming--8f0aae96"
-          ],
-          "hypothesis": "Warming-enriched genera carry the glyoxylate-cycle genes and other traits of fast-growing opportunists more often than warming-depleted genera. This would make the weak, uncorrected glyoxylate-gene signals a trait of the winners rather than noise.",
-          "id": "D4",
-          "outcomes": "Support: winners carry the glyoxylate-cycle genes more often and respond more strongly to the acetate pulse in heated soil. Refutation: winners and losers do not differ in these traits, or the carbon pulse favors both groups equally. The original shifts came from one sampling date, and the organic-horizon samples were all lab-incubated, so a refutation could also mean those shifts do not recur.",
-          "papers": [
-            "25762989",
-            "27590813",
-            "34512564",
-            "40105318"
-          ],
-          "prior_work": "PMID 25762989 reports individual Actinobacteria and Acidobacteria members responding to Harvard Forest warming, and PMID 34512564 and 40105318 describe warming-responsive transcripts and pangenome changes. None compares genome traits of rising and falling taxa or tests them with a carbon pulse.",
-          "question": "In Harvard Forest organic soil, Actinobacteria rose and Acidobacteria fell under long-term warming. Do the genera that rise share genome traits, such as the glyoxylate cycle and larger genomes, that the falling genera lack?",
-          "readiness": "needs new measurements",
-          "readiness_basis": "The catalog lists taxonomic profile, gene annotation and genome bin tables, but whether Harvard Forest bins are present was not shown, and the activity test needs new heated and control cores.",
-          "tables": [
-            "nmdc.results.kraken2_classification_report",
-            "nmdc.results.annotation_kegg_orthology",
-            "kbase.nmdc_mags.mag_catalog",
-            "kbase.nmdc_mags.bin_catalog",
-            "kbase.ke_pangenome.gtdb_metadata",
-            "nmdc.metadata.study_set"
-          ],
-          "test": "Step 1 (analysis): list the genera that rose or fell in the heated plots from the taxonomic profiles. Find genome bins from matching soils and compare winners with losers for the glyoxylate-cycle genes, genome size and annotated carbon-cycling gene content, using related species in the pangenome collection as a cross-check. Step 2 (experiment): in fresh heated and control cores from the same plots, add a labile carbon source such as acetate. Measure respiration and use quantitative PCR to follow the winner and loser groups.",
-          "title": "Does long-term warming favor soil bacteria that carry fast-growth and glyoxylate-cycle traits?",
-          "why_it_matters": "It would turn a phylum-level shift seen at one time point into a trait-based prediction of which soil bacteria gain under warming. That would inform models of warmed forest carbon, which currently treat the community as a block."
-        },
-        {
-          "approach": "analysis then experiment",
-          "conflicts": [],
-          "databases": [
-            "protect.curated",
-            "protect.formulation",
-            "protect.genome_analysis",
-            "kbase.ke_pangenome"
-          ],
-          "findings": [
-            "cf_formulation_design--1799127b",
-            "cf_formulation_design--8bf20af1",
-            "cf_formulation_design--951bde52",
-            "cf_formulation_design--460ed03a",
-            "cf_formulation_design--94972e2b"
-          ],
-          "hypothesis": "For lung-adapted, toxin-type-matched isolates, metabolic overlap weighted by the isolate's own substrate preferences predicts commensal inhibition better than overlap weighted by the laboratory strain's preferences, with amino acids carrying most of the signal.",
-          "id": "D6",
-          "outcomes": "Support: strain-specific weighting predicts inhibition clearly better, and amino acids carry the predictive signal. Refutation: laboratory-strain weighting predicts as well, or inhibition of lung isolates is unrelated to overlap. That would point to non-metabolic inhibition mechanisms.",
-          "papers": [
-            "17873029",
-            "27881418",
-            "35174108",
-            "25409940",
-            "19936230"
-          ],
-          "prior_work": "PMID 17873029 describes carbon preferences of Pseudomonas in cystic fibrosis sputum and PMID 27881418 shows environmental pseudomonads inhibiting patient-derived isolates. Neither tests whether strain-specific substrate weighting predicts inhibition of lung-adapted isolates.",
-          "question": "The cystic fibrosis formulation work measured inhibition only on a laboratory strain that carries a different toxin type from most cystic fibrosis isolates, and no sugar or amino acid gave commensals a clear edge. Does inhibition of lung isolates depend on overlap in amino acid use instead?",
-          "readiness": "needs new measurements",
-          "readiness_basis": "Existing competition and virulence tables supply the commensal panel and typing, but inhibition and substrate preferences for toxin-type-matched lung isolates have not been measured; their column contents were not shown.",
-          "tables": [
-            "protect.formulation.competition_screen",
-            "protect.curated.silver_competition",
-            "protect.genome_analysis.isolate_virulence_factors",
-            "kbase.ke_pangenome.gapmind_pathways"
-          ],
-          "test": "Choose commensals from the existing competition screen and a panel of ExoS-positive cystic fibrosis isolates plus the laboratory strain. Measure growth inhibition of each isolate in co-culture and in conditioned medium. Measure each isolate's growth on sugars and amino acids directly, so any sugar-use difference is observed rather than inferred from pathway scores. Compute overlap weighted by each isolate's measured substrate preferences. Compare how well strain-specific and laboratory-strain weighting predict inhibition, and repeat with the three-member formulation that adds Micrococcus luteus.",
-          "title": "Do commensals inhibit lung-adapted Pseudomonas by competing for amino acids rather than sugars?",
-          "why_it_matters": "It would show whether formulations designed around one reference strain transfer to the strains in patients. Lung isolates score lower on several sugar pathways, which the earlier work reads as possible metabolic streamlining (an interpretation, not a measured loss), so the test also shows whether design should target amino acid use."
-        },
-        {
-          "approach": "analysis then experiment",
           "conflicts": [
             "conflict--ecotype-environment-gene-content--30e389f5"
           ],
           "databases": [
-            "kbase.ke_pangenome",
-            "kescience.fitnessbrowser",
-            "kescience.bacdive"
-          ],
-          "findings": [
-            "pseudomonas_carbon_ecology--0211e0cd",
-            "pseudomonas_carbon_ecology--cbe7e256",
-            "pseudomonas_carbon_ecology--eb1d58ae"
-          ],
-          "hypothesis": "Within Pseudomonas fluorescens-group and P. putida species, plant-root isolates grow faster than water isolates on xylose, arabinose and myo-inositol. The pathway genes are present in both, so the difference lies in transport or regulation that pathway-presence calls cannot see.",
-          "id": "D8",
-          "outcomes": "Support: growth rates differ by habitat on these sugars among isolates with identical pathway calls, and fast and slow growers differ in transporter or regulator variants. Refutation: rates are similar across habitats, or they track pathway completeness only. The coarse-pathway explanation for the weak habitat signal would then fall away.",
-          "papers": [
-            "22576821",
-            "41332517",
-            "26194109",
-            "19137341"
-          ],
-          "prior_work": "PMID 22576821 links substrate-use profiles of 23 Pseudomonas strains to rhizosphere competence, and PMID 41332517 reports strain-level metabolic variation within P. putida. Neither compares growth rates among isolates of one species with identical pathway content across habitats.",
-          "question": "Pathway presence alone discriminated habitats only modestly among free-living Pseudomonas. Do isolates of one species from soil, plant roots and water differ in growth rate on plant-derived sugars even when the same pathway is present in all of them?",
-          "readiness": "needs new measurements",
-          "readiness_basis": "Pathway calls and isolation metadata are in the catalog, but growth rates of habitat-sorted isolates on these sugars must be measured, and how many species have enough isolates per habitat was not shown.",
-          "tables": [
-            "kbase.ke_pangenome.gapmind_pathways",
-            "kbase.ke_pangenome.gtdb_metadata",
-            "kbase.ke_pangenome.ncbi_env",
-            "kescience.fitnessbrowser.experiment",
-            "kescience.bacdive.isolation"
-          ],
-          "test": "From the pangenome collection, choose species with isolates from at least two habitats whose genomes all carry the three pathways. Order or obtain about 10 isolates per habitat. Measure growth rate and yield on each sugar as sole carbon source in plate readers. Compare habitats within species. Check whether growth tracks the pathway-completeness scores, and compare with carbon-source growth in the Putida mutant-fitness experiments and in the strain-level utilization records for the same species. Then compare sugar-transporter and regulator gene variants between fast and slow growers.",
-          "title": "Do Pseudomonas from different habitats differ in how fast they use plant sugars despite equal pathways?",
-          "why_it_matters": "It would show that habitat adaptation in carbon use sits in quantitative performance, not gene presence. That would explain the weak habitat signal in pathway profiles, and it would redirect the search for niche markers toward regulation and transport variants."
-        },
-        {
-          "approach": "analysis then experiment",
-          "conflicts": [],
-          "databases": [
             "kbase.ke_pangenome"
           ],
           "findings": [
-            "plant_microbiome_ecotypes--64143b61",
-            "plant_microbiome_ecotypes--223dadd3"
+            "cf_formulation_design--460ed03a",
+            "pseudomonas_carbon_ecology--9c42f41a"
           ],
-          "hypothesis": "The host-specific subclades of both species carry gains concentrated in secretion-system and effector functions, not metabolic functions. Moving the subclade-specific effector set into a strain from another subclade shifts its ability to colonize the matching host.",
-          "id": "D9",
-          "outcomes": "Support: both specializations are enriched for secretion and effector functions, and the transfer shifts host colonization toward the matching plant. Refutation: the subclade-specific gene sets are unrelated in function between the two species, or the transfer does not change host outcome. Host range would then depend on genes outside these clusters. Only 18 of 65 plant-associated species had tree data, so the pattern may not generalize beyond these two.",
+          "hypothesis": "Sugar-pathway losses (sorbitol, mannitol, gluconate) arise repeatedly on separate branches of the P. aeruginosa tree in lung isolates, and lung isolates grow worse on those sugars than environmental isolates from the same clades.",
+          "id": "D1",
+          "outcomes": "Support: many independent losses concentrated in lung isolates, plus reduced growth on those sugars in the lung members of matched pairs. Refute: the losses fall in a few clades regardless of source, or growth does not differ between matched pairs.",
           "papers": [
-            "35536128",
-            "32040377",
-            "38199962",
-            "28677478"
+            "25409940",
+            "31214142",
+            "17873029",
+            "26510267"
           ],
-          "prior_work": "PMID 35536128 relates X. campestris pathovar to genomic relatedness and host range, and PMID 32040377 reports gene content enriched in corn-infecting X. vasicola. Neither compares the two host specializations for functional convergence or tests the subclade-specific genes by transfer.",
-          "question": "Two Xanthomonas species each split into subclades that segregate by plant host: X. campestris with Brassica and X. vasicola with maize. Did these two specializations arise by gaining the same kind of accessory genes, or by unrelated changes?",
+          "prior_work": "PMIDs 25409940 and 31214142 describe single cystic fibrosis isolates with altered carbon use; this direction asks whether the pattern is convergent across the species and tests it by growth measurements.",
+          "question": "Is the lower sugar-pathway completeness in lung and cystic fibrosis P. aeruginosa the result of repeated, independent losses in many lineages, or of a few lung-adapted clades inheriting the losses?",
           "readiness": "needs compute",
-          "readiness_basis": "Gene-cluster, annotation and tree tables are listed, but the subclade-specific gene sets must be computed and the transfer test needs new plant assays; whether trees exist for these two species was not shown.",
+          "readiness_basis": "Pathway scores, genome-to-genome similarity and isolation-source labels are in the catalog, but tree-based loss reconstruction and the growth assays still have to be run.",
           "tables": [
-            "kbase.ke_pangenome.gene_cluster",
-            "kbase.ke_pangenome.gene_genecluster_junction",
-            "kbase.ke_pangenome.eggnog_mapper_annotations",
-            "kbase.ke_pangenome.phylogenetic_tree",
-            "kbase.ke_pangenome.gtdb_metadata"
+            "kbase.ke_pangenome.gapmind_pathways",
+            "kbase.ke_pangenome.gtdb_metadata",
+            "kbase.ke_pangenome.genome_ani",
+            "kbase.ke_pangenome.ncbi_env"
           ],
-          "test": "Step 1 (analysis): in the subclades already identified, extract gene families present in the host-matched subclade and absent from the others. Classify them by function and compare the two species for convergence. Step 2 (experiment): clone the top subclade-specific effector or secretion cluster into a strain from a non-matching subclade of the same species. Test colonization and symptoms on Brassica and maize.",
-          "title": "Is host specialization in Xanthomonas carried by a small shared set of accessory genes?",
-          "why_it_matters": "A shared functional class would suggest a general route by which plant pathogens specialize, and would give a short list of genes for surveillance of emerging pathovars. Unrelated changes would mean host range cannot be predicted from gene class."
+          "test": "Step 1: from the pathway scores and isolation-source labels for the 6,760 P. aeruginosa genomes, build a similarity tree from pairwise genome distances. Reconstruct where each of the seven lower-scoring carbon pathways was lost, and count independent losses in lung versus non-lung genomes. Step 2: choose matched lung and environmental isolate pairs from the same clades and measure growth on sorbitol, mannitol and gluconate, with glycerol as a positive control.",
+          "title": "Do cystic fibrosis lung Pseudomonas aeruginosa lose sugar pathways repeatedly and independently?",
+          "why_it_matters": "The lung-streamlining idea is an evolutionary inference from genome scores, not a measured loss. Repeated independent loss would support relaxed selection in the lung, and it would tell formulation designers which substrates lung strains can no longer use."
         },
         {
-          "approach": "analysis then experiment",
+          "approach": "lakehouse analysis",
+          "conflicts": [
+            "conflict--ecotype-environment-gene-content--66537c9c",
+            "conflict--genome-wide-versus-locus-specific-ecological-adaptation--3fea06ca"
+          ],
+          "databases": [
+            "kbase.ke_pangenome",
+            "arkinlab.microbeatlas"
+          ],
+          "findings": [
+            "ecotype_analysis--aa4707c1",
+            "ecotype_analysis--9366534f",
+            "ecotype_env_reanalysis--82307b2c",
+            "env_embedding_explorer--7dd94f0f"
+          ],
+          "hypothesis": "Within free-living species, differences in directly measured pH between isolation sites predict differences in accessory gene content beyond what relatedness explains, even though the coordinate-based embedding signal is near zero.",
+          "id": "D2",
+          "outcomes": "Support: a consistent positive pH-gene-content association in free-living species that is absent or weaker in host-associated species and stronger than the embedding result. Refute: no association with direct pH either, which would point to real weakness of whole-genome environment effects.",
+          "papers": [
+            "31227022",
+            "34523223",
+            "29975997",
+            "23332119"
+          ],
+          "prior_work": "PMIDs 31227022 and 34523223 report weaker environment responses in host-associated communities using direct environmental measurements; this direction applies that kind of measurement to gene content across many species.",
+          "question": "When environment is measured directly (for example soil pH) rather than inferred from sampling coordinates, does it predict which accessory genes free-living bacteria carry, after accounting for relatedness?",
+          "readiness": "needs compute",
+          "readiness_basis": "Biosample attributes, genome distances, embeddings and gridded soil properties are listed, but how many species have usable pH values was not visible in the catalog.",
+          "tables": [
+            "kbase.ke_pangenome.ncbi_env",
+            "kbase.ke_pangenome.genome_ani",
+            "kbase.ke_pangenome.gtdb_metadata",
+            "kbase.ke_pangenome.alphaearth_embeddings_all_years",
+            "arkinlab.microbeatlas.enriched_metadata_gee"
+          ],
+          "test": "Choose species with many genomes whose biosample records report pH or soil descriptors, and link them to measured or gridded soil pH for the sample site. For each species, correlate pairwise pH difference with pairwise accessory-gene dissimilarity while controlling for pairwise genome distance. Compare free-living and host-associated species, and compare against the same species' coordinate-embedding result.",
+          "title": "Does measured soil acidity predict accessory gene content where satellite-derived place descriptors do not?",
+          "why_it_matters": "Broad analyses found no stronger environment effect in free-living than in host-associated bacteria, which conflicts with other studies. If direct measurements recover a signal, the earlier null reflects a weak environmental proxy and not weak habitat structuring of gene content."
+        },
+        {
+          "approach": "lakehouse analysis",
+          "conflicts": [],
+          "databases": [
+            "nmdc.results",
+            "nmdc.metadata",
+            "kbase.nmdc_mags"
+          ],
+          "findings": [
+            "harvard_forest_warming--4fcaf7c4",
+            "harvard_forest_warming--5dcb42f7",
+            "harvard_forest_warming--d1815e53",
+            "harvard_forest_warming--8f0aae96"
+          ],
+          "hypothesis": "The ratio of transcripts to gene copies for methane monooxygenase genes rises under warming while gene abundance stays flat, indicating regulation within existing populations; glyoxylate-cycle transcripts instead trace to the Actinobacteria that rise in warmed organic soil.",
+          "id": "D3",
+          "outcomes": "Support: higher transcript-to-DNA ratio for methane monooxygenase genes under warming with unchanged DNA, glyoxylate transcripts mapping mostly to Actinobacteria, and recurrence at another warming site. Refute: ratios unchanged, increases fully explained by more methanotroph DNA, or no recurrence.",
+          "papers": [
+            "34512564",
+            "38561130",
+            "25762989",
+            "27590813"
+          ],
+          "prior_work": "PMID 34512564 profiles warming-responsive RNA at the same site, and PMID 38561130 finds higher methane uptake without a rise in pmoA gene copies; this direction separates expression from abundance for these genes.",
+          "question": "In Harvard Forest warmed soil, do the higher methane monooxygenase (pmoA, pmoB) transcript levels come from existing methanotrophs expressing more, or from more methanotroph cells?",
+          "readiness": "unknown",
+          "readiness_basis": "Annotation, read-classification and genome tables are listed, but the catalog did not show whether gene-level DNA and RNA abundances are paired for the warming samples or available for other warming studies.",
+          "tables": [
+            "nmdc.results.annotation_kegg_orthology",
+            "nmdc.results.kraken2_classification_report",
+            "nmdc.metadata.biosample_set",
+            "kbase.nmdc_mags.mag_catalog"
+          ],
+          "test": "Using the paired DNA and RNA data for the heated and control organic and mineral samples, compute per-gene transcript-to-DNA ratios for methane monooxygenase and glyoxylate-cycle genes. Assign the genes to taxa through read classification and the assembled genomes from the same site. Then look for the same pattern in other warming or thaw studies in the national microbiome collection (peatland, permafrost). Because the original signals are weak, treat any recurrence as the key evidence.",
+          "title": "Does warming raise methane-oxidation transcripts by increasing expression rather than methanotroph abundance?",
+          "why_it_matters": "The transcript increases were weak and did not survive correction for testing thousands of gene families at once, so it is unclear whether warming reshapes who is present or what they do. A clear answer would show whether warmed forest soil methane uptake should be modelled from community composition or from regulation."
+        },
+        {
+          "approach": "lakehouse analysis",
           "conflicts": [
             "conflict--ecotype-clustering-validity--f884063a"
           ],
@@ -275,31 +235,93 @@
             "kescience.mgnify"
           ],
           "findings": [
-            "prophage_ecology--fc67e694",
-            "prophage_ecology--3c13d0b7"
+            "prophage_ecology--fc67e694"
           ],
-          "hypothesis": "Human-associated genomes carry more intact prophage per megabase than soil or marine genomes, and their anti-defense genes sit inside those intact elements. If the enrichment is mostly remnants, the intact density will not differ between habitats.",
-          "id": "D10",
-          "outcomes": "Support: intact prophage density is higher in human-associated genomes, anti-defense genes sit within them, and some isolates release virions. Refutation: intact density is similar across habitats and the enriched genes lie outside intact elements, which would favor domesticated remnants. Habitat sampling is uneven in the collection, and defense-table contents were not shown.",
+          "hypothesis": "Across biomes, anti-defense gene content rises with the number of host defense systems per genome, and this link explains the human-associated enrichment beyond genome size.",
+          "id": "D5",
+          "outcomes": "Support: a positive within-biome link between defense count and anti-defense content that absorbs the biome difference. Refute: biome still explains anti-defense content after defense count is included, or anti-defense genes do not co-vary with defense systems.",
           "papers": [
-            "25092302",
+            "40639337",
+            "29371424",
             "34232073",
-            "33606979",
-            "40639337"
+            "29416123"
           ],
-          "prior_work": "PMID 25092302 shows pervasive domestication of defective prophages, and PMID 40639337 describes phage counter-defense repertoires. Neither compares intact prophage density across habitats or places habitat-enriched anti-defense genes inside intact elements.",
-          "question": "Tail, head and anti-defense gene groups of prophages are more common in human-associated species, yet no single phage lineage tracked environment. Are these genes part of intact, potentially inducible prophages, or are they remnants kept by the host?",
-          "readiness": "needs compute",
-          "readiness_basis": "Mobile-element and defense tables by habitat are listed, but per-genome normalization and overlap with gene groups must be computed, and the induction assays need new measurements.",
+          "prior_work": "PMID 40639337 describes phage counter-defense repertoires, and PMID 29371424 describes defense systems in pangenomes; this direction links the two across habitats.",
+          "question": "Do the high-defense settings of the human gut favor phage genomes that carry anti-defense modules, producing the enrichment seen in human-associated genomes?",
+          "readiness": "unknown",
+          "readiness_basis": "Genome and biome tables are matched and defense and mobile-element tables appear in the directory, but the catalog did not show their columns or whether anti-defense calls exist.",
           "tables": [
-            "kescience.mgnify.gene_mobilome",
             "kescience.mgnify.gene_defense",
+            "kescience.mgnify.gene_mobilome",
             "kescience.mgnify.genome",
             "kescience.mgnify.biome"
           ],
-          "test": "Use the mobile-element calls and defense annotations for the genome collection grouped by habitat. Count intact prophage and phage-type elements per megabase in human gut, soil and marine genomes, and check whether anti-defense and tail genes lie inside them. Compare the same genomes with the earlier annotation-based module counts. Follow with induction assays on a few human-gut isolates that carry the elements, to see whether virions are released.",
-          "title": "Are phage tail and anti-defense genes enriched in human-associated bacteria carried by intact prophages?",
-          "why_it_matters": "Intact prophages are a live source of gene transfer and host killing, while remnants are inert baggage. Telling them apart decides whether the human-associated pattern reflects ongoing phage-host conflict or past events that cost nothing now."
+          "test": "Using genomes from several biomes in the metagenome-assembled genome catalogue (gut, soil, marine, rhizosphere), count defense systems per genome and anti-defense-like and mobile-element genes per genome. Test whether defense system count predicts anti-defense content within biomes and in a model that includes genome size and biome. Check whether anti-defense genes sit next to defense islands or on prophages. If the catalogue lacks explicit anti-defense calls, derive them from protein annotations.",
+          "title": "Are anti-defense modules enriched in human-associated genomes because defense systems are dense there?",
+          "why_it_matters": "It separates an arms-race explanation from other explanations for why prophage modules vary with habitat. It would also show that module-level environmental signals can come from defense pressure rather than the habitat itself."
+        },
+        {
+          "approach": "lakehouse analysis",
+          "conflicts": [],
+          "databases": [
+            "kbase.ke_pangenome"
+          ],
+          "findings": [
+            "amr_strain_variation--e349ed14",
+            "amr_strain_variation--6ebb7e8b",
+            "amr_strain_variation--065d36b5"
+          ],
+          "hypothesis": "Acquired resistance genes show more independent gain events per gene than non-resistance accessory genes of matched prevalence, so their stronger relatedness signal does not mean clonal inheritance.",
+          "id": "D6",
+          "outcomes": "Support: more independent gains per resistance gene than matched non-resistance genes. Refute: gain counts equal to or lower than matched genes, meaning clonal inheritance explains the pattern.",
+          "papers": [
+            "30953542",
+            "20805406",
+            "35801696",
+            "39472795"
+          ],
+          "prior_work": "PMID 30953542 separates core and accessory resistance genes, and PMID 35801696 reports recombination rates in core versus accessory genes; neither counts independent gains of resistance genes.",
+          "question": "Do putatively acquired resistance genes track strain relatedness because they pass down clonal lineages, or because they are gained repeatedly in related strains?",
+          "readiness": "needs compute",
+          "readiness_basis": "Trees exist for only some species in the catalog (343 listed), and ancestral reconstruction for every gene cluster has to be computed.",
+          "tables": [
+            "kbase.ke_pangenome.phylogenetic_tree",
+            "kbase.ke_pangenome.bakta_amr",
+            "kbase.ke_pangenome.gene_genecluster_junction",
+            "kbase.ke_pangenome.genome"
+          ],
+          "test": "For species that have within-species trees, reconstruct gains and losses of each resistance gene cluster and of non-resistance accessory clusters matched on prevalence. Compare the number of independent gains per gene. Repeat in species with the most genomes.",
+          "title": "Is acquired resistance spread by repeated gene gain rather than clonal inheritance?",
+          "why_it_matters": "The higher relatedness signal for acquired than for intrinsic resistance genes was partly an effect of how the measure handles near-universal core genes, which barely vary between strains. A gain-event comparison between genes of similar prevalence would give a mechanism that this effect cannot."
+        },
+        {
+          "approach": "experiment",
+          "conflicts": [],
+          "databases": [],
+          "findings": [
+            "cf_formulation_design--8bf20af1",
+            "cf_formulation_design--94972e2b",
+            "cf_formulation_design--c513d6f7",
+            "cf_formulation_design--1799127b",
+            "cf_formulation_design--951bde52"
+          ],
+          "hypothesis": "A three-member mixture of Micrococcus luteus, Neisseria mucosa and Streptococcus salivarius suppresses P. aeruginosa more than the average of its members, and the extra suppression depends on how many of the pathogen's preferred substrates the members jointly use.",
+          "id": "D7",
+          "outcomes": "Support: mixtures beat the member average and the gain scales with combined use of preferred substrates, in both strain types. Refute: mixtures match or fall below the average, or ExoS-type strains escape.",
+          "papers": [
+            "17873029",
+            "35174108",
+            "27881418",
+            "40818976"
+          ],
+          "prior_work": "PMIDs 35174108 and 27881418 show commensal and environmental Pseudomonas inhibition of P. aeruginosa, and PMID 40818976 shows commensal-plus-phage suppression of another pathogen; none tests whether mixtures act through shared nutrient depletion beyond additive effects.",
+          "question": "Since no single substrate favors commensals over PA14, does a mixture of commensals suppress P. aeruginosa through combined depletion of the nutrients it prefers, including in the more common ExoS-type strains?",
+          "readiness": "needs new measurements",
+          "readiness_basis": "Only five unique commensal pairs have been measured, and no ExoS-type strain or mixture co-culture data are described.",
+          "tables": [],
+          "test": "In synthetic cystic fibrosis sputum medium, co-culture PA14 and an ExoS-type strain (PAO1-like) with each commensal alone, each pair, and the triple. Measure pathogen growth and substrate depletion, and compare observed suppression with the average of members. Vary substrates to test whether suppression follows combined substrate use.",
+          "title": "Do commensal mixtures suppress Pseudomonas aeruginosa beyond what their members do alone?",
+          "why_it_matters": "The additive scoring behind formulation design is unvalidated, and the substrate-overlap link to inhibition is modest. A measured non-additive effect would change how mixtures are designed, and ExoS-type testing would address the PA14 limitation."
         }
       ]
     }
@@ -1956,124 +1978,44 @@
     }
   },
   "subsurface-and-soil-community-ecology": {
-    "input": "7724d3d8809f6077f0468e41f37ac6c50e598a80291725cd1513ac3218765e9a",
+    "input": "43dd96a381877b4ad3284197bbe07958b9f73f92d8418e629fff8da418d2d545",
     "pages": {
-      "are-enigma-model-organisms-rare-in-the-field-because-they-bl--59bca2.md": "c8108a25582e5af2bc6234dfc1104c07e932e0aff77d603c624de70df5626e93",
-      "do-groundwater-enriched-and-sediment-enriched-genera-differ--200b29.md": "70f4ba08cc27707b4e071164ca49c86fcfd0fac9edde224d1156330866ded5a3",
-      "does-ca-methanoperedens-in-sediment-indicate-nitrate-driven--4f8fef.md": "e650b29807be6545d3cd62292f12f4403439b990b40a1fe556befaf7ec85456d",
-      "does-groundwater-community-turnover-occur-only-after-recharg--ab61fe.md": "3ac08b0fccf14107d4119d2225a0e2e97f75e12935387343ffa028a437f3de28",
-      "does-the-contaminant-plume-not-lateral-distance-organize-sub--9edeae.md": "b01ad1e5c5be3b8562d5deb3dca5fc4040f1609a865e22ced777f8c497d78585",
-      "is-field-uranium-association-in-oak-ridge-genera-really-a-re--d24a67.md": "537309cacc2c66e34bb629efd6301e24f383c6a125abba4791b24efb42d1f996"
+      "are-sulfate-reducers-rare-in-groundwater-because-they-live-a--faf671.md": "026fea37b2b8eb5247f620f448cbf023fafa182b2a713acbd71a25326c71812b",
+      "do-groundwater-iron-oxidisers-persist-in-the-water-phase-whi--6249ab.md": "8f090b7dfde74c6656b4415ac1c1edbd9a8835e945f3325d95d136ff46679847",
+      "does-long-term-warming-remove-labile-compound-classes-from-m--4b271a.md": "ea1003a4c5305daa83c153694b577475dcf4885e4c554b168569f58ec99febce"
     },
     "render": "direction-page@2",
     "reply": {
       "directions": [
         {
-          "approach": "analysis then experiment",
+          "approach": "experiment",
           "conflicts": [],
           "databases": [
-            "enigma.coral",
-            "enigma.sso_staging"
-          ],
-          "findings": [
-            "enigma_sso_asv_ecology--7ffad219",
-            "enigma_sso_asv_ecology--519fc7f6",
-            "enigma_sso_asv_ecology--9b46b768"
-          ],
-          "hypothesis": "Within a hydrogeological zone, differences between communities track measured contaminant chemistry (nitrate, metals, pH), not horizontal distance between wells. Layer identity adds little once chemistry is known.",
-          "id": "D1",
-          "outcomes": "Support: chemistry removes most of the depth and zone effect, and cross-well similarity of same-zone samples follows chemical similarity. Refute: depth or zone still explains much of the variation after chemistry is accounted for, or horizontal distance explains it, pointing to isolation or unmeasured factors.",
-          "papers": [
-            "20305024",
-            "22140175",
-            "30265315",
-            "16407148"
-          ],
-          "prior_work": "PMIDs 20305024 and 22140175 describe subsurface community members at this site and 30265315 reviews hydrologic boundaries, but none tests whether chemistry accounts for depth turnover compared with horizontal structure.",
-          "question": "Do microbial communities at the Oak Ridge site differ with depth because contamination moves through particular saturated layers, rather than because of horizontal position or hydrogeological zone alone?",
-          "readiness": "unknown",
-          "readiness_basis": "Community counts and sample tables are shown, but the catalog did not show whether chemistry exists for the same samples; the depth finding's caveat says the plume explanation awaits geochemical confirmation.",
-          "tables": [
-            "enigma.coral.ddt_brick0000459",
-            "enigma.coral.ddt_brick0000476",
-            "enigma.coral.sdt_sample",
-            "enigma.coral.sdt_community",
-            "enigma.sso_staging.toc_tn_anions",
-            "enigma.sso_staging.picarro_gas",
-            "enigma.sso_staging.sample_registry"
-          ],
-          "test": "First establish which sediment and groundwater samples have matching chemistry, since the registered site geochemistry samples may not yet be loaded and the staging tables for carbon, nitrogen, anions and gas have unshown coverage. Also settle the sediment sample count, because the sediment analysis counts 37 core segments but its zone counts add up to more. For samples with chemistry, partition community dissimilarity among zone, depth, horizontal distance and chemistry. Then compare same-zone, cross-well pairs matched for chemistry with pairs that differ in chemistry. If chemistry is missing for most samples, measure it on archived cores and well water.",
-          "title": "Does the contaminant plume, not lateral distance, organize subsurface communities by depth layer?",
-          "why_it_matters": "Same-well, different-depth pairs were nearly completely different, while same-zone pairs from different wells were more alike. Hillslope position showed no structure. The plume explanation currently rests on community composition alone and awaits chemical confirmation. If chemistry explains the depth pattern, sampling and remediation should follow flow layers rather than map position."
-        },
-        {
-          "approach": "analysis then experiment",
-          "conflicts": [],
-          "databases": [
-            "kbase.nmdc_mags",
-            "kbase.ke_pangenome",
             "enigma.coral"
           ],
           "findings": [
             "enigma_sso_asv_ecology--51556105"
           ],
-          "hypothesis": "Genera enriched in groundwater (Rhodanobacter, Gallionella, Sideroxydans) carry denitrification and iron-oxidation genes, while sediment-enriched genera (Anaeromyxobacter, Arcobacter, Ca. Methanoperedens) carry iron-reduction, sulfur and methane-oxidation genes, at the same sites.",
+          "hypothesis": "In sealed microcosms of sediment and groundwater from the same well, iron oxidisers grow in the water phase when ferrous iron and low oxygen are supplied. Anaeromyxobacter and Methanoperedens remain on the solids and do not move into the water.",
           "id": "D2",
-          "outcomes": "Support: the marker genes sort by habitat as predicted in matched samples. Refute: gene capacity does not differ between habitats, or the split disappears when both are sampled on the same dates, which would show a time effect.",
+          "outcomes": "Support: iron oxidisers rise in the water fraction under ferrous iron and low oxygen, while the others stay in the solid fraction. Refutation: all genera partition the same way regardless of treatment, or the contrast disappears, which would suggest the original difference came from sampling time.",
           "papers": [
             "22179233",
             "38391193",
+            "30265315",
             "22140175"
           ],
-          "prior_work": "PMID 22179233 shows Rhodanobacter dominating in both groundwater and sediment but not a paired habitat comparison, and 38391193 links metal oxides to microbiome structure in another system; neither tests gene capacity by habitat.",
-          "question": "Is the split of genera between groundwater and sediment in the same wells explained by what they do with iron, nitrate and methane, rather than by sampling date?",
+          "prior_work": "PMID 22179233 reports Rhodanobacter dominance in both groundwater and sediment at this site, and PMID 38391193 links metal-oxide precipitation to community structure; neither manipulates iron and oxygen to test attachment.",
+          "question": "Gallionella and Sideroxydans are more common in groundwater, while Anaeromyxobacter and Methanoperedens are more common in sediment. Do these genera differ because of a real lifestyle contrast in how they respond to oxygen and ferrous iron, rather than because the two materials were sampled about 18 months apart?",
           "readiness": "needs new measurements",
-          "readiness_basis": "Genomes for the named genera appear in the catalog, but matched same-date metagenomes of sediment and groundwater are not shown and would need to be generated.",
+          "readiness_basis": "The catalog shows sample and abundance tables for choosing a well, but the catalog did not show date-matched sediment and groundwater pairs, so microcosms need new sampling.",
           "tables": [
-            "kbase.nmdc_mags.mag_catalog",
-            "kbase.ke_pangenome.genome",
-            "kbase.ke_pangenome.eggnog_mapper_annotations",
-            "kbase.ke_pangenome.gene_cluster",
             "enigma.coral.sdt_sample",
-            "enigma.coral.sdt_community"
+            "enigma.coral.ddt_brick0000476"
           ],
-          "test": "Pull Rhodanobacter and Anaeromyxobacter genomes from the metagenome-assembled genome catalog and the species pangenome collection, and score marker genes for each pathway from the annotation tables. Then run shotgun metagenomes on paired sediment cores and groundwater from the same wells, collected on the same dates, and compare gene content with the 16S-based assignments.",
-          "title": "Do groundwater-enriched and sediment-enriched genera differ in iron and nitrogen metabolism?",
-          "why_it_matters": "Sediment and groundwater were sampled about 18 months apart, so the split might simply reflect time. A functional pattern that holds in matched metagenomes would show that the two habitats run different parts of the nitrogen and iron cycle."
-        },
-        {
-          "approach": "analysis then experiment",
-          "conflicts": [],
-          "databases": [
-            "kescience.fitnessbrowser",
-            "enigma.coral"
-          ],
-          "findings": [
-            "lab_field_ecology--7268dc9b",
-            "lab_field_ecology--c4028be7",
-            "lab_field_ecology--0a8de054"
-          ],
-          "hypothesis": "In defined media, uranium alone does not change the growth of Caulobacter or Herbaspirillum, whereas lowering pH and adding nitrate reproduces the field pattern (Herbaspirillum favoured, Caulobacter disfavoured).",
-          "id": "D3",
-          "outcomes": "Support: pH or nitrate, not uranium, controls growth and matches the field direction. Refute: uranium alone reproduces the field abundance pattern in the isolates.",
-          "papers": [
-            "26676055",
-            "30523276",
-            "35107332"
-          ],
-          "prior_work": "PMID 26676055 shows Caulobacter tolerating uranium in a synthetic consortium and 30523276 links Rhodanobacter to uranium and low pH in wells; neither separates uranium from pH and nitrate in isolates of Caulobacter or Herbaspirillum.",
-          "question": "Do Herbaspirillum enrichment and Caulobacter depletion at high-uranium sites come from uranium itself or from the low pH and nitrate that travel with it?",
-          "readiness": "needs new measurements",
-          "readiness_basis": "Isolate growth under crossed conditions is not in the catalog; only the Caulobacter fitness tables and field community tables were shown.",
-          "tables": [
-            "kescience.fitnessbrowser.experiment",
-            "kescience.fitnessbrowser.fitbyexp_caulo",
-            "enigma.coral.sdt_community",
-            "enigma.coral.sdt_sample"
-          ],
-          "test": "Fit field abundances against uranium, pH and nitrate across the Oak Ridge sites, then grow Caulobacter and Herbaspirillum isolates in synthetic groundwater crossing uranium, pH and nitrate. Compare with existing Caulobacter fitness experiments for metal and acid conditions.",
-          "title": "Is field uranium association in Oak Ridge genera really a response to acidity or nitrate?",
-          "why_it_matters": "A lab consortium kept Caulobacter growing and dominant with uranium, but in the field it was less abundant at high-uranium sites. Deciding which variable filters taxa tells us whether uranium tolerance scores can predict field communities."
+          "test": "Collect a sediment core and groundwater from the same well on the same day. Set up microcosms with sediment plus groundwater, manipulating oxygen and ferrous iron. Sequence the water and solid fractions over time and track Gallionella, Sideroxydans, Anaeromyxobacter, Arcobacter, Methanoperedens and Rhodanobacter. Existing community and sample records help pick the well.",
+          "title": "Do groundwater iron oxidisers persist in the water phase while sediment anaerobes stay attached?",
+          "why_it_matters": "A real lifestyle split would mean groundwater sampling systematically misses attached iron reducers and methane-oxidising archaea, so inferences about site metabolism from water alone would be incomplete."
         },
         {
           "approach": "experiment",
@@ -2081,97 +2023,69 @@
           "databases": [],
           "findings": [
             "lab_field_ecology--d16a3056",
-            "lab_field_ecology--94b20be5"
+            "lab_field_ecology--94b20be5",
+            "enigma_sso_asv_ecology--51556105"
           ],
-          "hypothesis": "Desulfovibrio and Pseudomonas stay at very low abundance in unamended Oak Ridge material, and increase substantially after carbon addition once electron acceptors are depleted.",
+          "hypothesis": "Sulfate-reducer marker genes are far more abundant in DNA from deeper saturated-zone sediment than in groundwater from the same wells.",
           "id": "D4",
-          "outcomes": "Support: a clear rise after carbon addition that is absent in unamended controls, tracking electron-acceptor depletion. Refute: abundance stays near its low baseline in amended microcosms, suggesting these organisms are not ecologically relevant in situ or are poorly detected.",
+          "outcomes": "Support: marker abundance is much higher in sediment than groundwater, especially in deeper zones. Refutation: markers are equally scarce in both materials, pointing to genuine rarity at the site.",
           "papers": [
             "38552495",
-            "17948804"
+            "17948804",
+            "30523276"
           ],
-          "prior_work": "PMID 38552495 reports reproducible succession after carbon amendment and 17948804 shows uranium inhibits a reducing consortium; neither asks whether ENIGMA model organisms are conditional bloomers.",
-          "question": "Do Desulfovibrio and Pseudomonas, which showed no field link to uranium, rise from rarity only when carbon is added to Oak Ridge groundwater or sediment?",
+          "prior_work": "PMID 17948804 shows uranium inhibits a uranium- and sulfate-reducing consortium and PMID 38552495 describes subsurface successions under carbon amendment; neither asks whether sulfate reducers are missed because of the material sampled.",
+          "question": "Desulfovibrio, the main laboratory model organism for this site, is detected at very low abundance in field surveys. Is it concentrated in sediment or other attached niches that groundwater sampling underrepresents?",
           "readiness": "needs new measurements",
-          "readiness_basis": "The catalog did not show amendment-status data for these wells, so the carbon-addition comparison would need to be generated with new microcosms.",
+          "readiness_basis": "Sediment and groundwater DNA with gene-targeted quantification must be generated; the catalog did not show taxonomy assignments for existing community records.",
           "tables": [],
-          "test": "Set up microcosms of Oak Ridge groundwater and sediment with and without added carbon, sampling over time. Track both genera by 16S amplicon sequencing, with a Desulfovibrio-specific quantitative PCR to rule out 16S detection bias, and record nitrate and sulfate depletion. Before starting, check whether the existing community tables record any carbon-amendment status; the catalog did not show this.",
-          "title": "Are ENIGMA model organisms rare in the field because they bloom only after carbon addition?",
-          "why_it_matters": "The primary model organism was detected at only 34% of sites and at very low abundance, so its 16S-based uranium analysis is unreliable. If it is a conditional bloomer, lab fitness data apply to amended or reduced conditions rather than to the ambient community."
+          "test": "Extract DNA from sediment cores and groundwater from the same wells at matched depths. Quantify the sulfate-reduction marker genes dsrAB and Desulfovibrio 16S by quantitative PCR in both. The catalog did not show a mapping from community sequence variants to genus names, so detection is done directly.",
+          "title": "Are sulfate reducers rare in groundwater because they live attached to deeper sediment?",
+          "why_it_matters": "If true, the gap between laboratory model organisms and field data reflects where the field is sampled, not the irrelevance of those organisms. Laboratory tolerance scores for sulfate reducers could then be tested against sediment communities."
         },
         {
           "approach": "lakehouse analysis",
           "conflicts": [],
           "databases": [
-            "enigma.continuous_monitoring",
-            "enigmay12.weather",
-            "enigma.coral"
+            "kbase.nmdc_arkin",
+            "nmdc.metadata"
           ],
           "findings": [
-            "enigma_sso_asv_ecology--6ee64744",
-            "enigma_sso_asv_ecology--ab22d581"
+            "harvard_forest_warming--664ecd79"
           ],
-          "hypothesis": "Community change between sampling dates grows with the preceding change in water level and rainfall, so the nine-day stability reflects a quiet hydrologic period rather than an intrinsically stable community.",
-          "id": "D5",
-          "outcomes": "Support: dissimilarity between dates increases with recharge-related change. Refute: dissimilarity is unrelated to hydrologic change even across large events, indicating inherent stability or other drivers.",
-          "papers": [
-            "34130083",
-            "38755262",
-            "39998254"
-          ],
-          "prior_work": "PMID 34130083 shows groundwater communities shifting with recharge and 38755262 relates community hierarchy to time and space; neither tests water-level change as the trigger at a contaminated site.",
-          "question": "Are Oak Ridge groundwater communities stable over days because the hydrology is steady, and do they shift only when water level or flow changes?",
-          "readiness": "needs compute",
-          "readiness_basis": "Sensor and weather tables are listed, but the number of amplicon dates spanning a recharge event was not visible in the catalog.",
-          "tables": [
-            "enigma.continuous_monitoring.hazen_aquatroll600_sso_l7_sz1",
-            "enigma.continuous_monitoring.hazen_aquatroll600_sso_l9_sz1",
-            "enigmay12.weather.ddt_weather_hourly_temperature_rain",
-            "enigma.coral.ddt_brick0000476",
-            "enigma.coral.sdt_sample"
-          ],
-          "test": "Pair multi-date amplicon samples from the SSO wells with well-sensor water-level and conductivity records and hourly rainfall, and test whether community dissimilarity between dates rises with water-level change and rainfall in the interval.",
-          "title": "Does groundwater community turnover occur only after recharge events changing water level?",
-          "why_it_matters": "The nine-day data show spatial ordering of wells preserved and no date effect, whereas other aquifers shift with recharge. A hydrologic trigger would reconcile the two and tell monitoring programs when to sample."
-        },
-        {
-          "approach": "analysis then experiment",
-          "conflicts": [],
-          "databases": [
-            "enigma.sso_staging",
-            "enigma.coral"
-          ],
-          "findings": [
-            "enigma_sso_asv_ecology--51556105"
-          ],
-          "hypothesis": "Ca. Methanoperedens abundance in sediment cores rises with measured methane and nitrate and carries genes for reverse methanogenesis and nitrate reduction.",
+          "hypothesis": "Across warming studies, metabolites detected in control but not heated mineral soil are overrepresented in labile classes, as expected if warming speeds microbial use of easy substrates.",
           "id": "D6",
-          "outcomes": "Support: abundance co-varies with methane and nitrate, the genes are present, and labelled methane is oxidized only with nitrate. Refute: no covariation and no activity, suggesting the taxon is a relic or uses another acceptor.",
-          "papers": [],
-          "prior_work": "",
-          "question": "Is the sediment-restricted methane-oxidizing archaeon Ca. Methanoperedens active in the Oak Ridge subsurface where methane and nitrate overlap?",
-          "readiness": "unknown",
-          "readiness_basis": "Gas and anion staging tables exist, but their columns, wells and overlap with sediment cores were not shown.",
-          "tables": [
-            "enigma.sso_staging.picarro_gas",
-            "enigma.sso_staging.toc_tn_anions",
-            "enigma.sso_staging.sample_registry",
-            "enigma.coral.sdt_community"
+          "outcomes": "Support: lost metabolites are overrepresented in labile classes in more than one warming study. Refutation: losses are spread evenly across classes or sit in recalcitrant classes. Many identifiers may not resolve to a class, which limits the test.",
+          "papers": [
+            "36448874",
+            "25762989",
+            "27590813"
           ],
-          "test": "Correlate Ca. Methanoperedens abundance in sediment cores with gas and anion measurements in the same wells and zones, then examine sediment metagenomes for mcr-type and nitrate reductase genes, and incubate cores with labelled methane and nitrate.",
-          "title": "Does Ca. Methanoperedens in sediment indicate nitrate-driven methane oxidation at the plume edge?",
-          "why_it_matters": "Anaerobic methane oxidation coupled to nitrate would be a methane sink and a nitrate removal route in a nitrate-contaminated aquifer that is currently unconsidered."
+          "prior_work": "PMID 36448874 argues that substrate availability controls microbial temperature sensitivity under long-term warming, but it does not profile which compound classes disappear from heated mineral soil.",
+          "question": "Heated mineral soil had about 7% fewer detectable metabolites, though no single metabolite clearly differed once the many metabolites tested were taken into account. Are the lost metabolites concentrated in labile compound classes such as sugars, amino acids and organic acids?",
+          "readiness": "needs compute",
+          "readiness_basis": "Metabolite tables with identifiers and names are listed, but the catalog did not show which samples are warming-treatment mineral soil or what share of identifiers resolve to chemical classes.",
+          "tables": [
+            "kbase.nmdc_arkin.metabolomics_gold",
+            "nmdc.metadata.workflow_execution_set_has_metabolite_identifications",
+            "nmdc.metadata.biosample_set",
+            "nmdc.metadata.study_set"
+          ],
+          "test": "Resolve chemical identifiers and names in the national metabolomics tables to compound classes, since the Harvard Forest labels were left unresolved. Identify the warming studies and mineral samples through the study and sample tables. Compare the share of lost metabolites in labile classes against all detected metabolites, within each study.",
+          "title": "Does long-term warming remove labile compound classes from mineral soil metabolomes?",
+          "why_it_matters": "A consistent class-level pattern would show a substrate-limitation signature of warming that no single-metabolite test could detect, and would bear on whether microbial warming sensitivity is limited by substrate supply."
         }
       ]
     }
   },
   "translational-microbiome-and-phage-therapeutics": {
-    "input": "fdded030dbd153f2bad492f4a7909b3647b414ae8ee65ba2a27213cd59285c47",
+    "input": "062fec7e44d9ed4207e1cbd9085a8d220f3ed645f22314e29bfc67c03961558b",
     "pages": {
-      "are-the-missing-phages-for-three-gut-anaerobes-absent-becaus--4c4663.md": "bb4d23276ef984e6b1fc08c85d63d36ff6c22110bc21ecb38ed49dc836c31808",
-      "do-siderophores-let-crohn-s-pathobionts-out-compete-commensa--6b2e10.md": "00cee0be726ec033e2e1ba2ca14152332844534b76b100ba09eae98bc8578aa0",
-      "does-anaerostipes-caccae-live-on-lactate-from-bacteroides-ra--9a0303.md": "ab18d2010127c3d47fe42be0b3ac571d483e9b006b9c76af3698f40a0fd1f64f",
-      "is-the-crohn-s-link-of-escherichia-coli-carried-by-a-small-s--2fe795.md": "45b747047d4502e4b25f7a982b8f594c2b218a6b5c1ce4c35588f4a3bca64ba2"
+      "do-gut-communities-form-a-continuous-gradient-that-explains--9240ec.md": "54e1b459d0f498f9795b564b7611444e68018c1695ea351963896436fdbdd00e",
+      "do-gut-enterobacteriaceae-carry-extra-siderophore-and-genoto--e506b6.md": "33d65c700933332cecadd4a0b2b790a1258a669d1cd6457d426028a675c17f90",
+      "does-anaerostipes-caccae-get-its-lactate-from-bacteroides-ra--0fc4cf.md": "d7cac2557bebcf16dc418459857edfe5bf59f141aabb4ddc973dba31a3a38677",
+      "does-removing-core-pathobionts-shift-crohn-s-stool-communiti--30312d.md": "6dfc91372387e4298d8325ba192d9e866cce7b00e410d849e5bd5a0fd61f6e32",
+      "is-crohn-s-linked-e-coli-a-siderophore-and-genotoxin-subset--374905.md": "a0c2cd8500dfd4aff0b64e8e491aa970b3a8920f00b147ba8652823d598ead6a"
     },
     "render": "direction-page@2",
     "reply": {
@@ -2183,101 +2097,135 @@
           "findings": [
             "ibd_phage_targeting--f8d4a8f9"
           ],
-          "hypothesis": "A. caccae grows on lactate only when a Bacteroides or Bifidobacterium partner supplies it. Pathobiont partners such as F. plautii and E. bolteae do not raise its butyrate output in co-culture.",
+          "hypothesis": "In defined lactate-limited medium, A. caccae growth and butyrate output rise when it is paired with Bacteroides or Bifidobacterium, but not when it is paired with F. plautii or E. bolteae. That would make the opposite-direction lactate pattern across the cohort consistent with these two pathobionts not supplying lactate to A. caccae under the tested conditions.",
           "id": "D1",
-          "outcomes": "Support: butyrate and A. caccae growth rise with the Bacteroides or Bifidobacterium partner but not with the pathobionts. Refutation: pathobiont partners raise growth and butyrate as much as the commensal partners do.",
+          "outcomes": "Support: A. caccae butyrate rises only with the Bacteroides or Bifidobacterium partners, and the pathobionts add nothing under the conditions tried. Refutation: pathobiont partners raise A. caccae growth or butyrate as much as the known partners, so the cohort pattern came from something other than missing cross-feeding. A null result would apply only to these partners and conditions, not to cross-feeding in general.",
           "papers": [
             "36473601",
             "33191780",
             "18554304"
           ],
-          "prior_work": "PMIDs 36473601, 33191780 and 18554304 show A. caccae using lactate with Bacteroides or Bifidobacterium partners in vitro or in rats; none tests the Crohn's pathobionts as partners.",
-          "question": "In Crohn's disease, where does the lactate that Anaerostipes caccae converts to butyrate come from? Cohort data did not support supply from the pathobionts Flavonifractor plautii or Enterocloster bolteae.",
+          "prior_work": "PMIDs 36473601, 33191780 and 18554304 show A. caccae using lactate with Bacteroides, Bifidobacterium or in rats, but none tests the pathobionts F. plautii or E. bolteae as lactate suppliers.",
+          "question": "Where does Anaerostipes caccae get the lactate it converts to butyrate in a Crohn's gut, and do the pathobionts Flavonifractor plautii and Enterocloster bolteae supply it under defined growth conditions?",
           "readiness": "needs new measurements",
-          "readiness_basis": "Needs anaerobic co-culture work; the cohort data gave only opposite-sign lactate correlations, and that result was flagged as a limit of single-cohort data scope rather than a refutation.",
+          "readiness_basis": "The paired-partner co-culture data needed are not shown in the catalog; only cohort-level metagenome and metabolite data were used, and those gave the null.",
           "tables": [],
-          "test": "Grow A. caccae in lactate-limited defined medium alone and with each of F. plautii, E. bolteae, a Bacteroides species and a Bifidobacterium species. Measure lactate, butyrate and A. caccae growth over time. Add transwell and conditioned-medium controls to separate contact from diffusible metabolites. Then repeat in a defined mixed community with each partner removed in turn.",
-          "title": "Does Anaerostipes caccae live on lactate from Bacteroides rather than from Crohn's pathobionts?",
-          "why_it_matters": "If true, depleting these pathobionts with phage would not cut butyrate supply through lost cross-feeding. If false, cocktail design needs a butyrate-protection step."
+          "test": "Grow A. caccae in defined lactate-limited medium, alone and paired with F. plautii, E. bolteae, a Bacteroides species, or Bifidobacterium infantis. Measure lactate, butyrate and A. caccae counts over time. Spent-medium and transwell controls separate secreted lactate from contact effects. Then repeat in a synthetic community in which each partner is removed in turn, and vary the carbon source and pH to see whether any result depends on condition.",
+          "title": "Does Anaerostipes caccae get its lactate from Bacteroides rather than Crohn's pathobionts?",
+          "why_it_matters": "Pathobiont-targeting phage cocktails assume that removing a pathobiont may cost the gut a butyrate supply. If A. caccae does not depend on these pathobionts, that cost is smaller for these partners, and the real lactate suppliers become the taxa to protect."
         },
         {
           "approach": "analysis then experiment",
           "conflicts": [],
           "databases": [
-            "arkinlab.cmd_reference",
             "phagefoundry.escherichia_genome_browser"
           ],
           "findings": [
             "ibd_phage_targeting--6d9fa20c",
             "ibd_phage_targeting--446eca8c"
           ],
-          "hypothesis": "Among E. coli carriers, the disease-linked signal comes from strains with yersiniabactin, enterobactin or colibactin-type clusters. Strains without them show no disease association.",
+          "hypothesis": "Disease-linked E. coli are those carrying yersiniabactin, enterobactin or colibactin-type clusters. Carriers of strains lacking these clusters look like non-IBD E. coli, so species-level detection (8 of 23 patients) hides the real signal.",
           "id": "D2",
-          "outcomes": "Support: only marker-positive carriers differ between Crohn's and non-IBD. Refutation: marker-negative carriers show the same difference, or marker-positive carriers do not differ from controls.",
+          "outcomes": "Support: cluster-positive strains cluster in disease samples and cluster-negative strains do not. Refutation: cluster content is the same in disease and healthy E. coli, or non-carriers show no other siderophore-bearing taxon, so the signal is species abundance.",
           "papers": [
             "35359974",
-            "28130329"
+            "28130329",
+            "41606218"
           ],
-          "prior_work": "PMID 35359974 reports how common adherent-invasive E. coli is in disease cohorts, and PMID 28130329 proposes phage against it; neither asks whether virulence-cluster content, not carriage, explains the signal within carriers.",
-          "question": "E. coli was detectable in only 8 of 23 Crohn's patients in the UC Davis cohort. Is its disease association confined to strains carrying iron-siderophore and genotoxin clusters rather than to the species as a whole?",
-          "readiness": "unknown",
-          "readiness_basis": "Cohort sample metadata is in the catalog; the catalog did not show whether the genome browser carries cluster calls or whether the cohort data resolve strains.",
+          "prior_work": "PMID 35359974 reports adherent-invasive E. coli prevalence by disease group and PMID 28130329 proposes phages against these strains; neither relates strain-level cluster content to carriage in a small Crohn's cohort.",
+          "question": "Within the few Crohn's patients who carry E. coli, do strains with iron-siderophore or genotoxin gene clusters differ from strains without them in how they track disease and bloom?",
+          "readiness": "needs new measurements",
+          "readiness_basis": "The E. coli genome browser can seed the cluster map, but patient-matched strain genotyping needs new isolates or stool assays.",
           "tables": [
-            "arkinlab.cmd_reference.sample_metadata"
+            "phagefoundry.escherichia_genome_browser.browser_gene",
+            "phagefoundry.escherichia_genome_browser.browser_genome"
           ],
-          "test": "Gather E. coli genomes from the Escherichia genome browser and public assemblies and call siderophore and genotoxin clusters in each. Build a marker panel that separates strains with and without them. Apply the panel to E. coli abundance data across IBD cohorts, using the pooled cohort sample metadata for disease labels. Compare marker-positive and marker-negative carriers between Crohn's and non-IBD subjects. Then confirm in stool from the UC Davis patients by strain-resolved metagenomics.",
-          "title": "Is the Crohn's link of Escherichia coli carried by a small siderophore-and-genotoxin strain subset?",
-          "why_it_matters": "It would decide whether phage cocktails should target E. coli by strain virulence content rather than by species. A species-wide cocktail would then also target strains that lack the disease-linked clusters."
+          "test": "Build a cluster-presence map across E. coli genomes with known source and compare Crohn's-linked genomes with others. Then genotype the E. coli isolates or stool DNA of the 8 carrier patients for the cluster genes and test whether cluster-positive carriers have higher E. coli load and stronger disease markers than cluster-negative carriers. Also ask which other taxa carry the same clusters in patients without detectable E. coli.",
+          "title": "Is Crohn's-linked E. coli a siderophore-and-genotoxin subset rather than the whole species?",
+          "why_it_matters": "Species-level targeting would hit harmless E. coli and miss the harmful subset. A strain-cluster rule would give a narrower, testable phage target and help explain why E. coli is rarer in this cohort than the adherent-invasive E. coli literature implies."
         },
         {
           "approach": "experiment",
           "conflicts": [],
           "databases": [],
           "findings": [
-            "ibd_phage_targeting--446eca8c"
+            "ibd_phage_targeting--218b95c7"
           ],
-          "hypothesis": "Deleting the siderophore cluster in a pathobiont reduces its expansion in an iron-limited community. Adding a siderophore-independent iron source restores that expansion.",
+          "hypothesis": "The joint species-metabolite axis separating Crohn's from non-IBD is driven by the pathobionts themselves. Selective removal moves a Crohn's community along that axis toward non-IBD, while removing a matched number of other species does not.",
           "id": "D3",
-          "outcomes": "Support: the mutant loses ground only at low iron, and rescue with a non-siderophore iron source restores it. Refutation: mutant and parent expand equally across iron levels.",
+          "outcomes": "Support: targeted removal shifts cultures toward the non-IBD end of the axis more than control removal. Refutation: both removals shift cultures equally or not at all, or the axis position is unchanged while the pathobionts fall.",
           "papers": [
-            "41606218"
+            "39250478",
+            "21761941"
           ],
-          "prior_work": "PMID 41606218 surveys specialised-metabolite gene clusters across human microbiomes but does not test whether siderophore loss costs a gut species fitness.",
-          "question": "The core pathobiont gene clusters are strongly enriched for iron-siderophore and genotoxin themes. Does siderophore production give these species a growth advantage in an inflamed, iron-limited gut?",
+          "prior_work": "PMID 39250478 finds joint microbiome-metabolome structure linked to IBD and PMID 21761941 finds altered fecal metabolites in ulcerative colitis, both correlational; neither perturbs the taxa to test whether they drive the axis.",
+          "question": "If the six core pathobionts are selectively removed from Crohn's stool communities grown ex vivo, does the community's metabolite profile shift toward that of non-IBD communities?",
           "readiness": "needs new measurements",
-          "readiness_basis": "Needs mutant construction and community cultures; the enrichment is a computational observation against a catalog background.",
+          "readiness_basis": "The catalog shows cohort data only; ex vivo removal experiments with paired metabolomics have not been run.",
           "tables": [],
-          "test": "In E. coli, a known siderophore producer among the targets, build siderophore-synthesis deletion mutants. Add each mutant or its parent to a defined commensal community in anaerobic chemostats. Vary iron by chelator or by supplementation with hemin or ferric salt. Track strain abundance by amplicon or barcode counts. Run the same iron-limited chemostat with the E. coli parent in the presence and absence of phage.",
-          "title": "Do siderophores let Crohn's pathobionts out-compete commensals when iron is restricted?",
-          "why_it_matters": "It would turn an enrichment seen against a rare-background comparison into a mechanism. It would also say whether iron restriction could make phage targeting of these species more or less effective."
+          "test": "Culture stool from Crohn's and non-IBD donors anaerobically. In Crohn's cultures, remove the pathobionts with targeted phages or selective inhibitors, and in control cultures remove random abundance-matched non-pathobionts. Profile species by sequencing and metabolites by untargeted mass spectrometry at several time points, then project each culture onto the canonical axis built from the human cohort.",
+          "title": "Does removing core pathobionts shift Crohn's stool communities toward a non-IBD metabolite profile?",
+          "why_it_matters": "The axis is a correlation. A shift on removal would show it is a causal handle, supporting pathobiont targeting; no shift would mean the pathobionts are markers of a disease state and not its drivers."
         },
         {
-          "approach": "analysis then experiment",
+          "approach": "lakehouse analysis",
           "conflicts": [],
           "databases": [
-            "refdata.jgi_virus",
-            "kbase.nmdc_mags"
+            "kbase.ke_pangenome",
+            "kescience.mgnify"
           ],
           "findings": [
+            "ibd_phage_targeting--446eca8c"
+          ],
+          "hypothesis": "Within Enterobacteriaceae, genomes from inflamed or gut sources do not carry more siderophore or genotoxin clusters than genomes from other sources. The large enrichment seen against the full cluster catalog is a lineage effect.",
+          "id": "D4",
+          "outcomes": "Support for lineage-only: within-genus gut and non-gut genomes carry the same clusters. Refutation: gut genomes within genera carry more clusters, pointing to habitat selection beyond lineage.",
+          "papers": [
+            "41606218",
+            "42458242"
+          ],
+          "prior_work": "PMID 41606218 surveys specialised metabolite clusters across human microbiomes and PMID 42458242 does so for Staphylococcus aureus; neither separates lineage from habitat selection for iron and genotoxin clusters among gut Enterobacteriaceae.",
+          "question": "Do gut-associated Enterobacteriaceae carry more iron-siderophore and genotoxin clusters than their non-gut relatives, or does the enrichment among the Crohn's targets come from lineage alone?",
+          "readiness": "needs compute",
+          "readiness_basis": "The pangenome and metagenome tables are in the catalog, but mapping cluster themes onto annotations and matching genomes needs new computation.",
+          "tables": [
+            "kbase.ke_pangenome.bakta_annotations",
+            "kbase.ke_pangenome.gtdb_metadata",
+            "kbase.ke_pangenome.ncbi_env",
+            "kescience.mgnify.gene_bgc"
+          ],
+          "test": "Take Enterobacteriaceae genomes from the pangenome collection with their isolation source and predicted cluster content. Compare siderophore and genotoxin cluster counts between gut-associated and non-gut genomes within each genus, and against matched Enterobacteriaceae drawn at random. Repeat with the environmental metagenome cluster tables as an outside check.",
+          "title": "Do gut Enterobacteriaceae carry extra siderophore and genotoxin clusters beyond lineage expectation?",
+          "why_it_matters": "The enrichment was measured against a rare-cluster background, so it may reflect lineage and not disease selection. This test says whether iron and genotoxin traits justify a Crohn's-specific mechanism axis for target choice."
+        },
+        {
+          "approach": "lakehouse analysis",
+          "conflicts": [],
+          "databases": [
+            "arkinlab.cmd_reference"
+          ],
+          "findings": [
+            "ibd_phage_targeting--56e3bb7d",
             "ibd_phage_targeting--d7f80dce"
           ],
-          "hypothesis": "Virus sequences assigned to these hosts are mostly integrated or temperate type. Predicted lytic phages are rare even after adjusting for how many genomes exist per host.",
+          "hypothesis": "A one-dimensional gradient fitted to many cohorts predicts Crohn's candidate abundance as well as the four labelled states do, and its placement of samples agrees across studies far better than the labels do.",
           "id": "D5",
-          "outcomes": "Support: host-assigned viruses are overwhelmingly temperate and enrichments yield no lytic phage. Refutation: lytic phages for these hosts are recovered from stool or already exist at normal rates.",
+          "outcomes": "Support: the gradient predicts candidates and disease as well as the states, with steadier positions across studies. Refutation: the discrete states predict candidates better, or positions are no steadier, so the replication reflects real discrete structure.",
           "papers": [
-            "41726920",
-            "28130329"
+            "39244168",
+            "41726920"
           ],
-          "prior_work": "PMID 41726920 profiles viral changes in IBD cohort data and PMID 28130329 treats phage against E. coli; neither asks why lytic phages for these anaerobes are missing.",
-          "question": "No lytic phage is known for Hungatella hathewayi, Flavonifractor plautii or Mediterraneibacter gnavus. Is this because phages of these hosts are mostly temperate, or because gut anaerobe phages have simply been under-sampled?",
+          "prior_work": "PMID 39244168 shows microbiome differences between populations and PMID 41726920 profiles viruses in the same HMP2 cohort; neither asks whether discrete community states or a continuous gradient explains candidate replication.",
+          "question": "Do gut communities form a continuous gradient, so that the Crohn's candidate species replicate while discrete state labels shift between cohorts?",
           "readiness": "unknown",
-          "readiness_basis": "The MAG catalog lists some of these species by name; the catalog showed viral host-assignment tables but not whether they hold lifestyle calls, and MAG counts for these hosts were not shown.",
+          "readiness_basis": "The catalog shows cohort sample metadata and an E. coli abundance table but not the species abundance matrix the models need.",
           "tables": [
-            "kbase.nmdc_mags.mag_catalog"
+            "arkinlab.cmd_reference.sample_metadata",
+            "arkinlab.cmd_reference.ecoli_relab_by_cohort"
           ],
-          "test": "From the large environmental viral-sequence collection, pull host assignments and lifestyle calls for these three hosts and compare them to hosts with good phage coverage, normalising by genome counts. Screen the anaerobe genomes and the metagenome-assembled genomes in the MAG catalog for prophage content as an independent measure. Then attempt phage enrichment from stool of Crohn's patients on each host and record plaque-forming or lytic-curve results.",
-          "title": "Are the missing phages for three gut anaerobes absent because they are temperate or undersampled?",
-          "why_it_matters": "If the gap is biological, hybrid strategies such as enzyme inhibitors or engineered lytic-locked phage are needed. If it is under-sampling, targeted isolation from stool could fill it."
+          "test": "Using multi-cohort gut metagenomic profiles with sample metadata, fit a discrete mixture model and a continuous latent gradient model to the same samples. Compare how well each predicts held-out candidate abundance and Crohn's status within each cohort, and how stable sample positions are across studies. Use the E1 candidate list that replicated in the held-out HMP2 samples as the target.",
+          "title": "Do gut communities form a continuous gradient that explains why candidate species replicate?",
+          "why_it_matters": "The state labels agreed poorly across studies even though the candidate list replicated in held-out samples. If a gradient explains this, patient stratification should use position on a gradient and not state labels."
         }
       ]
     }
