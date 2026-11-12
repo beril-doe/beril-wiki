@@ -4,7 +4,7 @@
     "pages": {
       "are-fba-versus-tnseq-disagreements-in-adp1-mostly-caused-by--460c05.md": "e62445f5aa1b69d77d2665a59a81ed04e537694bfd7891dddd18f51bdea8614d",
       "do-metal-contaminated-site-strains-gain-metal-genes-within-s--529fb0.md": "952ba2b87ed467bf40a3d2e6bfebee6669482680096b4c6d4ec374f976793058",
-      "do-snipe-defense-carriers-keep-a-mannose-type-transporter-mo--f72278.md": "a8f028b46c53f2cedfb83c738254d6529d868d329dec1c252ab743038b5cacff",
+      "do-snipe-defense-carriers-keep-a-mannose-type-transporter-mo--f72278.md": "6d6d5d0ad0b590db3a99880988f475dbd965e90288ee6cde7b96f6a2d12065cc",
       "does-contamination-select-for-defense-genes-within-a-genus-h--c70fc7.md": "fa54a05a1496d24bdf87960250489ed8b6a24a25d3b75e9ce0d4a4deca4d3fb2",
       "does-prophage-content-follow-genome-size-within-species-not--ad0ede.md": "2097a578b69b32a9b61ab8a2735613412666284f1d6412b0daf84a458ce5f572",
       "is-growth-predictable-from-gene-content-only-where-a-whole-c--886042.md": "4c0edbcd1244c7020134ba7b1541f93c82f88eb0919892a23df09cde1287bd9b"
@@ -158,7 +158,7 @@
           ],
           "hypothesis": "Within genera that vary in SNIPE carriage, SNIPE-carrying species keep a ManYZ-like transporter more often than non-carriers, because the nuclease is proposed to act on phage DNA injected through that transporter.",
           "id": "D5",
-          "outcomes": "Support: SNIPE carriers retain the transporter more often within genera, and deletion in carriers removes protection. Refute: no co-retention within genera, or deletion leaves protection intact.",
+          "outcomes": "Support: SNIPE carriers retain the transporter more often within genera, and strains that lose SNIPE but keep the transporter lose protection against phages that enter through it. Refute: no co-retention within genera, or removing SNIPE leaves protection unchanged.",
           "papers": [
             "41741653",
             "34032565",
@@ -167,13 +167,13 @@
           "prior_work": "PMID 41741653 describes the membrane nuclease cleaving injected phage DNA; this asks whether transporter co-retention extends across bacteria.",
           "question": "The SNIPE defense domain turned up in 1,696 species across 33 phyla, yet its transporter partner was found by gene name only in E. coli K-12 among the mutant-fitness organisms. Do species carrying the domain also keep a mannose-type transporter more often than relatives lacking it?",
           "readiness": "needs new measurements",
-          "readiness_basis": "Domain annotations are in the catalog, but the Klebsiella phage tables hold no fitness data, so the decisive deletion test needs new mutants.",
+          "readiness_basis": "Domain annotations are in the catalog, but the Klebsiella phage tables hold no fitness data, so the decisive SNIPE deletion test needs new mutants.",
           "tables": [
             "kbase.ke_pangenome.eggnog_mapper_annotations",
             "kbase.ke_pangenome.genome",
             "kbase.ke_pangenome.gtdb_taxonomy_r214v1"
           ],
-          "test": "Using protein-domain annotations in the pangenome, mark species carrying the SNIPE diagnostic domain and detect mannose-type transporter domains in all species. Compare co-occurrence within genera using the genome taxonomy table. Then, in Klebsiella strains that have annotated ManYZ but no fitness data, delete the transporter in SNIPE-carrying strains and test phage susceptibility.",
+          "test": "Using protein-domain annotations in the pangenome, mark species carrying the SNIPE diagnostic domain and detect mannose-type transporter domains in all species. Compare co-occurrence within genera using the genome taxonomy table. Then, in Klebsiella strains that carry SNIPE and an annotated ManYZ, delete SNIPE while keeping the transporter and compare phage susceptibility with the parent strain. Deleting the transporter itself blocks phage entry, so it cannot show what SNIPE adds.",
           "title": "Do SNIPE defense carriers keep a mannose-type transporter more often than relatives?",
           "why_it_matters": "A consistent co-retention would show the mechanism generalizes beyond E. coli and would suggest why a defense gene might be lost when its transporter is lost."
         },

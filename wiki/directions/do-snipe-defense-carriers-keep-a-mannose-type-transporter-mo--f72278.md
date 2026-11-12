@@ -4,7 +4,7 @@ description: "The SNIPE defense domain turned up in 1,696 species across 33 phyl
 hypothesis: "Within genera that vary in SNIPE carriage, SNIPE-carrying species keep a ManYZ-like transporter more often than non-carriers, because the nuclease is proposed to act on phage DNA injected through that transporter."
 approach: "analysis then experiment"
 readiness: "needs new measurements"
-readiness_basis: "Domain annotations are in the catalog, but the Klebsiella phage tables hold no fitness data, so the decisive deletion test needs new mutants."
+readiness_basis: "Domain annotations are in the catalog, but the Klebsiella phage tables hold no fitness data, so the decisive SNIPE deletion test needs new mutants."
 databases: ["kbase.ke_pangenome"]
 tables: ["kbase.ke_pangenome.eggnog_mapper_annotations", "kbase.ke_pangenome.genome", "kbase.ke_pangenome.gtdb_taxonomy_r214v1"]
 findings: ["snipe_defense_system--5727ec31", "snipe_defense_system--69396dc3", "snipe_defense_system--792b9ec1"]
@@ -28,15 +28,15 @@ A consistent co-retention would show the mechanism generalizes beyond E. coli an
 
 ## How to test it
 
-Using protein-domain annotations in the pangenome, mark species carrying the SNIPE diagnostic domain and detect mannose-type transporter domains in all species. Compare co-occurrence within genera using the genome taxonomy table. Then, in Klebsiella strains that have annotated ManYZ but no fitness data, delete the transporter in SNIPE-carrying strains and test phage susceptibility.
+Using protein-domain annotations in the pangenome, mark species carrying the SNIPE diagnostic domain and detect mannose-type transporter domains in all species. Compare co-occurrence within genera using the genome taxonomy table. Then, in Klebsiella strains that carry SNIPE and an annotated ManYZ, delete SNIPE while keeping the transporter and compare phage susceptibility with the parent strain. Deleting the transporter itself blocks phage entry, so it cannot show what SNIPE adds.
 
 ## What would support or refute it
 
-Support: SNIPE carriers retain the transporter more often within genera, and deletion in carriers removes protection. Refute: no co-retention within genera, or deletion leaves protection intact.
+Support: SNIPE carriers retain the transporter more often within genera, and strains that lose SNIPE but keep the transporter lose protection against phages that enter through it. Refute: no co-retention within genera, or removing SNIPE leaves protection unchanged.
 
 ## Data
 
-Approach: analysis then experiment. Readiness: needs new measurements. Domain annotations are in the catalog, but the Klebsiella phage tables hold no fitness data, so the decisive deletion test needs new mutants.
+Approach: analysis then experiment. Readiness: needs new measurements. Domain annotations are in the catalog, but the Klebsiella phage tables hold no fitness data, so the decisive SNIPE deletion test needs new mutants.
 
 ## Builds on
 

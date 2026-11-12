@@ -416,10 +416,10 @@
   "do-snipe-defense-carriers-keep-a-mannose-type-transporter-mo--f72278": {
     "data_unclear": false,
     "first_step_existing": true,
-    "input": "41f91396caca18f41bf158e6f596a21635672edc7f6a621f0b346dc277dda3c7",
+    "input": "bd41d3069e5c492e89def447cdc37299f3ad9ebfb3ffba45fc8a022925ba724c",
     "model": "claude-haiku-5-5",
     "need": "experiment",
-    "reason": "Whether carriers keep the transporter more often is read from pangenome annotations, but only deleting it in carrier strains decides protection, which needs new mutants.",
+    "reason": "Co-retention of SNIPE and ManYZ-like domains within genera can be checked in the lakehouse, but deciding support needs new SNIPE-deletion mutants and phage susceptibility assays.",
     "tables": [
       "kbase.ke_pangenome.eggnog_mapper_annotations",
       "kbase.ke_pangenome.genome",

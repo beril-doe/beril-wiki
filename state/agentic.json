@@ -800,7 +800,7 @@
         "wiki/directions/do-metal-contaminated-site-strains-gain-metal-genes-within-s--529fb0.md": "952ba2b87ed467bf40a3d2e6bfebee6669482680096b4c6d4ec374f976793058",
         "wiki/directions/do-resistance-genes-share-neighbors-with-flagellar-genes-bec--6cd46e.md": "afffb8087f3abd344f3871404f2b3cec17e103d0fe67341328163a4f47b7c552",
         "wiki/directions/do-restriction-modification-and-gabija-defenses-pair-up-beca--563b91.md": "0d2d0cc057eced2ebce0ffea0457f8827a47330803940bc4135cdee6f9019ddf",
-        "wiki/directions/do-snipe-defense-carriers-keep-a-mannose-type-transporter-mo--f72278.md": "a8f028b46c53f2cedfb83c738254d6529d868d329dec1c252ab743038b5cacff",
+        "wiki/directions/do-snipe-defense-carriers-keep-a-mannose-type-transporter-mo--f72278.md": "6d6d5d0ad0b590db3a99880988f475dbd965e90288ee6cde7b96f6a2d12065cc",
         "wiki/directions/do-soil-bacteria-with-the-auxin-gene-ipdc-give-up-tryptophan--d38f82.md": "d9be258c186658afcba9c9b304f0cb82c91088ac38e1f3df0835e93ebf3d98e5",
         "wiki/directions/do-soil-microbes-lose-amino-acid-synthesis-genes-where-free--d65307.md": "171d19a6fd646a27e76c55ea809399323e3887360597b02cc8240176d14ad6bd",
         "wiki/directions/do-species-from-diverse-environments-gain-resistance-genes-t--cd6026.md": "56023f019c3280d15b39aa72792460019c610fd2dbfcb83a3c270635310ff9a1",
@@ -839,9 +839,9 @@
       "semantic": "c4f08baa7769327f53a8b63d06aca79614e290eac1b06f3a110b228db85f1adf"
     },
     "followups": {
-      "inputs": "fe9755f6d591d6f69393be095481fd7472f87d85fa224742dce1145b89db5011",
+      "inputs": "91354b5933ca6155d2d127b64c34cf837f7a9b7e8022ecb06e6e0ac969b9147e",
       "outputs": {
-        "state/followups.json": "8236200ba5979e60b36d4444d56589248e8e50fd158c3a184a607d392bc142c6"
+        "state/followups.json": "33a04307f4b97e422c02137cd2ea11148c228e6abefa0f6dc0de08eb9123fbcc"
       },
       "semantic": "17d859965c5e1f68c5c02d1c4c3b922a37495f8b3a389a89cc8266d53d6e2924"
     },
@@ -1277,7 +1277,7 @@
     "state/figures-state.json": "107d02901fb585b4079e88402275f06fde020dcbb43d86fa666ab46cac477774"
   },
   "figure_revision": "63c05bdf7b183de4596bfb45c5c6f0271e4ae1f6092264d3c8089a039b634270",
-  "fingerprint": "5224350f2f59ee6d7598759b652ff9d6a08e63242237513052d0e43df2aff6e1",
+  "fingerprint": "32ec9f5958d57f97ee80a353d800888ddf83a610aa63995e4d68456733cd2131",
   "models": {
     "card_review": "gpt-6-luna",
     "cards": "claude-sonnet-5-5",
