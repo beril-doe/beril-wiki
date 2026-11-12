@@ -404,7 +404,8 @@ def main(root: Path = ROOT) -> int:
     # A new judge, reviewer or query model re-judges every label; the old one stays
     # as the fallback if retrieval then fails.
     roles = ("cards", "findings_review", "queries")
-    revision = digest([JUDGE_REVISION, cards.policy(cards.runtime().config, roles)])
+    config = cards.runtime().config
+    revision = digest([JUDGE_REVISION, cards.policy(config, roles)])
     for fid in decisions.keys() - findings.keys():
         print(f"  [WARN] {DECISIONS}: no finding {fid}")
     reports: dict[str, list[str]] = {}
@@ -423,6 +424,8 @@ def main(root: Path = ROOT) -> int:
     for fid, finding in findings.items():
         key = digest([finding, revision])
         prev = state.get(fid, {})
+        if cards.leaves_failed(config, prev.get("failed") is True, cards.owners("novelty", fid)):
+            continue
         if prev.get("input") == key and not prev.get("failed") and age(prev) <= REFRESH_DAYS:
             continue
         sid = finding["report"]

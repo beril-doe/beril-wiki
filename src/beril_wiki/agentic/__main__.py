@@ -700,6 +700,8 @@ def main() -> int:
                 verdict = admit(root, args.checkout.resolve(), args.expect_source)
                 if not verdict["admitted"]:
                     raise WorkflowError("not admitted: " + "; ".join(verdict["reasons"]))
+                # The card stages leave other projects' failed entries as saved.
+                config["expect_source"] = args.expect_source
             if args.progress:
                 os.environ[progress.ENV] = str(args.progress.resolve())
             print(json.dumps({"models": model_policy(config)}, indent=2))

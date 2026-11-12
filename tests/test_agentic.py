@@ -1532,12 +1532,43 @@ def stale_stage(root, checkout):
     path.write_text(json.dumps(state))
 
 
-def failed_link_on_main(root, checkout):
+def failed_on_main(root, entries, links=()):
+    """Save `entries` ({store: {key: entry}}) as main's card state, and settle the
+    accepted snapshot so only the failures are owed."""
     import json
 
-    (root / "state/links.json").write_text(
-        json.dumps({"candidates": {"ref:x__REPORT.md>y": {"failed": True}}, "links": []})
-    )
+    from beril_wiki.agentic import curator as C
+    from beril_wiki.stages import cards
+
+    for store, data in (({"links": {}} if links else {}) | entries).items():
+        saved = {"candidates": data, "links": list(links)} if store == "links" else data
+        (root / f"state/{store}.json").write_text(json.dumps(saved))
+    for fid in {f for x in links for f in (x["a"], x["b"])}:
+        fields = {"type": "Finding", "description": "Growth fell.", "source": fid[:1]}
+        cards.write_page(root / f"wiki/findings/{fid}.md", fields, "# Growth fell\n")
+    path = root / "state/agentic.json"
+    state = json.loads(path.read_text())
+    state["editorial"] = {n: C.stage_snapshot(root, n) for n in C.EDITORIAL}
+    path.write_text(json.dumps(state))
+
+
+def failed_gist_of_b(root, checkout):
+    failed_on_main(root, {"gists": {"b--1a2b3c4d": {"failed": True}}})
+
+
+def failed_link_naming_b(root, checkout):
+    failed_on_main(root, {"links": {"ref:a>b": {"failed": True}}})
+
+
+SHARED_LINK = {"a": "a--1a2b3c4d", "b": "b--5e6f7a8b", "level": "finding"}
+SHARED_LINK |= {"type": "same result", "label": "Both saw growth fall"}
+
+
+def failed_group_with_b(root, checkout):
+    from beril_wiki.stages.shared import group_id
+
+    gid = group_id(["a--1a2b3c4d", "b--5e6f7a8b"])
+    failed_on_main(root, {"shared": {gid: {"input": "", "failed": True}}}, [SHARED_LINK])
 
 
 def unknown_job(root, checkout):
@@ -1577,7 +1608,9 @@ def test_expect_source_adopts_an_older_revision_scheme(tmp_path):
         (current_revision, "accepted revision"),
         (expired_labels, "novelty labels"),
         (stale_stage, "main owes editorial stages: authors"),
-        (failed_link_on_main, "failed card entries links:ref:x__REPORT.md>y"),
+        (failed_gist_of_b, "failed card entries of b: gists:b--1a2b3c4d"),
+        (failed_link_naming_b, "failed card entries of b: links:ref:a>b"),
+        (failed_group_with_b, "failed card entries of b: shared:g-"),
         (unknown_job, "conflicts/x"),
         (other_manifest_entry, "manifest.json differs from HEAD outside projects/b: projects/a"),
         (other_readme, "projects/a/README.md"),
@@ -1594,6 +1627,36 @@ def test_expect_source_refuses_work_beyond_one_project(tmp_path, mutate, reason)
     assert not verdict["admitted"]
     assert any(reason in r for r in verdict["reasons"]), verdict["reasons"]
     assert ledger_rows(root) == rows
+
+
+def test_expect_source_leaves_other_projects_failed_entries_to_maintenance(tmp_path):
+    """Main's failed entries of other projects, or of a topic, are not a researcher's to
+    pay for, so they are listed for maintenance and do not refuse."""
+    from beril_wiki.agentic import __main__ as cli
+    from beril_wiki.stages.shared import group_id
+
+    root, checkout = admission_base(tmp_path)
+    add_project(checkout, "b")
+    link = SHARED_LINK | {"b": "z--5e6f7a8b"}
+    gid = group_id(["a--1a2b3c4d", "z--5e6f7a8b"])
+    failed_on_main(
+        root,
+        {
+            "gists": {"a--1a2b3c4d": {"failed": True}, "a--99999999": {"gist": "Kept."}},
+            "links": {"pair:a--1a2b3c4d|z--5e6f7a8b": {"failed": True}},
+            "shared": {gid: {"input": "", "failed": True}},
+            "followups": {"does-growth-fall--1a2b3c": {"failed": True}},
+        },
+        [link],
+    )
+    verdict = cli.plan(root, checkout, "b")
+    assert verdict["admitted"], verdict["reasons"]
+    assert verdict["maintenance_failed"] == [
+        "gists:a--1a2b3c4d",
+        "links:pair:a--1a2b3c4d|z--5e6f7a8b",
+        f"shared:{gid}",
+        "followups:does-growth-fall--1a2b3c",
+    ]
 
 
 def test_expect_source_cli_exits_on_refusal_before_run(tmp_path, monkeypatch, capsys):
@@ -1626,6 +1689,28 @@ def test_expect_source_cli_exits_on_refusal_before_run(tmp_path, monkeypatch, ca
     monkeypatch.setattr(sys, "argv", run)
     assert cli.main() == 1
     assert "c__REPORT.md" in capsys.readouterr().out
+
+
+def test_expect_source_tells_the_card_stages_which_project_runs(tmp_path, monkeypatch):
+    """The card stages leave other projects' failed entries only when the run's config
+    names the project; without it they re-ask every one."""
+    import sys
+
+    from beril_wiki.agentic import __main__ as cli
+
+    root, checkout = admission_base(tmp_path)
+    add_project(checkout, "b")
+    seen = {}
+    monkeypatch.setattr(cli, "run", lambda root, checkout, config, staged: seen.update(config))
+    flags = ["--max-tokens", "10", "--max-jobs", "1", "--cli", "claude", "--model", "m"]
+    run = ["agentic", "--root", str(root), "run", *flags, "--checkout", str(checkout)]
+    monkeypatch.setattr(sys, "argv", [*run, "--expect-source", "b"])
+    assert cli.main() == 0
+    assert seen["expect_source"] == "b"
+    seen.clear()
+    monkeypatch.setattr(sys, "argv", run)
+    assert cli.main() == 0
+    assert "expect_source" not in seen
 
 
 STAGE_DRIVER = """
