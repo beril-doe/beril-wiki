@@ -2,9 +2,10 @@
 
 Two passes, each over a scratch copy of the live trees. The base pass fetches the
 corpus committed at HEAD and refuses when `main` already owes editorial stages,
-label refreshes or a ledger reconciliation, since a researcher's run would pay for
-them. The import pass fetches the given checkout and refuses when anything but the
-expected project would change, or when the run would re-integrate every source.
+label refreshes, failed card entries or a ledger reconciliation, since a researcher's
+run would pay for them. The import pass fetches the given checkout and refuses when
+anything but the expected project would change, or when the run would re-integrate
+every source.
 Nothing is written to the live trees or the job ledger.
 """
 
@@ -12,6 +13,7 @@ from __future__ import annotations
 
 import contextlib
 import io
+import json
 import re
 import shutil
 import sqlite3
@@ -36,6 +38,17 @@ from beril_wiki.stages.fetch import fetch_local
 from beril_wiki.stages.novelty import labels_due
 
 PROJECT_ID = r"[A-Za-z0-9][A-Za-z0-9_-]*"
+# Card stages re-ask every entry saved as failed, whichever project it belongs to.
+CARD_STATE = (
+    "gists",
+    "links",
+    "shared",
+    "headlines",
+    "novelty",
+    "outcomes",
+    "followups",
+    "directions",
+)
 
 
 def head_corpus(root: Path, dest: Path) -> Path:
@@ -85,6 +98,28 @@ def unknown_usage(root: Path) -> list[str]:
         raise WorkflowError(f"cannot read the job ledger {path}: {exc}") from exc
 
 
+def failed_entries(root: Path) -> list[str]:
+    """`<state>:<key>` for each card entry saved with `failed: true`."""
+    found: list[str] = []
+    for name in CARD_STATE:
+        path = root / "state" / f"{name}.json"
+        if not path.is_file():
+            continue
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except ValueError as exc:
+            raise WorkflowError(f"cannot read {path}: {exc}") from exc
+        if name == "links" and isinstance(data, dict):
+            data = data.get("candidates", {})
+        if isinstance(data, dict):
+            found += [
+                f"{name}:{key}"
+                for key, entry in data.items()
+                if isinstance(entry, dict) and entry.get("failed") is True
+            ]
+    return found
+
+
 def outside(paths: set[str], expect: str) -> list[str]:
     return sorted(p for p in paths if not p.startswith(f"projects/{expect}/"))
 
@@ -127,8 +162,11 @@ def admit(root: Path, checkout: Path, expect: str) -> dict:
         base_pending = due_editorial(base)
         due = labels_due(base)
         unknown = unknown_usage(root)
+        failed = failed_entries(base)
         if base_pending:
             reasons.append(f"main owes editorial stages: {', '.join(base_pending)}")
+        if failed:
+            reasons.append(f"main owes maintenance: failed card entries {listed(failed)}")
         if due:
             reasons.append("main owes a refresh of novelty labels past their age")
         if unknown:

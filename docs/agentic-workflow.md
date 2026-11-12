@@ -52,8 +52,11 @@ repository already owed. It reads `--checkout` (default `corpus/`), makes no
 model call, and writes nothing to `wiki/`, `state/`, `staging/` or the job
 ledger. It checks two scratch copies of the trees. The base copy fetches
 `corpus/` as committed at `HEAD` and refuses when an editorial stage is
-pending, when a novelty label is due for refresh, or when
-`.agentic/jobs.sqlite` holds a job with unknown usage. The import copy fetches
+pending, when a novelty label is due for refresh, when an entry of
+`state/{gists,links,shared,headlines,novelty,outcomes,followups,directions}.json`
+is saved with `failed: true` (a card stage re-asks it, whichever project it
+belongs to), or when `.agentic/jobs.sqlite` holds a job with unknown usage. The
+import copy fetches
 the checkout and refuses when:
 
 - a staged source other than `ID__REPORT.md` would integrate;
@@ -120,9 +123,11 @@ scope check for a publisher branch. The branch comes from `--branch` or
 fails when `REF` is not an ancestor of the head, when `corpus/` changes outside
 `projects/ID/` and the `ID` entry of `manifest.json`, when `wiki/sources`,
 `wiki/summaries` or `wiki/figures` change outside `ID`, or when an entry of
-`state/{headlines,novelty,gists,outcomes,shared,links}.json` changes for no
-project of `ID`. `followups.json` and `directions.json` are keyed by question
-and topic slug, so the script does not check them. The `scope` job in
+`state/{headlines,novelty,gists,outcomes}.json` changes for no project of `ID`.
+`links.json` and `shared.json` relate findings across projects, as concept pages
+do, so a new project may change any of their entries. `followups.json` and
+`directions.json` are keyed by question and topic slug. The script checks none
+of the four. The `scope` job in
 `.github/workflows/tests.yml` runs it on every pull request.
 Individual jobs have `--max-turns` (default 12, applying to tool-using jobs
 other than page sessions), `--timeout` (600 seconds), and `--max-output-tokens`

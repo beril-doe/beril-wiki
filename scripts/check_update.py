@@ -9,9 +9,12 @@ the project id is the rest of the name, and the check fails when:
 - `--base` is not an ancestor of `--head`;
 - `corpus/` changes outside `corpus/projects/ID/` and the `ID` entry of `manifest.json`;
 - `wiki/sources`, `wiki/summaries` or `wiki/figures` change outside `ID`;
-- `state/{headlines,novelty,gists,outcomes,shared,links}.json` change an entry that
-  belongs to no project of the branch. `followups.json` and `directions.json` key their
-  entries by question or topic slug, which names no project, so they are not checked.
+- `state/{headlines,novelty,gists,outcomes}.json` change an entry that belongs to no
+  project of the branch.
+
+`links.json` and `shared.json` relate findings across projects, as concept pages do, so a
+new project may change any of their entries. `followups.json` and `directions.json` key
+their entries by question or topic slug, which names no project. None of the four is checked.
 
 Exit 0 when the branch is in scope, 1 with one line per violation otherwise.
 """
@@ -58,45 +61,6 @@ def by_key(ids: set[str]) -> Callable[[dict, dict], list[str]]:
 
     def check(base: dict, head: dict) -> list[str]:
         return [k for k in sorted(changed_keys(base, head)) if project_of(k) not in ids]
-
-    return check
-
-
-def shared_stale(ids: set[str]) -> Callable[[dict, dict], list[str]]:
-    def check(base: dict, head: dict) -> list[str]:
-        bad = []
-        for k in sorted(changed_keys(base, head)):
-            projects = {p for side in (base, head) for p in (side.get(k) or {}).get("projects", [])}
-            if not projects & ids:
-                bad.append(k)
-        return bad
-
-    return check
-
-
-def pair_projects(key: str) -> set[str]:
-    return {project_of(m) for m in key.removeprefix("pair:").split("|")}
-
-
-def links_stale(ids: set[str]) -> Callable[[dict, dict], list[str]]:
-    """A candidate pair or link may change when either side is one of the branch's projects."""
-
-    def check(base: dict, head: dict) -> list[str]:
-        bad = [
-            k
-            for k in sorted(changed_keys(base.get("candidates", {}), head.get("candidates", {})))
-            if not pair_projects(k) & ids
-        ]
-
-        def items(side: dict) -> dict[str, dict]:
-            return {json.dumps(x, sort_keys=True): x for x in side.get("links", [])}
-
-        before, after = items(base), items(head)
-        for k in sorted(before.keys() ^ after.keys()):
-            x = before.get(k) or after[k]
-            if not {project_of(str(x.get("a", ""))), project_of(str(x.get("b", "")))} & ids:
-                bad.append(f"link {x.get('a')} | {x.get('b')}")
-        return bad
 
     return check
 
@@ -148,8 +112,6 @@ def violations(base: str, head: str, ids: set[str]) -> list[str]:
         "novelty": by_key(ids),
         "gists": by_key(ids),
         "outcomes": by_key(ids),
-        "shared": shared_stale(ids),
-        "links": links_stale(ids),
     }
     for name, check in checks.items():
         path = f"state/{name}.json"
