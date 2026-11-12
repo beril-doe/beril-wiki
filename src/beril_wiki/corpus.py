@@ -121,6 +121,9 @@ def import_v1(checkout: Path, corpus: Path = CORPUS) -> dict:
 
 def verify(corpus: Path = CORPUS) -> list[str]:
     """Every corpus file is in the manifest with its current hash, and nothing is missing."""
+    # load() reads a missing manifest as empty, which an empty tree would then match.
+    if not (corpus / MANIFEST).is_file():
+        return [f"{MANIFEST}: missing; run import-v1"]
     manifest = load(corpus)
     problems: list[str] = []
     listed = {rel: h for rel, h in manifest.get("shared", {}).items()}

@@ -36,6 +36,7 @@ def test_committed_corpus_matches_its_manifest():
 
 def test_verify_names_an_edited_file(tmp_path):
     out = tmp_path / "corpus"
+    assert corpus.verify(out) == ["manifest.json: missing; run import-v1"]
     corpus.import_v1(checkout(tmp_path, ["a", "b"]), out)
     assert corpus.verify(out) == []
     (out / "projects/a/README.md").write_text("edited\n")
