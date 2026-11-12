@@ -112,6 +112,9 @@ def test_ingest_merges_label_and_topics(tmp_path, monkeypatch):
     import json
 
     card_corpus(tmp_path / "kb")
+    manifest_bytes = b'{"projects": {}, "shared": {}, "version": 1}\n'
+    (tmp_path / "kb/corpus").mkdir()
+    (tmp_path / "kb/corpus/manifest.json").write_bytes(manifest_bytes)
     publish(tmp_path / "kb", tmp_path / "out", monkeypatch)
     finding = (tmp_path / "out/findings/a--1a2b3c4d.md").read_text()
     assert 'label: "Candidate novel"' in finding and 'topics: ["dark-matter"]' in finding
@@ -132,6 +135,7 @@ def test_ingest_merges_label_and_topics(tmp_path, monkeypatch):
     assert "[[data-issues/a|1 proposal(s) for the report's maintainers]]" in summary
     export = json.loads((tmp_path / "out/cards.json").read_text())
     assert export["findings"][0]["label"] == "Candidate novel"
+    assert (tmp_path / "out/corpus-manifest.json").read_bytes() == manifest_bytes
     assert export["research_directions"][0]["readiness"] == "needs compute"
     assert export["data_issues"] == {"a": ["Recompute the stress rates per experiment. [src: a]"]}
 
