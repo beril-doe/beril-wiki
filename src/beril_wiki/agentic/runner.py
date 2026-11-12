@@ -5,19 +5,26 @@ from __future__ import annotations
 import fcntl
 import json
 import os
-import re
 import shutil
 import signal
 import subprocess
 import sys
 import time
+import uuid
 from contextlib import contextmanager
 from importlib.metadata import version
 from pathlib import Path
 
 from beril_wiki import compiler as C
+from beril_wiki.agentic import progress
 from beril_wiki.agentic.batch import INTEGRATION_REVISION, changed_sources, retryable
-from beril_wiki.agentic.curator import EDITORIAL, curate, stage_revision, stage_snapshot
+from beril_wiki.agentic.curator import (
+    EDITORIAL,
+    curate,
+    pending_actions,
+    stage_revision,
+    stage_snapshot,
+)
 from beril_wiki.agentic.runtime import (
     AUTH_ENV,
     Runtime,
@@ -31,9 +38,12 @@ from beril_wiki.agentic.runtime import (
     model_policy,
     model_signature,
 )
+from beril_wiki.corpus import FIG_EMBED
 from beril_wiki.stages.novelty import labels_due
 
 TREES = ("wiki", "state", "staging")
+# Pages integration writes; an edit outside a run makes the next one re-integrate.
+CORE_OUTPUTS = ("wiki/concepts", "wiki/entities", "wiki/summaries")
 
 
 @contextmanager
@@ -122,9 +132,7 @@ def checkout_inputs(checkout: Path) -> dict[str, str]:
     paths |= {checkout / "docs" / name for name in ("discoveries.md", "pitfalls.md")}
     for report in list(paths):
         if report.name == "REPORT.md":
-            for figure in re.findall(
-                r"!\[[^\]]*\]\((figures/[^)]+)\)", report.read_text(encoding="utf-8")
-            ):
+            for figure in FIG_EMBED.findall(report.read_text(encoding="utf-8")):
                 rel = Path(figure)
                 if ".." in rel.parts or rel.is_absolute():
                     raise WorkflowError(f"unsafe figure reference in {report}")
@@ -168,9 +176,28 @@ def run_stage(work: Path, config_path: Path, name: str, module: str, args: list[
         FETCH_BACKEND="local",
     )
     logfile = config_path.parent / f"stage-{name}.log"
-    limit = json.loads(config_path.read_text(encoding="utf-8")).get("stage_timeout", 14400)
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    limit = config.get("stage_timeout", 14400)
     command = [sys.executable, "-m", f"beril_wiki.{module}", *args]
     print(f"agentic stage: {name}", flush=True)
+
+    def report(event: str, **extra: object) -> None:
+        if progress.enabled():
+            totals = progress.snapshot(config_path.parent, config.get("run", ""))
+            progress.emit(event, stage=name, **totals, **extra)
+
+    report("stage_start")
+    try:
+        _run_stage(work, env, logfile, command, name, limit)
+    except BaseException as exc:
+        report("stage_end", ok=False, error=str(exc)[-500:])
+        raise
+    report("stage_end", ok=True)
+
+
+def _run_stage(
+    work: Path, env: dict[str, str], logfile: Path, command: list[str], name: str, limit: float
+) -> None:
     with logfile.open("w") as output:
         process = subprocess.Popen(
             command,
@@ -220,6 +247,10 @@ def compiler_revision() -> str:
     return digest([INTEGRATION_REVISION])
 
 
+def scientific_revision(root: Path) -> str:
+    return digest([compiler_revision(), contract_manifest(root)])
+
+
 def fingerprint(root: Path) -> dict[str, str]:
     return {
         p: h for p, h in manifest(root, (*TREES, "contract")).items() if p != "state/agentic.json"
@@ -249,6 +280,50 @@ def adopts(accepted: dict, contract: str) -> bool:
         and accepted.get("revision_scheme") != REVISION_SCHEME
         and accepted.get("contract", contract) == contract
     )
+
+
+def load_accepted(root: Path) -> dict:
+    path = root / "state/agentic.json"
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+
+
+def invalidation(work: Path, accepted: dict, adopting: bool) -> str | None:
+    """Which accepted record makes a run re-integrate every staged source, if any."""
+    if not accepted:
+        return None
+    # A revision accepted under another scheme cannot be recomputed here, and
+    # re-integrating every source to find out would re-plan the corpus; it is adopted.
+    if accepted.get("revision") != scientific_revision(work) and not adopting:
+        return "revision"
+    # Conservative: manual edits need integration review, never silently adopted.
+    if accepted.get("core_outputs", {}) != manifest(work, CORE_OUTPUTS):
+        return "core_outputs"
+    return None
+
+
+def due_editorial(root: Path) -> list[str]:
+    """Editorial stages whose fingerprint no longer matches the accepted state, comparing
+    a state accepted under an earlier revision scheme as the next run adopts it."""
+    accepted = load_accepted(root)
+    prior = accepted.get("editorial", {})
+    if adopts(accepted, digest(contract_manifest(root))):
+        prior = adopt_editorial(root, prior)
+    return pending_actions(root, prior, integrated=True)
+
+
+def snapshot_trees(root: Path, work: Path, checkout: Path, external: dict[str, str]) -> None:
+    """Copy the live trees into `work`, and the checkout's inputs into `work/reference`."""
+    for folder in (*TREES, "contract"):
+        if (root / folder).exists():
+            shutil.copytree(root / folder, work / folder)
+        else:
+            (work / folder).mkdir(parents=True)
+    for rel in external:
+        dst = work / "reference" / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(checkout / rel, dst)
+    if checkout_inputs(work / "reference") != external:
+        raise WorkflowError("observatory inputs changed while taking snapshot")
 
 
 def budget_run(root: Path, base: dict, external: dict, staged: bool) -> str:
@@ -289,10 +364,7 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
         if labels_due(root):
             # Literature labels expire with time alone, which no fingerprint sees.
             identity = digest([identity, "labels-due"])
-        accepted_path = root / "state/agentic.json"
-        accepted = (
-            json.loads(accepted_path.read_text(encoding="utf-8")) if accepted_path.exists() else {}
-        )
+        accepted = load_accepted(root)
         store = root / ".agentic"
         retry = retryable(store)
         if accepted.get("fingerprint") == identity and not retry:
@@ -303,24 +375,17 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
             manifest(work, (*TREES, "contract", "reference"))  # reject symlinks before cleanup
             shutil.rmtree(work)
         work.mkdir()
-        for folder in (*TREES, "contract"):
-            if (root / folder).exists():
-                shutil.copytree(root / folder, work / folder)
-            else:
-                (work / folder).mkdir()
-        for rel in external:
-            dst = work / "reference" / rel
-            dst.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(checkout / rel, dst)
-        if checkout_inputs(work / "reference") != external:
-            raise WorkflowError("observatory inputs changed while taking snapshot")
+        snapshot_trees(root, work, checkout, external)
         config = config | {
             "root": str(work),
             "store": str(store),
             "revision": rev,
-            "run": budget_run(root, base, external, staged),
+            "run": config.get("budget_run") or budget_run(root, base, external, staged),
             "run_inputs": digest([base, external, staged]),
         }
+        if config.get("budget_run"):
+            # Stage subprocesses read this from config.json, so each tags its jobs.
+            config["invocation"] = uuid.uuid4().hex
         config_path = store / "config.json"
         atomic_json(config_path, config)
         if not staged:
@@ -328,26 +393,16 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
             (work / "staging").mkdir()
             run_stage(work, config_path, "fetch", "stages.fetch", [])
         changed = changed_sources(work)
-        scientific_revision = digest([compiler_revision(), contract_manifest(work)])
+        scientific = scientific_revision(work)
         contract = digest(contract_manifest(work))
         adopting = adopts(accepted, contract)
         if adopting and "contract" not in accepted:
             print("agentic: adopting a state with no recorded contract; assuming it is unchanged")
-        # Compiler/config edits invalidate previous accepted core outputs.
-        if accepted and accepted.get("revision") != scientific_revision:
-            if not adopting:
-                changed = sorted(p.name for p in (work / "staging").glob("*.md"))
-            else:
-                # Accepted under another scheme, whose revision cannot be recomputed
-                # here; re-integrating every source to find out would re-plan the
-                # corpus. Adopt it once; promotion records the current scheme.
-                print("agentic: adopting the accepted revision under explicit revisions")
-        if accepted:
-            prior_outputs = accepted.get("core_outputs", {})
-            current_outputs = manifest(work, ("wiki/concepts", "wiki/entities", "wiki/summaries"))
-            if prior_outputs != current_outputs:
-                # Conservative: manual edits need integration review, never silently adopted.
-                changed = sorted(p.name for p in (work / "staging").glob("*.md"))
+        if adopting and accepted.get("revision") != scientific:
+            # Promotion records the current scheme, so this happens once.
+            print("agentic: adopting the accepted revision under explicit revisions")
+        if invalidation(work, accepted, adopting):
+            changed = sorted(p.name for p in (work / "staging").glob("*.md"))
         agent = Runtime(config)
         agent.ledger.reconcile_stale(store / "transcripts")
         # Apply existing human decisions before planning without entering embeddings.
@@ -387,12 +442,12 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
                 "inputs changed during compilation; saved candidate, refusing promotion"
             )
         next_state = {
-            "revision": scientific_revision,
+            "revision": scientific,
             "revision_scheme": REVISION_SCHEME,
             "contract": contract,
             "fingerprint": digest([fingerprint(work), external, rev, models, staged]),
             "models": model_policy(config),
-            "core_outputs": manifest(work, ("wiki/concepts", "wiki/entities", "wiki/summaries")),
+            "core_outputs": manifest(work, CORE_OUTPUTS),
             "version": 2,
             "figure_revision": figure_revision,
             "figure_outputs": manifest(work, figure_state),

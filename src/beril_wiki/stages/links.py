@@ -338,7 +338,11 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
             state_path, {"candidates": dict(sorted(entries.items())), "links": current_links()}
         )
 
-    todo = [cid for cid in current if stale(cid)]
+    def left(cid: str) -> bool:
+        failed = entries.get(cid, {}).get("failed") is True
+        return cards.leaves_failed(config, failed, cards.owners("links", cid))
+
+    todo = [cid for cid in current if stale(cid) and not left(cid)]
     pair_ids = [c for c in todo if current[c][0] == "pair"]
     batches: list[tuple[str, list[str]]] = []
     for i in range(0, len(pair_ids), BATCH):

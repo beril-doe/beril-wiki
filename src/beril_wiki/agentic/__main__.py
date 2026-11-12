@@ -3,32 +3,29 @@
 import argparse
 import json
 import math
+import os
 import shutil
 import signal
 import sys
+import tempfile
 from pathlib import Path
 
 import yaml
 
+from beril_wiki.agentic import progress
+from beril_wiki.agentic.admission import admit
 from beril_wiki.agentic.batch import changed_sources
-from beril_wiki.agentic.curator import CARD_STAGES, EDITORIAL, pending_actions
+from beril_wiki.agentic.curator import CARD_STAGES, EDITORIAL
 from beril_wiki.agentic.prose import owning_stage
-from beril_wiki.agentic.runner import (
-    adopt_editorial,
-    adopts,
-    locked,
-    recover,
-    run,
-    run_stage,
-)
+from beril_wiki.agentic.runner import due_editorial, locked, recover, run, run_stage
 from beril_wiki.agentic.runtime import (
+    CONTENT_FLAG,
     MODEL_ROLES,
     EvidenceTools,
     Runtime,
     WorkflowError,
     atomic_json,
     check_page_writers,
-    contract_manifest,
     digest,
     manifest,
     model_policy,
@@ -184,34 +181,94 @@ def run_cards(root: Path, config: dict, stages: list[str] | None = None) -> dict
     return totals
 
 
-def plan(root: Path) -> dict:
+def plan(root: Path, checkout: Path | None = None, expect: str | None = None) -> dict:
     """What the next run would do, without model calls: changed staged sources and the
     editorial stages whose fingerprint no longer matches the accepted state. A state
-    accepted under an earlier revision scheme is compared as the next run adopts it."""
-    accepted_path = root / "state/agentic.json"
-    accepted = (
-        json.loads(accepted_path.read_text(encoding="utf-8")) if accepted_path.exists() else {}
-    )
+    accepted under an earlier revision scheme is compared as the next run adopts it.
+
+    With `expect`, the admission check of a run from `checkout` (default: the corpus)
+    that may add or update only that project; see `admission.admit`."""
     # Validates the policy a run would load, though no stage fingerprint holds a model.
     load_models(root, None, None, [])
-    prior = accepted.get("editorial", {})
-    if adopts(accepted, digest(contract_manifest(root))):
-        prior = adopt_editorial(root, prior)
+    if expect is not None:
+        return admit(root, checkout or CHECKOUT, expect)
     staged = any((root / "staging").glob("*.md"))
     return {
         "changed_sources": changed_sources(root) if staged else [],
-        "pending_editorial": pending_actions(root, prior, integrated=True),
+        "pending_editorial": due_editorial(root),
     }
+
+
+def check_logins(cli: str | None, readme: Path | None) -> dict:
+    """Each login's status, "ok" or the error, and the README's author count, without
+    a model call or a ledger row."""
+    from beril_wiki.agentic import codex, runtime
+    from beril_wiki.stages.people import parse_authors
+
+    report: dict[str, str | int] = {}
+    try:
+        if not cli:
+            raise WorkflowError("install Claude Code and log in with a subscription first")
+        runtime.check_auth(cli)
+        report["claude"] = "ok"
+    except Exception as exc:  # an unknown status is a failure, never an "ok"
+        report["claude"] = str(exc) or type(exc).__name__
+    try:
+        # A throwaway store keeps the Codex home out of .agentic. Built directly, not
+        # through codex.session(), so it closes here rather than at exit, after cleanup.
+        with tempfile.TemporaryDirectory() as store:
+            current = codex.CodexSession(Path(store))
+            try:
+                codex.check_auth(current.client)
+            finally:
+                current.close()
+        report["codex"] = "ok"
+    except Exception as exc:
+        report["codex"] = str(exc) or type(exc).__name__
+    if readme is not None:
+        try:
+            report["authors"] = len(parse_authors(readme.read_text(encoding="utf-8")))
+        except (OSError, ValueError) as exc:
+            report["authors"] = str(exc) or type(exc).__name__
+    return report
+
+
+def admission_text(verdict: dict) -> str:
+    lines = [f"admitted: {'yes' if verdict['admitted'] else 'no'}"]
+    lines += [f"reason: {reason}" for reason in verdict["reasons"]]
+    for key, value in verdict.items():
+        if key not in ("admitted", "reasons"):
+            shown = ", ".join(value) if isinstance(value, list) else value
+            lines.append(f"{key}: {shown if shown not in ('', None) else '-'}")
+    return "\n".join(lines)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=ROOT)
     commands = parser.add_subparsers(dest="command", required=True)
-    commands.add_parser(
+    inspect = commands.add_parser(
         "plan",
         help="list changed staged sources and stale editorial stages; no network/model calls",
     )
+    inspect.add_argument(
+        "--checkout", type=Path, help="with --expect-source: the tree to import (default: corpus/)"
+    )
+    inspect.add_argument(
+        "--expect-source",
+        metavar="ID",
+        help="admit only a run that adds or updates this project; exit 1 with the reasons",
+    )
+    inspect.add_argument("--json", action="store_true", help="print the admission as JSON")
+    inspect.add_argument(
+        "--progress", type=Path, metavar="FILE", help="append JSON progress lines to FILE"
+    )
+    logins = commands.add_parser(
+        "check-auth",
+        help="check the Claude and Codex subscription logins; no model calls or ledger rows",
+    )
+    logins.add_argument("--authors", type=Path, metavar="README", help="also count its authors")
+    logins.add_argument("--cli", default=shutil.which("claude"))
     search = commands.add_parser("search", help="search accepted wiki text; no model calls")
     search.add_argument("query")
     search.add_argument("--offset", type=int, default=0)
@@ -296,6 +353,29 @@ def main() -> int:
     execute.add_argument(
         "--staged", action="store_true", help="use current staging instead of fetching"
     )
+    execute.add_argument(
+        "--expect-source",
+        metavar="ID",
+        help="refuse unless the run adds or updates only this project (see plan)",
+    )
+    execute.add_argument(
+        "--max-usd", type=float, help="cap the run's recorded Claude USD (default: no cap)"
+    )
+    execute.add_argument(
+        "--max-codex-tokens", type=int, help="cap the run's raw Codex tokens (default: no cap)"
+    )
+    execute.add_argument(
+        "--budget-run",
+        metavar="NAME",
+        help="ledger run id the caps, totals and progress counts use, kept across runs "
+        "on different inputs (default: a digest of the inputs)",
+    )
+    execute.add_argument(
+        "--progress",
+        type=Path,
+        metavar="FILE",
+        help="append JSON progress lines to FILE, from the run and its stages",
+    )
     execute.add_argument("--cli", default=shutil.which("claude"))
     account = commands.add_parser("account", help="reconcile unknown usage; does not retry")
     account.add_argument("--job", required=True)
@@ -308,6 +388,11 @@ def main() -> int:
         "--page", action="append", default=[], help="page key from failures.json; repeatable"
     )
     retry.add_argument("--all-failed", action="store_true", help="every page in failures.json")
+    retry.add_argument(
+        "--failed-jobs",
+        action="store_true",
+        help="every failed ledger job not refused for its content; prints their keys",
+    )
     cards = commands.add_parser(
         "cards",
         help="run only the finding, label and direction stages in place, then check --strict",
@@ -375,10 +460,38 @@ def main() -> int:
     args = parser.parse_args()
     root = args.root.resolve()
     try:
-        if args.command == "plan":
-            if (root / ".agentic/promotion.json").exists():
-                raise WorkflowError("promotion pending; run recover before inspection")
-            print(json.dumps(plan(root), indent=2))
+        if args.command == "check-auth":
+            report = check_logins(args.cli, args.authors)
+            print(json.dumps(report))
+            if any(report[k] != "ok" for k in ("claude", "codex")) or isinstance(
+                report.get("authors", 0), str
+            ):
+                return 1
+        elif args.command == "plan":
+            if args.progress:
+                os.environ[progress.ENV] = str(args.progress.resolve())
+            progress.emit("plan_start", expect_source=args.expect_source)
+            try:
+                if (root / ".agentic/promotion.json").exists():
+                    raise WorkflowError("promotion pending; run recover before inspection")
+                if args.checkout and not args.expect_source:
+                    raise WorkflowError("plan --checkout needs --expect-source")
+                checkout = args.checkout.resolve() if args.checkout else None
+                result = plan(root, checkout, args.expect_source)
+            except (WorkflowError, OSError, ValueError) as exc:
+                refused = {"admitted": False, "reasons": [str(exc)]} if args.expect_source else {}
+                progress.emit("plan_end", error=str(exc), **refused)
+                raise
+            if args.expect_source:
+                progress.emit("plan_end", admitted=result["admitted"], reasons=result["reasons"])
+            else:
+                progress.emit("plan_end", **result)
+            if args.expect_source and not args.json:
+                print(admission_text(result))
+            else:
+                print(json.dumps(result, indent=2))
+            if args.expect_source and not result["admitted"]:
+                return 1
         elif args.command == "search":
             with locked(root):
                 if (root / ".agentic/promotion.json").exists():
@@ -471,8 +584,29 @@ def main() -> int:
                     if unknown := [p for p in pages if p not in failures]:
                         raise WorkflowError(f"not in failures.json: {unknown}")
                     keys = args.job + [k for p in pages for k in failures[p]["jobs"]]
+                    if args.failed_jobs:
+                        # A hard kill leaves its jobs pending; charge them as the next run
+                        # would, so they are retried now instead of failing one Resume.
+                        agent.ledger.reconcile_stale(agent.store / "transcripts")
+                        # A content refusal would be refused again; reserve fails only its item.
+                        failed = [
+                            key
+                            for (key,) in agent.ledger.db.execute(
+                                "SELECT key FROM jobs WHERE status='failed' "
+                                "AND instr(coalesce(error,''), ?)=0 ORDER BY rowid",
+                                (CONTENT_FLAG,),
+                            )
+                        ]
+                        for key in failed:
+                            print(f"retry: {key}")
+                        if not failed and not keys:
+                            print("retry: no failed jobs")
+                            return 0
+                        keys += failed
                     if not keys:
-                        raise WorkflowError("retry needs --job, --page or --all-failed")
+                        raise WorkflowError(
+                            "retry needs --job, --page, --all-failed or --failed-jobs"
+                        )
                     with agent.ledger.db:
                         changed = sum(
                             agent.ledger.db.execute(
@@ -513,6 +647,11 @@ def main() -> int:
                 raise WorkflowError("pass_records must not be negative")
             if args.stage_max_tokens < 0:
                 raise WorkflowError("stage_max_tokens must not be negative")
+            # nan never compares greater and inf never refuses: either would disable a cap.
+            if args.max_usd is not None and not (math.isfinite(args.max_usd) and args.max_usd > 0):
+                raise WorkflowError("max_usd must be positive and finite")
+            if args.max_codex_tokens is not None and args.max_codex_tokens <= 0:
+                raise WorkflowError("max_codex_tokens must be positive")
             config = {
                 key: getattr(args, key)
                 for key in (
@@ -533,6 +672,13 @@ def main() -> int:
                     "usd_reserve",
                 )
             } | {"stage_max_usd": usd_caps(args.stage_max_usd)}
+            if args.budget_run is not None and not args.budget_run.strip():
+                raise WorkflowError("budget_run must not be empty")
+            config |= {
+                key: getattr(args, key)
+                for key in ("max_usd", "max_codex_tokens", "budget_run")
+                if getattr(args, key) is not None
+            }
             known = (set(EDITORIAL) | set(RUN_PREFIXES)) - FILED_AS.keys()
             if unknown := set(config["stage_max_usd"]) - known:
                 hints = [
@@ -548,8 +694,24 @@ def main() -> int:
                 load_models(root, args.model_config, args.model, args.step_model, args.effort)
             )
             check_page_writers(config)
+            if args.expect_source:
+                if args.staged:
+                    raise WorkflowError("--expect-source fetches the checkout; drop --staged")
+                verdict = admit(root, args.checkout.resolve(), args.expect_source)
+                if not verdict["admitted"]:
+                    raise WorkflowError("not admitted: " + "; ".join(verdict["reasons"]))
+                # The card stages leave other projects' failed entries as saved.
+                config["expect_source"] = args.expect_source
+            if args.progress:
+                os.environ[progress.ENV] = str(args.progress.resolve())
             print(json.dumps({"models": model_policy(config)}, indent=2))
-            run(root, args.checkout.resolve(), config, args.staged)
+            # As in run_cards: an exit runs run_stage's cleanup, which kills the stage's
+            # own process group; the default SIGTERM would leave it running and spending.
+            previous = signal.signal(signal.SIGTERM, lambda *_: sys.exit(143))
+            try:
+                run(root, args.checkout.resolve(), config, args.staged)
+            finally:
+                signal.signal(signal.SIGTERM, previous)
     except (WorkflowError, OSError, ValueError) as exc:
         print(f"agentic stopped: {exc}")
         return 1

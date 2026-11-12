@@ -29,8 +29,16 @@ from beril_wiki.paths import ROOT
 CORPUS = ROOT / "corpus"
 MANIFEST = "manifest.json"
 SHARED = ("ui/config/collections.yaml", "docs/discoveries.md", "docs/pitfalls.md")
-# Must match the embeds `stages.fetch` copies and `agentic.runner.checkout_inputs` hashes.
-FIG_EMBED = re.compile(r"!\[[^\]]*\]\((figures/[^)]+)\)")
+# The embed forms the synthesize skill allows; fetch, `checkout_inputs` and the publish
+# ingest all read this one pattern. Group 1 is the path relative to the project.
+FIG_EMBED = re.compile(
+    r"!\[[^\]]*\]\(((?:figures|runs/[^)/\s]+/out|work/[^)/\s]+/runs/[^)/\s]+/out)/[^)\s]+)\)"
+)
+
+
+def figure_destination(project_id: str, rel: str) -> str:
+    """Path under ``wiki/figures/``; v1 ``figures/`` embeds drop that prefix."""
+    return f"{project_id}/{re.sub(r'^figures/', '', rel)}"
 
 
 def sha256(path: Path) -> str:

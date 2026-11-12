@@ -519,6 +519,16 @@ def pages_for(out: Path, topic: str) -> list[Path]:
     return [p for p in sorted(out.glob("*.md")) if topic in cards.read_page(p)[0].get("topics", [])]
 
 
+def retire_broken(root: Path, out: Path, topic: str) -> None:
+    """Delete a kept page that builds on a finding or conflict now gone, which the strict
+    check would reject for the whole run."""
+    for page in pages_for(out, topic):
+        refs = cards.read_page(page)[0].get("builds_on", [])
+        if any(not (root / "wiki" / f"{ref}.md").exists() for ref in refs):
+            page.unlink()
+            print(f"  directions/{topic}: retired {page.name}; it builds on removed work")
+
+
 def topic_key(public: dict, policy: str) -> str:
     """Return a topic's cache key: the prompt with its public pack, and the model policy.
 
@@ -544,8 +554,9 @@ def status(root: Path = ROOT) -> int:
     """Print how many topics' saved directions today's run would keep; call no model.
 
     A topic is skipped when it has no findings and no conflicts, failed when
-    ``.agentic/failures.json`` lists it, current when its saved key equals today's
-    ``topic_key`` and today's checks accept its saved reply, and stale otherwise.
+    ``.agentic/failures.json`` lists it or its saved state is marked failed, current
+    when its saved key equals today's ``topic_key`` and today's checks accept its saved
+    reply, and stale otherwise.
 
     Parameters
     ----------
@@ -573,7 +584,7 @@ def status(root: Path = ROOT) -> int:
         saved = state.get(topic, {})
         if not pack["FINDINGS"] and not pack["CONFLICTS"]:
             skipped += 1
-        elif f"directions/{topic}" in failures:
+        elif f"directions/{topic}" in failures or saved.get("failed"):
             failed += 1
         elif (
             saved.get("input") == topic_key(public, policy)
@@ -626,7 +637,12 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         on_disk = {p.name: file_hash(p) for p in pages_for(out, topic)}
         # A saved reply stays while its input is unchanged and today's checks accept it,
         # so a code change re-asks only the topics whose replies its rules now reject.
-        if saved.get("input") == key and saved.get("reply") and accepted(saved["reply"], pack, cat):
+        if (
+            saved.get("input") == key
+            and saved.get("reply")
+            and not saved.get("failed")
+            and accepted(saved["reply"], pack, cat)
+        ):
             if saved.get("render") == RENDER and saved.get("pages") == on_disk:
                 continue
             reply = Reply.model_validate(saved["reply"])
@@ -639,6 +655,9 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
                 atomic_json(state_path, state)
                 record_failure(f"directions/{topic}", None)
                 print(f"  directions/{topic}: no findings or conflicts; no directions")
+                continue
+            if cards.leaves_failed(agent.config, saved.get("failed") is True, None):
+                retire_broken(root, out, topic)
                 continue
             parse = checker(pack, cat)
             try:
@@ -654,15 +673,12 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
                 result = cards.failure(f"directions/{topic}", exc, agent)
                 record_failure(f"directions/{topic}", result)
                 print(f"  [FAILED] directions/{topic}: {result}")
-                # The last accepted pages stay, except one that builds on a finding or
-                # conflict now gone, which the strict check would reject for the whole run.
-                for page in pages_for(out, topic):
-                    refs = cards.read_page(page)[0].get("builds_on", [])
-                    if any(not (root / "wiki" / f"{ref}.md").exists() for ref in refs):
-                        page.unlink()
-                        print(
-                            f"  directions/{topic}: retired {page.name}; it builds on removed work"
-                        )
+                # Committed, unlike failures.json, so a run from a fresh job store sees it;
+                # the last reply stays to steer other topics' drafts.
+                state[topic] = saved | {"failed": True}
+                atomic_json(state_path, state)
+                # The last accepted pages stay, except one that builds on removed work.
+                retire_broken(root, out, topic)
                 continue
         names = set()
         for d in reply.directions:

@@ -668,6 +668,66 @@ def test_a_recorded_contract_change_is_not_adopted(tmp_path, monkeypatch):
     assert {"conflicts", "topics", "literature", "authors"} <= set(calls)
 
 
+def test_budget_run_keeps_one_cap_across_bases(tmp_path, monkeypatch):
+    """A refresh onto a moved main changes the input digest, which named a new ledger
+    run and let the earlier spend stop counting against the cap. Each invocation gets
+    its own max_jobs and max_tokens: a resume on the same inputs counted the earlier
+    attempts' jobs and tokens, which the person cannot raise, against them."""
+    import json
+    from types import SimpleNamespace
+
+    from beril_wiki.agentic import runner
+
+    root, checkout = tmp_path / "repo", tmp_path / "checkout"
+    for folder in (*runner.TREES, "contract"):
+        (root / folder).mkdir(parents=True)
+    (root / "contract/AGENTS.md").write_text("Contract")
+    (checkout / "ui/config").mkdir(parents=True)
+    (checkout / "ui/config/collections.yaml").write_text("collections: []")
+    config: dict[str, object] = {"cli": "claude", "model": "test", "max_tokens": 12}
+    config |= {"max_jobs": 1, "reserve_tokens": 10, "max_usd": 30.0, "budget_run": "wiki/p"}
+    monkeypatch.setattr(
+        runner.subprocess, "run", lambda *a, **k: SimpleNamespace(stdout="test CLI")
+    )
+    seen = []
+
+    def recorded_stage(work, config_path, name, module, args):
+        (work / "wiki" / f"{name}.md").write_text(name)
+        if name != "fetch":
+            return
+        stored = json.loads(config_path.read_text())
+        ledger = runner.Runtime(stored).ledger
+        key = f"job-{len(seen)}"
+        try:
+            ledger.reserve(key, "write/x", "claude-sonnet-5-5")
+        except WorkflowError as exc:
+            seen.append((stored["run"], stored["run_inputs"], str(exc)))
+            return
+        ledger.finish(key, "ok", {"input_tokens": 3, "output_tokens": 2}, cost=costs.pop(0))
+        with pytest.raises(WorkflowError, match="jobs=1, effective=5"):
+            ledger.reserve(key + "-more", "write/y", "claude-sonnet-5-5")
+        seen.append((stored["run"], stored["run_inputs"], "admitted"))
+        if len(seen) == 1:
+            raise WorkflowError("stopped before acceptance")
+
+    from agentic_recording import reply
+
+    monkeypatch.setattr(runner.Runtime, "ask", reply)
+    monkeypatch.setattr(runner, "run_stage", recorded_stage)
+    costs = [20.0, 9.0]
+    with pytest.raises(WorkflowError, match="stopped"):
+        runner.run(root, checkout, config)
+    # A resume of the stopped run, on the same snapshot.
+    runner.run(root, checkout, config)
+    (root / "wiki/other.md").write_text("another project merged to main\n")
+    runner.run(root, checkout, config)
+    (first, first_inputs, a), (second, second_inputs, b), (third, third_inputs, c) = seen
+    assert first == second == third == "wiki/p"
+    assert first_inputs == second_inputs != third_inputs
+    assert (a, b) == ("admitted", "admitted")
+    assert "Claude USD 29.00" in c
+
+
 def test_source_numbers_invalidates_same_length_revision():
     from beril_wiki.check import source_numbers
 
@@ -1265,3 +1325,635 @@ def test_an_unmeasured_codex_job_keeps_its_hold_under_a_cap(tmp_path):
     ledger.reconcile_stale(tmp_path / "transcripts")
     with pytest.raises(WorkflowError, match="Codex tokens 400000"):
         ledger.reserve("b", "write/y/science-review", "gpt-6-luna")
+
+
+SOURCES = ("a__REPORT.md", "discoveries.md", "pitfalls.md")
+
+
+def admission_base(tmp_path):
+    """A settled wiki repository: project `a` is integrated from the corpus committed at
+    HEAD, and the accepted state owes no editorial stage. Returns it and a checkout
+    copied from that corpus."""
+    import json
+    import shutil
+    import subprocess
+
+    from beril_wiki import corpus
+    from beril_wiki.agentic import curator as C
+    from beril_wiki.agentic import runner
+    from beril_wiki.agentic.admission import write_extras
+    from beril_wiki.agentic.runtime import contract_manifest, digest, file_hash, manifest
+    from beril_wiki.stages.fetch import fetch_local
+
+    root = tmp_path / "repo"
+    source = root / "corpus"
+    files = {
+        "projects/a/README.md": "# A\n\n## Authors\n\n- Ada\n",
+        "projects/a/REPORT.md": "# A report\n\nYield was 42%.\n",
+        "ui/config/collections.yaml": "collections: []\n",
+        "docs/discoveries.md": "# Discoveries\n",
+        "docs/pitfalls.md": "# Pitfalls\n",
+    }
+    for rel, text in {
+        **files,
+        "contract/AGENTS.md": "Contract",
+        "agentic.yaml": "model: m\n",
+        "wiki/concepts/c.md": "# C\n",
+        "wiki/sources/a__REPORT.md": files["projects/a/REPORT.md"],
+        "wiki/sources/discoveries.md": files["docs/discoveries.md"],
+        "wiki/sources/pitfalls.md": files["docs/pitfalls.md"],
+        **{f"wiki/summaries/{n}": "# Summary\n" for n in SOURCES},
+    }.items():
+        path = (source if rel in files else root) / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text)
+    corpus.save(
+        {
+            "version": 1,
+            "shared": {rel: corpus.sha256(source / rel) for rel in corpus.SHARED},
+            "projects": {"a": corpus.entry(source / "projects/a", "workbench")},
+        },
+        source,
+    )
+    fetch_local(root / "staging", source)
+    state = root / "state"
+    state.mkdir()
+    (state / "hashes.json").write_text(
+        json.dumps({n: file_hash(root / "staging" / n) for n in SOURCES})
+    )
+    (state / "curator-topics.json").write_text(
+        json.dumps(
+            {
+                "version": 1,
+                "reason": "One group",
+                "groups": [{"title": "C studies", "concepts": ["c"]}],
+                "concepts": manifest(root, ("wiki/concepts",)),
+            }
+        )
+    )
+    # A run's curator runs extras first, so a settled base holds its author pages.
+    write_extras(root, source)
+    (state / "agentic.json").write_text(
+        json.dumps(
+            {
+                "version": 2,
+                "revision": runner.scientific_revision(root),
+                "revision_scheme": runner.REVISION_SCHEME,
+                "contract": digest(contract_manifest(root)),
+                "core_outputs": manifest(root, runner.CORE_OUTPUTS),
+                "editorial": {name: C.stage_snapshot(root, name) for name in C.EDITORIAL},
+            }
+        )
+    )
+    git = ["git", "-C", str(root), "-c", "user.name=t", "-c", "user.email=t@example.org"]
+    subprocess.run([*git, "init", "-q"], check=True)
+    subprocess.run([*git, "add", "-A"], check=True)
+    subprocess.run([*git, "commit", "-qm", "base"], check=True)
+    checkout = tmp_path / "checkout"
+    shutil.copytree(source, checkout)
+    return root, checkout
+
+
+def add_project(checkout, pid, report="# New report\n\nGrowth was 7%.\n"):
+    from beril_wiki import corpus
+
+    project = checkout / "projects" / pid
+    project.mkdir(parents=True, exist_ok=True)
+    (project / "README.md").write_text(f"# {pid}\n\n## Authors\n\n- Ada\n")
+    (project / "REPORT.md").write_text(report)
+    manifest = corpus.load(checkout)
+    manifest["projects"][pid] = corpus.entry(project, "workbench")
+    corpus.save(manifest, checkout)
+
+
+def ledger_rows(root):
+    import sqlite3
+
+    path = root / ".agentic/jobs.sqlite"
+    if not path.exists():
+        return None
+    with sqlite3.connect(path) as db:
+        return db.execute("SELECT key,status FROM jobs ORDER BY rowid").fetchall()
+
+
+def test_expect_source_admits_one_added_report(tmp_path):
+    from beril_wiki.agentic import __main__ as cli
+    from beril_wiki.agentic import runner
+    from beril_wiki.agentic.runtime import manifest
+
+    root, checkout = admission_base(tmp_path)
+    add_project(checkout, "b")
+    before = manifest(root, (*runner.TREES, "contract"))
+    verdict = cli.plan(root, checkout, "b")
+    assert verdict["admitted"], verdict["reasons"]
+    assert verdict["changed_sources"] == ["b__REPORT.md"]
+    assert verdict["base_pending"] == [] and verdict["invalidation"] is None
+    # The import stages a new source, which the per-source stages then owe.
+    assert "conflicts" in verdict["pending_editorial"]
+    assert manifest(root, (*runner.TREES, "contract")) == before
+    assert not (root / ".agentic").exists()
+    assert set(cli.plan(root)) == {"changed_sources", "pending_editorial"}
+
+
+def test_expect_source_admits_a_readme_only_update(tmp_path):
+    from beril_wiki import corpus
+    from beril_wiki.agentic import __main__ as cli
+
+    root, checkout = admission_base(tmp_path)
+    (checkout / "projects/a/README.md").write_text("# A\n\n## Authors\n\n- Ada\n- Grace\n")
+    manifest = corpus.load(checkout)
+    manifest["projects"]["a"] = corpus.entry(checkout / "projects/a", "workbench")
+    corpus.save(manifest, checkout)
+    verdict = cli.plan(root, checkout, "a")
+    assert verdict["admitted"], verdict["reasons"]
+    assert verdict["changed_sources"] == []
+
+
+def test_expect_source_plans_the_authors_stage_a_readme_change_makes_due(tmp_path):
+    """A run's curator runs extras before anything else, so an added author rewrites
+    the author pages and the authors stage spends; the plan must list it."""
+    import subprocess
+
+    from beril_wiki import corpus
+    from beril_wiki.agentic import __main__ as cli
+
+    root, checkout = admission_base(tmp_path)
+    git = ["git", "-C", str(root), "-c", "user.name=t", "-c", "user.email=t@example.org"]
+    assert "authors" not in cli.plan(root, checkout, "a")["pending_editorial"]
+    (checkout / "projects/a/README.md").write_text("# A\n\n## Authors\n\n- Ada\n- Grace\n")
+    manifest = corpus.load(checkout)
+    manifest["projects"]["a"] = corpus.entry(checkout / "projects/a", "workbench")
+    corpus.save(manifest, checkout)
+    verdict = cli.plan(root, checkout, "a")
+    assert verdict["admitted"], verdict["reasons"]
+    assert "authors" in verdict["pending_editorial"]
+    # The same README committed to HEAD without a run is main's debt, not the publisher's.
+    for name in ("projects/a/README.md", corpus.MANIFEST):
+        (root / "corpus" / name).write_bytes((checkout / name).read_bytes())
+    subprocess.run([*git, "commit", "-qam", "readme without a run"], check=True)
+    verdict = cli.plan(root, checkout, "a")
+    owed = [r for r in verdict["reasons"] if r.startswith("main owes editorial stages:")]
+    assert owed and "authors" in owed[0], verdict["reasons"]
+
+
+def adopted_revision(root, checkout):
+    import json
+
+    path = root / "state/agentic.json"
+    state = json.loads(path.read_text())
+    path.write_text(json.dumps(state | {"revision": "older", "revision_scheme": 4}))
+
+
+def current_revision(root, checkout):
+    import json
+
+    path = root / "state/agentic.json"
+    path.write_text(json.dumps(json.loads(path.read_text()) | {"revision": "older"}))
+
+
+def second_report(root, checkout):
+    add_project(checkout, "c")
+
+
+def edited_concept(root, checkout):
+    (root / "wiki/concepts/c.md").write_text("# C\n\nEdited by hand.\n")
+
+
+def expired_labels(root, checkout):
+    import json
+
+    (root / "state/novelty.json").write_text(json.dumps({"f1": {"retrieved_on": "2020-01-01"}}))
+
+
+def stale_stage(root, checkout):
+    import json
+
+    path = root / "state/agentic.json"
+    state = json.loads(path.read_text())
+    del state["editorial"]["authors"]
+    path.write_text(json.dumps(state))
+
+
+def failed_on_main(root, entries, links=()):
+    """Save `entries` ({store: {key: entry}}) as main's card state, and settle the
+    accepted snapshot so only the failures are owed."""
+    import json
+
+    from beril_wiki.agentic import curator as C
+    from beril_wiki.stages import cards
+
+    for store, data in (({"links": {}} if links else {}) | entries).items():
+        saved = {"candidates": data, "links": list(links)} if store == "links" else data
+        (root / f"state/{store}.json").write_text(json.dumps(saved))
+    for fid in {f for x in links for f in (x["a"], x["b"])}:
+        fields = {"type": "Finding", "description": "Growth fell.", "source": fid[:1]}
+        cards.write_page(root / f"wiki/findings/{fid}.md", fields, "# Growth fell\n")
+    path = root / "state/agentic.json"
+    state = json.loads(path.read_text())
+    state["editorial"] = {n: C.stage_snapshot(root, n) for n in C.EDITORIAL}
+    path.write_text(json.dumps(state))
+
+
+def failed_gist_of_b(root, checkout):
+    failed_on_main(root, {"gists": {"b--1a2b3c4d": {"failed": True}}})
+
+
+def failed_link_naming_b(root, checkout):
+    failed_on_main(root, {"links": {"ref:a>b": {"failed": True}}})
+
+
+SHARED_LINK = {"a": "a--1a2b3c4d", "b": "b--5e6f7a8b", "level": "finding"}
+SHARED_LINK |= {"type": "same result", "label": "Both saw growth fall"}
+
+
+def failed_group_with_b(root, checkout):
+    from beril_wiki.stages.shared import group_id
+
+    gid = group_id(["a--1a2b3c4d", "b--5e6f7a8b"])
+    failed_on_main(root, {"shared": {gid: {"input": "", "failed": True}}}, [SHARED_LINK])
+
+
+def unknown_job(root, checkout):
+    ledger = Ledger(root / ".agentic/jobs.sqlite", "earlier", 100, 5, 10)
+    ledger.reserve("conflicts/x")
+    with pytest.raises(WorkflowError, match="unknown token usage"):
+        ledger.finish("conflicts/x", "", None)
+
+
+def other_manifest_entry(root, checkout):
+    from beril_wiki import corpus
+
+    manifest = corpus.load(checkout)
+    manifest["projects"]["a"]["origin"] = "v1@elsewhere"
+    corpus.save(manifest, checkout)
+
+
+def other_readme(root, checkout):
+    (checkout / "projects/a/README.md").write_text("# A\n\n## Authors\n\n- Someone else\n")
+
+
+def test_expect_source_adopts_an_older_revision_scheme(tmp_path):
+    from beril_wiki.agentic import __main__ as cli
+
+    root, checkout = admission_base(tmp_path)
+    add_project(checkout, "b")
+    adopted_revision(root, checkout)
+    verdict = cli.plan(root, checkout, "b")
+    assert verdict["admitted"], verdict["reasons"]
+
+
+@pytest.mark.parametrize(
+    ("mutate", "reason"),
+    [
+        (second_report, "c__REPORT.md"),
+        (edited_concept, "accepted core_outputs"),
+        (current_revision, "accepted revision"),
+        (expired_labels, "novelty labels"),
+        (stale_stage, "main owes editorial stages: authors"),
+        (failed_gist_of_b, "failed card entries of b: gists:b--1a2b3c4d"),
+        (failed_link_naming_b, "failed card entries of b: links:ref:a>b"),
+        (failed_group_with_b, "failed card entries of b: shared:g-"),
+        (unknown_job, "conflicts/x"),
+        (other_manifest_entry, "manifest.json differs from HEAD outside projects/b: projects/a"),
+        (other_readme, "projects/a/README.md"),
+    ],
+)
+def test_expect_source_refuses_work_beyond_one_project(tmp_path, mutate, reason):
+    from beril_wiki.agentic import __main__ as cli
+
+    root, checkout = admission_base(tmp_path)
+    add_project(checkout, "b")
+    mutate(root, checkout)
+    rows = ledger_rows(root)
+    verdict = cli.plan(root, checkout, "b")
+    assert not verdict["admitted"]
+    assert any(reason in r for r in verdict["reasons"]), verdict["reasons"]
+    assert ledger_rows(root) == rows
+
+
+def test_expect_source_leaves_other_projects_failed_entries_to_maintenance(tmp_path):
+    """Main's failed entries of other projects, or of a topic, are not a researcher's to
+    pay for, so they are listed for maintenance and do not refuse."""
+    from beril_wiki.agentic import __main__ as cli
+    from beril_wiki.stages.shared import group_id
+
+    root, checkout = admission_base(tmp_path)
+    add_project(checkout, "b")
+    link = SHARED_LINK | {"b": "z--5e6f7a8b"}
+    gid = group_id(["a--1a2b3c4d", "z--5e6f7a8b"])
+    failed_on_main(
+        root,
+        {
+            "gists": {"a--1a2b3c4d": {"failed": True}, "a--99999999": {"gist": "Kept."}},
+            "links": {"pair:a--1a2b3c4d|z--5e6f7a8b": {"failed": True}},
+            "shared": {gid: {"input": "", "failed": True}},
+            "followups": {"does-growth-fall--1a2b3c": {"failed": True}},
+            "directions": {"dark-matter": {"input": "k", "reply": {}, "failed": True}},
+        },
+        [link],
+    )
+    verdict = cli.plan(root, checkout, "b")
+    assert verdict["admitted"], verdict["reasons"]
+    assert verdict["maintenance_failed"] == [
+        "gists:a--1a2b3c4d",
+        "links:pair:a--1a2b3c4d|z--5e6f7a8b",
+        f"shared:{gid}",
+        "followups:does-growth-fall--1a2b3c",
+        "directions:dark-matter",
+    ]
+
+
+def test_expect_source_cli_exits_on_refusal_before_run(tmp_path, monkeypatch, capsys):
+    import json
+    import sys
+
+    from beril_wiki.agentic import __main__ as cli
+
+    root, checkout = admission_base(tmp_path)
+    add_project(checkout, "b")
+    add_project(checkout, "c")
+    common = ["agentic", "--root", str(root)]
+    plan = [*common, "plan", "--checkout", str(checkout), "--expect-source", "b", "--json"]
+    lines = tmp_path / "progress.jsonl"
+    monkeypatch.setenv("BERIL_WIKI_PROGRESS", "")  # restored after the CLI exports it
+    monkeypatch.setattr(sys, "argv", [*plan, "--progress", str(lines)])
+    assert cli.main() == 1
+    verdict = json.loads(capsys.readouterr().out)
+    assert not verdict["admitted"]
+    start, end = (json.loads(line) for line in lines.read_text().splitlines())
+    assert (start["event"], start["expect_source"]) == ("plan_start", "b")
+    assert (end["event"], end["admitted"], end["reasons"]) == (
+        "plan_end",
+        False,
+        verdict["reasons"],
+    )
+    monkeypatch.setattr(cli, "run", lambda *a, **k: pytest.fail("run started"))
+    flags = ["--max-tokens", "10", "--max-jobs", "1", "--cli", "claude", "--model", "m"]
+    run = [*common, "run", *flags, "--checkout", str(checkout), "--expect-source", "b"]
+    monkeypatch.setattr(sys, "argv", run)
+    assert cli.main() == 1
+    assert "c__REPORT.md" in capsys.readouterr().out
+
+
+def test_expect_source_tells_the_card_stages_which_project_runs(tmp_path, monkeypatch):
+    """The card stages leave other projects' failed entries only when the run's config
+    names the project; without it they re-ask every one."""
+    import sys
+
+    from beril_wiki.agentic import __main__ as cli
+
+    root, checkout = admission_base(tmp_path)
+    add_project(checkout, "b")
+    seen = {}
+    monkeypatch.setattr(cli, "run", lambda root, checkout, config, staged: seen.update(config))
+    flags = ["--max-tokens", "10", "--max-jobs", "1", "--cli", "claude", "--model", "m"]
+    run = ["agentic", "--root", str(root), "run", *flags, "--checkout", str(checkout)]
+    monkeypatch.setattr(sys, "argv", [*run, "--expect-source", "b"])
+    assert cli.main() == 0
+    assert seen["expect_source"] == "b"
+    seen.clear()
+    monkeypatch.setattr(sys, "argv", run)
+    assert cli.main() == 0
+    assert "expect_source" not in seen
+
+
+STAGE_DRIVER = """
+import sys
+from pathlib import Path
+
+from beril_wiki.agentic import __main__ as cli
+from beril_wiki.agentic import runner
+
+d = Path(sys.argv[1])
+inert = ["/bin/sh", "-c", f"echo $$ > {d}/stage.pid; exec sleep 300"]
+
+
+def run(root, checkout, config, staged):
+    runner._run_stage(d, {"PATH": "/usr/bin:/bin"}, d / "stage.log", inert, "inert", 600)
+
+
+cli.run = run
+sys.argv = ["agentic", "--root", str(d), "run", "--max-tokens", "10", "--max-jobs", "1"]
+sys.argv += ["--cli", "claude", "--model", "m"]
+sys.exit(cli.main())
+"""
+
+
+def test_sigterm_to_run_kills_the_stage_group(tmp_path):
+    """Cancel sends SIGTERM to the runner; a stage runs in its own session, so only
+    run_stage's cleanup can stop it."""
+    import contextlib
+    import os
+    import signal
+    import subprocess
+    import sys
+    import time
+
+    driver = tmp_path / "driver.py"
+    driver.write_text(STAGE_DRIVER)
+    runner = subprocess.Popen(
+        [sys.executable, str(driver), str(tmp_path)], start_new_session=True, cwd=tmp_path
+    )
+    pidfile = tmp_path / "stage.pid"
+    stage = None
+    try:
+        deadline = time.monotonic() + 30
+        while not (pidfile.exists() and pidfile.read_text().strip()):
+            assert runner.poll() is None and time.monotonic() < deadline, "stage never started"
+            time.sleep(0.05)
+        stage = int(pidfile.read_text())
+        os.killpg(runner.pid, signal.SIGTERM)
+        assert runner.wait(timeout=20) == 143
+        with pytest.raises(ProcessLookupError):
+            os.kill(stage, 0)
+    finally:
+        for pid in (runner.pid, stage):
+            if pid is not None:
+                with contextlib.suppress(ProcessLookupError, PermissionError):
+                    os.killpg(pid, signal.SIGKILL)
+        runner.wait()
+
+
+def test_retry_failed_jobs_reissues_all_but_content_refusals(tmp_path, monkeypatch, capsys):
+    """A job interrupted by Cancel ends as failed, and reserve refuses a failed key on
+    every resume until something moves it to the retry path. A hard kill leaves its job
+    pending, which retry charges and re-issues too instead of failing the next Resume."""
+    import json
+    import sys
+
+    from beril_wiki.agentic import __main__ as cli
+    from beril_wiki.agentic.runtime import CONTENT_FLAG
+
+    store = tmp_path / ".agentic"
+    store.mkdir()
+    config: dict[str, object] = {"root": str(tmp_path), "store": str(store), "run": "r"}
+    config |= {"cli": "claude", "max_tokens": 10**6, "max_jobs": 9, "reserve_tokens": 10}
+    (store / "config.json").write_text(json.dumps(config))
+    ledger = Ledger(store / "jobs.sqlite", "r", 10**6, 9, 10)
+    usage = {"input_tokens": 1, "output_tokens": 1}
+    for key, error in (("cut", "interrupted"), ("flagged", f"{CONTENT_FLAG} refusal"), ("ok", "")):
+        ledger.reserve(key, "write/x")
+        ledger.finish(key, "out", usage, error=error)
+    ledger.reserve("killed", "write/x")
+    with pytest.raises(WorkflowError, match="job cut: failed"):
+        ledger.reserve("cut", "write/x")
+    monkeypatch.setattr(sys, "argv", ["agentic", "--root", str(tmp_path), "retry", "--failed-jobs"])
+    assert cli.main() == 0
+    out = capsys.readouterr().out
+    assert "retry: cut" in out and "retry: killed" in out
+    rows = dict(ledger.db.execute("SELECT key,status FROM jobs").fetchall())
+    assert rows == {"cut": "rejected", "flagged": "failed", "ok": "done", "killed": "rejected"}
+    assert cli.main() == 0
+    assert "no failed jobs" in capsys.readouterr().out
+
+
+def test_run_caps_reach_the_ledger(tmp_path, monkeypatch):
+    import sys
+
+    from beril_wiki.agentic import __main__ as cli
+    from beril_wiki.agentic.runtime import Runtime
+
+    captured = {}
+    monkeypatch.setattr(cli, "run", lambda root, checkout, config, staged: captured.update(config))
+    common = ["agentic", "--root", str(tmp_path), "run", "--max-tokens", "10000000"]
+    common += ["--max-jobs", "99", "--cli", "claude", "--model", "m"]
+    caps = ["--max-usd", "3", "--max-codex-tokens", "500000", "--budget-run", "wiki/p"]
+    monkeypatch.setattr(sys, "argv", [*common, *caps])
+    assert cli.main() == 0
+    assert captured["budget_run"] == "wiki/p"
+    store = tmp_path / ".agentic"
+    ledger = Runtime(captured | {"root": str(tmp_path), "store": str(store), "run": "r"}).ledger
+    usage = {"input_tokens": 1, "output_tokens": 1}
+    ledger.reserve("a", "write/x", "claude-sonnet-5-5")
+    ledger.finish("a", "ok", usage, cost=2.5)
+    with pytest.raises(WorkflowError, match="Claude USD 2.50"):
+        ledger.reserve("b", "write/y", "claude-sonnet-5-5")
+    ledger.reserve("c", "write/x/science-review", "gpt-6.1-sol")
+    with pytest.raises(WorkflowError, match="Codex tokens 400000"):
+        ledger.reserve("d", "write/y/science-review", "gpt-6.1-sol")
+    # A cap that compares false against every spend would admit everything.
+    monkeypatch.setattr(sys, "argv", [*common, "--max-usd", "nan"])
+    assert cli.main() == 1
+
+
+# Recorded replies that pass through the real Runtime.ask, so each job is reserved and
+# finished in the ledger as a model job would be.
+LEDGER_RECORDING = """
+import json
+
+from beril_wiki.agentic import runtime
+
+real_ask = runtime.Runtime.ask
+from agentic_recording import install, reply
+
+install()
+runtime.Runtime.ask = real_ask
+runtime.check_auth = lambda cli: None
+
+
+async def recorded_query(self, payload, key, model):
+    output = reply(self, json.loads(payload), self._step)
+    self.ledger.finish(key, output, {"input_tokens": 10, "output_tokens": 10}, cost=0.01)
+    return output
+
+
+runtime.Runtime._query = recorded_query
+"""
+
+
+def test_progress_lines_cover_stages_and_jobs(tmp_path, monkeypatch):
+    import json
+    import sqlite3
+    import sys
+    from pathlib import Path
+
+    from agentic_recording import reply
+    from beril_wiki.agentic import __main__ as cli
+    from beril_wiki.agentic import runtime
+    from card_fakes import lakehouse
+
+    root, checkout = tmp_path / "repo", tmp_path / "observatory"
+    lakehouse(root)
+    (root / "contract").mkdir(parents=True)
+    (root / "contract/AGENTS.md").write_text("Cite exact measurements; preserve caveats.")
+    for sid, value in (("a", "42"), ("b", "56")):
+        project = checkout / "projects" / sid
+        (project / "figures").mkdir(parents=True)
+        (project / "REPORT.md").write_text(f"Yield was {value}%.\n\n![Yield](figures/yield.png)")
+        (project / "README.md").write_text("## Authors\n\n- Ada Example\n")
+        (project / "figures/yield.png").write_bytes(b"recorded-image")
+    (checkout / "ui/config").mkdir(parents=True)
+    (checkout / "ui/config/collections.yaml").write_text("collections: []")
+    (tmp_path / "sitecustomize.py").write_text(LEDGER_RECORDING)
+    monkeypatch.setenv("PYTHONPATH", f"{tmp_path}:{Path(__file__).parent.resolve()}")
+
+    async def recorded_query(self, payload, key, model):
+        output = reply(self, json.loads(payload), self._step)
+        self.ledger.finish(key, output, {"input_tokens": 10, "output_tokens": 10}, cost=0.01)
+        return output
+
+    monkeypatch.setattr(runtime.Runtime, "_query", recorded_query)
+    monkeypatch.setattr(runtime, "check_auth", lambda cli: None)
+    lines = tmp_path / "progress.jsonl"
+    monkeypatch.setenv("BERIL_WIKI_PROGRESS", "")  # restored after the CLI exports it
+    argv = ["agentic", "--root", str(root), "run", "--max-tokens", "10000000"]
+    argv += ["--max-jobs", "1000", "--cli", "/usr/bin/true", "--model", "recorded"]
+    monkeypatch.setattr(
+        sys, "argv", [*argv, "--checkout", str(checkout), "--progress", "progress.jsonl"]
+    )
+    monkeypatch.chdir(tmp_path)
+    assert cli.main() == 0
+    events = [json.loads(line) for line in lines.read_text().splitlines()]
+    assert all(e["source"] == "wiki" and e["ts"] for e in events)
+    staged = [(e["event"], e["stage"]) for e in events if e["event"].startswith("stage_")]
+    names = [stage for event, stage in staged if event == "stage_start"]
+    assert staged == [(event, n) for n in names for event in ("stage_start", "stage_end")]
+    assert names[0] == "fetch" and names[-1] == "check" and "figures" in names
+    assert all(e["ok"] for e in events if e["event"] == "stage_end")
+    db = sqlite3.connect(root / ".agentic/jobs.sqlite")
+    (finished,) = db.execute("SELECT count(*) FROM jobs WHERE status!='pending'").fetchone()
+    jobs = [e for e in events if e["event"] == "job"]
+    assert finished and len(jobs) == finished
+    assert max(e["jobs"] for e in jobs) == finished
+    # Stage subprocesses inherit the file, and the curator's own jobs run in the runner.
+    assert {e["stage"] for e in jobs} > {""}
+    last = [e for e in events if e["event"] == "stage_end"][-1]
+    assert last["jobs"] == finished and last["usd"] == round(0.01 * finished, 4)
+    assert last["codex_tokens"] == 0 and last["failed_pages"] == 0
+
+
+def test_check_auth_reports_each_login(tmp_path, monkeypatch, capsys):
+    import json
+    import sys
+
+    from beril_wiki.agentic import __main__ as cli
+    from beril_wiki.agentic import codex, runtime
+
+    class Session:
+        def __init__(self, store):
+            self.client = "client"
+
+        def close(self):
+            pass
+
+    def no_codex_login(client):
+        raise WorkflowError("a ChatGPT subscription login is required for Codex; no API key")
+
+    readme = tmp_path / "README.md"
+    readme.write_text("## Authors\n\n- Ada Example\n- Bo Example\n")
+    monkeypatch.setattr(codex, "CodexSession", Session)
+    monkeypatch.setattr(runtime, "check_auth", lambda cli: None)
+    monkeypatch.setattr(codex, "check_auth", lambda client: None)
+    argv = ["agentic", "--root", str(tmp_path), "check-auth", "--cli", "claude"]
+    monkeypatch.setattr(sys, "argv", [*argv, "--authors", str(readme)])
+    assert cli.main() == 0
+    assert json.loads(capsys.readouterr().out) == {"claude": "ok", "codex": "ok", "authors": 2}
+    monkeypatch.setattr(codex, "check_auth", no_codex_login)
+    assert cli.main() == 1
+    report = json.loads(capsys.readouterr().out)
+    assert report["claude"] == "ok" and "ChatGPT subscription" in report["codex"]
+    monkeypatch.setattr(codex, "check_auth", lambda client: None)
+    monkeypatch.setattr(sys, "argv", [*argv, "--authors", str(tmp_path / "missing.md")])
+    assert cli.main() == 1
+    assert isinstance(json.loads(capsys.readouterr().out)["authors"], str)
+    assert not (tmp_path / ".agentic").exists()

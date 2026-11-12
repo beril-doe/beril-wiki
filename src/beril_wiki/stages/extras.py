@@ -10,6 +10,7 @@ Output goes to wiki/{authors,data}/ next to the compiled collections.
 
 from __future__ import annotations
 
+import json
 import re
 
 import yaml
@@ -76,6 +77,16 @@ def write_authors() -> int:
             link = f"[[summaries/{proj}__REPORT|{proj}]]" if proj in known else proj
             lines.append(f"- {link}")
         path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    current = {f"{slugify(record.name)}.md" for record in index.values()}
+    removed = {p.name for p in out.glob("*.md") if p.name != "index.md"} - current
+    for name in removed:
+        (out / name).unlink()
+    state_path = ROOT / "state" / "authors.json"
+    if state_path.exists():
+        state = json.loads(state_path.read_text())
+        kept = {k: v for k, v in state.items() if k not in removed}
+        if kept != state:
+            state_path.write_text(json.dumps(kept, indent=2, sort_keys=True) + "\n")
     return len(index)
 
 

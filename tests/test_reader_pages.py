@@ -124,6 +124,9 @@ def test_ingest_merges_label_and_topics(tmp_path, monkeypatch):
 
     kb = tmp_path / "kb"
     card_corpus(kb)
+    manifest_bytes = b'{"projects": {}, "shared": {}, "version": 1}\n'
+    (kb / "corpus").mkdir()
+    (kb / "corpus/manifest.json").write_bytes(manifest_bytes)
     (kb / "wiki/about.md").write_text(ABOUT)
     (kb / "wiki/data").mkdir()
     (kb / "wiki/data/phagefoundry.md").write_text("# PhageFoundry Browsers\n\nCurated.\n")
@@ -181,6 +184,7 @@ def test_ingest_merges_label_and_topics(tmp_path, monkeypatch):
     assert "[[data-issues/a|1 proposal(s) for the report's maintainers]]" in summary
     export = json.loads((tmp_path / "out/cards.json").read_text())
     assert export["findings"][0]["label"] == "Candidate novel"
+    assert (tmp_path / "out/corpus-manifest.json").read_bytes() == manifest_bytes
     assert export["research_directions"][0]["readiness"] == "needs compute"
     assert export["data_issues"] == {"a": ["Recompute the stress rates per experiment. [src: a]"]}
     # The cited database without a curated page gets one, and the catalog's free text on

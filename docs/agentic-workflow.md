@@ -24,6 +24,12 @@ uv run python -m beril_wiki.agentic plan
 uv run python -m beril_wiki.agentic run \
   --max-tokens 500000 --max-jobs 40
 
+# Check that a run from this checkout adds or updates one project and nothing else.
+uv run python -m beril_wiki.agentic plan --checkout corpus --expect-source ID --json
+
+# Check both subscription logins and count a README's authors, without a model call.
+uv run python -m beril_wiki.agentic check-auth --authors corpus/projects/ID/README.md
+
 # Search accepted wiki Markdown without inference.
 uv run python -m beril_wiki.agentic search 'carbon yield'
 
@@ -40,6 +46,77 @@ model call.
 `--root PATH` precedes the subcommand. `--staged` uses current staging; the
 checkout is still read for metadata and figure context.
 
+`plan --expect-source ID` admits a run that adds or updates project `ID` and
+owes no other work, so a researcher's run never pays for maintenance the
+repository already owed. It reads `--checkout` (default `corpus/`), makes no
+model call, and writes nothing to `wiki/`, `state/`, `staging/` or the job
+ledger. It checks two scratch copies of the trees. The base copy fetches
+`corpus/` as committed at `HEAD` and refuses when an editorial stage is
+pending, when a novelty label is due for refresh, when an entry of project `ID`
+in `state/{gists,links,shared,headlines,novelty,outcomes}.json` is saved with
+`failed: true`, or when `.agentic/jobs.sqlite` holds a job with unknown usage.
+An entry belongs to `ID` when its key is `ID` or starts `ID--` (a finding of
+`ID`), when a `pair:` or `ref:` links candidate names `ID` as an endpoint, or
+when a shared group, whose members admission rebuilds from the saved links,
+holds a result of `ID`. Other projects' failed entries, and every failed entry
+of the topic-keyed `state/followups.json` and `state/directions.json`, do not
+refuse; the result lists them in `maintenance_failed`. The import copy fetches
+the checkout and refuses when:
+
+- a staged source other than `ID__REPORT.md` would integrate;
+- the accepted `revision` differs and the state is not adopted from an earlier
+  scheme, or `core_outputs` differs, either of which re-integrates every source;
+- a checkout input outside `projects/ID/` differs from `HEAD`'s corpus;
+- `manifest.json` differs from `HEAD`'s anywhere but `projects.ID`.
+
+A README-only or figure-only update is admitted with an empty
+`changed_sources`. The result lists `admitted`, `reasons`, `changed_sources`,
+`pending_editorial` (the stages the import makes due, judged after the
+deterministic extras stage rewrites author and collection pages on the import
+copy, as a run's curator does first), `base_pending` (judged the same way on a
+copy of `HEAD`, so author pages `HEAD`'s corpus would rewrite count as main's debt),
+`labels_due`, `unknown_usage`, `maintenance_failed` and `invalidation`. `--json`
+prints it as one JSON object; without it, one line per field. `plan` exits 1
+when the run is not admitted. `run --expect-source ID` makes the same check
+before the run starts and stops with the reasons; it cannot be combined with
+`--staged`. An admitted run passes `ID` to its stages as `expect_source` in
+`.agentic/config.json`. The card stages then leave each failed entry that does
+not belong to `ID`, and each failed topic of directions or followups, as
+saved: they make no
+model call for it and do not count it as failed, so `--strict-pages` does not
+stop the run for it. They re-ask `ID`'s own failed entries as before. A run
+without `--expect-source` re-asks every failed entry.
+
+`check-auth` runs the Claude subscription check (`claude auth status`) and the
+Codex ChatGPT-login check in a session whose Codex home is a temporary
+directory, so it writes nothing under `.agentic/`. With `--authors README` it
+also counts the authors under the README's `## Authors` heading. It prints one
+JSON object, `{"claude": "ok", "codex": "ok", "authors": 2}`, where a failed
+check holds its error text in place of `"ok"` or the count, and it exits 1 when
+any check fails. Without `--authors` the `authors` key is absent.
+
+### Progress lines
+
+`plan --progress FILE` and `run --progress FILE` append one JSON object per line
+to `FILE` and export it as `BERIL_WIKI_PROGRESS`, so stage subprocesses write to
+the same file. Every line carries `ts` (UTC, ISO 8601), `"source": "wiki"` and
+`event`:
+
+| `event` | Written by | Other fields |
+|---|---|---|
+| `plan_start` | `plan` | `expect_source` (the ID or `null`) |
+| `plan_end` | `plan` | with `--expect-source`: `admitted`, `reasons`; without it: `changed_sources`, `pending_editorial`; on an error: `error`, plus `admitted: false` and `reasons` with `--expect-source` |
+| `stage_start` | `run`, before each stage subprocess | `stage`, `jobs`, `usd`, `codex_tokens`, `failed_pages` |
+| `stage_end` | `run`, after each stage subprocess | the `stage_start` fields, `ok`, and `error` (the last 500 characters of the failure) when `ok` is false |
+| `job` | the ledger, when a job records its final charge | `stage` (empty for jobs the runner itself issues), `step`, `jobs`, `usd`, `codex_tokens`, `failed_pages` |
+
+`jobs` counts the ledger run's finished jobs, `usd` sums their recorded Claude
+cost and `codex_tokens` their raw Codex tokens, the same per-run units the
+`--max-usd` and `--max-codex-tokens` caps use. Pending jobs are left out, because
+their figures are admission holds. `failed_pages` is the number of pages in
+`.agentic/failures.json`. A ledger or failures file that cannot be read gives
+`null`. A line that cannot be written is dropped, and the run goes on.
+
 The checkout defaults to the repository's own `corpus/`, a copy of every
 input a run reads, laid out like an observatory checkout: `projects/<id>/`
 (`README.md`, `REPORT.md` and the figures the report embeds),
@@ -49,6 +126,26 @@ input a run reads, laid out like an observatory checkout: `projects/<id>/`
 tests run it. `uv run python -m beril_wiki.corpus import-v1 --checkout PATH`
 rebuilds `corpus/` from an observatory checkout. Pass `--checkout` (or set
 `BERIL_CHECKOUT`) only to compile from another tree.
+
+`beril_wiki.publish.ingest` copies `corpus/manifest.json` byte for byte to the
+site root as `corpus-manifest.json`, so a client can compare a project's
+published source digest with its own.
+
+`scripts/check_update.py --base REF --head REF [--branch NAME]` is the model-free
+scope check for a publisher branch. The branch comes from `--branch` or
+`GITHUB_HEAD_REF`; one that does not start with `wiki/` passes. On `wiki/ID` it
+fails when `REF` is not an ancestor of the head; when the newest commit after
+`REF` with a `Base <sha>` trailer, which the Workbench publisher writes on its
+commit, names another commit than `REF`, or no commit has one, so merging main
+into the branch without recompiling fails; when `corpus/` changes outside
+`projects/ID/` and the `ID` entry of `manifest.json`, when `wiki/sources`,
+`wiki/summaries` or `wiki/figures` change outside `ID`, or when an entry of
+`state/{headlines,novelty,gists,outcomes}.json` changes for no project of `ID`.
+`links.json` and `shared.json` relate findings across projects, as concept pages
+do, so a new project may change any of their entries. `followups.json` and
+`directions.json` are keyed by question and topic slug. The script checks none
+of the four. The `scope` job in
+`.github/workflows/tests.yml` runs it on every pull request.
 Individual jobs have `--max-turns` (default 12, applying to tool-using jobs
 other than page sessions), `--timeout` (600 seconds), and `--max-output-tokens`
 (32,768). A page session is bounded by its brief instead: 20 turns plus one per
@@ -103,15 +200,22 @@ each Claude job in flight or finished without a cost and for the job itself,
 would pass the cap. GPT jobs are never refused by a USD cap. `agentic cards`
 prints each capped stage's recorded USD against its cap at the end.
 
-A pilot has two more caps, per ledger run, in the units a person approves:
+Two more caps apply per ledger run, in the units a person approves:
 `max_usd` on the SDK's cost estimate for Claude jobs and `max_codex_tokens` on
 raw Codex tokens. A capped run counts each finished job at its recorded charge
 and each pending one at a hold: a page session holds its whole session USD
 ceiling, any other Claude job USD 2, a Codex job 400,000 tokens. A job is
 admitted only if its hold still fits. A job that ends without a reported cost (a
-kill, a timeout) keeps its hold, so an interrupted job still counts. Only the
-`pilot` command sets them (`--max-usd`, `--max-codex-tokens`); `run` has no flag
-for them. Account billing settings remain
+kill, a timeout) keeps its hold, so an interrupted job still counts. `run` and
+`pilot` set them with `--max-usd` and `--max-codex-tokens`; `run` without them
+has no such cap. A resume of the same inputs keeps the ledger run, so its
+earlier spend still counts against the caps. `run --budget-run NAME` names the
+ledger run that caps, totals and progress counts use, so runs on different
+inputs, such as a publication refreshed onto a moved main, share one cap; job
+cache keys do not change. Under `--budget-run`, `--max-jobs` and `--max-tokens`
+count only the jobs this invocation reserves, so a resume gets a fresh job and
+token allowance while the USD and Codex caps keep counting every invocation's
+spend. Account billing settings remain
 provider-owned; the runner does not purchase credits.
 
 ### Per-step models
@@ -350,12 +454,12 @@ every stage that depends on it stale as well:
 | Topics | Choose concept groups and titles, then write hubs/home after conflicts are current. Every concept must occur exactly once. |
 | Literature | Add supported external context after topics are current. |
 | Authors | Update contributions from current summaries and metadata; independent of topics. |
-| Headlines | For each report in `contract/cards.yaml`, choose up to 4 observations or inferences and up to 2 null results or corrections from its accepted evidence records, and write each to `wiki/findings/<id>.md`. Cached per report in `state/headlines.json`; a saved reply stays while its input is unchanged and today's checks accept it, and the curator never clears it, since the run that wrote the records may have used another job store. Every figure in a headline must appear in its record's quote. After two rejected replies, the headlines that still fail are dropped and the rest go to the reviewer, so one headline citing another passage no longer costs the report its cards. A report whose evidence snapshot does not match its current text is skipped and keeps its previous pages. |
+| Headlines | For each report in `contract/cards.yaml`, choose up to 4 observations or inferences and up to 2 null results or corrections from its accepted evidence records, and write each to `wiki/findings/<id>.md`. Cached per report in `state/headlines.json`; a saved reply stays while its input is unchanged and today's checks accept it, and the curator never clears it, since the run that wrote the records may have used another job store. Every figure in a headline must appear in its record's quote. After two rejected replies, the headlines that still fail are dropped and the rest go to the reviewer, so one headline citing another passage no longer costs the report its cards. A report whose reply fails keeps its previous pages and is saved with `failed: true` beside its last accepted reply, so a run from another job store sees the failure; its next accepted reply clears it. A report whose evidence snapshot does not match its current text is skipped and keeps its previous pages. |
 | Novelty | Label each finding against PubMed after headlines; labels go to `state/novelty.json`, not to the finding page. |
-| Research directions | After conflicts, topics, headlines and novelty, write 3 to 8 research directions for each topic in `contract/cards.yaml` into `wiki/directions/<slug>.md`. Cached per topic in `state/directions.json`, with the accepted reply kept so a page re-renders without a model call. Code rejects a title that is not a question, test statistics or statistical wording, snake_case table names and other identifiers, prose about what "the report" says, and a direction that shares at least 3 cited findings or conflicts, and 60% of them, with another direction in the reply or in another topic. The draft sees the other topics' directions (`OTHER_TOPICS`), but they stay out of the topic's cache key, so one topic's rewrite never makes another stale. A saved reply stays while its input is unchanged and today's checks accept it; the curator never clears `state/directions.json`, because clearing it would empty the other topics' context, change the drafts' text and buy them again. A topic whose redraft fails keeps its earlier pages, except a page that builds on a finding or conflict that no longer exists. Two topics that accept the same direction each keep a page; the second page's name ends in its topic. |
+| Research directions | After conflicts, topics, headlines and novelty, write 3 to 8 research directions for each topic in `contract/cards.yaml` into `wiki/directions/<slug>.md`. Cached per topic in `state/directions.json`, with the accepted reply kept so a page re-renders without a model call. Code rejects a title that is not a question, test statistics or statistical wording, snake_case table names and other identifiers, prose about what "the report" says, and a direction that shares at least 3 cited findings or conflicts, and 60% of them, with another direction in the reply or in another topic. The draft sees the other topics' directions (`OTHER_TOPICS`), but they stay out of the topic's cache key, so one topic's rewrite never makes another stale. A saved reply stays while its input is unchanged and today's checks accept it; the curator never clears `state/directions.json`, because clearing it would empty the other topics' context, change the drafts' text and buy them again. A topic whose redraft fails keeps its earlier pages, except a page that builds on a finding or conflict that no longer exists, and is saved with `failed: true` beside its last reply, so a run from another job store sees the failure; its next accepted reply clears it. Two topics that accept the same direction each keep a page; the second page's name ends in its topic. |
 | Plain summaries | After headlines, write a gist of at most 45 words for each finding (plus a plain replacement title when the stored title holds a statistic, statistical wording such as "significant" or jargon, and a case for null results) to `state/gists.json`. The writer also sees the report's other caveats and the other findings from the same report: a gist claims no more than the measurement and its limits allow, says when a sibling finding states the opposite, and may mark its finding as repeating an earlier one (`repeats`), which publish leaves off the lists. Code rejects statistics, statistical wording, jargon (`JARGON`: annotation systems, procedures, notebook codes; lineage names such as `Pseudomonas_E` are left to the prompt, since the reviewer requires the name the finding gives), more than two standalone numbers (the prompt asks for one), figures the claim, quote and caveat never state, and a `repeats` id that is not an earlier finding of the report; GPT reviews faithfulness. Keyed on the finding, its report title, caveats and siblings, and the prompt tag (`gists@4`), so a sibling's change reruns the report's gists. A saved gist stays while its input is unchanged and today's checks accept it, so a tightened rule re-asks only the gists it rejects. A refusal fails only that finding and keeps its previous gist in state for recovery; publish shows a failed finding's title only. A failed finding is asked again on the next run with `LAST_ATTEMPT`, the objections from `.agentic/failures.json` that rejected it, so the retry is a new question rather than a replay of the failed jobs; its saved key does not include them. |
 | Links | After headlines, find links between projects and write them to `state/links.json`. Code finds two kinds of candidate: pairs of results from different projects whose title and claim reach a TF-IDF cosine of 0.30 (`THRESHOLD`) and whose two projects a concept or conflict page cites together, and source-report lines that name another project by id or exact report title. The `cards` model sorts each candidate, 8 to a job, into a fixed relation (`same result`, `uses its data or methods`, ...) or drops it, and writes a label of at most 16 words. Code rejects a label with a statistic, a figure the inputs never state, wording that one project confirms, reproduces or agrees with another, file, table or column names, or an opening such as "Uses its ..." that leaves out whose data it is; GPT reviews every job. A stored label today's rules reject counts as stale, so a rule change re-asks only those candidates. Each candidate is cached under a digest of its own texts, so a corpus change re-asks only changed candidates. A failed job leaves its candidates without a current link, and a candidate whose results or projects are gone is pruned. |
-| Shared results | After links, group the related-result links into connected groups and write one statement per group to `state/shared.json`. A group qualifies with 2 to 4 results, from two or more projects whose main topics number two or more; a larger group is skipped. Code sets the group's relation to the weakest of its links. The `cards` model writes a title, a sentence, the question the projects asked, a short label per result and how the results relate, under the same rejections as Links; results that reach different conclusions are never presented as one result, and shared data is named in the sentence. GPT reviews faithfulness to every member. A failure fails only its group. A group whose links are gone is pruned. |
+| Shared results | After links, group the related-result links into connected groups and write one statement per group to `state/shared.json`. A group qualifies with 2 to 4 results, from two or more projects whose main topics number two or more; a larger group is skipped. Code sets the group's relation to the weakest of its links. The `cards` model writes a title, a sentence, the question the projects asked, a short label per result and how the results relate, under the same rejections as Links; results that reach different conclusions are never presented as one result, and shared data is named in the sentence. GPT reviews faithfulness to every member. A failure fails only its group. A group whose links are gone, or that no longer qualifies, is pruned, except in a run for one project (`expect_source`), which keeps every failed group with no result of that project as saved. |
 | Result types | After gists, label every finding publish would list as a positive, negative or inconclusive result, a result about the data, a bookkeeping fix or an untested explanation, in `state/outcomes.json`. The extraction tag misfiles both ways, so every finding is read. The `labels` model writes the type and a one-sentence reason; the `card_review` model reviews it against the evidence quote. Publish unlists bookkeeping fixes and untested explanations and keeps their pages. A failure fails only its finding, and publish falls back to the tag. |
 | Follow-up needs | After directions, label every open question by what its deciding test needs (existing lakehouse data, outside data, or an experiment), whether existing data comes first in an experiment, and whether data availability is unclear, in `state/followups.json`, written by the `labels` model. The pack carries the question, the tables its direction names, the catalog directory and up to 20 catalog tables matched to the question. A reply names the tables it relies on (`tables`, at most 12). Code rejects a table the catalog lacks, `existing` or a first analysis that names no table, a reason that says BERDL, and a reason that says the lakehouse lacks data. The direction's approach and readiness fields misfile both ways, so every question is read. The `card_review` model reviews each answer against the question. A failure fails only its question, and publish shows that question as *Not checked yet*. |
 
@@ -1011,7 +1115,15 @@ uv run python -m beril_wiki.agentic status
 uv run python -m beril_wiki.agentic retry --job FULL_JOB_ID
 uv run python -m beril_wiki.agentic retry --page conflicts/conflict--stem--1a2b3c4d
 uv run python -m beril_wiki.agentic retry --all-failed
+uv run python -m beril_wiki.agentic retry --failed-jobs
 ```
+
+A job interrupted by a cancel or a killed stage ends as `failed`, and the next
+run stops at it ("inspect saved job before retrying"). `retry --failed-jobs`
+marks every failed job rejected, as `retry --job` does, and prints each key. It
+first charges any job a hard kill left pending, as the next run would, so that
+job is retried too. It skips jobs refused for their content, which a retry would only repeat, and exits
+0 when no job failed.
 
 For a capped acceptance pass, invoke a stage directly with `--limit N`
 (conflicts and topics): it writes at most N new pages and retires none, so a
