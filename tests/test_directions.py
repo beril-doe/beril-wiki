@@ -1,6 +1,7 @@
 """The directions stage: research questions grounded in findings, never reanalysis."""
 
 import json
+import shutil
 
 import pytest
 
@@ -570,15 +571,35 @@ def test_a_question_title_may_run_a_few_words_past_the_prompt_limit(tmp_path):
     assert parse(reply(items[0] | {"title": long}, items[1], items[2]))
 
 
-@pytest.mark.parametrize(("expect", "asked"), [("a", False), (None, True)])
+@pytest.mark.parametrize(("expect", "asked"), [("b", False), (None, True)])
 def test_a_run_for_one_project_leaves_a_failed_topic(tmp_path, monkeypatch, expect, asked):
-    """Topics belong to no one project, so no run for one project re-asks a topic whose
-    last attempt failed; a maintainer run does."""
-    corpus(tmp_path)
-    monkeypatch.setattr(directions, "failed_pages", lambda: {f"directions/{TOPIC}"})
-    agent = FakeAgent(tmp_path / "store", {f"directions/{TOPIC}": [THREE]})
+    """Sol review of edcce0b: a researcher's run starts from a fresh job store, so a topic
+    failure kept only in failures.json was re-asked and, refused again, failed the run
+    under --strict-pages. The failure is read from the committed state, so no run for one
+    project re-asks it; a maintainer run does, and its accepted reply clears the mark."""
+    main_root, researcher = tmp_path / "main", tmp_path / "researcher"
+    main_root.mkdir()
+    corpus(main_root)
+    error = Refused("refused on claude-opus-5", "claude-opus-5")
+    agent = FakeAgent(
+        tmp_path / "store-a",
+        {f"directions/{TOPIC}": [THREE]},
+        review_error={f"directions/{TOPIC}": error},
+    )
+    install(monkeypatch, agent)
+    assert directions.main(main_root) == 0
+    assert json.loads((main_root / directions.STATE).read_text())[TOPIC]["failed"] is True
+    shutil.copytree(main_root, researcher)
+    before = (researcher / directions.STATE).read_text()
+    agent = FakeAgent(tmp_path / "store-b", {f"directions/{TOPIC}": [THREE]})
     if expect:
         agent.config["expect_source"] = expect
     install(monkeypatch, agent)
-    assert directions.main(tmp_path) == 0
-    assert bool(agent.asked) is asked
+    monkeypatch.setattr(cards, "strict_pages", lambda: True)
+    assert directions.main(researcher) == 0
+    after = (researcher / directions.STATE).read_text()
+    if asked:
+        assert f"directions/{TOPIC}/science-review" in agent.asked
+        assert "failed" not in json.loads(after)[TOPIC]
+    else:
+        assert agent.asked == [] and after == before

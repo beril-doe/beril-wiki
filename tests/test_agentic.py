@@ -1649,6 +1649,7 @@ def test_expect_source_leaves_other_projects_failed_entries_to_maintenance(tmp_p
             "links": {"pair:a--1a2b3c4d|z--5e6f7a8b": {"failed": True}},
             "shared": {gid: {"input": "", "failed": True}},
             "followups": {"does-growth-fall--1a2b3c": {"failed": True}},
+            "directions": {"dark-matter": {"input": "k", "reply": {}, "failed": True}},
         },
         [link],
     )
@@ -1659,6 +1660,7 @@ def test_expect_source_leaves_other_projects_failed_entries_to_maintenance(tmp_p
         "links:pair:a--1a2b3c4d|z--5e6f7a8b",
         f"shared:{gid}",
         "followups:does-growth-fall--1a2b3c",
+        "directions:dark-matter",
     ]
 
 

@@ -30,7 +30,7 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 from beril_wiki import lakehouse, records
-from beril_wiki.agentic.prose import PLATFORM, failed_pages, prune_failures, record_failure
+from beril_wiki.agentic.prose import PLATFORM, prune_failures, record_failure
 from beril_wiki.agentic.runtime import CandidateError, atomic_json, digest, file_hash, prompt
 from beril_wiki.check import numbers_in, pmids_in, prose_only
 from beril_wiki.lakehouse import Catalog, absence_claims
@@ -554,8 +554,9 @@ def status(root: Path = ROOT) -> int:
     """Print how many topics' saved directions today's run would keep; call no model.
 
     A topic is skipped when it has no findings and no conflicts, failed when
-    ``.agentic/failures.json`` lists it, current when its saved key equals today's
-    ``topic_key`` and today's checks accept its saved reply, and stale otherwise.
+    ``.agentic/failures.json`` lists it or its saved state is marked failed, current
+    when its saved key equals today's ``topic_key`` and today's checks accept its saved
+    reply, and stale otherwise.
 
     Parameters
     ----------
@@ -583,7 +584,7 @@ def status(root: Path = ROOT) -> int:
         saved = state.get(topic, {})
         if not pack["FINDINGS"] and not pack["CONFLICTS"]:
             skipped += 1
-        elif f"directions/{topic}" in failures:
+        elif f"directions/{topic}" in failures or saved.get("failed"):
             failed += 1
         elif (
             saved.get("input") == topic_key(public, policy)
@@ -622,8 +623,6 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     state_path = root / STATE
     state = cards.load_state(state_path)
     policy = cards.policy(agent.config, ("cards", "card_review"))
-    # A topic's failure is kept in the failure list only; its state keeps the last reply.
-    last_failed = failed_pages()
     written = failed = 0
     for topic in topics:
         # A topic's failure lists only its own jobs: a retry of it rejects every job
@@ -638,7 +637,12 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         on_disk = {p.name: file_hash(p) for p in pages_for(out, topic)}
         # A saved reply stays while its input is unchanged and today's checks accept it,
         # so a code change re-asks only the topics whose replies its rules now reject.
-        if saved.get("input") == key and saved.get("reply") and accepted(saved["reply"], pack, cat):
+        if (
+            saved.get("input") == key
+            and saved.get("reply")
+            and not saved.get("failed")
+            and accepted(saved["reply"], pack, cat)
+        ):
             if saved.get("render") == RENDER and saved.get("pages") == on_disk:
                 continue
             reply = Reply.model_validate(saved["reply"])
@@ -652,7 +656,7 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
                 record_failure(f"directions/{topic}", None)
                 print(f"  directions/{topic}: no findings or conflicts; no directions")
                 continue
-            if cards.leaves_failed(agent.config, f"directions/{topic}" in last_failed, None):
+            if cards.leaves_failed(agent.config, saved.get("failed") is True, None):
                 retire_broken(root, out, topic)
                 continue
             parse = checker(pack, cat)
@@ -669,6 +673,10 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
                 result = cards.failure(f"directions/{topic}", exc, agent)
                 record_failure(f"directions/{topic}", result)
                 print(f"  [FAILED] directions/{topic}: {result}")
+                # Committed, unlike failures.json, so a run from a fresh job store sees it;
+                # the last reply stays to steer other topics' drafts.
+                state[topic] = saved | {"failed": True}
+                atomic_json(state_path, state)
                 # The last accepted pages stay, except one that builds on removed work.
                 retire_broken(root, out, topic)
                 continue
