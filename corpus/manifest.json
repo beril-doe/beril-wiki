@@ -1,0 +1,1283 @@
+{
+  "projects": {
+    "acinetobacter_adp1_explorer": {
+      "digest": "sha256:e95a1ff3f7e7c54e2dcca8f22e54506921952bb8b7ee39dea94d567e642ec7fa",
+      "files": {
+        "README.md": "sha256:675267d920af8c5c67ecd429538e059ebf6fee8ec74558e4179064e67b135811",
+        "REPORT.md": "sha256:ec7429b1cf2b99caae21a458ffae48609efc6384c9a4b7e3a9b1385d70024218",
+        "figures/annotation_by_essentiality.png": "sha256:89d570437aafd75a766bc2fac39e5ba9acbac66069f40f33a7dce92c5dc2678b",
+        "figures/data_coverage_by_modality.png": "sha256:4dd47cc0a96c34763aaa3589893e2a1b6edd3b3c616740cea2ce55e158873737",
+        "figures/essentiality_distribution.png": "sha256:c19a49c3409394f5795aea64bd2e0ce47bf0bcf0388f37bc2a984f10bb0434c8",
+        "figures/essentiality_overview.png": "sha256:a718281dd63f77004bc0a772af03b4b46c78fb977e591f6d9a0a7a8eeaffb5a9",
+        "figures/essentiality_vs_pangenome.png": "sha256:947ab74834583d36c6027d00b1a317550d29fc65fd617cf5b96d85d53546f991",
+        "figures/fba_flux_class_transition.png": "sha256:d1e1619b18ccc57dfc0724299b534eb2e0176ac31a3508a7a5393fc7d837f4d4",
+        "figures/fba_tnseq_concordance.png": "sha256:10246c8a097dca536bdf111df1ad9980a7a409d70183ca0b6654519527065f0c",
+        "figures/gapfilling_impact.png": "sha256:0ecae6bae94e94c8cfa6a75d389ab332b93ea6a9010d680cc66be32a3edcdd7f",
+        "figures/growth_condition_correlation.png": "sha256:1a02eb555340b7ecc0c22ef3892bcddb42120f3e858059b0e85f912a804f85fd",
+        "figures/growth_phenotype_predictions.png": "sha256:9311c9613a0f504ee2de2f3df334eda63bd2eaa66e05edd959ea006351d6d852",
+        "figures/metabolic_flux_classes.png": "sha256:a2775232761ff31df956db6c2654998a047785a438d0340bfd208721abba4007",
+        "figures/mutant_growth_by_condition.png": "sha256:0ca20fa67efc8add2df4403c724fb2a766da23d05a5ae988024446a2d189d48d",
+        "figures/mutant_growth_fitness.png": "sha256:327a1e5a78cc46594e210e16fc4124c2da92449dc656d4066684cc35ffa5d420",
+        "figures/ontology_distribution.png": "sha256:7d4ea2669374ac7789aae3a0bd3f86a6c1584c682e7e068d692528266c61e1ba",
+        "figures/proteomics_cross_strain.png": "sha256:0670c03c1a41ad66c66439825a44da339cf296827bb38d686ccbd19ef33c718b",
+        "figures/proteomics_wt_vs_engineered.png": "sha256:0959a67951542e65df6b5dd45677d6898d36da9a530bf3d747ec9694a3993f8a",
+        "figures/reaction_conservation.png": "sha256:2ab1c303d7d52c6884912a5e49d909e1775c1fcd114428a8b52cbfb1581cf783",
+        "figures/reaction_gapfilling.png": "sha256:a5c5052d9b1b4b502acf2a8b36acb117a2a3b21c9c433340b9934475ab99d834"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "adp1_deletion_phenotypes": {
+      "digest": "sha256:256b5efd895ca627bcce751bd1f2a3b9c9ae3c25194a1a2c9c6c1d0a2cfd49c2",
+      "files": {
+        "README.md": "sha256:0a228eca1d0ee9b94ad7b86d0c8641e8a69f89015858a1c7c46465034d73f62b",
+        "REPORT.md": "sha256:7d40ea0a5c21fdf6e9852ab3cc9628a50905fba2ddb532cd9dc5aa24117bb6f0",
+        "figures/condition_boxplots.png": "sha256:64cfd96e8f43f5f72760633a1b276d0deb6df4c871e71d34e1dc0875ebb0f940",
+        "figures/condition_clustermap.png": "sha256:4588aab1ba239266474217a4b671764d4e11fecebee53d6cfe5edf4723853ca3",
+        "figures/condition_specific_heatmap.png": "sha256:1d50bc9c9997c82901f20be686dee12a61a5b585c8538ea0ce371c6ffcb5ffe1",
+        "figures/gene_heatmap.png": "sha256:6e506e7f6adfc5d7fc510e212c9690325b6fe35f68160761a1622060654fc019",
+        "figures/missing_gene_length.png": "sha256:da65bd302762808302b540118e6148faadc67deb64ee6ae8f08c68a7e7f6e13c",
+        "figures/module_profiles.png": "sha256:3a3e9377978c5a660e4dc3844034be52feed98b452170405a725a1db7344dd24",
+        "figures/pca_biplot.png": "sha256:67acb3e7c87e676adb9f4b76931631ffec3559af5b93986c0989116bf878ae18",
+        "figures/pca_variance.png": "sha256:2f61361540d217aef085491c308fac2a10fa0b8045d89306390647a49bd7edd7",
+        "figures/silhouette_analysis.png": "sha256:d42ef6406997b5763d40314b9eccc24aac8dd7cfea6e076f3ccb998bfa5887bc",
+        "figures/specificity_distribution.png": "sha256:829e276661026c3f165018424dc245b2907173bc6d890b6ea5a47c6b6266806d",
+        "figures/tnseq_gap_coverage.png": "sha256:728b0d3aefa5e524153a32a140f4fa696cac49888bd823e01ed4835fb4ee712e"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "adp1_triple_essentiality": {
+      "digest": "sha256:37c0f5a8c0f05dcf4b2408a3af08c5f0848ea7b54c4406b1d1c03850bea57143",
+      "files": {
+        "README.md": "sha256:786121a21c35678fefa338a16bb250e1ebc1edea4d6b34a97aabff978b9908e3",
+        "REPORT.md": "sha256:5b0b80cbb8215ef660717892ae828f95ef135b781bd6f7024b19d981c94fe52f",
+        "figures/concordance_comprehensive.png": "sha256:affd8b82ec0956c2c8503bab9538638c1c3fc1396345216ccc282ba0ce3c78f0",
+        "figures/defect_condition_correlation.png": "sha256:79a50fe21fa5f9363056a1b80b8b87c7987d57013c91353f56f0569c58865fa4",
+        "figures/discordance_analysis.png": "sha256:c0db10eb4117cabb5a42d1e9d79e068da28b0ae04aec2b96caf97535ab24053d",
+        "figures/fba_comparison.png": "sha256:212659e883ad1b5bf89f4bd36948bd4c70e7f211eaec505e175727db74f201c6",
+        "figures/fba_growth_concordance.png": "sha256:bf7ce2817606731c290c6d5604656b89ff6f2cb1f910cd71dab8b9da93d08d8f",
+        "figures/flux_vs_growth_scatter.png": "sha256:f89514f67f9509e141177f1e5173745ea5aa64d3449e989b244e11b71855db86",
+        "figures/growth_by_fba_class.png": "sha256:ca6eddf52906b4ae113989c85efb1f132cb560e2a5f5229335a0b34010ed4dde",
+        "figures/pangenome_discordance.png": "sha256:e8d7e6db369fa6eadc7cd006802c2e3d954f1af984eda49a331ae958ee4367f6",
+        "figures/proteomics_expression_distribution.png": "sha256:b67dd72b13b12d3520735ae6dc1fb029c0fc828f4a1ba418f4e131a7c02a9972",
+        "figures/rast_by_discordance_class.png": "sha256:6febb311ff620c5b7d5f2f4d2648e182d557305829bfe070db6bb8a73183a362",
+        "figures/rast_enrichment_discordant.png": "sha256:d70ea4230f29022023ef18f559711c837c45efd5101820f12b70bc1971c4409a",
+        "figures/roc_comprehensive.png": "sha256:98165bf9ebf10ee0dd1ab79827b3d88406854930c35a02309d2254f7d05db652",
+        "figures/threshold_sensitivity.png": "sha256:08c3b2ec9ef4594a1e4b34f6810401248f7c1c5f929791bb73b5028d4e5f5347"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "alphafold_msa_annotation": {
+      "digest": "sha256:0ae33c68fdb8181c8d526fdd28b77ec0541979d1172da4e182c8f5f802a93e4e",
+      "files": {
+        "README.md": "sha256:43cb124e6cfd04a2aee36a4a2eac28ec56245cd813dc7631095f888e0bc96191",
+        "REPORT.md": "sha256:f66f0c9679cde23e009a56a030fe65d0d4efb49b7f8d057511382970661ac7e1",
+        "figures/NB03_msa_depth_pangenome_class.png": "sha256:5472034148d1ff854c6e6f82c44c140693f63461ea1ee9d45e5d97ba18c8493f"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "amr_cofitness_networks": {
+      "digest": "sha256:5c09429d622389158843a9357280fdea7f52f761b14764e0cf8bb8480dd7e22b",
+      "files": {
+        "README.md": "sha256:fb9a5134c4d714814499374f304e6d4a2cfd6ea7d5f400075a2bcd4a85a5b5d7",
+        "REPORT.md": "sha256:aff57c75024bdd9b12de29d4d39e499b07d78769cef6d0bd2d1a1161e467e9cd",
+        "figures/amr_module_analysis.png": "sha256:86a5833c7af639e74aacf1807a59a51fb3814e1b4d7e070fc94b986c6d506804",
+        "figures/go_conservation_heatmap.png": "sha256:7b84c92c878503d040a0ac91bf874a7c8a4809aa9e1f7e85c87f42ed49389b9f",
+        "figures/go_enrichment_interproscan.png": "sha256:40f5be5dd888fdd297951947ac10f417deab431efbc386e6800c9850290c6d77",
+        "figures/jaccard_go_comparison.png": "sha256:cd1c171d63111c0c7593d2cbbc9eca02dab49e7dc1aff48325c44f0f8270ab91",
+        "figures/network_size_vs_fitness.png": "sha256:acf6655a95c21c7855dacd4fe48afcf1547faaa3e0e2767a8c0e570351dad127"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "amr_environmental_resistome": {
+      "digest": "sha256:7350af847fafb417420fb56bb40e2a9713e9fa5388ef36f5102df4079a350288",
+      "files": {
+        "README.md": "sha256:23ac31983704dde9007f674a50e7c271447248733013bdcb3a2aaed7b444972b",
+        "REPORT.md": "sha256:48d007e13fa6f22f0af5ab50fce2658553a23932da5b203ebca2d18948d147b4",
+        "figures/h1_amr_by_environment.png": "sha256:39a3a452adf5a6202e4fc3256766dc067a5002b728606d667c335ec5ca172588",
+        "figures/h2_core_accessory_by_env.png": "sha256:0ce9399e8e9f0cc9f38ee53c7aa0d04af6247ff8cd03edf9375581085403593e",
+        "figures/h3_mechanism_by_environment.png": "sha256:7e95eb1ae172dc7751374c7286c5478520638614d7d8ea5c533a1b06dbff3899",
+        "figures/h4_within_species.png": "sha256:f3f0952e905c98a58f0cc1c0d087fff989c553b0567cb50e22fdc7a26c82842c",
+        "figures/nb04_alphaearth.png": "sha256:64a6483ac63d174b90462449fc01ff5671caa30c0ee55e26caf34bf20dcd9e9f"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "amr_fitness_cost": {
+      "digest": "sha256:72d48450a78e3da9afd03eee9d55c334bb376654e068349a60ef329b8332e70f",
+      "files": {
+        "README.md": "sha256:47fe59be7e7e0fc588b0cf8204847cc517267d5e85cb3b5739e759f7b075b9d9",
+        "REPORT.md": "sha256:37cff6733111944d43de76281816b859093e2ba9f743e964e9b5a9fc5652e034",
+        "figures/antibiotic_validation.png": "sha256:6a9cf36b44861bb550b7552aed798834f058580662c0d6b5883367470cecc93f",
+        "figures/class_matched_heatmap.png": "sha256:86052154c4c09cbb98b221631c579ad7b20717fce5ece80948c5d5675d650030",
+        "figures/forest_plot_amr_fitness.png": "sha256:10cb11ad0a02b2d7b7be74429550fd4353c4de94518cf697f3d623c036839f8e",
+        "figures/h2_mechanism_stratification.png": "sha256:5635afd5f1807b300a038f409532ccce735f5f591a8bcf0246106044569b1cd7",
+        "figures/h3_core_vs_accessory.png": "sha256:3026fd8cd9cb55d53d477c570d19d8bdd220035d1bf6be65b76d07efc7922b51",
+        "figures/mechanism_x_conservation.png": "sha256:fb7acbbe3fe396563a4b9a38eaed947bbb75e13ec024077dade47e3f517ce3ec"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "amr_pangenome_atlas": {
+      "digest": "sha256:f2570ebd39e5ffacbc1ce27c179ef6a96dce04e236fc4209af92002a60610518",
+      "files": {
+        "README.md": "sha256:bcab0496e068eb5613c91d687bd2bfc0444e93f620a5e1241a1923bef3ba3acf",
+        "REPORT.md": "sha256:d3ff61262afb26bda0b9720898fba96907b71a2b2f1209b3f8d18d168f387de6",
+        "figures/amr_alphaearth_diversity.png": "sha256:3a9e798ffd7680600226e7975a48d7c32e3dccf4941f557edfbf359d4d90c454",
+        "figures/amr_by_environment.png": "sha256:54015c35886f768fbe3d8d6e7664bdfcf1d2c97d26b0020e06fe6f3bfd316d46",
+        "figures/amr_cog_enrichment.png": "sha256:3db94ae77195d0c433531942f4709ea6a1931ea79289f2326611f48915b210b4",
+        "figures/amr_conservation_vs_baseline.png": "sha256:0483ec00a46628cb8c5e29ff31a79ffba6d8705f159e458f1a53119708e7efac",
+        "figures/amr_fitness_distribution.png": "sha256:115249ee66eedf1bbc15be60e619bb9192fc0bb4152bf63aeb164db947296fe7",
+        "figures/amr_gene_families_core_fraction.png": "sha256:8501690d3d4166db12ff870076fa32eaa7c0e13fa9c6d473bad7971dc4250482",
+        "figures/amr_hotspot_families.png": "sha256:5529dfb530f61057764908783ef19b47bdb25fe141cd8cb7f056325599a84a27",
+        "figures/amr_mechanism_conservation.png": "sha256:2dc229e10d980f021898c39a589af2702008c5f9cffe7d165cfcd61104e2b936",
+        "figures/amr_openness_by_phylum.png": "sha256:6c365cffbfa6737443642e3cb8f99087739a6b993557c8c0d24aba9e0b75ed1e"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "amr_strain_variation": {
+      "digest": "sha256:3d0b301416a232b7b0b53d39cdbfb7969eabebedb6ff57c3785fbb0b27b375dd",
+      "files": {
+        "README.md": "sha256:28c80ea4486fbe014cdd892b12e922b531c7462b78809eef9324e97dcd9bb597",
+        "REPORT.md": "sha256:281555811f8881723be3df2451fb1922ac3608fa2659d910741acb7a97cfcc9c",
+        "figures/nb02_variation_landscape.png": "sha256:cb2109b8c78263c491ec8fe1650367b32a920e4bf4c0acf17734b58f19099090",
+        "figures/nb03_cooccurrence.png": "sha256:9a9b0e37b74231b0c0ce7b1b7bdf6345f178508c2fc61b1302d72f7409fb933d",
+        "figures/nb04_phylogenetic_signal.png": "sha256:9f8b5af4a0ce0aa06059b7ceebb20ab4453a235b547ec7fad6e5c8315c6e5935"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "annotation_gap_discovery": {
+      "digest": "sha256:4b2332ead97784b6fa8036da63ab701e9109e4c3e71581723f6e4ac5221554d5",
+      "files": {
+        "README.md": "sha256:4c780a47b8125758babfa26566157faf49069b045b30cf249cc09b92262708f8",
+        "REPORT.md": "sha256:3c63fd0fe807325171c748094ed79318ae508fb874d02e4db139674dc478387c",
+        "figures/annotation_gap_resolution_heatmap.png": "sha256:23548fb1fcda83297d9baa9f035ca9a10786e73455baf9c6cb9f296108b6a2ae",
+        "figures/evidence_distribution.png": "sha256:e82973dd66dca989f52c72745556bdebe9bf1b235ec15ddc7ba6a490bb607981",
+        "figures/fig1_resolution_overview.png": "sha256:28ced40168fba66aba31512eda577dc43d24b646063a8ad635a62c721b5049f0",
+        "figures/fig2_cross_validation.png": "sha256:3b459100ecd3bdf599728c824d15469eddb7654e54fd40513bef2fea3b24709d",
+        "figures/fig3_organism_resolution.png": "sha256:fe565a6cc88f4dfe75a813e6320c07996d10bfe20b08d70c766e2ace0c85d1e8",
+        "figures/fig4_blast_quality.png": "sha256:17d79c18230d76a8161accc3838e8d3ba92172db911450329c4ed9e79c8d33aa",
+        "figures/fig5_gapmind_concordance.png": "sha256:187baeb7dd7492fa84ae8234562942c6353930ffdd4ef693312044c0b3af7e1c",
+        "figures/fig6_conservation.png": "sha256:6f88e789ea9ca4b48c1047dc5f612a4d34cbfbc1f7b36bf608837dc837d1bf0b",
+        "figures/gapmind_score_categories.png": "sha256:5b440559c4715d034f165e6f54597c43e078ba1556b44ba89e2bcfb1f87d72fd",
+        "figures/nb04_candidate_sources.png": "sha256:8c271a83d1ea9922396b131c63dcda05557f74f74efed77127a5c73e72c3e885",
+        "figures/nb05_fitness_specificity.png": "sha256:9844ca60cf78f4066cafc0aeb88b79f36ce0373ea2dc80fe671c55ae301a0f4a",
+        "figures/nb06_triangulated_evidence.png": "sha256:6b25d943adfac30203ec47ca40484663aa41f93647927665e47ee7f7c328b222"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "aromatic_catabolism_network": {
+      "digest": "sha256:bf26f63d728c96eb005acef82adb8fa0fed82abb780e410f05b438d7433ab477",
+      "files": {
+        "README.md": "sha256:a3ce7019f965c62a614e0de72cd872568ebccafc634fee83bcfa685f0a799e8c",
+        "REPORT.md": "sha256:68071594c6f00c685e2305ec838c11f3c31f6ef34c03cf0c699a64d106b027d6",
+        "figures/chromosome_map.png": "sha256:020c97ab818e5f8f2d16b95ad9c22838c1335088be1b85e9c7defa7e9ce040c8",
+        "figures/cofitness_heatmap.png": "sha256:d0775aed253906319f312c1911177077dad190f48a4bafc24d09bf2bc7ddaedf",
+        "figures/cofitness_within_between.png": "sha256:c7200ceee4f6675e56e6f14a808a608cdddaf8a27cba4cf6164cdd36c95069d3",
+        "figures/complex_I_vs_background.png": "sha256:665f0b5b24b96416f32c668c8b6124ee3a53c16356f871baa120d4d9e306441b",
+        "figures/cross_species_fitness.png": "sha256:41a68b77832194612fe9f38d26765d935c6271f76f185b7206a9a313c41886d7",
+        "figures/fba_flux_heatmap.png": "sha256:294bd52351f12e548bb1c80a4481390a919473c7cb2679984d52fdab16afbdaf",
+        "figures/gene_clusters.png": "sha256:511071e1d0a342187f77e0746c54cf55b641149aa4e0772eb3d2e563a068bb34",
+        "figures/support_network_categories.png": "sha256:735ff92fa5893f59398103770fb50b20aea3785dd60b7dc24040c9ba6ff2ca57",
+        "figures/unknown_assignments_heatmap.png": "sha256:898a8853bfa05cac7078982ed42e573b2a4e369f9c0954656668323aa70ba467"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "bacdive_metal_validation": {
+      "digest": "sha256:8cb937de36dea32e3a25c7bd63a201abe8fef038c020f7be7eeb9ffed862e520",
+      "files": {
+        "README.md": "sha256:385c3bab00acbdd36b7f79642b78faad2c6eaf2080db8b17fa25f2239e577072",
+        "REPORT.md": "sha256:6b482275a5774daed2242605f701225afa538da071ebfacdff398459a8d660a0",
+        "figures/bridge_summary.png": "sha256:5d24de330398f7331b3b7a3eb1097c867922e7d724cb95509626a5179ec0c64f",
+        "figures/metal_score_by_environment.png": "sha256:7fb6e4b5262b265d0635504d2b01f4e7a4871832e14600d56ae88ab2d34e4e53",
+        "figures/utilization_vs_score.png": "sha256:79236fef8ca44f1ce006e02a5bea54fd3e6bea6b2378f4ad0c4bbd9d068d8a28"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "bacdive_phenotype_metal_tolerance": {
+      "digest": "sha256:8d930098a8cf84a4dc6f6573edcf72c9896cb9f65b312a3fe4c631c38fc66051",
+      "files": {
+        "README.md": "sha256:426ca56eed52dc0f9bcd646965e53c5797e1c4d0f6a008ae7442a31ec29c8226",
+        "REPORT.md": "sha256:9fcabb1ca7fe2bf7740290ce37ec596ac51e60e89249679f42c9408e567a541b",
+        "figures/coverage_waterfall.png": "sha256:162836bbd14805a53946b52e051e36ee9554b26e6abfe4d77cc934ff27ea4346",
+        "figures/fb_bacdive_phenotype_table.png": "sha256:ef084a15a812555649acacb2e569e3b25cc4b6800965dab474ba061bd290742b",
+        "figures/feature_completeness.png": "sha256:99882dca628329cd93209939628ca4079349508a89b902065645777e00b30d51",
+        "figures/model_comparison.png": "sha256:67de238a6f9e83021224060ec89c9b7b622f5f1f2ef070f342e7de580a2db4e3",
+        "figures/shap_summary.png": "sha256:9fb4cbd4313f038822d689c14d3a2a6950b6c38955448a625f6dbaa93a805431",
+        "figures/univariate_effect_sizes.png": "sha256:34914f5578e86bd130e708fb485ba0ddd69d678000f06fbbea638a5e7cb5bb33"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "bacillota_b_subsurface_accessory": {
+      "digest": "sha256:2eacad9c12cd94b869741f6fc4e76e197727f61855a8bea79c0d422087703526",
+      "files": {
+        "README.md": "sha256:3a26e711e8b049873e9b3c358306795d1755a52d423ebd44d53ef0c19faa17a8",
+        "REPORT.md": "sha256:d7e7f6138df01ab1518706a0ea0667b6ddedc64f7966c6ac95c3ec44bcd45441",
+        "figures/summary_figure.png": "sha256:a337e3638eee60e04be00b4e76d460f559478f91ae2c48044f7458df1539a35e"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "berdl_data_atlas": {
+      "digest": "sha256:12f1c59f20ad7e6c012693377b01124b91eb69a02b33de7a14338ac80fcd2c83",
+      "files": {
+        "README.md": "sha256:580b8fae21cbd402294aaf973aba610611f94dd2e56343c725d27aad3982fffb",
+        "REPORT.md": "sha256:be5f29816668f7662998e22a666a6a398c84a18d10e70464cfbd943fc645831e",
+        "figures/nb00_tenant_topic_heatmap.png": "sha256:e6ed00f8155fbf743a5a29f6beaeaa41aae80d3f302854fac123be2e1a06be52",
+        "figures/nb00_topic_distribution.png": "sha256:f312c5aa5ce7f7d99e319a64b8b7cadf1b5ae93487cf3c98cf262289b690e2f2",
+        "figures/nb01_agency_topic_heatmap.png": "sha256:476768d36fe50950dfe17e4a825800143e638307c78995486c3bcf09a3a53e59",
+        "figures/nb01_synergy_capacity.png": "sha256:ce41b00a0f6eec1276ab93299ad6266cfb5f8c7e3c9eff042a84c62cc5c1dc99",
+        "figures/nb01_topic_concentration.png": "sha256:da97f159ab29b8da87f8c73c7a7e4dffa2ad415779bdb6389a6000cea5362a80",
+        "figures/nb02_key_tenant_heatmap.png": "sha256:df909822950181566355d8c1eb0416347969549f78c479d542a91f672e82d537",
+        "figures/nb02_linkage_graph.png": "sha256:34cb2fd2dddc684d1fa7b7db965cbf0f8e04dd7ea02bb5d7207f54cf58d98989",
+        "figures/nb03_tenant_frequency.png": "sha256:99c5ed76b4cc17b08e809ed4d51f79d0379f494c7b432a6e4e4935ddde84ac82",
+        "figures/nb03_theoretical_vs_realized.png": "sha256:e02e2c63444249200547d55c547a4e96cfb1982540bfd431cb55d29b3481b530",
+        "figures/nb04_atlas_composite.png": "sha256:b853fc60b194a2d2d8b61540630e5ce4ef17299a51cb7e4f991e00039a46ea01",
+        "figures/nb05_volume_by_entity_class.png": "sha256:a6e28c664a12f5366e4859af3d8b9d9c6675603856166a02b94ecbf4af359429",
+        "figures/nb05_volume_per_table.png": "sha256:54765882496f15b6422927a36c3313844e873a3b56d2838a7c24994dbf0c3ec1"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "caulobacter_fur_lipida_loss": {
+      "digest": "sha256:e9f0afc8d35e2e10a4fc9626c4c31cd19623c55bbba4383573bbdd3163b6021a",
+      "files": {
+        "README.md": "sha256:2dea59dc4d22a186c8d49f0d0c21c3dafbbafb98f9e18321e742bacae7426546",
+        "REPORT.md": "sha256:ef8e4c5759abd14a915e18706ba9283e83019f0c753991a823669cf1d213b8cd",
+        "figures/00_sphingolipid_locus_heatmap.png": "sha256:0f6e58ec63a7ef497415a07b12d94c9f948d7b3810ed59f34aec63c28dc1704a",
+        "figures/NB01_fur_signature_scatter.png": "sha256:d4411c81f556f9a31446d11e4ba6c32fc62ab59dc2398dfb35bf93ee9b39213e",
+        "figures/NB01_leaden_iron_vs_fur.png": "sha256:3b01295b72e802d9c3d8a7be330d2e7387a2271cd369d10311bfd488de279180",
+        "figures/NB04_ctpA_per_strain.png": "sha256:d050823c0123b14683c12dd28f338607c0969014acf2978de9e3f2c2be71f89b",
+        "figures/NB04_lpt_apparatus_heatmap.png": "sha256:06b9f39e04ea0425d07325f918f801d3c00a433f731bea8ba2c766a01d0311e2",
+        "figures/NB04_sphingolipid_locus_heatmap.png": "sha256:ac19fe449eab1a6e4ea4e925db36cdfe8de9b3046a580dc0ea03e82df534bfe7",
+        "figures/NB05_pg_remodeling_heatmap.png": "sha256:b330cea731ef0560b78dea57071d07b5c5108e036f17b73e3fbd9d6e767ad9e4",
+        "figures/NB07_synthesis_master.png": "sha256:d773026cc5e75f646bd348cc052629f71b8985ba22399d4bfaa79eab2ef82892"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "cf_formulation_design": {
+      "digest": "sha256:5938b43dbb7d13520a268066d52c22b1ed06f085aabb4befae617b328012cf8e",
+      "files": {
+        "README.md": "sha256:1515f0173059f88229909e8fad55db478276c7d0bebf2f75a309ab75aea34438",
+        "REPORT.md": "sha256:06931c95e1ee4b3b3a4a95563e11b057ffbada9817b91426fd15b4be9ef75bfe",
+        "figures/01_carbon_util_clustermap.png": "sha256:db50cebe781727e50e72264a7aaf7e8678989f0a14984a9e8207958f3008485c",
+        "figures/01_data_overlap.png": "sha256:5a78c9abc52051998ff68e0c346e91a5d33d87019952aacfe7726e52ab27a737",
+        "figures/01_genome_quality.png": "sha256:0351e5c83bea233626b40c8350b1a80a29c1eef0a9ebfb3a52a2f26e6f709ceb",
+        "figures/01_inhibition_by_genus.png": "sha256:6bc48c7d6e3351da0c5621aec4e768085783d92130f46798d3466f1b0aed95fd",
+        "figures/01_inhibition_distribution.png": "sha256:7a021760a104f63b4abd45e8d4012e4f1e94eeb0f76c98a2e725bed15ad2d9b3",
+        "figures/01_isolate_genus_distribution.png": "sha256:09ba024abfea32ce4ce68091aa91df43b82dd9c34c9ab3e4781fbf8a89af5a1e",
+        "figures/01_isolate_species_distribution.png": "sha256:33d5a73108941bcee9d6dc46545682da71786f327241bf79555339fada49d2b2",
+        "figures/01_overlap_vs_inhibition_preview.png": "sha256:83e153be7809d902bf10f8fd5a30f2216f95f81bf4e10cf400f8e1eaf7ce3d7d",
+        "figures/01_pa14_carbon_profile.png": "sha256:5fa3359b3b1236de1a1c22ec9cc68d9420d661964eddaca36e4867de5180e049",
+        "figures/01_reporter_carbon_heatmap.png": "sha256:b1a02c2eb8ea2f787cc4a497fd3404085eb0808476c6af01bf42ab1ae5f9f396",
+        "figures/02_growth_curve_gallery.png": "sha256:b50a34b5d5605df7bd6611147d721af23256e21683e4eabeea2ebbd7f1551db6",
+        "figures/02_kinetics_vs_endpoint.png": "sha256:713c9761aba7270bc774618dfe798996cb995efd6c56db1924a79fa50600d3ae",
+        "figures/02_parameter_distributions.png": "sha256:f879cb4ca881dafec171532c5865e8396f2b76d8cf76195b0cdd2f32160be009",
+        "figures/02_rate_advantage_heatmap.png": "sha256:5015d647d29f395b11ff302ef5c513d5a592b81b941a091a7e2c570bdeb562a3",
+        "figures/03_inhibition_by_genus_cohort.png": "sha256:a4e924b1235408e57d9c7c220043db45df92110bf797bb811220e96be251f094",
+        "figures/03_kinetic_advantage_vs_inhibition.png": "sha256:33de98c2cfb8990183b09269050515b4c1729a502632dee7cd62222bdf71154e",
+        "figures/03_metabolic_features_vs_inhibition.png": "sha256:2232f35cf0dc00749a40e8f5d836c6de587548221d5d9ac10d862f496a323076",
+        "figures/03_predicted_vs_observed.png": "sha256:a207602d33efe7aeffde72a2552951ba7295e508db1ed178864bad18c5140c6d",
+        "figures/04_prevalence_vs_activity.png": "sha256:40c11183af05f133c5deea969b9c7bbc1a1507e1ecb87acbcf9a410e5a21e2ec",
+        "figures/05_formulation_scores_by_size.png": "sha256:08b2fe1731fe760fc3b81d038df5795a6a9705065e704427929dea1a03a6c671",
+        "figures/05b_bootstrap_ci.png": "sha256:ffaa74831c0502c93c22c15a379562e87b99d0e0b32fb8b3470c9a2cc4bf0262",
+        "figures/05b_strict_safe_species_frequency.png": "sha256:56b1d2680e04919c64b770930202a35b9ffa304039ae11279df58e2325828cda",
+        "figures/06_prebiotic_selectivity.png": "sha256:29137ddc349d91d50d62704afffc7e20d57a394c994e92dda126561e507943d9",
+        "figures/07_aa_pathway_conservation.png": "sha256:4105633e436ed7e7c4693dcac55451f3a516f64d6ef26a8686863682c8347cda",
+        "figures/07_carbon_pathway_conservation.png": "sha256:53327f10592cea6396162e60b8df1883317d4107abb3d2a2f244f8e0bbc7a106",
+        "figures/08_dose_response_pairs.png": "sha256:46b479280645ccc9c6aa0fdf9d186eb17935e9e50615eaef4b4fa7d36648a0cc",
+        "figures/08_pair_vs_single_inhibition.png": "sha256:b1a3030a2a9b52dce078c258f3b529dc3db3679d3feb8983bbea5d2beab2fde5",
+        "figures/09_pathway_selectivity_heatmap.png": "sha256:c2a084ff4e90b6588a8fd2bafb5de83b855b861845656b0d44329e78a4a0963a",
+        "figures/10_pa_genome_sources.png": "sha256:3c512828569de1c89728e1e445a7d32b67a54b06945b7dc4584df602d031de80",
+        "figures/10_pa_lung_clusters.png": "sha256:2e8a0aa9d7b68225b471f537ab6b4f0c3f8485c8d646ba1c172f008fdf5b2d02",
+        "figures/10_pa_lung_vs_nonlung_pathways.png": "sha256:82d3782d830d306abbe58edfb07ce4d0e84b888633dd54e730638a88aad85b4c",
+        "figures/10_pa_sick_vs_stable_pathways.png": "sha256:3ad3d418f14b71a805c2b7cc3032690cac2a19bdb3f8aaedfef4c0ee292ca19d",
+        "figures/10_pa_target_robustness.png": "sha256:c1d747631af6a2782d44bebfec310b9ebf2de1a382832b9beb56352145d78b04",
+        "figures/10_protect_pa_genome_variation.png": "sha256:1664bc1233ddb3a92ce55f3f596d5635b7112ece3d7fea045ab0fde81f785247",
+        "figures/12_growth_rate_prediction.png": "sha256:b5ba2a20b8fe37b4019b035e3f11bff52778974b380cd21acd56b79e9f0875f4",
+        "figures/13_biofilm_by_environment.png": "sha256:a0f96380db85b0b606d295a36fdee67aca69bee59915b950753a3d00642f1da1",
+        "figures/13_pa_virulence_summary.png": "sha256:164b8b7de46b4726ebe37ae5596864b5b407cc118a4d31d04b15f71edc2fda1c",
+        "figures/13_protect_pa_virulence.png": "sha256:c380ea71e6b85d4762d8eea015b42701b4da2b937a0c7613c3ee1bb8902d2781",
+        "figures/13_t3ss_by_environment.png": "sha256:e941cab9ce035a81a398292716e16743480e72b4cafb445e1f29e768c6118151",
+        "figures/14_asma_virulence_profiles.png": "sha256:2e2bc581b9edb1fa738bf2f52fdbd3b2697062d05b520b7566a11d2406f5f656",
+        "figures/14_pa_phylogenetic_tree.png": "sha256:c9a732cabcb51aeaaace3dd75bd88e1c0903804ff211ba25064e65f08d683243"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "clay_confined_subsurface": {
+      "digest": "sha256:e9441213c0c345d4769fe7fb7fca884318406db5d769065fdfeac928889684c7",
+      "files": {
+        "README.md": "sha256:4d7595d167cf707d98e6293d783cfb2b706efb7a7512263ffc2ce39e120639e9",
+        "REPORT.md": "sha256:93b0616d8ca5b3e28c3abd934fdaf5a1c4aa678b99ef85f1baeb9f9c637b0c2c",
+        "figures/h1_self_sufficiency_violin.png": "sha256:76dee059fdaede3c8f99593917a5872f29aed8488c244e3c343fc860628f5ca9",
+        "figures/h2_toolkit_by_cohort.png": "sha256:ace5ed1bf557d51d395e09e41da6afb451dce6f42cc8c038ad23daae033cf2aa",
+        "figures/h3_porewater_vs_rock.png": "sha256:e797bfb2944f51fc415d550d25afbcd7c4e579f07a6540c2ad2685be0c17e780"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "cofitness_coinheritance": {
+      "digest": "sha256:9d734360e05340840b7408da00abb41e3bd63abc410275d2a64e7c6f190f7d96",
+      "files": {
+        "README.md": "sha256:e5248c18772d86eddf9522a5c00d9d5fd1e72c1eec639fdaf2289af9104ccd8e",
+        "REPORT.md": "sha256:c42104325d32cf92b9baff7341246a79f8b8347e87d245d42d91303d7e98b44c",
+        "figures/fig1_cofit_cooccurrence.png": "sha256:bfba2501b3d92ff0cc50ff90f819e7394c5493248168b12ed1455f4f6f162777",
+        "figures/fig2_operon_control.png": "sha256:6e53a265e9cde00061da8f683b684759d84ef9494a0661bec13b014fcc82285a",
+        "figures/fig3_phylo_control.png": "sha256:a05c14d3c6695c5683daa01bc0a496bd74ada9eeba5c355b6f2add6b40bfe8cf",
+        "figures/fig4_cofit_strength.png": "sha256:24cf2058fd2ec4cba3047409f2c316ddaee678af35bd0a1bd68afa6de6e550bc",
+        "figures/fig5_module_coinheritance.png": "sha256:7d9f0091d2be05b7dfef5aac2b63371bae0086f4397996e77a4bfcf59c7ab740",
+        "figures/fig6_functional.png": "sha256:ccf7b695daaee80a57758fd1173299b6eb8b667eb85f9667ab96798927a2cc81"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "cog_analysis": {
+      "digest": "sha256:13c726146e5e0eb1a24fd2cd61456c646cf11deea0526b7e268928ffa1f11a6c",
+      "files": {
+        "README.md": "sha256:db51996b27cf16372f9e8a12cccea3f0e286944d9bf241c3b7288323391d7c72",
+        "REPORT.md": "sha256:3551e1b64c6e5e5d4a42b48a79c8034d31302e0401e238884d44971741da489e"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "conservation_fitness_synthesis": {
+      "digest": "sha256:c3d80c979ab0138f5162118f3718f2d6101310fc7dc416b27d734e001e355a02",
+      "files": {
+        "README.md": "sha256:580984a0cbbb7af5f9250c20079fc22ccf2ecbd820a3261036faeaebca232b6b",
+        "REPORT.md": "sha256:dcc30773426e7d1bb6a6642b526725d104f24b2ce4bc490da0348587b841885a",
+        "figures/core_genome_active.png": "sha256:71ff7e225a8854661ad30f3621a4d84870024bad9be138f870b1f64b9ac1a5fc",
+        "figures/fitness_conservation_gradient.png": "sha256:4664de4413ed6d722308c3485f85cf6446a42363ce076933357871fa7f1fe739",
+        "figures/selection_signature.png": "sha256:6a00cab85eee917de936f56b327d788774fded932fb35353c3d04630380019c4"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "conservation_vs_fitness": {
+      "digest": "sha256:2d16bdef26887c3dbffb52f047dd3c575851e025ab1fa440411d4ae35bfa1df7",
+      "files": {
+        "README.md": "sha256:5a118845a8713f2934b82734d434808d8d13e66a88cf5b3558c33a62eb76f19c",
+        "REPORT.md": "sha256:e0d31ced5965dc2bd3597dc43f0c63a33ad3497af8e9ec712d9369ae6c9aa197",
+        "figures/conservation_breakdown.png": "sha256:36d5c38a705b3a41904ccdec15555513aa5f8d89688eb7c7c60bbe74ce21fd32",
+        "figures/essential_enrichment_by_context.png": "sha256:31f2319fff34af84dfa99d3d1536eada479b9c82667dd32ac64a5c87d628053f",
+        "figures/essential_enrichment_by_lifestyle.png": "sha256:9814c721baa6de72f5599ebe3b2fcea7959130cd1d9289294c4f510cb96c3b94",
+        "figures/essential_enzyme_breakdown.png": "sha256:150e0d3b6c4f2def7d4acf4fe48f553709dcaaaa78d41ab9bb78befbc22d6666",
+        "figures/essential_length_validation.png": "sha256:db308503ec83f6ce468855a9b4d3c4e909bb026b266c42de5554264abd4874b4",
+        "figures/essential_seed_toplevel_heatmap.png": "sha256:991b7b6c2fdb5e0d44c53d1f3f6aa3edb8729cf6b1f285fa7b79e843ac26fd43",
+        "figures/essential_vs_core_forest_plot.png": "sha256:88733e0ec7cd38cf63a837e623584b7c380dc73f19e826be2be688501d5dce6a",
+        "figures/identity_distributions.png": "sha256:2b11d6758905d84d43debad59740aa76662b08bacea16aa8a26ed4b12737d79b"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "core_gene_tradeoffs": {
+      "digest": "sha256:01e646082d464d331e42375fa3135c37f2f5f703fcbf3630c415bb1402325c61",
+      "files": {
+        "README.md": "sha256:37f1b1285d7c8f0015a6002c15ce0d34a287c2f055d7908048d4cc3cffbfae58",
+        "REPORT.md": "sha256:dd4a7ef97e18dbe8a750070900eeb5647cdf2162c92c52d7d247f70465256e75",
+        "figures/burden_by_condition.png": "sha256:ba9893c62a9bf34c1cf00252e1bcde58857e9c1b2d6c9fae03ec1ecad957587d",
+        "figures/burden_by_function.png": "sha256:ae86944431a8ff3385598ade3652941817d08bbde580b469eb064654d8336e21",
+        "figures/motility_case_study.png": "sha256:0ccfa19d22680ca63eda36f978e9ed5f3e5443040dbd97ff5c760b5a31980e79",
+        "figures/selection_signature_matrix.png": "sha256:623bc6c5d12eca6c6fa2f6cce98efedb070cf4e78d4a722167a5bfc513b66cd6",
+        "figures/specific_phenotype_conditions.png": "sha256:5c02e90d79ef8aec50170a7252ac69433a3eb874a0fec290b3d3595cf3d91f3e",
+        "figures/tradeoff_genes_conservation.png": "sha256:fc3d0f114f442bfee0435740f712c110677ecb02b3cda57c6992286a3b27fcc6"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "costly_dispensable_genes": {
+      "digest": "sha256:c288f69103a082ef5d41aadcaf876cc6a19f115e93d32b4c416313a94eb482e3",
+      "files": {
+        "README.md": "sha256:57a960758266ae038f8ec6b5680c6bc87e3f02fe8164ae9e51038ae7c008f38e",
+        "REPORT.md": "sha256:09c61ea64ca662d2bfa768e341afaf3854e4a5dafe91dd4c4e17eb97d6d663c4",
+        "figures/fig_annotation_rate.png": "sha256:84e34a3c6b8098e9a532789c9f7f00b6069144316cd54bce2e32155712ffad98",
+        "figures/fig_gene_length.png": "sha256:3a2135ace1f4956243fdc635caa19517ef9baa7f994e4b1a125a3cc223cced8c",
+        "figures/fig_organism_distribution.png": "sha256:1b83ea4066dc7e3ce78360c3e4923042964f916219c12770435401b189221f56",
+        "figures/fig_ortholog_breadth.png": "sha256:060a54adfdfb858c68dde1aaa390a00f401ea506d4c80e6ed3a2d390aa032397",
+        "figures/fig_per_organism.png": "sha256:684d6175b08d8b9a51fbe27c6d8bac7114cf8f4c380f0c8bf6a960ae83a00d87",
+        "figures/fig_seed_enrichment.png": "sha256:3147667925b32f312ff0401c5891c2fcc7ef10f5a01f5d6d1422e688aacfe97b"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "counter_ion_effects": {
+      "digest": "sha256:9ea11897c7f6154e6ad985f17664f4b4b157c672984cdd3f521e34c7fec4e4ec",
+      "files": {
+        "README.md": "sha256:466d31ac797f9e701684bf1748aa0c3ac9ae018141cb2361ed7b9566a9c34f66",
+        "REPORT.md": "sha256:c43b2ab4f0d5dd44e987cc5bb413ebd72891a74a14ce45245be883ec2ca48807",
+        "figures/atlas_original_vs_corrected.png": "sha256:1644b2ea99cf7e764852f56a29585af658790bb92054a777af6979f86b6c5c68",
+        "figures/cl_concentration_vs_overlap.png": "sha256:e088353a924b124f55f6d1e323908c6b333460bb4376cdcb5f67aa3634ca447f",
+        "figures/dvh_nacl_metal_correlation.png": "sha256:659e46ce90598770965756ca4fcbca56950649dfc4f4da5d3fcb731e83029246",
+        "figures/gene_classification_by_metal.png": "sha256:895a5276ea74af805dc5b0f1396d724b5fa08148af3dff1414f094401ccfc926",
+        "figures/metal_nacl_overlap_by_counter_ion.png": "sha256:97cc5cca5754820a8d98ab322dceccf3c9854b23f1ed4922c666d49df0334b5a",
+        "figures/nacl_metal_overlap_heatmap.png": "sha256:c94b1969c80adc3319deddb81e0868dd79737a2d507307c3cdb85ffc08dd321d",
+        "figures/psrch2_copper_comparison.png": "sha256:21c29fc55b0e1eeaa886be103d531857035e1311283f04732a7b3755d994cf0e"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "ecotype_analysis": {
+      "digest": "sha256:e8b6adbc8aa238efa92c9f0017db6d36b1f3394a9f2e8880af3d5782bd7a7169",
+      "files": {
+        "README.md": "sha256:4b10a6a6f98b10ccde4dc4434c479c7e862fc59d01822ccb336ab1fa903c59e1",
+        "REPORT.md": "sha256:f55bacaa37a86c994ad5c736d651fab97795c9583e3ba5d394319cd671196339",
+        "figures/ecotype_by_category.png": "sha256:8ba660ba08fca986ae9190d62d374abb4bca52a466d30552354fd19854f04271",
+        "figures/ecotype_correlation_summary.png": "sha256:1c115a51f99b3fedbbcd3a80e40d71e09cf0c1e85d9cd7092634be5507e4984b",
+        "figures/ecotype_scatter_by_category.png": "sha256:19568c7b3633fc859021fbd8387436620e32b71c60b2e771ee372f8cfbff03d7",
+        "figures/embedding_diversity_distribution.png": "sha256:0aa702dcdf377e73f0669d92b29e1ba050db9f2fbbbc4901e7870eb5e1636a34",
+        "figures/environmental_vs_host_comparison.png": "sha256:2b635e82d6621210c2e57ba9730dcd82f45c4890a61a4870d2617a62ef630fd1"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "ecotype_env_reanalysis": {
+      "digest": "sha256:596a716da421b15b3e6931d42e95635a595062326ad6c0ba39fb71013e1b45f2",
+      "files": {
+        "README.md": "sha256:239c0c4fddc449634832b152601aa9a19df5a34df22d8aaf7ba4350eef1fae0d",
+        "REPORT.md": "sha256:db74961114a7aabd8fccc5e50114a3f44b684ffbdd661104a55c40c7fb4e3723",
+        "figures/frac_env_vs_partial_corr.png": "sha256:689b52956abd8f0df4bee6580e98cff9c1f888ef036cd0993e39586245510a4d",
+        "figures/partial_corr_by_group.png": "sha256:351fe82e661140f175db8d463ae2a7f6a2c1b055b501bca5b19bc6883c5d4dc7",
+        "figures/partial_corr_distributions.png": "sha256:c409bcd570ab2081c6e8d75617d569d039470f3876d1e8c449e94e3c24cda208",
+        "figures/species_classification.png": "sha256:df1970b2625490281d7b75f5f9b3859d131aa834d61a32e362e07e79c1acfc99"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "ecotype_functional_differentiation": {
+      "digest": "sha256:d587d1887f03fd45d5a91ff30fbef60794cd36c7b903af01ce916a1e7b44d34c",
+      "files": {
+        "README.md": "sha256:7cf2e6bef69f880604c6d2e94c2976065e0dad09c3b3f6732cdaf470a6aec1f8",
+        "REPORT.md": "sha256:465628fbc1a9804913dac4212b73369f7fa168714f0ebe401719451cd96d3751",
+        "figures/cog_differentiation_heatmap.png": "sha256:b314335d789b083f9adec506333e11cd058379495ecac8c136b6ef4269bb43da",
+        "figures/cog_differentiation_rates.png": "sha256:3d71fc0602933e55464ae896adbff05c90e0771cce64fc07d2ad69ea4c3461e2",
+        "figures/effect_size_distributions.png": "sha256:a8f998015767cf7385e4a22c564048262e9c85968b1b951a173ed849e044e9bf"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "enigma_carbon_census_1": {
+      "digest": "sha256:2a28cfd4f2543edead9b3039e3a2915036d3b828153ee20985956df9ba0c7294",
+      "files": {
+        "README.md": "sha256:16accbc07dba2dbbf57f0e1da013c2350d143e0a2e3d2235b782d7887d1ec14b",
+        "REPORT.md": "sha256:62204d5c4271f61cef9bd5c3aee8b1410bebd0a60d508276d2875691a7194f49",
+        "figures/04_utilizer_genera.png": "sha256:b49038c61d3f574e045e1649f5b3ff5e1767c7c5139b0bcd73c5f7a8fc5ee0fa",
+        "figures/05_cooccurrence.png": "sha256:4e69606de9e8a8f697815a01ebfa4451a15ab89ea34edd7572a0671a27b66427",
+        "figures/05_genus_versatility.png": "sha256:5ee3e2b732a9c06ee78024a6483a5bd178d903ed880c3ffd55b7f0677f756a8e",
+        "figures/05b_odds_ratio_forest.png": "sha256:a9911ac012f5235b9ac82b25dc3989c58d6c757837743a6a3d231bae09ae0bfd",
+        "figures/06_certainty_composition.png": "sha256:ea656976e8aa4582f966be6c61fc37eb5770fff50e2674b46f1cfbd1ad6caf8f",
+        "figures/06_phylo_order_map.png": "sha256:d6a28848be14811844890dc3dd6bb239074e924b2884db11ba846c67733480e0",
+        "figures/07b_env_atlas_heatmap.png": "sha256:5e83756890a8da608dbcabf15199796c11d51042d3b550a20429484f9778e11f",
+        "figures/07b_soil_fresh_enrichment.png": "sha256:7803e02d7f51c039328cd1e633fbb4594ce87e8576a1114e6025f7ac32d9fa62",
+        "figures/08_funnel.png": "sha256:c81d47badd439153ead17db43605ddd9dabeb69dcead609a49c2ab2d7ef3bb7f",
+        "figures/09a_bioavailability_space.png": "sha256:e0d9275d833952e2b19795cfad4122dca1903eee6d498ef8a3d533d3a69b75d6",
+        "figures/09a_physicochem_callable_dark.png": "sha256:4c342db2b01971fe6ca83b648ce38aa2db84f2548e4d4e3acf6d48bc8c5cb50b",
+        "figures/09b_chassis.png": "sha256:a1c41fbe103fad413ef03405aae8b8bc80deec4f268268fcc1a3d3cca5e43857",
+        "figures/09c_clade_conservation.png": "sha256:b7ebfcc9c9d71f0c8f6420023e7f86a2c986d2ec8b2e8fae1c6fca6eb0fd3be2",
+        "figures/09d_dark_taxonomy.png": "sha256:117e98d79cb1ed2e001e063525934dc6b12b6fba79b939f7f461c7a13b3f8a52"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "enigma_contamination_functional_potential": {
+      "digest": "sha256:f0896904e7989c045d4711a865c107c2cfbede58ee2cf306e06b824b75afd5fb",
+      "files": {
+        "README.md": "sha256:3feadab259f8e4979450ed72dc57cf9fb8a75dda90eb8040c47405fc1e339561",
+        "REPORT.md": "sha256:4dcb3d9608b4e864e109a4e0ca80952e30f26797b2d3de85a58962f773ba79f1",
+        "figures/confirmatory_defense_vs_contamination.png": "sha256:64965b88935c216566e14630ee4c04f9852c5c34c03643e426f347d19af43e49",
+        "figures/contamination_index_distribution.png": "sha256:5cb0de06ec155a66ce30bb1bb74bd35eef2e121047c6ff3e5f09db9991210980",
+        "figures/contamination_vs_functional_score.png": "sha256:7b7c86bb9b2e905702144b2ca206fd338d15cbf23dcfa3b471ed752262afbe21",
+        "figures/mapping_coverage_by_mode.png": "sha256:08733d54b6962e966bf4b5731d93acf2a378f7f3cbf3ea93723d7c912fa72791"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "enigma_sso_asv_ecology": {
+      "digest": "sha256:6d9671d0b28b4eb6402f2b04be51e2c7aedd1cfc959be1a4750da67cb6d42a9f",
+      "files": {
+        "README.md": "sha256:debab68f2ed11895501db3864751ef3a04b0993014b3c70b51b9823beb7b4a70",
+        "REPORT.md": "sha256:1153f1f3f4d12bf8f52c79351cc2441f7f7114eaae9b86f58aae67797d6cb55a",
+        "figures/bc_heatmap_sediment.png": "sha256:98777b3a07263d5e30224e0f70b591a5cb661439760903ff7307409e49d147c8",
+        "figures/depth_phylum_correlation.png": "sha256:453a006429a9bc1ab7c5c0d2a2167ddd92a926980dc09edddffe2447de1b2b26",
+        "figures/depth_zone_profile.png": "sha256:a77ff73c8e6eb1468751bc7bb0483fb8bdaf21e97094ff7b70d3fc85cf9b1931",
+        "figures/genus_process_clustermap.png": "sha256:8dfbb534d85c1f22b2ad148c293a2ec1f55357808b4fe5f90eb54878670c0eb8",
+        "figures/genus_process_grid.png": "sha256:0cea33382ba941594de6d18e6ce38d6fda3e66ed82bc311017c3ac424917ad9f",
+        "figures/guild_composition_bars.png": "sha256:0e33c2c1d8017b18719834d22ccd9c821196148165693188bc5ed731816821a6",
+        "figures/guild_cooccurrence.png": "sha256:c7313862cada73f647dc3bd92b0d7451a116dcf1001d3455b080be07841554f7",
+        "figures/gw_vs_sediment_phylum.png": "sha256:307ed44ebd116e338b1f0ae58deb33748d8197916a411cc6f0f4366a45766210",
+        "figures/key_functional_gradients.png": "sha256:cdcef9cb7c67674dbac5386dce6a7b67f020c77aa9951241c4598eeb933d405d",
+        "figures/mantel_distance_decay.png": "sha256:5458ad17717a40ba65530b9e70c174d40d1b10411b31e974dae2a9b949baad81",
+        "figures/nmds_samples_zone_well.png": "sha256:df9f99b4bbf14dd895c3c712cc848a42b33ecd152e2e3e9aa467b869b05b8bb5",
+        "figures/nmds_vs_grid.png": "sha256:b652e7e2d558af8bb16cdb6a7ce0c8c30a783350172b95fb967f0b34a01bc336",
+        "figures/phylum_by_zone.png": "sha256:c9d15ba2b0d26eaf3fc93c49db1d3f66b181f1a75363b6aa084ff3562c7769ab",
+        "figures/procrustes_overlay.png": "sha256:f517af09bc837eb734ff12391f0bf4a7d2841b564afcfe69204170239adbc41a",
+        "figures/residual_analysis.png": "sha256:7122dadf71a226d9503772ea5950034df4ff72cb6dfda8d34d521fab7a10223f",
+        "figures/spatial_stability_mantel.png": "sha256:b7d4c43e4a0fa3dd4c429b008be89e1dd8c90304eaab7a7ec0c051b3935bf71b",
+        "figures/synthesis_plume_model.png": "sha256:77070d7cb98db3683a4c46bf6587f8924ac5eeadd4ce187230498a397acd4c4e",
+        "figures/temporal_vs_spatial_gw.png": "sha256:262fd3dd51d012dd0484636bef4127847fa522cd56a9526e0ca9c9c08e314113",
+        "figures/trait_clustermap.png": "sha256:1a1476b2651c38c6e2697ba7a4f888d1810939a5139e844a08e0fbdd8e2dc36d",
+        "figures/trait_grid_maps.png": "sha256:56b79fd58a84e1d4b70d8b45442e6ee620d2fcc7808f0cc64cc052868e8eda8e",
+        "figures/well_grid_geometry.png": "sha256:85ec21311919c3c70ac1ddffe975537268e39935263cafbec22c21b27594c729",
+        "figures/zone_indicator_heatmap.png": "sha256:b6a8ce62364a7370dc495f67c39e18427be20633802e643200f69e03f982fb4b",
+        "figures/zone_vs_well_dissim.png": "sha256:4a68ae0b0a9107e830de67d568d8ed7960c793e15e4117e0bc7d048876526f6d"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "env_embedding_explorer": {
+      "digest": "sha256:5b2363ad605032a6871f2cb04e4a82281ada8d14b03ebd55b560867e0a4ad55e",
+      "files": {
+        "README.md": "sha256:39773f636e2d975b92ea6a5e76623d1ce776e81a77e8d6d04db2748f57cebf60",
+        "REPORT.md": "sha256:9d8367c2702227ec806ff62e384e9178954f1455f3826dafd569baa34a61a76f",
+        "figures/cluster_env_heatmap.png": "sha256:e4aa38aa6936de197b4c1c216d2506d3136a30c010de3da0774c19e51dfa1e8b",
+        "figures/coord_quality_map.png": "sha256:ebaa79e90634f23a3186572efde1be24e3eb527eccc61bdc2323ccbc0cc95dd9",
+        "figures/coverage_bar.png": "sha256:4f08bde3e9c51f1f6f748fb3f84d6c3597b73e94b4d5ba2127707f21b663b760",
+        "figures/coverage_intersections.png": "sha256:d8cb7c16c8494744e55a1dfe0838136eb9c39c9598e7909488dc927acc2ef969",
+        "figures/env_categories.png": "sha256:437e17beb4a8d523e514939b251f5094dd68bfe8e9c4e0acaf98da2f3e08c4e4",
+        "figures/env_cluster_distribution.png": "sha256:10981c500d28af510ddc3ebda774d99d4b3aead79ada0261f3ccc053a57a1cf0",
+        "figures/geo_vs_embedding_binned.png": "sha256:ed947348dc368b1783c4199c9bbedb1068f40e2ebdc4310cb203bc623e5bf50f",
+        "figures/geo_vs_embedding_by_env_group.png": "sha256:e3410cd89d6666a4a0abf76cb3a476ff62f4b8c598e4e76d1d9fe3c13e51f777",
+        "figures/umap_by_env_category.png": "sha256:e45aa0a933ef4631850edbc692f10f36a971bf6310a7caac5a7fcdfa4736bd4c",
+        "figures/umap_by_phylum.png": "sha256:7e59d0e62a16388492ac5df9b297e149c2fb5b2e57a82564385e51d2c719fe05"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "essential_genome": {
+      "digest": "sha256:04dc0e4eb7d20723d0b3e64de326d67c66751e003bacaacb52c0a9c9a45d4e0f",
+      "files": {
+        "README.md": "sha256:312e021ac5d95702c490cd8b985fdcd4ba55c7f2170249cb229efe35a379bec3",
+        "REPORT.md": "sha256:6bf9c96cf9fac3bfd553efb4fed76a92d75e70a0549d7be588a83c632ea0c049",
+        "figures/conservation_architecture.png": "sha256:08a4605614c8494d928c3aadb9833d389faaef8df19301f378f8c268eddfc077",
+        "figures/essential_families_heatmap.png": "sha256:c22581937ff6d0beed7fecba13760dfde08e540b5b0935defbc23a861b2b2f1a",
+        "figures/essential_families_overview.png": "sha256:bb7a0c1b0cc3e52194fecbccb58a53a32006df25dd9813241d5cfd3e1c5bbcc7"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "essential_metabolome": {
+      "digest": "sha256:c0158e985f98e1e98c78db851edeb201dc1c2489514f3bd70cf2219248b2d3f0",
+      "files": {
+        "README.md": "sha256:dbfa0503bd723a2fa590431ef2030ea8f4b4e06c7220a0b2ee7f28e722f2c2c3",
+        "REPORT.md": "sha256:8a18113bee96ddf029c55c8c06b70270b663c1f3e817ab0501e7608c8a90427f",
+        "figures/pathway_completeness.png": "sha256:c9bcde67404d921216bc3b4c1af396e819353a5b69aa10059b4a82374023bf1a"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "euk_in_prok_correlates": {
+      "digest": "sha256:ae5ec2f08e15a7e968f789bc1939d50944c08a43da14bf9ccb636282d515defa",
+      "files": {
+        "README.md": "sha256:2de1005f39225f18e6644ade8ed3f610081a8ca1cb74624a5b7bfe97a60f2922",
+        "REPORT.md": "sha256:345875dfe9abb66eeb33126277f33a3a655e7e7feed29ff12ebd79787207c86a",
+        "figures/fig01_euk_distributions.png": "sha256:cb3e46a6b5a16c94952d26e7b35e5de58a570c14a4b56577c2c4a9f000de8ed0",
+        "figures/fig02_euk_by_environment.png": "sha256:09d002fe1f6e4496baddf68d39280afbabcd165cf43ed52842de2a689352d384",
+        "figures/fig03_variance_partition.png": "sha256:03f6a50f376a204e88e3a88865437556adb1d95acdce7aacfa8a54979aacaca4",
+        "figures/fig04_within_study_env.png": "sha256:a8f6dd18562150079cad62882d1ff683102a7c07d2ac54b41b6983b4f81a171d"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "field_vs_lab_fitness": {
+      "digest": "sha256:1343b2139efbebb7ef5a68d446321ec143bb6051155813e0681ab4d9de37a22e",
+      "files": {
+        "README.md": "sha256:de59ac1c1f10df8b6a059486f3272134a4db99990424a021b82b7963ffc8a9fa",
+        "REPORT.md": "sha256:8bf50c605e80b6db78122bc45bdfce5cb3ef8bc17821932e2e7ab7fb94e5622c",
+        "figures/fig_condition_importance_heatmap.png": "sha256:bcebc2215b8f3be3c1873417659bf1065399b3d08e5a7bcc73cc064266993730",
+        "figures/fig_conservation_by_condition_class.png": "sha256:e62a4273015a91b5d87ef44972e4825e6b9b463aec2f8243e976deb7d0045b80",
+        "figures/fig_ecological_vs_lab_modules.png": "sha256:0b9a23e1fef689da45d2b549a905864074015138996c735607d7f94e1d2e34d7",
+        "figures/fig_field_vs_lab_specificity.png": "sha256:c1fe27bbed610fd9cc4d0dfe344dbd430f5b1bae499c64cf806edfa0f0aa4c0c",
+        "figures/fig_module_conservation_vs_activity.png": "sha256:64996af72dbde2b9d7f5812c1a02008e514673e297e843b0dc2f9844833d74ad",
+        "figures/fig_roc_conservation_prediction.png": "sha256:034f4aefa5750a9096da22663458684dd09010c24692bc6052e44e4f06f44c57"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "fitness_effects_conservation": {
+      "digest": "sha256:e23ddb0ac1f0faa2a3a46e95fd0d3f557dc2908db4013273904c8ed5807fee21",
+      "files": {
+        "README.md": "sha256:9db4fda38692e6f7712ff344e82bca648a21245a458d85cc20e1632ceb22dd0b",
+        "REPORT.md": "sha256:876489dafb304c591b6d0ae6315b0249426b647ff63d98b5135904893840f259",
+        "figures/broad_vs_specific_conservation.png": "sha256:d31d96ce3d06c2f94c428f91ecc7ab55f64a0bbd7d839dd1f1d298c673055fb4",
+        "figures/burden_genes_by_conservation.png": "sha256:93c486444e76b70c8941083d5e63d31929602642b18f2778b869e4bbad52346f",
+        "figures/conservation_by_condition_type.png": "sha256:71d373acccbe6982f27664ae0dca939f563983ce49c0e9a4224555c078fbde24",
+        "figures/conservation_by_fitness_profile.png": "sha256:34ce240c2c69f9ddcc8015eba980ca31a7a1abf257c300a86374a866393503de",
+        "figures/cost_benefit_portrait.png": "sha256:460311eb06038272704164924e9056b81d47944612588095a3f629535cac062e",
+        "figures/fitness_breadth_vs_conservation.png": "sha256:049af1cc57ef9f4736964270174f14e06390fd345ab681eeacd5edc5a89535a6",
+        "figures/fitness_distributions_by_conservation.png": "sha256:2395e20932d30687340d011f2a3726281d5b56af5af97b54f7684d51f46984e2",
+        "figures/fitness_magnitude_vs_conservation.png": "sha256:3bef3b54dc5f5b4dff4c3724edf8a2d66fcaa04494a7590634e8607b834cdb5e",
+        "figures/novel_gene_mean_fitness.png": "sha256:1e5d98bebaa7c93d175dbe64effe7fc96e000c9bcf87100b7401e66fb66886b0"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "fitness_modules": {
+      "digest": "sha256:cff6830521689aec65b26a69a3c57f742a4c8f440cc6f7454bfea74fa50be898",
+      "files": {
+        "README.md": "sha256:5e45368c1e8bca8aa1a45b6b2369b2e8bf0e29f53be047c8129b9c5d6ff2f424",
+        "REPORT.md": "sha256:4fce3013b064e0af4e90202509f2c93e0d181d2663930f839a35e0ae16b2f86e",
+        "figures/benchmark_neighborhood.png": "sha256:1113444212e0d11387e4b6754840917f5bdf6153b1e4d224abcd68eacfe51ed4",
+        "figures/benchmark_strict.png": "sha256:670afcb16048874ddf4c752e3566a0c4e0ffd07bc8acd4fb2ccd49e8adf82a4a",
+        "figures/enrichment_summary.png": "sha256:3d2d21e4769026c7786a2f37cc8ab8612354d0f10d8e696aada85d9ec7eb3479",
+        "figures/module_families.png": "sha256:b78814fb775d18b7b3d9c099122117d5260255cdf085f39ebb0a4ac9ad810745",
+        "figures/module_size_distribution.png": "sha256:b2487bbc58d0d6322881916cb98b290dc90c60637840dbccc608dc8c402ccf7a",
+        "figures/pca_eigenvalues.png": "sha256:660e54dfe21bccb49ea52faafcbd0140ab5fc45b4191e3f62375b7c9ca3e2390",
+        "figures/prediction_summary.png": "sha256:0ceee82693eede5e90621b163279539dcf6df1d113c154341789b46d5ae610aa",
+        "figures/validation_summary.png": "sha256:e1f3de295ddc623b77dc7b52c94ee0cdd8b00653d9c779e084aeac52e590ac23"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "functional_dark_matter": {
+      "digest": "sha256:7b2fc3c35718beba8d720e8a66c55a0a256d4d8124490101e8b8300d53846057",
+      "files": {
+        "README.md": "sha256:beb1c959227781b6e1c10e663044975a96bf9d708361e02dc2496d5fdc385a7a",
+        "REPORT.md": "sha256:1ea00a93830c52ac6d4c47418f8d718cf6b5aa2d81462a64855a8308888da1d0",
+        "figures/fig01_annotation_breakdown.png": "sha256:91eb7d79a49ce635debc249ab21b142f7841232c38cad87edcbb0cf185fbf23b",
+        "figures/fig02_fitness_distributions.png": "sha256:2ccc67591f26efda6190aee3ef80fb89333e6cec6113dd86bf27a4900ef9fa6b",
+        "figures/fig03_dark_gene_coverage.png": "sha256:a7900375dc1793b640a52923e049e889f692775995a85dc8530abf3534051706",
+        "figures/fig04_condition_classes.png": "sha256:51afd76e8d7de7be931ddf447db722a12f9c4363d18193dc3214f356837122b7",
+        "figures/fig05_gapmind_gaps.png": "sha256:def1460f4d5795e0737cf916854b0059f39a3b186e179fba4d4f3b900ed1afb8",
+        "figures/fig06_concordance.png": "sha256:4d8e995631423372f190d21316cac253ba04b3b2033bfc4d63ab1c6cb72d3782",
+        "figures/fig07_phylo_breadth.png": "sha256:426d4d48cca676574a0c56f08827df57356c431cfb9e6939fca78c50e1840001",
+        "figures/fig08_env_distribution.png": "sha256:8b06a82e1cc595e6a57e2b2c84a17d7af948bb4687d187176162d54f8b2e0351",
+        "figures/fig09_carrier_tests.png": "sha256:6ad3e1ed6f741474e354b2e633f8cc537de6bce901419329be177a2f43024bfc",
+        "figures/fig10_embedding_umap.png": "sha256:4c36ac4cfbe092244d1476d8c42e84a925dcf083f99d135525d673ac4c1e0091",
+        "figures/fig11_concordance_matrix.png": "sha256:f866df195b2f62739f5304cae597b741e06a5b0c07e07068efec8bf09233f6ee",
+        "figures/fig12_nmdc_correlations.png": "sha256:6b0adaeece0a1d493545da3fb1a91227cfd34f1aeacc685069221b0a6e0793df",
+        "figures/fig13_score_components.png": "sha256:19fe8743c4bc1c3b21c1da0e61cc7e993edecb8a1d7ff9bd2f3013264e86cfc3",
+        "figures/fig14_top20_dossiers.png": "sha256:cd094b418159b7087d472fca537a3a80afaf3298580cc89040d6c727679a6190",
+        "figures/fig15_organism_distribution.png": "sha256:1ad6dc765e4abf493ebe5734f1b7bdb263ed9b7e2534034c9998362773d9e0b7",
+        "figures/fig16_h1b_test.png": "sha256:2f3fb364227e954fff628e54f9503496cf2d4e7e77f5e81334a19cba7f3da35f",
+        "figures/fig17_concordance_comparison.png": "sha256:141f3e28f3f4223421064d8be66583ad1a0cc8574cabe77e6fe5ca4807276410",
+        "figures/fig18_neighbor_analysis.png": "sha256:f399113d85bbb84b45848e29eb372a7937412dd24dfa58152a6ca3282ac88d38",
+        "figures/fig19_essential_scores.png": "sha256:7b97f0fe2dea2f25fe3dc52728c755a0470232af543c0999ca434097222e9b5e",
+        "figures/fig20_essential_top20.png": "sha256:ab7bfc83572d5b1c9697f0a1bf0bf574c172de94ea3591c26728dbafc32f97d4",
+        "figures/fig21_trait_correlations.png": "sha256:384910c205a727ba4f8b44ec148130c8369e4005928bb764986fa00d537cec5b",
+        "figures/fig22_conserved_neighborhoods.png": "sha256:13441d08617353a9d087fed62b7ee6fca7c0d03a21339808700115e18bebbbe9",
+        "figures/fig23_cofit_validation.png": "sha256:ad8c5746b488dd1d1db1915b7f1dc2d222b92bb586ace461fb92768cd95a648d",
+        "figures/fig24_improved_experimental_roadmap.png": "sha256:964e557cec60c239ebc214fddf9e660e5558ff5ced120f061c5a67c1a144a9ff",
+        "figures/fig25_darkness_spectrum.png": "sha256:7066536acfd133f17961842add1b105c7ebe22c1c945278e4106dea95368d677",
+        "figures/fig26_covering_set.png": "sha256:537ede20d2e0827ce3d0462376b755f39ceb48edd7ff93974aabd923231804cd",
+        "figures/fig27_action_plan.png": "sha256:7987d640d384f110868229547adf33d3cf756453e3afe2173091625f8357027a",
+        "figures/fig28_domain_matching.png": "sha256:507bad51a75d9fb833badf06e35640c535daeb1aa348aad6053299a4cae38a46",
+        "figures/fig29_robust_ranks.png": "sha256:d55db0384a63310ada2d43d82b881e229d54106dc7373a547703d7fb8e04c1a2",
+        "figures/fig30_species_count_scoring.png": "sha256:b9d28df971e13700a4158e68dc628e03c8d336214e4f74fbfb0e60a8762478f4",
+        "figures/fig31_statistical_tests.png": "sha256:3a7d013dff2e7cf2334c1d40467bcabe96ec86281f60d6d2f791dd18c0f4352f",
+        "figures/fig32_organism_taxonomy.png": "sha256:47506ac0ef91364ffb2bd765a8373469ef6062ca1c7a7b4b68606e976f760b3d",
+        "figures/fig33_bakta_reclassification.png": "sha256:b74b600c99b37ef082508d123a22aa446084bf1a22250e23e5217a96768c7415",
+        "figures/fig33_conservation_tiers.png": "sha256:a11baaaeb93cf92c113c23d9e6fa7c5338a3fb08f21df2dd3f3448e4c58f3e02",
+        "figures/fig34_bakta_coverage_heatmap.png": "sha256:ff1e5faedfe5a6e719f82d220a482f7aadc4131b52b03d39cf01d867849f3dad",
+        "figures/fig34_classification_heatmap.png": "sha256:0ed50d6f4870bf475fd2a3fa5b953eba9740fb7a4bf02ac860ca145579d5f4d7",
+        "figures/fig35_top_knowledge_gaps.png": "sha256:67de7668726758398e3c4a4eef8dd740d2a3353548af84ede46ef63909b87529",
+        "figures/fig36_covering_set_curve.png": "sha256:2513d409d1c222f8959fd4d0bde24783531b08b82367cfe22e20a6bf0c6bf5da",
+        "figures/fig37_experiment_plan_heatmap.png": "sha256:157dc2fbea8b9ba610a979721983bd0041db1efa68377806f29dca742105a336",
+        "figures/fig38_pangenome_species_distribution.png": "sha256:2fa368358d1ed003a6e74e0df819c6ecf9ac361d40cfcf33e65a6196e8aef8f8",
+        "figures/fig39_extended_covering_set.png": "sha256:6f07468b9e6a5507b7c4184627147c9bfb32b3f1ed4d423b8fd02c06ab540904"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "fw300_metabolic_consistency": {
+      "digest": "sha256:dc5ed65e340b890aab4f6d8e710d2e713e90770c1053fcd344032d4f8129b1e3",
+      "files": {
+        "README.md": "sha256:5cc5153e40b5f1263b8c5c381db1425f0e2fac369be26ec2e817980631b1d5d0",
+        "REPORT.md": "sha256:7ba873873f7c42649450d7c75e18227257c5c7c8eb2fee052525f3732c997c05",
+        "figures/concordance_summary.png": "sha256:22d27164c9a8917d9121dc37ee56b4f865afb7f77872efdf6cef5bc33921e7a0",
+        "figures/consistency_heatmap.png": "sha256:8d4e3058f9d25bb8543168eebf6bb2ba71c44a2c9a24fad239598cbdb9c9c425",
+        "figures/fitness_hits_per_metabolite.png": "sha256:5d6581a9bca26a8987446181731dfe455d72cc99fb503b50bf85720e70c246ad"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "gene_function_ecological_agora": {
+      "digest": "sha256:2fce9919e6138f2c6bec7da9241fd67c351d5ea355051e1bc9ad17e4fcfba30f",
+      "files": {
+        "README.md": "sha256:53a9245c603d36154a9a3d4f04a6f6495f6599808717475f7c90a005c496b929",
+        "REPORT.md": "sha256:ec22f37a485c95d0e067c1984020af5580f9f103cae1582742ed63f035a74a69",
+        "figures/p1a_null_consumer_distribution.png": "sha256:68cebc5ef19ee8c54877f9d1c5374ea4c420b1df28fef566dbb0872ed0ce63da",
+        "figures/p1a_null_per_rank_distributions.png": "sha256:1823b311431eed1ae990b3467528bb8234057c2ecf787ca576f758ca7b5fc66a",
+        "figures/p1a_null_producer_distribution.png": "sha256:07f23f89eb04666acc8c4cf99fbe865dfcc7fa89152c22653a601337e5040aed",
+        "figures/p1a_paralog_count_distribution.png": "sha256:d58992a534c10a3d818e899c85eafab31713c6dbd55390bf9952a6ef8141ee0c",
+        "figures/p1a_producer_consumer_per_rank.png": "sha256:a32237057bea900aed6f8bc9f1529823942c288ebe4d87f79581a092ca7706f6",
+        "figures/p1a_scores_by_class_per_rank.png": "sha256:e378bb1b3d6d5fc8a895c0d37217e42d4e7e1a98ba1d954ffbf0f6eb778b71cb",
+        "figures/p1b_bacteroidota_pul_position.png": "sha256:7128d8a7770e2b7c796812c0e488ab664489f17c68e4728789d8a306d6f84637",
+        "figures/p1b_metric_diagnostic_panels.png": "sha256:2e0f352c87530a1d57ad3f61211aab21c59022fc36eac531b68ad481a37e7edd",
+        "figures/p1b_null_per_rank_distributions.png": "sha256:1664d407b8f966d22660047433ce1157118e8658aff428c2343ec4903f251e9b",
+        "figures/p1b_scores_by_class_per_rank.png": "sha256:cf0ff6ce250a360e1e7fbc21e2d48842296033e8b1a5d6b872693b0d0ad08962",
+        "figures/p2_ko_atlas_per_rank.png": "sha256:d6e4d9a647fe251ea34345a783cfc424a87c07e145ec1896c7035d5315ca1f34",
+        "figures/p2_m18_amplification_panel.png": "sha256:509ed70d8aefab30aeaba525c6a601e2da046f223c7e22b6b6af41e84ba51c59",
+        "figures/p2_m18c_strict_class_panel.png": "sha256:3608b824dd8445b84e69f0236b1baf5d06b59413ec33ef7c223700ff7987764b",
+        "figures/p2_m22_acquisition_depth_per_class.png": "sha256:f84b6520b055ed0723f0bf4e64b7f7e829d3df829898262f93c020b4a6060890",
+        "figures/p2_nb11_regulatory_vs_metabolic.png": "sha256:9ce25113d4de5d87cf638d5bbdf5007823a8b362a4c057a4ebe28a17e44c95b9",
+        "figures/p2_nb12_mycobacteriota_mycolic.png": "sha256:ba2a4c8cdbc5dbc76792c6849e1971c5eacb20a6df5c77346134fba1ebc1d548",
+        "figures/p3_nb16_cyanobacteria_psii.png": "sha256:5b261b4bda341251ce325792a30796ee8cdfa59abb551b0edca4ab929ac5b49c",
+        "figures/p3_nb17_tcs_hk_architectural.png": "sha256:4a11ffc76166d140c2501bffeb8f384ce1de3f2b55de224dd9e9e164491d533e",
+        "figures/p4_synthesis_H1_innovation_tree.png": "sha256:113a104c06b3417eff92c7ac99e6b019aea08ff879381d36fb1ce02e2cf82f23",
+        "figures/p4_synthesis_H2_three_substrate_convergence.png": "sha256:88bba4e67036afe487be548115dca119c475773db1a187e6ec45c8475bccf69a",
+        "figures/p4_synthesis_H3_acquisition_depth_spectrum.png": "sha256:78afa55a0b5b86b60e9f02de77a24ac89210c0af330d9aa34d817e3f4f1c68a9",
+        "figures/p4_synthesis_H3b_control_class_signature_plane.png": "sha256:d2048c187a4c60d70ff1711261313597f15e755b622709d7b159c7310e490beb",
+        "figures/p4_synthesis_N7_atlas_heatmap.png": "sha256:4562b4c24182c18df5eee67902e55a9b50a9ab79e5961b32e6d443cc63adf8ee",
+        "figures/p4_synthesis_N8_four_quadrant_summary.png": "sha256:7ef2af9e77b1da6438d891c398ff972d475f70847f769ffbca290cabb736051f",
+        "figures/p4_synthesis_S4_psii_rank_dependence.png": "sha256:7da4afb73a828ce7cae99bd0410005a54c34209429b3d87dbee3f320702837b7",
+        "figures/p4_synthesis_S5_hypothesis_verdict_card.png": "sha256:cd9783b82d166e13a6146ca54e2dad07aafe3779213869acdbac72f91ba69780",
+        "figures/p4_synthesis_S6_function_env_flow.png": "sha256:d0e232f9e7a1d9029a814758f257f27fbb6bb7dfd473ac2ee0a62ea38cbbe7d4",
+        "figures/p4_synthesis_S7_hypothesis_leaf_consistency.png": "sha256:ec1b26f6a419eb7dba9f4c43acfee9f5439af15941fc15f649e8484fb687c1cb",
+        "figures/p4_synthesis_S8_atlas_confidence_ridge.png": "sha256:d119bdacf61b15d57afaffcc18006f64cfac3bec0e59a3d1237d9d9113de8265",
+        "figures/p4d1_alphaearth_env_cluster_panel.png": "sha256:71212280ca45bc64982b70f33324987767336a45749ae7563b2833c08a98387f",
+        "figures/p4d1_bacdive_phenotype_panel.png": "sha256:340d32765ff35269429df4fd0413874f0bad8ff8f85f4aabc0e14534037d0db9",
+        "figures/p4d1_clade_biome_panel.png": "sha256:8702b46fd3b0bc63cad74faf6a88d0132e0b1da72dc7ed9cbbadd829a7cc2de4",
+        "figures/p4d2_mge_context_panel.png": "sha256:43494748079fe34d07a34613df90c374609620d79e9e30881aaf11ffaee9da8b",
+        "figures/p4d4_openness_vs_acquisition.png": "sha256:8d76945d539218a367cc5de9da57f942c03394d0d5efcadaa8714d355472dfe6",
+        "figures/p4d5_residualization_panel.png": "sha256:3019c0d965ebf7dad57e3e464734953db97f2a701d3c5b7bc391834d419408d8"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "genotype_to_phenotype_enigma": {
+      "digest": "sha256:4d66d698dced6de5a31276931e3fc188cf24f62e4690bb10003de4003d7e8425",
+      "files": {
+        "README.md": "sha256:6085d77b5bb6696527643d5b3525abce79509375f0e23e528eee738588b0b8b1",
+        "REPORT.md": "sha256:e69de667de1b74a70a09c07dc5b5bfb99aa3f042b003017eb1e60ec118fbab42",
+        "figures/NB01_curve_fit_examples.png": "sha256:70ce35952ab404cb2bbb0a57dd08b4ac0a97e71b2839605cd84d911e7ee3f19b",
+        "figures/NB01_parameter_distributions.png": "sha256:19133d5245991c9779dcb7191483e3a8f8bde0cc865f4a19b22a9e56f81eabb4",
+        "figures/NB01_qc_summary.png": "sha256:09acf094176cfacaef93060dc8edfbdc81feeecf39f39789116f6a7ffffb0246",
+        "figures/NB02_anchor_growth_heatmap.png": "sha256:956cab41cf144961f4363a86c851c57768d85918557c8355ea27e72de57971c6",
+        "figures/NB02_condition_overlap_4way.png": "sha256:d1b2a73cc9c549cd978c4cf20f7a6fc74b6f0ffaa5dc0d6294094f9e2bde2fba",
+        "figures/NB03_cog_by_guild.png": "sha256:0052493704198ebdb4955500c3e2cd28aed64e92f3ccc30b2d05635152565daa",
+        "figures/NB03_genome_vs_ko.png": "sha256:328dc0728374ea1bdca10795853a538a5b8b2024467ec79eece98d0cf76dd5b9",
+        "figures/NB03_ko_pca_guilds.png": "sha256:fad1493421d5dc35a9655a36643f26d680d779d83889de7a55ae3c3ddcf42bfb",
+        "figures/NB04_cluster_env_comparison.png": "sha256:b6b94b10fbc6f5334769469c4a7aa01868bd227c4fe816b4d5273d77d6044a85",
+        "figures/NB04_genus_env_heatmap.png": "sha256:723af105f9afc59e6c554516b0db854dbcce999a23a5adba730e9df06b611120",
+        "figures/NB04_global_cooccurrence.png": "sha256:e05e80ce14b442c40fab197205bd8fb31fb411973bd247994bb89a7c7bcdda50",
+        "figures/NB04_global_genus_occurrence.png": "sha256:51dabf125aac4b8e5f3ec16be3d4ba42822c469bb170bc735f50dc1b84ead41f",
+        "figures/NB04_oak_ridge_strain_map.png": "sha256:edd14a7355f449d9ed85d78308808036bb2d8da3e73ca5a3c76562cb8236e0c0",
+        "figures/NB04_oakridge_cooccurrence.png": "sha256:84de9f8e15158e5f7df1a6c35c88711c2c583649e2eff1b65327d1b6000deedd",
+        "figures/NB04_pangenome_env_profiles.png": "sha256:6098393eecda4f5aad3792c78ed0d4afcf58aaf9317d16d7f6ae09ec57ffdce6",
+        "figures/NB04_well_guild_distribution.png": "sha256:8a009a6681cca0f471d889c7503a455122adca30fe8362fc2229042553271562",
+        "figures/NB05_feature_summary.png": "sha256:d10b12ee765b9d714de97984e12ae0e2799f6e67b574bd98c31c4b0dd80de520",
+        "figures/NB05_ko_prevalence_filter.png": "sha256:dbd45fdfabde9ba457974d175e44ba24ae1a72ec327688d6a5831e688a2cb7cd",
+        "figures/NB05_target_distributions.png": "sha256:d40fe3b30306c01ec4e389a786d97ea16d1488f00894fd55e59ac6f6a8ffc0c9",
+        "figures/NB06_feature_correlation.png": "sha256:b96eeb70d89a53941e706b5096f234cad1e30584b4035ea0af7ca175d16bdc20",
+        "figures/NB06_group_shap.png": "sha256:71b3bd9ede8609345e66bddffe8b7b56a6bfe43ade2f8792a395515397cff30e",
+        "figures/NB06_shap_top20.png": "sha256:b37f3e44f632a3f1980181ef607332f327dcbb85285b11f58248b720fb1320fe",
+        "figures/NB06_variance_partition.png": "sha256:581bef29731105ef31c15b3807b21422b40760b7e67f7a68389399203e424c62",
+        "figures/NB07_bulk_vs_continuous.png": "sha256:c6977be1da6a9707caeb56c7b7e37e26f7332bea775fe8bc448238e953f7d143",
+        "figures/NB07_confusion_matrices.png": "sha256:70686abc3078273e54bb4c4ead343a9f315d33f34403d52d100987a95074036e",
+        "figures/NB07_coverage_gap.png": "sha256:847425ceed3d60b4895fedb66414b3267c36a75d27433f1ab17928e490f8baf2",
+        "figures/NB07_fb_concordance.png": "sha256:6e17450347fc41c55493aa44a0ca30dd090cbc362d719feba4d9da0420e06e5f",
+        "figures/NB07_fb_concordance_detail.png": "sha256:463449983455e5f132bcd13c042fa69a98f19f4c7136dfd62d503acf5e2729ab",
+        "figures/NB07_full_corpus_results.png": "sha256:15aef232b48ba8a359c90554c6fbfb7edd2011c8cd0ad5504650cea30383842b",
+        "figures/NB07_full_corpus_shap.png": "sha256:e5b357c8855bb81a1524aeb565e8bf50203e5d1fa7eea2dd0a8dd957f23e7b74",
+        "figures/NB07_model_comparison.png": "sha256:2faba78e051314ea5e38f50a1f5e46075dd5f1ca89afe9c663d96dc5a7eafd1a",
+        "figures/NB07_model_diagnostics.png": "sha256:43a4954e568543aa15a51ca07fc303e1c42cd0f3e65e03dba32e05f02561570d",
+        "figures/NB07_per_condition_auc.png": "sha256:d939152164ae18b9dd0e3a6df06e05ff37db5642fefc720f1bb034c04ba86cb3",
+        "figures/NB07_roc_curves.png": "sha256:0f1e62fdba7f1e1d3ab52544c7b2204e9ffa6a28bc8c2bbaae81ff0a4d0b84ae",
+        "figures/NB07_shap_beeswarm.png": "sha256:b0935c996ebf12cd1e50a9f9b274024b6c15eb0b250f49f14173380dac079c23",
+        "figures/NB07_shap_comparison_n7_vs_full.png": "sha256:4961202843069b86ab1e91ca3481621b4f4a45dfe9d3f5ea2aef12864044e3ed",
+        "figures/NB08_fb_cognate_results.png": "sha256:905e93a0d5ab8eb9d03d99cd980f4ced965c216d14c15af9aefbef111aeae5bc",
+        "figures/NB08_mechanistic_examples.png": "sha256:f9b95cd59b73a772aa257b49fcd86d9e3840d70a64e60fe3f40771d4cb8e473e",
+        "figures/NB08_method_comparison.png": "sha256:fa40eb712f50d2f8acfe1501f3ee0f4aea3e5c611c45c7ceeaf94b820bc5be91",
+        "figures/NB08_production_ko_heatmap.png": "sha256:6664c04008811f7399de23e6124e669f8c289bb812b6bb5c8ac3ce8dc76a8d69",
+        "figures/NB09_active_learning_candidates.png": "sha256:f9cef97554e636a21f7faaa67c68e367e747504dab7ac92aebb3009e50ab4bf3",
+        "figures/NB09_conflict_detection.png": "sha256:b4d9b4ab242e423faa8ee7abbecd5525e4443d1b39a730b552e7f57a8f7215d3",
+        "figures/NB10_active_learning_proposal.png": "sha256:51e28fa00c3884b3971d9214dd5c2cce3e5028bcc2602fa810fb715fe7245ee1"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "harvard_forest_warming": {
+      "digest": "sha256:d0ffb549ccbce51d83e60779724ba08a79d8e453262a6c14da028cfdb888ea89",
+      "files": {
+        "README.md": "sha256:5fa457542cb13b6d4265dbed299477cd7106f30a56a346f7854ebb15252625ad",
+        "REPORT.md": "sha256:d4043571b26bef25b8a3ca32dbd57a1ba8196ebed694062c96fb769ca1a9e273",
+        "figures/01_design.png": "sha256:412b61ca3ffadcccd192428d18a19b246283942aabac3a4820405837afdec479",
+        "figures/03_phylum_bars.png": "sha256:9a94ebb2c4b5d6b9e7395e4bb8d625bb14009a4f1020d3a4ff8e82490846ba9f",
+        "figures/04_dna_vs_rna_pcoa.png": "sha256:267d922616078e4f53a9013042f64e5377e7df0772377d15d4145bd7252c1ae3",
+        "figures/05_c_cycling_volcano.png": "sha256:2fca1a40c30b3c1590354b954af8d5658d416856e04d81f17df7c8410d549bd5",
+        "figures/06_horizon_interaction.png": "sha256:303e7fcb28062611ab8ced6d5d6a6ee845e12fbde4a66c24fbbdf9acc0bb8509",
+        "figures/07_metabolite_heatmap.png": "sha256:305be3fdbf7471d73f94d74dbd029644b372c8e22ce705b6ebb1dad51136c27c",
+        "figures/08_synthesis.png": "sha256:be07a49e8bea0dd4ce8c8401811fa775d4687542e5cd39d4191e5745e997daa0"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "ibd_phage_targeting": {
+      "digest": "sha256:e84cb8ca346f9d2d868cca7005310e46c6c19aae4133ed7cea76faa484a8b8d4",
+      "files": {
+        "README.md": "sha256:cabeefb3abbf4677beea75160c664343541f2e7aaeb169c78a9844737a659f7b",
+        "REPORT.md": "sha256:7bb70c12c17426e8c3553768511907d214bbcaa696a58e3a283e6ad8dd52ff53",
+        "figures/NB00_protective_species_paradox.png": "sha256:2827f5b78b72c497bc1ccb06bb14bdabcb12484b6e57e3a696f49172a9f47e4d",
+        "figures/NB01b_K_selection.png": "sha256:484f8e990d4da5ca8d88a7acfa2a703f5078a20a32f9f4e9602b7acc41ad6fad",
+        "figures/NB01b_ecotype_by_diagnosis.png": "sha256:cbf4843fa54567d745cd78e6d1d44766dc6596560b1154ce4c5249603c5ab762",
+        "figures/NB01b_ecotype_species_heatmap.png": "sha256:22a03504b7c546d347797106206c8ff1e810cc72e306b889dc5f288eb27e73ac",
+        "figures/NB02_ucdavis_ecotype_assignment.png": "sha256:98ef3ae571bee807d572c003459a1b9f0ca260d6a571e71eb2df7ec7d979a9a4",
+        "figures/NB02_ucdavis_ecotype_x_clinical.png": "sha256:061b17931153b6691c2bfe91afa670d33e5a4dd58fb3889cafce0f82e0da01f2",
+        "figures/NB03_feature_importance.png": "sha256:4c1f67812920b95f922ecc839115f00ede7959f8b0261686d09fb76325197af1",
+        "figures/NB03_h1c_auc.png": "sha256:198d828289cb1bdaaa8c779581f2576ab3f9f7eda3b75cc68f7df8d34da48466",
+        "figures/NB04b_jaccard_null.png": "sha256:5de67490c444761f38648957964f37639a847674917f09a30e738f8f00fc4df0",
+        "figures/NB04h_hmp2_external_replication.png": "sha256:cec04ee4f7c48572ee17e2b1ffdda7b9a06e0ae831b8659bca8b34b85da2b24f",
+        "figures/NB05_tier_a_scored.png": "sha256:3d02bc83fa5af42f790a76b1670bf35286494ff223e877316d67cbac56047d72",
+        "figures/NB06_cooccurrence_networks.png": "sha256:83c5de50125dee4e784fc55fdb5b993ce899e08393a83bea17e2a136ae0ac6ba",
+        "figures/NB07_H3a_v18_class_enrichment.png": "sha256:67308619bed3035f13f66d762035fe8bdacf4dbaa5df1d0475623758033bbe5f",
+        "figures/NB07a_H3a_falsifiability.png": "sha256:1b845ab7196eccc2af890bc70cc3a58226bae3bac6feb911625272cc0bb3b5d4",
+        "figures/NB07b_stratified_H3a_b.png": "sha256:7ce0941bf11158084e91b54d2403a3c62d91bc66a70a9567e631b0590a88bbf6",
+        "figures/NB07c_anchor_pathobiont_coupling.png": "sha256:99be12b6027b356c307fd710f79db50e45e7ac382d638e7f5b745d8f28728700",
+        "figures/NB07d_mofa_pilot.png": "sha256:c45103b1304484fb2382de1ad83962ad44ad32f29f3c314fb648623ff96ae28b",
+        "figures/NB08a_bgc_pathobiont_enrichment.png": "sha256:4c285c42c38b942c0f77f0805f0d7df5d3fd85a47cb1eb0df8bb75f5d3fc10d8",
+        "figures/NB09a_metabolomics_cd_vs_nonibd.png": "sha256:bc266757b71dadbd1b5140fb4d983dbf48d8807d995d7696b903a6f0933911b2",
+        "figures/NB09b_cross_cohort_metabolomics.png": "sha256:c0870a108f017c8b8a42cc7500bb78ec1034f5645ba3917ddc999e3235180f63",
+        "figures/NB09c_cross_feeding_disambiguation.png": "sha256:1b836d1c181ec9973b994b2a234afff2485bad5c10caf85e0f86702f35436c82",
+        "figures/NB09d_metabolite_ecotype_stability.png": "sha256:54e5c81be85d6ac7b787c6930613219aa3a34d807483af1b4db657bd1f52def8",
+        "figures/NB10a_kumbhari_strain_adaptation.png": "sha256:3f71c9285a64b0c038bafe8036ec37c6a25f4f7b89612b21f522898ec75bddc9",
+        "figures/NB11_serology_pathobiont.png": "sha256:fd8b2025a50adeb5b30fa548b42c2a9d788d0cb15cf8d9bc33b9efa156f0b24b",
+        "figures/NB12_phage_targetability.png": "sha256:9ac611eb298a130ae9153f93867bdb86ee20bcac3afc3c15fc5b55d9a956d638",
+        "figures/NB13_phagefoundry_cocktail.png": "sha256:654012a6ec69b212daca71f13ee9b81faadff2989351b7053e5c215471b5625f",
+        "figures/NB14_endogenous_phageome.png": "sha256:ad2fa9e5c867477b45888876d402fcc4017a494a9d2be9ed00d86dffacb18504",
+        "figures/NB15_patient_cocktail_draft.png": "sha256:d0ce168b684d6eeaa771778ca620eb8faad4c926d83fb0208164981379fb1436",
+        "figures/NB16_longitudinal_dosing.png": "sha256:c960cf19cea9f5accc76402b8507b67e0ba7cade36a8764bf426f8aae6ec10f5",
+        "figures/NB17_synthesis.png": "sha256:aba65e0db22cee9a731b72ea7d0266b9e6225d74d552ae9f8a66c861094ddd95"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "lab_field_ecology": {
+      "digest": "sha256:198f73caa9ad5f2bd116cfd2ba37b3376cfb21bb3a5a35900e4e76cd89c9d1e2",
+      "files": {
+        "README.md": "sha256:681680fc360a452d2c520eec27ae246955e5d4b2782f8bf8de93798f7150c097",
+        "REPORT.md": "sha256:d301e46026bc8482d801d3d918f6cdabb080b372de868edfa81b5a8631ff3f52",
+        "figures/fig_abundance_vs_uranium.png": "sha256:c83e3a23ec0c237e0f012ed6753e4799a57fb55c48fe10c896a4f7c3fd103090",
+        "figures/fig_community_by_contamination.png": "sha256:607e1f836bcb485164acf16ea00c5b31394707651a0390c4b70c3d375d890802",
+        "figures/fig_fb_genus_prevalence.png": "sha256:c89bda56e993f22a403e624267fcb4ae7b799dec3838652a25640a57d7efc83c",
+        "figures/fig_metal_tolerance_score.png": "sha256:b3bcc54a74572ce02094b51562fc1671d8abbf5ca1204c9bec93de63169fbf93"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "lanthanide_methylotrophy_atlas": {
+      "digest": "sha256:2a5d6368cf6eae27d611df8f2010f437244f3d7507c118c9d540936fb5eec26a",
+      "files": {
+        "README.md": "sha256:5f2ecb88bbf2d3a965227ac0ddf5de306a68ff318ad5a648ad9ce67f2b52a15f",
+        "REPORT.md": "sha256:4c006958be98f494be09edfff08176308c57490b4b48dc38c5753450c3d8e304",
+        "figures/h1_phylogenetic_validation.png": "sha256:4a03428e73f4bae301e3a124004e7476ff220b306b62c8a1c8308eb1900b39c4",
+        "figures/h1_phylum_forest_plot.png": "sha256:e76824e1163c3e620162ab252774c61bb74d561d79a94c3a728e2d5720765202",
+        "figures/h2_cassette_by_environment.png": "sha256:361a8b3122bd89beefcc0634f26195c6f548d06354089348aa6b2e76a04e3aaa",
+        "figures/h3_lanmodulin_clade_restriction.png": "sha256:786494db602a7cd5cb122ee1751b5b718bca0595ae47fdbbf5814d9163d53450",
+        "figures/lanM_preferred_name_false_positives.png": "sha256:c162f8532d4b2674da70d4f2e5f6be14a70bd5b97164eb9dac7117159aec7f9f",
+        "figures/marker_agreement_eggnog_vs_bakta.png": "sha256:a26a5b499890e61be5ed1438e7b9847cdc14d3d545c95c3cfc98585b05bffc7d",
+        "figures/pqq_supply_asymmetry.png": "sha256:ecab10a7ad4963b7fc9e6421a2d5e038e49bca09d26d538324b4ce081747cb0e",
+        "figures/ree_amd_marker_presence.png": "sha256:8b2c1646ab17d85404a10f09f3d77ae7e112c03debeddc7cfd8539160da53410",
+        "figures/ree_amd_taxonomy.png": "sha256:637871d3e1e32ab91904649892e25ff71a506944088ceccb918c6cebdd1f95ef",
+        "figures/xoxF_vs_mxaF_by_phylum.png": "sha256:8e50e85b9036cb55c6a6cf648154681e3e20609356399282f3f2290c362340fc"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "lignin_community_enrichment": {
+      "digest": "sha256:3e557bb52d89f7b39ea668fe4804ac046fe5e85c64fe87668dba8f61d59c90af",
+      "files": {
+        "README.md": "sha256:f085823901c557ba620fe128ecee2add3d666d80be0c5f4f252277e269d7fdcc",
+        "REPORT.md": "sha256:f0bce929a335ab8e8ef7a4731d9934d5e53d9244e175f9b21ac411501aad0360",
+        "figures/16S_alpha_diversity.png": "sha256:42312a51147baf749b877349d48d34c1d53792665f2ef7abbdfe609d78f613e9",
+        "figures/16S_community_trajectories.png": "sha256:cca928a3aae4a17f65d1dae06a44875749f1f7699c7b3e67f70049fdaae2a586",
+        "figures/16S_dendrogram.png": "sha256:561999fc94b71aebb2b5e545b4e3d94a382b2baf1fcad446e71b044ee67811c1",
+        "figures/16S_ecological_memory_pcoa.png": "sha256:343da84245191a1a390b871603b6203ca72c4e44c0e6d9afaf1d1b3cecd1db92",
+        "figures/16S_genus_barplot.png": "sha256:b346af92cef86d38dee349576d0b67efa5c785e2222449c8f25b12c4b103774d",
+        "figures/16S_pcoa.png": "sha256:9a3be2c1c5bb002afd5c0b972b30017bf151c1127d28dbf610c5a0cbeed2b4f5",
+        "figures/16S_phylum_barplot.png": "sha256:cf3b14238d458ade120406b475e3b44a2cb3ca4bc5c503bbca18fcfe847f1902",
+        "figures/16S_rarefaction.png": "sha256:8d247d152b2f5083b694b7187c4c781cd8a4f172cd0a06ac889e643d4bc38a43",
+        "figures/16S_targeted_heatmap.png": "sha256:e2bcc868b4d7b1a2f268793ad5ddb5552d6be44163757e97e36a1d394a4a7ef0",
+        "figures/16S_volcano_base_vs_L.png": "sha256:78906da4d1fd6a9b82922b2294caf6699ebbc703b9b65c7a0a2123618625e7bb",
+        "figures/ITS_alpha_diversity.png": "sha256:21a0af998e7361d747687158a6e439874f74eb530baca7cdb7520f20e6322454",
+        "figures/ITS_dendrogram.png": "sha256:e0bb39fd4e180f701b129621a3a7f5ef65b508e601963b53f6529f1c8b70184e",
+        "figures/ITS_genus_barplot.png": "sha256:26917336c9ff36024d5836825e4b43ea172d1e13584b2f949c00370d03000df8",
+        "figures/ITS_phylum_barplot.png": "sha256:8957c5441c2ab9a90464d8b014af55c3b44855c903368bfcfd2a8b0ad0d3a7f0",
+        "figures/ITS_rarefaction.png": "sha256:c91a5b0e563c09f4f7e1dbfe858f5b555a3eaf8292f09dad0a7534e84ef1a751",
+        "figures/ITS_targeted_heatmap.png": "sha256:0ea8c9247ceba433c774fc73c57fb5c8f38c66005a1e212e7f61e9f93d954fed",
+        "figures/ecological_memory_distances.png": "sha256:ee578480e18743a6291697f888c65b5dd55752d4b00c085f8968094f196a04cb",
+        "figures/gc_content_distribution.png": "sha256:413a8b1d1ccfa689e1d180e7f3fa011d7a7ecca3129281a4f2fa21f9f5c9a312",
+        "figures/pcoa_panel.png": "sha256:a53dd041338e8d7db6846bf9750c900b12f393c9c512bb4232e608f9a3f59885",
+        "figures/pielou_evenness.png": "sha256:b833475dc618872003ebe51dc8ab10e059f46d0e3886e241a39a082503afdcdf",
+        "figures/quality_scores_summary.png": "sha256:6a48c78464a34b290307e2776e70c809924fb705dfcc1799185e9db568c1bcfb",
+        "figures/read_counts_per_sample.png": "sha256:a8b5491c3f9cbfbafc6a5c710505dc73bf005a5058d0fb89d18087381bda5465",
+        "figures/read_length_distribution.png": "sha256:04afa8b11275c79f41d7334dc8db67313cfd7f7334a9adb79c2f3122316282de"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "metabolic_capability_dependency": {
+      "digest": "sha256:4d5a095ed7c6a8a247977e35c18fb2e72364c5e22541538c8a1c01d70b087a9f",
+      "files": {
+        "README.md": "sha256:788cc3d883a75736385cc97982be013f39ee83b010a8ffd9d08a3823ede7d18b",
+        "REPORT.md": "sha256:1412a5c1aa7711732d548b57744f3324a207e5eba6d0b4052c8882ac9cc593fe",
+        "figures/nb03_organism_overview.png": "sha256:1670ef2a731d80a886f7ba6bbb18a1d32760c510e8ba737d7748cd6da660d49e",
+        "figures/nb03_scatter.png": "sha256:5258fe20a2963756359d22ff222baab8e92515ce38ab8fbefdd124a4ac393219",
+        "figures/nb03_stacked_bar.png": "sha256:1a52448f4bd7d7ad3b1c25bd3ccc2379aedab23768101c4461528810f7cb105f",
+        "figures/nb04_conservation_boxplot.png": "sha256:09341e90a23f47f45e19d94f3f0189a61d4fb4ae5da152fa82c02ee1c8a65ccd",
+        "figures/nb04_conservation_cdf.png": "sha256:2fd31807135f27753fbdd7d5c713e6975c9b99b475b1c247c8671a94b067665f",
+        "figures/nb04_openness_scatter.png": "sha256:e72d1a2e231f6f88f299ace43ae5f5d9b55c98fb4781205bd1d108ba7db67d2f",
+        "figures/nb05_heatmap_Pelagibacter_sp003209915.png": "sha256:d4586d64c3dbd55bda50b9c76174227e2d545f16e9615eb5746d323941f72dbd",
+        "figures/nb05_heatmap_Prochlorococcus_A_sp000635495.png": "sha256:520369b3dbf1fcc8d491d5fc04709538a2dbd5c7423e3d45c058b783b41fa72b",
+        "figures/nb05_heatmap_Salmonella_enterica.png": "sha256:7cee2a3ada5e701a4c4282dae9cc955bfc9cec573f7b9a8ef6611bb005d34ce5",
+        "figures/nb05_pathway_heterogeneity.png": "sha256:667b0e0ae3b3e67e8aeaefe49035eb7aae7df43970847e6c6fadf8a561c94cc6",
+        "figures/nb05_pca_all_species.png": "sha256:4d084e0bfa5493d79ba4dcfbcc965f9497319fa9be64c65eefdd369f9930ba6e"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "metal_cross_resistance": {
+      "digest": "sha256:5d3a258b10d48ae4b7908a71156680db27328c889dee5a122b3b39a964d5f439",
+      "files": {
+        "README.md": "sha256:f20dc94c6137f355eaf857f3dc70ae810474f4bd68c807238dfa25ad4dd51e1a",
+        "REPORT.md": "sha256:500dd3cfb440724464d76e3acbbeb03b0f8408de0fccbf2e8a4f53a05e43721b",
+        "figures/consensus_vs_individual.png": "sha256:b545a740007da287d0ba448ce223a9c49a22ab4c3264be898c90a019e54cc2c6",
+        "figures/core_enrichment_gradient.png": "sha256:25b34e47e47a8a6c9065de47f252230f32d2f60aec3ebdb37e82987209ffd0ca",
+        "figures/cross_resistance_panel.png": "sha256:61615179acc3b97df3956b28854dde9da8b5782cdf047374affd1ccb15d16e97",
+        "figures/dvh_cross_resistance_heatmap.png": "sha256:a9407390f8774ad8868bef299446bb098b5c660079d9ab206e7ba7f3c5442af4",
+        "figures/mantel_distribution.png": "sha256:8464df38bacac44f59e457919963e6b82a7f0ea39682ee43725ed5e6c184d60c",
+        "figures/metal_clustering_dendrogram.png": "sha256:35126ce9ab78b5f594f0d974d651f0c1f7ad3d07caa96b9f847be8ba971d87e9",
+        "figures/metal_pair_conservation.png": "sha256:0341227de9f2c26b988facb9f58f3823cf7406425d8861f9fdd2ad97916af27e",
+        "figures/multimetal_validation.png": "sha256:563ceb78a85aa5be8eba5159a13b1e6efd7c43c899a3426b97db3acd88275e40",
+        "figures/organism_agreement_heatmap.png": "sha256:5e65c2fe74696bdb410635ae6eff7340f2628c932fd9b48290b1656d122b5215",
+        "figures/permutation_test.png": "sha256:89327a1ae061529aeb04927dd590e109d6bdaf3502d294a6c1dff0aa430d345d",
+        "figures/tier_functional_enrichment.png": "sha256:bfaeb05349cbc36e750dac77523a490f1a57ce2b70c7d025accebe14e4a187da"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "metal_fitness_atlas": {
+      "digest": "sha256:2a24feb7e993d7492c0d953914e52cf91fc52c1db21225fed91c0ba41525bddb",
+      "files": {
+        "README.md": "sha256:9ca690bab192156af9dba97e3c6025fd8768d8d6920a7c6d568e2ab1c9df372f",
+        "REPORT.md": "sha256:9ea58c19144575c5e8a783b777863269a18b37241d89bb6c0a9c2a044de1353d",
+        "figures/bioleaching_species_scores.png": "sha256:b3dee22ad8498d0fd7e977cefbd879f7d389f9fb49e6e741a20f110cb0c6880f",
+        "figures/core_fraction_by_metal.png": "sha256:370ae2a8b0aec138d5c302ff3e48c8d80bf9076c7b57c8e26b937dc55a6b3865",
+        "figures/metal_conservation_by_organism.png": "sha256:0f33125938d91da88de747a7176a170b967395fd31dbcc63b5bd192b9e446f37",
+        "figures/metal_family_conservation_heatmap.png": "sha256:d0175a6aecb7b27387e8a82dd5ad5a961b584f0ff6ff4d6c4d6076b0e12fe7e3",
+        "figures/metal_fitness_distributions.png": "sha256:47fd9f52eb7b0b69609f24a0f06633be75ecc0f28603468edade6b4e1c59c758",
+        "figures/metal_important_genes_by_organism.png": "sha256:84b43b7c865621cda45cac355cf0cb17007f2ddbaf048deecc638c820ae4ac5a",
+        "figures/metal_module_activity_heatmap.png": "sha256:dc04e47243d6357cab1803bfbef73024adc273335531a1b1b723781cc1ab96c6",
+        "figures/organism_metal_matrix.png": "sha256:a28a87c2b67d323af98d949229d644f28175a397e3489e405124aadf1aec382f",
+        "figures/species_metal_score_distribution.png": "sha256:e0119ab362ad254b3259dd735901c0af013645eceb684cd1f6281e6b614d91ee"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "metal_resistance_global_biogeography": {
+      "digest": "sha256:e9fbeeeaf22c02c1df05d559a3ecf7d8f3f4c38548ff75c6e8ac8788b2bcbe6c",
+      "files": {
+        "README.md": "sha256:2a31bbf4782564675537d85064d08bad54e710e9596a2d0bb84b44eac5c7bacf",
+        "REPORT.md": "sha256:b0f55ad895a38acb546b33895f438128175fe7ebe53480136798c601a8137317"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "metal_specificity": {
+      "digest": "sha256:14e26ffca398073842f6479e7351c40fcb2200773d8df6ec3b8daed521f5de7c",
+      "files": {
+        "README.md": "sha256:aeac5529f216cf67141fd4cb526ba32bdca92ed5fadaa4a7c5fd2fc7e5a7ee26",
+        "REPORT.md": "sha256:8555e9245da861451c7bb26e5536567914d3b5cdeeaddefdd4919d2eb6810e89",
+        "figures/conservation_by_specificity.png": "sha256:dff4b3f4a0552acee55252c41ea13a1706b550c78612f7fd412973c871352b72",
+        "figures/functional_comparison.png": "sha256:60e2e0be1652a154f55ea58085188e18b05c9e7e694d5899d8921ff9e45dd86e",
+        "figures/specificity_breakdown.png": "sha256:279a547ad6b0e403d687fc6452344b9a13aeefd6a52ebe691adc173eb3683fa0",
+        "figures/threshold_sensitivity.png": "sha256:fe879dd3e5e6f7a64509f0a63a5475927c8387d25dcfcbba24f212d4b61495d7"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "microbeatlas_metal_ecology": {
+      "digest": "sha256:385d2f2cfae200dda9523ee04ac8654cd0793d571194803dab4b6a29f66b2af3",
+      "files": {
+        "README.md": "sha256:f6378a8976edd3f8a9dc3609aa946525cd6a639ceee7f1a75f6c70cf87159d6b",
+        "REPORT.md": "sha256:45fedd7ae4d79ed996ffeb2f8c38d1298866c9714db14c499b03c3e3882594ad",
+        "figures/fig1_lambda_heatmap.png": "sha256:fa2cb5345ed3747816eb56bf6d56fefdbd8e9faf003feb6f1e23fad6a63c7034",
+        "figures/fig2_pgls_forest.png": "sha256:7c3f9c18c3c5005b2d3b22c1c98f3f071214fa57e00983845473f948006b0b84",
+        "figures/fig3_synthesis.png": "sha256:538c2e917cc64908b58eebae36206c857d621c2760d5a3c2faf97aedec8a0256",
+        "figures/fig4_metal_types_scatter.png": "sha256:ed2f14917f642d7a7e70d06a18cf387f86faa65b73ded3177277e1a350408444",
+        "figures/fig5_robustness.png": "sha256:f1cb055331d5da19c83e61b464244d53afdfdbdf840d7198931ddf1466a1cc59",
+        "figures/fig_enigma_trackB.png": "sha256:5f9b18d57a7ad90f320c2d4f8c4e4592d71be484b10a7b46861cd37252d5ffdb"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "module_conservation": {
+      "digest": "sha256:912865b16e57e073447eebec259219717e7104b00e048402ef80ad823f27afe4",
+      "files": {
+        "README.md": "sha256:fede588b9a0c9bb8f1d138821bc6bd8eff59074456bc7552977113b8459399ba",
+        "REPORT.md": "sha256:44e13c4ca1eae246521c79a559693fa556289043e35e7eeb7eaf3c806ed152de",
+        "figures/family_breadth_vs_conservation.png": "sha256:1ec694db6ff359c6a27d5229a5b860e1bb329c20e979eb0cbf7a356b11050381",
+        "figures/module_core_distribution.png": "sha256:57258761d389d33380912ba1b1701331313c4cc3efb0f93df26ec4b2e8ffe24c"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "nmdc_community_metabolic_ecology": {
+      "digest": "sha256:b327efd45304f3664931d18366c12ead09bc931fb64b47324ca8156ad30b7e9f",
+      "files": {
+        "README.md": "sha256:eeed7a62c2e7f969220f449321166e5f646f25a9a6cae19a4a6a1dccc155cd73",
+        "REPORT.md": "sha256:1959fd37259df598f708ecfea2c796883e3a8f2f62ea52e1443073544a8866d5",
+        "figures/h1_bqh_barplot.png": "sha256:eb840659b70c1f88f4385f4f54cc94f0d97573c7c0018a3819a0f71092a27175",
+        "figures/h1_scatter_top.png": "sha256:4ce04427066a830fa30ee3011a602527b7c9cc97f174425fdbdb66e7e40b7624",
+        "figures/h2_pca.png": "sha256:1c5d1de7f8182a94f86e5a45999334a2a5bf5d5272ecc120bd874b561f151e46",
+        "figures/pathway_completeness_boxplot.png": "sha256:3392edfb4d74312e78ede8e5ab741bcf29469c7f985bf31e76c398cf5b9baebd"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "nmdc_context_audit": {
+      "digest": "sha256:d1cd350543de30631c2fcea8a03cd1730ea9d677d038f1769f7917223513b259",
+      "files": {
+        "README.md": "sha256:f078d8d65741dd9ad5b433e1727d273128c44b04f09d31c0d188b0e43f479a16",
+        "REPORT.md": "sha256:0f4c987b31cd4df5a18862ca0ce3d3589a6cdbd46b7cbf0496b2f325c91f5d92",
+        "figures/nmdc_currency.png": "sha256:14ba88962b4560bc92865492e86d34131508478a7ba3d00c409dc84ff925850c",
+        "figures/nmdc_scale.png": "sha256:8505da6d63a75837ec0c7eca13bad15c0124a2f3e001dba22575c6df52f14d2d"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "openness_functional_composition": {
+      "digest": "sha256:69892bd4ea64fd6110dd51ba7470677df56303fb1a5e6fc56f91de922a2e5038",
+      "files": {
+        "README.md": "sha256:dfd11158bc685e216f8c5345b29bc54087a0cb0b89ebf4a82871f554a34ddf22"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "pangenome_openness": {
+      "digest": "sha256:b8c0c66d5422470d06012fb112040fe9755fd1aa11e92c47855c9d1d6393101d",
+      "files": {
+        "README.md": "sha256:77ab8c989a41ad980ccf746ae20132f5cc7007784e59ad8722fd5c3738a72bac",
+        "REPORT.md": "sha256:ed7689d4effffdfad5f1be8b8d69b761f8c4d726f62d90e7f89b037a43308fe8",
+        "figures/pangenome_vs_effects.png": "sha256:94c8bead739f8451f262dfa24e6c09ceae93262063bb91a631bf78bec225331d"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "pangenome_pathway_ecology": {
+      "digest": "sha256:0047e0a2d084ff91e5c16e7dedaf624d41d9edfb64513b6823a9f85c88b98da2",
+      "files": {
+        "README.md": "sha256:ef226e12865e20eb9078d28c906c4ba697647a0b7d8c5fb836c798e19ed8b515"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "pangenome_pathway_geography": {
+      "digest": "sha256:f78ae6dbc3344d0859642ab3c21ef982dab90b616c8d31036c360a8f2182a894",
+      "files": {
+        "README.md": "sha256:c1a0133bc59723e77d8373b792c34f2e22e5a2052bb5764e25aeff8bca82aaf1"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "paperblast_explorer": {
+      "digest": "sha256:636b6acb65a26c82f3692f9ceea25b994de26fcff9cec749e7dc3f9076590243",
+      "files": {
+        "README.md": "sha256:5ce82ca2d5d603a4770b4a2011c93609cd75a915feab2768586e046b605ff8bc",
+        "REPORT.md": "sha256:21c92287da8100c2ce6f5e7686137d1f4a58e8270def5e4de9a0da68a56494f6",
+        "figures/cluster_cumulative_capture.png": "sha256:f8e2fc48f4767c9b7587dd3aea73a6612625b1bf0d18af1145f008ef5f29d399",
+        "figures/cluster_size_distributions.png": "sha256:9565e80bd0976f6cf0559387e7a1af4294c12e4561daf50db23d97c1052b4393",
+        "figures/cluster_vs_literature.png": "sha256:2cbc3516ce4f46d4088142bc3cf22b33b6dc04e81a34c3404f8f184cdb2b904c",
+        "figures/domain_distribution.png": "sha256:65ca61c4429ad99d0af55a5d80cbf03dc67b2085911bc7377e42e2da9e4101fb",
+        "figures/gene_coverage_skew.png": "sha256:8d402ae55a226e6bed5c99e19dfdba252fdfef71f47b864ed6582b64a2bdf434",
+        "figures/literature_coverage_landscape.png": "sha256:5586c2a6c9ef3b37b140ff6b57825bf3334e636d7b75aae02cba8fb441945ea0",
+        "figures/lorenz_curves.png": "sha256:0b0ac903e0ac0d1f79cbf915449bbbf920152c13cf92a8c1538c1cf747710d64",
+        "figures/organism_coverage_skew.png": "sha256:0c17a25cb6f81ddab12bc390c8ee2944abd7cbe23b79196576c7d7aee71b23c0",
+        "figures/papers_per_gene.png": "sha256:d06095ec784f676a34e95fd2cfba0a60b94d97faf2b7397639ba08d124fc6172",
+        "figures/sequence_space_reduction.png": "sha256:97ebb845300aca33025b92886b45a9da81244039489e075d77ddb9a99cb9cf08",
+        "figures/top20_bacteria.png": "sha256:19eb363ed222697188453b6553de2347137810a5bbe3d6fdd61fe442d59b4e3d",
+        "figures/year_distribution.png": "sha256:8490dd3e366d73ef511e86baa9af052b5003efb8d1336d85e170dbf7ff49138f"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "pathway_capability_dependency": {
+      "digest": "sha256:815816b0bd5371efa3a7f8b2cdd917b95df3ba745d65554e477d6193e1e11969",
+      "files": {
+        "README.md": "sha256:96f98dd1877233e6d22818510e90886cc51b85b79c0d74c87b7cb413d2210584",
+        "REPORT.md": "sha256:b48f1bebed72779629baaf7e71b9cffda8ab0298f49aa9c3460cc6d13bb7cf75",
+        "figures/core_vs_all_pathway_completeness.png": "sha256:1a0eb0998d430f2608a39392d8212d7d0523926b837c99474878be00df710f02",
+        "figures/ecotype_count_vs_openness.png": "sha256:d599bc6262d0ddc87b5032d12510c47482ce94b01929dbef44115ec23fa4ebec",
+        "figures/fig1_four_category_overview.png": "sha256:de874e31c1615bd149373eb8fa791d1199722b42f1bf1bba0a54b9f5bdf663a3",
+        "figures/fig2_conservation_by_category.png": "sha256:9fa1c9a5ee8850f41207e9988908ec6857599141932dd51fd171419d79bb4f48",
+        "figures/fig3_core_accessory_pathways.png": "sha256:6f5c095feb15d802a8c0bd2df6a72a11ff17dfd63f433ebce29dc20b74d37a9f",
+        "figures/fig4_ecotype_openness.png": "sha256:77e5f614921c799116a0c1428f8f84153be6e2b33d3f435d22160471f3800266",
+        "figures/fig5_condition_type_shifts.png": "sha256:14086d58934d9276580f4399e4b3382cf6b10a0aee24551cbbe0542b39f37af0",
+        "figures/pathway_conservation_by_genus.png": "sha256:e87436653e908d6ff58e830b36085e772aed542be0ad7902be1daf49ae9ac52a",
+        "figures/pathway_conservation_vs_openness.png": "sha256:e28aa8b7802b6084fcd3bbf2cb93608bcd36740cfd7408a337362e8eda812d2e",
+        "figures/tier1_classification_heatmap.png": "sha256:27cfe10a24604cb4f8de9227ff59c99c8ab5cb94084bcc9b7481f5410fd7b61b",
+        "figures/tier1_condition_type_shifts.png": "sha256:4d390d656a5ff8d52ff57767e30ba4bd57d55cd3f328cc280d4dff5d461fe4ec"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "pgp_pangenome_ecology": {
+      "digest": "sha256:d96cf258387b6fe1fd3537440c362a2fb645a97bf412a88bfeb60c3c958d8f92",
+      "files": {
+        "README.md": "sha256:aa854014e27f579703d05534d4b32df41f75feeb22b0a07a236591baee592774",
+        "REPORT.md": "sha256:8319f0fcf3c6f5a2997e4444496c7d59bb5d956e8bfc9aab5ed472003d02a946",
+        "figures/cooccurrence_combinations.png": "sha256:74e91f5eef1a6a17283e4a3e834c12fd16e7600a80fe4eb1a695c049458ef9df",
+        "figures/cooccurrence_heatmap.png": "sha256:670d38064724950900dfd220a89b9f46f0afb4a21e54da159086470132c13470",
+        "figures/env_enrichment_barplot.png": "sha256:2fd292f5f0e0ab895dbfb65c6cb66b9e9c229b400cbedfc3b70e169c7fe1de13",
+        "figures/openness_vs_pgp.png": "sha256:d9a59772b94997f586c3c3aa25d6e4b3ca1fa769cb60887d4f71443a43c6eb63",
+        "figures/pgp_core_accessory_pie.png": "sha256:8cabb7e15825c0702958d97332c69a9801757bd855df91f877afd1214f7894aa",
+        "figures/trp_iaa_contingency.png": "sha256:dea209730ae096e0269461be8c89d125b9d168774a78ae6ff410cbfd2f1aa5bd"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "phage_defense_arsenal": {
+      "digest": "sha256:13cd1e37dbd5b4bf16f8cf223572f06201baacfbe4182a603aae3ccff1e1d576",
+      "files": {
+        "README.md": "sha256:157e56291ba74d880d464798ce3e5d3c9f222459b41a22fe5cd6d4cd595df68f",
+        "REPORT.md": "sha256:9d450a848b83b2462d07d216ef01827f8a08f8e1c4fcddcdf74cfdb7dbcbe601",
+        "figures/arms_race_scatter.png": "sha256:2b15cdac968754148e9af07d0ee02693e75c0b2bd93e1222fb761d43b3b404c5",
+        "figures/core_vs_accessory_by_system.png": "sha256:ac06d8fa12965479108fe199e6b3bc3bdac4562d9e592f74e86323d420166fbc",
+        "figures/partial_correlation_barplot.png": "sha256:e70888f1c94aa05ad563848dd9f7b8237df9b59b4ec92191314ec2026826479e",
+        "figures/syndrome_heatmap.png": "sha256:b889cb5fce3f4b66548a1aaf02c54e6a2ba2a4068a51aa84a49b32eb244205ac",
+        "figures/syndrome_network.png": "sha256:d60cc716b5f91748bb9898f5b883a6d5d7e3b6d398a916689a59997fdcc5f092",
+        "figures/system_prevalence_by_phylum.png": "sha256:f96e57fbe0ee5ec51d6bde6a8d70bc5780ed77b0f24b14aecef313ac2c5ea7a4"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "phb_granule_ecology": {
+      "digest": "sha256:a4225a445597741c60578cfad39ce6a819dd750349c96521f2f02e76af12c12f",
+      "files": {
+        "README.md": "sha256:0c444978e1c726e1017fcd1e2cdae01243ca107172d02ea692cbe84d38d5d1b1",
+        "REPORT.md": "sha256:256700c607287ee65c24d87e88b02331582e76de9afbe656fd2ea6cd80350324",
+        "figures/embedding_variance_phb.png": "sha256:14008c106b194b9a65bb0652487235be5e9ad3435437131e7df43e700e1ed68c",
+        "figures/genome_size_confound.png": "sha256:d1f19f5c7c8bc89933ddd3469889f262ee3372add0ff4ec34b7603d28db59bbe",
+        "figures/nmdc_phb_by_environment.png": "sha256:3845c9fb3f01db1ee50a78fa4a8dc1e5cb47a49251748cc26ddad571350574cf",
+        "figures/nmdc_phb_vs_abiotic.png": "sha256:4bd4274d3c9a90c7d9670c5c1979e610472857d3d7fb43a83ddf6d24601f7362",
+        "figures/pangenome_vs_metagenome.png": "sha256:0004922f41605691494e62d5d155277fa4ea1cfea36d24095e264d720d3378be",
+        "figures/phb_by_environment.png": "sha256:d7bd3d89addd5ee01bc17523129f134fc2ba9b86f03d76a2f0d966e618f8ebcb",
+        "figures/phb_core_vs_accessory.png": "sha256:95fddd8bcb519282645c5e8b79f5ae8fbd05f386e33be166bf336fd7d5600014",
+        "figures/phb_enrichment_heatmap.png": "sha256:41685a5771bc66f8d31e10a73b57abfbf14d8b4629653c62f8c33307d139f6bf",
+        "figures/phb_pathway_completeness.png": "sha256:264a3a1d990cab442abbf77bed2ba2aaf29fe86b623ed626f33907be867e04d1",
+        "figures/phb_prevalence_by_phylum.png": "sha256:fe5dda648b448e3d08b957ba248912908c09c7395c7130866e343cb1f39c523f"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "plant_microbiome_ecotypes": {
+      "digest": "sha256:19ad10447d692ee95d98a89ed9df457c4bc5705c5630c623547eb517f2be79f2",
+      "files": {
+        "README.md": "sha256:394b3a9cbba65ef1f85ed5c3d82a89dde1ff23fb3f7012aff9ec4ff0c35063e2",
+        "REPORT.md": "sha256:ab4bafa20bb607a1edf87a293d67885cd96017817bfabdbff2c19bac9dc95272",
+        "figures/compartment_heatmap.png": "sha256:554a82a5e8e97fdabc5e3d5bb9f796d24d065ea98dcce39ec1ee24150ebf88bf",
+        "figures/complementarity_comparison.png": "sha256:6b58b6a8b7c9c31877634c144a1f7aad64c4020ca86287f05715b681c1354c1f",
+        "figures/complementarity_heatmap.png": "sha256:9462037c68b4629625a8a4b45c936a24a6cf6a106a7341199cfc5e5caa47fe07",
+        "figures/complementarity_heatmap_detail.png": "sha256:723842294ab944a651cb744c2c38f74059528cfdbc6b73d332040423635a36d9",
+        "figures/core_vs_pathogenic.png": "sha256:c0f2695d772c78669b4f5d3233785c80fb441ad9a92dcf8794321bbf141040b7",
+        "figures/dual_nature_marker_drivers.png": "sha256:b990310477f789ead6eadd9aa0955ceb8311284c4b5809848dd4583bfc874277",
+        "figures/feature_importance_compartment.png": "sha256:c41e8a67dab5f0ec20f1a20702bfb98005955fc64d9705e22a328619a6d56877",
+        "figures/final_synthesis.png": "sha256:548eb042bda494b0cc7a938cf58441c37b0129cc3dededdd3a157c7a05786e52",
+        "figures/genome_size_vs_markers.png": "sha256:ed8d92494daa2fa248e45627c8caf8853de7aa3d76ba69fdf4d1db51ca840c8f",
+        "figures/guild_network.png": "sha256:81a535ca73d78eec28fb0a8ab6d61d01eb2b9046d2ac13720a582ff5d80f01ef",
+        "figures/hgt_contig_distance.png": "sha256:ff7fffd3dca54afb05dc16ae202a6817ebfe932c87ee85af80747c900555db3b",
+        "figures/hgt_per_marker_transposase.png": "sha256:b6b35c330598ad3b7e50d778df23a82c4cf3cbf57cf0dc8ecfbe2ca427b73f44",
+        "figures/mgnify_integration.png": "sha256:77e065ead1c1d816a2413ecd5290873c4eac13777acd6af09aac94eeb9cf3c0a",
+        "figures/mobility_proxies.png": "sha256:53927e039245db8a638a02a78bea84afcdf5989defcbdf126e71b491618b7889",
+        "figures/nb01_compartment_census.png": "sha256:f39a9a70ad16332fcd4a04d438611bc83f319caae5c73bd2617ad3c3704f949a",
+        "figures/nb02_marker_survey.png": "sha256:6ee193301b7bb6c7edec35aaa6a1067fc7b0290f108b1d2de99db59011553044",
+        "figures/nb04_cohort_compartment_bar.png": "sha256:e3026f4341a3f6c2315577aaecc2dd235b52b194889f2cfb70349ad40425853b",
+        "figures/novel_og_annotation.png": "sha256:a3d9797bc6a5e499d8a080e7d6fd8e57065dbfa90271e50c1a08cf82aa4dc588",
+        "figures/pgp_vs_pathogen_scatter.png": "sha256:291710512e3c14a68042734c770a631b5e3ac96248a937a5fb10cf10b91f834f",
+        "figures/refined_cohort_comparison.png": "sha256:b5c0f3df9caf4c5ccfaecbf23c0e5fa8d246c0e8cb91ffd9c6f2e1f466319dbd",
+        "figures/sensitivity_t3ss_t6ss.png": "sha256:451b6759f13647f0cbf0b309e1c174c7aa91bf453e3c93544b4bd24dfdf62af0",
+        "figures/subclade_corrected.png": "sha256:bddc8c3df1107af86c2e10fa4ef8e73f43778e5a0338f8205dc5e74c857936d5",
+        "figures/synthesis_overview.png": "sha256:bb4d48f6136d1a07ba5d252419b5b1af2d20be2def4abb6a636ec7eb41ae952a",
+        "figures/volcano_enrichment.png": "sha256:d02f199cf3a14bab5786f619765e390264f4490ba28e4141b2a9c832d75d6764"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "prophage_amr_comobilization": {
+      "digest": "sha256:99dc6998c11ce392326a3f992ce945e6fa1e7d8452c87addf7f6788fbfd33ff4",
+      "files": {
+        "README.md": "sha256:5c4f6967eb6f6525251fb9bdd668f652f86656ae4661cfd12b36254652417d43",
+        "REPORT.md": "sha256:f58710893c456806b9a06f5e9bd3687468082c34ffcf93be308e037eb59268b5",
+        "figures/nb01_amr_prophage_phylum_distribution.png": "sha256:474404587bc96ea0ebae78a3a8f5cf9c4c3ba9026ba97603fa7df5beb0bf4af9",
+        "figures/nb01_census_overview.png": "sha256:1267955dd694355467f069b85ffd2c7e8969ec6889ad1ff36b8ce9d4b4e0dc6b",
+        "figures/nb02_distance_distribution.png": "sha256:71a78da926da66131dd13b5186bdf50abe5647ec30efbeb4792e3f0db11f81ea",
+        "figures/nb02_proximal_fraction.png": "sha256:473b5d25df30bb09484f7d3b93ed110193a2b89da0c441b514667e948c654142",
+        "figures/nb03_h1_contingency.png": "sha256:570995f493e30f96895226ae835853d8ec1540b4755d1f2486da1ad8d8a16bea",
+        "figures/nb03_h1_species_odds.png": "sha256:942f1e5bb50908215cc820cc3ea4fb0eeed1ce2d03f18c9cce8d1c485abac976",
+        "figures/nb04_h2_breadth_regression.png": "sha256:beb16a5e413fc8b8581b3de11898e43307a3aaa4f6de19d87ccda0e4e9698d4e"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "prophage_ecology": {
+      "digest": "sha256:ba1adca6115eedbc34108e2c9d6ca2822de250388f301df35a2aef436544fee7",
+      "files": {
+        "README.md": "sha256:617d03e181b8ea791aa75ecc720ffe70bd16692ce8d3d90aa0473ad09deb5fdf",
+        "REPORT.md": "sha256:58e5dfbe672d830cc749b46434bc92ecb328e31d5cb5f793a987c72994a7e0ed",
+        "figures/genome_size_confound.png": "sha256:60a0d37f775243b38ed24da28b24b263a29c342bcbcb23e473f30999129e481c",
+        "figures/lineage_environment_heatmap.png": "sha256:3f6a694043bebb47155fa129d4d363fb1d4df6fe75c16c1e6967099e0021438f",
+        "figures/module_cooccurrence_heatmap.png": "sha256:9ec2803b12570e61d5d69f7f92e3a7b12f54b67131d2f3d7abeb5f52b1ae5c0e",
+        "figures/module_environment_enrichment.png": "sha256:88a89a11e53ca8464c529982d0c73d875ed6e77288e1198a3ec3cc04c69deac6",
+        "figures/nmdc_module_abiotic_heatmap.png": "sha256:1ebc6b76ed154d3376f41dcbe7c7968ec64a06515d3549340c0b0807951d7f1b",
+        "figures/nmdc_prophage_vs_abiotic.png": "sha256:460bd7e4ce09399cb79f0f5c30e60df46d713d545dc287d8c537ffde9c423789",
+        "figures/prophage_conservation_by_module.png": "sha256:553f211cd180a245aa604a4021e049a9bc645f5c5ee35610a9219dee7ab61da1",
+        "figures/prophage_module_discovery.png": "sha256:037e5fb6999877417ba6abea72989a5facb0cc9028bb5c6d1e8746d735566161",
+        "figures/prophage_prevalence_by_phylum.png": "sha256:705371fd70bf4d32b3a8760e5d487f7713dcbb61d4c7b1ee1904a88e3dcdcbef",
+        "figures/terL_lineage_overview.png": "sha256:7c4a6ff09ba3a2c0bf7ae59743c7c77e8396ded8b405faeb18103de1f3683fe8",
+        "figures/variance_partitioning.png": "sha256:c76b15ed5ccee3cdfa76e31b2093a17198a1813aa3dd91cac8d4b04bc48c1f37"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "pseudomonas_carbon_ecology": {
+      "digest": "sha256:5152e32515db89673581691e6cfbcda4aa2f63be035243e68ce08ad9dcf79e33",
+      "files": {
+        "README.md": "sha256:5ecaf4258b32425f28d15924ad670cfc2ebd96271eb7119d6aa017988f603be6",
+        "REPORT.md": "sha256:9a0d1678e23b48d6e7732b56ad5ca0452fed1ff9fcf5c9c5e8e9b23315c58260",
+        "figures/environment_by_subgenus.png": "sha256:864a72e683aed506f79b71907177a1f78dda9edcbab1d17b8229b1f7daf762e0",
+        "figures/pathway_heatmap.png": "sha256:21c02610559c1be81cfc8c0aa365717f4bdddb19a5448d8b98787125edf37b2d",
+        "figures/pathway_loss_barplot.png": "sha256:174b0be18a778457d97fa379fb8aa50a6dbae6cad2b9d061e7fb823049f23d2c",
+        "figures/pathway_pca_by_environment.png": "sha256:3fbcbef7f7f1d351a5e777c1718596d0c6f978ea2d1a1665db31dd7057129d83",
+        "figures/pathway_pca_by_lifestyle.png": "sha256:92078719e5f1859b620fb957617eaf971bc87da27fd162c99d08adf79c22f61e",
+        "figures/pathway_richness_by_lifestyle.png": "sha256:4a2a3a7ec9473682deaf56d0c7762732e761fb20c748b364769abd2aff9d9702",
+        "figures/rf_importance.png": "sha256:49c6aa0d358008f59801b3ffe3abd653740a8b5f872454274988de242d0622b9"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "resistance_hotspots": {
+      "digest": "sha256:2375a4b279caea2480cc857bbcc0bd85420a3cd1cb1a6d3eda17b8ed1fa7729c",
+      "files": {
+        "README.md": "sha256:9a7e7c3616fba9421341f24f6fe5442228d944db0c708debe76b8f958f744b2e"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "respiratory_chain_wiring": {
+      "digest": "sha256:356a7e7f4fe4ad4f9c3123c71577623a5956a51e548e0ffbdcf0e4eaa0c3e9bd",
+      "files": {
+        "README.md": "sha256:ad9e385a1f28802b7a191ededce6b57bc1241b195ea490d4e51a420a6f5dc649",
+        "REPORT.md": "sha256:e44ee5fea95d2bf94013d27d0b2afd372d6612ac3bf997f73e2813afe5bb42b3",
+        "figures/nadh_stoichiometry.png": "sha256:378664d6f91ce3f58e9e20d52bf19330427a96b7b0d9a267032d72e667dacc3b",
+        "figures/ndh2_vs_complex_I.png": "sha256:40adf692de4ed1dfb71ddbdbe1706594395a8f67c9f0bded79bf681a39add94e",
+        "figures/proteomics_respiratory.png": "sha256:e3fba1436425dd9fa33fdeeb2c5536913a6492c86edf6f20ed5401020477ab83",
+        "figures/respiratory_chain_heatmap.png": "sha256:023c264a0d62263eccbb1f36828a889ea09707b3545b945dd9ceb0b4a30dc5bf",
+        "figures/respiratory_clustermap.png": "sha256:24fd0c059eca244e64d3d2663c0cd657cbeef91d9be448b3ca215d9c8f38773c",
+        "figures/subsystem_profiles.png": "sha256:32b698bc956308c3ab75cac686503d4b794444e0a38e051f6a653c741af3587e",
+        "figures/wiring_matrix.png": "sha256:0d4f7f03dedd693fed49fa46dbdd1e1d2901633ac644d1f162041a7ff3a8eb9b",
+        "figures/wiring_model.png": "sha256:cb55a8d05ecd6662f3d416efbb72ed94b547f4a2d70106c6ad91f417228dfc01"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "snipe_defense_system": {
+      "digest": "sha256:8ae2d799671fe265c10ad456f6609004b3e78483c6da4b4ecbe15ffb1c5e6039",
+      "files": {
+        "README.md": "sha256:6ae39d1bc4d526bd8b36b3e537af4e01e9a4d71b9a0072bf5b4808dd5c43f415",
+        "REPORT.md": "sha256:f7d78af3b2d5fc355bdd55bc72ce728519a3dc854968793d401b959f1e9ae555"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "soil_frontier_genomics": {
+      "digest": "sha256:5364d9b6e50c1bdfc4a3d9c895ef4e2d6d0fc1db275187252d9c2e7e417e4905",
+      "files": {
+        "README.md": "sha256:71634747828bead7c3ba3de0c963fc4e649c267f06b2fe96eec44468a6a8534a",
+        "REPORT.md": "sha256:f3931fe9d68922f56c7c150229f466d5cddab2ea6b166362e8b31933149f9a8d"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "soil_metal_functional_genomics": {
+      "digest": "sha256:62ec6463de631834d5a0d0bb3ae8f79385ebffed06d60065aaff979362aa1920",
+      "files": {
+        "README.md": "sha256:c8e04926cafd9167c794050d2b927feab5017542091ba20d5d8435ad41d057e5",
+        "REPORT.md": "sha256:afe5423a06222e7ee2957401c00f4af52fea13df31be748b4ab108fb1dfe6144"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "t4ss_cazy_environmental_hgt": {
+      "digest": "sha256:0f8940786a3c50b8262ef19b7935450ab3bb86d34bc48d551d596f221c988fa4",
+      "files": {
+        "README.md": "sha256:a8c19a7ef057ae95d5b3e3e52cd574c4e6a6669c0896f3152b3b0e87dbb100d4",
+        "REPORT.md": "sha256:51a111efe7b5ea5f55b6310291e8badbd42dcc5ebe29717b03e23d2c103de389"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "temporal_core_dynamics": {
+      "digest": "sha256:b2369ce768fb0c049cf0b07d8f124c58a3c432251767c222b61eba9dd19a0ede",
+      "files": {
+        "README.md": "sha256:f58df04ca63a3c4fdd7844fbdbb6dd451c16ae185070ebfd0853e06511ba82af"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "truly_dark_genes": {
+      "digest": "sha256:269c1458410b11480b78979166918361fc712858102337d0dee542748799e28e",
+      "files": {
+        "README.md": "sha256:f3dda715db18292f8dfb13262440f34be2c42c0e9db59fe444c01f803e269e87",
+        "REPORT.md": "sha256:c3c61898305ee30bac02c9a1ff4d8c27bd21313ee4b736ea0055ea6d9014adf0",
+        "figures/fig01_organism_distribution.png": "sha256:d17de6cfc4c0b7d92dbcfdfcc3a3693183d9817d746e999e0fe7e5cd6075acfa",
+        "figures/fig02_gene_length.png": "sha256:a1e92978884b4961e8f90b7e394ea46bdc6dd98e3106f6a4fa23beba6e70e128",
+        "figures/fig03_summary_comparison.png": "sha256:d4f32a168cb7ad4eda87b7926b516a7fcf2b94d10f5c49f978142694b7bc72d4",
+        "figures/fig04_clue_coverage.png": "sha256:558e61003ace03fd0e7a2000bf800916b05364cb4ff1c8188cd617ed6bc0cb0e",
+        "figures/fig05_annotation_tiers.png": "sha256:c076f533f28860bae48d120f67c9fb00cdb9458bb68492ed86cc5f13c99b4e7c",
+        "figures/fig06_ortholog_breadth.png": "sha256:1e76e0d15ca0c5aa26030982894b18fbe0ee6fabd6faf4c8f74e237863e31514",
+        "figures/fig07_gc_deviation.png": "sha256:c83045473ffef7d743a3319451830a473f0b865662df3d92ea6df936cd542f54",
+        "figures/fig08_genomic_context.png": "sha256:b014a51b7d7bd85b2dd2275325a72b1db8e9c8e9447dae82d71c9c229ae4eda4",
+        "figures/fig09_prioritization.png": "sha256:91e92cd3af399c7331feab3ac1bcc0eb50f4f3fca97ffd4ce8c41be5833823c6"
+      },
+      "origin": "v1@0ffb1c89399c"
+    },
+    "webofmicrobes_explorer": {
+      "digest": "sha256:5b48cb6157dfe184d29eb5f7db189afd417afaf18f1fc9ff1d20b2f78ee3a955",
+      "files": {
+        "README.md": "sha256:b3d465ffdaee32da4068f2a02e9621b71f3c7cecba8e323c6878908218dc3a03",
+        "REPORT.md": "sha256:9a00ed7cecab68d7f9f290eb54f509ee70ab0950d80bcd48cd92b528748dd4da",
+        "figures/enigma_metabolite_heatmap.png": "sha256:16b0a75ee2c34c045b79f17f071f2bc9d9d92008459b40dd2e770eb28e0a197e"
+      },
+      "origin": "v1@0ffb1c89399c"
+    }
+  },
+  "shared": {
+    "docs/discoveries.md": "sha256:f2eb62ac540dea2dd730770887b843734c864dba019e888c49e5cbc9d7d1b564",
+    "docs/pitfalls.md": "sha256:d100706f1a00a7f21b590573f90449c7936ee47108d93861756f06f3113df3b4",
+    "ui/config/collections.yaml": "sha256:815185ef8b41341607863d57208f15011a2bce01dbc11726ea2740af1e2c590e"
+  },
+  "version": 1
+}

@@ -3,7 +3,8 @@
 
 Two backends behind one function, selected by ``FETCH_BACKEND``:
   local  (default) copy REPORT.md per project + the discoveries/pitfalls
-         digests from a BERIL observatory checkout (``BERIL_CHECKOUT``).
+         digests from a checkout-shaped tree (``BERIL_CHECKOUT``, default
+         the repository's own ``corpus/``; see ``beril_wiki.corpus``).
   hub    BERIL hub client — stub until projects/ moves there.
 
 Other stages import ``CHECKOUT`` from here for figure/README/collections
@@ -22,9 +23,7 @@ import sys
 
 from beril_wiki.paths import ROOT
 
-CHECKOUT = pathlib.Path(
-    os.environ.get("BERIL_CHECKOUT", "/Volumes/WorkSSD/Work/BERIL/BERIL-research-observatory")
-)
+CHECKOUT = pathlib.Path(os.environ.get("BERIL_CHECKOUT", ROOT / "corpus"))
 BACKEND = os.environ.get("FETCH_BACKEND", "local")
 
 
@@ -33,6 +32,9 @@ FIG_EMBED = re.compile(r"!\[[^\]]*\]\((figures/[^)]+)\)")
 
 def fetch_local(staging: pathlib.Path) -> int:
     staging.mkdir(parents=True, exist_ok=True)
+    # A report left from an earlier fetch would hide its deletion from changed_sources.
+    for stale in staging.glob("*.md"):
+        stale.unlink()
     figroot = staging.parent / "wiki" / "figures"
     n = nf = 0
     for report in sorted(CHECKOUT.glob("projects/*/REPORT.md")):
