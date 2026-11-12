@@ -113,6 +113,17 @@ rebuilds `corpus/` from an observatory checkout. Pass `--checkout` (or set
 `beril_wiki.publish.ingest` copies `corpus/manifest.json` byte for byte to the
 site root as `corpus-manifest.json`, so a client can compare a project's
 published source digest with its own.
+
+`scripts/check_update.py --base REF --head REF [--branch NAME]` is the model-free
+scope check for a publisher branch. The branch comes from `--branch` or
+`GITHUB_HEAD_REF`; one that does not start with `wiki/` passes. On `wiki/ID` it
+fails when `REF` is not an ancestor of the head, when `corpus/` changes outside
+`projects/ID/` and the `ID` entry of `manifest.json`, when `wiki/sources`,
+`wiki/summaries` or `wiki/figures` change outside `ID`, or when an entry of
+`state/{headlines,novelty,gists,outcomes,shared,links}.json` changes for no
+project of `ID`. `followups.json` and `directions.json` are keyed by question
+and topic slug, so the script does not check them. The `scope` job in
+`.github/workflows/tests.yml` runs it on every pull request.
 Individual jobs have `--max-turns` (default 12, applying to tool-using jobs
 other than page sessions), `--timeout` (600 seconds), and `--max-output-tokens`
 (32,768). A page session is bounded by its brief instead: 20 turns plus one per
