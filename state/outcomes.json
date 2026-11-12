@@ -413,6 +413,12 @@
     "reason": "The evidence shows shared identifiers linking data collections and an audit finding no recorded project use at audit time, a coverage fact limited by README-based search.",
     "type": "data"
   },
+  "berdl_data_atlas--82c709b1": {
+    "input": "e2576268d84cd1864604ca7c4be2ea0fdd81cc756db4d9751746c253899edf80",
+    "model": "claude-haiku-5-5",
+    "reason": "The evidence shows which database keys link fitness measurements to structure models and how many genes the corrected link yields, not a biological result.",
+    "type": "data"
+  },
   "berdl_data_atlas--a65ca624": {
     "input": "f5769c24c458b310f4351ce1a50d2a2fe71f6d5643cd2040f2f040dbb7b89e6f",
     "model": "claude-haiku-5-5",

@@ -5583,6 +5583,9 @@
       ]
     }
   },
+  "fw300_metabolic_consistency": {
+    "failed": true
+  },
   "gene_function_ecological_agora": {
     "input": "82b5ea0c6023ac7dea6a8aea5cfd8ade18aaabffa1f9661b4cdd1adb9b483299",
     "pages": {

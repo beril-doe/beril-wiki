@@ -563,7 +563,12 @@
     "failed": true
   },
   "berdl_data_atlas--82c709b1": {
-    "failed": true
+    "case": "",
+    "gist": "A corrected link between gene-fitness measurements and AlphaFold protein structure models, routed through SwissProt best-hit matches, produced a working set of 55,454 genes that have both kinds of data, checked on a sample from the live cluster.",
+    "input": "2f4abd915da46b4a5658bfa30b655554cdcc60552ebb3b44ce48584c2946e963",
+    "model": "claude-sonnet-5-5",
+    "repeats": "",
+    "title": ""
   },
   "berdl_data_atlas--a65ca624": {
     "case": "",

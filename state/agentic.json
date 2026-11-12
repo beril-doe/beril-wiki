@@ -842,21 +842,21 @@
         "wiki/directions/why-are-fungal-lignin-enrichment-communities-irreproducible--7e9ea7.md": "526c1a6b9f60a12d64613b9568ffb563688fbaa503199414980a523b12fee544",
         "wiki/directions/why-is-the-model-sulfate-reducer-desulfovibrio-nearly-absent--bc3e92.md": "c5d6005fabd16b861ae5c1e2911556d2f2b83300505a9c6f0e22d7f8845d6fa4"
       },
-      "semantic": "ecc82165759245fd2f4caa74f2097609022be47bc58d852cffc96487b7bdd8e4"
+      "semantic": "03a0280930f8fc07de00dd5c8f358629aba3b1228913dcc90be5793be3ce51ab"
     },
     "followups": {
       "inputs": "96ceefd76a05d16aa867b0ba430dcfe15ea08d851724bf41fd51e7e47a87dda6",
       "outputs": {
         "state/followups.json": "c7cb60e7b22db2bb640767f2dab97468f5764e1813d68819c58fa267c23b759b"
       },
-      "semantic": "279bcd630f1af0db347c38dadb5e93ec002ee8516a827ac9c2d78c6875f40837"
+      "semantic": "4ddc48a365a4b999e08648c3fbed33b1e6ffaed38a4d643baedc900f9c0ef532"
     },
     "gists": {
       "inputs": "fe25637e235d32dbc05ffa56fd45be9b64e6f2f5d92cbeaad326b0a95eb1d7a8",
       "outputs": {
-        "state/gists.json": "c71025729f868e2efd7b635b4e554377f4b2f3682ae0a4eb0b4ed3e4d1543951"
+        "state/gists.json": "03311d75e9fe563e2addd8f6c25d42ec0c9ac109c11635b64edebe2d7048c6cb"
       },
-      "semantic": "424cb67656ad3bd8b0710805b85adec27b488f415370d773a7e067fc889c50c8"
+      "semantic": "339a4a95a3800ca58aa906065995edfeb9201e74ecc4b2c4bfea165c4170279c"
     },
     "headlines": {
       "inputs": "8c9481faf96ea1774cca540cee728f1de2a4d2476182513060231f2e9d1e8aa7",
@@ -1204,14 +1204,14 @@
         "wiki/findings/webofmicrobes_explorer--ab7e4ba4.md": "73755fd5eb4dcce202c53d92dc8c2b3c5a15a80dc6717771ac07fff758567ba1",
         "wiki/findings/webofmicrobes_explorer--f572a74d.md": "a7dd46169cae0b92a8df52b72fa1fb3d3d8e0ebeba71819f5105d89255ccbd2c"
       },
-      "semantic": "4c8c5e728017e622aa865c0683116bdda62756156faff3ad1b1f6849bd6be1f5"
+      "semantic": "caa9af34d657113b3d49f4163389410d0bc58c3d7b7435bb6010a61221e72b91"
     },
     "links": {
       "inputs": "0fac21cb789731d24f9ec699e0403d008b669843e86e5e679dff386b39f3521d",
       "outputs": {
         "state/links.json": "d843e21687f7f76204235600c0f9ff5829ad91620ec4af80342faf32cb8b6eae"
       },
-      "semantic": "9a4091825227a5b9f8d862c88e1a03e9e8a3b9c6dc5a15ffda76643af7fcc681"
+      "semantic": "acea3783e45dae619ca0b7d9993e5529ad07e05173eb4ff70136cf42157ece5d"
     },
     "literature": {
       "inputs": "867dc4dbdf2533bd9319209affed9f3db9d6074ad61fc0213aeb3cf8772f346b",
@@ -1239,21 +1239,21 @@
       "outputs": {
         "state/novelty.json": "b70994f79de0364e36e47d31c644c31471d4966cc6a1f16f9804456a84f0315c"
       },
-      "semantic": "6f74fb5d782af81c04235bc06b77dd734a45b935c39ff67b74bc047e1c258acb"
+      "semantic": "cd538daa4245c1605a9e41792a5b983225fac03cc873f8d5c1db7f1501ab9ff3"
     },
     "outcomes": {
-      "inputs": "c6dd668435224f9027a886994bbdb80317416a244966a16c59e0c36ab5045dae",
+      "inputs": "10a8349e22148be9e478e4f7b467b82ef25973d46b8527d1a02d4e62e65c181a",
       "outputs": {
-        "state/outcomes.json": "3147cce80bffd1707aeb30dcbf5b789c37af612529f20399c58d22c2483a5265"
+        "state/outcomes.json": "f97152b69fa8bae149ab5a02c195371a9944ccbc277b08c74ca47dd9b3ded4c0"
       },
-      "semantic": "c7f8520938dcf2150852ec3aaff1faa796c1438f34108d38800f46bfe8a6c23d"
+      "semantic": "910db5f30d7e63328f08dfaa35670fc9e367ffdd83bc0319f2f17d3e8baa5a51"
     },
     "shared": {
       "inputs": "52a59b89380835040ca7ba66f5ef2a8f1fedd97ea7ab89048bda7b530c7e8829",
       "outputs": {
         "state/shared.json": "9128e11c3db08d7e0395fa379a7962f16d8bc0f046f5113f46ee5ab3b483a405"
       },
-      "semantic": "3e0e3ede9ea41baa5360e12607f337ba722fb5fc65ab56ace3dfca77b9d6e30d"
+      "semantic": "1207a846ba9ae44314282914618b566c34f10b10241a6df5f860396b5b97df61"
     },
     "topics": {
       "inputs": "e4dfd2e16f02ee0b841c5c407b34a72a4150f72e4b716ce0ae8341d4d2afcfe2",
@@ -1283,6 +1283,7 @@
     "state/figures-state.json": "107d02901fb585b4079e88402275f06fde020dcbb43d86fa666ab46cac477774"
   },
   "figure_revision": "63c05bdf7b183de4596bfb45c5c6f0271e4ae1f6092264d3c8089a039b634270",
+  "fingerprint": "8d74ee99f3b88ad0ad579c238445ab85b4b38fab5c19ca1544ea394ae19a9ce5",
   "models": {
     "card_review": "gpt-6-luna",
     "cards": "claude-sonnet-5-5",
