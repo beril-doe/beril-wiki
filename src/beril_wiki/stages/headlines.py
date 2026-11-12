@@ -354,7 +354,12 @@ def main(root: Path = ROOT) -> int:
         on_disk = {p.name: file_hash(p) for p in pages_of(out, sid)}
         # A saved reply stays while its input is unchanged and today's checks accept it,
         # so a code change re-asks only the reports whose replies its rules now reject.
-        if saved.get("input") == key and saved.get("reply") and passes(saved["reply"], records):
+        if (
+            saved.get("input") == key
+            and saved.get("reply")
+            and not saved.get("failed")
+            and passes(saved["reply"], records)
+        ):
             # The accepted reply is kept, so a page edited by hand or a new render
             # is rewritten from it without a model call.
             if saved.get("render") != RENDER or saved.get("pages") != on_disk:
@@ -405,6 +410,10 @@ def main(root: Path = ROOT) -> int:
     ):
         if isinstance(result, PageFailure):
             failed += 1
+            # Committed, unlike failures.json, so a run from another job store sees it;
+            # the last accepted reply stays.
+            state[sid] = state.get(sid, {}) | {"failed": True}
+            atomic_json(state_path, state)
             continue
         publish(sid, records, key, result)
         written += 1
