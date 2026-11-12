@@ -670,7 +670,9 @@ def test_a_recorded_contract_change_is_not_adopted(tmp_path, monkeypatch):
 
 def test_budget_run_keeps_one_cap_across_bases(tmp_path, monkeypatch):
     """A refresh onto a moved main changes the input digest, which named a new ledger
-    run and let the earlier spend stop counting against the cap."""
+    run and let the earlier spend stop counting against the cap. Each invocation gets
+    its own max_jobs and max_tokens: a resume on the same inputs counted the earlier
+    attempts' jobs and tokens, which the person cannot raise, against them."""
     import json
     from types import SimpleNamespace
 
@@ -682,8 +684,8 @@ def test_budget_run_keeps_one_cap_across_bases(tmp_path, monkeypatch):
     (root / "contract/AGENTS.md").write_text("Contract")
     (checkout / "ui/config").mkdir(parents=True)
     (checkout / "ui/config/collections.yaml").write_text("collections: []")
-    config: dict[str, object] = {"cli": "claude", "model": "test", "max_tokens": 10**9}
-    config |= {"max_jobs": 50, "reserve_tokens": 10, "max_usd": 30.0, "budget_run": "wiki/p"}
+    config: dict[str, object] = {"cli": "claude", "model": "test", "max_tokens": 12}
+    config |= {"max_jobs": 1, "reserve_tokens": 10, "max_usd": 30.0, "budget_run": "wiki/p"}
     monkeypatch.setattr(
         runner.subprocess, "run", lambda *a, **k: SimpleNamespace(stdout="test CLI")
     )
@@ -698,22 +700,32 @@ def test_budget_run_keeps_one_cap_across_bases(tmp_path, monkeypatch):
         key = f"job-{len(seen)}"
         try:
             ledger.reserve(key, "write/x", "claude-sonnet-5-5")
-        except WorkflowError:
-            seen.append((stored["run"], stored["run_inputs"], "refused"))
+        except WorkflowError as exc:
+            seen.append((stored["run"], stored["run_inputs"], str(exc)))
             return
-        ledger.finish(key, "ok", {"input_tokens": 1, "output_tokens": 1}, cost=29.0)
+        ledger.finish(key, "ok", {"input_tokens": 3, "output_tokens": 2}, cost=costs.pop(0))
+        with pytest.raises(WorkflowError, match="jobs=1, effective=5"):
+            ledger.reserve(key + "-more", "write/y", "claude-sonnet-5-5")
         seen.append((stored["run"], stored["run_inputs"], "admitted"))
+        if len(seen) == 1:
+            raise WorkflowError("stopped before acceptance")
 
     from agentic_recording import reply
 
     monkeypatch.setattr(runner.Runtime, "ask", reply)
     monkeypatch.setattr(runner, "run_stage", recorded_stage)
+    costs = [20.0, 9.0]
+    with pytest.raises(WorkflowError, match="stopped"):
+        runner.run(root, checkout, config)
+    # A resume of the stopped run, on the same snapshot.
     runner.run(root, checkout, config)
     (root / "wiki/other.md").write_text("another project merged to main\n")
     runner.run(root, checkout, config)
-    (first_run, first_inputs, first), (second_run, second_inputs, second) = seen
-    assert first_run == second_run == "wiki/p" and first_inputs != second_inputs
-    assert (first, second) == ("admitted", "refused")
+    (first, first_inputs, a), (second, second_inputs, b), (third, third_inputs, c) = seen
+    assert first == second == third == "wiki/p"
+    assert first_inputs == second_inputs != third_inputs
+    assert (a, b) == ("admitted", "admitted")
+    assert "Claude USD 29.00" in c
 
 
 def test_source_numbers_invalidates_same_length_revision():

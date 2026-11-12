@@ -10,6 +10,7 @@ import signal
 import subprocess
 import sys
 import time
+import uuid
 from contextlib import contextmanager
 from importlib.metadata import version
 from pathlib import Path
@@ -382,6 +383,9 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
             "run": config.get("budget_run") or budget_run(root, base, external, staged),
             "run_inputs": digest([base, external, staged]),
         }
+        if config.get("budget_run"):
+            # Stage subprocesses read this from config.json, so each tags its jobs.
+            config["invocation"] = uuid.uuid4().hex
         config_path = store / "config.json"
         atomic_json(config_path, config)
         if not staged:
