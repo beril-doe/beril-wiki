@@ -72,6 +72,8 @@ def run(
     for item_id, pack in items.items():
         key = digest([pack, prompt_tag, policy])
         prev = state.get(item_id, {})
+        if cards.leaves_failed(config, prev.get("failed") is True, cards.owners(name, item_id)):
+            continue
         if prev.get("input") == key and not prev.get("failed") and passes(prev, pack):
             continue
         step = f"{name}/{item_id}"

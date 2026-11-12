@@ -14,7 +14,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-from collections.abc import Callable, Iterator
+from collections.abc import Callable, Iterator, Sequence
 from pathlib import Path
 from typing import TypeVar
 
@@ -92,6 +92,37 @@ def each_job(
             record_failure(step(item), result)
             print(f"  [FAILED] {step(item)}: {result}")
         yield item, result
+
+
+TOPIC_KEYED = ("directions", "followups")
+
+
+def project_of(fid: str) -> str:
+    """The project of a finding id, `<project>--<8 hex>`."""
+    return fid.rsplit("--", 1)[0]
+
+
+def owners(store: str, key: str, members: Sequence[str] = ()) -> set[str] | None:
+    """The projects an entry of `state/<store>.json` belongs to; None for a topic-keyed
+    store. A shared group's projects are those of its `members`."""
+    if store in TOPIC_KEYED:
+        return None
+    if store == "headlines":
+        return {key}
+    if store == "shared":
+        return {project_of(m) for m in members}
+    if store == "links":
+        kind, _, ends = key.partition(":")
+        parts = ends.replace(">", "|").split("|")
+        return {project_of(p) for p in parts} if kind == "pair" else set(parts)
+    return {project_of(key)}
+
+
+def leaves_failed(config: dict, failed: bool, projects: set[str] | None) -> bool:
+    """Whether this run leaves a saved failed entry as it is: a run published for one
+    project (`expect_source`) does not re-ask another project's or a topic's failure."""
+    project = config.get("expect_source")
+    return bool(project) and failed and (projects is None or project not in projects)
 
 
 def exit_code(failed: int) -> int:

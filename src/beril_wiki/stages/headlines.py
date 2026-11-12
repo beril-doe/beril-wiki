@@ -347,6 +347,10 @@ def main(root: Path = ROOT) -> int:
         # The models are part of the key: a new cards or findings_review model re-judges.
         key = digest([messages, cards.policy(agent.config, ("cards", "findings_review"))])
         saved = state.get(sid, {})
+        if cards.leaves_failed(
+            agent.config, saved.get("failed") is True, cards.owners("headlines", sid)
+        ):
+            continue
         on_disk = {p.name: file_hash(p) for p in pages_of(out, sid)}
         # A saved reply stays while its input is unchanged and today's checks accept it,
         # so a code change re-asks only the reports whose replies its rules now reject.

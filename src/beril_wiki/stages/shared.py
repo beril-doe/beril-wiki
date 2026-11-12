@@ -86,6 +86,30 @@ def group_topics(root: Path, projects: list[str]) -> list[str]:
     return sorted({t for sid in projects for t in records.main_topics(sid, groups, cites)})
 
 
+def related(current: list[dict], findings: dict[str, dict]) -> list[dict]:
+    """The saved related-result links between results that still exist."""
+    return [
+        x
+        for x in current
+        if x["level"] == "finding"
+        and x["type"] in RELATIONS
+        and x["a"] in findings
+        and x["b"] in findings
+    ]
+
+
+def group_id(members: list[str]) -> str:
+    return "g-" + digest(members)[:10]
+
+
+def group_members(root: Path) -> dict[str, list[str]]:
+    """Group id -> members for every component the saved links form, before main's size
+    and topic filters: a failed group's record holds no members of its own."""
+    current = cards.load_state(root / LINKS).get("links", [])
+    edges = [(x["a"], x["b"]) for x in related(current, links.read_findings(root))]
+    return {group_id(members): members for members in records.components(edges)}
+
+
 def checker(members: dict[str, dict]) -> Callable[[str], Group]:
     pool = " ".join(
         " ".join(map(str, (f["claim"], f["quote"], f["quantities"]))) for f in members.values()
@@ -163,20 +187,14 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         return 0
     current = saved_links["links"]
     findings = links.read_findings(root)
-    related = [
-        x
-        for x in current
-        if x["level"] == "finding"
-        and x["type"] in RELATIONS
-        and x["a"] in findings
-        and x["b"] in findings
-    ]
+    linked = related(current, findings)
     config = cards.runtime().config
     policy = cards.policy(config, ("cards", "card_review"))
 
     todo = []
     groups: dict[str, dict] = {}
-    for members in records.components([(x["a"], x["b"]) for x in related]):
+    left: set[str] = set()  # failed groups this run leaves as saved
+    for members in records.components([(x["a"], x["b"]) for x in linked]):
         projects = sorted({findings[f]["report"] for f in members})
         if len(members) > MAX_MEMBERS:
             print(f"  shared: skipped a group of {len(members)} results: {members}")
@@ -186,9 +204,9 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         topics = group_topics(root, projects)
         if len(topics) < 2:
             continue
-        inner = [x for x in related if x["a"] in members and x["b"] in members]
+        inner = [x for x in linked if x["a"] in members and x["b"] in members]
         relation = max((x["type"] for x in inner), key=RELATIONS.index)
-        gid = "g-" + digest(members)[:10]
+        gid = group_id(members)
         texts = {
             f: {k: findings[f][k] for k in ("title", "claim", "quote", "quantities")}
             | {"project": records.summary_title(root, findings[f]["report"])}
@@ -199,6 +217,11 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         groups[gid] = {"members": members, "projects": projects, "topics": topics}
         groups[gid] |= {"relation": relation, "input": key}
         prev = state.get(gid, {})
+        if cards.leaves_failed(
+            config, prev.get("failed") is True, cards.owners("shared", gid, members)
+        ):
+            left.add(gid)
+            continue
         if prev.get("input") == key and not prev.get("failed") and not reads_badly(prev):
             continue
         todo.append((gid, pack, {f: findings[f] for f in members}))
@@ -208,6 +231,8 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     for gid in list(state):
         if gid not in groups:
             state.pop(gid)
+        elif gid in left:
+            continue
         elif state[gid].get("input") != groups[gid]["input"] or reads_badly(state[gid]):
             state[gid] = {"input": "", "failed": True}
     atomic_json(state_path, dict(sorted(state.items())))
