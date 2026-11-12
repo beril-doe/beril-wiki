@@ -1,59 +1,71 @@
 name: Build wiki image
 
 # The site as served on SPIN, at beril.kbase.us/wiki (and beril-dev.kbase.us/wiki),
-# by the server in src/beril_wiki/serve.py. Same render and gates as pages.yml,
-# built once per host because Quartz bakes the host into absolute links (the
-# footer's About link, the sitemap, RSS); in-page links follow the /wiki path.
+# by the server in src/beril_wiki/serve.py. Same render and gates as pages.yml.
+# Quartz bakes the host into absolute links (the footer's About link, the
+# sitemap, RSS), so each host has its own image and tag, and one run builds one:
+#
+#   pull request      -> :develop  for beril-dev.kbase.us
+#   push to main      -> :latest   for beril.kbase.us
+#   workflow_dispatch -> whichever the `channel` input names (default :latest)
+#
+# Only main may produce :latest. A dispatch from any other ref that asks for
+# it, or defaults to it, fails before building, so no branch can replace the
+# production image or restart production.
+#
 # The site is built here on the runner, not in the Dockerfile, because the
 # search vectors come from the search-data branch and need the checkout's .git.
 #
-# This only publishes images. SPIN picks a new one up when the deployment is
-# restarted (it pulls :latest / :develop); nothing here touches the cluster.
+# Once the image is pushed, the deploy job hands the channel to
+# spin_deploy.yml, which restarts the matching SPIN deployment so it pulls the
+# new tag. The channel travels as a job output rather than being inferred from
+# the branch or event, so a dispatch of :develop from main restarts dev, not
+# production. A pull request from a fork runs with a read-only token: it builds
+# the develop image as a check, pushes nothing, and so deploys nothing.
 on:
   push:
     branches: [main]
-    paths: &build_paths
-      - "wiki/**"
-      - "src/**"
-      - "scripts/**"
-      - "theme/**"
-      - "state/lakehouse/**"
-      - "pyproject.toml"
-      - "uv.lock"
-      - "Dockerfile"
-      - ".dockerignore"
-      - ".github/workflows/image.yml"
-  # Build both images on the PR too, without pushing.
   pull_request:
-    paths: *build_paths
-  # Also dispatched by `search_data push` (beril_wiki.publish.search_data).
+  # Also dispatched by `search_data push` (beril_wiki.publish.search_data),
+  # which passes no input and so refreshes :latest.
   workflow_dispatch:
+    inputs:
+      channel:
+        description: Image tag to build and push
+        type: choice
+        options: [latest, develop]
+        default: latest
 
 permissions:
   contents: read
   packages: write
-
-concurrency:
-  group: image-${{ github.ref }}
-  cancel-in-progress: true
 
 env:
   REGISTRY: ghcr.io
   # Pinned rather than derived from the repository, so a repo transfer cannot
   # move the image out from under the SPIN deployments.
   IMAGE_NAME: beril-doe/beril-wiki
+  # Which tag this run produces. Pull requests feed the dev host; main and a
+  # plain dispatch feed production.
+  CHANNEL: ${{ github.event_name == 'pull_request' && 'develop' || inputs.channel || 'latest' }}
+  # Whether the image can be pushed: everything except a fork's pull request,
+  # whose GITHUB_TOKEN cannot write packages.
+  PUSH: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
 
 jobs:
   image:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - host: beril.kbase.us
-            tag: latest
-          - host: beril-dev.kbase.us
-            tag: develop
+    # A newer build of the same ref and channel supersedes this one. The group
+    # is on this job, not the workflow, so a deploy that is already running
+    # after its image was pushed is never cancelled; spin_deploy.yml queues
+    # deploys of one channel behind each other. The channel expression repeats
+    # env.CHANNEL because job concurrency cannot read env.
+    concurrency:
+      group: image-${{ github.ref }}-${{ github.event_name == 'pull_request' && 'develop' || inputs.channel || 'latest' }}
+      cancel-in-progress: true
+    outputs:
+      channel: ${{ steps.pick.outputs.channel }}
+      pushed: ${{ steps.pick.outputs.pushed }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -63,12 +75,27 @@ jobs:
         with:
           enable-cache: true
 
+      - name: Pick the host for the channel
+        id: pick
+        run: |
+          if [ "$CHANNEL" = latest ] && [ "$GITHUB_REF" != refs/heads/main ]; then
+            echo "refusing to build :latest from $GITHUB_REF; only main may" >&2
+            exit 1
+          fi
+          echo "channel=$CHANNEL" >> "$GITHUB_OUTPUT"
+          echo "pushed=$PUSH" >> "$GITHUB_OUTPUT"
+          case "$CHANNEL" in
+            latest)  echo "HOST=beril.kbase.us" >> "$GITHUB_ENV" ;;
+            develop) echo "HOST=beril-dev.kbase.us" >> "$GITHUB_ENV" ;;
+            *) echo "unknown channel: $CHANNEL" >&2; exit 1 ;;
+          esac
+
       - name: Validate the corpus
         run: uv run --project . python -m beril_wiki.check --strict
 
       - name: Build site
         env:
-          WIKI_BASE_URL: ${{ matrix.host }}/wiki
+          WIKI_BASE_URL: ${{ env.HOST }}/wiki
           SEARCH_REQUIRE_VECTORS: ${{ github.event_name == 'pull_request' && '1' || '' }}
         run: scripts/build_quartz.sh
 
@@ -83,7 +110,7 @@ jobs:
       - uses: docker/setup-buildx-action@v4
 
       - uses: docker/login-action@v4
-        if: github.event_name != 'pull_request'
+        if: env.PUSH == 'true'
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -94,16 +121,26 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${{ matrix.tag }}
-            type=sha,prefix=${{ matrix.tag }}-
+            type=raw,value=${{ env.CHANNEL }}
+            type=sha,prefix=${{ env.CHANNEL }}-
 
       - uses: docker/build-push-action@v7
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
+          push: ${{ env.PUSH == 'true' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             GIT_COMMIT=${{ github.sha }}
-          cache-from: type=gha,scope=${{ matrix.tag }}
-          cache-to: type=gha,mode=max,scope=${{ matrix.tag }}
+          cache-from: type=gha,scope=${{ env.CHANNEL }}
+          cache-to: type=gha,mode=max,scope=${{ env.CHANNEL }}
+
+  # Runs only after the image job succeeded, so `pushed` being true means the
+  # push step completed and the tag now holds this build.
+  deploy:
+    needs: image
+    if: needs.image.outputs.pushed == 'true'
+    uses: ./.github/workflows/spin_deploy.yml
+    with:
+      channel: ${{ needs.image.outputs.channel }}
+    secrets: inherit
