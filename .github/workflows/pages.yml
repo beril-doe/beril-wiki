@@ -14,6 +14,7 @@ on:
       - "src/**"
       - "scripts/**"
       - "theme/**"
+      - "state/lakehouse/**"
       - "pyproject.toml"
       - "uv.lock"
       - ".github/workflows/pages.yml"

@@ -54,7 +54,7 @@ file, runs the host's checks and asks the GPT reviewer through tools, and the
 host accepts only the exact text both approved. A page that does not converge
 is recorded, not a run stop. Model changes apply to pages written from then on;
 `pilot` measures a model on named pages first. See the [operating guide](docs/agentic-workflow.md) for
-subscription login, the observatory checkout, run budgets, workers, failed-page
+subscription login, the vendored `corpus/`, run budgets, workers, failed-page
 retry, search, and recovery, or open the
 [HTML walkthrough](docs/agentic-workflow.html) for the control flow. A capped
 real-source update remains the acceptance step before a large compilation.
@@ -65,6 +65,10 @@ stages (or those named with `--stage`) for the reports
 and topics in `contract/cards.yaml`, then `check --strict`.
 `--stage-max-usd STAGE=USD` caps a stage's recorded Claude spend across runs,
 on `cards` and `run` alike.
+`uv run python -m beril_wiki.stages.lakehouse --check` checks the committed
+lakehouse catalog in `state/lakehouse/`; the
+[operating guide](docs/agentic-workflow.md#lakehouse-catalog) gives the snapshots
+it is built from and what a refresh costs.
 The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 
 ## Repository layout
@@ -77,7 +81,8 @@ The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 | `tests/` | deterministic checks and recorded-response workflow tests |
 | `theme/` | the Quartz page frame (one component per page region), the stylesheet (one partial per region), and the browser script and index builder for search and Ask |
 | `contract/` | the editorial contract injected into every compile, the concept decisions manifest, the errata a person has recorded against the source reports, the scope of finding and research-direction records (`cards.yaml`), and human decisions on literature labels (`novelty-decisions.yaml`) |
-| `state/` | per-stage caches that make the pipeline incremental |
+| `corpus/` | every source a run reads, laid out like an observatory checkout, with `manifest.json` recording each file's hash and origin (`beril_wiki.corpus`); the site serves the manifest as `corpus-manifest.json` |
+| `state/` | per-stage caches that make the pipeline incremental, and the lakehouse catalog under `lakehouse/` |
 | `search/` | ignored local copy of the section vectors for meaning search; the shared copy lives on the `search-data` branch |
 | `.agentic/` | ignored runtime ledger, raw results, receipts, and candidate workspace; preserve when resuming |
 | `docs/` | curator operating guide, HTML walkthrough, and wiki-format reference |
@@ -95,7 +100,9 @@ uv run ty check              # type check
 The same four commands run in CI on every pull request and on `main`
 ([`.github/workflows/tests.yml`](.github/workflows/tests.yml)); the publish
 workflow separately validates the committed wiki, renders it, and type-checks
-the theme. Use `uv run python -m beril_wiki.agentic` for curator operations.
+the theme. A `scope` job also runs `scripts/check_update.py`, which keeps a
+`wiki/<id>` publisher branch inside its own project
+([details](docs/agentic-workflow.md)). Use `uv run python -m beril_wiki.agentic` for curator operations.
 Direct stage invocations are maintenance tools and do not establish the
 curator's shared budget or isolated promotion context. The theme type-checks
 with `npm --prefix theme run typecheck` once `scripts/build_quartz.sh` has installed it.

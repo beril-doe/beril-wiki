@@ -3,7 +3,8 @@
 
 Two backends behind one function, selected by ``FETCH_BACKEND``:
   local  (default) copy REPORT.md per project + the discoveries/pitfalls
-         digests from a BERIL observatory checkout (``BERIL_CHECKOUT``).
+         digests from a checkout-shaped tree (``BERIL_CHECKOUT``, default
+         the repository's own ``corpus/``; see ``beril_wiki.corpus``).
   hub    BERIL hub client — stub until projects/ moves there.
 
 Other stages import ``CHECKOUT`` from here for figure/README/collections
@@ -16,42 +17,43 @@ from __future__ import annotations
 
 import os
 import pathlib
-import re
 import shutil
 import sys
 
+from beril_wiki.corpus import FIG_EMBED, figure_destination
 from beril_wiki.paths import ROOT
 
-CHECKOUT = pathlib.Path(
-    os.environ.get("BERIL_CHECKOUT", "/Volumes/WorkSSD/Work/BERIL/BERIL-research-observatory")
-)
+CHECKOUT = pathlib.Path(os.environ.get("BERIL_CHECKOUT", ROOT / "corpus"))
 BACKEND = os.environ.get("FETCH_BACKEND", "local")
 
 
-FIG_EMBED = re.compile(r"!\[[^\]]*\]\((figures/[^)]+)\)")
-
-
-def fetch_local(staging: pathlib.Path) -> int:
+def fetch_local(staging: pathlib.Path, checkout: pathlib.Path | None = None) -> int:
+    checkout = checkout or CHECKOUT
     staging.mkdir(parents=True, exist_ok=True)
+    # A report left from an earlier fetch would hide its deletion from changed_sources.
+    for stale in staging.glob("*.md"):
+        stale.unlink()
     figroot = staging.parent / "wiki" / "figures"
     n = nf = 0
-    for report in sorted(CHECKOUT.glob("projects/*/REPORT.md")):
+    for report in sorted(checkout.glob("projects/*/REPORT.md")):
         text = report.read_text(encoding="utf-8", errors="replace")
         shutil.copy2(report, staging / f"{report.parent.name}__REPORT.md")
         n += 1
         # Figures referenced by the report travel with the wiki repo, so the
         # site is fully renderable from a clone; the checkout is fetch-only.
         for rel in set(FIG_EMBED.findall(text)):
+            if ".." in pathlib.PurePosixPath(rel).parts:
+                continue
             src = report.parent / rel
             if not src.exists():
                 continue
-            dst = figroot / report.parent.name / re.sub(r"^figures/", "", rel)
+            dst = figroot / figure_destination(report.parent.name, rel)
             if not dst.exists() or dst.read_bytes() != src.read_bytes():
                 dst.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(src, dst)
                 nf += 1
     for digest in ("discoveries.md", "pitfalls.md"):
-        src = CHECKOUT / "docs" / digest
+        src = checkout / "docs" / digest
         if src.exists():
             shutil.copy2(src, staging / digest)
             n += 1

@@ -4,6 +4,7 @@ import json
 
 import pytest
 
+from beril_wiki.agentic.admission import failed_entries
 from beril_wiki.stages import cards, headlines
 from card_fakes import FakeAgent, evidence, install, report, scope
 
@@ -85,13 +86,30 @@ def test_headlines_rejects_figure_absent_from_quote(tmp_path, monkeypatch):
     bad = {
         "headlines": [headline(claim="Dark genes were depleted under stress (odds ratio 0.61).")]
     }
-    setup(
+    agent = setup(
         tmp_path,
         monkeypatch,
         {"headlines/a": [json.dumps(bad)], "headlines/a/repair": [json.dumps(bad)] * 3},
     )
     assert headlines.main(tmp_path) == 0  # a failure is recorded, the stage continues
     assert not list((tmp_path / "wiki/findings").glob("*.md"))
+    # Sol review of edcce0b: the failure is saved in committed state, so admission refuses
+    # its owner, and a run for another project neither pays for it nor changes it, even
+    # under --strict-pages; a run for its owner asks again.
+    path = tmp_path / "state/headlines.json"
+    assert json.loads(path.read_text())["a"]["failed"] is True
+    assert failed_entries(tmp_path, "a") == (["headlines:a"], [])
+    assert failed_entries(tmp_path, "b") == ([], ["headlines:a"])
+    before, asked = path.read_text(), len(agent.asked)
+    agent.config["expect_source"] = "b"
+    monkeypatch.setattr(cards, "strict_pages", lambda: True)
+    assert headlines.main(tmp_path) == 0
+    assert len(agent.asked) == asked and path.read_text() == before
+    agent.config["expect_source"] = "a"
+    agent.replies["headlines/a"] = [json.dumps({"headlines": [headline()]})]
+    assert headlines.main(tmp_path) == 0
+    assert agent.asked[asked] == "headlines/a"
+    assert "failed" not in json.loads(path.read_text())["a"]
 
 
 def test_headlines_drop_a_failing_headline_after_the_strict_rounds(tmp_path, monkeypatch):

@@ -1,0 +1,1252 @@
+{
+  "acinetobacter_adp1_explorer": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kbase.msd_biochemistry",
+      "kbase.uniref100",
+      "kbase.uniref50",
+      "kbase.uniref90",
+      "kescience.fitnessbrowser",
+      "phagefoundry.acinetobacter_genome_browser"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.pangenome",
+      "kbase.msd_biochemistry.molecule",
+      "kbase.msd_biochemistry.reaction",
+      "kescience.fitnessbrowser.organism"
+    ]
+  },
+  "adp1_deletion_phenotypes": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": []
+  },
+  "alphafold_msa_annotation": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.alphafold",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.interproscan_domains",
+      "kescience.alphafold.alphafold_msa_depths"
+    ]
+  },
+  "amr_cofitness_networks": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.interproscan_domains",
+      "kbase.ke_pangenome.interproscan_go"
+    ]
+  },
+  "amr_environmental_resistome": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kbase.nmdc_arkin"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.alphaearth_embeddings_all_years",
+      "kbase.ke_pangenome.bakta_amr",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1",
+      "kbase.ke_pangenome.ncbi_env",
+      "kbase.ke_pangenome.pangenome"
+    ]
+  },
+  "amr_fitness_cost": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.bakta_amr",
+      "kbase.ke_pangenome.bakta_annotations"
+    ]
+  },
+  "amr_pangenome_atlas": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.alphaearth_embeddings_all_years",
+      "kbase.ke_pangenome.bakta_amr",
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.bakta_pfam_domains",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1",
+      "kbase.ke_pangenome.ncbi_env",
+      "kbase.ke_pangenome.pangenome",
+      "kescience.fitnessbrowser.genefitness"
+    ]
+  },
+  "amr_strain_variation": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.genome_ani",
+      "kbase.ke_pangenome.ncbi_env"
+    ]
+  },
+  "annotation_gap_discovery": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kbase.msd_biochemistry",
+      "kescience.bacdive",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.pangenome",
+      "kescience.bacdive.metabolite_utilization",
+      "kescience.bacdive.strain",
+      "kescience.fitnessbrowser.besthitkegg",
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.genefitness",
+      "kescience.fitnessbrowser.keggmember",
+      "kescience.fitnessbrowser.kgroupec",
+      "kescience.fitnessbrowser.organism"
+    ]
+  },
+  "aromatic_catabolism_network": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": []
+  },
+  "bacdive_metal_validation": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.genome"
+    ]
+  },
+  "bacdive_phenotype_metal_tolerance": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.bacdive",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": []
+  },
+  "bacillota_b_subsurface_accessory": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.bacdive"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.bakta_pfam_domains",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1",
+      "kbase.ke_pangenome.ncbi_env",
+      "kescience.bacdive.isolation",
+      "kescience.bacdive.taxonomy"
+    ]
+  },
+  "berdl_data_atlas": {
+    "databases": [
+      "arkinlab.envdbs",
+      "arkinlab.microbeatlas",
+      "arkinlab.mobilome",
+      "enigma.coral",
+      "enigma.genome_depot_enigma",
+      "ese.ganymede",
+      "evaluation.survey",
+      "globalusers.carbon_source_phenotypes",
+      "kbase.all_the_bacteria",
+      "kbase.genomes",
+      "kbase.ke_pangenome",
+      "kbase.msd_biochemistry",
+      "kbase.nmdc_arkin",
+      "kbase.phenotype",
+      "kescience.alphafold",
+      "kescience.bacdive",
+      "kescience.fitnessbrowser",
+      "kescience.paperblast",
+      "kescience.pdb",
+      "kescience.pubmed",
+      "kescience.webofmicrobes",
+      "msyscolo.grow",
+      "netl.pw_dna",
+      "nmdc.metadata",
+      "nmdc.results",
+      "phagefoundry.acinetobacter_genome_browser",
+      "phagefoundry.ecoliphagesgenomedepot",
+      "phagefoundry.klebsiella_genome_browser_genomedepot",
+      "phagefoundry.paeruginosa_genome_browser",
+      "phagefoundry.pviridiflava_genome_browser",
+      "phagefoundry.strain_modelling",
+      "planetmicrobe.planetmicrobe",
+      "protect.genomedepot",
+      "refdata.jgi_virus",
+      "refdata.ontology_source",
+      "refdata.spire",
+      "usgs.produced_waters"
+    ],
+    "tables": [
+      "arkinlab.microbeatlas.otu_counts_long",
+      "arkinlab.microbeatlas.otu_metadata",
+      "arkinlab.microbeatlas.sample_metadata",
+      "enigma.coral.ddt_ndarray",
+      "enigma.coral.sdt_asv",
+      "enigma.coral.sdt_genome",
+      "enigma.coral.sdt_sample",
+      "enigma.genome_depot_enigma.browser_gene",
+      "enigma.genome_depot_enigma.browser_genome",
+      "enigma.genome_depot_enigma.browser_protein",
+      "globalusers.carbon_source_phenotypes.phenotype_data_table",
+      "kbase.ke_pangenome.alphaearth_embeddings_all_years",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.pangenome",
+      "kbase.msd_biochemistry.molecule",
+      "kbase.msd_biochemistry.reaction",
+      "kbase.nmdc_arkin.abiotic_features",
+      "kbase.nmdc_arkin.ec_terms",
+      "kbase.nmdc_arkin.embeddings_v1",
+      "kbase.nmdc_arkin.go_terms",
+      "kbase.nmdc_arkin.gottcha_gold",
+      "kbase.nmdc_arkin.kraken_gold",
+      "kbase.nmdc_arkin.metatranscriptomics_gold",
+      "kbase.nmdc_arkin.nom_gold",
+      "kbase.nmdc_arkin.nom_matrix_optimized",
+      "kbase.nmdc_arkin.rhea_reactions",
+      "kbase.nmdc_arkin.trait_features",
+      "kescience.alphafold.alphafold_entries",
+      "kescience.bacdive.strain",
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.genefitness",
+      "kescience.paperblast.curatedgene",
+      "kescience.pdb.pdb_entries",
+      "kescience.pubmed.pubmed_article_wide",
+      "kescience.webofmicrobes.observation",
+      "kescience.webofmicrobes.organism",
+      "netl.pw_dna.dna_metadata",
+      "nmdc.metadata.biosample_set",
+      "phagefoundry.acinetobacter_genome_browser.browser_gene",
+      "phagefoundry.acinetobacter_genome_browser.browser_genome",
+      "phagefoundry.ecoliphagesgenomedepot.browser_genome",
+      "phagefoundry.klebsiella_genome_browser_genomedepot.browser_genome",
+      "phagefoundry.paeruginosa_genome_browser.browser_genome",
+      "phagefoundry.pviridiflava_genome_browser.browser_genome",
+      "phagefoundry.strain_modelling.strainmodelling_gene",
+      "phagefoundry.strain_modelling.strainmodelling_genome",
+      "planetmicrobe.planetmicrobe.sample",
+      "protect.genomedepot.browser_gene",
+      "protect.genomedepot.browser_genome",
+      "protect.genomedepot.browser_protein",
+      "refdata.jgi_virus.imgvr_sequence_info",
+      "refdata.jgi_virus.metavr_main",
+      "refdata.ontology_source.statements",
+      "refdata.spire.genome_metadata",
+      "usgs.produced_waters.usgspwdb_c",
+      "usgs.produced_waters.usgspwdb_n"
+    ]
+  },
+  "caulobacter_fur_lipida_loss": {
+    "databases": [
+      "kescience.fitnessbrowser",
+      "kescience.paperblast"
+    ],
+    "tables": [
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.fitbyexp_caulo",
+      "kescience.fitnessbrowser.gene",
+      "kescience.paperblast.gene"
+    ]
+  },
+  "cf_formulation_design": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "protect.genomedepot"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.ncbi_env",
+      "protect.genomedepot.browser_annotation",
+      "protect.genomedepot.browser_gene",
+      "protect.genomedepot.browser_genome",
+      "protect.genomedepot.browser_taxon"
+    ]
+  },
+  "clay_confined_subsurface": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1",
+      "kbase.ke_pangenome.ncbi_env"
+    ]
+  },
+  "cofitness_coinheritance": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.pangenome",
+      "kbase.ke_pangenome.phylogenetic_tree",
+      "kbase.ke_pangenome.phylogenetic_tree_distance_pairs",
+      "kescience.fitnessbrowser.cofit",
+      "kescience.fitnessbrowser.gene"
+    ]
+  },
+  "cog_analysis": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.pangenome"
+    ]
+  },
+  "conservation_vs_fitness": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.pangenome",
+      "kescience.fitnessbrowser.besthitkegg",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.genefitness",
+      "kescience.fitnessbrowser.keggmember",
+      "kescience.fitnessbrowser.kgroupdesc",
+      "kescience.fitnessbrowser.organism",
+      "kescience.fitnessbrowser.seedannotation",
+      "kescience.fitnessbrowser.seedannotationtoroles",
+      "kescience.fitnessbrowser.seedroles"
+    ]
+  },
+  "costly_dispensable_genes": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": []
+  },
+  "counter_ion_effects": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": []
+  },
+  "ecotype_analysis": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.alphaearth_embeddings_all_years",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.genome_ani"
+    ]
+  },
+  "ecotype_env_reanalysis": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": []
+  },
+  "ecotype_functional_differentiation": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1",
+      "kbase.ke_pangenome.pangenome"
+    ]
+  },
+  "enigma_carbon_census_1": {
+    "databases": [
+      "enigma.coral",
+      "enigma.genome_depot_enigma",
+      "kbase.ke_pangenome",
+      "kbase.msd_biochemistry",
+      "kbase.nmdc_arkin",
+      "kescience.fitnessbrowser",
+      "kescience.paperblast",
+      "nmdc.metadata",
+      "planetmicrobe.planetmicrobe"
+    ],
+    "tables": [
+      "enigma.genome_depot_enigma.browser_gene",
+      "kbase.msd_biochemistry.molecule",
+      "kbase.msd_biochemistry.reagent",
+      "kbase.nmdc_arkin.covstats_taxonomy_rollup",
+      "kbase.nmdc_arkin.sample_file_lookup",
+      "kescience.fitnessbrowser.experiment",
+      "kescience.paperblast.curatedgene",
+      "nmdc.metadata.biosample_set",
+      "planetmicrobe.planetmicrobe.campaign",
+      "planetmicrobe.planetmicrobe.experiment",
+      "planetmicrobe.planetmicrobe.project",
+      "planetmicrobe.planetmicrobe.project_to_sample",
+      "planetmicrobe.planetmicrobe.run",
+      "planetmicrobe.planetmicrobe.run_to_taxonomy",
+      "planetmicrobe.planetmicrobe.sample_to_sampling_event",
+      "planetmicrobe.planetmicrobe.sampling_event",
+      "planetmicrobe.planetmicrobe.taxonomy"
+    ]
+  },
+  "enigma_contamination_functional_potential": {
+    "databases": [
+      "enigma.coral",
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "enigma.coral.ddt_brick0000010",
+      "enigma.coral.sdt_community",
+      "enigma.coral.sdt_location",
+      "enigma.coral.sdt_sample",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.pangenome"
+    ]
+  },
+  "enigma_sso_asv_ecology": {
+    "databases": [
+      "enigma.coral"
+    ],
+    "tables": [
+      "enigma.coral.ddt_brick0000010",
+      "enigma.coral.sdt_genome",
+      "enigma.coral.sdt_location",
+      "enigma.coral.sdt_strain"
+    ]
+  },
+  "env_embedding_explorer": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.alphaearth_embeddings_all_years",
+      "kbase.ke_pangenome.ncbi_env"
+    ]
+  },
+  "essential_genome": {
+    "databases": [
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.genefitness",
+      "kescience.fitnessbrowser.organism",
+      "kescience.fitnessbrowser.ortholog",
+      "kescience.fitnessbrowser.seedannotation"
+    ]
+  },
+  "essential_metabolome": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kbase.msd_biochemistry",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.genome",
+      "kbase.msd_biochemistry.reaction",
+      "kescience.fitnessbrowser.organism"
+    ]
+  },
+  "euk_in_prok_correlates": {
+    "databases": [
+      "kbase.nmdc_arkin",
+      "kbase.nmdc_mags",
+      "kbase.nmdc_neon",
+      "kescience.mgnify",
+      "nmdc.metadata",
+      "nmdc.ncbi_biosamples",
+      "nmdc.results"
+    ],
+    "tables": [
+      "kbase.nmdc_arkin.centrifuge_gold",
+      "kbase.nmdc_arkin.gottcha_gold",
+      "kbase.nmdc_arkin.kraken_gold",
+      "kbase.nmdc_arkin.omics_files_table",
+      "kbase.nmdc_arkin.study_table",
+      "nmdc.metadata.biosample_set",
+      "nmdc.metadata.biosample_set_associated_studies",
+      "nmdc.metadata.biosample_to_workflow_run",
+      "nmdc.metadata.data_generation_set",
+      "nmdc.metadata.data_generation_set_has_input",
+      "nmdc.metadata.data_generation_set_instrument_used",
+      "nmdc.metadata.instrument_set",
+      "nmdc.metadata.material_processing_set",
+      "nmdc.metadata.material_processing_set_has_input",
+      "nmdc.metadata.study_set",
+      "nmdc.results.centrifuge_output_report_file",
+      "nmdc.results.gottcha2_classification_report",
+      "nmdc.results.kraken2_classification_report"
+    ]
+  },
+  "field_vs_lab_fitness": {
+    "databases": [
+      "enigma.coral",
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "enigma.coral.sdt_community",
+      "enigma.coral.sdt_condition",
+      "enigma.coral.sdt_dubseq_library",
+      "enigma.coral.sdt_location",
+      "enigma.coral.sdt_sample",
+      "enigma.coral.sdt_strain",
+      "enigma.coral.sdt_taxon",
+      "enigma.coral.sdt_tnseq_library"
+    ]
+  },
+  "fitness_effects_conservation": {
+    "databases": [
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.genefitness",
+      "kescience.fitnessbrowser.specificphenotype"
+    ]
+  },
+  "fitness_modules": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kescience.fitnessbrowser.besthitkegg",
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.genedomain",
+      "kescience.fitnessbrowser.genefitness",
+      "kescience.fitnessbrowser.keggmember",
+      "kescience.fitnessbrowser.kgroupdesc",
+      "kescience.fitnessbrowser.kgroupec",
+      "kescience.fitnessbrowser.organism",
+      "kescience.fitnessbrowser.ortholog",
+      "kescience.fitnessbrowser.seedannotation",
+      "kescience.fitnessbrowser.specificphenotype"
+    ]
+  },
+  "functional_dark_matter": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kbase.nmdc_arkin",
+      "kescience.fitnessbrowser",
+      "nmdc.results"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.alphaearth_embeddings_all_years",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.ncbi_env",
+      "kbase.nmdc_arkin.abiotic_features",
+      "kbase.nmdc_arkin.taxonomy_dim",
+      "kbase.nmdc_arkin.taxonomy_features",
+      "kbase.nmdc_arkin.trait_features",
+      "kescience.fitnessbrowser.cofit",
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.genedomain",
+      "kescience.fitnessbrowser.genefitness",
+      "kescience.fitnessbrowser.organism",
+      "kescience.fitnessbrowser.ortholog",
+      "kescience.fitnessbrowser.specificphenotype",
+      "kescience.fitnessbrowser.specog"
+    ]
+  },
+  "fw300_metabolic_consistency": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.bacdive",
+      "kescience.fitnessbrowser",
+      "kescience.webofmicrobes"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kescience.bacdive.metabolite_utilization",
+      "kescience.bacdive.strain",
+      "kescience.bacdive.taxonomy",
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.genefitness",
+      "kescience.fitnessbrowser.seedannotation",
+      "kescience.webofmicrobes.compound",
+      "kescience.webofmicrobes.environment",
+      "kescience.webofmicrobes.observation",
+      "kescience.webofmicrobes.organism",
+      "kescience.webofmicrobes.project"
+    ]
+  },
+  "gene_function_ecological_agora": {
+    "databases": [
+      "kbase.genomes",
+      "kbase.ke_pangenome",
+      "kbase.nmdc_arkin",
+      "kbase.uniprot",
+      "kbase.uniref50",
+      "kbase.uniref90",
+      "kescience.bacdive",
+      "kescience.fitnessbrowser",
+      "kescience.mgnify"
+    ],
+    "tables": [
+      "kbase.genomes.contig_x_feature",
+      "kbase.genomes.feature",
+      "kbase.genomes.name",
+      "kbase.ke_pangenome.alphaearth_embeddings_all_years",
+      "kbase.ke_pangenome.bakta_amr",
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.bakta_db_xrefs",
+      "kbase.ke_pangenome.bakta_pfam_domains",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.interproscan_domains",
+      "kbase.ke_pangenome.interproscan_go",
+      "kbase.ke_pangenome.interproscan_pathways",
+      "kbase.ke_pangenome.ncbi_env",
+      "kbase.ke_pangenome.pangenome",
+      "kbase.ke_pangenome.sample",
+      "kbase.nmdc_arkin.taxonomy_features",
+      "kescience.bacdive.sequence_info",
+      "kescience.bacdive.strain",
+      "kescience.mgnify.genome",
+      "kescience.mgnify.species"
+    ]
+  },
+  "genotype_to_phenotype_enigma": {
+    "databases": [
+      "arkinlab.microbeatlas",
+      "enigma.coral",
+      "enigma.genome_depot_enigma",
+      "globalusers.carbon_source_phenotypes",
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser",
+      "kescience.webofmicrobes"
+    ],
+    "tables": [
+      "arkinlab.microbeatlas.enriched_metadata_gee",
+      "arkinlab.microbeatlas.otu_counts_long",
+      "arkinlab.microbeatlas.otu_metadata",
+      "enigma.coral.ddt_brick0000010",
+      "enigma.coral.ddt_brick0000080",
+      "enigma.coral.ddt_brick0000476",
+      "enigma.coral.ddt_ndarray",
+      "enigma.coral.sdt_asv",
+      "enigma.coral.sdt_community",
+      "enigma.coral.sdt_genome",
+      "enigma.coral.sdt_location",
+      "enigma.coral.sdt_sample",
+      "kbase.ke_pangenome.ncbi_env",
+      "kescience.fitnessbrowser.besthitkegg",
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.genefitness",
+      "kescience.fitnessbrowser.keggmember",
+      "kescience.fitnessbrowser.kgroupdesc",
+      "kescience.webofmicrobes.compound",
+      "kescience.webofmicrobes.observation",
+      "kescience.webofmicrobes.organism"
+    ]
+  },
+  "harvard_forest_warming": {
+    "databases": [
+      "kbase.nmdc_arkin",
+      "nmdc.metadata",
+      "nmdc.results"
+    ],
+    "tables": [
+      "kbase.nmdc_arkin.metabolomics_gold",
+      "nmdc.metadata.biosample_set",
+      "nmdc.metadata.biosample_set_associated_studies",
+      "nmdc.metadata.biosample_to_workflow_run",
+      "nmdc.metadata.study_set",
+      "nmdc.metadata.workflow_execution_set",
+      "nmdc.metadata.workflow_execution_set_has_metabolite_identifications",
+      "nmdc.results.annotation_kegg_orthology",
+      "nmdc.results.annotation_statistics",
+      "nmdc.results.gtdbtk_bacterial_summary",
+      "nmdc.results.kraken2_classification_report",
+      "nmdc.results.pfam_annotation_gff"
+    ]
+  },
+  "ibd_phage_targeting": {
+    "databases": [
+      "kbase.genomes",
+      "kbase.ke_pangenome",
+      "kescience.bacdive",
+      "kescience.fitnessbrowser",
+      "kescience.mgnify",
+      "kescience.paperblast",
+      "kescience.pubmed",
+      "phagefoundry.strain_modelling"
+    ],
+    "tables": []
+  },
+  "lab_field_ecology": {
+    "databases": [
+      "enigma.coral"
+    ],
+    "tables": [
+      "enigma.coral.ddt_brick0000010",
+      "enigma.coral.ddt_brick0000459",
+      "enigma.coral.ddt_brick0000476",
+      "enigma.coral.sdt_community",
+      "enigma.coral.sdt_location",
+      "enigma.coral.sdt_sample"
+    ]
+  },
+  "lanthanide_methylotrophy_atlas": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.bacdive"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1",
+      "kbase.ke_pangenome.ncbi_env"
+    ]
+  },
+  "lignin_community_enrichment": {
+    "databases": [
+      "enigma.genome_depot_enigma",
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "enigma.genome_depot_enigma.browser_cazy_family",
+      "enigma.genome_depot_enigma.browser_gene",
+      "enigma.genome_depot_enigma.browser_genome",
+      "enigma.genome_depot_enigma.browser_kegg_ortholog",
+      "enigma.genome_depot_enigma.browser_protein",
+      "enigma.genome_depot_enigma.browser_protein_cazy_families",
+      "enigma.genome_depot_enigma.browser_protein_kegg_orthologs",
+      "enigma.genome_depot_enigma.browser_taxon"
+    ]
+  },
+  "metabolic_capability_dependency": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.pangenome",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.genefitness",
+      "kescience.fitnessbrowser.organism",
+      "kescience.fitnessbrowser.seedannotation"
+    ]
+  },
+  "metal_cross_resistance": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.bacdive",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kescience.bacdive.isolation",
+      "kescience.bacdive.strain",
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.genefitness",
+      "kescience.fitnessbrowser.organism"
+    ]
+  },
+  "metal_fitness_atlas": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.pangenome"
+    ]
+  },
+  "metal_resistance_global_biogeography": {
+    "databases": [
+      "kescience.mgnify"
+    ],
+    "tables": [
+      "kescience.mgnify.biome",
+      "kescience.mgnify.gene_amr",
+      "kescience.mgnify.genome"
+    ]
+  },
+  "microbeatlas_metal_ecology": {
+    "databases": [
+      "arkinlab.microbeatlas",
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "arkinlab.microbeatlas.enriched_metadata",
+      "arkinlab.microbeatlas.otu_counts_long",
+      "arkinlab.microbeatlas.otu_metadata",
+      "arkinlab.microbeatlas.sample_metadata",
+      "kbase.ke_pangenome.bakta_amr",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.gtdb_species_clade"
+    ]
+  },
+  "nmdc_community_metabolic_ecology": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kbase.nmdc_arkin",
+      "nmdc.ncbi_biosamples"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.nmdc_arkin.abiotic_features",
+      "kbase.nmdc_arkin.centrifuge_gold",
+      "kbase.nmdc_arkin.embeddings_v1",
+      "kbase.nmdc_arkin.kraken_gold",
+      "kbase.nmdc_arkin.metabolomics_gold",
+      "kbase.nmdc_arkin.omics_files_table",
+      "kbase.nmdc_arkin.sample_tokens_v1",
+      "kbase.nmdc_arkin.study_table",
+      "kbase.nmdc_arkin.taxonomy_features",
+      "nmdc.ncbi_biosamples.biosamples_ids",
+      "nmdc.ncbi_biosamples.biosamples_links"
+    ]
+  },
+  "nmdc_context_audit": {
+    "databases": [
+      "globalusers.nmdc_core_test3",
+      "kbase.nmdc_arkin",
+      "kbase.nmdc_mags",
+      "kbase.nmdc_neon",
+      "nmdc.metadata",
+      "nmdc.ncbi_biosamples",
+      "nmdc.ref_data",
+      "nmdc.results"
+    ],
+    "tables": [
+      "nmdc.metadata.biosample_set",
+      "nmdc.results.annotation_kegg_orthology"
+    ]
+  },
+  "openness_functional_composition": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.pangenome"
+    ]
+  },
+  "pangenome_openness": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.genome"
+    ]
+  },
+  "pangenome_pathway_ecology": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.alphaearth_embeddings_all_years",
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.pangenome"
+    ]
+  },
+  "pangenome_pathway_geography": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.alphaearth_embeddings_all_years",
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.pangenome"
+    ]
+  },
+  "paperblast_explorer": {
+    "databases": [
+      "kescience.paperblast"
+    ],
+    "tables": []
+  },
+  "pathway_capability_dependency": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.pangenome",
+      "kescience.fitnessbrowser.besthitkegg",
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.genefitness"
+    ]
+  },
+  "pgp_pangenome_ecology": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1",
+      "kbase.ke_pangenome.pangenome"
+    ]
+  },
+  "phage_defense_arsenal": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.interproscan_domains",
+      "kbase.ke_pangenome.pangenome"
+    ]
+  },
+  "phb_granule_ecology": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kbase.nmdc_arkin",
+      "nmdc.ncbi_biosamples"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.alphaearth_embeddings_all_years",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.ncbi_env",
+      "kbase.ke_pangenome.pangenome",
+      "kbase.nmdc_arkin.abiotic_features",
+      "kbase.nmdc_arkin.annotation_terms_unified",
+      "kbase.nmdc_arkin.embedding_metadata",
+      "kbase.nmdc_arkin.kegg_ko_terms",
+      "kbase.nmdc_arkin.metabolomics_gold",
+      "kbase.nmdc_arkin.metatranscriptomics_gold",
+      "kbase.nmdc_arkin.study_table",
+      "kbase.nmdc_arkin.taxonomy_dim",
+      "kbase.nmdc_arkin.taxonomy_features",
+      "kbase.nmdc_arkin.taxstring_lookup",
+      "kbase.nmdc_arkin.trait_features",
+      "nmdc.ncbi_biosamples.env_triads_flattened"
+    ]
+  },
+  "plant_microbiome_ecotypes": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kbase.nmdc_arkin",
+      "kescience.bacdive",
+      "kescience.mgnify"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.bakta_pfam_domains",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1",
+      "kbase.ke_pangenome.interproscan_domains",
+      "kbase.ke_pangenome.interproscan_go",
+      "kbase.ke_pangenome.interproscan_pathways",
+      "kbase.ke_pangenome.ncbi_env",
+      "kbase.ke_pangenome.pangenome",
+      "kbase.ke_pangenome.phylogenetic_tree",
+      "kbase.ke_pangenome.phylogenetic_tree_distance_pairs",
+      "kbase.ke_pangenome.sample",
+      "kbase.nmdc_arkin.kraken_gold",
+      "kbase.nmdc_arkin.omics_files_table",
+      "kbase.nmdc_arkin.study_table",
+      "kescience.bacdive.isolation",
+      "kescience.bacdive.metabolite_utilization",
+      "kescience.bacdive.sequence_info",
+      "kescience.bacdive.taxonomy",
+      "kescience.mgnify.gene_bgc",
+      "kescience.mgnify.gene_mobilome",
+      "kescience.mgnify.genome",
+      "kescience.mgnify.genome_cog",
+      "kescience.mgnify.genome_kegg_module",
+      "kescience.mgnify.species"
+    ]
+  },
+  "prophage_amr_comobilization": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.bakta_amr",
+      "kbase.ke_pangenome.bakta_annotations",
+      "kbase.ke_pangenome.bakta_pfam_domains",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1",
+      "kbase.ke_pangenome.pangenome",
+      "kescience.fitnessbrowser.genefitness"
+    ]
+  },
+  "prophage_ecology": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kbase.nmdc_arkin"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.alphaearth_embeddings_all_years",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1",
+      "kbase.ke_pangenome.ncbi_env",
+      "kbase.ke_pangenome.pangenome",
+      "kbase.nmdc_arkin.abiotic_features",
+      "kbase.nmdc_arkin.study_table",
+      "kbase.nmdc_arkin.taxonomy_dim",
+      "kbase.nmdc_arkin.taxonomy_features"
+    ]
+  },
+  "pseudomonas_carbon_ecology": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.ncbi_env",
+      "kbase.ke_pangenome.pangenome",
+      "kbase.ke_pangenome.sample"
+    ]
+  },
+  "resistance_hotspots": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.pangenome"
+    ]
+  },
+  "respiratory_chain_wiring": {
+    "databases": [
+      "kescience.fitnessbrowser"
+    ],
+    "tables": [
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.genefitness"
+    ]
+  },
+  "snipe_defense_system": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser",
+      "phagefoundry.acinetobacter_genome_browser",
+      "phagefoundry.klebsiella_genome_browser_genomedepot",
+      "phagefoundry.paeruginosa_genome_browser",
+      "phagefoundry.pviridiflava_genome_browser",
+      "phagefoundry.strain_modelling"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.alphaearth_embeddings_all_years",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1"
+    ]
+  },
+  "soil_frontier_genomics": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": []
+  },
+  "soil_metal_functional_genomics": {
+    "databases": [
+      "arkinlab.microbeatlas",
+      "kbase.ke_pangenome",
+      "kescience.mgnify"
+    ],
+    "tables": []
+  },
+  "t4ss_cazy_environmental_hgt": {
+    "databases": [
+      "kescience.bacdive",
+      "kescience.fitnessbrowser",
+      "kescience.mgnify"
+    ],
+    "tables": [
+      "kescience.bacdive.metabolite_utilization",
+      "kescience.bacdive.taxonomy",
+      "kescience.fitnessbrowser.kgroupdesc",
+      "kescience.mgnify.biome",
+      "kescience.mgnify.gene",
+      "kescience.mgnify.gene_amr",
+      "kescience.mgnify.gene_eggnog",
+      "kescience.mgnify.gene_mobilome",
+      "kescience.mgnify.genome",
+      "kescience.mgnify.genome_cazy"
+    ]
+  },
+  "temporal_core_dynamics": {
+    "databases": [
+      "kbase.ke_pangenome"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.gene_cluster",
+      "kbase.ke_pangenome.gene_genecluster_junction",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.ncbi_env",
+      "kbase.ke_pangenome.pangenome"
+    ]
+  },
+  "truly_dark_genes": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kescience.fitnessbrowser"
+    ],
+    "tables": []
+  },
+  "webofmicrobes_explorer": {
+    "databases": [
+      "kbase.ke_pangenome",
+      "kbase.msd_biochemistry",
+      "kescience.fitnessbrowser",
+      "kescience.webofmicrobes"
+    ],
+    "tables": [
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.pangenome",
+      "kbase.msd_biochemistry.molecule",
+      "kescience.fitnessbrowser.experiment",
+      "kescience.fitnessbrowser.gene",
+      "kescience.fitnessbrowser.organism",
+      "kescience.webofmicrobes.compound",
+      "kescience.webofmicrobes.environment",
+      "kescience.webofmicrobes.observation",
+      "kescience.webofmicrobes.organism",
+      "kescience.webofmicrobes.project"
+    ]
+  }
+}

@@ -6,6 +6,7 @@ import json
 import pathlib
 
 from beril_wiki.publish.cards.corpus import ISSUES, Corpus, eligible, join, result_type
+from beril_wiki.publish.cards.data import cited, data_page
 from beril_wiki.publish.cards.links import links_index, shared_index
 from beril_wiki.publish.cards.pages import follow_fields, issues_page
 from beril_wiki.publish.cards.picks import home_picks, pick_lists
@@ -13,11 +14,11 @@ from beril_wiki.publish.cards.text import (
     CHIP,
     COMPARE_NOTES,
     COMPARE_ORDER,
-    FOLLOW_NOTES,
     FOLLOW_ORDER,
     FOLLOW_TEXT,
     NOT_ASSESSED,
     SOMETHING_NEW,
+    follow_notes,
 )
 from beril_wiki.records import title_of
 
@@ -66,11 +67,22 @@ def export(c: Corpus) -> dict:
         }
         | {
             k: fields.get(k, [])
-            for k in ("collections", "findings", "conflicts", "papers", "projects", "topics")
+            for k in (
+                "findings",
+                "conflicts",
+                "papers",
+                "projects",
+                "topics",
+            )
         }
+        # The checked databases and tables come from here, not the direction's frontmatter.
         | follow_fields(fields | {"_id": d}, c)
         for d, (fields, body) in c.directions.items()
     ]
+    for entry in directions:
+        # Not checked yet makes no data claim, so the readiness note stays out.
+        if entry["follow"] == "unchecked":
+            entry["readiness_basis"] = None
     issues = {sid: [b["text"] for b in items] for sid, items in c.issues.items()}
     return {
         "findings": findings,
@@ -107,7 +119,8 @@ def picture_data(c: Corpus) -> dict:
 
 
 def write_extras(dst: pathlib.Path, c: Corpus, provenance: str) -> int:
-    """Collection landing pages and the JSON export; returns the pages written."""
+    """Collection landing pages, generated data pages and the JSON export; returns the
+    pages written."""
     n = 0
     for folder, pages in (("findings", c.findings), ("directions", c.directions)):
         if pages:
@@ -119,7 +132,7 @@ def write_extras(dst: pathlib.Path, c: Corpus, provenance: str) -> int:
                 fields |= {
                     "follow_order": FOLLOW_ORDER,
                     "follow_text": FOLLOW_TEXT,
-                    "follow_notes": FOLLOW_NOTES,
+                    "follow_notes": follow_notes(c.catalog.tenants_covered(), c.catalog.snapshot()),
                 }
             (dst / folder / "index.md").write_text(
                 join(fields, f"{provenance}\n\n{blurb}\n"), encoding="utf-8"
@@ -143,5 +156,13 @@ def write_extras(dst: pathlib.Path, c: Corpus, provenance: str) -> int:
             encoding="utf-8",
         )
         n += len(c.issues) + 1
+    for database in cited(c):
+        if c.catalog.curated(database):
+            continue
+        tables = [r for r in c.catalog.tables if r["database"] == database]
+        page = dst / f"{c.catalog.route(database)}.md"
+        page.parent.mkdir(parents=True, exist_ok=True)
+        page.write_text(data_page(database, tables, c, provenance), encoding="utf-8")
+        n += 1
     (dst / "cards.json").write_text(json.dumps(export(c), indent=1), encoding="utf-8")
     return n

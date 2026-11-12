@@ -37,3 +37,23 @@ jobs:
       # Recorded-response tests: no model calls, no network, no keys.
       - name: Tests
         run: uv run pytest -q
+
+  # Model-free: a publisher branch (wiki/<id>) may only touch its own project.
+  # Other branches pass, so maintainer and code PRs are unchanged.
+  scope:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync
+      - name: Publisher branch scope
+        env:
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+        run: >-
+          uv run python scripts/check_update.py
+          --base origin/${{ github.base_ref }} --head ${{ github.event.pull_request.head.sha }}

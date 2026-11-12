@@ -14,7 +14,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-from collections.abc import Callable, Iterator
+from collections.abc import Callable, Iterator, Sequence
 from pathlib import Path
 from typing import TypeVar
 
@@ -44,7 +44,7 @@ from beril_wiki.agentic.runtime import (
     runtime,
 )
 from beril_wiki.check import figures_in, prose_only
-from beril_wiki.records import source_path, title_of
+from beril_wiki.records import source_path
 
 T = TypeVar("T")
 M = TypeVar("M", bound=BaseModel)
@@ -94,6 +94,37 @@ def each_job(
         yield item, result
 
 
+TOPIC_KEYED = ("directions", "followups")
+
+
+def project_of(fid: str) -> str:
+    """The project of a finding id, `<project>--<8 hex>`."""
+    return fid.rsplit("--", 1)[0]
+
+
+def owners(store: str, key: str, members: Sequence[str] = ()) -> set[str] | None:
+    """The projects an entry of `state/<store>.json` belongs to; None for a topic-keyed
+    store. A shared group's projects are those of its `members`."""
+    if store in TOPIC_KEYED:
+        return None
+    if store == "headlines":
+        return {key}
+    if store == "shared":
+        return {project_of(m) for m in members}
+    if store == "links":
+        kind, _, ends = key.partition(":")
+        parts = ends.replace(">", "|").split("|")
+        return {project_of(p) for p in parts} if kind == "pair" else set(parts)
+    return {project_of(key)}
+
+
+def leaves_failed(config: dict, failed: bool, projects: set[str] | None) -> bool:
+    """Whether this run leaves a saved failed entry as it is: a run published for one
+    project (`expect_source`) does not re-ask another project's or a topic's failure."""
+    project = config.get("expect_source")
+    return bool(project) and failed and (projects is None or project not in projects)
+
+
 def exit_code(failed: int) -> int:
     """A stage's exit status: failed items stop the run only under --strict-pages."""
     return 1 if failed and strict_pages() else 0
@@ -134,19 +165,6 @@ def write_page(path: Path, fields: dict, body: str) -> None:
 
 def read_page(path: Path) -> tuple[dict, str]:
     return C.parse_fm(path.read_text(encoding="utf-8"))
-
-
-def collections(root: Path) -> dict[str, str]:
-    """Collection page stem -> its title, from wiki/data/."""
-    out = {}
-    for path in sorted((root / "wiki/data").glob("*.md")):
-        if path.stem != "index":
-            out[path.stem] = title_of(path.read_text(encoding="utf-8"), path.stem)
-    return out
-
-
-def collection_id(name: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
 
 
 def new_figures(text: str, pool: str) -> list[str]:

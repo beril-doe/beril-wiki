@@ -19,6 +19,7 @@ import subprocess
 import sys
 
 from beril_wiki import evidence
+from beril_wiki.corpus import FIG_EMBED, figure_destination
 from beril_wiki.publish import cards
 
 SRC_TAG = re.compile(r"\[src:\s*([^\]]+)\]")
@@ -387,8 +388,14 @@ def split_paragraphs(body: str) -> list[str]:
 
 
 def fig_src(kb: pathlib.Path, project: str, rel: str) -> pathlib.Path:
-    """A figure's committed location: wiki/figures/<project>/<path-under-figures/>."""
-    return kb / "wiki" / "figures" / project / re.sub(r"^figures/", "", rel)
+    """A figure's committed location under wiki/figures/ (see ``corpus.figure_destination``)."""
+    return kb / "wiki" / "figures" / figure_destination(project, rel)
+
+
+def published_name(rel: str) -> str:
+    """A figure's path under the site's figures/<project>/."""
+    # Run-output embeds keep their path: two runs may both write figures/a.png.
+    return pathlib.Path(rel).name if rel.startswith("figures/") else rel
 
 
 def splice_figures(text: str, entry: dict, kb: pathlib.Path, dst_root: pathlib.Path) -> str:
@@ -401,7 +408,7 @@ def splice_figures(text: str, entry: dict, kb: pathlib.Path, dst_root: pathlib.P
         src = fig_src(kb, pl["project"], pl["file"])
         if not src.exists():
             continue
-        name = pathlib.Path(pl["file"]).name
+        name = published_name(pl["file"])
         copy_figure(src, dst_root / "figures" / pl["project"] / name)
         block = (
             f"![{pl['caption']}](../figures/{pl['project']}/{name})\n"
@@ -417,14 +424,15 @@ def rewrite_source_figures(
     text: str, project: str, kb: pathlib.Path, dst_root: pathlib.Path
 ) -> str:
     def repl(m: re.Match) -> str:
-        src = fig_src(kb, project, m.group(2))
+        alt, rel = m.group(0)[2 : m.group(0).index("](")], m.group(1)
+        src = fig_src(kb, project, rel)
         if not src.exists():
-            return m.group(1)  # drop the broken embed, keep the alt text
-        name = pathlib.Path(m.group(2)).name
+            return alt  # drop the broken embed, keep the alt text
+        name = published_name(rel)
         copy_figure(src, dst_root / "figures" / project / name)
-        return f"![{m.group(1)}](../figures/{project}/{name})"
+        return f"![{alt}](../figures/{project}/{name})"
 
-    return re.sub(r"!\[([^\]]*)\]\((figures/[^)]+)\)", repl, text)
+    return FIG_EMBED.sub(repl, text)
 
 
 def linkify_src(text: str, summary_pages: set[str]) -> str:
@@ -552,6 +560,7 @@ def main() -> None:
     records = cards.Corpus(kb)
     # Maintainer lists are written straight to the site, so no wiki page backs them.
     targets |= {f"{cards.ISSUES}/{_slug(sid)}" for sid in records.issues}
+    targets |= cards.generated_routes(records)
     shutil.rmtree(dst, ignore_errors=True)
 
     n = 0
@@ -568,6 +577,8 @@ def main() -> None:
         text = src.read_text(encoding="utf-8", errors="replace")
         if rel.parts[0] in cards.DIRS:
             text = cards.record(rel, records)
+        if rel == pathlib.Path("about.md"):
+            text = cards.about_text(text, records.catalog)
         if rel.parts[0] == "sources" and rel.stem.endswith("__REPORT"):
             text = rewrite_source_figures(text, re.sub(r"__REPORT$", "", rel.stem), kb, dst)
         # Report prose carries links into the observatory checkout and
@@ -646,6 +657,12 @@ def main() -> None:
     assets = root / "assets"
     if assets.is_dir():
         shutil.copytree(assets, dst / "assets", dirs_exist_ok=True)
+
+    # Byte-identical copy: the Workbench compares source digests against it to
+    # tell a researcher whether the live page is current.
+    manifest = kb / "corpus" / "manifest.json"
+    if manifest.is_file():
+        shutil.copyfile(manifest, dst / "corpus-manifest.json")
 
     print(f"wrote {n} pages -> {dst}")
 

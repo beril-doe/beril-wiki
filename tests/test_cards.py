@@ -183,7 +183,7 @@ def test_check_flags_card_errors(tmp_path):
     )
     cards.write_page(
         wiki / "directions/s--abc123.md",
-        {"collections": ["kbase-nope"], "builds_on": ["findings/gone"], "papers": ["777"]},
+        {"tables": ["kbase.nope.x"], "builds_on": ["findings/gone"], "papers": ["777"]},
         "# Recompute the stress rates\n\nWhy?\n",
     )
     (wiki / "data").mkdir()
@@ -201,7 +201,7 @@ def test_check_flags_card_errors(tmp_path):
     assert "unknown label 'Novel!'" in errors
     assert "PMID 9 was not retrieved" in errors
     assert "a--gone0000: no such finding" in errors
-    assert "collection 'kbase-nope'" in errors
+    assert "table 'kbase.nope.x' is not in the lakehouse catalog" in errors
     assert "builds on 'findings/gone'" in errors
     assert "PMID 777 is not a closest paper" in errors
     assert "asks to redo existing work" in errors
@@ -228,6 +228,30 @@ def test_shared_card_modules_reschedule_only_card_stages(tmp_path, monkeypatch, 
         assert after[name] == before[name]
     for name in C.CARD_STAGES:
         assert after[name] != before[name]
+
+
+def test_lakehouse_view_reschedules_only_directions_and_followups(tmp_path, monkeypatch):
+    """The catalog view is hashed for the two stages that read it, not through CARD_FILES,
+    which would reschedule all eight card stages."""
+    from beril_wiki.agentic import curator as C
+
+    (tmp_path / "contract").mkdir()
+    before = {name: C.stage_revision(tmp_path, name) for name in C.EDITORIAL}
+    real = C.Path.read_text
+
+    def edited(self, *args, **kwargs):
+        text = real(self, *args, **kwargs)
+        return (
+            text + "\nEDITED = 1\n" if self.as_posix().endswith("beril_wiki/lakehouse.py") else text
+        )
+
+    monkeypatch.setattr(C.Path, "read_text", edited)
+    after = {name: C.stage_revision(tmp_path, name) for name in C.EDITORIAL}
+    for name in C.EDITORIAL:
+        if name in ("directions", "followups"):
+            assert after[name] != before[name]
+        else:
+            assert after[name] == before[name], name
 
 
 def test_cards_command_runs_only_card_stages(tmp_path, monkeypatch):

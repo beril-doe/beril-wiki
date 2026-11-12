@@ -31,6 +31,8 @@ from claude_agent_sdk import (
     tool,
 )
 
+from beril_wiki.agentic import progress
+
 
 class WorkflowError(RuntimeError):
     """Stop without accepting partial work or silently spending more tokens."""
@@ -404,6 +406,7 @@ class Ledger:
         usd_caps: dict[str, float] | None = None,
         usd_reserve: float = 0.40,
         caps: dict | None = None,
+        invocation: str | None = None,
     ):
         if min(budget, max_jobs, reserve) <= 0 or stage_budget < 0:
             raise ValueError("budgets must be positive")
@@ -414,12 +417,16 @@ class Ledger:
         # SDK's own estimate) and raw Codex tokens, each with headroom held for every
         # job of that backend still in flight. A pilot sets them; usd_caps cap stages.
         self.caps = caps or {}
+        self.store = path.parent
         path.parent.mkdir(parents=True, exist_ok=True)
         # A page session's review tool runs a Claude reviewer's query on a helper thread
         # (run_coroutine) while the session's thread waits, so access stays serial.
         self.db = sqlite3.connect(path, timeout=30, check_same_thread=False)
         self.run, self.budget, self.max_jobs, self.headroom = run, budget, max_jobs, reserve
         self.stage_budget = stage_budget
+        # A named budget run spans invocations: its USD and Codex caps add up across
+        # them, while max_jobs and max_tokens count only this invocation's jobs.
+        self.invocation = invocation
         self.db.execute("PRAGMA journal_mode=WAL")
         self.db.execute("""CREATE TABLE IF NOT EXISTS jobs (
             key TEXT PRIMARY KEY, run TEXT NOT NULL, status TEXT NOT NULL,
@@ -436,6 +443,7 @@ class Ledger:
             ("stage", "TEXT"),
             ("effective", "INTEGER"),
             ("cost", "REAL"),
+            ("invocation", "TEXT"),
         ):
             if column not in columns:
                 self.db.execute(f"ALTER TABLE jobs ADD COLUMN {column} {kind}")
@@ -474,8 +482,8 @@ class Ledger:
             # Pending rows are jobs in flight in a worker; each holds its own headroom.
             count, spent, inflight = self.db.execute(
                 "SELECT count(*),coalesce(sum(effective),0),coalesce(sum(status='pending'),0) "
-                "FROM jobs WHERE run=?",
-                (self.run,),
+                "FROM jobs WHERE run=? AND (? IS NULL OR invocation=?)",
+                (self.run, self.invocation, self.invocation),
             ).fetchone()
             if count >= self.max_jobs or spent + self.headroom * (inflight + 1) > self.budget:
                 raise WorkflowError(
@@ -497,9 +505,9 @@ class Ledger:
             # A capped run holds each pending job's possible spend in its cost (Claude)
             # or tokens (Codex) until finish() records the real figure.
             self.db.execute(
-                "INSERT INTO jobs(key,run,status,step,model,stage,cost,tokens) "
-                "VALUES(?,?,'pending',?,?,?,?,?)",
-                (key, self.run, step, model, stage, held_usd, held_tokens),
+                "INSERT INTO jobs(key,run,status,step,model,stage,cost,tokens,invocation) "
+                "VALUES(?,?,'pending',?,?,?,?,?,?)",
+                (key, self.run, step, model, stage, held_usd, held_tokens, self.invocation),
             )
             self.db.commit()
             return None
@@ -605,6 +613,7 @@ class Ledger:
                     key,
                 ),
             )
+        self._finished(key)
         if not valid:
             raise WorkflowError(f"unknown token usage for {key}; saved output, stopped scheduling")
 
@@ -646,6 +655,21 @@ class Ledger:
             ).rowcount
         if not changed:
             raise WorkflowError("job is not pending/unknown")
+        self._finished(key)
+
+    def _finished(self, key: str) -> None:
+        """A `job` progress line for a job that now holds its final charge."""
+        if not progress.enabled():
+            return
+        row = self.db.execute("SELECT stage,step FROM jobs WHERE key=?", (key,)).fetchone()
+        stage, step = row or ("", "")
+        progress.emit(
+            "job",
+            stage=stage or "",
+            step=step or "",
+            **progress.counts(self.db, self.run),
+            failed_pages=progress.failed_pages(self.store),
+        )
 
     def unreported(self, key: str) -> int:
         """The token charge for a job that reported no usage: the headroom, or the larger
@@ -1001,6 +1025,7 @@ class Runtime:
             config.get("stage_max_usd") or {},
             config.get("usd_reserve", 0.40),
             {k: config[k] for k in ("max_usd", "max_codex_tokens") if config.get(k)},
+            config.get("invocation"),
         )
 
     def ask(self, messages: list[dict], step: str, *, model: str | None = None) -> str:
