@@ -44,6 +44,15 @@
       "kbase.ke_pangenome.gtdb_species_clade"
     ]
   },
+  "are-fba-versus-tnseq-disagreements-in-adp1-mostly-caused-by--460c05": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "2f89f999816cfd62398a1ad840640ca5437892b16b152065f1fdc88803dbb579",
+    "model": "claude-haiku-5-5",
+    "need": "outside",
+    "reason": "Deciding redundancy needs double-deletion growth data, which the ADP1 model and transposon calls must first supply, and the lakehouse catalog did not show either.",
+    "tables": []
+  },
   "are-fungal-lignin-enrichment-communities-variable-because-of--be21b0": {
     "data_unclear": false,
     "first_step_existing": false,
@@ -86,23 +95,6 @@
       "kescience.fitnessbrowser.organism",
       "kescience.fitnessbrowser.experiment",
       "kescience.fitnessbrowser.genefitness"
-    ]
-  },
-  "are-large-bacterial-genomes-rich-in-prophage-modules-because--3e281b": {
-    "data_unclear": true,
-    "first_step_existing": false,
-    "input": "15cc47a4a743743d244c25211a9103dc2a3d56991dd9ca63923627e7c9508918",
-    "model": "claude-haiku-5-5",
-    "need": "existing",
-    "reason": "Core, accessory and singleton status of prophage-annotated clusters, linked to genome size, can decide it in the KBase Data Lakehouse; dedicated prophage calls are a secondary check.",
-    "tables": [
-      "kbase.ke_pangenome.gene_cluster",
-      "kbase.ke_pangenome.gene_genecluster_junction",
-      "kbase.ke_pangenome.gene",
-      "kbase.ke_pangenome.genome",
-      "kbase.ke_pangenome.eggnog_mapper_annotations",
-      "kbase.ke_pangenome.pangenome",
-      "kbase.ke_pangenome.gtdb_metadata"
     ]
   },
   "are-metal-resistance-hotspots-in-environmental-genomes-set-b--631e2d": {
@@ -383,6 +375,22 @@
       "kescience.mgnify.gene_bgc"
     ]
   },
+  "do-metal-contaminated-site-strains-gain-metal-genes-within-s--529fb0": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "ae86642ab548385144ba3acf040e88c979e13ee4cf4ad78419e5198f4c391562",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "The hypothesis is decided by genome isolation sources and metal-resistance annotations within shared species, which the KBase Data Lakehouse holds, though species-name matching is partial.",
+    "tables": [
+      "kescience.bacdive.isolation",
+      "kescience.bacdive.strain",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.gtdb_species_clade",
+      "kbase.ke_pangenome.eggnog_mapper_annotations"
+    ]
+  },
   "do-resistance-genes-share-neighbors-with-flagellar-genes-bec--6cd46e": {
     "data_unclear": true,
     "first_step_existing": false,
@@ -403,6 +411,19 @@
       "kescience.mgnify.gene_eggnog",
       "kescience.mgnify.gene_mobilome",
       "kescience.mgnify.genome"
+    ]
+  },
+  "do-snipe-defense-carriers-keep-a-mannose-type-transporter-mo--f72278": {
+    "data_unclear": false,
+    "first_step_existing": true,
+    "input": "41f91396caca18f41bf158e6f596a21635672edc7f6a621f0b346dc277dda3c7",
+    "model": "claude-haiku-5-5",
+    "need": "experiment",
+    "reason": "Whether carriers keep the transporter more often is read from pangenome annotations, but only deleting it in carrier strains decides protection, which needs new mutants.",
+    "tables": [
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_taxonomy_r214v1"
     ]
   },
   "do-soil-bacteria-with-the-auxin-gene-ipdc-give-up-tryptophan--d38f82": {
@@ -571,6 +592,21 @@
       "kescience.mgnify.biome"
     ]
   },
+  "does-contamination-select-for-defense-genes-within-a-genus-h--c70fc7": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "3844e9651a67726823fb3a6a956b699d666ca9cbbfe05f31ebcc3c6bfdbcb127",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Within-genus defense-gene shares for contaminated and other genomes need isolation-source labels from ncbi_env and per-gene annotations linked through genome and gene tables in the KBase Data Lakehouse.",
+    "tables": [
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.ncbi_env",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.eggnog_mapper_annotations"
+    ]
+  },
   "does-desulfovibrio-vulgaris-make-serine-by-a-route-that-path--233058": {
     "data_unclear": true,
     "first_step_existing": true,
@@ -664,6 +700,21 @@
       "nmdc.metadata.biosample_set"
     ]
   },
+  "does-prophage-content-follow-genome-size-within-species-not--ad0ede": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "5dfb95c49ee256d0d85c2e992494a9f7f07a610bfbb7666d85fb41be3cde70fe",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Whether prophage content follows genome size within species needs per-genome annotation counts joined to genome size and isolation environment, which the pangenome tables can supply through the gene-to-genome mapping.",
+    "tables": [
+      "kbase.ke_pangenome.genome",
+      "kbase.ke_pangenome.gtdb_metadata",
+      "kbase.ke_pangenome.eggnog_mapper_annotations",
+      "kbase.ke_pangenome.gene",
+      "kbase.ke_pangenome.ncbi_env"
+    ]
+  },
   "does-removing-core-pathobionts-shift-crohn-s-stool-communiti--30312d": {
     "data_unclear": true,
     "first_step_existing": false,
@@ -750,6 +801,19 @@
       "phagefoundry.escherichia_genome_browser.browser_genome"
     ]
   },
+  "is-growth-predictable-from-gene-content-only-where-a-whole-c--886042": {
+    "data_unclear": true,
+    "first_step_existing": false,
+    "input": "8964fb2ff1ed48afc40c3fd8fefb948359ca926e4a387646ef08eb5c93adaf01",
+    "model": "claude-haiku-5-5",
+    "need": "existing",
+    "reason": "Deciding whether pathway-only models match full gene-content models needs genome-matched growth calls, GapMind pathway scores and eggNOG annotations, all in the catalog; overlap and other conditions remain unshown.",
+    "tables": [
+      "globalusers.carbon_source_phenotypes.phenotype_data_table",
+      "kbase.ke_pangenome.gapmind_pathways",
+      "kbase.ke_pangenome.eggnog_mapper_annotations"
+    ]
+  },
   "is-lanmodulin-an-ancient-methylotroph-lineage-tool-or-a-lant--6f5a5e": {
     "data_unclear": true,
     "first_step_existing": true,
@@ -764,15 +828,6 @@
       "kbase.ke_pangenome.genome",
       "kbase.ke_pangenome.gtdb_taxonomy_r214v1"
     ]
-  },
-  "is-metal-and-antibiotic-tolerance-unpredictable-from-gene-co--0bfdb1": {
-    "data_unclear": false,
-    "first_step_existing": false,
-    "input": "fef6ae02df57330361a1094eaeda5278bbbf477a836dac8779e4becbd20630f5",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Only new graded-dose growth assays on sequenced strains, with copy-number and promoter-variant calls, can decide whether these features beat presence-only prediction.",
-    "tables": []
   },
   "is-smooth-module-free-gene-importance-an-acinetobacter-trait--d2a672": {
     "data_unclear": true,
@@ -832,22 +887,6 @@
       "kescience.fitnessbrowser.specog",
       "kescience.fitnessbrowser.specificphenotype",
       "kescience.fitnessbrowser.gene"
-    ]
-  },
-  "is-the-snipe-phage-defense-nuclease-tied-to-hosts-that-carry--dffbb3": {
-    "data_unclear": false,
-    "first_step_existing": true,
-    "input": "b8a14a17e1acada85c47aef0ff9ca0a37b750f4687b14145be388fe11e17cf5a",
-    "model": "claude-haiku-5-5",
-    "need": "experiment",
-    "reason": "Only building manYZ deletion mutants in a SNIPE-carrying strain can decide the causal effect; lakehouse analyses first pick the strain.",
-    "tables": [
-      "kbase.ke_pangenome.bakta_pfam_domains",
-      "kbase.ke_pangenome.eggnog_mapper_annotations",
-      "kbase.ke_pangenome.gene_cluster",
-      "kbase.ke_pangenome.genome",
-      "phagefoundry.phage_host_interactions.strainmodelling_interaction",
-      "phagefoundry.phage_host_interactions.strainmodelling_genome"
     ]
   },
   "is-xoxf-in-non-methylotrophs-a-methanol-enzyme-or-a-general--125baa": {

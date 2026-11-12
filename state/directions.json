@@ -1,10 +1,13 @@
 {
   "data-infrastructure-provenance-and-research-practice": {
-    "input": "c2e133928f6005e4c90bde40a6c44dad5f9e5949eefe0cfc56a69d789caf919e",
+    "input": "1b3a6025126d44c3cbd583cc8fe7edc76b7c4089ebc9663e04d4dc06e66b5b0d",
     "pages": {
-      "are-large-bacterial-genomes-rich-in-prophage-modules-because--3e281b.md": "e95728e5b63f5a9d9da3778a64c0c8eab4d35fbe03d4878630c18ca464b9cd8c",
-      "is-metal-and-antibiotic-tolerance-unpredictable-from-gene-co--0bfdb1.md": "fe819ff0942f4ab03c53700653c410cfa349fd860aac62b9dccf3bc996a056de",
-      "is-the-snipe-phage-defense-nuclease-tied-to-hosts-that-carry--dffbb3.md": "76f5426520c52ef17780952699e9a90473c14c794051a4150743d8e891e6215f"
+      "are-fba-versus-tnseq-disagreements-in-adp1-mostly-caused-by--460c05.md": "e62445f5aa1b69d77d2665a59a81ed04e537694bfd7891dddd18f51bdea8614d",
+      "do-metal-contaminated-site-strains-gain-metal-genes-within-s--529fb0.md": "952ba2b87ed467bf40a3d2e6bfebee6669482680096b4c6d4ec374f976793058",
+      "do-snipe-defense-carriers-keep-a-mannose-type-transporter-mo--f72278.md": "a8f028b46c53f2cedfb83c738254d6529d868d329dec1c252ab743038b5cacff",
+      "does-contamination-select-for-defense-genes-within-a-genus-h--c70fc7.md": "fa54a05a1496d24bdf87960250489ed8b6a24a25d3b75e9ce0d4a4deca4d3fb2",
+      "does-prophage-content-follow-genome-size-within-species-not--ad0ede.md": "2097a578b69b32a9b61ab8a2735613412666284f1d6412b0daf84a458ce5f572",
+      "is-growth-predictable-from-gene-content-only-where-a-whole-c--886042.md": "4c0edbcd1244c7020134ba7b1541f93c82f88eb0919892a23df09cde1287bd9b"
     },
     "render": "direction-page@2",
     "reply": {
@@ -16,87 +19,187 @@
             "kbase.ke_pangenome"
           ],
           "findings": [
+            "enigma_contamination_functional_potential--a97faeef",
+            "enigma_contamination_functional_potential--f4cd1747",
+            "enigma_contamination_functional_potential--606b2ef6"
+          ],
+          "hypothesis": "Within genera with genomes from both contaminated and non-contaminated sources, contaminated-source genomes carry a larger share of defense-category genes than their relatives. The earlier genus-level null arose because this signal sits within genera and was averaged away.",
+          "id": "D1",
+          "outcomes": "Support: a consistent excess of defense genes in contaminated-source genomes across several genera. Refute: no within-genus difference, which would back the genus-level null and leave the earlier covariate-adjusted positive signal as an abundance or coverage artefact.",
+          "papers": [
+            "26583008",
+            "35107332",
+            "30523276"
+          ],
+          "prior_work": "PMID 26583008 compared two wells at community level and PMID 35107332 studied one genus; this tests defense content within shared genera across source types.",
+          "question": "Within genera found in both contaminated and clean settings, do genomes from contaminated sources carry more defense-annotated genes than close relatives from other sources, even though genus-averaged Oak Ridge community profiles showed no link?",
+          "readiness": "needs compute",
+          "readiness_basis": "Genome, metadata, environmental-attribute and annotation tables are in the catalog, but contamination labels must be derived from free-text source fields and the catalog did not show how annotations link to genomes or how many genera have both source classes.",
+          "tables": [
+            "kbase.ke_pangenome.genome",
+            "kbase.ke_pangenome.gtdb_metadata",
+            "kbase.ke_pangenome.ncbi_env",
+            "kbase.ke_pangenome.eggnog_mapper_annotations"
+          ],
+          "test": "Use the genome-level pangenome collection and its genome metadata. Label genomes as contaminated-site or other from the sample isolation-source and environmental attribute text, starting with Rhodanobacter and other genera known from Oak Ridge. Per genome, take the share of annotated genes in the defense functional category from the functional annotation table. Compare labels within each genus, controlling for genome size, and run a permutation test that shuffles source labels within genus.",
+          "title": "Does contamination select for defense genes within a genus, hidden by genus-level averaging?",
+          "why_it_matters": "It would decide whether the earlier null means contamination does not select for defense, or only that the broad genus-level proxy cannot see it. That choice changes how contaminated-site metagenomes are interpreted."
+        },
+        {
+          "approach": "lakehouse analysis",
+          "conflicts": [
+            "conflict--cross-tenant-data-bridging--d89b8efa"
+          ],
+          "databases": [
+            "globalusers.carbon_source_phenotypes",
+            "kbase.ke_pangenome"
+          ],
+          "findings": [
+            "genotype_to_phenotype_enigma--602fd76d",
+            "genotype_to_phenotype_enigma--ccab2bff"
+          ],
+          "hypothesis": "Carbon-source and amino-acid growth calls with a matching pathway predictor are predicted as well by complete-pathway scores alone as by full gene-content models; calls without a matching complete-pathway predictor are predicted worse by pathway scores alone.",
+          "id": "D2",
+          "outcomes": "Support: pathway-only models match full models for substrates with a matching pathway and lose performance for those without. Refute: pathway-only models fail even where full models succeed, or succeed where full models fail, meaning predictability tracks something else.",
+          "papers": [
+            "42271456"
+          ],
+          "prior_work": "PMID 42271456 links genomes to a single trait, growth pH; this asks why predictability differs across substrate classes.",
+          "question": "Growth on amino acids and tryptophan was predictable from gene content while metals, antibiotics and nitrogen sources were not. Is predictability higher where growth depends on presence of a complete pathway, and lower where it depends on accessory or regulatory genes?",
+          "readiness": "needs compute",
+          "readiness_basis": "The growth table and pathway scores are in the catalog; genome identifiers must be matched across them, and the catalog did not show how many genomes overlap or which conditions beyond carbon sources it holds.",
+          "tables": [
+            "globalusers.carbon_source_phenotypes.phenotype_data_table",
+            "kbase.ke_pangenome.gapmind_pathways",
+            "kbase.ke_pangenome.eggnog_mapper_annotations"
+          ],
+          "test": "Join the literature-derived carbon-source growth table (genomes by substrate) to pathway-completeness scores for the same genomes. For each substrate, compare a model using only pathway scores for the matching pathway with a model using all functional orthology annotations, holding out whole genera. Then test whether the gap between the two grows for substrates lacking a matching pathway. Metals, antibiotics and nitrogen sources are not in this table; they would need separate data.",
+          "title": "Is growth predictable from gene content only where a whole conserved pathway decides it?",
+          "why_it_matters": "It would show which phenotypes can be inferred from genomes alone and which need new kinds of data, and would help explain why tryptophan pathway evidence did not imply tryptophan growth in another strain set."
+        },
+        {
+          "approach": "lakehouse analysis",
+          "conflicts": [],
+          "databases": [
+            "kescience.bacdive",
+            "kbase.ke_pangenome"
+          ],
+          "findings": [
+            "bacdive_metal_validation--09db2bda",
+            "bacdive_metal_validation--1ac30de6",
+            "bacdive_metal_validation--60f073d0"
+          ],
+          "hypothesis": "Within species that have genomes from both contaminated and non-contaminated sources, contaminated-source genomes carry more metal-resistance gene annotations. Species identity explains little of the contamination effect.",
+          "id": "D3",
+          "outcomes": "Support: a within-species excess of metal-resistance annotations in contaminated-source genomes, graded from heavy-metal to industrial sources. Refute: no within-species difference, meaning the earlier signal reflects which species are isolated, or the small heavy-metal group.",
+          "papers": [
+            "41601069",
+            "33540257",
+            "37290750"
+          ],
+          "prior_work": "PMID 41601069 and PMID 33540257 link metal contamination to resistance at community level; this tests gene gain within species.",
+          "question": "Isolates from heavy-metal sites score higher on predicted metal tolerance, and the effect persists within Proteobacteria. Does it arise from extra metal-resistance genes in strains of the same species, or from contaminated sites favoring different species?",
+          "readiness": "needs compute",
+          "readiness_basis": "Isolation, strain and pangenome tables are in the catalog, but species-name matching is partial and the number of species with both source classes was not shown.",
+          "tables": [
+            "kescience.bacdive.isolation",
+            "kescience.bacdive.strain",
+            "kbase.ke_pangenome.genome",
+            "kbase.ke_pangenome.gtdb_metadata",
+            "kbase.ke_pangenome.gtdb_species_clade",
+            "kbase.ke_pangenome.eggnog_mapper_annotations"
+          ],
+          "test": "Label pangenome genomes by isolation source using genome metadata, and cross-check with culture-collection isolation records matched by species name (the strain table holds no genome accession). Keep species with genomes from both source classes. Count metal-resistance annotations per genome from the functional annotation table (efflux and transporter names for copper, zinc, cadmium, arsenic, mercury) and compare classes with species as a fixed effect, checking whether the contamination effect vanishes once species is included.",
+          "title": "Do metal-contaminated-site strains gain metal genes within species, not through species sorting?",
+          "why_it_matters": "It would separate recent gene gain within a species from species-level sorting, which changes how predicted metal scores should be used to flag contaminated-site organisms."
+        },
+        {
+          "approach": "lakehouse analysis",
+          "conflicts": [],
+          "databases": [
+            "kbase.ke_pangenome"
+          ],
+          "findings": [
             "prophage_ecology--9f2125cc",
+            "prophage_ecology--3c13d0b7",
             "prophage_ecology--d880eadf"
           ],
-          "hypothesis": "In larger genomes, the extra prophage-associated gene clusters are mostly core within their species, which suggests domesticated remnants, whereas in smaller genomes they are mostly accessory or single-genome.",
-          "id": "D3",
-          "outcomes": "Support: the size-linked increase is concentrated in core prophage-derived clusters, and dedicated detection finds little more intact prophage in large genomes. Refute: the increase is in accessory or single-genome clusters and tracks intact prophage calls, favouring active carriage.",
+          "hypothesis": "Within a species, strains with larger genomes carry more prophage-associated modules, so prophage content mainly follows genome size, and environmental associations reduce to genome-size differences.",
+          "id": "D4",
+          "outcomes": "Support: a positive within-species size slope that absorbs most environmental effects. Refute: no within-species slope, so the between-species pattern is phylogenetic, or environment effects persisting after size is accounted for.",
           "papers": [
             "25092302",
             "28692019",
-            "29416123"
+            "39549700"
           ],
-          "prior_work": "PMID 25092302 showed that bacteria domesticate defective prophages, and PMID 28692019 related phage evolution to host and genome features; neither asks whether genome size predicts prophage-module content across the pangenome through domesticated core clusters.",
-          "question": "Does the strong link between genome size and prophage-module content arise because larger genomes retain domesticated, species-wide prophage-derived genes, rather than carrying more recently acquired intact prophages?",
+          "prior_work": "PMID 28692019 relates phage evolution to host and genome; PMID 25092302 shows domestication of defective prophages. Neither tests within-species scaling of prophage content with genome size.",
+          "question": "Across species, genome size predicts prophage-module composition far better than environment or phylogeny, and no individual terminase lineage tracks an environment. Does prophage load also scale with genome size among strains of one species?",
           "readiness": "needs compute",
-          "readiness_basis": "The pangenome, annotation and genome-size tables are in the catalog; dedicated prophage calls on a subset would have to be generated.",
+          "readiness_basis": "Genome size and annotation tables are in the catalog, though prophage detection rests on annotation proxies, not dedicated detectors, and the linking of annotations to genomes was not shown.",
           "tables": [
-            "kbase.ke_pangenome.gene_cluster",
-            "kbase.ke_pangenome.eggnog_mapper_annotations",
-            "kbase.ke_pangenome.pangenome",
-            "kbase.ke_pangenome.gtdb_metadata"
+            "kbase.ke_pangenome.genome",
+            "kbase.ke_pangenome.gtdb_metadata",
+            "kbase.ke_pangenome.eggnog_mapper_annotations"
           ],
-          "test": "For species in the pangenome, tally prophage-associated gene clusters by module and by whether the cluster is core, accessory or single-genome in its species. Relate each class to genome size within genera, and compare with non-prophage accessory genes to see whether prophage content scales differently. In a subset, call prophages with a dedicated detector and compare intact calls with annotation-based counts.",
-          "title": "Are large bacterial genomes rich in prophage modules because those modules become domesticated?",
-          "why_it_matters": "Genome size predicted prophage-module composition far more than environment or family-level phylogeny. The annotation-based method counts domesticated remnants as well as intact prophages, so it cannot say what the size effect means. Separating domestication from active carriage would show whether genome size reflects genome-wide tolerance of mobile DNA or long-term retention of useful phage-derived functions."
+          "test": "For species with many genomes, regress per-genome counts of prophage-associated annotations (from the functional annotation table, as in the original survey) on genome size from genome metadata, with species as a random effect. Then add isolation environment and ask whether it explains variation beyond genome size. Repeat on a gene-poor lineage subset.",
+          "title": "Does prophage content follow genome size within species, not environment?",
+          "why_it_matters": "If it holds, apparent environment-prophage links need genome size as a core covariate, and prophage burden may reflect a genome's capacity to tolerate extra DNA, not selection by habitat."
         },
         {
           "approach": "analysis then experiment",
           "conflicts": [],
           "databases": [
-            "kbase.ke_pangenome",
-            "phagefoundry.phage_host_interactions",
-            "phagefoundry.klebsiella_genome_browser"
+            "kbase.ke_pangenome"
           ],
           "findings": [
             "snipe_defense_system--5727ec31",
             "snipe_defense_system--69396dc3",
             "snipe_defense_system--792b9ec1"
           ],
-          "hypothesis": "SNIPE-family hosts carry ManYZ-type transporters more often than relatedness predicts, and deleting manYZ in a SNIPE-carrying strain changes its phage susceptibility.",
-          "id": "D4",
-          "outcomes": "Support: co-occurrence exceeds lineage expectation and manYZ loss shifts phage susceptibility in the SNIPE strain. Refute: co-occurrence matches relatedness and the deletion leaves infection unchanged.",
+          "hypothesis": "Within genera that vary in SNIPE carriage, SNIPE-carrying species keep a ManYZ-like transporter more often than non-carriers, because the nuclease is proposed to act on phage DNA injected through that transporter.",
+          "id": "D5",
+          "outcomes": "Support: SNIPE carriers retain the transporter more often within genera, and deletion in carriers removes protection. Refute: no co-retention within genera, or deletion leaves protection intact.",
           "papers": [
             "41741653",
             "34032565",
-            "25968644"
+            "25015235"
           ],
-          "prior_work": "PMID 41741653 shows a membrane-bound nuclease cleaving phage DNA during injection and PMID 34032565 shows membrane defenses and counter-defenses in E. coli; neither tests co-occurrence across species or the role of ManYZ in Klebsiella.",
-          "question": "Do species carrying SNIPE-family DUF4041 proteins also carry ManYZ-type transporters more often than expected from relatedness, and does a SNIPE host's susceptibility to phages depend on its ManYZ?",
+          "prior_work": "PMID 41741653 describes the membrane nuclease cleaving injected phage DNA; this asks whether transporter co-retention extends across bacteria.",
+          "question": "The SNIPE defense domain turned up in 1,696 species across 33 phyla, yet its transporter partner was found by gene name only in E. coli K-12 among the mutant-fitness organisms. Do species carrying the domain also keep a mannose-type transporter more often than relatives lacking it?",
           "readiness": "needs new measurements",
-          "readiness_basis": "Co-occurrence and E. coli susceptibility analyses use catalog tables, but Klebsiella-specific fitness was unmeasured and deletion mutants in SNIPE-carrying strains must be built.",
+          "readiness_basis": "Domain annotations are in the catalog, but the Klebsiella phage tables hold no fitness data, so the decisive deletion test needs new mutants.",
           "tables": [
-            "kbase.ke_pangenome.bakta_pfam_domains",
             "kbase.ke_pangenome.eggnog_mapper_annotations",
-            "phagefoundry.phage_host_interactions.strainmodelling_interaction",
-            "phagefoundry.phage_host_interactions.strainmodelling_genome",
-            "phagefoundry.klebsiella_genome_browser.browser_gene"
+            "kbase.ke_pangenome.genome",
+            "kbase.ke_pangenome.gtdb_taxonomy_r214v1"
           ],
-          "test": "Across the pangenome, test co-occurrence of DUF4041 clusters, restricted to those with additional SNIPE-family features where available, with ManYZ-type transporter clusters within genera. In E. coli, where phage susceptibility calls exist, ask whether strains with SNIPE and ManYZ differ in susceptibility from strains lacking either. In Klebsiella, where the catalog shows annotations but no fitness data, build deletion mutants of manYZ in a SNIPE-carrying strain such as NCTC9140 or HS11286 and challenge them with phages.",
-          "title": "Is the SNIPE phage-defense nuclease tied to hosts that carry the ManYZ phage-entry transporter?",
-          "why_it_matters": "The DUF4041 domain was found in 4,572 gene clusters across 1,696 species, but an estimated 80.4% of clusters are SNIPE-family proteins, so the rest may be other proteins or annotation noise. A link between a defense and the host entry route it guards would show how defenses coevolve with the proteins phages exploit and would help predict which strains phage therapy can reach."
+          "test": "Using protein-domain annotations in the pangenome, mark species carrying the SNIPE diagnostic domain and detect mannose-type transporter domains in all species. Compare co-occurrence within genera using the genome taxonomy table. Then, in Klebsiella strains that have annotated ManYZ but no fitness data, delete the transporter in SNIPE-carrying strains and test phage susceptibility.",
+          "title": "Do SNIPE defense carriers keep a mannose-type transporter more often than relatives?",
+          "why_it_matters": "A consistent co-retention would show the mechanism generalizes beyond E. coli and would suggest why a defense gene might be lost when its transporter is lost."
         },
         {
           "approach": "experiment",
           "conflicts": [],
           "databases": [],
           "findings": [
-            "genotype_to_phenotype_enigma--602fd76d",
-            "genotype_to_phenotype_enigma--ccab2bff"
+            "acinetobacter_adp1_explorer--1cfedc83",
+            "acinetobacter_adp1_explorer--c925d9c6"
           ],
-          "hypothesis": "Tolerance phenotypes depend on gene copy number or regulatory variants of resistance genes rather than their presence, so adding copy number and promoter variants for efflux and detoxification genes will improve prediction for these conditions where presence alone fails.",
-          "id": "D8",
-          "outcomes": "Support: dosage and regulatory features raise held-out prediction for metals and antibiotics while leaving presence-only models unimproved. Refute: prediction stays poor with these features, pointing to unmeasured factors such as plasmids or physiology.",
-          "papers": [],
-          "prior_work": "",
-          "question": "Why can growth on amino acids, nucleosides and some carbon sources be predicted from the presence of gene families, while metal, antibiotic and nitrogen conditions cannot?",
+          "hypothesis": "Genes the model predicts essential but transposons call dispensable are enriched for paralogs that can cover the same reaction. Deleting both paralogs together will be lethal or severely growth-limiting.",
+          "id": "D6",
+          "outcomes": "Support: double deletions are lethal or strongly impaired while single deletions are tolerated, more often than in controls. Refute: double deletions grow normally, pointing to regulation or model error.",
+          "papers": [
+            "18840283",
+            "18319726"
+          ],
+          "prior_work": "PMID 18840283 used discrepancies to refine the ADP1 model and PMID 18319726 built the deletion collection; neither tested whether discordant genes sit in redundant paralog pairs.",
+          "question": "For genes where model-predicted essentiality and transposon essentiality disagree in Acinetobacter baylyi ADP1, is the disagreement explained by redundant paralogs that the model leaves out?",
           "readiness": "needs new measurements",
-          "readiness_basis": "The existing genome-to-growth corpus lacks graded-dose tolerance measurements and copy-number or promoter-variant data, so these must be measured.",
+          "readiness_basis": "The ADP1 database itself was not shown in the catalog, and the decisive step needs new double mutants.",
           "tables": [],
-          "test": "Choose a panel of strains from the Oak Ridge isolate collection spanning several genera, and measure growth with graded doses of several metals and antibiotics. Sequence them to determine copy number and promoter variants of known resistance and efflux genes. Compare models using presence alone with models adding copy number and promoter variants, holding out whole genera.",
-          "title": "Is metal and antibiotic tolerance unpredictable from gene content because of gene dosage?",
-          "why_it_matters": "If tolerance depends on dosage and regulation, genome-based prediction of resistance and metal tolerance needs different features than metabolic growth prediction, and presence-based surveys of resistance genes will mislead."
+          "test": "Among the genes with both calls, list those the model predicts essential but transposons call dispensable. Identify paralogs for the same reaction by annotation, then construct double deletions for a panel of such pairs in ADP1 and measure growth on minimal medium. Include matched control pairs from concordant genes.",
+          "title": "Are FBA-versus-TnSeq disagreements in ADP1 mostly caused by redundant paralogs?",
+          "why_it_matters": "It would show whether model errors reflect missing redundancy, which model edits can fix, or regulatory effects the model cannot capture, which would limit what flux models can predict."
         }
       ]
     }
