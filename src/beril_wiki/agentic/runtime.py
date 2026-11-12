@@ -31,6 +31,8 @@ from claude_agent_sdk import (
     tool,
 )
 
+from beril_wiki.agentic import progress
+
 
 class WorkflowError(RuntimeError):
     """Stop without accepting partial work or silently spending more tokens."""
@@ -414,6 +416,7 @@ class Ledger:
         # SDK's own estimate) and raw Codex tokens, each with headroom held for every
         # job of that backend still in flight. A pilot sets them; usd_caps cap stages.
         self.caps = caps or {}
+        self.store = path.parent
         path.parent.mkdir(parents=True, exist_ok=True)
         # A page session's review tool runs a Claude reviewer's query on a helper thread
         # (run_coroutine) while the session's thread waits, so access stays serial.
@@ -605,6 +608,7 @@ class Ledger:
                     key,
                 ),
             )
+        self._finished(key)
         if not valid:
             raise WorkflowError(f"unknown token usage for {key}; saved output, stopped scheduling")
 
@@ -646,6 +650,21 @@ class Ledger:
             ).rowcount
         if not changed:
             raise WorkflowError("job is not pending/unknown")
+        self._finished(key)
+
+    def _finished(self, key: str) -> None:
+        """A `job` progress line for a job that now holds its final charge."""
+        if not progress.enabled():
+            return
+        row = self.db.execute("SELECT stage,step FROM jobs WHERE key=?", (key,)).fetchone()
+        stage, step = row or ("", "")
+        progress.emit(
+            "job",
+            stage=stage or "",
+            step=step or "",
+            **progress.counts(self.db, self.run),
+            failed_pages=progress.failed_pages(self.store),
+        )
 
     def unreported(self, key: str) -> int:
         """The token charge for a job that reported no usage: the headroom, or the larger

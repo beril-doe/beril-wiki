@@ -1510,12 +1510,173 @@ def test_expect_source_cli_exits_on_refusal_before_run(tmp_path, monkeypatch, ca
     add_project(checkout, "c")
     common = ["agentic", "--root", str(root)]
     plan = [*common, "plan", "--checkout", str(checkout), "--expect-source", "b", "--json"]
-    monkeypatch.setattr(sys, "argv", plan)
+    lines = tmp_path / "progress.jsonl"
+    monkeypatch.setenv("BERIL_WIKI_PROGRESS", "")  # restored after the CLI exports it
+    monkeypatch.setattr(sys, "argv", [*plan, "--progress", str(lines)])
     assert cli.main() == 1
-    assert not json.loads(capsys.readouterr().out)["admitted"]
+    verdict = json.loads(capsys.readouterr().out)
+    assert not verdict["admitted"]
+    start, end = (json.loads(line) for line in lines.read_text().splitlines())
+    assert (start["event"], start["expect_source"]) == ("plan_start", "b")
+    assert (end["event"], end["admitted"], end["reasons"]) == (
+        "plan_end",
+        False,
+        verdict["reasons"],
+    )
     monkeypatch.setattr(cli, "run", lambda *a, **k: pytest.fail("run started"))
     flags = ["--max-tokens", "10", "--max-jobs", "1", "--cli", "claude", "--model", "m"]
     run = [*common, "run", *flags, "--checkout", str(checkout), "--expect-source", "b"]
     monkeypatch.setattr(sys, "argv", run)
     assert cli.main() == 1
     assert "c__REPORT.md" in capsys.readouterr().out
+
+
+def test_run_caps_reach_the_ledger(tmp_path, monkeypatch):
+    import sys
+
+    from beril_wiki.agentic import __main__ as cli
+    from beril_wiki.agentic.runtime import Runtime
+
+    captured = {}
+    monkeypatch.setattr(cli, "run", lambda root, checkout, config, staged: captured.update(config))
+    common = ["agentic", "--root", str(tmp_path), "run", "--max-tokens", "10000000"]
+    common += ["--max-jobs", "99", "--cli", "claude", "--model", "m"]
+    caps = ["--max-usd", "3", "--max-codex-tokens", "500000"]
+    monkeypatch.setattr(sys, "argv", [*common, *caps])
+    assert cli.main() == 0
+    store = tmp_path / ".agentic"
+    ledger = Runtime(captured | {"root": str(tmp_path), "store": str(store), "run": "r"}).ledger
+    usage = {"input_tokens": 1, "output_tokens": 1}
+    ledger.reserve("a", "write/x", "claude-sonnet-5-5")
+    ledger.finish("a", "ok", usage, cost=2.5)
+    with pytest.raises(WorkflowError, match="Claude USD 2.50"):
+        ledger.reserve("b", "write/y", "claude-sonnet-5-5")
+    ledger.reserve("c", "write/x/science-review", "gpt-6.1-sol")
+    with pytest.raises(WorkflowError, match="Codex tokens 400000"):
+        ledger.reserve("d", "write/y/science-review", "gpt-6.1-sol")
+    # A cap that compares false against every spend would admit everything.
+    monkeypatch.setattr(sys, "argv", [*common, "--max-usd", "nan"])
+    assert cli.main() == 1
+
+
+# Recorded replies that pass through the real Runtime.ask, so each job is reserved and
+# finished in the ledger as a model job would be.
+LEDGER_RECORDING = """
+import json
+
+from beril_wiki.agentic import runtime
+
+real_ask = runtime.Runtime.ask
+from agentic_recording import install, reply
+
+install()
+runtime.Runtime.ask = real_ask
+runtime.check_auth = lambda cli: None
+
+
+async def recorded_query(self, payload, key, model):
+    output = reply(self, json.loads(payload), self._step)
+    self.ledger.finish(key, output, {"input_tokens": 10, "output_tokens": 10}, cost=0.01)
+    return output
+
+
+runtime.Runtime._query = recorded_query
+"""
+
+
+def test_progress_lines_cover_stages_and_jobs(tmp_path, monkeypatch):
+    import json
+    import sqlite3
+    import sys
+    from pathlib import Path
+
+    from agentic_recording import reply
+    from beril_wiki.agentic import __main__ as cli
+    from beril_wiki.agentic import runtime
+    from card_fakes import lakehouse
+
+    root, checkout = tmp_path / "repo", tmp_path / "observatory"
+    lakehouse(root)
+    (root / "contract").mkdir(parents=True)
+    (root / "contract/AGENTS.md").write_text("Cite exact measurements; preserve caveats.")
+    for sid, value in (("a", "42"), ("b", "56")):
+        project = checkout / "projects" / sid
+        (project / "figures").mkdir(parents=True)
+        (project / "REPORT.md").write_text(f"Yield was {value}%.\n\n![Yield](figures/yield.png)")
+        (project / "README.md").write_text("## Authors\n\n- Ada Example\n")
+        (project / "figures/yield.png").write_bytes(b"recorded-image")
+    (checkout / "ui/config").mkdir(parents=True)
+    (checkout / "ui/config/collections.yaml").write_text("collections: []")
+    (tmp_path / "sitecustomize.py").write_text(LEDGER_RECORDING)
+    monkeypatch.setenv("PYTHONPATH", f"{tmp_path}:{Path(__file__).parent.resolve()}")
+
+    async def recorded_query(self, payload, key, model):
+        output = reply(self, json.loads(payload), self._step)
+        self.ledger.finish(key, output, {"input_tokens": 10, "output_tokens": 10}, cost=0.01)
+        return output
+
+    monkeypatch.setattr(runtime.Runtime, "_query", recorded_query)
+    monkeypatch.setattr(runtime, "check_auth", lambda cli: None)
+    lines = tmp_path / "progress.jsonl"
+    monkeypatch.setenv("BERIL_WIKI_PROGRESS", "")  # restored after the CLI exports it
+    argv = ["agentic", "--root", str(root), "run", "--max-tokens", "10000000"]
+    argv += ["--max-jobs", "1000", "--cli", "/usr/bin/true", "--model", "recorded"]
+    monkeypatch.setattr(
+        sys, "argv", [*argv, "--checkout", str(checkout), "--progress", "progress.jsonl"]
+    )
+    monkeypatch.chdir(tmp_path)
+    assert cli.main() == 0
+    events = [json.loads(line) for line in lines.read_text().splitlines()]
+    assert all(e["source"] == "wiki" and e["ts"] for e in events)
+    staged = [(e["event"], e["stage"]) for e in events if e["event"].startswith("stage_")]
+    names = [stage for event, stage in staged if event == "stage_start"]
+    assert staged == [(event, n) for n in names for event in ("stage_start", "stage_end")]
+    assert names[0] == "fetch" and names[-1] == "check" and "figures" in names
+    assert all(e["ok"] for e in events if e["event"] == "stage_end")
+    db = sqlite3.connect(root / ".agentic/jobs.sqlite")
+    (finished,) = db.execute("SELECT count(*) FROM jobs WHERE status!='pending'").fetchone()
+    jobs = [e for e in events if e["event"] == "job"]
+    assert finished and len(jobs) == finished
+    assert max(e["jobs"] for e in jobs) == finished
+    # Stage subprocesses inherit the file, and the curator's own jobs run in the runner.
+    assert {e["stage"] for e in jobs} > {""}
+    last = [e for e in events if e["event"] == "stage_end"][-1]
+    assert last["jobs"] == finished and last["usd"] == round(0.01 * finished, 4)
+    assert last["codex_tokens"] == 0 and last["failed_pages"] == 0
+
+
+def test_check_auth_reports_each_login(tmp_path, monkeypatch, capsys):
+    import json
+    import sys
+
+    from beril_wiki.agentic import __main__ as cli
+    from beril_wiki.agentic import codex, runtime
+
+    class Session:
+        def __init__(self, store):
+            self.client = "client"
+
+        def close(self):
+            pass
+
+    def no_codex_login(client):
+        raise WorkflowError("a ChatGPT subscription login is required for Codex; no API key")
+
+    readme = tmp_path / "README.md"
+    readme.write_text("## Authors\n\n- Ada Example\n- Bo Example\n")
+    monkeypatch.setattr(codex, "CodexSession", Session)
+    monkeypatch.setattr(runtime, "check_auth", lambda cli: None)
+    monkeypatch.setattr(codex, "check_auth", lambda client: None)
+    argv = ["agentic", "--root", str(tmp_path), "check-auth", "--cli", "claude"]
+    monkeypatch.setattr(sys, "argv", [*argv, "--authors", str(readme)])
+    assert cli.main() == 0
+    assert json.loads(capsys.readouterr().out) == {"claude": "ok", "codex": "ok", "authors": 2}
+    monkeypatch.setattr(codex, "check_auth", no_codex_login)
+    assert cli.main() == 1
+    report = json.loads(capsys.readouterr().out)
+    assert report["claude"] == "ok" and "ChatGPT subscription" in report["codex"]
+    monkeypatch.setattr(codex, "check_auth", lambda client: None)
+    monkeypatch.setattr(sys, "argv", [*argv, "--authors", str(tmp_path / "missing.md")])
+    assert cli.main() == 1
+    assert isinstance(json.loads(capsys.readouterr().out)["authors"], str)
+    assert not (tmp_path / ".agentic").exists()
