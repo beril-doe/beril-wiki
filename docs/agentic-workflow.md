@@ -1109,7 +1109,8 @@ uv run python -m beril_wiki.agentic retry --failed-jobs
 A job interrupted by a cancel or a killed stage ends as `failed`, and the next
 run stops at it ("inspect saved job before retrying"). `retry --failed-jobs`
 marks every failed job rejected, as `retry --job` does, and prints each key. It
-skips jobs refused for their content, which a retry would only repeat, and exits
+first charges any job a hard kill left pending, as the next run would, so that
+job is retried too. It skips jobs refused for their content, which a retry would only repeat, and exits
 0 when no job failed.
 
 For a capped acceptance pass, invoke a stage directly with `--limit N`

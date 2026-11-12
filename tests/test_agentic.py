@@ -1690,7 +1690,8 @@ def test_sigterm_to_run_kills_the_stage_group(tmp_path):
 
 def test_retry_failed_jobs_reissues_all_but_content_refusals(tmp_path, monkeypatch, capsys):
     """A job interrupted by Cancel ends as failed, and reserve refuses a failed key on
-    every resume until something moves it to the retry path."""
+    every resume until something moves it to the retry path. A hard kill leaves its job
+    pending, which retry charges and re-issues too instead of failing the next Resume."""
     import json
     import sys
 
@@ -1707,13 +1708,15 @@ def test_retry_failed_jobs_reissues_all_but_content_refusals(tmp_path, monkeypat
     for key, error in (("cut", "interrupted"), ("flagged", f"{CONTENT_FLAG} refusal"), ("ok", "")):
         ledger.reserve(key, "write/x")
         ledger.finish(key, "out", usage, error=error)
+    ledger.reserve("killed", "write/x")
     with pytest.raises(WorkflowError, match="job cut: failed"):
         ledger.reserve("cut", "write/x")
     monkeypatch.setattr(sys, "argv", ["agentic", "--root", str(tmp_path), "retry", "--failed-jobs"])
     assert cli.main() == 0
-    assert "retry: cut" in capsys.readouterr().out
+    out = capsys.readouterr().out
+    assert "retry: cut" in out and "retry: killed" in out
     rows = dict(ledger.db.execute("SELECT key,status FROM jobs").fetchall())
-    assert rows == {"cut": "rejected", "flagged": "failed", "ok": "done"}
+    assert rows == {"cut": "rejected", "flagged": "failed", "ok": "done", "killed": "rejected"}
     assert cli.main() == 0
     assert "no failed jobs" in capsys.readouterr().out
 
