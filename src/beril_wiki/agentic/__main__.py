@@ -668,7 +668,13 @@ def main() -> int:
             if args.progress:
                 os.environ[progress.ENV] = str(args.progress.resolve())
             print(json.dumps({"models": model_policy(config)}, indent=2))
-            run(root, args.checkout.resolve(), config, args.staged)
+            # As in run_cards: an exit runs run_stage's cleanup, which kills the stage's
+            # own process group; the default SIGTERM would leave it running and spending.
+            previous = signal.signal(signal.SIGTERM, lambda *_: sys.exit(143))
+            try:
+                run(root, args.checkout.resolve(), config, args.staged)
+            finally:
+                signal.signal(signal.SIGTERM, previous)
     except (WorkflowError, OSError, ValueError) as exc:
         print(f"agentic stopped: {exc}")
         return 1
