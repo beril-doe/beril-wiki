@@ -146,7 +146,7 @@ calls [`spin_deploy.yml`](.github/workflows/spin_deploy.yml) with that tag,
 which restarts the matching SPIN deployment so it pulls the new image. The
 deploy workflow can also be run by hand to restart one environment.
 
-To run the image locally:
+#### Run the image locally
 
     WIKI_BASE_URL=localhost:8080/wiki scripts/build_quartz.sh
     docker build -t beril-wiki .
@@ -154,6 +154,88 @@ To run the image locally:
 
 The site is built before the image rather than inside it, because the search
 vectors come from the `search-data` branch and need the checkout's `.git`.
+`build_quartz.sh` also writes `quartz/corpus/` (the source reports, finding and
+direction records and `cards.json`), which the image bakes in at `/srv/corpus`
+for the MCP tools below.
+
+The server ([`serve.py`](src/beril_wiki/serve.py), FastAPI) reads:
+
+| Variable | Default | Meaning |
+| --- | --- | --- |
+| `WIKI_SITE_DIR` | `/srv/site` | the site baked into the image, served when no artifact is |
+| `WIKI_CORPUS_DIR` | `/srv/corpus` | the baked corpus the MCP tools read beside it |
+| `WIKI_PREFIX` | `/wiki` | the URL prefix the ingress routes here |
+| `WIKI_SITE_ROOT` | `/srv/artifacts` | where downloaded artifacts are unpacked (`site-<id>/`); mount a volume |
+| `WIKI_ARTIFACT_ENDPOINT` | unset | S3 endpoint (`http://minio:9000`) or `file:///dir`; unset means serve the baked site only |
+| `WIKI_ARTIFACT_BUCKET`, `WIKI_ARTIFACT_PREFIX` (`wiki`), `WIKI_ARTIFACT_ACCESS_KEY`, `WIKI_ARTIFACT_SECRET_KEY`, `WIKI_ARTIFACT_REGION` | | the store |
+| `WIKI_RELOAD_TOKEN` | unset | bearer token for `POST /wiki/_admin/reload`; unset disables the route (503) |
+
+`GET /wiki/_admin/status` names the artifact being served (`baked` for the
+image's own tree). `GET /healthz` is the liveness probe.
+
+**Publish a site without a new image.** The curator host (or anyone with the
+store's keys) packs the built site and makes it current; the container swaps
+to it on request:
+
+    export WIKI_ARTIFACT_ENDPOINT=http://localhost:9000 WIKI_ARTIFACT_BUCKET=beril-wiki \
+           WIKI_ARTIFACT_ACCESS_KEY=minioadmin WIKI_ARTIFACT_SECRET_KEY=minioadmin
+    WIKI_BASE_URL=localhost:8080/wiki scripts/build_quartz.sh
+    scripts/publish_artifact.sh                         # check --strict, check_site, push, point current
+    curl -X POST -H "Authorization: Bearer $WIKI_RELOAD_TOKEN" localhost:8080/wiki/_admin/reload
+    uv run python -m beril_wiki.publish.artifact rollback --to <id>   # then reload again
+
+Each push is immutable (`site-<id>.tar.gz` plus `site-<id>.manifest.json`
+under the prefix); `current.json` is the only thing that moves, so rollback is
+moving the pointer. The server verifies the tarball's sha256 against
+`current.json` and the manifest's id and page count against the unpacked tree
+before it swaps, keeps the previous artifact unpacked, and on a restart serves
+the last one it unpacked when the store is unreachable, or the baked site when
+nothing was. The manifest records the page count, the git commit, the accepted
+run's fingerprint from `state/agentic.json` and the sha256 of every source
+report. `WIKI_ARTIFACT_ENDPOINT=file:///some/dir` is a store without S3, for
+tests or a single host.
+
+To try the whole loop against MinIO on one machine:
+
+    docker run -d --name minio -p 9000:9000 -e MINIO_ROOT_USER=minioadmin \
+      -e MINIO_ROOT_PASSWORD=minioadmin quay.io/minio/minio server /data
+    docker run --rm -it --entrypoint sh --network host quay.io/minio/mc -c \
+      "mc alias set local http://localhost:9000 minioadmin minioadmin && mc mb -p local/beril-wiki"
+    docker run --rm -p 8080:8080 -e WIKI_ARTIFACT_ENDPOINT=http://host.docker.internal:9000 \
+      -e WIKI_ARTIFACT_BUCKET=beril-wiki -e WIKI_ARTIFACT_ACCESS_KEY=minioadmin \
+      -e WIKI_ARTIFACT_SECRET_KEY=minioadmin -e WIKI_RELOAD_TOKEN=dev beril-wiki
+    # then, from the checkout, the publish commands above with WIKI_RELOAD_TOKEN=dev
+
+The observatory's `docker-compose.yml` has a `wiki` profile service that pulls
+`ghcr.io/beril-doe/beril-wiki:develop`. It reads the image from
+`BERIL_WIKI_IMAGE`, so a local build runs there without editing that repo:
+
+    docker build -t beril-wiki:local .                 # in this checkout
+    BERIL_WIKI_IMAGE=beril-wiki:local docker compose --profile wiki up -d   # in the observatory
+
+Put the `WIKI_ARTIFACT_*` and `WIKI_RELOAD_TOKEN` values in the observatory's
+`.env` (its `wiki` service has no `env_file`, so pass them with `docker compose
+run -e` or a compose override file) to point that container at a store.
+
+Quartz bakes the full `WIKI_BASE_URL` into the sitemap, RSS, canonical and
+`og:url` tags, and used to bake it into the footer's About link too. The footer
+link is now root-relative (the path of the base URL), so one artifact serves
+`beril.kbase.us/wiki` and `beril-dev.kbase.us/wiki` with only those metadata
+URLs naming the build host; a host that needs them exact still gets its own
+artifact, built with its own `WIKI_BASE_URL`.
+
+#### MCP tools
+
+The container also serves the wiki as a read-only MCP tool server at
+`/wiki/mcp/` (streamable HTTP, stateless, no authentication: it exposes nothing
+the site does not). Tools: `search(query, scope?, k)` (keyword, BM25 over the
+site's own section index; meaning search is a TODO until the server holds an
+embedding key), `read_page(path)`, `read_section(path, heading)`,
+`list_findings(topic?|project?)`, `get_finding(id)`, `get_direction(id)` and
+`get_source(project, offset, length)` for exact-quote checks against the
+source report. Every answer names the artifact it was served from. The BERIL
+webapp's chat is the intended client; Claude Code can use it with
+`claude mcp add --transport http beril-wiki https://beril.kbase.us/wiki/mcp/`.
 
 ### Search and Ask
 

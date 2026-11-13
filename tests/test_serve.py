@@ -94,3 +94,126 @@ def test_plain_404_without_a_site_404_page(site):
 def test_healthz(client):
     r = client.get("/healthz")
     assert r.status_code == 200 and r.text == "ok"
+
+
+# ---------------------------------------------------------------- artifact reload
+
+
+def published(tmp_path, store, artifact_id: str, body: str):
+    """Push a tiny site named `artifact_id` whose index reads `body`."""
+    from beril_wiki.publish import artifact as A
+
+    root = tmp_path / f"repo-{artifact_id}"
+    site = root / "quartz/public"
+    (site / "static/search").mkdir(parents=True)
+    (site / "index.html").write_text(body)
+    (site / "404.html").write_text(f"404 of {artifact_id}")
+    (site / "static/search/pages.json").write_text('{"build": "b", "pages": []}')
+    (site / "static/search/sections.json").write_text('{"build": "b", "sections": []}')
+    (root / "wiki/sources").mkdir(parents=True)
+    (root / "wiki/sources/demo__REPORT.md").write_text(f"report of {artifact_id}")
+    return A.push(store, A.Keys("wiki"), root, site, artifact_id)
+
+
+@pytest.fixture
+def store(tmp_path):
+    from beril_wiki.publish import artifact as A
+
+    return A.DirStore(tmp_path / "bucket")
+
+
+def reloading_app(site, tmp_path, store, token="secret", sync_on_start=True):
+    from beril_wiki.publish import artifact as A
+
+    return create_app(
+        site,
+        "/wiki",
+        site_root=tmp_path / "artifacts",
+        store=store,
+        keys=A.Keys("wiki"),
+        reload_token=token,
+        sync_on_start=sync_on_start,
+    )
+
+
+def test_startup_serves_the_current_artifact_and_reload_swaps(site, tmp_path, store):
+    published(tmp_path, store, "v1", "site v1")
+    with TestClient(reloading_app(site, tmp_path, store)) as c:
+        assert c.get("/wiki/").text == "site v1"
+        status = c.get("/wiki/_admin/status").json()
+        assert status["artifact"] == "v1" and status["page_count"] == 2 and status["corpus"]
+        published(tmp_path, store, "v2", "site v2")
+        assert c.get("/wiki/").text == "site v1"  # nothing changes until asked
+        r = c.post("/wiki/_admin/reload", headers={"Authorization": "Bearer secret"})
+        assert r.status_code == 200
+        assert r.json() == {"artifact": "v2", "previous": "v1", "page_count": 2, "changed": True}
+        assert c.get("/wiki/").text == "site v2"
+        assert c.get("/wiki/nope").text == "404 of v2"
+        # Rollback is the pointer moving back, then the same reload.
+        from beril_wiki.publish import artifact as A
+
+        A.point(store, A.Keys("wiki"), "v1")
+        c.post("/wiki/_admin/reload", headers={"Authorization": "Bearer secret"})
+        assert c.get("/wiki/").text == "site v1"
+        link = tmp_path / "artifacts/current"
+        assert link.is_symlink() and link.resolve().name == "site-v1"
+
+
+def test_reload_requires_the_bearer_token(site, tmp_path, store):
+    published(tmp_path, store, "v1", "site v1")
+    with TestClient(reloading_app(site, tmp_path, store)) as c:
+        assert c.post("/wiki/_admin/reload").status_code == 401
+        r = c.post("/wiki/_admin/reload", headers={"Authorization": "Bearer wrong"})
+        assert r.status_code == 401
+        assert c.get("/wiki/_admin/reload").status_code == 404  # a GET is a page lookup
+    with TestClient(reloading_app(site, tmp_path, store, token=None)) as c:
+        r = c.post("/wiki/_admin/reload", headers={"Authorization": "Bearer secret"})
+        assert r.status_code == 503
+
+
+def test_without_a_store_the_baked_site_is_served(site):
+    with TestClient(create_app(site, "/wiki")) as c:
+        assert c.get("/wiki/").text == "home"
+        status = c.get("/wiki/_admin/status").json()
+        assert status["artifact"] == "baked" and status["store"] is False
+        assert c.post("/wiki/_admin/reload").status_code == 503
+
+
+def test_unreachable_store_falls_back_to_the_last_unpacked_then_baked(site, tmp_path, store):
+    from beril_wiki.publish import artifact as A
+
+    published(tmp_path, store, "v1", "site v1")
+    with TestClient(reloading_app(site, tmp_path, store)) as c:
+        assert c.get("/wiki/").text == "site v1"
+
+    class Down:
+        def get(self, key):
+            raise A.ArtifactError("store down")
+
+        def put(self, *a):
+            raise A.ArtifactError("store down")
+
+        def exists(self, key):
+            return False
+
+    # The previous run left site-v1 behind the `current` symlink: served again.
+    with TestClient(reloading_app(site, tmp_path, Down())) as c:
+        assert c.get("/wiki/").text == "site v1"
+        r = c.post("/wiki/_admin/reload", headers={"Authorization": "Bearer secret"})
+        assert r.status_code == 502 and r.json()["artifact"] == "v1"
+    # A fresh container with nothing unpacked serves the image's own tree.
+    with TestClient(reloading_app(site, tmp_path / "fresh", Down())) as c:
+        assert c.get("/wiki/").text == "home"
+        assert c.get("/wiki/_admin/status").json()["artifact"] == "baked"
+
+
+def test_a_bad_artifact_does_not_replace_the_served_one(site, tmp_path, store):
+    published(tmp_path, store, "v1", "site v1")
+    with TestClient(reloading_app(site, tmp_path, store)) as c:
+        assert c.get("/wiki/").text == "site v1"
+        published(tmp_path, store, "v2", "site v2")
+        store.put("wiki/site-v2.tar.gz", b"not a tarball", "application/gzip")
+        r = c.post("/wiki/_admin/reload", headers={"Authorization": "Bearer secret"})
+        assert r.status_code == 502
+        assert c.get("/wiki/").text == "site v1"
+        assert c.get("/wiki/_admin/status").json()["artifact"] == "v1"

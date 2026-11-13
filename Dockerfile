@@ -9,6 +9,12 @@
 # Building in the image would need the repo's .git (the search vectors come
 # from the search-data branch) and network for the Quartz clone; CI already has
 # both on the runner (.github/workflows/image.yml).
+#
+# The baked site (/srv/site) and corpus (/srv/corpus) are the fallback. With
+# WIKI_ARTIFACT_* set (see README, "Run the image locally") the server fetches
+# the current site artifact into WIKI_SITE_ROOT on start and on
+# POST /wiki/_admin/reload, so content changes need no new image. Mount a
+# volume at /srv/artifacts to keep the unpacked artifact across restarts.
 FROM ghcr.io/astral-sh/uv:0.12.20-python3.12-trixie-slim
 
 # SPIN runs the pod as this uid/gid, the same account the observatory image uses.
@@ -19,6 +25,8 @@ ENV PYTHONUNBUFFERED=1 \
     UV_COMPILE_BYTECODE=1 \
     PYTHONPATH=/app \
     WIKI_SITE_DIR=/srv/site \
+    WIKI_CORPUS_DIR=/srv/corpus \
+    WIKI_SITE_ROOT=/srv/artifacts \
     WIKI_PREFIX=/wiki
 
 # Only the server's dependencies (the `serve` group), exactly as uv.lock pins them.
@@ -28,8 +36,14 @@ RUN uv export --project /tmp/build --frozen --only-group serve --no-emit-project
     uv pip install --system --require-hashes -r /tmp/build/requirements.txt && \
     rm -rf /tmp/build
 
-COPY src/beril_wiki/__init__.py src/beril_wiki/serve.py /app/beril_wiki/
+# serve.py and the two modules it imports; nothing else from the package.
+COPY src/beril_wiki/__init__.py src/beril_wiki/serve.py src/beril_wiki/mcp_server.py \
+     /app/beril_wiki/
+COPY src/beril_wiki/publish/__init__.py src/beril_wiki/publish/artifact.py \
+     /app/beril_wiki/publish/
 COPY quartz/public/ /srv/site/
+COPY quartz/corpus/ /srv/corpus/
+RUN mkdir -p /srv/artifacts && chown beril:beril_app /srv/artifacts
 
 USER beril
 EXPOSE 8080
