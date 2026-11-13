@@ -21,15 +21,24 @@ dev = [
     "ruff>=0.12",
     "ty",
 ]
-# The site server, and all the container image installs (beril_wiki.serve).
-# Pinned to the versions mcp already locks, so the image and `uv sync` agree.
+# The site server, and all the container image installs (beril_wiki.serve,
+# publish/artifact.py and mcp_server.py). Pinned to the versions the lock
+# already holds for the runtime, so the image and `uv sync` agree. boto3 is the
+# artifact store client the reload route uses; mcp the tool server.
 serve = [
+    "boto3==1.43.85",
+    "fastapi==0.162.7",
+    "mcp==1.30.0",
     "starlette==1.6.0",
     "uvicorn==0.52.4",
 ]
+# Publishing a site artifact from the curator host (beril_wiki.publish.artifact push).
+publish = [
+    "boto3==1.43.85",
+]
 
 [tool.uv]
-default-groups = ["dev", "serve"]
+default-groups = ["dev", "serve", "publish"]
 
 [build-system]
 requires = ["uv_build>=0.8,<0.13"]

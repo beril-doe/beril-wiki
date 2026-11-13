@@ -74,5 +74,10 @@ node "$THEME/dist/build-search.js" "$REPO"
 # Quartz's static folder so a served build still has search.
 rm -rf "$QP/quartz/static/search"
 cp -R "$QP/public/static/search" "$QP/quartz/static/search"
+# What the MCP tools answer from besides the search index: the source reports,
+# the finding and direction records and cards.json. Packed into the site
+# artifact by publish_artifact.sh and copied into the image as its fallback.
+uv run --project "$REPO" python -m beril_wiki.publish.artifact corpus "$QP/corpus" --root "$REPO"
 echo
 echo "built. serve with:  cd $QP && npx quartz build --serve"
+echo "publish as a site artifact with:  scripts/publish_artifact.sh"
