@@ -12,9 +12,24 @@ See the [HTML walkthrough](agentic-workflow.html) for the control flow and the
 
 ## Commands and limits
 
-Install with `uv sync` and sign in using `claude auth login` with a direct Claude
-subscription. The runner removes inherited API credentials and provider routing;
-each SDK job verifies subscription authentication. There is no API fallback.
+Install with `uv sync`. How jobs authenticate is `BERIL_WIKI_AUTH`, a
+per-deployment mode rather than a constant:
+
+- `subscription` (default): sign in with `claude auth login` on a direct Claude
+  subscription and with a ChatGPT login for Codex. The runner removes inherited
+  API credentials and provider routing from every stage and job; each SDK job
+  verifies the subscription login and refuses to start on any credential.
+  There is no API fallback within this mode.
+- `api`: for an unattended scheduler (a CronJob holding the keys as secrets).
+  Claude-role jobs run on `ANTHROPIC_API_KEY`, and `ANTHROPIC_BASE_URL` may
+  name a compatible gateway such as CBORG; Codex-role jobs run on
+  `OPENAI_API_KEY` with `OPENAI_BASE_URL` for the CBORG OpenAI-compatible
+  endpoint. Only those four variables pass through; OAuth tokens and
+  cloud-provider routing are still stripped, the Codex login file is not
+  shared into the isolated `CODEX_HOME`, and a job that initialises on the
+  wrong credential kind fails before it runs. Job cache keys and the ledger's
+  per-model rows do not name the mode, so work cached under one mode is reused
+  under the other.
 
 ```sh
 # List changed staged sources and stale editorial stages, without fetching or inference.

@@ -19,7 +19,6 @@ from beril_wiki import compiler as C
 from beril_wiki.agentic.batch import INTEGRATION_REVISION, changed_sources, retryable
 from beril_wiki.agentic.curator import EDITORIAL, curate, stage_revision, stage_snapshot
 from beril_wiki.agentic.runtime import (
-    AUTH_ENV,
     Runtime,
     WorkflowError,
     atomic_json,
@@ -30,6 +29,7 @@ from beril_wiki.agentic.runtime import (
     manifest,
     model_policy,
     model_signature,
+    stripped_env,
 )
 from beril_wiki.stages import hub as H
 from beril_wiki.stages.novelty import labels_due
@@ -188,7 +188,7 @@ def unlink_missing(work: Path) -> None:
 
 def run_stage(work: Path, config_path: Path, name: str, module: str, args: list[str]) -> None:
     env = os.environ.copy()
-    for key in AUTH_ENV:
+    for key in stripped_env():  # every credential in subscription mode; API keys stay in api
         env.pop(key, None)
     env.update(
         BERIL_WIKI_ROOT=str(work),
