@@ -807,8 +807,15 @@ class EvidenceTools(ReadTools):
         return result
 
 
+# contract/collections.yaml is observatory metadata the extras stage renders, not
+# editorial contract: it was never part of a writer's or reviewer's brief.
 UNKEYED_CONTRACT = frozenset(
-    {"contract/errata.yaml", "contract/cards.yaml", "contract/novelty-decisions.yaml"}
+    {
+        "contract/errata.yaml",
+        "contract/cards.yaml",
+        "contract/novelty-decisions.yaml",
+        "contract/collections.yaml",
+    }
 )
 
 

@@ -6,6 +6,7 @@ license = "AGPL-3.0-or-later"
 requires-python = ">=3.11"
 dependencies = [
     "claude-agent-sdk==0.1.81",
+    "httpx>=0.27",  # the hub fetch backend (stages/hub.py)
     "litellm>=1.40",
     # SDK 0.1.81 requires the MCP 1.x in-process list_tools interface.
     "mcp>=1.0,<2",
@@ -16,7 +17,6 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "httpx>=0.27",  # starlette's TestClient, for tests/test_serve.py
     "pytest>=8",
     "ruff>=0.12",
     "ty",

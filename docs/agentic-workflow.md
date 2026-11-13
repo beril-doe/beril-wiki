@@ -40,6 +40,62 @@ stages whose fingerprint no longer matches `state/agentic.json`). It makes no
 model call.
 `--root PATH` precedes the subcommand. `--staged` uses current staging; an
 observatory checkout is still required for metadata and figure context.
+
+### Where the sources come from
+
+`FETCH_BACKEND` selects the input (`stages/fetch.py`); a run never mixes the two.
+
+- `local` (default): `--checkout` names a BERIL observatory checkout. The run
+  copies the files it consumes (every `projects/*/REPORT.md` and `README.md`,
+  the figures the reports embed, `ui/config/collections.yaml`, the two digests
+  under `docs/`) into the work tree and fingerprints them as the external input.
+- `hub`: no checkout. `BERIL_URL` and `BERIL_TOKEN` (a BERIL personal access
+  token) reach BERIL's context API, and nothing else: the wiki never calls
+  OpenViking. `GET /api/context/submissions?kind=approved,seeded` lists the
+  projects an approved `/submit` or an admin seed has published, with the
+  sha256 of each ingested file; `GET /api/context/read` supplies `REPORT.md`,
+  `beril.yaml`, `README.md` and the embedded `figures/**` as raw bytes. Every
+  download is checked against the feed's hash (or, for a figure the feed does
+  not list, the hash the route declares) and a mismatch stops the fetch. The
+  feed is incremental: `state/hub.json` keeps the merged view and the
+  `next_since` to continue from, promotion carries it back, and the external
+  fingerprint is that merged view (project, path, sha256), so a submission
+  that lands during a run is caught at promotion like a changed checkout.
+  Projects the feed marks private are not staged. The `README.md` copies go to
+  `reference/projects/<project>/` in the work tree, where the authors stage
+  reads them; `collections.yaml` is the committed copy at
+  `contract/collections.yaml` (unkeyed: it changes no cached work). The two
+  central digests have no hub route; the hub backend takes them from a
+  checkout when `BERIL_CHECKOUT` has one and otherwise re-stages the accepted
+  copies under `wiki/sources`, since both archives stopped changing in May 2026.
+
+### Where the sources come from
+
+`FETCH_BACKEND` selects the input (`stages/fetch.py`); a run never mixes the two.
+
+- `local` (default): `--checkout` names a BERIL observatory checkout. The run
+  copies the files it consumes (every `projects/*/REPORT.md` and `README.md`,
+  the figures the reports embed, `ui/config/collections.yaml`, the two digests
+  under `docs/`) into the work tree and fingerprints them as the external input.
+- `hub`: no checkout. `BERIL_URL` and `BERIL_TOKEN` (a BERIL personal access
+  token) reach BERIL's context API, and nothing else: the wiki never calls
+  OpenViking. `GET /api/context/submissions?kind=approved,seeded` lists the
+  projects an approved `/submit` or an admin seed has published, with the
+  sha256 of each ingested file; `GET /api/context/read` supplies `REPORT.md`,
+  `beril.yaml`, `README.md` and the embedded `figures/**` as raw bytes. Every
+  download is checked against the feed's hash (or, for a figure the feed does
+  not list, the hash the route declares) and a mismatch stops the fetch. The
+  feed is incremental: `state/hub.json` keeps the merged view and the
+  `next_since` to continue from, promotion carries it back, and the external
+  fingerprint is that merged view (project, path, sha256), so a submission
+  that lands during a run is caught at promotion like a changed checkout.
+  Projects the feed marks private are not staged. The `README.md` copies go to
+  `reference/projects/<project>/` in the work tree, where the authors stage
+  reads them; `collections.yaml` is the committed copy at
+  `contract/collections.yaml` (unkeyed: it changes no cached work). The two
+  central digests have no hub route; the hub backend takes them from a
+  checkout when `BERIL_CHECKOUT` has one and otherwise re-stages the accepted
+  copies under `wiki/sources`, since both archives stopped changing in May 2026.
 Individual jobs have `--max-turns` (default 12, applying to tool-using jobs
 other than page sessions), `--timeout` (600 seconds), and `--max-output-tokens`
 (32,768). A page session is bounded by its brief instead: 20 turns plus one per

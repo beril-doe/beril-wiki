@@ -31,6 +31,7 @@ from beril_wiki.agentic.runtime import (
     model_policy,
     model_signature,
 )
+from beril_wiki.stages import hub as H
 from beril_wiki.stages.novelty import labels_due
 
 TREES = ("wiki", "state", "staging")
@@ -115,6 +116,36 @@ def promote(root: Path, work: Path, before: dict[str, str]) -> None:
     recover(root)
 
 
+def fetch_backend() -> str:
+    """Where a run's sources come from: a checkout (local) or BERIL's context API (hub).
+
+    Read once from the environment, so the fingerprint, the fetch stage and extras
+    agree on it. A run never mixes the two."""
+    backend = os.environ.get("FETCH_BACKEND", "local")
+    if backend not in ("local", "hub"):
+        raise WorkflowError(f"unknown FETCH_BACKEND {backend!r}")
+    return backend
+
+
+def hub_snapshot(root: Path) -> dict:
+    """The feed brought up to its head from the accepted state/hub.json, without
+    writing it: the run's work tree receives it, and promotion carries it back."""
+    try:
+        with H.Hub() as client:
+            return H.sync(client, H.load_state(root))
+    except H.HubError as exc:
+        raise WorkflowError(f"hub feed: {exc}") from exc
+
+
+def external_inputs(root: Path, checkout: Path) -> tuple[dict[str, str], dict | None]:
+    """The external-input fingerprint for the configured backend, and in hub mode
+    the feed snapshot it was taken from."""
+    if fetch_backend() == "hub":
+        state = hub_snapshot(root)
+        return H.fingerprint(state), state
+    return checkout_inputs(checkout), None
+
+
 def checkout_inputs(checkout: Path) -> dict[str, str]:
     """Only inputs consumed by fetch/extras, including the referenced figure bytes."""
     paths = set(checkout.glob("projects/*/README.md")) | set(checkout.glob("projects/*/REPORT.md"))
@@ -165,7 +196,7 @@ def run_stage(work: Path, config_path: Path, name: str, module: str, args: list[
         BERIL_AGENTIC_STAGE=name,
         BERIL_CHECKOUT=str(work / "reference"),
         CONFLICT_SIM="1.01",
-        FETCH_BACKEND="local",
+        FETCH_BACKEND=fetch_backend(),
     )
     logfile = config_path.parent / f"stage-{name}.log"
     limit = json.loads(config_path.read_text(encoding="utf-8")).get("stage_timeout", 14400)
@@ -271,7 +302,7 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
         recover(root)
         original = manifest(root, TREES)
         base = fingerprint(root)
-        external = checkout_inputs(checkout)
+        external, feed = external_inputs(root, checkout)
         code_revision = revision()
         cli_version = subprocess.run(
             [config["cli"], "--version"], capture_output=True, text=True, timeout=30, check=True
@@ -308,12 +339,17 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
                 shutil.copytree(root / folder, work / folder)
             else:
                 (work / folder).mkdir()
-        for rel in external:
-            dst = work / "reference" / rel
-            dst.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(checkout / rel, dst)
-        if checkout_inputs(work / "reference") != external:
-            raise WorkflowError("observatory inputs changed while taking snapshot")
+        if feed is not None:
+            # Hub mode: the fetch stage downloads from this snapshot of the feed; its
+            # hashes are what every file is checked against. No checkout is copied.
+            H.save_state(work, feed)
+        else:
+            for rel in external:
+                dst = work / "reference" / rel
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(checkout / rel, dst)
+            if checkout_inputs(work / "reference") != external:
+                raise WorkflowError("observatory inputs changed while taking snapshot")
         config = config | {
             "root": str(work),
             "store": str(store),
@@ -380,7 +416,7 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
         run_stage(work, config_path, "check", "check", [str(work), "--strict"])
         if (
             fingerprint(root) != base
-            or checkout_inputs(checkout) != external
+            or external_inputs(root, checkout)[0] != external
             or revision() != code_revision
         ):
             raise WorkflowError(
