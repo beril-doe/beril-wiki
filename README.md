@@ -78,6 +78,7 @@ The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 | `theme/` | the Quartz page frame (one component per page region), the stylesheet (one partial per region), and the browser script and index builder for search and Ask |
 | `contract/` | the editorial contract injected into every compile, the concept decisions manifest, the errata a person has recorded against the source reports, the scope of finding and research-direction records (`cards.yaml`), and human decisions on literature labels (`novelty-decisions.yaml`) |
 | `state/` | per-stage caches that make the pipeline incremental |
+| `corpus/` | the committed sources: `corpus/<owner>/<project>/` with each report, README, `beril.yaml` and embedded figures, and `corpus/index.json`, which assigns every project its `[src:]` id once (see the operating guide, "Where the sources come from") |
 | `search/` | ignored local copy of the section vectors for meaning search; the shared copy lives on the `search-data` branch |
 | `.agentic/` | ignored runtime ledger, raw results, receipts, and candidate workspace; preserve when resuming |
 | `docs/` | curator operating guide, HTML walkthrough, and wiki-format reference |

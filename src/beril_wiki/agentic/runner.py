@@ -34,7 +34,7 @@ from beril_wiki.agentic.runtime import (
 from beril_wiki.stages import hub as H
 from beril_wiki.stages.novelty import labels_due
 
-TREES = ("wiki", "state", "staging")
+TREES = ("wiki", "state", "staging", "corpus")
 
 
 @contextmanager

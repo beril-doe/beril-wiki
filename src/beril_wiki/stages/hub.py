@@ -3,19 +3,22 @@
 The wiki runs off-cluster and reaches the observatory's projects only through two
 BERIL routes, with a BERIL personal access token (``BERIL_URL``, ``BERIL_TOKEN``):
 
-  GET /api/context/submissions?since=<iso>&kind=approved,seeded&limit=<n>
-      the "changed since" feed: one row per completed ingest batch, ascending,
-      each naming the project's files and their sha256; ``next_since`` continues.
+  GET /api/context/submissions?since=<iso>&kind=approved,seeded,docs&limit=<n>
+      the "changed since" feed: one row per complete submission, ascending, each
+      naming the owner, the project, its revision (sha256 of REPORT.md) and every
+      file with its sha256; ``next_since`` continues. ``kind: docs`` rows carry
+      the central digests (owner ``beril``, project ``docs``).
   GET /api/context/read?address=<owner>/<project>/<path>
       one allowlisted file (REPORT.md, README.md, beril.yaml, CORRECTIONS.md,
       REFUTATION_<n>.md, figures/**). Asked for as raw bytes so what the wiki
       hashes and quotes is byte-exact.
 
 The feed is incremental, so ``state/hub.json`` keeps the merged view of every
-project ever reported plus the ``next_since`` to continue from; a run stages all
-of them, as the local backend stages every checkout report. Every download is
-checked against the sha256 the feed declared for the path (or, for a file the
-feed does not list, the one the route itself declares) and refused on mismatch.
+project ever reported plus the ``next_since`` to continue from; fetch_hub writes
+the changed ones into the committed corpus (stages/corpus.py), which is then
+staged whole. Every download is checked against the sha256 the feed declared for
+the path (or, for a file the feed does not list, the one the route itself
+declares) and refused on mismatch.
 """
 
 from __future__ import annotations
@@ -32,7 +35,7 @@ import httpx
 
 FEED_PAGE = 200
 STATE_FILE = "hub.json"
-KINDS = "approved,seeded"
+KINDS = "approved,seeded,docs"
 TEXT_FILES = ("REPORT.md", "beril.yaml", "README.md")
 SAFE_PATH = re.compile(r"^(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$")
 
@@ -148,21 +151,26 @@ def save_state(root: pathlib.Path, state: dict) -> None:
 
 
 def merge(state: dict, rows: list[dict]) -> dict:
-    """The state after the feed rows: later rows for a project replace earlier ones."""
+    """The state after the feed rows: a later row for (owner, project) replaces an
+    earlier one. Keys are "<owner>/<project>"."""
     projects = dict(state.get("projects", {}))
     latest = state.get("next_since")
     for row in rows:
-        project = row["project"]
-        if not re.fullmatch(r"[A-Za-z0-9_.-]+", project):
-            raise HubError(f"feed names an unsafe project id {project!r}")
+        owner, project = str(row.get("owner_orcid") or ""), str(row["project"])
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", project) or not re.fullmatch(
+            r"[A-Za-z0-9][A-Za-z0-9_.-]*", owner
+        ):
+            raise HubError(f"feed names an unsafe owner/project {owner!r}/{project!r}")
         files = {safe_path(f["path"]): f["sha256"] for f in row.get("files", [])}
-        projects[project] = {
+        projects[f"{owner}/{project}"] = {
+            "id": row.get("id"),
+            "owner_orcid": owner,
+            "project": project,
             "address": row["address"],
-            "owner_orcid": row.get("owner_orcid"),
+            "revision": row.get("revision") or files.get("REPORT.md"),
             "submitted_at": row.get("submitted_at"),
             "kind": row.get("kind"),
-            "batch_id": row.get("batch_id"),
-            "is_public": row.get("is_public", True),
+            "archive_path": row.get("archive_path"),
             "files": files,
         }
         if row.get("submitted_at") and (latest is None or row["submitted_at"] > latest):
@@ -177,23 +185,14 @@ def sync(hub: Hub, state: dict) -> dict:
 
 
 def fingerprint(state: dict) -> dict[str, str]:
-    """What a run depends on from the hub: every served project's files and hashes.
+    """What a run depends on from the hub: every reported project's files and hashes.
 
-    This replaces the checkout fingerprint (`runner.checkout_inputs`) in hub mode.
-    Projects the feed marks private are not served and so not part of it."""
+    This replaces the checkout fingerprint (`runner.checkout_inputs`) in hub mode."""
     out: dict[str, str] = {}
-    for project, entry in state.get("projects", {}).items():
-        if entry.get("is_public", True) is False:
-            continue
+    for key, entry in state.get("projects", {}).items():
         for path, sha in sorted(entry.get("files", {}).items()):
-            out[f"projects/{project}/{path}"] = sha
+            out[f"corpus/{key}/{path}"] = sha
     return out
-
-
-def served(state: dict) -> dict[str, dict]:
-    return {
-        p: e for p, e in state.get("projects", {}).items() if e.get("is_public", True) is not False
-    }
 
 
 def fetch_file(hub: Hub, entry: dict, path: str, required: bool = True) -> bytes | None:

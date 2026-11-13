@@ -58,31 +58,48 @@ observatory checkout is still required for metadata and figure context.
 
 ### Where the sources come from
 
-`FETCH_BACKEND` selects the input (`stages/fetch.py`); a run never mixes the two.
+Every source the wiki compiles from lives in the committed tree `corpus/`
+(`stages/corpus.py`): `corpus/<owner_orcid>/<project>/` holds a project's
+`REPORT.md`, `README.md`, `beril.yaml` and the figures its report embeds,
+`corpus/beril/docs/` the two central digests, and `corpus/index.json` maps
+`<owner>/<project>` to `{sid, revision, submitted_at, kind}`. `FETCH_BACKEND`
+selects what fills it (`stages/fetch.py`); a run never mixes the two:
 
-- `local` (default): `--checkout` names a BERIL observatory checkout. The run
-  copies the files it consumes (every `projects/*/REPORT.md` and `README.md`,
-  the figures the reports embed, `ui/config/collections.yaml`, the two digests
-  under `docs/`) into the work tree and fingerprints them as the external input.
+- `local` (default): `--checkout` names a BERIL observatory checkout. Its
+  `projects/*/` and `docs/` digests are written under the owner `legacy` and the
+  run fingerprints the files it consumed as the external input.
 - `hub`: no checkout. `BERIL_URL` and `BERIL_TOKEN` (a BERIL personal access
   token) reach BERIL's context API, and nothing else: the wiki never calls
-  OpenViking. `GET /api/context/submissions?kind=approved,seeded` lists the
-  projects an approved `/submit` or an admin seed has published, with the
-  sha256 of each ingested file; `GET /api/context/read` supplies `REPORT.md`,
-  `beril.yaml`, `README.md` and the embedded `figures/**` as raw bytes. Every
-  download is checked against the feed's hash (or, for a figure the feed does
-  not list, the hash the route declares) and a mismatch stops the fetch. The
-  feed is incremental: `state/hub.json` keeps the merged view and the
-  `next_since` to continue from, promotion carries it back, and the external
-  fingerprint is that merged view (project, path, sha256), so a submission
-  that lands during a run is caught at promotion like a changed checkout.
-  Projects the feed marks private are not staged. The `README.md` copies go to
-  `reference/projects/<project>/` in the work tree, where the authors stage
-  reads them; `collections.yaml` is the committed copy at
-  `contract/collections.yaml` (unkeyed: it changes no cached work). The two
-  central digests have no hub route; the hub backend takes them from a
-  checkout when `BERIL_CHECKOUT` has one and otherwise re-stages the accepted
-  copies under `wiki/sources`, since both archives stopped changing in May 2026.
+  OpenViking. `GET /api/context/submissions?kind=approved,seeded,docs` lists
+  complete submissions (owner, project, revision = sha256 of `REPORT.md`, every
+  file with its sha256); `GET /api/context/read` supplies the files as raw bytes.
+  Only a project whose revision differs from the index is downloaded; every
+  download is checked against the feed's hash (or, for a file the feed does not
+  list, the hash the route declares) and a mismatch stops the fetch before
+  anything is written. `state/hub.json` keeps the feed's merged view and the
+  `next_since` cursor, promotion carries both back, and the external fingerprint
+  is that merged view, so a submission landing during a run is caught at
+  promotion like a changed checkout. `kind: docs` rows (owner `beril`, project
+  `docs`) carry the digests; without one, the accepted copies under
+  `wiki/sources` are staged.
+
+After either backend, `stages.fetch` stages **all** of the corpus: every indexed
+report as `staging/<sid>__REPORT.md` (a legacy entry with no corpus files stages
+its accepted `wiki/sources` copy) and its figures into `wiki/figures/<sid>/`. The
+runner compares the whole of `staging/` with `wiki/sources/`, so a partial
+staging would read as deletions and be refused; staging the whole corpus is what
+makes an incremental fetch safe.
+
+**Source ids.** BERIL project slugs are unique per owner only, and a `[src: id]`
+never changes once pages cite it, so the index assigns each project's sid once:
+(1) an entry for `(owner, project)` keeps its sid; else (2) a `legacy/<project>`
+entry, a source integrated before owners were known, is claimed: the sid is the
+slug and the entry moves to the owner; else (3) the slug, when no other entry
+uses it as a sid; else (4) `<slug>__<orcid>`. The existing sources are pinned
+as `legacy/<sid>` in the committed `corpus/index.json`, so seeding the feed
+re-integrates nothing. `extras` reads README and `beril.yaml` from `corpus/`;
+`collections.yaml` is the committed copy at `contract/collections.yaml`
+(unkeyed: it changes no cached work).
 
 Individual jobs have `--max-turns` (default 12, applying to tool-using jobs
 other than page sessions), `--timeout` (600 seconds), and `--max-output-tokens`

@@ -1,0 +1,442 @@
+{
+ "projects": {
+  "legacy/acinetobacter_adp1_explorer": {
+   "kind": "legacy",
+   "revision": "ec7429b1cf2b99caae21a458ffae48609efc6384c9a4b7e3a9b1385d70024218",
+   "sid": "acinetobacter_adp1_explorer",
+   "submitted_at": null
+  },
+  "legacy/adp1_deletion_phenotypes": {
+   "kind": "legacy",
+   "revision": "7d40ea0a5c21fdf6e9852ab3cc9628a50905fba2ddb532cd9dc5aa24117bb6f0",
+   "sid": "adp1_deletion_phenotypes",
+   "submitted_at": null
+  },
+  "legacy/adp1_triple_essentiality": {
+   "kind": "legacy",
+   "revision": "5b0b80cbb8215ef660717892ae828f95ef135b781bd6f7024b19d981c94fe52f",
+   "sid": "adp1_triple_essentiality",
+   "submitted_at": null
+  },
+  "legacy/alphafold_msa_annotation": {
+   "kind": "legacy",
+   "revision": "f66f0c9679cde23e009a56a030fe65d0d4efb49b7f8d057511382970661ac7e1",
+   "sid": "alphafold_msa_annotation",
+   "submitted_at": null
+  },
+  "legacy/amr_cofitness_networks": {
+   "kind": "legacy",
+   "revision": "aff57c75024bdd9b12de29d4d39e499b07d78769cef6d0bd2d1a1161e467e9cd",
+   "sid": "amr_cofitness_networks",
+   "submitted_at": null
+  },
+  "legacy/amr_environmental_resistome": {
+   "kind": "legacy",
+   "revision": "48d007e13fa6f22f0af5ab50fce2658553a23932da5b203ebca2d18948d147b4",
+   "sid": "amr_environmental_resistome",
+   "submitted_at": null
+  },
+  "legacy/amr_fitness_cost": {
+   "kind": "legacy",
+   "revision": "37cff6733111944d43de76281816b859093e2ba9f743e964e9b5a9fc5652e034",
+   "sid": "amr_fitness_cost",
+   "submitted_at": null
+  },
+  "legacy/amr_pangenome_atlas": {
+   "kind": "legacy",
+   "revision": "d3ff61262afb26bda0b9720898fba96907b71a2b2f1209b3f8d18d168f387de6",
+   "sid": "amr_pangenome_atlas",
+   "submitted_at": null
+  },
+  "legacy/amr_strain_variation": {
+   "kind": "legacy",
+   "revision": "281555811f8881723be3df2451fb1922ac3608fa2659d910741acb7a97cfcc9c",
+   "sid": "amr_strain_variation",
+   "submitted_at": null
+  },
+  "legacy/annotation_gap_discovery": {
+   "kind": "legacy",
+   "revision": "3c63fd0fe807325171c748094ed79318ae508fb874d02e4db139674dc478387c",
+   "sid": "annotation_gap_discovery",
+   "submitted_at": null
+  },
+  "legacy/aromatic_catabolism_network": {
+   "kind": "legacy",
+   "revision": "68071594c6f00c685e2305ec838c11f3c31f6ef34c03cf0c699a64d106b027d6",
+   "sid": "aromatic_catabolism_network",
+   "submitted_at": null
+  },
+  "legacy/bacdive_metal_validation": {
+   "kind": "legacy",
+   "revision": "6b482275a5774daed2242605f701225afa538da071ebfacdff398459a8d660a0",
+   "sid": "bacdive_metal_validation",
+   "submitted_at": null
+  },
+  "legacy/bacdive_phenotype_metal_tolerance": {
+   "kind": "legacy",
+   "revision": "9fcabb1ca7fe2bf7740290ce37ec596ac51e60e89249679f42c9408e567a541b",
+   "sid": "bacdive_phenotype_metal_tolerance",
+   "submitted_at": null
+  },
+  "legacy/bacillota_b_subsurface_accessory": {
+   "kind": "legacy",
+   "revision": "d7e7f6138df01ab1518706a0ea0667b6ddedc64f7966c6ac95c3ec44bcd45441",
+   "sid": "bacillota_b_subsurface_accessory",
+   "submitted_at": null
+  },
+  "legacy/berdl_data_atlas": {
+   "kind": "legacy",
+   "revision": "be5f29816668f7662998e22a666a6a398c84a18d10e70464cfbd943fc645831e",
+   "sid": "berdl_data_atlas",
+   "submitted_at": null
+  },
+  "legacy/caulobacter_fur_lipida_loss": {
+   "kind": "legacy",
+   "revision": "ef8e4c5759abd14a915e18706ba9283e83019f0c753991a823669cf1d213b8cd",
+   "sid": "caulobacter_fur_lipida_loss",
+   "submitted_at": null
+  },
+  "legacy/cf_formulation_design": {
+   "kind": "legacy",
+   "revision": "06931c95e1ee4b3b3a4a95563e11b057ffbada9817b91426fd15b4be9ef75bfe",
+   "sid": "cf_formulation_design",
+   "submitted_at": null
+  },
+  "legacy/clay_confined_subsurface": {
+   "kind": "legacy",
+   "revision": "93b0616d8ca5b3e28c3abd934fdaf5a1c4aa678b99ef85f1baeb9f9c637b0c2c",
+   "sid": "clay_confined_subsurface",
+   "submitted_at": null
+  },
+  "legacy/cofitness_coinheritance": {
+   "kind": "legacy",
+   "revision": "c42104325d32cf92b9baff7341246a79f8b8347e87d245d42d91303d7e98b44c",
+   "sid": "cofitness_coinheritance",
+   "submitted_at": null
+  },
+  "legacy/cog_analysis": {
+   "kind": "legacy",
+   "revision": "3551e1b64c6e5e5d4a42b48a79c8034d31302e0401e238884d44971741da489e",
+   "sid": "cog_analysis",
+   "submitted_at": null
+  },
+  "legacy/conservation_fitness_synthesis": {
+   "kind": "legacy",
+   "revision": "dcc30773426e7d1bb6a6642b526725d104f24b2ce4bc490da0348587b841885a",
+   "sid": "conservation_fitness_synthesis",
+   "submitted_at": null
+  },
+  "legacy/conservation_vs_fitness": {
+   "kind": "legacy",
+   "revision": "e0d31ced5965dc2bd3597dc43f0c63a33ad3497af8e9ec712d9369ae6c9aa197",
+   "sid": "conservation_vs_fitness",
+   "submitted_at": null
+  },
+  "legacy/core_gene_tradeoffs": {
+   "kind": "legacy",
+   "revision": "dd4a7ef97e18dbe8a750070900eeb5647cdf2162c92c52d7d247f70465256e75",
+   "sid": "core_gene_tradeoffs",
+   "submitted_at": null
+  },
+  "legacy/costly_dispensable_genes": {
+   "kind": "legacy",
+   "revision": "09c61ea64ca662d2bfa768e341afaf3854e4a5dafe91dd4c4e17eb97d6d663c4",
+   "sid": "costly_dispensable_genes",
+   "submitted_at": null
+  },
+  "legacy/counter_ion_effects": {
+   "kind": "legacy",
+   "revision": "c43b2ab4f0d5dd44e987cc5bb413ebd72891a74a14ce45245be883ec2ca48807",
+   "sid": "counter_ion_effects",
+   "submitted_at": null
+  },
+  "legacy/ecotype_analysis": {
+   "kind": "legacy",
+   "revision": "f55bacaa37a86c994ad5c736d651fab97795c9583e3ba5d394319cd671196339",
+   "sid": "ecotype_analysis",
+   "submitted_at": null
+  },
+  "legacy/ecotype_env_reanalysis": {
+   "kind": "legacy",
+   "revision": "db74961114a7aabd8fccc5e50114a3f44b684ffbdd661104a55c40c7fb4e3723",
+   "sid": "ecotype_env_reanalysis",
+   "submitted_at": null
+  },
+  "legacy/ecotype_functional_differentiation": {
+   "kind": "legacy",
+   "revision": "465628fbc1a9804913dac4212b73369f7fa168714f0ebe401719451cd96d3751",
+   "sid": "ecotype_functional_differentiation",
+   "submitted_at": null
+  },
+  "legacy/enigma_carbon_census_1": {
+   "kind": "legacy",
+   "revision": "62204d5c4271f61cef9bd5c3aee8b1410bebd0a60d508276d2875691a7194f49",
+   "sid": "enigma_carbon_census_1",
+   "submitted_at": null
+  },
+  "legacy/enigma_contamination_functional_potential": {
+   "kind": "legacy",
+   "revision": "4dcb3d9608b4e864e109a4e0ca80952e30f26797b2d3de85a58962f773ba79f1",
+   "sid": "enigma_contamination_functional_potential",
+   "submitted_at": null
+  },
+  "legacy/enigma_sso_asv_ecology": {
+   "kind": "legacy",
+   "revision": "1153f1f3f4d12bf8f52c79351cc2441f7f7114eaae9b86f58aae67797d6cb55a",
+   "sid": "enigma_sso_asv_ecology",
+   "submitted_at": null
+  },
+  "legacy/env_embedding_explorer": {
+   "kind": "legacy",
+   "revision": "9d8367c2702227ec806ff62e384e9178954f1455f3826dafd569baa34a61a76f",
+   "sid": "env_embedding_explorer",
+   "submitted_at": null
+  },
+  "legacy/essential_genome": {
+   "kind": "legacy",
+   "revision": "6bf9c96cf9fac3bfd553efb4fed76a92d75e70a0549d7be588a83c632ea0c049",
+   "sid": "essential_genome",
+   "submitted_at": null
+  },
+  "legacy/essential_metabolome": {
+   "kind": "legacy",
+   "revision": "8a18113bee96ddf029c55c8c06b70270b663c1f3e817ab0501e7608c8a90427f",
+   "sid": "essential_metabolome",
+   "submitted_at": null
+  },
+  "legacy/euk_in_prok_correlates": {
+   "kind": "legacy",
+   "revision": "345875dfe9abb66eeb33126277f33a3a655e7e7feed29ff12ebd79787207c86a",
+   "sid": "euk_in_prok_correlates",
+   "submitted_at": null
+  },
+  "legacy/field_vs_lab_fitness": {
+   "kind": "legacy",
+   "revision": "8bf50c605e80b6db78122bc45bdfce5cb3ef8bc17821932e2e7ab7fb94e5622c",
+   "sid": "field_vs_lab_fitness",
+   "submitted_at": null
+  },
+  "legacy/fitness_effects_conservation": {
+   "kind": "legacy",
+   "revision": "876489dafb304c591b6d0ae6315b0249426b647ff63d98b5135904893840f259",
+   "sid": "fitness_effects_conservation",
+   "submitted_at": null
+  },
+  "legacy/fitness_modules": {
+   "kind": "legacy",
+   "revision": "4fce3013b064e0af4e90202509f2c93e0d181d2663930f839a35e0ae16b2f86e",
+   "sid": "fitness_modules",
+   "submitted_at": null
+  },
+  "legacy/functional_dark_matter": {
+   "kind": "legacy",
+   "revision": "1ea00a93830c52ac6d4c47418f8d718cf6b5aa2d81462a64855a8308888da1d0",
+   "sid": "functional_dark_matter",
+   "submitted_at": null
+  },
+  "legacy/fw300_metabolic_consistency": {
+   "kind": "legacy",
+   "revision": "7ba873873f7c42649450d7c75e18227257c5c7c8eb2fee052525f3732c997c05",
+   "sid": "fw300_metabolic_consistency",
+   "submitted_at": null
+  },
+  "legacy/gene_function_ecological_agora": {
+   "kind": "legacy",
+   "revision": "ec22f37a485c95d0e067c1984020af5580f9f103cae1582742ed63f035a74a69",
+   "sid": "gene_function_ecological_agora",
+   "submitted_at": null
+  },
+  "legacy/genotype_to_phenotype_enigma": {
+   "kind": "legacy",
+   "revision": "e69de667de1b74a70a09c07dc5b5bfb99aa3f042b003017eb1e60ec118fbab42",
+   "sid": "genotype_to_phenotype_enigma",
+   "submitted_at": null
+  },
+  "legacy/harvard_forest_warming": {
+   "kind": "legacy",
+   "revision": "d4043571b26bef25b8a3ca32dbd57a1ba8196ebed694062c96fb769ca1a9e273",
+   "sid": "harvard_forest_warming",
+   "submitted_at": null
+  },
+  "legacy/ibd_phage_targeting": {
+   "kind": "legacy",
+   "revision": "7bb70c12c17426e8c3553768511907d214bbcaa696a58e3a283e6ad8dd52ff53",
+   "sid": "ibd_phage_targeting",
+   "submitted_at": null
+  },
+  "legacy/lab_field_ecology": {
+   "kind": "legacy",
+   "revision": "d301e46026bc8482d801d3d918f6cdabb080b372de868edfa81b5a8631ff3f52",
+   "sid": "lab_field_ecology",
+   "submitted_at": null
+  },
+  "legacy/lanthanide_methylotrophy_atlas": {
+   "kind": "legacy",
+   "revision": "4c006958be98f494be09edfff08176308c57490b4b48dc38c5753450c3d8e304",
+   "sid": "lanthanide_methylotrophy_atlas",
+   "submitted_at": null
+  },
+  "legacy/lignin_community_enrichment": {
+   "kind": "legacy",
+   "revision": "f0bce929a335ab8e8ef7a4731d9934d5e53d9244e175f9b21ac411501aad0360",
+   "sid": "lignin_community_enrichment",
+   "submitted_at": null
+  },
+  "legacy/metabolic_capability_dependency": {
+   "kind": "legacy",
+   "revision": "1412a5c1aa7711732d548b57744f3324a207e5eba6d0b4052c8882ac9cc593fe",
+   "sid": "metabolic_capability_dependency",
+   "submitted_at": null
+  },
+  "legacy/metal_cross_resistance": {
+   "kind": "legacy",
+   "revision": "500dd3cfb440724464d76e3acbbeb03b0f8408de0fccbf2e8a4f53a05e43721b",
+   "sid": "metal_cross_resistance",
+   "submitted_at": null
+  },
+  "legacy/metal_fitness_atlas": {
+   "kind": "legacy",
+   "revision": "9ea58c19144575c5e8a783b777863269a18b37241d89bb6c0a9c2a044de1353d",
+   "sid": "metal_fitness_atlas",
+   "submitted_at": null
+  },
+  "legacy/metal_resistance_global_biogeography": {
+   "kind": "legacy",
+   "revision": "b0f55ad895a38acb546b33895f438128175fe7ebe53480136798c601a8137317",
+   "sid": "metal_resistance_global_biogeography",
+   "submitted_at": null
+  },
+  "legacy/metal_specificity": {
+   "kind": "legacy",
+   "revision": "8555e9245da861451c7bb26e5536567914d3b5cdeeaddefdd4919d2eb6810e89",
+   "sid": "metal_specificity",
+   "submitted_at": null
+  },
+  "legacy/microbeatlas_metal_ecology": {
+   "kind": "legacy",
+   "revision": "45fedd7ae4d79ed996ffeb2f8c38d1298866c9714db14c499b03c3e3882594ad",
+   "sid": "microbeatlas_metal_ecology",
+   "submitted_at": null
+  },
+  "legacy/module_conservation": {
+   "kind": "legacy",
+   "revision": "44e13c4ca1eae246521c79a559693fa556289043e35e7eeb7eaf3c806ed152de",
+   "sid": "module_conservation",
+   "submitted_at": null
+  },
+  "legacy/nmdc_community_metabolic_ecology": {
+   "kind": "legacy",
+   "revision": "1959fd37259df598f708ecfea2c796883e3a8f2f62ea52e1443073544a8866d5",
+   "sid": "nmdc_community_metabolic_ecology",
+   "submitted_at": null
+  },
+  "legacy/nmdc_context_audit": {
+   "kind": "legacy",
+   "revision": "0f4c987b31cd4df5a18862ca0ce3d3589a6cdbd46b7cbf0496b2f325c91f5d92",
+   "sid": "nmdc_context_audit",
+   "submitted_at": null
+  },
+  "legacy/pangenome_openness": {
+   "kind": "legacy",
+   "revision": "ed7689d4effffdfad5f1be8b8d69b761f8c4d726f62d90e7f89b037a43308fe8",
+   "sid": "pangenome_openness",
+   "submitted_at": null
+  },
+  "legacy/paperblast_explorer": {
+   "kind": "legacy",
+   "revision": "21c92287da8100c2ce6f5e7686137d1f4a58e8270def5e4de9a0da68a56494f6",
+   "sid": "paperblast_explorer",
+   "submitted_at": null
+  },
+  "legacy/pathway_capability_dependency": {
+   "kind": "legacy",
+   "revision": "b48f1bebed72779629baaf7e71b9cffda8ab0298f49aa9c3460cc6d13bb7cf75",
+   "sid": "pathway_capability_dependency",
+   "submitted_at": null
+  },
+  "legacy/pgp_pangenome_ecology": {
+   "kind": "legacy",
+   "revision": "8319f0fcf3c6f5a2997e4444496c7d59bb5d956e8bfc9aab5ed472003d02a946",
+   "sid": "pgp_pangenome_ecology",
+   "submitted_at": null
+  },
+  "legacy/phage_defense_arsenal": {
+   "kind": "legacy",
+   "revision": "9d450a848b83b2462d07d216ef01827f8a08f8e1c4fcddcdf74cfdb7dbcbe601",
+   "sid": "phage_defense_arsenal",
+   "submitted_at": null
+  },
+  "legacy/phb_granule_ecology": {
+   "kind": "legacy",
+   "revision": "256700c607287ee65c24d87e88b02331582e76de9afbe656fd2ea6cd80350324",
+   "sid": "phb_granule_ecology",
+   "submitted_at": null
+  },
+  "legacy/plant_microbiome_ecotypes": {
+   "kind": "legacy",
+   "revision": "ab4bafa20bb607a1edf87a293d67885cd96017817bfabdbff2c19bac9dc95272",
+   "sid": "plant_microbiome_ecotypes",
+   "submitted_at": null
+  },
+  "legacy/prophage_amr_comobilization": {
+   "kind": "legacy",
+   "revision": "f58710893c456806b9a06f5e9bd3687468082c34ffcf93be308e037eb59268b5",
+   "sid": "prophage_amr_comobilization",
+   "submitted_at": null
+  },
+  "legacy/prophage_ecology": {
+   "kind": "legacy",
+   "revision": "58e5dfbe672d830cc749b46434bc92ecb328e31d5cb5f793a987c72994a7e0ed",
+   "sid": "prophage_ecology",
+   "submitted_at": null
+  },
+  "legacy/pseudomonas_carbon_ecology": {
+   "kind": "legacy",
+   "revision": "9a0d1678e23b48d6e7732b56ad5ca0452fed1ff9fcf5c9c5e8e9b23315c58260",
+   "sid": "pseudomonas_carbon_ecology",
+   "submitted_at": null
+  },
+  "legacy/respiratory_chain_wiring": {
+   "kind": "legacy",
+   "revision": "e44ee5fea95d2bf94013d27d0b2afd372d6612ac3bf997f73e2813afe5bb42b3",
+   "sid": "respiratory_chain_wiring",
+   "submitted_at": null
+  },
+  "legacy/snipe_defense_system": {
+   "kind": "legacy",
+   "revision": "f7d78af3b2d5fc355bdd55bc72ce728519a3dc854968793d401b959f1e9ae555",
+   "sid": "snipe_defense_system",
+   "submitted_at": null
+  },
+  "legacy/soil_frontier_genomics": {
+   "kind": "legacy",
+   "revision": "f3931fe9d68922f56c7c150229f466d5cddab2ea6b166362e8b31933149f9a8d",
+   "sid": "soil_frontier_genomics",
+   "submitted_at": null
+  },
+  "legacy/soil_metal_functional_genomics": {
+   "kind": "legacy",
+   "revision": "afe5423a06222e7ee2957401c00f4af52fea13df31be748b4ab108fb1dfe6144",
+   "sid": "soil_metal_functional_genomics",
+   "submitted_at": null
+  },
+  "legacy/t4ss_cazy_environmental_hgt": {
+   "kind": "legacy",
+   "revision": "51a111efe7b5ea5f55b6310291e8badbd42dcc5ebe29717b03e23d2c103de389",
+   "sid": "t4ss_cazy_environmental_hgt",
+   "submitted_at": null
+  },
+  "legacy/truly_dark_genes": {
+   "kind": "legacy",
+   "revision": "c3c61898305ee30bac02c9a1ff4d8c27bd21313ee4b736ea0055ea6d9014adf0",
+   "sid": "truly_dark_genes",
+   "submitted_at": null
+  },
+  "legacy/webofmicrobes_explorer": {
+   "kind": "legacy",
+   "revision": "9a00ed7cecab68d7f9f290eb54f509ee70ab0950d80bcd48cd92b528748dd4da",
+   "sid": "webofmicrobes_explorer",
+   "submitted_at": null
+  }
+ }
+}
