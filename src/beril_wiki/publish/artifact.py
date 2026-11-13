@@ -6,7 +6,7 @@ without a commit, an image build or a rollout.
     uv run python -m beril_wiki.publish.artifact current
     uv run python -m beril_wiki.publish.artifact corpus DIR   # the corpus/ tree alone
 
-`push` packs the rendered site plus the Markdown the MCP tools answer from
+`push` packs the rendered site plus the Markdown the internal API answers from
 (wiki/sources, wiki/findings, wiki/directions and a fresh cards.json) as
 ``<prefix>/site-<id>.tar.gz`` beside ``<prefix>/site-<id>.manifest.json``, then
 rewrites ``<prefix>/current.json`` to point at it. The server (beril_wiki.serve)
@@ -314,7 +314,7 @@ def _git_commit(root: pathlib.Path) -> str | None:
 
 
 def corpus_files(root: pathlib.Path) -> dict[str, bytes]:
-    """The Markdown and records the MCP tools answer from, as archive members."""
+    """The Markdown and records the internal API answers from, as archive members."""
     out: dict[str, bytes] = {}
     for folder in CORPUS_DIRS:
         for p in sorted((root / "wiki" / folder).glob("*.md")):

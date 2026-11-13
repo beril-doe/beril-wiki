@@ -157,19 +157,20 @@ The site is built before the image rather than inside it, because the search
 vectors come from the `history` branch and need the checkout's `.git`.
 `build_quartz.sh` also writes `quartz/corpus/` (the source reports, finding and
 direction records and `cards.json`), which the image bakes in at `/srv/corpus`
-for the MCP tools below.
+for the internal API below.
 
 The server ([`serve.py`](src/beril_wiki/serve.py), FastAPI) reads:
 
 | Variable | Default | Meaning |
 | --- | --- | --- |
 | `WIKI_SITE_DIR` | `/srv/site` | the site baked into the image, served when no artifact is |
-| `WIKI_CORPUS_DIR` | `/srv/corpus` | the baked corpus the MCP tools read beside it |
+| `WIKI_CORPUS_DIR` | `/srv/corpus` | the baked corpus the internal API reads beside it |
 | `WIKI_PREFIX` | `/wiki` | the URL prefix the ingress routes here |
 | `WIKI_SITE_ROOT` | `/srv/artifacts` | where downloaded artifacts are unpacked (`site-<id>/`); mount a volume |
 | `WIKI_ARTIFACT_ENDPOINT` | unset | S3 endpoint (`http://minio:9000`) or `file:///dir`; unset means serve the baked site only |
 | `WIKI_ARTIFACT_BUCKET`, `WIKI_ARTIFACT_PREFIX` (`wiki`), `WIKI_ARTIFACT_ACCESS_KEY`, `WIKI_ARTIFACT_SECRET_KEY`, `WIKI_ARTIFACT_REGION` | | the store |
 | `WIKI_RELOAD_TOKEN` | unset | bearer token for `POST /wiki/_admin/reload`; unset disables the route (503) |
+| `WIKI_INTERNAL_TOKEN` | unset | bearer token for the internal API under `/wiki/_api/`; unset disables it (503) |
 
 `GET /wiki/_admin/status` names the artifact being served (`baked` for the
 image's own tree). `GET /healthz` is the liveness probe.
@@ -241,18 +242,30 @@ link is now root-relative (the path of the base URL), so one artifact serves
 URLs naming the build host; a host that needs them exact still gets its own
 artifact, built with its own `WIKI_BASE_URL`.
 
-#### MCP tools
+#### Internal API
 
-The container also serves the wiki as a read-only MCP tool server at
-`/wiki/mcp/` (streamable HTTP, stateless, no authentication: it exposes nothing
-the site does not). Tools: `search(query, scope?, k)` (keyword, BM25 over the
-site's own section index; meaning search is a TODO until the server holds an
-embedding key), `read_page(path)`, `read_section(path, heading)`,
-`list_findings(topic?|project?)`, `get_finding(id)`, `get_direction(id)` and
-`get_source(project, offset, length)` for exact-quote checks against the
-source report. Every answer names the artifact it was served from. The BERIL
-webapp's chat is the intended client; Claude Code can use it with
-`claude mcp add --transport http beril-wiki https://beril.kbase.us/wiki/mcp/`.
+The container also answers an internal, token-guarded HTTP API under
+`/wiki/_api/` ([`wiki_api.py`](src/beril_wiki/wiki_api.py)), the backend the
+BERIL webapp's `WikiManager` reads the wiki through (`beril context find|read
+--source wiki`). It is for in-cluster callers only (`http://wiki:8080`): **the
+ingress must not expose `/wiki/_api` or `/wiki/_admin`**; add `location ~
+^/wiki/_(api|admin) { return 404; }` (or an equivalent deny) ahead of the
+`/wiki` proxy rule in the SPIN NGINX config and in the observatory's
+`nginx.conf`. Every request carries `Authorization: Bearer
+$WIKI_INTERNAL_TOKEN`; with the variable unset the routes answer 503.
+
+| Route | Answer |
+| --- | --- |
+| `GET /wiki/_api/search?q=&scope=&k=` | `{artifact, results: [{address, title, heading, text, score}]}`; `scope` is a page group (`concept`, `topic`, `finding`, ...) or a path prefix such as `concepts/` |
+| `GET /wiki/_api/read?address=` | `{artifact, address, title, content, sources}` for `wiki/<collection>/<slug>[#section]`; a `sources/` address returns the exact report Markdown |
+| `GET /wiki/_api/ls?path=` | the collections, or the pages of one |
+| `GET /wiki/_api/source?project=&offset=&length=` | exact characters of a source report, for quote checks |
+
+Collections served: concepts, topics, conflicts, entities, summaries, sources,
+findings, directions, data. The authors collection is excluded server-side.
+Every answer names the artifact it was served from. Search is keyword only
+(BM25 over the site's own section index); vector search is a TODO until the
+server holds an embedding key.
 
 ### Search and Ask
 

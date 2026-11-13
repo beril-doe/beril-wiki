@@ -37,7 +37,7 @@ RUN uv export --project /tmp/build --frozen --only-group serve --no-emit-project
     rm -rf /tmp/build
 
 # serve.py and the two modules it imports; nothing else from the package.
-COPY src/beril_wiki/__init__.py src/beril_wiki/serve.py src/beril_wiki/mcp_server.py \
+COPY src/beril_wiki/__init__.py src/beril_wiki/serve.py src/beril_wiki/wiki_api.py \
      /app/beril_wiki/
 COPY src/beril_wiki/publish/__init__.py src/beril_wiki/publish/artifact.py \
      /app/beril_wiki/publish/

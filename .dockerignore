@@ -6,7 +6,7 @@
 !uv.lock
 !src/beril_wiki/__init__.py
 !src/beril_wiki/serve.py
-!src/beril_wiki/mcp_server.py
+!src/beril_wiki/wiki_api.py
 !src/beril_wiki/publish/__init__.py
 !src/beril_wiki/publish/artifact.py
 !quartz/public/

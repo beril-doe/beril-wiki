@@ -22,10 +22,11 @@ was unpacked before; `POST /wiki/_admin/reload` with `Authorization: Bearer
 $WIKI_RELOAD_TOKEN` fetches the current artifact again and swaps to it
 atomically (one in-process assignment; a `current` symlink records it for the
 next start). `GET /wiki/_admin/status` names the artifact being served. The
-MCP tool server (beril_wiki.mcp_server) is mounted at /wiki/mcp and reads the
-same artifact.
+internal API (beril_wiki.wiki_api, `WIKI_INTERNAL_TOKEN`) is mounted under
+/wiki/_api and reads the same artifact; like /wiki/_admin it is for in-cluster
+callers and must not be exposed by the ingress.
 
-Only this module, publish/artifact.py, mcp_server.py and the `serve` dependency
+Only this module, publish/artifact.py, wiki_api.py and the `serve` dependency
 group go into the image, so nothing else from the package is imported here.
 """
 
@@ -51,7 +52,7 @@ from fastapi.responses import (
     Response,
 )
 
-from beril_wiki import mcp_server
+from beril_wiki import wiki_api
 from beril_wiki.publish import artifact
 
 log = logging.getLogger("beril_wiki.serve")
@@ -102,8 +103,8 @@ class Served:
     corpus: pathlib.Path | None
     manifest: dict
 
-    def mcp_corpus(self) -> mcp_server.Corpus:
-        return mcp_server.Corpus(self.artifact, self.root, self.corpus)
+    def api_corpus(self) -> wiki_api.Corpus:
+        return wiki_api.Corpus(self.artifact, self.root, self.corpus)
 
 
 class Site:
@@ -120,14 +121,14 @@ class Site:
         self.current = baked
         self.site_root = site_root
         self.store, self.keys = store, keys
-        self._corpus: mcp_server.Corpus | None = None
+        self._corpus: wiki_api.Corpus | None = None
         self.swap_lock = asyncio.Lock()
 
     @property
-    def corpus(self) -> mcp_server.Corpus:
+    def corpus(self) -> wiki_api.Corpus:
         c = self._corpus
         if c is None or c.artifact != self.current.artifact:
-            c = self._corpus = self.current.mcp_corpus()
+            c = self._corpus = self.current.api_corpus()
         return c
 
     @property
@@ -199,6 +200,7 @@ def create_app(
     store: artifact.Store | None = None,
     keys: artifact.Keys | None = None,
     reload_token: str | None = None,
+    internal_token: str | None = None,
     sync_on_start: bool = True,
 ) -> FastAPI:
     baked_root = pathlib.Path(site_dir).resolve()
@@ -206,14 +208,12 @@ def create_app(
     baked = Served(BAKED, baked_root, corpus if corpus and corpus.is_dir() else None, {})
     site = Site(baked, pathlib.Path(site_root).resolve() if site_root else None, store, keys)
     prefix = "/" + prefix.strip("/")
-    mcp = mcp_server.create_mcp(lambda: site.corpus)
 
     @contextlib.asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         if sync_on_start:
             await run_in_threadpool(site.startup)
-        async with mcp.session_manager.run():
-            yield
+        yield
 
     app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None)
     app.state.site = site
@@ -266,10 +266,6 @@ def create_app(
             }
         )
 
-    async def to_mcp() -> Response:
-        # The mount answers at the slash form; 308 keeps the method and body.
-        return RedirectResponse(prefix + "/mcp/", status_code=308)
-
     async def page(request: Request, path: str) -> Response:
         found = resolve(site.current.root, path)
         if isinstance(found, str):
@@ -286,9 +282,8 @@ def create_app(
     app.add_api_route(prefix, to_prefix, methods=["GET"])
     app.add_api_route(prefix + "/_admin/status", status, methods=["GET"])
     app.add_api_route(prefix + "/_admin/reload", reload, methods=["POST"])
-    # Mounted before the catch-all so /wiki/mcp is the tool server, not a page lookup.
-    app.add_api_route(prefix + "/mcp", to_mcp, methods=["GET", "POST", "DELETE"])
-    app.mount(prefix + "/mcp", mcp.streamable_http_app())
+    # Registered before the catch-all so /wiki/_api/* is the API, not a page lookup.
+    app.include_router(wiki_api.create_router(lambda: site.corpus, internal_token, prefix))
     app.add_api_route(prefix + "/{path:path}", page, methods=["GET", "HEAD"])
     app.add_api_route("/{path:path}", missing, methods=["GET", "HEAD"])
     return app
@@ -309,6 +304,7 @@ def app_from_env() -> FastAPI:
         store=store,
         keys=keys,
         reload_token=os.environ.get("WIKI_RELOAD_TOKEN") or None,
+        internal_token=os.environ.get("WIKI_INTERNAL_TOKEN") or None,
     )
 
 
