@@ -108,6 +108,8 @@ with `npm --prefix theme run typecheck` once `scripts/build_quartz.sh` has insta
 - [`docs/agentic-workflow.html`](docs/agentic-workflow.html), visual walkthrough
 - [`docs/wiki.md`](docs/wiki.md), how the wiki itself is structured and how
   to read it
+- [`deploy/README.md`](deploy/README.md), running the curator as a scheduled
+  job: the persistent volume it needs, its environment, and the cold-start guard
 - [`contract/AGENTS.md`](contract/AGENTS.md), the editorial contract
 
 ## Publishing

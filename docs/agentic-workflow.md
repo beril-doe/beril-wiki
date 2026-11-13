@@ -969,6 +969,16 @@ survive cached updates and are removed when their pages are retired. No
 embedding API is used in this path; PubMed remains an external data retrieval
 operation.
 
+## Running unattended
+
+A scheduled run (a SPIN CronJob) needs one persistent volume mounted at the
+checkout, holding `wiki/`, `state/`, `corpus/`, `search/section-vectors.jsonl`
+and `.agentic/`; a pod without it looks like a first-ever run and would
+re-integrate the whole corpus. `agentic run` refuses to start when
+`state/agentic.json` is absent unless `BERIL_WIKI_ALLOW_COLD_START=1` says the
+cold start is meant. [`deploy/README.md`](../deploy/README.md) has the layout,
+the job's environment and the sequence one run executes.
+
 ## Resume and recovery
 
 Ignored `.agentic/` stores the SQLite ledger, raw results, evidence, plans, paper
