@@ -417,14 +417,18 @@ columns run least effort first: Analyze existing data, Add outside data, Run
 an experiment, then Not checked yet for the questions no check has placed. A
 line above them reads "Less effort to follow up → more
 effort". Each column header shows its definition from `follow_notes` under
-its name. Every dot is an
-ink circle, 10 px across like the Results map's marks. Both maps use one type
+its name. Each question uses an ink glyph, 10 px across like the Results
+map's marks. An ordinary question is a solid circle. Both maps use one type
 size for row labels and one for column headers. A dot is orange when the
 question cites a listed result in the Results map's New direction column, and
-ringed when it builds on results from two or more projects. A half-filled dot
-starts with existing data. A dashed dot marks a question whose data
-availability is unclear. The legend shows each of these two marks only when a
-question in the grid has it. The square beside each row's topic label is the topic's
+has an outer circular ring when it builds on results from two or more projects.
+A filled left semicircle means it starts with existing data. A continuous
+hollow diamond marks a question whose data availability is unclear; when it
+also starts with existing data, the diamond's left half is filled. The legend
+shows each of these two marks only when a question in the grid has it.
+The legend and grid share one SVG glyph drawing
+with separate half-fill, circle or diamond outline and outer project ring.
+The square beside each row's topic label is the topic's
 colour. Hover, focus or tap a dot for a pop-up with the question, "Builds on
 a new-direction result" when that applies, what following it up needs, "Starts
 with existing data" and "Data availability unclear" when they apply, why, and

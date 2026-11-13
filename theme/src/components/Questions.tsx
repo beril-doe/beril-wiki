@@ -1,7 +1,7 @@
 // The open-questions grid: topics down the side, what following a question up needs across
 // the top (least effort first), one dot per question. Every word comes from frontmatter
 // publish/cards.py wrote. Position carries the topic and the need; a half-filled dot starts
-// with existing data before its experiment, a dashed dot leaves data availability unclear,
+// with existing data before its experiment, a diamond leaves data availability unclear,
 // a ring marks a question that builds on results from two or more projects, and orange a
 // question that builds on a result in the Results map's first (New direction) column. The
 // dots are links, so the grid works without JavaScript; src/client/questions.ts adds the
@@ -126,6 +126,24 @@ const topicName = (c: Corpus, slug: string) => {
   return t ? titleOf(t) : slug.replace(/-/g, " ")
 }
 
+interface GlyphProps {
+  half?: boolean
+  unclear?: boolean
+}
+
+/** The fill and outline share fixed geometry, including when both statuses apply. */
+function QuestionGlyph({ half, unclear }: GlyphProps) {
+  return (
+    <svg class="qglyph" viewBox="0 0 10 10" aria-hidden="true" focusable="false">
+      {!half && !unclear && <circle class="qsolid" cx="5" cy="5" r="5" />}
+      {half && <path class="qhalf" d={unclear ? "M5 1.75 L5 8.25 L1.75 5 Z" : "M5 1 A4 4 0 0 0 5 9 Z"} />}
+      {unclear
+        ? <path class="qoutline" d="M5 1 L9 5 L5 9 L1 5 Z" />
+        : half && <circle class="qoutline" cx="5" cy="5" r="4.5" />}
+    </svg>
+  )
+}
+
 /** The dot is the link; the pop-up is its sibling so it can hold its own "Open the question" link.
  * Its name carries what the ring and the colour show to sighted readers. */
 function Dot({ q, c, from }: { q: File; c: Corpus; from: FullSlug }) {
@@ -146,7 +164,9 @@ function Dot({ q, c, from }: { q: File; c: Corpus; from: FullSlug }) {
   const cls = [m.cross && "cross", novel && "novel", m.first_step && "half", m.data_unclear && "unclear"].filter(Boolean).join(" ")
   return (
     <span class={`qd${cls ? ` ${cls}` : ""}`} data-id={slugOf(q)}>
-      <a class="qdot" href={href} aria-label={label} aria-describedby={popId(q)} />
+      <a class="qdot" href={href} aria-label={label} aria-describedby={popId(q)}>
+        <QuestionGlyph half={m.first_step} unclear={m.data_unclear} />
+      </a>
       <span class="qpop" id={popId(q)}>
         <strong>{titleOf(q)}</strong>
         {novel && <span class="qnovel">{NOVEL_WORDS}.</span>}
@@ -167,7 +187,9 @@ function Dot({ q, c, from }: { q: File; c: Corpus; from: FullSlug }) {
 function LegendDot({ cls }: { cls?: string }) {
   return (
     <span class={`qd key${cls ? ` ${cls}` : ""}`} aria-hidden="true">
-      <span class="qdot" />
+      <span class="qdot">
+        <QuestionGlyph half={cls === "half"} unclear={cls === "unclear"} />
+      </span>
     </span>
   )
 }

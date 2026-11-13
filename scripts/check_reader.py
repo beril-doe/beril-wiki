@@ -586,7 +586,19 @@ const ndFeat = e => {
 }
 const qdFeat = q => {
   const d = q.querySelector(':scope > .qdot')
-  const s = getComputedStyle(q), b = getComputedStyle(d, '::before')
+  const g = d.querySelector('.qglyph')
+  const s = getComputedStyle(q), b = g ? getComputedStyle(g) : getComputedStyle(d, '::before')
+  const part = cls => {
+    const e = g?.querySelector(cls)
+    if (!e) return null
+    const c = getComputedStyle(e)
+    return {tag: e.tagName, cx: e.getAttribute('cx'), cy: e.getAttribute('cy'),
+            r: e.getAttribute('r'), d: e.getAttribute('d'), length: e.getAttribute('pathLength'),
+            fill: c.fill, stroke: c.stroke, width: c.strokeWidth, dash: c.strokeDasharray,
+            offset: c.strokeDashoffset, transform: c.transform,
+            shown: !!e.getClientRects().length && c.display !== 'none'
+                && c.visibility === 'visible' && +c.opacity === 1}
+  }
   const r = d.getBoundingClientRect()
   return {
     id: q.dataset.id || '', novel: q.classList.contains('novel'),
@@ -598,6 +610,8 @@ const qdFeat = q => {
     b: { bg: b.backgroundColor, img: b.backgroundImage, clip: b.clipPath,
          radius: b.borderTopLeftRadius, shadow: b.boxShadow, bstyle: b.borderTopStyle,
          bwidth: b.borderTopWidth, bcolor: b.borderTopColor },
+    glyph: {view: g?.getAttribute('viewBox'), solid: part('.qsolid'),
+            half: part('.qhalf'), outline: part('.qoutline')},
     under: under(q),
   }
 }
@@ -3032,36 +3046,69 @@ def result_features(m: dict, tk: dict) -> dict:
 
 
 def question_features(q: dict, tk: dict) -> dict:
-    """What a question dot shows: a circle, solid, half filled (with a stroke) or dashed,
-    with or without the cross-project ring, in ink or orange."""
+    """Read circle or diamond geometry, fill, project ring and colour."""
     col = rgba(q["color"])
     b = q["b"]
-    half = b["img"].startswith("linear-gradient(") and "90deg" in b["img"]
-    shape = (
-        "circle"
-        if b["radius"] == "50%" and b["clip"] == "none" and (b["img"] == "none" or half)
-        else f"other (radius {b['radius']}, clip {b['clip']}, image {b['img'][:30]})"
+    g = q["glyph"]
+
+    def circle(p: dict | None, radius: str) -> bool:
+        return bool(
+            p
+            and p["shown"]
+            and p["tag"] == "circle"
+            and p["cx"] == p["cy"] == "5"
+            and p["r"] == radius
+            and p["transform"] == "none"
+        )
+
+    solid, half, outline = g["solid"], g["half"], g["outline"]
+    diamond = bool(
+        outline
+        and outline["shown"]
+        and outline["tag"] == "path"
+        and outline["d"] == "M5 1 L9 5 L5 9 L1 5 Z"
+        and outline["transform"] == "none"
     )
-    bg = rgba(b["bg"])
-    stroke, outer, dashed, border = outline_of(b, col)
+    shape = (
+        ("diamond" if diamond else "circle")
+        if g["view"] == "0 0 10 10"
+        and b["radius"] == "50%"
+        and b["clip"] == "none"
+        and b["img"] == "none"
+        and (diamond or circle(solid, "5") or circle(outline, "4.5"))
+        else "other"
+    )
+    stroke = bool(
+        (diamond or circle(outline, "4.5"))
+        and outline["fill"] == "none"
+        and same(rgba(outline["stroke"]), col)
+        and px(outline["width"]) == 1
+        and outline["dash"] == "none"
+    )
     parts: list[str] = []
     if half:
-        stops = colours_in(b["img"])
-        empty_half = len(stops) == 2 and (same(stops[1], tk["card"]) or stops[1][3] == 0)
-        # A dashed outline replaces the inner stroke when the data is also unclear.
-        drawn = stroke == "ok" or (stroke == "none" and dashed)
-        # A hard split at the midpoint: both colour stops sit at 50%.
-        split = re.findall(r"(\d+(?:\.\d+)?)%", b["img"]) == ["50", "50"]
-        ok = empty_half and split and same(stops[0], col) and drawn
-        parts.append("half" if ok else f"gradient {b['img']} stroke {stroke}")
-    elif stroke != "none":
-        parts.append(f"inset stroke {stroke}")
-    if dashed:
-        parts.append("dashed" if same(bg, tk["card"]) or bg[3] == 0 else f"dashed on {b['bg']}")
-    elif border:
-        parts.append(f"border {b['bstyle']} {b['bwidth']}")
+        ok = (
+            half["shown"]
+            and half["d"] == ("M5 1.75 L5 8.25 L1.75 5 Z" if diamond else "M5 1 A4 4 0 0 0 5 9 Z")
+            and half["transform"] == "none"
+            and same(rgba(half["fill"]), col)
+            and stroke
+        )
+        parts.append("half" if ok else "bad half")
+    if outline and not stroke:
+        parts.append("bad outline")
+    empty = rgba(b["bg"])[3] == 0 or (not diamond and same(rgba(b["bg"]), tk["card"]))
+    if (half or outline) and (solid is not None or not empty):
+        parts.append("filled half" if half else "filled outline")
     if not parts:
-        parts.append("solid" if same(bg, col) else f"filled {b['bg']}")
+        parts.append(
+            "hollow"
+            if diamond and stroke
+            else "solid"
+            if circle(solid, "5") and same(rgba(solid["fill"]), col)
+            else "empty"
+        )
+    outer = shadow_layers(b["shadow"])
     if not outer:
         ring = "none"
     elif (
@@ -3089,11 +3136,9 @@ def expect_result(r: dict) -> dict:
 
 
 def expect_question(q: dict) -> dict:
-    # A question with both markers would need both looks; the design draws neither alone.
-    fill = " ".join(w for w, on in (("half", q["first"]), ("dashed", q["unclear"])) if on)
     return {
-        "shape": "circle",
-        "fill": fill or "solid",
+        "shape": "diamond" if q["unclear"] else "circle",
+        "fill": "half" if q["first"] else "hollow" if q["unclear"] else "solid",
         "ring": "ring" if q["cross"] else "none",
         "colour": "orange" if q["novel"] else "ink",
     }
@@ -3181,14 +3226,19 @@ RESULT_CONTROLS = [
         '.nvgrid .nd[data-k="data"]::before { border-radius: 50% !important; }',
     ),
 ]
-UNCLEAR_SOLID = ".qgrid .qd.unclear .qdot::before { border-style: solid !important; }"
-# Nearly solid: the split moved from the midpoint to 99%.
-HALF_SKEWED = (
-    ".qgrid .qd.half .qdot::before { background: linear-gradient(90deg, currentColor 99%, "
-    "var(--card) 99%) !important; }"
+UNCLEAR_FILLED = ".qgrid .qd.unclear .qoutline { fill: currentColor !important; }"
+UNCLEAR_ROUND_JS = """on => document.querySelectorAll('.qgrid .qd.unclear .qoutline')
+    .forEach(e => e.setAttribute('d', on ? 'M5 1 L9 5 L5 9 L1 5 Z'
+        : 'M5 .5 A4.5 4.5 0 1 0 5 9.5 A4.5 4.5 0 1 0 5 .5 Z'))"""
+GLYPH_FILLED = ".qgrid .qglyph { background: currentColor !important; }"
+GLYPH_PAINTED = (
+    ".qgrid .qglyph { background-image: linear-gradient(currentColor, currentColor) !important; }"
 )
-HALF_JS = """on => document.querySelectorAll(on ? '.qgrid .qd[data-was-half]' : '.qgrid .qd.half')
-    .forEach(e => { e.classList.toggle('half', on); e.toggleAttribute('data-was-half', !on) })"""
+UNCLEAR_BACKDROP = ".qgrid .qd.unclear .qglyph { background: var(--card) !important; }"
+# Stretching the semicircle must not pass as half filled.
+HALF_SKEWED = ".qgrid .qhalf { transform: scaleX(1.98) !important; }"
+HALF_JS = """on => document.querySelectorAll('.qgrid .qhalf')
+    .forEach(e => { e.style.display = on ? '' : 'none' })"""
 
 
 def control_fails(page: Page, tag: str, tk: dict, results_page: bool) -> list[str]:
@@ -3226,13 +3276,32 @@ def control_fails(page: Page, tag: str, tk: dict, results_page: bool) -> list[st
             page.evaluate(HALF_JS, False)
             caught = {i for i, _ in mark_diffs(page, tk)[0]}
             page.evaluate(HALF_JS, True)
-            report("first-step dots lose .half", caught, firsts, "first-step questions")
+            report("first-step dots lose their half fill", caught, firsts, "first-step questions")
             report(
-                "first-step dots split at 99%", caught_by(HALF_SKEWED), firsts, "first-step ones"
+                "first-step semicircles stretched",
+                caught_by(HALF_SKEWED),
+                firsts,
+                "first-step ones",
             )
         unclear = {q for q, e in rec["questions"].items() if e["unclear"]}
         if unclear:
-            report("unclear dots drawn solid", caught_by(UNCLEAR_SOLID), unclear, "unclear ones")
+            report("unclear diamonds filled", caught_by(UNCLEAR_FILLED), unclear, "unclear ones")
+            report(
+                "unclear diamonds on discs", caught_by(UNCLEAR_BACKDROP), unclear, "unclear ones"
+            )
+            page.evaluate(UNCLEAR_ROUND_JS, False)
+            caught = {i for i, _ in mark_diffs(page, tk)[0]}
+            page.evaluate(UNCLEAR_ROUND_JS, True)
+            report("unclear diamonds drawn round", caught, unclear, "unclear ones")
+        partial = firsts | unclear
+        if partial:
+            report("empty glyph interiors filled", caught_by(GLYPH_FILLED), partial, "partial dots")
+        report(
+            "glyph background images",
+            caught_by(GLYPH_PAINTED),
+            set(rec["questions"]),
+            "questions",
+        )
     css, paint = column_paint(rec)
     probe = page.evaluate(
         "cs => cs.map(c => { const e = document.createElement('i'); e.style.color = c;"
@@ -3282,8 +3351,8 @@ SIZE_JS = """() => {
     const mute = (() => { const e = document.createElement('i'); e.style.color = 'var(--mute-ink)';
         document.body.append(e); const c = getComputedStyle(e).color; e.remove(); return c })()
     const box = e => { const r = e.getBoundingClientRect(); return [r.width, r.height] }
-    const pseudo = e => { const b = getComputedStyle(e, '::before')
-        return [parseFloat(b.width), parseFloat(b.height)] }
+    const pseudo = e => { const r = e.querySelector('.qglyph')?.getBoundingClientRect()
+        return r ? [r.width, r.height] : [0, 0] }
     return {
         ui: probe('var(--t-ui)'), label: probe('var(--t-label)'), mute,
         nd: [...document.querySelectorAll('.nvgrid .nd, .nvlegend .nd')].map(box),
@@ -3663,11 +3732,12 @@ def halo_fails(page: Page, tag: str, tk: dict, results_page: bool) -> list[str]:
         q = page.locator(".qgrid .qd.cross").first
         dot = q.locator("a.qdot")
         dot.scroll_into_view_if_needed()
-        ring = dot.evaluate("e => getComputedStyle(e, '::before').boxShadow")
+        ring = dot.evaluate("e => getComputedStyle(e.querySelector('.qglyph')).boxShadow")
         dot.hover()
         page.wait_for_timeout(200)
         bg, ring2 = dot.evaluate(
-            "e => [getComputedStyle(e).backgroundColor, getComputedStyle(e, '::before').boxShadow]"
+            "e => [getComputedStyle(e).backgroundColor, "
+            "getComputedStyle(e.querySelector('.qglyph')).boxShadow]"
         )
         c = rgba(bg)
         if not (0 < c[3] < 0.3) or ring2 != ring:
