@@ -5,6 +5,10 @@
 #
 #   scripts/publish_artifact.sh [--id ID] [--no-check]
 #
+# A successful push also commits wiki/, state/, corpus/index.json and the
+# vectors to the `history` branch and tags artifact/<id>; `artifact rollback
+# --to <id>` moves current back and restores the checkout from that tag.
+#
 # Needs the store in the environment (beril_wiki.publish.artifact):
 #   WIKI_ARTIFACT_ENDPOINT   https://s3.example or file:///a/directory
 #   WIKI_ARTIFACT_BUCKET WIKI_ARTIFACT_PREFIX WIKI_ARTIFACT_ACCESS_KEY WIKI_ARTIFACT_SECRET_KEY
@@ -25,10 +29,12 @@ for arg in "$@"; do
   esac
 done
 
-# The same gates that block a Pages deploy or an image push block an artifact.
+# The same gates that block a Pages deploy or an image push block an artifact:
+# check --strict, the theme typecheck and check_site.sh. `push` refuses without
+# a record of all three passing on exactly this build (quartz/gate-results.json,
+# written here or by build_quartz.sh); --no-check reuses the build's record.
 if [ "$CHECK" = 1 ]; then
-  uv run --project "$REPO" python -m beril_wiki.check --strict
-  "$HERE/check_site.sh" "$SITE"
+  uv run --project "$REPO" python -m beril_wiki.publish.artifact gate --root "$REPO" --site "$SITE"
 fi
 
 uv run --project "$REPO" python -m beril_wiki.publish.artifact push \

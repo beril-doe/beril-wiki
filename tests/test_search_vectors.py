@@ -35,7 +35,7 @@ def test_only_new_hashes_are_embedded():
 
 
 def test_vectors_for_removed_sections_are_kept():
-    # Another branch's build may still use them; search_data push --prune drops them.
+    # Another branch's build may still use them, so the store never drops them.
     store, _ = sv.update(inputs("a", "b"), {}, embedder=fake_embedder([]), pace=0)
     store, n = sv.update(inputs("b"), store, embedder=fake_embedder([]), pace=0)
     assert n == 0 and set(store) == {"h-a", "h-b"}

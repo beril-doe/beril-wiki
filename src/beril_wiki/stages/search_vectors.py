@@ -8,12 +8,11 @@ whose hash has no stored vector, with CBORG's LBL-hosted nomic-embed-text
 ($0 per token), and adds one int8 vector per hash to
 ``search/section-vectors.jsonl``. The next publish copies them into the site.
 
-CI has no CBORG key, so the vectors are shared through the ``search-data``
-branch (beril_wiki.publish.search_data): a build pulls them first and a
-maintainer pushes the new ones. Readers' browsers embed only their queries,
-with their own keys. Vectors for sections that no longer exist are kept, so a
-build of an older or newer branch still finds its own; ``search_data push
---prune`` drops them.
+CI has no CBORG key, so the vectors are shared through the ``history`` branch
+(beril_wiki.publish.search_data pulls them; every ``artifact push`` commits the
+store there and ships it inside the artifact). Readers' browsers embed only
+their queries, with their own keys. Vectors for sections that no longer exist
+are kept, so a build of an older or newer branch still finds its own.
 
     OPENAI_API_KEY=$CBORG_API_KEY OPENAI_BASE_URL=https://api.cborg.lbl.gov \\
         uv run python -m beril_wiki.stages.search_vectors [--force]

@@ -1032,11 +1032,20 @@ OpenViking integration**.
 After local acceptance, `scripts/build_quartz.sh` renders the site, including the
 finding and research-direction records and the maintainers' data-issue lists.
 With `CBORG_API_KEY` set, it also embeds the sections that have no vector yet.
-Then run `uv run python -m beril_wiki.publish.search_data push` before opening
-the pull request: the vectors live on the `search-data` branch, and a pull
-request whose sections lack vectors fails its build.
-The curator does not commit, push or deploy. Do not publish concurrently with
-promotion.
+Then `scripts/publish_artifact.sh` runs the three publish gates (`check
+--strict`, the theme typecheck, `check_site.sh`), pushes the site as a versioned
+artifact whose manifest records them, commits `wiki/`, `state/`,
+`corpus/index.json` and `search/section-vectors.jsonl` to the `history` branch
+and tags `artifact/<id>`; `current` never moves to a site CI would reject. Push
+`history` before opening a pull request: `search_data pull` reads the vectors
+from it (the `search-data` branch is retired), they also ship inside every
+artifact under `corpus/`, and a pull request whose sections lack vectors still
+fails its build (`SEARCH_REQUIRE_VECTORS=1`). `publish.artifact rollback --to
+<id>` moves `current` back and restores `wiki/`, `state/`, `search/` and
+`corpus/index.json` from the tag, so the next curate run starts from the
+restored promotion; it refuses while a run holds `.agentic/lock` or when the tag
+is missing. The curator itself does not commit to `main`, push or deploy. Do not
+publish concurrently with promotion.
 
 ## Development verification
 

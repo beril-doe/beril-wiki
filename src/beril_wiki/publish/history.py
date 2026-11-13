@@ -1,0 +1,138 @@
+"""The `history` branch: the audit trail of every published artifact, and the rollback
+source.
+
+After a successful `artifact push`, `record` commits `wiki/`, `state/`,
+`corpus/index.json` and `search/section-vectors.jsonl` from the working checkout
+to the branch `history` (created orphan when absent) and tags the commit
+`artifact/<id>`. The working checkout's own branch, index and working tree are
+untouched: the commit is built through a temporary git index.
+
+`restore` is the other half of a rollback: it checks `wiki/`, `state/` and
+`search/` out of `artifact/<id>` into the working checkout and resets
+`corpus/index.json` to that promotion, so the next curate run starts from the
+restored state (the next fetch re-downloads whatever the feed has moved past
+it, and `changed_sources` re-integrates against the restored `wiki/sources`).
+It refuses while a curator run holds `.agentic/lock`.
+
+`search_data pull` reads the vectors from this branch, which replaces the
+retired single-commit `search-data` branch.
+"""
+
+from __future__ import annotations
+
+import fcntl
+import os
+import pathlib
+import shutil
+import subprocess
+import tarfile
+import tempfile
+
+BRANCH = "history"
+TAG_PREFIX = "artifact/"
+TRACKED = ("wiki", "state", "corpus/index.json", "search/section-vectors.jsonl")
+RESTORED_TREES = ("wiki", "state", "search")
+
+
+class HistoryError(RuntimeError):
+    pass
+
+
+def git(root: pathlib.Path, *args: str, env: dict[str, str] | None = None) -> str:
+    r = subprocess.run(
+        ["git", "-C", str(root), *args],
+        capture_output=True,
+        text=True,
+        env={**os.environ, **(env or {})},
+    )
+    if r.returncode:
+        raise HistoryError(f"git {' '.join(args)}: {r.stderr.strip()}")
+    return r.stdout
+
+
+def ref(root: pathlib.Path, name: str) -> str | None:
+    r = subprocess.run(
+        ["git", "-C", str(root), "rev-parse", "--verify", "--quiet", name],
+        capture_output=True,
+        text=True,
+    )
+    return r.stdout.strip() or None
+
+
+def tag_of(artifact_id: str) -> str:
+    return f"{TAG_PREFIX}{artifact_id}"
+
+
+def record(root: pathlib.Path, artifact_id: str, message: str | None = None) -> str:
+    """Commit the tracked trees to `history` and tag `artifact/<id>`; returns the commit."""
+    tag = tag_of(artifact_id)
+    if ref(root, f"refs/tags/{tag}"):
+        raise HistoryError(f"tag {tag} already exists")
+    present = [p for p in TRACKED if (root / p).exists()]
+    if not present:
+        raise HistoryError("nothing to record: none of the tracked paths exist")
+    with tempfile.NamedTemporaryFile(prefix="history-index.", delete=False) as handle:
+        index = handle.name
+    try:
+        os.unlink(index)
+        env = {"GIT_INDEX_FILE": index}
+        # -f: the vectors store is gitignored in the working checkout.
+        git(root, "add", "-f", "--", *present, env=env)
+        tree = git(root, "write-tree", env=env).strip()
+        parent = ref(root, f"refs/heads/{BRANCH}")
+        args = ["commit-tree", tree, "-m", message or f"Artifact {artifact_id}"]
+        if parent:
+            args += ["-p", parent]
+        commit = git(root, *args).strip()
+        git(root, "update-ref", f"refs/heads/{BRANCH}", commit, parent or "")
+        git(root, "tag", tag, commit)
+        return commit
+    finally:
+        if os.path.exists(index):
+            os.unlink(index)
+
+
+def locked_by_a_run(root: pathlib.Path) -> bool:
+    lock = root / ".agentic" / "lock"
+    if not lock.exists():
+        return False
+    with lock.open("a") as handle:
+        try:
+            fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            return True
+        fcntl.flock(handle, fcntl.LOCK_UN)
+    return False
+
+
+def restore(root: pathlib.Path, artifact_id: str) -> str:
+    """Replace wiki/, state/, search/ and corpus/index.json with the tagged promotion."""
+    tag = tag_of(artifact_id)
+    commit = ref(root, f"refs/tags/{tag}")
+    if not commit:
+        raise HistoryError(f"no tag {tag}; was this artifact recorded on {BRANCH}?")
+    if locked_by_a_run(root):
+        raise HistoryError("a curator run holds .agentic/lock; retry when it has finished")
+    archive = subprocess.run(
+        ["git", "-C", str(root), "archive", "--format=tar", commit],
+        capture_output=True,
+    )
+    if archive.returncode:
+        raise HistoryError(f"git archive {tag}: {archive.stderr.decode().strip()}")
+    staging = pathlib.Path(tempfile.mkdtemp(prefix=".restore.", dir=root))
+    try:
+        with tarfile.open(fileobj=__import__("io").BytesIO(archive.stdout)) as tar:
+            tar.extractall(staging, filter="data")
+        for tree in RESTORED_TREES:
+            target = root / tree
+            if target.exists():
+                shutil.rmtree(target)
+            if (staging / tree).exists():
+                shutil.move(str(staging / tree), str(target))
+        index = staging / "corpus/index.json"
+        if index.exists():
+            (root / "corpus").mkdir(exist_ok=True)
+            shutil.move(str(index), str(root / "corpus/index.json"))
+    finally:
+        shutil.rmtree(staging, ignore_errors=True)
+    return commit

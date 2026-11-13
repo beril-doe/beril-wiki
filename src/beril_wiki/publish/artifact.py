@@ -199,6 +199,77 @@ def count_pages(site: pathlib.Path) -> int:
     return sum(1 for _ in site.rglob("*.html"))
 
 
+GATES = ("check_strict", "theme_typecheck", "check_site")
+GATE_FILE = "gate-results.json"
+
+
+def site_digest(site: pathlib.Path) -> str:
+    """One hash over the built site's paths and bytes, so gate results can be tied to
+    exactly the tree they ran against."""
+    h = hashlib.sha256()
+    for path in sorted(site.rglob("*")):
+        if path.is_file():
+            h.update(path.relative_to(site).as_posix().encode())
+            h.update(b"\0")
+            h.update(sha256(path.read_bytes()).encode())
+            h.update(b"\n")
+    return h.hexdigest()
+
+
+def gate_commands(root: pathlib.Path, site: pathlib.Path) -> dict[str, list[str]]:
+    """The three checks CI runs before it publishes; a push needs all of them green."""
+    return {
+        "check_strict": [sys.executable, "-m", "beril_wiki.check", str(root), "--strict"],
+        "theme_typecheck": ["npm", "--prefix", str(root / "theme"), "run", "typecheck"],
+        "check_site": [str(root / "scripts/check_site.sh"), str(site)],
+    }
+
+
+def run_gates(root: pathlib.Path, site: pathlib.Path) -> dict:
+    """Run the gates, recording each result; never raises on a failed gate."""
+    results: dict[str, Any] = {}
+    for name, command in gate_commands(root, site).items():
+        try:
+            r = subprocess.run(command, cwd=root, capture_output=True, text=True, timeout=1800)
+            passed, tail = r.returncode == 0, (r.stdout + r.stderr)[-2000:]
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            passed, tail = False, str(exc)
+        results[name] = {"passed": passed, "output": tail.strip()}
+        print(f"gate {name}: {'passed' if passed else 'FAILED'}", file=sys.stderr)
+    return {
+        "ran_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
+        "site_digest": site_digest(site),
+        "results": results,
+    }
+
+
+def gates_passed(gate: dict) -> list[str]:
+    """The gates that did not pass (empty when all three did)."""
+    results = gate.get("results", {})
+    return [name for name in GATES if not results.get(name, {}).get("passed")]
+
+
+def check_gate(gate: dict | None, site: pathlib.Path) -> dict:
+    """The gate record a push may carry into its manifest, or an ArtifactError."""
+    if not gate:
+        raise ArtifactError("no gate results: run the gates (`artifact gate`) before pushing")
+    failed = gates_passed(gate)
+    if failed:
+        raise ArtifactError(f"gate(s) failed: {', '.join(failed)}; current will not move")
+    if gate.get("site_digest") != site_digest(site):
+        raise ArtifactError("gate results are for a different build of the site; rerun the gates")
+    return {
+        "ran_at": gate.get("ran_at"),
+        "site_digest": gate["site_digest"],
+        **{name: True for name in GATES},
+    }
+
+
+def manifest_gates_ok(manifest: dict) -> bool:
+    gates = manifest.get("gates") or {}
+    return all(gates.get(name) is True for name in GATES)
+
+
 def new_id(root: pathlib.Path, now: dt.datetime | None = None) -> str:
     """UTC timestamp plus the accepted run's fingerprint prefix (or the git commit)."""
     now = now or dt.datetime.now(dt.UTC)
@@ -248,6 +319,9 @@ def corpus_files(root: pathlib.Path) -> dict[str, bytes]:
     for folder in CORPUS_DIRS:
         for p in sorted((root / "wiki" / folder).glob("*.md")):
             out[f"corpus/{folder}/{p.name}"] = p.read_bytes()
+    vectors = root / "search/section-vectors.jsonl"
+    if vectors.is_file():
+        out["corpus/section-vectors.jsonl"] = vectors.read_bytes()
     try:
         from beril_wiki.publish import cards
         from beril_wiki.publish.cards.export import export
@@ -302,11 +376,18 @@ def push(
     site: pathlib.Path,
     artifact_id: str | None = None,
     base_url: str | None = None,
+    gate: dict | None = None,
+    history: bool = True,
 ) -> dict:
+    """Pack, upload and point `current`, then record the promotion on the history
+    branch. Refuses without a gate record showing all three checks passed on this
+    exact site, so `current` never moves to a site CI would reject."""
     artifact_id = check_id(artifact_id or new_id(root))
     if store.exists(keys.tarball(artifact_id)):
         raise ArtifactError(f"artifact {artifact_id} already exists; artifacts are immutable")
+    gates = check_gate(gate, site)
     manifest = build_manifest(root, site, artifact_id, base_url)
+    manifest["gates"] = gates
     data = pack(root, site, manifest)
     manifest["tarball_sha256"] = sha256(data)
     manifest["tarball_bytes"] = len(data)
@@ -315,6 +396,32 @@ def push(
         keys.manifest(artifact_id), json.dumps(manifest, indent=1).encode(), "application/json"
     )
     pointer = point(store, keys, artifact_id, manifest)
+    if history:
+        from beril_wiki.publish import history as H
+
+        try:
+            pointer["history_commit"] = H.record(root, artifact_id)
+        except H.HistoryError as exc:
+            # The artifact is live; the audit trail is the part that failed.
+            print(f"artifact: [WARN] history not recorded: {exc}", file=sys.stderr)
+    return pointer
+
+
+def rollback(store: Store, keys: Keys, root: pathlib.Path, artifact_id: str) -> dict:
+    """Move `current` back and restore the working checkout to that promotion."""
+    from beril_wiki.publish import history as H
+
+    if not H.ref(root, f"refs/tags/{H.tag_of(artifact_id)}"):
+        raise ArtifactError(f"no history tag for {artifact_id}; refusing to roll back")
+    if H.locked_by_a_run(root):
+        raise ArtifactError("a curator run holds .agentic/lock; retry when it has finished")
+    pointer = point(store, keys, artifact_id)
+    try:
+        pointer["restored_commit"] = H.restore(root, artifact_id)
+    except H.HistoryError as exc:
+        raise ArtifactError(
+            f"current moved to {artifact_id} but the checkout was not restored: {exc}"
+        ) from exc
     return pointer
 
 
@@ -363,6 +470,8 @@ def verify_manifest(unpacked: pathlib.Path, artifact_id: str) -> dict:
     pages = count_pages(site)
     if manifest.get("page_count") != pages:
         raise ArtifactError(f"manifest says {manifest.get('page_count')} pages, found {pages}")
+    if not manifest_gates_ok(manifest):
+        raise ArtifactError("manifest does not record all three gates passing; refusing it")
     return manifest
 
 
@@ -423,8 +532,21 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--site", type=pathlib.Path, default=None, help="default <root>/quartz/public")
     p.add_argument("--id", dest="artifact_id", default=None)
     p.add_argument("--base-url", default=os.environ.get("WIKI_BASE_URL"))
-    r = sub.add_parser("rollback", help="point current at an earlier artifact")
+    p.add_argument(
+        "--gate-results",
+        type=pathlib.Path,
+        default=None,
+        help="gate record written by `artifact gate` (default <root>/quartz/gate-results.json)",
+    )
+    p.add_argument("--run-gates", action="store_true", help="run the three gates now")
+    p.add_argument("--no-history", action="store_true", help="do not record on the history branch")
+    g = sub.add_parser("gate", help="run check --strict, the theme typecheck and check_site")
+    g.add_argument("--root", type=pathlib.Path, default=pathlib.Path.cwd())
+    g.add_argument("--site", type=pathlib.Path, default=None)
+    g.add_argument("--out", type=pathlib.Path, default=None)
+    r = sub.add_parser("rollback", help="point current at an earlier artifact and restore it")
     r.add_argument("--to", required=True, dest="artifact_id")
+    r.add_argument("--root", type=pathlib.Path, default=pathlib.Path.cwd())
     sub.add_parser("current", help="print current.json")
     c = sub.add_parser("corpus", help="write the corpus/ tree (no store needed)")
     c.add_argument("dest", type=pathlib.Path)
@@ -434,14 +556,32 @@ def main(argv: list[str] | None = None) -> int:
         n = write_corpus(args.root.resolve(), args.dest.resolve())
         print(f"artifact: wrote {n} corpus file(s) -> {args.dest}")
         return 0
+    if args.command == "gate":
+        root = args.root.resolve()
+        site = (args.site or root / "quartz/public").resolve()
+        gate = run_gates(root, site)
+        out = args.out or root / "quartz" / GATE_FILE
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(gate, indent=1))
+        failed = gates_passed(gate)
+        verdict = "all passed" if not failed else "FAILED: " + ", ".join(failed)
+        print(f"artifact: gates {verdict}; {out}")
+        return 1 if failed else 0
     try:
         store, keys = store_from_env(), Keys(prefix_from_env())
         if args.command == "push":
             root = args.root.resolve()
             site = (args.site or root / "quartz/public").resolve()
-            result: Any = push(store, keys, root, site, args.artifact_id, args.base_url)
+            if args.run_gates:
+                gate: dict | None = run_gates(root, site)
+            else:
+                gate_path = args.gate_results or root / "quartz" / GATE_FILE
+                gate = json.loads(gate_path.read_text()) if gate_path.exists() else None
+            result: Any = push(
+                store, keys, root, site, args.artifact_id, args.base_url, gate, not args.no_history
+            )
         elif args.command == "rollback":
-            result = point(store, keys, args.artifact_id)
+            result = rollback(store, keys, args.root.resolve(), args.artifact_id)
         else:
             result = current(store, keys)
     except ArtifactError as exc:

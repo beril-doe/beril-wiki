@@ -39,11 +39,24 @@ def store(tmp_path) -> A.DirStore:
     return A.DirStore(tmp_path / "bucket")
 
 
+def gate(site: Path) -> dict:
+    """A gate record showing all three checks passed on exactly this site."""
+    return {
+        "ran_at": "2026-11-13T00:00:00+00:00",
+        "site_digest": A.site_digest(site),
+        "results": {name: {"passed": True, "output": ""} for name in A.GATES},
+    }
+
+
+def push(store, keys, root, site, artifact_id, **kw):
+    return A.push(store, keys, root, site, artifact_id, gate=gate(site), history=False, **kw)
+
+
 def test_push_packs_site_and_corpus_and_points_current(tmp_path, store, monkeypatch):
     root, site = make_repo(tmp_path)
     monkeypatch.setattr(A, "corpus_files", lambda r: _plain_corpus(r))
     keys = A.Keys("wiki")
-    pointer = A.push(store, keys, root, site, "v1", base_url="localhost:8080/wiki")
+    pointer = push(store, keys, root, site, "v1", base_url="localhost:8080/wiki")
     assert pointer["id"] == "v1" and pointer["previous"] is None
     assert store.exists("wiki/site-v1.tar.gz") and store.exists("wiki/site-v1.manifest.json")
     manifest = json.loads(store.get("wiki/site-v1.manifest.json"))
@@ -71,21 +84,29 @@ def test_artifacts_are_immutable_and_ids_are_checked(tmp_path, store, monkeypatc
     root, site = make_repo(tmp_path)
     monkeypatch.setattr(A, "corpus_files", _plain_corpus)
     keys = A.Keys("wiki")
-    A.push(store, keys, root, site, "v1")
+    push(store, keys, root, site, "v1")
     with pytest.raises(A.ArtifactError, match="immutable"):
-        A.push(store, keys, root, site, "v1")
+        push(store, keys, root, site, "v1")
     with pytest.raises(A.ArtifactError, match="bad artifact id"):
-        A.push(store, keys, root, site, "../v2")
+        push(store, keys, root, site, "../v2")
     with pytest.raises(A.ArtifactError, match="no built site"):
-        A.push(store, keys, root, tmp_path / "empty", "v3")
+        A.push(
+            store,
+            keys,
+            root,
+            tmp_path / "empty",
+            "v3",
+            gate=gate(tmp_path / "empty"),
+            history=False,
+        )
 
 
 def test_rollback_moves_the_pointer_only_to_an_existing_artifact(tmp_path, store, monkeypatch):
     root, site = make_repo(tmp_path)
     monkeypatch.setattr(A, "corpus_files", _plain_corpus)
     keys = A.Keys("wiki")
-    A.push(store, keys, root, site, "v1")
-    A.push(store, keys, root, site, "v2")
+    push(store, keys, root, site, "v1")
+    push(store, keys, root, site, "v2")
     assert A.current(store, keys)["id"] == "v2"
     pointer = A.point(store, keys, "v1")
     assert pointer["id"] == "v1" and pointer["previous"] == "v2"
@@ -98,7 +119,7 @@ def test_sync_unpacks_verifies_and_reuses(tmp_path, store, monkeypatch):
     root, site = make_repo(tmp_path)
     monkeypatch.setattr(A, "corpus_files", _plain_corpus)
     keys = A.Keys("wiki")
-    A.push(store, keys, root, site, "v1")
+    push(store, keys, root, site, "v1")
     site_root = tmp_path / "artifacts"
     artifact_id, where, manifest = A.sync(store, keys, site_root)
     assert artifact_id == "v1" and where == site_root / "site-v1"
@@ -126,7 +147,7 @@ def test_sync_refuses_a_tampered_tarball_or_manifest(tmp_path, store, monkeypatc
     root, site = make_repo(tmp_path)
     monkeypatch.setattr(A, "corpus_files", _plain_corpus)
     keys = A.Keys("wiki")
-    A.push(store, keys, root, site, "v1")
+    push(store, keys, root, site, "v1")
     good = store.get("wiki/site-v1.tar.gz")
     store.put("wiki/site-v1.tar.gz", good + b"x", "application/gzip")
     with pytest.raises(A.ArtifactError, match="sha256 does not match"):
@@ -176,11 +197,13 @@ def test_cli_push_and_current(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr(A, "corpus_files", _plain_corpus)
     monkeypatch.setenv("WIKI_ARTIFACT_ENDPOINT", f"file://{tmp_path}/bucket")
     monkeypatch.setenv("WIKI_ARTIFACT_PREFIX", "wiki")
-    assert A.main(["push", "--root", str(root), "--id", "v1"]) == 0
+    assert A.main(["push", "--root", str(root), "--id", "v1", "--no-history"]) == 1  # no gates
+    (root / "quartz/gate-results.json").write_text(json.dumps(gate(site)))
+    assert A.main(["push", "--root", str(root), "--id", "v1", "--no-history"]) == 0
     assert A.main(["current"]) == 0
     assert '"id": "v1"' in capsys.readouterr().out
     assert A.main(["rollback", "--to", "v9"]) == 1
-    assert "no artifact v9" in capsys.readouterr().err
+    assert "no history tag for v9" in capsys.readouterr().err
 
 
 def test_corpus_tree_is_written_for_the_image(tmp_path, monkeypatch, capsys):

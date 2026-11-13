@@ -4,8 +4,8 @@ name: Publish wiki
 # key and no observatory checkout. Refreshing the *content* is still a
 # maintainer running scripts/run_pipeline.sh and committing the result; this
 # job only turns what is committed into the published site. The meaning-search
-# vectors come from the search-data branch (beril_wiki.publish.search_data);
-# pushing new ones there dispatches this workflow on main.
+# vectors come from the history branch (beril_wiki.publish.search_data), where
+# every artifact push commits them.
 on:
   push:
     branches: [main]
@@ -60,8 +60,8 @@ jobs:
       - name: Validate the corpus
         run: uv run --project . python -m beril_wiki.check --strict
 
-      # A pull request must bring the vectors for the sections it changes (pushed
-      # to search-data before review), so pages never change without them. A
+      # A pull request must bring the vectors for the sections it changes (on the
+      # history branch before review), so pages never change without them. A
       # deploy only warns: holding back content for a missing vector is worse.
       - name: Build site
         env:

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 import pytest
 from starlette.testclient import TestClient
 
@@ -112,7 +114,12 @@ def published(tmp_path, store, artifact_id: str, body: str):
     (site / "static/search/sections.json").write_text('{"build": "b", "sections": []}')
     (root / "wiki/sources").mkdir(parents=True)
     (root / "wiki/sources/demo__REPORT.md").write_text(f"report of {artifact_id}")
-    return A.push(store, A.Keys("wiki"), root, site, artifact_id)
+    gate = {
+        "ran_at": "now",
+        "site_digest": A.site_digest(site),
+        "results": {n: {"passed": True, "output": ""} for n in A.GATES},
+    }
+    return A.push(store, A.Keys("wiki"), root, site, artifact_id, gate=gate, history=False)
 
 
 @pytest.fixture
@@ -217,3 +224,36 @@ def test_a_bad_artifact_does_not_replace_the_served_one(site, tmp_path, store):
         assert r.status_code == 502
         assert c.get("/wiki/").text == "site v1"
         assert c.get("/wiki/_admin/status").json()["artifact"] == "v1"
+
+
+def test_a_manifest_without_gate_results_is_refused(site, tmp_path, store):
+    from beril_wiki.publish import artifact as A
+
+    published(tmp_path, store, "v1", "site v1")
+    manifest = json.loads(store.get("wiki/site-v1.manifest.json"))
+    del manifest["gates"]
+    # Re-pack v1's tarball with the gate-less manifest and point current at it.
+    import io
+    import tarfile
+
+    old = store.get("wiki/site-v1.tar.gz")
+    buf = io.BytesIO()
+    with (
+        tarfile.open(fileobj=io.BytesIO(old)) as src,
+        tarfile.open(fileobj=buf, mode="w:gz") as dst,
+    ):
+        for member in src.getmembers():
+            handle = src.extractfile(member) if member.isfile() else None
+            data = handle.read() if handle else b""
+            if member.name == "manifest.json":
+                data = json.dumps(manifest).encode()
+                member.size = len(data)
+            dst.addfile(member, io.BytesIO(data))
+    store.put("wiki/site-v1.tar.gz", buf.getvalue(), "application/gzip")
+    pointer = json.loads(store.get("wiki/current.json"))
+    pointer["sha256"] = A.sha256(buf.getvalue())
+    store.put("wiki/current.json", json.dumps(pointer).encode(), "application/json")
+    with TestClient(reloading_app(site, tmp_path, store)) as c:
+        assert c.get("/wiki/").text == "home"  # refused on start: the baked site
+        r = c.post("/wiki/_admin/reload", headers={"Authorization": "Bearer secret"})
+        assert r.status_code == 502 and "gates" in r.json()["error"]

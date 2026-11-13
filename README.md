@@ -79,7 +79,7 @@ The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 | `contract/` | the editorial contract injected into every compile, the concept decisions manifest, the errata a person has recorded against the source reports, the scope of finding and research-direction records (`cards.yaml`), and human decisions on literature labels (`novelty-decisions.yaml`) |
 | `state/` | per-stage caches that make the pipeline incremental |
 | `corpus/` | the committed sources: `corpus/<owner>/<project>/` with each report, README, `beril.yaml` and embedded figures, and `corpus/index.json`, which assigns every project its `[src:]` id once (see the operating guide, "Where the sources come from") |
-| `search/` | ignored local copy of the section vectors for meaning search; the shared copy lives on the `search-data` branch |
+| `search/` | ignored local copy of the section vectors for meaning search; the shared copy lives on the `history` branch and inside every site artifact |
 | `.agentic/` | ignored runtime ledger, raw results, receipts, and candidate workspace; preserve when resuming |
 | `docs/` | curator operating guide, HTML walkthrough, and wiki-format reference |
 
@@ -154,7 +154,7 @@ deploy workflow can also be run by hand to restart one environment.
     docker run --rm -p 8080:8080 beril-wiki     # http://localhost:8080/wiki/
 
 The site is built before the image rather than inside it, because the search
-vectors come from the `search-data` branch and need the checkout's `.git`.
+vectors come from the `history` branch and need the checkout's `.git`.
 `build_quartz.sh` also writes `quartz/corpus/` (the source reports, finding and
 direction records and `cards.json`), which the image bakes in at `/srv/corpus`
 for the MCP tools below.
@@ -181,17 +181,33 @@ to it on request:
     export WIKI_ARTIFACT_ENDPOINT=http://localhost:9000 WIKI_ARTIFACT_BUCKET=beril-wiki \
            WIKI_ARTIFACT_ACCESS_KEY=minioadmin WIKI_ARTIFACT_SECRET_KEY=minioadmin
     WIKI_BASE_URL=localhost:8080/wiki scripts/build_quartz.sh
-    scripts/publish_artifact.sh                         # check --strict, check_site, push, point current
+    scripts/publish_artifact.sh                         # gates, push, point current, record history
     curl -X POST -H "Authorization: Bearer $WIKI_RELOAD_TOKEN" localhost:8080/wiki/_admin/reload
     uv run python -m beril_wiki.publish.artifact rollback --to <id>   # then reload again
 
+**The gate.** `push` refuses unless a gate record for exactly this build shows
+`beril_wiki.check --strict`, `npm --prefix theme run typecheck` and
+`scripts/check_site.sh` all passed: `build_quartz.sh` writes one to
+`quartz/gate-results.json` (`WIKI_SKIP_GATES=1` leaves them to CI's steps),
+`publish_artifact.sh` reruns them, and `push --run-gates` runs them in the same
+invocation. The three results go into the manifest, and the server refuses a
+manifest without them, so `current` never moves to a site CI would reject.
+
 Each push is immutable (`site-<id>.tar.gz` plus `site-<id>.manifest.json`
-under the prefix); `current.json` is the only thing that moves, so rollback is
-moving the pointer. The server verifies the tarball's sha256 against
-`current.json` and the manifest's id and page count against the unpacked tree
-before it swaps, keeps the previous artifact unpacked, and on a restart serves
-the last one it unpacked when the store is unreachable, or the baked site when
-nothing was. The manifest records the page count, the git commit, the accepted
+under the prefix); `current.json` is the only thing that moves. A successful
+push also commits `wiki/`, `state/`, `corpus/index.json` and
+`search/section-vectors.jsonl` from the working checkout to the `history`
+branch (created orphan when absent, through a temporary index so your own
+branch is untouched) and tags `artifact/<id>`; push that branch to share the
+audit trail and the vectors. `rollback --to <id>` moves `current` back, then
+restores `wiki/`, `state/`, `search/` and `corpus/index.json` from the tag into
+the checkout, so the next curate run starts from the restored promotion instead
+of building on the bad one; it refuses while a run holds `.agentic/lock` or
+when the tag is missing. The server verifies the tarball's sha256 against
+`current.json` and the manifest's id, page count and gates against the unpacked
+tree before it swaps, keeps the previous artifact unpacked, and on a restart
+serves the last one it unpacked when the store is unreachable, or the baked
+site when nothing was. The manifest also records the git commit, the accepted
 run's fingerprint from `state/agentic.json` and the sha256 of every source
 report. `WIKI_ARTIFACT_ENDPOINT=file:///some/dir` is a store without S3, for
 tests or a single host.
@@ -257,27 +273,18 @@ reader's credit.
 `scripts/build_quartz.sh` builds the search index after `npx quartz build`.
 Meaning search compares the reader's query with one int8 vector per section,
 keyed by a hash of the section's text. The vectors (about 8 MB) live on the
-orphan branch `search-data`, which holds one commit with one file, so they never
-enter `main`'s history. The script first pulls them into the ignored local store
-`search/section-vectors.jsonl`. When `CBORG_API_KEY` is set, it then runs
-`python -m beril_wiki.stages.search_vectors`, which embeds only the sections
-with no vector using CBORG's free `lbl/nomic-embed-text`, and indexes again.
-
-Whenever page text changes, share the new vectors before the change merges:
-
-```sh
-CBORG_API_KEY=... scripts/build_quartz.sh
-uv run python -m beril_wiki.publish.search_data push
-```
-
-`push` merges the local store into `search-data`, replaces the branch's single
-commit, and dispatches the Pages workflow on `main` (it needs `gh`; otherwise
-run `gh workflow run pages.yml --ref main`). CI has no key: it pulls the
-vectors, fails a pull request whose sections lack one, and only warns on a
-deploy from `main`. Vectors for sections that no longer exist are kept, so a
-feature branch's push never drops ones the live site uses; from an up-to-date
-`main`, `push --prune` removes them. `scripts/run_pipeline.sh` pushes after
-publishing.
+`history` branch, which every `scripts/publish_artifact.sh` run commits to
+(with `wiki/`, `state/` and `corpus/index.json`, tagged `artifact/<id>`), and
+inside every site artifact under `corpus/`. The script first pulls them into
+the ignored local store `search/section-vectors.jsonl`
+(`beril_wiki.publish.search_data pull`). When `CBORG_API_KEY` is set, it then
+runs `python -m beril_wiki.stages.search_vectors`, which embeds only the
+sections with no vector using CBORG's free `lbl/nomic-embed-text`, and indexes
+again. CI has no key: it pulls the vectors, fails a pull request whose sections
+lack one (`SEARCH_REQUIRE_VECTORS=1`), and only warns on a deploy from `main`.
+Vectors for sections that no longer exist are kept, so a feature branch's build
+never drops ones the live site uses. The single-commit `search-data` branch is
+retired; `search_data push` now only says so.
 
 ## License
 

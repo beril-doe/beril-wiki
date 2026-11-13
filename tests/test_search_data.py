@@ -1,4 +1,4 @@
-"""The search-data branch: vectors travel through an orphan branch, merged, never lost."""
+"""Vectors are read from the history branch and merged into the local store, never lost."""
 
 from __future__ import annotations
 
@@ -8,6 +8,7 @@ import subprocess
 
 import pytest
 
+from beril_wiki.publish import history as H
 from beril_wiki.publish import search_data as sd
 
 
@@ -21,7 +22,7 @@ def run(*args: str, cwd) -> str:
 
 @pytest.fixture
 def repos(tmp_path):
-    """A bare remote and two clones of it, as two maintainers' checkouts."""
+    """A bare remote and two clones of it, as the curator host and a maintainer."""
     remote = tmp_path / "remote.git"
     run("git", "init", "--quiet", "--bare", str(remote), cwd=tmp_path)
     clones = []
@@ -31,61 +32,52 @@ def repos(tmp_path):
         run("git", "remote", "add", "origin", str(remote), cwd=c)
         for k, v in (("user.name", "t"), ("user.email", "t@example.org")):
             run("git", "config", k, v, cwd=c)
+        (c / "wiki").mkdir()
+        (c / "wiki/index.md").write_text("# w\n")
         clones.append(c)
     return remote, clones
 
 
-def branch_rows(remote) -> dict:
-    return sd.parse(run("git", "show", f"{sd.BRANCH}:{sd.FILE}", cwd=remote), "test")
+def publish_vectors(repo, artifact_id: str, *hashes: str) -> None:
+    """What `artifact push` does for the vectors: record them on history and push."""
+    store = repo / sd.FILE
+    store.parent.mkdir(exist_ok=True)
+    store.write_text("".join(row(h) + "\n" for h in hashes))
+    H.record(repo, artifact_id)
+    run("git", "push", "--quiet", "origin", H.BRANCH, cwd=repo)
 
 
-def test_push_creates_a_one_commit_orphan_branch(repos):
-    remote, (a, _) = repos
-    store = a / "search/section-vectors.jsonl"
+def test_pull_reads_the_history_branch_and_merges(repos):
+    remote, (a, b) = repos
+    publish_vectors(a, "v1", "h1")
+    store = b / "store.jsonl"
+    assert sd.pull(b, store) == (1, 1)
+    # Local rows the branch lacks survive; branch rows are added.
+    store.write_text(store.read_text() + row("h2") + "\n")
+    publish_vectors(a, "v2", "h1", "h3")
+    assert sd.pull(b, store) == (1, 3)
+    assert set(sd.parse(store.read_text(), "t")) == {"h1", "h2", "h3"}
+    assert run("git", "rev-list", "--count", H.BRANCH, cwd=remote).strip() == "2"
+
+
+def test_pull_falls_back_to_the_local_history_branch(repos):
+    _, (a, _) = repos
+    store = a / sd.FILE
     store.parent.mkdir()
     store.write_text(row("h1") + "\n")
-    assert "pushed 1 vectors" in sd.push(a, store)
-    assert set(branch_rows(remote)) == {"h1"}
-    store.write_text(row("h1") + "\n" + row("h2") + "\n")
-    sd.push(a, store)
-    # Each push replaces the branch's only commit, so old stores never pile up.
-    assert run("git", "rev-list", "--count", sd.BRANCH, cwd=remote).strip() == "1"
-    assert set(branch_rows(remote)) == {"h1", "h2"}
-    assert "up to date" in sd.push(a, store)
+    H.record(a, "v1")  # recorded but never pushed
+    store.unlink()
+    assert sd.pull(a, store) == (1, 1)
 
 
-def test_pull_and_push_merge_instead_of_replacing(repos):
-    remote, (a, b) = repos
-    sa, sb = a / "store.jsonl", b / "store.jsonl"
-    sa.write_text(row("h1") + "\n")
-    sd.push(a, sa)
-    # The second maintainer pulls h1, embeds h2 locally, and pushes: both survive.
-    assert sd.pull(b, sb) == (1, 1)
-    sb.write_text(sb.read_text() + row("h2") + "\n")
-    sd.push(b, sb)
-    # The first maintainer, who never saw h2, pushes h3: h2 is merged, not dropped.
-    sa.write_text(row("h1") + "\n" + row("h3") + "\n")
-    sd.push(a, sa)
-    assert set(branch_rows(remote)) == {"h1", "h2", "h3"}
-
-
-def test_prune_keeps_only_current_sections_and_refuses_gaps(repos):
-    remote, (a, _) = repos
-    store = a / "store.jsonl"
-    store.write_text(row("h1") + "\n" + row("old") + "\n")
-    sd.push(a, store)
-    with pytest.raises(sd.SearchDataError, match="no vector yet"):
-        sd.push(a, store, prune_to={"h1", "h9"})
-    sd.push(a, store, prune_to={"h1"})
-    assert set(branch_rows(remote)) == {"h1"}
-
-
-def test_a_malformed_store_is_refused(repos):
+def test_a_malformed_branch_store_is_refused(repos):
     _, (a, _) = repos
-    store = a / "store.jsonl"
+    store = a / sd.FILE
+    store.parent.mkdir()
     store.write_text(json.dumps({"h": "h1", "v": "AAAA", "s": 0.1}) + "\n")
+    H.record(a, "v1")
     with pytest.raises(sd.SearchDataError, match="768-dimension"):
-        sd.push(a, store)
+        sd.pull(a, a / "fresh.jsonl")
 
 
 def test_pull_without_the_branch_keeps_the_local_store(repos):
