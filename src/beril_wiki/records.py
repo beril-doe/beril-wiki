@@ -193,7 +193,7 @@ def forward_bullets(root: Path, topic: str, reports: list[str]) -> list[dict]:
     for sid in reports:
         path = source_path(root, sid)
         if path.exists():
-            for text in bullets(path.read_text(encoding="utf-8"), REPORT_FORWARD):
+            for text in bullets(path.read_text(encoding="utf-8", errors="replace"), REPORT_FORWARD):
                 add(f"sources/{sid}__REPORT", "Future Directions", text, [sid])
     return items
 

@@ -479,6 +479,7 @@ def test_a_cached_page_is_rewritten_when_a_source_its_reviewer_read_changes(tmp_
     drives = []
 
     async def drive(agent_, session, key, model, resumed):
+        assert not resumed and (session.workdir / "page.md").read_text() == "Old body."
         drives.append(key)
         (session.workdir / "page.md").write_text("Claims value=1. [src: x]")
         assert session.do_check()["passed"] and session.do_review()["accepted"]
@@ -495,6 +496,66 @@ def test_a_cached_page_is_rewritten_when_a_source_its_reviewer_read_changes(tmp_
     assert len(drives) == 2
 
 
+@pytest.mark.parametrize("reader", ["writer", "reviewer"])
+@pytest.mark.parametrize("stop", ["crash", "reviewer_stop"])
+def test_a_crashed_session_cannot_restore_approvals_after_its_source_changes(
+    tmp_path, monkeypatch, reader, stop
+):
+    from beril_wiki.agentic.runtime import WorkflowError, file_hash
+
+    agent = _ledger_agent(tmp_path, monkeypatch)
+    source = tmp_path / "staging/r.md"
+    source.write_text("value=1")
+    reviewed = []
+
+    def review(text, meta):
+        reviewed.append(source.read_text())
+        if reader == "reviewer":
+            key = f"review-{len(agent.jobs)}"
+            agent.jobs.append(key)
+            agent.ledger.reserve(key, "write/concepts/a.md/science-review", "gpt-6-luna")
+            agent.ledger.finish(key, "{}", USAGE, "", {"staging/r.md": file_hash(source)})
+        if stop == "reviewer_stop" and len(reviewed) == 1:
+            raise WorkflowError("reviewer transport failed")
+        return []
+
+    resumed = []
+
+    async def drive(agent_, session, key, model, continuing):
+        resumed.append(continuing)
+        if len(resumed) == 1:
+            (session.workdir / "page.md").write_text("A good claim: value=1. [src: x]")
+            if reader == "writer":
+                session.deps["staging/r.md"] = file_hash(source)
+            assert session.do_check()["passed"]
+            try:
+                assert session.do_review()["accepted"]
+            except WorkflowError:
+                return "writer exited", USAGE, 0.01, "", ""
+            raise RuntimeError("crashed before submit")
+        # A changed source requires both host gates before the resumed job can submit.
+        assert (session.workdir / "page.md").read_text() == "Old body."
+        assert session.do_submit()["missing"] == ["check", "review"]
+        assert not session.full_review and session.reviews == 0
+        (session.workdir / "page.md").write_text("A good claim: value=2. [src: x]")
+        session.deps["staging/r.md"] = file_hash(source)
+        assert session.do_check()["passed"] and session.do_review()["accepted"]
+        assert session.do_submit()["accepted"]
+        return "done", USAGE, 0.01, "", ""
+
+    monkeypatch.setattr(PA, "_drive", drive)
+    page = _page(tmp_path, review=review)
+    error = RuntimeError if stop == "crash" else WorkflowError
+    message = "crashed before submit" if stop == "crash" else "reviewer transport failed"
+    with pytest.raises(error, match=message):
+        REAL_RUN(agent, page, tmp_path / "work")
+    agent.ledger.reconcile_stale(tmp_path / "transcripts")
+    source.write_text("value=2")
+    text, _ = REAL_RUN(agent, page, tmp_path / "work")
+    assert text == "A good claim: value=2. [src: x]"
+    assert resumed == [False, False] and reviewed == ["value=1", "value=2"]
+
+
 def test_a_later_pass_goes_straight_to_the_model_that_answered_a_refusal(tmp_path, monkeypatch):
     """Review finding P: a writer that refused one pass of a page is not asked again for
     the next pass, as Runtime.ask already rules for other jobs."""
@@ -503,10 +564,12 @@ def test_a_later_pass_goes_straight_to_the_model_that_answered_a_refusal(tmp_pat
 
     async def drive(agent_, session, key, model, resumed):
         models.append(model)
+        assert not resumed and (session.workdir / "page.md").read_text() == "Old body."
+        (session.workdir / "page.md").write_text("A good claim. [src: x]")
+        assert session.do_check()["passed"] and session.do_review()["accepted"]
         if model == "claude-haiku-5-5":
             return "I can't help with that.", USAGE, 0.01, "", "claude-sonnet-5-5"
-        (session.workdir / "page.md").write_text("A good claim. [src: x]")
-        session.do_check(), session.do_review(), session.do_submit()
+        assert session.do_submit()["accepted"]
         return "done", USAGE, 0.0, "", ""
 
     monkeypatch.setattr(PA, "_drive", drive)
@@ -538,3 +601,144 @@ def test_a_re_review_that_crashes_cannot_restore_the_voided_approval(tmp_path):
     assert PA._restore(resumed)
     assert resumed.do_submit()["missing"] == ["review"]
     assert resumed.reviews == 2  # the failed review still counts against the limit
+
+
+@pytest.mark.parametrize("ending", ["review_limit", "stage_stop", "writer_stop"])
+def test_a_decided_or_exhausted_session_starts_fresh_on_retry(tmp_path, monkeypatch, ending):
+    from beril_wiki.agentic.runtime import WorkflowError
+
+    agent = _ledger_agent(tmp_path, monkeypatch)
+    attempts = []
+
+    def review(text, meta):
+        if len(attempts) == 1:
+            if ending == "review_limit":
+                raise WorkflowError("reviewer transport failed on last allowance")
+            if ending == "stage_stop":
+                raise CandidateError("no scientific progress", ["unsupported claim"])
+        return []
+
+    async def drive(agent_, session, key, model, resumed):
+        attempts.append(resumed)
+        assert not resumed and (session.workdir / "page.md").read_text() == "Old body."
+        assert session.reviews == 0 and session.do_submit()["missing"] == ["check", "review"]
+        (session.workdir / "page.md").write_text("A good claim. [src: x]")
+        assert session.do_check()["passed"]
+        try:
+            verdict = session.do_review()
+        except WorkflowError:
+            return "writer exited", USAGE, 0.01, "", ""
+        if len(attempts) > 1:
+            assert verdict["accepted"] and session.do_submit()["accepted"]
+        return "done", USAGE, 0.01, "", ""
+
+    monkeypatch.setattr(PA, "_drive", drive)
+    page = _page(tmp_path, review=review)
+    error = WorkflowError if ending == "review_limit" else PA.Exhausted
+    with pytest.raises(error):
+        REAL_RUN(agent, page, tmp_path / "work", max_reviews=1)
+    assert json.loads((tmp_path / "work/state.json").read_text())["ended"]
+    assert REAL_RUN(agent, page, tmp_path / "work", max_reviews=1)[0] == "A good claim. [src: x]"
+    assert attempts == [False, False]
+
+
+@pytest.mark.parametrize(
+    "ending", ["success", "refused", "empty", "transport", "partial_transport", "unknown_usage"]
+)
+def test_review_admission_failure_survives_the_writer_exit(tmp_path, monkeypatch, ending):
+    from claude_agent_sdk import AssistantMessage, SystemMessage
+    from mcp.types import CallToolRequest, CallToolRequestParams
+
+    from beril_wiki.agentic.runtime import WorkflowError
+
+    agent = _ledger_agent(tmp_path, monkeypatch, model="claude-haiku-5-5")
+    agent.ledger.caps = {"max_usd": 100}
+    reason = "budget admission refused: jobs=56, effective=5090060, inflight=1"
+    failure = WorkflowError(reason)
+    reviews = []
+
+    def review(text, meta):
+        reviews.append(text)
+        raise failure
+
+    configured = {}
+    real_server = PA.create_sdk_mcp_server
+
+    def server(name, tools):
+        mcp = real_server(name, tools=tools)
+        configured["handler"] = mcp["instance"].request_handlers[CallToolRequest]
+        return mcp
+
+    monkeypatch.setattr(PA, "create_sdk_mcp_server", server)
+    replies = []
+
+    async def query(prompt, options):
+        (tmp_path / "work/page.md").write_text("A good claim. [src: x]")
+        for name in ("check", "review", "review"):
+            reply = await configured["handler"](
+                CallToolRequest(
+                    method="tools/call", params=CallToolRequestParams(name=name, arguments={})
+                )
+            )
+            replies.append(reply.root)
+        if ending == "partial_transport":
+            yield AssistantMessage(
+                content=[], model="m", usage={"input_tokens": 7, "output_tokens": 3}
+            )
+        if ending in ("transport", "partial_transport"):
+            raise RuntimeError("writer transport failed after the reviewer stopped")
+        if ending == "empty":
+            return
+        if ending == "refused":
+            yield SystemMessage(
+                subtype="model_refusal_fallback", data={"fallback_model": "claude-sonnet-5-5"}
+            )
+        result = _result(cost=0.01)
+        yield dataclasses.replace(result, usage=None) if ending == "unknown_usage" else result
+
+    monkeypatch.setattr(PA, "query", query)
+    with pytest.raises(WorkflowError, match=reason) as caught:
+        REAL_RUN(agent, _page(tmp_path, review=review), tmp_path / "work")
+    assert caught.value is failure
+    assert not isinstance(caught.value, CandidateError)
+    assert len(reviews) == 1  # MCP caught both errors, but the reviewer ran only once
+    assert [reply.isError for reply in replies] == [False, True, True]
+    status = "unknown" if ending in ("empty", "transport", "unknown_usage") else "failed"
+    tokens = None if status == "unknown" else 10 if ending == "partial_transport" else 2
+    cost = (
+        PA.budget_for(_page(tmp_path).messages)[1]
+        if ending in ("empty", "transport", "partial_transport")
+        else 0.01
+    )
+    assert agent.ledger.db.execute("SELECT status,error,tokens,cost FROM jobs").fetchall() == [
+        (status, reason, tokens, cost)
+    ]
+    saved = json.loads((tmp_path / "work/state.json").read_text())
+    assert saved["checked"] and not saved["reviewed"] and not saved["ended"]
+    draft = "A good claim. [src: x]"
+
+    def retry_review(text, meta):
+        reviews.append(text)
+        return []
+
+    async def retry_drive(agent_, session, key, model, resumed):
+        assert resumed and (session.workdir / "page.md").read_text() == draft
+        assert session.reviews == 1 and session.do_submit()["missing"] == ["review"]
+        assert session.do_review()["accepted"] and session.do_submit()["accepted"]
+        return "done", USAGE, 0.02, "", ""
+
+    monkeypatch.setattr(PA, "_drive", retry_drive)
+    page = _page(tmp_path, review=retry_review)
+    if status == "unknown":
+        with pytest.raises(WorkflowError, match="unknown usage"):
+            REAL_RUN(agent, page, tmp_path / "work")
+        assert (tmp_path / "work/page.md").read_text() == draft
+        assert agent.ledger.db.execute("SELECT count(*) FROM jobs").fetchone() == (1,)
+        agent.ledger.account(agent.jobs[0], 5)
+    assert REAL_RUN(agent, page, tmp_path / "work")[0] == draft
+    assert reviews == [draft, draft]
+    assert agent.ledger.db.execute("SELECT cost FROM jobs ORDER BY rowid").fetchall() == [
+        (cost,),
+        (0.02,),
+    ]
+    assert json.loads((tmp_path / "work/state.json").read_text())["ended"]

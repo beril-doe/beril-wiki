@@ -52,6 +52,7 @@ from beril_wiki.agentic.runtime import (
     refusal_scope,
     search_inventory,
     subscription_env,
+    transcript_usage,
     valid_usage,
 )
 
@@ -112,9 +113,8 @@ class Session:
         self, page: Page, workdir: Path, max_reviews: int, task: str = "", root: Path | None = None
     ) -> None:
         self.page, self.workdir, self.max_reviews = page, workdir, max_reviews
-        # Scratch state belongs to one task (the page's base session key) and is resumed
-        # only after a crash: a new task, or a session that ended (submitted, spent its
-        # reviews, stopped), starts fresh rather than inheriting its approvals.
+        # Scratch belongs to one task and survives crashes or operational review stops.
+        # Submitted, decided and exhausted sessions start fresh on another attempt.
         self.task, self.ended, self.root = task, False, root
         self.deps: dict[str, str] = {}  # snapshot files and inventories the writer read
         self.checked = ""  # fingerprint of the last candidate that passed the gates
@@ -124,6 +124,7 @@ class Session:
         self.failing: list[str] = []  # what the last failed check reported
         self.submitted: tuple[str, dict | None] | None = None
         self.fatal = ""
+        self.failure: WorkflowError | None = None
         self.full_review = False
         self.stops_blocked = 0
         self.seen: dict[str, str] = {}  # loop guard: read key -> content hash
@@ -170,6 +171,8 @@ class Session:
         return {"passed": True, "next": "call review" if self.reviewed != self.checked else ""}
 
     def do_review(self) -> dict:
+        if self.failure is not None:
+            raise self.failure
         text, meta = self.current()
         now = _fingerprint(text, meta)
         if now != self.checked:
@@ -192,6 +195,11 @@ class Session:
             self.fatal = str(exc)[:500]
             self.save()
             return {"accepted": False, "stop": "the reviewer's objections will not close"}
+        except WorkflowError as exc:
+            # MCP returns tool errors to the writer, whose terminal result may be success.
+            self.failure, self.fatal = exc, str(exc)
+            self.save()
+            raise
         self.full_review = True
         # The latest verdict decides: an objection voids an earlier approval of this text.
         self.reviewed = now if not self.open else ""
@@ -425,11 +433,28 @@ def run(
     resumed = _restore(session)
     how = "resuming its checked scratch" if resumed else "fresh"
     print(f"agentic: page session {page.step} model={model} {how} [{key[:12]}]", flush=True)
-    output, usage, cost, error, refused = asyncio.run(_drive(agent, session, key, model, resumed))
-    # The session ended on its own terms, so its scratch is never resumed; only a crash
-    # (an exception out of _drive, before this line) leaves state a retry can continue.
-    session.ended = True
+    try:
+        output, usage, cost, error, refused = asyncio.run(
+            _drive(agent, session, key, model, resumed)
+        )
+    except Exception:
+        if session.failure is None:
+            raise
+        # A later writer crash must not replace the reviewer's operational failure.
+        observed = transcript_usage(agent.store / "transcripts" / f"{key}.jsonl")
+        usage, cost = observed if observed is not None else (None, None)
+        output, error, refused = "", "", ""
+    # An operational reviewer stop keeps checked work resumable within its allowance.
+    # do_review already voided approval; retry still needs a fresh scientific verdict.
+    session.ended = session.failure is None or session.reviews >= max_reviews
     session.save()
+    if session.failure is not None:
+        try:
+            agent.ledger.finish(key, output, usage, str(session.failure), session.deps, cost=cost)
+        except WorkflowError as exc:
+            # Unknown usage still blocks scheduling; retain the failure that caused the stop.
+            raise session.failure from exc
+        raise session.failure
     if refused:
         agent.ledger.finish(
             key,
@@ -466,11 +491,13 @@ def _restore(session: Session) -> bool:
             text, meta = session.current()
         except (CandidateError, OSError):  # a scratch file the crash left missing
             text, meta = "", None
+        deps = saved.get("deps", {})
         if (
             saved.get("task") == session.task
             and not saved.get("ended")
             and saved.get("checked")
             and saved["checked"] == _fingerprint(text, meta)
+            and (session.root is None or current_dependencies(session.root, deps) == deps)
         ):
             session.checked = saved["checked"]
             session.reviewed = saved.get("reviewed", "")
@@ -478,7 +505,7 @@ def _restore(session: Session) -> bool:
             session.open = saved.get("open", [])
             session.full_review = saved.get("full_review", False)
             # The restored approvals rest on what the crashed session read.
-            session.deps = saved.get("deps", {})
+            session.deps = deps
             return True
     page.write_text(session.page.text, encoding="utf-8")
     if session.page.meta is not None:

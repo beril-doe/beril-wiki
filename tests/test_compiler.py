@@ -62,6 +62,12 @@ def test_validate():
     )
     # numbers in a comma-grouped source still resolve after normalization
     assert validate_page("It found 7609 genes. [src: proj_a]", SOURCES, TARGETS) == []
+    scientific = {"p": "The measured p-value is 1.77e-06."}
+    assert any(
+        "not found in cited source" in error
+        for error in validate_page("The measured p-value is 1.77. [src: p]", scientific, set())
+    )
+    assert validate_page("The measured p-value is 1.77 x 10^-6. [src: p]", scientific, set()) == []
 
 
 def test_links_and_fm():

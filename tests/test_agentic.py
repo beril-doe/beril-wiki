@@ -2,8 +2,11 @@
 
 import pytest
 
+from beril_wiki.agentic import page_agent
 from beril_wiki.agentic.runtime import Ledger, ReadTools, WorkflowError
 from beril_wiki.check import all_paragraphs
+
+REAL_PAGE_RUN = page_agent.run
 
 
 def test_ledger_resume_and_global_budget(tmp_path):
@@ -113,11 +116,12 @@ def test_usd_cap_counts_claude_aliases(tmp_path):
         ledger.reserve("b", "links/p2", "sonnet")
 
 
-def test_usd_and_codex_caps_refuse_admission_per_backend(tmp_path):
+@pytest.mark.parametrize("weighted_budget", [100, 10**9])
+def test_usd_and_codex_caps_refuse_admission_per_backend(tmp_path, weighted_budget):
     ledger = Ledger(
         tmp_path / "jobs.sqlite",
         "pilot",
-        10**9,
+        weighted_budget,
         99,
         10,
         caps={"max_usd": 5, "max_codex_tokens": 10**6},
@@ -153,6 +157,27 @@ def test_one_hour_cache_writes_count_at_their_price():
     assert effective_tokens(split) == 600 * 2 + 400 * 1.25
     # A split larger than the total it splits is malformed: charge the plain weight.
     assert effective_tokens(usage | {"cache_creation": {"ephemeral_1h_input_tokens": 5000}}) == 1250
+
+
+def test_capped_resume_keeps_spend_after_the_weighted_allowance_is_used(tmp_path):
+    db = tmp_path / "resume.sqlite"
+    caps = {"max_usd": 30, "max_codex_tokens": 10_000_000}
+    first = Ledger(db, "submitted-snapshot", 5_000_000, 120, 50_000, caps=caps)
+    first.reserve("writer", "write/a", "claude-haiku-5-5")
+    first.finish("writer", "draft", {"input_tokens": 3_000_000, "output_tokens": 0}, cost=5.8)
+    first.reserve("reviewer", "write/a/science-review", "gpt-6-luna")
+    first.finish("reviewer", "review", {"input_tokens": 4_961_040, "output_tokens": 0})
+    resumed = Ledger(db, "submitted-snapshot", 5_000_000, 120, 50_000, caps=caps)
+    assert resumed.reserve("next", "write/b/science-review", "gpt-6-luna") is None
+    assert resumed.db.execute(
+        "SELECT sum(tokens) FROM jobs WHERE status='done' AND model LIKE 'gpt-%'"
+    ).fetchone() == (4_961_040,)
+    assert resumed.db.execute(
+        "SELECT sum(cost) FROM jobs WHERE status='done' AND model LIKE 'claude-%'"
+    ).fetchone() == (5.8,)
+    # Jobs without a backend still need the legacy allowance as a bound.
+    with pytest.raises(WorkflowError, match="budget admission refused"):
+        resumed.reserve("unmetered", "write/c")
 
 
 def test_read_tools_bound_ranges_and_reject_escape(tmp_path):
@@ -550,6 +575,181 @@ def test_runner_stage_order_noop_and_failed_gate(tmp_path, monkeypatch, failed_s
     with pytest.raises(WorkflowError, match="strict gate"):
         runner.run(root, checkout, config | {"model": "changed"})
     assert manifest(root, runner.TREES) == before
+
+
+@pytest.mark.parametrize(
+    ("abort", "retry_fails"),
+    [("titles", False), ("check", False), ("promotion", False), ("crash", False), ("check", True)],
+)
+def test_retry_scheduling_survives_an_abort_until_the_page_is_promoted(
+    tmp_path, monkeypatch, abort, retry_fails
+):
+    import json
+    from pathlib import Path
+    from types import SimpleNamespace
+
+    from beril_wiki.agentic import batch, curator, runner
+    from beril_wiki.agentic.runtime import (
+        JobFailed,
+        atomic_json,
+        contract_manifest,
+        digest,
+        file_hash,
+        manifest,
+        model_signature,
+    )
+
+    root, checkout = tmp_path / "repo", tmp_path / "checkout"
+    for folder in (*runner.TREES, "contract", "wiki/concepts", "wiki/sources", "wiki/summaries"):
+        (root / folder).mkdir(parents=True, exist_ok=True)
+    (checkout / "ui/config").mkdir(parents=True)
+    (checkout / "ui/config/collections.yaml").write_text("collections: []")
+    (root / "contract/AGENTS.md").write_text("Preserve cited source claims.")
+    source = "Cells were observed. Additional context was recorded."
+    for folder in ("staging", "wiki/sources"):
+        (root / folder / "a__REPORT.md").write_text(source)
+    (root / "wiki/summaries/a__REPORT.md").write_text("Summary")
+    page = "concepts/cells.md"
+    old = "# Cells\n\nCells were observed. [src: a]\n\n## Open Directions\n\nObserve more cells."
+    new = old + "\n\nAdditional context was recorded. [src: a]"
+    target = root / "wiki" / page
+    target.write_text(old)
+    atomic_json(
+        root / "state/hashes.json", {"a__REPORT.md": file_hash(root / "staging/a__REPORT.md")}
+    )
+    store = root / ".agentic"
+    (store / "evidence").mkdir(parents=True)
+    job = batch.PageJob(path=page, title="Cells", type="Concept", sources=["a"], reason="Retry")
+    atomic_json(
+        store / "last-plan.json",
+        {"evidence": "fixture.json", "pages": [job.model_dump()], "coverage": []},
+    )
+    atomic_json(store / "evidence/fixture.json", {"findings": []})
+    prior = {"step": "write/" + page, "issues": [], "jobs": ["old-failed"], "retries": 0}
+    added = {"step": "topics/new", "issues": [], "jobs": []}
+    atomic_json(store / "failures.json", {page: prior})
+    config = dict(
+        cli="fixture", model="claude-haiku-5-5", max_tokens=10000, max_jobs=99, reserve_tokens=10
+    )
+    monkeypatch.setattr(runner, "revision", lambda: "fixture revision")
+    monkeypatch.setattr(runner, "version", lambda package: "fixture version")
+    monkeypatch.setattr(runner, "labels_due", lambda root: False)
+    monkeypatch.setattr(
+        runner.subprocess, "run", lambda *a, **k: SimpleNamespace(stdout="fixture CLI")
+    )
+    monkeypatch.setattr(curator, "pending_actions", lambda *a, **k: [])
+    rev = digest(["fixture revision", "fixture CLI", "fixture version", "fixture version", 6])
+    atomic_json(
+        root / "state/agentic.json",
+        {
+            "version": 2,
+            "revision": runner.scientific_revision(root),
+            "revision_scheme": runner.REVISION_SCHEME,
+            "contract": digest(contract_manifest(root)),
+            "core_outputs": manifest(root, runner.CORE_OUTPUTS),
+            "editorial": {},
+            "fingerprint": digest(
+                [
+                    runner.fingerprint(root),
+                    runner.checkout_inputs(checkout),
+                    rev,
+                    model_signature(config),
+                    True,
+                ]
+            ),
+        },
+    )
+    transports = []
+
+    def deny(*args, **kwargs):
+        raise AssertionError("a completed retry must not call model or auth transport")
+
+    def review(*args, **kwargs):
+        if retry_fails:
+            raise JobFailed("recorded local reviewer failure")
+
+    async def drive(agent, session, key, model, resumed):
+        transports.append(key)
+        (session.workdir / "page.md").write_text(new)
+        (session.workdir / "meta.json").write_text(
+            json.dumps({"description": "Cell observations", "accounted_evidence": {}})
+        )
+        assert session.do_check()["passed"]
+        try:
+            verdict = session.do_review()
+        except JobFailed:
+            pass
+        else:
+            assert verdict["accepted"] and session.do_submit()["accepted"]
+        return "recorded writer", {"input_tokens": 10, "output_tokens": 20}, 0.2, "", ""
+
+    monkeypatch.setattr(page_agent, "run", REAL_PAGE_RUN)
+    monkeypatch.setattr(page_agent, "check_auth", lambda cli: None)
+    monkeypatch.setattr(page_agent, "_drive", drive)
+    monkeypatch.setattr(runner.Runtime, "review", review)
+    monkeypatch.setattr(runner.Runtime, "_query", deny)
+    stopping = True
+
+    def stage(work, config_path, name, module, args):
+        if name == "titles":
+            failures = batch.load_failures(store)
+            failures["topics/new.md"] = added
+            atomic_json(store / "failures.json", failures)
+        if stopping and name == ("check" if abort == "crash" else abort):
+            raise WorkflowError("recorded later stage abort")
+
+    monkeypatch.setattr(runner, "run_stage", stage)
+    replace = runner.os.replace
+
+    def interrupt(src, dst):
+        if stopping and abort == "promotion" and Path(src) == root / "wiki":
+            raise OSError("recorded promotion interruption")
+        return replace(src, dst)
+
+    monkeypatch.setattr(runner.os, "replace", interrupt)
+    restore_retries = runner._restore_retries
+    if abort == "crash":
+        # A killed runner cannot execute its context-manager cleanup.
+        monkeypatch.setattr(runner, "_restore_retries", lambda root: None)
+    with pytest.raises((WorkflowError, OSError), match="recorded"):
+        runner.run(root, checkout, config, staged=True)
+    assert target.read_text() == old
+    failures = batch.load_failures(store)
+    expected = (
+        prior
+        | {
+            "retries": 1,
+            "jobs": transports,
+            "issues": [{"category": "write", "note": "recorded local reviewer failure"}],
+        }
+        if retry_fails
+        else prior
+    )
+    if abort == "crash":
+        assert page not in failures
+        assert json.loads((store / "retry-scheduling.json").read_text()) == {page: prior}
+        monkeypatch.setattr(runner, "_restore_retries", restore_retries)
+    else:
+        assert failures[page] == expected
+        assert not (store / "retry-scheduling.json").exists()
+    assert failures["topics/new.md"] == added
+    if retry_fails:
+        return
+    ledger = runner.Runtime(json.loads((store / "config.json").read_text())).ledger
+    paid = ledger.db.execute("SELECT key,status,tokens,cost FROM jobs").fetchall()
+    assert paid == [(transports[0], "done", 30, 0.2)]
+    stopping = False
+    monkeypatch.setattr(page_agent, "check_auth", deny)
+    monkeypatch.setattr(page_agent, "_drive", deny)
+    runner.run(root, checkout, config, staged=True)
+    assert new in target.read_text()
+    assert len(transports) == 1
+    assert ledger.db.execute("SELECT key,status,tokens,cost FROM jobs").fetchall() == paid
+    assert batch.retryable(store) == []
+    assert batch.load_failures(store) == {"topics/new.md": added}
+    assert not (store / "retry-scheduling.json").exists()
+    assert not (store / "promotion.json").exists()
+    assert runner.run(root, checkout, config, staged=True) == {"unchanged": True}
 
 
 def test_older_revision_scheme_and_model_change_adopt_accepted_wiki(tmp_path, monkeypatch):
@@ -1007,7 +1207,7 @@ def test_downstream_sdk_routing_skips_api_and_mechanical_review(monkeypatch):
     monkeypatch.setattr(litellm, "completion", no_api)
     calls = []
 
-    def sdk(messages, step, review=True):
+    def sdk(messages, step, review=True, *, validate=None):
         calls.append((step, review))
         return "{}"
 

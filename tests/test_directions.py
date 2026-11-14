@@ -1,11 +1,15 @@
 """The directions stage: research questions grounded in findings, never reanalysis."""
 
+import importlib
 import json
 import shutil
 
 import pytest
 
 from beril_wiki import lakehouse as lakehouse_view
+from beril_wiki import records
+from beril_wiki.agentic import prose
+from beril_wiki.agentic import runtime as agentic_runtime
 from beril_wiki.agentic.runtime import JobFailed, Refused
 from beril_wiki.stages import cards, directions
 from beril_wiki.wording import asks_to_redo, is_reanalysis
@@ -135,10 +139,20 @@ def pack_and_catalog(root):
 
 def test_pack_leaves_reanalysis_proposals_out(tmp_path):
     corpus(tmp_path)
+    report(tmp_path, "a", "").write_bytes(
+        b"# A\n\n## Future Directions\n\n- Test nutrient uptake at 35\xb0C.\n"
+    )
+    report(tmp_path, "unrelated", "# Other\n\n## Future Directions\n\n- Test resistance.\n")
     pack, _ = pack_and_catalog(tmp_path)
-    assert pack["PROPOSALS"] == ["Test whether dark genes encode transporters. [src: a]"]
+    assert pack["PROPOSALS"] == [
+        "Test whether dark genes encode transporters. [src: a]",
+        "Test nutrient uptake at 35�C.",
+    ]
     assert [f["id"] for f in pack["FINDINGS"]] == [FID]
     assert pack["PAPERS"] == [{"pmid": "29769716", "title": "Mutant phenotypes"}]
+    cat = lakehouse_view.load(tmp_path)
+    other = directions.topic_pack(tmp_path, TOPIC, ["a", "unrelated"], cat)
+    assert other == pack
 
 
 @pytest.mark.parametrize(
@@ -199,6 +213,11 @@ def test_unchanged_input_makes_no_calls_and_rerenders_from_reply(tmp_path, monke
     capsys.readouterr()
     assert directions.status(tmp_path) == 0
     assert "1 current, 0 stale" in capsys.readouterr().out
+    report(tmp_path, "unrelated", "# Other\n\n## Future Directions\n\n- Test resistance.\n")
+    scope(tmp_path, reports=["a", "unrelated"], topics=[TOPIC])
+    assert directions.main(tmp_path) == 0
+    assert directions.status(tmp_path) == 0
+    assert len(agent.asked) == calls
     # A catalog refresh that adds a table changes the directory, so the saved reply is stale.
     new_table = {
         "database": "kbase.uniref50",
@@ -216,6 +235,150 @@ def test_unchanged_input_makes_no_calls_and_rerenders_from_reply(tmp_path, monke
     assert directions.status(tmp_path) == 1
     assert "1 stale" in capsys.readouterr().out
     assert len(agent.asked) == calls
+
+
+def legacy_directions(root, monkeypatch, all_reports=True):
+    corpus(root)
+    report(root, "unrelated", "# Other\n\n## Future Directions\n\n- Test resistance.\n")
+    scope(root, reports=["a", "unrelated"], topics=[TOPIC])
+    agent = FakeAgent(root / "store", {f"directions/{TOPIC}": [THREE]})
+    install(monkeypatch, agent)
+    scoped = directions.topic_pack
+
+    def all_report_proposals(root, topic, reports, cat):
+        pack = scoped(root, topic, reports, cat)
+        if all_reports:
+            pack["PROPOSALS"] = [
+                bullet["text"]
+                for bullet in records.forward_bullets(root, topic, reports)
+                if not is_reanalysis(bullet["text"])
+            ]
+        return pack
+
+    with monkeypatch.context() as legacy:
+        legacy.setattr(directions, "topic_pack", all_report_proposals)
+        legacy.setattr(
+            directions,
+            "topic_key",
+            lambda public, policy: agentic_runtime.digest(
+                [[{"role": "user", "content": directions.PROMPT + json.dumps(public)}], policy]
+            ),
+        )
+        assert directions.main(root) == 0
+    agent.asked.clear()
+    monkeypatch.delenv("BERIL_AGENTIC_CONFIG", raising=False)
+    (root / "agentic.yaml").write_text(f"model: {agent.config['model']}\n")
+    return agent, root / "state/directions.json"
+
+
+def test_status_accepts_a_valid_legacy_proposal_key_without_writes(tmp_path, monkeypatch, capsys):
+    agent, state = legacy_directions(tmp_path, monkeypatch)
+    before = state.read_bytes()
+    capsys.readouterr()
+
+    def no_save(*_args):
+        raise AssertionError("status must not write")
+
+    monkeypatch.setattr(directions, "atomic_json", no_save)
+    assert directions.status(tmp_path) == 0
+    assert "1 current, 0 stale" in capsys.readouterr().out
+    assert state.read_bytes() == before and agent.asked == []
+
+
+def test_legacy_proposal_key_migrates_without_models_and_ignores_later_unrelated_reports(
+    tmp_path, monkeypatch
+):
+    agent, path = legacy_directions(tmp_path, monkeypatch)
+    before = json.loads(path.read_text())[TOPIC]
+    assert directions.main(tmp_path) == 0
+    after = json.loads(path.read_text())[TOPIC]
+    assert before["input"] != after["input"]
+    assert before | {"input": after["input"]} == after
+    report(tmp_path, "new", "# New\n\n## Future Directions\n\n- Test community growth.\n")
+    scope(tmp_path, reports=["a", "unrelated", "new"], topics=[TOPIC])
+    assert directions.status(tmp_path) == 0
+    assert directions.main(tmp_path) == 0
+    assert json.loads(path.read_text())[TOPIC] == after and agent.asked == []
+
+
+@pytest.mark.parametrize("stored", ["tagged", "scoped-raw", "all-report-raw"])
+@pytest.mark.parametrize("shared", [False, True])
+def test_directions_wording_change_keeps_saved_replies_with_a_fresh_store(
+    tmp_path, monkeypatch, stored, shared
+):
+    _, path = legacy_directions(tmp_path, monkeypatch, all_reports=stored == "all-report-raw")
+    if stored == "tagged":
+        assert directions.main(tmp_path) == 0
+    before = json.loads(path.read_text())[TOPIC]
+    agent = FakeAgent(tmp_path / "fresh-store", {})
+    install(monkeypatch, agent)
+    original = prose.PLATFORM
+    try:
+        if shared:
+            monkeypatch.setattr(prose, "PLATFORM", original.replace("is the", "is named the"))
+            importlib.reload(directions)
+        else:
+            wording = directions.PROMPT + "Keep the wording concise.\n"
+            monkeypatch.setitem(agentic_runtime.PROMPTS, "directions@4", wording)
+            monkeypatch.setattr(directions, "PROMPT", wording)
+        saved_bytes = path.read_bytes()
+        assert directions.status(tmp_path) == 0
+        assert path.read_bytes() == saved_bytes
+        assert directions.main(tmp_path) == 0
+        after = json.loads(path.read_text())[TOPIC]
+        assert after == before | {"input": after["input"]}
+        assert agent.asked == []
+    finally:
+        if shared:
+            monkeypatch.setattr(prose, "PLATFORM", original)
+            importlib.reload(directions)
+
+
+@pytest.mark.parametrize("stored", ["tagged", "scoped-raw", "all-report-raw"])
+def test_directions_tag_change_invalidates_tagged_and_raw_keys_with_identical_wording(
+    tmp_path, monkeypatch, stored
+):
+    _, path = legacy_directions(tmp_path, monkeypatch, all_reports=stored == "all-report-raw")
+    if stored == "tagged":
+        assert directions.main(tmp_path) == 0
+    monkeypatch.setattr(directions, "PROMPT_TAG", "directions@test-next", raising=False)
+    monkeypatch.setitem(agentic_runtime.PROMPTS, "directions@test-next", directions.PROMPT)
+    agent = FakeAgent(tmp_path / "fresh-store", {f"directions/{TOPIC}": [THREE]})
+    install(monkeypatch, agent)
+    before = path.read_bytes()
+    assert directions.status(tmp_path) == 1
+    assert path.read_bytes() == before and agent.asked == []
+    assert directions.main(tmp_path) == 0
+    assert agent.asked == [f"directions/{TOPIC}", f"directions/{TOPIC}/science-review"]
+
+
+@pytest.mark.parametrize("changed", ["reply", "finding", "catalog", "policy", "arbitrary"])
+def test_legacy_key_does_not_adopt_invalid_replies_or_changed_inputs(
+    tmp_path, monkeypatch, changed
+):
+    agent, path = legacy_directions(tmp_path, monkeypatch)
+    state = json.loads(path.read_text())
+    if changed == "reply":
+        state[TOPIC]["reply"]["directions"][0]["title"] = "Dark genes are nutrient genes"
+    elif changed == "finding":
+        page = tmp_path / "wiki/findings" / f"{FID}.md"
+        fields, body = cards.read_page(page)
+        cards.write_page(page, fields | {"description": "Dark genes respond to iron."}, body)
+    elif changed == "catalog":
+        catalog = tmp_path / "state/lakehouse/databases.jsonl"
+        catalog.write_text(catalog.read_text().replace("KE Science", "Updated tenant"))
+    elif changed == "policy":
+        agent.config["model"] = "gpt-6.1-sol"
+        (tmp_path / "agentic.yaml").write_text(f"model: {agent.config['model']}\n")
+    else:
+        state[TOPIC]["input"] = "unrelated-stale-key"
+    path.write_text(json.dumps(state))
+    before = path.read_bytes()
+    assert directions.status(tmp_path) == 1
+    assert path.read_bytes() == before and agent.asked == []
+    agent.replies[f"directions/{TOPIC}"] = [THREE]
+    assert directions.main(tmp_path) == 0
+    assert agent.asked == [f"directions/{TOPIC}", f"directions/{TOPIC}/science-review"]
 
 
 def test_is_reanalysis_reads_the_opening_clause():

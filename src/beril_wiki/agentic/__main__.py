@@ -140,6 +140,15 @@ def usd_caps(values: list[str]) -> dict[str, float]:
     return caps
 
 
+def check_budget_caps(max_usd: float | None, max_codex_tokens: int | None) -> None:
+    """Refuse invalid per-backend caps before a run or pilot starts work."""
+    # nan never compares greater and inf never refuses: either would disable a cap.
+    if max_usd is not None and not (math.isfinite(max_usd) and max_usd > 0):
+        raise WorkflowError("max_usd must be positive and finite")
+    if max_codex_tokens is not None and max_codex_tokens <= 0:
+        raise WorkflowError("max_codex_tokens must be positive")
+
+
 def run_cards(root: Path, config: dict, stages: list[str] | None = None) -> dict:
     """Run only the card stages (CARD_STAGES) in place, then the strict check.
 
@@ -540,6 +549,7 @@ def main() -> int:
                 return 0
             if args.action in ("cell", "judge") and (not args.max_usd or not args.max_codex_tokens):
                 raise WorkflowError("a pilot cell or judge needs --max-usd and --max-codex-tokens")
+            check_budget_caps(args.max_usd, args.max_codex_tokens)
             config = {
                 "cli": args.cli,
                 "run": args.run,
@@ -647,11 +657,7 @@ def main() -> int:
                 raise WorkflowError("pass_records must not be negative")
             if args.stage_max_tokens < 0:
                 raise WorkflowError("stage_max_tokens must not be negative")
-            # nan never compares greater and inf never refuses: either would disable a cap.
-            if args.max_usd is not None and not (math.isfinite(args.max_usd) and args.max_usd > 0):
-                raise WorkflowError("max_usd must be positive and finite")
-            if args.max_codex_tokens is not None and args.max_codex_tokens <= 0:
-                raise WorkflowError("max_codex_tokens must be positive")
+            check_budget_caps(args.max_usd, args.max_codex_tokens)
             config = {
                 key: getattr(args, key)
                 for key in (

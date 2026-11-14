@@ -17,7 +17,7 @@ from pathlib import Path
 
 from beril_wiki import compiler as C
 from beril_wiki.agentic import progress
-from beril_wiki.agentic.batch import INTEGRATION_REVISION, changed_sources, retryable
+from beril_wiki.agentic.batch import INTEGRATION_REVISION, changed_sources, load_failures, retryable
 from beril_wiki.agentic.curator import (
     EDITORIAL,
     curate,
@@ -60,9 +60,35 @@ def locked(root: Path):
         yield
 
 
+def _restore_retries(root: Path) -> None:
+    checkpoint = root / ".agentic/retry-scheduling.json"
+    if not checkpoint.exists():
+        return
+    saved = json.loads(checkpoint.read_text(encoding="utf-8"))
+    failures = load_failures(checkpoint.parent)
+    restored = saved | failures  # preserve new failures and failed-attempt retry progress
+    if restored != failures:
+        atomic_json(checkpoint.parent / "failures.json", restored)
+    checkpoint.unlink()
+    fsync_dir(checkpoint.parent)
+
+
+@contextmanager
+def _retry_scheduling(root: Path, pages: list[str]):
+    store = root / ".agentic"
+    selected = {page: entry for page, entry in load_failures(store).items() if page in pages}
+    if selected:
+        atomic_json(store / "retry-scheduling.json", selected)
+    try:
+        yield
+    finally:
+        _restore_retries(root)
+
+
 def recover(root: Path) -> None:
     journal = root / ".agentic/promotion.json"
     if not journal.exists():
+        _restore_retries(root)
         return
     data = json.loads(journal.read_text(encoding="utf-8"))
     work = root / ".agentic/work"
@@ -91,6 +117,16 @@ def recover(root: Path) -> None:
                 f"promoted {folder} changed during recovery; inspect journal "
                 "and retained originals in .agentic/previous"
             )
+    failures = load_failures(journal.parent)
+    completed = data.get("completed_retries", {})
+    remaining = {
+        page: entry
+        for page, entry in failures.items()
+        if page not in completed or entry != completed[page]
+    }
+    if remaining != failures:
+        atomic_json(journal.parent / "failures.json", remaining)
+    (journal.parent / "retry-scheduling.json").unlink(missing_ok=True)
     journal.unlink()
     fsync_dir(journal.parent)
 
@@ -112,10 +148,16 @@ def promote(root: Path, work: Path, before: dict[str, str]) -> None:
     if backup.exists():
         shutil.rmtree(backup)
     backup.mkdir(parents=True)
+    checkpoint = root / ".agentic/retry-scheduling.json"
+    scheduled = json.loads(checkpoint.read_text(encoding="utf-8")) if checkpoint.exists() else {}
+    failures = load_failures(checkpoint.parent)
     atomic_json(
         root / ".agentic/promotion.json",
         {
             "candidate": candidate,
+            "completed_retries": {
+                page: entry for page, entry in scheduled.items() if page not in failures
+            },
             "before": {
                 folder: {p: h for p, h in before.items() if p.startswith(folder + "/")}
                 for folder in TREES
@@ -420,41 +462,42 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
         if adopting:
             prior = adopt_editorial(work, prior)
         # Accepted snapshots are recomputed after final naming and figure postprocessing.
-        curate(work, agent, changed, refresh, prior, retry)
-        refresh("titles", [str(work)])
-        refresh("names", [str(work)])
-        refresh("errata", [str(work)])
-        figure_state = ("state/figures-placements.json", "state/figures-state.json")
-        figure_revision = stage_revision(work, "figures")
-        figures_current = accepted.get("figure_outputs") == manifest(work, figure_state)
-        force_figures = not figures_current or (
-            accepted.get("figure_revision") != figure_revision and not adopting
-        )
-        refresh("figures", ["--force"] if force_figures else [])
-        unlink_missing(work)
-        run_stage(work, config_path, "check", "check", [str(work), "--strict"])
-        if (
-            fingerprint(root) != base
-            or checkout_inputs(checkout) != external
-            or revision() != code_revision
-        ):
-            raise WorkflowError(
-                "inputs changed during compilation; saved candidate, refusing promotion"
+        with _retry_scheduling(root, retry):
+            curate(work, agent, changed, refresh, prior, retry)
+            refresh("titles", [str(work)])
+            refresh("names", [str(work)])
+            refresh("errata", [str(work)])
+            figure_state = ("state/figures-placements.json", "state/figures-state.json")
+            figure_revision = stage_revision(work, "figures")
+            figures_current = accepted.get("figure_outputs") == manifest(work, figure_state)
+            force_figures = not figures_current or (
+                accepted.get("figure_revision") != figure_revision and not adopting
             )
-        next_state = {
-            "revision": scientific,
-            "revision_scheme": REVISION_SCHEME,
-            "contract": contract,
-            "fingerprint": digest([fingerprint(work), external, rev, models, staged]),
-            "models": model_policy(config),
-            "core_outputs": manifest(work, CORE_OUTPUTS),
-            "version": 2,
-            "figure_revision": figure_revision,
-            "figure_outputs": manifest(work, figure_state),
-            "editorial": {name: stage_snapshot(work, name) for name in EDITORIAL},
-        }
-        atomic_json(work / "state/agentic.json", next_state)
-        promote(root, work, original)
+            refresh("figures", ["--force"] if force_figures else [])
+            unlink_missing(work)
+            run_stage(work, config_path, "check", "check", [str(work), "--strict"])
+            if (
+                fingerprint(root) != base
+                or checkout_inputs(checkout) != external
+                or revision() != code_revision
+            ):
+                raise WorkflowError(
+                    "inputs changed during compilation; saved candidate, refusing promotion"
+                )
+            next_state = {
+                "revision": scientific,
+                "revision_scheme": REVISION_SCHEME,
+                "contract": contract,
+                "fingerprint": digest([fingerprint(work), external, rev, models, staged]),
+                "models": model_policy(config),
+                "core_outputs": manifest(work, CORE_OUTPUTS),
+                "version": 2,
+                "figure_revision": figure_revision,
+                "figure_outputs": manifest(work, figure_state),
+                "editorial": {name: stage_snapshot(work, name) for name in EDITORIAL},
+            }
+            atomic_json(work / "state/agentic.json", next_state)
+            promote(root, work, original)
         totals = agent.ledger.totals()
         failures_path = store / "failures.json"
         failures = (

@@ -26,6 +26,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from beril_wiki import compiler as C
 from beril_wiki.agentic.runtime import (
     CandidateError,
+    JobFailed,
     Runtime,
     atomic_json,
     configured,
@@ -692,6 +693,12 @@ def agent_page(
     )
     try:
         text, _ = PA.run(agent, page, agent.store / "pages" / digest(step)[:16])
+    except JobFailed as exc:
+        if strict_pages():
+            raise
+        raise PageFailure(
+            step, [Issue(category="format", note=str(exc)[:300])], agent.jobs[first:]
+        ) from exc
     except PA.Exhausted as exc:
         issues = state["pending"] or [Issue(category="format", note=str(exc)[:300])]
         if state.get("unusable"):
