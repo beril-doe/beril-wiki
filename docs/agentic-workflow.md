@@ -124,7 +124,10 @@ input a run reads, laid out like an observatory checkout: `projects/<id>/`
 `corpus/manifest.json` records each file's SHA-256 and each project's origin.
 `uv run python -m beril_wiki.corpus verify` checks the two agree, and the
 tests run it. `uv run python -m beril_wiki.corpus import-v1 --checkout PATH`
-rebuilds `corpus/` from an observatory checkout. Pass `--checkout` (or set
+stages and verifies a complete replacement from an observatory checkout before
+replacing `corpus/`. A failed replacement restores the previous corpus. If that
+rollback fails, the previous tree stays in a temporary import directory beside
+`corpus/` for recovery. Pass `--checkout` (or set
 `BERIL_CHECKOUT`) only to compile from another tree.
 
 `beril_wiki.publish.ingest` copies `corpus/manifest.json` byte for byte to the
@@ -166,14 +169,17 @@ names one for `pages` (default: the model's own). The committed policy names
 `medium` for `pages`, so `--write-effort` takes effect only with `--model` or a
 replacement file that omits it.
 Each stage subprocess is bounded by `--stage-timeout` (default 14,400 seconds,
-four hours). A job killed by either clock is charged automatically from its
-saved transcript (the terminal result if one arrived, otherwise the summed
-model turns, otherwise the reservation) before the next stage starts, so a
-kill never leaves a pending row that needs manual reconciliation.
+four hours). A job left pending by either clock is charged automatically from
+its saved transcript (the terminal result if one arrived, otherwise the latest
+cumulative Codex usage notification or summed Claude turns, otherwise the
+reservation). A finished job without usable usage is recorded as `unknown`.
+It blocks new calls until a person conservatively reconciles its charge.
 
 `--max-tokens` is an admission ceiling in **effective tokens**, not a hard
-provider token cap. The ledger records raw input, output, cache-write and
-cache-read counts for every job, and admits on a weighted figure: input and
+provider token cap. When both `--max-usd` and `--max-codex-tokens` are set,
+their separate backend caps replace this combined ceiling; `--max-jobs` and
+any per-stage ceiling still apply. The ledger records raw input, output,
+cache-write and cache-read counts for every job, and weights them as follows: input and
 output count once, 5-minute cache writes 1.25 times, 1-hour cache writes twice,
 cache reads 0.1 times. The CLI writes 1-hour caches; a usage that reports its
 `cache_creation` split by lifetime is weighted that way, and one without the
@@ -212,9 +218,9 @@ has no such cap. A resume of the same inputs keeps the ledger run, so its
 earlier spend still counts against the caps. `run --budget-run NAME` names the
 ledger run that caps, totals and progress counts use, so runs on different
 inputs, such as a publication refreshed onto a moved main, share one cap; job
-cache keys do not change. Under `--budget-run`, `--max-jobs` and `--max-tokens`
-count only the jobs this invocation reserves, so a resume gets a fresh job and
-token allowance while the USD and Codex caps keep counting every invocation's
+cache keys do not change. Under `--budget-run`, `--max-jobs` and the combined
+effective-token ceiling, when applicable, count only this invocation's jobs,
+while the USD and Codex caps keep counting every invocation's
 spend. Account billing settings remain
 provider-owned; the runner does not purchase credits.
 
@@ -449,7 +455,7 @@ every stage that depends on it stale as well:
 
 | Stage | Work and completion condition |
 |---|---|
-| Integrate | Runs first when sources changed: extract changed reports, route every evidence record to concept pages, group edits by destination, validate and review pages; resolve entities and refresh deterministic metadata. A writer receives the evidence assigned to its page with quotes packed, not every finding its sources yielded; an existing entity with nothing assigned and no revised source is skipped. It accounts for each assigned record by the index of the paragraph carrying it, not by repeating the paragraph, since a page assigned three hundred records could not otherwise finish its answer; the validator resolves the index against every paragraph of the body, including Open Directions, and the reviewer sees the resolved text. Each write is one page session (see [Page sessions](#page-sessions)): the page, absorbed pages and quotes are packed into its system prompt, the writer edits `page.md` and fills `meta.json` (the description and the `accounted_evidence` map), may read and search `staging/` and `wiki/`, and calls the host's `check`, `review` and `submit` tools. A page assigned more than `--pass-records` records is written in near-equal passes in evidence-id order, each its own page session over its slice against the page the previous pass left, so no single session integrates hundreds of records; the retention gate keeps every earlier pass's citations and figures. A pass that will not converge is dropped rather than the page, which keeps every accepted pass; its records, objections and job keys go to `.agentic/salvaged.json`, as a salvaged derived page's paragraphs do. At nine passes in ten accepted in the pilot, a seven-pass page failing whole would publish under half the time. Only a page whose every pass fails keeps its previous version. |
+| Integrate | Runs first when sources changed: extract changed reports, route every evidence record to concept pages, group edits by destination, validate and review pages; resolve entities and refresh deterministic metadata. A writer receives the evidence assigned to its page with quotes packed, not every finding its sources yielded; an existing entity with nothing assigned and no revised source is skipped unless explicitly retried. It accounts for each assigned record by the index of the paragraph carrying it, not by repeating the paragraph, since a page assigned three hundred records could not otherwise finish its answer; the validator resolves the index against every paragraph of the body, including Open Directions, and the reviewer sees the resolved text. Each write is one page session (see [Page sessions](#page-sessions)): the page, absorbed pages and quotes are packed into its system prompt, the writer edits `page.md` and fills `meta.json` (the description and the `accounted_evidence` map), may read and search `staging/` and `wiki/`, and calls the host's `check`, `review` and `submit` tools. A page assigned more than `--pass-records` records is written in near-equal passes in evidence-id order, each its own page session over its slice against the page the previous pass left, so no single session integrates hundreds of records; the retention gate keeps every earlier pass's citations and figures. A pass that will not converge is dropped rather than the page, which keeps every accepted pass; its records, objections and job keys go to `.agentic/salvaged.json`, as a salvaged derived page's paragraphs do. At nine passes in ten accepted in the pilot, a seven-pass page failing whole would publish under half the time. Only a page whose every pass fails keeps its previous version. |
 | Conflicts | Reconcile tensions after integration. |
 | Topics | Choose concept groups and titles, then write hubs/home after conflicts are current. Every concept must occur exactly once. |
 | Literature | Add supported external context after topics are current. |
@@ -488,6 +494,13 @@ remain compatible with existing provenance and Quartz tools. This is bounded
 editorial autonomy; the agent cannot change its acceptance rules or run arbitrary
 code.
 
+The strict numeric check compares whole scientific values, normalizing equivalent
+exponent spellings without accepting a scientific value's mantissa on its own.
+Arithmetic matches use a precision-scaled tolerance, so a tiny unsupported value
+cannot pass merely because it is near zero. Published figure paths retain
+subdirectories after the report's leading `figures/` prefix; run-output paths
+retain their full relative path.
+
 After the editorial stages and before naming, the deterministic `titles` stage
 (`beril_wiki.stages.titles`) writes the planner's title as the H1 of any page
 that lacks one. It reads titles from `.agentic/last-plan.json` in the curator
@@ -525,7 +538,10 @@ is not a relationship and is never "Candidate novel"; it is labelled
 "Insufficient literature evidence" unless a retrieved paper reports the same
 pattern. A label is judged
 again when its finding changes, when the `cards`, `findings_review` or `queries`
-model changes, or 90 days after retrieval (`REFRESH_DAYS`). An expired label makes every
+model changes, when its report's cited PMID set changes, or 90 days after
+retrieval (`REFRESH_DAYS`). An otherwise current legacy label without a saved
+PMID set records the current set without retrieval or inference. Earlier
+citation changes remain unknown. An expired label makes every
 `agentic run` schedule the novelty stage until a refresh succeeds. When retrieval
 fails, the previous label and date stay. A failed refresh does not hold up the
 run that attempted it: the label stays due, and the next run retries it.
@@ -540,7 +556,8 @@ disk for a withdrawn finding.
 
 The directions stage writes one reviewed job per topic. The `cards` model reads
 the topic's findings with their literature labels and closest papers, its
-conflict pages, the proposals its pages already make, and two views of the
+conflict pages, the proposals its pages and reports assigned to that topic already
+make, and two views of the
 lakehouse catalog (`beril_wiki/lakehouse.py`). DATABASES is the directory of
 every covered database with its first table names. TABLES holds up to 40 tables
 matched to the topic, with columns and sample values: first the tables the
@@ -569,6 +586,9 @@ The catalog directory is part of every topic's cache key, so a catalog rebuild
 that changes a table name makes every topic's directions stale and the next run
 buys them again. The curator reads `state/lakehouse/` as a directions input in
 place of `wiki/data/`, so a data page edit never makes directions stale.
+When only the corrected proposal scope changes a legacy input key, a saved
+successful reply that passes today's checks can migrate to the new key without
+a model call.
 Pages written before the catalog keep a `collections` field until that rerun;
 nothing reads it.
 
@@ -807,7 +827,8 @@ The `new_topic` leftovers go to a few proposal jobs (`plan/propose/N`) in
 sequence, each told what the earlier ones proposed, which turn them into new
 concept pages or summary-only rows. An entity named by fewer than two records,
 or, when the update spans several projects, by records from only one of them,
-gets no page, and an existing entity is only rechecked when its sources change.
+gets no page, and an existing entity is only rechecked when its sources change
+or an explicit retry requests it.
 The router proposes no merges; concept identity decisions stay in
 `contract/concept-decisions.yaml`. The planner this replaced read the inventory
 of every page planned so far, so 103 batches ran one after another for 10 to 14
@@ -846,8 +867,9 @@ literal `search_evidence`. A page session has the tools listed under
 writer emit its whole candidate twice, once to check and once to answer, while
 `check` reads the file the writer already edited. The final
 candidate must pass the host checks and independent scientific review before it
-is written. Extraction and retrieval both decode UTF-8 with
-replacement for invalid bytes; offsets refer to that decoded text. Original
+is written. Extraction, retrieval, novelty's cited-PMID scan and forward-direction
+report bullets decode UTF-8 with replacement for invalid bytes; offsets refer to
+that decoded text. Original
 report bytes remain unchanged. No shell, filesystem writes outside a session's
 `page.md` and `meta.json`, skill discovery or unrelated tools are exposed.
 Source text is evidence, never an instruction authority.
@@ -886,7 +908,11 @@ submitting. A finished session is cached under its brief and is reused while the
 files its writer read and its reviewer's jobs read are unchanged. A search of
 `wiki/` records no dependency, since `wiki/` is the tree the run writes. A cached
 derived page meets today's gates again before it is published, and fails as a page
-when it no longer passes them. A page whose writer refused it once starts its later
+when it no longer passes them. Budget, authentication and usage failures from a
+nested reviewer stop the run even if the writer exits normally. A local reviewer
+job failure (`JobFailed`) drops only its failing integrated pass, retaining accepted
+passes, or fails its derived page. `--strict-pages` stops the run instead. A page whose
+writer refused it once starts its later
 passes on the model that answered, as other jobs do. An integrated pass keeps its progress
 rule: after the first verification, a further round is allowed once, and only
 when that verification closed most objections (two or fewer left, at most half
@@ -898,17 +924,19 @@ A session that ends without an accepted submission is handled by what it is. An
 integrated pass is dropped, as above. A derived page with no full review fails; one
 whose reviewer returned no usable verdict fails closed; one with a full review
 publishes the reviewed text intact when the open objections are presentation only,
-and is otherwise salvaged or failed as described under derived prose. A crashed or
-killed session is charged from its transcript; the next attempt is a new session
-under a new key, which resumes from the scratch files only when they match the
-check the host last recorded for the same task, and starts fresh otherwise. The
-scratch state belongs to one task (the page's brief, starting text, model and
+and is otherwise salvaged or failed as described under derived prose. Once its
+usage is accounted for, a crashed or killed session's next attempt starts under
+a new key, which restores scratch files and approvals only when the files
+match the host's last check for the same task and every recorded read dependency
+is unchanged. Otherwise it starts fresh. The scratch state belongs to one task
+(the page's brief, starting text, model and
 contract): new evidence starts fresh, and so does a retry after a session that
-ended on its own terms (submitted, spent its reviews, stopped), so a retry never
-inherits an approval or an exhausted review count. Resuming continues from the
+ended on its own terms (submitted, spent its reviews, stopped), so such a retry
+inherits neither an approval nor an exhausted review count. Resuming continues from the
 files, not from the SDK conversation: the session starts a new conversation with
-the brief and a note of the open objections, and the reviewer gives the resumed
-text a fresh open review. A page whose text has started 20 sessions is recorded as
+the brief and a note of the open objections, while the host retains valid saved
+approvals. A page whose
+text has started 20 sessions is recorded as
 failed rather than stopping the run. Reviews run on a fresh Codex thread per call,
 as other jobs do; a thread kept per page, which the plan proposed, was not built.
 
@@ -1027,9 +1055,10 @@ there. A refusal stated in prose, or a refused GPT turn, goes to a fixed fallbac
 (`REFUSAL_FALLBACK` in `agentic/runtime.py`): Opus 5.5 and Sonnet 5.5 to Opus 5,
 Haiku 5.5 to Sonnet 5.5, and GPT-6.1 Sol, GPT-6 Sol and GPT-6 Luna to GPT-5.6 Sol.
 A fallback that refuses again follows its own entry, so a Haiku page goes to
-Sonnet 5.5 and then to Opus 5. A Codex fallback fires only on a turn that failed
-for biological risk. The memory is per backend, so a refused Claude writer never redirects the
-GPT reviewer of the same page or the reverse. It also counts only refusals by the
+Sonnet 5.5 and then to Opus 5. A Codex fallback fires on a turn that failed for
+biological risk or a completed reply recognized as a prose refusal. The original
+attempt keeps its charge. The memory is per backend, so a refused Claude writer
+never redirects the GPT reviewer of the same page or the reverse. It also counts only refusals by the
 model about to be asked, so a page Opus 5.5 refused is offered to a new page
 writer before any fallback. On this corpus refused attempts were a fifth of extraction
 spend, and a flagged report cost five to ten times an ordinary one. A derived
@@ -1136,7 +1165,10 @@ retried automatically, as above. For a derived page, `retry --page` and
 owning stage from the accepted state, so the next run (which would otherwise
 report "unchanged") re-runs that stage, issues the page a new session (resuming
 from its scratch files under `.agentic/pages/` only when they match the check the
-host last recorded) and leaves every other cached page untouched. A pass that records any failure retires no pages,
+host last recorded and its read dependencies are unchanged) and leaves every other
+cached page untouched. An explicit
+integrated-page retry also writes an existing entity with no assigned coverage or
+revised source. A pass that records any failure retires no pages,
 so a failed replacement's predecessor stays published under its old slug.
 
 Use `retry` only after inspecting a saved failed/rejected job. Malformed figure
@@ -1146,9 +1178,10 @@ does not stop the run; its issues and job keys are in `.agentic/failures.json`. 
 failed session is not replayed from the ledger: whenever its stage runs again, the
 page gets a new session, which spends again. Excess valid figure placements are trimmed to the page's cap. Completed editorial results remain cached; stopping
 promotion does not discard their paid model outputs. A crash can consume
-allowance without returning usage. Jobs interrupted by a timeout or a killed
-stage are charged from their transcripts automatically; only a job whose result
-carried no usable usage is left `unknown`, which blocks new calls until
+allowance without returning usage. Jobs left pending by a timeout or a killed
+stage are charged from their transcripts or reservation automatically. Finished
+jobs without usable usage stay `unknown`, including a writer that exits without
+usage after a nested review failure. These rows block new calls until
 conservatively reconciled by hand. Prior charges and outputs remain saved:
 
 ```sh
