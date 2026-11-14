@@ -8,7 +8,7 @@ import pytest
 
 from agentic_recording import page_session
 from beril_wiki.agentic import batch, page_agent
-from beril_wiki.agentic.runtime import CandidateError, Runtime, WorkflowError, digest
+from beril_wiki.agentic.runtime import CandidateError, JobFailed, Runtime, WorkflowError, digest
 from beril_wiki.check import all_paragraphs
 
 OLD = "# Yield\n\nYield was 42%. [src: a]\n\n## Open Directions\n\nRepeat measurements."
@@ -198,6 +198,99 @@ def test_a_pass_that_will_not_converge_is_dropped_and_the_page_kept(tmp_path, mo
     entry = salvaged["write/concepts/yield.md/pass/1"]
     assert entry["removed"] == ["a:0:1"] and "jobs" in entry
     assert "unchanged citations or quantities" in entry["issues"][0]["note"]
+
+
+@pytest.mark.parametrize(
+    ("error_type", "strict", "failed_passes"),
+    [
+        (JobFailed, False, "last"),
+        (JobFailed, True, "last"),
+        (WorkflowError, False, "last"),
+        (JobFailed, False, "all"),
+        (JobFailed, False, "single"),
+    ],
+)
+def test_reviewer_job_failure_keeps_accepted_passes_without_retrying_them(
+    tmp_path, monkeypatch, error_type, strict, failed_passes
+):
+    def rewrite(step, body):
+        return body.replace("[src: a]", "[src: a]\n\nYield held. [src: a]", 1)
+
+    agent, _ = heavy_batch(tmp_path, monkeypatch, rewrite)
+    agent.config.update(cli="unused", model="claude-haiku-5-5", strict_pages=strict)
+    if failed_passes == "single":
+        agent.config["pass_records"] = 0
+    monkeypatch.setattr(page_agent, "check_auth", lambda cli: None)
+    monkeypatch.setattr(page_agent, "run", REAL_PAGE_RUN)
+    drives, reviews = [], []
+
+    def review(task, raw, step):
+        key = f"review-{len(reviews)}"
+        reviews.append(step)
+        agent.jobs.append(key)
+        agent.ledger.reserve(key, step + "/science-review", "gpt-6-luna")
+        failed = step.startswith("write/concepts/") and (
+            failed_passes != "last" or step.endswith("/pass/1")
+        )
+        agent.ledger.finish(
+            key,
+            "{}",
+            {"input_tokens": 1, "output_tokens": 1},
+            "recorded reviewer failed" if failed else "",
+        )
+        if failed:
+            raise error_type("recorded reviewer failed")
+
+    async def drive(worker, session, key, model, resumed):
+        drives.append(session.page.step)
+        candidate = json.loads(worker.ask(session.page.messages, session.page.step))
+        (session.workdir / "page.md").write_text(candidate["content"])
+        (session.workdir / "meta.json").write_text(
+            json.dumps({k: candidate[k] for k in ("description", "accounted_evidence")})
+        )
+        assert session.do_check()["passed"]
+        try:
+            verdict = session.do_review()
+        except WorkflowError:
+            pass  # MCP returns the tool error to a writer that can still end normally.
+        else:
+            assert verdict["accepted"] and session.do_submit()["accepted"]
+        return "recorded writer result", {"input_tokens": 1, "output_tokens": 1}, 0.0, "", ""
+
+    monkeypatch.setattr(agent, "review", review)
+    monkeypatch.setattr(page_agent, "_drive", drive)
+    target = tmp_path / "wiki/concepts/yield.md"
+    if strict or error_type is WorkflowError:
+        with pytest.raises(error_type, match="recorded reviewer failed"):
+            batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+        assert target.read_text() == OLD
+        assert batch.load_failures(agent.store) == {}
+        assert not (agent.store / "salvaged.json").exists()
+        return
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    if failed_passes != "last":
+        assert target.read_text() == OLD
+        assert list(batch.load_failures(agent.store)) == ["concepts/yield.md"]
+        return
+    accepted = agent.ledger.db.execute(
+        "SELECT key FROM jobs WHERE step IN (?,?) AND status='done'",
+        ("write/concepts/yield.md/pass/0", "write/concepts/yield.md/pass/0/science-review"),
+    ).fetchall()
+    assert len(accepted) == 2
+    first_drives, first_reviews = list(drives), list(reviews)
+    for _ in range(batch.RETRY_LIMIT):
+        batch.compile_batch(tmp_path, agent, [], retry=batch.retryable(agent.store))
+        assert drives == first_drives and reviews == first_reviews
+        assert all(
+            agent.ledger.db.execute("SELECT status FROM jobs WHERE key=?", row).fetchone()
+            == ("done",)
+            for row in accepted
+        )
+    assert "Yield held. [src: a]" in target.read_text()
+    assert batch.load_failures(agent.store) == {} and batch.retryable(agent.store) == []
+    salvage = json.loads((agent.store / "salvaged.json").read_text())
+    assert list(salvage) == ["write/concepts/yield.md/pass/1"]
+    assert salvage["write/concepts/yield.md/pass/1"]["removed"] == ["a:0:1"]
 
 
 def test_a_page_whose_every_pass_fails_is_left_as_it_was(tmp_path, monkeypatch):

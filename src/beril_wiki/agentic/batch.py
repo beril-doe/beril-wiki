@@ -1268,7 +1268,9 @@ def compile_batch(
                 try:
                     context = part or about or relevant
                     write_pass(worker, path, job, part, context, (index, len(slices)))
-                except (CandidateError, Unconverged) as exc:
+                except (CandidateError, JobFailed, Unconverged) as exc:
+                    if isinstance(exc, JobFailed) and agent.config.get("strict_pages"):
+                        raise
                     # A pass that will not converge is dropped, not the page: at nine in ten
                     # passes accepted, a seven-pass page failing whole would publish under
                     # half the time. The page keeps every accepted pass; the dropped

@@ -365,15 +365,25 @@ def effective_tokens(usage: dict) -> int:
 
 
 def transcript_usage(path: Path) -> tuple[dict, float | None] | None:
-    """Usage from a saved job stream: the terminal result, else the summed turns."""
+    """The terminal usage, latest Codex total, or summed Claude turns on disk."""
     if not path.is_file():
         return None
     turns: list[dict] = []
+    codex_usage: dict | None = None
     for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
         try:
             message = json.loads(line)
         except ValueError:
             continue
+        if isinstance(message, dict) and message.get("method") == "thread/tokenUsage/updated":
+            from beril_wiki.agentic.codex import map_usage
+
+            payload = message.get("payload")
+            if isinstance(payload, dict):
+                recorded = payload.get("token_usage")
+                found = map_usage(recorded) if isinstance(recorded, dict) else None
+                if valid_usage(found):
+                    codex_usage = found  # cumulative snapshots replace, rather than add
         usage = message.get("usage") if isinstance(message, dict) else None
         if not valid_usage(usage):
             continue
@@ -381,6 +391,8 @@ def transcript_usage(path: Path) -> tuple[dict, float | None] | None:
             return usage, message.get("total_cost_usd")
         if "model" in message and usage != (turns[-1] if turns else None):
             turns.append(usage)  # streamed blocks repeat one turn's usage; count it once
+    if codex_usage is not None:
+        return codex_usage, None
     if not turns:
         return None
     return {k: sum(t.get(k, 0) for t in turns) for k in TOKEN_FIELDS}, None
@@ -485,7 +497,13 @@ class Ledger:
                 "FROM jobs WHERE run=? AND (? IS NULL OR invocation=?)",
                 (self.run, self.invocation, self.invocation),
             ).fetchone()
-            if count >= self.max_jobs or spent + self.headroom * (inflight + 1) > self.budget:
+            # Explicit limits for both backends replace the legacy mixed-token ceiling.
+            weighted_limit = not (
+                model and self.caps.get("max_usd") and self.caps.get("max_codex_tokens")
+            )
+            if count >= self.max_jobs or (
+                weighted_limit and spent + self.headroom * (inflight + 1) > self.budget
+            ):
                 raise WorkflowError(
                     f"budget admission refused: jobs={count}, effective={spent}, "
                     f"inflight={inflight}"
@@ -1120,8 +1138,9 @@ class Runtime:
         self._step = step
         try:
             if backend == "codex":
-                return codex.run_job(self, payload, key, model)
-            output = run_coroutine(self._query(payload, key, model))
+                output = codex.run_job(self, payload, key, model)
+            else:
+                output = run_coroutine(self._query(payload, key, model))
             return self._screened(messages, step, model, key, output)
         except Refused as exc:
             if exc.fallback_model == model:

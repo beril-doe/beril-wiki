@@ -218,6 +218,32 @@ def test_parallel_yields_page_failures_and_raises_operational_errors():
         list(P.parallel(["a", "crash"], work, 4))
 
 
+@pytest.mark.parametrize("strict", [False, True])
+@pytest.mark.parametrize("kind", ["job", "budget"])
+def test_derived_review_job_failure_stays_local_only_without_strict_pages(
+    tmp_path, monkeypatch, strict, kind
+):
+    from beril_wiki.agentic import page_agent as PA
+    from beril_wiki.agentic.runtime import JobFailed, WorkflowError
+
+    configure(monkeypatch, tmp_path, {})
+    monkeypatch.setattr(
+        P, "runtime_config", lambda: {"store": str(tmp_path), "strict_pages": strict}
+    )
+    error = JobFailed("reviewer turn failed") if kind == "job" else WorkflowError("budget refused")
+
+    def fail(*args, **kwargs):
+        raise error
+
+    monkeypatch.setattr(PA, "run", fail)
+    if not strict and kind == "job":
+        result = dict(P.parallel(["x"], run, 1))["x"]
+        assert isinstance(result, P.PageFailure) and "reviewer turn failed" in str(result)
+    else:
+        with pytest.raises(type(error), match=str(error)):
+            list(P.parallel(["x"], run, 1))
+
+
 def test_conflicts_stage_continues_past_a_failed_page(monkeypatch, tmp_path):
     from beril_wiki.stages import conflicts as CB
 

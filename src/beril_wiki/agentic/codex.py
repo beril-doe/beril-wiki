@@ -56,6 +56,13 @@ def map_usage(usage: Any) -> dict | None:
     tokens are already inside output_tokens."""
     if usage is None:
         return None
+    if isinstance(usage, dict):
+        from openai_codex.generated.v2_all import ThreadTokenUsage
+
+        try:
+            usage = ThreadTokenUsage.model_validate(usage, strict=True)
+        except ValueError:
+            return None
     t = usage.total
     return {
         "input_tokens": max(0, t.input_tokens - t.cached_input_tokens),

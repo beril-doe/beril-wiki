@@ -113,11 +113,12 @@ def test_usd_cap_counts_claude_aliases(tmp_path):
         ledger.reserve("b", "links/p2", "sonnet")
 
 
-def test_usd_and_codex_caps_refuse_admission_per_backend(tmp_path):
+@pytest.mark.parametrize("weighted_budget", [100, 10**9])
+def test_usd_and_codex_caps_refuse_admission_per_backend(tmp_path, weighted_budget):
     ledger = Ledger(
         tmp_path / "jobs.sqlite",
         "pilot",
-        10**9,
+        weighted_budget,
         99,
         10,
         caps={"max_usd": 5, "max_codex_tokens": 10**6},
@@ -153,6 +154,27 @@ def test_one_hour_cache_writes_count_at_their_price():
     assert effective_tokens(split) == 600 * 2 + 400 * 1.25
     # A split larger than the total it splits is malformed: charge the plain weight.
     assert effective_tokens(usage | {"cache_creation": {"ephemeral_1h_input_tokens": 5000}}) == 1250
+
+
+def test_capped_resume_keeps_spend_after_the_weighted_allowance_is_used(tmp_path):
+    db = tmp_path / "resume.sqlite"
+    caps = {"max_usd": 30, "max_codex_tokens": 10_000_000}
+    first = Ledger(db, "submitted-snapshot", 5_000_000, 120, 50_000, caps=caps)
+    first.reserve("writer", "write/a", "claude-haiku-5-5")
+    first.finish("writer", "draft", {"input_tokens": 3_000_000, "output_tokens": 0}, cost=5.8)
+    first.reserve("reviewer", "write/a/science-review", "gpt-6-luna")
+    first.finish("reviewer", "review", {"input_tokens": 4_961_040, "output_tokens": 0})
+    resumed = Ledger(db, "submitted-snapshot", 5_000_000, 120, 50_000, caps=caps)
+    assert resumed.reserve("next", "write/b/science-review", "gpt-6-luna") is None
+    assert resumed.db.execute(
+        "SELECT sum(tokens) FROM jobs WHERE status='done' AND model LIKE 'gpt-%'"
+    ).fetchone() == (4_961_040,)
+    assert resumed.db.execute(
+        "SELECT sum(cost) FROM jobs WHERE status='done' AND model LIKE 'claude-%'"
+    ).fetchone() == (5.8,)
+    # Jobs without a backend still need the legacy allowance as a bound.
+    with pytest.raises(WorkflowError, match="budget admission refused"):
+        resumed.reserve("unmetered", "write/c")
 
 
 def test_read_tools_bound_ranges_and_reject_escape(tmp_path):
