@@ -22,6 +22,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 from beril_wiki.paths import ROOT
@@ -92,30 +93,49 @@ def import_v1(checkout: Path, corpus: Path = CORPUS) -> dict:
         text=True,
         check=True,
     ).stdout.strip()
-    if corpus.exists():
-        shutil.rmtree(corpus)
-    corpus.mkdir(parents=True)
-    manifest: dict = {"version": 1, "shared": {}, "projects": {}}
-    for rel in SHARED:
-        src = checkout / rel
-        if not src.is_file():
-            raise SystemExit(f"corpus: checkout lacks {rel}")
-        dst = corpus / rel
-        dst.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(src, dst)
-        manifest["shared"][rel] = sha256(dst)
-    for project in sorted(p for p in (checkout / "projects").iterdir() if p.is_dir()):
-        names = project_files(project)
-        if not names:
-            continue
-        for name in names:
-            dst = corpus / "projects" / project.name / name
+    corpus.parent.mkdir(parents=True, exist_ok=True)
+    temporary = Path(tempfile.mkdtemp(prefix=f".{corpus.name}-import-", dir=corpus.parent))
+    replacement, previous = temporary / "replacement", temporary / "previous"
+    installed = False
+    try:
+        replacement.mkdir()
+        manifest: dict = {"version": 1, "shared": {}, "projects": {}}
+        for rel in SHARED:
+            src = checkout / rel
+            if not src.is_file():
+                raise SystemExit(f"corpus: checkout lacks {rel}")
+            dst = replacement / rel
             dst.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(project / name, dst)
-        manifest["projects"][project.name] = entry(
-            corpus / "projects" / project.name, f"v1@{commit[:12]}"
-        )
-    save(manifest, corpus)
+            shutil.copy2(src, dst)
+            manifest["shared"][rel] = sha256(dst)
+        for project in sorted(p for p in (checkout / "projects").iterdir() if p.is_dir()):
+            names = project_files(project)
+            if not names:
+                continue
+            for name in names:
+                dst = replacement / "projects" / project.name / name
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(project / name, dst)
+            manifest["projects"][project.name] = entry(
+                replacement / "projects" / project.name, f"v1@{commit[:12]}"
+            )
+        save(manifest, replacement)
+        problems = verify(replacement)
+        if problems:
+            raise ValueError("corpus: replacement verification failed: " + "; ".join(problems))
+        try:
+            if corpus.exists():
+                corpus.replace(previous)
+            replacement.replace(corpus)
+        except BaseException:
+            if previous.exists():
+                previous.replace(corpus)
+            raise
+        installed = True
+    finally:
+        # Keep the previous corpus recoverable if rollback itself failed.
+        if installed or not previous.exists():
+            shutil.rmtree(temporary)
     return manifest
 
 

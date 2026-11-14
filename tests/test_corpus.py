@@ -1,6 +1,7 @@
 """The vendored corpus: the committed copy verifies, and fetch mirrors it exactly."""
 
 import subprocess
+from pathlib import Path
 
 import pytest
 
@@ -45,6 +46,59 @@ def test_verify_names_an_edited_file(tmp_path):
         "projects/b/figures/extra.png: not in the manifest",
         "projects/a/README.md: hash differs from the manifest",
     ]
+
+
+@pytest.mark.parametrize("failure", ["missing", "copy", "promote"])
+def test_failed_import_preserves_existing_corpus(tmp_path, monkeypatch, failure):
+    src = checkout(tmp_path, ["a", "b"])
+    out = tmp_path / "corpus"
+    corpus.import_v1(src, out)
+    before = {p.relative_to(out): p.read_bytes() for p in out.rglob("*") if p.is_file()}
+    (src / "projects/a/REPORT.md").write_text("# Replacement\n")
+    if failure == "missing":
+        (src / corpus.SHARED[0]).unlink()
+        error, message = SystemExit, "checkout lacks"
+    elif failure == "copy":
+        copy = corpus.shutil.copy2
+
+        def fail_copy(source, destination):
+            if Path(source).name == "REPORT.md":
+                raise OSError("copy failed")
+            return copy(source, destination)
+
+        monkeypatch.setattr(corpus.shutil, "copy2", fail_copy)
+        error, message = OSError, "copy failed"
+    else:
+        replace = Path.replace
+        failed = False
+
+        def fail_promotion(path, target):
+            nonlocal failed
+            if Path(target) == out and not failed:
+                failed = True
+                raise OSError("promotion failed")
+            return replace(path, target)
+
+        monkeypatch.setattr(Path, "replace", fail_promotion)
+        error, message = OSError, "promotion failed"
+    with pytest.raises(error, match=message):
+        corpus.import_v1(src, out)
+    assert {p.relative_to(out): p.read_bytes() for p in out.rglob("*") if p.is_file()} == before
+    assert corpus.verify(out) == []
+    assert list(tmp_path.glob(".corpus-import-*")) == []
+
+
+def test_import_replaces_the_complete_corpus(tmp_path):
+    src = checkout(tmp_path, ["a", "b"])
+    out = tmp_path / "corpus"
+    corpus.import_v1(src, out)
+    corpus.shutil.rmtree(src / "projects/b")
+    (src / "projects/a/REPORT.md").write_text("# Replacement\n")
+    manifest = corpus.import_v1(src, out)
+    assert set(manifest["projects"]) == {"a"}
+    assert not (out / "projects/b").exists()
+    assert (out / "projects/a/REPORT.md").read_text() == "# Replacement\n"
+    assert corpus.verify(out) == []
 
 
 def test_fetch_drops_a_report_the_checkout_no_longer_has(tmp_path, monkeypatch):
