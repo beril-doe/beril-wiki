@@ -82,8 +82,10 @@ class Reply(BaseModel):
     headlines: list[Headline]
 
 
+PROMPT_TAG = "headlines@1"
+_LEGACY_PROMPT_TAG = "headlines@1"
 PROMPT = prompt(
-    "headlines@1",
+    PROMPT_TAG,
     "Choose the headline findings of one research report, for a scientist deciding what "
     "to investigate next. From FINDINGS choose at most "
     f"{MAX_FINDINGS} observations or inferences that most change what is known: prefer a "
@@ -104,6 +106,52 @@ PROMPT = prompt(
     "this claim) and caveat (one sentence restating it, figures copied exactly). "
     "Never add a confidence label or a claim about a person. " + PLATFORM + "\n"
     f"Return only JSON matching {json.dumps(Reply.model_json_schema())}.\n",
+)
+
+# Exact rendered prompt for raw-key migration; shared wording and schemas may change.
+_LEGACY_PROMPT = (
+    "Choose the headline findings of one research report, for a scientist deciding what "
+    "to investigate next. From FINDINGS choose at most 4 observations or inferences that "
+    "most change what is known: prefer a measured effect, a large scope, or a direction a "
+    "reader would not assume. Choose at most 2 null results or corrections that close an "
+    "avenue or correct an earlier claim. A null result must be a record of kind null and "
+    "is reported as null. A correction is a finding that, by its own quote, revises an "
+    "earlier result or an assumption. Prefer fewer headlines to weak ones; restating "
+    "method or data inventory is not a finding.\n"
+    "For each headline give: evidence (the record id); result (observation, inference, "
+    "null result or correction; an inference is a conclusion the report draws rather than "
+    "measures); title (at most 12 words, no figures); claim (one sentence restating the "
+    "record, qualified exactly as its quote qualifies it: organism, dataset, threshold, "
+    "denominator, and 'suggests' where the report infers; every figure copied exactly "
+    "from the quote); quantities (up to 4 key figures, each with value copied exactly "
+    "from the quote, what it measures, and unit, denominator and scope where the quote "
+    "gives them, else empty strings); caveat_evidence (the id of the CAVEATS record that "
+    "most limits this claim) and caveat (one sentence restating it, figures copied "
+    "exactly). Never add a confidence label or a claim about a person. The data platform "
+    "is the KBase Data Lakehouse; never write BERDL or BER Data Lakehouse (the project id "
+    'berdl_data_atlas and its title "BERDL Data Atlas" are a project\'s names and stay).\n'
+    'Return only JSON matching {"$defs": {"Headline": {"additionalProperties": false, '
+    '"properties": {"evidence": {"title": "Evidence", "type": "string"}, '
+    '"result": {"enum": ["observation", "inference", "null result", "correction"], '
+    '"title": "Result", "type": "string"}, "title": {"maxLength": 120, '
+    '"minLength": 3, "title": "Title", "type": "string"}, "claim": {"maxLength": '
+    '700, "minLength": 10, "title": "Claim", "type": "string"}, "quantities": '
+    '{"items": {"$ref": "#/$defs/Quantity"}, "maxItems": 4, "title": "Quantities", '
+    '"type": "array"}, "caveat_evidence": {"title": "Caveat Evidence", "type": '
+    '"string"}, "caveat": {"maxLength": 500, "minLength": 10, "title": "Caveat", '
+    '"type": "string"}}, "required": ["evidence", "result", "title", "claim", '
+    '"quantities", "caveat_evidence", "caveat"], "title": "Headline", "type": '
+    '"object"}, "Quantity": {"additionalProperties": false, "properties": {"value": '
+    '{"maxLength": 80, "minLength": 1, "title": "Value", "type": "string"}, '
+    '"what": {"maxLength": 300, "minLength": 1, "title": "What", "type": '
+    '"string"}, "unit": {"default": "", "maxLength": 60, "title": "Unit", '
+    '"type": "string"}, "denominator": {"default": "", "maxLength": 300, '
+    '"title": "Denominator", "type": "string"}, "scope": {"default": "", '
+    '"maxLength": 300, "title": "Scope", "type": "string"}}, "required": '
+    '["value", "what"], "title": "Quantity", "type": "object"}}, '
+    '"additionalProperties": false, "properties": {"headlines": {"items": {"$ref": '
+    '"#/$defs/Headline"}, "title": "Headlines", "type": "array"}}, "required": '
+    '["headlines"], "title": "Reply", "type": "object"}.\n'
 )
 
 
@@ -345,7 +393,12 @@ def main(root: Path = ROOT) -> int:
         body = pack(sid, source_title(root, sid), records)
         messages = [{"role": "user", "content": PROMPT + json.dumps(body)}]
         # The models are part of the key: a new cards or findings_review model re-judges.
-        key = digest([messages, cards.policy(agent.config, ("cards", "findings_review"))])
+        policy = cards.policy(agent.config, ("cards", "findings_review"))
+        key = digest([body, PROMPT_TAG, policy])
+        compatible = {key}
+        if PROMPT_TAG == _LEGACY_PROMPT_TAG:
+            legacy = [{"role": "user", "content": _LEGACY_PROMPT + json.dumps(body)}]
+            compatible.add(digest([legacy, policy]))
         saved = state.get(sid, {})
         if cards.leaves_failed(
             agent.config, saved.get("failed") is True, cards.owners("headlines", sid)
@@ -355,11 +408,14 @@ def main(root: Path = ROOT) -> int:
         # A saved reply stays while its input is unchanged and today's checks accept it,
         # so a code change re-asks only the reports whose replies its rules now reject.
         if (
-            saved.get("input") == key
+            saved.get("input") in compatible
             and saved.get("reply")
             and not saved.get("failed")
             and passes(saved["reply"], records)
         ):
+            if saved.get("input") != key:
+                state[sid] = saved | {"input": key}
+                atomic_json(state_path, state)
             # The accepted reply is kept, so a page edited by hand or a new render
             # is rewritten from it without a model call.
             if saved.get("render") != RENDER or saved.get("pages") != on_disk:

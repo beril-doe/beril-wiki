@@ -591,9 +591,9 @@ The catalog directory is part of every topic's cache key, so a catalog rebuild
 that changes a table name makes every topic's directions stale and the next run
 buys them again. The curator reads `state/lakehouse/` as a directions input in
 place of `wiki/data/`, so a data page edit never makes directions stale.
-When only the corrected proposal scope changes a legacy input key, a saved
-successful reply that passes today's checks can migrate to the new key without
-a model call.
+Under the original prompt tag, a saved successful reply with the legacy
+proposal-scope key can migrate without a model call when its other inputs are
+current and today's checks accept it.
 Pages written before the catalog keep a `collections` field until that rerun;
 nothing reads it.
 
@@ -1112,6 +1112,13 @@ every planning batch or every Codex job, extraction included. Work cached under
 that older formula is still found: a versioned key with no row falls back to the
 legacy key, and a hit is recorded in the ledger's `aliases` table, so one replay
 carries the cache over with no duplicated rows or charges.
+
+Headlines and directions also key their durable saved replies on the public
+evidence pack, prompt tag and model policy. Wording edits that keep the tag retain
+successful replies that pass today's checks, even without the originating job
+store. Under the original tag, compatible raw-prompt keys migrate to the tagged
+formula after validation, without model calls. A tag bump makes those old keys
+stale too.
 
 Scientific compiler or contract changes and manual edits to core pages
 conservatively revisit staged sources; model changes do not. The runner compares a

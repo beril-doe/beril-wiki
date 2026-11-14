@@ -1,5 +1,6 @@
 """The directions stage: research questions grounded in findings, never reanalysis."""
 
+import importlib
 import json
 import shutil
 
@@ -7,6 +8,8 @@ import pytest
 
 from beril_wiki import lakehouse as lakehouse_view
 from beril_wiki import records
+from beril_wiki.agentic import prose
+from beril_wiki.agentic import runtime as agentic_runtime
 from beril_wiki.agentic.runtime import JobFailed, Refused
 from beril_wiki.stages import cards, directions
 from beril_wiki.wording import asks_to_redo, is_reanalysis
@@ -234,7 +237,7 @@ def test_unchanged_input_makes_no_calls_and_rerenders_from_reply(tmp_path, monke
     assert len(agent.asked) == calls
 
 
-def legacy_directions(root, monkeypatch):
+def legacy_directions(root, monkeypatch, all_reports=True):
     corpus(root)
     report(root, "unrelated", "# Other\n\n## Future Directions\n\n- Test resistance.\n")
     scope(root, reports=["a", "unrelated"], topics=[TOPIC])
@@ -244,15 +247,23 @@ def legacy_directions(root, monkeypatch):
 
     def all_report_proposals(root, topic, reports, cat):
         pack = scoped(root, topic, reports, cat)
-        pack["PROPOSALS"] = [
-            bullet["text"]
-            for bullet in records.forward_bullets(root, topic, reports)
-            if not is_reanalysis(bullet["text"])
-        ]
+        if all_reports:
+            pack["PROPOSALS"] = [
+                bullet["text"]
+                for bullet in records.forward_bullets(root, topic, reports)
+                if not is_reanalysis(bullet["text"])
+            ]
         return pack
 
     with monkeypatch.context() as legacy:
         legacy.setattr(directions, "topic_pack", all_report_proposals)
+        legacy.setattr(
+            directions,
+            "topic_key",
+            lambda public, policy: agentic_runtime.digest(
+                [[{"role": "user", "content": directions.PROMPT + json.dumps(public)}], policy]
+            ),
+        )
         assert directions.main(root) == 0
     agent.asked.clear()
     monkeypatch.delenv("BERIL_AGENTIC_CONFIG", raising=False)
@@ -288,6 +299,57 @@ def test_legacy_proposal_key_migrates_without_models_and_ignores_later_unrelated
     assert directions.status(tmp_path) == 0
     assert directions.main(tmp_path) == 0
     assert json.loads(path.read_text())[TOPIC] == after and agent.asked == []
+
+
+@pytest.mark.parametrize("stored", ["tagged", "scoped-raw", "all-report-raw"])
+@pytest.mark.parametrize("shared", [False, True])
+def test_directions_wording_change_keeps_saved_replies_with_a_fresh_store(
+    tmp_path, monkeypatch, stored, shared
+):
+    _, path = legacy_directions(tmp_path, monkeypatch, all_reports=stored == "all-report-raw")
+    if stored == "tagged":
+        assert directions.main(tmp_path) == 0
+    before = json.loads(path.read_text())[TOPIC]
+    agent = FakeAgent(tmp_path / "fresh-store", {})
+    install(monkeypatch, agent)
+    original = prose.PLATFORM
+    try:
+        if shared:
+            monkeypatch.setattr(prose, "PLATFORM", original.replace("is the", "is named the"))
+            importlib.reload(directions)
+        else:
+            wording = directions.PROMPT + "Keep the wording concise.\n"
+            monkeypatch.setitem(agentic_runtime.PROMPTS, "directions@4", wording)
+            monkeypatch.setattr(directions, "PROMPT", wording)
+        saved_bytes = path.read_bytes()
+        assert directions.status(tmp_path) == 0
+        assert path.read_bytes() == saved_bytes
+        assert directions.main(tmp_path) == 0
+        after = json.loads(path.read_text())[TOPIC]
+        assert after == before | {"input": after["input"]}
+        assert agent.asked == []
+    finally:
+        if shared:
+            monkeypatch.setattr(prose, "PLATFORM", original)
+            importlib.reload(directions)
+
+
+@pytest.mark.parametrize("stored", ["tagged", "scoped-raw", "all-report-raw"])
+def test_directions_tag_change_invalidates_tagged_and_raw_keys_with_identical_wording(
+    tmp_path, monkeypatch, stored
+):
+    _, path = legacy_directions(tmp_path, monkeypatch, all_reports=stored == "all-report-raw")
+    if stored == "tagged":
+        assert directions.main(tmp_path) == 0
+    monkeypatch.setattr(directions, "PROMPT_TAG", "directions@test-next", raising=False)
+    monkeypatch.setitem(agentic_runtime.PROMPTS, "directions@test-next", directions.PROMPT)
+    agent = FakeAgent(tmp_path / "fresh-store", {f"directions/{TOPIC}": [THREE]})
+    install(monkeypatch, agent)
+    before = path.read_bytes()
+    assert directions.status(tmp_path) == 1
+    assert path.read_bytes() == before and agent.asked == []
+    assert directions.main(tmp_path) == 0
+    assert agent.asked == [f"directions/{TOPIC}", f"directions/{TOPIC}/science-review"]
 
 
 @pytest.mark.parametrize("changed", ["reply", "finding", "catalog", "policy", "arbitrary"])

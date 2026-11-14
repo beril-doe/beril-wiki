@@ -1,9 +1,12 @@
 """The headlines stage: capped, figure-checked finding records per report."""
 
+import importlib
 import json
 
 import pytest
 
+from beril_wiki.agentic import prose
+from beril_wiki.agentic import runtime as agentic_runtime
 from beril_wiki.agentic.admission import failed_entries
 from beril_wiki.stages import cards, headlines
 from card_fakes import FakeAgent, evidence, install, report, scope
@@ -154,6 +157,81 @@ def test_headlines_unchanged_input_makes_no_calls(tmp_path, monkeypatch):
     calls = len(agent.asked)
     assert headlines.main(tmp_path) == 0
     assert len(agent.asked) == calls
+    fresh = FakeAgent(tmp_path / "fresh-store", {})
+    evidence(fresh.store, tmp_path, "a", RECORDS)
+    install(monkeypatch, fresh)
+    wording = headlines.PROMPT + "Keep the wording concise.\n"
+    monkeypatch.setitem(agentic_runtime.PROMPTS, "headlines@1", wording)
+    monkeypatch.setattr(headlines, "PROMPT", wording)
+    assert headlines.main(tmp_path) == 0
+    assert fresh.asked == []
+
+
+def cached_headlines(root, monkeypatch, raw):
+    good = json.dumps({"headlines": [headline()]})
+    agent = setup(root, monkeypatch, {"headlines/a": [good]})
+    assert headlines.main(root) == 0
+    path = root / headlines.STATE
+    state = json.loads(path.read_text())
+    if raw:
+        body = headlines.pack("a", "Dark genes", RECORDS)
+        messages = [{"role": "user", "content": headlines.PROMPT + json.dumps(body)}]
+        state["a"]["input"] = agentic_runtime.digest(
+            [messages, cards.policy(agent.config, ("cards", "findings_review"))]
+        )
+        path.write_text(json.dumps(state))
+    fresh = FakeAgent(root / "fresh-store", {})
+    evidence(fresh.store, root, "a", RECORDS)
+    install(monkeypatch, fresh)
+    return fresh, path, good
+
+
+@pytest.mark.parametrize("shared", [False, True])
+def test_headlines_raw_key_migrates_after_a_wording_only_change(tmp_path, monkeypatch, shared):
+    agent, path, _ = cached_headlines(tmp_path, monkeypatch, raw=True)
+    before = json.loads(path.read_text())["a"]
+    original = prose.PLATFORM
+    try:
+        if shared:
+            monkeypatch.setattr(prose, "PLATFORM", original.replace("is the", "is named the"))
+            importlib.reload(headlines)
+        else:
+            wording = headlines.PROMPT + "Keep the wording concise.\n"
+            monkeypatch.setitem(agentic_runtime.PROMPTS, "headlines@1", wording)
+            monkeypatch.setattr(headlines, "PROMPT", wording)
+        assert headlines.main(tmp_path) == 0
+        after = json.loads(path.read_text())["a"]
+        assert before["input"] != after["input"]
+        assert after == before | {"input": after["input"]}
+        assert agent.asked == []
+    finally:
+        if shared:
+            monkeypatch.setattr(prose, "PLATFORM", original)
+            importlib.reload(headlines)
+
+
+@pytest.mark.parametrize("raw", [False, True])
+@pytest.mark.parametrize("changed", ["tag", "evidence", "policy", "reply"])
+def test_headlines_tag_changes_and_changed_inputs_do_not_reuse_saved_replies(
+    tmp_path, monkeypatch, raw, changed
+):
+    agent, path, good = cached_headlines(tmp_path, monkeypatch, raw)
+    if changed == "tag":
+        monkeypatch.setattr(headlines, "PROMPT_TAG", "headlines@test-next", raising=False)
+        monkeypatch.setitem(agentic_runtime.PROMPTS, "headlines@test-next", headlines.PROMPT)
+    elif changed == "evidence":
+        evidence(
+            agent.store, tmp_path, "a", [RECORDS[0] | {"claim": "Revised claim"}, *RECORDS[1:]]
+        )
+    elif changed == "policy":
+        agent.config["model"] = "gpt-6.1-sol"
+    else:
+        state = json.loads(path.read_text())
+        state["a"]["reply"]["headlines"][0]["quantities"][0]["value"] = "0.99"
+        path.write_text(json.dumps(state))
+    agent.replies["headlines/a"] = [good]
+    assert headlines.main(tmp_path) == 0
+    assert agent.asked == ["headlines/a", "headlines/a/science-review"]
 
 
 def test_headlines_retires_pages_of_out_of_scope_reports(tmp_path, monkeypatch):

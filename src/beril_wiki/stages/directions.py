@@ -88,8 +88,10 @@ class Reply(BaseModel):
     directions: list[Direction]
 
 
+PROMPT_TAG = "directions@4"
+_LEGACY_PROMPT_TAG = "directions@4"
 PROMPT = prompt(
-    "directions@4",
+    PROMPT_TAG,
     "Propose research directions for scientists choosing their next project in one topic of "
     "a microbial-biology research wiki built from AI-run analyses over the KBase Data "
     "Lakehouse. You get the topic's FINDINGS (headline results, each with a literature label "
@@ -148,6 +150,95 @@ PROMPT = prompt(
     "builds on the same evidence to the topic that has it. "
     + PLATFORM
     + f"\nReturn only JSON matching {json.dumps(Reply.model_json_schema())}.\n",
+)
+
+# Exact rendered prompt for raw-key migration; shared wording and schemas may change.
+_LEGACY_PROMPT = (
+    "Propose research directions for scientists choosing their next project in one topic "
+    "of a microbial-biology research wiki built from AI-run analyses over the KBase Data "
+    "Lakehouse. You get the topic's FINDINGS (headline results, each with a literature "
+    "label from a PubMed comparison and its closest papers), its CONFLICTS (places where "
+    "projects disagree), PROPOSALS the wiki's pages already make (raw ideas, many of them "
+    "routine), PAPERS (the retrieved papers you may cite), DATABASES (a directory of the "
+    "lakehouse catalog: each database it covers with its first table names) and TABLES "
+    "(catalog tables matched to this topic, with their columns and sample values).\n"
+    "Propose 3 to 8 directions. A research direction is a biological question a scientist "
+    "in this field would choose to spend months on because the answer would change what "
+    "is believed: a mechanism, an ecological or evolutionary explanation, a prediction "
+    "that could fail. It is never a repeat, correction, reconciliation, recount, audit or "
+    "re-analysis of existing work, nor data plumbing (joining tables, standardizing "
+    "names, documenting pipelines); those go to the reports' maintainers and are excluded "
+    "here. Prefer directions that start from 'Candidate novel' or 'In tension' findings, "
+    "from null results that rule out one explanation and leave another open, and from "
+    "conflicts read as competing biological hypotheses rather than as numerical "
+    "discrepancies. Do not restate a proposal unless you turn it into a question with a "
+    "hypothesis. Directions may join findings from different reports.\n"
+    "For each direction give: id (D1, D2, ... in order; when you revise, a direction "
+    "keeps its id even if rewritten, a new direction takes the next unused id and a "
+    "dropped id is never reused, so reviewers can name directions by id); title (at most "
+    "14 words, no figures, phrased as the idea, not as a task); question; hypothesis "
+    "(falsifiable, one or two sentences); why_it_matters (what would change in "
+    "understanding or practice if it holds); test (the decisive analysis on lakehouse "
+    "data, or the experiment, or both, naming the organisms, genes, conditions or "
+    "datasets the findings name); outcomes (what result would support it and what would "
+    "refute it); approach (lakehouse analysis, experiment, or analysis then experiment); "
+    "databases (names from DATABASES the test reads, only those); tables (the tables the "
+    "test reads, each written <database>.<table>, only those); readiness (data in the "
+    "lakehouse, needs compute, needs new measurements, or unknown) and readiness_basis "
+    "(one sentence on what it rests on). tables must name at least one table when "
+    "readiness is data in the lakehouse or needs compute, or when approach is lakehouse "
+    "analysis or analysis then experiment. A value or column missing from DATABASES or "
+    "TABLES is unknown, not absent; a table marked columns_truncated, complete false or "
+    "basis sample holds more than is shown. The catalog covers only some of the "
+    "lakehouse: never claim the lakehouse lacks data; say the catalog did not show it. "
+    "findings (ids from FINDINGS it builds on) and conflicts (slugs from CONFLICTS), at "
+    "least one of the two; papers (up to 6 PMIDs from PAPERS that are its closest "
+    "published work) and prior_work (one sentence on how it goes beyond them, naming them "
+    "by PMID; empty if none apply). Use only result figures stated in FINDINGS or "
+    "CONFLICTS, keep each finding's qualifications, and add no confidence label, ranking "
+    "or claim about a person.\n"
+    "A scientist outside the subfield reads every field. Write them in plain words: no "
+    "test statistics (p-values, correlation coefficients, FDR or q-values, AUC, odds "
+    "ratios, accuracy scores) and no statistical words such as 'significant' or "
+    "'nominal'; say what was seen in words. In prose name a dataset in plain words, never "
+    "by a database or table name, and use no notebook, node or sample identifiers. Say "
+    "what was found, not what 'the report' or 'the evidence' says. The title is a "
+    "question ending in '?' and does not state the hypothesis as a fact.\n"
+    "The decisive test must be able to fail in an informative way, and outcomes say what "
+    "result would refute the hypothesis. A direction whose main step checks whether an "
+    "existing result holds after a control, a correction or a replication is a "
+    "re-analysis, not a new project. OTHER_TOPICS lists the directions other topics "
+    "already propose: do not propose the same project again, and leave a project that "
+    "builds on the same evidence to the topic that has it. The data platform is the KBase "
+    "Data Lakehouse; never write BERDL or BER Data Lakehouse (the project id "
+    'berdl_data_atlas and its title "BERDL Data Atlas" are a project\'s names and stay).\n'
+    'Return only JSON matching {"$defs": {"Direction": {"additionalProperties": false, '
+    '"properties": {"id": {"pattern": "^D[1-9][0-9]?$", "title": "Id", "type": '
+    '"string"}, "title": {"maxLength": 140, "minLength": 5, "title": "Title", '
+    '"type": "string"}, "question": {"maxLength": 400, "minLength": 15, "title": '
+    '"Question", "type": "string"}, "hypothesis": {"maxLength": 600, "minLength": '
+    '15, "title": "Hypothesis", "type": "string"}, "why_it_matters": {"maxLength": '
+    '600, "minLength": 15, "title": "Why It Matters", "type": "string"}, "test": '
+    '{"maxLength": 1000, "minLength": 20, "title": "Test", "type": "string"}, '
+    '"outcomes": {"maxLength": 600, "minLength": 15, "title": "Outcomes", "type": '
+    '"string"}, "approach": {"enum": ["lakehouse analysis", "experiment", "analysis '
+    'then experiment"], "title": "Approach", "type": "string"}, "databases": '
+    '{"items": {"type": "string"}, "maxItems": 8, "title": "Databases", "type": '
+    '"array"}, "tables": {"items": {"type": "string"}, "maxItems": 12, "title": '
+    '"Tables", "type": "array"}, "readiness": {"enum": ["data in the lakehouse", '
+    '"needs compute", "needs new measurements", "unknown"], "title": "Readiness", '
+    '"type": "string"}, "readiness_basis": {"maxLength": 400, "minLength": 5, '
+    '"title": "Readiness Basis", "type": "string"}, "findings": {"items": '
+    '{"type": "string"}, "title": "Findings", "type": "array"}, "conflicts": '
+    '{"items": {"type": "string"}, "title": "Conflicts", "type": "array"}, '
+    '"papers": {"items": {"type": "string"}, "maxItems": 6, "title": "Papers", '
+    '"type": "array"}, "prior_work": {"default": "", "maxLength": 600, "title": '
+    '"Prior Work", "type": "string"}}, "required": ["id", "title", "question", '
+    '"hypothesis", "why_it_matters", "test", "outcomes", "approach", "readiness", '
+    '"readiness_basis"], "title": "Direction", "type": "object"}}, '
+    '"additionalProperties": false, "properties": {"directions": {"items": {"$ref": '
+    '"#/$defs/Direction"}, "title": "Directions", "type": "array"}}, "required": '
+    '["directions"], "title": "Reply", "type": "object"}.\n'
 )
 
 
@@ -531,22 +622,22 @@ def retire_broken(root: Path, out: Path, topic: str) -> None:
 
 
 def topic_key(public: dict, policy: str) -> str:
-    """Return a topic's cache key: the prompt with its public pack, and the model policy.
+    """Return a topic's cache key: its public pack, semantic prompt tag and model policy.
 
     Other topics' directions steer the draft but stay out of the key: in it, each topic's
     rewrite would make every other topic stale, and the topics would keep rewriting one
     another.
     """
-    return digest([[{"role": "user", "content": PROMPT + json.dumps(public)}], policy])
+    return digest([public, PROMPT_TAG, policy])
 
 
 def matches_topic_input(
     root: Path, topic: str, reports: list[str], public: dict, policy: str, saved_input: str | None
 ) -> bool:
-    """Match today's scoped key or its legacy proposal pack with all other inputs current."""
+    """Match today's key or a raw legacy key under its original tag and current inputs."""
     if saved_input == topic_key(public, policy):
         return True
-    if not saved_input:
+    if not saved_input or PROMPT_TAG != _LEGACY_PROMPT_TAG:
         return False
     legacy = public | {
         "PROPOSALS": [
@@ -555,7 +646,11 @@ def matches_topic_input(
             if not is_reanalysis(bullet["text"])
         ]
     }
-    return saved_input == topic_key(legacy, policy)
+    return any(
+        saved_input
+        == digest([[{"role": "user", "content": _LEGACY_PROMPT + json.dumps(pack)}], policy])
+        for pack in (public, legacy)
+    )
 
 
 def other_topics(state: dict, topic: str, topics: list[str]) -> list[dict]:
