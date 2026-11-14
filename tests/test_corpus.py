@@ -83,9 +83,15 @@ def test_run_output_figures_are_vendored_and_fetched(tmp_path, monkeypatch):
     assert "projects/p/runs/r1/out/figures/b.png" in runner.checkout_inputs(src)
 
 
-def test_run_output_figures_reach_placement_with_their_paths(tmp_path, monkeypatch):
-    """Placement saw only `figures/` embeds, and splicing flattened a placed figure to
-    its basename, where two runs' figures/b.png would collide."""
+@pytest.mark.parametrize(
+    "paths",
+    [
+        ("runs/r1/out/figures/b.png", "runs/r2/out/figures/b.png"),
+        ("figures/a/plot.png", "figures/b/plot.png"),
+    ],
+)
+def test_run_output_figures_reach_placement_with_their_paths(tmp_path, monkeypatch, paths):
+    """Raw reports and placements preserve figure paths with shared basenames."""
     import hashlib
 
     from beril_wiki.publish import ingest
@@ -93,30 +99,38 @@ def test_run_output_figures_reach_placement_with_their_paths(tmp_path, monkeypat
 
     root = tmp_path / "wiki-root"
     (root / "wiki/sources").mkdir(parents=True)
-    (root / "wiki/sources/p__REPORT.md").write_text(
-        "Growth rose.\n\n![Growth](runs/r1/out/figures/b.png)\n\n![Old](figures/f.png)\n"
+    report = (
+        f"Growth rose.\n\n![First]({paths[0]})\n\n![Second]({paths[1]})\n\n![Old](figures/f.png)\n"
     )
-    for rel, data in (("runs/r1/out/figures/b.png", b"r1"), ("runs/r2/out/figures/b.png", b"r2")):
-        (root / "wiki/figures/p" / rel).parent.mkdir(parents=True, exist_ok=True)
-        (root / "wiki/figures/p" / rel).write_bytes(data)
+    (root / "wiki/sources/p__REPORT.md").write_text(report)
+    for rel, data in zip(paths, (b"first", b"second"), strict=True):
+        figure = root / "wiki/figures" / corpus.figure_destination("p", rel)
+        figure.parent.mkdir(parents=True, exist_ok=True)
+        figure.write_bytes(data)
     (root / "wiki/figures/p/f.png").write_bytes(b"f")
     monkeypatch.setattr(figures, "ROOT", root)
     monkeypatch.setattr(figures, "STATE", root / "state")
     files = [(f["file"], f["caption"]) for f in figures.build_manifest()["p"]]
-    assert files == [("runs/r1/out/figures/b.png", "Growth"), ("figures/f.png", "Old")]
+    assert files == [(paths[0], "First"), (paths[1], "Second"), ("figures/f.png", "Old")]
     page = "First.\n\nSecond.\n"
     placed = [
         {
             "project": "p",
-            "file": f"runs/{run}/out/figures/b.png",
-            "caption": run,
+            "file": rel,
+            "caption": str(i),
             "after_paragraph": i,
         }
-        for i, run in enumerate(("r1", "r2"))
+        for i, rel in enumerate(paths)
     ]
     entry = {"page_hash": hashlib.sha256(page.encode()).hexdigest()[:16], "placements": placed}
     site = tmp_path / "site"
     spliced = ingest.splice_figures(page, entry, root, site)
-    for run in ("r1", "r2"):
-        assert f"](../figures/p/runs/{run}/out/figures/b.png)" in spliced
-        assert (site / f"figures/p/runs/{run}/out/figures/b.png").read_bytes() == run.encode()
+    raw_site = tmp_path / "raw-site"
+    rewritten = ingest.rewrite_source_figures(report, "p", root, raw_site)
+    assert "](../figures/p/f.png)" in rewritten
+    assert (raw_site / "figures/p/f.png").read_bytes() == b"f"
+    for rel, data in zip(paths, (b"first", b"second"), strict=True):
+        destination = corpus.figure_destination("p", rel)
+        for text, output in ((spliced, site), (rewritten, raw_site)):
+            assert f"](../figures/{destination})" in text
+            assert (output / "figures" / destination).read_bytes() == data

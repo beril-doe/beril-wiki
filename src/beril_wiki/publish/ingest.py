@@ -394,8 +394,7 @@ def fig_src(kb: pathlib.Path, project: str, rel: str) -> pathlib.Path:
 
 def published_name(rel: str) -> str:
     """A figure's path under the site's figures/<project>/."""
-    # Run-output embeds keep their path: two runs may both write figures/a.png.
-    return pathlib.Path(rel).name if rel.startswith("figures/") else rel
+    return rel.removeprefix("figures/")
 
 
 def splice_figures(text: str, entry: dict, kb: pathlib.Path, dst_root: pathlib.Path) -> str:
