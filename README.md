@@ -13,8 +13,9 @@ a reproducible pipeline.
 > from AI-conducted research reports. Scientists have checked some of that
 > underlying research; no one reviewed the pages themselves, and nothing marks
 > which claims fall on which side. Citations and numbers are machine-verified,
-> and narrowly: a figure is checked to appear in a source the paragraph cites,
-> as text, so a flipped sign or a changed unit passes. Nothing checks whether a
+> and narrowly: a number is compared with the sources the paragraph cites, allowing
+> equivalent scientific notation and simple differences or ratios at the stated
+> precision. A flipped sign or a changed unit still passes. Nothing checks whether a
 > finding is correct. Read
 > [About This Wiki](https://beril-doe.org/beril-wiki/about) before citing
 > anything, and cite the underlying research report rather than the synthesis

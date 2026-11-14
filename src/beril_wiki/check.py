@@ -22,6 +22,7 @@ import json
 import pathlib
 import re
 import sys
+from decimal import Decimal, InvalidOperation
 
 import yaml
 
@@ -49,7 +50,9 @@ NUMBER = re.compile(
     r"""
     (?<![\w.])
     (?:
-        \d[\d,]*(?:\.\d+)?[eE][-+]?\d+     # 1.3e-43, 2.0E+4  (must precede the decimal rule)
+        \d[\d,]*(?:\.\d+)?\s*[x×]\s*10\s*
+        (?:\^\s*[-+]?\d+|[⁺⁻]?[⁰¹²³⁴⁵⁶⁷⁸⁹]+)  # 1.3 x 10^-43, 1.3×10⁻⁴³
+      | \d[\d,]*(?:\.\d+)?[eE][-+]?\d+     # 1.3e-43, 2.0E+4
       | \d[\d,]*\.\d+\s?%                  # 59.3%
       | \d[\d,]*\.\d+(?!\d|,\d)            # 0.038, 1,234.56
       | \d[\d,]*\d\s?% | \d\s?%            # 66%, 7%
@@ -64,6 +67,7 @@ NUMBER = re.compile(
 # it made those figures invisible and every page quoting them looked unsupported.
 
 _SRC_NUMS: dict[tuple[str, str], set[str]] = {}
+SUPERSCRIPTS = str.maketrans("⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻", "0123456789+-")
 
 FRONTMATTER = re.compile(r"^---\n.*?\n---\n", re.S)
 H1 = re.compile(r"^# +\S", re.M)
@@ -76,11 +80,23 @@ def has_title(text: str) -> bool:
     return bool(H1.search(FENCED.sub("", FRONTMATTER.sub("", text, count=1))))
 
 
+def _decimal_spelling(tok: str) -> str:
+    value = re.sub(r"\s+", "", tok).replace(",", "").rstrip("%")
+    value = re.sub(r"[x×]10(?:\^|(?=[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]))", "e", value)
+    return value.translate(SUPERSCRIPTS)
+
+
 def norm_num(tok: str) -> str:
     """Percent-insensitive on purpose: sources routinely state a proportion that a
     page renders as a percentage, and treating `%` as significant flags 143 such
     pairs on this corpus against 28 genuine misses."""
-    return tok.replace(",", "").replace(" ", "").rstrip("%")
+    value = _decimal_spelling(tok)
+    if re.fullmatch(r"[\d.]+[eE][-+]?\d+", value):
+        mantissa, exponent = format(Decimal(value), "e").split("e")
+        if "." in mantissa:
+            mantissa = mantissa.rstrip("0").rstrip(".")
+        return f"{mantissa}e{int(exponent):+d}"
+    return value
 
 
 def prose_only(par: str) -> str:
@@ -102,19 +118,8 @@ def prose_only(par: str) -> str:
 
 
 def numbers_in(text: str) -> set[str]:
-    """Figures in `text`, plus the MANTISSA of every scientific value.
-
-    A source writing `p = 1.77e-06` yields one token, so a page quoting the same
-    result as `1.77 x 10^-6` — whose exponent is not ASCII scientific notation —
-    matched nothing. Emitting `1.77` as well makes the two spellings agree."""
-    out = set()
-    for t in NUMBER.findall(text):
-        n = norm_num(t)
-        out.add(n)
-        m = re.match(r"([\d.]+)[eE][-+]?\d+$", n)
-        if m:
-            out.add(m.group(1))
-    return out
+    """Complete figures in `text`, with equivalent scientific spellings normalized."""
+    return {norm_num(t) for t in NUMBER.findall(text)}
 
 
 # Integers below four digits, which NUMBER leaves out on purpose for prose checks.
@@ -132,14 +137,10 @@ def figures_in(text: str) -> set[str]:
     """Every figure in text for card records' quote checks: small integers included,
     and a percent sign kept, since a card that turns "42 genes" into "42%" states a
     figure its quote does not (paragraph checks drop it on purpose; see norm_num)."""
-    out = set()
-    for t in NUMBER.findall(text):
-        n = t.replace(",", "").replace(" ", "")
-        out.add(n)
-        m = re.match(r"([\d.]+)[eE][-+]?\d+$", n)
-        if m:
-            out.add(m.group(1))
-    return out | set(SMALL_INT.findall(text))
+    out = {t.replace(",", "").replace(" ", "") for t in NUMBER.findall(text)}
+    # Exponent digits belong to the scientific value, not a separate small count.
+    counts = NUMBER.sub(lambda m: " " if re.search(r"[eEx×]", m.group(0)) else m.group(0), text)
+    return out | set(SMALL_INT.findall(counts))
 
 
 def pmids_in(text: str) -> set[str]:
@@ -158,7 +159,7 @@ def source_numbers(sid: str, text: str) -> set[str]:
     return _SRC_NUMS[key]
 
 
-def _derivable(val: float, pool: set[float]) -> bool:
+def _derivable(val: Decimal, pool: set[Decimal], tolerance: Decimal) -> bool:
     """True if `val` is a difference or ratio of two figures in the cited sources.
 
     A concept page legitimately computes across its sources: "core 24.4% vs
@@ -170,17 +171,17 @@ def _derivable(val: float, pool: set[float]) -> bool:
     xs = sorted(pool)
     for i, a in enumerate(xs):
         for b in xs[i + 1 :]:
-            if abs(abs(a - b) - abs(val)) < 0.0051:
+            if abs(abs(a - b) - abs(val)) < tolerance:
                 return True
-            if b and abs(abs(a / b) - abs(val)) < 0.0051:
+            if b and abs(abs(a / b) - abs(val)) < tolerance:
                 return True
     return False
 
 
-def _as_float(tok: str) -> float | None:
+def _as_decimal(tok: str) -> Decimal | None:
     try:
-        return float(tok.replace(",", "").replace(" ", "").rstrip("%"))
-    except ValueError:
+        return Decimal(norm_num(tok))
+    except InvalidOperation:
         return None
 
 
@@ -191,13 +192,19 @@ def derivable_numbers(par: str, ids: list[str], sources: dict[str, str]) -> set[
         return set()
     pool = {
         v
-        for v in (_as_float(t) for s in known for t in source_numbers(s, sources[s]))
+        for v in (_as_decimal(t) for s in known for t in source_numbers(s, sources[s]))
         if v is not None
     }
     out = set()
     for tok in unsupported_numbers(par, ids, sources):
-        v = _as_float(tok)
-        if v is not None and _derivable(v, pool):
+        v = _as_decimal(tok)
+        if v is None:
+            continue
+        # Preserve two-decimal rounding without treating every tiny value as zero.
+        precision = Decimal(_decimal_spelling(tok)).as_tuple().exponent
+        assert isinstance(precision, int)
+        tolerance = min(Decimal("0.0051"), Decimal("0.51").scaleb(precision))
+        if _derivable(v, pool, tolerance):
             out.add(tok)
     return out
 
