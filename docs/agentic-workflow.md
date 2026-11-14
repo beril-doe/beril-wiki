@@ -380,7 +380,10 @@ uv run python -m beril_wiki.agentic pilot report --scratch /path/to/scratch
 ```
 
 The caps are illustrations, not measured requirements; `cell` and `judge` refuse
-to start without both. `setup` needs a scratch directory that does not exist yet.
+to start without both. The USD cap must be finite and positive, and the Codex
+token cap must be a positive integer. The CLI checks them before loading the
+pilot policy or starting work, using the same rules as `run`.
+`setup` needs a scratch directory that does not exist yet.
 It exports the tracked wiki, state and contract at `--before` (the tree
 integrated, routing and extraction cells start from) and at `HEAD` (the tree derived cells start from),
 copies the ledger, saved plan and evidence from `--store`, and applies concept

@@ -1,10 +1,12 @@
 """Offline checks for the pilot's outcome and judgement bookkeeping (no model calls)."""
 
 import json
+import sys
 from typing import Any
 
 import pytest
 
+from beril_wiki.agentic import __main__ as cli
 from beril_wiki.agentic import pilot as P
 from beril_wiki.agentic import runtime as R
 
@@ -14,6 +16,71 @@ def _tree(root, pages):
         path = root / "wiki" / page
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(text)
+
+
+@pytest.mark.parametrize("action", ["cell", "judge"])
+@pytest.mark.parametrize(
+    ("usd", "tokens", "error"),
+    [
+        pytest.param("1.25", "1000000", None, id="finite-positive"),
+        pytest.param("nan", "1000000", "max_usd must be positive and finite", id="nan-usd"),
+        pytest.param("inf", "1000000", "max_usd must be positive and finite", id="infinite-usd"),
+        pytest.param(
+            "-inf", "1000000", "max_usd must be positive and finite", id="negative-inf-usd"
+        ),
+        pytest.param("-1", "1000000", "max_usd must be positive and finite", id="negative-usd"),
+        pytest.param("1.25", "-1", "max_codex_tokens must be positive", id="negative-tokens"),
+        pytest.param("0", "1000000", "needs --max-usd and --max-codex-tokens", id="zero-usd"),
+        pytest.param("1.25", "0", "needs --max-usd and --max-codex-tokens", id="zero-tokens"),
+        pytest.param(None, "1000000", "needs --max-usd and --max-codex-tokens", id="missing-usd"),
+        pytest.param("1.25", None, "needs --max-usd and --max-codex-tokens", id="missing-tokens"),
+        pytest.param(None, None, "needs --max-usd and --max-codex-tokens", id="missing-both"),
+    ],
+)
+def test_pilot_cli_validates_caps_before_config_or_work(
+    tmp_path, monkeypatch, capsys, action, usd, tokens, error
+):
+    scratch = tmp_path / "scratch"
+    argv = [
+        "agentic",
+        "--root",
+        str(tmp_path),
+        "pilot",
+        action,
+        "--scratch",
+        str(scratch),
+        "--name",
+        "fixture",
+        "--kind",
+        "routing",
+    ]
+    if usd is not None:
+        argv.append(f"--max-usd={usd}")
+    if tokens is not None:
+        argv.append(f"--max-codex-tokens={tokens}")
+    monkeypatch.setattr(sys, "argv", argv)
+    reached = []
+
+    def load_models(*args):
+        assert error is None, "invalid caps reached model config loading"
+        return {"model": "claude-sonnet-5-5"}
+
+    def work(*args):
+        assert error is None, "invalid caps reached pilot work"
+        reached.append(args[-1])
+
+    monkeypatch.setattr(cli, "load_models", load_models)
+    monkeypatch.setattr(P, "run_cell", work)
+    monkeypatch.setattr(P, "judge", work)
+    assert cli.main() == int(error is not None)
+    if error:
+        assert error in capsys.readouterr().out
+        assert not reached
+    else:
+        assert len(reached) == 1
+        assert reached[0]["max_usd"] == 1.25
+        assert reached[0]["max_codex_tokens"] == 1000000
+    assert not scratch.exists()
 
 
 def test_outcomes_follow_what_the_host_did(tmp_path):
