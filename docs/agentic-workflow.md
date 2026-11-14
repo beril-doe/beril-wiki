@@ -959,6 +959,11 @@ text, so replaying integration would re-plan and rewrite the corpus to re-draft 
 handful of pages. A page that fails its retries waits for a person. `--strict-pages`
 stops the run instead.
 
+A successful integrated-page retry stays scheduled until its candidate is
+promoted. If a later stage, final check or promotion aborts, the next run can reuse
+its matching completed page cache. Only successful promotion, including recovery
+that finishes promotion, retires the original failure record.
+
 ### Derived prose: packed evidence, page sessions, closed verification
 
 Conflict pages, topic hubs, the home page, literature sections and author
