@@ -940,6 +940,11 @@ text has started 20 sessions is recorded as
 failed rather than stopping the run. Reviews run on a fresh Codex thread per call,
 as other jobs do; a thread kept per page, which the plan proposed, was not built.
 
+A reviewer operational stop also keeps the checked draft resumable while review
+allowance remains. The retry retains the review count and rechecks the task and
+read dependencies; it needs a fresh scientific verdict, and unknown usage still
+blocks scheduling until reconciled.
+
 The pilot that preceded the cutover ran 13 integrated pages through both paths on
 Sonnet 5.5: the page sessions cost USD 12.60 of Claude spend against USD 21.08
 for the pipeline, and 8.72M Codex tokens against 9.76M. Against the accepted Opus

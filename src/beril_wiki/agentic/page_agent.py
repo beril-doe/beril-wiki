@@ -113,9 +113,8 @@ class Session:
         self, page: Page, workdir: Path, max_reviews: int, task: str = "", root: Path | None = None
     ) -> None:
         self.page, self.workdir, self.max_reviews = page, workdir, max_reviews
-        # Scratch state belongs to one task (the page's base session key) and is resumed
-        # only after a crash: a new task, or a session that ended (submitted, spent its
-        # reviews, stopped), starts fresh rather than inheriting its approvals.
+        # Scratch belongs to one task and survives crashes or operational review stops.
+        # Submitted, decided and exhausted sessions start fresh on another attempt.
         self.task, self.ended, self.root = task, False, root
         self.deps: dict[str, str] = {}  # snapshot files and inventories the writer read
         self.checked = ""  # fingerprint of the last candidate that passed the gates
@@ -445,9 +444,9 @@ def run(
         observed = transcript_usage(agent.store / "transcripts" / f"{key}.jsonl")
         usage, cost = observed if observed is not None else (None, None)
         output, error, refused = "", "", ""
-    # A terminal result or recorded operational failure ends this scratch session.
-    # Unclassified drive crashes leave it available for a retry.
-    session.ended = True
+    # An operational reviewer stop keeps checked work resumable within its allowance.
+    # do_review already voided approval; retry still needs a fresh scientific verdict.
+    session.ended = session.failure is None or session.reviews >= max_reviews
     session.save()
     if session.failure is not None:
         try:
