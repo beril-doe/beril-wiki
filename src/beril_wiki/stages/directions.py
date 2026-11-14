@@ -219,9 +219,10 @@ def topic_pack(root: Path, topic: str, reports: list[str], cat: Catalog) -> dict
                 "sides": section(text, "Evidence Sides"),
                 "projects": records.projects_in(text),
             }
+    topic_reports = [sid for sid in reports if topic in records.main_topics(sid, groups, cites)]
     proposals = [
         b["text"]
-        for b in records.forward_bullets(root, topic, reports)
+        for b in records.forward_bullets(root, topic, topic_reports)
         if not is_reanalysis(b["text"])
     ]
     text = " ".join(
@@ -539,6 +540,24 @@ def topic_key(public: dict, policy: str) -> str:
     return digest([[{"role": "user", "content": PROMPT + json.dumps(public)}], policy])
 
 
+def matches_topic_input(
+    root: Path, topic: str, reports: list[str], public: dict, policy: str, saved_input: str | None
+) -> bool:
+    """Match today's scoped key or its legacy proposal pack with all other inputs current."""
+    if saved_input == topic_key(public, policy):
+        return True
+    if not saved_input:
+        return False
+    legacy = public | {
+        "PROPOSALS": [
+            bullet["text"]
+            for bullet in records.forward_bullets(root, topic, reports)
+            if not is_reanalysis(bullet["text"])
+        ]
+    }
+    return saved_input == topic_key(legacy, policy)
+
+
 def other_topics(state: dict, topic: str, topics: list[str]) -> list[dict]:
     """The directions the other topics in scope saved, which a topic must not repeat."""
     return [
@@ -555,8 +574,8 @@ def status(root: Path = ROOT) -> int:
 
     A topic is skipped when it has no findings and no conflicts, failed when
     ``.agentic/failures.json`` lists it or its saved state is marked failed, current
-    when its saved key equals today's ``topic_key`` and today's checks accept its saved
-    reply, and stale otherwise.
+    when its saved key matches today's inputs or their legacy proposal pack and today's
+    checks accept its saved reply, and stale otherwise.
 
     Parameters
     ----------
@@ -587,7 +606,7 @@ def status(root: Path = ROOT) -> int:
         elif f"directions/{topic}" in failures or saved.get("failed"):
             failed += 1
         elif (
-            saved.get("input") == topic_key(public, policy)
+            matches_topic_input(root, topic, reports, public, policy, saved.get("input"))
             and saved.get("reply")
             and accepted(saved["reply"], pack, cat)
         ):
@@ -638,11 +657,15 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
         # A saved reply stays while its input is unchanged and today's checks accept it,
         # so a code change re-asks only the topics whose replies its rules now reject.
         if (
-            saved.get("input") == key
+            matches_topic_input(root, topic, reports, public, policy, saved.get("input"))
             and saved.get("reply")
             and not saved.get("failed")
             and accepted(saved["reply"], pack, cat)
         ):
+            if saved.get("input") != key:
+                saved = saved | {"input": key}
+                state[topic] = saved
+                atomic_json(state_path, state)
             if saved.get("render") == RENDER and saved.get("pages") == on_disk:
                 continue
             reply = Reply.model_validate(saved["reply"])

@@ -16,6 +16,7 @@ LOSS = OLD.replace("42%", "measured")
 
 # A recorded page session: the draft and four corrections (agentic_recording.page_session).
 WRITES = 5
+REAL_PAGE_RUN = page_agent.run
 
 
 def route(evidence, *concepts, summary_only="", new_topic=""):
@@ -401,6 +402,55 @@ def test_a_failed_page_missing_from_the_saved_plan_goes_to_a_person(tmp_path, mo
         "needs a person"
         in batch.load_failures(agent.store)["concepts/gone.md"]["issues"][0]["note"]
     )
+
+
+@pytest.mark.parametrize("rejected", [False, True])
+def test_retry_writes_an_existing_entity_without_assigned_coverage(tmp_path, monkeypatch, rejected):
+    agent, calls, _, _ = setup_batch(tmp_path, monkeypatch)
+    path = "entities/strain.md"
+    target = tmp_path / "wiki" / path
+    target.parent.mkdir()
+    original = "# Strain\n\nYield was 42%. [src: a]"
+    target.write_text(original)
+    recorded = agent.ask
+
+    def with_entity(messages, step):
+        if step.startswith("write/entities/"):
+            calls.append((step, messages))
+            if rejected:
+                raise JobFailed("Recorded writer failure")
+            payload = json.loads(messages[0]["content"].split("\n")[-1])
+            return json.dumps(
+                {
+                    "base_hash": payload["base_hash"],
+                    "description": "Strain yield",
+                    "content": original + "\n\n## Open Directions\n\nRepeat measurements.",
+                    "rewrite_reason": "Recheck evidence",
+                    "accounted_evidence": {},
+                }
+            )
+        raw = recorded(messages, step)
+        data = json.loads(raw)
+        if step.startswith("plan/route/"):
+            data["entities"].append(
+                {"path": path, "title": "Strain", "type": "organism", "evidence": ["a:0:0"]}
+            )
+        return json.dumps(data)
+
+    monkeypatch.setattr(agent, "ask", with_entity)
+    batch.compile_batch(tmp_path, agent, ["a__REPORT.md"])
+    assert target.read_text() == original
+    failure = {"step": f"write/{path}", "issues": [], "jobs": [], "retries": 0}
+    (agent.store / "failures.json").write_text(json.dumps({path: failure}))
+    before = len(calls)
+    batch.compile_batch(tmp_path, agent, [], retry=[path])
+    assert calls[before:] and all(s.startswith(f"write/{path}") for s, _ in calls[before:])
+    if rejected:
+        assert target.read_text() == original
+        assert batch.load_failures(agent.store)[path]["retries"] == 1
+    else:
+        assert "Repeat measurements." in target.read_text()
+        assert batch.load_failures(agent.store) == {}
 
 
 def test_a_page_failing_its_retries_waits_for_a_person(tmp_path, monkeypatch):

@@ -9,7 +9,7 @@ when a model of the other vendor assigns the same label; otherwise the finding
 takes the weaker label. contract/novelty-decisions.yaml pins or withdraws labels.
 
 An empty search never earns "Candidate novel": it is "Insufficient literature
-evidence" without a model call. A label is re-judged when its finding changes, and
+evidence" without a model call. A label is re-judged when its finding or cited papers change, and
 on any run more than REFRESH_DAYS after retrieval, because unchanged corpus text
 does not mean unchanged literature. When retrieval fails the previous label and
 date stay, and a finding never labelled shows "Not assessed".
@@ -421,18 +421,34 @@ def main(root: Path = ROOT) -> int:
         atomic_json(state_path, dict(sorted(state.items())))
 
     todo = []
+    baselined = 0
     for fid, finding in findings.items():
         key = digest([finding, revision])
         prev = state.get(fid, {})
         if cards.leaves_failed(config, prev.get("failed") is True, cards.owners("novelty", fid)):
             continue
-        if prev.get("input") == key and not prev.get("failed") and age(prev) <= REFRESH_DAYS:
-            continue
         sid = finding["report"]
         if sid not in reports:
             path = source_path(root, sid)
-            reports[sid] = cited_pmids(path.read_text(encoding="utf-8")) if path.exists() else []
+            reports[sid] = (
+                cited_pmids(path.read_text(encoding="utf-8", errors="replace"))
+                if path.exists()
+                else []
+            )
+        if prev.get("input") == key and not prev.get("failed") and age(prev) <= REFRESH_DAYS:
+            if "cited_pmids" not in prev:
+                # Legacy labels lack citation history; baseline current inputs without rejudging.
+                state[fid] = prev | {"cited_pmids": reports[sid]}
+                baselined += 1
+                continue
+            if prev["cited_pmids"] == reports[sid]:
+                continue
         todo.append((fid, finding, key))
+    if baselined:
+        atomic_json(state_path, dict(sorted(state.items())))
+        print(
+            f"novelty: baselined citations for {baselined} legacy label(s); prior citations unknown"
+        )
 
     def label(item: tuple, agent: Runtime) -> dict:
         fid, finding, _ = item
@@ -445,7 +461,9 @@ def main(root: Path = ROOT) -> int:
             raise CandidateError(f"retrieval failed: {exc}") from exc
 
     done = failed = 0
-    for (fid, _, key), result in cards.each_job(todo, lambda item: f"novelty/{item[0]}", label):
+    for (fid, finding, key), result in cards.each_job(
+        todo, lambda item: f"novelty/{item[0]}", label
+    ):
         if isinstance(result, PageFailure):
             failed += 1
             kept = state.get(fid) or {"label": NOT_ASSESSED, "pipeline_label": NOT_ASSESSED}
@@ -454,7 +472,13 @@ def main(root: Path = ROOT) -> int:
         # A person's decision applies before every save, so a run stopped mid-way never
         # leaves a withdrawn or pinned label showing the model's judgment.
         state[fid] = apply_decision(
-            {**result, "pipeline_label": result["label"], "input": key}, decisions.get(fid)
+            {
+                **result,
+                "pipeline_label": result["label"],
+                "input": key,
+                "cited_pmids": reports[finding["report"]],
+            },
+            decisions.get(fid),
         )
         # Saved per label, so a run stopped by its budget keeps what it finished.
         atomic_json(state_path, dict(sorted(state.items())))
