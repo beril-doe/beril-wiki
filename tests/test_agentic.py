@@ -2,8 +2,11 @@
 
 import pytest
 
+from beril_wiki.agentic import page_agent
 from beril_wiki.agentic.runtime import Ledger, ReadTools, WorkflowError
 from beril_wiki.check import all_paragraphs
+
+REAL_PAGE_RUN = page_agent.run
 
 
 def test_ledger_resume_and_global_budget(tmp_path):
@@ -1204,7 +1207,7 @@ def test_downstream_sdk_routing_skips_api_and_mechanical_review(monkeypatch):
     monkeypatch.setattr(litellm, "completion", no_api)
     calls = []
 
-    def sdk(messages, step, review=True):
+    def sdk(messages, step, review=True, *, validate=None):
         calls.append((step, review))
         return "{}"
 

@@ -1549,14 +1549,23 @@ def runtime() -> Runtime:
     return Runtime(runtime_config())
 
 
-def text_completion(messages: list[dict], step: str, review: bool = True) -> str:
+def text_completion(
+    messages: list[dict],
+    step: str,
+    review: bool = True,
+    *,
+    validate: Callable[[str], None] | None = None,
+) -> str:
     """One accounted job with the tool-based scientific review for merge candidates.
 
     Derived pages review through agentic.prose; this path serves the entity merge
     and human concept-decision writers, which still rewrite whole pages."""
     agent = runtime()
     if not review:
-        return agent.ask(messages, step)
+        result = agent.ask(messages, step)
+        if validate:
+            validate(result)
+        return result
 
     # One open verdict, then closed verification: a rewrite is asked only whether the
     # stated objections are closed, never invited to raise fresh ones, so the loop
@@ -1564,6 +1573,8 @@ def text_completion(messages: list[dict], step: str, review: bool = True) -> str
     pending: list[str] = []
 
     def accept(result: str) -> str:
+        if validate:
+            validate(result)
         if not pending:
             try:
                 agent.review(messages, result, step)

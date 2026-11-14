@@ -494,6 +494,11 @@ remain compatible with existing provenance and Quartz tools. This is bounded
 editorial autonomy; the agent cannot change its acceptance rules or run arbitrary
 code.
 
+Managed merge and enrichment candidates pass JSON parsing and page validation
+before scientific review. Merges also pass citation and quantity retention first.
+The existing page-validation retry and separate merge-retention retry remain
+bounded to one each. Valid final candidates still require scientific review.
+
 The strict numeric check compares whole scientific values, normalizing equivalent
 exponent spellings without accepting a scientific value's mantissa on its own.
 Arithmetic matches use a precision-scaled tolerance, so a tiny unsupported value
