@@ -50,9 +50,11 @@ RUN WIKI_BASE_URL="$WIKI_BASE_URL" WIKI_SKIP_GATES=1 scripts/build_quartz.sh \
     && mkdir -p /site /corpus \
     && cp -R quartz/public/. /site/ && cp -R quartz/corpus/. /corpus/
 
+# --- chosen: the stage SITE_FROM names (COPY --from cannot expand an ARG) ----
+FROM ${SITE_FROM} AS chosen
+
 # --- runtime -----------------------------------------------------------------
 FROM ghcr.io/astral-sh/uv:0.12.20-python3.12-trixie-slim
-ARG SITE_FROM
 
 # SPIN runs the pod as this uid/gid, the same account the observatory image uses.
 RUN addgroup --system --gid 76761 beril_app && \
@@ -78,8 +80,8 @@ COPY src/beril_wiki/__init__.py src/beril_wiki/serve.py src/beril_wiki/wiki_api.
      /app/beril_wiki/
 COPY src/beril_wiki/publish/__init__.py src/beril_wiki/publish/artifact.py \
      /app/beril_wiki/publish/
-COPY --from=${SITE_FROM} /site/ /srv/site/
-COPY --from=${SITE_FROM} /corpus/ /srv/corpus/
+COPY --from=chosen /site/ /srv/site/
+COPY --from=chosen /corpus/ /srv/corpus/
 RUN mkdir -p /srv/artifacts && chown beril:beril_app /srv/artifacts
 
 USER beril
