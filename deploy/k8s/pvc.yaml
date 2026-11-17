@@ -1,0 +1,27 @@
+# The curator's working volume: one git clone of beril-wiki at /work/beril-wiki
+# holding code and the trees the curator owns (wiki/, state/, corpus/, search/,
+# .agentic/). Populate it once (deploy/README.md, "First-time population");
+# after that only the jobs write to it.
+#
+# Size: the clone with history is about 1.5 GB (figures under corpus/ and
+# wiki/figures/ dominate), .agentic/ grows with the ledger, transcripts and
+# evidence (a few hundred MB after months), theme/node_modules about 50 MB.
+# 10Gi leaves room; the Quartz clone and the build output live in the
+# container, not here.
+#
+# RWO: the plan and curate CronJobs never overlap (concurrencyPolicy: Forbid on
+# each, and agentic's .agentic/lock refuses a second runner), and both run on
+# the node the volume binds to. Namespace: dev is knowledge-engine.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: beril-wiki-curator-work
+  namespace: knowledge-engine
+  labels:
+    app: beril-wiki-curator
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 10Gi
+  # storageClassName: nfs-client   # SPIN's default applies when omitted
