@@ -1,0 +1,36 @@
+# Non-secret settings shared by the plan and curate CronJobs and the run-now Job.
+# Dev values; production changes the hosts (beril.kbase.us) and the budgets.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: beril-wiki-curator
+  namespace: knowledge-engine
+  labels:
+    app: beril-wiki-curator
+data:
+  # Sources come from BERIL's context API with BERIL_TOKEN; nothing else.
+  FETCH_BACKEND: "hub"
+  BERIL_URL: "https://beril-dev.kbase.us"
+  # Unattended: API keys from the Secret; OAuth and provider routing stripped.
+  BERIL_WIKI_AUTH: "api"
+  # The git clone on the volume, and the ref whose code paths each run refreshes.
+  WIKI_WORKDIR: "/work/beril-wiki"
+  WIKI_GIT_URL: "https://github.com/beril-doe/beril-wiki.git"
+  WIKI_GIT_REF: "main"
+  # Baked into the site's absolute URLs (sitemap, RSS, canonical).
+  WIKI_BASE_URL: "beril-dev.kbase.us/wiki"
+  # The wiki pod's store routes and reload, over the cluster network. The pod
+  # itself runs with WIKI_ARTIFACT_ENDPOINT=file:///srv/artifacts/store.
+  WIKI_ARTIFACT_ENDPOINT: "http://wiki:8080/wiki/_admin/store"
+  WIKI_ARTIFACT_PREFIX: "wiki"
+  WIKI_RELOAD_URL: "http://wiki:8080/wiki/_admin/reload"
+  # Budgets per curate run (docs/agentic-workflow.md, "Commands and limits").
+  # Fixed, so a bad night is capped; raise deliberately after measuring a run.
+  WIKI_CURATE_MAX_TOKENS: "2000000"
+  WIKI_CURATE_MAX_JOBS: "120"
+  WIKI_CURATE_WORKERS: "4"
+  WIKI_CURATE_STAGE_MAX_USD: "pages=40 writing=30 planning=10 extraction=20 review=20"
+  WIKI_CURATE_EXTRA_ARGS: ""
+  # Git identity for the history commits.
+  WIKI_GIT_NAME: "BERIL wiki curator"
+  WIKI_GIT_EMAIL: "beril-wiki-curator@kbase.us"
