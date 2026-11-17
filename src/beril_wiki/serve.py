@@ -22,10 +22,14 @@ was unpacked before; `POST /wiki/_admin/reload` with `Authorization: Bearer
 $WIKI_RELOAD_TOKEN` fetches the current artifact again and swaps to it
 atomically (one in-process assignment; a `current` symlink records it for the
 next start). `GET /wiki/_admin/status`, under the same token, names the artifact
-being served. The
-internal API (beril_wiki.wiki_api, `WIKI_INTERNAL_TOKEN`) is mounted under
-/wiki/_api and reads the same artifact; like /wiki/_admin it is for in-cluster
-callers and must not be exposed by the ingress.
+being served. When the store is a directory (``file://``), the same token also
+guards the store routes under `/wiki/_admin/store/{key}` (PUT, GET, HEAD;
+`?prefix=` lists), so a curator that shares neither a bucket nor a volume with
+this pod publishes through it (artifact.HttpStore); bodies are streamed to disk,
+capped by `WIKI_STORE_MAX_BYTES` (default 1 GiB). The internal API
+(beril_wiki.wiki_api, `WIKI_INTERNAL_TOKEN`) is mounted under /wiki/_api and
+reads the same artifact; like /wiki/_admin it is for in-cluster callers and must
+not be exposed by the ingress.
 
 Only this module, publish/artifact.py, wiki_api.py and the `serve` dependency
 group go into the image, so nothing else from the package is imported here.
@@ -35,6 +39,7 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
+import hashlib
 import logging
 import os
 import pathlib
@@ -203,6 +208,7 @@ def create_app(
     reload_token: str | None = None,
     internal_token: str | None = None,
     sync_on_start: bool = True,
+    store_max_bytes: int = 1 << 30,
 ) -> FastAPI:
     baked_root = pathlib.Path(site_dir).resolve()
     corpus = pathlib.Path(corpus_dir).resolve() if corpus_dir else None
@@ -257,6 +263,53 @@ def create_app(
             }
         )
 
+    def file_store() -> artifact.DirStore | None:
+        return site.store if isinstance(site.store, artifact.DirStore) else None
+
+    async def store_put(request: Request, key: str) -> Response:
+        if (refused := admin_refused(request)) or not (store := file_store()):
+            return refused or JSONResponse({"error": "no directory store"}, status_code=503)
+        declared = request.headers.get("content-length", "")
+        if declared.isdigit() and int(declared) > store_max_bytes:
+            return JSONResponse({"error": "body too large"}, status_code=413)
+        try:
+            path = store._path(key)
+        except artifact.ArtifactError as exc:
+            return JSONResponse({"error": str(exc)}, status_code=400)
+        # Streamed straight to a temporary file beside the target, then renamed, so a
+        # reader never sees a partial object and an oversized body leaves nothing.
+        path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = path.with_name(f".{path.name}.{os.getpid()}.{secrets.token_hex(4)}")
+        digest, size = hashlib.sha256(), 0
+        try:
+            with tmp.open("wb") as out:
+                async for chunk in request.stream():
+                    size += len(chunk)
+                    if size > store_max_bytes:
+                        return JSONResponse({"error": "body too large"}, status_code=413)
+                    digest.update(chunk)
+                    out.write(chunk)
+            os.replace(tmp, path)
+        finally:
+            tmp.unlink(missing_ok=True)
+        return JSONResponse({"key": key, "bytes": size, "sha256": digest.hexdigest()})
+
+    async def store_get(request: Request, key: str) -> Response:
+        if (refused := admin_refused(request)) or not (store := file_store()):
+            return refused or JSONResponse({"error": "no directory store"}, status_code=503)
+        try:
+            path = store._path(key)
+        except artifact.ArtifactError as exc:
+            return JSONResponse({"error": str(exc)}, status_code=400)
+        if not path.is_file():
+            return JSONResponse({"error": "no such object"}, status_code=404)
+        return FileResponse(path, headers={"Cache-Control": "no-store"})
+
+    async def store_list(request: Request, prefix: str = "") -> Response:
+        if (refused := admin_refused(request)) or not (store := file_store()):
+            return refused or JSONResponse({"error": "no directory store"}, status_code=503)
+        return JSONResponse({"keys": await run_in_threadpool(store.list_keys, prefix)})
+
     async def reload(request: Request) -> Response:
         if not site.configured:
             return JSONResponse({"error": "reload is not configured"}, status_code=503)
@@ -293,6 +346,9 @@ def create_app(
     app.add_api_route(prefix, to_prefix, methods=["GET"])
     app.add_api_route(prefix + "/_admin/status", status, methods=["GET"])
     app.add_api_route(prefix + "/_admin/reload", reload, methods=["POST"])
+    app.add_api_route(prefix + "/_admin/store", store_list, methods=["GET"])
+    app.add_api_route(prefix + "/_admin/store/{key:path}", store_put, methods=["PUT"])
+    app.add_api_route(prefix + "/_admin/store/{key:path}", store_get, methods=["GET", "HEAD"])
     # Registered before the catch-all so /wiki/_api/* is the API, not a page lookup.
     app.include_router(wiki_api.create_router(lambda: site.corpus, internal_token, prefix))
     app.add_api_route(prefix + "/{path:path}", page, methods=["GET", "HEAD"])
@@ -316,6 +372,7 @@ def app_from_env() -> FastAPI:
         keys=keys,
         reload_token=os.environ.get("WIKI_RELOAD_TOKEN") or None,
         internal_token=os.environ.get("WIKI_INTERNAL_TOKEN") or None,
+        store_max_bytes=int(os.environ.get("WIKI_STORE_MAX_BYTES") or 1 << 30),
     )
 
 

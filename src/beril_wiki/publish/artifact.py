@@ -14,8 +14,11 @@ downloads ``current`` on start and on ``POST /wiki/_admin/reload``, unpacks it
 beside the live tree and swaps. Rollback is moving the pointer.
 
 Store configuration, from the environment on both sides:
-  WIKI_ARTIFACT_ENDPOINT    S3 endpoint URL (MinIO, Ceph, AWS); or ``file:///dir``
-                            for a directory store, which needs no S3 at all
+  WIKI_ARTIFACT_ENDPOINT    S3 endpoint URL (MinIO, Ceph, AWS); ``file:///dir`` for a
+                            directory store, which needs no S3 at all; or the wiki
+                            server's own store routes, ``http(s)://host/wiki/_admin/store``,
+                            with WIKI_RELOAD_TOKEN as the bearer (a curator job that
+                            shares neither a bucket nor a volume with the server)
   WIKI_ARTIFACT_BUCKET      bucket name (ignored by the directory store)
   WIKI_ARTIFACT_PREFIX      key prefix inside the bucket (default ``wiki``)
   WIKI_ARTIFACT_ACCESS_KEY, WIKI_ARTIFACT_SECRET_KEY
@@ -53,16 +56,29 @@ import subprocess
 import sys
 import tarfile
 import tempfile
-from collections.abc import Iterator, Mapping
+import urllib.error
+import urllib.request
+from collections.abc import Iterable, Iterator, Mapping
 from typing import Any, Protocol
+from urllib.parse import quote, urlencode
 
 ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$")
+# A store key: slash-separated segments of safe characters, none of them `.` or `..`.
+KEY_RE = re.compile(r"^[A-Za-z0-9_][A-Za-z0-9._-]*(/[A-Za-z0-9_][A-Za-z0-9._-]*)*$")
 CORPUS_DIRS = ("sources", "findings", "directions")
 MANIFEST_VERSION = 1
 
 
 class ArtifactError(RuntimeError):
     pass
+
+
+def check_key(key: str) -> str:
+    """A key the directory store and the server's store routes accept: relative, no
+    traversal, no hidden segments, nothing a shell or a URL would reinterpret."""
+    if not KEY_RE.fullmatch(key) or len(key) > 400:
+        raise ArtifactError(f"bad store key {key!r}")
+    return key
 
 
 # --------------------------------------------------------------------------- store
@@ -99,10 +115,41 @@ class DirStore:
         self.root = root
 
     def _path(self, key: str) -> pathlib.Path:
-        p = (self.root / key).resolve()
+        p = (self.root / check_key(key)).resolve()
         if not p.is_relative_to(self.root.resolve()):
             raise ArtifactError(f"key escapes the store: {key}")
         return p
+
+    def write(self, key: str, chunks: Iterable[bytes], limit: int | None = None) -> tuple[int, str]:
+        """Stream an object in (the server's PUT route); returns (bytes, sha256). A body
+        over ``limit`` leaves nothing behind."""
+        p = self._path(key)
+        p.parent.mkdir(parents=True, exist_ok=True)
+        tmp = p.with_name(f".{p.name}.{os.getpid()}.tmp")
+        h, size = hashlib.sha256(), 0
+        try:
+            with tmp.open("wb") as out:
+                for chunk in chunks:
+                    size += len(chunk)
+                    if limit is not None and size > limit:
+                        raise ArtifactError(f"object exceeds {limit} bytes")
+                    h.update(chunk)
+                    out.write(chunk)
+            os.replace(tmp, p)
+        finally:
+            tmp.unlink(missing_ok=True)
+        return size, h.hexdigest()
+
+    def list_keys(self, prefix: str = "") -> list[str]:
+        root = self.root.resolve()
+        if not root.is_dir():
+            return []
+        keys = [
+            p.relative_to(root).as_posix()
+            for p in root.rglob("*")
+            if p.is_file() and not p.name.startswith(".")
+        ]
+        return sorted(k for k in keys if k.startswith(prefix))
 
     def get(self, key: str) -> bytes:
         try:
@@ -231,6 +278,64 @@ class S3Store:
             raise ArtifactError(f"store head {key}: {exc}") from exc
 
 
+class HttpStore:
+    """The wiki server's own directory store, reached through its token-guarded routes
+    (``PUT/GET/HEAD <endpoint>/{key}``, ``GET <endpoint>?prefix=``; beril_wiki.serve).
+    The bearer is WIKI_RELOAD_TOKEN, the same token that triggers the reload, so a
+    curator job needs one secret and no bucket, volume or ``kubectl cp``."""
+
+    def __init__(self, endpoint: str, token: str, timeout: float = 900.0) -> None:
+        if not token:
+            raise ArtifactError("an http(s) WIKI_ARTIFACT_ENDPOINT needs WIKI_RELOAD_TOKEN")
+        self.endpoint = endpoint.rstrip("/")
+        self.token = token
+        self.timeout = timeout
+
+    def _request(
+        self,
+        method: str,
+        key: str | None,
+        data: bytes | None = None,
+        content_type: str | None = None,
+        query: Mapping[str, str] | None = None,
+    ) -> tuple[int, bytes]:
+        url = self.endpoint + (f"/{quote(check_key(key))}" if key is not None else "")
+        if query:
+            url += "?" + urlencode(query)
+        headers = {"Authorization": f"Bearer {self.token}"}
+        if content_type:
+            headers["Content-Type"] = content_type
+        req = urllib.request.Request(url, data=data, method=method, headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=self.timeout) as r:  # noqa: S310
+                return r.status, r.read()
+        except urllib.error.HTTPError as exc:
+            if exc.code == 404:
+                return 404, b""
+            detail = exc.read()[:300].decode("utf-8", "replace")
+            raise ArtifactError(f"store {method} {key or ''}: HTTP {exc.code} {detail}") from exc
+        except urllib.error.URLError as exc:
+            raise ArtifactError(f"store {method} {key or ''}: {exc.reason}") from exc
+
+    def get(self, key: str) -> bytes:
+        status, body = self._request("GET", key)
+        if status == 404:
+            raise ArtifactError(f"missing object {key}")
+        return body
+
+    def put(self, key: str, data: bytes, content_type: str) -> None:
+        status, body = self._request("PUT", key, data, content_type)
+        echoed = json.loads(body or b"{}").get("sha256")
+        if echoed != sha256(data):
+            raise ArtifactError(f"store PUT {key}: the server stored different bytes")
+
+    def exists(self, key: str) -> bool:
+        return self._request("HEAD", key)[0] == 200
+
+    def list_keys(self, prefix: str = "") -> list[str]:
+        return json.loads(self._request("GET", None, query={"prefix": prefix})[1])["keys"]
+
+
 def configured(env: Mapping[str, str] | None = None) -> bool:
     env = os.environ if env is None else env
     return bool(env.get("WIKI_ARTIFACT_ENDPOINT"))
@@ -243,6 +348,8 @@ def store_from_env(env: Mapping[str, str] | None = None) -> Store:
         raise ArtifactError("WIKI_ARTIFACT_ENDPOINT is not set")
     if endpoint.startswith("file://"):
         return DirStore(pathlib.Path(endpoint.removeprefix("file://")))
+    if endpoint.startswith(("http://", "https://")) and "/_admin/store" in endpoint:
+        return HttpStore(endpoint, env.get("WIKI_RELOAD_TOKEN", ""))
     missing = [
         k
         for k in ("WIKI_ARTIFACT_BUCKET", "WIKI_ARTIFACT_ACCESS_KEY", "WIKI_ARTIFACT_SECRET_KEY")
