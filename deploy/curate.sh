@@ -45,14 +45,20 @@ export GIT_AUTHOR_NAME="${WIKI_GIT_NAME:-BERIL wiki curator}" \
   GIT_COMMITTER_NAME="${WIKI_GIT_NAME:-BERIL wiki curator}" \
   GIT_AUTHOR_EMAIL="${WIKI_GIT_EMAIL:-wiki-curator@beril.invalid}" \
   GIT_COMMITTER_EMAIL="${WIKI_GIT_EMAIL:-wiki-curator@beril.invalid}"
+git_env() {
+  # Append key=value to git's environment-held config: it applies to every git
+  # call this job makes (fetch, search_data pull, push) and lands in no file.
+  local n="${GIT_CONFIG_COUNT:-0}"
+  export "GIT_CONFIG_KEY_$n=$1" "GIT_CONFIG_VALUE_$n=$2" GIT_CONFIG_COUNT=$((n + 1))
+}
+# The volume may have been populated by another uid than the job's.
+git_env safe.directory "$WIKI_WORKDIR"
 if [ -n "${WIKI_GIT_TOKEN:-}" ]; then
-  # Config through the environment applies to every git call this job makes
-  # (fetch, search_data pull, push). The helper prints the token from the
-  # environment when git asks; the token is in no file and no command line.
-  export GIT_CONFIG_COUNT=2
-  export GIT_CONFIG_KEY_0=credential.helper
-  export GIT_CONFIG_VALUE_0='!f() { printf "username=x-access-token\npassword=%s\n" "$WIKI_GIT_TOKEN"; }; f'
-  export GIT_CONFIG_KEY_1=url.https://github.com/.insteadOf GIT_CONFIG_VALUE_1=git@github.com:
+  # The helper prints the token from the environment when git asks for it; the
+  # token itself is in no config value, file or command line.
+  git_env credential.helper \
+    '!f() { printf "username=x-access-token\npassword=%s\n" "$WIKI_GIT_TOKEN"; }; f'
+  git_env url.https://github.com/.insteadOf git@github.com:
 fi
 
 # --- python: the image's venv (UV_PROJECT_ENVIRONMENT, UV_NO_SYNC) running the
@@ -108,14 +114,16 @@ plan_step() {
   # differ from wiki/sources, projects the feed moved (hub mode), or editorial
   # stages whose fingerprint no longer matches the accepted state.
   local out summary
-  out=$(agentic plan)
+  # Checked explicitly: errexit is off inside a function called in a && or || list.
+  out=$(agentic plan) || die "agentic plan failed (exit $?)"
   printf '%s\n' "$out"
   summary=$(printf '%s' "$out" | py -c '
 import json, sys
 d = json.load(sys.stdin)
 keys = ("changed_sources", "feed_changes", "pending_editorial")
 counts = {k: len(d.get(k) or []) for k in keys}
-print(sum(counts.values()), " ".join(f"{k}={v}" for k, v in counts.items()))')
+print(sum(counts.values()), " ".join(f"{k}={v}" for k, v in counts.items()))') ||
+    die "could not read the plan"
   log "plan: ${summary#* }"
   [ "${summary%% *}" = 0 ] && return 0 || return 3
 }
