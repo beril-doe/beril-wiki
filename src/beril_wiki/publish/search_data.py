@@ -5,7 +5,7 @@ The vectors (about 8 MB) are rebuilt whenever page text changes. They travel
 two ways, both written by `beril_wiki.publish.artifact push`: inside every site
 artifact (``corpus/section-vectors.jsonl``) and on the ``history`` branch, which
 records ``search/section-vectors.jsonl`` with ``wiki/``, ``state/`` and
-``corpus/index.json`` for every published artifact. The single-commit
+``corpus/`` for every published artifact. The single-commit
 ``search-data`` branch this module used to push to is retired.
 
     uv run python -m beril_wiki.publish.search_data pull

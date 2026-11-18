@@ -1,18 +1,19 @@
 """The `history` branch: the audit trail of every published artifact, and the rollback
 source.
 
-After a successful `artifact push`, `record` commits `wiki/`, `state/`,
-`corpus/index.json` and `search/section-vectors.jsonl` from the working checkout
+After a successful `artifact push`, `record` commits `wiki/`, `state/`, `corpus/`
+and `search/section-vectors.jsonl` from the working checkout
 to the branch `history` (created orphan when absent) and tags the commit
 `artifact/<id>`. The working checkout's own branch, index and working tree are
 untouched: the commit is built through a temporary git index.
 
-`restore` is the other half of a rollback: it checks `wiki/`, `state/` and
-`search/` out of `artifact/<id>` into the working checkout and resets
-`corpus/index.json` to that promotion, so the next curate run starts from the
-restored state (the next fetch re-downloads whatever the feed has moved past
-it, and `changed_sources` re-integrates against the restored `wiki/sources`).
-It refuses while a curator run holds `.agentic/lock`.
+`restore` is the other half of a rollback: it checks `wiki/`, `state/`,
+`corpus/` and `search/` out of `artifact/<id>` into the working checkout, so
+the next curate run starts from exactly that promotion: the corpus and its
+manifest (with the hub feed cursor) match the wiki, so `corpus pull-hub`
+re-downloads whatever the feed has moved past it and `changed_sources`
+re-integrates it against the restored `wiki/sources`. It refuses while a
+curator run holds `.agentic/lock`.
 
 `search_data pull` reads the vectors from this branch, which replaces the
 retired single-commit `search-data` branch.
@@ -30,8 +31,8 @@ import tempfile
 
 BRANCH = "history"
 TAG_PREFIX = "artifact/"
-TRACKED = ("wiki", "state", "corpus/index.json", "search/section-vectors.jsonl")
-RESTORED_TREES = ("wiki", "state", "search")
+TRACKED = ("wiki", "state", "corpus", "search/section-vectors.jsonl")
+RESTORED_TREES = ("wiki", "state", "corpus", "search")
 
 
 class HistoryError(RuntimeError):
@@ -106,7 +107,7 @@ def locked_by_a_run(root: pathlib.Path) -> bool:
 
 
 def restore(root: pathlib.Path, artifact_id: str) -> str:
-    """Replace wiki/, state/, search/ and corpus/index.json with the tagged promotion."""
+    """Replace wiki/, state/, corpus/ and search/ with the tagged promotion."""
     tag = tag_of(artifact_id)
     commit = ref(root, f"refs/tags/{tag}")
     if not commit:
@@ -129,10 +130,6 @@ def restore(root: pathlib.Path, artifact_id: str) -> str:
                 shutil.rmtree(target)
             if (staging / tree).exists():
                 shutil.move(str(staging / tree), str(target))
-        index = staging / "corpus/index.json"
-        if index.exists():
-            (root / "corpus").mkdir(exist_ok=True)
-            shutil.move(str(index), str(root / "corpus/index.json"))
     finally:
         shutil.rmtree(staging, ignore_errors=True)
     return commit

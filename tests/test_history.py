@@ -29,7 +29,8 @@ def checkout(tmp_path: Path) -> Path:
         "wiki/sources/demo__REPORT.md": "# demo v1\n",
         "wiki/concepts/x.md": "# x v1\n",
         "state/agentic.json": json.dumps({"fingerprint": "f1"}),
-        "corpus/index.json": json.dumps({"projects": {"legacy/demo": {"sid": "demo"}}}),
+        "corpus/manifest.json": json.dumps({"hub": {"next_since": "t1"}, "projects": {}}),
+        "corpus/projects/demo/REPORT.md": "# demo v1\n",
         "search/section-vectors.jsonl": "",
     }.items():
         (repo / rel).parent.mkdir(parents=True, exist_ok=True)
@@ -68,7 +69,8 @@ def test_record_commits_the_trees_without_touching_main(tmp_path):
         "wiki/sources/demo__REPORT.md",
         "wiki/concepts/x.md",
         "state/agentic.json",
-        "corpus/index.json",
+        "corpus/manifest.json",
+        "corpus/projects/demo/REPORT.md",
         "search/section-vectors.jsonl",
     }
     assert (
@@ -95,7 +97,10 @@ def test_push_records_history_and_rollback_restores_the_checkout(tmp_path, monke
     (repo / "wiki/sources/demo__REPORT.md").write_text("# demo v2\n")
     (repo / "wiki/concepts/y.md").write_text("# y\n")
     (repo / "state/agentic.json").write_text(json.dumps({"fingerprint": "f2"}))
-    (repo / "corpus/index.json").write_text(json.dumps({"projects": {"o/demo": {"sid": "demo"}}}))
+    (repo / "corpus/manifest.json").write_text(json.dumps({"hub": {"next_since": "t2"}}))
+    (repo / "corpus/projects/demo/REPORT.md").write_text("# demo v2\n")
+    (repo / "corpus/projects/later/REPORT.md").parent.mkdir()
+    (repo / "corpus/projects/later/REPORT.md").write_text("# later\n")
     (repo / "search/section-vectors.jsonl").write_text('{"h": "b"}\n')
     site_for(repo, "B")
     A.push(store, keys, repo, site, "B", gate=gate(site))
@@ -107,9 +112,9 @@ def test_push_records_history_and_rollback_restores_the_checkout(tmp_path, monke
     assert (repo / "wiki/sources/demo__REPORT.md").read_text() == "# demo v1\n"
     assert not (repo / "wiki/concepts/y.md").exists()
     assert json.loads((repo / "state/agentic.json").read_text()) == {"fingerprint": "f1"}
-    assert json.loads((repo / "corpus/index.json").read_text())["projects"] == {
-        "legacy/demo": {"sid": "demo"}
-    }
+    assert json.loads((repo / "corpus/manifest.json").read_text())["hub"] == {"next_since": "t1"}
+    assert (repo / "corpus/projects/demo/REPORT.md").read_text() == "# demo v1\n"
+    assert not (repo / "corpus/projects/later").exists()
     assert (repo / "search/section-vectors.jsonl").read_text() == ""
     # The site build and main's HEAD are not what rollback restores.
     assert (site / "index.html").read_text() == "B"

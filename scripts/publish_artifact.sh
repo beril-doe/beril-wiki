@@ -5,7 +5,7 @@
 #
 #   scripts/publish_artifact.sh [--id ID] [--no-check]
 #
-# A successful push also commits wiki/, state/, corpus/index.json and the
+# A successful push also commits wiki/, state/, corpus/ and the
 # vectors to the `history` branch and tags artifact/<id>; `artifact rollback
 # --to <id>` moves current back and restores the checkout from that tag.
 #
