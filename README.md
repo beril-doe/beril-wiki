@@ -82,7 +82,7 @@ The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 | `tests/` | deterministic checks and recorded-response workflow tests |
 | `theme/` | the Quartz page frame (one component per page region), the stylesheet (one partial per region), and the browser script and index builder for search and Ask |
 | `contract/` | the editorial contract injected into every compile, the concept decisions manifest, the errata a person has recorded against the source reports, the scope of finding and research-direction records (`cards.yaml`), and human decisions on literature labels (`novelty-decisions.yaml`) |
-| `corpus/` | every source a run reads, laid out like an observatory checkout, with `manifest.json` recording each file's hash and origin (`beril_wiki.corpus`); the site serves the manifest as `corpus-manifest.json` |
+| `corpus/` | every source a run reads, laid out like an observatory checkout, with `manifest.json` recording each file's hash and origin (`beril_wiki.corpus`; `pull-hub` fills it from BERIL's context API, see the operating guide, "Pulling the corpus from BERIL"); the site serves the manifest as `corpus-manifest.json` |
 | `state/` | per-stage caches that make the pipeline incremental, and the lakehouse catalog under `lakehouse/` |
 | `search/` | ignored local copy of the section vectors for meaning search; the shared copy lives on the `history` branch and inside every site artifact |
 | `.agentic/` | ignored runtime ledger, raw results, receipts, and candidate workspace; preserve when resuming |
@@ -205,13 +205,13 @@ manifest without them, so `current` never moves to a site CI would reject.
 
 Each push is immutable (`site-<id>.tar.gz` plus `site-<id>.manifest.json`
 under the prefix); `current.json` is the only thing that moves. A successful
-push also commits `wiki/`, `state/`, `corpus/index.json` and
+push also commits `wiki/`, `state/`, `corpus/` and
 `search/section-vectors.jsonl` from the working checkout to the `history`
 branch (created orphan when absent, through a temporary index so your own
 branch is untouched) and tags `artifact/<id>`; push that branch to share the
 audit trail and the vectors. `rollback --to <id>` moves `current` back, then
-restores `wiki/`, `state/`, `search/` and `corpus/index.json` from the tag into
-the checkout, so the next curate run starts from the restored promotion instead
+restores `wiki/`, `state/`, `corpus/` and `search/` from the tag into the
+checkout, so the next curate run starts from the restored promotion instead
 of building on the bad one; it refuses while a run holds `.agentic/lock` or
 when the tag is missing. The server verifies the tarball's sha256 against
 `current.json` and the manifest's id, page count and gates against the unpacked
@@ -296,7 +296,7 @@ reader's credit.
 Meaning search compares the reader's query with one int8 vector per section,
 keyed by a hash of the section's text. The vectors (about 8 MB) live on the
 `history` branch, which every `scripts/publish_artifact.sh` run commits to
-(with `wiki/`, `state/` and `corpus/index.json`, tagged `artifact/<id>`), and
+(with `wiki/`, `state/` and `corpus/`, tagged `artifact/<id>`), and
 inside every site artifact under `corpus/`. The script first pulls them into
 the ignored local store `search/section-vectors.jsonl`
 (`beril_wiki.publish.search_data pull`). When `CBORG_API_KEY` is set, it then
