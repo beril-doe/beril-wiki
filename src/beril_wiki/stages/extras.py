@@ -2,11 +2,8 @@
 """Deterministic wiki pages OpenKB shouldn't hallucinate: authors and data collections.
 
 Carried over from v1/v2: author pages from project README ``## Authors`` blocks
-(ORCID-keyed, via people.py) and data-collection pages from the observatory's
-collections.yaml. Where both come from is the fetch backend's business
-(stages/fetch.py): a checkout, or the hub plus the copy committed at
-contract/collections.yaml. Output goes to wiki/{authors,data}/ next to the
-compiled collections.
+(ORCID-keyed, via people.py) and data-collection pages from ui/config/collections.yaml.
+Output goes to wiki/{authors,data}/ next to the compiled collections.
 
     uv run python -m beril_wiki.stages.extras
 """
@@ -19,7 +16,7 @@ import re
 import yaml
 
 from beril_wiki.paths import ROOT
-from beril_wiki.stages.fetch import collections_config, project_readmes
+from beril_wiki.stages.fetch import CHECKOUT
 from beril_wiki.stages.people import build_author_index
 
 OUT = ROOT / "wiki"
@@ -44,7 +41,12 @@ def wiki_projects() -> list[str]:
 
 
 def write_authors() -> int:
-    index = build_author_index(project_readmes(ROOT))
+    readmes = {
+        p.parent.name: (p.read_text(encoding="utf-8", errors="replace"))
+        for p in CHECKOUT.glob("projects/*/README.md")
+        if (p.parent / "REPORT.md").exists()
+    }
+    index = build_author_index(readmes)
     out = OUT / "authors"
     out.mkdir(parents=True, exist_ok=True)
     known = set(wiki_projects())
@@ -89,7 +91,7 @@ def write_authors() -> int:
 
 
 def write_collections() -> int:
-    cfg = yaml.safe_load(collections_config().read_text(encoding="utf-8"))
+    cfg = yaml.safe_load((CHECKOUT / "ui/config/collections.yaml").read_text(encoding="utf-8"))
     out = OUT / "data"
     out.mkdir(parents=True, exist_ok=True)
     projects = wiki_projects()
