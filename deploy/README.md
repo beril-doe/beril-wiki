@@ -78,8 +78,9 @@ uv run --project . python -m beril_wiki.publish.search_data pull
 
 `main` carries `wiki/`, `state/` and `corpus/`; `search_data pull` fills
 `search/section-vectors.jsonl` from `history`. With the clone in place,
-`curate.sh plan` reports what the first run would do (`changed_sources=0` and
-an empty `feed_changes` when BERIL's feed matches `state/hub.json`).
+`curate.sh plan` reports what the first run would do (`changed_sources=0` when
+`corpus/` already holds everything BERIL's feed lists past the cursor in
+`corpus/manifest.json`).
 
 ## Job environment
 
@@ -90,8 +91,7 @@ keys are the Secret rows below, and no filled copy belongs in git).
 
 | Variable | Where | Value |
 | --- | --- | --- |
-| `FETCH_BACKEND` | ConfigMap | `hub`: sources come from BERIL's `/api/context/*` with `BERIL_TOKEN` and from nothing else (never `/ov`) |
-| `BERIL_URL` | ConfigMap | BERIL's base URL |
+| `BERIL_URL` | ConfigMap | BERIL's base URL; `corpus pull-hub` reads `/api/context/*` with `BERIL_TOKEN` and nothing else (never `/ov`), and the run itself reads `corpus/` (`FETCH_BACKEND` stays `local`) |
 | `BERIL_TOKEN` | Secret | the wiki service account's BERIL PAT |
 | `BERIL_WIKI_AUTH` | ConfigMap | `api`: jobs run on the keys below; OAuth and provider routing are stripped |
 | `ANTHROPIC_API_KEY`, `ANTHROPIC_BASE_URL` | Secret | Claude-role jobs; the base URL may be a CBORG-compatible gateway |
@@ -120,15 +120,16 @@ the volume may have been populated by another uid.
 
 | Mode | Dispatched by | Steps | Exit |
 | --- | --- | --- | --- |
-| `plan` | `cronjob-plan.yaml`, hourly | refresh code; `agentic plan`; log `plan: changed_sources=N feed_changes=N pending_editorial=N` | 0 nothing to do, 3 a run would do something (the CronJob maps 3 to success), 2 no clone |
+| `plan` | `cronjob-plan.yaml`, hourly | refresh code; `corpus pull-hub`; `stages.fetch`; `agentic plan`; log `plan: changed_sources=N pending_editorial=N` | 0 nothing to do, 3 a run would do something (the CronJob maps 3 to success), 2 no clone |
 | `run` | `cronjob-curate.yaml`, nightly; `job-run-now.yaml` | `plan`; stop at 0 when empty; else `agentic run` under the budgets; `build_quartz.sh`; `publish_artifact.sh --id <UTC stamp> --no-check`; `git push origin history refs/tags/artifact/*` | 0 published or nothing to do; non-zero on any failed step, including a held `.agentic/lock` and a refused cold start |
 | `publish` | by hand | refresh code; render and publish the accepted wiki as above, without curating | as `run` |
 | `status` | by hand | `agentic status`, or a note when no run has been recorded | 0 |
 
 Every step logs one timestamped line (`2026-11-17T07:30:00Z curate[run] ...`).
-`feed_changes` is new with this job: in hub mode `agentic plan` compares
-BERIL's feed with the accepted `state/hub.json`, because staging is empty
-between scheduled runs and `changed_sources` alone would never fire. Budgets
+Staging is empty between scheduled runs, so `plan` first runs `corpus pull-hub`
+(BERIL's feed into `corpus/`, every file sha256-checked, the cursor kept in
+`corpus/manifest.json`) and `stages.fetch` (`corpus/` into `staging/`), and
+`changed_sources` then names the projects a run would integrate. Budgets
 are fixed per run, so a bad night is capped; `agentic run` refuses a second
 runner on the same checkout, and a run killed by the Job's deadline is charged
 from its transcripts and resumes from cached work the next night.

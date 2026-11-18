@@ -8,8 +8,8 @@ metadata:
   labels:
     app: beril-wiki-curator
 data:
-  # Sources come from BERIL's context API with BERIL_TOKEN; nothing else.
-  FETCH_BACKEND: "hub"
+  # `corpus pull-hub` fills corpus/ from BERIL's context API with BERIL_TOKEN and
+  # nothing else; the run then reads corpus/ (FETCH_BACKEND stays local).
   BERIL_URL: "https://beril-dev.kbase.us"
   # Unattended: API keys from the Secret; OAuth and provider routing stripped.
   BERIL_WIKI_AUTH: "api"

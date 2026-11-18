@@ -3,7 +3,7 @@
 # site with Quartz and publishes the artifact to the wiki pod's store routes.
 #
 #   docker build -f Dockerfile.curator -t beril-wiki-curator .
-#   docker run --rm -v beril-wiki-work:/work -e FETCH_BACKEND=hub ... \
+#   docker run --rm -v beril-wiki-work:/work -e BERIL_URL=... -e BERIL_TOKEN=... \
 #     beril-wiki-curator plan
 #
 # What is in the image and what is not: the image carries the dependencies
