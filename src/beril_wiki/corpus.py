@@ -14,7 +14,9 @@ came from. ``verify`` fails when a file and the manifest disagree.
     uv run python -m beril_wiki.corpus verify
 
 ``pull-hub`` is the incremental import from BERIL's context API (stages/hub.py):
-it pages the submissions feed from the cursor kept in ``manifest["hub"]``,
+it pages the submissions feed from the cursor kept in ``manifest["hub"]``
+(``next_after``, a feed position), keeps each project's newest revision by
+``submitted_at`` (the feed is in completion order, not submission order),
 downloads each changed project's REPORT.md, README.md, beril.yaml and embedded
 figures (sha256-checked against the feed), writes ``projects/<sid>/`` and
 ``docs/*.md``, and records ``owner_orcid``, ``project``, ``revision``,
@@ -204,18 +206,22 @@ def download_project(client: hub.Hub, row: dict, dest: Path) -> None:
 
 
 def pull_hub(
-    corpus: Path = CORPUS, client: hub.Hub | None = None, since: str | None = None
+    corpus: Path = CORPUS, client: hub.Hub | None = None, after: int | None = None
 ) -> dict:
-    """Bring ``corpus/`` up to the hub feed's head; returns ``{projects, docs, next_since}``."""
+    """Bring ``corpus/`` up to the hub feed's head; returns ``{projects, docs, next_after}``.
+
+    A manifest from before the feed paged by ``after`` (it kept ``next_since``)
+    starts from the beginning once; unchanged revisions are skipped, so that
+    re-lists the feed without re-downloading it."""
     own = client is None
     client = client or hub.Hub()
     manifest = load(corpus)
-    cursor = since or manifest.get(HUB, {}).get("next_since")
+    cursor = after if after is not None else manifest.get(HUB, {}).get("next_after")
     temporary = Path(tempfile.mkdtemp(prefix=f".{corpus.name}-pull-", dir=corpus.parent))
     installs: list[tuple[Path, Path]] = []
     counts = {"projects": 0, "docs": 0}
     try:
-        rows = client.submissions(cursor)
+        rows, following = client.submissions(cursor)
         for (owner, slug), row in hub.latest(rows).items():
             if row.get("kind") == "docs":
                 for rel, expected in sorted(row["files"].items()):
@@ -236,6 +242,10 @@ def pull_hub(
                 and (corpus / "projects" / sid / "REPORT.md").is_file()
             ):
                 continue
+            if hub.submitted(current) > hub.submitted(row):
+                # An older revision that completed after a newer one was
+                # pulled: the corpus already has the newer one.
+                continue
             staged = temporary / "projects" / sid
             download_project(client, row, staged)
             manifest["projects"][sid] = entry(staged, f"hub@{row.get('id')}") | {
@@ -249,15 +259,14 @@ def pull_hub(
             if dest.is_dir():
                 shutil.rmtree(dest)
             staged.replace(dest)
-        stamps = [r["submitted_at"] for r in rows if r.get("submitted_at")]
-        manifest[HUB] = {"url": client.url, "next_since": max(stamps) if stamps else cursor}
+        manifest[HUB] = {"url": client.url, "next_after": following}
         corpus.mkdir(parents=True, exist_ok=True)
         save(manifest, corpus)
     finally:
         shutil.rmtree(temporary, ignore_errors=True)
         if own:
             client.close()
-    return counts | {"next_since": manifest[HUB]["next_since"]}
+    return counts | {"next_after": manifest[HUB]["next_after"]}
 
 
 def verify(corpus: Path = CORPUS) -> list[str]:
@@ -296,7 +305,11 @@ def main(argv: list[str] | None = None) -> int:
     imp = sub.add_parser("import-v1", help="replace corpus/ from an observatory checkout")
     imp.add_argument("--checkout", type=Path, required=True)
     pull = sub.add_parser("pull-hub", help="update corpus/ from BERIL's submissions feed")
-    pull.add_argument("--since", help="feed cursor to start from (default: the manifest's)")
+    pull.add_argument(
+        "--after",
+        type=int,
+        help="feed position to start after (default: the manifest's; 0 = the beginning)",
+    )
     sub.add_parser("verify", help="check corpus/ against its manifest")
     args = parser.parse_args(argv)
     if args.cmd == "import-v1":
@@ -305,12 +318,12 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if args.cmd == "pull-hub":
         try:
-            done = pull_hub(CORPUS, since=args.since)
+            done = pull_hub(CORPUS, after=args.after)
         except hub.HubError as exc:
             raise SystemExit(f"corpus: {exc}") from exc
         print(
             f"corpus: {done['projects']} project(s) and {done['docs']} digest(s) updated; "
-            f"feed cursor {done['next_since']}"
+            f"feed cursor {done['next_after']}"
         )
         return 0
     problems = verify()

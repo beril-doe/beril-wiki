@@ -29,6 +29,7 @@ class FakeBeril:
 
     def __init__(self) -> None:
         self.files: dict[str, dict[str, bytes]] = {}
+        self.when: dict[str, str] = {}
         self.rows: list[dict] = []
         self.requests: list[str] = []
         self.corrupt: set[str] = set()
@@ -37,7 +38,10 @@ class FakeBeril:
     def project(
         self, name: str, files: dict[str, bytes], when: str, kind="approved", owner=ORCID
     ) -> None:
-        self.files[f"{owner}/{name}"] = files
+        # Like BERIL's read with no revision: the newest submission's files.
+        if when >= self.when.get(f"{owner}/{name}", ""):
+            self.files[f"{owner}/{name}"] = files
+            self.when[f"{owner}/{name}"] = when
         report = files.get("REPORT.md")
         self.rows.append(
             {
@@ -57,12 +61,12 @@ class FakeBeril:
         if request.headers.get("authorization") != "Bearer pat-1":
             return httpx.Response(401, json={"detail": "unauthorized"})
         if request.url.path == "/api/context/submissions":
-            since = request.url.params.get("since")
+            # Feed position = completion order = the order rows were added.
+            after = int(request.url.params.get("after", "0"))
             limit = int(request.url.params.get("limit", "200"))
-            rows = sorted(self.rows, key=lambda r: r["submitted_at"])
-            rows = [r for r in rows if not since or r["submitted_at"] > since][:limit]
-            nxt = rows[-1]["submitted_at"] if rows else since
-            return httpx.Response(200, json={"submissions": rows, "next_since": nxt})
+            rows = [r for r in self.rows if r["id"] > after][:limit]
+            nxt = rows[-1]["id"] if rows else after
+            return httpx.Response(200, json={"submissions": rows, "next_after": nxt})
         if request.url.path == "/api/context/read":
             owner, project, path = request.url.params["address"].split("/", 2)
             data = self.files.get(f"{owner}/{project}", {}).get(path)
@@ -112,14 +116,14 @@ def out(tmp_path) -> Path:
 
 def test_pull_writes_the_checkout_layout_and_the_manifest(out, beril, client):
     done = corpus.pull_hub(out, client)
-    assert done == {"projects": 1, "docs": 0, "next_since": "2026-11-01T00:00:00Z"}
+    assert done == {"projects": 1, "docs": 0, "next_after": 1}
     where = out / "projects/demo"
     assert (where / "REPORT.md").read_bytes() == REPORT
     assert (where / "README.md").read_bytes() == README
     assert (where / "beril.yaml").read_bytes() == YAML
     assert (where / "figures/plot.png").read_bytes() == PLOT
     manifest = corpus.load(out)
-    assert manifest["hub"] == {"url": "https://beril.test", "next_since": "2026-11-01T00:00:00Z"}
+    assert manifest["hub"] == {"url": "https://beril.test", "next_after": 1}
     entry = manifest["projects"]["demo"]
     assert entry["files"] == {
         "README.md": "sha256:" + sha(README),
@@ -184,13 +188,9 @@ def test_only_changed_revisions_are_downloaded_and_a_new_revision_replaces(out, 
     beril.requests.clear()
     beril.project("later", {"REPORT.md": b"# later\n"}, "2026-11-02T00:00:00Z")
     assert corpus.pull_hub(out, client)["projects"] == 1
-    assert beril.requests[0].endswith("since=2026-11-01T00%3A00%3A00Z")
+    assert beril.requests[0].endswith("after=1")
     assert not any("demo" in r for r in beril.requests[1:])
-    assert corpus.pull_hub(out, client) == {
-        "projects": 0,
-        "docs": 0,
-        "next_since": "2026-11-02T00:00:00Z",
-    }
+    assert corpus.pull_hub(out, client) == {"projects": 0, "docs": 0, "next_after": 2}
     beril.project("demo", {"REPORT.md": REPORT + b"v2\n"}, "2026-11-03T00:00:00Z")
     assert corpus.pull_hub(out, client)["projects"] == 1
     assert (out / "projects/demo/REPORT.md").read_bytes() == REPORT + b"v2\n"
@@ -225,11 +225,42 @@ def test_sids_are_unique_per_owner_and_vendored_ids_are_pinned(out, beril, clien
     assert corpus.verify(out) == []
 
 
-def test_feed_pages_follow_next_since(beril, client):
+def test_feed_pages_follow_next_after(beril, client):
     for i in range(5):
         beril.project(f"p{i}", {"REPORT.md": f"# {i}\n".encode()}, f"2026-11-1{i}T00:00:00Z")
-    rows = client.submissions(None, limit=2)
+    rows, following = client.submissions(None, limit=2)
     assert [r["project"] for r in rows] == ["demo", "p0", "p1", "p2", "p3", "p4"]
+    assert following == 6
+    assert client.submissions(following) == ([], 6)
+
+
+def test_the_newest_revision_wins_when_an_older_one_completes_later(out, beril, client):
+    # v2 is fed first; v1 (submitted earlier) completes after it. Within one
+    # pull and across pulls, the corpus keeps v2.
+    beril.project("demo", {"REPORT.md": b"# v2\n"}, "2026-11-05T00:00:00Z")
+    beril.project("demo", {"REPORT.md": b"# v1\n"}, "2026-11-04T00:00:00Z")
+    corpus.pull_hub(out, client)
+    assert (out / "projects/demo/REPORT.md").read_bytes() == b"# v2\n"
+
+    beril.project("demo", {"REPORT.md": b"# v0\n"}, "2026-11-03T00:00:00Z")
+    assert corpus.pull_hub(out, client)["projects"] == 0
+    assert (out / "projects/demo/REPORT.md").read_bytes() == b"# v2\n"
+    assert corpus.load(out)["projects"]["demo"]["submitted_at"] == "2026-11-05T00:00:00Z"
+    assert corpus.verify(out) == []
+
+
+def test_a_manifest_with_the_old_cursor_relists_from_the_beginning(out, beril, client):
+    corpus.pull_hub(out, client)
+    manifest = corpus.load(out)
+    manifest["hub"] = {"url": "https://beril.test", "next_since": "2026-11-01T00:00:00Z"}
+    corpus.save(manifest, out)
+    beril.requests.clear()
+
+    done = corpus.pull_hub(out, client)
+
+    assert "after=" not in beril.requests[0]
+    assert done == {"projects": 0, "docs": 0, "next_after": 1}  # demo unchanged: not re-downloaded
+    assert corpus.load(out)["hub"] == {"url": "https://beril.test", "next_after": 1}
 
 
 def test_unsafe_names_from_the_feed_are_refused():
@@ -264,5 +295,5 @@ def test_cli_reports_the_pull(out, beril, monkeypatch, capsys):
     monkeypatch.setattr(hub, "Hub", lambda: connect(beril))
     assert corpus.main(["pull-hub"]) == 0
     assert "1 project(s) and 0 digest(s) updated" in capsys.readouterr().out
-    assert json.loads((out / "manifest.json").read_text())["hub"]["next_since"]
+    assert json.loads((out / "manifest.json").read_text())["hub"]["next_after"] == 1
     assert corpus.main(["verify"]) == 0

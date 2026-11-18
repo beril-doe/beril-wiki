@@ -3,11 +3,14 @@
 The wiki runs off-cluster and reaches the observatory's projects only through two
 BERIL routes, with a BERIL personal access token (``BERIL_URL``, ``BERIL_TOKEN``):
 
-  GET /api/context/submissions?since=<iso>&kind=approved,seeded,docs&limit=<n>
-      the "changed since" feed: one row per complete submission, ascending, each
-      naming the owner, the project, its revision (sha256 of REPORT.md) and every
-      file with its sha256; ``next_since`` continues. ``kind: docs`` rows carry
-      the central digests (owner ``beril``, project ``docs``).
+  GET /api/context/submissions?after=<n>&kind=approved,seeded,docs&limit=<n>
+      the "changed since" feed: one row per complete submission, in the order
+      they completed, each naming the owner, the project, its revision (sha256
+      of REPORT.md), ``submitted_at`` and every file with its sha256;
+      ``next_after`` continues. A submission whose figures arrived last
+      completes after a newer one, so a project's revisions can come out of
+      order: the newest ``submitted_at`` wins. ``kind: docs`` rows carry the
+      central digests (owner ``beril``, project ``docs``).
   GET /api/context/read?address=<owner>/<project>/<path>
       one allowlisted file (REPORT.md, README.md, beril.yaml, CORRECTIONS.md,
       REFUTATION_<n>.md, figures/**). Asked for as raw bytes so what the wiki
@@ -26,6 +29,7 @@ import base64
 import hashlib
 import os
 import re
+from datetime import UTC, datetime
 from typing import Any
 
 import httpx
@@ -88,26 +92,30 @@ class Hub:
     def __exit__(self, *exc: object) -> None:
         self.close()
 
-    def submissions(self, since: str | None, limit: int = FEED_PAGE) -> list[dict]:
-        """Every feed row after ``since``, in order, following ``next_since``."""
+    def submissions(
+        self, after: int | None, limit: int = FEED_PAGE
+    ) -> tuple[list[dict], int | None]:
+        """Every feed row after ``after``, in feed order, following
+        ``next_after``; and the cursor to resume from (``after`` itself when
+        nothing is new)."""
         rows: list[dict] = []
-        seen: set[str | None] = set()
+        seen: set[int | None] = set()
         while True:
             params: dict[str, Any] = {"kind": KINDS, "limit": limit}
-            if since:
-                params["since"] = since
+            if after is not None:
+                params["after"] = after
             r = self.client.get("/api/context/submissions", params=params)
             if r.status_code != 200:
                 raise HubError(f"submissions feed: HTTP {r.status_code} {r.text[:200]}")
             body = r.json()
             page = body.get("submissions") or []
             rows.extend(page)
-            following = body.get("next_since")
-            if not page or not following or following == since or following in seen:
+            following = body.get("next_after")
+            if not page or following is None or following == after or following in seen:
                 break
-            seen.add(since)
-            since = following
-        return rows
+            seen.add(after)
+            after = following
+        return rows, (following if page and following is not None else after)
 
     def read(self, address: str) -> tuple[bytes, str | None]:
         """A file's exact bytes and the sha256 the route declares for them."""
@@ -140,8 +148,20 @@ class Hub:
         return data
 
 
+def submitted(entry: dict) -> datetime:
+    """A feed row's (or manifest entry's) ``submitted_at``; the earliest
+    instant when it has none, so anything dated wins over it."""
+    value = entry.get("submitted_at")
+    if not value:
+        return datetime.min.replace(tzinfo=UTC)
+    when = datetime.fromisoformat(str(value))
+    return when if when.tzinfo else when.replace(tzinfo=UTC)
+
+
 def latest(rows: list[dict]) -> dict[tuple[str, str], dict]:
-    """The last feed row per (owner, project), with every name and path checked."""
+    """The newest row per (owner, project) by ``submitted_at`` (the later
+    feed row on a tie), with every name and path checked. Feed order is
+    completion order, so the last row for a project need not be its newest."""
     out: dict[tuple[str, str], dict] = {}
     for row in rows:
         owner, project = str(row.get("owner_orcid") or ""), str(row.get("project") or "")
@@ -151,5 +171,7 @@ def latest(rows: list[dict]) -> dict[tuple[str, str], dict]:
         address = str(row.get("address") or f"{owner}/{project}").strip("/")
         if safe_path(address) != f"{owner}/{project}":
             raise HubError(f"feed address {address!r} is not {owner}/{project}")
-        out[(owner, project)] = row | {"files": files, "address": address}
+        kept = out.get((owner, project))
+        if kept is None or submitted(row) >= submitted(kept):
+            out[(owner, project)] = row | {"files": files, "address": address}
     return out

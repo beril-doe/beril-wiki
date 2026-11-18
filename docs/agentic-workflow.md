@@ -158,8 +158,12 @@ runner has no hub code and a submission landing mid-run is caught at promotion
 like a changed checkout. `BERIL_URL` and `BERIL_TOKEN` (a BERIL personal access
 token) reach two routes and nothing else; the wiki never calls OpenViking.
 `GET /api/context/submissions?kind=approved,seeded,docs` lists complete
-submissions after the cursor kept in `manifest["hub"].next_since` (owner,
-project, revision = sha256 of `REPORT.md`, every file with its sha256);
+submissions, in the order they completed, after the cursor kept in
+`manifest["hub"].next_after` (owner, project, revision = sha256 of
+`REPORT.md`, `submitted_at`, every file with its sha256). A submission whose
+figures arrived last completes after a newer one, so `pull-hub` keeps each
+project's newest revision by `submitted_at` and never replaces it with an
+older one that completes later;
 `GET /api/context/read` supplies each file as raw bytes. For every project whose
 revision differs from the manifest's, `pull-hub` downloads `REPORT.md`,
 `README.md`, `beril.yaml` and the figures the report embeds, checks each against
