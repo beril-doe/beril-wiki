@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # The scheduled curator's entry point (Dockerfile.curator, deploy/k8s/).
 #
-#   curate.sh plan      refresh code, `agentic plan`; exit 3 when the feed or the
-#                       staging holds changes, 0 when there is nothing to do
+#   curate.sh plan      refresh code, `corpus pull-hub` (BERIL's feed -> corpus/),
+#                       `stages.fetch` (corpus/ -> staging/), `agentic plan`; exit 3
+#                       when a source or an editorial stage changed, 0 otherwise
 #   curate.sh run       plan; stop (0) when nothing changed, else `agentic run`
 #                       under the env budgets, render, publish, push `history`
 #   curate.sh publish   render and publish the accepted wiki without curating
@@ -110,17 +111,21 @@ seed_build_caches() {
 }
 
 plan_step() {
-  # Prints the plan. Returns 3 when a run would do something: staged sources that
-  # differ from wiki/sources, projects the feed moved (hub mode), or editorial
-  # stages whose fingerprint no longer matches the accepted state.
+  # Brings corpus/ up to BERIL's feed (every file sha256-checked; nothing installed
+  # on a failure), stages it, then prints the plan. Returns 3 when a run would do
+  # something: staged sources that differ from wiki/sources, or editorial stages
+  # whose fingerprint no longer matches the accepted state. A run never talks to
+  # the hub itself: it reads corpus/ as its checkout.
   local out summary
   # Checked explicitly: errexit is off inside a function called in a && or || list.
+  py -m beril_wiki.corpus pull-hub || die "corpus pull-hub failed (exit $?)"
+  py -m beril_wiki.stages.fetch >/dev/null || die "stages.fetch failed (exit $?)"
   out=$(agentic plan) || die "agentic plan failed (exit $?)"
   printf '%s\n' "$out"
   summary=$(printf '%s' "$out" | py -c '
 import json, sys
 d = json.load(sys.stdin)
-keys = ("changed_sources", "feed_changes", "pending_editorial")
+keys = ("changed_sources", "pending_editorial")
 counts = {k: len(d.get(k) or []) for k in keys}
 print(sum(counts.values()), " ".join(f"{k}={v}" for k, v in counts.items()))') ||
     die "could not read the plan"
@@ -155,7 +160,7 @@ run_step() {
   for cap in ${WIKI_CURATE_STAGE_MAX_USD:-}; do args+=(--stage-max-usd "$cap"); done
   # shellcheck disable=SC2206
   [ -z "${WIKI_CURATE_EXTRA_ARGS:-}" ] || args+=(${WIKI_CURATE_EXTRA_ARGS})
-  log "curate: agentic ${args[*]} (auth ${BERIL_WIKI_AUTH:-subscription}, fetch ${FETCH_BACKEND:-local})"
+  log "curate: agentic ${args[*]} (auth ${BERIL_WIKI_AUTH:-subscription})"
   # A held .agentic/lock or a missing accepted state stops here with a non-zero exit.
   agentic "${args[@]}"
 }

@@ -283,8 +283,8 @@ Manifests and the full environment table are in
 [`deploy/README.md`](deploy/README.md). Locally:
 
     docker build -f Dockerfile.curator -t beril-wiki-curator .
-    docker run --rm -v "$PWD/../work:/work" -e FETCH_BACKEND=hub -e BERIL_URL=... \
-      -e BERIL_TOKEN=... beril-wiki-curator plan      # /work/beril-wiki must be a clone
+    docker run --rm -v "$PWD/../work:/work" -e BERIL_URL=... -e BERIL_TOKEN=... \
+      beril-wiki-curator plan                         # /work/beril-wiki must be a clone
 
 #### Internal API
 
