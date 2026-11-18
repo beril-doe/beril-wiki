@@ -13,42 +13,38 @@ BERIL routes, with a BERIL personal access token (``BERIL_URL``, ``BERIL_TOKEN``
       REFUTATION_<n>.md, figures/**). Asked for as raw bytes so what the wiki
       hashes and quotes is byte-exact.
 
-The feed is incremental, so ``state/hub.json`` keeps the merged view of every
-project ever reported plus the ``next_since`` to continue from; fetch_hub writes
-the changed ones into the committed corpus (stages/corpus.py), which is then
-staged whole. Every download is checked against the sha256 the feed declared for
-the path (or, for a file the feed does not list, the one the route itself
-declares) and refused on mismatch.
+``beril_wiki.corpus pull-hub`` drives this client: it keeps the feed cursor in
+``corpus/manifest.json`` and writes what it downloads into ``corpus/``. Every
+download is checked against the sha256 the feed declared for the path (or, for a
+file the feed does not list, the one the route itself declares) and refused on
+mismatch.
 """
 
 from __future__ import annotations
 
 import base64
 import hashlib
-import json
 import os
-import pathlib
 import re
 from typing import Any
 
 import httpx
 
 FEED_PAGE = 200
-STATE_FILE = "hub.json"
 KINDS = "approved,seeded,docs"
-TEXT_FILES = ("REPORT.md", "beril.yaml", "README.md")
 SAFE_PATH = re.compile(r"^(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$")
+SAFE_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]*$")
 
 
 class HubError(RuntimeError):
-    """A hub read that must stop the stage: no token, a refused file, a bad hash."""
+    """A hub read that must stop the pull: no token, a refused file, a bad hash."""
 
 
 def settings() -> tuple[str, str]:
     url = os.environ.get("BERIL_URL", "").rstrip("/")
     token = os.environ.get("BERIL_TOKEN", "")
     if not url or not token:
-        raise HubError("FETCH_BACKEND=hub needs BERIL_URL and BERIL_TOKEN")
+        raise HubError("corpus pull-hub needs BERIL_URL and BERIL_TOKEN")
     return url, token
 
 
@@ -56,6 +52,10 @@ def safe_path(path: str) -> str:
     if not SAFE_PATH.fullmatch(path) or ".." in path.split("/"):
         raise HubError(f"unsafe project path {path!r}")
     return path
+
+
+def sha256(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
 
 
 class Hub:
@@ -73,7 +73,7 @@ class Hub:
         self.url = url.rstrip("/")
         self.client = httpx.Client(
             base_url=self.url,
-            headers={"Authorization": f"Bearer {token}", "User-Agent": "beril-wiki/fetch"},
+            headers={"Authorization": f"Bearer {token}", "User-Agent": "beril-wiki/corpus"},
             timeout=timeout,
             transport=transport,
             follow_redirects=False,
@@ -109,15 +109,13 @@ class Hub:
             since = following
         return rows
 
-    def read(self, address: str) -> tuple[bytes, str | None, str | None]:
-        """A file's exact bytes, the sha256 the route declares, and its source."""
+    def read(self, address: str) -> tuple[bytes, str | None]:
+        """A file's exact bytes and the sha256 the route declares for them."""
         r = self.client.get(
             "/api/context/read",
             params={"address": address},
             headers={"Accept": "application/octet-stream"},
         )
-        if r.status_code == 404:
-            raise HubError(f"read {address}: not found")
         if r.status_code != 200:
             raise HubError(f"read {address}: HTTP {r.status_code} {r.text[:200]}")
         if r.headers.get("content-type", "").startswith("application/json"):
@@ -127,88 +125,31 @@ class Hub:
             data = (
                 base64.b64decode(raw) if body.get("encoding") == "base64" else raw.encode("utf-8")
             )
-            return data, body.get("sha256"), body.get("source")
-        return r.content, r.headers.get("x-content-sha256"), r.headers.get("x-content-source")
+            return data, body.get("sha256")
+        return r.content, r.headers.get("x-content-sha256")
+
+    def fetch(self, address: str, expected: str | None) -> bytes:
+        """``address`` verified against ``expected`` (the feed's hash) or, when the
+        feed did not list the file, against the hash the route declares."""
+        data, declared = self.read(address)
+        expected = expected or declared
+        if not expected:
+            raise HubError(f"{address}: neither the feed nor the route declares a sha256")
+        if (actual := sha256(data)) != expected:
+            raise HubError(f"{address}: sha256 {actual} does not match declared {expected}")
+        return data
 
 
-def sha256(data: bytes) -> str:
-    return hashlib.sha256(data).hexdigest()
-
-
-def load_state(root: pathlib.Path) -> dict:
-    path = root / "state" / STATE_FILE
-    if path.exists():
-        return json.loads(path.read_text(encoding="utf-8"))
-    return {"next_since": None, "projects": {}}
-
-
-def save_state(root: pathlib.Path, state: dict) -> None:
-    path = root / "state" / STATE_FILE
-    path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_suffix(".json.tmp")
-    tmp.write_text(json.dumps(state, indent=1, sort_keys=True) + "\n", encoding="utf-8")
-    os.replace(tmp, path)
-
-
-def merge(state: dict, rows: list[dict]) -> dict:
-    """The state after the feed rows: a later row for (owner, project) replaces an
-    earlier one. Keys are "<owner>/<project>"."""
-    projects = dict(state.get("projects", {}))
-    latest = state.get("next_since")
+def latest(rows: list[dict]) -> dict[tuple[str, str], dict]:
+    """The last feed row per (owner, project), with every name and path checked."""
+    out: dict[tuple[str, str], dict] = {}
     for row in rows:
-        owner, project = str(row.get("owner_orcid") or ""), str(row["project"])
-        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", project) or not re.fullmatch(
-            r"[A-Za-z0-9][A-Za-z0-9_.-]*", owner
-        ):
+        owner, project = str(row.get("owner_orcid") or ""), str(row.get("project") or "")
+        if not SAFE_NAME.fullmatch(owner) or not SAFE_NAME.fullmatch(project):
             raise HubError(f"feed names an unsafe owner/project {owner!r}/{project!r}")
         files = {safe_path(f["path"]): f["sha256"] for f in row.get("files", [])}
-        projects[f"{owner}/{project}"] = {
-            "id": row.get("id"),
-            "owner_orcid": owner,
-            "project": project,
-            "address": row["address"],
-            "revision": row.get("revision") or files.get("REPORT.md"),
-            "submitted_at": row.get("submitted_at"),
-            "kind": row.get("kind"),
-            "archive_path": row.get("archive_path"),
-            "files": files,
-        }
-        if row.get("submitted_at") and (latest is None or row["submitted_at"] > latest):
-            latest = row["submitted_at"]
-    return {"next_since": latest, "projects": dict(sorted(projects.items()))}
-
-
-def sync(hub: Hub, state: dict) -> dict:
-    """The state brought up to the feed's head; the same object when nothing changed."""
-    rows = hub.submissions(state.get("next_since"))
-    return merge(state, rows) if rows else state
-
-
-def fingerprint(state: dict) -> dict[str, str]:
-    """What a run depends on from the hub: every reported project's files and hashes.
-
-    This replaces the checkout fingerprint (`runner.checkout_inputs`) in hub mode."""
-    out: dict[str, str] = {}
-    for key, entry in state.get("projects", {}).items():
-        for path, sha in sorted(entry.get("files", {}).items()):
-            out[f"corpus/{key}/{path}"] = sha
+        address = str(row.get("address") or f"{owner}/{project}").strip("/")
+        if safe_path(address) != f"{owner}/{project}":
+            raise HubError(f"feed address {address!r} is not {owner}/{project}")
+        out[(owner, project)] = row | {"files": files, "address": address}
     return out
-
-
-def fetch_file(hub: Hub, entry: dict, path: str, required: bool = True) -> bytes | None:
-    """One project file, verified against the feed's hash for it when the feed has one
-    and against the route's own declared hash otherwise."""
-    address = f"{entry['address'].strip('/')}/{safe_path(path)}"
-    try:
-        data, declared, _source = hub.read(address)
-    except HubError:
-        if required:
-            raise
-        return None
-    expected = entry.get("files", {}).get(path) or declared
-    if not expected:
-        raise HubError(f"{address}: neither the feed nor the route declares a sha256")
-    actual = sha256(data)
-    if actual != expected:
-        raise HubError(f"{address}: sha256 {actual} does not match declared {expected}")
-    return data
