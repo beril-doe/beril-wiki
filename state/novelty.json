@@ -3393,6 +3393,222 @@
     "retrieved": 19,
     "retrieved_on": "2026-10-27"
   },
+  "berdl_data_atlas--113f874a": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "10592235",
+      "24214959",
+      "29186510",
+      "29769710",
+      "34265844",
+      "34293799",
+      "34850110",
+      "36408920",
+      "37855702",
+      "39963423"
+    ],
+    "closest": [
+      {
+        "pmid": "39963423",
+        "relation": "related",
+        "title": "Standardized and accessible multi-omics bioinformatics workflows through the NMDC EDGE resource."
+      },
+      {
+        "pmid": "34265844",
+        "relation": "related",
+        "title": "Highly accurate protein structure prediction with AlphaFold."
+      },
+      {
+        "pmid": "36408920",
+        "relation": "related",
+        "title": "UniProt: the Universal Protein Knowledgebase in 2023."
+      },
+      {
+        "pmid": "24214959",
+        "relation": "related",
+        "title": "BacDive--the Bacterial Diversity Metadatabase."
+      }
+    ],
+    "difference": "",
+    "input": "7a3f88c10ca50c9485e1240ccdada151d0330a553655429371832fc2f36a5dfc",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(KBase OR NMDC OR \"National Microbiome Data Collaborative\" OR AlphaFold OR GTDB OR \"Genome Taxonomy Database\") AND interoperability AND \"data reuse\"",
+      "(microbial OR biological) AND databases AND \"shared identifiers\" AND (\"unused connections\" OR underutilization OR \"integration opportunities\")",
+      "(\"metadata audit\" OR \"identifier mapping\" OR \"schema matching\") AND \"data integration\" AND (reuse OR \"usage analysis\")"
+    ],
+    "retrieved": 10,
+    "retrieved_on": "2026-11-11"
+  },
+  "berdl_data_atlas--5f0ea1fc": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "10592235",
+      "23952476",
+      "24109559",
+      "24214959",
+      "28025334",
+      "29186510",
+      "29769710",
+      "32013947",
+      "34092224",
+      "34265844",
+      "34293799",
+      "34850110",
+      "35133969",
+      "35320840",
+      "35493622",
+      "36408920",
+      "37031232",
+      "37745378",
+      "37855702",
+      "37964570",
+      "37998475",
+      "38070153",
+      "38702332",
+      "39238830",
+      "39787587",
+      "40028839",
+      "41286922",
+      "41749200",
+      "42550579"
+    ],
+    "closest": [
+      {
+        "pmid": "24109559",
+        "relation": "related",
+        "title": "Data reuse and the open data citation advantage."
+      },
+      {
+        "pmid": "38070153",
+        "relation": "related",
+        "title": "Bibliometric analysis of neuroscience publications quantifies the impact of data sharing."
+      },
+      {
+        "pmid": "38702332",
+        "relation": "related",
+        "title": "A dataset for measuring the impact of research data and their curation."
+      },
+      {
+        "pmid": "34092224",
+        "relation": "related",
+        "title": "Social media attention and citations of published outputs from re-use of clinical trial data: a matched comparison with articles published in the same journals."
+      }
+    ],
+    "difference": "",
+    "input": "39728d4636d2c937306fce6274a9f905f06ff4d4bac2a058c88c917c4ad09670",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(KBase OR \"Systems Biology Knowledgebase\" OR ENIGMA OR PhageFoundry OR PROTECT) AND (\"data reuse\" OR \"dataset reuse\" OR \"data usage\")",
+      "(\"biological databases\" OR \"research repositories\") AND (\"data volume\" OR \"repository size\") AND (reuse OR utilization OR adoption)",
+      "(\"data reuse\" OR \"dataset reuse\") AND (\"usage audit\" OR \"repository mining\" OR \"README analysis\" OR bibliometrics)"
+    ],
+    "retrieved": 29,
+    "retrieved_on": "2026-11-11"
+  },
+  "berdl_data_atlas--82c709b1": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "10592235",
+      "24214959",
+      "29186510",
+      "29769710",
+      "34265844",
+      "34293799",
+      "34850110",
+      "36408920",
+      "37855702"
+    ],
+    "closest": [
+      {
+        "pmid": "34293799",
+        "relation": "related",
+        "title": "Highly accurate protein structure prediction for the human proteome."
+      },
+      {
+        "pmid": "36408920",
+        "relation": "related",
+        "title": "UniProt: the Universal Protein Knowledgebase in 2023."
+      },
+      {
+        "pmid": "34265844",
+        "relation": "related",
+        "title": "Highly accurate protein structure prediction with AlphaFold."
+      }
+    ],
+    "difference": "",
+    "input": "cefe9a4b08e9c4f42408e60dd879fa7439b0162fee8ec9410f011b8a95bee52e",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(\"Fitness Browser\" OR FitnessBrowser) (AlphaFold OR \"AlphaFold DB\") (\"Swiss-Prot\" OR SwissProt OR UniProt)",
+      "microbial gene fitness measurements predicted protein structures database integration coverage",
+      "(\"RB-TnSeq\" OR \"random barcode transposon sequencing\" OR \"Tn-seq\") AlphaFold sequence homology mapping"
+    ],
+    "retrieved": 9,
+    "retrieved_on": "2026-11-11"
+  },
+  "berdl_data_atlas--a65ca624": {
+    "abstracts_only": true,
+    "agree_model": null,
+    "agreed": null,
+    "candidates": [
+      "10592235",
+      "24214959",
+      "29186510",
+      "29769710",
+      "34265844",
+      "34293799",
+      "34672140",
+      "34850110",
+      "36408920",
+      "37855702"
+    ],
+    "closest": [
+      {
+        "pmid": "34672140",
+        "relation": "related",
+        "title": "Developing a Dementia Platform Databank Using Multiple Existing Cohorts."
+      },
+      {
+        "pmid": "29186510",
+        "relation": "related",
+        "title": "The European Bioinformatics Institute in 2017: data coordination and integration."
+      },
+      {
+        "pmid": "24214959",
+        "relation": "related",
+        "title": "BacDive--the Bacterial Diversity Metadatabase."
+      }
+    ],
+    "difference": "",
+    "input": "f78d5384b0d1f4714270241c88960fc2244ba0900d3cd7c6852a82982d1d7a34",
+    "judge_model": "claude-sonnet-5-5",
+    "judged_label": "Insufficient literature evidence",
+    "label": "Insufficient literature evidence",
+    "pipeline_label": "Insufficient literature evidence",
+    "queries": [
+      "(KBase OR \"Systems Biology Knowledgebase\" OR \"KBase Data Lakehouse\" OR kescience) (\"data integration\" OR \"data reuse\")",
+      "microbial research cross-project data integration collaboration data reuse",
+      "research data reuse audit README analysis repository usage"
+    ],
+    "retrieved": 10,
+    "retrieved_on": "2026-11-11"
+  },
   "caulobacter_fur_lipida_loss--088e2303": {
     "abstracts_only": true,
     "agree_model": "gpt-6.1-sol",

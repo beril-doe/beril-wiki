@@ -32,17 +32,42 @@ FOLLOW_TEXT = {
     "existing": "Analyze existing data",
     "outside": "Add outside data",
     "experiment": "Run an experiment",
-}
-FOLLOW_NOTES = {
-    "existing": "BERDL already holds what the answer needs. Some questions need a new "
-    "analysis written.",
-    "outside": "Public genomes, metagenomes or another study's measurements, with no new lab work.",
-    "experiment": "Only a new lab or field measurement can test the hypothesis.",
+    "unchecked": "Not checked yet",
 }
 FIRST_STEP_TEXT = "Starts with existing data"
 UNCLEAR_TEXT = "Data availability unclear"
-# Questions on the directions index frontmatter: the columns, least effort first.
-FOLLOW_ORDER = list(FOLLOW_TEXT)
+# Questions on the directions index frontmatter: the columns, least effort first, then
+# the questions no check has placed.
+FOLLOW_ORDER = ["existing", "outside", "experiment", "unchecked"]
+
+
+def follow_notes(tenants: int, date: str) -> dict[str, str]:
+    """What each follow-up column means, with the catalog's tenant count and date.
+
+    Parameters
+    ----------
+    tenants : int
+        How many lakehouse tenants the catalog covers.
+    date : str
+        The catalog snapshot date in reader form.
+
+    Returns
+    -------
+    dict[str, str]
+        Follow-up key to the note the Open questions page shows for its column.
+    """
+    return {
+        "existing": f"An AI model matched the test to tables in the lakehouse catalog of {date}. "
+        "No one has run the analysis.",
+        "outside": f"Not found in the {tenants} tenants the catalog covers. Public genomes, "
+        "metagenomes or another study's measurements can supply it, with no new lab work.",
+        "experiment": f"Not found in the {tenants} tenants the catalog covers. Only a new lab or "
+        "field measurement can test the hypothesis.",
+        "unchecked": "The check that names the data a question needs has not run on it, or did "
+        "not finish. This page makes no data claim.",
+    }
+
+
 # The first two are the two kinds of new: a new direction, and new on published ground.
 CHIP = {
     "Candidate novel": "New direction",
@@ -110,13 +135,6 @@ def reader_terms(text: str) -> str:
     for term, plain_words in READER_TERMS.items():
         text = text.replace(term, plain_words)
     return text
-
-
-def follow_of(entry: dict | None, approach: str) -> str:
-    """What following up a question needs; before the followups stage, its approach."""
-    if entry and entry.get("need") in FOLLOW_TEXT:
-        return entry["need"]
-    return "existing" if approach == "lakehouse analysis" else "experiment"
 
 
 def compare_text(entry: dict | None) -> str:

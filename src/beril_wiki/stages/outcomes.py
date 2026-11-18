@@ -131,7 +131,8 @@ def main(root: Path = ROOT, argv: list[str] | None = None) -> int:
     args.add_argument("--status", action="store_true", help="count types; run nothing")
     items = packs(root)
     if args.parse_args(argv or []).status:
-        return classify.status("outcomes", root / STATE, list(items))
+        policy = cards.policy(classify.status_config(root), ("labels", "card_review"))
+        return classify.status("outcomes", root / STATE, items, PROMPT_TAG, checker, policy)
     return classify.run("outcomes", root / STATE, items, PROMPT, PROMPT_TAG, checker)
 
 

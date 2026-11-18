@@ -5,8 +5,8 @@ import json
 import pytest
 
 from beril_wiki.agentic import curator
-from beril_wiki.agentic.runtime import CandidateError, WorkflowError
-from beril_wiki.stages import shared
+from beril_wiki.agentic.runtime import CONTENT_FLAG, CandidateError, JobFailed, WorkflowError
+from beril_wiki.stages import cards, shared
 from card_fakes import install
 from test_links import A, B, C, Scripted, finding
 
@@ -164,3 +164,60 @@ def test_prompt_keeps_disagreeing_results_apart():
     """Content review, Nov 2026: a group of results that disagreed read as one result."""
     assert shared.PROMPT_TAG == "shared@2"
     assert "never present them as one result" in shared.PROMPT
+
+
+@pytest.mark.parametrize(("expect", "asked"), [("gamma", False), ("alpha", True), (None, True)])
+def test_a_run_for_one_project_leaves_another_projects_failed_group(
+    tmp_path, monkeypatch, expect, asked
+):
+    """A run for gamma must not re-ask the failed alpha and beta group or change its
+    record, even under --strict-pages; a run for alpha and a maintainer run re-ask it."""
+    corpus(tmp_path)
+
+    def refuse(step, content):
+        raise JobFailed(f"Codex turn failed: {CONTENT_FLAG}")
+
+    install(monkeypatch, Scripted(tmp_path / "store", refuse))
+    assert shared.main(tmp_path) == 0
+    before = (tmp_path / "state/shared.json").read_text()
+    assert all(g["failed"] for g in json.loads(before).values())
+    agent = Scripted(tmp_path / "store", lambda step, content: json.dumps(GOOD))
+    if expect:
+        agent.config["expect_source"] = expect
+    install(monkeypatch, agent)
+    monkeypatch.setattr(cards, "strict_pages", lambda: True)
+    assert shared.main(tmp_path) == 0
+    after = (tmp_path / "state/shared.json").read_text()
+    if asked:
+        assert agent.asked and next(iter(json.loads(after).values()))["title"] == GOOD["title"]
+    else:
+        assert agent.asked == [] and after == before
+
+
+@pytest.mark.parametrize("expect", ["gamma", None])
+def test_a_failed_group_that_falls_out_of_the_topic_filter(tmp_path, monkeypatch, expect):
+    """Sol review of edcce0b: the group left the eligibility filters before the rule that
+    keeps other projects' failures ran, so a run for gamma deleted the failed alpha and
+    beta group. A run for gamma keeps it as saved; a maintainer run still prunes it."""
+    corpus(tmp_path)
+
+    def refuse(step, content):
+        raise JobFailed(f"Codex turn failed: {CONTENT_FLAG}")
+
+    install(monkeypatch, Scripted(tmp_path / "store", refuse))
+    assert shared.main(tmp_path) == 0
+    before = (tmp_path / "state/shared.json").read_text()
+    assert all(g["failed"] for g in json.loads(before).values())
+    # alpha and beta now share a single main topic, so the group is not eligible.
+    (tmp_path / "wiki/concepts/fit.md").write_text("# Fit\n\nNo citation.\n")
+    agent = Scripted(tmp_path / "store", lambda step, content: json.dumps(GOOD))
+    if expect:
+        agent.config["expect_source"] = expect
+    install(monkeypatch, agent)
+    assert shared.main(tmp_path) == 0
+    after = (tmp_path / "state/shared.json").read_text()
+    assert agent.asked == []
+    if expect:
+        assert after == before
+    else:
+        assert json.loads(after) == {}

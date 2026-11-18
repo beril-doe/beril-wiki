@@ -1251,7 +1251,7 @@ def compile_batch(
         # carries no assignment. An existing entity whose sources have not changed
         # has nothing to integrate: on this corpus that was 335 of 619 jobs,
         # scheduled only because a model change had marked every source stale.
-        if not assigned and original is not None and not (set(job.sources) & revised):
+        if not retry and not assigned and original is not None and not (set(job.sources) & revised):
             print(f"agentic: skip {path}: nothing assigned and no source revised", flush=True)
             return False
         # A writer gets what it must integrate, not every finding its sources ever
@@ -1268,7 +1268,9 @@ def compile_batch(
                 try:
                     context = part or about or relevant
                     write_pass(worker, path, job, part, context, (index, len(slices)))
-                except (CandidateError, Unconverged) as exc:
+                except (CandidateError, JobFailed, Unconverged) as exc:
+                    if isinstance(exc, JobFailed) and agent.config.get("strict_pages"):
+                        raise
                     # A pass that will not converge is dropped, not the page: at nine in ten
                     # passes accepted, a seven-pass page failing whole would publish under
                     # half the time. The page keeps every accepted pass; the dropped

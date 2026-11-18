@@ -192,6 +192,57 @@ def test_run_job_records_usage_transcript_and_clears_binding(tmp_path, monkeypat
     assert "DELTA-TEXT" not in transcript and '"method": "item/completed"' in transcript
 
 
+@pytest.mark.parametrize("terminal_record", [False, True])
+def test_killed_codex_reconciles_the_latest_saved_cumulative_usage(tmp_path, terminal_record):
+    from openai_codex.generated.v2_all import (
+        ThreadTokenUsage,
+        ThreadTokenUsageUpdatedNotification,
+        TokenUsageBreakdown,
+    )
+
+    def event(input_tokens):
+        total = TokenUsageBreakdown(
+            input_tokens=input_tokens,
+            cached_input_tokens=100_000,
+            output_tokens=50_000,
+            reasoning_output_tokens=20_000,
+            total_tokens=input_tokens + 50_000,
+        )
+        payload = ThreadTokenUsageUpdatedNotification(
+            thread_id="th1", turn_id="t1", token_usage=ThreadTokenUsage(last=total, total=total)
+        )
+        return SimpleNamespace(method="thread/tokenUsage/updated", payload=payload)
+
+    transcript = tmp_path / "transcripts/k.jsonl"
+    transcript.parent.mkdir()
+    with transcript.open("w") as out:
+        # A killed worker leaves SDK notifications before run_job's normalized record.
+        C.consume(FakeTurn([event(200_000), event(600_000), event(600_000)]), out, 1)
+        if terminal_record:
+            final = {"input_tokens": 700_000, "output_tokens": 50_000}
+            out.write(json.dumps({"usage": final, "total_cost_usd": None}) + "\n")
+        else:
+            final = {
+                "input_tokens": 500_000,
+                "output_tokens": 50_000,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 100_000,
+            }
+        out.write('{"method": "thread/tokenUsage/updated", "payload": {}}\n')
+        out.write('{"method": "thread/tokenUsage/updated", "payload": {"token_usage": "bad"}}\n')
+        out.write('{"method": "thread/tokenUsage/updated"')  # a cut-off final record
+    assert R.transcript_usage(transcript) == (final, None)
+    ledger = R.Ledger(
+        tmp_path / "jobs.sqlite", "r", 10**9, 99, 10, caps={"max_codex_tokens": 1_000_000}
+    )
+    ledger.reserve("k", "write/a/science-review", "gpt-6.1-sol")
+    assert ledger.reconcile_stale(transcript.parent) == ["k"]
+    charged = 750_000 if terminal_record else 650_000
+    assert ledger.db.execute("SELECT tokens FROM jobs WHERE key='k'").fetchone() == (charged,)
+    with pytest.raises(R.WorkflowError, match="Codex tokens"):
+        ledger.reserve("next", "write/b/science-review", "gpt-6.1-sol")
+
+
 def failed_without_usage(message):
     error = SimpleNamespace(message=message)
     return [
@@ -224,6 +275,41 @@ def test_bio_flagged_review_is_answered_on_the_fallback_model(tmp_path, monkeypa
     # The page's later review jobs go there; its Claude writer is not redirected.
     assert agent.ledger.refused_model("write/concepts/x.md", "codex") == "gpt-5.6-sol"
     assert agent.ledger.refused_model("write/concepts/x.md", "claude") == ""
+
+
+@pytest.mark.parametrize("model", ["gpt-6.1-sol", "gpt-6-sol", "gpt-6-luna"])
+def test_completed_prose_refusal_uses_the_fallback_and_remembers_it(tmp_path, monkeypatch, model):
+    agent = agent_for(tmp_path, model=model)
+    turn = FakeTurn([])
+    fake = fake_session(monkeypatch, turn)
+    monkeypatch.setattr(C, "check_auth", lambda client: None)
+    accepted = '{"accepted": true, "issues": []}'
+
+    def stream():
+        text = (
+            "I can't finish because a safety classifier stopped my reply."
+            if fake.client.starts[-1]["model"] == model
+            else accepted
+        )
+        yield from completed(text)
+
+    monkeypatch.setattr(turn, "stream", stream)
+    messages = [{"role": "user", "content": "Review the supplied claim."}]
+    step = "write/concepts/x.md/science-review"
+    assert agent.ask(messages, step) == accepted
+    assert [start["model"] for start in fake.client.starts] == [model, "gpt-5.6-sol"]
+    rows = agent.ledger.db.execute(
+        "SELECT key,model,status,tokens,output FROM jobs ORDER BY rowid"
+    ).fetchall()
+    assert rows[0][1:4] == (model, "rejected", 140)
+    assert R.refusal_target(rows[0][4]) == "gpt-5.6-sol"
+    assert rows[1][1:4] == ("gpt-5.6-sol", "done", 140) and rows[0][0] != rows[1][0]
+    assert agent.ledger.refused_model("write/concepts/x.md", "codex", model) == "gpt-5.6-sol"
+    assert agent.ledger.refused_model("write/concepts/x.md", "claude") == ""
+    assert agent.ask(messages, step) == accepted
+    assert len(fake.client.starts) == 2  # the fallback answer replays under its original key
+    assert agent.ask([{"role": "user", "content": "Review the next claim."}], step) == accepted
+    assert [start["model"] for start in fake.client.starts] == [model, "gpt-5.6-sol", "gpt-5.6-sol"]
 
 
 def test_failed_turn_keeps_usage_and_fails_the_job(tmp_path, monkeypatch):

@@ -189,11 +189,12 @@ def test_direction_page_uses_reader_words(tmp_path):
     )
     page.write_text(join(fields, body))
     fields, text = split(direction_page("transport--abc123", Corpus(kb)))
-    # Before the followups stage reads it, the planned approach stands in.
-    assert "Following up: analyze existing data. Data exists." in text
+    # Before the followups stage reads it, the planned approach places nothing, and the
+    # readiness note goes too: Not checked yet makes no data claim.
+    assert "Following up: not checked yet.\n" in text and "Data exists." not in text
     assert "|Dark]] (New direction)" in text
     assert "|Other]]\n" in text and "(Insufficient" not in text
-    assert fields["follow"] == "existing" and fields["follow_text"] == "Analyze existing data"
+    assert fields["follow"] == "unchecked" and fields["follow_text"] == "Not checked yet"
     assert fields["first_step"] is False and fields["topic"] == "dark-matter"
     set_state(
         kb,
@@ -204,15 +205,34 @@ def test_direction_page_uses_reader_words(tmp_path):
                 "first_step_existing": True,
                 "data_unclear": True,
                 "reason": "r",
+                "tables": ["kescience.fitnessbrowser.experiment"],
             }
         },
     )
     fields, text = split(direction_page("transport--abc123", Corpus(kb)))
     assert fields["follow"] == "experiment" and fields["first_step"] and fields["data_unclear"]
     assert (
-        "Following up: run an experiment. Starts with existing data. "
-        "Data availability unclear. Data exists." in text
+        "Following up: run an experiment. Not found in the 2 tenants the catalog covers. "
+        "Starts with existing data. Data availability unclear. Data exists." in text
     )
+    # A catalog refresh removed one named table: only the one still listed shows, and a
+    # followup whose tables are all gone places nothing (Review Focus 2).
+    mixed = ["kescience.fitnessbrowser.experiment", "kescience.fitnessbrowser.gone"]
+    set_state(
+        kb,
+        "followups.json",
+        {"transport--abc123": {"need": "existing", "reason": "r", "tables": mixed}},
+    )
+    fields, text = split(direction_page("transport--abc123", Corpus(kb)))
+    data = text.split("## Data\n")[1].split("\n## ")[0]
+    assert fields["follow"] == "existing"
+    assert "`experiment`" in data and "gone" not in data
+    assert fields["tables"] == ["kescience.fitnessbrowser.experiment"]
+    gone_only = {"need": "existing", "reason": "r", "tables": ["kescience.fitnessbrowser.gone"]}
+    set_state(kb, "followups.json", {"transport--abc123": gone_only})
+    fields, text = split(direction_page("transport--abc123", Corpus(kb)))
+    assert fields["follow"] == "unchecked" and "Following up: not checked yet." in text
+    assert "gone" not in text.split("## Data\n")[1].split("\n## ")[0]
 
 
 def make_picks_corpus(tmp_path, specs, broad=True):
@@ -385,6 +405,9 @@ def test_readiness_explanations_and_check_notes_use_reader_words(tmp_path):
     fields, body = split(page.read_text())
     fields["readiness_basis"] = "The census exists, but the join needs compute."
     page.write_text(join(fields, body + "\nApproach: lakehouse analysis. Readiness: x. "))
+    # A checked question keeps its readiness note; Not checked yet would drop it.
+    entry = {"need": "experiment", "reason": "r", "tables": []}
+    set_state(kb, "followups.json", {"transport--abc123": entry})
     out = direction_page("transport--abc123", Corpus(kb))
     published, text = split(out)
     assert published["readiness_basis"] == "The census exists, but the join needs a new analysis."

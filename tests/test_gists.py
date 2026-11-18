@@ -394,3 +394,27 @@ def test_a_failed_finding_retries_with_the_objections_that_stopped_it(tmp_path, 
     # The saved key is the finding's own, so the next run finds the retried gist current.
     state, agent = run(tmp_path, monkeypatch, {})
     assert agent.asked == [] and state[FID]["gist"] == GOOD
+
+
+@pytest.mark.parametrize(("expect", "asked"), [("b", False), ("a", True), (None, True)])
+def test_a_run_for_one_project_leaves_another_projects_failed_gist(
+    tmp_path, monkeypatch, expect, asked
+):
+    """A run for project b must not pay for project a's failed gist or change its record,
+    even under --strict-pages; a run for a and a maintainer run re-ask it."""
+    refusal = JobFailed(f"Codex turn failed: {CONTENT_FLAG}")
+    state, _ = run(tmp_path, monkeypatch, {STEP: [reply()]}, review_error={STEP: refusal})
+    assert state[FID] == {"failed": True}
+    before = (tmp_path / "state/gists.json").read_text()
+    agent = FakeAgent(tmp_path / "store", {STEP: [reply()]})
+    if expect:
+        agent.config["expect_source"] = expect
+    install(monkeypatch, agent)
+    monkeypatch.setattr(cards, "strict_pages", lambda: True)
+    assert gists.main(tmp_path) == 0
+    after = (tmp_path / "state/gists.json").read_text()
+    if asked:
+        assert agent.asked == [STEP, f"{STEP}/science-review"]
+        assert json.loads(after)[FID]["gist"] == GOOD
+    else:
+        assert agent.asked == [] and after == before

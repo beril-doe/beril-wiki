@@ -227,3 +227,41 @@ def test_a_label_naming_the_other_project_may_say_its_later():
     ):
         assert links.label_problem(label) == ""
     assert links.label_problem("Uses its essential gene counts for the comparison")
+
+
+@pytest.mark.parametrize(("expect", "asked"), [("gamma", False), ("alpha", True), (None, True)])
+def test_a_run_for_one_project_leaves_another_projects_failed_link(
+    tmp_path, monkeypatch, expect, asked
+):
+    """A run for gamma must not re-ask the failed alpha|beta pair or change its record,
+    even under --strict-pages; a run for alpha and a maintainer run re-ask it."""
+    corpus(tmp_path)
+    run(tmp_path, monkeypatch)
+    finding(
+        tmp_path,
+        A,
+        "Essential genes are mostly core",
+        "Essential genes are mostly core genes.",
+        quote="Essential genes were 86% core.",
+    )
+
+    def refuse(step, content):
+        if "pairs-" in step:
+            raise JobFailed("Codex turn failed: flagged for possible biological risk.")
+        return default_answer(step, content)
+
+    state, _ = run(tmp_path, monkeypatch, answer=refuse)
+    assert state["candidates"][f"pair:{A}|{B}"]["failed"] is True
+    before = (tmp_path / "state/links.json").read_text()
+    agent = Scripted(tmp_path / "store", default_answer)
+    if expect:
+        agent.config["expect_source"] = expect
+    install(monkeypatch, agent)
+    monkeypatch.setattr(cards, "strict_pages", lambda: True)
+    assert links.main(tmp_path) == 0
+    after = (tmp_path / "state/links.json").read_text()
+    if asked:
+        assert any("pairs-" in step for step in agent.asked)
+        assert json.loads(after)["candidates"][f"pair:{A}|{B}"]["relation"] == "same result"
+    else:
+        assert agent.asked == [] and after == before

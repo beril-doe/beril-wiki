@@ -505,8 +505,13 @@ def generate_retaining(
     and every gate in the pipeline passed, because check validates the
     numbers that remain, never the ones a rewrite deleted.
 
-    generate_page takes no custom validator, so this is a post-check with its
-    own single retry, phrased through the same RETRY_USER prompt."""
+    Retention runs before scientific review and keeps its own single retry,
+    phrased through the same RETRY_USER prompt."""
+
+    class RetentionError(C.PageError):
+        def __init__(self, obj: dict):
+            super().__init__("candidate dropped required evidence")
+            self.obj = obj
 
     def losses(obj: dict) -> tuple[list[str], list[str]]:
         content = (obj.get("content") or "").strip()
@@ -528,12 +533,23 @@ def generate_retaining(
             )
         return "\n".join(v)
 
-    obj = C.generate_page(messages, step, sources, targets)
+    def retain(obj: dict) -> None:
+        lost_ids, lost_nums = losses(obj)
+        if lost_ids or lost_nums:
+            raise RetentionError(obj)
+
+    def generate(msgs: list[dict], name: str) -> dict:
+        try:
+            return C.generate_page(msgs, name, sources, targets, validate=retain)
+        except RetentionError as exc:
+            return exc.obj
+
+    obj = generate(messages, step)
     lost_ids, lost_nums = losses(obj)
     if not lost_ids and not lost_nums:
         return obj
     print(f"    {step}: dropped {len(lost_ids)} citation(s), {len(lost_nums)} figure(s) — retrying")
-    obj = C.generate_page(
+    obj = generate(
         messages
         + [
             {"role": "assistant", "content": json.dumps(obj)},
@@ -543,8 +559,6 @@ def generate_retaining(
             },
         ],
         f"{step}/retention",
-        sources,
-        targets,
     )
     lost_ids, lost_nums = losses(obj)
     if lost_ids or lost_nums:

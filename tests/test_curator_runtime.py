@@ -380,6 +380,112 @@ def test_legacy_retry_gets_review_without_another_repair(tmp_path, monkeypatch, 
     assert calls == [step, step + "/science-review"]
 
 
+@pytest.mark.parametrize("failure", ["none", "unchanged", "json", "source", "citation", "figure"])
+def test_managed_merge_checks_before_review_and_replays_cached_jobs(tmp_path, monkeypatch, failure):
+    from beril_wiki.stages import consolidate
+
+    agent = runtime(tmp_path)
+    monkeypatch.setattr(R, "runtime", lambda: agent)
+    monkeypatch.setattr(R, "configured", lambda: True)
+    monkeypatch.setattr(R, "check_auth", lambda cli: None)
+    good = {
+        "content": "UNCHANGED"
+        if failure == "unchanged"
+        else "Kept 42%. [src: x]\n\nOther 56%. [src: y]"
+    }
+    bad = {
+        "none": json.dumps(good),
+        "unchanged": json.dumps(good),
+        "json": "not JSON",
+        "source": json.dumps({"content": "Wrong source. [src: bogus]"}),
+        "citation": json.dumps({"content": "Kept 42%. [src: x]"}),
+        "figure": json.dumps({"content": "Kept 42%. [src: x]\n\nOther claim. [src: y]"}),
+    }[failure]
+    calls = []
+
+    async def answer(payload, key, model):
+        step = agent._step
+        calls.append(step)
+        if step.endswith("/science-review"):
+            output = '{"accepted": true, "issues": []}'
+        else:
+            output = bad if step == "merge/probe" else json.dumps(good)
+        agent.ledger.finish(key, output, {"input_tokens": 2, "output_tokens": 3})
+        return output
+
+    monkeypatch.setattr(agent, "_query", answer)
+    messages = [{"role": "user", "content": "Merge the two pages."}]
+
+    def generate():
+        return consolidate.generate_retaining(
+            messages,
+            "merge/probe",
+            {"x": "Kept 42%.", "y": "Other 56%."},
+            set(),
+            {"x", "y"},
+            {"42", "56"},
+            unchanged_ok=failure == "unchanged",
+        )
+
+    if failure in {"none", "unchanged"}:
+        assert json.loads(R.text_completion(messages, "merge/probe")) == good
+    existing_keys = list(agent.jobs)
+    assert generate() == good
+    suffix = "retry" if failure in {"json", "source"} else "retention"
+    expected = (
+        ["merge/probe", "merge/probe/science-review"]
+        if failure in {"none", "unchanged"}
+        else ["merge/probe", f"merge/probe/{suffix}", f"merge/probe/{suffix}/science-review"]
+    )
+    assert calls == expected
+    keys = agent.jobs[len(existing_keys) :]
+    if existing_keys:
+        assert keys == existing_keys
+    finished = len(agent.jobs)
+    assert generate() == good
+    assert calls == expected
+    assert agent.jobs[finished:] == keys
+
+
+@pytest.mark.parametrize("failure", ["page", "retention", "both"])
+def test_managed_merge_keeps_existing_deterministic_retry_limits(tmp_path, monkeypatch, failure):
+    from beril_wiki import compiler
+    from beril_wiki.stages import consolidate
+
+    agent = runtime(tmp_path)
+    monkeypatch.setattr(R, "runtime", lambda: agent)
+    monkeypatch.setattr(R, "configured", lambda: True)
+    calls = []
+
+    def ask(messages, step):
+        calls.append(step)
+        page_invalid = failure == "page" or (failure == "both" and not step.endswith("/retry"))
+        return json.dumps(
+            {"content": "Wrong source. [src: bogus]" if page_invalid else "Kept claim. [src: x]"}
+        )
+
+    def no_review(*_args):
+        pytest.fail("a deterministically rejected candidate must not buy scientific review")
+
+    monkeypatch.setattr(agent, "ask", ask)
+    monkeypatch.setattr(agent, "review", no_review)
+    with pytest.raises(compiler.PageError):
+        consolidate.generate_retaining(
+            [], "merge/probe", {"x": "Kept claim.", "y": "Other claim."}, set(), {"x", "y"}, set()
+        )
+    expected = {
+        "page": ["merge/probe", "merge/probe/retry"],
+        "retention": ["merge/probe", "merge/probe/retention"],
+        "both": [
+            "merge/probe",
+            "merge/probe/retry",
+            "merge/probe/retention",
+            "merge/probe/retention/retry",
+        ],
+    }
+    assert calls == expected[failure]
+
+
 def test_search_ignores_unsearched_assets_and_bounds_long_snippets(tmp_path):
     (tmp_path / "wiki/concepts").mkdir(parents=True)
     (tmp_path / "wiki/concepts/a.md").write_text("z" * 100 + "x" * 200 + "z" * 100)

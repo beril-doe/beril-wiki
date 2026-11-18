@@ -269,6 +269,70 @@ def test_cited_pmids_reads_report_references():
     ]
 
 
+@pytest.mark.parametrize("remove", [False, True])
+def test_changed_cited_pmids_rejudge_only_the_affected_report(tmp_path, monkeypatch, remove):
+    page(tmp_path)
+    source = report(tmp_path, "a", "# A\n\nPMID: 12345\n")
+    if remove:
+        source.write_text(source.read_text() + "PMID: 67890\n")
+    other = "b--9f8e7d6c"
+    fields, body = cards.read_page(tmp_path / "wiki/findings" / f"{FID}.md")
+    cards.write_page(
+        tmp_path / "wiki/findings" / f"{other}.md",
+        fields | {"source": "b"},
+        body.replace("[src: a]", "[src: b]"),
+    )
+    report(tmp_path, "b", "# B\n\nPMID: 98765\n")
+    agent = FakeAgent(tmp_path / "store", {})
+    install(monkeypatch, agent)
+    monkeypatch.setattr(novelty, "today", lambda: datetime.date(2026, 10, 23))
+    judged = []
+
+    def judge(fid, finding, cited, agent):
+        judged.append((fid, cited))
+        return {"label": novelty.INSUFFICIENT, "retrieved_on": "2026-10-23", "closest": []}
+
+    monkeypatch.setattr(novelty, "judge", judge)
+    assert novelty.main(tmp_path) == 0
+    saved = json.loads((tmp_path / novelty.STATE).read_text())
+    judged.clear()
+    raw = b"# A\n\n35\xb0C\nPMID: 12345\n" + (b"" if remove else b"PMID: 67890\n")
+    source.write_bytes(raw)
+    assert novelty.main(tmp_path) == 0
+    expected = ["12345"] if remove else ["12345", "67890"]
+    assert judged == [(FID, expected)]
+    updated = json.loads((tmp_path / novelty.STATE).read_text())
+    assert updated[other] == saved[other]
+    assert updated[FID]["input"] == saved[FID]["input"]
+    assert updated[FID]["cited_pmids"] == expected
+    judged.clear()
+    assert novelty.main(tmp_path) == 0
+    assert judged == [] and agent.asked == []
+    assert source.read_bytes() == raw
+
+
+def test_legacy_labels_backfill_citations_without_rejudging_or_changing_input(
+    tmp_path, monkeypatch
+):
+    first, agent = run(tmp_path, monkeypatch, {}, papers={})
+    path = tmp_path / novelty.STATE
+    legacy = {key: value for key, value in first.items() if key != "cited_pmids"}
+    path.write_text(json.dumps({FID: legacy}))
+    source = report(tmp_path, "a", "# A\n\nPMID: 12345\n")
+    raw = source.read_bytes() + b"\n35\xb0C\n"
+    source.write_bytes(raw)
+    asked = list(agent.asked)
+
+    def no_judgment(*_args):
+        raise AssertionError("a legacy label must not buy a new judgment")
+
+    monkeypatch.setattr(novelty, "judge", no_judgment)
+    assert novelty.main(tmp_path) == 0
+    assert json.loads(path.read_text())[FID] == legacy | {"cited_pmids": ["12345"]}
+    assert agent.asked == asked
+    assert source.read_bytes() == raw
+
+
 def test_abstracts_are_fetched_in_batches_under_the_size_cap(monkeypatch):
     from beril_wiki.stages import literature as L
 

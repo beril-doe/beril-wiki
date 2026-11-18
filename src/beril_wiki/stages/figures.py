@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Figure placement for the wiki: manifest + LLM-chosen placements, cached.
 
-Phase A (deterministic): parse every project report's ![caption](figures/...)
-embeds into figures-manifest.json, keeping the caption and the report paragraph
-around each embed (what the figure evidences).
+Phase A (deterministic): parse every project report's figure embeds (`figures/...` and
+run outputs, as corpus.FIG_EMBED matches them) into figures-manifest.json, keeping the
+caption and the report paragraph around each embed (what the figure evidences).
 
 Phase B (LLM, cached by page-content hash, pages placed in a worker pool): for
 each summary / topic hub / conflict page, ask the model WHERE figures from the
@@ -29,6 +29,7 @@ import sys
 
 from beril_wiki.agentic.prose import PageFailure, parallel, workers
 from beril_wiki.agentic.runtime import WorkflowError, atomic_json, completion, configured
+from beril_wiki.corpus import FIG_EMBED, figure_destination
 from beril_wiki.paths import ROOT, STATE
 
 MODEL = os.environ.get("WIKI_MODEL", "openai/gpt-5.6-luna")
@@ -69,11 +70,12 @@ def build_manifest() -> dict[str, list[dict]]:
         text = report.read_text(encoding="utf-8", errors="replace")
         figs = []
         for par in paragraphs(text):
-            for m in re.finditer(r"!\[([^\]]*)\]\((figures/[^)]+)\)", par):
-                path = ROOT / "wiki" / "figures" / project / re.sub(r"^figures/", "", m.group(2))
+            for m in FIG_EMBED.finditer(par):
+                caption, rel = m.group(0)[2 : m.group(0).index("](")], m.group(1)
+                path = ROOT / "wiki" / "figures" / figure_destination(project, rel)
                 if path.exists():
                     ctx = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", par).strip()[:400]
-                    figs.append({"file": m.group(2), "caption": m.group(1), "context": ctx})
+                    figs.append({"file": rel, "caption": caption, "context": ctx})
         if figs:
             manifest[project] = figs
     STATE.mkdir(exist_ok=True)

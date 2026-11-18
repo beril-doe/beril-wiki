@@ -8,6 +8,7 @@ import re
 
 from beril_wiki import records
 from beril_wiki.publish.cards.corpus import Corpus, eligible, finding_title, join, result_type
+from beril_wiki.publish.cards.data import data_lines, question_tables
 from beril_wiki.publish.cards.links import related_results
 from beril_wiki.publish.cards.picks import home_questions, pick_lists
 from beril_wiki.publish.cards.text import (
@@ -23,7 +24,6 @@ from beril_wiki.publish.cards.text import (
     chip_note,
     chip_of,
     compare_text,
-    follow_of,
     label_note,
     reader_terms,
 )
@@ -227,7 +227,9 @@ def grounding(fields: dict, c: Corpus) -> list[str]:
 def beril_prompt(fields: dict, body: str, c: Corpus) -> str:
     """What a reader pastes into BERIL to start the project."""
     sec = sections(body)
-    data = ", ".join(fields.get("collections") or []) or "none named"
+    follow = follow_fields(fields, c)
+    databases = ", ".join(follow["databases"]) or "none named"
+    tables = ", ".join(follow["tables"]) or "none named"
     lines = [
         "I want to pursue this research direction with BERIL on the KBase Data Lakehouse.",
         "",
@@ -235,8 +237,9 @@ def beril_prompt(fields: dict, body: str, c: Corpus) -> str:
         f"Hypothesis: {fields.get('hypothesis', '')}",
         f"Proposed test: {sec.get('How to test it', '')}",
         f"What would support or refute it: {sec.get('What would support or refute it', '')}",
-        f"Collections: {data}. {follow_line(follow_fields(fields, c))} "
-        f"{fields.get('readiness_basis', '')}",
+        f"Databases: {databases}; tables: {tables}. "
+        f"{follow_line(follow, c.catalog.tenants_covered())} "
+        f"{data_note(fields, follow)}",
         "",
         "It builds on these results from the BERIL wiki:",
         *grounding(fields, c),
@@ -250,6 +253,7 @@ def beril_prompt(fields: dict, body: str, c: Corpus) -> str:
 def brief(fields: dict, body: str, c: Corpus) -> str:
     """The Markdown a reader copies to hand a direction to a collaborator or a lab."""
     sec = sections(body)
+    follow = follow_fields(fields, c)
     lines = [
         f"# {title_of(body, 'Research direction')}",
         "",
@@ -263,8 +267,9 @@ def brief(fields: dict, body: str, c: Corpus) -> str:
         "",
         f"**What would support or refute it.** {sec.get('What would support or refute it', '')}",
         "",
-        f"**What following up needs.** {follow_line(follow_fields(fields, c))} "
-        f"{fields.get('readiness_basis', '')}",
+        "**What following up needs.** "
+        f"{follow_line(follow, c.catalog.tenants_covered())} "
+        f"{data_note(fields, follow)}",
         "",
         "**Builds on**",
         *grounding(fields, c),
@@ -279,15 +284,23 @@ def brief(fields: dict, body: str, c: Corpus) -> str:
     return plain("\n".join(lines))
 
 
-APPROACH_LINE = re.compile(r"^Approach: (.+?)\. Readiness: (.+?)\. ", re.M)
+APPROACH_LINE = re.compile(r"^Approach: (.+?)\. Readiness: (.+?)\. ([^\n]*)", re.M)
 LABEL_SUFFIX = re.compile(
     r"^(- Finding: .*) \((" + "|".join(map(re.escape, [*LABEL_TEXT, NOT_ASSESSED])) + r")\)$", re.M
 )
 
 
-def follow_line(follow: dict) -> str:
+def data_note(fields: dict, follow: dict) -> str:
+    """The direction's readiness note, or "" for *Not checked yet*, which makes no data
+    claim."""
+    return "" if follow["follow"] == "unchecked" else str(fields.get("readiness_basis") or "")
+
+
+def follow_line(follow: dict, tenants: int) -> str:
     """What following up needs, as the question page's Data section states it."""
     parts = [f"Following up: {FOLLOW_TEXT[follow['follow']].lower()}."]
+    if follow["follow"] in ("outside", "experiment"):
+        parts.append(f"Not found in the {tenants} tenants the catalog covers.")
     if follow.get("first_step"):
         parts.append(f"{FIRST_STEP_TEXT}.")
     if follow.get("data_unclear"):
@@ -295,11 +308,16 @@ def follow_line(follow: dict) -> str:
     return " ".join(parts)
 
 
-def reader_words(body: str, follow: dict | None = None) -> str:
+def reader_words(body: str, follow: dict | None, tenants: int) -> str:
     """The generated body with pipeline terms replaced by the reader-facing ones."""
 
     def approach(m: re.Match) -> str:
-        return follow_line(follow) + " " if follow else ""
+        if not follow:
+            return m.group(3)
+        # The rest of the line is the readiness note, which Not checked yet leaves out.
+        if follow["follow"] == "unchecked":
+            return follow_line(follow, tenants)
+        return f"{follow_line(follow, tenants)} {m.group(3)}"
 
     def suffix(m: re.Match) -> str:
         chip = CHIP.get(m.group(2))
@@ -309,21 +327,56 @@ def reader_words(body: str, follow: dict | None = None) -> str:
 
 
 def follow_fields(fields: dict, c: Corpus) -> dict:
-    """A question's follow-up need for its page: column, words and the two markers."""
+    """A question's follow-up need for its page: column, words, the two markers and the
+    catalog tables it names.
+
+    Only the followups stage places a question. *Existing* and the first-step marker also
+    need a table of the entry's own that the committed catalog lists, so a model's word
+    alone never shows them. A missing, failed or table-less answer, or one written before
+    the catalog check (Corpus drops those), reads *Not checked yet* and names no database
+    or table, since that state makes no data claim. The direction's own approach and
+    readiness grade a plan and place nothing."""
     entry = c.followups.get(fields.get("_id", ""))
-    follow = follow_of(entry, fields.get("approach", ""))
-    first = (
-        bool(entry.get("first_step_existing"))
-        if entry
-        else (follow == "experiment" and fields.get("approach") == "analysis then experiment")
-    )
-    unclear = bool(entry.get("data_unclear")) if entry else fields.get("readiness") == "unknown"
+    own = bool(question_tables({}, entry, c.catalog))
+    need = (entry or {}).get("need")
+    if need in ("outside", "experiment"):
+        follow = need
+    elif need == "existing" and own:
+        follow = "existing"
+    else:
+        follow = "unchecked"
+    checked = follow != "unchecked"
+    rows = question_tables(fields, entry, c.catalog) if checked else []
+    named = (c.catalog.canonical(str(d)) for d in fields.get("databases") or [] if checked)
     return {
         "follow": follow,
         "follow_text": FOLLOW_TEXT[follow],
-        "first_step": first and follow == "experiment",
-        "data_unclear": unclear,
+        "first_step": bool(
+            entry and entry.get("first_step_existing") and follow == "experiment" and own
+        ),
+        "data_unclear": bool(entry.get("data_unclear")) if entry else False,
+        "databases": sorted({d for d in named if d} | {r["database"] for r in rows}),
+        "tables": [f"{r['database']}.{r['table']}" for r in rows],
     }
+
+
+DATA_SECTION = re.compile(r"^## Data\n", re.M)
+HEADING = re.compile(r"^## ", re.M)
+
+
+def with_data_lines(body: str, lines: list[str]) -> str:
+    """The body with ``lines`` at the end of its Data section, or in a new Data section
+    before Builds on (else at the end) when it has none."""
+    block = "\n".join(lines)
+    found = DATA_SECTION.search(body)
+    if found:
+        after = HEADING.search(body, found.end())
+    else:
+        after = re.search(r"^## Builds on\n", body, re.M)
+        block = f"## Data\n\n{block}"
+    at = after.start() if after else len(body)
+    rest = body[at:]
+    return f"{body[:at].rstrip()}\n\n{block}\n" + (f"\n{rest}" if rest else "")
 
 
 def direction_page(did: str, c: Corpus) -> str:
@@ -337,11 +390,14 @@ def direction_page(did: str, c: Corpus) -> str:
         **follow,
         "topic": topics[0] if topics else "",
     }
-    if fields.get("readiness_basis"):
-        extra["readiness_basis"] = reader_terms(fields["readiness_basis"])
+    published = fields | extra
+    if data_note(fields, follow):
+        published["readiness_basis"] = reader_terms(fields["readiness_basis"])
+    else:
+        published.pop("readiness_basis", None)
     by = c.cross_projects(did)
     if by:
-        extra["cross"] = [
+        published["cross"] = [
             {
                 "source": sid,
                 "title": c.report_title(sid),
@@ -350,10 +406,14 @@ def direction_page(did: str, c: Corpus) -> str:
             }
             for sid, fids in sorted(by.items())
         ]
-        extra["cross_topics"] = c.group_topics(sorted(by))
+        published["cross_topics"] = c.group_topics(sorted(by))
     if did in home_questions(c):
-        extra["home_question_rank"] = home_questions(c).index(did) + 1
-    return join(fields | extra, reader_terms(reader_words(body, follow)).rstrip() + "\n")
+        published["home_question_rank"] = home_questions(c).index(did) + 1
+    unchecked = follow["follow"] == "unchecked"
+    rows = [] if unchecked else question_tables(fields, c.followups.get(did), c.catalog)
+    text = reader_words(body, follow, c.catalog.tenants_covered())
+    text = with_data_lines(text, data_lines(rows, c.catalog))
+    return join(published, reader_terms(text).rstrip() + "\n")
 
 
 def issues_page(sid: str, items: list[dict], provenance: str, titles: dict[str, str]) -> str:

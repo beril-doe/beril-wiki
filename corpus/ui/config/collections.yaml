@@ -1,0 +1,637 @@
+# BERIL Collections Configuration
+# Defines metadata for BERDL collections shown in the Research Observatory
+
+collections:
+  # Primary Research Collections
+  - id: kbase_ke_pangenome
+    name: Pangenome Collection
+    category: primary
+    icon: "&#129516;"  # DNA emoji
+    provider: "KBase, DOE"
+    citation: "Arkin AP et al. (2018) KBase: The United States Department of Energy Systems Biology Knowledgebase. Nat Biotechnol 36:566-569"
+    doi: "10.1038/nbt.4163"
+    website: "https://www.kbase.us/"
+    description: >
+      Pangenome data for 293,059 genomes across 27,690 microbial species
+      derived from GTDB r214. Includes core/accessory gene classification,
+      functional annotations, and ANI relationships.
+    philosophy: >
+      Enable comparative genomics at scale. Understand core vs accessory
+      genome content, functional distributions, and evolutionary patterns
+      across bacterial and archaeal species. Answer questions about what
+      makes species unique and what they share.
+    data_sources:
+      - GTDB r214
+      - eggNOG v6
+      - GapMind
+      - AlphaEarth
+    scale_stats:
+      genomes: 293059
+      species: 27690
+      genes: "1B+"
+      tables: 14
+    key_tables:
+      - name: genome
+        description: Core genome metadata and identifiers
+        row_count: 293059
+      - name: pangenome
+        description: Per-species pangenome statistics
+        row_count: 27690
+      - name: gene_cluster
+        description: Gene family classifications (core/accessory/singleton)
+        row_count: null
+      - name: gene
+        description: Individual gene records
+        row_count: null
+      - name: eggnog_mapper_annotations
+        description: Functional annotations (COG, GO, KEGG, EC, PFAM)
+        row_count: null
+      - name: gapmind_pathways
+        description: Metabolic pathway predictions
+        row_count: null
+      - name: genome_ani
+        description: Pairwise ANI values between genomes
+        row_count: 421000000
+      - name: gtdb_metadata
+        description: CheckM quality, assembly stats, GC%
+        row_count: 293059
+      - name: gtdb_species_clade
+        description: Species taxonomy and ANI statistics
+        row_count: 27690
+      - name: gtdb_taxonomy_r214v1
+        description: Full GTDB taxonomy
+        row_count: null
+    sample_queries:
+      - title: Get species with most genomes
+        query: |
+          SELECT
+            s.GTDB_species,
+            p.no_genomes,
+            p.no_core,
+            p.no_aux_genome,
+            s.mean_intra_species_ANI
+          FROM kbase_ke_pangenome.pangenome p
+          JOIN kbase_ke_pangenome.gtdb_species_clade s
+            ON p.gtdb_species_clade_id = s.gtdb_species_clade_id
+          ORDER BY p.no_genomes DESC
+          LIMIT 20
+      - title: Get functional annotations for a species
+        query: |
+          SELECT
+            e.COG_category,
+            e.Description,
+            COUNT(*) as gene_count
+          FROM kbase_ke_pangenome.gene g
+          JOIN kbase_ke_pangenome.eggnog_mapper_annotations e
+            ON g.gene_id = e.gene_id
+          WHERE g.gtdb_species_clade_id = 's__Escherichia_coli--RS_GCF_000005845.2'
+          GROUP BY e.COG_category, e.Description
+          ORDER BY gene_count DESC
+          LIMIT 20
+      - title: Get genomes for a species with quality metrics
+        query: |
+          SELECT
+            g.genome_id,
+            g.ncbi_biosample_id,
+            m.checkm_completeness,
+            m.checkm_contamination,
+            m.genome_size,
+            m.gc_percentage
+          FROM kbase_ke_pangenome.genome g
+          LEFT JOIN kbase_ke_pangenome.gtdb_metadata m
+            ON g.genome_id = m.accession
+          WHERE g.gtdb_species_clade_id = 's__Escherichia_coli--RS_GCF_000005845.2'
+          LIMIT 100
+    related_collections:
+      - kescience_fitnessbrowser
+      - kbase_msd_biochemistry
+      - kbase_genomes
+
+  - id: kescience_fitnessbrowser
+    name: Fitness Browser
+    category: primary
+    icon: "&#128202;"  # Chart emoji
+    provider: "Price Lab, LBNL"
+    citation: "Price MN et al. (2018) Mutant phenotypes for thousands of bacterial genes of unknown function. Nature 557:503-509"
+    doi: "10.1038/s41586-018-0124-0"
+    website: "https://fit.genomics.lbl.gov/"
+    description: >
+      Gene fitness data from transposon mutant experiments across 40+
+      bacterial organisms. Identify essential genes and condition-specific
+      fitness effects.
+    philosophy: >
+      Connect genotype to phenotype through systematic mutagenesis. Understand
+      which genes are essential for growth, which provide advantages under
+      specific conditions, and how genetic background affects fitness.
+    data_sources:
+      - RB-TnSeq experiments
+      - KEGG
+      - MetaCyc
+      - SEED
+    scale_stats:
+      organisms: "40+"
+      experiments: "1000+"
+      tables: "90+"
+    key_tables:
+      - name: gene
+        description: Gene definitions and annotations
+        row_count: null
+      - name: experiment
+        description: Experimental conditions and metadata
+        row_count: null
+      - name: fitness
+        description: Gene fitness scores per experiment
+        row_count: null
+      - name: organism
+        description: Organism metadata
+        row_count: null
+    sample_queries:
+      - title: Get organisms in the fitness browser
+        query: |
+          SELECT *
+          FROM kescience_fitnessbrowser.organism
+          LIMIT 20
+      - title: Get fitness scores for a gene
+        query: |
+          SELECT
+            e.condition,
+            f.fitness,
+            f.t_score
+          FROM kescience_fitnessbrowser.fitness f
+          JOIN kescience_fitnessbrowser.experiment e
+            ON f.experiment_id = e.experiment_id
+          WHERE f.gene_id = 'YOUR_GENE_ID'
+          ORDER BY ABS(f.fitness) DESC
+          LIMIT 20
+    related_collections:
+      - kbase_ke_pangenome
+      - kbase_phenotype
+
+  - id: kbase_genomes
+    name: KBase Genomes
+    category: primary
+    icon: "&#128172;"  # Speech bubble (placeholder)
+    provider: "KBase, DOE"
+    website: "https://www.kbase.us/"
+    description: >
+      Structural genomics data including contigs, features, and protein
+      sequences from the KBase genome repository.
+    philosophy: >
+      Provide foundational genome sequence data. Access raw sequences,
+      structural annotations, and protein products for detailed analysis.
+    data_sources:
+      - KBase genome repository
+      - NCBI
+      - JGI
+    scale_stats:
+      tables: 16
+    key_tables:
+      - name: genome
+        description: Genome metadata
+        row_count: null
+      - name: contig
+        description: Contig sequences
+        row_count: null
+      - name: feature
+        description: Genomic features (genes, CDS, etc.)
+        row_count: null
+      - name: protein
+        description: Protein sequences
+        row_count: null
+    sample_queries:
+      - title: Get genome metadata
+        query: |
+          SELECT *
+          FROM kbase_genomes.genome
+          LIMIT 20
+    related_collections:
+      - kbase_ke_pangenome
+
+  - id: kbase_msd_biochemistry
+    name: ModelSEED Biochemistry
+    category: primary
+    icon: "&#9879;"  # Alembic emoji
+    provider: "ModelSEED / Henry Lab"
+    website: "https://modelseed.org/"
+    description: >
+      Biochemistry reference data for metabolic modeling. Reactions,
+      compounds, and pathway mappings from ModelSEED.
+    philosophy: >
+      Enable metabolic modeling and pathway analysis. Map genes to reactions,
+      understand metabolic capabilities, and support flux balance analysis.
+    data_sources:
+      - ModelSEED
+      - KEGG
+      - MetaCyc
+    scale_stats:
+      tables: 4
+    key_tables:
+      - name: reaction
+        description: Biochemical reactions
+        row_count: null
+      - name: compound
+        description: Chemical compounds and metabolites
+        row_count: null
+      - name: pathway
+        description: Metabolic pathways
+        row_count: null
+    sample_queries:
+      - title: Get reactions
+        query: |
+          SELECT *
+          FROM kbase_msd_biochemistry.reaction
+          LIMIT 20
+    related_collections:
+      - kbase_ke_pangenome
+      - kescience_fitnessbrowser
+
+  - id: kbase_phenotype
+    name: Phenotype Collection
+    category: primary
+    icon: "&#127793;"  # Seedling emoji
+    description: >
+      Experimental phenotype data including growth conditions, measurements,
+      and phenotypic outcomes.
+    philosophy: >
+      Capture experimental observations. Link genotypes to measured phenotypes
+      under defined conditions for validation and discovery.
+    data_sources:
+      - KBase phenotype data
+    scale_stats:
+      tables: 7
+    key_tables:
+      - name: phenotype
+        description: Phenotype measurements
+        row_count: null
+      - name: condition
+        description: Experimental conditions
+        row_count: null
+      - name: media
+        description: Growth media definitions
+        row_count: null
+    sample_queries:
+      - title: Get phenotype data
+        query: |
+          SELECT *
+          FROM kbase_phenotype.phenotype
+          LIMIT 20
+    related_collections:
+      - kescience_fitnessbrowser
+
+  # Domain-Specific Collections
+  - id: phagefoundry
+    name: PhageFoundry Browsers
+    category: domain
+    icon: "&#129440;"  # Microbe emoji
+    description: >
+      Phage genome browsers for specific bacterial hosts including Klebsiella,
+      P. aeruginosa, Acinetobacter, and P. viridiflava.
+    philosophy: >
+      Support phage therapy research. Catalog phage genomes, understand
+      host-phage interactions, and identify therapeutic candidates.
+    data_sources:
+      - PhageFoundry
+    scale_stats:
+      browsers: 4
+      hosts:
+        - Klebsiella
+        - P. aeruginosa
+        - Acinetobacter
+        - P. viridiflava
+    sub_collections:
+      - phagefoundry_klebsiella
+      - phagefoundry_paeruginosa
+      - phagefoundry_acinetobacter
+      - phagefoundry_pviridiflava
+    sample_queries:
+      - title: Get phage genomes (Klebsiella example)
+        query: |
+          SELECT *
+          FROM phagefoundry_klebsiella.phage
+          LIMIT 20
+    related_collections: []
+
+  - id: enigma_coral
+    name: ENIGMA CORAL
+    category: domain
+    icon: "&#129712;"  # Coral emoji
+    provider: "ENIGMA SFA, LBNL"
+    website: "https://enigma.lbl.gov/"
+    description: >
+      Subsurface microbial ecology and geochemistry data from the ENIGMA SFA
+      project at the Oak Ridge Reservation (ORR), Tennessee. Covers
+      environmental sampling (groundwater from boreholes), 16S amplicon
+      community profiling, isolated bacterial strains with genomes, and
+      geochemical measurements. Includes the SSO (subsurface observatory)
+      site with spatial and temporal community profiles.
+    philosophy: >
+      Understand subsurface microbial ecology at contaminated sites. Study
+      how microbial community composition (ASVs) varies in space and time
+      and correlates with geochemical parameters (metals, nitrate, etc.)
+      across the Oak Ridge Reservation watershed.
+    data_sources:
+      - ENIGMA SFA
+    scale_stats:
+      locations: 596
+      samples: 4346
+      asvs: 213044
+      strains: 3154
+      genomes: 6705
+      tables: 47
+    key_tables:
+      - name: sdt_location
+        description: Field sites with GPS coordinates and biome annotations
+        row_count: 596
+      - name: sdt_sample
+        description: Environmental samples (mostly groundwater) linked to locations
+        row_count: 4346
+      - name: sdt_asv
+        description: 16S rRNA Amplicon Sequence Variants
+        row_count: 213044
+      - name: ddt_brick0000459
+        description: ASV abundance counts per community (dataset 1, 868K rows)
+        row_count: 867946
+      - name: ddt_brick0000454
+        description: ASV taxonomy assignments at all levels (dataset 1)
+        row_count: 627241
+      - name: ddt_brick0000010
+        description: Per-sample geochemistry in µM (nitrate, nitrite, metals)
+        row_count: 52884
+      - name: sdt_genome
+        description: Annotated microbial genomes
+        row_count: 6705
+      - name: sdt_strain
+        description: Isolated bacterial strains
+        row_count: 3154
+      - name: ddt_brick0000521
+        description: Genome quality metrics (CheckM completeness, contamination, N50)
+        row_count: 1496
+      - name: sys_process
+        description: Scientific process provenance (campaign, person, protocol)
+        row_count: 87677
+    sample_queries:
+      - title: Get SSO community ASV profiles
+        query: |
+          SELECT ab.sdt_community_name, ab.sdt_asv_name,
+                 tax.taxonomic_level_sys_oterm_name, tax.sdt_taxon_name,
+                 ab.count_count_unit
+          FROM enigma_coral.ddt_brick0000459 ab
+          JOIN enigma_coral.ddt_brick0000454 tax
+            ON ab.sdt_asv_name = tax.sdt_asv_name
+          WHERE ab.sdt_community_name LIKE 'SSO%'
+            AND ab.count_count_unit > 0
+            AND tax.taxonomic_level_sys_oterm_name = 'Genus'
+          ORDER BY ab.sdt_community_name, ab.count_count_unit DESC
+      - title: Get SSO geochemistry
+        query: |
+          SELECT sdt_sample_name, molecule_from_list_sys_oterm_name,
+                 concentration_micromolar, physiochemical_state
+          FROM enigma_coral.ddt_brick0000010
+          WHERE sdt_sample_name LIKE 'SSO%'
+          ORDER BY sdt_sample_name, concentration_micromolar DESC
+      - title: Get samples with location metadata
+        query: |
+          SELECT s.sdt_sample_name, s.date, s.depth_meter,
+                 l.latitude_degree, l.longitude_degree, l.region,
+                 l.feature_sys_oterm_name
+          FROM enigma_coral.sdt_sample s
+          JOIN enigma_coral.sdt_location l
+            ON s.sdt_location_name = l.sdt_location_name
+          WHERE s.sdt_location_name LIKE 'SSO%'
+          ORDER BY s.date, s.sdt_location_name
+      - title: Get high-quality genomes
+        query: |
+          SELECT q.sdt_strain_name,
+                 q.genome_completeness_method_checkm_percent,
+                 q.genome_contamination_method_checkm_percent,
+                 q.genome_n50_method_checkm_count_unit
+          FROM enigma_coral.ddt_brick0000521 q
+          WHERE q.genome_completeness_method_checkm_percent >= 95
+            AND q.genome_contamination_method_checkm_percent <= 5
+          ORDER BY q.genome_completeness_method_checkm_percent DESC
+    related_collections:
+      - kbase_ke_pangenome
+      - kescience_fitnessbrowser
+
+  - id: nmdc_arkin
+    name: NMDC Multi-omics
+    category: domain
+    icon: "&#128300;"  # Microscope emoji
+    provider: "NMDC"
+    website: "https://microbiomedata.org/"
+    description: >
+      Multi-omics analysis data from the National Microbiome Data
+      Collaborative. Includes functional annotations, embeddings,
+      metabolomics, proteomics, lipidomics, and microbial trait data
+      for integrated microbiome analysis.
+    philosophy: >
+      Enable integrated microbiome analysis across multiple omics layers.
+      Combine metabolomics, proteomics, and metagenomics with standardized
+      annotations and embeddings for comprehensive sample characterization.
+    data_sources:
+      - NMDC
+      - COG
+      - KEGG
+      - MetaCyc
+      - GO
+    scale_stats:
+      studies: 48
+      metabolomics_records: "3M+"
+      lipidomics_records: "1.4M+"
+      tables: "60+"
+    key_tables:
+      - name: annotation_terms_unified
+        description: Unified annotation terms (COG, EC, GO, KEGG, MetaCyc)
+        row_count: 67353
+      - name: metabolomics_gold
+        description: Metabolomics measurements
+        row_count: 3129061
+      - name: lipidomics_gold
+        description: Lipidomics measurements
+        row_count: 1395867
+      - name: embeddings_v1
+        description: 256-dimensional sample embeddings
+        row_count: 5316
+      - name: trait_features
+        description: Microbial trait profiles (90+ traits)
+        row_count: null
+      - name: study_table
+        description: Study definitions
+        row_count: 48
+    sample_queries:
+      - title: Get NMDC studies
+        query: |
+          SELECT *
+          FROM nmdc_arkin.study_table
+      - title: Get metabolomics data
+        query: |
+          SELECT *
+          FROM nmdc_arkin.metabolomics_gold
+          LIMIT 20
+    related_collections:
+      - kbase_ke_pangenome
+
+  - id: nmdc_ncbi_biosamples
+    name: NMDC BioSamples
+    category: domain
+    icon: "&#128300;"  # Microscope emoji
+    provider: "NMDC / NCBI"
+    website: "https://microbiomedata.org/"
+    description: >
+      Harmonized NCBI BioSample metadata from the National Microbiome Data
+      Collaborative. Standardized attributes, environmental triads, and
+      dimensional statistics for biosample integration.
+    philosophy: >
+      Standardize biosample metadata for cross-study comparisons. Enable
+      sample discovery and integration across microbiome studies.
+    data_sources:
+      - NCBI BioSample
+      - NMDC
+    scale_stats:
+      tables: 17
+    key_tables:
+      - name: biosamples_flattened
+        description: Flattened biosample records
+        row_count: null
+      - name: env_triads_flattened
+        description: Environmental triads (broad/local/medium)
+        row_count: null
+      - name: biosamples_attributes
+        description: Biosample attributes
+        row_count: null
+    sample_queries:
+      - title: Get biosamples
+        query: |
+          SELECT *
+          FROM nmdc_ncbi_biosamples.biosamples_flattened
+          LIMIT 20
+    related_collections:
+      - nmdc_arkin
+
+  - id: planetmicrobe
+    name: PlanetMicrobe
+    category: domain
+    icon: "&#127754;"  # Ocean wave emoji
+    description: >
+      Marine microbial ecology data including oceanographic sampling
+      campaigns, environmental samples, sequencing experiments, and
+      taxonomic/functional profiles from metagenomic and amplicon studies.
+    philosophy: >
+      Catalog marine microbial diversity. Connect oceanographic sampling
+      with microbial community composition and function for global-scale
+      marine ecology research.
+    data_sources:
+      - PlanetMicrobe
+    scale_stats:
+      samples: 2371
+      experiments: 5946
+      sampling_events: 1151
+      tables: 30
+    sub_collections:
+      - planetmicrobe_planetmicrobe
+      - planetmicrobe_planetmicrobe_raw
+    key_tables:
+      - name: sample
+        description: Environmental samples
+        row_count: 2371
+      - name: experiment
+        description: Sequencing experiments
+        row_count: 5946
+      - name: sampling_event
+        description: Sampling events with coordinates
+        row_count: 1151
+      - name: campaign
+        description: Oceanographic campaigns/cruises
+        row_count: null
+    sample_queries:
+      - title: Get marine samples
+        query: |
+          SELECT *
+          FROM planetmicrobe_planetmicrobe.sample
+          LIMIT 20
+      - title: Get sampling events
+        query: |
+          SELECT *
+          FROM planetmicrobe_planetmicrobe.sampling_event
+          LIMIT 20
+    related_collections: []
+
+  - id: protect_genomedepot
+    name: PROTECT Pathogen Browser
+    category: domain
+    icon: "&#129440;"  # Microbe emoji
+    description: >
+      Pathogen genome browser using the GenomeDepot format. Contains genome,
+      gene, annotation, strain, sample, and taxon data for pathogen
+      surveillance and research.
+    philosophy: >
+      Support pathogen surveillance research. Catalog pathogen genomes,
+      track strain variation, and enable comparative genomic analysis
+      for public health applications.
+    data_sources:
+      - PROTECT
+    scale_stats:
+      tables: 6
+    key_tables:
+      - name: browser_genome
+        description: Pathogen genome records
+        row_count: null
+      - name: browser_gene_sampled
+        description: Sampled gene records
+        row_count: null
+      - name: browser_strain
+        description: Strain information
+        row_count: null
+      - name: browser_taxon
+        description: Taxonomic information
+        row_count: null
+    sample_queries:
+      - title: Get pathogen genomes
+        query: |
+          SELECT *
+          FROM protect_genomedepot.browser_genome
+          LIMIT 20
+    related_collections: []
+
+  # Reference Collections
+  - id: kbase_uniref
+    name: UniRef Clusters
+    category: reference
+    icon: "&#128196;"  # Page emoji
+    description: >
+      Protein sequence clusters at 50%, 90%, and 100% identity thresholds
+      from UniRef.
+    philosophy: >
+      Reduce redundancy in protein searches. Group related proteins for
+      faster homology searches and functional inference.
+    sub_collections:
+      - kbase_uniref50
+      - kbase_uniref90
+      - kbase_uniref100
+    related_collections: []
+
+  - id: kbase_uniprot
+    name: UniProt Annotations
+    category: reference
+    icon: "&#128196;"  # Page emoji
+    description: >
+      UniProt protein annotations for bacterial and archaeal proteins.
+    philosophy: >
+      Provide high-quality protein functional annotations. Access curated
+      protein information for functional interpretation.
+    sub_collections:
+      - kbase_uniprot_bacteria
+      - kbase_uniprot_archaea
+    related_collections: []
+
+  - id: kbase_ontology_source
+    name: Ontologies
+    category: reference
+    icon: "&#128196;"  # Page emoji
+    description: >
+      Ontology reference data including GO, KEGG, EC numbers, and other
+      controlled vocabularies.
+    philosophy: >
+      Standardize functional descriptions. Use controlled vocabularies for
+      consistent annotation and cross-database integration.
+    related_collections: []

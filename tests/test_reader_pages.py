@@ -32,6 +32,7 @@ def card_corpus(kb):
     import json
 
     from beril_wiki.stages import cards
+    from card_fakes import lakehouse
 
     wiki = kb / "wiki"
     (wiki / "concepts").mkdir(parents=True)
@@ -67,7 +68,8 @@ def card_corpus(kb):
             "approach": "lakehouse analysis",
             "readiness": "needs compute",
             "readiness_basis": "Data exists.",
-            "collections": ["kbase-ke-pangenome"],
+            "databases": ["kescience.fitnessbrowser"],
+            "tables": ["kescience.fitnessbrowser.experiment"],
             "findings": ["a--1a2b3c4d"],
             "conflicts": ["conflict--gap--1234abcd"],
             "builds_on": ["findings/a--1a2b3c4d", "conflicts/conflict--gap--1234abcd"],
@@ -78,6 +80,7 @@ def card_corpus(kb):
         "## What would support or refute it\n\nCofitness with transporters.\n",
     )
     (kb / "state").mkdir()
+    lakehouse(kb)
     (kb / "state/curator-topics.json").write_text(
         json.dumps({"groups": [{"title": "Dark Matter", "concepts": ["gap"]}]})
     )
@@ -108,11 +111,60 @@ def publish(kb, dst, monkeypatch):
     ingest.main()
 
 
+ABOUT = (
+    "# About This Wiki\n\n- *Analyze existing data*: matched in the catalog of "
+    "<!-- lakehouse-date -->.\n- *Add outside data*: not found in the "
+    "[<!-- lakehouse-tenants --> tenants the catalog covers](#lakehouse-coverage).\n\n"
+    "<!-- lakehouse-coverage -->\n\n## License\n\nText.\n"
+)
+
+
 def test_ingest_merges_label_and_topics(tmp_path, monkeypatch):
     import json
 
-    card_corpus(tmp_path / "kb")
-    publish(tmp_path / "kb", tmp_path / "out", monkeypatch)
+    kb = tmp_path / "kb"
+    card_corpus(kb)
+    manifest_bytes = b'{"projects": {}, "shared": {}, "version": 1}\n'
+    (kb / "corpus").mkdir()
+    (kb / "corpus/manifest.json").write_bytes(manifest_bytes)
+    (kb / "wiki/about.md").write_text(ABOUT)
+    (kb / "wiki/data").mkdir()
+    (kb / "wiki/data/phagefoundry.md").write_text("# PhageFoundry Browsers\n\nCurated.\n")
+    catalog = kb / "state/lakehouse/catalog.jsonl"
+    rows = [json.loads(line) for line in catalog.read_text().splitlines()]
+    for row in rows:
+        if (row["database"], row["table"]) == ("kescience.bacdive", "strain"):
+            row["description"] = "See [[x]] and <script>a</script> | pipe"
+            row["columns"].append(["before\n\n<img src=x onerror=alert(2)>\n\nafter", "string"])
+    catalog.write_text("".join(json.dumps(r) + "\n" for r in rows))
+    # A database the direction names without a table still gets a page.
+    page = kb / "wiki/directions/transport--abc123.md"
+    text = page.read_text()
+    page.write_text(
+        text.replace(
+            'databases: ["kescience.fitnessbrowser"]',
+            'databases: ["kescience.fitnessbrowser", "kbase.ke_pangenome"]',
+        )
+    )
+    assert "kbase.ke_pangenome" in page.read_text()
+    tables = [
+        "kescience.bacdive.strain",
+        "phagefoundry.acinetobacter_genome_browser.browser_gene",
+    ]
+    (kb / "state/followups.json").write_text(
+        json.dumps(
+            {
+                "transport--abc123": {
+                    "need": "existing",
+                    "first_step_existing": False,
+                    "data_unclear": False,
+                    "reason": "The strain table can decide it.",
+                    "tables": tables,
+                }
+            }
+        )
+    )
+    publish(kb, tmp_path / "out", monkeypatch)
     finding = (tmp_path / "out/findings/a--1a2b3c4d.md").read_text()
     assert 'label: "Candidate novel"' in finding and 'topics: ["dark-matter"]' in finding
     assert "## Compared with published work" in finding and "retrieved on 2026-10-23" in finding
@@ -132,8 +184,48 @@ def test_ingest_merges_label_and_topics(tmp_path, monkeypatch):
     assert "[[data-issues/a|1 proposal(s) for the report's maintainers]]" in summary
     export = json.loads((tmp_path / "out/cards.json").read_text())
     assert export["findings"][0]["label"] == "Candidate novel"
+    assert (tmp_path / "out/corpus-manifest.json").read_bytes() == manifest_bytes
     assert export["research_directions"][0]["readiness"] == "needs compute"
     assert export["data_issues"] == {"a": ["Recompute the stress rates per experiment. [src: a]"]}
+    # The cited database without a curated page gets one, and the catalog's free text on
+    # it renders as text (Review Focus 3).
+    page = (tmp_path / "out/data/kescience-bacdive.md").read_text()
+    assert PROVENANCE.split(".")[0] in page and "11 November 2026" in page
+    assert "`strain`" in page and "97,334 rows" in page
+    assert r"See \[\[x\]\] and \<script\>a\</script\> \| pipe" in page
+    assert "<script>" not in page and "[[x]]" not in page
+    # A column name with blank lines and HTML stays one line of escaped text.
+    assert r"strain\_id, before \<img src=x onerror=alert(2)\> after" in page
+    assert page.count("<img") == page.count(r"\<img") == 1 and "<img" not in direction
+    # The source reads in reader words, not as a pipeline id.
+    assert "(hub catalog export)" in page and "packet-2026-11-11" not in page
+    assert (tmp_path / "out/data/kbase-ke-pangenome.md").is_file()
+    assert "kbase.ke_pangenome" in export["research_directions"][0]["databases"]
+    # The question page keeps both database links, the atlas table's unknown row count
+    # (Review Focus 5), the hedge and the coverage link.
+    assert "[[data/kescience-bacdive|kescience.bacdive]] · `strain` · 97,334 rows" in direction
+    assert "[[data/phagefoundry|PhageFoundry Browsers]] · `browser_gene` · " in direction
+    assert "row count unknown · schema only, May 2026" in direction
+    assert "An AI model matched this question to these tables" in direction
+    assert "[[about#lakehouse-coverage|" in direction
+    assert 'follow: "existing"' in direction
+    # A curated route keeps its own page; no generated page replaces it.
+    assert "Curated." in (tmp_path / "out/data/phagefoundry.md").read_text()
+    about = (tmp_path / "out/about.md").read_text()
+    assert "## Lakehouse coverage" in about
+    assert "- KBase: hub catalog export, 2026-11-11" in about and "- KE Science:" in about
+    assert "other tenants this catalog does not cover" in about
+    assert "[2 tenants the catalog covers](#lakehouse-coverage)" in about
+    assert "<!-- lakehouse-" not in about and "BERDL" not in about
+    assert export["research_directions"][0]["tables"] == [
+        "kescience.fitnessbrowser.experiment",
+        *tables,
+    ]
+    from beril_wiki.publish.cards.corpus import split
+
+    index, _ = split((tmp_path / "out/directions/index.md").read_text())
+    assert index["follow_order"][-1] == "unchecked"
+    assert "11 November 2026" in index["follow_notes"]["existing"]
 
 
 def test_finding_topics_are_the_reports_main_topics(tmp_path):

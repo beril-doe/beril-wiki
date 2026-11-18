@@ -35,6 +35,7 @@ import pathlib
 import re
 import shutil
 import sys
+from collections.abc import Callable
 
 import yaml
 from litellm import completion
@@ -296,14 +297,20 @@ class PageError(Exception):
     """A generated page was rejected (truncated or failed validation twice)."""
 
 
-def llm(messages: list[dict], step: str) -> str:
+class _InvalidPage(PageError):
+    def __init__(self, raw: str, obj: dict | None, violations: list[str]):
+        super().__init__("; ".join(violations))
+        self.raw, self.obj, self.violations = raw, obj, violations
+
+
+def llm(messages: list[dict], step: str, *, validate: Callable[[str], None] | None = None) -> str:
     from beril_wiki.agentic.runtime import configured, text_completion
 
     if configured():
         mechanical = step.rsplit("/", 1)[-1] in ("plan", "queries", "enrich-plan") or (
             step.startswith("merge-judge/")
         )
-        return text_completion(messages, step, review=not mechanical)
+        return text_completion(messages, step, review=not mechanical, validate=validate)
     est = _usage["in"] * PRICE_IN + _usage["out"] * PRICE_OUT
     if est > BUDGET_USD:
         raise SystemExit(
@@ -325,7 +332,10 @@ def llm(messages: list[dict], step: str) -> str:
     print(f"    {step}: in={u.prompt_tokens} out={u.completion_tokens}")
     if resp.choices[0].finish_reason == "length":
         raise PageError(f"{step}: hit the {MAX_TOKENS}-token cap — refusing a truncated page")
-    return (resp.choices[0].message.content or "").strip()
+    raw = (resp.choices[0].message.content or "").strip()
+    if validate:
+        validate(raw)
+    return raw
 
 
 def parse_json_reply(text: str) -> dict:
@@ -441,29 +451,41 @@ def generate_page(
     targets: set[str],
     require_slots: bool = False,
     check_links: bool = True,
+    *,
+    validate: Callable[[dict], None] | None = None,
 ) -> dict:
     """One LLM page call + write-time validation with a single violation-quoting
     retry. Raises PageError on second failure (caller keeps the old page)."""
 
     def attempt(msgs: list[dict], name: str) -> tuple[str, dict | None, list[str]]:
-        raw = llm(msgs, name)
-        try:
-            obj = parse_json_reply(raw)
-        except (json.JSONDecodeError, ValueError) as e:
-            # A malformed reply costs the page a retry, never the whole doc.
-            return (
-                raw,
-                None,
-                [
-                    f"your reply was not parseable JSON ({e}) — "
-                    "resend the SAME page as one valid JSON object"
-                ],
+        obj: dict | None = None
+
+        def check(raw: str) -> None:
+            nonlocal obj
+            try:
+                obj = parse_json_reply(raw)
+            except (json.JSONDecodeError, ValueError) as exc:
+                raise _InvalidPage(
+                    raw,
+                    None,
+                    [
+                        f"your reply was not parseable JSON ({exc}) — "
+                        "resend the SAME page as one valid JSON object"
+                    ],
+                ) from exc
+            violations = validate_page(
+                obj.get("content") or "", sources, targets, require_slots, check_links
             )
-        return (
-            raw,
-            obj,
-            validate_page(obj.get("content") or "", sources, targets, require_slots, check_links),
-        )
+            if violations:
+                raise _InvalidPage(raw, obj, violations)
+            if validate:
+                validate(obj)
+
+        try:
+            raw = llm(msgs, name, validate=check)
+        except _InvalidPage as exc:
+            return exc.raw, exc.obj, exc.violations
+        return raw, obj, []
 
     raw, obj, violations = attempt(messages, step)
     if violations:

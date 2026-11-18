@@ -87,13 +87,18 @@ to take up. Each states a hypothesis, the test that would settle it and the
 results it builds on. The Open questions page groups them by what following up
 needs, least effort first:
 
-- *Analyze existing data*: BERDL, the shared database the projects query,
-  already holds what the answer needs.
-- *Add outside data*: public genomes, metagenomes or another study's
-  measurements, with no new lab work.
-- *Run an experiment*: only a new lab or field measurement can test the
-  hypothesis. Some of these *start with existing data*, which narrows what the
-  experiment tests.
+- *Analyze existing data*: an AI model matched the test to tables in the
+  lakehouse catalog of <!-- lakehouse-date -->, and no one has run the analysis.
+- *Add outside data*: the data was not found in the
+  [<!-- lakehouse-tenants --> tenants the catalog covers](#lakehouse-coverage),
+  and public genomes, metagenomes or another study's measurements can supply
+  it, with no new lab work.
+- *Run an experiment*: the data was not found in the
+  [<!-- lakehouse-tenants --> tenants the catalog covers](#lakehouse-coverage),
+  and only a new lab or field measurement can test the hypothesis. Some of
+  these *start with existing data*, which narrows what the experiment tests.
+- *Not checked yet*: the check that names the data has not run on the
+  question, or did not finish, so the page makes no data claim.
 
 A question whose data cannot yet be shown to exist or join reads *Data
 availability unclear*. An AI model drafts the questions and sorts them, and a
@@ -102,6 +107,8 @@ second AI model reviews both. No scientist has rated them yet.
 Topic pages, project reports and concept pages each list the results and open
 questions that belong to them, so you can move between a synthesis, the projects
 it rests on, and what those projects found and left open.
+
+<!-- lakehouse-coverage -->
 
 ## What the evidence label means
 

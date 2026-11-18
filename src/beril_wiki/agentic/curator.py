@@ -64,7 +64,7 @@ EDITORIAL = {
             "wiki/concepts",
             "wiki/conflicts",
             "wiki/sources",
-            "wiki/data",
+            "state/lakehouse",
             "contract/cards.yaml",
             "state/curator-topics.json",
         ),
@@ -111,7 +111,7 @@ EDITORIAL = {
     ),
     # What following up each open question needs: the Open questions map's columns.
     "followups": (
-        ("wiki/directions",),
+        ("wiki/directions", "state/lakehouse"),
         ("state/followups.json",),
         ("directions",),
         None,
@@ -132,6 +132,9 @@ CARD_STAGES = (
 CARD_FILES = ("stages/cards.py", "records.py", "wording.py")
 # The one-label stages share stages/classify.py's loop and gists' retry helpers.
 LABEL_STAGES = ("outcomes", "followups")
+# Stages that read the lakehouse catalog view. Only they hash lakehouse.py: through
+# CARD_FILES a change to it would reschedule all eight card stages.
+CATALOG_STAGES = ("directions", "followups")
 # Fail immediately if a future table edit would make freshness propagation order-dependent.
 for index, (action, (_, _, dependencies, _)) in enumerate(EDITORIAL.items()):
     if not set(dependencies) <= set(list(EDITORIAL)[:index]):
@@ -170,12 +173,12 @@ STAGE_REVISIONS = {
     "figures": "figures@1",
     "headlines": "headlines@1",
     "novelty": "novelty@1",
-    "directions": "directions@1",
+    "directions": "directions@2",
     "gists": "gists@1",
     "links": "links@1",
     "shared": "shared@1",
     "outcomes": "outcomes@1",
-    "followups": "followups@1",
+    "followups": "followups@2",
 }
 
 
@@ -189,6 +192,8 @@ def stage_revision(root: Path, name: str) -> str:
         files = (f"stages/{name}.py", *CARD_FILES)
     if name in LABEL_STAGES:
         files += ("stages/classify.py", "stages/gists.py")
+    if name in CATALOG_STAGES:
+        files += ("lakehouse.py",)
     return digest(
         [
             STAGE_REVISIONS[name],

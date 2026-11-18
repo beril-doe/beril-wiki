@@ -31,6 +31,8 @@ from claude_agent_sdk import (
     tool,
 )
 
+from beril_wiki.agentic import progress
+
 
 class WorkflowError(RuntimeError):
     """Stop without accepting partial work or silently spending more tokens."""
@@ -363,15 +365,25 @@ def effective_tokens(usage: dict) -> int:
 
 
 def transcript_usage(path: Path) -> tuple[dict, float | None] | None:
-    """Usage from a saved job stream: the terminal result, else the summed turns."""
+    """The terminal usage, latest Codex total, or summed Claude turns on disk."""
     if not path.is_file():
         return None
     turns: list[dict] = []
+    codex_usage: dict | None = None
     for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
         try:
             message = json.loads(line)
         except ValueError:
             continue
+        if isinstance(message, dict) and message.get("method") == "thread/tokenUsage/updated":
+            from beril_wiki.agentic.codex import map_usage
+
+            payload = message.get("payload")
+            if isinstance(payload, dict):
+                recorded = payload.get("token_usage")
+                found = map_usage(recorded) if isinstance(recorded, dict) else None
+                if valid_usage(found):
+                    codex_usage = found  # cumulative snapshots replace, rather than add
         usage = message.get("usage") if isinstance(message, dict) else None
         if not valid_usage(usage):
             continue
@@ -379,6 +391,8 @@ def transcript_usage(path: Path) -> tuple[dict, float | None] | None:
             return usage, message.get("total_cost_usd")
         if "model" in message and usage != (turns[-1] if turns else None):
             turns.append(usage)  # streamed blocks repeat one turn's usage; count it once
+    if codex_usage is not None:
+        return codex_usage, None
     if not turns:
         return None
     return {k: sum(t.get(k, 0) for t in turns) for k in TOKEN_FIELDS}, None
@@ -404,6 +418,7 @@ class Ledger:
         usd_caps: dict[str, float] | None = None,
         usd_reserve: float = 0.40,
         caps: dict | None = None,
+        invocation: str | None = None,
     ):
         if min(budget, max_jobs, reserve) <= 0 or stage_budget < 0:
             raise ValueError("budgets must be positive")
@@ -414,12 +429,16 @@ class Ledger:
         # SDK's own estimate) and raw Codex tokens, each with headroom held for every
         # job of that backend still in flight. A pilot sets them; usd_caps cap stages.
         self.caps = caps or {}
+        self.store = path.parent
         path.parent.mkdir(parents=True, exist_ok=True)
         # A page session's review tool runs a Claude reviewer's query on a helper thread
         # (run_coroutine) while the session's thread waits, so access stays serial.
         self.db = sqlite3.connect(path, timeout=30, check_same_thread=False)
         self.run, self.budget, self.max_jobs, self.headroom = run, budget, max_jobs, reserve
         self.stage_budget = stage_budget
+        # A named budget run spans invocations: its USD and Codex caps add up across
+        # them, while max_jobs and max_tokens count only this invocation's jobs.
+        self.invocation = invocation
         self.db.execute("PRAGMA journal_mode=WAL")
         self.db.execute("""CREATE TABLE IF NOT EXISTS jobs (
             key TEXT PRIMARY KEY, run TEXT NOT NULL, status TEXT NOT NULL,
@@ -436,6 +455,7 @@ class Ledger:
             ("stage", "TEXT"),
             ("effective", "INTEGER"),
             ("cost", "REAL"),
+            ("invocation", "TEXT"),
         ):
             if column not in columns:
                 self.db.execute(f"ALTER TABLE jobs ADD COLUMN {column} {kind}")
@@ -474,10 +494,16 @@ class Ledger:
             # Pending rows are jobs in flight in a worker; each holds its own headroom.
             count, spent, inflight = self.db.execute(
                 "SELECT count(*),coalesce(sum(effective),0),coalesce(sum(status='pending'),0) "
-                "FROM jobs WHERE run=?",
-                (self.run,),
+                "FROM jobs WHERE run=? AND (? IS NULL OR invocation=?)",
+                (self.run, self.invocation, self.invocation),
             ).fetchone()
-            if count >= self.max_jobs or spent + self.headroom * (inflight + 1) > self.budget:
+            # Explicit limits for both backends replace the legacy mixed-token ceiling.
+            weighted_limit = not (
+                model and self.caps.get("max_usd") and self.caps.get("max_codex_tokens")
+            )
+            if count >= self.max_jobs or (
+                weighted_limit and spent + self.headroom * (inflight + 1) > self.budget
+            ):
                 raise WorkflowError(
                     f"budget admission refused: jobs={count}, effective={spent}, "
                     f"inflight={inflight}"
@@ -497,9 +523,9 @@ class Ledger:
             # A capped run holds each pending job's possible spend in its cost (Claude)
             # or tokens (Codex) until finish() records the real figure.
             self.db.execute(
-                "INSERT INTO jobs(key,run,status,step,model,stage,cost,tokens) "
-                "VALUES(?,?,'pending',?,?,?,?,?)",
-                (key, self.run, step, model, stage, held_usd, held_tokens),
+                "INSERT INTO jobs(key,run,status,step,model,stage,cost,tokens,invocation) "
+                "VALUES(?,?,'pending',?,?,?,?,?,?)",
+                (key, self.run, step, model, stage, held_usd, held_tokens, self.invocation),
             )
             self.db.commit()
             return None
@@ -605,6 +631,7 @@ class Ledger:
                     key,
                 ),
             )
+        self._finished(key)
         if not valid:
             raise WorkflowError(f"unknown token usage for {key}; saved output, stopped scheduling")
 
@@ -646,6 +673,21 @@ class Ledger:
             ).rowcount
         if not changed:
             raise WorkflowError("job is not pending/unknown")
+        self._finished(key)
+
+    def _finished(self, key: str) -> None:
+        """A `job` progress line for a job that now holds its final charge."""
+        if not progress.enabled():
+            return
+        row = self.db.execute("SELECT stage,step FROM jobs WHERE key=?", (key,)).fetchone()
+        stage, step = row or ("", "")
+        progress.emit(
+            "job",
+            stage=stage or "",
+            step=step or "",
+            **progress.counts(self.db, self.run),
+            failed_pages=progress.failed_pages(self.store),
+        )
 
     def unreported(self, key: str) -> int:
         """The token charge for a job that reported no usage: the headroom, or the larger
@@ -1056,6 +1098,7 @@ class Runtime:
             config.get("stage_max_usd") or {},
             config.get("usd_reserve", 0.40),
             {k: config[k] for k in ("max_usd", "max_codex_tokens") if config.get(k)},
+            config.get("invocation"),
         )
 
     def ask(self, messages: list[dict], step: str, *, model: str | None = None) -> str:
@@ -1150,8 +1193,9 @@ class Runtime:
         self._step = step
         try:
             if backend == "codex":
-                return codex.run_job(self, payload, key, model)
-            output = run_coroutine(self._query(payload, key, model))
+                output = codex.run_job(self, payload, key, model)
+            else:
+                output = run_coroutine(self._query(payload, key, model))
             return self._screened(messages, step, model, key, output)
         except Refused as exc:
             if exc.fallback_model == model:
@@ -1560,14 +1604,23 @@ def runtime() -> Runtime:
     return Runtime(runtime_config())
 
 
-def text_completion(messages: list[dict], step: str, review: bool = True) -> str:
+def text_completion(
+    messages: list[dict],
+    step: str,
+    review: bool = True,
+    *,
+    validate: Callable[[str], None] | None = None,
+) -> str:
     """One accounted job with the tool-based scientific review for merge candidates.
 
     Derived pages review through agentic.prose; this path serves the entity merge
     and human concept-decision writers, which still rewrite whole pages."""
     agent = runtime()
     if not review:
-        return agent.ask(messages, step)
+        result = agent.ask(messages, step)
+        if validate:
+            validate(result)
+        return result
 
     # One open verdict, then closed verification: a rewrite is asked only whether the
     # stated objections are closed, never invited to raise fresh ones, so the loop
@@ -1575,6 +1628,8 @@ def text_completion(messages: list[dict], step: str, review: bool = True) -> str
     pending: list[str] = []
 
     def accept(result: str) -> str:
+        if validate:
+            validate(result)
         if not pending:
             try:
                 agent.review(messages, result, step)

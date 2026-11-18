@@ -37,8 +37,13 @@ uv run python -m beril_wiki.agentic plan
 
 # Use the committed model policy and explicit budgets appropriate to the update.
 uv run python -m beril_wiki.agentic run \
-  --max-tokens 500000 --max-jobs 40 \
-  --checkout /path/to/BERIL-research-observatory
+  --max-tokens 500000 --max-jobs 40
+
+# Check that a run from this checkout adds or updates one project and nothing else.
+uv run python -m beril_wiki.agentic plan --checkout corpus --expect-source ID --json
+
+# Check both subscription logins and count a README's authors, without a model call.
+uv run python -m beril_wiki.agentic check-auth --authors corpus/projects/ID/README.md
 
 # Search accepted wiki Markdown without inference.
 uv run python -m beril_wiki.agentic search 'carbon yield'
@@ -53,54 +58,112 @@ These budgets illustrate syntax, not measured requirements for this corpus.
 their integrated copy, empty when nothing is staged) and `pending_editorial` (the editorial
 stages whose fingerprint no longer matches `state/agentic.json`). It makes no
 model call.
-`--root PATH` precedes the subcommand. `--staged` uses current staging; an
-observatory checkout is still required for metadata and figure context.
+`--root PATH` precedes the subcommand. `--staged` uses current staging; the
+checkout is still read for metadata and figure context.
 
-### Where the sources come from
+`plan --expect-source ID` admits a run that adds or updates project `ID` and
+owes no other work, so a researcher's run never pays for maintenance the
+repository already owed. It reads `--checkout` (default `corpus/`), makes no
+model call, and writes nothing to `wiki/`, `state/`, `staging/` or the job
+ledger. It checks two scratch copies of the trees. The base copy fetches
+`corpus/` as committed at `HEAD` and refuses when an editorial stage is
+pending, when a novelty label is due for refresh, when an entry of project `ID`
+in `state/{gists,links,shared,headlines,novelty,outcomes}.json` is saved with
+`failed: true`, or when `.agentic/jobs.sqlite` holds a job with unknown usage.
+An entry belongs to `ID` when its key is `ID` or starts `ID--` (a finding of
+`ID`), when a `pair:` or `ref:` links candidate names `ID` as an endpoint, or
+when a shared group, whose members admission rebuilds from the saved links,
+holds a result of `ID`. Other projects' failed entries, and every failed entry
+of the topic-keyed `state/followups.json` and `state/directions.json`, do not
+refuse; the result lists them in `maintenance_failed`. The import copy fetches
+the checkout and refuses when:
 
-Every source the wiki compiles from lives in the committed tree `corpus/`
-(`stages/corpus.py`): `corpus/<owner_orcid>/<project>/` holds a project's
-`REPORT.md`, `README.md`, `beril.yaml` and the figures its report embeds,
-`corpus/beril/docs/` the two central digests, and `corpus/index.json` maps
-`<owner>/<project>` to `{sid, revision, submitted_at, kind}`. `FETCH_BACKEND`
-selects what fills it (`stages/fetch.py`); a run never mixes the two:
+- a staged source other than `ID__REPORT.md` would integrate;
+- the accepted `revision` differs and the state is not adopted from an earlier
+  scheme, or `core_outputs` differs, either of which re-integrates every source;
+- a checkout input outside `projects/ID/` differs from `HEAD`'s corpus;
+- `manifest.json` differs from `HEAD`'s anywhere but `projects.ID`.
 
-- `local` (default): `--checkout` names a BERIL observatory checkout. Its
-  `projects/*/` and `docs/` digests are written under the owner `legacy` and the
-  run fingerprints the files it consumed as the external input.
-- `hub`: no checkout. `BERIL_URL` and `BERIL_TOKEN` (a BERIL personal access
-  token) reach BERIL's context API, and nothing else: the wiki never calls
-  OpenViking. `GET /api/context/submissions?kind=approved,seeded,docs` lists
-  complete submissions (owner, project, revision = sha256 of `REPORT.md`, every
-  file with its sha256); `GET /api/context/read` supplies the files as raw bytes.
-  Only a project whose revision differs from the index is downloaded; every
-  download is checked against the feed's hash (or, for a file the feed does not
-  list, the hash the route declares) and a mismatch stops the fetch before
-  anything is written. `state/hub.json` keeps the feed's merged view and the
-  `next_since` cursor, promotion carries both back, and the external fingerprint
-  is that merged view, so a submission landing during a run is caught at
-  promotion like a changed checkout. `kind: docs` rows (owner `beril`, project
-  `docs`) carry the digests; without one, the accepted copies under
-  `wiki/sources` are staged.
+A README-only or figure-only update is admitted with an empty
+`changed_sources`. The result lists `admitted`, `reasons`, `changed_sources`,
+`pending_editorial` (the stages the import makes due, judged after the
+deterministic extras stage rewrites author and collection pages on the import
+copy, as a run's curator does first), `base_pending` (judged the same way on a
+copy of `HEAD`, so author pages `HEAD`'s corpus would rewrite count as main's debt),
+`labels_due`, `unknown_usage`, `maintenance_failed` and `invalidation`. `--json`
+prints it as one JSON object; without it, one line per field. `plan` exits 1
+when the run is not admitted. `run --expect-source ID` makes the same check
+before the run starts and stops with the reasons; it cannot be combined with
+`--staged`. An admitted run passes `ID` to its stages as `expect_source` in
+`.agentic/config.json`. The card stages then leave each failed entry that does
+not belong to `ID`, and each failed topic of directions or followups, as
+saved: they make no
+model call for it and do not count it as failed, so `--strict-pages` does not
+stop the run for it. They re-ask `ID`'s own failed entries as before. A run
+without `--expect-source` re-asks every failed entry.
 
-After either backend, `stages.fetch` stages **all** of the corpus: every indexed
-report as `staging/<sid>__REPORT.md` (a legacy entry with no corpus files stages
-its accepted `wiki/sources` copy) and its figures into `wiki/figures/<sid>/`. The
-runner compares the whole of `staging/` with `wiki/sources/`, so a partial
-staging would read as deletions and be refused; staging the whole corpus is what
-makes an incremental fetch safe.
+`check-auth` runs the Claude subscription check (`claude auth status`) and the
+Codex ChatGPT-login check in a session whose Codex home is a temporary
+directory, so it writes nothing under `.agentic/`. With `--authors README` it
+also counts the authors under the README's `## Authors` heading. It prints one
+JSON object, `{"claude": "ok", "codex": "ok", "authors": 2}`, where a failed
+check holds its error text in place of `"ok"` or the count, and it exits 1 when
+any check fails. Without `--authors` the `authors` key is absent.
 
-**Source ids.** BERIL project slugs are unique per owner only, and a `[src: id]`
-never changes once pages cite it, so the index assigns each project's sid once:
-(1) an entry for `(owner, project)` keeps its sid; else (2) a `legacy/<project>`
-entry, a source integrated before owners were known, is claimed: the sid is the
-slug and the entry moves to the owner; else (3) the slug, when no other entry
-uses it as a sid; else (4) `<slug>__<orcid>`. The existing sources are pinned
-as `legacy/<sid>` in the committed `corpus/index.json`, so seeding the feed
-re-integrates nothing. `extras` reads README and `beril.yaml` from `corpus/`;
-`collections.yaml` is the committed copy at `contract/collections.yaml`
-(unkeyed: it changes no cached work).
+### Progress lines
 
+`plan --progress FILE` and `run --progress FILE` append one JSON object per line
+to `FILE` and export it as `BERIL_WIKI_PROGRESS`, so stage subprocesses write to
+the same file. Every line carries `ts` (UTC, ISO 8601), `"source": "wiki"` and
+`event`:
+
+| `event` | Written by | Other fields |
+|---|---|---|
+| `plan_start` | `plan` | `expect_source` (the ID or `null`) |
+| `plan_end` | `plan` | with `--expect-source`: `admitted`, `reasons`; without it: `changed_sources`, `pending_editorial`; on an error: `error`, plus `admitted: false` and `reasons` with `--expect-source` |
+| `stage_start` | `run`, before each stage subprocess | `stage`, `jobs`, `usd`, `codex_tokens`, `failed_pages` |
+| `stage_end` | `run`, after each stage subprocess | the `stage_start` fields, `ok`, and `error` (the last 500 characters of the failure) when `ok` is false |
+| `job` | the ledger, when a job records its final charge | `stage` (empty for jobs the runner itself issues), `step`, `jobs`, `usd`, `codex_tokens`, `failed_pages` |
+
+`jobs` counts the ledger run's finished jobs, `usd` sums their recorded Claude
+cost and `codex_tokens` their raw Codex tokens, the same per-run units the
+`--max-usd` and `--max-codex-tokens` caps use. Pending jobs are left out, because
+their figures are admission holds. `failed_pages` is the number of pages in
+`.agentic/failures.json`. A ledger or failures file that cannot be read gives
+`null`. A line that cannot be written is dropped, and the run goes on.
+
+The checkout defaults to the repository's own `corpus/`, a copy of every
+input a run reads, laid out like an observatory checkout: `projects/<id>/`
+(`README.md`, `REPORT.md` and the figures the report embeds),
+`ui/config/collections.yaml` and `docs/{discoveries,pitfalls}.md`.
+`corpus/manifest.json` records each file's SHA-256 and each project's origin.
+`uv run python -m beril_wiki.corpus verify` checks the two agree, and the
+tests run it. `uv run python -m beril_wiki.corpus import-v1 --checkout PATH`
+stages and verifies a complete replacement from an observatory checkout before
+replacing `corpus/`. A failed replacement restores the previous corpus. If that
+rollback fails, the previous tree stays in a temporary import directory beside
+`corpus/` for recovery. Pass `--checkout` (or set
+`BERIL_CHECKOUT`) only to compile from another tree.
+
+`beril_wiki.publish.ingest` copies `corpus/manifest.json` byte for byte to the
+site root as `corpus-manifest.json`, so a client can compare a project's
+published source digest with its own.
+
+`scripts/check_update.py --base REF --head REF [--branch NAME]` is the model-free
+scope check for a publisher branch. The branch comes from `--branch` or
+`GITHUB_HEAD_REF`; one that does not start with `wiki/` passes. On `wiki/ID` it
+fails when `REF` is not an ancestor of the head; when the newest commit after
+`REF` with a `Base <sha>` trailer, which the Workbench publisher writes on its
+commit, names another commit than `REF`, or no commit has one, so merging main
+into the branch without recompiling fails; when `corpus/` changes outside
+`projects/ID/` and the `ID` entry of `manifest.json`, when `wiki/sources`,
+`wiki/summaries` or `wiki/figures` change outside `ID`, or when an entry of
+`state/{headlines,novelty,gists,outcomes}.json` changes for no project of `ID`.
+`links.json` and `shared.json` relate findings across projects, as concept pages
+do, so a new project may change any of their entries. `followups.json` and
+`directions.json` are keyed by question and topic slug. The script checks none
+of the four. The `scope` job in
+`.github/workflows/tests.yml` runs it on every pull request.
 Individual jobs have `--max-turns` (default 12, applying to tool-using jobs
 other than page sessions), `--timeout` (600 seconds), and `--max-output-tokens`
 (32,768). A page session is bounded by its brief instead: 20 turns plus one per
@@ -121,14 +184,17 @@ names one for `pages` (default: the model's own). The committed policy names
 `medium` for `pages`, so `--write-effort` takes effect only with `--model` or a
 replacement file that omits it.
 Each stage subprocess is bounded by `--stage-timeout` (default 14,400 seconds,
-four hours). A job killed by either clock is charged automatically from its
-saved transcript (the terminal result if one arrived, otherwise the summed
-model turns, otherwise the reservation) before the next stage starts, so a
-kill never leaves a pending row that needs manual reconciliation.
+four hours). A job left pending by either clock is charged automatically from
+its saved transcript (the terminal result if one arrived, otherwise the latest
+cumulative Codex usage notification or summed Claude turns, otherwise the
+reservation). A finished job without usable usage is recorded as `unknown`.
+It blocks new calls until a person conservatively reconciles its charge.
 
 `--max-tokens` is an admission ceiling in **effective tokens**, not a hard
-provider token cap. The ledger records raw input, output, cache-write and
-cache-read counts for every job, and admits on a weighted figure: input and
+provider token cap. When both `--max-usd` and `--max-codex-tokens` are set,
+their separate backend caps replace this combined ceiling; `--max-jobs` and
+any per-stage ceiling still apply. The ledger records raw input, output,
+cache-write and cache-read counts for every job, and weights them as follows: input and
 output count once, 5-minute cache writes 1.25 times, 1-hour cache writes twice,
 cache reads 0.1 times. The CLI writes 1-hour caches; a usage that reports its
 `cache_creation` split by lifetime is weighted that way, and one without the
@@ -155,15 +221,22 @@ each Claude job in flight or finished without a cost and for the job itself,
 would pass the cap. GPT jobs are never refused by a USD cap. `agentic cards`
 prints each capped stage's recorded USD against its cap at the end.
 
-A pilot has two more caps, per ledger run, in the units a person approves:
+Two more caps apply per ledger run, in the units a person approves:
 `max_usd` on the SDK's cost estimate for Claude jobs and `max_codex_tokens` on
 raw Codex tokens. A capped run counts each finished job at its recorded charge
 and each pending one at a hold: a page session holds its whole session USD
 ceiling, any other Claude job USD 2, a Codex job 400,000 tokens. A job is
 admitted only if its hold still fits. A job that ends without a reported cost (a
-kill, a timeout) keeps its hold, so an interrupted job still counts. Only the
-`pilot` command sets them (`--max-usd`, `--max-codex-tokens`); `run` has no flag
-for them. Account billing settings remain
+kill, a timeout) keeps its hold, so an interrupted job still counts. `run` and
+`pilot` set them with `--max-usd` and `--max-codex-tokens`; `run` without them
+has no such cap. A resume of the same inputs keeps the ledger run, so its
+earlier spend still counts against the caps. `run --budget-run NAME` names the
+ledger run that caps, totals and progress counts use, so runs on different
+inputs, such as a publication refreshed onto a moved main, share one cap; job
+cache keys do not change. Under `--budget-run`, `--max-jobs` and the combined
+effective-token ceiling, when applicable, count only this invocation's jobs,
+while the USD and Codex caps keep counting every invocation's
+spend. Account billing settings remain
 provider-owned; the runner does not purchase credits.
 
 ### Per-step models
@@ -224,7 +297,7 @@ then repeat `--step-model ROLE=MODEL_ID` for individual overrides. Without
 ```sh
 # Keep the repository policy, changing only scientific review.
 uv run python -m beril_wiki.agentic run --step-model review=MODEL_ID \
-  --max-tokens 500000 --max-jobs 40 --checkout /path/to/BERIL-research-observatory
+  --max-tokens 500000 --max-jobs 40
 ```
 
 `step_efforts` maps a role to a reasoning effort (`low`, `medium`, `high`,
@@ -307,7 +380,7 @@ policy changes, as a tracked operation (`agentic/pilot.py`):
 ```sh
 # Freeze the starting trees and copy the ledger the pilot charges to.
 uv run python -m beril_wiki.agentic pilot setup --scratch /path/to/scratch \
-  --store .agentic --before COMMIT --checkout /path/to/BERIL-research-observatory
+  --store .agentic --before COMMIT
 
 # One cell: one model policy over one set of pages, under spend caps.
 uv run python -m beril_wiki.agentic pilot cell --scratch /path/to/scratch \
@@ -322,7 +395,10 @@ uv run python -m beril_wiki.agentic pilot report --scratch /path/to/scratch
 ```
 
 The caps are illustrations, not measured requirements; `cell` and `judge` refuse
-to start without both. `setup` needs a scratch directory that does not exist yet.
+to start without both. The USD cap must be finite and positive, and the Codex
+token cap must be a positive integer. The CLI checks them before loading the
+pilot policy or starting work, using the same rules as `run`.
+`setup` needs a scratch directory that does not exist yet.
 It exports the tracked wiki, state and contract at `--before` (the tree
 integrated, routing and extraction cells start from) and at `HEAD` (the tree derived cells start from),
 copies the ledger, saved plan and evidence from `--store`, and applies concept
@@ -397,19 +473,19 @@ every stage that depends on it stale as well:
 
 | Stage | Work and completion condition |
 |---|---|
-| Integrate | Runs first when sources changed: extract changed reports, route every evidence record to concept pages, group edits by destination, validate and review pages; resolve entities and refresh deterministic metadata. A writer receives the evidence assigned to its page with quotes packed, not every finding its sources yielded; an existing entity with nothing assigned and no revised source is skipped. It accounts for each assigned record by the index of the paragraph carrying it, not by repeating the paragraph, since a page assigned three hundred records could not otherwise finish its answer; the validator resolves the index against every paragraph of the body, including Open Directions, and the reviewer sees the resolved text. Each write is one page session (see [Page sessions](#page-sessions)): the page, absorbed pages and quotes are packed into its system prompt, the writer edits `page.md` and fills `meta.json` (the description and the `accounted_evidence` map), may read and search `staging/` and `wiki/`, and calls the host's `check`, `review` and `submit` tools. A page assigned more than `--pass-records` records is written in near-equal passes in evidence-id order, each its own page session over its slice against the page the previous pass left, so no single session integrates hundreds of records; the retention gate keeps every earlier pass's citations and figures. A pass that will not converge is dropped rather than the page, which keeps every accepted pass; its records, objections and job keys go to `.agentic/salvaged.json`, as a salvaged derived page's paragraphs do. At nine passes in ten accepted in the pilot, a seven-pass page failing whole would publish under half the time. Only a page whose every pass fails keeps its previous version. |
+| Integrate | Runs first when sources changed: extract changed reports, route every evidence record to concept pages, group edits by destination, validate and review pages; resolve entities and refresh deterministic metadata. A writer receives the evidence assigned to its page with quotes packed, not every finding its sources yielded; an existing entity with nothing assigned and no revised source is skipped unless explicitly retried. It accounts for each assigned record by the index of the paragraph carrying it, not by repeating the paragraph, since a page assigned three hundred records could not otherwise finish its answer; the validator resolves the index against every paragraph of the body, including Open Directions, and the reviewer sees the resolved text. Each write is one page session (see [Page sessions](#page-sessions)): the page, absorbed pages and quotes are packed into its system prompt, the writer edits `page.md` and fills `meta.json` (the description and the `accounted_evidence` map), may read and search `staging/` and `wiki/`, and calls the host's `check`, `review` and `submit` tools. A page assigned more than `--pass-records` records is written in near-equal passes in evidence-id order, each its own page session over its slice against the page the previous pass left, so no single session integrates hundreds of records; the retention gate keeps every earlier pass's citations and figures. A pass that will not converge is dropped rather than the page, which keeps every accepted pass; its records, objections and job keys go to `.agentic/salvaged.json`, as a salvaged derived page's paragraphs do. At nine passes in ten accepted in the pilot, a seven-pass page failing whole would publish under half the time. Only a page whose every pass fails keeps its previous version. |
 | Conflicts | Reconcile tensions after integration. |
 | Topics | Choose concept groups and titles, then write hubs/home after conflicts are current. Every concept must occur exactly once. |
 | Literature | Add supported external context after topics are current. |
 | Authors | Update contributions from current summaries and metadata; independent of topics. |
-| Headlines | For each report in `contract/cards.yaml`, choose up to 4 observations or inferences and up to 2 null results or corrections from its accepted evidence records, and write each to `wiki/findings/<id>.md`. Cached per report in `state/headlines.json`; a saved reply stays while its input is unchanged and today's checks accept it, and the curator never clears it, since the run that wrote the records may have used another job store. Every figure in a headline must appear in its record's quote. After two rejected replies, the headlines that still fail are dropped and the rest go to the reviewer, so one headline citing another passage no longer costs the report its cards. A report whose evidence snapshot does not match its current text is skipped and keeps its previous pages. |
+| Headlines | For each report in `contract/cards.yaml`, choose up to 4 observations or inferences and up to 2 null results or corrections from its accepted evidence records, and write each to `wiki/findings/<id>.md`. Cached per report in `state/headlines.json`; a saved reply stays while its input is unchanged and today's checks accept it, and the curator never clears it, since the run that wrote the records may have used another job store. Every figure in a headline must appear in its record's quote. After two rejected replies, the headlines that still fail are dropped and the rest go to the reviewer, so one headline citing another passage no longer costs the report its cards. A report whose reply fails keeps its previous pages and is saved with `failed: true` beside its last accepted reply, so a run from another job store sees the failure; its next accepted reply clears it. A report whose evidence snapshot does not match its current text is skipped and keeps its previous pages. |
 | Novelty | Label each finding against PubMed after headlines; labels go to `state/novelty.json`, not to the finding page. |
-| Research directions | After conflicts, topics, headlines and novelty, write 3 to 8 research directions for each topic in `contract/cards.yaml` into `wiki/directions/<slug>.md`. Cached per topic in `state/directions.json`, with the accepted reply kept so a page re-renders without a model call. Code rejects a title that is not a question, test statistics or statistical wording, snake_case table names and other identifiers, prose about what "the report" says, and a direction that shares at least 3 cited findings or conflicts, and 60% of them, with another direction in the reply or in another topic. The draft sees the other topics' directions (`OTHER_TOPICS`), but they stay out of the topic's cache key, so one topic's rewrite never makes another stale. A saved reply stays while its input is unchanged and today's checks accept it; the curator never clears `state/directions.json`, because clearing it would empty the other topics' context, change the drafts' text and buy them again. A topic whose redraft fails keeps its earlier pages, except a page that builds on a finding or conflict that no longer exists. Two topics that accept the same direction each keep a page; the second page's name ends in its topic. |
+| Research directions | After conflicts, topics, headlines and novelty, write 3 to 8 research directions for each topic in `contract/cards.yaml` into `wiki/directions/<slug>.md`. Cached per topic in `state/directions.json`, with the accepted reply kept so a page re-renders without a model call. Code rejects a title that is not a question, test statistics or statistical wording, snake_case table names and other identifiers, prose about what "the report" says, and a direction that shares at least 3 cited findings or conflicts, and 60% of them, with another direction in the reply or in another topic. The draft sees the other topics' directions (`OTHER_TOPICS`), but they stay out of the topic's cache key, so one topic's rewrite never makes another stale. A saved reply stays while its input is unchanged and today's checks accept it; the curator never clears `state/directions.json`, because clearing it would empty the other topics' context, change the drafts' text and buy them again. A topic whose redraft fails keeps its earlier pages, except a page that builds on a finding or conflict that no longer exists, and is saved with `failed: true` beside its last reply, so a run from another job store sees the failure; its next accepted reply clears it. Two topics that accept the same direction each keep a page; the second page's name ends in its topic. |
 | Plain summaries | After headlines, write a gist of at most 45 words for each finding (plus a plain replacement title when the stored title holds a statistic, statistical wording such as "significant" or jargon, and a case for null results) to `state/gists.json`. The writer also sees the report's other caveats and the other findings from the same report: a gist claims no more than the measurement and its limits allow, says when a sibling finding states the opposite, and may mark its finding as repeating an earlier one (`repeats`), which publish leaves off the lists. Code rejects statistics, statistical wording, jargon (`JARGON`: annotation systems, procedures, notebook codes; lineage names such as `Pseudomonas_E` are left to the prompt, since the reviewer requires the name the finding gives), more than two standalone numbers (the prompt asks for one), figures the claim, quote and caveat never state, and a `repeats` id that is not an earlier finding of the report; GPT reviews faithfulness. Keyed on the finding, its report title, caveats and siblings, and the prompt tag (`gists@4`), so a sibling's change reruns the report's gists. A saved gist stays while its input is unchanged and today's checks accept it, so a tightened rule re-asks only the gists it rejects. A refusal fails only that finding and keeps its previous gist in state for recovery; publish shows a failed finding's title only. A failed finding is asked again on the next run with `LAST_ATTEMPT`, the objections from `.agentic/failures.json` that rejected it, so the retry is a new question rather than a replay of the failed jobs; its saved key does not include them. |
 | Links | After headlines, find links between projects and write them to `state/links.json`. Code finds two kinds of candidate: pairs of results from different projects whose title and claim reach a TF-IDF cosine of 0.30 (`THRESHOLD`) and whose two projects a concept or conflict page cites together, and source-report lines that name another project by id or exact report title. The `cards` model sorts each candidate, 8 to a job, into a fixed relation (`same result`, `uses its data or methods`, ...) or drops it, and writes a label of at most 16 words. Code rejects a label with a statistic, a figure the inputs never state, wording that one project confirms, reproduces or agrees with another, file, table or column names, or an opening such as "Uses its ..." that leaves out whose data it is; GPT reviews every job. A stored label today's rules reject counts as stale, so a rule change re-asks only those candidates. Each candidate is cached under a digest of its own texts, so a corpus change re-asks only changed candidates. A failed job leaves its candidates without a current link, and a candidate whose results or projects are gone is pruned. |
-| Shared results | After links, group the related-result links into connected groups and write one statement per group to `state/shared.json`. A group qualifies with 2 to 4 results, from two or more projects whose main topics number two or more; a larger group is skipped. Code sets the group's relation to the weakest of its links. The `cards` model writes a title, a sentence, the question the projects asked, a short label per result and how the results relate, under the same rejections as Links; results that reach different conclusions are never presented as one result, and shared data is named in the sentence. GPT reviews faithfulness to every member. A failure fails only its group. A group whose links are gone is pruned. |
+| Shared results | After links, group the related-result links into connected groups and write one statement per group to `state/shared.json`. A group qualifies with 2 to 4 results, from two or more projects whose main topics number two or more; a larger group is skipped. Code sets the group's relation to the weakest of its links. The `cards` model writes a title, a sentence, the question the projects asked, a short label per result and how the results relate, under the same rejections as Links; results that reach different conclusions are never presented as one result, and shared data is named in the sentence. GPT reviews faithfulness to every member. A failure fails only its group. A group whose links are gone, or that no longer qualifies, is pruned, except in a run for one project (`expect_source`), which keeps every failed group with no result of that project as saved. |
 | Result types | After gists, label every finding publish would list as a positive, negative or inconclusive result, a result about the data, a bookkeeping fix or an untested explanation, in `state/outcomes.json`. The extraction tag misfiles both ways, so every finding is read. The `labels` model writes the type and a one-sentence reason; the `card_review` model reviews it against the evidence quote. Publish unlists bookkeeping fixes and untested explanations and keeps their pages. A failure fails only its finding, and publish falls back to the tag. |
-| Follow-up needs | After directions, label every open question by what its deciding test needs (existing BERDL data, outside data, or an experiment), whether existing data comes first in an experiment, and whether data availability is unclear, in `state/followups.json`, written by the `labels` model. The direction's approach and readiness fields misfile both ways, so every question is read. The `card_review` model reviews each answer against the question. A failure fails only its question, and publish falls back to the approach. |
+| Follow-up needs | After directions, label every open question by what its deciding test needs (existing lakehouse data, outside data, or an experiment), whether existing data comes first in an experiment, and whether data availability is unclear, in `state/followups.json`, written by the `labels` model. The pack carries the question, the tables its direction names, the catalog directory and up to 20 catalog tables matched to the question. A reply names the tables it relies on (`tables`, at most 12). Code rejects a table the catalog lacks, `existing` or a first analysis that names no table, a reason that says BERDL, and a reason that says the lakehouse lacks data. The direction's approach and readiness fields misfile both ways, so every question is read. The `card_review` model reviews each answer against the question. A failure fails only its question, and publish shows that question as *Not checked yet*. |
 
 Before writing hundreds of planned pages, measure a few: `--write-only
 concepts/a.md,summaries/b.md` writes only those pages and then stops before any
@@ -435,6 +511,18 @@ sweeps are replaced by integration planning and candidate correction. Outputs
 remain compatible with existing provenance and Quartz tools. This is bounded
 editorial autonomy; the agent cannot change its acceptance rules or run arbitrary
 code.
+
+Managed merge and enrichment candidates pass JSON parsing and page validation
+before scientific review. Merges also pass citation and quantity retention first.
+The existing page-validation retry and separate merge-retention retry remain
+bounded to one each. Valid final candidates still require scientific review.
+
+The strict numeric check compares whole scientific values, normalizing equivalent
+exponent spellings without accepting a scientific value's mantissa on its own.
+Arithmetic matches use a precision-scaled tolerance, so a tiny unsupported value
+cannot pass merely because it is near zero. Published figure paths retain
+subdirectories after the report's leading `figures/` prefix; run-output paths
+retain their full relative path.
 
 After the editorial stages and before naming, the deterministic `titles` stage
 (`beril_wiki.stages.titles`) writes the planner's title as the H1 of any page
@@ -473,7 +561,10 @@ is not a relationship and is never "Candidate novel"; it is labelled
 "Insufficient literature evidence" unless a retrieved paper reports the same
 pattern. A label is judged
 again when its finding changes, when the `cards`, `findings_review` or `queries`
-model changes, or 90 days after retrieval (`REFRESH_DAYS`). An expired label makes every
+model changes, when its report's cited PMID set changes, or 90 days after
+retrieval (`REFRESH_DAYS`). An otherwise current legacy label without a saved
+PMID set records the current set without retrieval or inference. Earlier
+citation changes remain unknown. An expired label makes every
 `agentic run` schedule the novelty stage until a refresh succeeds. When retrieval
 fails, the previous label and date stay. A failed refresh does not hold up the
 run that attempted it: the label stays due, and the next run retries it.
@@ -488,19 +579,41 @@ disk for a withdrawn finding.
 
 The directions stage writes one reviewed job per topic. The `cards` model reads
 the topic's findings with their literature labels and closest papers, its
-conflict pages, the proposals its pages already make, and the collection list.
+conflict pages, the proposals its pages and reports assigned to that topic already
+make, and two views of the
+lakehouse catalog (`beril_wiki/lakehouse.py`). DATABASES is the directory of
+every covered database with its first table names. TABLES holds up to 40 tables
+matched to the topic, with columns and sample values: first the tables the
+topic's projects used, then the tables whose names, columns or values share
+words with the findings' and conflicts' titles and text.
 It proposes 3 to 8 directions, each with an id (D1, D2, ...) that repairs keep
 even when they rewrite the direction, a question, a falsifiable hypothesis,
 why it matters, the decisive test, what would support or refute it, an
-approach, the data and its readiness, and the findings, conflicts and closest
-papers it rests on. A direction is a biological question, never a request to
+approach, the databases and tables the test reads (`<database>.<table>`), the
+readiness, and the findings, conflicts and closest papers it rests on. A direction is a biological question, never a request to
 repeat, correct, reconcile, recount or audit existing work: code rejects a
 title or question that opens that way (`REANALYSIS` in `wording.py`). Those
 proposals are listed for the reports' maintainers at publish instead. Code also
 checks that each direction rests on a finding or conflict of the topic, cites
-only PMIDs the topic's findings retrieved, names collections under
-`wiki/data/`, and states no result figure the evidence it cites lacks.
-Directions carry no score.
+only PMIDs the topic's findings retrieved, names only databases and tables
+that the whole catalog holds (not only those in TABLES), and states no result
+figure the evidence it cites lacks. A direction whose readiness is "data in the
+lakehouse" or "needs compute", or whose approach is "lakehouse analysis" or
+"analysis then experiment", must name at least one table. A readiness note that
+says the lakehouse lacks data goes back: the catalog covers some tenants, so the
+note says the catalog did not show the data. Reader prose names no database or
+table. The page's frontmatter keeps the canonical dotted `tables` and their
+`databases`, and publish writes the table list. Directions carry no score.
+
+The catalog directory is part of every topic's cache key, so a catalog rebuild
+that changes a table name makes every topic's directions stale and the next run
+buys them again. The curator reads `state/lakehouse/` as a directions input in
+place of `wiki/data/`, so a data page edit never makes directions stale.
+Under the original prompt tag, a saved successful reply with the legacy
+proposal-scope key can migrate without a model call when its other inputs are
+current and today's checks accept it.
+Pages written before the catalog keep a `collections` field until that rerun;
+nothing reads it.
 
 When a headline or direction job does not converge, the stage keeps the last
 candidate the reviewer judged, minus the headlines or directions an open
@@ -531,10 +644,74 @@ caches. A card run's id hashes the stages' inputs and leaves out what the card
 stages write, so a run stopped after saving some records resumes under the same
 id, ceilings and recorded charges. `python -m beril_wiki.stages.links --status`
 and `python -m beril_wiki.stages.shared --status` count the current links and
-shared results without a model call; `outcomes --status` and `followups --status`
-count saved labels the same way.
+shared results without a model call. `outcomes --status` and `followups --status`
+print current, stale, failed and pending labels and exit 1 when any is stale, failed
+or pending: a label is current when its key equals today's `classify.item_key` and
+today's checks accept it, so a changed pack or prompt tag counts as stale, not
+accepted. `python -m beril_wiki.stages.directions --status`
+builds each topic's key from today's pack and compares it with
+`state/directions.json`. It prints current, stale, failed and skipped topics
+(skipped: no findings and no conflicts) and exits 1 when any is stale or failed.
+It keys with the agentic run's config when one is set, else with `agentic.yaml`.
 [`wiki.md`](wiki.md#rendering-the-accepted-corpus) describes how the
 records publish.
+
+### Lakehouse catalog
+
+`state/lakehouse/` lists the KBase Data Lakehouse tables, columns and values
+that question records may cite. `beril_wiki.stages.lakehouse` builds it from
+three local snapshots, with no model call and no network:
+
+- the hub catalog packet of 2026-11-11 (`--packet`, a folder whose `.zip` sits
+  beside it), which gives schema, row counts and value profiles for the 11
+  tenants the exporting account reads;
+- a pinned semcat snapshot (`--semcat`, commit `e3a8b81`, harvested 2026-11-04),
+  which gives production tables, columns, types, row counts and
+  producer-written descriptions for 12 more tenants, checked against its
+  `SHA256SUMS`;
+- the May 2026 BERDL Data Atlas table map (`--atlas`), which adds the tables
+  of 8 of those tenants that semcat lacks, schema only.
+
+```sh
+uv run python -m beril_wiki.stages.lakehouse \
+  --packet docs/drafts/lakehouse-catalog/beril-lakehouse-catalog-20261111 \
+  --semcat docs/drafts/semcat-e3a8b81 \
+  --atlas "$BERIL_CHECKOUT/projects/berdl_data_atlas/data/table_topic_map.csv"
+uv run python -m beril_wiki.stages.lakehouse --check
+```
+
+The build writes `catalog.jsonl` (one row per table, at most 200 columns),
+`values.jsonl.gz` (profiled values of the shared tenants kbase, kescience, nmdc,
+refdata, globalusers and planetmicrobe only), `databases.jsonl`, `usage.json`
+(the databases and tables each observatory project's report and code name),
+`coverage.json` (the covered tenants, with source and date) and `manifest.json`
+(input digests, the observatory commit, counts and the redaction rules). It
+drops personal namespaces (`u`, `u_*`), values under people or secret column
+names (such as `email`, `user`, `agent`, `expert`, `owner` or `first_name`),
+every value of a table named for people (such as `user`, `authors` or
+`experts`), and email-, ORCID- or URL-shaped values. It writes the six files to
+a sibling folder, runs the check there, and replaces `state/lakehouse/` only when
+the check passes, so a failed refresh leaves the committed files as they were
+and exits 1. `--tenants <jsonl>` adds a hub tenant listing, so `coverage.json`
+can name the tenants the catalog does not cover; the listing's
+`tenants_all.manifest.json` must give a `snapshot_utc` date, or the build stops
+with exit 2. Without `--tenants` that list stays empty and `listing` is
+`"none"`. The inputs stay in the ignored `docs/drafts/`; only the outputs are
+committed.
+
+`--check` re-reads the committed files and exits 1 on any failure: a file over
+its cap (3 MB for `catalog.jsonl`, 4 MB for `values.jsonl.gz`), an unsorted or
+repeated table, a database or table name with a character other than letters,
+digits, `_` and the dots between database parts, a value outside the shared
+tenants, under a redacted column name or in a table named for people, a kept
+email-, ORCID- or URL-shaped value, a personal namespace anywhere, a tenant both
+covered and uncovered, or a description holding an email or ORCID. When `docs/drafts/semcat-<commit>/` is present it also fails on any
+semcat `owner` value in any output; otherwise it prints that the owner scan was
+skipped.
+
+The build costs nothing, but a changed `catalog.jsonl` makes directions rerun
+for every topic (about USD 22 to 38) and then followups, and the build says so
+when the file changes. Refresh it only from a new snapshot.
 
 ## Checking the reader pages
 
@@ -578,7 +755,7 @@ their expected values from the records under `quartz/content/` and
   compares each dot's row and column with its record under `wiki/directions/`,
   exercises hover, focus, click, Escape and tap, checks that Tab from a focused
   dot reaches its pop-up's links, that no dot carries an approach shape and
-  that each dot's name and pop-up still state its approach. It checks for
+  that each dot's name and pop-up name its follow-up need. It checks for
   horizontal scroll at 390 px on `/`, `/findings/` and `/directions/`. It also
   moves the pointer from ringed and plain dots onto each pop-up in 2 px steps
   and checks that the pop-up stays open. A jump straight from one dot to
@@ -673,7 +850,8 @@ The `new_topic` leftovers go to a few proposal jobs (`plan/propose/N`) in
 sequence, each told what the earlier ones proposed, which turn them into new
 concept pages or summary-only rows. An entity named by fewer than two records,
 or, when the update spans several projects, by records from only one of them,
-gets no page, and an existing entity is only rechecked when its sources change.
+gets no page, and an existing entity is only rechecked when its sources change
+or an explicit retry requests it.
 The router proposes no merges; concept identity decisions stay in
 `contract/concept-decisions.yaml`. The planner this replaced read the inventory
 of every page planned so far, so 103 batches ran one after another for 10 to 14
@@ -712,8 +890,9 @@ literal `search_evidence`. A page session has the tools listed under
 writer emit its whole candidate twice, once to check and once to answer, while
 `check` reads the file the writer already edited. The final
 candidate must pass the host checks and independent scientific review before it
-is written. Extraction and retrieval both decode UTF-8 with
-replacement for invalid bytes; offsets refer to that decoded text. Original
+is written. Extraction, retrieval, novelty's cited-PMID scan and forward-direction
+report bullets decode UTF-8 with replacement for invalid bytes; offsets refer to
+that decoded text. Original
 report bytes remain unchanged. No shell, filesystem writes outside a session's
 `page.md` and `meta.json`, skill discovery or unrelated tools are exposed.
 Source text is evidence, never an instruction authority.
@@ -752,7 +931,11 @@ submitting. A finished session is cached under its brief and is reused while the
 files its writer read and its reviewer's jobs read are unchanged. A search of
 `wiki/` records no dependency, since `wiki/` is the tree the run writes. A cached
 derived page meets today's gates again before it is published, and fails as a page
-when it no longer passes them. A page whose writer refused it once starts its later
+when it no longer passes them. Budget, authentication and usage failures from a
+nested reviewer stop the run even if the writer exits normally. A local reviewer
+job failure (`JobFailed`) drops only its failing integrated pass, retaining accepted
+passes, or fails its derived page. `--strict-pages` stops the run instead. A page whose
+writer refused it once starts its later
 passes on the model that answered, as other jobs do. An integrated pass keeps its progress
 rule: after the first verification, a further round is allowed once, and only
 when that verification closed most objections (two or fewer left, at most half
@@ -764,19 +947,26 @@ A session that ends without an accepted submission is handled by what it is. An
 integrated pass is dropped, as above. A derived page with no full review fails; one
 whose reviewer returned no usable verdict fails closed; one with a full review
 publishes the reviewed text intact when the open objections are presentation only,
-and is otherwise salvaged or failed as described under derived prose. A crashed or
-killed session is charged from its transcript; the next attempt is a new session
-under a new key, which resumes from the scratch files only when they match the
-check the host last recorded for the same task, and starts fresh otherwise. The
-scratch state belongs to one task (the page's brief, starting text, model and
+and is otherwise salvaged or failed as described under derived prose. Once its
+usage is accounted for, a crashed or killed session's next attempt starts under
+a new key, which restores scratch files and approvals only when the files
+match the host's last check for the same task and every recorded read dependency
+is unchanged. Otherwise it starts fresh. The scratch state belongs to one task
+(the page's brief, starting text, model and
 contract): new evidence starts fresh, and so does a retry after a session that
-ended on its own terms (submitted, spent its reviews, stopped), so a retry never
-inherits an approval or an exhausted review count. Resuming continues from the
+ended on its own terms (submitted, spent its reviews, stopped), so such a retry
+inherits neither an approval nor an exhausted review count. Resuming continues from the
 files, not from the SDK conversation: the session starts a new conversation with
-the brief and a note of the open objections, and the reviewer gives the resumed
-text a fresh open review. A page whose text has started 20 sessions is recorded as
+the brief and a note of the open objections, while the host retains valid saved
+approvals. A page whose
+text has started 20 sessions is recorded as
 failed rather than stopping the run. Reviews run on a fresh Codex thread per call,
 as other jobs do; a thread kept per page, which the plan proposed, was not built.
+
+A reviewer operational stop also keeps the checked draft resumable while review
+allowance remains. The retry retains the review count and rechecks the task and
+read dependencies; it needs a fresh scientific verdict, and unknown usage still
+blocks scheduling until reconciled.
 
 The pilot that preceded the cutover ran 13 integrated pages through both paths on
 Sonnet 5.5: the page sessions cost USD 12.60 of Claude spend against USD 21.08
@@ -796,6 +986,11 @@ prompts carry the new concept dictionary and every write carries its page's new
 text, so replaying integration would re-plan and rewrite the corpus to re-draft a
 handful of pages. A page that fails its retries waits for a person. `--strict-pages`
 stops the run instead.
+
+A successful integrated-page retry stays scheduled until its candidate is
+promoted. If a later stage, final check or promotion aborts, the next run can reuse
+its matching completed page cache. Only successful promotion, including recovery
+that finishes promotion, retires the original failure record.
 
 ### Derived prose: packed evidence, page sessions, closed verification
 
@@ -893,9 +1088,10 @@ there. A refusal stated in prose, or a refused GPT turn, goes to a fixed fallbac
 (`REFUSAL_FALLBACK` in `agentic/runtime.py`): Opus 5.5 and Sonnet 5.5 to Opus 5,
 Haiku 5.5 to Sonnet 5.5, and GPT-6.1 Sol, GPT-6 Sol and GPT-6 Luna to GPT-5.6 Sol.
 A fallback that refuses again follows its own entry, so a Haiku page goes to
-Sonnet 5.5 and then to Opus 5. A Codex fallback fires only on a turn that failed
-for biological risk. The memory is per backend, so a refused Claude writer never redirects the
-GPT reviewer of the same page or the reverse. It also counts only refusals by the
+Sonnet 5.5 and then to Opus 5. A Codex fallback fires on a turn that failed for
+biological risk or a completed reply recognized as a prose refusal. The original
+attempt keeps its charge. The memory is per backend, so a refused Claude writer
+never redirects the GPT reviewer of the same page or the reverse. It also counts only refusals by the
 model about to be asked, so a page Opus 5.5 refused is offered to a new page
 writer before any fallback. On this corpus refused attempts were a fifth of extraction
 spend, and a flagged report cost five to ten times an ordinary one. A derived
@@ -934,6 +1130,13 @@ every planning batch or every Codex job, extraction included. Work cached under
 that older formula is still found: a versioned key with no row falls back to the
 legacy key, and a hit is recorded in the ledger's `aliases` table, so one replay
 carries the cache over with no duplicated rows or charges.
+
+Headlines and directions also key their durable saved replies on the public
+evidence pack, prompt tag and model policy. Wording edits that keep the tag retain
+successful replies that pass today's checks, even without the originating job
+store. Under the original tag, compatible raw-prompt keys migrate to the tagged
+formula after validation, without model calls. A tag bump makes those old keys
+stale too.
 
 Scientific compiler or contract changes and manual edits to core pages
 conservatively revisit staged sources; model changes do not. The runner compares a
@@ -991,7 +1194,15 @@ uv run python -m beril_wiki.agentic status
 uv run python -m beril_wiki.agentic retry --job FULL_JOB_ID
 uv run python -m beril_wiki.agentic retry --page conflicts/conflict--stem--1a2b3c4d
 uv run python -m beril_wiki.agentic retry --all-failed
+uv run python -m beril_wiki.agentic retry --failed-jobs
 ```
+
+A job interrupted by a cancel or a killed stage ends as `failed`, and the next
+run stops at it ("inspect saved job before retrying"). `retry --failed-jobs`
+marks every failed job rejected, as `retry --job` does, and prints each key. It
+first charges any job a hard kill left pending, as the next run would, so that
+job is retried too. It skips jobs refused for their content, which a retry would only repeat, and exits
+0 when no job failed.
 
 For a capped acceptance pass, invoke a stage directly with `--limit N`
 (conflicts and topics): it writes at most N new pages and retires none, so a
@@ -1004,7 +1215,10 @@ retried automatically, as above. For a derived page, `retry --page` and
 owning stage from the accepted state, so the next run (which would otherwise
 report "unchanged") re-runs that stage, issues the page a new session (resuming
 from its scratch files under `.agentic/pages/` only when they match the check the
-host last recorded) and leaves every other cached page untouched. A pass that records any failure retires no pages,
+host last recorded and its read dependencies are unchanged) and leaves every other
+cached page untouched. An explicit
+integrated-page retry also writes an existing entity with no assigned coverage or
+revised source. A pass that records any failure retires no pages,
 so a failed replacement's predecessor stays published under its old slug.
 
 Use `retry` only after inspecting a saved failed/rejected job. Malformed figure
@@ -1014,9 +1228,10 @@ does not stop the run; its issues and job keys are in `.agentic/failures.json`. 
 failed session is not replayed from the ledger: whenever its stage runs again, the
 page gets a new session, which spends again. Excess valid figure placements are trimmed to the page's cap. Completed editorial results remain cached; stopping
 promotion does not discard their paid model outputs. A crash can consume
-allowance without returning usage. Jobs interrupted by a timeout or a killed
-stage are charged from their transcripts automatically; only a job whose result
-carried no usable usage is left `unknown`, which blocks new calls until
+allowance without returning usage. Jobs left pending by a timeout or a killed
+stage are charged from their transcripts or reservation automatically. Finished
+jobs without usable usage stay `unknown`, including a writer that exits without
+usage after a nested review failure. These rows block new calls until
 conservatively reconciled by hand. Prior charges and outputs remain saved:
 
 ```sh
