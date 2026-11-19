@@ -413,15 +413,19 @@ def rollback(store: Store, keys: Keys, root: pathlib.Path, artifact_id: str) -> 
 
     if not H.ref(root, f"refs/tags/{H.tag_of(artifact_id)}"):
         raise ArtifactError(f"no history tag for {artifact_id}; refusing to roll back")
-    if H.locked_by_a_run(root):
-        raise ArtifactError("a curator run holds .agentic/lock; retry when it has finished")
-    pointer = point(store, keys, artifact_id)
     try:
-        pointer["restored_commit"] = H.restore(root, artifact_id)
+        # One lock across moving the pointer and replacing the trees: a run that
+        # started in between would promote on top of a half-restored checkout.
+        with H.held_lock(root):
+            pointer = point(store, keys, artifact_id)
+            try:
+                pointer["restored_commit"] = H.restore(root, artifact_id, locked=True)
+            except H.HistoryError as exc:
+                raise ArtifactError(
+                    f"current moved to {artifact_id} but the checkout was not restored: {exc}"
+                ) from exc
     except H.HistoryError as exc:
-        raise ArtifactError(
-            f"current moved to {artifact_id} but the checkout was not restored: {exc}"
-        ) from exc
+        raise ArtifactError(str(exc)) from exc
     return pointer
 
 

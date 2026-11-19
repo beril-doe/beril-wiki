@@ -177,6 +177,23 @@ def assign_sid(manifest: dict, owner: str, slug: str) -> str:
     return sid
 
 
+def unchanged(current: dict, row: dict, installed: Path) -> bool:
+    """Whether the feed row holds nothing the corpus has not already got: the report
+    revision matches, and every file the corpus consumes (the metadata files and the
+    figures it holds) carries the hash the feed declares. A README or figure can
+    change without the report, and both are run inputs."""
+    if not (installed / "REPORT.md").is_file():
+        return False
+    if current.get("revision") != row.get("revision"):
+        return False
+    declared = row.get("files", {})
+    recorded = current.get("files", {})
+    for rel, digest_ in recorded.items():
+        if rel in declared and f"sha256:{declared[rel]}" != digest_:
+            return False
+    return all(rel in recorded for rel in META if rel in declared)
+
+
 def warn(message: str) -> None:
     print(f"corpus: [WARN] {message}", file=sys.stderr)
 
@@ -237,10 +254,7 @@ def pull_hub(
                 continue
             sid = assign_sid(manifest, owner, slug)
             current = manifest["projects"].get(sid, {})
-            if (
-                current.get("revision") == row.get("revision")
-                and (corpus / "projects" / sid / "REPORT.md").is_file()
-            ):
+            if unchanged(current, row, corpus / "projects" / sid):
                 continue
             if hub.submitted(current) > hub.submitted(row):
                 # An older revision that completed after a newer one was

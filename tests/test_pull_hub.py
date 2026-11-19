@@ -297,3 +297,28 @@ def test_cli_reports_the_pull(out, beril, monkeypatch, capsys):
     assert "1 project(s) and 0 digest(s) updated" in capsys.readouterr().out
     assert json.loads((out / "manifest.json").read_text())["hub"]["next_after"] == 1
     assert corpus.main(["verify"]) == 0
+
+
+def test_a_readme_or_figure_change_without_a_report_change_is_pulled(out, beril, client):
+    corpus.pull_hub(out, client)
+    # Same REPORT.md (same revision), new README: a run input the manifest fingerprints.
+    beril.project(
+        "demo",
+        {"REPORT.md": REPORT, "figures/plot.png": PLOT, "README.md": README + b"edited\n"},
+        "2026-11-02T00:00:00Z",
+    )
+    assert corpus.pull_hub(out, client)["projects"] == 1
+    assert (out / "projects/demo/README.md").read_bytes() == README + b"edited\n"
+    # Same report and README, the embedded figure redrawn.
+    beril.project(
+        "demo",
+        {"REPORT.md": REPORT, "figures/plot.png": PLOT + b"v2", "README.md": README + b"edited\n"},
+        "2026-11-03T00:00:00Z",
+    )
+    assert corpus.pull_hub(out, client)["projects"] == 1
+    assert (out / "projects/demo/figures/plot.png").read_bytes() == PLOT + b"v2"
+    # Nothing new: the row is skipped without a download.
+    beril.requests.clear()
+    assert corpus.pull_hub(out, client)["projects"] == 0
+    assert all("/api/context/read" not in r for r in beril.requests)
+    assert corpus.verify(out) == []

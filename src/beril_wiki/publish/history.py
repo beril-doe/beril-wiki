@@ -21,6 +21,7 @@ retired single-commit `search-data` branch.
 
 from __future__ import annotations
 
+import contextlib
 import fcntl
 import os
 import pathlib
@@ -28,6 +29,7 @@ import shutil
 import subprocess
 import tarfile
 import tempfile
+from collections.abc import Iterator
 
 BRANCH = "history"
 TAG_PREFIX = "artifact/"
@@ -93,6 +95,26 @@ def record(root: pathlib.Path, artifact_id: str, message: str | None = None) -> 
             os.unlink(index)
 
 
+@contextlib.contextmanager
+def held_lock(root: pathlib.Path) -> Iterator[None]:
+    """Hold the curator's exclusive lock (the same flock `agentic run` takes on
+    `.agentic/lock`) for the duration of the block, so a scheduled run cannot start
+    while the trees are being replaced. Raises HistoryError when a run holds it."""
+    lock = root / ".agentic" / "lock"
+    lock.parent.mkdir(exist_ok=True)
+    with lock.open("a") as handle:
+        try:
+            fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            raise HistoryError(
+                "a curator run holds .agentic/lock; retry when it has finished"
+            ) from None
+        try:
+            yield
+        finally:
+            fcntl.flock(handle, fcntl.LOCK_UN)
+
+
 def locked_by_a_run(root: pathlib.Path) -> bool:
     lock = root / ".agentic" / "lock"
     if not lock.exists():
@@ -106,14 +128,20 @@ def locked_by_a_run(root: pathlib.Path) -> bool:
     return False
 
 
-def restore(root: pathlib.Path, artifact_id: str) -> str:
-    """Replace wiki/, state/, corpus/ and search/ with the tagged promotion."""
+def restore(root: pathlib.Path, artifact_id: str, *, locked: bool = False) -> str:
+    """Replace wiki/, state/, corpus/ and search/ with the tagged promotion, holding
+    the curator lock throughout unless the caller already holds it (`locked`)."""
     tag = tag_of(artifact_id)
     commit = ref(root, f"refs/tags/{tag}")
     if not commit:
         raise HistoryError(f"no tag {tag}; was this artifact recorded on {BRANCH}?")
-    if locked_by_a_run(root):
-        raise HistoryError("a curator run holds .agentic/lock; retry when it has finished")
+    if locked:
+        return _restore(root, commit, tag)
+    with held_lock(root):
+        return _restore(root, commit, tag)
+
+
+def _restore(root: pathlib.Path, commit: str, tag: str) -> str:
     archive = subprocess.run(
         ["git", "-C", str(root), "archive", "--format=tar", commit],
         capture_output=True,

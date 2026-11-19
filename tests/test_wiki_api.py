@@ -37,7 +37,7 @@ PAGES = [
     ),
     page(1, "summaries/demo__REPORT", "Demo report", "report"),
     page(2, "authors/ada-lovelace", "Ada Lovelace", "other"),
-    page(3, "sources/demo__REPORT", "demo source", "source"),
+    page(3, "sources/demo", "demo source", "source"),
 ]
 SECTIONS = [
     {
@@ -137,10 +137,13 @@ def test_read_page_section_and_source(site):
     assert section is not None
     assert [s["anchor"] for s in section["sections"]] == ["caveats"]
     assert section["address"] == "wiki/concepts/gene-essentiality#caveats"
-    source = W.read(c, "wiki/sources/demo__REPORT")
-    assert source is not None
-    assert source["exact"] and source["content"].startswith("# Report: demo")
-    assert source["sources"] == ["demo"]
+    # The site publishes sources/<id> (ingest drops the __REPORT staging suffix); the
+    # corpus keeps the suffix, and the read must still find the exact Markdown.
+    for address in ("wiki/sources/demo", "wiki/sources/demo__REPORT"):
+        source = W.read(c, address)
+        assert source is not None, address
+        assert source["exact"] and source["content"].startswith("# Report: demo")
+        assert source["sources"] == ["demo"]
     assert W.read(c, "wiki/concepts/none") is None
     for bad in ("wiki/authors/ada-lovelace", "concepts/x", "wiki/../etc", "wiki/nope/x"):
         with pytest.raises(ValueError):

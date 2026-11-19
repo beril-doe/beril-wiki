@@ -180,3 +180,22 @@ def test_run_gates_records_each_command(tmp_path, monkeypatch):
     assert result["results"]["check_site"] == {"passed": True, "output": "fine"}
     assert A.gates_passed(result) == ["theme_typecheck"]
     assert result["site_digest"] == A.site_digest(site)
+
+
+def test_restore_holds_the_curator_lock_for_its_whole_duration(tmp_path, monkeypatch):
+    repo = checkout(tmp_path)
+    H.record(repo, "A")
+    seen: list[bool] = []
+    original = H._restore
+
+    def observing(root, commit, tag):
+        seen.append(H.locked_by_a_run(root))  # True only while restore holds the flock
+        return original(root, commit, tag)
+
+    monkeypatch.setattr(H, "_restore", observing)
+    H.restore(repo, "A")
+    assert seen == [True]
+    assert not H.locked_by_a_run(repo)  # released afterwards
+    with H.held_lock(repo):
+        with pytest.raises(H.HistoryError, match="holds .agentic/lock"):
+            H.restore(repo, "A")

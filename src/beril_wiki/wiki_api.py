@@ -292,7 +292,12 @@ def read(c: Corpus, address: str) -> dict[str, Any] | None:
     slug, section = parse_address(address)
     page = c.by_slug.get(slug)
     if slug.startswith("sources/"):
-        text = c.markdown("sources", slug.split("/", 1)[1])
+        # publish.ingest.published() drops the `__REPORT` staging suffix from the
+        # page name; the corpus keeps it, so look the report up under both.
+        name = slug.split("/", 1)[1]
+        text = c.markdown("sources", f"{name}__REPORT")
+        if text is None:
+            text = c.markdown("sources", name)
         if text is None and page is None:
             return None
         content = text if text is not None else "\n\n".join(s["t"] for s in c.page_sections(slug))
