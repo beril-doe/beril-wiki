@@ -850,7 +850,11 @@ class EvidenceTools(ReadTools):
 
 
 UNKEYED_CONTRACT = frozenset(
-    {"contract/errata.yaml", "contract/cards.yaml", "contract/novelty-decisions.yaml"}
+    {
+        "contract/errata.yaml",
+        "contract/cards.yaml",
+        "contract/novelty-decisions.yaml",
+    }
 )
 
 
@@ -996,6 +1000,33 @@ If evidence is insufficient, say so instead of inventing support. Return only re
 """
 
 
+# The credentials an API-mode run passes through to the SDK (Anthropic or a
+# compatible gateway such as CBORG) and to Codex (OpenAI or its compatible endpoint).
+# Everything else in AUTH_ENV (OAuth tokens, cloud-provider routing) is still stripped.
+API_ENV = ("ANTHROPIC_API_KEY", "ANTHROPIC_BASE_URL")
+CODEX_API_ENV = ("OPENAI_API_KEY", "OPENAI_BASE_URL")
+AUTH_MODES = ("subscription", "api")
+
+
+def auth_mode() -> str:
+    """How jobs authenticate (BERIL_WIKI_AUTH): `subscription`, the default, runs on a
+    direct Claude login and a ChatGPT login and strips every API credential; `api` runs
+    on ANTHROPIC_API_KEY / ANTHROPIC_BASE_URL and OPENAI_API_KEY / OPENAI_BASE_URL, for
+    an unattended scheduler holding the keys as secrets. Cache keys and ledger model
+    names do not depend on the mode, so cached work survives a switch."""
+    mode = os.environ.get("BERIL_WIKI_AUTH", "subscription")
+    if mode not in AUTH_MODES:
+        raise WorkflowError(f"BERIL_WIKI_AUTH must be one of {AUTH_MODES}, not {mode!r}")
+    return mode
+
+
+def stripped_env() -> tuple[str, ...]:
+    """The credential variables a run removes before any job or stage runs."""
+    if auth_mode() == "api":
+        return tuple(k for k in AUTH_ENV if k not in API_ENV)
+    return AUTH_ENV
+
+
 def subscription_env(max_output: int = 32768) -> dict[str, str]:
     return {k: "" for k in AUTH_ENV} | {
         "CLAUDE_CODE_MAX_OUTPUT_TOKENS": str(max_output),
@@ -1003,7 +1034,28 @@ def subscription_env(max_output: int = 32768) -> dict[str, str]:
     }
 
 
+def job_env(max_output: int = 32768) -> dict[str, str]:
+    """The SDK job's environment overrides for the configured auth mode."""
+    env = subscription_env(max_output)
+    if auth_mode() == "api":
+        for key in API_ENV:
+            if os.environ.get(key):
+                env[key] = os.environ[key]
+    return env
+
+
+def credential_expected(source: str | None) -> bool:
+    """Whether the SDK's reported apiKeySource is the one the auth mode calls for."""
+    if auth_mode() == "api":
+        return source not in (None, "none")
+    return source in (None, "none")
+
+
 def check_auth(cli: str) -> None:
+    if auth_mode() == "api":
+        if not os.environ.get("ANTHROPIC_API_KEY"):
+            raise WorkflowError("BERIL_WIKI_AUTH=api needs ANTHROPIC_API_KEY")
+        return
     result = subprocess.run(
         [cli, "auth", "status", "--json"],
         env=os.environ | subscription_env(),
@@ -1257,7 +1309,7 @@ class Runtime:
             skills=[],
             plugins=[],
             cwd=self.store,
-            env=subscription_env(self.config.get("max_output_tokens", 32768)),
+            env=job_env(self.config.get("max_output_tokens", 32768)),
             permission_mode="dontAsk",
             max_turns=1 if profile == "none" else self.config.get("max_turns", 6),
             fallback_model=None,
@@ -1283,9 +1335,9 @@ class Runtime:
                 raise WorkflowError("transcript output limit reached")
             if isinstance(message, SystemMessage) and message.subtype == "init":
                 source = message.data.get("apiKeySource")
-                auth_ok = source in ("none", None)  # check_auth verifies subscription first
+                auth_ok = credential_expected(source)  # check_auth verified the mode first
                 if not auth_ok:
-                    raise WorkflowError("SDK initialized with an API credential")
+                    raise WorkflowError(f"SDK initialized with the wrong credential ({source})")
             if isinstance(message, SystemMessage) and message.subtype == "model_refusal_fallback":
                 fallback = message.data
             if isinstance(message, ResultMessage):

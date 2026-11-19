@@ -17,6 +17,12 @@ import sys
 import yaml
 
 
+def site_path(base_url: str) -> str:
+    """The path part of a host/path baseUrl: "" for a bare host, "/wiki" for host/wiki."""
+    _, _, path = base_url.strip("/").partition("/")
+    return f"/{path}" if path else ""
+
+
 def main(qp: pathlib.Path, base_url: str) -> None:
     cfg = yaml.safe_load((qp / "quartz.config.default.yaml").read_text())
     c = cfg["configuration"]
@@ -112,9 +118,16 @@ def main(qp: pathlib.Path, base_url: str) -> None:
         # routes off removes a taxonomy the corpus never claimed.
         if name == "tag-page":
             p["enabled"] = False
+        # Root-relative, so the link is right wherever the host is: the same
+        # artifact serves beril.kbase.us/wiki and beril-dev.kbase.us/wiki. Only
+        # the path of baseUrl is baked here.
+        # TODO(base-url): Quartz still writes the full baseUrl into the sitemap,
+        # RSS (index.xml), canonical and og:url tags; those are not configurable,
+        # so a host that must have them right needs its own artifact (render once
+        # per host, as image.yml does per channel).
         if name == "footer":
             p["options"]["links"] = {
-                "About & how to cite": "https://" + base_url.rstrip("/") + "/about",
+                "About & how to cite": site_path(base_url) + "/about",
                 "BERIL Observatory": "https://beril.kbase.us/",
                 "Source": "https://github.com/beril-doe/beril-wiki",
                 "AGPL-3.0": "https://www.gnu.org/licenses/agpl-3.0.html",

@@ -12,9 +12,24 @@ See the [HTML walkthrough](agentic-workflow.html) for the control flow and the
 
 ## Commands and limits
 
-Install with `uv sync` and sign in using `claude auth login` with a direct Claude
-subscription. The runner removes inherited API credentials and provider routing;
-each SDK job verifies subscription authentication. There is no API fallback.
+Install with `uv sync`. How jobs authenticate is `BERIL_WIKI_AUTH`, a
+per-deployment mode rather than a constant:
+
+- `subscription` (default): sign in with `claude auth login` on a direct Claude
+  subscription and with a ChatGPT login for Codex. The runner removes inherited
+  API credentials and provider routing from every stage and job; each SDK job
+  verifies the subscription login and refuses to start on any credential.
+  There is no API fallback within this mode.
+- `api`: for an unattended scheduler (a CronJob holding the keys as secrets).
+  Claude-role jobs run on `ANTHROPIC_API_KEY`, and `ANTHROPIC_BASE_URL` may
+  name a compatible gateway such as CBORG; Codex-role jobs run on
+  `OPENAI_API_KEY` with `OPENAI_BASE_URL` for the CBORG OpenAI-compatible
+  endpoint. Only those four variables pass through; OAuth tokens and
+  cloud-provider routing are still stripped, the Codex login file is not
+  shared into the isolated `CODEX_HOME`, and a job that initialises on the
+  wrong credential kind fails before it runs. Job cache keys and the ledger's
+  per-model rows do not name the mode, so work cached under one mode is reused
+  under the other.
 
 ```sh
 # List changed staged sources and stale editorial stages, without fetching or inference.
@@ -133,6 +148,42 @@ rollback fails, the previous tree stays in a temporary import directory beside
 `beril_wiki.publish.ingest` copies `corpus/manifest.json` byte for byte to the
 site root as `corpus-manifest.json`, so a client can compare a project's
 published source digest with its own.
+
+### Pulling the corpus from BERIL
+
+`uv run python -m beril_wiki.corpus pull-hub` is the incremental import from
+BERIL's context API, run before `agentic plan` and never inside a run: a run
+reads `corpus/` as its checkout and fingerprints it like any other, so the
+runner has no hub code and a submission landing mid-run is caught at promotion
+like a changed checkout. `BERIL_URL` and `BERIL_TOKEN` (a BERIL personal access
+token) reach two routes and nothing else; the wiki never calls OpenViking.
+`GET /api/context/submissions?kind=approved,seeded,docs` lists complete
+submissions, in the order they completed, after the cursor kept in
+`manifest["hub"].next_after` (owner, project, revision = sha256 of
+`REPORT.md`, `submitted_at`, every file with its sha256). A submission whose
+figures arrived last completes after a newer one, so `pull-hub` keeps each
+project's newest revision by `submitted_at` and never replaces it with an
+older one that completes later;
+`GET /api/context/read` supplies each file as raw bytes. For every project whose
+revision differs from the manifest's, `pull-hub` downloads `REPORT.md`,
+`README.md`, `beril.yaml` and the figures the report embeds, checks each against
+the feed's hash (a figure the hub refuses is skipped with a warning; a hash
+mismatch stops the pull), replaces `corpus/projects/<sid>/` and records
+`owner_orcid`, `project`, `revision`, `submitted_at`, `kind` and `address`
+beside the entry's `files`, `digest` and `origin` (`hub@<submission id>`).
+`kind: docs` rows write `corpus/docs/*.md` into `shared`. Nothing is installed
+and the cursor does not move unless every download verified, so `verify`
+passes after any pull. `--since ISO` overrides the cursor.
+
+**Source ids.** BERIL project slugs are unique per owner only, and a `[src: id]`
+never changes once pages cite it, so the directory name under
+`corpus/projects/` is assigned once: the slug when no other owner holds it,
+else `<slug>__<orcid>`. A project vendored by `import-v1` before owners were
+known is pinned to the first owner who submits under its slug. After a pull,
+`agentic plan` reports the changed projects in `changed_sources` as it does for
+any checkout change; the `hub` key of the manifest is not a per-project entry,
+so `plan --expect-source` and `check_update.py` treat a moved cursor as a
+change outside the project.
 
 `scripts/check_update.py --base REF --head REF [--branch NAME]` is the model-free
 scope check for a publisher branch. The branch comes from `--branch` or
@@ -1157,6 +1208,16 @@ survive cached updates and are removed when their pages are retired. No
 embedding API is used in this path; PubMed remains an external data retrieval
 operation.
 
+## Running unattended
+
+A scheduled run (a SPIN CronJob) needs one persistent volume mounted at the
+checkout, holding `wiki/`, `state/`, `corpus/`, `search/section-vectors.jsonl`
+and `.agentic/`; a pod without it looks like a first-ever run and would
+re-integrate the whole corpus. `agentic run` refuses to start when
+`state/agentic.json` is absent unless `BERIL_WIKI_ALLOW_COLD_START=1` says the
+cold start is meant. [`deploy/README.md`](../deploy/README.md) has the layout,
+the job's environment and the sequence one run executes.
+
 ## Resume and recovery
 
 Ignored `.agentic/` stores the SQLite ledger, raw results, evidence, plans, paper
@@ -1232,11 +1293,20 @@ OpenViking integration**.
 After local acceptance, `scripts/build_quartz.sh` renders the site, including the
 finding and research-direction records and the maintainers' data-issue lists.
 With `CBORG_API_KEY` set, it also embeds the sections that have no vector yet.
-Then run `uv run python -m beril_wiki.publish.search_data push` before opening
-the pull request: the vectors live on the `search-data` branch, and a pull
-request whose sections lack vectors fails its build.
-The curator does not commit, push or deploy. Do not publish concurrently with
-promotion.
+Then `scripts/publish_artifact.sh` runs the three publish gates (`check
+--strict`, the theme typecheck, `check_site.sh`), pushes the site as a versioned
+artifact whose manifest records them, commits `wiki/`, `state/`, `corpus/`
+and `search/section-vectors.jsonl` to the `history` branch
+and tags `artifact/<id>`; `current` never moves to a site CI would reject. Push
+`history` before opening a pull request: `search_data pull` reads the vectors
+from it (the `search-data` branch is retired), they also ship inside every
+artifact under `corpus/`, and a pull request whose sections lack vectors still
+fails its build (`SEARCH_REQUIRE_VECTORS=1`). `publish.artifact rollback --to
+<id>` moves `current` back and restores `wiki/`, `state/`, `corpus/` and
+`search/` from the tag, so the next curate run starts from the restored
+promotion with the corpus and its feed cursor that produced it; it refuses while a run holds `.agentic/lock` or when the tag
+is missing. The curator itself does not commit to `main`, push or deploy. Do not
+publish concurrently with promotion.
 
 ## Development verification
 

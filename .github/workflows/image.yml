@@ -14,7 +14,7 @@ name: Build wiki image
 # production image or restart production.
 #
 # The site is built here on the runner, not in the Dockerfile, because the
-# search vectors come from the search-data branch and need the checkout's .git.
+# search vectors come from the history branch and need the checkout's .git.
 #
 # Once the image is pushed, the deploy job hands the channel to
 # spin_deploy.yml, which restarts the matching SPIN deployment so it pulls the
@@ -26,8 +26,7 @@ on:
   push:
     branches: [main]
   pull_request:
-  # Also dispatched by `search_data push` (beril_wiki.publish.search_data),
-  # which passes no input and so refreshes :latest.
+  # A plain dispatch passes no input and so refreshes :latest.
   workflow_dispatch:
     inputs:
       channel:

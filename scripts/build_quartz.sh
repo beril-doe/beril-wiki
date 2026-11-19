@@ -58,10 +58,11 @@ printf '@use "beril/beril";\n' > "$QP/quartz/styles/custom.scss"
 uv run --project "$REPO" python -m beril_wiki.publish.ingest "$REPO" "$QP/content"
 (cd "$QP" && npx quartz build)
 # Search index from the rendered pages. The meaning-search vectors live on the
-# search-data branch; pull them into search/section-vectors.jsonl first (in CI a
-# failed pull fails the build). With a CBORG key, embed the sections that still
-# have none (free, hash-skipped) and index again, then share them with
-# `uv run python -m beril_wiki.publish.search_data push`. CI has no key.
+# history branch (search/section-vectors.jsonl, committed by every artifact
+# push); pull them into the local store first (in CI a failed pull fails the
+# build). With a CBORG key, embed the sections that still have none (free,
+# hash-skipped) and index again; the next publish_artifact.sh shares them. CI
+# has no key.
 uv run --project "$REPO" python -m beril_wiki.publish.search_data pull
 if [ -n "${CBORG_API_KEY:-}" ]; then
   # This pass only lists the sections to embed, so missing vectors are expected.
@@ -74,5 +75,16 @@ node "$THEME/dist/build-search.js" "$REPO"
 # Quartz's static folder so a served build still has search.
 rm -rf "$QP/quartz/static/search"
 cp -R "$QP/public/static/search" "$QP/quartz/static/search"
+# What the MCP tools answer from besides the search index: the source reports,
+# the finding and direction records and cards.json. Packed into the site
+# artifact by publish_artifact.sh and copied into the image as its fallback.
+uv run --project "$REPO" python -m beril_wiki.publish.artifact corpus "$QP/corpus" --root "$REPO"
+# The publish gates, recorded for `artifact push` (quartz/gate-results.json): a
+# failed gate does not fail this build, it stops the push. WIKI_SKIP_GATES=1
+# leaves them to CI's own steps.
+if [ -z "${WIKI_SKIP_GATES:-}" ]; then
+  uv run --project "$REPO" python -m beril_wiki.publish.artifact gate --root "$REPO" --site "$QP/public" || true
+fi
 echo
 echo "built. serve with:  cd $QP && npx quartz build --serve"
+echo "publish as a site artifact with:  scripts/publish_artifact.sh"

@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any
 
 from beril_wiki.agentic.runtime import (
+    CODEX_API_ENV,
     CONTENT_FLAG,
     REFUSAL_FALLBACK,
     SYSTEM,
@@ -24,6 +25,7 @@ from beril_wiki.agentic.runtime import (
     Refused,
     Runtime,
     WorkflowError,
+    auth_mode,
     tool_profile,
     turn_budget_sentence,
 )
@@ -188,8 +190,13 @@ def prepare_home(store: Path, name: str) -> Path:
     fifth server failed to initialize after four extraction workers had used one."""
     home = store / "codex-home" / name
     home.mkdir(parents=True, exist_ok=True)
-    source = Path(os.environ.get("CODEX_HOME", "~/.codex")).expanduser() / "auth.json"
     link = home / "auth.json"
+    if auth_mode() == "api":
+        # The key arrives in the environment; no login to share.
+        if link.is_symlink() or link.exists():
+            link.unlink()
+        return home
+    source = Path(os.environ.get("CODEX_HOME", "~/.codex")).expanduser() / "auth.json"
     if not link.is_symlink():
         if link.exists():
             link.unlink()
@@ -201,8 +208,26 @@ def check_auth(client: Any) -> None:
     account = client.account().account
     kind = getattr(getattr(account, "root", account), "type", None)
     kind = getattr(kind, "value", kind)
+    if auth_mode() == "api":
+        if kind != "apiKey":
+            raise WorkflowError("BERIL_WIKI_AUTH=api: Codex did not take OPENAI_API_KEY")
+        return
     if kind != "chatgpt":
         raise WorkflowError("a ChatGPT subscription login is required for Codex; no API key")
+
+
+def session_env() -> dict[str, str]:
+    """The app server's environment: provider credentials stripped, except the OpenAI
+    key and base URL in API mode (OPENAI_BASE_URL points Codex at a compatible
+    endpoint such as CBORG)."""
+    keep = set(CODEX_API_ENV) if auth_mode() == "api" else set()
+    return {k: v for k, v in os.environ.items() if k in keep or not k.startswith(ENV_PREFIXES)}
+
+
+def overrides() -> tuple[str, ...]:
+    """Config overrides for the auth mode: the forced login method follows it."""
+    method = "api" if auth_mode() == "api" else "chatgpt"
+    return (f'forced_login_method="{method}"', *OVERRIDES[1:])
 
 
 class CodexSession:
@@ -213,12 +238,12 @@ class CodexSession:
 
         self.store = store
         self.host = EvidenceHost()
-        env = {k: v for k, v in os.environ.items() if not k.startswith(ENV_PREFIXES)}
+        env = session_env()
         env["CODEX_HOME"] = str(prepare_home(store, f"{os.getpid()}-{threading.get_ident()}"))
         self.client = Codex(
             CodexConfig(
                 env=env,
-                config_overrides=(*OVERRIDES, f'mcp_servers.evidence.url="{self.host.url}"'),
+                config_overrides=(*overrides(), f'mcp_servers.evidence.url="{self.host.url}"'),
             )
         )
         try:

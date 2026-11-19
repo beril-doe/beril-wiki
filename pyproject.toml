@@ -6,6 +6,7 @@ license = "AGPL-3.0-or-later"
 requires-python = ">=3.11"
 dependencies = [
     "claude-agent-sdk==0.1.81",
+    "httpx>=0.27",  # the hub fetch backend (stages/hub.py)
     "litellm>=1.40",
     # SDK 0.1.81 requires the MCP 1.x in-process list_tools interface.
     "mcp>=1.0,<2",
@@ -16,20 +17,27 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "httpx>=0.27",  # starlette's TestClient, for tests/test_serve.py
     "pytest>=8",
     "ruff>=0.12",
     "ty",
 ]
-# The site server, and all the container image installs (beril_wiki.serve).
-# Pinned to the versions mcp already locks, so the image and `uv sync` agree.
+# The site server, and all the container image installs (beril_wiki.serve,
+# publish/artifact.py and wiki_api.py). Pinned to the versions the lock
+# already holds for the runtime, so the image and `uv sync` agree. boto3 is the
+# artifact store client the reload route uses.
 serve = [
+    "boto3==1.43.85",
+    "fastapi==0.162.7",
     "starlette==1.6.0",
     "uvicorn==0.52.4",
 ]
+# Publishing a site artifact from the curator host (beril_wiki.publish.artifact push).
+publish = [
+    "boto3==1.43.85",
+]
 
 [tool.uv]
-default-groups = ["dev", "serve"]
+default-groups = ["dev", "serve", "publish"]
 
 [build-system]
 requires = ["uv_build>=0.8,<0.13"]

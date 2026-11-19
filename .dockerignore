@@ -1,9 +1,20 @@
-# The image needs only the built site, the server module and the lock that pins
-# its dependencies (see Dockerfile). Everything else stays out of the context,
-# which otherwise carries wiki/, quartz/node_modules and .git.
+# Build context for the Dockerfile. The runtime stage needs only the server
+# modules, the lock and (for SITE_FROM=hostsite) the host-built site; the
+# in-image site build (SITE_FROM=site) also needs the sources it renders from.
+# .git, .venv, quartz/node_modules and the quartz clone itself stay out.
 *
 !pyproject.toml
 !uv.lock
-!src/beril_wiki/__init__.py
-!src/beril_wiki/serve.py
+!src/
+!theme/
+!scripts/
+!contract/
+!state/
+!wiki/
+!search/section-vectors.jsonl
 !quartz/public/
+!quartz/corpus/
+theme/node_modules/
+theme/dist/
+**/__pycache__/
+**/.DS_Store

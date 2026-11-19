@@ -26,7 +26,6 @@ from beril_wiki.agentic.curator import (
     stage_snapshot,
 )
 from beril_wiki.agentic.runtime import (
-    AUTH_ENV,
     Runtime,
     WorkflowError,
     atomic_json,
@@ -37,6 +36,7 @@ from beril_wiki.agentic.runtime import (
     manifest,
     model_policy,
     model_signature,
+    stripped_env,
 )
 from beril_wiki.corpus import FIG_EMBED
 from beril_wiki.stages.novelty import labels_due
@@ -207,7 +207,7 @@ def unlink_missing(work: Path) -> None:
 
 def run_stage(work: Path, config_path: Path, name: str, module: str, args: list[str]) -> None:
     env = os.environ.copy()
-    for key in AUTH_ENV:
+    for key in stripped_env():  # every credential in subscription mode; API keys stay in api
         env.pop(key, None)
     env.update(
         BERIL_WIKI_ROOT=str(work),
@@ -382,7 +382,22 @@ def budget_run(root: Path, base: dict, external: dict, staged: bool) -> str:
     return identity
 
 
+def check_warm_start(root: Path) -> None:
+    """Refuse a run that would re-integrate the whole corpus because the accepted state
+    is missing: a pod started without its persistent volume looks exactly like a
+    first-ever run. BERIL_WIKI_ALLOW_COLD_START=1 says the cold start is meant."""
+    if (root / "state/agentic.json").exists() or os.environ.get("BERIL_WIKI_ALLOW_COLD_START"):
+        return
+    raise WorkflowError(
+        f"no {root / 'state/agentic.json'}: this checkout holds no accepted run, so a run here "
+        "would re-integrate every source. Mount the persistent volume that holds wiki/, "
+        "state/, corpus/, search/ and .agentic/, or set BERIL_WIKI_ALLOW_COLD_START=1 to "
+        "start from nothing on purpose."
+    )
+
+
 def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
+    check_warm_start(root)
     models = model_signature(config)
     with locked(root):
         recover(root)
