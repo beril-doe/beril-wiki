@@ -51,11 +51,11 @@ def test_pull_reads_the_history_branch_and_merges(repos):
     remote, (a, b) = repos
     publish_vectors(a, "v1", "h1")
     store = b / "store.jsonl"
-    assert sd.pull(b, store) == (1, 1)
+    assert sd.pull(b, store)[:2] == (1, 1)
     # Local rows the branch lacks survive; branch rows are added.
     store.write_text(store.read_text() + row("h2") + "\n")
     publish_vectors(a, "v2", "h1", "h3")
-    assert sd.pull(b, store) == (1, 3)
+    assert sd.pull(b, store)[:2] == (1, 3)
     assert set(sd.parse(store.read_text(), "t")) == {"h1", "h2", "h3"}
     assert run("git", "rev-list", "--count", H.BRANCH, cwd=remote).strip() == "2"
 
@@ -67,7 +67,7 @@ def test_pull_falls_back_to_the_local_history_branch(repos):
     store.write_text(row("h1") + "\n")
     H.record(a, "v1")  # recorded but never pushed
     store.unlink()
-    assert sd.pull(a, store) == (1, 1)
+    assert sd.pull(a, store)[:2] == (1, 1)
 
 
 def test_a_malformed_branch_store_is_refused(repos):
@@ -84,5 +84,36 @@ def test_pull_without_the_branch_keeps_the_local_store(repos):
     _, (a, _) = repos
     store = a / "store.jsonl"
     store.write_text(row("h1") + "\n")
-    assert sd.pull(a, store) == (0, 1)
+    assert sd.pull(a, store)[:2] == (0, 1)
     assert set(sd.parse(store.read_text(), "t")) == {"h1"}
+
+
+def legacy_push(repo, *hashes: str) -> None:
+    store = repo / sd.FILE
+    store.parent.mkdir(exist_ok=True)
+    store.write_text("".join(row(h) + "\n" for h in hashes))
+    assert sd.push(repo, store).startswith("pushed")
+
+
+def test_pull_falls_back_to_the_legacy_search_data_branch(repos):
+    remote, (a, b) = repos
+    legacy_push(a, "h1", "h2")  # as main's maintainers still share vectors
+    assert run("git", "ls-remote", "--heads", str(remote), sd.LEGACY_BRANCH, cwd=b)
+    store = b / sd.FILE
+    added, total, source = sd.pull(b, store)
+    assert (added, total, source) == (2, 2, sd.LEGACY_BRANCH)
+    assert set(sd.parse(store.read_text(), "b")) == {"h1", "h2"}
+    # Once history exists, it wins over the legacy branch.
+    publish_vectors(a, "A", "h3")
+    added, total, source = sd.pull(b, store)
+    assert (added, total, source) == (1, 3, H.BRANCH)
+
+
+def test_legacy_push_is_one_orphan_commit_that_merges(repos):
+    remote, (a, b) = repos
+    legacy_push(a, "h1")
+    legacy_push(b, "h2")  # b never saw h1 locally; the push merges rather than replaces
+    rows = sd.parse(run("git", "show", f"origin/{sd.LEGACY_BRANCH}:{sd.LEGACY_FILE}", cwd=b), "r")
+    assert set(rows) == {"h1", "h2"}
+    parents = run("git", "rev-list", "--count", f"origin/{sd.LEGACY_BRANCH}", cwd=b).strip()
+    assert parents == "1"

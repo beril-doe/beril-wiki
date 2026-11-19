@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-"""Pull the section vectors from the `history` branch into the local store.
+"""Pull the section vectors into the local store: from the `history` branch when it
+exists, else from the legacy single-commit `search-data` branch.
 
 The vectors (about 8 MB) are rebuilt whenever page text changes. They travel
 two ways, both written by `beril_wiki.publish.artifact push`: inside every site
 artifact (``corpus/section-vectors.jsonl``) and on the ``history`` branch, which
 records ``search/section-vectors.jsonl`` with ``wiki/``, ``state/`` and
-``corpus/`` for every published artifact. The single-commit
-``search-data`` branch this module used to push to is retired.
+``corpus/`` for every published artifact. Until the scheduled curator has
+published once, no `history` branch exists on the remote, so `pull` falls back
+to the legacy single-commit ``search-data`` branch and `push` still updates it
+(transitional: it goes away once `history` carries the vectors).
 
     uv run python -m beril_wiki.publish.search_data pull
+    uv run python -m beril_wiki.publish.search_data push [--prune] [--no-deploy]
 
 scripts/build_quartz.sh runs it before indexing, in CI and locally, so a build
 only embeds sections that have no vector anywhere. `pull` merges the branch's
@@ -32,6 +36,9 @@ from beril_wiki.paths import ROOT
 from beril_wiki.publish.history import BRANCH
 
 FILE = "search/section-vectors.jsonl"
+# The legacy branch: one commit, the store at its root.
+LEGACY_BRANCH = "search-data"
+LEGACY_FILE = "section-vectors.jsonl"
 DIM = 768
 
 
@@ -92,28 +99,138 @@ def history_head(root: pathlib.Path, remote: str) -> str | None:
     return r.stdout.strip() or None
 
 
-def branch_rows(root: pathlib.Path, sha: str | None) -> dict[str, dict]:
+def branch_rows(root: pathlib.Path, sha: str | None, file: str = FILE) -> dict[str, dict]:
     if not sha:
         return {}
     r = subprocess.run(
-        ["git", "-C", str(root), "show", f"{sha}:{FILE}"], capture_output=True, text=True
+        ["git", "-C", str(root), "show", f"{sha}:{file}"], capture_output=True, text=True
     )
     if r.returncode:  # the branch exists but has no vectors yet
         return {}
-    return parse(r.stdout, f"{BRANCH}:{FILE}")
+    return parse(r.stdout, f"{sha[:8]}:{file}")
 
 
-def pull(root: pathlib.Path, store: pathlib.Path, remote: str = "origin") -> tuple[int, int]:
-    """Merge the branch's vectors into the local store. Returns (added, total)."""
+def legacy_head(root: pathlib.Path, remote: str) -> str | None:
+    """The legacy search-data branch's commit, remote first, else local; None if neither."""
+    out = git(root, "ls-remote", "--heads", remote, LEGACY_BRANCH).split() if remote else []
+    if out:
+        git(
+            root,
+            "fetch",
+            "--quiet",
+            "--no-tags",
+            remote,
+            f"+refs/heads/{LEGACY_BRANCH}:refs/remotes/{remote}/{LEGACY_BRANCH}",
+        )
+        return out[0]
+    r = subprocess.run(
+        ["git", "-C", str(root), "rev-parse", "--verify", "--quiet", f"refs/heads/{LEGACY_BRANCH}"],
+        capture_output=True,
+        text=True,
+    )
+    return r.stdout.strip() or None
+
+
+def shared_rows(root: pathlib.Path, remote: str) -> tuple[dict[str, dict], str]:
+    """The vectors the project shares: history's when that branch exists, else the
+    legacy branch's. Returns (rows, source name)."""
+    head = history_head(root, remote)
+    if head:
+        return branch_rows(root, head), BRANCH
+    return branch_rows(root, legacy_head(root, remote), LEGACY_FILE), LEGACY_BRANCH
+
+
+def pull(root: pathlib.Path, store: pathlib.Path, remote: str = "origin") -> tuple[int, int, str]:
+    """Merge the shared vectors into the local store. Returns (added, total, source)."""
     local = parse(store.read_text(), str(store)) if store.exists() else {}
-    theirs = branch_rows(root, history_head(root, remote))
+    theirs, source = shared_rows(root, remote)
     merged = theirs | local
     if merged != local:
         store.parent.mkdir(parents=True, exist_ok=True)
         tmp = store.with_suffix(".tmp")
         tmp.write_text(render(merged))
         tmp.replace(store)
-    return len(merged) - len(local), len(merged)
+    return len(merged) - len(local), len(merged), source
+
+
+def remote_head(root: pathlib.Path, remote: str) -> str | None:
+    """Legacy push target (search-data on the remote); fetched when it exists."""
+    out = git(root, "ls-remote", "--heads", remote, LEGACY_BRANCH).split()
+    if not out:
+        return None
+    git(
+        root,
+        "fetch",
+        "--quiet",
+        "--no-tags",
+        remote,
+        f"+refs/heads/{LEGACY_BRANCH}:refs/remotes/{remote}/{LEGACY_BRANCH}",
+    )
+    return out[0]
+
+
+def remote_rows(root: pathlib.Path, sha: str | None) -> dict[str, dict]:
+    return (
+        parse(git(root, "show", f"{sha}:{LEGACY_FILE}"), f"{LEGACY_BRANCH}:{LEGACY_FILE}")
+        if sha
+        else {}
+    )
+
+
+def push(
+    root: pathlib.Path,
+    store: pathlib.Path,
+    remote: str = "origin",
+    prune_to: set[str] | None = None,
+) -> str:
+    """Merge the local store into the branch and push it as the branch's only commit."""
+    if not store.exists():
+        raise SearchDataError(
+            f"{store} not found: run scripts/build_quartz.sh with CBORG_API_KEY set"
+        )
+    local = parse(store.read_text(), str(store))
+    head = remote_head(root, remote)
+    merged = remote_rows(root, head) | local
+    if prune_to is not None:
+        missing = prune_to - merged.keys()
+        if missing:
+            raise SearchDataError(
+                f"refusing to prune: {len(missing)} current section(s) have no vector yet"
+            )
+        merged = {h: r for h, r in merged.items() if h in prune_to}
+    if head and merged == remote_rows(root, head):
+        return f"{LEGACY_BRANCH} is up to date ({len(merged)} vectors)"
+    blob = git(root, "hash-object", "-w", "--stdin", input=render(merged).encode()).strip()
+    tree = git(root, "mktree", input=f"100644 blob {blob}\t{LEGACY_FILE}\n".encode()).strip()
+    commit = git(
+        root, "commit-tree", tree, "-m", f"Section vectors: {len(merged)} sections"
+    ).strip()
+    # One commit with no parent, so the branch never accumulates old stores. The lease
+    # refuses the push if someone else pushed in the meantime; pull and push again.
+    lease = f"--force-with-lease=refs/heads/{LEGACY_BRANCH}:{head or ''}"
+    git(root, "push", "--quiet", lease, remote, f"{commit}:refs/heads/{LEGACY_BRANCH}")
+    return f"pushed {len(merged)} vectors to {LEGACY_BRANCH} ({commit[:8]})"
+
+
+# Both builds of the site bake the vectors in: GitHub Pages and the SPIN image.
+DEPLOY_WORKFLOWS = ("pages.yml", "image.yml")
+
+
+def redeploy(root: pathlib.Path) -> str:
+    """Rebuild the live sites from main with the new vectors."""
+    failed = []
+    for workflow in DEPLOY_WORKFLOWS:
+        cmd = ["gh", "workflow", "run", workflow, "--ref", "main"]
+        try:
+            r = subprocess.run(cmd, cwd=root, capture_output=True, text=True)
+        except FileNotFoundError:
+            r = None
+        if r is None or r.returncode:
+            why = "gh is not installed" if r is None else r.stderr.strip()
+            failed.append(f"could not redeploy ({why}); run `{' '.join(cmd)}`")
+    if failed:
+        return "[WARN] " + "; ".join(failed)
+    return "redeploying the site from main"
 
 
 def main() -> int:
@@ -121,27 +238,35 @@ def main() -> int:
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     ap.add_argument("action", choices=["pull", "push"])
+    ap.add_argument("--prune", action="store_true", help="push only vectors the current build uses")
     ap.add_argument("--remote", default="origin")
+    ap.add_argument("--no-deploy", action="store_true", help="push without redeploying the site")
     args = ap.parse_args()
-    from beril_wiki.stages.search_vectors import STORE
+    from beril_wiki.stages.search_vectors import INPUT, STORE
 
-    if args.action == "push":
-        print(
-            "search_data: `push` is retired; vectors are committed to the history branch by "
-            "`beril_wiki.publish.artifact push` (scripts/publish_artifact.sh)",
-            file=sys.stderr,
-        )
-        return 1
     try:
-        added, total = pull(ROOT, STORE, args.remote)
-        print(f"search_data: pulled {added} vector(s) from {BRANCH}; {total} in the local store")
+        if args.action == "pull":
+            added, total, source = pull(ROOT, STORE, args.remote)
+            print(
+                f"search_data: pulled {added} vector(s) from {source}; {total} in the local store"
+            )
+            return 0
+        prune_to = None
+        if args.prune:
+            if not INPUT.exists():
+                raise SearchDataError(f"{INPUT} not found: run scripts/build_quartz.sh first")
+            prune_to = {r["h"] for r in json.loads(INPUT.read_text())}
+        result = push(ROOT, STORE, args.remote, prune_to)
+        print(f"search_data: {result}")
+        if result.startswith("pushed") and not args.no_deploy:
+            print(f"search_data: {redeploy(ROOT)}")
         return 0
     except SearchDataError as exc:
         # In CI a build without the vectors would publish meaning search half-broken, so fail it.
         print(
             f"[{'ERROR' if os.environ.get('CI') else 'WARN'}] search_data: {exc}", file=sys.stderr
         )
-        return 1 if os.environ.get("CI") else 0
+        return 1 if (args.action == "push" or os.environ.get("CI")) else 0
 
 
 if __name__ == "__main__":

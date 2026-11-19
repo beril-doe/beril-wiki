@@ -239,8 +239,14 @@ def pull_hub(
     counts = {"projects": 0, "docs": 0}
     try:
         rows, following = client.submissions(cursor)
+        docs_state = manifest.get(HUB, {}).get("docs", {})
         for (owner, slug), row in hub.latest(rows).items():
             if row.get("kind") == "docs":
+                if hub.submitted(docs_state) > hub.submitted(row):
+                    # An older digests submission that completed after a newer one
+                    # was pulled: its feed hashes no longer match what read serves.
+                    continue
+                docs_state = {"id": row.get("id"), "submitted_at": row.get("submitted_at")}
                 for rel, expected in sorted(row["files"].items()):
                     if f"docs/{rel}" not in SHARED:
                         warn(f"{row['address']}/{rel}: not a corpus digest, skipped")
@@ -254,11 +260,20 @@ def pull_hub(
                 continue
             sid = assign_sid(manifest, owner, slug)
             current = manifest["projects"].get(sid, {})
-            if unchanged(current, row, corpus / "projects" / sid):
-                continue
             if hub.submitted(current) > hub.submitted(row):
                 # An older revision that completed after a newer one was
                 # pulled: the corpus already has the newer one.
+                continue
+            if unchanged(current, row, corpus / "projects" / sid):
+                # Same bytes, newer submission: keep the newer metadata so a still
+                # older completion arriving later is rejected, not fetched and
+                # failed against the bytes read now serves.
+                current.update(
+                    origin=f"hub@{row.get('id')}",
+                    submitted_at=row.get("submitted_at"),
+                    kind=row.get("kind"),
+                    address=row.get("address"),
+                )
                 continue
             staged = temporary / "projects" / sid
             download_project(client, row, staged)
@@ -274,6 +289,8 @@ def pull_hub(
                 shutil.rmtree(dest)
             staged.replace(dest)
         manifest[HUB] = {"url": client.url, "next_after": following}
+        if docs_state:
+            manifest[HUB]["docs"] = docs_state
         corpus.mkdir(parents=True, exist_ok=True)
         save(manifest, corpus)
     finally:

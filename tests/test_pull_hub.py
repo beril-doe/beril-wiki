@@ -322,3 +322,34 @@ def test_a_readme_or_figure_change_without_a_report_change_is_pulled(out, beril,
     assert corpus.pull_hub(out, client)["projects"] == 0
     assert all("/api/context/read" not in r for r in beril.requests)
     assert corpus.verify(out) == []
+
+
+def test_an_identical_later_submission_keeps_its_date_so_an_older_one_is_rejected(
+    out, beril, client
+):
+    corpus.pull_hub(out, client)
+    files = dict(beril.files[f"{ORCID}/demo"])
+    # C: identical bytes, dated Nov 3, completes first; B: different bytes, dated Nov 2,
+    # completes after C. read now serves C's bytes, so B must be skipped, not fetched.
+    beril.project("demo", files, "2026-11-03T00:00:00Z")
+    assert corpus.pull_hub(out, client)["projects"] == 0
+    assert corpus.load(out)["projects"]["demo"]["submitted_at"] == "2026-11-03T00:00:00Z"
+    beril.project("demo", files | {"README.md": b"# older edit\n"}, "2026-11-02T00:00:00Z")
+    beril.requests.clear()
+    assert corpus.pull_hub(out, client)["projects"] == 0
+    assert all("/api/context/read" not in r for r in beril.requests)
+    assert (out / "projects/demo/README.md").read_bytes() == README
+    assert corpus.verify(out) == []
+
+
+def test_an_older_docs_submission_completing_later_is_skipped(out, beril, client):
+    newer = {"discoveries.md": b"# discoveries v2\n", "pitfalls.md": b"# pitfalls v2\n"}
+    beril.project("docs", newer, "2026-11-05T00:00:00Z", kind="docs", owner="beril")
+    assert corpus.pull_hub(out, client)["docs"] == 2
+    assert corpus.load(out)[corpus.HUB]["docs"]["submitted_at"] == "2026-11-05T00:00:00Z"
+    older = {"discoveries.md": b"# discoveries v1\n"}
+    beril.project("docs", older, "2026-11-04T00:00:00Z", kind="docs", owner="beril")
+    result = corpus.pull_hub(out, client)
+    assert result["docs"] == 0 and result["next_after"] == len(beril.rows)
+    assert (out / "docs/discoveries.md").read_bytes() == newer["discoveries.md"]
+    assert corpus.verify(out) == []
