@@ -134,10 +134,13 @@ def legacy_head(root: pathlib.Path, remote: str) -> str | None:
 def shared_rows(root: pathlib.Path, remote: str) -> tuple[dict[str, dict], str]:
     """The vectors the project shares: history's when that branch exists, else the
     legacy branch's. Returns (rows, source name)."""
+    legacy = branch_rows(root, legacy_head(root, remote), LEGACY_FILE)
     head = history_head(root, remote)
-    if head:
-        return branch_rows(root, head), BRANCH
-    return branch_rows(root, legacy_head(root, remote), LEGACY_FILE), LEGACY_BRANCH
+    if not head:
+        return legacy, LEGACY_BRANCH
+    # Both, history winning: a stale local history branch must not hide vectors
+    # maintainers shared on the legacy branch during the transition.
+    return legacy | branch_rows(root, head), BRANCH
 
 
 def pull(root: pathlib.Path, store: pathlib.Path, remote: str = "origin") -> tuple[int, int, str]:
