@@ -1,0 +1,71 @@
+# Hourly: refresh the clone's code, `corpus pull-hub`, `stages.fetch`, `agentic
+# plan`, log what a run would do. No model call, no publish. curate.sh exits 3
+# when there is something to run; the wrapper maps that to success so the hourly
+# Job is not reported as failed, while the log line
+# `plan: changed_sources=.. pending_editorial=..`
+# says what is pending. Dev namespace knowledge-engine, dev image tag :develop.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: beril-wiki-curator-plan
+  namespace: knowledge-engine
+  labels:
+    app: beril-wiki-curator
+    mode: plan
+spec:
+  schedule: "17 * * * *"
+  timeZone: Etc/UTC
+  # Never two curator pods on the volume at once (RWO, and agentic's lock).
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 900
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 1800
+      ttlSecondsAfterFinished: 172800
+      template:
+        metadata:
+          labels:
+            app: beril-wiki-curator
+            mode: plan
+        spec:
+          restartPolicy: Never
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 76761
+            runAsGroup: 76761
+            fsGroup: 76761
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: curator
+              image: registry.nersc.gov/kbase/beril-wiki-curator:develop
+              imagePullPolicy: Always
+              command: ["/bin/sh", "-c", "curate.sh plan || [ $? -eq 3 ]"]
+              envFrom:
+                - configMapRef:
+                    name: beril-wiki-curator
+                - secretRef:
+                    name: beril-wiki-curator
+              resources:
+                requests:
+                  cpu: 250m
+                  memory: 512Mi
+                limits:
+                  memory: 2Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop: [ALL]
+                # Not read-only: the Quartz build writes into /opt/quartz and the
+                # job's HOME holds the CLI's state (deploy/README.md).
+                readOnlyRootFilesystem: false
+              volumeMounts:
+                - name: work
+                  mountPath: /work
+          volumes:
+            - name: work
+              persistentVolumeClaim:
+                claimName: beril-wiki-curator-work

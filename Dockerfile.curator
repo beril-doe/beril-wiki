@@ -1,0 +1,86 @@
+# The BERIL wiki curator as a scheduled job on SPIN (deploy/README.md,
+# deploy/k8s/). Not the web process: it runs `agentic plan|run`, renders the
+# site with Quartz and publishes the artifact to the wiki pod's store routes.
+#
+#   docker build -f Dockerfile.curator -t beril-wiki-curator .
+#   docker run --rm -v beril-wiki-work:/work -e BERIL_URL=... -e BERIL_TOKEN=... \
+#     beril-wiki-curator plan
+#
+# What is in the image and what is not: the image carries the dependencies
+# (a venv at /opt/venv from uv.lock, Node 22, git, the Claude CLI bundled in the
+# Agent SDK wheel and the Codex CLI bundled in openai-codex, both native
+# binaries), plus a Quartz clone and the theme's node_modules as caches. The
+# wiki's own code and data come from the git clone on the persistent volume at
+# WIKI_WORKDIR, whose code paths deploy/curate.sh refreshes at every start, so a
+# code change on main needs no image rebuild unless the lock changed. UV_NO_SYNC
+# with UV_PROJECT_ENVIRONMENT makes the repo scripts' `uv run --project` calls
+# use /opt/venv as is, and PYTHONPATH points them at the clone's src/.
+FROM ghcr.io/astral-sh/uv:0.12.20-python3.12-trixie-slim
+
+# Node 22 for Quartz and the theme build, taken from the official image rather
+# than a distro package, so the version is the one the theme targets.
+COPY --from=node:22-bookworm-slim /usr/local/bin/node /usr/local/bin/node
+COPY --from=node:22-bookworm-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends git ca-certificates curl libstdc++6 libatomic1 \
+    && rm -rf /var/lib/apt/lists/* \
+    && node --version && npm --version && git --version
+
+# SPIN runs the pod as this uid/gid, the same account the serve image uses.
+RUN addgroup --system --gid 76761 beril_app \
+    && adduser --system --uid 76761 --home /home/beril --ingroup beril_app beril
+
+ENV PYTHONUNBUFFERED=1 \
+    UV_PROJECT_ENVIRONMENT=/opt/venv \
+    UV_NO_SYNC=1 \
+    UV_LINK_MODE=copy \
+    UV_COMPILE_BYTECODE=1 \
+    WIKI_WORKDIR=/work/beril-wiki \
+    PYTHONPATH=/work/beril-wiki/src \
+    WIKI_QUARTZ_CACHE=/opt/quartz \
+    WIKI_THEME_CACHE=/opt/theme \
+    npm_config_update_notifier=false
+
+# Dependencies only, exactly as the lock pins them; the project itself is not
+# installed because the clone on the volume is what runs (PYTHONPATH above).
+COPY pyproject.toml uv.lock /opt/project/
+RUN uv sync --project /opt/project --frozen --no-dev --no-install-project \
+    && ln -s /opt/venv/lib/python3.12/site-packages/claude_agent_sdk/_bundled/claude \
+          /usr/local/bin/claude \
+    && claude --version
+
+# The Quartz clone at the commit build_quartz.sh pins (read from the script, so
+# there is one source of truth), with its node_modules: the nightly job renders
+# without cloning Quartz. The build writes into this tree, so the job's user
+# owns it; deploy/curate.sh links $WIKI_WORKDIR/quartz here.
+COPY scripts/build_quartz.sh /opt/project/scripts/build_quartz.sh
+RUN ref=$(sed -n 's/^QUARTZ_REF="\${QUARTZ_REF:-\([0-9a-f]*\)}"/\1/p' /opt/project/scripts/build_quartz.sh) \
+    && test -n "$ref" \
+    && git init --quiet /opt/quartz \
+    && git -C /opt/quartz remote add origin https://github.com/jackyzha0/quartz.git \
+    && git -C /opt/quartz fetch --quiet --depth 1 origin "$ref" \
+    && git -C /opt/quartz checkout --quiet FETCH_HEAD \
+    && npm --prefix /opt/quartz install --silent --no-audit --no-fund \
+    && chown -R beril:beril_app /opt/quartz
+
+# The theme's dependencies, seeded into the clone's theme/node_modules on first
+# run; build_quartz.sh's `npm install` then has nothing to download.
+COPY theme/package.json theme/package-lock.json /opt/theme/
+RUN npm --prefix /opt/theme ci --silent --no-audit --no-fund \
+    && chown -R beril:beril_app /opt/theme
+
+COPY deploy/curate.sh /usr/local/bin/curate.sh
+RUN chmod 0755 /usr/local/bin/curate.sh \
+    && mkdir -p /work /home/beril \
+    && chown beril:beril_app /work /home/beril
+
+USER beril
+WORKDIR /work
+
+ARG GIT_COMMIT
+ENV BERIL_WIKI_CURATOR_GIT_COMMIT=${GIT_COMMIT}
+
+ENTRYPOINT ["/usr/local/bin/curate.sh"]
+CMD ["plan"]
