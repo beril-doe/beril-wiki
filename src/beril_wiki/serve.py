@@ -23,10 +23,13 @@ $WIKI_RELOAD_TOKEN` fetches the current artifact again and swaps to it
 atomically (one in-process assignment; a `current` symlink records it for the
 next start). `GET /wiki/_admin/status`, under the same token, names the artifact
 being served. When the store is a directory (``file://``), the same token also
-guards the store routes under `/wiki/_admin/store/{key}` (PUT, GET, HEAD;
-`?prefix=` lists), so a curator that shares neither a bucket nor a volume with
-this pod publishes through it (artifact.HttpStore); bodies are streamed to disk,
-capped by `WIKI_STORE_MAX_BYTES` (default 1 GiB). The internal API
+guards the store routes under `/wiki/_admin/store/{key}` (PUT, GET, HEAD,
+DELETE; `?prefix=` lists), so a curator that shares neither a bucket nor a
+volume with this pod publishes through it (artifact.HttpStore); bodies are
+streamed to disk, capped by `WIKI_STORE_MAX_BYTES` (default 1 GiB). A PUT with
+`If-None-Match: *` creates the key or answers 412 when it exists, atomically,
+which is how the publish lease (`<prefix>/publish.lease`, taken by `artifact
+push` and `rollback`, released with DELETE) excludes two publishers. The internal API
 (beril_wiki.wiki_api, `WIKI_INTERNAL_TOKEN`) is mounted under /wiki/_api and
 reads the same artifact; like /wiki/_admin it is for in-cluster callers and must
 not be exposed by the ingress.
@@ -278,6 +281,12 @@ def create_app(
             return JSONResponse({"error": str(exc)}, status_code=400)
         # Streamed straight to a temporary file beside the target, then renamed, so a
         # reader never sees a partial object and an oversized body leaves nothing.
+        # `If-None-Match: *` (the publish lease) links the file into place instead:
+        # link(2) fails with EEXIST when the key exists, so two creators cannot
+        # both win, and the answer is 412 without a check-then-write race.
+        create_only = request.headers.get("if-none-match", "").strip() == "*"
+        if create_only and path.exists():
+            return JSONResponse({"error": "key exists"}, status_code=412)
         path.parent.mkdir(parents=True, exist_ok=True)
         tmp = path.with_name(f".{path.name}.{os.getpid()}.{secrets.token_hex(4)}")
         digest, size = hashlib.sha256(), 0
@@ -289,10 +298,29 @@ def create_app(
                         return JSONResponse({"error": "body too large"}, status_code=413)
                     digest.update(chunk)
                     out.write(chunk)
-            os.replace(tmp, path)
+            if create_only:
+                try:
+                    os.link(tmp, path)
+                except FileExistsError:
+                    return JSONResponse({"error": "key exists"}, status_code=412)
+            else:
+                os.replace(tmp, path)
         finally:
             tmp.unlink(missing_ok=True)
         return JSONResponse({"key": key, "bytes": size, "sha256": digest.hexdigest()})
+
+    async def store_delete(request: Request, key: str) -> Response:
+        if (refused := admin_refused(request)) or not (store := file_store()):
+            return refused or JSONResponse({"error": "no directory store"}, status_code=503)
+        try:
+            path = store._path(key)
+        except artifact.ArtifactError as exc:
+            return JSONResponse({"error": str(exc)}, status_code=400)
+        try:
+            path.unlink()
+        except FileNotFoundError:
+            return JSONResponse({"error": "no such object"}, status_code=404)
+        return Response(status_code=204)
 
     async def store_get(request: Request, key: str) -> Response:
         if (refused := admin_refused(request)) or not (store := file_store()):
@@ -349,6 +377,7 @@ def create_app(
     app.add_api_route(prefix + "/_admin/store", store_list, methods=["GET"])
     app.add_api_route(prefix + "/_admin/store/{key:path}", store_put, methods=["PUT"])
     app.add_api_route(prefix + "/_admin/store/{key:path}", store_get, methods=["GET", "HEAD"])
+    app.add_api_route(prefix + "/_admin/store/{key:path}", store_delete, methods=["DELETE"])
     # Registered before the catch-all so /wiki/_api/* is the API, not a page lookup.
     app.include_router(wiki_api.create_router(lambda: site.corpus, internal_token, prefix))
     app.add_api_route(prefix + "/{path:path}", page, methods=["GET", "HEAD"])

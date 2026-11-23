@@ -234,3 +234,23 @@ def test_http_store_transport_failures_become_artifact_errors(error, expected):
 
     with pytest.raises(A.ArtifactError, match=expected):
         mock_store(failing).get("wiki/x")
+
+
+def test_put_if_none_match_creates_once_and_delete_releases(client, store):
+    # The publish lease: `artifact push` and `rollback` PUT <prefix>/publish.lease
+    # with If-None-Match: * and treat 412 as "another publisher holds it".
+    lease, create = "/wiki/_admin/store/wiki/publish.lease", {**AUTH, "If-None-Match": "*"}
+    r = client.put(lease, content=b"job-1", headers=create)
+    assert r.status_code == 200 and r.json()["sha256"] == A.sha256(b"job-1")
+    r = client.put(lease, content=b"job-2", headers=create)
+    assert r.status_code == 412, r.text
+    assert (store.root / "wiki/publish.lease").read_bytes() == b"job-1"
+    assert not list(store.root.rglob(".*"))  # the refused body left no temporary file
+    # A plain PUT still overwrites; DELETE releases, and a second DELETE is a 404.
+    assert client.put(lease, content=b"job-3", headers=AUTH).status_code == 200
+    assert client.delete(lease, headers=AUTH).status_code == 204
+    assert not (store.root / "wiki/publish.lease").exists()
+    assert client.delete(lease, headers=AUTH).status_code == 404
+    assert client.put(lease, content=b"job-4", headers=create).status_code == 200
+    assert client.delete(lease).status_code == 401
+    assert client.delete("/wiki/_admin/store/wiki/..%2Fx", headers=AUTH).status_code == 400
