@@ -1,5 +1,6 @@
-# Nightly: `curate.sh run`. Plans first and exits 0 when nothing changed;
-# otherwise curates under the ConfigMap's budgets, renders, publishes the
+# Nightly: `curate.sh run`. Reports the plan, then `agentic run` under the
+# ConfigMap's budgets, which makes its own test and spends nothing when the
+# accepted state is current; when it promoted, renders, publishes the
 # artifact to the wiki pod's store, reloads it and pushes `history`. A night
 # can take hours, so the deadline is generous; a run killed by it is charged
 # from its transcripts and resumes from cached work the next night.

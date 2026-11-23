@@ -2,8 +2,8 @@
 # plan`, log what a run would do. No model call, no publish. curate.sh exits 3
 # when there is something to run; the wrapper maps that to success so the hourly
 # Job is not reported as failed, while the log line
-# `plan: changed_sources=.. pending_editorial=..`
-# says what is pending. Dev namespace knowledge-engine, dev image tag :develop.
+# `plan: changed_sources=.. pending_editorial=.. retry_pages=.. accepted_current=..`
+# says what is pending (deploy/README.md, "What curate.sh does"). Dev namespace knowledge-engine, dev image tag :develop.
 apiVersion: batch/v1
 kind: CronJob
 metadata:

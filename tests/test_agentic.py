@@ -1652,7 +1652,12 @@ def test_expect_source_admits_one_added_report(tmp_path):
     assert "conflicts" in verdict["pending_editorial"]
     assert manifest(root, (*runner.TREES, "contract")) == before
     assert not (root / ".agentic").exists()
-    assert set(cli.plan(root)) == {"changed_sources", "pending_editorial"}
+    assert set(cli.plan(root)) == {
+        "changed_sources",
+        "pending_editorial",
+        "retry_pages",
+        "accepted_current",
+    }
 
 
 def test_expect_source_admits_a_readme_only_update(tmp_path):
@@ -2177,3 +2182,46 @@ def test_usd_caps_name_job_prefixes_not_model_roles():
         cli.check_usd_caps(["literature=5"])
     with pytest.raises(WorkflowError, match="STAGE=USD with USD > 0"):
         cli.check_usd_caps(["extract=0"])
+
+
+def test_plan_reports_retry_pages_and_runs_own_currency_test(tmp_path, monkeypatch):
+    """The curator's hourly plan gated the nightly on changed_sources and
+    pending_editorial alone, missing a README or figure change and pages queued in
+    failures.json. plan now makes run's own pre-model test and lists the retries."""
+    import json
+
+    from beril_wiki.agentic import __main__ as cli
+    from beril_wiki.agentic import runner
+    from beril_wiki.agentic.runtime import model_signature
+
+    root, checkout = admission_base(tmp_path)
+    monkeypatch.setattr(cli.shutil, "which", lambda name: None)
+    report = cli.plan(root, checkout)
+    assert report["changed_sources"] == [] and report["retry_pages"] == []
+    assert report["accepted_current"] is None  # no CLI here: its version is in the test
+    fake = tmp_path / "claude"
+    fake.write_text("#!/bin/sh\necho 1.2.3\n")
+    fake.chmod(0o755)
+    monkeypatch.setattr(cli.shutil, "which", lambda name: str(fake))
+    assert cli.plan(root, checkout)["accepted_current"] is False  # stamped by another CLI
+    state_path = root / "state/agentic.json"
+    state = json.loads(state_path.read_text())
+    state["fingerprint"] = runner.run_identity(
+        root,
+        runner.fingerprint(root),
+        runner.checkout_inputs(checkout),
+        runner.run_revision(str(fake), runner.DEFAULT_MAX_TURNS),
+        model_signature(cli.load_models(root, None, None, [])),
+        False,
+    )
+    state_path.write_text(json.dumps(state))
+    assert cli.plan(root, checkout)["accepted_current"] is True
+    # A README-only edit: no staged source differs, yet run would refresh the extras.
+    (checkout / "projects/a/README.md").write_text("# A\n\n## Authors\n\n- Ada\n- Bob\n")
+    report = cli.plan(root, checkout)
+    assert report["changed_sources"] == [] and report["accepted_current"] is False
+    (root / ".agentic").mkdir(exist_ok=True)
+    (root / ".agentic/failures.json").write_text(
+        json.dumps({"summaries/a.md": {"retries": 0}, "topics/t.md": {"retries": 0}})
+    )
+    assert cli.plan(root, checkout)["retry_pages"] == ["summaries/a.md"]

@@ -42,6 +42,8 @@ from beril_wiki.corpus import FIG_EMBED
 from beril_wiki.stages.novelty import labels_due
 
 TREES = ("wiki", "state", "staging")
+# The `run --max-turns` default; part of every run's identity.
+DEFAULT_MAX_TURNS = 12
 # Pages integration writes; an edit outside a run makes the next one re-integrate.
 CORE_OUTPUTS = ("wiki/concepts", "wiki/entities", "wiki/summaries")
 
@@ -396,6 +398,35 @@ def env_flag(name: str) -> bool:
     return os.environ.get(name, "").strip().lower() in TRUE_WORDS
 
 
+def run_revision(cli: str, max_turns: int) -> str:
+    """The compiler's part of a run's identity: this package, the CLI, the SDK and MCP
+    versions and the turn ceiling."""
+    cli_version = subprocess.run(
+        [cli, "--version"], capture_output=True, text=True, timeout=30, check=True
+    ).stdout.strip()
+    return digest([revision(), cli_version, version("claude-agent-sdk"), version("mcp"), max_turns])
+
+
+def run_identity(root: Path, base: dict, external: dict, rev: str, models, staged: bool) -> str:
+    """What `run` compares with the accepted fingerprint; equal, and with no page to
+    retry, a run makes zero model calls."""
+    identity = digest([base, external, rev, models, staged])
+    if labels_due(root):
+        # Literature labels expire with time alone, which no fingerprint sees.
+        identity = digest([identity, "labels-due"])
+    return identity
+
+
+def accepted_current(root: Path, checkout: Path, config: dict, cli: str, staged=False) -> bool:
+    """Whether `run` would find the accepted state current: its own test, made before
+    any model call, with the compiler installed here. False with no accepted state."""
+    rev = run_revision(cli, config.get("max_turns", DEFAULT_MAX_TURNS))
+    identity = run_identity(
+        root, fingerprint(root), checkout_inputs(checkout), rev, model_signature(config), staged
+    )
+    return load_accepted(root).get("fingerprint") == identity
+
+
 def check_warm_start(root: Path) -> None:
     """Refuse a run that would re-integrate the whole corpus because the accepted state
     is missing: a pod started without its persistent volume looks exactly like a
@@ -421,22 +452,8 @@ def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
         base = fingerprint(root)
         external = checkout_inputs(checkout)
         code_revision = revision()
-        cli_version = subprocess.run(
-            [config["cli"], "--version"], capture_output=True, text=True, timeout=30, check=True
-        ).stdout.strip()
-        rev = digest(
-            [
-                code_revision,
-                cli_version,
-                version("claude-agent-sdk"),
-                version("mcp"),
-                config.get("max_turns", 6),
-            ]
-        )
-        identity = digest([base, external, rev, models, staged])
-        if labels_due(root):
-            # Literature labels expire with time alone, which no fingerprint sees.
-            identity = digest([identity, "labels-due"])
+        rev = run_revision(config["cli"], config.get("max_turns", DEFAULT_MAX_TURNS))
+        identity = run_identity(root, base, external, rev, models, staged)
         accepted = load_accepted(root)
         store = root / ".agentic"
         retry = retryable(store)

@@ -5,8 +5,8 @@
 #   kubectl -n knowledge-engine create job --from=cronjob/beril-wiki-curator-curate \
 #     curator-run-now-$(date +%Y%m%d%H%M)
 #
-# `run` still exits 0 without curating when the plan is empty; to re-render and
-# republish the accepted wiki regardless, change args to ["publish"].
+# `run` still publishes nothing when `agentic run` finds the accepted state
+# current; to re-render and republish it regardless, change args to ["publish"].
 apiVersion: batch/v1
 kind: Job
 metadata:

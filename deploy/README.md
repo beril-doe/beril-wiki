@@ -139,8 +139,8 @@ the volume may have been populated by another uid.
 
 | Mode | Dispatched by | Steps | Exit |
 | --- | --- | --- | --- |
-| `plan` | `cronjob-plan.yaml`, hourly | refresh code; `corpus pull-hub`; `stages.fetch`; `agentic plan`; log `plan: changed_sources=N pending_editorial=N` | 0 nothing to do, 3 a run would do something (the CronJob maps 3 to success), 2 no clone |
-| `run` | `cronjob-curate.yaml`, nightly; `job-run-now.yaml` | `plan`; stop at 0 when empty; else `agentic run` under the budgets; `build_quartz.sh`; `publish_artifact.sh --id <UTC stamp> --no-check`; `git push origin history refs/tags/artifact/*` | 0 published or nothing to do; non-zero on any failed step, including a held `.agentic/lock` and a refused cold start |
+| `plan` | `cronjob-plan.yaml`, hourly | refresh code; `corpus pull-hub`; `stages.fetch`; `agentic plan`; log `plan: changed_sources=N pending_editorial=N retry_pages=N accepted_current=true|false|unknown` | 0 nothing to do, 3 a run would do something (the CronJob maps 3 to success), 2 no clone |
+| `run` | `cronjob-curate.yaml`, nightly; `job-run-now.yaml` | `plan` (reported, never a gate); `agentic run` under the budgets, which makes the same test itself and promotes or prints `unchanged; zero model calls`; when it promoted: `build_quartz.sh`; `publish_artifact.sh --id <UTC stamp> --no-check`; `git push origin history refs/tags/artifact/*` | 0 published or nothing to publish; non-zero on any failed step, including a held `.agentic/lock` and a refused cold start |
 | `publish` | by hand | refresh code; render and publish the accepted wiki as above, without curating | as `run` |
 | `render` | by hand | refresh code; `build_quartz.sh` into `quartz/public`; check the frame; no store, no push | 0 rendered with the theme's frame, else non-zero |
 | `status` | by hand | `agentic status`, or a note when no run has been recorded | 0 |
@@ -149,7 +149,13 @@ Every step logs one timestamped line (`2026-11-17T07:30:00Z curate[run] ...`).
 Staging is empty between scheduled runs, so `plan` first runs `corpus pull-hub`
 (BERIL's feed into `corpus/`, every file sha256-checked, the cursor kept in
 `corpus/manifest.json`) and `stages.fetch` (`corpus/` into `staging/`), and
-`changed_sources` then names the projects a run would integrate. Budgets
+`changed_sources` then names the projects a run would integrate. The other
+counts are what `agentic run` would act on without any source changing:
+`retry_pages` (integrated pages left in `.agentic/failures.json` with retries
+left, re-drafted unasked) and `accepted_current`, `run`'s own fingerprint
+test, which a README, figure or errata change alone fails, as does a code or
+model change (`unknown` when the Claude CLI, whose version is part of the
+fingerprint, is not on the PATH). Budgets
 are fixed per run, so a bad night is capped; `agentic run` refuses a second
 runner on the same checkout, and a run killed by the Job's deadline is charged
 from its transcripts and resumes from cached work the next night.

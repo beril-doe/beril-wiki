@@ -3,9 +3,9 @@
 #
 #   curate.sh plan      refresh code, `corpus pull-hub` (BERIL's feed -> corpus/),
 #                       `stages.fetch` (corpus/ -> staging/), `agentic plan`; exit 3
-#                       when a source or an editorial stage changed, 0 otherwise
-#   curate.sh run       plan; stop (0) when nothing changed, else `agentic run`
-#                       under the env budgets, render, publish, push `history`
+#                       when a run would do something, 0 otherwise
+#   curate.sh run       plan (reported), `agentic run` under the env budgets, and
+#                       when it promoted: render, publish, push `history`
 #   curate.sh publish   render and publish the accepted wiki without curating
 #   curate.sh render    render only (quartz/public), for checking an image
 #   curate.sh status    `agentic status`
@@ -127,10 +127,12 @@ seed_build_caches() {
 
 plan_step() {
   # Brings corpus/ up to BERIL's feed (every file sha256-checked; nothing installed
-  # on a failure), stages it, then prints the plan. Returns 3 when a run would do
-  # something: staged sources that differ from wiki/sources, or editorial stages
-  # whose fingerprint no longer matches the accepted state. A run never talks to
-  # the hub itself: it reads corpus/ as its checkout.
+  # on a failure), stages it, then prints the plan and logs its counts. Returns 3
+  # when a run would do something, by run's own test: the accepted fingerprint
+  # (sources, README and figure bytes, errata, code, models) no longer matches, or
+  # a page is queued for a retry. A run never talks to the hub itself: it reads
+  # corpus/ as its checkout. The nightly does not gate on this return: `agentic
+  # run` makes the same test and is the authority.
   local out summary
   # Checked explicitly: errexit is off inside a function called in a && or || list.
   py -m beril_wiki.corpus pull-hub || die "corpus pull-hub failed (exit $?)"
@@ -140,12 +142,21 @@ plan_step() {
   summary=$(printf '%s' "$out" | py -c '
 import json, sys
 d = json.load(sys.stdin)
-keys = ("changed_sources", "pending_editorial")
+keys = ("changed_sources", "pending_editorial", "retry_pages")
 counts = {k: len(d.get(k) or []) for k in keys}
-print(sum(counts.values()), " ".join(f"{k}={v}" for k, v in counts.items()))') ||
+current = d.get("accepted_current")
+work = any(counts.values()) or current is False
+shown = "unknown" if current is None else str(current).lower()
+print(int(work), " ".join(f"{k}={v}" for k, v in counts.items()), f"accepted_current={shown}")') ||
     die "could not read the plan"
   log "plan: ${summary#* }"
   [ "${summary%% *}" = 0 ] && return 0 || return 3
+}
+
+accepted_hash() {
+  # Promotion rewrites state/agentic.json with a fresh fingerprint; a run that found
+  # the state current leaves it alone.
+  git -C "$WIKI_WORKDIR" hash-object state/agentic.json 2>/dev/null || echo none
 }
 
 render_step() {
@@ -200,8 +211,13 @@ run_step() {
   # shellcheck disable=SC2206
   [ -z "${WIKI_CURATE_EXTRA_ARGS:-}" ] || args+=(${WIKI_CURATE_EXTRA_ARGS})
   log "curate: agentic ${args[*]} (auth ${BERIL_WIKI_AUTH:-subscription})"
-  # A held .agentic/lock or a missing accepted state stops here with a non-zero exit.
-  agentic "${args[@]}"
+  # A held .agentic/lock or a missing accepted state stops here with a non-zero
+  # exit. Returns 0 when the run promoted a new accepted state, 1 when it found
+  # the state current ("unchanged; zero model calls") and there is nothing to publish.
+  local before
+  before=$(accepted_hash)
+  agentic "${args[@]}" || die "agentic run failed (exit $?)"
+  [ "$(accepted_hash)" != "$before" ]
 }
 
 main() {
@@ -218,14 +234,13 @@ main() {
       refresh_code
       check_caps
       seed_build_caches
-      if plan_step; then
-        log "nothing to curate; done"
-        rc=0
-      else
-        run_step
+      plan_step || true # reported; agentic run makes the same test itself
+      if run_step; then
         publish_step
-        rc=0
+      else
+        log "accepted state unchanged by the run; nothing to publish"
       fi
+      rc=0
       ;;
     publish)
       refresh_code
