@@ -97,7 +97,23 @@ class DirStore:
         return self._path(key).is_file()
 
 
+def _s3_errors() -> tuple[type[Exception], ...]:
+    from botocore.exceptions import BotoCoreError, ClientError
+
+    return (BotoCoreError, ClientError)
+
+
+def _missing(exc: Exception) -> bool:
+    """A ClientError that says the object is not there, as opposed to a refusal or
+    a connection failure, which must not read as "missing"."""
+    code = str(getattr(exc, "response", {}).get("Error", {}).get("Code", ""))
+    return code in ("404", "NoSuchKey", "NotFound")
+
+
 class S3Store:
+    """Every store failure surfaces as an ArtifactError, so the server's reload and the
+    CLI report it instead of a traceback or a 500."""
+
     def __init__(
         self, endpoint: str, bucket: str, access_key: str, secret_key: str, region: str
     ) -> None:
@@ -117,18 +133,27 @@ class S3Store:
     def get(self, key: str) -> bytes:
         try:
             return self.client.get_object(Bucket=self.bucket, Key=key)["Body"].read()
-        except self.client.exceptions.NoSuchKey as exc:
-            raise ArtifactError(f"missing object {key}") from exc
+        except _s3_errors() as exc:
+            if _missing(exc):
+                raise ArtifactError(f"missing object {key}") from exc
+            raise ArtifactError(f"store get {key}: {exc}") from exc
 
     def put(self, key: str, data: bytes, content_type: str) -> None:
-        self.client.put_object(Bucket=self.bucket, Key=key, Body=data, ContentType=content_type)
+        try:
+            self.client.put_object(Bucket=self.bucket, Key=key, Body=data, ContentType=content_type)
+        except _s3_errors() as exc:
+            raise ArtifactError(f"store put {key}: {exc}") from exc
 
     def exists(self, key: str) -> bool:
         try:
             self.client.head_object(Bucket=self.bucket, Key=key)
             return True
-        except self.client.exceptions.ClientError:
-            return False
+        except _s3_errors() as exc:
+            # A denied or failed HEAD is not "missing": push's overwrite check relies
+            # on this answer.
+            if _missing(exc):
+                return False
+            raise ArtifactError(f"store head {key}: {exc}") from exc
 
 
 def configured(env: Mapping[str, str] | None = None) -> bool:

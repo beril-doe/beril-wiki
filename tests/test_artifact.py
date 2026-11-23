@@ -181,6 +181,64 @@ def test_unpack_refuses_members_that_escape(tmp_path):
     assert not (tmp_path / "outside.txt").exists()
 
 
+class FakeS3:
+    """Answers per key: bytes, or an exception to raise."""
+
+    def __init__(self, answers: dict) -> None:
+        self.answers = answers
+
+    def _answer(self, key):
+        answer = self.answers[key]
+        if isinstance(answer, Exception):
+            raise answer
+        return answer
+
+    def get_object(self, Bucket, Key):
+        return {"Body": io.BytesIO(self._answer(Key))}
+
+    def head_object(self, Bucket, Key):
+        self._answer(Key)
+
+    def put_object(self, Bucket, Key, Body, ContentType):
+        self._answer(Key)
+
+
+def s3_store(answers: dict) -> A.S3Store:
+    store = A.S3Store.__new__(A.S3Store)
+    store.bucket, store.client = "b", FakeS3(answers)
+    return store
+
+
+def test_s3_failures_are_artifact_errors_and_a_denied_head_is_not_missing():
+    from botocore.exceptions import ClientError, EndpointConnectionError
+
+    def client_error(code: str) -> ClientError:
+        return ClientError({"Error": {"Code": code, "Message": code}}, "HeadObject")
+
+    store = s3_store(
+        {
+            "ok": b"data",
+            "gone": client_error("NoSuchKey"),
+            "none": client_error("404"),
+            "denied": client_error("403"),
+            "down": EndpointConnectionError(endpoint_url="https://s3.test"),
+        }
+    )
+    assert store.get("ok") == b"data" and store.exists("ok")
+    with pytest.raises(A.ArtifactError, match="missing object gone"):
+        store.get("gone")
+    assert not store.exists("gone") and not store.exists("none")
+    for key, why in (("denied", "403"), ("down", "s3.test")):
+        with pytest.raises(A.ArtifactError, match=why):
+            store.exists(key)
+        with pytest.raises(A.ArtifactError, match=why):
+            store.get(key)
+        with pytest.raises(A.ArtifactError, match=why):
+            store.put(key, b"x", "text/plain")
+    with pytest.raises(A.ArtifactError, match="no current artifact"):
+        A.current(s3_store({"wiki/current.json": client_error("NoSuchKey")}), A.Keys("wiki"))
+
+
 def test_store_from_env(tmp_path):
     env = {"WIKI_ARTIFACT_ENDPOINT": f"file://{tmp_path}/bucket", "WIKI_ARTIFACT_PREFIX": "/p/"}
     assert isinstance(A.store_from_env(env), A.DirStore)
