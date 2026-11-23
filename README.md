@@ -282,10 +282,13 @@ artifact, built with its own `WIKI_BASE_URL`.
 
 #### Curator image
 
-The curator runs on SPIN as its own image, `Dockerfile.curator`, pushed by
-[`curator-image.yml`](.github/workflows/curator-image.yml) as
-`ghcr.io/beril-doe/beril-wiki-curator:develop` (pull requests) and `:latest`
-(main), with no deploy step: the CronJobs pull the tag when they next start.
+The curator runs on SPIN as its own image, `Dockerfile.curator`, published by
+[`curator-image.yml`](.github/workflows/curator-image.yml) from `main` only:
+a push to main refreshes `ghcr.io/beril-doe/beril-wiki-curator:develop`,
+`:latest` and an immutable `sha-<commit>` tag, a pull request builds the image
+as a check and pushes nothing (the CronJobs run it with the curator's secrets),
+and there is no deploy step: the CronJobs pull their tag, or a pinned digest,
+when they next start (`deploy/README.md`, "Image promotion").
 The image carries the dependencies, Node 22, the bundled Claude and Codex CLIs
 and a pre-warmed Quartz clone; the wiki's code and data live in a git clone on
 a persistent volume whose code paths the job refreshes from `main` at every
