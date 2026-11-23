@@ -99,15 +99,18 @@ class AppServer:
         return SimpleNamespace(account=account)
 
 
+class IgnoringAppServer(AppServer):
+    def login_api_key(self, key: str) -> None:
+        self.logins.append(key)
+
+
 def test_codex_api_mode_logs_the_key_in_before_checking(creds, monkeypatch):
     monkeypatch.setenv("BERIL_WIKI_AUTH", "api")
     server = AppServer()  # prepare_home removed auth.json: no account yet
     C.check_auth(server)
     assert server.logins == ["sk-openai"]
-    broken = AppServer()
-    broken.login_api_key = lambda key: None  # the server ignored the key
     with pytest.raises(R.WorkflowError, match="did not take OPENAI_API_KEY"):
-        C.check_auth(broken)
+        C.check_auth(IgnoringAppServer())  # the server ignored the key
     monkeypatch.delenv(OKEY)
     with pytest.raises(R.WorkflowError, match="needs OPENAI_API_KEY"):
         C.check_auth(AppServer())
