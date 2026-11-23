@@ -25,7 +25,8 @@
 # WIKI_CURATE_MAX_JOBS, WIKI_CURATE_WORKERS, WIKI_CURATE_STAGE_MAX_USD
 # ("STAGE=USD STAGE=USD"), WIKI_CURATE_EXTRA_ARGS, WIKI_BASE_URL, WIKI_LOCK_FILE,
 # WIKI_LOCK_WAIT (seconds run/publish wait for the hourly plan to finish, 1800),
-# and what build_quartz.sh / publish_artifact.sh / the agentic runner read.
+# WIKI_ALLOW_LOCK_SKEW (1 runs code whose uv.lock the image's venv was not built
+# from), and what build_quartz.sh / publish_artifact.sh / the agentic runner read.
 set -euo pipefail
 
 MODE="${1:-plan}"
@@ -41,6 +42,8 @@ CODE_COMMIT="$WIKI_WORKDIR/.curate/code-commit"
 # Pre-warmed in the image; seeded into the clone when it has none of its own.
 WIKI_QUARTZ_CACHE="${WIKI_QUARTZ_CACHE:-/opt/quartz}"
 WIKI_THEME_CACHE="${WIKI_THEME_CACHE:-/opt/theme}"
+# The sha256 of the uv.lock the image's venv was built from (Dockerfile.curator).
+WIKI_IMAGE_LOCK_SHA256="${WIKI_IMAGE_LOCK_SHA256:-/opt/uv.lock.sha256}"
 
 log() { printf '%s curate[%s] %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$MODE" "$*" >&2; }
 die() { log "ERROR $*"; exit "${2:-1}"; }
@@ -140,6 +143,36 @@ the committed trees on purpose." 2
       git -C "$WIKI_WORKDIR" rm --quiet --cached -- "$stale" && rm -f "$WIKI_WORKDIR/$stale"
     done
   record_code_commit "$(git -C "$WIKI_WORKDIR" rev-parse FETCH_HEAD)" "$WIKI_GIT_REF -> ${CODE_PATHS[*]}"
+}
+
+check_lock_skew() {
+  # The venv is the image's (UV_NO_SYNC) while the code is the clone's, refreshed
+  # from main: a merged dependency change reaches the clone's uv.lock at once
+  # and the venv only with a new image. Running refreshed code against the old
+  # venv fails late (an import, a changed API) or silently, so the two are
+  # compared here and a mismatch stops the job until the image is rebuilt and
+  # promoted. On a laptop, where no record exists, there is nothing to compare.
+  local want have
+  [ -f "$WIKI_IMAGE_LOCK_SHA256" ] || return 0
+  want=$(cut -d' ' -f1 "$WIKI_IMAGE_LOCK_SHA256")
+  have=$(sha256_of "$WIKI_WORKDIR/uv.lock")
+  if [ "$want" = "$have" ]; then
+    log "lock: uv.lock ${have:0:12} matches the image's venv"
+    return 0
+  fi
+  if [ "${WIKI_ALLOW_LOCK_SKEW:-}" = 1 ]; then
+    log "lock: WARNING uv.lock ${have:0:12} differs from the image's ${want:0:12}; WIKI_ALLOW_LOCK_SKEW=1, going on"
+    return 0
+  fi
+  die "the clone's uv.lock (sha256 ${have:0:12}) is not the one the image's venv was built \
+from (${want:0:12}): a dependency change on $WIKI_GIT_REF has no image yet. Rebuild and \
+promote the curator image (deploy/README.md, \"Image promotion\"), or set WIKI_ALLOW_LOCK_SKEW=1 \
+to run the refreshed code against the old venv on purpose." 2
+}
+
+sha256_of() {
+  if command -v sha256sum >/dev/null 2>&1; then sha256sum "$1"; else shasum -a 256 "$1"; fi |
+    cut -d' ' -f1
 }
 
 record_code_commit() {
@@ -398,12 +431,14 @@ main() {
         exit 0
       fi
       refresh_code
+      check_lock_skew
       check_caps
       plan_step && rc=0 || rc=$?
       ;;
     run)
       take_lock "${WIKI_LOCK_WAIT:-1800}" || die "another curator job still holds $WIKI_LOCK_FILE" 75
       refresh_code
+      check_lock_skew
       check_caps
       seed_build_caches
       if [ -f "$PUBLISH_PENDING" ]; then
@@ -424,6 +459,7 @@ main() {
     publish)
       take_lock "${WIKI_LOCK_WAIT:-1800}" || die "another curator job still holds $WIKI_LOCK_FILE" 75
       refresh_code
+      check_lock_skew
       seed_build_caches
       publish_step
       rc=0
@@ -431,6 +467,7 @@ main() {
     render)
       take_lock "${WIKI_LOCK_WAIT:-1800}" || die "another curator job still holds $WIKI_LOCK_FILE" 75
       refresh_code
+      check_lock_skew
       seed_build_caches
       render_step
       rc=0

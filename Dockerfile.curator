@@ -45,8 +45,11 @@ ENV PYTHONUNBUFFERED=1 \
 
 # Dependencies only, exactly as the lock pins them; the project itself is not
 # installed because the clone on the volume is what runs (PYTHONPATH above).
+# The lock's sha256 is recorded for deploy/curate.sh, which refuses to run the
+# clone's refreshed code against a venv built from a different uv.lock.
 COPY pyproject.toml uv.lock /opt/project/
-RUN uv sync --project /opt/project --frozen --no-dev --no-install-project \
+RUN sha256sum /opt/project/uv.lock | cut -d' ' -f1 > /opt/uv.lock.sha256 \
+    && uv sync --project /opt/project --frozen --no-dev --no-install-project \
     && ln -s /opt/venv/lib/python3.12/site-packages/claude_agent_sdk/_bundled/claude \
           /usr/local/bin/claude \
     && claude --version

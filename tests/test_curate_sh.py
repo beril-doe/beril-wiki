@@ -427,3 +427,28 @@ def test_the_publish_inherits_the_git_credential_helper(workdir):
     assert "ghp_secret" not in seen
     r = curate(workdir, "publish", STUBS)
     assert "credential.helper" not in (workdir / ".published-git-env").read_text()
+
+
+def test_a_lock_the_image_was_not_built_from_stops_the_job(workdir, tmp_path):
+    # The image records the sha256 of the uv.lock its venv came from; the clone's
+    # refreshed uv.lock must be that one, or the job runs new code on old deps.
+    (workdir / "uv.lock").write_text("version = 1\n")
+    import hashlib
+
+    record = tmp_path / "uv.lock.sha256"
+    record.write_text(hashlib.sha256(b"version = 1\n").hexdigest() + "\n")
+    env = {"PLAN": EMPTY, "WIKI_IMAGE_LOCK_SHA256": str(record)}
+    r = curate(workdir, "plan", STUBS, env)
+    assert r.returncode == 0 and "matches the image's venv" in r.stderr, r.stderr
+    (workdir / "uv.lock").write_text("version = 2\n")
+    for mode in ("plan", "run", "publish", "render"):
+        r = curate(workdir, mode, STUBS, env)
+        assert r.returncode == 2, (mode, r.stderr)
+        assert "not the one the image's venv was built from" in r.stderr
+        assert "WIKI_ALLOW_LOCK_SKEW=1" in r.stderr and "Image promotion" in r.stderr
+    assert trace(workdir) == []  # nothing was pulled, rendered or published
+    r = curate(workdir, "plan", STUBS, env | {"WIKI_ALLOW_LOCK_SKEW": "1"})
+    assert r.returncode == 0 and "WARNING uv.lock" in r.stderr, r.stderr
+    # Without a record (a laptop, an older image) there is nothing to compare.
+    r = curate(workdir, "plan", STUBS, {"PLAN": EMPTY, "WIKI_IMAGE_LOCK_SHA256": "/nonexistent"})
+    assert r.returncode == 0 and "lock:" not in r.stderr

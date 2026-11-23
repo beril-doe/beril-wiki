@@ -34,3 +34,13 @@ def test_the_build_context_admits_every_source_the_site_stage_copies():
         assert any(a == name or a.split("/")[0] == top for a in admitted), (
             f"{src} is copied by the site stage but not admitted by .dockerignore"
         )
+
+
+def test_the_curator_image_records_the_lock_its_venv_came_from():
+    # deploy/curate.sh compares /opt/uv.lock.sha256 with the clone's refreshed
+    # uv.lock and refuses to run new code against a venv built from another lock.
+    text = (DOCKERFILE.parent / "Dockerfile.curator").read_text()
+    assert re.search(r"sha256sum /opt/project/uv\.lock .*> /opt/uv\.lock\.sha256", text)
+    assert text.index("COPY pyproject.toml uv.lock /opt/project/") < text.index(
+        "/opt/uv.lock.sha256"
+    )
