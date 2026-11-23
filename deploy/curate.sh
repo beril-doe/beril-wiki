@@ -58,8 +58,10 @@ git_env() {
   local n="${GIT_CONFIG_COUNT:-0}"
   export "GIT_CONFIG_KEY_$n=$1" "GIT_CONFIG_VALUE_$n=$2" GIT_CONFIG_COUNT=$((n + 1))
 }
-# The volume may have been populated by another uid than the job's.
+# The volume may have been populated by another uid than the job's; quartz/ is
+# its own repository (copied from the image), asked for its commit at every start.
 git_env safe.directory "$WIKI_WORKDIR"
+git_env safe.directory "$WIKI_WORKDIR/quartz"
 if [ -n "${WIKI_GIT_TOKEN:-}" ]; then
   # The helper prints the token from the environment when git asks for it; the
   # token itself is in no config value, file or command line.
