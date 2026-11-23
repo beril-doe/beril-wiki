@@ -27,7 +27,11 @@ per-deployment mode rather than a constant:
   endpoint. Only those four variables pass through; OAuth tokens and
   cloud-provider routing are still stripped, the Codex login file is not
   shared into the isolated `CODEX_HOME`, and a job that initialises on the
-  wrong credential kind fails before it runs. Job cache keys and the ledger's
+  wrong credential kind fails before it runs. The Codex app server takes the
+  key through its login call, which writes it to `CODEX_HOME/auth.json`, so in
+  this mode each session's home is a fresh mode-0700 temporary directory
+  outside `.agentic/` (which the curator volume keeps across jobs), removed
+  with the key when the session closes or fails to start. Job cache keys and the ledger's
   per-model rows do not name the mode, so work cached under one mode is reused
   under the other.
 

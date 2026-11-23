@@ -9,6 +9,8 @@ from __future__ import annotations
 import atexit
 import json
 import os
+import shutil
+import tempfile
 import threading
 import time
 from pathlib import Path
@@ -187,21 +189,35 @@ def prepare_home(store: Path, name: str) -> Path:
     pipeline threads; auth.json is a symlink so the ChatGPT login stays shared.
 
     One home per session: app servers sharing a home share its sqlite state, and a
-    fifth server failed to initialize after four extraction workers had used one."""
+    fifth server failed to initialize after four extraction workers had used one.
+
+    In API mode `login_api_key` writes the service key to the home's auth.json, so
+    that home is not under the store (`.agentic/`, which the curator volume keeps
+    across jobs) but a fresh mode-0700 temporary directory that CodexSession.close
+    removes; `name` is its prefix."""
+    if auth_mode() == "api":
+        # The key arrives in the environment; no login to share.
+        parent = Path(tempfile.gettempdir()) / f"beril-wiki-codex-{os.getuid()}"
+        parent.mkdir(mode=0o700, exist_ok=True)
+        os.chmod(parent, 0o700)
+        return Path(tempfile.mkdtemp(prefix=f"{name}-", dir=parent))
     home = store / "codex-home" / name
     home.mkdir(parents=True, exist_ok=True)
     link = home / "auth.json"
-    if auth_mode() == "api":
-        # The key arrives in the environment; no login to share.
-        if link.is_symlink() or link.exists():
-            link.unlink()
-        return home
     source = Path(os.environ.get("CODEX_HOME", "~/.codex")).expanduser() / "auth.json"
     if not link.is_symlink():
         if link.exists():
             link.unlink()
         link.symlink_to(source)
     return home
+
+
+def discard_home(home: Path, store: Path) -> None:
+    """Remove an API-mode home (and the auth.json the login wrote there); a
+    subscription home under the store is kept, as its auth.json is only a link."""
+    if home.is_relative_to(store):
+        return
+    shutil.rmtree(home, ignore_errors=True)
 
 
 def account_kind(client: Any) -> str | None:
@@ -251,14 +267,18 @@ class CodexSession:
         self.store = store
         self.host = EvidenceHost()
         env = session_env()
-        env["CODEX_HOME"] = str(prepare_home(store, f"{os.getpid()}-{threading.get_ident()}"))
-        self.client = Codex(
-            CodexConfig(
-                env=env,
-                config_overrides=(*overrides(), f'mcp_servers.evidence.url="{self.host.url}"'),
-            )
-        )
+        self.home = prepare_home(store, f"{os.getpid()}-{threading.get_ident()}")
+        env["CODEX_HOME"] = str(self.home)
         try:
+            self.client = Codex(
+                CodexConfig(
+                    env=env,
+                    config_overrides=(
+                        *overrides(),
+                        f'mcp_servers.evidence.url="{self.host.url}"',
+                    ),
+                )
+            )
             check_auth(self.client)
         except BaseException:
             self.close()
@@ -266,9 +286,14 @@ class CodexSession:
 
     def close(self) -> None:
         try:
-            self.client.close()
+            client = getattr(self, "client", None)
+            if client is not None:
+                client.close()
         finally:
-            self.host.close()
+            try:
+                self.host.close()
+            finally:
+                discard_home(self.home, self.store)
 
 
 _local = threading.local()

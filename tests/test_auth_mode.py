@@ -3,6 +3,10 @@
 from __future__ import annotations
 
 import json
+import stat
+import sys
+import tempfile
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -129,8 +133,16 @@ def test_codex_subscription_mode_needs_the_linked_chatgpt_login(creds, monkeypat
 
 def test_codex_home_links_the_login_only_in_subscription_mode(creds, tmp_path, monkeypatch):
     monkeypatch.setenv("BERIL_WIKI_AUTH", "api")
+    (tmp_path / "tmp").mkdir()
+    monkeypatch.setattr(tempfile, "tempdir", str(tmp_path / "tmp"))
     home = C.prepare_home(tmp_path / "store", "a")
     assert not (home / "auth.json").is_symlink() and not (home / "auth.json").exists()
+    # The key the login writes there must not land on the persistent store volume,
+    # and nobody else on the host may read it.
+    assert not home.is_relative_to(tmp_path / "store") and home.is_relative_to(tmp_path / "tmp")
+    assert stat.S_IMODE(home.stat().st_mode) == 0o700
+    assert stat.S_IMODE(home.parent.stat().st_mode) == 0o700
+    assert C.prepare_home(tmp_path / "store", "a") != home  # one fresh home per session
     monkeypatch.delenv("BERIL_WIKI_AUTH")
     home = C.prepare_home(tmp_path / "store", "a")
     assert (home / "auth.json").is_symlink()
@@ -165,3 +177,43 @@ def test_stage_subprocess_env_follows_the_mode(creds, tmp_path, monkeypatch):
     assert seen["env"][KEY] == "sk-test" and seen["env"][URL] == "https://api.cborg.lbl.gov"
     assert "CLAUDE_CODE_OAUTH_TOKEN" not in seen["env"]
     assert seen["env"]["BERIL_WIKI_AUTH"] == "api"
+
+
+def test_api_mode_session_removes_its_home_and_the_key_on_close(creds, tmp_path, monkeypatch):
+    """`login_api_key` writes auth.json into CODEX_HOME; closing the session, or a
+    failed start, removes the whole home so the key never outlives the job."""
+    monkeypatch.setenv("BERIL_WIKI_AUTH", "api")
+    (tmp_path / "tmp").mkdir()
+    monkeypatch.setattr(tempfile, "tempdir", str(tmp_path / "tmp"))
+    homes: list[Path] = []
+
+    class Server(AppServer):
+        def __init__(self, config) -> None:
+            super().__init__()
+            self.home = Path(config.env["CODEX_HOME"])
+            homes.append(self.home)
+
+        def login_api_key(self, key: str) -> None:
+            super().login_api_key(key)
+            (self.home / "auth.json").write_text(json.dumps({"OPENAI_API_KEY": key}))
+
+        def close(self) -> None:
+            pass
+
+    monkeypatch.setattr(C, "EvidenceHost", lambda: SimpleNamespace(url="http://h", close=lambda: 0))
+    fake = SimpleNamespace(Codex=Server, CodexConfig=lambda **kw: SimpleNamespace(**kw))
+    monkeypatch.setitem(sys.modules, "openai_codex", fake)
+    session = C.CodexSession(tmp_path / "store")
+    assert (homes[0] / "auth.json").read_text() == json.dumps({"OPENAI_API_KEY": "sk-openai"})
+    session.close()
+    assert not homes[0].exists()
+    assert not (tmp_path / "store").exists()  # nothing was written under the store
+
+    class Ignoring(Server):
+        def login_api_key(self, key: str) -> None:
+            (self.home / "auth.json").write_text(key)
+
+    fake.Codex = Ignoring
+    with pytest.raises(R.WorkflowError, match="did not take"):
+        C.CodexSession(tmp_path / "store")
+    assert not homes[1].exists()
