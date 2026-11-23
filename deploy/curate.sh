@@ -164,8 +164,10 @@ render_step() {
   log "render: build_quartz.sh (WIKI_BASE_URL=$WIKI_BASE_URL)"
   "$WIKI_WORKDIR/scripts/build_quartz.sh"
   # The theme's frame, not Quartz's default: a plugin Quartz could not load is
-  # only a log line, so check the output rather than the exit code.
-  grep -q 'class="page-grid"' "$WIKI_WORKDIR/quartz/public/index.html" ||
+  # only a log line ("Unknown page frame beril, falling back to default"), so
+  # check the output rather than the exit code. The wordmark is the theme's top
+  # bar (theme/src/components/Bar.tsx), on every page including the home page.
+  grep -q 'class="wordmark"' "$WIKI_WORKDIR/quartz/public/index.html" ||
     die "render: quartz/public/index.html carries no BERIL frame (theme plugin not loaded)"
 }
 
