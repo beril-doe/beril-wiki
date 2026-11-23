@@ -21,7 +21,8 @@ baked into the image (WIKI_SITE_DIR) when the store is unreachable and nothing
 was unpacked before; `POST /wiki/_admin/reload` with `Authorization: Bearer
 $WIKI_RELOAD_TOKEN` fetches the current artifact again and swaps to it
 atomically (one in-process assignment; a `current` symlink records it for the
-next start). `GET /wiki/_admin/status` names the artifact being served. The
+next start). `GET /wiki/_admin/status`, under the same token, names the artifact
+being served. The
 internal API (beril_wiki.wiki_api, `WIKI_INTERNAL_TOKEN`) is mounted under
 /wiki/_api and reads the same artifact; like /wiki/_admin it is for in-cluster
 callers and must not be exposed by the ingress.
@@ -230,7 +231,19 @@ def create_app(
     async def to_prefix() -> Response:
         return RedirectResponse(prefix + "/", status_code=308)
 
-    async def status() -> Response:
+    def admin_refused(request: Request) -> Response | None:
+        """The admin routes answer only to the reload token: the ingress forwards
+        every /wiki path, and the artifact metadata is not public."""
+        if not reload_token:
+            return JSONResponse({"error": "admin routes are not configured"}, status_code=503)
+        scheme, _, token = request.headers.get("authorization", "").partition(" ")
+        if scheme.lower() != "bearer" or not secrets.compare_digest(token, reload_token):
+            return JSONResponse({"error": "unauthorized"}, status_code=401)
+        return None
+
+    async def status(request: Request) -> Response:
+        if refused := admin_refused(request):
+            return refused
         served = site.current
         m = served.manifest
         return JSONResponse(
@@ -245,12 +258,10 @@ def create_app(
         )
 
     async def reload(request: Request) -> Response:
-        if not reload_token or not site.configured:
+        if not site.configured:
             return JSONResponse({"error": "reload is not configured"}, status_code=503)
-        header = request.headers.get("authorization", "")
-        scheme, _, token = header.partition(" ")
-        if scheme.lower() != "bearer" or not secrets.compare_digest(token, reload_token):
-            return JSONResponse({"error": "unauthorized"}, status_code=401)
+        if refused := admin_refused(request):
+            return refused
         previous = site.current.artifact
         async with site.swap_lock:
             try:

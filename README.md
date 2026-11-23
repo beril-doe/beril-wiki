@@ -178,11 +178,11 @@ The server ([`serve.py`](src/beril_wiki/serve.py), FastAPI) reads:
 | `WIKI_SITE_ROOT` | `/srv/artifacts` | where downloaded artifacts are unpacked (`site-<id>/`); mount a volume |
 | `WIKI_ARTIFACT_ENDPOINT` | unset | S3 endpoint (`http://minio:9000`) or `file:///dir`; unset means serve the baked site only |
 | `WIKI_ARTIFACT_BUCKET`, `WIKI_ARTIFACT_PREFIX` (`wiki`), `WIKI_ARTIFACT_ACCESS_KEY`, `WIKI_ARTIFACT_SECRET_KEY`, `WIKI_ARTIFACT_REGION` | | the store |
-| `WIKI_RELOAD_TOKEN` | unset | bearer token for `POST /wiki/_admin/reload`; unset disables the route (503) |
+| `WIKI_RELOAD_TOKEN` | unset | bearer token for `POST /wiki/_admin/reload` and `GET /wiki/_admin/status`; unset disables both (503) |
 | `WIKI_INTERNAL_TOKEN` | unset | bearer token for the internal API under `/wiki/_api/`; unset disables it (503) |
 
-`GET /wiki/_admin/status` names the artifact being served (`baked` for the
-image's own tree). `GET /healthz` is the liveness probe.
+`GET /wiki/_admin/status` (with the reload token) names the artifact being
+served (`baked` for the image's own tree). `GET /healthz` is the liveness probe.
 
 **Publish a site without a new image.** The curator host (or anyone with the
 store's keys) packs the built site and makes it current; the container swaps

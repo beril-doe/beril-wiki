@@ -100,6 +100,8 @@ def test_healthz(client):
 
 # ---------------------------------------------------------------- artifact reload
 
+AUTH = {"Authorization": "Bearer secret"}
+
 
 def published(tmp_path, store, artifact_id: str, body: str):
     """Push a tiny site named `artifact_id` whose index reads `body`."""
@@ -147,7 +149,7 @@ def test_startup_serves_the_current_artifact_and_reload_swaps(site, tmp_path, st
     published(tmp_path, store, "v1", "site v1")
     with TestClient(reloading_app(site, tmp_path, store)) as c:
         assert c.get("/wiki/").text == "site v1"
-        status = c.get("/wiki/_admin/status").json()
+        status = c.get("/wiki/_admin/status", headers=AUTH).json()
         assert status["artifact"] == "v1" and status["page_count"] == 2 and status["corpus"]
         published(tmp_path, store, "v2", "site v2")
         assert c.get("/wiki/").text == "site v1"  # nothing changes until asked
@@ -179,11 +181,22 @@ def test_reload_requires_the_bearer_token(site, tmp_path, store):
 
 
 def test_without_a_store_the_baked_site_is_served(site):
-    with TestClient(create_app(site, "/wiki")) as c:
+    with TestClient(create_app(site, "/wiki", reload_token="secret")) as c:
         assert c.get("/wiki/").text == "home"
-        status = c.get("/wiki/_admin/status").json()
+        status = c.get("/wiki/_admin/status", headers=AUTH).json()
         assert status["artifact"] == "baked" and status["store"] is False
-        assert c.post("/wiki/_admin/reload").status_code == 503
+        assert c.post("/wiki/_admin/reload", headers=AUTH).status_code == 503
+
+
+def test_status_answers_only_to_the_reload_token(site):
+    # The documented ingress forwards every /wiki path: artifact metadata stays in-cluster.
+    with TestClient(create_app(site, "/wiki", reload_token="secret")) as c:
+        assert c.get("/wiki/_admin/status").status_code == 401
+        r = c.get("/wiki/_admin/status", headers={"Authorization": "Bearer wrong"})
+        assert r.status_code == 401
+        assert c.get("/wiki/_admin/status", headers=AUTH).status_code == 200
+    with TestClient(create_app(site, "/wiki")) as c:
+        assert c.get("/wiki/_admin/status", headers=AUTH).status_code == 503
 
 
 def test_unreachable_store_falls_back_to_the_last_unpacked_then_baked(site, tmp_path, store):
@@ -211,7 +224,7 @@ def test_unreachable_store_falls_back_to_the_last_unpacked_then_baked(site, tmp_
     # A fresh container with nothing unpacked serves the image's own tree.
     with TestClient(reloading_app(site, tmp_path / "fresh", Down())) as c:
         assert c.get("/wiki/").text == "home"
-        assert c.get("/wiki/_admin/status").json()["artifact"] == "baked"
+        assert c.get("/wiki/_admin/status", headers=AUTH).json()["artifact"] == "baked"
 
 
 def test_a_bad_artifact_does_not_replace_the_served_one(site, tmp_path, store):
@@ -223,7 +236,7 @@ def test_a_bad_artifact_does_not_replace_the_served_one(site, tmp_path, store):
         r = c.post("/wiki/_admin/reload", headers={"Authorization": "Bearer secret"})
         assert r.status_code == 502
         assert c.get("/wiki/").text == "site v1"
-        assert c.get("/wiki/_admin/status").json()["artifact"] == "v1"
+        assert c.get("/wiki/_admin/status", headers=AUTH).json()["artifact"] == "v1"
 
 
 def test_a_manifest_without_gate_results_is_refused(site, tmp_path, store):
