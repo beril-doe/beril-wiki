@@ -154,7 +154,9 @@ def test_http_store_pushes_and_the_server_reloads_from_it(live, tmp_path, store)
         assert r.status == 200
     with urllib.request.urlopen(f"{live}/wiki/", timeout=10) as r:
         assert r.read() == b"site v1"
-    with urllib.request.urlopen(f"{live}/wiki/_admin/status", timeout=10) as r:
+    # status answers only to the reload token (PR #33), like the other admin routes.
+    status = urllib.request.Request(f"{live}/wiki/_admin/status", headers=AUTH)
+    with urllib.request.urlopen(status, timeout=10) as r:
         assert b'"artifact":"v1"' in r.read().replace(b" ", b"")
     with pytest.raises(A.ArtifactError, match="HTTP 401"):
         A.HttpStore(f"{live}/wiki/_admin/store", "wrong").put("wiki/x", b"x", "text/plain")
