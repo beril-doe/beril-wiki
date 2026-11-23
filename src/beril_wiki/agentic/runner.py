@@ -26,7 +26,6 @@ from beril_wiki.agentic.curator import (
     stage_snapshot,
 )
 from beril_wiki.agentic.runtime import (
-    AUTH_ENV,
     Runtime,
     WorkflowError,
     atomic_json,
@@ -37,6 +36,7 @@ from beril_wiki.agentic.runtime import (
     manifest,
     model_policy,
     model_signature,
+    stripped_env,
 )
 from beril_wiki.corpus import FIG_EMBED
 from beril_wiki.stages.novelty import labels_due
@@ -207,7 +207,7 @@ def unlink_missing(work: Path) -> None:
 
 def run_stage(work: Path, config_path: Path, name: str, module: str, args: list[str]) -> None:
     env = os.environ.copy()
-    for key in AUTH_ENV:
+    for key in stripped_env():  # every credential in subscription mode; API keys stay in api
         env.pop(key, None)
     env.update(
         BERIL_WIKI_ROOT=str(work),
@@ -293,9 +293,14 @@ def scientific_revision(root: Path) -> str:
     return digest([compiler_revision(), contract_manifest(root)])
 
 
+# The accepted record and the hub feed cursor describe the run's bookkeeping, not
+# its inputs: neither is part of the fingerprint.
+UNFINGERPRINTED = ("state/agentic.json", "state/hub.json")
+
+
 def fingerprint(root: Path) -> dict[str, str]:
     return {
-        p: h for p, h in manifest(root, (*TREES, "contract")).items() if p != "state/agentic.json"
+        p: h for p, h in manifest(root, (*TREES, "contract")).items() if p not in UNFINGERPRINTED
     }
 
 
@@ -382,10 +387,36 @@ def budget_run(root: Path, base: dict, external: dict, staged: bool) -> str:
     return identity
 
 
+TRUE_WORDS = ("1", "true", "yes", "on")
+
+
+def env_flag(name: str) -> bool:
+    """An on/off environment switch: `1`, `true`, `yes` or `on` (any case) is on;
+    unset, empty, `0`, `false`, `no` or `off` is off."""
+    return os.environ.get(name, "").strip().lower() in TRUE_WORDS
+
+
+def check_warm_start(root: Path) -> None:
+    """Refuse a run that would re-integrate the whole corpus because the accepted state
+    is missing: a pod started without its persistent volume looks exactly like a
+    first-ever run. BERIL_WIKI_ALLOW_COLD_START=1 says the cold start is meant. Called
+    after recover(): a run killed between the two renames of a promotion has its
+    state/ in .agentic/work, not missing."""
+    if (root / "state/agentic.json").exists() or env_flag("BERIL_WIKI_ALLOW_COLD_START"):
+        return
+    raise WorkflowError(
+        f"no {root / 'state/agentic.json'}: this checkout holds no accepted run, so a run here "
+        "would re-integrate every source. Mount the persistent volume that holds wiki/, "
+        "state/, corpus/, search/ and .agentic/, or set BERIL_WIKI_ALLOW_COLD_START=1 to "
+        "start from nothing on purpose."
+    )
+
+
 def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
     models = model_signature(config)
     with locked(root):
         recover(root)
+        check_warm_start(root)
         original = manifest(root, TREES)
         base = fingerprint(root)
         external = checkout_inputs(checkout)

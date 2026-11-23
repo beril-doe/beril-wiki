@@ -277,20 +277,20 @@ def test_source_revision_not_source_membership(tmp_path):
     assert changed_sources(tmp_path) == ["a__REPORT.md"]
 
 
-def test_promotion_recovers_all_three_trees(tmp_path):
-    from beril_wiki.agentic.runner import promote, recover
+def test_promotion_recovers_all_trees(tmp_path):
+    from beril_wiki.agentic.runner import TREES, promote, recover
     from beril_wiki.agentic.runtime import manifest
 
     work = tmp_path / ".agentic/work"
-    for folder in ("wiki", "state", "staging"):
+    for folder in TREES:
         (tmp_path / folder).mkdir()
         (tmp_path / folder / "old").write_text("old")
         (work / folder).mkdir(parents=True)
         (work / folder / "new").write_text("new")
-    before = manifest(tmp_path, ("wiki", "state", "staging"))
+    before = manifest(tmp_path, TREES)
     promote(tmp_path, work, before)
     recover(tmp_path)
-    for folder in ("wiki", "state", "staging"):
+    for folder in TREES:
         assert (tmp_path / folder / "new").read_text() == "new"
         assert not (tmp_path / folder / "old").exists()
 

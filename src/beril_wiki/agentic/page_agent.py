@@ -42,16 +42,17 @@ from beril_wiki.agentic.runtime import (
     backend_for,
     check_auth,
     contract_manifest,
+    credential_expected,
     current_dependencies,
     digest,
     file_hash,
+    job_env,
     keyed,
     looks_refused,
     model_for,
     prompt,
     refusal_scope,
     search_inventory,
-    subscription_env,
     transcript_usage,
     valid_usage,
 )
@@ -557,8 +558,7 @@ async def _drive(
         plugins=[],
         cwd=session.workdir,
         add_dirs=[str(p) for p in page.reads],
-        env=subscription_env(agent.config.get("max_output_tokens", 32768))
-        | {"MCP_TOOL_TIMEOUT": "1800000"},
+        env=job_env(agent.config.get("max_output_tokens", 32768)) | {"MCP_TOOL_TIMEOUT": "1800000"},
         permission_mode="dontAsk",
         max_turns=turns,
         max_budget_usd=usd,
@@ -593,8 +593,8 @@ async def _drive(
                         # A killed worker is charged from this file; a buffered turn is lost.
                         out.flush()
                         if isinstance(message, SystemMessage) and message.subtype == "init":
-                            if message.data.get("apiKeySource") not in ("none", None):
-                                raise WorkflowError("SDK initialized with an API credential")
+                            if not credential_expected(message.data.get("apiKeySource")):
+                                raise WorkflowError("SDK initialized with the wrong credential")
                         if (
                             isinstance(message, SystemMessage)
                             and message.subtype == "model_refusal_fallback"

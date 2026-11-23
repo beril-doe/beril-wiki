@@ -5,7 +5,9 @@ Two backends behind one function, selected by ``FETCH_BACKEND``:
   local  (default) copy REPORT.md per project + the discoveries/pitfalls
          digests from a checkout-shaped tree (``BERIL_CHECKOUT``, default
          the repository's own ``corpus/``; see ``beril_wiki.corpus``).
-  hub    BERIL hub client — stub until projects/ moves there.
+  hub    refused: BERIL's context API fills ``corpus/`` outside a run
+         (``python -m beril_wiki.corpus pull-hub``), and ``local`` then
+         reads it like any checkout, so a run never talks to the hub.
 
 Other stages import ``CHECKOUT`` from here for figure/README/collections
 paths, so the checkout location is configured in exactly one place.
@@ -63,8 +65,9 @@ def fetch_local(staging: pathlib.Path, checkout: pathlib.Path | None = None) -> 
 
 
 def fetch_hub(staging: pathlib.Path) -> int:
-    raise NotImplementedError(
-        "hub backend: waiting on the BERIL hub client (projects/ is moving there)"
+    raise SystemExit(
+        "stages.fetch: FETCH_BACKEND=hub is not a fetch backend; run "
+        "`python -m beril_wiki.corpus pull-hub` first, then fetch with FETCH_BACKEND=local"
     )
 
 

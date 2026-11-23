@@ -82,9 +82,9 @@ The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 | `tests/` | deterministic checks and recorded-response workflow tests |
 | `theme/` | the Quartz page frame (one component per page region), the stylesheet (one partial per region), and the browser script and index builder for search and Ask |
 | `contract/` | the editorial contract injected into every compile, the concept decisions manifest, the errata a person has recorded against the source reports, the scope of finding and research-direction records (`cards.yaml`), and human decisions on literature labels (`novelty-decisions.yaml`) |
-| `corpus/` | every source a run reads, laid out like an observatory checkout, with `manifest.json` recording each file's hash and origin (`beril_wiki.corpus`); the site serves the manifest as `corpus-manifest.json` |
+| `corpus/` | every source a run reads, laid out like an observatory checkout, with `manifest.json` recording each file's hash and origin (`beril_wiki.corpus`; `pull-hub` fills it from BERIL's context API, see the operating guide, "Pulling the corpus from BERIL"); the site serves the manifest as `corpus-manifest.json` |
 | `state/` | per-stage caches that make the pipeline incremental, and the lakehouse catalog under `lakehouse/` |
-| `search/` | ignored local copy of the section vectors for meaning search; the shared copy lives on the `search-data` branch |
+| `search/` | ignored local copy of the section vectors for meaning search; the shared copy lives on the `history` branch and inside every site artifact |
 | `.agentic/` | ignored runtime ledger, raw results, receipts, and candidate workspace; preserve when resuming |
 | `docs/` | curator operating guide, HTML walkthrough, and wiki-format reference |
 
@@ -115,6 +115,8 @@ with `npm --prefix theme run typecheck` once `scripts/build_quartz.sh` has insta
 - [`docs/agentic-workflow.html`](docs/agentic-workflow.html), visual walkthrough
 - [`docs/wiki.md`](docs/wiki.md), how the wiki itself is structured and how
   to read it
+- [`deploy/README.md`](deploy/README.md), running the curator as a scheduled
+  job: the persistent volume it needs, its environment, and the cold-start guard
 - [`contract/AGENTS.md`](contract/AGENTS.md), the editorial contract
 
 ## Publishing
@@ -154,14 +156,139 @@ calls [`spin_deploy.yml`](.github/workflows/spin_deploy.yml) with that tag,
 which restarts the matching SPIN deployment so it pulls the new image. The
 deploy workflow can also be run by hand to restart one environment.
 
-To run the image locally:
+#### Run the image locally
 
     WIKI_BASE_URL=localhost:8080/wiki scripts/build_quartz.sh
     docker build -t beril-wiki .
     docker run --rm -p 8080:8080 beril-wiki     # http://localhost:8080/wiki/
 
 The site is built before the image rather than inside it, because the search
-vectors come from the `search-data` branch and need the checkout's `.git`.
+vectors come from the `history` branch and need the checkout's `.git`.
+`build_quartz.sh` also writes `quartz/corpus/` (the source reports, finding and
+direction records and `cards.json`), which the image bakes in at `/srv/corpus`
+for the internal API below.
+
+The server ([`serve.py`](src/beril_wiki/serve.py), FastAPI) reads:
+
+| Variable | Default | Meaning |
+| --- | --- | --- |
+| `WIKI_SITE_DIR` | `/srv/site` | the site baked into the image, served when no artifact is |
+| `WIKI_CORPUS_DIR` | `/srv/corpus` | the baked corpus the internal API reads beside it |
+| `WIKI_PREFIX` | `/wiki` | the URL prefix the ingress routes here |
+| `WIKI_SITE_ROOT` | `/srv/artifacts` | where downloaded artifacts are unpacked (`site-<id>/`); mount a volume |
+| `WIKI_ARTIFACT_ENDPOINT` | unset | S3 endpoint (`http://minio:9000`) or `file:///dir`; unset means serve the baked site only |
+| `WIKI_ARTIFACT_BUCKET`, `WIKI_ARTIFACT_PREFIX` (`wiki`), `WIKI_ARTIFACT_ACCESS_KEY`, `WIKI_ARTIFACT_SECRET_KEY`, `WIKI_ARTIFACT_REGION` | | the store |
+| `WIKI_RELOAD_TOKEN` | unset | bearer token for `POST /wiki/_admin/reload` and `GET /wiki/_admin/status`; unset disables both (503) |
+| `WIKI_INTERNAL_TOKEN` | unset | bearer token for the internal API under `/wiki/_api/`; unset disables it (503) |
+
+`GET /wiki/_admin/status` (with the reload token) names the artifact being
+served (`baked` for the image's own tree). `GET /healthz` is the liveness probe.
+
+**Publish a site without a new image.** The curator host (or anyone with the
+store's keys) packs the built site and makes it current; the container swaps
+to it on request:
+
+    export WIKI_ARTIFACT_ENDPOINT=http://localhost:9000 WIKI_ARTIFACT_BUCKET=beril-wiki \
+           WIKI_ARTIFACT_ACCESS_KEY=minioadmin WIKI_ARTIFACT_SECRET_KEY=minioadmin
+    WIKI_BASE_URL=localhost:8080/wiki scripts/build_quartz.sh
+    scripts/publish_artifact.sh                         # gates, push, record history, point current
+    curl -X POST -H "Authorization: Bearer $WIKI_RELOAD_TOKEN" localhost:8080/wiki/_admin/reload
+    uv run python -m beril_wiki.publish.artifact rollback --to <id>   # then reload again
+
+**The gate.** `push` refuses unless a gate record for exactly this build shows
+`beril_wiki.check --strict`, `npm --prefix theme run typecheck` and
+`scripts/check_site.sh` all passed: `build_quartz.sh` writes one to
+`quartz/gate-results.json` (`WIKI_SKIP_GATES=1` leaves them to CI's steps),
+`publish_artifact.sh` reruns them, and `push --run-gates` runs them in the same
+invocation. The three results go into the manifest, and the server refuses a
+manifest without them, so `current` never moves to a site CI would reject.
+
+Each push is immutable (`site-<id>.tar.gz` plus `site-<id>.manifest.json`
+under the prefix); `current.json` is the only thing that moves. A successful
+push also commits `wiki/`, `state/`, `corpus/` and
+`search/section-vectors.jsonl` from the working checkout to the `history`
+branch (created orphan when absent, through a temporary index so your own
+branch is untouched), tags `artifact/<id>` and, when the checkout has an
+`origin` with a `history` branch, pushes both there before `current` moves:
+the record must chain onto the fetched `origin/history`, and a rejected push
+(another host published first) leaves `current` alone and undoes the local
+record (`--no-history-push` keeps it local, for offline use). `push` and
+`rollback` hold `<prefix>/publish.lease` in the store meanwhile, so two hosts
+cannot move `current` at once; a lease a dead host left expires after
+`WIKI_PUBLISH_LEASE_SECONDS` (default 3600). `rollback --to <id>` restores `wiki/`, `state/`,
+`corpus/` and `search/` from the tag into the checkout and moves `current`
+back, so the next curate run starts from the restored promotion instead of
+building on the bad one; the previous trees are kept aside until `current` has
+moved, and put back if it could not, so the served artifact and the checkout
+always stand at the same promotion. It refuses while a run holds
+`.agentic/lock` or when the tag is missing. The server reads the store's
+manifest first and refuses it before any download when its id, page count,
+gates or tarball sha256 disagree with `current.json`; it then streams the
+tarball to a file, verifies its sha256, and extracts it one member at a time
+(regular files and directories only) under `WIKI_ARTIFACT_MAX_MEMBERS`
+(50000), `WIKI_ARTIFACT_MAX_UNPACKED_BYTES` (4 GiB) and
+`WIKI_ARTIFACT_MAX_MEMBER_BYTES` (1 GiB), removing the partial tree when a cap
+trips, so a compressed archive cannot fill the volume. It checks the manifest's
+id, page count and gates against the unpacked tree before it swaps, keeps the previous artifact unpacked, and on a restart
+serves the last one it unpacked when the store is unreachable, or the baked
+site when nothing was. The manifest also records the git commit, the accepted
+run's fingerprint from `state/agentic.json` and the sha256 of every source
+report. `WIKI_ARTIFACT_ENDPOINT=file:///some/dir` is a store without S3, for
+tests or a single host.
+
+To try the whole loop against MinIO on one machine:
+
+    docker run -d --name minio -p 9000:9000 -e MINIO_ROOT_USER=minioadmin \
+      -e MINIO_ROOT_PASSWORD=minioadmin quay.io/minio/minio server /data
+    docker run --rm -it --entrypoint sh --network host quay.io/minio/mc -c \
+      "mc alias set local http://localhost:9000 minioadmin minioadmin && mc mb -p local/beril-wiki"
+    docker run --rm -p 8080:8080 -e WIKI_ARTIFACT_ENDPOINT=http://host.docker.internal:9000 \
+      -e WIKI_ARTIFACT_BUCKET=beril-wiki -e WIKI_ARTIFACT_ACCESS_KEY=minioadmin \
+      -e WIKI_ARTIFACT_SECRET_KEY=minioadmin -e WIKI_RELOAD_TOKEN=dev beril-wiki
+    # then, from the checkout, the publish commands above with WIKI_RELOAD_TOKEN=dev
+
+The observatory's `docker-compose.yml` has a `wiki` profile service that pulls
+`ghcr.io/beril-doe/beril-wiki:develop`. It reads the image from
+`BERIL_WIKI_IMAGE`, so a local build runs there without editing that repo:
+
+    docker build -t beril-wiki:local .                 # in this checkout
+    BERIL_WIKI_IMAGE=beril-wiki:local docker compose --profile wiki up -d   # in the observatory
+
+Put the `WIKI_ARTIFACT_*` and `WIKI_RELOAD_TOKEN` values in the observatory's
+`.env` (its `wiki` service has no `env_file`, so pass them with `docker compose
+run -e` or a compose override file) to point that container at a store.
+
+Quartz bakes the full `WIKI_BASE_URL` into the sitemap, RSS, canonical and
+`og:url` tags, and used to bake it into the footer's About link too. The footer
+link is now root-relative (the path of the base URL), so one artifact serves
+`beril.kbase.us/wiki` and `beril-dev.kbase.us/wiki` with only those metadata
+URLs naming the build host; a host that needs them exact still gets its own
+artifact, built with its own `WIKI_BASE_URL`.
+
+#### Internal API
+
+The container also answers an internal, token-guarded HTTP API under
+`/wiki/_api/` ([`wiki_api.py`](src/beril_wiki/wiki_api.py)), the backend the
+BERIL webapp's `WikiManager` reads the wiki through (`beril context find|read
+--source wiki`). It is for in-cluster callers only (`http://wiki:8080`): **the
+ingress must not expose `/wiki/_api` or `/wiki/_admin`**; add `location ~
+^/wiki/_(api|admin) { return 404; }` (or an equivalent deny) ahead of the
+`/wiki` proxy rule in the SPIN NGINX config and in the observatory's
+`nginx.conf`. Every request carries `Authorization: Bearer
+$WIKI_INTERNAL_TOKEN`; with the variable unset the routes answer 503.
+
+| Route | Answer |
+| --- | --- |
+| `GET /wiki/_api/search?q=&scope=&k=` | `{artifact, results: [{address, title, heading, text, score}]}`; `scope` is a page group (`concept`, `topic`, `finding`, ...) or a path prefix such as `concepts/` |
+| `GET /wiki/_api/read?address=` | `{artifact, address, title, content, sources}` for `wiki/<collection>/<slug>[#section]`; a `sources/` address returns the exact report Markdown |
+| `GET /wiki/_api/ls?path=` | the collections, or the pages of one |
+| `GET /wiki/_api/source?project=&offset=&length=` | exact characters of a source report, for quote checks |
+
+Collections served: concepts, topics, conflicts, entities, summaries, sources,
+findings, directions, data. The authors collection is excluded server-side.
+Every answer names the artifact it was served from. Search is keyword only
+(BM25 over the site's own section index); vector search is a TODO until the
+server holds an embedding key.
 
 ### Search and Ask
 
@@ -182,27 +309,20 @@ reader's credit.
 `scripts/build_quartz.sh` builds the search index after `npx quartz build`.
 Meaning search compares the reader's query with one int8 vector per section,
 keyed by a hash of the section's text. The vectors (about 8 MB) live on the
-orphan branch `search-data`, which holds one commit with one file, so they never
-enter `main`'s history. The script first pulls them into the ignored local store
-`search/section-vectors.jsonl`. When `CBORG_API_KEY` is set, it then runs
-`python -m beril_wiki.stages.search_vectors`, which embeds only the sections
-with no vector using CBORG's free `lbl/nomic-embed-text`, and indexes again.
-
-Whenever page text changes, share the new vectors before the change merges:
-
-```sh
-CBORG_API_KEY=... scripts/build_quartz.sh
-uv run python -m beril_wiki.publish.search_data push
-```
-
-`push` merges the local store into `search-data`, replaces the branch's single
-commit, and dispatches the Pages workflow on `main` (it needs `gh`; otherwise
-run `gh workflow run pages.yml --ref main`). CI has no key: it pulls the
-vectors, fails a pull request whose sections lack one, and only warns on a
-deploy from `main`. Vectors for sections that no longer exist are kept, so a
-feature branch's push never drops ones the live site uses; from an up-to-date
-`main`, `push --prune` removes them. `scripts/run_pipeline.sh` pushes after
-publishing.
+`history` branch, which every `scripts/publish_artifact.sh` run commits to
+(with `wiki/`, `state/` and `corpus/`, tagged `artifact/<id>`), and
+inside every site artifact under `corpus/`. The script first pulls them into
+the ignored local store `search/section-vectors.jsonl`
+(`beril_wiki.publish.search_data pull`). When `CBORG_API_KEY` is set, it then
+runs `python -m beril_wiki.stages.search_vectors`, which embeds only the
+sections with no vector using CBORG's free `lbl/nomic-embed-text`, and indexes
+again. CI has no key: it pulls the vectors, fails a pull request whose sections
+lack one (`SEARCH_REQUIRE_VECTORS=1`), and only warns on a deploy from `main`.
+Vectors for sections that no longer exist are kept, so a feature branch's build
+never drops ones the live site uses. Until the first artifact push puts
+`history` on the remote, `pull` falls back to the legacy single-commit
+`search-data` branch and `search_data push [--prune]` still updates it; that
+branch goes away once `history` carries the vectors.
 
 ## License
 

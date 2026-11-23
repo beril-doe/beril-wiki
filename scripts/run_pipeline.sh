@@ -20,7 +20,7 @@
 #   check    citation, numeric, uptake, and duplicate-concept audits (fails on errors)
 #   publish  Quartz static site (dead links stripped, evidence labels added),
 #            search index, and vectors for sections new since the last publish,
-#            pushed to the search-data branch
+#            committed to the history branch by publish_artifact.sh
 #
 # scripts/run_pipeline.sh --force        rebuild every derived stage, ignoring caches
 # scripts/run_pipeline.sh --no-publish   skip the Quartz build
@@ -110,10 +110,13 @@ echo "== check" | tee -a "$LOG"
 
 if [ "${1:-}" != "--no-publish" ]; then
   echo "== publish" | tee -a "$LOG"
-  # Also embeds new sections for meaning search, since CBORG_API_KEY is set;
-  # then share them on the search-data branch, which redeploys the site.
+  # Also embeds new sections for meaning search, since CBORG_API_KEY is set.
+  # The vectors travel inside the artifact and on the history branch, both
+  # written by publish_artifact.sh when a store is configured.
   "$HERE/build_quartz.sh" 2>&1 | tail -6 | tee -a "$LOG"
-  echo "== search vectors" | tee -a "$LOG"
-  "${PY[@]}" -m beril_wiki.publish.search_data push | tee -a "$LOG"
+  if [ -n "${WIKI_ARTIFACT_ENDPOINT:-}" ]; then
+    echo "== publish artifact" | tee -a "$LOG"
+    "$HERE/publish_artifact.sh" --no-check | tee -a "$LOG"
+  fi
 fi
 echo "== pipeline done"

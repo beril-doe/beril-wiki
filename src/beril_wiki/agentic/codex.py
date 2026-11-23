@@ -9,12 +9,15 @@ from __future__ import annotations
 import atexit
 import json
 import os
+import shutil
+import tempfile
 import threading
 import time
 from pathlib import Path
 from typing import Any
 
 from beril_wiki.agentic.runtime import (
+    CODEX_API_ENV,
     CONTENT_FLAG,
     REFUSAL_FALLBACK,
     SYSTEM,
@@ -24,6 +27,7 @@ from beril_wiki.agentic.runtime import (
     Refused,
     Runtime,
     WorkflowError,
+    auth_mode,
     tool_profile,
     turn_budget_sentence,
 )
@@ -185,11 +189,22 @@ def prepare_home(store: Path, name: str) -> Path:
     pipeline threads; auth.json is a symlink so the ChatGPT login stays shared.
 
     One home per session: app servers sharing a home share its sqlite state, and a
-    fifth server failed to initialize after four extraction workers had used one."""
+    fifth server failed to initialize after four extraction workers had used one.
+
+    In API mode `login_api_key` writes the service key to the home's auth.json, so
+    that home is not under the store (`.agentic/`, which the curator volume keeps
+    across jobs) but a fresh mode-0700 temporary directory that CodexSession.close
+    removes; `name` is its prefix."""
+    if auth_mode() == "api":
+        # The key arrives in the environment; no login to share.
+        parent = Path(tempfile.gettempdir()) / f"beril-wiki-codex-{os.getuid()}"
+        parent.mkdir(mode=0o700, exist_ok=True)
+        os.chmod(parent, 0o700)
+        return Path(tempfile.mkdtemp(prefix=f"{name}-", dir=parent))
     home = store / "codex-home" / name
     home.mkdir(parents=True, exist_ok=True)
-    source = Path(os.environ.get("CODEX_HOME", "~/.codex")).expanduser() / "auth.json"
     link = home / "auth.json"
+    source = Path(os.environ.get("CODEX_HOME", "~/.codex")).expanduser() / "auth.json"
     if not link.is_symlink():
         if link.exists():
             link.unlink()
@@ -197,12 +212,50 @@ def prepare_home(store: Path, name: str) -> Path:
     return home
 
 
-def check_auth(client: Any) -> None:
+def discard_home(home: Path, store: Path) -> None:
+    """Remove an API-mode home (and the auth.json the login wrote there); a
+    subscription home under the store is kept, as its auth.json is only a link."""
+    if home.is_relative_to(store):
+        return
+    shutil.rmtree(home, ignore_errors=True)
+
+
+def account_kind(client: Any) -> str | None:
     account = client.account().account
     kind = getattr(getattr(account, "root", account), "type", None)
-    kind = getattr(kind, "value", kind)
-    if kind != "chatgpt":
+    return getattr(kind, "value", kind)
+
+
+def check_auth(client: Any) -> None:
+    """Log the app server in for the mode, then confirm it took.
+
+    In API mode the key only travels in the server's environment; the app server
+    (0.159.x) does not read it on its own, so the isolated home has no account until
+    `login_api_key` writes one (its auth.json, never the user's)."""
+    if auth_mode() == "api":
+        key = os.environ.get("OPENAI_API_KEY", "")
+        if not key:
+            raise WorkflowError("BERIL_WIKI_AUTH=api needs OPENAI_API_KEY for Codex")
+        client.login_api_key(key)
+        if account_kind(client) != "apiKey":
+            raise WorkflowError("BERIL_WIKI_AUTH=api: Codex did not take OPENAI_API_KEY")
+        return
+    if account_kind(client) != "chatgpt":
         raise WorkflowError("a ChatGPT subscription login is required for Codex; no API key")
+
+
+def session_env() -> dict[str, str]:
+    """The app server's environment: provider credentials stripped, except the OpenAI
+    key and base URL in API mode (OPENAI_BASE_URL points Codex at a compatible
+    endpoint such as CBORG)."""
+    keep = set(CODEX_API_ENV) if auth_mode() == "api" else set()
+    return {k: v for k, v in os.environ.items() if k in keep or not k.startswith(ENV_PREFIXES)}
+
+
+def overrides() -> tuple[str, ...]:
+    """Config overrides for the auth mode: the forced login method follows it."""
+    method = "api" if auth_mode() == "api" else "chatgpt"
+    return (f'forced_login_method="{method}"', *OVERRIDES[1:])
 
 
 class CodexSession:
@@ -213,15 +266,19 @@ class CodexSession:
 
         self.store = store
         self.host = EvidenceHost()
-        env = {k: v for k, v in os.environ.items() if not k.startswith(ENV_PREFIXES)}
-        env["CODEX_HOME"] = str(prepare_home(store, f"{os.getpid()}-{threading.get_ident()}"))
-        self.client = Codex(
-            CodexConfig(
-                env=env,
-                config_overrides=(*OVERRIDES, f'mcp_servers.evidence.url="{self.host.url}"'),
-            )
-        )
+        env = session_env()
+        self.home = prepare_home(store, f"{os.getpid()}-{threading.get_ident()}")
+        env["CODEX_HOME"] = str(self.home)
         try:
+            self.client = Codex(
+                CodexConfig(
+                    env=env,
+                    config_overrides=(
+                        *overrides(),
+                        f'mcp_servers.evidence.url="{self.host.url}"',
+                    ),
+                )
+            )
             check_auth(self.client)
         except BaseException:
             self.close()
@@ -229,9 +286,14 @@ class CodexSession:
 
     def close(self) -> None:
         try:
-            self.client.close()
+            client = getattr(self, "client", None)
+            if client is not None:
+                client.close()
         finally:
-            self.host.close()
+            try:
+                self.host.close()
+            finally:
+                discard_home(self.home, self.store)
 
 
 _local = threading.local()
