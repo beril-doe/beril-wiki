@@ -117,3 +117,19 @@ def test_legacy_push_is_one_orphan_commit_that_merges(repos):
     assert set(rows) == {"h1", "h2"}
     parents = run("git", "rev-list", "--count", f"origin/{sd.LEGACY_BRANCH}", cwd=b).strip()
     assert parents == "1"
+
+
+def test_a_prune_refuses_while_a_current_section_has_no_vector(repos):
+    remote, (a, b) = repos
+    legacy_push(a, "h1", "h2")
+    store = b / sd.FILE
+    store.parent.mkdir(exist_ok=True)
+    store.write_text(row("h3") + "\n")
+    # h4 is a section the current build uses but nobody has embedded yet.
+    with pytest.raises(sd.SearchDataError, match="refusing to prune: 1 current section"):
+        sd.push(b, store, prune_to={"h1", "h3", "h4"})
+    before = run("git", "ls-remote", "--heads", str(remote), sd.LEGACY_BRANCH, cwd=b)
+    assert sd.push(b, store, prune_to={"h1", "h3"}).startswith("pushed 2 vectors")
+    assert run("git", "ls-remote", "--heads", str(remote), sd.LEGACY_BRANCH, cwd=b) != before
+    rows = sd.parse(run("git", "show", f"origin/{sd.LEGACY_BRANCH}:{sd.LEGACY_FILE}", cwd=b), "r")
+    assert set(rows) == {"h1", "h3"}  # h2 pruned, h1 kept from the remote, h3 merged in
