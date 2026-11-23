@@ -382,11 +382,22 @@ def budget_run(root: Path, base: dict, external: dict, staged: bool) -> str:
     return identity
 
 
+TRUE_WORDS = ("1", "true", "yes", "on")
+
+
+def env_flag(name: str) -> bool:
+    """An on/off environment switch: `1`, `true`, `yes` or `on` (any case) is on;
+    unset, empty, `0`, `false`, `no` or `off` is off."""
+    return os.environ.get(name, "").strip().lower() in TRUE_WORDS
+
+
 def check_warm_start(root: Path) -> None:
     """Refuse a run that would re-integrate the whole corpus because the accepted state
     is missing: a pod started without its persistent volume looks exactly like a
-    first-ever run. BERIL_WIKI_ALLOW_COLD_START=1 says the cold start is meant."""
-    if (root / "state/agentic.json").exists() or os.environ.get("BERIL_WIKI_ALLOW_COLD_START"):
+    first-ever run. BERIL_WIKI_ALLOW_COLD_START=1 says the cold start is meant. Called
+    after recover(): a run killed between the two renames of a promotion has its
+    state/ in .agentic/work, not missing."""
+    if (root / "state/agentic.json").exists() or env_flag("BERIL_WIKI_ALLOW_COLD_START"):
         return
     raise WorkflowError(
         f"no {root / 'state/agentic.json'}: this checkout holds no accepted run, so a run here "
@@ -397,10 +408,10 @@ def check_warm_start(root: Path) -> None:
 
 
 def run(root: Path, checkout: Path, config: dict, staged: bool = False) -> dict:
-    check_warm_start(root)
     models = model_signature(config)
     with locked(root):
         recover(root)
+        check_warm_start(root)
         original = manifest(root, TREES)
         base = fingerprint(root)
         external = checkout_inputs(checkout)
