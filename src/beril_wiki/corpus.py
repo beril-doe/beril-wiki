@@ -35,6 +35,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -55,6 +56,10 @@ META = ("README.md", "beril.yaml")
 # dropped on the next save.
 CURSOR = "hub.json"
 LEGACY_CURSOR_KEY = "hub"
+# pull-hub's install journal: written before the first live tree is swapped, removed
+# after the manifest and cursor are saved. One left behind means an install was
+# interrupted, and `recover` puts the corpus back as it was before the swaps.
+JOURNAL = ".pull-journal.json"
 # The embed forms the synthesize skill allows; fetch, `checkout_inputs` and the publish
 # ingest all read this one pattern. Group 1 is the path relative to the project.
 FIG_EMBED = re.compile(
@@ -274,6 +279,7 @@ def pull_hub(
     own = client is None
     client = client or hub.Hub()
     state = state or state_dir(corpus)
+    recover(corpus)
     manifest = load(corpus)
     hub_state = load_cursor(state) or manifest.pop(LEGACY_CURSOR_KEY, {})
     # A `next_since` cursor (a server from before the `after` paging) is not kept:
@@ -328,11 +334,6 @@ def pull_hub(
             }
             installs.append((staged, corpus / "projects" / sid))
             counts["projects"] += 1
-        for staged, dest in installs:
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            if dest.is_dir():
-                shutil.rmtree(dest)
-            staged.replace(dest)
         hub_state = {
             "url": client.url,
             "next_after": following if isinstance(following, int) else None,
@@ -341,17 +342,113 @@ def pull_hub(
             hub_state["docs"] = docs_state
         corpus.mkdir(parents=True, exist_ok=True)
         manifest.pop(LEGACY_CURSOR_KEY, None)
-        save(manifest, corpus)
-        save_cursor(state, hub_state)
+        # Every download verified: swap the trees in by rename, each live one going
+        # aside first, under a journal that survives a crash between two swaps.
+        journaled = _journal(corpus, state, temporary, [dest for _, dest in installs])
+        try:
+            for staged, dest in installs:
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                if dest.exists():
+                    kept = temporary / "aside" / dest.relative_to(corpus)
+                    kept.parent.mkdir(parents=True, exist_ok=True)
+                    os.rename(dest, kept)
+                os.rename(staged, dest)
+            save(manifest, corpus)
+            save_cursor(state, hub_state)
+            journaled.unlink()
+        except BaseException:
+            # Put the corpus back now; a recovery that itself fails leaves the
+            # journal and the asides for the next pull (or verify) to retry.
+            try:
+                recover(corpus)
+            except Exception as exc:
+                warn(f"interrupted install not recovered ({exc}); kept {journaled}")
+            raise
     finally:
-        shutil.rmtree(temporary, ignore_errors=True)
+        if not (corpus / JOURNAL).exists():
+            shutil.rmtree(temporary, ignore_errors=True)
         if own:
             client.close()
     return counts | {"next_after": hub_state["next_after"]}
 
 
+def _journal(corpus: Path, state: Path, temporary: Path, dests: list[Path]) -> Path:
+    """Write the install journal and set the manifest and cursor aside, so `recover`
+    can undo the swaps that follow. Paths are relative to the corpus's parent, so a
+    volume mounted elsewhere next time still reads it."""
+    aside = temporary / "aside"
+    aside.mkdir()
+
+    def rel(path: Path) -> str:
+        return os.path.relpath(path, corpus.parent)
+
+    record = {
+        "staging": rel(temporary),
+        "state": rel(state),
+        "moves": [
+            {"dest": dest.relative_to(corpus).as_posix(), "replace": dest.exists()}
+            for dest in dests
+        ],
+        "manifest": (corpus / MANIFEST).is_file(),
+        "cursor": (state / CURSOR).is_file(),
+    }
+    if record["manifest"]:
+        shutil.copy2(corpus / MANIFEST, aside / MANIFEST)
+    if record["cursor"]:
+        shutil.copy2(state / CURSOR, aside / CURSOR)
+    path = corpus / JOURNAL
+    tmp = corpus / (JOURNAL + ".tmp")
+    tmp.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    tmp.replace(path)
+    return path
+
+
+def recover(corpus: Path = CORPUS) -> bool:
+    """Undo an interrupted ``pull-hub`` install left behind by its journal: every tree
+    set aside goes back where it was, a half-installed new tree is dropped, and the
+    manifest and cursor are restored, so the corpus is exactly as before the pull
+    and the next one downloads again. Returns whether there was anything to do."""
+    journal = corpus / JOURNAL
+    if not journal.is_file():
+        return False
+    record = json.loads(journal.read_text(encoding="utf-8"))
+    staging = (corpus.parent / record["staging"]).resolve()
+    state = (corpus.parent / record["state"]).resolve()
+    aside = staging / "aside"
+    if not aside.is_dir():
+        raise hub.HubError(
+            f"{journal} records an interrupted install but its staging directory "
+            f"{staging} is gone; restore corpus/ from the history branch"
+        )
+    for move in record["moves"]:
+        dest, kept = corpus / move["dest"], aside / move["dest"]
+        if move["replace"] and not kept.exists():
+            continue  # never moved aside: still the live tree
+        if dest.is_dir() and not dest.is_symlink():
+            shutil.rmtree(dest)
+        elif dest.exists():
+            dest.unlink()
+        if move["replace"]:
+            os.rename(kept, dest)
+    for flag, path, backup in (
+        ("manifest", corpus / MANIFEST, aside / MANIFEST),
+        ("cursor", state / CURSOR, aside / CURSOR),
+    ):
+        if record[flag]:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            os.replace(backup, path)
+        elif path.exists():
+            path.unlink()
+    journal.unlink()
+    shutil.rmtree(staging, ignore_errors=True)
+    warn("an interrupted pull-hub install was undone; pull again")
+    return True
+
+
 def verify(corpus: Path = CORPUS) -> list[str]:
-    """Every corpus file is in the manifest with its current hash, and nothing is missing."""
+    """Every corpus file is in the manifest with its current hash, and nothing is missing.
+    An interrupted install is undone first, so what is checked is a whole corpus."""
+    recover(corpus)
     # load() reads a missing manifest as empty, which an empty tree would then match.
     if not (corpus / MANIFEST).is_file():
         return [f"{MANIFEST}: missing; run import-v1"]

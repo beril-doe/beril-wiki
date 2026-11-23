@@ -177,9 +177,14 @@ list is skipped, with a warning), replaces `corpus/projects/<sid>/` and records
 `owner_orcid`, `project`, `revision`, `submitted_at`, `kind` and `address`
 beside the entry's `files`, `digest` and `origin` (`hub@<submission id>`).
 `kind: docs` rows write `corpus/docs/*.md` into `shared`. Nothing is installed
-and the cursor does not move unless every download verified, so `verify`
-passes after any pull. `--after N` overrides the cursor (`0` lists the feed
-from the beginning).
+and the cursor does not move unless every download verified. The install
+itself swaps each tree in by rename under a journal
+(`corpus/.pull-journal.json`, written before the first swap with the previous
+manifest and cursor set aside, removed once both are saved): a pull that dies
+between two swaps is undone by the next `pull-hub` or `verify`, which put every
+tree, the manifest and the cursor back as they were, so `verify` passes after
+any pull and the next one downloads again. `--after N` overrides the cursor
+(`0` lists the feed from the beginning).
 
 **Source ids.** BERIL project slugs are unique per owner only, and a `[src: id]`
 never changes once pages cite it, so the directory name under

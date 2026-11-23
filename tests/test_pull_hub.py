@@ -480,3 +480,67 @@ def test_a_removed_readme_or_figure_without_a_report_change_is_pulled(out, beril
     assert not (out / "projects/demo/README.md").exists()
     assert "README.md" not in corpus.load(out)["projects"]["demo"]["files"]
     assert corpus.verify(out) == []
+
+
+def test_an_install_interrupted_between_swaps_is_undone_and_the_next_pull_retries(
+    out, beril, client, monkeypatch, capsys
+):
+    """After every download verified, the trees are swapped in one by one. A failure
+    between two swaps (here: placing the second project) must not leave the first
+    project new while the manifest, cursor and second project are old."""
+    corpus.pull_hub(out, client)
+    before = {p.relative_to(out): p.read_bytes() for p in out.rglob("*") if p.is_file()}
+    cursor = (out.parent / "state/hub.json").read_bytes()
+    beril.project("demo", {"REPORT.md": REPORT + b"v2\n"}, "2026-11-02T00:00:00Z")
+    beril.project("later", {"REPORT.md": b"# later\n"}, "2026-11-03T00:00:00Z")
+    rename = corpus.os.rename
+
+    def failing(src, dst):
+        if Path(dst) == out / "projects/later":  # demo is already swapped by now
+            raise OSError("disk full")
+        rename(src, dst)
+
+    monkeypatch.setattr(corpus.os, "rename", failing)
+    # First, the process dies with the journal in place: nothing undoes it inline.
+    monkeypatch.setattr(corpus, "recover", lambda c=None: False)
+    with pytest.raises(OSError, match="disk full"):
+        corpus.pull_hub(out, client)
+    assert (out / corpus.JOURNAL).is_file()
+    assert (out / "projects/demo/REPORT.md").read_bytes() == REPORT + b"v2\n"  # split
+    assert not (out / "projects/later").exists()
+    monkeypatch.undo()
+    monkeypatch.setattr(corpus.os, "rename", failing)
+    # The next pull recovers before it reads the manifest, then fails the same way;
+    # this time the inline recovery puts the corpus back.
+    with pytest.raises(OSError, match="disk full"):
+        corpus.pull_hub(out, client)
+    assert not (out / corpus.JOURNAL).exists()
+    assert {p.relative_to(out): p.read_bytes() for p in out.rglob("*") if p.is_file()} == before
+    assert (out.parent / "state/hub.json").read_bytes() == cursor
+    assert list(out.parent.glob(".corpus-pull-*")) == []
+    assert corpus.verify(out) == []
+    assert "interrupted pull-hub install was undone" in capsys.readouterr().err
+    monkeypatch.undo()
+    assert corpus.pull_hub(out, client)["projects"] == 2
+    assert (out / "projects/later/REPORT.md").read_bytes() == b"# later\n"
+    assert corpus.verify(out) == []
+
+
+def test_verify_undoes_an_interrupted_install_first(out, beril, client, monkeypatch):
+    corpus.pull_hub(out, client)
+    beril.project("demo", {"REPORT.md": REPORT + b"v2\n"}, "2026-11-02T00:00:00Z")
+    monkeypatch.setattr(corpus, "save", lambda m, c: (_ for _ in ()).throw(OSError("full")))
+    monkeypatch.setattr(corpus, "recover", lambda c=None: False)
+    with pytest.raises(OSError, match="full"):
+        corpus.pull_hub(out, client)
+    monkeypatch.undo()
+    assert (out / corpus.JOURNAL).is_file()
+    assert corpus.verify(out) == []
+    assert (out / "projects/demo/REPORT.md").read_bytes() == REPORT
+    assert corpus.load(out)["projects"]["demo"]["submitted_at"] == "2026-11-01T00:00:00Z"
+    # A journal whose staging directory is gone cannot be undone silently.
+    (out / corpus.JOURNAL).write_text(
+        json.dumps({"staging": ".nowhere", "state": "state", "moves": []})
+    )
+    with pytest.raises(hub.HubError, match="staging directory .* is gone"):
+        corpus.verify(out)
