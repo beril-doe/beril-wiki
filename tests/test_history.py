@@ -52,6 +52,7 @@ def gate(site: Path) -> dict:
     return {
         "ran_at": "2026-11-13T00:00:00+00:00",
         "site_digest": A.site_digest(site),
+        "corpus_digest": A.corpus_digest(site.parents[1]),
         "results": {name: {"passed": True, "output": ""} for name in A.GATES},
     }
 
@@ -209,11 +210,32 @@ def test_push_refuses_without_passing_gates_on_this_site(tmp_path, monkeypatch):
     (site / "index.html").write_text("edited after the gates ran")
     with pytest.raises(A.ArtifactError, match="different build"):
         A.push(store, keys, repo, site, "A", gate=stale)
+    # The record is bound to the packed sources too: a manual push of a stale build
+    # must not serve site A with sources B.
+    moved_on = gate(site)
+    monkeypatch.setattr(A, "corpus_files", lambda r: {"corpus/sources/demo__REPORT.md": b"B"})
+    with pytest.raises(A.ArtifactError, match="different sources"):
+        A.push(store, keys, repo, site, "A", gate=moved_on)
+    monkeypatch.setattr(A, "corpus_files", lambda r: {})
     assert not store.exists(keys.current)  # current never moved
     ok = A.push(store, keys, repo, site, "A", gate=gate(site), history=False)
     manifest = json.loads(store.get(keys.manifest(ok["id"])))
     assert all(manifest["gates"][name] is True for name in A.GATES)
     assert manifest["gates"]["site_digest"] == A.site_digest(site)
+
+
+def test_a_promotion_history_cannot_record_is_not_made_live(tmp_path, monkeypatch):
+    repo = checkout(tmp_path)
+    monkeypatch.setattr(A, "corpus_files", lambda r: {})
+    store, keys = A.DirStore(tmp_path / "bucket"), A.Keys("wiki")
+    site = site_for(repo, "A")
+    A.push(store, keys, repo, site, "A", gate=gate(site))
+    site_for(repo, "B")
+    H.record(repo, "B")  # the tag exists already: record() will refuse
+    with pytest.raises(A.ArtifactError, match="history not recorded.*tag artifact/B"):
+        A.push(store, keys, repo, site, "B", gate=gate(site))
+    assert A.current(store, keys)["id"] == "A"
+    assert store.exists(keys.tarball("B"))  # uploaded, immutable, never current
 
 
 def test_run_gates_records_each_command(tmp_path, monkeypatch):
@@ -235,6 +257,7 @@ def test_run_gates_records_each_command(tmp_path, monkeypatch):
     assert result["results"]["check_site"] == {"passed": True, "output": "fine"}
     assert A.gates_passed(result) == ["theme_typecheck"]
     assert result["site_digest"] == A.site_digest(site)
+    assert result["corpus_digest"] == A.corpus_digest(tmp_path)
 
 
 def test_restore_holds_the_curator_lock_for_its_whole_duration(tmp_path, monkeypatch):

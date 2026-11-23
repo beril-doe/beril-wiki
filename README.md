@@ -191,7 +191,7 @@ to it on request:
     export WIKI_ARTIFACT_ENDPOINT=http://localhost:9000 WIKI_ARTIFACT_BUCKET=beril-wiki \
            WIKI_ARTIFACT_ACCESS_KEY=minioadmin WIKI_ARTIFACT_SECRET_KEY=minioadmin
     WIKI_BASE_URL=localhost:8080/wiki scripts/build_quartz.sh
-    scripts/publish_artifact.sh                         # gates, push, point current, record history
+    scripts/publish_artifact.sh                         # gates, push, record history, point current
     curl -X POST -H "Authorization: Bearer $WIKI_RELOAD_TOKEN" localhost:8080/wiki/_admin/reload
     uv run python -m beril_wiki.publish.artifact rollback --to <id>   # then reload again
 

@@ -44,6 +44,7 @@ def gate(site: Path) -> dict:
     return {
         "ran_at": "2026-11-13T00:00:00+00:00",
         "site_digest": A.site_digest(site),
+        "corpus_digest": A.corpus_digest(site.parents[1]),
         "results": {name: {"passed": True, "output": ""} for name in A.GATES},
     }
 
@@ -96,7 +97,7 @@ def test_artifacts_are_immutable_and_ids_are_checked(tmp_path, store, monkeypatc
             root,
             tmp_path / "empty",
             "v3",
-            gate=gate(tmp_path / "empty"),
+            gate=gate(tmp_path / "empty") | {"corpus_digest": A.corpus_digest(root)},
             history=False,
         )
 

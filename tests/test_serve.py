@@ -119,6 +119,7 @@ def published(tmp_path, store, artifact_id: str, body: str):
     gate = {
         "ran_at": "now",
         "site_digest": A.site_digest(site),
+        "corpus_digest": A.corpus_digest(root),
         "results": {n: {"passed": True, "output": ""} for n in A.GATES},
     }
     return A.push(store, A.Keys("wiki"), root, site, artifact_id, gate=gate, history=False)

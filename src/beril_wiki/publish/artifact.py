@@ -241,6 +241,20 @@ def site_digest(site: pathlib.Path) -> str:
     return h.hexdigest()
 
 
+def corpus_digest(root: pathlib.Path) -> str:
+    """One hash over what corpus_files() packs beside the site, so the gate record is
+    tied to the sources a push ships as well as to the rendered tree: `check
+    --strict` ran against the live wiki/, and a stale build of the site must not be
+    published with newer sources."""
+    h = hashlib.sha256()
+    for name, data in sorted(corpus_files(root).items()):
+        h.update(name.encode())
+        h.update(b"\0")
+        h.update(sha256(data).encode())
+        h.update(b"\n")
+    return h.hexdigest()
+
+
 def gate_commands(root: pathlib.Path, site: pathlib.Path) -> dict[str, list[str]]:
     """The three checks CI runs before it publishes; a push needs all of them green."""
     return {
@@ -264,6 +278,7 @@ def run_gates(root: pathlib.Path, site: pathlib.Path) -> dict:
     return {
         "ran_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
         "site_digest": site_digest(site),
+        "corpus_digest": corpus_digest(root),
         "results": results,
     }
 
@@ -274,7 +289,7 @@ def gates_passed(gate: dict) -> list[str]:
     return [name for name in GATES if not results.get(name, {}).get("passed")]
 
 
-def check_gate(gate: dict | None, site: pathlib.Path) -> dict:
+def check_gate(gate: dict | None, root: pathlib.Path, site: pathlib.Path) -> dict:
     """The gate record a push may carry into its manifest, or an ArtifactError."""
     if not gate:
         raise ArtifactError("no gate results: run the gates (`artifact gate`) before pushing")
@@ -283,9 +298,14 @@ def check_gate(gate: dict | None, site: pathlib.Path) -> dict:
         raise ArtifactError(f"gate(s) failed: {', '.join(failed)}; current will not move")
     if gate.get("site_digest") != site_digest(site):
         raise ArtifactError("gate results are for a different build of the site; rerun the gates")
+    if gate.get("corpus_digest") != corpus_digest(root):
+        raise ArtifactError(
+            "gate results are for different sources than the checkout holds; rerun the gates"
+        )
     return {
         "ran_at": gate.get("ran_at"),
         "site_digest": gate["site_digest"],
+        "corpus_digest": gate["corpus_digest"],
         **{name: True for name in GATES},
     }
 
@@ -404,13 +424,15 @@ def push(
     gate: dict | None = None,
     history: bool = True,
 ) -> dict:
-    """Pack, upload and point `current`, then record the promotion on the history
-    branch. Refuses without a gate record showing all three checks passed on this
-    exact site, so `current` never moves to a site CI would reject."""
+    """Pack, upload, record the promotion on the history branch, then point
+    `current`. Refuses without a gate record showing all three checks passed on this
+    exact site and these sources, so `current` never moves to a site CI would
+    reject; a promotion the history branch did not record is not made live either,
+    since rollback to it would be refused."""
     artifact_id = check_id(artifact_id or new_id(root))
     if store.exists(keys.tarball(artifact_id)):
         raise ArtifactError(f"artifact {artifact_id} already exists; artifacts are immutable")
-    gates = check_gate(gate, site)
+    gates = check_gate(gate, root, site)
     manifest = build_manifest(root, site, artifact_id, base_url)
     manifest["gates"] = gates
     data = pack(root, site, manifest)
@@ -420,15 +442,20 @@ def push(
     store.put(
         keys.manifest(artifact_id), json.dumps(manifest, indent=1).encode(), "application/json"
     )
-    pointer = point(store, keys, artifact_id, manifest)
+    commit = None
     if history:
         from beril_wiki.publish import history as H
 
         try:
-            pointer["history_commit"] = H.record(root, artifact_id)
+            commit = H.record(root, artifact_id)
         except H.HistoryError as exc:
-            # The artifact is live; the audit trail is the part that failed.
-            print(f"artifact: [WARN] history not recorded: {exc}", file=sys.stderr)
+            raise ArtifactError(
+                f"history not recorded, so current will not move to {artifact_id} "
+                f"(the uploaded artifact stays in the store): {exc}"
+            ) from exc
+    pointer = point(store, keys, artifact_id, manifest)
+    if commit:
+        pointer["history_commit"] = commit
     return pointer
 
 
