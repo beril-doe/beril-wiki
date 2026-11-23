@@ -212,7 +212,10 @@ def test_a_failed_publish_is_owed_until_a_later_run_or_publish_finishes_it(workd
         workdir, "run", STUBS, {"PLAN": EMPTY, "RUN_EFFECT": "echo ran >> $WIKI_WORKDIR/.trace"}
     )
     assert r.returncode == 0, r.stderr
-    assert trace(workdir)[-6:-3] == ["ran", "rendered", "published"]
+    # The owed publish goes first, before the run: accepted work never waits on
+    # a later curation.
+    seen = trace(workdir)
+    assert seen.index("rendered", 1) < seen.index("ran", 1) and "published" in seen
     assert not pending.exists()
     assert "publish_pending=no" in curate(workdir, "plan", STUBS, {"PLAN": EMPTY}).stderr
     # `publish` by hand finishes it as well.
@@ -303,3 +306,28 @@ def test_the_publish_names_the_commit_whose_code_ran(workdir):
     (workdir / ".curate/code-commit").unlink()
     r = curate(workdir, "publish", stubs, {"WIKI_SKIP_CODE_REFRESH": "1"})
     assert (workdir / ".published-commit").read_text().strip() == git(workdir, "rev-parse", "HEAD")
+
+
+def test_an_owed_publish_is_finished_even_when_the_next_curation_fails(workdir):
+    pending = workdir / ".curate/publish-pending.json"
+    pending.parent.mkdir(exist_ok=True)
+    pending.write_text('{"promoted_at": "2026-11-23T07:31:00Z"}')
+    r = curate(workdir, "run", STUBS, {"PLAN": EMPTY, "RUN_EFFECT": "exit 7"})
+    assert r.returncode == 1 and "agentic run failed (exit 7)" in r.stderr
+    assert trace(workdir)[:3] == ["rendered", "published", "--id"]
+    assert not pending.exists()
+
+
+def test_a_failed_bootstrap_leaves_no_clone_so_the_next_job_retries(tmp_path, origin):
+    with_history(origin, tmp_path)
+    workdir = tmp_path / "work/beril-wiki"
+    stubs = STUBS.replace('refresh_code() { log "code: stubbed"; }\n', "")
+    broken = stubs + "\nbootstrap_data_trees() { log 'bootstrap: simulated failure'; return 1; }\n"
+    r = curate(workdir, "plan", broken, COLD | {"WIKI_GIT_URL": str(origin)})
+    assert r.returncode == 1 and "bootstrap failed; nothing left" in r.stderr, r.stderr
+    assert not workdir.exists() and not list(workdir.parent.glob("beril-wiki.bootstrap.*"))
+    # The next job starts over and succeeds, with the trees from the newest tag.
+    r = curate(workdir, "plan", stubs, COLD | {"WIKI_GIT_URL": str(origin)})
+    assert r.returncode == 0, r.stderr
+    assert "bootstrap: clone ready" in r.stderr
+    assert json.loads((workdir / "state/agentic.json").read_text()) == {"fingerprint": "artifact-2"}

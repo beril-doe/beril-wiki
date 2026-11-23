@@ -103,8 +103,21 @@ Mount the persistent volume that holds the clone (wiki/, state/, corpus/, search
 .agentic/), or set BERIL_WIKI_ALLOW_COLD_START=1 to clone $WIKI_GIT_URL and start from \
 the committed trees on purpose." 2
     log "no clone at $WIKI_WORKDIR; cold start allowed, cloning $WIKI_GIT_URL ($WIKI_GIT_REF)"
-    git clone --quiet --branch "$WIKI_GIT_REF" "$WIKI_GIT_URL" "$WIKI_WORKDIR"
-    bootstrap_data_trees
+    # Clone and bootstrap beside the final path and move it into place only once
+    # both succeeded: a job that dies after the clone must not leave a .git the
+    # next job takes for a finished bootstrap (and then curates from main's
+    # older trees instead of the newest artifact).
+    local scratch="$WIKI_WORKDIR.bootstrap.$$"
+    rm -rf "$scratch"
+    [ ! -e "$WIKI_WORKDIR" ] || die "$WIKI_WORKDIR exists but is not a git clone; refusing to replace it" 2
+    if git clone --quiet --branch "$WIKI_GIT_REF" "$WIKI_GIT_URL" "$scratch" &&
+      bootstrap_data_trees "$scratch"; then
+      mv "$scratch" "$WIKI_WORKDIR"
+      log "bootstrap: clone ready at $WIKI_WORKDIR"
+    else
+      rm -rf "$scratch"
+      die "bootstrap failed; nothing left at $WIKI_WORKDIR, the next job retries"
+    fi
   fi
   if [ "${WIKI_SKIP_CODE_REFRESH:-}" = 1 ]; then
     # The commit the last refresh checked out, else the clone's own HEAD.
@@ -140,24 +153,25 @@ record_code_commit() {
 }
 
 bootstrap_data_trees() {
+  local clone="${1:-$WIKI_WORKDIR}"
   # A fresh clone carries wiki/ state/ corpus/ as main last merged them; once the
   # curator has published, `history` is authoritative and its newest artifact/<id>
   # tag is the accepted wiki the pod serves. A replacement volume starts from that
   # tag, else it would re-curate accepted projects from main's older baseline.
   local tag rc=0 tree
-  git -C "$WIKI_WORKDIR" ls-remote --exit-code --heads origin history >/dev/null || rc=$?
+  git -C "$clone" ls-remote --exit-code --heads origin history >/dev/null || rc=$?
   if [ "$rc" = 2 ]; then
     # Origin has no history branch: a repository that never published. Any other
     # failure is the network or the token, never a reason to start from main.
     log "bootstrap: origin has no history branch; the trees on $WIKI_GIT_REF are the start"
     return
   fi
-  [ "$rc" = 0 ] || die "bootstrap: cannot list origin's branches (exit $rc)"
-  git -C "$WIKI_WORKDIR" fetch --quiet origin 'refs/heads/history:refs/heads/history' \
-    'refs/tags/artifact/*:refs/tags/artifact/*' || die "bootstrap: fetching history failed"
+  [ "$rc" = 0 ] || { log "bootstrap: cannot list origin's branches (exit $rc)"; return 1; }
+  git -C "$clone" fetch --quiet origin 'refs/heads/history:refs/heads/history' \
+    'refs/tags/artifact/*:refs/tags/artifact/*' || { log "bootstrap: fetching history failed"; return 1; }
   # Newest by commit date, the id (a UTC stamp) breaking a tie; the last --sort
   # is the primary key.
-  tag=$(git -C "$WIKI_WORKDIR" for-each-ref --sort=-refname --sort=-creatordate --count=1 \
+  tag=$(git -C "$clone" for-each-ref --sort=-refname --sort=-creatordate --count=1 \
     --format='%(refname:short)' 'refs/tags/artifact/*')
   if [ -z "$tag" ]; then
     log "bootstrap: history has no artifact/* tag; the trees on $WIKI_GIT_REF are the start"
@@ -167,10 +181,10 @@ bootstrap_data_trees() {
   # tag has not go too); a tree the tag lacks keeps main's. The vectors are
   # gitignored on main and recorded by every publish on history.
   for tree in wiki state corpus search/section-vectors.jsonl; do
-    [ -n "$(git -C "$WIKI_WORKDIR" ls-tree --name-only "$tag" -- "$tree")" ] || continue
-    rm -rf "${WIKI_WORKDIR:?}/$tree"
-    git -C "$WIKI_WORKDIR" checkout --quiet "$tag" -- "$tree"
-    log "bootstrap: $tree from $tag ($(git -C "$WIKI_WORKDIR" rev-parse --short "$tag^{commit}"))"
+    [ -n "$(git -C "$clone" ls-tree --name-only "$tag" -- "$tree")" ] || continue
+    rm -rf "${clone:?}/$tree"
+    git -C "$clone" checkout --quiet "$tag" -- "$tree" || return 1
+    log "bootstrap: $tree from $tag ($(git -C "$clone" rev-parse --short "$tag^{commit}"))"
   done
 }
 
@@ -331,12 +345,15 @@ main() {
       refresh_code
       check_caps
       seed_build_caches
+      if [ -f "$PUBLISH_PENDING" ]; then
+        # An earlier promotion is still unpublished: publish it first, so accepted
+        # work never waits on a later curation that may keep failing.
+        log "a promoted wiki is still unpublished; publishing it before curating"
+        publish_step
+      fi
       plan_step || true # reported; agentic run makes the same test itself
       if run_step; then
         mark_publish_pending
-        publish_step
-      elif [ -f "$PUBLISH_PENDING" ]; then
-        # The run changed nothing, but an earlier promotion is still unpublished.
         publish_step
       else
         log "accepted state unchanged by the run; nothing to publish"
