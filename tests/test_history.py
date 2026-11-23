@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import fcntl
 import json
+import pathlib
 import subprocess
 from pathlib import Path
 
@@ -140,6 +141,39 @@ def test_push_records_history_and_rollback_restores_the_checkout(tmp_path, monke
     # The site build and main's HEAD are not what rollback restores.
     assert (site / "index.html").read_text() == "B"
     assert run("git", "rev-parse", "--abbrev-ref", "HEAD", cwd=repo).strip() == "main"
+
+
+def test_a_failed_restore_puts_the_checkout_back_and_leaves_current_alone(tmp_path, monkeypatch):
+    repo = checkout(tmp_path)
+    monkeypatch.setattr(A, "corpus_files", lambda r: {})
+    store, keys = A.DirStore(tmp_path / "bucket"), A.Keys("wiki")
+    site = site_for(repo, "A")
+    A.push(store, keys, repo, site, "A", gate=gate(site))
+    (repo / "wiki/concepts/x.md").write_text("# x v2\n")
+    (repo / "corpus/projects/demo/REPORT.md").write_text("# demo v2\n")
+    (repo / "state/agentic.json").write_text(json.dumps({"fingerprint": "f2"}))
+    site_for(repo, "B")
+    A.push(store, keys, repo, site, "B", gate=gate(site))
+    live = {p.relative_to(repo): p.read_text() for p in repo.rglob("*.md")}
+    rename = H.os.rename
+    failures = ["disk full"]
+
+    def failing(src, dst):
+        # Placing corpus/ fails once: wiki/ and state/ are already swapped by then.
+        if pathlib.Path(dst) == repo / "corpus" and failures:
+            raise OSError(failures.pop())
+        rename(src, dst)
+
+    monkeypatch.setattr(H.os, "rename", failing)
+    with pytest.raises(A.ArtifactError, match="put back: disk full"):
+        A.rollback(store, keys, repo, "A")
+    assert {p.relative_to(repo): p.read_text() for p in repo.rglob("*.md")} == live
+    assert json.loads((repo / "state/agentic.json").read_text()) == {"fingerprint": "f2"}
+    assert A.current(store, keys)["id"] == "B"
+    assert list(repo.glob(".restore.*")) == []
+    monkeypatch.setattr(H.os, "rename", rename)
+    assert A.rollback(store, keys, repo, "A")["id"] == "A"
+    assert (repo / "wiki/concepts/x.md").read_text() == "# x v1\n"
 
 
 def test_rollback_refuses_without_a_tag_or_while_a_run_holds_the_lock(tmp_path, monkeypatch):

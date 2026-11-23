@@ -438,19 +438,24 @@ def rollback(store: Store, keys: Keys, root: pathlib.Path, artifact_id: str) -> 
 
     if not H.ref(root, f"refs/tags/{H.tag_of(artifact_id)}"):
         raise ArtifactError(f"no history tag for {artifact_id}; refusing to roll back")
+    if not store.exists(keys.tarball(artifact_id)):
+        raise ArtifactError(f"no artifact {artifact_id} in the store")
     try:
-        # One lock across moving the pointer and replacing the trees: a run that
-        # started in between would promote on top of a half-restored checkout.
+        # One lock across replacing the trees and moving the pointer: a run that
+        # started in between would promote on top of a half-restored checkout. The
+        # trees go first: a failed restore puts them back and leaves `current` alone.
         with H.held_lock(root):
-            pointer = point(store, keys, artifact_id)
+            restored = H.restore(root, artifact_id, locked=True)
             try:
-                pointer["restored_commit"] = H.restore(root, artifact_id, locked=True)
-            except H.HistoryError as exc:
+                pointer = point(store, keys, artifact_id)
+            except ArtifactError as exc:
                 raise ArtifactError(
-                    f"current moved to {artifact_id} but the checkout was not restored: {exc}"
+                    f"the checkout was restored to {artifact_id} but current was not moved "
+                    f"({exc}); run the rollback again"
                 ) from exc
     except H.HistoryError as exc:
         raise ArtifactError(str(exc)) from exc
+    pointer["restored_commit"] = restored
     return pointer
 
 
