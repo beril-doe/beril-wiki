@@ -125,6 +125,7 @@ keys are the Secret rows below, and no filled copy belongs in git).
 | `WIKI_CURATE_MAX_TOKENS`, `WIKI_CURATE_MAX_JOBS`, `WIKI_CURATE_WORKERS` | ConfigMap | `agentic run --max-tokens / --max-jobs / --workers` |
 | `WIKI_CURATE_STAGE_MAX_USD` | ConfigMap | space-separated `STAGE=USD` list, each one a `--stage-max-usd`; `STAGE` is a job-step prefix (`extract plan write lit figures curator merge merge-judge backmerge repair`) or an editorial stage, never a model role, and `curate.sh` refuses the list at every start otherwise |
 | `WIKI_CURATE_EXTRA_ARGS` | ConfigMap | appended to `agentic run` verbatim (for example `--strict-pages`) |
+| `WIKI_LOCK_FILE`, `WIKI_LOCK_WAIT` | optional | the curator's job lock, `/work/.curate.lock` beside the clone, and how long `run`/`publish`/`render` wait for it (1800 s; `plan` never waits) |
 | `BERIL_WIKI_ALLOW_COLD_START` | set by hand | `1` lets `curate.sh` clone a missing checkout and `agentic run` start without `state/agentic.json` |
 | `WIKI_SKIP_CODE_REFRESH` | set by hand | `1` skips the fetch and path checkout |
 
@@ -159,6 +160,16 @@ fingerprint, is not on the PATH). Budgets
 are fixed per run, so a bad night is capped; `agentic run` refuses a second
 runner on the same checkout, and a run killed by the Job's deadline is charged
 from its transcripts and resumes from cached work the next night.
+
+`concurrencyPolicy: Forbid` is per CronJob, so the hourly plan would start
+while the nightly run is curating, and its code refresh, `pull-hub` and
+`stages.fetch` would change the run's inputs, which then refuses promotion
+("inputs changed during compilation"). Every mode but `status` therefore
+holds `flock` on `/work/.curate.lock` (beside the clone, so a cold start can
+take it first; `.agentic/lock` is `agentic run`'s own, held inside it): `plan`
+exits 0 with "skipping this plan" when another job holds it, and `run`,
+`publish` and `render` wait up to `WIKI_LOCK_WAIT` seconds for the plan to
+finish before giving up with exit 75.
 
 Run now: `kubectl -n knowledge-engine create job
 --from=cronjob/beril-wiki-curator-curate curator-run-now-$(date +%Y%m%d%H%M)`,

@@ -13,7 +13,8 @@ metadata:
     app: beril-wiki-curator
     mode: run
 spec:
-  # 07:30 UTC = 23:30 Pacific (PST); the hourly plan at :17 never overlaps it.
+  # 07:30 UTC = 23:30 Pacific (PST). The hourly plan at :17 would overlap a run
+  # of hours; curate.sh's lock makes it skip while the run holds the volume.
   schedule: "30 7 * * *"
   timeZone: Etc/UTC
   concurrencyPolicy: Forbid

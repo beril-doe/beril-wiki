@@ -15,7 +15,8 @@ metadata:
 spec:
   schedule: "17 * * * *"
   timeZone: Etc/UTC
-  # Never two curator pods on the volume at once (RWO, and agentic's lock).
+  # Never two plan pods at once; against the nightly run, which this does not
+  # cover, curate.sh's own lock makes the plan skip with exit 0.
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 900
   successfulJobsHistoryLimit: 2

@@ -156,3 +156,29 @@ def test_run_stops_when_agentic_run_fails(workdir):
     r = curate(workdir, "run", STUBS, {"PLAN": EMPTY, "RUN_EFFECT": "exit 7"})
     assert r.returncode == 1 and "agentic run failed (exit 7)" in r.stderr
     assert trace(workdir) == []
+
+
+def hold_lock(workdir: Path):
+    """Hold the curator's lock as a running job would, until the handle is closed."""
+    import fcntl
+
+    handle = (workdir.parent / ".curate.lock").open("a")
+    fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    return handle
+
+
+def test_plan_skips_and_run_waits_while_another_job_holds_the_lock(workdir):
+    # The hourly plan at :17 would otherwise refresh code, pull the hub and stage
+    # while the nightly run curates, and the run would refuse promotion.
+    held = hold_lock(workdir)
+    try:
+        r = curate(workdir, "plan", STUBS, {"PLAN": EMPTY})
+        assert r.returncode == 0 and "skipping this plan" in r.stderr, r.stderr
+        assert "] plan: " not in r.stderr  # nothing was pulled or staged
+        r = curate(workdir, "run", STUBS, {"PLAN": EMPTY, "WIKI_LOCK_WAIT": "1"})
+        assert r.returncode == 75 and "still holds" in r.stderr, r.stderr
+        assert trace(workdir) == []
+    finally:
+        held.close()
+    r = curate(workdir, "plan", STUBS, {"PLAN": EMPTY})
+    assert r.returncode == 0 and "] plan: " in r.stderr, r.stderr

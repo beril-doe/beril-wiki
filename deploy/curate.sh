@@ -21,8 +21,9 @@
 # WIKI_GIT_REF, WIKI_GIT_TOKEN (push access to history; read by a credential
 # helper at call time, never written anywhere), WIKI_CURATE_MAX_TOKENS,
 # WIKI_CURATE_MAX_JOBS, WIKI_CURATE_WORKERS, WIKI_CURATE_STAGE_MAX_USD
-# ("STAGE=USD STAGE=USD"), WIKI_CURATE_EXTRA_ARGS, WIKI_BASE_URL, and what
-# build_quartz.sh / publish_artifact.sh / the agentic runner read themselves.
+# ("STAGE=USD STAGE=USD"), WIKI_CURATE_EXTRA_ARGS, WIKI_BASE_URL, WIKI_LOCK_FILE,
+# WIKI_LOCK_WAIT (seconds run/publish wait for the hourly plan to finish, 1800),
+# and what build_quartz.sh / publish_artifact.sh / the agentic runner read.
 set -euo pipefail
 
 MODE="${1:-plan}"
@@ -62,6 +63,26 @@ if [ -n "${WIKI_GIT_TOKEN:-}" ]; then
     '!f() { printf "username=x-access-token\npassword=%s\n" "$WIKI_GIT_TOKEN"; }; f'
   git_env url.https://github.com/.insteadOf git@github.com:
 fi
+
+# --- one curator job on the volume at a time ----------------------------------
+# `Forbid` is per CronJob: the hourly plan would start while the nightly run (up
+# to 12 h) is curating, and its code refresh, pull-hub and fetch change the run's
+# inputs, which then refuses promotion ("inputs changed during compilation").
+# Every mode but status holds this lock from before its first write to the end.
+# It is the curator's own file, beside the clone on the volume (so a cold start
+# can take it before cloning); .agentic/lock is `agentic run`'s, held inside it.
+WIKI_LOCK_FILE="${WIKI_LOCK_FILE:-$(dirname "$WIKI_WORKDIR")/.curate.lock}"
+take_lock() {
+  # take_lock SECONDS: wait that long for the lock; 0 gives up at once. Returns 1
+  # when another job still holds it. Descriptor 9 keeps it until this process ends.
+  local wait="$1"
+  mkdir -p "$(dirname "$WIKI_LOCK_FILE")"
+  exec 9>>"$WIKI_LOCK_FILE"
+  flock -n 9 && return 0
+  [ "$wait" != 0 ] || return 1
+  log "another curator job holds $WIKI_LOCK_FILE; waiting up to ${wait}s"
+  flock -w "$wait" 9
+}
 
 # --- python: the image's venv (UV_PROJECT_ENVIRONMENT, UV_NO_SYNC) running the
 # clone's code; on a laptop `uv run` syncs the clone's own .venv instead. -------
@@ -228,11 +249,16 @@ main() {
   log "start in $WIKI_WORKDIR"
   case "$MODE" in
     plan)
+      if ! take_lock 0; then
+        log "another curator job holds $WIKI_LOCK_FILE (the nightly run?); skipping this plan"
+        exit 0
+      fi
       refresh_code
       check_caps
       plan_step && rc=0 || rc=$?
       ;;
     run)
+      take_lock "${WIKI_LOCK_WAIT:-1800}" || die "another curator job still holds $WIKI_LOCK_FILE" 75
       refresh_code
       check_caps
       seed_build_caches
@@ -245,12 +271,14 @@ main() {
       rc=0
       ;;
     publish)
+      take_lock "${WIKI_LOCK_WAIT:-1800}" || die "another curator job still holds $WIKI_LOCK_FILE" 75
       refresh_code
       seed_build_caches
       publish_step
       rc=0
       ;;
     render)
+      take_lock "${WIKI_LOCK_WAIT:-1800}" || die "another curator job still holds $WIKI_LOCK_FILE" 75
       refresh_code
       seed_build_caches
       render_step

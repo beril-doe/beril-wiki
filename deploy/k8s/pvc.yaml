@@ -9,9 +9,9 @@
 # and quartz/ (the Quartz clone copied from the image, its node_modules and
 # the rendered public/) about 1 GB. 10Gi leaves room.
 #
-# RWO: the plan and curate CronJobs never overlap (concurrencyPolicy: Forbid on
-# each, and agentic's .agentic/lock refuses a second runner), and both run on
-# the node the volume binds to. Namespace: dev is knowledge-engine.
+# RWO: both CronJobs run on the node the volume binds to, and curate.sh holds
+# /work/.curate.lock so the hourly plan never works the clone while the nightly
+# run does (Forbid is per CronJob). Namespace: dev is knowledge-engine.
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
