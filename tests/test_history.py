@@ -91,7 +91,9 @@ def test_record_commits_the_trees_without_touching_main(tmp_path):
 def test_a_fresh_clone_chains_its_record_onto_the_remote_history(tmp_path):
     repo = checkout(tmp_path)
     remote = tmp_path / "remote.git"
-    run("git", "init", "--quiet", "--bare", str(remote), cwd=tmp_path)
+    # -b main: with git's default init branch unset (CI), a bare repo's HEAD names
+    # master, and a clone of it checks nothing out, so wiki/ would not exist.
+    run("git", "init", "--quiet", "--bare", "-b", "main", str(remote), cwd=tmp_path)
     run("git", "remote", "add", "origin", str(remote), cwd=repo)
     first = H.record(repo, "A")
     run("git", "push", "--quiet", "origin", "main", H.BRANCH, cwd=repo)
