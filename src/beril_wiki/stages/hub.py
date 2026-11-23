@@ -7,7 +7,9 @@ BERIL routes, with a BERIL personal access token (``BERIL_URL``, ``BERIL_TOKEN``
       the "changed since" feed: one row per complete submission, in the order
       they completed, each naming the owner, the project, its revision (sha256
       of REPORT.md), ``submitted_at`` and every file with its sha256;
-      ``next_after`` continues. A submission whose figures arrived last
+      ``next_after`` continues (``next_since`` on a server from before the
+      ``after`` paging; a page naming neither stops the pull). A submission
+      whose figures arrived last
       completes after a newer one, so a project's revisions can come out of
       order: the newest ``submitted_at`` wins. ``kind: docs`` rows carry the
       central digests (owner ``beril``, project ``docs``).
@@ -93,17 +95,20 @@ class Hub:
         self.close()
 
     def submissions(
-        self, after: int | None, limit: int = FEED_PAGE
-    ) -> tuple[list[dict], int | None]:
-        """Every feed row after ``after``, in feed order, following
-        ``next_after``; and the cursor to resume from (``after`` itself when
-        nothing is new)."""
+        self, after: int | str | None, limit: int = FEED_PAGE
+    ) -> tuple[list[dict], int | str | None]:
+        """Every feed row after ``after``, in feed order, following ``next_after``
+        (or ``next_since``, the position a server before the ``after`` paging
+        sends, passed back as ``since``); and the cursor to resume from (``after``
+        itself when nothing is new). A page that names neither is refused rather
+        than read as the end of the feed."""
         rows: list[dict] = []
-        seen: set[int | None] = set()
+        seen: set[int | str | None] = set()
+        key = "since" if isinstance(after, str) else "after"
         while True:
             params: dict[str, Any] = {"kind": KINDS, "limit": limit}
             if after is not None:
-                params["after"] = after
+                params[key] = after
             r = self.client.get("/api/context/submissions", params=params)
             if r.status_code != 200:
                 raise HubError(f"submissions feed: HTTP {r.status_code} {r.text[:200]}")
@@ -111,7 +116,12 @@ class Hub:
             page = body.get("submissions") or []
             rows.extend(page)
             following = body.get("next_after")
-            if not page or following is None or following == after or following in seen:
+            key = "after"
+            if following is None and body.get("next_since") is not None:
+                following, key = str(body["next_since"]), "since"
+            if page and following is None:
+                raise HubError("submissions feed: a page with neither next_after nor next_since")
+            if not page or following == after or following in seen:
                 break
             seen.add(after)
             after = following

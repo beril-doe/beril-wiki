@@ -276,6 +276,8 @@ def pull_hub(
     state = state or state_dir(corpus)
     manifest = load(corpus)
     hub_state = load_cursor(state) or manifest.pop(LEGACY_CURSOR_KEY, {})
+    # A `next_since` cursor (a server from before the `after` paging) is not kept:
+    # that feed is re-listed from the beginning, and unchanged rows are skipped.
     cursor = after if after is not None else hub_state.get("next_after")
     temporary = Path(tempfile.mkdtemp(prefix=f".{corpus.name}-pull-", dir=corpus.parent))
     installs: list[tuple[Path, Path]] = []
@@ -331,7 +333,10 @@ def pull_hub(
             if dest.is_dir():
                 shutil.rmtree(dest)
             staged.replace(dest)
-        hub_state = {"url": client.url, "next_after": following}
+        hub_state = {
+            "url": client.url,
+            "next_after": following if isinstance(following, int) else None,
+        }
         if docs_state:
             hub_state["docs"] = docs_state
         corpus.mkdir(parents=True, exist_ok=True)

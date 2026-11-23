@@ -264,6 +264,52 @@ def test_feed_pages_follow_next_after(beril, client):
     assert client.submissions(following) == ([], 6)
 
 
+def test_a_feed_page_without_a_cursor_is_refused_and_next_since_is_followed(beril):
+    beril.project("p1", {"REPORT.md": b"# 1\n"}, "2026-11-11T00:00:00Z")
+    pages: list[str] = []
+
+    def paging(request: httpx.Request) -> httpx.Response:
+        if request.url.path != "/api/context/submissions":
+            return beril.handle(request)
+        pages.append(request.url.query.decode())
+        since = request.url.params.get("since")
+        if since is None:
+            return httpx.Response(200, json={"submissions": beril.rows[:1], "next_since": "t1"})
+        if since == "t1":
+            return httpx.Response(200, json={"submissions": beril.rows[1:], "next_since": "t2"})
+        return httpx.Response(200, json={"submissions": [], "next_since": since})
+
+    client = hub.Hub("https://beril.test", "pat-1", transport=httpx.MockTransport(paging))
+    rows, following = client.submissions(None, limit=1)
+    assert [r["project"] for r in rows] == ["demo", "p1"] and following == "t2"
+    assert pages == [
+        "kind=approved%2Cseeded%2Cdocs&limit=1",
+        "kind=approved%2Cseeded%2Cdocs&limit=1&since=t1",
+        "kind=approved%2Cseeded%2Cdocs&limit=1&since=t2",
+    ]
+
+    def no_cursor(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(200, json={"submissions": beril.rows[:1]})
+
+    client = hub.Hub("https://beril.test", "pat-1", transport=httpx.MockTransport(no_cursor))
+    with pytest.raises(hub.HubError, match="neither next_after nor next_since"):
+        client.submissions(None, limit=1)
+
+
+def test_a_pull_over_next_since_keeps_no_resumable_cursor(out, beril, monkeypatch):
+    def paging(request: httpx.Request) -> httpx.Response:
+        if request.url.path != "/api/context/submissions":
+            return beril.handle(request)
+        if request.url.params.get("since") is None:
+            return httpx.Response(200, json={"submissions": beril.rows, "next_since": "t1"})
+        return httpx.Response(200, json={"submissions": [], "next_since": "t1"})
+
+    client = hub.Hub("https://beril.test", "pat-1", transport=httpx.MockTransport(paging))
+    assert corpus.pull_hub(out, client) == {"projects": 1, "docs": 0, "next_after": None}
+    assert corpus.load_cursor(out.parent / "state")["next_after"] is None
+    assert corpus.pull_hub(out, client)["projects"] == 0  # re-listed, nothing re-downloaded
+
+
 def test_the_newest_revision_wins_when_an_older_one_completes_later(out, beril, client):
     # v2 is fed first; v1 (submitted earlier) completes after it. Within one
     # pull and across pulls, the corpus keeps v2.
