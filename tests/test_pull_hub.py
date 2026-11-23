@@ -353,3 +353,14 @@ def test_an_older_docs_submission_completing_later_is_skipped(out, beril, client
     assert result["docs"] == 0 and result["next_after"] == len(beril.rows)
     assert (out / "docs/discoveries.md").read_bytes() == newer["discoveries.md"]
     assert corpus.verify(out) == []
+
+
+def test_a_removed_readme_or_figure_without_a_report_change_is_pulled(out, beril, client):
+    corpus.pull_hub(out, client)
+    assert (out / "projects/demo/README.md").exists()
+    # Same report, README withdrawn from the submission: stale author metadata must go.
+    beril.project("demo", {"REPORT.md": REPORT, "figures/plot.png": PLOT}, "2026-11-02T00:00:00Z")
+    assert corpus.pull_hub(out, client)["projects"] == 1
+    assert not (out / "projects/demo/README.md").exists()
+    assert "README.md" not in corpus.load(out)["projects"]["demo"]["files"]
+    assert corpus.verify(out) == []

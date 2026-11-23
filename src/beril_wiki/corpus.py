@@ -189,7 +189,12 @@ def unchanged(current: dict, row: dict, installed: Path) -> bool:
     declared = row.get("files", {})
     recorded = current.get("files", {})
     for rel, digest_ in recorded.items():
-        if rel in declared and f"sha256:{declared[rel]}" != digest_:
+        if rel == "REPORT.md":
+            continue
+        # A file the corpus holds that the submission no longer carries (a removed
+        # README, a figure dropped from the archive) is a change: the project tree
+        # must be replaced, or the checkout keeps metadata upstream deleted.
+        if rel not in declared or f"sha256:{declared[rel]}" != digest_:
             return False
     return all(rel in recorded for rel in META if rel in declared)
 
