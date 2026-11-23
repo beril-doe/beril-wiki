@@ -48,6 +48,11 @@ has run, `wiki/`, `state/` and `corpus/` on `main` stop being authoritative;
 the `history` branch is** (every publish commits them there and tags
 `artifact/<id>`). A pull request that edits those trees on `main` changes
 nothing on the volume. `WIKI_SKIP_CODE_REFRESH=1` leaves the clone as it is.
+The clone's `HEAD` never moves (the checkout is path-limited), so the job
+records the commit it checked out in `.curate/code-commit` and exports it as
+`BERIL_WIKI_GIT_COMMIT`, which the artifact manifest and `/wiki/_admin/status`
+name instead of `HEAD`; a skipped refresh names the recorded commit, or
+`HEAD` when nothing was recorded.
 
 What runs is the clone's code, not a copy baked into the image. The image
 holds the dependencies in a venv at `/opt/venv` (from `uv.lock`,

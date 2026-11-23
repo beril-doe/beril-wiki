@@ -55,7 +55,9 @@ def workdir(tmp_path):
     # publish_step's push to the store: a trace line instead.
     (root / "scripts").mkdir()
     (root / "scripts/publish_artifact.sh").write_text(
-        '#!/bin/sh\necho "published $*" >> "$WIKI_WORKDIR/.trace"\n'
+        "#!/bin/sh\n"
+        'echo "published $*" >> "$WIKI_WORKDIR/.trace"\n'
+        'echo "${BERIL_WIKI_GIT_COMMIT:-unset}" > "$WIKI_WORKDIR/.published-commit"\n'
     )
     (root / "scripts/publish_artifact.sh").chmod(0o755)
     return root
@@ -271,6 +273,10 @@ def test_cold_start_bootstraps_the_trees_from_the_newest_artifact_tag(tmp_path, 
     assert sorted(p.name for p in (workdir / "wiki").iterdir()) == ["accepted-2.md"]
     assert (workdir / "search/section-vectors.jsonl").read_text() == '{"n": 2}\n'
     assert (workdir / "deploy/curate.sh").read_text() == "# code\n"
+    # The commit whose code ran is recorded, though HEAD never moves.
+    main = git(origin, "rev-parse", "main")
+    assert (workdir / ".curate/code-commit").read_text().strip() == main
+    assert f"code: {main[:12]} of main" in r.stderr
 
 
 def test_cold_start_without_a_history_branch_starts_from_main(tmp_path, origin):
@@ -283,3 +289,17 @@ def test_cold_start_without_a_history_branch_starts_from_main(tmp_path, origin):
     # Without the override a missing clone is refused, not created.
     r = curate(tmp_path / "other", "plan", stubs, {"PLAN": EMPTY, "WIKI_GIT_URL": str(origin)})
     assert r.returncode == 2 and "no git clone" in r.stderr
+
+
+def test_the_publish_names_the_commit_whose_code_ran(workdir):
+    (workdir / ".curate").mkdir()
+    (workdir / ".curate/code-commit").write_text("a" * 40 + "\n")
+    stubs = STUBS.replace('refresh_code() { log "code: stubbed"; }\n', "")
+    r = curate(workdir, "publish", stubs, {"WIKI_SKIP_CODE_REFRESH": "1"})
+    assert r.returncode == 0, r.stderr
+    assert (workdir / ".published-commit").read_text().strip() == "a" * 40
+    assert f"code: {'a' * 12} of the clone as it is" in r.stderr
+    # Without a record the clone's own HEAD is named.
+    (workdir / ".curate/code-commit").unlink()
+    r = curate(workdir, "publish", stubs, {"WIKI_SKIP_CODE_REFRESH": "1"})
+    assert (workdir / ".published-commit").read_text().strip() == git(workdir, "rev-parse", "HEAD")

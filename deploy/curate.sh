@@ -36,6 +36,7 @@ CODE_PATHS=(src scripts theme contract deploy pyproject.toml uv.lock agentic.yam
   Dockerfile Dockerfile.curator .gitignore)
 # The curator's own state in the clone (gitignored): the publish still owed.
 PUBLISH_PENDING="$WIKI_WORKDIR/.curate/publish-pending.json"
+CODE_COMMIT="$WIKI_WORKDIR/.curate/code-commit"
 # Pre-warmed in the image; seeded into the clone when it has none of its own.
 WIKI_QUARTZ_CACHE="${WIKI_QUARTZ_CACHE:-/opt/quartz}"
 WIKI_THEME_CACHE="${WIKI_THEME_CACHE:-/opt/theme}"
@@ -104,7 +105,9 @@ the committed trees on purpose." 2
     bootstrap_data_trees
   fi
   if [ "${WIKI_SKIP_CODE_REFRESH:-}" = 1 ]; then
-    log "code refresh skipped (WIKI_SKIP_CODE_REFRESH=1)"
+    # The commit the last refresh checked out, else the clone's own HEAD.
+    record_code_commit "$(cat "$CODE_COMMIT" 2>/dev/null || git -C "$WIKI_WORKDIR" rev-parse HEAD)" \
+      "the clone as it is (WIKI_SKIP_CODE_REFRESH=1)"
     return
   fi
   git -C "$WIKI_WORKDIR" fetch --quiet origin "$WIKI_GIT_REF"
@@ -120,7 +123,18 @@ the committed trees on purpose." 2
     while IFS= read -r stale; do
       git -C "$WIKI_WORKDIR" rm --quiet --cached -- "$stale" && rm -f "$WIKI_WORKDIR/$stale"
     done
-  log "code: $(git -C "$WIKI_WORKDIR" rev-parse --short FETCH_HEAD) of $WIKI_GIT_REF -> ${CODE_PATHS[*]}"
+  record_code_commit "$(git -C "$WIKI_WORKDIR" rev-parse FETCH_HEAD)" "$WIKI_GIT_REF -> ${CODE_PATHS[*]}"
+}
+
+record_code_commit() {
+  # HEAD stays at the clone's original commit: the checkout is path-limited. The
+  # commit whose code runs is recorded for the next job and exported for this
+  # one, so the artifact manifest and /wiki/_admin/status name the commit that
+  # built the artifact (publish.artifact reads BERIL_WIKI_GIT_COMMIT before HEAD).
+  mkdir -p "${CODE_COMMIT%/*}"
+  printf '%s\n' "$1" > "$CODE_COMMIT"
+  export BERIL_WIKI_GIT_COMMIT="$1"
+  log "code: ${1:0:12} of $2"
 }
 
 bootstrap_data_trees() {
