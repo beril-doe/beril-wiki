@@ -86,6 +86,27 @@ def test_record_commits_the_trees_without_touching_main(tmp_path):
         H.record(repo, "v3")
 
 
+def test_a_fresh_clone_chains_its_record_onto_the_remote_history(tmp_path):
+    repo = checkout(tmp_path)
+    remote = tmp_path / "remote.git"
+    run("git", "init", "--quiet", "--bare", str(remote), cwd=tmp_path)
+    run("git", "remote", "add", "origin", str(remote), cwd=repo)
+    first = H.record(repo, "A")
+    run("git", "push", "--quiet", "origin", "main", H.BRANCH, cwd=repo)
+    clone = tmp_path / "clone"
+    run("git", "clone", "--quiet", str(remote), str(clone), cwd=tmp_path)
+    for k, v in (("user.name", "t"), ("user.email", "t@example.org")):
+        run("git", "config", k, v, cwd=clone)
+    assert H.ref(clone, f"refs/heads/{H.BRANCH}") is None  # only origin/history
+    (clone / "wiki/concepts/x.md").write_text("# x v2\n")
+    second = H.record(clone, "B")
+    assert run("git", "rev-parse", f"{second}^", cwd=clone).strip() == first
+    run("git", "push", "--quiet", "origin", H.BRANCH, cwd=clone)  # a fast-forward
+    assert run("git", "rev-parse", H.BRANCH, cwd=repo).strip() == first
+    run("git", "fetch", "--quiet", "origin", cwd=repo)
+    assert run("git", "rev-parse", f"origin/{H.BRANCH}", cwd=repo).strip() == second
+
+
 def test_push_records_history_and_rollback_restores_the_checkout(tmp_path, monkeypatch):
     repo = checkout(tmp_path)
     monkeypatch.setattr(A, "corpus_files", lambda r: {})

@@ -66,6 +66,13 @@ def tag_of(artifact_id: str) -> str:
     return f"{TAG_PREFIX}{artifact_id}"
 
 
+def branch_head(root: pathlib.Path, remote: str = "origin") -> str | None:
+    """The commit a new record chains onto: the local `history`, else the remote's
+    (a fresh clone has only `origin/history`; an unrelated root there would make the
+    later `git push origin history` a rejected non-fast-forward)."""
+    return ref(root, f"refs/heads/{BRANCH}") or ref(root, f"refs/remotes/{remote}/{BRANCH}")
+
+
 def record(root: pathlib.Path, artifact_id: str, message: str | None = None) -> str:
     """Commit the tracked trees to `history` and tag `artifact/<id>`; returns the commit."""
     tag = tag_of(artifact_id)
@@ -82,12 +89,13 @@ def record(root: pathlib.Path, artifact_id: str, message: str | None = None) -> 
         # -f: the vectors store is gitignored in the working checkout.
         git(root, "add", "-f", "--", *present, env=env)
         tree = git(root, "write-tree", env=env).strip()
-        parent = ref(root, f"refs/heads/{BRANCH}")
+        local = ref(root, f"refs/heads/{BRANCH}")
+        parent = local or branch_head(root)
         args = ["commit-tree", tree, "-m", message or f"Artifact {artifact_id}"]
         if parent:
             args += ["-p", parent]
         commit = git(root, *args).strip()
-        git(root, "update-ref", f"refs/heads/{BRANCH}", commit, parent or "")
+        git(root, "update-ref", f"refs/heads/{BRANCH}", commit, local or "")
         git(root, "tag", tag, commit)
         return commit
     finally:
