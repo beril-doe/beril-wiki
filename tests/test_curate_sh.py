@@ -67,7 +67,7 @@ def curate(
     """Run `curate.sh <mode>` with the stubs defined after sourcing it."""
     shim = workdir.parent / "bin"
     if shutil.which("flock") is None and not (shim / "flock").exists():
-        shim.mkdir(exist_ok=True)
+        shim.mkdir(parents=True, exist_ok=True)
         (shim / "flock").write_text(FLOCK_SHIM)
         (shim / "flock").chmod(0o755)
     harness = f'source "{SCRIPT}" {mode}\n{stubs}\nmain\n'
@@ -218,3 +218,68 @@ def test_a_failed_publish_is_owed_until_a_later_run_or_publish_finishes_it(workd
     pending.write_text('{"promoted_at": "2026-11-23T07:31:00Z"}')
     r = curate(workdir, "publish", STUBS)
     assert r.returncode == 0 and not pending.exists()
+
+
+@pytest.fixture
+def origin(tmp_path):
+    """A bare origin with main (code and the trees as last merged) and, when asked,
+    a history branch whose newest artifact/<id> tag holds the accepted wiki."""
+    src = tmp_path / "src"
+    (src / "state").mkdir(parents=True)
+    (src / "wiki").mkdir()
+    (src / "deploy").mkdir()
+    (src / "state/agentic.json").write_text('{"fingerprint": "main"}')
+    (src / "wiki/from-main.md").write_text("main\n")
+    (src / "deploy/curate.sh").write_text("# code\n")
+    git(src, "init", "-q", "-b", "main")
+    git(src, "add", ".")
+    git(src, "commit", "-q", "-m", "main")
+    bare = tmp_path / "origin.git"
+    git(tmp_path, "clone", "-q", "--bare", str(src), str(bare))
+    return bare
+
+
+def with_history(origin: Path, tmp_path: Path) -> None:
+    work = tmp_path / "publisher"
+    git(tmp_path, "clone", "-q", str(origin), str(work))
+    git(work, "checkout", "-q", "--orphan", "history")
+    for n in ("1", "2"):
+        for page in (work / "wiki").iterdir():  # each artifact's wiki is its own tree
+            page.unlink()
+        (work / "state/agentic.json").write_text(f'{{"fingerprint": "artifact-{n}"}}')
+        (work / "wiki" / f"accepted-{n}.md").write_text(n)
+        (work / "search").mkdir(exist_ok=True)
+        (work / "search/section-vectors.jsonl").write_text(f'{{"n": {n}}}\n')
+        git(work, "add", "-A", "-f", ".")
+        git(work, "commit", "-q", "-m", f"Artifact {n}")
+        git(work, "tag", f"artifact/2026112{n}T000000Z")
+    git(work, "push", "-q", "origin", "history", "--tags")
+
+
+COLD = {"BERIL_WIKI_ALLOW_COLD_START": "1", "PLAN": EMPTY}
+
+
+def test_cold_start_bootstraps_the_trees_from_the_newest_artifact_tag(tmp_path, origin):
+    with_history(origin, tmp_path)
+    workdir = tmp_path / "work/beril-wiki"
+    stubs = STUBS.replace('refresh_code() { log "code: stubbed"; }\n', "")
+    r = curate(workdir, "plan", stubs, COLD | {"WIKI_GIT_URL": str(origin)})
+    assert r.returncode == 0, r.stderr
+    assert "bootstrap: wiki from artifact/20261122T000000Z" in r.stderr, r.stderr
+    assert "bootstrap: search/section-vectors.jsonl from artifact/20261122T000000Z" in r.stderr
+    assert json.loads((workdir / "state/agentic.json").read_text()) == {"fingerprint": "artifact-2"}
+    assert sorted(p.name for p in (workdir / "wiki").iterdir()) == ["accepted-2.md"]
+    assert (workdir / "search/section-vectors.jsonl").read_text() == '{"n": 2}\n'
+    assert (workdir / "deploy/curate.sh").read_text() == "# code\n"
+
+
+def test_cold_start_without_a_history_branch_starts_from_main(tmp_path, origin):
+    workdir = tmp_path / "work/beril-wiki"
+    stubs = STUBS.replace('refresh_code() { log "code: stubbed"; }\n', "")
+    r = curate(workdir, "plan", stubs, COLD | {"WIKI_GIT_URL": str(origin)})
+    assert r.returncode == 0, r.stderr
+    assert "origin has no history branch; the trees on main are the start" in r.stderr
+    assert json.loads((workdir / "state/agentic.json").read_text()) == {"fingerprint": "main"}
+    # Without the override a missing clone is refused, not created.
+    r = curate(tmp_path / "other", "plan", stubs, {"PLAN": EMPTY, "WIKI_GIT_URL": str(origin)})
+    assert r.returncode == 2 and "no git clone" in r.stderr

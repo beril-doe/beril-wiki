@@ -85,22 +85,31 @@ A pod that starts without the clone looks exactly like a first-ever run and
 would re-integrate the whole corpus at full cost. `curate.sh` therefore exits 2
 when `$WIKI_WORKDIR/.git` is missing, and `agentic run` refuses when
 `state/agentic.json` is absent, unless `BERIL_WIKI_ALLOW_COLD_START=1` says the
-cold start is meant. Populate the volume once, from a pod with it mounted (for
-example the run-now Job with `command: ["sleep", "infinity"]`, then
-`kubectl exec`), or let the job do it with the override:
+cold start is meant. With the override the job clones `WIKI_GIT_REF` and then
+bootstraps the data trees from `history`: it fetches that branch with its
+`artifact/*` tags and checks out `wiki/`, `state/`, `corpus/` and
+`search/section-vectors.jsonl` from the newest tag (by commit date), which is
+the accepted wiki the pod serves. Starting from `main` instead, once the
+curator has published, would re-curate accepted projects from an older
+baseline. Only when origin has no `history` branch, or it carries no tag,
+do `main`'s trees stand; a fetch that fails for any other reason stops the
+job. The same by hand, from a pod with the volume mounted (for example the
+run-now Job with `command: ["sleep", "infinity"]`, then `kubectl exec`):
 
 ```sh
 git clone --branch main https://github.com/beril-doe/beril-wiki.git /work/beril-wiki
 cd /work/beril-wiki
-git fetch origin history:history            # the audit trail and the vectors
-uv run --project . python -m beril_wiki.publish.search_data pull
+git fetch origin history:history 'refs/tags/artifact/*:refs/tags/artifact/*'
+tag=$(git for-each-ref --sort=-refname --sort=-creatordate --count=1 \
+  --format='%(refname:short)' 'refs/tags/artifact/*')
+rm -rf wiki state corpus && git checkout "$tag" -- wiki state corpus search/section-vectors.jsonl
+uv run --project . python -m beril_wiki.publish.search_data pull   # merges newer vectors
 ```
 
-`main` carries `wiki/`, `state/` and `corpus/`; `search_data pull` fills
-`search/section-vectors.jsonl` from `history`. With the clone in place,
-`curate.sh plan` reports what the first run would do (`changed_sources=0` when
-`corpus/` already holds everything BERIL's feed lists past the cursor in
-`corpus/manifest.json`).
+With the clone in place, `curate.sh plan` reports what the first run would do
+(`changed_sources=0` when `corpus/` already holds everything BERIL's feed
+lists past the cursor in `corpus/manifest.json`, `accepted_current=true` when
+the code and models are the ones the tag was accepted under).
 
 ## Job environment
 

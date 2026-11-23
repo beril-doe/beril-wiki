@@ -15,7 +15,8 @@
 # paths are refreshed from WIKI_GIT_REF at start; the data trees are never
 # checked out, so `main` stops being authoritative for them once this has run
 # and the `history` branch is. A missing clone is created only when
-# BERIL_WIKI_ALLOW_COLD_START=1 (deploy/README.md, "First-time population").
+# BERIL_WIKI_ALLOW_COLD_START=1, from the newest artifact/<id> tag on `history`
+# when there is one (deploy/README.md, "First-time population").
 #
 # Environment (deploy/README.md has the full table): WIKI_WORKDIR, WIKI_GIT_URL,
 # WIKI_GIT_REF, WIKI_GIT_TOKEN (push access to history; read by a credential
@@ -100,6 +101,7 @@ Mount the persistent volume that holds the clone (wiki/, state/, corpus/, search
 the committed trees on purpose." 2
     log "no clone at $WIKI_WORKDIR; cold start allowed, cloning $WIKI_GIT_URL ($WIKI_GIT_REF)"
     git clone --quiet --branch "$WIKI_GIT_REF" "$WIKI_GIT_URL" "$WIKI_WORKDIR"
+    bootstrap_data_trees
   fi
   if [ "${WIKI_SKIP_CODE_REFRESH:-}" = 1 ]; then
     log "code refresh skipped (WIKI_SKIP_CODE_REFRESH=1)"
@@ -119,6 +121,41 @@ the committed trees on purpose." 2
       git -C "$WIKI_WORKDIR" rm --quiet --cached -- "$stale" && rm -f "$WIKI_WORKDIR/$stale"
     done
   log "code: $(git -C "$WIKI_WORKDIR" rev-parse --short FETCH_HEAD) of $WIKI_GIT_REF -> ${CODE_PATHS[*]}"
+}
+
+bootstrap_data_trees() {
+  # A fresh clone carries wiki/ state/ corpus/ as main last merged them; once the
+  # curator has published, `history` is authoritative and its newest artifact/<id>
+  # tag is the accepted wiki the pod serves. A replacement volume starts from that
+  # tag, else it would re-curate accepted projects from main's older baseline.
+  local tag rc=0 tree
+  git -C "$WIKI_WORKDIR" ls-remote --exit-code --heads origin history >/dev/null || rc=$?
+  if [ "$rc" = 2 ]; then
+    # Origin has no history branch: a repository that never published. Any other
+    # failure is the network or the token, never a reason to start from main.
+    log "bootstrap: origin has no history branch; the trees on $WIKI_GIT_REF are the start"
+    return
+  fi
+  [ "$rc" = 0 ] || die "bootstrap: cannot list origin's branches (exit $rc)"
+  git -C "$WIKI_WORKDIR" fetch --quiet origin 'refs/heads/history:refs/heads/history' \
+    'refs/tags/artifact/*:refs/tags/artifact/*' || die "bootstrap: fetching history failed"
+  # Newest by commit date, the id (a UTC stamp) breaking a tie; the last --sort
+  # is the primary key.
+  tag=$(git -C "$WIKI_WORKDIR" for-each-ref --sort=-refname --sort=-creatordate --count=1 \
+    --format='%(refname:short)' 'refs/tags/artifact/*')
+  if [ -z "$tag" ]; then
+    log "bootstrap: history has no artifact/* tag; the trees on $WIKI_GIT_REF are the start"
+    return
+  fi
+  # Each tree the tag records replaces main's whole tree (files main has and the
+  # tag has not go too); a tree the tag lacks keeps main's. The vectors are
+  # gitignored on main and recorded by every publish on history.
+  for tree in wiki state corpus search/section-vectors.jsonl; do
+    [ -n "$(git -C "$WIKI_WORKDIR" ls-tree --name-only "$tag" -- "$tree")" ] || continue
+    rm -rf "${WIKI_WORKDIR:?}/$tree"
+    git -C "$WIKI_WORKDIR" checkout --quiet "$tag" -- "$tree"
+    log "bootstrap: $tree from $tag ($(git -C "$WIKI_WORKDIR" rev-parse --short "$tag^{commit}"))"
+  done
 }
 
 seed_build_caches() {
