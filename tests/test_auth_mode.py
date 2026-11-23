@@ -80,20 +80,48 @@ def test_subscription_mode_still_verifies_the_login(creds, monkeypatch):
     assert seen["env"][KEY] == ""
 
 
-def account_of(kind):
-    account = None if kind is None else SimpleNamespace(root=SimpleNamespace(type=kind))
-    return SimpleNamespace(account=lambda: SimpleNamespace(account=account))
+class AppServer:
+    """The pinned app server: an isolated home holds no account until a login call
+    writes one, and the ChatGPT login is whatever auth.json the home links to."""
+
+    def __init__(self, linked: str | None = None) -> None:
+        self.kind = linked
+        self.logins: list[str] = []
+
+    def login_api_key(self, key: str) -> None:
+        self.logins.append(key)
+        self.kind = "apiKey"
+
+    def account(self):
+        account = (
+            None if self.kind is None else SimpleNamespace(root=SimpleNamespace(type=self.kind))
+        )
+        return SimpleNamespace(account=account)
 
 
-def test_codex_auth_follows_the_mode(creds, monkeypatch):
+def test_codex_api_mode_logs_the_key_in_before_checking(creds, monkeypatch):
     monkeypatch.setenv("BERIL_WIKI_AUTH", "api")
-    C.check_auth(account_of("apiKey"))
+    server = AppServer()  # prepare_home removed auth.json: no account yet
+    C.check_auth(server)
+    assert server.logins == ["sk-openai"]
+    broken = AppServer()
+    broken.login_api_key = lambda key: None  # the server ignored the key
     with pytest.raises(R.WorkflowError, match="did not take OPENAI_API_KEY"):
-        C.check_auth(account_of("chatgpt"))
-    monkeypatch.delenv("BERIL_WIKI_AUTH")
-    C.check_auth(account_of("chatgpt"))
+        C.check_auth(broken)
+    monkeypatch.delenv(OKEY)
+    with pytest.raises(R.WorkflowError, match="needs OPENAI_API_KEY"):
+        C.check_auth(AppServer())
+
+
+def test_codex_subscription_mode_needs_the_linked_chatgpt_login(creds, monkeypatch):
+    monkeypatch.delenv("BERIL_WIKI_AUTH", raising=False)
+    server = AppServer("chatgpt")
+    C.check_auth(server)
+    assert server.logins == []  # never logs in with a key
     with pytest.raises(R.WorkflowError, match="ChatGPT"):
-        C.check_auth(account_of("apiKey"))
+        C.check_auth(AppServer("apiKey"))
+    with pytest.raises(R.WorkflowError, match="ChatGPT"):
+        C.check_auth(AppServer(None))
 
 
 def test_codex_home_links_the_login_only_in_subscription_mode(creds, tmp_path, monkeypatch):

@@ -204,15 +204,27 @@ def prepare_home(store: Path, name: str) -> Path:
     return home
 
 
-def check_auth(client: Any) -> None:
+def account_kind(client: Any) -> str | None:
     account = client.account().account
     kind = getattr(getattr(account, "root", account), "type", None)
-    kind = getattr(kind, "value", kind)
+    return getattr(kind, "value", kind)
+
+
+def check_auth(client: Any) -> None:
+    """Log the app server in for the mode, then confirm it took.
+
+    In API mode the key only travels in the server's environment; the app server
+    (0.159.x) does not read it on its own, so the isolated home has no account until
+    `login_api_key` writes one (its auth.json, never the user's)."""
     if auth_mode() == "api":
-        if kind != "apiKey":
+        key = os.environ.get("OPENAI_API_KEY", "")
+        if not key:
+            raise WorkflowError("BERIL_WIKI_AUTH=api needs OPENAI_API_KEY for Codex")
+        client.login_api_key(key)
+        if account_kind(client) != "apiKey":
             raise WorkflowError("BERIL_WIKI_AUTH=api: Codex did not take OPENAI_API_KEY")
         return
-    if kind != "chatgpt":
+    if account_kind(client) != "chatgpt":
         raise WorkflowError("a ChatGPT subscription login is required for Codex; no API key")
 
 
