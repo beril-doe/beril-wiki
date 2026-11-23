@@ -6,8 +6,19 @@ image (`Dockerfile.curator`, pushed by `.github/workflows/curator-image.yml` as
 `ghcr.io/beril-doe/beril-wiki-curator:develop` on pull requests and `:latest`
 from main), runs `deploy/curate.sh` as its entry point, and is dispatched by the
 manifests under `deploy/k8s/`. The dev namespace is `knowledge-engine`; the
-manifests name the dev image `registry.nersc.gov/kbase/beril-wiki-curator:develop`
-and dev hosts, so production changes hosts, budgets and the tag.
+manifests pull `ghcr.io/beril-doe/beril-wiki-curator:develop`, the tag the
+workflow pushes, and name dev hosts, so production changes hosts, budgets and
+the tag. GHCR is where SPIN already pulls the wiki's serve image from
+(`image.yml`, `spin_deploy.yml`); no workflow holds a NERSC registry
+credential. Should a namespace need `registry.nersc.gov` instead, copy the
+tag by hand and change the three `image:` lines:
+
+```sh
+docker login registry.nersc.gov
+docker buildx imagetools create \
+  --tag registry.nersc.gov/kbase/beril-wiki-curator:develop \
+  ghcr.io/beril-doe/beril-wiki-curator:develop
+```
 
 ## Layout: one volume, one git clone
 

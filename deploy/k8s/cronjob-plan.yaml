@@ -41,7 +41,7 @@ spec:
               type: RuntimeDefault
           containers:
             - name: curator
-              image: registry.nersc.gov/kbase/beril-wiki-curator:develop
+              image: ghcr.io/beril-doe/beril-wiki-curator:develop
               imagePullPolicy: Always
               command: ["/bin/sh", "-c", "curate.sh plan || [ $? -eq 3 ]"]
               envFrom:
