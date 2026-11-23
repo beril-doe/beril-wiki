@@ -151,6 +151,22 @@ publish_step() {
   fi
 }
 
+check_caps() {
+  # The caps name job-step prefixes (extract plan write ...) or editorial stages,
+  # never model roles; `agentic run` refuses anything else, so check here, in the
+  # hourly plan too, rather than at the nightly run hours later.
+  # shellcheck disable=SC2086
+  py -c '
+import sys
+from beril_wiki.agentic.__main__ import check_usd_caps
+from beril_wiki.agentic.runtime import WorkflowError
+try:
+    check_usd_caps(sys.argv[1:])
+except WorkflowError as exc:
+    sys.exit(f"WIKI_CURATE_STAGE_MAX_USD: {exc}")' ${WIKI_CURATE_STAGE_MAX_USD:-} ||
+    die "stage caps rejected (exit $?)"
+}
+
 run_step() {
   local args=(run)
   args+=(--max-tokens "${WIKI_CURATE_MAX_TOKENS:?WIKI_CURATE_MAX_TOKENS is required}")
@@ -165,40 +181,48 @@ run_step() {
   agentic "${args[@]}"
 }
 
-started=$(date +%s)
-log "start in $WIKI_WORKDIR"
-case "$MODE" in
-  plan)
-    refresh_code
-    plan_step && rc=0 || rc=$?
-    ;;
-  run)
-    refresh_code
-    seed_build_caches
-    if plan_step; then
-      log "nothing to curate; done"
-      rc=0
-    else
-      run_step
+main() {
+  local started rc
+  started=$(date +%s)
+  log "start in $WIKI_WORKDIR"
+  case "$MODE" in
+    plan)
+      refresh_code
+      check_caps
+      plan_step && rc=0 || rc=$?
+      ;;
+    run)
+      refresh_code
+      check_caps
+      seed_build_caches
+      if plan_step; then
+        log "nothing to curate; done"
+        rc=0
+      else
+        run_step
+        publish_step
+        rc=0
+      fi
+      ;;
+    publish)
+      refresh_code
+      seed_build_caches
       publish_step
       rc=0
-    fi
-    ;;
-  publish)
-    refresh_code
-    seed_build_caches
-    publish_step
-    rc=0
-    ;;
-  status)
-    [ -d "$WIKI_WORKDIR/.git" ] || die "no clone at $WIKI_WORKDIR" 2
-    if [ -f "$WIKI_WORKDIR/.agentic/config.json" ]; then
-      agentic status
-    else
-      log "no run has been recorded in $WIKI_WORKDIR/.agentic yet"
-    fi
-    rc=0
-    ;;
-esac
-log "done in $(( $(date +%s) - started ))s (exit $rc)"
-exit "$rc"
+      ;;
+    status)
+      [ -d "$WIKI_WORKDIR/.git" ] || die "no clone at $WIKI_WORKDIR" 2
+      if [ -f "$WIKI_WORKDIR/.agentic/config.json" ]; then
+        agentic status
+      else
+        log "no run has been recorded in $WIKI_WORKDIR/.agentic yet"
+      fi
+      rc=0
+      ;;
+  esac
+  log "done in $(( $(date +%s) - started ))s (exit $rc)"
+  exit "$rc"
+}
+
+# Sourced (tests), the functions are defined and nothing runs.
+[[ "${BASH_SOURCE[0]}" != "$0" ]] || main

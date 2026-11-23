@@ -8,6 +8,7 @@ import shutil
 import signal
 import sys
 import tempfile
+from collections.abc import Mapping
 from pathlib import Path
 
 import yaml
@@ -137,6 +138,28 @@ def usd_caps(values: list[str]) -> dict[str, float]:
         if not sep or not stage or not math.isfinite(usd) or usd <= 0:
             raise WorkflowError(f"--stage-max-usd expects STAGE=USD with USD > 0, got {value!r}")
         caps[stage] = usd
+    return caps
+
+
+def check_cap_names(caps: Mapping[str, float]) -> None:
+    """Refuse a USD cap on a name no run job carries: it would be accepted and never
+    consulted. A cap names an editorial stage or a step prefix from RUN_PREFIXES."""
+    known = (set(EDITORIAL) | set(RUN_PREFIXES)) - FILED_AS.keys()
+    if unknown := set(caps) - known:
+        hints = [f"{n} jobs are filed as {FILED_AS[n]}/" for n in sorted(unknown) if n in FILED_AS]
+        raise WorkflowError(
+            f"--stage-max-usd names no job prefix a run issues: {sorted(unknown)}"
+            + (f" ({'; '.join(hints)})" if hints else "")
+            + f"; known: {' '.join(sorted(known))}"
+        )
+
+
+def check_usd_caps(values: list[str]) -> dict[str, float]:
+    """`STAGE=USD` flags as `run` accepts them, or a WorkflowError naming the problem.
+    deploy/curate.sh calls this at every start so a misconfigured cap is reported by
+    the hourly plan rather than by the nightly run, hours later."""
+    caps = usd_caps(values)
+    check_cap_names(caps)
     return caps
 
 
@@ -685,17 +708,7 @@ def main() -> int:
                 for key in ("max_usd", "max_codex_tokens", "budget_run")
                 if getattr(args, key) is not None
             }
-            known = (set(EDITORIAL) | set(RUN_PREFIXES)) - FILED_AS.keys()
-            if unknown := set(config["stage_max_usd"]) - known:
-                hints = [
-                    f"{n} jobs are filed as {FILED_AS[n]}/"
-                    for n in sorted(unknown)
-                    if n in FILED_AS
-                ]
-                raise WorkflowError(
-                    f"--stage-max-usd names no job prefix a run issues: {sorted(unknown)}"
-                    + (f" ({'; '.join(hints)})" if hints else "")
-                )
+            check_cap_names(config["stage_max_usd"])
             config.update(
                 load_models(root, args.model_config, args.model, args.step_model, args.effort)
             )

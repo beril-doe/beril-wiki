@@ -2157,3 +2157,23 @@ def test_check_auth_reports_each_login(tmp_path, monkeypatch, capsys):
     assert cli.main() == 1
     assert isinstance(json.loads(capsys.readouterr().out)["authors"], str)
     assert not (tmp_path / ".agentic").exists()
+
+
+def test_usd_caps_name_job_prefixes_not_model_roles():
+    """The curator's ConfigMap once capped `pages`, `writing`, `planning`: model roles,
+    which no job carries. check_usd_caps is what deploy/curate.sh validates with."""
+    from beril_wiki.agentic import __main__ as cli
+
+    assert cli.check_usd_caps(["extract=20", "plan=10", "write=40", "links=5"]) == {
+        "extract": 20.0,
+        "plan": 10.0,
+        "write": 40.0,
+        "links": 5.0,
+    }
+    with pytest.raises(WorkflowError, match=r"no job prefix.*\['pages', 'writing'\].*known: "):
+        cli.check_usd_caps(["pages=40", "writing=30", "extract=20"])
+    # Stages filed under another prefix are refused with the prefix to use.
+    with pytest.raises(WorkflowError, match=r"literature jobs are filed as lit/"):
+        cli.check_usd_caps(["literature=5"])
+    with pytest.raises(WorkflowError, match="STAGE=USD with USD > 0"):
+        cli.check_usd_caps(["extract=0"])

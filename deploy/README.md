@@ -104,7 +104,7 @@ keys are the Secret rows below, and no filled copy belongs in git).
 | `WIKI_ARTIFACT_ENDPOINT`, `WIKI_ARTIFACT_PREFIX` | ConfigMap | `http://wiki:8080/wiki/_admin/store` and `wiki`: the wiki pod's store routes (below) |
 | `WIKI_RELOAD_URL`, `WIKI_RELOAD_TOKEN` | ConfigMap, Secret | `http://wiki:8080/wiki/_admin/reload` and the pod's admin bearer, shared by the store routes |
 | `WIKI_CURATE_MAX_TOKENS`, `WIKI_CURATE_MAX_JOBS`, `WIKI_CURATE_WORKERS` | ConfigMap | `agentic run --max-tokens / --max-jobs / --workers` |
-| `WIKI_CURATE_STAGE_MAX_USD` | ConfigMap | space-separated `STAGE=USD` list, each one a `--stage-max-usd` |
+| `WIKI_CURATE_STAGE_MAX_USD` | ConfigMap | space-separated `STAGE=USD` list, each one a `--stage-max-usd`; `STAGE` is a job-step prefix (`extract plan write lit figures curator merge merge-judge backmerge repair`) or an editorial stage, never a model role, and `curate.sh` refuses the list at every start otherwise |
 | `WIKI_CURATE_EXTRA_ARGS` | ConfigMap | appended to `agentic run` verbatim (for example `--strict-pages`) |
 | `BERIL_WIKI_ALLOW_COLD_START` | set by hand | `1` lets `curate.sh` clone a missing checkout and `agentic run` start without `state/agentic.json` |
 | `WIKI_SKIP_CODE_REFRESH` | set by hand | `1` skips the fetch and path checkout |

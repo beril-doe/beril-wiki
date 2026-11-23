@@ -29,7 +29,13 @@ data:
   WIKI_CURATE_MAX_TOKENS: "2000000"
   WIKI_CURATE_MAX_JOBS: "120"
   WIKI_CURATE_WORKERS: "4"
-  WIKI_CURATE_STAGE_MAX_USD: "pages=40 writing=30 planning=10 extraction=20 review=20"
+  # Per job-step prefix, counted across runs. A name must be a prefix a run's
+  # jobs carry (extract plan write lit figures curator merge merge-judge
+  # backmerge repair) or an editorial stage (conflicts topics authors headlines
+  # novelty directions gists links shared outcomes followups); model roles such
+  # as `pages` are refused, and curate.sh checks the list at every start.
+  # Starting points, not measurements.
+  WIKI_CURATE_STAGE_MAX_USD: "extract=20 plan=10 write=40 lit=15 merge=10 figures=5 repair=10"
   WIKI_CURATE_EXTRA_ARGS: ""
   # Git identity for the history commits.
   WIKI_GIT_NAME: "BERIL wiki curator"
