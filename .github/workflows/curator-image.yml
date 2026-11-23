@@ -1,0 +1,146 @@
+name: Build curator image
+
+# The scheduled curator (Dockerfile.curator, deploy/README.md): dependencies,
+# Node, the Claude and Codex CLIs and a Quartz clone, with no site and no wiki
+# code inside; the job runs the clone on its persistent volume.
+#
+# The CronJobs run this image with the curator Secret (git token, model keys,
+# BERIL token, the wiki's admin bearer), so a pull request must never be able to
+# replace what they pull: nothing is published from `pull_request`, whatever
+# repository it comes from, and the `check` job runs with a read-only token.
+# Only main publishes, and every publish also carries an immutable tag:
+#
+#   pull request      -> build only, nothing pushed (the `check` job)
+#   push to main      -> :develop, :latest and sha-<commit>
+#   workflow_dispatch -> :<channel> (develop or latest) and sha-<commit>, from main only
+#
+# One push to main refreshes both channels: the dev CronJobs pin :develop and
+# production :latest, and a merged dependency change (uv.lock) must reach the
+# image dev actually runs, or the clone's refreshed code meets an old venv
+# (deploy/curate.sh refuses that). The sha-<commit> tag, or better the digest
+# the job prints, is what a manifest pins when a mutable tag is not acceptable.
+# No deploy step: a CronJob pulls its tag at its next start.
+on:
+  push:
+    branches: [main]
+    paths:
+      - Dockerfile.curator
+      - deploy/curate.sh
+      - pyproject.toml
+      - uv.lock
+      - theme/package.json
+      - theme/package-lock.json
+      - scripts/build_quartz.sh
+      - .github/workflows/curator-image.yml
+  pull_request:
+    paths:
+      - Dockerfile.curator
+      - deploy/curate.sh
+      - pyproject.toml
+      - uv.lock
+      - theme/package.json
+      - theme/package-lock.json
+      - scripts/build_quartz.sh
+      - .github/workflows/curator-image.yml
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: Image tag to build and push (from main only)
+        type: choice
+        options: [latest, develop]
+        default: latest
+
+permissions:
+  contents: read
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: beril-doe/beril-wiki-curator
+
+jobs:
+  check:
+    # A pull request builds the image as a check and pushes nothing; the job
+    # has no package permission, so a changed workflow file in the PR cannot
+    # push either.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    concurrency:
+      group: curator-image-check-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: Dockerfile.curator
+          push: false
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:pr-${{ github.event.pull_request.number }}
+          build-args: |
+            GIT_COMMIT=${{ github.sha }}
+          cache-from: type=gha,scope=curator-main
+
+  publish:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    concurrency:
+      group: curator-image-publish-${{ inputs.channel || 'main' }}
+      cancel-in-progress: true
+    env:
+      CHANNEL: ${{ inputs.channel || '' }}
+    steps:
+      - name: Refuse to publish from any ref but main
+        run: |
+          if [ "$GITHUB_REF" != refs/heads/main ]; then
+            echo "refusing to publish the curator image from $GITHUB_REF; only main may" >&2
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          # A push to main refreshes both channels; a dispatch names one.
+          tags: |
+            type=raw,value=latest,enable=${{ env.CHANNEL == '' || env.CHANNEL == 'latest' }}
+            type=raw,value=develop,enable=${{ env.CHANNEL == '' || env.CHANNEL == 'develop' }}
+            type=sha,prefix=sha-,format=long
+
+      - id: build
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: Dockerfile.curator
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            GIT_COMMIT=${{ github.sha }}
+          cache-from: type=gha,scope=curator-main
+          cache-to: type=gha,mode=max,scope=curator-main
+
+      - name: Record what to pin
+        # The digest is the immutable name of this build: deploy/README.md,
+        # "Image promotion", pins a CronJob to it.
+        run: |
+          {
+            echo "## Curator image"
+            echo
+            echo '```'
+            echo "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build.outputs.digest }}"
+            echo "${{ steps.meta.outputs.tags }}"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

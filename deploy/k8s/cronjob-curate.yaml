@@ -1,0 +1,84 @@
+# Nightly: `curate.sh run`. Reports the plan, then `agentic run` under the
+# ConfigMap's budgets, which makes its own test and spends nothing when the
+# accepted state is current; when it promoted, renders and publishes the
+# artifact to the wiki pod's store (`history` and the artifact tag reach origin
+# before `current` moves), then reloads the pod. A night
+# can take hours, so the deadline is generous; a run killed by it is charged
+# from its transcripts and resumes from cached work the next night.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: beril-wiki-curator-curate
+  namespace: knowledge-engine
+  labels:
+    app: beril-wiki-curator
+    mode: run
+spec:
+  # 07:30 UTC = 23:30 Pacific (PST). The hourly plan at :17 would overlap a run
+  # of hours; curate.sh's lock makes it skip while the run holds the volume.
+  schedule: "30 7 * * *"
+  timeZone: Etc/UTC
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 3600
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 43200   # 12 hours
+      ttlSecondsAfterFinished: 604800
+      template:
+        metadata:
+          labels:
+            app: beril-wiki-curator
+            mode: run
+        spec:
+          restartPolicy: Never
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 76761
+            runAsGroup: 76761
+            fsGroup: 76761
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: curator
+              # The tag main's push of curator-image.yml refreshes (dev: develop,
+              # production: latest); nothing is published from a pull request.
+              # To pin this job to one build instead, as deploy/README.md
+              # ("Image promotion") describes, name the digest the workflow run
+              # printed and stop re-pulling what cannot change:
+              #   image: ghcr.io/beril-doe/beril-wiki-curator@sha256:<digest>
+              #   imagePullPolicy: IfNotPresent
+              # (or `kustomize edit set image ghcr.io/beril-doe/beril-wiki-curator@sha256:<digest>`).
+              image: ghcr.io/beril-doe/beril-wiki-curator:develop
+              imagePullPolicy: Always
+              args: ["run"]
+              envFrom:
+                - configMapRef:
+                    name: beril-wiki-curator
+                - secretRef:
+                    name: beril-wiki-curator
+              env:
+                # The Quartz render of 400+ pages plus the search index.
+                - name: NODE_OPTIONS
+                  value: "--max-old-space-size=4096"
+              resources:
+                requests:
+                  cpu: "1"
+                  memory: 2Gi
+                limits:
+                  cpu: "4"
+                  memory: 8Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop: [ALL]
+                readOnlyRootFilesystem: false
+              volumeMounts:
+                - name: work
+                  mountPath: /work
+          volumes:
+            - name: work
+              persistentVolumeClaim:
+                claimName: beril-wiki-curator-work

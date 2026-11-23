@@ -176,13 +176,28 @@ The server ([`serve.py`](src/beril_wiki/serve.py), FastAPI) reads:
 | `WIKI_CORPUS_DIR` | `/srv/corpus` | the baked corpus the internal API reads beside it |
 | `WIKI_PREFIX` | `/wiki` | the URL prefix the ingress routes here |
 | `WIKI_SITE_ROOT` | `/srv/artifacts` | where downloaded artifacts are unpacked (`site-<id>/`); mount a volume |
-| `WIKI_ARTIFACT_ENDPOINT` | unset | S3 endpoint (`http://minio:9000`) or `file:///dir`; unset means serve the baked site only |
+| `WIKI_ARTIFACT_ENDPOINT` | unset | S3 endpoint (`http://minio:9000`) or `file:///dir`; unset means serve the baked site only. A `file://` store also enables the store routes below |
+| `WIKI_STORE_MAX_BYTES` | 1 GiB | the largest body `PUT /wiki/_admin/store/{key}` accepts |
 | `WIKI_ARTIFACT_BUCKET`, `WIKI_ARTIFACT_PREFIX` (`wiki`), `WIKI_ARTIFACT_ACCESS_KEY`, `WIKI_ARTIFACT_SECRET_KEY`, `WIKI_ARTIFACT_REGION` | | the store |
 | `WIKI_RELOAD_TOKEN` | unset | bearer token for `POST /wiki/_admin/reload` and `GET /wiki/_admin/status`; unset disables both (503) |
 | `WIKI_INTERNAL_TOKEN` | unset | bearer token for the internal API under `/wiki/_api/`; unset disables it (503) |
 
 `GET /wiki/_admin/status` (with the reload token) names the artifact being
 served (`baked` for the image's own tree). `GET /healthz` is the liveness probe.
+
+**The store routes.** With a `file://` store and `WIKI_RELOAD_TOKEN` set, the
+same token guards `PUT`, `GET` and `HEAD /wiki/_admin/store/{key}` and `GET
+/wiki/_admin/store?prefix=`: the server's own directory store, reachable over
+HTTP for a publisher that shares neither a bucket nor a volume with it. Bodies
+stream to disk under `WIKI_STORE_MAX_BYTES`, keys are checked against
+traversal, and the sha256 is echoed back. On the curator side
+`WIKI_ARTIFACT_ENDPOINT=http://<wiki host>/wiki/_admin/store` plus
+`WIKI_RELOAD_TOKEN` selects `publish.artifact.HttpStore`, so `push`, `rollback`
+and `current` work unchanged against a wiki container started with
+`WIKI_ARTIFACT_ENDPOINT=file:///srv/artifacts/store`. This is what the
+scheduled curator uses (`deploy/README.md`), and it is the simplest local loop
+too: no MinIO, one container, the publish commands above with the http
+endpoint. Like `/wiki/_api`, the ingress must not expose `/wiki/_admin`.
 
 **Publish a site without a new image.** The curator host (or anyone with the
 store's keys) packs the built site and makes it current; the container swaps
@@ -264,6 +279,29 @@ link is now root-relative (the path of the base URL), so one artifact serves
 `beril.kbase.us/wiki` and `beril-dev.kbase.us/wiki` with only those metadata
 URLs naming the build host; a host that needs them exact still gets its own
 artifact, built with its own `WIKI_BASE_URL`.
+
+#### Curator image
+
+The curator runs on SPIN as its own image, `Dockerfile.curator`, published by
+[`curator-image.yml`](.github/workflows/curator-image.yml) from `main` only:
+a push to main refreshes `ghcr.io/beril-doe/beril-wiki-curator:develop`,
+`:latest` and an immutable `sha-<commit>` tag, a pull request builds the image
+as a check and pushes nothing (the CronJobs run it with the curator's secrets),
+and there is no deploy step: the CronJobs pull their tag, or a pinned digest,
+when they next start (`deploy/README.md`, "Image promotion").
+The image carries the dependencies, Node 22, the bundled Claude and Codex CLIs
+and a pre-warmed Quartz clone; the wiki's code and data live in a git clone on
+a persistent volume whose code paths the job refreshes from `main` at every
+start, so the data trees the curator owns are written by the curator alone and
+`history`, not `main`, is authoritative for them once it runs. The entry point
+[`deploy/curate.sh`](deploy/curate.sh) has four modes (`plan` hourly, `run`
+nightly, `publish`, `status`) and publishes through the store routes above.
+Manifests and the full environment table are in
+[`deploy/README.md`](deploy/README.md). Locally:
+
+    docker build -f Dockerfile.curator -t beril-wiki-curator .
+    docker run --rm -v "$PWD/../work:/work" -e BERIL_URL=... -e BERIL_TOKEN=... \
+      beril-wiki-curator plan                         # /work/beril-wiki must be a clone
 
 #### Internal API
 

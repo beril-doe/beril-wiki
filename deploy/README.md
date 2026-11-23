@@ -1,12 +1,63 @@
 # Running the curator on SPIN
 
 The curator is a scheduled job, never the web process: it holds a long lock,
-runs for hours, and keeps its incremental state on disk. Two things follow.
+runs for hours, and keeps its incremental state on disk. It ships as its own
+image (`Dockerfile.curator`, published by `.github/workflows/curator-image.yml`
+from `main` only; "Image promotion" below), runs `deploy/curate.sh` as its
+entry point, and is dispatched by the manifests under `deploy/k8s/`. The dev
+namespace is `knowledge-engine`; the manifests pull
+`ghcr.io/beril-doe/beril-wiki-curator:develop` and name dev hosts, so
+production changes hosts, budgets and the tag. GHCR is where SPIN already
+pulls the wiki's serve image from (`image.yml`, `spin_deploy.yml`); no
+workflow holds a NERSC registry credential. Should a namespace need
+`registry.nersc.gov` instead, copy the tag by hand and change the three
+`image:` lines:
 
-## One persistent volume, mounted at the wiki checkout
+```sh
+docker login registry.nersc.gov
+docker buildx imagetools create \
+  --tag registry.nersc.gov/kbase/beril-wiki-curator:develop \
+  ghcr.io/beril-doe/beril-wiki-curator:develop
+```
 
-The CronJob mounts a single PVC at the checkout (say `/work/beril-wiki`), and
-that checkout holds everything a run reads and promotes:
+## Image promotion
+
+The CronJobs run the image with the curator Secret (the git token, the model
+keys, `BERIL_TOKEN`, the wiki's admin bearer), so what they pull is decided by
+`main` alone. `curator-image.yml` publishes nothing from a pull request, from
+this repository or a fork: the PR's `check` job builds the image with a
+read-only token and `push: false`. A push to `main` that touches the image's
+inputs (`Dockerfile.curator`, `deploy/curate.sh`, `pyproject.toml`,
+`uv.lock`, the theme's lock, `build_quartz.sh`, the workflow) publishes
+`:develop` **and** `:latest` plus an immutable `sha-<commit>`, so a merged
+dependency change reaches the image dev actually runs; a `workflow_dispatch`
+publishes the channel it names, and refuses any ref but `main`. There is no
+deploy step: a CronJob pulls its tag (`imagePullPolicy: Always`) when it next
+starts.
+
+A mutable tag can still be moved by anyone who can push to `main`. Where that
+is not acceptable, pin the job to one build by digest, which the workflow run
+prints in its summary (`ghcr.io/beril-doe/beril-wiki-curator@sha256:...`),
+and stop re-pulling what cannot change:
+
+```yaml
+image: ghcr.io/beril-doe/beril-wiki-curator@sha256:<digest>
+imagePullPolicy: IfNotPresent
+```
+
+or, with a `kustomization.yaml` over `deploy/k8s/`, `kustomize edit set image
+ghcr.io/beril-doe/beril-wiki-curator@sha256:<digest>`. Promoting a build then
+means changing the digest in the manifests, which is a reviewed change rather
+than a side effect of a merge; the `sha-<commit>` tag names the same build
+when a readable name is wanted.
+
+## Layout: one volume, one git clone
+
+The jobs mount a single RWO volume (`deploy/k8s/pvc.yaml`) at `/work`, and
+`/work/beril-wiki` (`WIKI_WORKDIR`) is a full git clone of this repository.
+Code and data live together, which is what every script here assumes
+(`scripts/build_quartz.sh` renders `$REPO/wiki`, `publish_artifact.sh` commits
+`history` from the same checkout, `artifact rollback` restores into it).
 
 | Path | What it holds | Why it must persist |
 | --- | --- | --- |
@@ -15,59 +66,217 @@ that checkout holds everything a run reads and promotes:
 | `corpus/` | every source a run reads, and `corpus/manifest.json` (file hashes, each project's owner and revision) | a source id assigned once must never be assigned again |
 | `search/section-vectors.jsonl` | the meaning-search vectors | embedding again costs time; the file is gitignored |
 | `.agentic/` | the ledger (`jobs.sqlite`), evidence, plans, failures, the lock | spend accounting and cached paid work |
+| `.curate/` | the curator's own state (gitignored): `publish-pending.json` (the artifact id chosen at promotion) while a promoted wiki is unpublished, `code-commit` | a failed publish is finished by the next job, under the same id, rather than lost |
 
-The checkout is also where `publish_artifact.sh` commits the `history` branch
-from (and where `artifact rollback` restores into), so `git` with push access
-to `history` must be configured in the pod.
+At every start `curate.sh` refreshes **code paths only** from `WIKI_GIT_REF`
+(default `main`): `src scripts theme contract deploy pyproject.toml uv.lock
+agentic.yaml Dockerfile Dockerfile.curator`, with a path-limited `git fetch` +
+`git checkout FETCH_HEAD -- <paths>` (files the ref dropped are removed too).
+`wiki/`, `state/`, `corpus/`, `search/` and `.agentic/` are never checked out,
+so a code change on `main` reaches the next job without an image rebuild, while
+the data the curator owns is only ever written by the curator. **Once the job
+has run, `wiki/`, `state/` and `corpus/` on `main` stop being authoritative;
+the `history` branch is** (every publish commits them there and tags
+`artifact/<id>`). A pull request that edits those trees on `main` changes
+nothing on the volume. `WIKI_SKIP_CODE_REFRESH=1` leaves the clone as it is.
+The clone's `HEAD` never moves (the checkout is path-limited), so the job
+records the commit it checked out in `.curate/code-commit` and exports it as
+`BERIL_WIKI_GIT_COMMIT`, which the artifact manifest and `/wiki/_admin/status`
+name instead of `HEAD`; a skipped refresh names the recorded commit, or
+`HEAD` when nothing was recorded.
 
-A pod that starts without the PVC looks exactly like a first-ever run and would
-re-integrate the whole corpus at full cost. `agentic run` therefore refuses to
-start when `state/agentic.json` is absent unless `BERIL_WIKI_ALLOW_COLD_START=1`
-is set; `agentic plan` on the mounted volume reports `unchanged` when nothing
-has moved. The initial population of the volume is a one-time `git clone` of
-this repository (which carries `wiki/`, `state/`, `corpus/`) plus
-`search_data pull`; after that only the job writes to it.
+What runs is the clone's code, not a copy baked into the image. The image
+holds the dependencies in a venv at `/opt/venv` (from `uv.lock`,
+`--no-install-project`) and sets `UV_PROJECT_ENVIRONMENT=/opt/venv`,
+`UV_NO_SYNC=1` and `PYTHONPATH=/work/beril-wiki/src`, so the repository
+scripts' `uv run --project $REPO python ...` calls run `/opt/venv`'s Python
+against the clone's `src/` without syncing anything onto the volume, and
+`beril_wiki.paths.ROOT` resolves to the clone (`BERIL_WIKI_ROOT` names the
+same path). A dependency change (`uv.lock`) therefore needs a new image, which
+the workflow publishes when the lock changes on `main`. Until that image is
+pulled, the clone's refreshed `uv.lock` and the venv disagree, and the job
+would run new code on old dependencies; so the image records the sha256 of
+the lock its venv came from in `/opt/uv.lock.sha256`, and `curate.sh` compares
+it with the clone's `uv.lock` after every code refresh and stops (exit 2,
+naming both hashes) on a mismatch, in every mode, before pulling the hub or
+spending anything. The cure is the image: wait for `main`'s build, or rebuild
+and promote it ("Image promotion"). `WIKI_ALLOW_LOCK_SKEW=1` runs on with a
+warning when the skew is known to be harmless. The Claude CLI is the native binary
+bundled in the Agent SDK wheel, linked to `/usr/local/bin/claude`; the Codex
+CLI is the one `openai-codex` ships. Neither needs Node; Node 22 is in the
+image for Quartz and the theme build.
+
+The Quartz clone (at the commit `build_quartz.sh` pins) with its
+`node_modules`, and the theme's `node_modules`, are pre-warmed in the image at
+`/opt/quartz` and `/opt/theme`. The build chain hard-codes `$REPO/quartz` in
+four places (the script, `check_site.sh`, `theme/src/build/search.ts`,
+`stages/search_vectors.py`), and `quartz/` must be a real directory in the
+clone: Quartz loads the theme plugin as `../theme` relative to its own
+physical path, so a `quartz -> /opt/quartz` symlink made it load `/opt/theme`
+(dependencies, no `dist/`) and fall back to its default frame with only a log
+line to say so. The job therefore copies `/opt/quartz` into
+`$WIKI_WORKDIR/quartz` on the first run, replaces the copy when the pinned
+Quartz commit changes, and copies `/opt/theme/node_modules` into `theme/` when
+that is absent. The render writes into `quartz/` on the volume (about 1 GB
+with `node_modules` and `public/`); `curate.sh render` checks that
+`quartz/public/index.html` carries the theme's frame (`class="page-grid"`)
+and fails otherwise. `curate.sh render` on its own, with the volume mounted,
+is how to check an image before trusting it with a publish.
+
+## First-time population
+
+A pod that starts without the clone looks exactly like a first-ever run and
+would re-integrate the whole corpus at full cost. `curate.sh` therefore exits 2
+when `$WIKI_WORKDIR/.git` is missing, and `agentic run` refuses when
+`state/agentic.json` is absent, unless `BERIL_WIKI_ALLOW_COLD_START=1` says the
+cold start is meant. With the override the job clones `WIKI_GIT_REF` and then
+bootstraps the data trees from `history`: it fetches that branch with its
+`artifact/*` tags and checks out `wiki/`, `state/`, `corpus/` and
+`search/section-vectors.jsonl` from the newest tag (by commit date), which is
+the accepted wiki the pod serves. Starting from `main` instead, once the
+curator has published, would re-curate accepted projects from an older
+baseline. Only when origin has no `history` branch, or it carries no tag,
+do `main`'s trees stand; a fetch that fails for any other reason stops the
+job. The same by hand, from a pod with the volume mounted (for example the
+run-now Job with `command: ["sleep", "infinity"]`, then `kubectl exec`):
+
+```sh
+git clone --branch main https://github.com/beril-doe/beril-wiki.git /work/beril-wiki
+cd /work/beril-wiki
+git fetch origin history:history 'refs/tags/artifact/*:refs/tags/artifact/*'
+tag=$(git for-each-ref --sort=-refname --sort=-creatordate --count=1 \
+  --format='%(refname:short)' 'refs/tags/artifact/*')
+rm -rf wiki state corpus && git checkout "$tag" -- wiki state corpus search/section-vectors.jsonl
+uv run --project . python -m beril_wiki.publish.search_data pull   # merges newer vectors
+```
+
+With the clone in place, `curate.sh plan` reports what the first run would do
+(`changed_sources=0` when `corpus/` already holds everything BERIL's feed
+lists past the cursor in `corpus/manifest.json`, `accepted_current=true` when
+the code and models are the ones the tag was accepted under).
 
 ## Job environment
 
-| Variable | Value |
-| --- | --- |
-| `BERIL_URL`, `BERIL_TOKEN` | BERIL's base URL and the wiki service PAT (a Secret), read only by `corpus pull-hub`; the run itself reads `corpus/` (`FETCH_BACKEND` stays `local`) |
-| `BERIL_WIKI_AUTH` | `api`, with `ANTHROPIC_API_KEY`/`ANTHROPIC_BASE_URL` and `OPENAI_API_KEY`/`OPENAI_BASE_URL` from Secrets (CBORG-compatible) |
-| `CBORG_API_KEY` | for the section embeddings in `build_quartz.sh` |
-| `WIKI_ARTIFACT_ENDPOINT`, `WIKI_ARTIFACT_BUCKET`, `WIKI_ARTIFACT_PREFIX`, `WIKI_ARTIFACT_ACCESS_KEY`, `WIKI_ARTIFACT_SECRET_KEY` | the artifact store the wiki container also reads |
-| `WIKI_RELOAD_URL`, `WIKI_RELOAD_TOKEN` | `http://wiki:8080/wiki/_admin/reload` and its bearer token, so a push swaps the live site |
-| `WIKI_BASE_URL` | `beril.kbase.us/wiki` (or the dev host) |
+Set through `deploy/k8s/configmap.yaml` and the Secret `beril-wiki-curator`
+(create it from your own terminal with `kubectl create secret generic
+beril-wiki-curator -n knowledge-engine --from-literal=NAME=VALUE ...`; the
+keys are the Secret rows below, and no filled copy belongs in git).
 
-## What one scheduled run does
+| Variable | Where | Value |
+| --- | --- | --- |
+| `BERIL_URL` | ConfigMap | BERIL's base URL; `corpus pull-hub` reads `/api/context/*` with `BERIL_TOKEN` and nothing else (never `/ov`), and the run itself reads `corpus/` (`FETCH_BACKEND` stays `local`) |
+| `BERIL_TOKEN` | Secret | the wiki service account's BERIL PAT |
+| `BERIL_WIKI_AUTH` | ConfigMap | `api`: jobs run on the keys below; OAuth and provider routing are stripped |
+| `ANTHROPIC_API_KEY`, `ANTHROPIC_BASE_URL` | Secret | Claude-role jobs; the base URL may be a CBORG-compatible gateway |
+| `OPENAI_API_KEY`, `OPENAI_BASE_URL` | Secret | Codex-role jobs through CBORG's OpenAI-compatible endpoint |
+| `CBORG_API_KEY` | Secret | section embeddings in `build_quartz.sh` |
+| `WIKI_WORKDIR`, `WIKI_GIT_URL`, `WIKI_GIT_REF` | ConfigMap | the clone, where it is fetched from, which ref's code paths are refreshed |
+| `WIKI_GIT_TOKEN` | Secret | GitHub token with `contents:write`: `artifact push` pushes `history` and the `artifact/<id>` tag to origin before it moves `current` |
+| `WIKI_GIT_NAME`, `WIKI_GIT_EMAIL` | ConfigMap | author of the `history` commits |
+| `WIKI_BASE_URL` | ConfigMap | `beril.kbase.us/wiki` or the dev host; baked into sitemap, RSS and canonical URLs |
+| `WIKI_ARTIFACT_ENDPOINT`, `WIKI_ARTIFACT_PREFIX` | ConfigMap | `http://beril-wiki:8080/wiki/_admin/store` and `wiki`: the wiki pod's store routes (below), through the Service the SPIN guide names `beril-wiki` (Compose: `wiki`) |
+| `WIKI_RELOAD_URL`, `WIKI_RELOAD_TOKEN` | ConfigMap, Secret | `http://beril-wiki:8080/wiki/_admin/reload` and the pod's admin bearer, shared by the store routes |
+| `WIKI_CURATE_MAX_TOKENS`, `WIKI_CURATE_MAX_JOBS`, `WIKI_CURATE_WORKERS` | ConfigMap | `agentic run --max-tokens / --max-jobs / --workers` |
+| `WIKI_CURATE_STAGE_MAX_USD` | ConfigMap | space-separated `STAGE=USD` list, each one a `--stage-max-usd`; `STAGE` is a job-step prefix (`extract plan write lit figures curator merge merge-judge backmerge repair`) or an editorial stage, never a model role, and `curate.sh` refuses the list at every start otherwise |
+| `WIKI_CURATE_EXTRA_ARGS` | ConfigMap | appended to `agentic run` verbatim (for example `--strict-pages`) |
+| `WIKI_LOCK_FILE`, `WIKI_LOCK_WAIT` | optional | the curator's job lock, `/work/.curate.lock` beside the clone, and how long `run`/`publish`/`render` wait for it (1800 s; `plan` never waits) |
+| `BERIL_WIKI_ALLOW_COLD_START` | set by hand | `1` lets `curate.sh` clone a missing checkout and `agentic run` start without `state/agentic.json` |
+| `WIKI_SKIP_CODE_REFRESH` | set by hand | `1` skips the fetch and path checkout |
+| `WIKI_ALLOW_LOCK_SKEW` | set by hand | `1` runs on when the clone's `uv.lock` is not the one the image's venv was built from (otherwise exit 2) |
 
-```sh
-cd /work/beril-wiki
-uv run python -m beril_wiki.corpus pull-hub              # BERIL's feed -> corpus/; verifies every file
-uv run python -m beril_wiki.agentic plan                 # free; exit if changed_sources is empty
-uv run python -m beril_wiki.agentic run --max-tokens N --max-jobs M --stage-max-usd ...
-scripts/build_quartz.sh                                  # render, embed, index, gates
-scripts/publish_artifact.sh --no-check                   # push artifact, record + push history, point current, reload
-```
+`WIKI_GIT_TOKEN` reaches git through a credential helper that `curate.sh`
+installs in git's environment-held config (`GIT_CONFIG_*`): the helper prints
+the token from the environment when git asks, so it appears in no file on the
+volume, no config and no command line. The same mechanism rewrites a
+`git@github.com:` origin to https and marks the clone a `safe.directory`, since
+the volume may have been populated by another uid.
 
-`artifact push` holds `<prefix>/publish.lease` in the store while it works (so
-two hosts cannot move `current` at once), fetches `origin/history`, refuses
-when another host has published since the local `history`, and pushes
-`history` and `artifact/<id>` to `origin` before it moves `current`: a
-rejected push leaves `current` alone and undoes the local record. A separate
-`git push origin history --tags` after the script is therefore no longer
-needed. A lease a dead host left behind expires after
-`WIKI_PUBLISH_LEASE_SECONDS` (default 3600) and is then taken over.
+## What `curate.sh` does
 
-Budgets are fixed per run, so a bad night is capped. The hourly poll runs only
-`pull-hub` and `plan`; the curate step runs at most once per window (nightly by default), and
-an admin "run now" is the same command dispatched by hand.
+| Mode | Dispatched by | Steps | Exit |
+| --- | --- | --- | --- |
+| `plan` | `cronjob-plan.yaml`, hourly | refresh code; `corpus pull-hub`; `stages.fetch`; `agentic plan`; log `plan: changed_sources=N pending_editorial=N retry_pages=N accepted_current=true|false|unknown publish_pending=yes|no` | 0 nothing to do, 3 a run would do something, a publish owed included (the CronJob maps 3 to success), 2 no clone |
+| `run` | `cronjob-curate.yaml`, nightly; `job-run-now.yaml` | `plan` (reported, never a gate); `agentic run` under the budgets, which makes the same test itself and promotes or prints `unchanged; zero model calls`; when it promoted, or a publish is still owed: `build_quartz.sh`; `publish_artifact.sh --id <id> --no-check`, whose `artifact push` records `history`, pushes it and `artifact/<id>` to origin, then moves `current`, then reloads the pod | 0 published or nothing to publish; non-zero on any failed step, including a held `.agentic/lock`, a refused cold start and a lock the image was not built from |
+| `publish` | by hand | refresh code; render and publish the accepted wiki as above, without curating | as `run` |
+| `render` | by hand | refresh code; `build_quartz.sh` into `quartz/public`; check the frame; no store, no push | 0 rendered with the theme's frame, else non-zero |
+| `status` | by hand | `agentic status`, or a note when no run has been recorded | 0 |
+
+Every step logs one timestamped line (`2026-11-17T07:30:00Z curate[run] ...`).
+Staging is empty between scheduled runs, so `plan` first runs `corpus pull-hub`
+(BERIL's feed into `corpus/`, every file sha256-checked, the cursor kept in
+`corpus/manifest.json`) and `stages.fetch` (`corpus/` into `staging/`), and
+`changed_sources` then names the projects a run would integrate. The other
+counts are what `agentic run` would act on without any source changing:
+`retry_pages` (integrated pages left in `.agentic/failures.json` with retries
+left, re-drafted unasked) and `accepted_current`, `run`'s own fingerprint
+test, which a README, figure or errata change alone fails, as does a code or
+model change (`unknown` when the Claude CLI, whose version is part of the
+fingerprint, is not on the PATH). `publish_pending=yes` means `agentic run`
+promoted but the render, push or reload that followed failed:
+`.curate/publish-pending.json` is written at promotion, with the artifact id
+the publish will carry, and removed after the reload, and the next `run` or
+`publish` finishes that publish before anything else, so the promoted wiki is
+not stranded behind a plan with nothing left to curate.
+
+The publish is one transaction under that id, in the order that keeps what
+the pod serves on origin: `artifact push` uploads the tarball and manifest,
+commits `history` and tags `artifact/<id>`, pushes both to origin, and only
+then moves `current` (a rejected push fails the publish with `current`
+unchanged); `publish_artifact.sh` reloads the pod last. A retry resumes
+rather than rebuilding: an artifact recorded locally but not on origin is
+pushed again; one in the store and on origin is pointed at
+(`publish_artifact.sh --point <id>`) and the pod reloaded; one uploaded but
+never recorded is a stray, and the trees go out again under a fresh id. The
+pod therefore never serves an artifact a replacement volume could not
+bootstrap from, and rollback always has its tag. Budgets
+are fixed per run, so a bad night is capped; `agentic run` refuses a second
+runner on the same checkout, and a run killed by the Job's deadline is charged
+from its transcripts and resumes from cached work the next night.
+
+`concurrencyPolicy: Forbid` is per CronJob, so the hourly plan would start
+while the nightly run is curating, and its code refresh, `pull-hub` and
+`stages.fetch` would change the run's inputs, which then refuses promotion
+("inputs changed during compilation"). Every mode but `status` therefore
+holds `flock` on `/work/.curate.lock` (beside the clone, so a cold start can
+take it first; `.agentic/lock` is `agentic run`'s own, held inside it): `plan`
+exits 0 with "skipping this plan" when another job holds it, and `run`,
+`publish` and `render` wait up to `WIKI_LOCK_WAIT` seconds for the plan to
+finish before giving up with exit 75.
+
+Run now: `kubectl -n knowledge-engine create job
+--from=cronjob/beril-wiki-curator-curate curator-run-now-$(date +%Y%m%d%H%M)`,
+or apply `deploy/k8s/job-run-now.yaml` with a fresh name; both run `run`, which
+still does nothing when the plan is empty (switch the args to `publish` to
+re-render regardless). Roll back with `uv run python -m
+beril_wiki.publish.artifact rollback --to <id>` from a pod with the volume and
+the Secret mounted, then `POST /wiki/_admin/reload`.
+
+## The artifact transport
+
+No bucket is reachable from both the job and the wiki pod, and `kubectl cp`
+is no transport for a CronJob, so the wiki server carries the store itself.
+With `WIKI_RELOAD_TOKEN` set and a `file://` store (the pod runs with
+`WIKI_ARTIFACT_ENDPOINT=file:///srv/artifacts/store`, on the same volume as
+its unpacked sites), it answers `PUT`, `GET`, `HEAD` and `DELETE
+/wiki/_admin/store/{key}` and `GET /wiki/_admin/store?prefix=`, guarded by
+the same bearer as the reload, bodies streamed to disk under
+`WIKI_STORE_MAX_BYTES` (default 1 GiB) with the sha256 echoed back. A `PUT`
+with `If-None-Match: *` creates the key or answers 412 when it exists, in
+one atomic step: that is the publish lease (`<prefix>/publish.lease`) that
+`artifact push` and `rollback` take so two publishers cannot interleave, and
+`DELETE` releases it. The
+curator's `WIKI_ARTIFACT_ENDPOINT=http://beril-wiki:8080/wiki/_admin/store` selects
+`publish.artifact.HttpStore`, which speaks those routes; `push`, `rollback`,
+`current` and the reload are unchanged, and `publish_artifact.sh` still calls
+`WIKI_RELOAD_URL` afterwards. The ingress must keep `/wiki/_admin` (and
+`/wiki/_api`) unreachable from outside the cluster, as before.
 
 ## The wiki container
 
 The wiki `Deployment` is separate: it serves the current artifact, mounts its
-own volume at `/srv/artifacts` for the unpacked sites, and reads the same
-`WIKI_ARTIFACT_*` values plus `WIKI_RELOAD_TOKEN` and `WIKI_INTERNAL_TOKEN`.
-The ingress routes `/wiki` to it but must not expose `/wiki/_admin` or
-`/wiki/_api`; the webapp reaches the internal API over the cluster network as
-`http://wiki:8080/wiki/_api/`. See the README, "Run the image locally".
+own volume at `/srv/artifacts` for the unpacked sites and the store, and reads
+`WIKI_ARTIFACT_ENDPOINT=file:///srv/artifacts/store` plus `WIKI_RELOAD_TOKEN`
+and `WIKI_INTERNAL_TOKEN`. The ingress routes `/wiki` to it but must not
+expose `/wiki/_admin` or `/wiki/_api`; the webapp reaches the internal API
+over the cluster network as `http://wiki:8080/wiki/_api/`. See the README,
+"Run the image locally".

@@ -1,0 +1,69 @@
+# An admin "run now": the nightly template as a one-off Job. Either apply this
+# file (change the name each time, Job names are immutable), or clone the
+# CronJob's template, which keeps the two in step:
+#
+#   kubectl -n knowledge-engine create job --from=cronjob/beril-wiki-curator-curate \
+#     curator-run-now-$(date +%Y%m%d%H%M)
+#
+# `run` still publishes nothing when `agentic run` finds the accepted state
+# current; to re-render and republish it regardless, change args to ["publish"].
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: beril-wiki-curator-run-now
+  namespace: knowledge-engine
+  labels:
+    app: beril-wiki-curator
+    mode: run-now
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 43200
+  ttlSecondsAfterFinished: 604800
+  template:
+    metadata:
+      labels:
+        app: beril-wiki-curator
+        mode: run-now
+    spec:
+      restartPolicy: Never
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 76761
+        runAsGroup: 76761
+        fsGroup: 76761
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: curator
+          # Same image rule as cronjob-curate.yaml: :develop from main, or a
+          # pinned digest with imagePullPolicy: IfNotPresent.
+          image: ghcr.io/beril-doe/beril-wiki-curator:develop
+          imagePullPolicy: Always
+          args: ["run"]
+          envFrom:
+            - configMapRef:
+                name: beril-wiki-curator
+            - secretRef:
+                name: beril-wiki-curator
+          env:
+            - name: NODE_OPTIONS
+              value: "--max-old-space-size=4096"
+          resources:
+            requests:
+              cpu: "1"
+              memory: 2Gi
+            limits:
+              cpu: "4"
+              memory: 8Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+            readOnlyRootFilesystem: false
+          volumeMounts:
+            - name: work
+              mountPath: /work
+      volumes:
+        - name: work
+          persistentVolumeClaim:
+            claimName: beril-wiki-curator-work

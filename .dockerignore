@@ -15,6 +15,8 @@
 !search/section-vectors.jsonl
 !quartz/public/
 !quartz/corpus/
+# The curator image (Dockerfile.curator): its entry point.
+!deploy/curate.sh
 theme/node_modules/
 theme/dist/
 **/__pycache__/

@@ -8,16 +8,25 @@ import shutil
 import signal
 import sys
 import tempfile
+from collections.abc import Mapping
 from pathlib import Path
 
 import yaml
 
 from beril_wiki.agentic import progress
 from beril_wiki.agentic.admission import admit
-from beril_wiki.agentic.batch import changed_sources
+from beril_wiki.agentic.batch import changed_sources, retryable
 from beril_wiki.agentic.curator import CARD_STAGES, EDITORIAL
 from beril_wiki.agentic.prose import owning_stage
-from beril_wiki.agentic.runner import due_editorial, locked, recover, run, run_stage
+from beril_wiki.agentic.runner import (
+    DEFAULT_MAX_TURNS,
+    accepted_current,
+    due_editorial,
+    locked,
+    recover,
+    run,
+    run_stage,
+)
 from beril_wiki.agentic.runtime import (
     CONTENT_FLAG,
     MODEL_ROLES,
@@ -140,6 +149,28 @@ def usd_caps(values: list[str]) -> dict[str, float]:
     return caps
 
 
+def check_cap_names(caps: Mapping[str, float]) -> None:
+    """Refuse a USD cap on a name no run job carries: it would be accepted and never
+    consulted. A cap names an editorial stage or a step prefix from RUN_PREFIXES."""
+    known = (set(EDITORIAL) | set(RUN_PREFIXES)) - FILED_AS.keys()
+    if unknown := set(caps) - known:
+        hints = [f"{n} jobs are filed as {FILED_AS[n]}/" for n in sorted(unknown) if n in FILED_AS]
+        raise WorkflowError(
+            f"--stage-max-usd names no job prefix a run issues: {sorted(unknown)}"
+            + (f" ({'; '.join(hints)})" if hints else "")
+            + f"; known: {' '.join(sorted(known))}"
+        )
+
+
+def check_usd_caps(values: list[str]) -> dict[str, float]:
+    """`STAGE=USD` flags as `run` accepts them, or a WorkflowError naming the problem.
+    deploy/curate.sh calls this at every start so a misconfigured cap is reported by
+    the hourly plan rather than by the nightly run, hours later."""
+    caps = usd_caps(values)
+    check_cap_names(caps)
+    return caps
+
+
 def check_budget_caps(max_usd: float | None, max_codex_tokens: int | None) -> None:
     """Refuse invalid per-backend caps before a run or pilot starts work."""
     # nan never compares greater and inf never refuses: either would disable a cap.
@@ -198,14 +229,22 @@ def plan(root: Path, checkout: Path | None = None, expect: str | None = None) ->
     With `expect`, the admission check of a run from `checkout` (default: the corpus)
     that may add or update only that project; see `admission.admit`."""
     # Validates the policy a run would load, though no stage fingerprint holds a model.
-    load_models(root, None, None, [])
+    config = load_models(root, None, None, [])
     if expect is not None:
         return admit(root, checkout or CHECKOUT, expect)
     staged = any((root / "staging").glob("*.md"))
-    return {
+    report = {
         "changed_sources": changed_sources(root) if staged else [],
         "pending_editorial": due_editorial(root),
+        # Integrated pages a run re-drafts unasked; a run with nothing else still does.
+        "retry_pages": retryable(root / ".agentic"),
+        # Exactly `run`'s test before any model call, so a README, figure or errata
+        # change alone counts; null without the CLI, whose version the test includes.
+        "accepted_current": None,
     }
+    if cli := shutil.which("claude"):
+        report["accepted_current"] = accepted_current(root, checkout or CHECKOUT, config, cli)
+    return report
 
 
 def check_logins(cli: str | None, readme: Path | None) -> dict:
@@ -307,7 +346,7 @@ def main() -> int:
     execute.add_argument("--max-tokens", type=int, required=True)
     execute.add_argument("--max-jobs", type=int, required=True)
     execute.add_argument("--reserve-tokens", type=int, default=50_000)
-    execute.add_argument("--max-turns", type=int, default=12)
+    execute.add_argument("--max-turns", type=int, default=DEFAULT_MAX_TURNS)
     execute.add_argument("--max-output-tokens", type=int, default=32768)
     execute.add_argument("--timeout", type=int, default=600)
     execute.add_argument(
@@ -685,17 +724,7 @@ def main() -> int:
                 for key in ("max_usd", "max_codex_tokens", "budget_run")
                 if getattr(args, key) is not None
             }
-            known = (set(EDITORIAL) | set(RUN_PREFIXES)) - FILED_AS.keys()
-            if unknown := set(config["stage_max_usd"]) - known:
-                hints = [
-                    f"{n} jobs are filed as {FILED_AS[n]}/"
-                    for n in sorted(unknown)
-                    if n in FILED_AS
-                ]
-                raise WorkflowError(
-                    f"--stage-max-usd names no job prefix a run issues: {sorted(unknown)}"
-                    + (f" ({'; '.join(hints)})" if hints else "")
-                )
+            check_cap_names(config["stage_max_usd"])
             config.update(
                 load_models(root, args.model_config, args.model, args.step_model, args.effort)
             )
