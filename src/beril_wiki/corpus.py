@@ -18,7 +18,8 @@ it pages the submissions feed from the cursor kept in ``manifest["hub"]``
 (``next_after``, a feed position), keeps each project's newest revision by
 ``submitted_at`` (the feed is in completion order, not submission order),
 downloads each changed project's REPORT.md, README.md, beril.yaml and embedded
-figures (sha256-checked against the feed), writes ``projects/<sid>/`` and
+figures (sha256-checked against the feed; a listed figure the hub does not
+serve stops the pull, so a later pull asks again), writes ``projects/<sid>/`` and
 ``docs/*.md``, and records ``owner_orcid``, ``project``, ``revision``,
 ``submitted_at``, ``kind`` and ``address`` beside each entry's files. Nothing is
 installed and the cursor does not move unless every download verified. The
@@ -180,9 +181,10 @@ def assign_sid(manifest: dict, owner: str, slug: str) -> str:
 def unchanged(current: dict, row: dict, installed: Path) -> bool:
     """Whether the feed row holds nothing the corpus has not already got: the report
     revision matches, and every file the corpus consumes (the metadata files and the
-    figures it holds) carries the hash the feed declares. A README or figure can
-    change without the report, and both are run inputs."""
-    if not (installed / "REPORT.md").is_file():
+    figures the report embeds) is held with the hash the feed declares. A README or
+    figure can change without the report, and both are run inputs."""
+    report = installed / "REPORT.md"
+    if not report.is_file():
         return False
     if current.get("revision") != row.get("revision"):
         return False
@@ -196,7 +198,12 @@ def unchanged(current: dict, row: dict, installed: Path) -> bool:
         # must be replaced, or the checkout keeps metadata upstream deleted.
         if rel not in declared or f"sha256:{declared[rel]}" != digest_:
             return False
-    return all(rel in recorded for rel in META if rel in declared)
+    # A declared file the corpus consumes but does not hold (a figure an earlier
+    # pull could not fetch) is missing, not unchanged.
+    wanted = set(META) | set(
+        FIG_EMBED.findall(report.read_text(encoding="utf-8", errors="replace"))
+    )
+    return all(rel in recorded for rel in wanted if rel in declared)
 
 
 def warn(message: str) -> None:
@@ -205,7 +212,8 @@ def warn(message: str) -> None:
 
 def download_project(client: hub.Hub, row: dict, dest: Path) -> None:
     """REPORT.md (required), README.md, beril.yaml and the embedded figures of one feed
-    row into ``dest``; a figure the hub refuses is skipped with a warning."""
+    row into ``dest``. A figure the feed lists must arrive; one the feed does not
+    list (the report embeds a file the submission lacks) is skipped with a warning."""
     files, address = row["files"], row["address"]
     report = client.fetch(f"{address}/REPORT.md", files.get("REPORT.md"))
     dest.mkdir(parents=True)
@@ -219,7 +227,7 @@ def download_project(client: hub.Hub, row: dict, dest: Path) -> None:
         try:
             data = client.fetch(f"{address}/{hub.safe_path(rel)}", files.get(rel))
         except hub.HubError as exc:
-            if rel in META or (rel in files and "does not match" in str(exc)):
+            if rel in META or rel in files:
                 raise
             warn(f"{address}/{rel}: skipped ({exc})")
             continue

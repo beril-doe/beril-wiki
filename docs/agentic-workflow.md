@@ -167,8 +167,9 @@ older one that completes later;
 `GET /api/context/read` supplies each file as raw bytes. For every project whose
 revision differs from the manifest's, `pull-hub` downloads `REPORT.md`,
 `README.md`, `beril.yaml` and the figures the report embeds, checks each against
-the feed's hash (a figure the hub refuses is skipped with a warning; a hash
-mismatch stops the pull), replaces `corpus/projects/<sid>/` and records
+the feed's hash (a listed file the hub does not serve, or a hash mismatch,
+stops the pull; only a figure the report embeds but the submission does not
+list is skipped, with a warning), replaces `corpus/projects/<sid>/` and records
 `owner_orcid`, `project`, `revision`, `submitted_at`, `kind` and `address`
 beside the entry's `files`, `digest` and `origin` (`hub@<submission id>`).
 `kind: docs` rows write `corpus/docs/*.md` into `shared`. Nothing is installed

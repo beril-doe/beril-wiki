@@ -171,15 +171,41 @@ def test_a_download_whose_hash_differs_installs_nothing(out, beril, client):
     assert not out.exists()
 
 
-def test_a_figure_the_hub_refuses_is_skipped_with_a_warning(out, beril, client, capsys):
+def test_a_listed_figure_the_hub_does_not_serve_stops_the_pull(out, beril, client, capsys):
+    # A 502 on a feed-listed figure is not a skip: skipping would install the project
+    # without it, advance the cursor and never ask for the figure again.
     beril.broken.add("figures/plot.png")
+    with pytest.raises(hub.HubError, match="figures/plot.png: HTTP 502"):
+        corpus.pull_hub(out, client)
+    assert not out.exists()
+    beril.broken.clear()
+    assert corpus.pull_hub(out, client)["projects"] == 1
+    assert (out / "projects/demo/figures/plot.png").read_bytes() == PLOT
+    # A figure the report embeds but the submission does not carry is all a pull
+    # can skip; it is not in the feed, so there is nothing to ask for later.
     beril.project(
         "nofig", {"REPORT.md": b"# n\n\n![x](figures/gone.png)\n"}, "2026-11-02T00:00:00Z"
     )
-    assert corpus.pull_hub(out, client)["projects"] == 2
-    assert not (out / "projects/demo/figures").exists()
-    assert "figures/plot.png: skipped" in capsys.readouterr().err
-    assert "figures/plot.png" not in corpus.load(out)["projects"]["demo"]["files"]
+    assert corpus.pull_hub(out, client)["projects"] == 1
+    assert "figures/gone.png: skipped" in capsys.readouterr().err
+    assert corpus.verify(out) == []
+
+
+def test_a_project_held_without_a_declared_figure_is_pulled_again(out, beril, client):
+    corpus.pull_hub(out, client)
+    manifest = corpus.load(out)
+    entry = manifest["projects"]["demo"]
+    # As a corpus written before listed figures were required may hold it.
+    del entry["files"]["figures/plot.png"]
+    entry["digest"] = corpus.digest(entry["files"])
+    (out / "projects/demo/figures/plot.png").unlink()
+    corpus.save(manifest, out)
+    assert corpus.verify(out) == []
+    row = hub.latest(beril.rows)[(ORCID, "demo")]
+    assert not corpus.unchanged(entry, row, out / "projects/demo")
+    beril.project("demo", dict(beril.files[f"{ORCID}/demo"]), "2026-11-02T00:00:00Z")
+    assert corpus.pull_hub(out, client)["projects"] == 1
+    assert (out / "projects/demo/figures/plot.png").read_bytes() == PLOT
     assert corpus.verify(out) == []
 
 
