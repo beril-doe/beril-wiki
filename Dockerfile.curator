@@ -53,8 +53,9 @@ RUN uv sync --project /opt/project --frozen --no-dev --no-install-project \
 
 # The Quartz clone at the commit build_quartz.sh pins (read from the script, so
 # there is one source of truth), with its node_modules: the nightly job renders
-# without cloning Quartz. The build writes into this tree, so the job's user
-# owns it; deploy/curate.sh links $WIKI_WORKDIR/quartz here.
+# without cloning Quartz. deploy/curate.sh copies this tree into the clone's
+# quartz/ (a symlink would make Quartz resolve ../theme to /opt/theme) and
+# replaces the copy when the pinned commit changes; the job's user owns it.
 COPY scripts/build_quartz.sh /opt/project/scripts/build_quartz.sh
 RUN ref=$(sed -n 's/^QUARTZ_REF="\${QUARTZ_REF:-\([0-9a-f]*\)}"/\1/p' /opt/project/scripts/build_quartz.sh) \
     && test -n "$ref" \

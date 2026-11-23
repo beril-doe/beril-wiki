@@ -59,8 +59,8 @@ spec:
                 allowPrivilegeEscalation: false
                 capabilities:
                   drop: [ALL]
-                # Not read-only: the Quartz build writes into /opt/quartz and the
-                # job's HOME holds the CLI's state (deploy/README.md).
+                # Not read-only: the job's HOME holds the CLIs' state and uv
+                # writes its cache under it (deploy/README.md).
                 readOnlyRootFilesystem: false
               volumeMounts:
                 - name: work

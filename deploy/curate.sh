@@ -7,6 +7,7 @@
 #   curate.sh run       plan; stop (0) when nothing changed, else `agentic run`
 #                       under the env budgets, render, publish, push `history`
 #   curate.sh publish   render and publish the accepted wiki without curating
+#   curate.sh render    render only (quartz/public), for checking an image
 #   curate.sh status    `agentic status`
 #
 # The PVC at WIKI_WORKDIR holds a git clone of beril-wiki: code and the trees the
@@ -38,7 +39,7 @@ WIKI_THEME_CACHE="${WIKI_THEME_CACHE:-/opt/theme}"
 log() { printf '%s curate[%s] %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$MODE" "$*" >&2; }
 die() { log "ERROR $*"; exit "${2:-1}"; }
 
-case "$MODE" in plan | run | publish | status) ;; *) die "unknown mode '$MODE'" 64 ;; esac
+case "$MODE" in plan | run | publish | render | status) ;; *) die "unknown mode '$MODE'" 64 ;; esac
 
 # --- git: identity for history commits, token through a helper, no prompts ---
 export GIT_TERMINAL_PROMPT=0
@@ -98,11 +99,25 @@ the committed trees on purpose." 2
 }
 
 seed_build_caches() {
-  # quartz/ is gitignored and derived; the image's clone stands in for it. The
-  # build writes into it, so it must be writable, which /opt/quartz is.
-  if [ ! -e "$WIKI_WORKDIR/quartz" ] && [ -d "$WIKI_QUARTZ_CACHE/node_modules" ]; then
-    ln -s "$WIKI_QUARTZ_CACHE" "$WIKI_WORKDIR/quartz"
-    log "quartz: linked $WIKI_QUARTZ_CACHE"
+  # quartz/ is gitignored and derived, and it must be a real directory in the
+  # clone: Quartz loads the theme plugin as ../theme relative to its own physical
+  # path, so a `quartz -> /opt/quartz` symlink resolved the theme to /opt/theme
+  # (node_modules, no dist/) and Quartz silently rendered its default frame. The
+  # image's clone is copied in on the first run and replaced when the pinned
+  # Quartz commit changes; the build then writes into the volume.
+  local q="$WIKI_WORKDIR/quartz" want have=""
+  if [ -L "$q" ]; then
+    rm "$q"
+    log "quartz: removed the symlink an earlier job left"
+  fi
+  if [ -d "$WIKI_QUARTZ_CACHE/node_modules" ]; then
+    want=$(git -C "$WIKI_QUARTZ_CACHE" rev-parse HEAD)
+    [ ! -d "$q/.git" ] || have=$(git -C "$q" rev-parse HEAD 2>/dev/null || true)
+    if [ "$have" != "$want" ]; then
+      rm -rf "$q"
+      cp -a "$WIKI_QUARTZ_CACHE" "$q"
+      log "quartz: copied $WIKI_QUARTZ_CACHE (${want:0:12}) into the clone"
+    fi
   fi
   if [ ! -d "$WIKI_WORKDIR/theme/node_modules" ] && [ -d "$WIKI_THEME_CACHE/node_modules" ]; then
     cp -R "$WIKI_THEME_CACHE/node_modules" "$WIKI_WORKDIR/theme/node_modules"
@@ -133,12 +148,20 @@ print(sum(counts.values()), " ".join(f"{k}={v}" for k, v in counts.items()))') |
   [ "${summary%% *}" = 0 ] && return 0 || return 3
 }
 
-publish_step() {
-  local stamp
-  stamp=$(date -u +%Y%m%dT%H%M%SZ)
+render_step() {
   : "${WIKI_BASE_URL:?WIKI_BASE_URL is required to render (e.g. beril.kbase.us/wiki)}"
   log "render: build_quartz.sh (WIKI_BASE_URL=$WIKI_BASE_URL)"
   "$WIKI_WORKDIR/scripts/build_quartz.sh"
+  # The theme's frame, not Quartz's default: a plugin Quartz could not load is
+  # only a log line, so check the output rather than the exit code.
+  grep -q 'class="page-grid"' "$WIKI_WORKDIR/quartz/public/index.html" ||
+    die "render: quartz/public/index.html carries no BERIL frame (theme plugin not loaded)"
+}
+
+publish_step() {
+  local stamp
+  stamp=$(date -u +%Y%m%dT%H%M%SZ)
+  render_step
   # The gates ran inside build_quartz.sh and are recorded for this exact build;
   # push refuses without that record, so --no-check repeats nothing.
   log "publish: artifact $stamp -> ${WIKI_ARTIFACT_ENDPOINT:-<no store>}"
@@ -208,6 +231,12 @@ main() {
       refresh_code
       seed_build_caches
       publish_step
+      rc=0
+      ;;
+    render)
+      refresh_code
+      seed_build_caches
+      render_step
       rc=0
       ;;
     status)

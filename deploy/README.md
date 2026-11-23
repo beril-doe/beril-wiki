@@ -54,10 +54,18 @@ The Quartz clone (at the commit `build_quartz.sh` pins) with its
 `node_modules`, and the theme's `node_modules`, are pre-warmed in the image at
 `/opt/quartz` and `/opt/theme`. The build chain hard-codes `$REPO/quartz` in
 four places (the script, `check_site.sh`, `theme/src/build/search.ts`,
-`stages/search_vectors.py`), so rather than an override the job links
-`$WIKI_WORKDIR/quartz -> /opt/quartz` when the clone has no `quartz/` and
-copies `/opt/theme/node_modules` into `theme/` when that is absent. The render
-writes into the container, not the volume; the artifact is what persists.
+`stages/search_vectors.py`), and `quartz/` must be a real directory in the
+clone: Quartz loads the theme plugin as `../theme` relative to its own
+physical path, so a `quartz -> /opt/quartz` symlink made it load `/opt/theme`
+(dependencies, no `dist/`) and fall back to its default frame with only a log
+line to say so. The job therefore copies `/opt/quartz` into
+`$WIKI_WORKDIR/quartz` on the first run, replaces the copy when the pinned
+Quartz commit changes, and copies `/opt/theme/node_modules` into `theme/` when
+that is absent. The render writes into `quartz/` on the volume (about 1 GB
+with `node_modules` and `public/`); `curate.sh render` checks that
+`quartz/public/index.html` carries the theme's frame (`class="page-grid"`)
+and fails otherwise. `curate.sh render` on its own, with the volume mounted,
+is how to check an image before trusting it with a publish.
 
 ## First-time population
 
@@ -123,6 +131,7 @@ the volume may have been populated by another uid.
 | `plan` | `cronjob-plan.yaml`, hourly | refresh code; `corpus pull-hub`; `stages.fetch`; `agentic plan`; log `plan: changed_sources=N pending_editorial=N` | 0 nothing to do, 3 a run would do something (the CronJob maps 3 to success), 2 no clone |
 | `run` | `cronjob-curate.yaml`, nightly; `job-run-now.yaml` | `plan`; stop at 0 when empty; else `agentic run` under the budgets; `build_quartz.sh`; `publish_artifact.sh --id <UTC stamp> --no-check`; `git push origin history refs/tags/artifact/*` | 0 published or nothing to do; non-zero on any failed step, including a held `.agentic/lock` and a refused cold start |
 | `publish` | by hand | refresh code; render and publish the accepted wiki as above, without curating | as `run` |
+| `render` | by hand | refresh code; `build_quartz.sh` into `quartz/public`; check the frame; no store, no push | 0 rendered with the theme's frame, else non-zero |
 | `status` | by hand | `agentic status`, or a note when no run has been recorded | 0 |
 
 Every step logs one timestamped line (`2026-11-17T07:30:00Z curate[run] ...`).

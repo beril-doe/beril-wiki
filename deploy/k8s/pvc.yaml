@@ -5,9 +5,9 @@
 #
 # Size: the clone with history is about 1.5 GB (figures under corpus/ and
 # wiki/figures/ dominate), .agentic/ grows with the ledger, transcripts and
-# evidence (a few hundred MB after months), theme/node_modules about 50 MB.
-# 10Gi leaves room; the Quartz clone and the build output live in the
-# container, not here.
+# evidence (a few hundred MB after months), theme/node_modules about 50 MB,
+# and quartz/ (the Quartz clone copied from the image, its node_modules and
+# the rendered public/) about 1 GB. 10Gi leaves room.
 #
 # RWO: the plan and curate CronJobs never overlap (concurrencyPolicy: Forbid on
 # each, and agentic's .agentic/lock refuses a second runner), and both run on
