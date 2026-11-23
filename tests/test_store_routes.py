@@ -162,3 +162,73 @@ def test_http_store_pushes_and_the_server_reloads_from_it(live, tmp_path, store)
         A.store_from_env({"WIKI_ARTIFACT_ENDPOINT": f"{live}/wiki/_admin/store"})
     env = {"WIKI_ARTIFACT_ENDPOINT": f"{live}/wiki/_admin/store/", "WIKI_RELOAD_TOKEN": "t"}
     assert isinstance(A.store_from_env(env), A.HttpStore)
+
+
+# ------------------------------------------- HttpStore's error mapping, no server
+
+
+def mock_store(handler):
+    """An HttpStore over a scripted transport; `handler` takes the request and returns
+    a response or raises the transport error to simulate."""
+    import httpx
+
+    return A.HttpStore("http://wiki:8080/wiki/_admin/store", "t", 5, httpx.MockTransport(handler))
+
+
+def answer(status, body=b"", json=None):
+    import httpx
+
+    if json is not None:
+        return lambda req: httpx.Response(status, json=json)
+    return lambda req: httpx.Response(status, content=body)
+
+
+def test_http_store_reports_a_404_on_put_as_a_missing_route_not_different_bytes():
+    with pytest.raises(A.ArtifactError, match=r"store PUT wiki/x: HTTP 404 not found$"):
+        mock_store(answer(404, b"not found")).put("wiki/x", b"x", "text/plain")
+
+
+def test_http_store_reports_a_2xx_without_the_sha_echo_and_a_wrong_echo():
+    with pytest.raises(A.ArtifactError, match="HTTP 200 with no sha256 echo"):
+        mock_store(answer(200, b"<html>")).put("wiki/x", b"x", "text/plain")
+    with pytest.raises(A.ArtifactError, match="stored different bytes"):
+        mock_store(answer(200, json={"sha256": "0" * 64})).put("wiki/x", b"x", "text/plain")
+    mock_store(answer(200, json={"sha256": A.sha256(b"x")})).put("wiki/x", b"x", "text/plain")
+
+
+def test_http_store_listing_errors_carry_the_status_not_a_decode_error():
+    with pytest.raises(A.ArtifactError, match=r"store GET: HTTP 404"):
+        mock_store(answer(404)).list_keys("wiki/")
+    with pytest.raises(A.ArtifactError, match="HTTP 200 with no key list"):
+        mock_store(answer(200, b"<html>")).list_keys("wiki/")
+    assert mock_store(answer(200, json={"keys": ["wiki/a"]})).list_keys("wiki/") == ["wiki/a"]
+
+
+def test_http_store_exists_is_false_only_on_404():
+    assert mock_store(answer(200)).exists("wiki/x") is True
+    assert mock_store(answer(404)).exists("wiki/x") is False
+    for status in (401, 500, 503):
+        with pytest.raises(A.ArtifactError, match=f"store HEAD wiki/x: HTTP {status}"):
+            mock_store(answer(status)).exists("wiki/x")
+    with pytest.raises(A.ArtifactError, match="missing object wiki/x"):
+        mock_store(answer(404)).get("wiki/x")
+    with pytest.raises(A.ArtifactError, match="store GET wiki/x: HTTP 503"):
+        mock_store(answer(503)).get("wiki/x")
+
+
+@pytest.mark.parametrize(
+    ("error", "expected"),
+    [
+        ("ReadTimeout", r"store GET wiki/x: no answer within 5s from http://wiki:8080"),
+        ("ConnectError", r"store GET wiki/x: ConnectError: .*\(http://wiki:8080"),
+        ("RemoteProtocolError", r"store GET wiki/x: RemoteProtocolError: disconnected"),
+    ],
+)
+def test_http_store_transport_failures_become_artifact_errors(error, expected):
+    import httpx
+
+    def failing(req):
+        raise getattr(httpx, error)("disconnected", request=req)
+
+    with pytest.raises(A.ArtifactError, match=expected):
+        mock_store(failing).get("wiki/x")

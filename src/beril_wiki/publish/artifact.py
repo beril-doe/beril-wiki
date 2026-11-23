@@ -56,11 +56,9 @@ import subprocess
 import sys
 import tarfile
 import tempfile
-import urllib.error
-import urllib.request
 from collections.abc import Iterable, Iterator, Mapping
 from typing import Any, Protocol
-from urllib.parse import quote, urlencode
+from urllib.parse import quote
 
 ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$")
 # A store key: slash-separated segments of safe characters, none of them `.` or `..`.
@@ -282,14 +280,24 @@ class HttpStore:
     """The wiki server's own directory store, reached through its token-guarded routes
     (``PUT/GET/HEAD <endpoint>/{key}``, ``GET <endpoint>?prefix=``; beril_wiki.serve).
     The bearer is WIKI_RELOAD_TOKEN, the same token that triggers the reload, so a
-    curator job needs one secret and no bucket, volume or ``kubectl cp``."""
+    curator job needs one secret and no bucket, volume or ``kubectl cp``.
 
-    def __init__(self, endpoint: str, token: str, timeout: float = 900.0) -> None:
+    Every failure is an ArtifactError that names the route and, for an HTTP answer,
+    the status: a 404 on PUT is a missing route, not "different bytes", and a
+    timeout or a dropped connection is reported as such, never as a traceback."""
+
+    def __init__(
+        self, endpoint: str, token: str, timeout: float = 900.0, transport: Any = None
+    ) -> None:
+        import httpx
+
         if not token:
             raise ArtifactError("an http(s) WIKI_ARTIFACT_ENDPOINT needs WIKI_RELOAD_TOKEN")
         self.endpoint = endpoint.rstrip("/")
-        self.token = token
         self.timeout = timeout
+        self.client = httpx.Client(
+            timeout=timeout, headers={"Authorization": f"Bearer {token}"}, transport=transport
+        )
 
     def _request(
         self,
@@ -298,42 +306,58 @@ class HttpStore:
         data: bytes | None = None,
         content_type: str | None = None,
         query: Mapping[str, str] | None = None,
-    ) -> tuple[int, bytes]:
+        accept: tuple[int, ...] = (),
+    ) -> Any:
+        """The response, with a 2xx or an `accept`ed status; anything else, including a
+        transport failure, is an ArtifactError naming the route."""
+        import httpx
+
         url = self.endpoint + (f"/{quote(check_key(key))}" if key is not None else "")
-        if query:
-            url += "?" + urlencode(query)
-        headers = {"Authorization": f"Bearer {self.token}"}
-        if content_type:
-            headers["Content-Type"] = content_type
-        req = urllib.request.Request(url, data=data, method=method, headers=headers)
+        where = f"store {method} {key or ''}".rstrip()
+        headers = {"Content-Type": content_type} if content_type else {}
         try:
-            with urllib.request.urlopen(req, timeout=self.timeout) as r:  # noqa: S310
-                return r.status, r.read()
-        except urllib.error.HTTPError as exc:
-            if exc.code == 404:
-                return 404, b""
-            detail = exc.read()[:300].decode("utf-8", "replace")
-            raise ArtifactError(f"store {method} {key or ''}: HTTP {exc.code} {detail}") from exc
-        except urllib.error.URLError as exc:
-            raise ArtifactError(f"store {method} {key or ''}: {exc.reason}") from exc
+            r = self.client.request(method, url, content=data, headers=headers, params=query)
+        except httpx.TimeoutException as exc:
+            raise ArtifactError(f"{where}: no answer within {self.timeout:g}s from {url}") from exc
+        except httpx.HTTPError as exc:  # refused, unresolvable, dropped mid-transfer
+            raise ArtifactError(f"{where}: {type(exc).__name__}: {exc} ({url})") from exc
+        if r.is_success or r.status_code in accept:
+            return r
+        detail = r.text[:300].strip()
+        raise ArtifactError(f"{where}: HTTP {r.status_code} {detail}".rstrip())
 
     def get(self, key: str) -> bytes:
-        status, body = self._request("GET", key)
-        if status == 404:
+        r = self._request("GET", key, accept=(404,))
+        if r.status_code == 404:
             raise ArtifactError(f"missing object {key}")
-        return body
+        return r.content
 
     def put(self, key: str, data: bytes, content_type: str) -> None:
-        status, body = self._request("PUT", key, data, content_type)
-        echoed = json.loads(body or b"{}").get("sha256")
+        r = self._request("PUT", key, data, content_type)
+        try:
+            echoed = r.json().get("sha256")
+        except (ValueError, AttributeError) as exc:
+            raise ArtifactError(
+                f"store PUT {key}: HTTP {r.status_code} with no sha256 echo; is "
+                f"{self.endpoint} the wiki's /_admin/store route?"
+            ) from exc
         if echoed != sha256(data):
             raise ArtifactError(f"store PUT {key}: the server stored different bytes")
 
     def exists(self, key: str) -> bool:
-        return self._request("HEAD", key)[0] == 200
+        """True on 200, False on 404; any other answer is an error, not an absence."""
+        return self._request("HEAD", key, accept=(404,)).status_code == 200
 
     def list_keys(self, prefix: str = "") -> list[str]:
-        return json.loads(self._request("GET", None, query={"prefix": prefix})[1])["keys"]
+        r = self._request("GET", None, query={"prefix": prefix})
+        try:
+            keys = r.json()["keys"]
+        except (ValueError, KeyError, TypeError) as exc:
+            raise ArtifactError(
+                f"store GET ?prefix={prefix}: HTTP {r.status_code} with no key list; is "
+                f"{self.endpoint} the wiki's /_admin/store route?"
+            ) from exc
+        return list(keys)
 
 
 def configured(env: Mapping[str, str] | None = None) -> bool:
