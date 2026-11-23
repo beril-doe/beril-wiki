@@ -120,8 +120,8 @@ keys are the Secret rows below, and no filled copy belongs in git).
 | `WIKI_GIT_TOKEN` | Secret | GitHub token with `contents:write`, for `git push origin history` and the `artifact/*` tags |
 | `WIKI_GIT_NAME`, `WIKI_GIT_EMAIL` | ConfigMap | author of the `history` commits |
 | `WIKI_BASE_URL` | ConfigMap | `beril.kbase.us/wiki` or the dev host; baked into sitemap, RSS and canonical URLs |
-| `WIKI_ARTIFACT_ENDPOINT`, `WIKI_ARTIFACT_PREFIX` | ConfigMap | `http://wiki:8080/wiki/_admin/store` and `wiki`: the wiki pod's store routes (below) |
-| `WIKI_RELOAD_URL`, `WIKI_RELOAD_TOKEN` | ConfigMap, Secret | `http://wiki:8080/wiki/_admin/reload` and the pod's admin bearer, shared by the store routes |
+| `WIKI_ARTIFACT_ENDPOINT`, `WIKI_ARTIFACT_PREFIX` | ConfigMap | `http://beril-wiki:8080/wiki/_admin/store` and `wiki`: the wiki pod's store routes (below), through the Service the SPIN guide names `beril-wiki` (Compose: `wiki`) |
+| `WIKI_RELOAD_URL`, `WIKI_RELOAD_TOKEN` | ConfigMap, Secret | `http://beril-wiki:8080/wiki/_admin/reload` and the pod's admin bearer, shared by the store routes |
 | `WIKI_CURATE_MAX_TOKENS`, `WIKI_CURATE_MAX_JOBS`, `WIKI_CURATE_WORKERS` | ConfigMap | `agentic run --max-tokens / --max-jobs / --workers` |
 | `WIKI_CURATE_STAGE_MAX_USD` | ConfigMap | space-separated `STAGE=USD` list, each one a `--stage-max-usd`; `STAGE` is a job-step prefix (`extract plan write lit figures curator merge merge-judge backmerge repair`) or an editorial stage, never a model role, and `curate.sh` refuses the list at every start otherwise |
 | `WIKI_CURATE_EXTRA_ARGS` | ConfigMap | appended to `agentic run` verbatim (for example `--strict-pages`) |
@@ -172,7 +172,7 @@ its unpacked sites), it answers `PUT`, `GET` and `HEAD
 /wiki/_admin/store/{key}` and `GET /wiki/_admin/store?prefix=`, guarded by
 the same bearer as the reload, bodies streamed to disk under
 `WIKI_STORE_MAX_BYTES` (default 1 GiB) with the sha256 echoed back. The
-curator's `WIKI_ARTIFACT_ENDPOINT=http://wiki:8080/wiki/_admin/store` selects
+curator's `WIKI_ARTIFACT_ENDPOINT=http://beril-wiki:8080/wiki/_admin/store` selects
 `publish.artifact.HttpStore`, which speaks those routes; `push`, `rollback`,
 `current` and the reload are unchanged, and `publish_artifact.sh` still calls
 `WIKI_RELOAD_URL` afterwards. The ingress must keep `/wiki/_admin` (and

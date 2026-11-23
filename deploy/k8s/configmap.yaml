@@ -19,11 +19,14 @@ data:
   WIKI_GIT_REF: "main"
   # Baked into the site's absolute URLs (sitemap, RSS, canonical).
   WIKI_BASE_URL: "beril-dev.kbase.us/wiki"
-  # The wiki pod's store routes and reload, over the cluster network. The pod
-  # itself runs with WIKI_ARTIFACT_ENDPOINT=file:///srv/artifacts/store.
-  WIKI_ARTIFACT_ENDPOINT: "http://wiki:8080/wiki/_admin/store"
+  # The wiki pod's store routes and reload, over the cluster network, through
+  # the Service the observatory's SPIN guide names `beril-wiki` (the Compose
+  # stack calls the same container `wiki`; a publish to an unknown host fails
+  # after the night's curation, so check `kubectl -n knowledge-engine get svc`).
+  # The pod itself runs with WIKI_ARTIFACT_ENDPOINT=file:///srv/artifacts/store.
+  WIKI_ARTIFACT_ENDPOINT: "http://beril-wiki:8080/wiki/_admin/store"
   WIKI_ARTIFACT_PREFIX: "wiki"
-  WIKI_RELOAD_URL: "http://wiki:8080/wiki/_admin/reload"
+  WIKI_RELOAD_URL: "http://beril-wiki:8080/wiki/_admin/reload"
   # Budgets per curate run (docs/agentic-workflow.md, "Commands and limits").
   # Fixed, so a bad night is capped; raise deliberately after measuring a run.
   WIKI_CURATE_MAX_TOKENS: "2000000"
