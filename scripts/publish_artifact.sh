@@ -41,7 +41,7 @@ if [ -n "$POINT" ]; then
 import json, sys
 from beril_wiki.publish import artifact as A
 store, keys = A.store_from_env(), A.Keys(A.prefix_from_env())
-print(json.dumps(A.point(store, keys, sys.argv[1]), indent=1))' "$POINT"
+print(json.dumps(A.point_current(store, keys, sys.argv[1]), indent=1))' "$POINT"
 else
   # The same gates that block a Pages deploy or an image push block an artifact:
   # check --strict, the theme typecheck and check_site.sh. `push` refuses without

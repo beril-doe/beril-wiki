@@ -254,3 +254,28 @@ def test_put_if_none_match_creates_once_and_delete_releases(client, store):
     assert client.put(lease, content=b"job-4", headers=create).status_code == 200
     assert client.delete(lease).status_code == 401
     assert client.delete("/wiki/_admin/store/wiki/..%2Fx", headers=AUTH).status_code == 400
+
+
+def test_http_store_lease_primitives_and_streamed_download(live, tmp_path, store):
+    http = A.HttpStore(f"{live}/wiki/_admin/store", "secret")
+    assert http.put_new("wiki/publish.lease", b'{"holder": "a"}', "application/json")
+    assert not http.put_new("wiki/publish.lease", b'{"holder": "b"}', "application/json")
+    assert http.get("wiki/publish.lease") == b'{"holder": "a"}'
+    http.delete("wiki/publish.lease")
+    http.delete("wiki/publish.lease")  # already gone: not an error
+    assert not http.exists("wiki/publish.lease")
+    http.put("wiki/blob", b"x" * 100_000, "application/octet-stream")
+    dest = tmp_path / "blob"
+    http.get_file("wiki/blob", dest)
+    assert dest.read_bytes() == b"x" * 100_000 and not dest.with_name("blob.part").exists()
+    with pytest.raises(A.ArtifactError, match="missing object"):
+        http.get_file("wiki/absent", tmp_path / "absent")
+    # point_current takes the lease: a held lease refuses it.
+    assert http.put_new(
+        "wiki/publish.lease",
+        b'{"holder": "other", "expires_at": "2999-01-01T00:00:00+00:00"}',
+        "application/json",
+    )
+    with pytest.raises(A.ArtifactError, match="another publisher holds"):
+        A.point_current(http, A.Keys("wiki"), "v1")
+    http.delete("wiki/publish.lease")

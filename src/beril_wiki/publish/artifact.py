@@ -307,6 +307,7 @@ class HttpStore:
         content_type: str | None = None,
         query: Mapping[str, str] | None = None,
         accept: tuple[int, ...] = (),
+        headers: Mapping[str, str] | None = None,
     ) -> Any:
         """The response, with a 2xx or an `accept`ed status; anything else, including a
         transport failure, is an ArtifactError naming the route."""
@@ -314,7 +315,9 @@ class HttpStore:
 
         url = self.endpoint + (f"/{quote(check_key(key))}" if key is not None else "")
         where = f"store {method} {key or ''}".rstrip()
-        headers = {"Content-Type": content_type} if content_type else {}
+        headers = dict(headers or {})
+        if content_type:
+            headers["Content-Type"] = content_type
         try:
             r = self.client.request(method, url, content=data, headers=headers, params=query)
         except httpx.TimeoutException as exc:
@@ -343,6 +346,50 @@ class HttpStore:
             ) from exc
         if echoed != sha256(data):
             raise ArtifactError(f"store PUT {key}: the server stored different bytes")
+
+    def put_new(self, key: str, data: bytes, content_type: str) -> bool:
+        """The lease primitive over HTTP: `If-None-Match: *` makes the server create
+        the key or answer 412 when it already exists (beril_wiki.serve)."""
+        r = self._request(
+            "PUT", key, data, content_type, accept=(412,), headers={"If-None-Match": "*"}
+        )
+        if r.status_code == 412:
+            return False
+        try:
+            echoed = r.json().get("sha256")
+        except (ValueError, AttributeError) as exc:
+            raise ArtifactError(
+                f"store PUT {key}: HTTP {r.status_code} with no sha256 echo; is "
+                f"{self.endpoint} the wiki's /_admin/store route?"
+            ) from exc
+        if echoed != sha256(data):
+            raise ArtifactError(f"store PUT {key}: the server stored different bytes")
+        return True
+
+    def delete(self, key: str) -> None:
+        """Release a lease or drop an object; a key already gone is not an error."""
+        self._request("DELETE", key, accept=(404,))
+
+    def get_file(self, key: str, dest: pathlib.Path) -> None:
+        """Stream an object to `dest` so a tarball never sits whole in memory."""
+        import httpx
+
+        url = f"{self.endpoint}/{quote(check_key(key))}"
+        try:
+            with self.client.stream("GET", url) as r:
+                if r.status_code == 404:
+                    raise ArtifactError(f"missing object {key}")
+                if not r.is_success:
+                    raise ArtifactError(f"store GET {key}: HTTP {r.status_code}")
+                tmp = dest.with_name(dest.name + ".part")
+                with tmp.open("wb") as out:
+                    for chunk in r.iter_bytes():
+                        out.write(chunk)
+                os.replace(tmp, dest)
+        except httpx.TimeoutException as exc:
+            raise ArtifactError(f"store GET {key}: no answer within {self.timeout:g}s") from exc
+        except httpx.HTTPError as exc:
+            raise ArtifactError(f"store GET {key}: {type(exc).__name__}: {exc}") from exc
 
     def exists(self, key: str) -> bool:
         """True on 200, False on 404; any other answer is an error, not an absence."""
@@ -806,6 +853,13 @@ def rollback(store: Store, keys: Keys, root: pathlib.Path, artifact_id: str) -> 
         raise ArtifactError(str(exc)) from exc
     pointer["restored_commit"] = restored
     return pointer
+
+
+def point_current(store: Store, keys: Keys, artifact_id: str) -> dict:
+    """Move `current` to an artifact already in the store, under the publish lease:
+    what a retried publish does once the artifact and its history tag exist."""
+    with publish_lease(store, keys, "point", artifact_id):
+        return point(store, keys, artifact_id)
 
 
 def point(store: Store, keys: Keys, artifact_id: str, manifest: dict | None = None) -> dict:
