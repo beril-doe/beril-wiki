@@ -140,19 +140,45 @@ def locked_by_a_run(root: pathlib.Path) -> bool:
 def restore(root: pathlib.Path, artifact_id: str, *, locked: bool = False) -> str:
     """Replace wiki/, state/, corpus/ and search/ with the tagged promotion, holding
     the curator lock throughout unless the caller already holds it (`locked`)."""
+    if locked:
+        return stage_restore(root, artifact_id).keep()
+    with held_lock(root):
+        return stage_restore(root, artifact_id).keep()
+
+
+class Restore:
+    """A restore whose previous trees are kept aside until the caller settles it:
+    `keep()` discards them once whatever the restore was for (the live pointer) has
+    moved too; `undo()` puts them back, so the checkout and the pointer stay at the
+    same promotion when the pointer could not move."""
+
+    def __init__(self, root: pathlib.Path, commit: str, tag: str, staging: pathlib.Path) -> None:
+        self.root, self.commit, self.tag, self.staging = root, commit, tag, staging
+
+    def keep(self) -> str:
+        shutil.rmtree(self.staging, ignore_errors=True)
+        return self.commit
+
+    def undo(self) -> None:
+        aside = self.staging / ".aside"
+        try:
+            _put_back(self.root, aside)
+        except OSError as exc:
+            raise HistoryError(
+                f"putting the checkout back failed ({exc}); the previous trees are kept "
+                f"under {aside}"
+            ) from exc
+        shutil.rmtree(self.staging, ignore_errors=True)
+
+
+def stage_restore(root: pathlib.Path, artifact_id: str) -> Restore:
+    """Swap the tagged trees in by rename, each live tree going aside first: a
+    failure part-way puts every tree back, so the checkout is never split. The
+    caller holds the curator lock, and settles the result with `keep` or `undo`."""
     tag = tag_of(artifact_id)
     commit = ref(root, f"refs/tags/{tag}")
     if not commit:
         raise HistoryError(f"no tag {tag}; was this artifact recorded on {BRANCH}?")
-    if locked:
-        return _restore(root, commit, tag)
-    with held_lock(root):
-        return _restore(root, commit, tag)
-
-
-def _restore(root: pathlib.Path, commit: str, tag: str) -> str:
-    """Swap the tagged trees in by rename: each live tree goes aside first, so a
-    failure part-way puts every tree back and the checkout is never split."""
     archive = subprocess.run(
         ["git", "-C", str(root), "archive", "--format=tar", commit],
         capture_output=True,
@@ -160,35 +186,24 @@ def _restore(root: pathlib.Path, commit: str, tag: str) -> str:
     if archive.returncode:
         raise HistoryError(f"git archive {tag}: {archive.stderr.decode().strip()}")
     staging = pathlib.Path(tempfile.mkdtemp(prefix=".restore.", dir=root))
-    aside = staging / ".aside"
-    keep = False
+    pending = Restore(root, commit, tag, staging)
     try:
         with tarfile.open(fileobj=io.BytesIO(archive.stdout)) as tar:
             tar.extractall(staging, filter="data")
-        aside.mkdir()
+        (staging / ".aside").mkdir()
+        for tree in RESTORED_TREES:
+            target = root / tree
+            if target.exists():
+                os.rename(target, staging / ".aside" / tree)
+            if (staging / tree).exists():
+                os.rename(staging / tree, target)
+    except OSError as exc:
         try:
-            for tree in RESTORED_TREES:
-                target = root / tree
-                if target.exists():
-                    os.rename(target, aside / tree)
-                if (staging / tree).exists():
-                    os.rename(staging / tree, target)
-        except OSError as exc:
-            try:
-                _put_back(root, aside)
-            except OSError as undo:
-                keep = True
-                raise HistoryError(
-                    f"restore of {tag} failed ({exc}) and putting the checkout back failed "
-                    f"({undo}); the previous trees are kept under {aside}"
-                ) from undo
-            raise HistoryError(
-                f"restore of {tag} failed; the checkout was put back: {exc}"
-            ) from exc
-    finally:
-        if not keep:
-            shutil.rmtree(staging, ignore_errors=True)
-    return commit
+            pending.undo()
+        except HistoryError as undo:
+            raise HistoryError(f"restore of {tag} failed ({exc}) and {undo}") from undo
+        raise HistoryError(f"restore of {tag} failed; the checkout was put back: {exc}") from exc
+    return pending
 
 
 def _put_back(root: pathlib.Path, aside: pathlib.Path) -> None:

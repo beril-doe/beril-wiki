@@ -209,11 +209,13 @@ push also commits `wiki/`, `state/`, `corpus/` and
 `search/section-vectors.jsonl` from the working checkout to the `history`
 branch (created orphan when absent, through a temporary index so your own
 branch is untouched) and tags `artifact/<id>`; push that branch to share the
-audit trail and the vectors. `rollback --to <id>` moves `current` back, then
-restores `wiki/`, `state/`, `corpus/` and `search/` from the tag into the
-checkout, so the next curate run starts from the restored promotion instead
-of building on the bad one; it refuses while a run holds `.agentic/lock` or
-when the tag is missing. The server verifies the tarball's sha256 against
+audit trail and the vectors. `rollback --to <id>` restores `wiki/`, `state/`,
+`corpus/` and `search/` from the tag into the checkout and moves `current`
+back, so the next curate run starts from the restored promotion instead of
+building on the bad one; the previous trees are kept aside until `current` has
+moved, and put back if it could not, so the served artifact and the checkout
+always stand at the same promotion. It refuses while a run holds
+`.agentic/lock` or when the tag is missing. The server verifies the tarball's sha256 against
 `current.json` and the manifest's id, page count and gates against the unpacked
 tree before it swaps, keeps the previous artifact unpacked, and on a restart
 serves the last one it unpacked when the store is unreachable, or the baked

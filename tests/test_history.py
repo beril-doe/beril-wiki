@@ -266,16 +266,57 @@ def test_restore_holds_the_curator_lock_for_its_whole_duration(tmp_path, monkeyp
     repo = checkout(tmp_path)
     H.record(repo, "A")
     seen: list[bool] = []
-    original = H._restore
+    original = H.stage_restore
 
-    def observing(root, commit, tag):
+    def observing(root, artifact_id):
         seen.append(H.locked_by_a_run(root))  # True only while restore holds the flock
-        return original(root, commit, tag)
+        return original(root, artifact_id)
 
-    monkeypatch.setattr(H, "_restore", observing)
+    monkeypatch.setattr(H, "stage_restore", observing)
     H.restore(repo, "A")
     assert seen == [True]
     assert not H.locked_by_a_run(repo)  # released afterwards
     with H.held_lock(repo):
         with pytest.raises(H.HistoryError, match="holds .agentic/lock"):
             H.restore(repo, "A")
+
+
+def test_a_pointer_write_that_fails_after_the_restore_puts_the_checkout_back(tmp_path, monkeypatch):
+    """The served artifact and the curator's inputs must agree: when `current`
+    cannot move, the restored trees are undone and both stay at the previous
+    promotion. A later rollback, with the store back, restores for good."""
+    repo = checkout(tmp_path)
+    monkeypatch.setattr(A, "corpus_files", lambda r: {})
+    store, keys = A.DirStore(tmp_path / "bucket"), A.Keys("wiki")
+    site = site_for(repo, "A")
+    A.push(store, keys, repo, site, "A", gate=gate(site))
+    (repo / "wiki/concepts/x.md").write_text("# x v2\n")
+    (repo / "corpus/projects/demo/REPORT.md").write_text("# demo v2\n")
+    (repo / "state/agentic.json").write_text(json.dumps({"fingerprint": "f2"}))
+    site_for(repo, "B")
+    A.push(store, keys, repo, site, "B", gate=gate(site))
+    live = {p.relative_to(repo): p.read_text() for p in repo.rglob("*.md")}
+    put = store.put
+
+    def failing(key, data, content_type):
+        if key == keys.current:
+            raise A.ArtifactError("store down")
+        put(key, data, content_type)
+
+    monkeypatch.setattr(store, "put", failing)
+    with pytest.raises(A.ArtifactError, match="store down.*the checkout was put back"):
+        A.rollback(store, keys, repo, "A")
+    assert {p.relative_to(repo): p.read_text() for p in repo.rglob("*.md")} == live
+    assert json.loads((repo / "state/agentic.json").read_text()) == {"fingerprint": "f2"}
+    assert A.current(store, keys)["id"] == "B"
+    assert list(repo.glob(".restore.*")) == []
+    # When even the undo fails, the error says where the previous trees are kept.
+    monkeypatch.setattr(H, "_put_back", lambda root, aside: (_ for _ in ()).throw(OSError("ro")))
+    with pytest.raises(A.ArtifactError, match="could not be put back.*kept under"):
+        A.rollback(store, keys, repo, "A")
+    assert (repo / "wiki/concepts/x.md").read_text() == "# x v1\n"  # restored, pointer at B
+    kept = list(repo.glob(".restore.*/.aside/wiki/concepts/x.md"))
+    assert len(kept) == 1 and kept[0].read_text() == "# x v2\n"
+    monkeypatch.undo()
+    assert A.rollback(store, keys, repo, "A")["id"] == "A"
+    assert A.current(store, keys)["id"] == "A"

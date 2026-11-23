@@ -470,16 +470,26 @@ def rollback(store: Store, keys: Keys, root: pathlib.Path, artifact_id: str) -> 
     try:
         # One lock across replacing the trees and moving the pointer: a run that
         # started in between would promote on top of a half-restored checkout. The
-        # trees go first: a failed restore puts them back and leaves `current` alone.
+        # trees go first, but their predecessors are kept aside until `current` has
+        # moved: a pointer write that fails puts them back, so the served artifact
+        # and the curator's inputs never disagree.
         with H.held_lock(root):
-            restored = H.restore(root, artifact_id, locked=True)
+            pending = H.stage_restore(root, artifact_id)
             try:
                 pointer = point(store, keys, artifact_id)
             except ArtifactError as exc:
+                try:
+                    pending.undo()
+                except H.HistoryError as undo:
+                    raise ArtifactError(
+                        f"current was not moved ({exc}) and the checkout, restored to "
+                        f"{artifact_id}, could not be put back: {undo}"
+                    ) from undo
                 raise ArtifactError(
-                    f"the checkout was restored to {artifact_id} but current was not moved "
-                    f"({exc}); run the rollback again"
+                    f"current was not moved ({exc}); the checkout was put back, so both "
+                    f"still stand at the previous promotion"
                 ) from exc
+            restored = pending.keep()
     except H.HistoryError as exc:
         raise ArtifactError(str(exc)) from exc
     pointer["restored_commit"] = restored
