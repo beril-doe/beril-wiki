@@ -1,7 +1,8 @@
 # Nightly: `curate.sh run`. Reports the plan, then `agentic run` under the
 # ConfigMap's budgets, which makes its own test and spends nothing when the
-# accepted state is current; when it promoted, renders, publishes the
-# artifact to the wiki pod's store, reloads it and pushes `history`. A night
+# accepted state is current; when it promoted, renders and publishes the
+# artifact to the wiki pod's store (`history` and the artifact tag reach origin
+# before `current` moves), then reloads the pod. A night
 # can take hours, so the deadline is generous; a run killed by it is charged
 # from its transcripts and resumes from cached work the next night.
 apiVersion: batch/v1
@@ -42,6 +43,14 @@ spec:
               type: RuntimeDefault
           containers:
             - name: curator
+              # The tag main's push of curator-image.yml refreshes (dev: develop,
+              # production: latest); nothing is published from a pull request.
+              # To pin this job to one build instead, as deploy/README.md
+              # ("Image promotion") describes, name the digest the workflow run
+              # printed and stop re-pulling what cannot change:
+              #   image: ghcr.io/beril-doe/beril-wiki-curator@sha256:<digest>
+              #   imagePullPolicy: IfNotPresent
+              # (or `kustomize edit set image ghcr.io/beril-doe/beril-wiki-curator@sha256:<digest>`).
               image: ghcr.io/beril-doe/beril-wiki-curator:develop
               imagePullPolicy: Always
               args: ["run"]

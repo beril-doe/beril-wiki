@@ -35,6 +35,8 @@ spec:
           type: RuntimeDefault
       containers:
         - name: curator
+          # Same image rule as cronjob-curate.yaml: :develop from main, or a
+          # pinned digest with imagePullPolicy: IfNotPresent.
           image: ghcr.io/beril-doe/beril-wiki-curator:develop
           imagePullPolicy: Always
           args: ["run"]
