@@ -42,6 +42,8 @@ COPY scripts ./scripts
 COPY contract ./contract
 COPY state ./state
 COPY wiki ./wiki
+# The ingest copies corpus/manifest.json into the site as corpus-manifest.json.
+COPY corpus ./corpus
 # A local vector store, when the host has one (gitignored; absent in CI).
 COPY searc[h]/ ./search/
 RUN uv sync --frozen --no-dev
