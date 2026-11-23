@@ -32,7 +32,9 @@ WIKI_GIT_URL="${WIKI_GIT_URL:-https://github.com/beril-doe/beril-wiki.git}"
 WIKI_GIT_REF="${WIKI_GIT_REF:-main}"
 # Refreshed from WIKI_GIT_REF every start. Never wiki/ state/ corpus/ search/.
 CODE_PATHS=(src scripts theme contract deploy pyproject.toml uv.lock agentic.yaml
-  Dockerfile Dockerfile.curator)
+  Dockerfile Dockerfile.curator .gitignore)
+# The curator's own state in the clone (gitignored): the publish still owed.
+PUBLISH_PENDING="$WIKI_WORKDIR/.curate/publish-pending.json"
 # Pre-warmed in the image; seeded into the clone when it has none of its own.
 WIKI_QUARTZ_CACHE="${WIKI_QUARTZ_CACHE:-/opt/quartz}"
 WIKI_THEME_CACHE="${WIKI_THEME_CACHE:-/opt/theme}"
@@ -170,7 +172,11 @@ work = any(counts.values()) or current is False
 shown = "unknown" if current is None else str(current).lower()
 print(int(work), " ".join(f"{k}={v}" for k, v in counts.items()), f"accepted_current={shown}")') ||
     die "could not read the plan"
-  log "plan: ${summary#* }"
+  if [ -f "$PUBLISH_PENDING" ]; then
+    log "plan: ${summary#* } publish_pending=yes (a promoted wiki is not published yet)"
+    return 3
+  fi
+  log "plan: ${summary#* } publish_pending=no"
   [ "${summary%% *}" = 0 ] && return 0 || return 3
 }
 
@@ -192,9 +198,18 @@ render_step() {
     die "render: quartz/public/index.html carries no BERIL frame (theme plugin not loaded)"
 }
 
+mark_publish_pending() {
+  # Written the moment `agentic run` promoted, removed when the reload succeeded:
+  # a failed render, push, reload or history push is finished by the next run or
+  # publish instead of being lost behind a plan that now has nothing to curate.
+  mkdir -p "${PUBLISH_PENDING%/*}"
+  printf '{"promoted_at": "%s"}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$PUBLISH_PENDING"
+}
+
 publish_step() {
   local stamp
   stamp=$(date -u +%Y%m%dT%H%M%SZ)
+  [ ! -f "$PUBLISH_PENDING" ] || log "publish: owed since $(cat "$PUBLISH_PENDING")"
   render_step
   # The gates ran inside build_quartz.sh and are recorded for this exact build;
   # push refuses without that record, so --no-check repeats nothing.
@@ -206,6 +221,7 @@ publish_step() {
   else
     log "push: no history branch recorded yet; nothing to push"
   fi
+  rm -f "$PUBLISH_PENDING"
 }
 
 check_caps() {
@@ -264,6 +280,10 @@ main() {
       seed_build_caches
       plan_step || true # reported; agentic run makes the same test itself
       if run_step; then
+        mark_publish_pending
+        publish_step
+      elif [ -f "$PUBLISH_PENDING" ]; then
+        # The run changed nothing, but an earlier promotion is still unpublished.
         publish_step
       else
         log "accepted state unchanged by the run; nothing to publish"

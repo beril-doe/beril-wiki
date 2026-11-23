@@ -35,6 +35,7 @@ Code and data live together, which is what every script here assumes
 | `corpus/` | every source a run reads, and `corpus/manifest.json` (file hashes, each project's owner and revision) | a source id assigned once must never be assigned again |
 | `search/section-vectors.jsonl` | the meaning-search vectors | embedding again costs time; the file is gitignored |
 | `.agentic/` | the ledger (`jobs.sqlite`), evidence, plans, failures, the lock | spend accounting and cached paid work |
+| `.curate/` | the curator's own state (gitignored): `publish-pending.json` while a promoted wiki is unpublished, `code-commit` | a failed publish is finished by the next job rather than lost |
 
 At every start `curate.sh` refreshes **code paths only** from `WIKI_GIT_REF`
 (default `main`): `src scripts theme contract deploy pyproject.toml uv.lock
@@ -140,8 +141,8 @@ the volume may have been populated by another uid.
 
 | Mode | Dispatched by | Steps | Exit |
 | --- | --- | --- | --- |
-| `plan` | `cronjob-plan.yaml`, hourly | refresh code; `corpus pull-hub`; `stages.fetch`; `agentic plan`; log `plan: changed_sources=N pending_editorial=N retry_pages=N accepted_current=true|false|unknown` | 0 nothing to do, 3 a run would do something (the CronJob maps 3 to success), 2 no clone |
-| `run` | `cronjob-curate.yaml`, nightly; `job-run-now.yaml` | `plan` (reported, never a gate); `agentic run` under the budgets, which makes the same test itself and promotes or prints `unchanged; zero model calls`; when it promoted: `build_quartz.sh`; `publish_artifact.sh --id <UTC stamp> --no-check`; `git push origin history refs/tags/artifact/*` | 0 published or nothing to publish; non-zero on any failed step, including a held `.agentic/lock` and a refused cold start |
+| `plan` | `cronjob-plan.yaml`, hourly | refresh code; `corpus pull-hub`; `stages.fetch`; `agentic plan`; log `plan: changed_sources=N pending_editorial=N retry_pages=N accepted_current=true|false|unknown publish_pending=yes|no` | 0 nothing to do, 3 a run would do something, a publish owed included (the CronJob maps 3 to success), 2 no clone |
+| `run` | `cronjob-curate.yaml`, nightly; `job-run-now.yaml` | `plan` (reported, never a gate); `agentic run` under the budgets, which makes the same test itself and promotes or prints `unchanged; zero model calls`; when it promoted, or a publish is still owed: `build_quartz.sh`; `publish_artifact.sh --id <UTC stamp> --no-check`; `git push origin history refs/tags/artifact/*` | 0 published or nothing to publish; non-zero on any failed step, including a held `.agentic/lock` and a refused cold start |
 | `publish` | by hand | refresh code; render and publish the accepted wiki as above, without curating | as `run` |
 | `render` | by hand | refresh code; `build_quartz.sh` into `quartz/public`; check the frame; no store, no push | 0 rendered with the theme's frame, else non-zero |
 | `status` | by hand | `agentic status`, or a note when no run has been recorded | 0 |
@@ -156,7 +157,12 @@ counts are what `agentic run` would act on without any source changing:
 left, re-drafted unasked) and `accepted_current`, `run`'s own fingerprint
 test, which a README, figure or errata change alone fails, as does a code or
 model change (`unknown` when the Claude CLI, whose version is part of the
-fingerprint, is not on the PATH). Budgets
+fingerprint, is not on the PATH). `publish_pending=yes` means `agentic run`
+promoted but the render, push, reload or `history` push that followed
+failed: `.curate/publish-pending.json` is written at promotion and removed
+after the reload, and the next `run` or `publish` finishes that publish
+before anything else, so the promoted wiki is not stranded behind a plan
+with nothing left to curate. Budgets
 are fixed per run, so a bad night is capped; `agentic run` refuses a second
 runner on the same checkout, and a run killed by the Job's deadline is charged
 from its transcripts and resumes from cached work the next night.

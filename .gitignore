@@ -25,6 +25,8 @@ reference/
 /docs/**/*.excalidraw
 !/docs/agentic-workflow.html
 /.agentic/
+# The scheduled curator's own state on its volume (deploy/curate.sh).
+/.curate/
 # Personal worktree hook for Orca and T3 Code; lives only in the main checkout.
 /t3.json
 /scripts/worktree-setup.sh

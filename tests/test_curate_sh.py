@@ -52,6 +52,12 @@ def workdir(tmp_path):
     git(root, "init", "-q", "-b", "main")
     git(root, "add", ".")
     git(root, "commit", "-q", "-m", "state")
+    # publish_step's push to the store: a trace line instead.
+    (root / "scripts").mkdir()
+    (root / "scripts/publish_artifact.sh").write_text(
+        '#!/bin/sh\necho "published $*" >> "$WIKI_WORKDIR/.trace"\n'
+    )
+    (root / "scripts/publish_artifact.sh").chmod(0o755)
     return root
 
 
@@ -96,7 +102,9 @@ py() {
   esac
 }
 render_step() { echo rendered >> "$WIKI_WORKDIR/.trace"; }
-publish_step() { render_step; echo published >> "$WIKI_WORKDIR/.trace"; }
+git() {
+  case "$*" in *" push "*) echo pushed >> "$WIKI_WORKDIR/.trace" ;; *) command git "$@" ;; esac
+}
 """
 
 EMPTY = json.dumps(
@@ -149,7 +157,7 @@ def test_run_calls_agentic_run_regardless_of_the_plan_and_publishes_on_promotion
     )
     r = curate(workdir, "run", STUBS, {"PLAN": EMPTY, "RUN_EFFECT": promote})
     assert r.returncode == 0, r.stderr
-    assert trace(workdir) == ["ran", "ran", "rendered", "published"]
+    assert trace(workdir)[:5] == ["ran", "ran", "rendered", "published", "--id"]
 
 
 def test_run_stops_when_agentic_run_fails(workdir):
@@ -182,3 +190,31 @@ def test_plan_skips_and_run_waits_while_another_job_holds_the_lock(workdir):
         held.close()
     r = curate(workdir, "plan", STUBS, {"PLAN": EMPTY})
     assert r.returncode == 0 and "] plan: " in r.stderr, r.stderr
+
+
+def test_a_failed_publish_is_owed_until_a_later_run_or_publish_finishes_it(workdir):
+    promote = (
+        "echo ran >> $WIKI_WORKDIR/.trace; "
+        'echo \'{"fingerprint": "f1"}\' > $WIKI_WORKDIR/state/agentic.json'
+    )
+    failing = STUBS + '\npublish_step() { render_step; die "publish: reload failed"; }\n'
+    r = curate(workdir, "run", failing, {"PLAN": EMPTY, "RUN_EFFECT": promote})
+    assert r.returncode == 1 and "reload failed" in r.stderr
+    pending = workdir / ".curate/publish-pending.json"
+    assert "promoted_at" in pending.read_text()
+    # The hourly plan says so and asks for a run; the next run, with nothing
+    # to curate, publishes the promoted wiki and clears the marker.
+    r = curate(workdir, "plan", STUBS, {"PLAN": EMPTY})
+    assert r.returncode == 3 and "publish_pending=yes" in r.stderr, r.stderr
+    r = curate(
+        workdir, "run", STUBS, {"PLAN": EMPTY, "RUN_EFFECT": "echo ran >> $WIKI_WORKDIR/.trace"}
+    )
+    assert r.returncode == 0, r.stderr
+    assert trace(workdir)[-6:-3] == ["ran", "rendered", "published"]
+    assert not pending.exists()
+    assert "publish_pending=no" in curate(workdir, "plan", STUBS, {"PLAN": EMPTY}).stderr
+    # `publish` by hand finishes it as well.
+    pending.parent.mkdir(exist_ok=True)
+    pending.write_text('{"promoted_at": "2026-11-23T07:31:00Z"}')
+    r = curate(workdir, "publish", STUBS)
+    assert r.returncode == 0 and not pending.exists()
