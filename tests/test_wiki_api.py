@@ -173,6 +173,30 @@ def test_source_slices_exact_characters(site):
         W.source(c, "../x", 0, 10)
 
 
+def test_source_finds_a_report_under_either_name_and_keeps_its_bytes(site):
+    root, corpus = site
+    # discoveries and pitfalls are stored under the published name, as read hands
+    # them out as citations; a CRLF report is served with its CRs, so offsets
+    # agree with the hashed bytes.
+    (corpus / "sources/discoveries.md").write_bytes(b"# Discoveries\r\n\r\nOne \xc3\xa9 two.\r\n")
+    c = corpus_of(site)
+    whole = W.read(c, "wiki/sources/discoveries")
+    assert whole is not None and whole["exact"]
+    assert whole["content"] == "# Discoveries\r\n\r\nOne \u00e9 two.\r\n"
+    piece = W.source(c, "discoveries", 17, 9)
+    assert piece["text"] == "One \u00e9 two" and piece["total"] == len(whole["content"])
+    assert whole["content"][piece["offset"] : piece["end"]] == piece["text"]
+    assert W.source(c, "demo", 0, 8)["text"] == "# Report"  # the __REPORT copy still wins
+    app = create_app(root, "/wiki", corpus_dir=corpus, internal_token="internal")
+    with TestClient(app) as client:
+        r = client.get(
+            "/wiki/_api/source",
+            params={"project": "discoveries", "offset": 17, "length": 9},
+            headers={"Authorization": "Bearer internal"},
+        )
+        assert r.status_code == 200 and r.json()["text"] == "One \u00e9 two"
+
+
 def test_routes_are_token_guarded_and_name_the_artifact(site):
     root, corpus = site
     app = create_app(root, "/wiki", corpus_dir=corpus, internal_token="internal")

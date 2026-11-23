@@ -14,6 +14,7 @@ was served from, so an agent's citations match what a reader sees.
   GET _api/read?address=          {artifact, address, title, content, sources}
   GET _api/ls?path=               {artifact, path, entries: [{address, title}]}
   GET _api/source?project=&offset=&length=   exact characters of the source report
+                                  (code-point offsets into the UTF-8 decoded file)
 
 The tools read only what the artifact carries: the search index the site ships
 (``static/search/pages.json`` and ``sections.json``) and, when the artifact or
@@ -168,12 +169,21 @@ class Corpus:
             return self._cards
 
     def markdown(self, folder: str, name: str) -> str | None:
+        """The file's bytes decoded as UTF-8 (undecodable bytes replaced), with its line
+        endings as stored: offsets the API reports count code points of this text, so
+        a CRLF report keeps its CRs rather than being read through newline translation."""
         if not self.corpus or not ID_RE.fullmatch(name):
             return None
         path = self.corpus / folder / f"{name}.md"
         if path.is_file() and path.resolve().is_relative_to(self.corpus.resolve()):
-            return path.read_text(encoding="utf-8", errors="replace")
+            return path.read_bytes().decode("utf-8", errors="replace")
         return None
+
+    def report(self, project: str) -> str | None:
+        """A project's source report: the staging copy ``<id>__REPORT.md``, else a
+        copy stored under the published name ``<id>.md``."""
+        text = self.markdown("sources", f"{project}__REPORT")
+        return text if text is not None else self.markdown("sources", project)
 
     def page_sections(self, slug: str) -> list[dict]:
         return [s for s in self.sections if s["s"] == slug]
@@ -294,10 +304,7 @@ def read(c: Corpus, address: str) -> dict[str, Any] | None:
     if slug.startswith("sources/"):
         # publish.ingest.published() drops the `__REPORT` staging suffix from the
         # page name; the corpus keeps it, so look the report up under both.
-        name = slug.split("/", 1)[1]
-        text = c.markdown("sources", f"{name}__REPORT")
-        if text is None:
-            text = c.markdown("sources", name)
+        text = c.report(slug.split("/", 1)[1])
         if text is None and page is None:
             return None
         content = text if text is not None else "\n\n".join(s["t"] for s in c.page_sections(slug))
@@ -351,10 +358,12 @@ def ls(c: Corpus, path: str) -> dict[str, Any]:
 
 
 def source(c: Corpus, project: str, offset: int, length: int) -> dict[str, Any]:
-    """A slice of a project's source report by character offset, for exact quotes."""
+    """A slice of a project's source report by character offset, for exact quotes.
+    Offsets, ``end`` and ``total`` count code points of the UTF-8 decoded file (see
+    Corpus.markdown), the same text ``read`` returns whole."""
     if not ID_RE.fullmatch(project):
         raise ValueError("bad project id")
-    text = c.markdown("sources", f"{project}__REPORT")
+    text = c.report(project)
     if text is None:
         return {"artifact": c.artifact, "project": project, "error": "source not available"}
     offset = max(0, int(offset))
