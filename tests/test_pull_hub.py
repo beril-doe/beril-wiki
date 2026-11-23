@@ -362,6 +362,7 @@ def test_a_moved_cursor_is_not_a_corpus_change_to_the_scope_checks(out, beril, c
     spec = importlib.util.spec_from_file_location(
         "check_update", Path(__file__).resolve().parents[1] / "scripts/check_update.py"
     )
+    assert spec and spec.loader
     check_update = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(check_update)
     corpus.pull_hub(out, client)
