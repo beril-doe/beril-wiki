@@ -264,6 +264,8 @@ def test_a_manifest_without_gate_results_is_refused(site, tmp_path, store):
                 member.size = len(data)
             dst.addfile(member, io.BytesIO(data))
     store.put("wiki/site-v1.tar.gz", buf.getvalue(), "application/gzip")
+    manifest["tarball_sha256"] = A.sha256(buf.getvalue())
+    store.put("wiki/site-v1.manifest.json", json.dumps(manifest).encode(), "application/json")
     pointer = json.loads(store.get("wiki/current.json"))
     pointer["sha256"] = A.sha256(buf.getvalue())
     store.put("wiki/current.json", json.dumps(pointer).encode(), "application/json")

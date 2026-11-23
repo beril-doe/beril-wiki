@@ -221,9 +221,15 @@ back, so the next curate run starts from the restored promotion instead of
 building on the bad one; the previous trees are kept aside until `current` has
 moved, and put back if it could not, so the served artifact and the checkout
 always stand at the same promotion. It refuses while a run holds
-`.agentic/lock` or when the tag is missing. The server verifies the tarball's sha256 against
-`current.json` and the manifest's id, page count and gates against the unpacked
-tree before it swaps, keeps the previous artifact unpacked, and on a restart
+`.agentic/lock` or when the tag is missing. The server reads the store's
+manifest first and refuses it before any download when its id, page count,
+gates or tarball sha256 disagree with `current.json`; it then streams the
+tarball to a file, verifies its sha256, and extracts it one member at a time
+(regular files and directories only) under `WIKI_ARTIFACT_MAX_MEMBERS`
+(50000), `WIKI_ARTIFACT_MAX_UNPACKED_BYTES` (4 GiB) and
+`WIKI_ARTIFACT_MAX_MEMBER_BYTES` (1 GiB), removing the partial tree when a cap
+trips, so a compressed archive cannot fill the volume. It checks the manifest's
+id, page count and gates against the unpacked tree before it swaps, keeps the previous artifact unpacked, and on a restart
 serves the last one it unpacked when the store is unreachable, or the baked
 site when nothing was. The manifest also records the git commit, the accepted
 run's fingerprint from `state/agentic.json` and the sha256 of every source

@@ -22,6 +22,10 @@ Store configuration, from the environment on both sides:
   WIKI_ARTIFACT_REGION      optional, default us-east-1
   WIKI_PUBLISH_LEASE_SECONDS  how long ``<prefix>/publish.lease`` (held by push and
                             rollback) outlives a publisher that died; default 3600
+  WIKI_ARTIFACT_MAX_MEMBERS, WIKI_ARTIFACT_MAX_UNPACKED_BYTES,
+  WIKI_ARTIFACT_MAX_MEMBER_BYTES
+                            what the server will extract from one artifact
+                            (default 50000 members, 4 GiB in all, 1 GiB each)
 
 gzip rather than zstd: the standard library reads and writes it, so the server
 image carries no native extension for it, and a site of this size unpacks in
@@ -74,6 +78,10 @@ class Store(Protocol):
 
     def get(self, key: str) -> bytes: ...
 
+    def get_file(self, key: str, dest: pathlib.Path) -> None:
+        """Stream the object to ``dest`` without holding it in memory."""
+        ...
+
     def put(self, key: str, data: bytes, content_type: str) -> None: ...
 
     def put_new(self, key: str, data: bytes, content_type: str) -> bool: ...
@@ -99,6 +107,12 @@ class DirStore:
     def get(self, key: str) -> bytes:
         try:
             return self._path(key).read_bytes()
+        except FileNotFoundError as exc:
+            raise ArtifactError(f"missing object {key}") from exc
+
+    def get_file(self, key: str, dest: pathlib.Path) -> None:
+        try:
+            shutil.copyfile(self._path(key), dest)
         except FileNotFoundError as exc:
             raise ArtifactError(f"missing object {key}") from exc
 
@@ -166,6 +180,15 @@ class S3Store:
     def get(self, key: str) -> bytes:
         try:
             return self.client.get_object(Bucket=self.bucket, Key=key)["Body"].read()
+        except _s3_errors() as exc:
+            if _missing(exc):
+                raise ArtifactError(f"missing object {key}") from exc
+            raise ArtifactError(f"store get {key}: {exc}") from exc
+
+    def get_file(self, key: str, dest: pathlib.Path) -> None:
+        try:
+            with dest.open("wb") as handle:
+                self.client.download_fileobj(self.bucket, key, handle)
         except _s3_errors() as exc:
             if _missing(exc):
                 raise ArtifactError(f"missing object {key}") from exc
@@ -704,23 +727,88 @@ def verify_manifest(unpacked: pathlib.Path, artifact_id: str) -> dict:
     return manifest
 
 
-def unpack(data: bytes, dest: pathlib.Path, artifact_id: str, expected_sha: str | None) -> dict:
-    """Extract into ``dest`` (replacing any partial earlier attempt) and verify."""
-    if expected_sha and sha256(data) != expected_sha:
+UNPACK_LIMITS = {
+    "WIKI_ARTIFACT_MAX_MEMBERS": 50_000,
+    "WIKI_ARTIFACT_MAX_UNPACKED_BYTES": 4 * 1024**3,
+    "WIKI_ARTIFACT_MAX_MEMBER_BYTES": 1024**3,
+}
+
+
+def unpack_limits(env: Mapping[str, str] | None = None) -> dict[str, int]:
+    env = os.environ if env is None else env
+    return {name: int(env.get(name) or default) for name, default in UNPACK_LIMITS.items()}
+
+
+def file_sha256(path: pathlib.Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def check_store_manifest(manifest: dict, artifact_id: str, pointer: dict) -> dict:
+    """The manifest the store holds beside the tarball, checked before the tarball is
+    read: a writer who can put objects must not get a tarball extracted on the
+    strength of a manifest that would be refused anyway."""
+    if manifest.get("id") != artifact_id:
+        raise ArtifactError(f"manifest id {manifest.get('id')!r} is not {artifact_id!r}")
+    if not isinstance(manifest.get("page_count"), int):
+        raise ArtifactError("manifest has no page count")
+    if not manifest_gates_ok(manifest):
+        raise ArtifactError("manifest does not record all three gates passing; refusing it")
+    expected = pointer.get("sha256")
+    if expected and manifest.get("tarball_sha256") != expected:
+        raise ArtifactError("manifest tarball sha256 does not match current.json")
+    return manifest
+
+
+def unpack(
+    tarball: pathlib.Path,
+    dest: pathlib.Path,
+    artifact_id: str,
+    expected_sha: str | None,
+    manifest: dict | None = None,
+    limits: dict[str, int] | None = None,
+) -> dict:
+    """Extract the downloaded tarball into ``dest`` (replacing any partial earlier
+    attempt) and verify. The sha256 is checked on the file before anything is
+    extracted; members are extracted one at a time, regular files and directories
+    only, and the count, each member's size and the total (as the headers declare
+    them, which `filter="data"` holds the extraction to) are capped, so a
+    compressed archive cannot fill the volume. A trip removes the partial tree."""
+    limits = limits or unpack_limits()
+    if expected_sha and file_sha256(tarball) != expected_sha:
         raise ArtifactError("tarball sha256 does not match current.json")
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmp = pathlib.Path(tempfile.mkdtemp(prefix=f".site-{artifact_id}.", dir=dest.parent))
     try:
-        with tarfile.open(fileobj=io.BytesIO(data), mode="r:gz") as tar:
-            tar.extractall(tmp, filter="data")
-        manifest = verify_manifest(tmp, artifact_id)
+        with tarfile.open(tarball, mode="r:gz") as tar:
+            members = total = 0
+            for member in tar:
+                members += 1
+                if members > limits["WIKI_ARTIFACT_MAX_MEMBERS"]:
+                    raise ArtifactError(f"artifact has more than {members - 1} members")
+                if not (member.isfile() or member.isdir()):
+                    raise ArtifactError(f"{member.name}: not a regular file or directory")
+                if member.size > limits["WIKI_ARTIFACT_MAX_MEMBER_BYTES"]:
+                    raise ArtifactError(f"{member.name}: {member.size} bytes exceeds the cap")
+                total += member.size
+                if total > limits["WIKI_ARTIFACT_MAX_UNPACKED_BYTES"]:
+                    raise ArtifactError(f"artifact unpacks past {total - member.size} bytes")
+                tar.extract(member, tmp, filter="data")
+        found = verify_manifest(tmp, artifact_id)
+        if manifest is not None:
+            for key in ("id", "page_count", "gates"):
+                if found.get(key) != manifest.get(key):
+                    raise ArtifactError(f"the tarball's manifest differs from the store's: {key}")
         if dest.exists():
             shutil.rmtree(dest)
         os.replace(tmp, dest)
     except BaseException:
         shutil.rmtree(tmp, ignore_errors=True)
         raise
-    return manifest
+    return found
 
 
 def sync(store: Store, keys: Keys, site_root: pathlib.Path) -> tuple[str, pathlib.Path, dict]:
@@ -735,8 +823,13 @@ def sync(store: Store, keys: Keys, site_root: pathlib.Path) -> tuple[str, pathli
             return artifact_id, dest, verify_manifest(dest, artifact_id)
         except ArtifactError:
             shutil.rmtree(dest)
-    data = store.get(pointer["tarball"])
-    manifest = unpack(data, dest, artifact_id, pointer.get("sha256"))
+    manifest = check_store_manifest(
+        json.loads(store.get(keys.manifest(artifact_id))), artifact_id, pointer
+    )
+    with tempfile.TemporaryDirectory(prefix=f".download-{artifact_id}.", dir=site_root) as tmp:
+        tarball = pathlib.Path(tmp) / "site.tar.gz"
+        store.get_file(keys.tarball(artifact_id), tarball)
+        manifest = unpack(tarball, dest, artifact_id, pointer.get("sha256"), manifest)
     return artifact_id, dest, manifest
 
 

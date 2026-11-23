@@ -164,10 +164,12 @@ def test_sync_refuses_a_tampered_tarball_or_manifest(tmp_path, store, monkeypatc
             info = tarfile.TarInfo(name)
             info.size = len(body)
             tar.addfile(info, io.BytesIO(body))
+    bad = tmp_path / "bad.tar.gz"
+    bad.write_bytes(buf.getvalue())
     with pytest.raises(A.ArtifactError, match="manifest says 7 pages"):
-        A.unpack(buf.getvalue(), tmp_path / "artifacts/site-v1", "v1", None)
+        A.unpack(bad, tmp_path / "artifacts/site-v1", "v1", None)
     with pytest.raises(A.ArtifactError, match="manifest id"):
-        A.unpack(buf.getvalue(), tmp_path / "artifacts/site-v2", "v2", None)
+        A.unpack(bad, tmp_path / "artifacts/site-v2", "v2", None)
 
 
 def test_unpack_refuses_members_that_escape(tmp_path):
@@ -177,8 +179,10 @@ def test_unpack_refuses_members_that_escape(tmp_path):
         info = tarfile.TarInfo("../outside.txt")
         info.size = len(body)
         tar.addfile(info, io.BytesIO(body))
+    evil = tmp_path / "evil.tar.gz"
+    evil.write_bytes(buf.getvalue())
     with pytest.raises((A.ArtifactError, tarfile.TarError)):
-        A.unpack(buf.getvalue(), tmp_path / "artifacts/site-v1", "v1", None)
+        A.unpack(evil, tmp_path / "artifacts/site-v1", "v1", None)
     assert not (tmp_path / "outside.txt").exists()
 
 
@@ -349,3 +353,68 @@ def test_s3_store_leases_with_if_none_match_and_reads_a_precondition_failure_as_
     store.delete("gone")  # missing is fine
     with pytest.raises(A.ArtifactError, match="delete denied"):
         store.delete("denied")
+
+
+def bomb(path: Path, members: int, size: int) -> None:
+    """A tiny gzip holding ``members`` files of ``size`` zero bytes each."""
+    with tarfile.open(path, mode="w:gz") as tar:
+        for i in range(members):
+            info = tarfile.TarInfo(f"site/{i}.html" if i else "site/index.html")
+            info.size = size
+            tar.addfile(info, io.BytesIO(bytes(size)))
+
+
+def test_unpack_stops_a_tar_bomb_before_it_fills_the_volume(tmp_path, monkeypatch):
+    limits = {
+        "WIKI_ARTIFACT_MAX_MEMBERS": 10,
+        "WIKI_ARTIFACT_MAX_UNPACKED_BYTES": 1 << 20,
+        "WIKI_ARTIFACT_MAX_MEMBER_BYTES": 1 << 19,
+    }
+    dest = tmp_path / "artifacts/site-v1"
+    big = tmp_path / "big.tar.gz"
+    bomb(big, 3, 1 << 19)  # 1.5 MiB of zeros in a few hundred compressed bytes
+    assert big.stat().st_size < 4096
+    with pytest.raises(A.ArtifactError, match="unpacks past"):
+        A.unpack(big, dest, "v1", None, limits=limits)
+    many = tmp_path / "many.tar.gz"
+    bomb(many, 11, 1)
+    with pytest.raises(A.ArtifactError, match="more than 10 members"):
+        A.unpack(many, dest, "v1", None, limits=limits)
+    fat = tmp_path / "fat.tar.gz"
+    bomb(fat, 1, (1 << 19) + 1)
+    with pytest.raises(A.ArtifactError, match="exceeds the cap"):
+        A.unpack(fat, dest, "v1", None, limits=limits)
+    linked = tmp_path / "linked.tar.gz"
+    with tarfile.open(linked, mode="w:gz") as tar:
+        info = tarfile.TarInfo("site/index.html")
+        info.type = tarfile.SYMTYPE
+        info.linkname = "/etc/passwd"
+        tar.addfile(info)
+    with pytest.raises(A.ArtifactError, match="not a regular file"):
+        A.unpack(linked, dest, "v1", None, limits=limits)
+    # Nothing partial is left behind, and the defaults read from the environment.
+    assert not dest.exists() and list((tmp_path / "artifacts").glob(".site-*")) == []
+    monkeypatch.setenv("WIKI_ARTIFACT_MAX_MEMBERS", "7")
+    assert A.unpack_limits()["WIKI_ARTIFACT_MAX_MEMBERS"] == 7
+    assert A.unpack_limits({})["WIKI_ARTIFACT_MAX_UNPACKED_BYTES"] == 4 * 1024**3
+
+
+def test_sync_refuses_a_bad_store_manifest_before_downloading_the_tarball(
+    tmp_path, store, monkeypatch
+):
+    root, site = make_repo(tmp_path)
+    monkeypatch.setattr(A, "corpus_files", _plain_corpus)
+    keys = A.Keys("wiki")
+    push(store, keys, root, site, "v1")
+    manifest = json.loads(store.get(keys.manifest("v1")))
+    downloads = []
+    monkeypatch.setattr(store, "get_file", lambda key, dest: downloads.append(key))
+    for change, why in (
+        ({"gates": None}, "gates"),
+        ({"tarball_sha256": "0" * 64}, "sha256 does not match current.json"),
+        ({"page_count": "3"}, "no page count"),
+    ):
+        store.put(keys.manifest("v1"), json.dumps(manifest | change).encode(), "application/json")
+        with pytest.raises(A.ArtifactError, match=why):
+            A.sync(store, keys, tmp_path / "artifacts")
+    assert downloads == []
