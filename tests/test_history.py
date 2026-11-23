@@ -320,3 +320,111 @@ def test_a_pointer_write_that_fails_after_the_restore_puts_the_checkout_back(tmp
     monkeypatch.undo()
     assert A.rollback(store, keys, repo, "A")["id"] == "A"
     assert A.current(store, keys)["id"] == "A"
+
+
+def with_remote(tmp_path: Path) -> tuple[Path, Path, Path]:
+    """A bare `origin`, the first checkout that published A, and a second clone."""
+    repo = checkout(tmp_path)
+    remote = tmp_path / "remote.git"
+    run("git", "init", "--quiet", "--bare", "-b", "main", str(remote), cwd=tmp_path)
+    run("git", "remote", "add", "origin", str(remote), cwd=repo)
+    run("git", "push", "--quiet", "origin", "main", cwd=repo)
+    clone = tmp_path / "clone"
+    run("git", "clone", "--quiet", str(remote), str(clone), cwd=tmp_path)
+    for k, v in (("user.name", "t"), ("user.email", "t@example.org")):
+        run("git", "config", k, v, cwd=clone)
+    return remote, repo, clone
+
+
+def test_push_sends_the_record_to_origin_before_current_moves(tmp_path, monkeypatch):
+    remote, repo, clone = with_remote(tmp_path)
+    monkeypatch.setattr(A, "corpus_files", lambda r: {})
+    store, keys = A.DirStore(tmp_path / "bucket"), A.Keys("wiki")
+    site = site_for(repo, "A")
+    first = A.push(store, keys, repo, site, "A", gate=gate(site))
+    assert run("git", "rev-parse", H.BRANCH, cwd=remote).strip() == first["history_commit"]
+    assert run("git", "rev-parse", "artifact/A", cwd=remote).strip() == first["history_commit"]
+    # The other host fetches origin/history and chains onto it.
+    site_for(clone, "B")
+    second = A.push(store, keys, clone, site_for(clone, "B"), "B", gate=gate(site_for(clone, "B")))
+    assert (
+        run("git", "rev-parse", f"{second['history_commit']}^", cwd=clone).strip()
+        == first["history_commit"]
+    )
+    assert run("git", "rev-parse", H.BRANCH, cwd=remote).strip() == second["history_commit"]
+    assert A.current(store, keys)["id"] == "B"
+    # Rollback under a held lease is refused before any tree moves.
+    with A.publish_lease(store, keys, "push", "C", seconds=60):
+        with pytest.raises(A.ArtifactError, match="another publisher holds"):
+            A.rollback(store, keys, clone, "A")
+    assert A.current(store, keys)["id"] == "B"
+
+
+def test_a_record_behind_the_remote_history_is_refused(tmp_path, monkeypatch):
+    """The first host published A and B; the second still has A as its local history
+    (an earlier publish of its own, say). Its next record would fork the trail."""
+    remote, repo, clone = with_remote(tmp_path)
+    monkeypatch.setattr(A, "corpus_files", lambda r: {})
+    store, keys = A.DirStore(tmp_path / "bucket"), A.Keys("wiki")
+    site = site_for(repo, "A")
+    A.push(store, keys, repo, site, "A", gate=gate(site))
+    run("git", "fetch", "--quiet", "origin", cwd=clone)
+    run("git", "branch", H.BRANCH, f"origin/{H.BRANCH}", cwd=clone)
+    site_for(repo, "B")
+    A.push(store, keys, repo, site, "B", gate=gate(site))
+    with pytest.raises(A.ArtifactError, match="history not recorded.*has moved past the local"):
+        A.push(store, keys, clone, site_for(clone, "C"), "C", gate=gate(site_for(clone, "C")))
+    assert A.current(store, keys)["id"] == "B"
+    assert H.ref(clone, "refs/tags/artifact/C") is None
+    assert store.exists(keys.tarball("C"))  # uploaded, immutable, never current
+    # Without fetching (offline, --no-history-push) the stale origin/history still
+    # refuses; record() does not quietly fork either way.
+    with pytest.raises(A.ArtifactError, match="has moved past"):
+        A.push(
+            store,
+            keys,
+            clone,
+            site_for(clone, "D"),
+            "D",
+            gate=gate(site_for(clone, "D")),
+            history_push=False,
+        )
+
+
+def test_a_rejected_history_push_leaves_current_unchanged_and_undoes_the_record(
+    tmp_path, monkeypatch
+):
+    """Both hosts fetched the same origin/history; the first pushes in between, so
+    the second's push is a non-fast-forward and is rejected."""
+    remote, repo, clone = with_remote(tmp_path)
+    monkeypatch.setattr(A, "corpus_files", lambda r: {})
+    store, keys = A.DirStore(tmp_path / "bucket"), A.Keys("wiki")
+    site = site_for(repo, "A")
+    A.push(store, keys, repo, site, "A", gate=gate(site))
+    run("git", "fetch", "--quiet", "origin", cwd=clone)  # the clone sees A
+    monkeypatch.setattr(H, "fetch_history", lambda root, remote="origin": None)  # the race
+    site_for(repo, "B")
+    A.push(store, keys, repo, site, "B", gate=gate(site))
+    before = run("git", "rev-parse", H.BRANCH, cwd=remote).strip()
+    with pytest.raises(A.ArtifactError, match="history push rejected.*local record was undone"):
+        A.push(store, keys, clone, site_for(clone, "C"), "C", gate=gate(site_for(clone, "C")))
+    assert A.current(store, keys)["id"] == "B"
+    assert run("git", "rev-parse", H.BRANCH, cwd=remote).strip() == before
+    assert H.ref(clone, "refs/tags/artifact/C") is None
+    assert H.ref(clone, f"refs/heads/{H.BRANCH}") is None  # there was none before
+    assert not store.exists(keys.lease)
+    # With origin caught up, the next publish goes through (C's tarball stays in the
+    # store, immutable and never current, so the retry takes a new id).
+    monkeypatch.undo()
+    monkeypatch.setattr(A, "corpus_files", lambda r: {})
+    done = A.push(store, keys, clone, site_for(clone, "C"), "C2", gate=gate(site_for(clone, "C")))
+    assert run("git", "rev-parse", H.BRANCH, cwd=remote).strip() == done["history_commit"]
+
+
+def test_push_without_origin_keeps_the_record_local(tmp_path, monkeypatch):
+    repo = checkout(tmp_path)
+    monkeypatch.setattr(A, "corpus_files", lambda r: {})
+    store, keys = A.DirStore(tmp_path / "bucket"), A.Keys("wiki")
+    site = site_for(repo, "A")
+    assert A.push(store, keys, repo, site, "A", gate=gate(site))["history_commit"]
+    assert H.fetch_history(repo) is None and not H.has_remote(repo)

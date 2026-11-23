@@ -20,6 +20,8 @@ Store configuration, from the environment on both sides:
   WIKI_ARTIFACT_PREFIX      key prefix inside the bucket (default ``wiki``)
   WIKI_ARTIFACT_ACCESS_KEY, WIKI_ARTIFACT_SECRET_KEY
   WIKI_ARTIFACT_REGION      optional, default us-east-1
+  WIKI_PUBLISH_LEASE_SECONDS  how long ``<prefix>/publish.lease`` (held by push and
+                            rollback) outlives a publisher that died; default 3600
 
 gzip rather than zstd: the standard library reads and writes it, so the server
 image carries no native extension for it, and a site of this size unpacks in
@@ -32,6 +34,7 @@ import time: it ships in the server image with serve.py.
 from __future__ import annotations
 
 import argparse
+import contextlib
 import datetime as dt
 import hashlib
 import io
@@ -39,12 +42,14 @@ import json
 import os
 import pathlib
 import re
+import secrets
 import shutil
+import socket
 import subprocess
 import sys
 import tarfile
 import tempfile
-from collections.abc import Mapping
+from collections.abc import Iterator, Mapping
 from typing import Any, Protocol
 
 ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$")
@@ -60,9 +65,20 @@ class ArtifactError(RuntimeError):
 
 
 class Store(Protocol):
+    """What a store must answer. `put_new` is the publish lease's primitive: create
+    the key only if it does not exist, atomically, and answer False (never
+    overwrite) when it does. DirStore opens with O_CREAT|O_EXCL; S3Store sends
+    `If-None-Match: *` and reads PreconditionFailed as held. An HTTP store honours
+    the same contract on its store routes: a PUT carrying `If-None-Match: *` is
+    refused with 412 when the key exists, and `delete` is a DELETE on the key."""
+
     def get(self, key: str) -> bytes: ...
 
     def put(self, key: str, data: bytes, content_type: str) -> None: ...
+
+    def put_new(self, key: str, data: bytes, content_type: str) -> bool: ...
+
+    def delete(self, key: str) -> None: ...
 
     def exists(self, key: str) -> bool: ...
 
@@ -92,6 +108,23 @@ class DirStore:
         tmp = p.with_name(p.name + ".tmp")
         tmp.write_bytes(data)
         os.replace(tmp, p)
+
+    def put_new(self, key: str, data: bytes, content_type: str) -> bool:
+        p = self._path(key)
+        p.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            fd = os.open(p, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o644)
+        except FileExistsError:
+            return False
+        with os.fdopen(fd, "wb") as handle:
+            handle.write(data)
+        return True
+
+    def delete(self, key: str) -> None:
+        try:
+            self._path(key).unlink()
+        except FileNotFoundError:
+            pass
 
     def exists(self, key: str) -> bool:
         return self._path(key).is_file()
@@ -143,6 +176,25 @@ class S3Store:
             self.client.put_object(Bucket=self.bucket, Key=key, Body=data, ContentType=content_type)
         except _s3_errors() as exc:
             raise ArtifactError(f"store put {key}: {exc}") from exc
+
+    def put_new(self, key: str, data: bytes, content_type: str) -> bool:
+        try:
+            self.client.put_object(
+                Bucket=self.bucket, Key=key, Body=data, ContentType=content_type, IfNoneMatch="*"
+            )
+            return True
+        except _s3_errors() as exc:
+            code = str(getattr(exc, "response", {}).get("Error", {}).get("Code", ""))
+            if code in ("PreconditionFailed", "412"):
+                return False
+            raise ArtifactError(f"store put-new {key}: {exc}") from exc
+
+    def delete(self, key: str) -> None:
+        try:
+            self.client.delete_object(Bucket=self.bucket, Key=key)
+        except _s3_errors() as exc:
+            if not _missing(exc):
+                raise ArtifactError(f"store delete {key}: {exc}") from exc
 
     def exists(self, key: str) -> bool:
         try:
@@ -206,6 +258,10 @@ class Keys:
     def current(self) -> str:
         return self._join("current.json")
 
+    @property
+    def lease(self) -> str:
+        return self._join("publish.lease")
+
 
 def check_id(artifact_id: str) -> str:
     if not ID_RE.fullmatch(artifact_id):
@@ -215,6 +271,80 @@ def check_id(artifact_id: str) -> str:
 
 def sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
+
+
+# ---------------------------------------------------------------------------- lease
+
+LEASE_SECONDS_ENV = "WIKI_PUBLISH_LEASE_SECONDS"
+LEASE_SECONDS = 3600
+
+
+def lease_seconds(env: Mapping[str, str] | None = None) -> int:
+    env = os.environ if env is None else env
+    return int(env.get(LEASE_SECONDS_ENV) or LEASE_SECONDS)
+
+
+def _parse_time(value: Any) -> dt.datetime | None:
+    try:
+        when = dt.datetime.fromisoformat(str(value))
+    except (TypeError, ValueError):
+        return None
+    return when if when.tzinfo else when.replace(tzinfo=dt.UTC)
+
+
+def _read_lease(store: Store, keys: Keys) -> dict:
+    try:
+        held = json.loads(store.get(keys.lease))
+    except (ArtifactError, ValueError):
+        return {}
+    return held if isinstance(held, dict) else {}
+
+
+@contextlib.contextmanager
+def publish_lease(
+    store: Store, keys: Keys, operation: str, artifact_id: str, seconds: int | None = None
+) -> Iterator[dict]:
+    """Hold `<prefix>/publish.lease` for the block: the one publisher allowed to move
+    `current` (push or rollback) at a time, across hosts sharing the store. The key is
+    created exclusively (Store.put_new) with a JSON body naming the holder, the
+    operation, the artifact and when the lease expires (WIKI_PUBLISH_LEASE_SECONDS,
+    default 3600). A lease another publisher holds refuses this one; an expired one,
+    left by a host that died, is taken over. Released on success or failure."""
+    seconds = lease_seconds() if seconds is None else seconds
+    holder = f"{socket.gethostname()}:{os.getpid()}:{secrets.token_hex(4)}"
+    now = dt.datetime.now(dt.UTC)
+    body = {
+        "holder": holder,
+        "operation": operation,
+        "artifact_id": artifact_id,
+        "acquired_at": now.isoformat(timespec="seconds"),
+        "expires_at": (now + dt.timedelta(seconds=seconds)).isoformat(timespec="seconds"),
+    }
+    data = json.dumps(body, indent=1).encode()
+    if not store.put_new(keys.lease, data, "application/json"):
+        held = _read_lease(store, keys)
+        expires = _parse_time(held.get("expires_at"))
+        if expires is None or expires > now:
+            until = expires.isoformat(timespec="seconds") if expires else "an unknown time"
+            raise ArtifactError(
+                f"another publisher holds {keys.lease} ({held.get('holder', 'unknown')}: "
+                f"{held.get('operation', '?')} {held.get('artifact_id', '?')}, until {until}); "
+                f"current will not move. Retry when it has finished, or remove the lease "
+                f"if that host is gone"
+            )
+        store.delete(keys.lease)  # stale: its holder died with it
+        if not store.put_new(keys.lease, data, "application/json"):
+            raise ArtifactError(
+                f"{keys.lease} had expired but another publisher took it first; retry later"
+            )
+    try:
+        yield body
+    finally:
+        try:
+            if _read_lease(store, keys).get("holder") == holder:
+                store.delete(keys.lease)
+        except ArtifactError as exc:
+            print(f"artifact: lease not released ({exc}); it expires on its own", file=sys.stderr)
 
 
 # ---------------------------------------------------------------------------- pack
@@ -423,40 +553,68 @@ def push(
     base_url: str | None = None,
     gate: dict | None = None,
     history: bool = True,
+    history_push: bool = True,
 ) -> dict:
-    """Pack, upload, record the promotion on the history branch, then point
-    `current`. Refuses without a gate record showing all three checks passed on this
-    exact site and these sources, so `current` never moves to a site CI would
-    reject; a promotion the history branch did not record is not made live either,
-    since rollback to it would be refused."""
+    """Pack, upload, record the promotion on the history branch, push that record,
+    then point `current`, all under the store's publish lease. Refuses without a
+    gate record showing all three checks passed on this exact site and these
+    sources, so `current` never moves to a site CI would reject; a promotion the
+    history branch did not record, or whose record `origin` rejected (another host
+    published first), is not made live either, since rollback to it would be
+    refused or the audit trail would fork. `history_push=False` keeps the record
+    local, for a checkout without `origin` or offline use."""
     artifact_id = check_id(artifact_id or new_id(root))
-    if store.exists(keys.tarball(artifact_id)):
-        raise ArtifactError(f"artifact {artifact_id} already exists; artifacts are immutable")
-    gates = check_gate(gate, root, site)
-    manifest = build_manifest(root, site, artifact_id, base_url)
-    manifest["gates"] = gates
-    data = pack(root, site, manifest)
-    manifest["tarball_sha256"] = sha256(data)
-    manifest["tarball_bytes"] = len(data)
-    store.put(keys.tarball(artifact_id), data, "application/gzip")
-    store.put(
-        keys.manifest(artifact_id), json.dumps(manifest, indent=1).encode(), "application/json"
-    )
-    commit = None
-    if history:
-        from beril_wiki.publish import history as H
-
-        try:
-            commit = H.record(root, artifact_id)
-        except H.HistoryError as exc:
-            raise ArtifactError(
-                f"history not recorded, so current will not move to {artifact_id} "
-                f"(the uploaded artifact stays in the store): {exc}"
-            ) from exc
-    pointer = point(store, keys, artifact_id, manifest)
+    with publish_lease(store, keys, "push", artifact_id):
+        if store.exists(keys.tarball(artifact_id)):
+            raise ArtifactError(f"artifact {artifact_id} already exists; artifacts are immutable")
+        gates = check_gate(gate, root, site)
+        manifest = build_manifest(root, site, artifact_id, base_url)
+        manifest["gates"] = gates
+        data = pack(root, site, manifest)
+        manifest["tarball_sha256"] = sha256(data)
+        manifest["tarball_bytes"] = len(data)
+        store.put(keys.tarball(artifact_id), data, "application/gzip")
+        store.put(
+            keys.manifest(artifact_id), json.dumps(manifest, indent=1).encode(), "application/json"
+        )
+        commit = None
+        if history:
+            commit = _record_and_push(root, artifact_id, history_push)
+        pointer = point(store, keys, artifact_id, manifest)
     if commit:
         pointer["history_commit"] = commit
     return pointer
+
+
+def _record_and_push(root: pathlib.Path, artifact_id: str, history_push: bool) -> str:
+    """Record on `history`, then push the branch and tag to `origin` when the
+    checkout has one; a rejected push undoes the record, so a retry starts clean."""
+    from beril_wiki.publish import history as H
+
+    stays = "the uploaded artifact stays in the store"
+    previous = H.ref(root, f"refs/heads/{H.BRANCH}")
+    try:
+        commit = H.record(root, artifact_id, fetch=history_push)
+    except H.HistoryError as exc:
+        raise ArtifactError(
+            f"history not recorded, so current will not move to {artifact_id} ({stays}): {exc}"
+        ) from exc
+    if history_push and H.has_remote(root):
+        try:
+            H.push_remote(root, artifact_id)
+        except H.HistoryError as exc:
+            try:
+                H.unrecord(root, artifact_id, previous)
+            except H.HistoryError as undo:
+                raise ArtifactError(
+                    f"history push rejected ({exc}) and the local record was not undone "
+                    f"({undo}); current will not move to {artifact_id} ({stays})"
+                ) from undo
+            raise ArtifactError(
+                f"history push rejected, so current will not move to {artifact_id} "
+                f"({stays}; the local record was undone): {exc}"
+            ) from exc
+    return commit
 
 
 def rollback(store: Store, keys: Keys, root: pathlib.Path, artifact_id: str) -> dict:
@@ -473,7 +631,7 @@ def rollback(store: Store, keys: Keys, root: pathlib.Path, artifact_id: str) -> 
         # trees go first, but their predecessors are kept aside until `current` has
         # moved: a pointer write that fails puts them back, so the served artifact
         # and the curator's inputs never disagree.
-        with H.held_lock(root):
+        with publish_lease(store, keys, "rollback", artifact_id), H.held_lock(root):
             pending = H.stage_restore(root, artifact_id)
             try:
                 pointer = point(store, keys, artifact_id)
@@ -611,6 +769,11 @@ def main(argv: list[str] | None = None) -> int:
     )
     p.add_argument("--run-gates", action="store_true", help="run the three gates now")
     p.add_argument("--no-history", action="store_true", help="do not record on the history branch")
+    p.add_argument(
+        "--no-history-push",
+        action="store_true",
+        help="record on the history branch but do not push it to origin first (offline use)",
+    )
     g = sub.add_parser("gate", help="run check --strict, the theme typecheck and check_site")
     g.add_argument("--root", type=pathlib.Path, default=pathlib.Path.cwd())
     g.add_argument("--site", type=pathlib.Path, default=None)
@@ -649,7 +812,15 @@ def main(argv: list[str] | None = None) -> int:
                 gate_path = args.gate_results or root / "quartz" / GATE_FILE
                 gate = json.loads(gate_path.read_text()) if gate_path.exists() else None
             result: Any = push(
-                store, keys, root, site, args.artifact_id, args.base_url, gate, not args.no_history
+                store,
+                keys,
+                root,
+                site,
+                args.artifact_id,
+                args.base_url,
+                gate,
+                history=not args.no_history,
+                history_push=not args.no_history_push,
             )
         elif args.command == "rollback":
             result = rollback(store, keys, args.root.resolve(), args.artifact_id)

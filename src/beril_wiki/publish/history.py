@@ -74,11 +74,71 @@ def branch_head(root: pathlib.Path, remote: str = "origin") -> str | None:
     return ref(root, f"refs/heads/{BRANCH}") or ref(root, f"refs/remotes/{remote}/{BRANCH}")
 
 
-def record(root: pathlib.Path, artifact_id: str, message: str | None = None) -> str:
-    """Commit the tracked trees to `history` and tag `artifact/<id>`; returns the commit."""
+def has_remote(root: pathlib.Path, remote: str = "origin") -> bool:
+    r = subprocess.run(
+        ["git", "-C", str(root), "remote", "get-url", remote], capture_output=True, text=True
+    )
+    return r.returncode == 0
+
+
+def fetch_history(root: pathlib.Path, remote: str = "origin") -> str | None:
+    """Bring `origin/history` up to date; None when the remote has no such branch.
+    Any other failure (the remote unreachable) is an error: a record cannot be shown
+    linear against a history it cannot see."""
+    if not has_remote(root, remote):
+        return None
+    r = subprocess.run(
+        [
+            "git",
+            "-C",
+            str(root),
+            "fetch",
+            "--quiet",
+            remote,
+            f"{BRANCH}:refs/remotes/{remote}/{BRANCH}",
+        ],
+        capture_output=True,
+        text=True,
+    )
+    if r.returncode:
+        if "couldn't find remote ref" in r.stderr or "fatal: couldn't find" in r.stderr:
+            return None
+        raise HistoryError(f"git fetch {remote} {BRANCH}: {r.stderr.strip()}")
+    return ref(root, f"refs/remotes/{remote}/{BRANCH}")
+
+
+def check_linear(root: pathlib.Path, parent: str | None, remote: str = "origin") -> None:
+    """Refuse a record whose parent is not at or ahead of `origin/history`: another
+    host has published since, and a commit here would fork the audit trail (its
+    push would be rejected after the artifact went live)."""
+    upstream = ref(root, f"refs/remotes/{remote}/{BRANCH}")
+    if not upstream:
+        return
+    if not parent:
+        raise HistoryError(f"{remote}/{BRANCH} exists but the local {BRANCH} has no parent")
+    r = subprocess.run(
+        ["git", "-C", str(root), "merge-base", "--is-ancestor", upstream, parent],
+        capture_output=True,
+    )
+    if r.returncode:
+        raise HistoryError(
+            f"{remote}/{BRANCH} ({upstream[:12]}) has moved past the local {BRANCH} "
+            f"({parent[:12]}): another host published since; reset {BRANCH} to "
+            f"{remote}/{BRANCH} (and restore the checkout from its latest tag) before publishing"
+        )
+
+
+def record(
+    root: pathlib.Path, artifact_id: str, message: str | None = None, *, fetch: bool = False
+) -> str:
+    """Commit the tracked trees to `history` and tag `artifact/<id>`; returns the commit.
+    With `fetch`, `origin/history` is fetched first; when the checkout has one, the
+    record refuses unless it chains onto it (see check_linear)."""
     tag = tag_of(artifact_id)
     if ref(root, f"refs/tags/{tag}"):
         raise HistoryError(f"tag {tag} already exists")
+    if fetch:
+        fetch_history(root)
     present = [p for p in TRACKED if (root / p).exists()]
     if not present:
         raise HistoryError("nothing to record: none of the tracked paths exist")
@@ -92,6 +152,7 @@ def record(root: pathlib.Path, artifact_id: str, message: str | None = None) -> 
         tree = git(root, "write-tree", env=env).strip()
         local = ref(root, f"refs/heads/{BRANCH}")
         parent = local or branch_head(root)
+        check_linear(root, parent)
         args = ["commit-tree", tree, "-m", message or f"Artifact {artifact_id}"]
         if parent:
             args += ["-p", parent]
@@ -102,6 +163,23 @@ def record(root: pathlib.Path, artifact_id: str, message: str | None = None) -> 
     finally:
         if os.path.exists(index):
             os.unlink(index)
+
+
+def unrecord(root: pathlib.Path, artifact_id: str, previous: str | None) -> None:
+    """Undo `record`: drop the tag and move `history` back to `previous` (deleting it
+    when there was none), so a record whose push was rejected is not left behind."""
+    git(root, "tag", "-d", tag_of(artifact_id))
+    if previous:
+        git(root, "update-ref", f"refs/heads/{BRANCH}", previous)
+    else:
+        git(root, "update-ref", "-d", f"refs/heads/{BRANCH}")
+
+
+def push_remote(root: pathlib.Path, artifact_id: str, remote: str = "origin") -> None:
+    """`git push origin history refs/tags/artifact/<id>`, a fast-forward or nothing: a
+    rejection means another host published first, and the caller must not make
+    this artifact current."""
+    git(root, "push", "--quiet", remote, BRANCH, f"refs/tags/{tag_of(artifact_id)}")
 
 
 @contextlib.contextmanager

@@ -1312,8 +1312,12 @@ Then `scripts/publish_artifact.sh` runs the three publish gates (`check
 --strict`, the theme typecheck, `check_site.sh`), pushes the site as a versioned
 artifact whose manifest records them, commits `wiki/`, `state/`, `corpus/`
 and `search/section-vectors.jsonl` to the `history` branch
-and tags `artifact/<id>`; `current` never moves to a site CI would reject. Push
-`history` before opening a pull request: `search_data pull` reads the vectors
+and tags `artifact/<id>`, and pushes both to `origin` (when the checkout has
+one with a `history` branch) before `current` moves; the record must chain onto
+the fetched `origin/history`, and a rejected push leaves `current` alone. Push
+and rollback hold `<prefix>/publish.lease` in the store meanwhile, so two
+hosts cannot move `current` at once. `current` never moves to a site CI would
+reject. `search_data pull` reads the vectors
 from it, falling back to the legacy single-commit `search-data` branch until
 `history` exists on the remote (`search_data push` still writes that branch
 for now; see the module docstring), they also ship inside every

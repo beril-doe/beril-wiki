@@ -200,7 +200,11 @@ class FakeS3:
     def head_object(self, Bucket, Key):
         self._answer(Key)
 
-    def put_object(self, Bucket, Key, Body, ContentType):
+    def put_object(self, Bucket, Key, Body, ContentType, **conditions):
+        self.conditions = conditions
+        self._answer(Key)
+
+    def delete_object(self, Bucket, Key):
         self._answer(Key)
 
 
@@ -279,3 +283,69 @@ def test_footer_link_is_root_relative():
     assert site_path("beril.kbase.us/wiki") == "/wiki"
     assert site_path("beril-doe.org/beril-wiki/") == "/beril-wiki"
     assert site_path("localhost:8080") == ""
+
+
+def test_the_publish_lease_refuses_a_second_publisher_and_takes_over_a_stale_one(
+    tmp_path, store, monkeypatch
+):
+    root, site = make_repo(tmp_path)
+    monkeypatch.setattr(A, "corpus_files", _plain_corpus)
+    keys = A.Keys("wiki")
+    push(store, keys, root, site, "v1")
+    assert not store.exists(keys.lease)  # released after a push
+    with A.publish_lease(store, keys, "push", "v2", seconds=60) as held:
+        assert json.loads(store.get(keys.lease)) == held
+        assert held["operation"] == "push" and held["artifact_id"] == "v2"
+        with pytest.raises(A.ArtifactError, match="another publisher holds wiki/publish.lease"):
+            push(store, keys, root, site, "v2")
+        assert A.current(store, keys)["id"] == "v1" and not store.exists(keys.tarball("v2"))
+    assert not store.exists(keys.lease)
+    # A failed push releases the lease too.
+    with pytest.raises(A.ArtifactError, match="immutable"):
+        push(store, keys, root, site, "v1")
+    assert not store.exists(keys.lease)
+    # A lease whose holder died is taken over once it has expired.
+    stale = {"holder": "dead:1:x", "operation": "push", "expires_at": "2000-01-01T00:00:00+00:00"}
+    store.put(keys.lease, json.dumps(stale).encode(), "application/json")
+    assert push(store, keys, root, site, "v2")["id"] == "v2"
+    assert not store.exists(keys.lease)
+    # One without a readable expiry is never taken over on a guess.
+    store.put(keys.lease, b"not json", "application/json")
+    with pytest.raises(A.ArtifactError, match="until an unknown time"):
+        push(store, keys, root, site, "v3")
+    assert A.current(store, keys)["id"] == "v2"
+    assert A.lease_seconds({}) == 3600 and A.lease_seconds({A.LEASE_SECONDS_ENV: "5"}) == 5
+
+
+def test_dir_store_creates_a_lease_exclusively(tmp_path):
+    store = A.DirStore(tmp_path / "bucket")
+    assert store.put_new("wiki/publish.lease", b"a", "application/json")
+    assert not store.put_new("wiki/publish.lease", b"b", "application/json")
+    assert store.get("wiki/publish.lease") == b"a"
+    store.delete("wiki/publish.lease")
+    store.delete("wiki/publish.lease")  # already gone: not an error
+    assert store.put_new("wiki/publish.lease", b"c", "application/json")
+
+
+def test_s3_store_leases_with_if_none_match_and_reads_a_precondition_failure_as_held():
+    from botocore.exceptions import ClientError
+
+    def client_error(code: str) -> ClientError:
+        return ClientError({"Error": {"Code": code, "Message": code}}, "PutObject")
+
+    store = s3_store(
+        {
+            "free": b"",
+            "held": client_error("PreconditionFailed"),
+            "denied": client_error("403"),
+            "gone": client_error("NoSuchKey"),
+        }
+    )
+    assert store.put_new("free", b"x", "application/json")
+    assert store.client.conditions == {"IfNoneMatch": "*"}
+    assert not store.put_new("held", b"x", "application/json")
+    with pytest.raises(A.ArtifactError, match="put-new denied"):
+        store.put_new("denied", b"x", "application/json")
+    store.delete("gone")  # missing is fine
+    with pytest.raises(A.ArtifactError, match="delete denied"):
+        store.delete("denied")

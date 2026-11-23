@@ -208,8 +208,14 @@ under the prefix); `current.json` is the only thing that moves. A successful
 push also commits `wiki/`, `state/`, `corpus/` and
 `search/section-vectors.jsonl` from the working checkout to the `history`
 branch (created orphan when absent, through a temporary index so your own
-branch is untouched) and tags `artifact/<id>`; push that branch to share the
-audit trail and the vectors. `rollback --to <id>` restores `wiki/`, `state/`,
+branch is untouched), tags `artifact/<id>` and, when the checkout has an
+`origin` with a `history` branch, pushes both there before `current` moves:
+the record must chain onto the fetched `origin/history`, and a rejected push
+(another host published first) leaves `current` alone and undoes the local
+record (`--no-history-push` keeps it local, for offline use). `push` and
+`rollback` hold `<prefix>/publish.lease` in the store meanwhile, so two hosts
+cannot move `current` at once; a lease a dead host left expires after
+`WIKI_PUBLISH_LEASE_SECONDS` (default 3600). `rollback --to <id>` restores `wiki/`, `state/`,
 `corpus/` and `search/` from the tag into the checkout and moves `current`
 back, so the next curate run starts from the restored promotion instead of
 building on the bad one; the previous trees are kept aside until `current` has

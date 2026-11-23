@@ -47,9 +47,17 @@ uv run python -m beril_wiki.corpus pull-hub              # BERIL's feed -> corpu
 uv run python -m beril_wiki.agentic plan                 # free; exit if changed_sources is empty
 uv run python -m beril_wiki.agentic run --max-tokens N --max-jobs M --stage-max-usd ...
 scripts/build_quartz.sh                                  # render, embed, index, gates
-scripts/publish_artifact.sh --no-check                   # push artifact, point current, record history, reload
-git push origin history --tags                           # share the audit trail and the vectors
+scripts/publish_artifact.sh --no-check                   # push artifact, record + push history, point current, reload
 ```
+
+`artifact push` holds `<prefix>/publish.lease` in the store while it works (so
+two hosts cannot move `current` at once), fetches `origin/history`, refuses
+when another host has published since the local `history`, and pushes
+`history` and `artifact/<id>` to `origin` before it moves `current`: a
+rejected push leaves `current` alone and undoes the local record. A separate
+`git push origin history --tags` after the script is therefore no longer
+needed. A lease a dead host left behind expires after
+`WIKI_PUBLISH_LEASE_SECONDS` (default 3600) and is then taken over.
 
 Budgets are fixed per run, so a bad night is capped. The hourly poll runs only
 `pull-hub` and `plan`; the curate step runs at most once per window (nightly by default), and
