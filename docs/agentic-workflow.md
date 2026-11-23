@@ -174,7 +174,8 @@ list is skipped, with a warning), replaces `corpus/projects/<sid>/` and records
 beside the entry's `files`, `digest` and `origin` (`hub@<submission id>`).
 `kind: docs` rows write `corpus/docs/*.md` into `shared`. Nothing is installed
 and the cursor does not move unless every download verified, so `verify`
-passes after any pull. `--since ISO` overrides the cursor.
+passes after any pull. `--after N` overrides the cursor (`0` lists the feed
+from the beginning).
 
 **Source ids.** BERIL project slugs are unique per owner only, and a `[src: id]`
 never changes once pages cite it, so the directory name under
@@ -1304,7 +1305,9 @@ artifact whose manifest records them, commits `wiki/`, `state/`, `corpus/`
 and `search/section-vectors.jsonl` to the `history` branch
 and tags `artifact/<id>`; `current` never moves to a site CI would reject. Push
 `history` before opening a pull request: `search_data pull` reads the vectors
-from it (the `search-data` branch is retired), they also ship inside every
+from it, falling back to the legacy single-commit `search-data` branch until
+`history` exists on the remote (`search_data push` still writes that branch
+for now; see the module docstring), they also ship inside every
 artifact under `corpus/`, and a pull request whose sections lack vectors still
 fails its build (`SEARCH_REQUIRE_VECTORS=1`). `publish.artifact rollback --to
 <id>` moves `current` back and restores `wiki/`, `state/`, `corpus/` and

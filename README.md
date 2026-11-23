@@ -305,8 +305,10 @@ sections with no vector using CBORG's free `lbl/nomic-embed-text`, and indexes
 again. CI has no key: it pulls the vectors, fails a pull request whose sections
 lack one (`SEARCH_REQUIRE_VECTORS=1`), and only warns on a deploy from `main`.
 Vectors for sections that no longer exist are kept, so a feature branch's build
-never drops ones the live site uses. The single-commit `search-data` branch is
-retired; `search_data push` now only says so.
+never drops ones the live site uses. Until the first artifact push puts
+`history` on the remote, `pull` falls back to the legacy single-commit
+`search-data` branch and `search_data push [--prune]` still updates it; that
+branch goes away once `history` carries the vectors.
 
 ## License
 
