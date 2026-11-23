@@ -9,8 +9,8 @@ untouched: the commit is built through a temporary git index.
 
 `restore` is the other half of a rollback: it checks `wiki/`, `state/`,
 `corpus/` and `search/` out of `artifact/<id>` into the working checkout, so
-the next curate run starts from exactly that promotion: the corpus and its
-manifest (with the hub feed cursor) match the wiki, so `corpus pull-hub`
+the next curate run starts from exactly that promotion: the corpus and
+`state/hub.json` (the hub feed cursor) match the wiki, so `corpus pull-hub`
 re-downloads whatever the feed has moved past it and `changed_sources`
 re-integrates it against the restored `wiki/sources`. It refuses while a
 curator run holds `.agentic/lock`.

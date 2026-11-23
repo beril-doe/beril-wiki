@@ -14,8 +14,10 @@ came from. ``verify`` fails when a file and the manifest disagree.
     uv run python -m beril_wiki.corpus verify
 
 ``pull-hub`` is the incremental import from BERIL's context API (stages/hub.py):
-it pages the submissions feed from the cursor kept in ``manifest["hub"]``
-(``next_after``, a feed position), keeps each project's newest revision by
+it pages the submissions feed from the cursor kept in ``state/hub.json``
+(``next_after``, a feed position; beside the corpus, not in its manifest, so a
+moved cursor is not a corpus change to the publisher scope checks), keeps each
+project's newest revision by
 ``submitted_at`` (the feed is in completion order, not submission order),
 downloads each changed project's REPORT.md, README.md, beril.yaml and embedded
 figures (sha256-checked against the feed; a listed figure the hub does not
@@ -47,7 +49,12 @@ CORPUS = ROOT / "corpus"
 MANIFEST = "manifest.json"
 SHARED = ("ui/config/collections.yaml", "docs/discoveries.md", "docs/pitfalls.md")
 META = ("README.md", "beril.yaml")
-HUB = "hub"
+# The feed cursor: ``state/hub.json`` beside ``corpus/``; ``state/`` travels with the
+# corpus through promotion, the history branch and rollback. A manifest written
+# before the cursor moved there still carries it under ``hub``; it is read once and
+# dropped on the next save.
+CURSOR = "hub.json"
+LEGACY_CURSOR_KEY = "hub"
 # The embed forms the synthesize skill allows; fetch, `checkout_inputs` and the publish
 # ingest all read this one pattern. Group 1 is the path relative to the project.
 FIG_EMBED = re.compile(
@@ -101,6 +108,24 @@ def save(manifest: dict, corpus: Path = CORPUS) -> None:
     tmp = corpus / (MANIFEST + ".tmp")
     tmp.write_text(text, encoding="utf-8")
     tmp.replace(corpus / MANIFEST)
+
+
+def state_dir(corpus: Path) -> Path:
+    return corpus.parent / "state"
+
+
+def load_cursor(state: Path) -> dict:
+    path = state / CURSOR
+    if not path.is_file():
+        return {}
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def save_cursor(state: Path, cursor: dict) -> None:
+    state.mkdir(parents=True, exist_ok=True)
+    tmp = state / (CURSOR + ".tmp")
+    tmp.write_text(json.dumps(cursor, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    tmp.replace(state / CURSOR)
 
 
 def import_v1(checkout: Path, corpus: Path = CORPUS) -> dict:
@@ -236,23 +261,28 @@ def download_project(client: hub.Hub, row: dict, dest: Path) -> None:
 
 
 def pull_hub(
-    corpus: Path = CORPUS, client: hub.Hub | None = None, after: int | None = None
+    corpus: Path = CORPUS,
+    client: hub.Hub | None = None,
+    after: int | None = None,
+    state: Path | None = None,
 ) -> dict:
     """Bring ``corpus/`` up to the hub feed's head; returns ``{projects, docs, next_after}``.
 
-    A manifest from before the feed paged by ``after`` (it kept ``next_since``)
+    A cursor from before the feed paged by ``after`` (it kept ``next_since``)
     starts from the beginning once; unchanged revisions are skipped, so that
     re-lists the feed without re-downloading it."""
     own = client is None
     client = client or hub.Hub()
+    state = state or state_dir(corpus)
     manifest = load(corpus)
-    cursor = after if after is not None else manifest.get(HUB, {}).get("next_after")
+    hub_state = load_cursor(state) or manifest.pop(LEGACY_CURSOR_KEY, {})
+    cursor = after if after is not None else hub_state.get("next_after")
     temporary = Path(tempfile.mkdtemp(prefix=f".{corpus.name}-pull-", dir=corpus.parent))
     installs: list[tuple[Path, Path]] = []
     counts = {"projects": 0, "docs": 0}
     try:
         rows, following = client.submissions(cursor)
-        docs_state = manifest.get(HUB, {}).get("docs", {})
+        docs_state = hub_state.get("docs", {})
         for (owner, slug), row in hub.latest(rows).items():
             if row.get("kind") == "docs":
                 if hub.submitted(docs_state) > hub.submitted(row):
@@ -301,16 +331,18 @@ def pull_hub(
             if dest.is_dir():
                 shutil.rmtree(dest)
             staged.replace(dest)
-        manifest[HUB] = {"url": client.url, "next_after": following}
+        hub_state = {"url": client.url, "next_after": following}
         if docs_state:
-            manifest[HUB]["docs"] = docs_state
+            hub_state["docs"] = docs_state
         corpus.mkdir(parents=True, exist_ok=True)
+        manifest.pop(LEGACY_CURSOR_KEY, None)
         save(manifest, corpus)
+        save_cursor(state, hub_state)
     finally:
         shutil.rmtree(temporary, ignore_errors=True)
         if own:
             client.close()
-    return counts | {"next_after": manifest[HUB]["next_after"]}
+    return counts | {"next_after": hub_state["next_after"]}
 
 
 def verify(corpus: Path = CORPUS) -> list[str]:
@@ -352,7 +384,7 @@ def main(argv: list[str] | None = None) -> int:
     pull.add_argument(
         "--after",
         type=int,
-        help="feed position to start after (default: the manifest's; 0 = the beginning)",
+        help="feed position to start after (default: state/hub.json's; 0 = the beginning)",
     )
     sub.add_parser("verify", help="check corpus/ against its manifest")
     args = parser.parse_args(argv)

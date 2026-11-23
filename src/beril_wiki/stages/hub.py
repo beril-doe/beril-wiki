@@ -17,7 +17,7 @@ BERIL routes, with a BERIL personal access token (``BERIL_URL``, ``BERIL_TOKEN``
       hashes and quotes is byte-exact.
 
 ``beril_wiki.corpus pull-hub`` drives this client: it keeps the feed cursor in
-``corpus/manifest.json`` and writes what it downloads into ``corpus/``. Every
+``state/hub.json`` and writes what it downloads into ``corpus/``. Every
 download is checked against the sha256 the feed declared for the path (or, for a
 file the feed does not list, the one the route itself declares) and refused on
 mismatch.

@@ -293,9 +293,14 @@ def scientific_revision(root: Path) -> str:
     return digest([compiler_revision(), contract_manifest(root)])
 
 
+# The accepted record and the hub feed cursor describe the run's bookkeeping, not
+# its inputs: neither is part of the fingerprint.
+UNFINGERPRINTED = ("state/agentic.json", "state/hub.json")
+
+
 def fingerprint(root: Path) -> dict[str, str]:
     return {
-        p: h for p, h in manifest(root, (*TREES, "contract")).items() if p != "state/agentic.json"
+        p: h for p, h in manifest(root, (*TREES, "contract")).items() if p not in UNFINGERPRINTED
     }
 
 

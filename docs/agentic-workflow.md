@@ -159,7 +159,7 @@ like a changed checkout. `BERIL_URL` and `BERIL_TOKEN` (a BERIL personal access
 token) reach two routes and nothing else; the wiki never calls OpenViking.
 `GET /api/context/submissions?kind=approved,seeded,docs` lists complete
 submissions, in the order they completed, after the cursor kept in
-`manifest["hub"].next_after` (owner, project, revision = sha256 of
+`state/hub.json` (`next_after`; owner, project, revision = sha256 of
 `REPORT.md`, `submitted_at`, every file with its sha256). A submission whose
 figures arrived last completes after a newer one, so `pull-hub` keeps each
 project's newest revision by `submitted_at` and never replaces it with an
@@ -182,9 +182,13 @@ never changes once pages cite it, so the directory name under
 else `<slug>__<orcid>`. A project vendored by `import-v1` before owners were
 known is pinned to the first owner who submits under its slug. After a pull,
 `agentic plan` reports the changed projects in `changed_sources` as it does for
-any checkout change; the `hub` key of the manifest is not a per-project entry,
-so `plan --expect-source` and `check_update.py` treat a moved cursor as a
-change outside the project.
+any checkout change. The feed cursor lives in `state/hub.json`, not in the
+manifest, so a pull that only moves it changes nothing `plan --expect-source`
+or `check_update.py` scope to a project; `state/` travels with `corpus/`
+through promotion, the `history` branch and rollback, and a run leaves it out
+of its fingerprint as it does `state/agentic.json`. A cursor an older checkout
+still carries under the manifest's `hub` key is read once and moved out on the
+next pull.
 
 `scripts/check_update.py --base REF --head REF [--branch NAME]` is the model-free
 scope check for a publisher branch. The branch comes from `--branch` or

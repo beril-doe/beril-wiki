@@ -123,7 +123,11 @@ def test_pull_writes_the_checkout_layout_and_the_manifest(out, beril, client):
     assert (where / "beril.yaml").read_bytes() == YAML
     assert (where / "figures/plot.png").read_bytes() == PLOT
     manifest = corpus.load(out)
-    assert manifest["hub"] == {"url": "https://beril.test", "next_after": 1}
+    assert "hub" not in manifest  # the cursor is state, not corpus
+    assert corpus.load_cursor(out.parent / "state") == {
+        "url": "https://beril.test",
+        "next_after": 1,
+    }
     entry = manifest["projects"]["demo"]
     assert entry["files"] == {
         "README.md": "sha256:" + sha(README),
@@ -275,18 +279,55 @@ def test_the_newest_revision_wins_when_an_older_one_completes_later(out, beril, 
     assert corpus.verify(out) == []
 
 
-def test_a_manifest_with_the_old_cursor_relists_from_the_beginning(out, beril, client):
+def test_a_cursor_from_the_old_feed_relists_from_the_beginning(out, beril, client):
     corpus.pull_hub(out, client)
-    manifest = corpus.load(out)
-    manifest["hub"] = {"url": "https://beril.test", "next_since": "2026-11-01T00:00:00Z"}
-    corpus.save(manifest, out)
+    state = out.parent / "state"
+    corpus.save_cursor(state, {"url": "https://beril.test", "next_since": "2026-11-01T00:00:00Z"})
     beril.requests.clear()
 
     done = corpus.pull_hub(out, client)
 
     assert "after=" not in beril.requests[0]
     assert done == {"projects": 0, "docs": 0, "next_after": 1}  # demo unchanged: not re-downloaded
-    assert corpus.load(out)["hub"] == {"url": "https://beril.test", "next_after": 1}
+    assert corpus.load_cursor(state) == {"url": "https://beril.test", "next_after": 1}
+
+
+def test_a_cursor_still_in_the_manifest_is_read_once_and_moved_out(out, beril, client):
+    corpus.pull_hub(out, client)
+    state = out.parent / "state"
+    (state / corpus.CURSOR).unlink()
+    manifest = corpus.load(out)
+    manifest["hub"] = {"url": "https://beril.test", "next_after": 1, "docs": {"id": 9}}
+    corpus.save(manifest, out)
+    beril.project("later", {"REPORT.md": b"# later\n"}, "2026-11-02T00:00:00Z")
+    beril.requests.clear()
+    assert corpus.pull_hub(out, client)["projects"] == 1
+    assert beril.requests[0].endswith("after=1")  # resumed from the manifest's cursor
+    assert "hub" not in corpus.load(out)
+    assert corpus.load_cursor(state)["docs"] == {"id": 9}
+    assert corpus.verify(out) == []
+
+
+def test_a_moved_cursor_is_not_a_corpus_change_to_the_scope_checks(out, beril, client):
+    import importlib.util
+
+    from beril_wiki.agentic.admission import manifest_scope
+
+    spec = importlib.util.spec_from_file_location(
+        "check_update", Path(__file__).resolve().parents[1] / "scripts/check_update.py"
+    )
+    check_update = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(check_update)
+    corpus.pull_hub(out, client)
+    before = (out / corpus.MANIFEST).read_bytes()
+    beril.project("other", {"REPORT.md": b"# other\n"}, "2026-11-02T00:00:00Z", owner=OTHER)
+    corpus.pull_hub(out, client)
+    beril.project("demo", {"REPORT.md": b"# stale\n"}, "2026-10-31T00:00:00Z")
+    corpus.pull_hub(out, client)  # moves the cursor past an older completion
+    assert corpus.load_cursor(out.parent / "state")["next_after"] == 3
+    base, head = json.loads(before), corpus.load(out)
+    assert manifest_scope(base, head, "other") == []
+    assert check_update.manifest_stale(base, head, {"other"}) == []
 
 
 def test_unsafe_names_from_the_feed_are_refused():
@@ -321,7 +362,7 @@ def test_cli_reports_the_pull(out, beril, monkeypatch, capsys):
     monkeypatch.setattr(hub, "Hub", lambda: connect(beril))
     assert corpus.main(["pull-hub"]) == 0
     assert "1 project(s) and 0 digest(s) updated" in capsys.readouterr().out
-    assert json.loads((out / "manifest.json").read_text())["hub"]["next_after"] == 1
+    assert json.loads((out.parent / "state/hub.json").read_text())["next_after"] == 1
     assert corpus.main(["verify"]) == 0
 
 
@@ -372,7 +413,9 @@ def test_an_older_docs_submission_completing_later_is_skipped(out, beril, client
     newer = {"discoveries.md": b"# discoveries v2\n", "pitfalls.md": b"# pitfalls v2\n"}
     beril.project("docs", newer, "2026-11-05T00:00:00Z", kind="docs", owner="beril")
     assert corpus.pull_hub(out, client)["docs"] == 2
-    assert corpus.load(out)[corpus.HUB]["docs"]["submitted_at"] == "2026-11-05T00:00:00Z"
+    assert (
+        corpus.load_cursor(out.parent / "state")["docs"]["submitted_at"] == "2026-11-05T00:00:00Z"
+    )
     older = {"discoveries.md": b"# discoveries v1\n"}
     beril.project("docs", older, "2026-11-04T00:00:00Z", kind="docs", owner="beril")
     result = corpus.pull_hub(out, client)

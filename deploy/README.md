@@ -11,8 +11,8 @@ that checkout holds everything a run reads and promotes:
 | Path | What it holds | Why it must persist |
 | --- | --- | --- |
 | `wiki/` | the accepted, compiled wiki | `changed_sources` compares every staged report with `wiki/sources/`; without it every source is new |
-| `state/` | per-stage caches, `state/agentic.json` (the accepted fingerprint) | the run's own idea of what is already done |
-| `corpus/` | every source a run reads, and `corpus/manifest.json` (file hashes, each project's owner and revision, the hub feed cursor) | a source id assigned once must never be assigned again, and the cursor says what `pull-hub` already has |
+| `state/` | per-stage caches, `state/agentic.json` (the accepted fingerprint), `state/hub.json` (the hub feed cursor) | the run's own idea of what is already done, and the cursor says what `pull-hub` already has |
+| `corpus/` | every source a run reads, and `corpus/manifest.json` (file hashes, each project's owner and revision) | a source id assigned once must never be assigned again |
 | `search/section-vectors.jsonl` | the meaning-search vectors | embedding again costs time; the file is gitignored |
 | `.agentic/` | the ledger (`jobs.sqlite`), evidence, plans, failures, the lock | spend accounting and cached paid work |
 
