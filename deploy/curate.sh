@@ -5,7 +5,8 @@
 #                       `stages.fetch` (corpus/ -> staging/), `agentic plan`; exit 3
 #                       when a run would do something, 0 otherwise
 #   curate.sh run       plan (reported), `agentic run` under the env budgets, and
-#                       when it promoted: render, publish, push `history`
+#                       when it promoted: render, publish (history and the tag
+#                       pushed to origin before `current` moves), reload
 #   curate.sh publish   render and publish the accepted wiki without curating
 #   curate.sh render    render only (quartz/public), for checking an image
 #   curate.sh status    `agentic status`
@@ -265,29 +266,89 @@ render_step() {
     die "render: quartz/public/index.html carries no BERIL frame (theme plugin not loaded)"
 }
 
+new_artifact_id() { date -u +%Y%m%dT%H%M%SZ; }
+
 mark_publish_pending() {
-  # Written the moment `agentic run` promoted, removed when the reload succeeded:
-  # a failed render, push, reload or history push is finished by the next run or
-  # publish instead of being lost behind a plan that now has nothing to curate.
+  # mark_publish_pending ID: written the moment `agentic run` promoted, with the
+  # id the publish will carry, and removed when the reload succeeded. A failed
+  # render, push or reload is finished by the next run or publish under that
+  # same id, instead of being lost behind a plan that now has nothing to curate
+  # or rebuilt as a second artifact of the same trees.
   mkdir -p "${PUBLISH_PENDING%/*}"
-  printf '{"promoted_at": "%s"}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$PUBLISH_PENDING"
+  printf '{"promoted_at": "%s", "artifact_id": "%s"}\n' \
+    "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$1" > "$PUBLISH_PENDING"
+}
+
+pending_artifact_id() {
+  # The id the marker carries; empty for a marker written before it carried one.
+  sed -n 's/.*"artifact_id": *"\([0-9A-Za-z_.-]*\)".*/\1/p' "$PUBLISH_PENDING" 2>/dev/null
+}
+
+tag_on_origin() {
+  # tag_on_origin ID: 0 when origin has artifact/ID, 1 when it has not. Any other
+  # answer (network, token) stops the job rather than passing for an absence.
+  local rc=0
+  git -C "$WIKI_WORKDIR" ls-remote --exit-code --tags origin "refs/tags/artifact/$1" \
+    >/dev/null 2>&1 || rc=$?
+  [ "$rc" = 2 ] && return 1
+  [ "$rc" = 0 ] || die "cannot ask origin whether it has artifact/$1 (git exit $rc)"
+}
+
+artifact_in_store() {
+  # artifact_in_store ID: whether the store holds the tarball; an unanswerable
+  # store stops the job (the publish could not reach it either).
+  local answer
+  answer=$(py -c '
+import sys
+from beril_wiki.publish import artifact as A
+store, keys = A.store_from_env(), A.Keys(A.prefix_from_env())
+print("yes" if store.exists(keys.tarball(sys.argv[1])) else "no")' "$1") ||
+    die "cannot ask the store whether it holds artifact $1"
+  [ "$answer" = yes ]
 }
 
 publish_step() {
-  local stamp
-  stamp=$(date -u +%Y%m%dT%H%M%SZ)
-  [ ! -f "$PUBLISH_PENDING" ] || log "publish: owed since $(cat "$PUBLISH_PENDING")"
+  # One transaction under the id the marker carries. `artifact push` records
+  # history, pushes it and artifact/<id> to origin, and only then moves
+  # `current` (a rejected push leaves current where it was), so the pod never
+  # serves an artifact origin lacks; publish_artifact.sh reloads last. The
+  # credential helper and safe.directory are in git's environment-held config
+  # (git_env), which that push inherits. A retry finishes the transaction where
+  # it stopped rather than rebuilding: recorded but not on origin, the push is
+  # repeated; on origin, current is pointed at it and the pod reloaded.
+  local id
+  if [ -f "$PUBLISH_PENDING" ]; then
+    log "publish: owed since $(cat "$PUBLISH_PENDING")"
+    id=$(pending_artifact_id)
+  fi
+  if [ -z "${id:-}" ]; then
+    id=$(new_artifact_id)
+    mark_publish_pending "$id"
+  fi
+  if artifact_in_store "$id"; then
+    if ! tag_on_origin "$id" &&
+      git -C "$WIKI_WORKDIR" rev-parse --verify --quiet "refs/tags/artifact/$id" >/dev/null; then
+      log "publish: artifact $id is recorded but not on origin; pushing history and its tag"
+      git -C "$WIKI_WORKDIR" push --quiet origin history "refs/tags/artifact/$id"
+    fi
+    if tag_on_origin "$id"; then
+      log "publish: artifact $id is in the store and on origin; pointing current at it"
+      "$WIKI_WORKDIR/scripts/publish_artifact.sh" --point "$id"
+      rm -f "$PUBLISH_PENDING"
+      return
+    fi
+    # Uploaded but never recorded: a stray (immutable, never current). The
+    # trees are published again under a fresh id, which the marker now carries.
+    local stray="$id"
+    id=$(new_artifact_id)
+    log "publish: artifact $stray is in the store but was never recorded; publishing as $id"
+    mark_publish_pending "$id"
+  fi
   render_step
   # The gates ran inside build_quartz.sh and are recorded for this exact build;
   # push refuses without that record, so --no-check repeats nothing.
-  log "publish: artifact $stamp -> ${WIKI_ARTIFACT_ENDPOINT:-<no store>}"
-  "$WIKI_WORKDIR/scripts/publish_artifact.sh" --id "$stamp" --no-check
-  if git -C "$WIKI_WORKDIR" rev-parse --verify --quiet refs/heads/history >/dev/null; then
-    log "push: history and artifact/* tags to origin"
-    git -C "$WIKI_WORKDIR" push --quiet origin history 'refs/tags/artifact/*'
-  else
-    log "push: no history branch recorded yet; nothing to push"
-  fi
+  log "publish: artifact $id -> ${WIKI_ARTIFACT_ENDPOINT:-<no store>} (history to origin, then current, then reload)"
+  "$WIKI_WORKDIR/scripts/publish_artifact.sh" --id "$id" --no-check
   rm -f "$PUBLISH_PENDING"
 }
 
@@ -353,7 +414,7 @@ main() {
       fi
       plan_step || true # reported; agentic run makes the same test itself
       if run_step; then
-        mark_publish_pending
+        mark_publish_pending "$(new_artifact_id)"
         publish_step
       else
         log "accepted state unchanged by the run; nothing to publish"

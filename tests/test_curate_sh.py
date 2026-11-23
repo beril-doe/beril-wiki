@@ -52,12 +52,15 @@ def workdir(tmp_path):
     git(root, "init", "-q", "-b", "main")
     git(root, "add", ".")
     git(root, "commit", "-q", "-m", "state")
-    # publish_step's push to the store: a trace line instead.
+    # publish_step's push to the store: a trace line instead, the git config it
+    # inherited, and a failure while `.publish-fails` exists.
     (root / "scripts").mkdir()
     (root / "scripts/publish_artifact.sh").write_text(
         "#!/bin/sh\n"
         'echo "published $*" >> "$WIKI_WORKDIR/.trace"\n'
         'echo "${BERIL_WIKI_GIT_COMMIT:-unset}" > "$WIKI_WORKDIR/.published-commit"\n'
+        'env | grep "^GIT_CONFIG" > "$WIKI_WORKDIR/.published-git-env"\n'
+        '[ ! -f "$WIKI_WORKDIR/.publish-fails" ] || exit 9\n'
     )
     (root / "scripts/publish_artifact.sh").chmod(0o755)
     return root
@@ -107,6 +110,8 @@ render_step() { echo rendered >> "$WIKI_WORKDIR/.trace"; }
 git() {
   case "$*" in *" push "*) echo pushed >> "$WIKI_WORKDIR/.trace" ;; *) command git "$@" ;; esac
 }
+artifact_in_store() { [ -f "$WIKI_WORKDIR/.in-store-$1" ]; }
+tag_on_origin() { [ -f "$WIKI_WORKDIR/.on-origin-$1" ]; }
 """
 
 EMPTY = json.dumps(
@@ -331,3 +336,94 @@ def test_a_failed_bootstrap_leaves_no_clone_so_the_next_job_retries(tmp_path, or
     assert r.returncode == 0, r.stderr
     assert "bootstrap: clone ready" in r.stderr
     assert json.loads((workdir / "state/agentic.json").read_text()) == {"fingerprint": "artifact-2"}
+
+
+PROMOTE = (
+    "echo ran >> $WIKI_WORKDIR/.trace; "
+    'echo \'{"fingerprint": "f1"}\' > $WIKI_WORKDIR/state/agentic.json'
+)
+
+
+def test_a_retried_publish_keeps_the_id_chosen_at_promotion(workdir):
+    # The id is fixed when `agentic run` promotes and written to the marker, so a
+    # publish that failed is retried under the same id (one artifact per
+    # promotion), never rebuilt as a second artifact of the same trees.
+    (workdir / ".publish-fails").touch()
+    r = curate(workdir, "run", STUBS, {"PLAN": EMPTY, "RUN_EFFECT": PROMOTE})
+    assert r.returncode == 9, r.stderr
+    pending = workdir / ".curate/publish-pending.json"
+    marker = json.loads(pending.read_text())
+    assert set(marker) == {"promoted_at", "artifact_id"} and marker["artifact_id"].endswith("Z")
+    assert trace(workdir)[-4:] == ["published", "--id", marker["artifact_id"], "--no-check"]
+    (workdir / ".publish-fails").unlink()
+    r = curate(
+        workdir, "run", STUBS, {"PLAN": EMPTY, "RUN_EFFECT": "echo ran >> $WIKI_WORKDIR/.trace"}
+    )
+    assert r.returncode == 0, r.stderr
+    seen = trace(workdir)
+    assert seen[-6:] == [
+        "rendered",
+        "published",
+        "--id",
+        marker["artifact_id"],
+        "--no-check",
+        "ran",
+    ]
+    assert not pending.exists()
+    assert "(history to origin, then current, then reload)" in r.stderr
+
+
+def owed(workdir: Path, artifact_id: str) -> Path:
+    pending = workdir / ".curate/publish-pending.json"
+    pending.parent.mkdir(exist_ok=True)
+    pending.write_text(f'{{"promoted_at": "2026-11-23T07:31:00Z", "artifact_id": "{artifact_id}"}}')
+    return pending
+
+
+def test_a_retried_publish_finishes_the_transaction_where_it_stopped(workdir):
+    # In the store and on origin (current or the reload failed): pointed at and
+    # reloaded, not rendered or pushed again.
+    pending = owed(workdir, "20261123T073000Z")
+    (workdir / ".in-store-20261123T073000Z").touch()
+    (workdir / ".on-origin-20261123T073000Z").touch()
+    r = curate(workdir, "publish", STUBS)
+    assert r.returncode == 0, r.stderr
+    assert trace(workdir) == ["published", "--point", "20261123T073000Z"]
+    assert "in the store and on origin; pointing current at it" in r.stderr
+    assert not pending.exists()
+    # Recorded locally but the push to origin failed: the push is repeated first.
+    (workdir / ".trace").unlink()
+    owed(workdir, "20261123T073000Z")
+    (workdir / ".on-origin-20261123T073000Z").unlink()
+    git(workdir, "tag", "artifact/20261123T073000Z")
+    pushing = STUBS + (
+        '\ngit() { case "$*" in *" push "*) echo pushed >> "$WIKI_WORKDIR/.trace";'
+        ' touch "$WIKI_WORKDIR/.on-origin-20261123T073000Z" ;; *) command git "$@" ;; esac; }\n'
+    )
+    r = curate(workdir, "publish", pushing)
+    assert r.returncode == 0, r.stderr
+    assert trace(workdir) == ["pushed", "published", "--point", "20261123T073000Z"]
+    assert "recorded but not on origin; pushing history and its tag" in r.stderr
+    # Uploaded but never recorded: a stray; the trees go out under a fresh id.
+    (workdir / ".trace").unlink()
+    owed(workdir, "20261123T073000Z")
+    (workdir / ".on-origin-20261123T073000Z").unlink()
+    git(workdir, "tag", "-d", "artifact/20261123T073000Z")
+    r = curate(workdir, "publish", STUBS)
+    assert r.returncode == 0, r.stderr
+    seen = trace(workdir)
+    assert seen[:3] == ["rendered", "published", "--id"] and seen[3] != "20261123T073000Z"
+    assert f"was never recorded; publishing as {seen[3]}" in r.stderr
+
+
+def test_the_publish_inherits_the_git_credential_helper(workdir):
+    # `artifact push` pushes history and the tag to origin itself, from python:
+    # the helper must reach it through git's environment-held config, and the
+    # token must stay out of every config value.
+    r = curate(workdir, "publish", STUBS, {"WIKI_GIT_TOKEN": "ghp_secret"})
+    assert r.returncode == 0, r.stderr
+    seen = (workdir / ".published-git-env").read_text()
+    assert "credential.helper" in seen and "WIKI_GIT_TOKEN" in seen
+    assert "ghp_secret" not in seen
+    r = curate(workdir, "publish", STUBS)
+    assert "credential.helper" not in (workdir / ".published-git-env").read_text()
