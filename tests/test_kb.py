@@ -309,7 +309,7 @@ def test_ingest_edits_one_section_and_records_its_evidence(root: Path):
     assert script.roles == ["extract", "curate", "edit", "review", "edit", "review"]
 
 
-def test_ingest_writes_a_finding_page_and_its_plain_summary(root: Path):
+def test_ingest_writes_a_finding_page_and_its_plain_summary(root: Path, monkeypatch):
     script = Script()
     script.extracted.append(claim("caveat", "Only one strain was tested.", LIMIT_QUOTE))
     result = workflow.ingest(root, "alpha", config(), script)
@@ -341,6 +341,12 @@ def test_ingest_writes_a_finding_page_and_its_plain_summary(root: Path):
     with pytest.raises(tools.Rejected) as refused:
         gate(wrong)
     assert "not in the quote" in " ".join(refused.value.objections)
+    # A report too large for one session is read from a bounded set that still holds a
+    # result and the caveat a headline needs.
+    whole = findings_jobs.jobs(jobs.Scope(root=root, source="alpha", reason="refresh"))[0].pack
+    monkeypatch.setattr(findings_jobs, "PACK_CHARS", 1)
+    less = findings_jobs.jobs(jobs.Scope(root=root, source="alpha", reason="refresh"))[0].pack
+    assert len(whole["FINDINGS"]) > 1 and len(less["FINDINGS"]) == len(less["CAVEATS"]) == 1
 
 
 def test_submit_claims_keeps_only_verbatim_quotes(root: Path):

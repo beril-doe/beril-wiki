@@ -27,6 +27,37 @@ def _said(out: Path, sid: str) -> dict[str, tuple]:
     return said
 
 
+# Characters of findings and caveats one findings session is given. The two largest
+# reports of the corpus (1,500 and 2,000 claims, 300,000 and 450,000 characters) lost
+# the start of their pack and could not name a valid record; one of 200,000 passed.
+PACK_CHARS = 180_000
+
+
+def bounded(scope: Scope, records: list[dict]) -> list[dict]:
+    """The records a findings session reads. A report whose findings and caveats pass
+    ``PACK_CHARS`` is read from its own summary sections, thinned evenly to fit, with
+    caveats from the whole report: a headline needs the caveat that limits it."""
+    from beril_wiki.kb.compile import main_spans, spread  # compile imports this package
+
+    packed = [r for r in records if r["kind"] in ("finding", "null", "caveat")]
+
+    def size(rows: list[dict]) -> int:
+        return sum(len(r["claim"]) + len(r["quote"]) for r in rows)
+
+    if size(packed) <= PACK_CHARS:
+        return records
+    start = {c["id"]: c["start"] for c in scope.store.claims(scope.source)}
+    spans = main_spans(scope.store.source_text(scope.source))
+    results = [r for r in packed if r["kind"] != "caveat"]
+    said = [r for r in results if any(a <= start[r["id"]] < b for a, b in spans)] or results
+    caveats = [r for r in packed if r["kind"] == "caveat"]
+
+    def fit(rows: list[dict], room: int) -> list[dict]:
+        return spread(rows, max(1, min(len(rows), len(rows) * room // max(1, size(rows)))))
+
+    return fit(said, PACK_CHARS * 2 // 3) + fit(caveats, PACK_CHARS // 3)
+
+
 def jobs(scope: Scope) -> list[Job]:
     root, sid = scope.root, scope.source
     if sid in DIGESTS:
@@ -50,6 +81,8 @@ def jobs(scope: Scope) -> list[Job]:
         if cited <= live and scope.reason != "refresh":
             return []
     out = root / headlines.OUT
+    # Staleness above is judged on every claim; the session reads a bounded set.
+    records = bounded(scope, records)
 
     def publish(record: dict) -> None:
         reply = headlines.Reply.model_validate(record)
