@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "wiki": {
+      "command": "uv",
+      "args": ["run", "beril-wiki", "mcp"]
+    }
+  }
+}
