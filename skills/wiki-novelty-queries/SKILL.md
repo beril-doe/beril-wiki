@@ -7,7 +7,9 @@ description: Propose PubMed searches that would find published work reporting th
 
 ## Tools
 
-- `submit_record(record)` submits your answer; `finish(note)` ends the session.
+- `submit_record(record)` submits your answer.
+
+The session ends when the tool accepts the record. Use the evidence in the task message.
 
 ## Input
 

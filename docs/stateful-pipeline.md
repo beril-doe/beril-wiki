@@ -26,6 +26,10 @@ Three things, and nothing else:
    sections that rest on that claim.
 3. An operator naming sections and a reason: `beril-wiki refresh SECTION... --why TEXT`.
 
+A fourth command, `beril-wiki compile`, builds every page from the reports in one run.
+It is for an empty wiki (see "Compiling the whole wiki"); once it has finished, the
+three triggers above are again the only ones.
+
 Editing a skill, the tools, `wiki.yaml`, the contract or a wiki page schedules nothing.
 `beril-wiki plan --json` prints `{"tasks": []}` after any of them. A rule change reaches
 accepted prose only through `refresh`, on the sections you name.
@@ -38,6 +42,10 @@ knowledge/claims/<report>.jsonl    one claim per line
 knowledge/pages/<kind>/<slug>.json which claims each section of a page rests on
 knowledge/backlog/<report>.jsonl   findings queued because a cap was reached
 knowledge/log/<run>.jsonl          one line per accepted edit: base, result, writer, reviewer
+knowledge/topics.json              the fixed topic list: slug, title, scope
+knowledge/catalog.json             the page list a compile settled: kind, title, scope, topic or type, aliases
+knowledge/routes/<report>.jsonl    which page each claim was routed to, and by which step
+knowledge/glossary.json            one reviewed expansion per abbreviation
 ```
 
 Files are split by report, page and run, so two machines that ingest different reports
@@ -91,8 +99,27 @@ imported links are advisory. `revise` therefore also scans for stale figures (be
 | `review(section, sha, verdict, objections)` | review | accept, or revise with objections that quote the new text |
 | `finish(note)` | all | ends the session |
 
-An agent never reads a whole page and never writes a file. A write tool stages a result
-in the run folder; the host applies it after review.
+| `submit_record(record)` | record | one structured record, checked by its stage's own code |
+| `write_page(body, declined)` | page | a whole page written from a pack of claims; see "The page gate" |
+
+An agent never writes a file. A write tool stages a result in the run folder; the host
+applies it after review.
+
+### Packed sessions
+
+Three roles have exactly one tool and no read tools: `record` (`submit_record`),
+`verdict` (`review`) and `page` (`write_page`). The task message carries everything the
+work rests on: the claims with their verbatim quotes, the text under review, the pages
+that may be linked. The session ends when its one call is accepted. The host stops the
+harness there (a turn interrupt on the Codex app server, a `PostToolUse` hook on the
+Claude Agent SDK), so no turn is spent on `finish` or a closing remark.
+
+This is what bounds a session. In the first pilots a reviewer with read tools used
+110,000 to 150,000 tokens to judge a record a few hundred characters long, because each
+tool turn sent the whole context again; three quarters of all tokens were such re-sent
+context. A packed review of a page uses about 13,000. Every record stage and every
+compile step runs packed. The section tools above remain for the one-report workflows
+and for a person driving a harness by hand.
 
 ### The section gate
 
@@ -134,13 +161,33 @@ submit what it has. That is what bounds a loop.
 | edit | 30 | 160,000 |
 | review | 12 | 120,000 |
 
+### The page gate
+
+`write_page` takes a whole page. The writer cites claims by the tags of its task
+message, `[C4]` or `[C4, C9]`; the host turns each tag into its report (`[src: id]`)
+when it publishes, and the sidecar records which claims each section rests on. The
+gate refuses a page, and says why, when:
+
+- a tag is not in the claim list, or the body writes `[src: ...]` itself;
+- a claim given to the writer is neither cited nor declined with a reason;
+- a claim an earlier pass cited is no longer cited;
+- a paragraph or list item that states a figure, or runs to 14 words or more, carries
+  no tag (the forward-looking sections `check` exempts are skipped);
+- a statement states a figure that the reports of its tags do not contain;
+- a wikilink points outside the list of pages the task message allows;
+- the lead is missing, a heading repeats, a required closing section is missing
+  (`Open Directions` on a concept, `Key Findings` on a summary), a section exceeds
+  1,500 words, or the text carries escaped line breaks.
+
 ## Skills
 
 `skills/wiki-extract`, `wiki-curate`, `wiki-edit` and `wiki-review` each hold one
 `SKILL.md`: what the role is for, the tools it has, the procedure, the editorial rules
 and when to stop. Each record stage has its own (`wiki-findings`, `wiki-gists`,
 `wiki-novelty`, `wiki-links`, `wiki-directions` and so on), and `wiki-card-review` is
-the reviewer's for all of them. A runner sends the skill, then the "Domain Rules" and "Integration
+the reviewer's for all of them. A compile adds `wiki-glossary`, `wiki-propose`,
+`wiki-consolidate`, `wiki-route` and `wiki-page`, with `wiki-glossary-review`,
+`wiki-consolidate-review` and `wiki-page-review` for their second opinions. A runner sends the skill, then the "Domain Rules" and "Integration
 Rules" of `contract/AGENTS.md`, as the agent's instructions. Nothing in a skill names a
 vendor, so the same file drives both harnesses, and editing one changes the next run
 without scheduling any work.
@@ -174,7 +221,21 @@ reviewer refused twice for wrong definitions and miscounts.
   refuses to start otherwise.
 - A vendor that reports a usage or rate limit stops the run at once. Nothing is
   retried on another model or vendor. The run says which vendor and model, and the
-  same command resumes it when the quota is back.
+  same command resumes it when the quota is back. With `--quota-wait SECONDS` (a
+  compile left to run overnight) the run waits instead and asks the same model again.
+  A spent allowance ("usage limit", "resets at") is asked again every 15 minutes. A
+  request turned away as one too many ("429 Too Many Requests") is asked again after
+  about a minute, then two, doubling up to 15, until the wait is used up.
+- A vendor does not say how many sessions it takes at once. Each model starts at
+  `jobs`; a refusal lowers its limit to the number of sessions it was running, and
+  each run of that many successes raises the limit by one. `notes.log` in the run
+  folder records every change.
+- A vendor that answers "at capacity", "overloaded" or "routing discovery timed
+  out" gets the same session again after 45 seconds, up to six times with a longer
+  pause each time, on the same model.
+- A vendor that answers "Not logged in" stops the run at the first such session. Sign
+  in again and the same command resumes it.
+- Ten sessions in a row that fail for any other reason stop the run.
 - Both harnesses use the subscription login by default. `BERIL_WIKI_AUTH=api` keeps
   `OPENAI_*` and `ANTHROPIC_*` in the child environment so each bills its API key. The
   API mode has not been exercised yet.
@@ -285,6 +346,110 @@ report unread, so the same command retries it; a record a reviewer refused twice
 dropped and the run finishes. A record keeps its reviewer's last objections across a
 stop, and one accepted just before a crash is stored on resume without a new session. Run state lives in `.agentic/runs/<run>/` and is disposable once the run is
 done, because accepted results are already in Git text.
+
+## Compiling the whole wiki
+
+```sh
+uv run beril-wiki compile --jobs 8 --quota-wait 43200
+uv run beril-wiki compile --sources a,b,c --pages-only   # a pilot on some reports
+uv run beril-wiki compile --claims-only    # stop when the reports are read into claims
+uv run beril-wiki compile --routes-only    # stop when the page list and routes are settled
+```
+
+`ingest` reads one report into a wiki that exists. Run once per report on an empty
+wiki, it would rewrite a shared page each time another report touched it, and the page
+list would depend on the order the reports arrived in. `compile` does each kind of work
+once, from the reports in `corpus/` and the topic list in `knowledge/topics.json`:
+
+1. **Extract.** Every report becomes claims, in parallel. A report is cut at its
+   headings, and inside a long section at its paragraph breaks, into parts of about
+   8,000 characters. Each part is read by its own session, which gets the part, the
+   report's outline and its opening in the task message and records the claims in one
+   call.
+2. **Glossary.** One session proposes the expansion of each abbreviation the claims
+   use, with the expansions the reports themselves give; the other vendor reviews the
+   list. Writers expand a term only from this list and reviewers accept it, so a term
+   reads the same on every page.
+3. **Propose.** For each report, one session proposes the concept and entity pages its
+   claims belong on: a title, a one-sentence scope, a topic or an entity type, and the
+   claims.
+4. **Consolidate.** The proposals of all reports are merged into one page list: the
+   same question or the same thing under two names becomes one page. The session
+   lists only the pages it merges or renames; a candidate it leaves out stays a page of
+   its own. The other vendor reviews the list. If the list is still refused after the
+   second round, the merges the reviewer faulted are undone and the rest are kept.
+   Entities with the same name are merged in code first. Over 220 candidates, concepts
+   are merged topic by topic and entities type by type.
+5. **Route.** With the list settled, each report's claims are offered to every page, so
+   a claim reaches a page another report proposed. A claim sits on at most three pages.
+6. **Write.** Each page is written once from every claim routed to it, 60 claims to a
+   pass, and each pass is reviewed by the other vendor. A concept needs three claims.
+   An entity needs two claims from two reports, because the site shows an entity page
+   only when two reports speak of the entity. Thinner pages are not written; their
+   claims stay in the summaries and are listed in `knowledge/routes/unwritten.json`.
+   After the pages are written, `knowledge/routes/uncited.json` lists for each report
+   the claims that no page cites, read from the pages as published.
+   A report's summary is written from all of its claims. Up to 180 claims that is one
+   page in passes, like any other. A longer report is summarised in parts: one session
+   writes the opening (lead, Key Findings, Caveats and Open Work) from what the report
+   says under its own summary headings, and one session for each part of the report, of
+   at most 50 claims and cut at the report's headings, writes that part's section from
+   every claim in it. Each is reviewed on its own, the sections are written side by
+   side, and code puts them together in the report's order. No session rewrites the
+   page, so a refused part leaves the others standing.
+7. **Records.** Findings, plain summaries, result types and literature labels run per
+   report. Topic hubs, the home page, links, shared results, conflict pages, research
+   directions, follow-ups, literature context, author pages and figures then run once
+   for the corpus.
+
+A pass has at most two writer sessions and two reviewer sessions. A writer has three
+attempts at the page checks in a session. On the third, a page whose every statement
+passes is taken even if it leaves some of the pass's claims out; those claims are
+recorded as not placed, and for a concept or entity page they go to the backlog. If the
+reviewer still faults statements after the second round, the host removes exactly those
+sentences or list items, records their claims as declined, and checks the page again;
+what is published is text the reviewer did not fault. A page therefore always ends
+accepted or rejected, and no page is rewritten because another one changed. A published
+page cites each sentence after its closing period, as the rest of the wiki does.
+
+A topic hub or the home page that is still refused after the second round is written
+by code instead: the topic's scope and its concept pages, without a narrative. The wiki
+cannot be read without those pages, so they do not stay missing.
+
+Every step is recorded in the run, and each step writes its files before it is
+recorded. The same command resumes a stopped compile and pays for nothing twice. A
+second `compile` of reports that were already compiled refuses to start. A compile
+that stops where `--claims-only`, `--routes-only` or `--pages-only` asked it to exits 0
+and leaves the run open for the next command. A part of a long summary is reused only
+for the claims it was written from, so a part cut differently on a later run is
+written again.
+
+### Watching a run
+
+```sh
+uv run beril-wiki status              # the newest run, on one screen
+uv run beril-wiki status --watch 600  # return when it needs someone, ends, or after 600 s
+```
+
+`status` reads the run's `run.json`: the stage and how far it is, sessions open and
+waiting on a vendor, failures among the last twenty, spend, and a verdict. It exits 0
+for `ok` and `done` and 3 for a verdict that needs someone:
+
+| Verdict | Meaning |
+| --- | --- |
+| `ok` | sessions are finishing; a vendor pause under five minutes counts as working |
+| `waiting` | a session waits more than five minutes on a vendor limit |
+| `failing` | half of the last twenty sessions failed for a reason other than a vendor refusal |
+| `stuck` | a session has run past its timeout |
+| `idle` | no session is open and none has finished for ten minutes |
+| `dead` | the record says running and the process is gone; run the same command again |
+| `stopped`, `done` | the run ended, with its reason |
+
+A compile also stops itself when its pages go wrong. Once ten pages have been written
+in a run, more than half of the last twenty ending refused or failed stops it, so a
+fault in a skill or a check costs about twenty pages and not the page list. Fix the
+cause and run `beril-wiki compile --retry-rejected`, which writes the refused pages
+again; without the flag a refused page is not asked for twice.
 
 ## By hand
 
@@ -432,6 +597,93 @@ curator's stored labels that happened for 21 of 342 findings. The queries and th
 retrieval code are the curator's, and the cause of the gap is not established on a
 sample this small. And the planner is not repeatable: the two attempts placed the same
 report's claims on different concept pages, and both sets passed review.
+
+## Compile pilots
+
+Run on 2026-11-23 and 24 on scratch copies that started from an empty wiki, with the
+default models and subscription logins. Costs for Codex are API-equivalent estimates
+from the prices in `wiki.yaml`; Claude costs are what the SDK reported.
+
+| | Pilot 1 | Pilot 2 |
+| --- | --- | --- |
+| Sources | 5 reports | 8: 7 reports, one of 297,000 characters, and the discoveries digest |
+| Claims | 984 | 4,172 |
+| Pages | 83 accepted, 1 refused | 101 accepted, 2 refused; 43 of the 138 listed pages too thin to write |
+| Sessions, failed | 794, 62 (60 of them "429 Too Many Requests") | 1,290, 11 (10 of them "429") |
+| Most turns in one session | 10 | 4 |
+| Tokens | 12.5 M | 30.1 M |
+| Cost, every stage | USD 15.59 | USD 43.80 |
+| `check --strict` | 0 errors | 0 errors |
+
+In pilot 2 the page writer cost USD 22.45 of the 43.80 (238 sessions, 29,000 tokens
+each), the page reviewer USD 0.97, extraction USD 3.03, and the record stages the
+rest. Pilot 1 read each report in one long session of 119,000 tokens; pilot 2 read
+reports in parts at 20,100 tokens a session and found 27% more claims on the four
+reports both read. Each pilot ended `stopped` with one or two record jobs failed (a
+research direction in pilot 1; one findings and one literature job in pilot 2), which
+the same command would ask for again.
+
+**Blind judging.** Gemini 4 Neon, a model outside both vendors, scored pages from 0 to
+10 without knowing which version it saw. For a summary it saw the deployed page and
+the new page side by side with the full report, in both orders, each order sent to a
+different judge. A page with one altered or unsupported number scores at most 4 on
+fidelity. Each cell below is the mean of two judgements.
+
+| Summary of | New: fidelity, coverage, clarity, synthesis | Deployed | Preferred in both orders |
+| --- | --- | --- | --- |
+| `ecotype_analysis` | 10.0, 9.5, 8.0, 7.0 | 10.0, 9.5, 9.0, 8.0 | deployed |
+| `field_vs_lab_fitness` | 9.5, 10.0, 9.0, 7.0 | 10.0, 9.0, 6.0, 9.0 | new |
+| `metal_fitness_atlas` | 9.0, 9.0, 8.0, 8.0 | 4.0, 8.5, 6.0, 8.0 | new |
+| `pangenome_openness` | 10.0, 9.0, 9.0, 8.0 | 9.0, 9.0, 7.5, 8.0 | new |
+| `pgp_pangenome_ecology` | 10.0, 9.5, 8.0, 8.0 | 10.0, 9.0, 6.5, 9.0 | one each |
+| `discoveries` (digest, 802 claims) | 9.5, 9.0, 5.0, 4.0 | 3.0, 8.5, 6.0, 8.0 | new |
+| `ibd_phage_targeting` (1,897 claims) | 4.0, 9.0, 4.0, 3.5 | 9.5, 9.0, 4.0, 7.0 | deployed |
+| `plant_microbiome_ecotypes` (790 claims) | 3.0, 8.0, 4.0, 2.5 | 9.5, 9.0, 6.0, 8.5 | deployed |
+| Mean of the 16 judgements | 8.12, 9.12, 6.88, 6.00 | 8.12, 8.94, 6.38, 8.19 | new 4, deployed 3 |
+
+The first five rows are the second judging round; the three long sources are the third,
+after their summaries were rewritten in parts. In the second round those three scored
+4 to 5 on fidelity and 6 to 7 on coverage, because the summary was written from a
+sample of 480 claims and patched in eight passes.
+
+For concept and entity pages, judged against the full text of the reports they cite:
+the new pages scored 8.75 on fidelity with 4 of 495 statements unsupported (16 pages),
+the deployed pages 6.67 with 16 of 112 unsupported (9 pages). In both wikis every
+number in a cited statement is found in the report it cites, 100% in the new pages and
+99.7 to 100% in the deployed ones.
+
+**What the pilots show.**
+
+- For a report of up to 180 claims the new summary is as faithful as the deployed one
+  and easier to read, and it says less about what the results mean together.
+- A long report with several phases is the weak case. The summary written in parts
+  carries the report's content (coverage 8 to 9) and each number is in the report, but
+  it is about as long as the report, repeats a result in each place the report repeats
+  it, and in the plant report states five results as current that a later phase of the
+  same report replaced. A part is written from its own claims and does not know what a
+  later part revises. Giving each part the report's own conclusions as context was
+  tried and judged: fidelity moved from 3.0 to 4.0 on one report and not at all on the
+  other, one section invented a revision the report does not make, and 14 of 136
+  writers answered in text without submitting the page. It was taken out again.
+- Concept and entity pages hold fewer unsupported statements than the deployed ones,
+  and relate evidence across reports about as well.
+
+**Defects the pilots found, all fixed before the full compile.**
+
+- A vendor's "429 Too Many Requests" was treated as a spent allowance and waited on
+  for 15 minutes at a time; pilot 1 stood still for 80 minutes. Bursts are now asked
+  again after a minute and each model's session limit adapts.
+- The entity page list was refused twice at 33,000 output tokens. The list now holds
+  only merges and renames, and unfaulted merges survive a refusal.
+- Three summaries were refused because the writer left claims out on every attempt.
+  The third attempt now takes a page whose statements all pass and records what it
+  left out.
+- A long-running process imported a module that had changed on disk since it started
+  and crashed. Long runs now start from a copy of the source.
+- The merge of a short last part into the one before it dropped a part and wrote the
+  last one twice. Found by reading a page, fixed, and covered by a test.
+- An expired Claude login failed 12 sessions before the page breaker stopped the run.
+  The first "Not logged in" now stops it.
 
 ## Not built yet
 

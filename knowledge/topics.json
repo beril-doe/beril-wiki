@@ -1,0 +1,77 @@
+[
+ {
+  "slug": "gene-fitness-landscapes-and-cofitness-modules",
+  "title": "Gene Fitness Landscapes and Cofitness Modules",
+  "scope": "A gene fitness landscape is the set of growth effects that disrupting each gene produces across many experimental conditions."
+ },
+ {
+  "slug": "gene-essentiality-and-perturbation-assay-validity",
+  "title": "Gene Essentiality and Perturbation-Assay Validity",
+  "scope": "Gene essentiality is dependence of growth on a gene's function under a defined condition."
+ },
+ {
+  "slug": "laboratory-fitness-versus-natural-selection-and-gene-conservation",
+  "title": "Laboratory Fitness Versus Natural Selection and Gene Conservation",
+  "scope": "This topic asks whether a gene's measured effect on growth in the laboratory tells us why it is kept or lost across a species' genomes in nature."
+ },
+ {
+  "slug": "pangenome-structure-and-genome-evolution",
+  "title": "Pangenome Structure and Genome Evolution",
+  "scope": "A pangenome is the full set of gene clusters across the genomes of a species ."
+ },
+ {
+  "slug": "ecotypes-and-environmental-gene-content-differentiation",
+  "title": "Ecotypes and Environmental Gene-Content Differentiation",
+  "scope": "Within-species gene-content ecotypes are groups of genomes clustered by accessory (strain-variable) gene-content differences ."
+ },
+ {
+  "slug": "metabolic-traits-auxotrophy-and-community-dependence",
+  "title": "Metabolic Traits, Auxotrophy, and Community Dependence",
+  "scope": "This topic asks what organisms can make, what they can use, and what they depend on others for."
+ },
+ {
+  "slug": "metabolic-models-and-pathway-level-evidence",
+  "title": "Metabolic Models and Pathway-Level Evidence",
+  "scope": "This topic asks how far genome-derived metabolic predictions can be trusted."
+ },
+ {
+  "slug": "lanthanide-dependent-methylotrophy",
+  "title": "Lanthanide-Dependent Methylotrophy",
+  "scope": "Lanthanide-dependent methylotrophy is the use of rare-earth elements (REEs, the lanthanides) as cofactors for methanol oxidation by pyrroloquinoline-quinone (PQQ) methanol dehydrogenases."
+ },
+ {
+  "slug": "functional-dark-matter-and-annotation-resolution",
+  "title": "Functional Dark Matter and Annotation Resolution",
+  "scope": "In this corpus, \"dark\" genes are genes that lack functional annotation: hypothetical proteins, DUFs (domains of unknown function) and uncharacterized proteins ."
+ },
+ {
+  "slug": "resistance-defense-systems-and-mobile-elements",
+  "title": "Resistance, Defense Systems, and Mobile Elements",
+  "scope": "Bacteria carry overlapping systems for surviving chemical and biological attack: antimicrobial-resistance (AMR) genes, metal-tolerance determinants, anti-phage defense systems, and the mobile genetic elements (prophages, plasmids, integrative elements) that can move these functions between genomes."
+ },
+ {
+  "slug": "sampling-coverage-and-statistical-confounding",
+  "title": "Sampling Coverage and Statistical Confounding",
+  "scope": "Many apparent ecological and genomic patterns in this corpus depend on who was sampled, what the reference databases could represent, and which observations were treated as independent."
+ },
+ {
+  "slug": "data-infrastructure-provenance-and-research-practice",
+  "title": "Data Infrastructure, Provenance, and Research Practice",
+  "scope": "This topic covers how data are organized, labelled and joined in the KBase Data Lakehouse, and how research practice (review, code history, ingestion) decides whether a result can be trusted."
+ },
+ {
+  "slug": "distributed-computation-and-analysis-execution",
+  "title": "Distributed Computation and Analysis Execution",
+  "scope": "This topic covers how analyses actually run against the KBase Data Lakehouse: Spark (the distributed query engine behind the Lakehouse), the pandas frames and notebooks where results are examined, and the sessions, credentials and access paths between them."
+ },
+ {
+  "slug": "translational-microbiome-and-phage-therapeutics",
+  "title": "Translational Microbiome and Phage Therapeutics",
+  "scope": "This topic asks how microbiome measurements become interventions: which species to remove or displace, in which patients, with what evidence that the intervention will work and what it will cost the community."
+ },
+ {
+  "slug": "subsurface-and-soil-community-ecology",
+  "title": "Subsurface and Soil Community Ecology",
+  "scope": "This topic asks what structures microbial communities in soils and the subsurface: depth and flow, contamination, treatment history, warming, and lineage-level genome content."
+ }
+]

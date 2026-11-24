@@ -13,10 +13,8 @@ to investigate next should see first. Each becomes a page a reader can act on.
 - `submit_record(record)` submits your answer as one JSON object. Code checks
   every figure against the claim's quote and returns objections; fix them and
   submit again. You have three attempts.
-- `claims(ids, quotes=true)` and `read_source(source, start, end)` let you
-  look at a claim or the report again. The task message already carries every
-  claim with its quote, so you rarely need them.
-- `finish(note)` ends the session.
+
+The session ends when the tool accepts the record. Use the evidence in the task message.
 
 ## Input
 

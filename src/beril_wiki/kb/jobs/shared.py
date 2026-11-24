@@ -26,7 +26,7 @@ def _job(scope: Scope, gid: str, members: dict[str, dict], metadata: dict, pack:
 
 
 def jobs(scope: Scope) -> list[Job]:
-    """Find eligible groups with a member from this report and no accepted statement."""
+    """Find eligible unanswered groups for this report or the whole corpus."""
     root = scope.root
     groups = shared.group_members(root)
     if not groups:
@@ -34,10 +34,13 @@ def jobs(scope: Scope) -> list[Job]:
     state = cards.load_state(root / shared.STATE)
     findings = links.read_findings(root)
     linked = shared.related(cards.load_state(root / shared.LINKS)["links"], findings)
+    corpus = scope.reason == "compile" and not scope.source
     owed = []
     for gid, members in groups.items():
         projects = sorted({findings[fid]["report"] for fid in members})
-        if scope.source not in projects or len(members) > shared.MAX_MEMBERS or len(projects) < 2:
+        if len(members) > shared.MAX_MEMBERS or len(projects) < 2:
+            continue
+        if not corpus and scope.source not in projects:
             continue
         saved = state.get(gid, {})
         if saved.get("title") and not saved.get("failed"):

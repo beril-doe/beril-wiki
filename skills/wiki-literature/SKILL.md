@@ -1,21 +1,20 @@
 ---
 name: wiki-literature
-description: Propose PubMed queries for an edited topic hub or write its literature context from retrieved candidates.
+description: Propose PubMed queries for a concept or topic page or write its literature context from retrieved candidates.
 ---
 
-# Place a topic hub in the published literature
+# Place a wiki page in the published literature
 
 ## Tools
 
 - `submit_record(record)` submits your answer. Fix any objections and submit
   again. You have three attempts.
-- `claims(ids, quotes=true)` and `read_source(source, start, end)` let you
-  check the corpus evidence.
-- `finish(note)` ends the session.
+
+The session ends when the tool accepts the record. Use the evidence in the task message.
 
 ## Input
 
-`HUB PAGE` gives the topic hub. For a section job, `CANDIDATE PAPERS` lists
+`HUB PAGE` gives the concept or topic page. For a section job, `CANDIDATE PAPERS` lists
 the retrieved evidence by PMID and `LITERATURE CONTRACT` gives the rules.
 
 ## The record

@@ -87,6 +87,8 @@ uv run beril-wiki plan              # what would run, and why; no model call
 uv run beril-wiki ingest <report>   # a new report: claims, section edits, every record stage
 uv run beril-wiki revise <report>   # a changed report: only the sections it reaches
 uv run beril-wiki lint              # free checks on claims, links and the backlog
+uv run beril-wiki compile           # an empty wiki: every page and record, each written once
+uv run beril-wiki status            # whether the newest run is working, on one screen
 ```
 
 It runs every stage the curator runs for a report: claims, section edits, findings and

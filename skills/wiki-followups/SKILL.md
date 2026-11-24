@@ -9,9 +9,8 @@ description: Classify what the deciding test for one research direction needs an
 
 - `submit_record(record)` submits your answer as one JSON object. Fix any
   objections and submit again. You have three attempts.
-- `claims(ids, quotes=true)` and `read_source(source, start, end)` let you
-  inspect the claims and report again.
-- `finish(note)` ends the session.
+
+The session ends when the tool accepts the record. Use the evidence in the task message.
 
 ## Input
 
@@ -19,8 +18,9 @@ description: Classify what the deciding test for one research direction needs an
 would support or refute it, the planned approach, and a note on what data
 exist. The KBase Data Lakehouse is the shared database the projects queried.
 `DIRECTION_TABLES` lists the catalog tables the direction names. `DATABASES`
-lists the databases the catalog covers and their first table names. `TABLES`
-lists catalog tables matched to the question, with columns and sample values.
+lists the databases represented in the matched tables. `TABLES` lists the
+catalog tables named by the direction or matched to its question, with
+selected columns.
 
 ## The record
 

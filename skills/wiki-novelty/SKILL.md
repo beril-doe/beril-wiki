@@ -10,7 +10,8 @@ description: Compare one finding with abstracts retrieved from PubMed and assign
 - `submit_record(record)` submits your answer. Code checks every PMID against
   the candidates and that the label fits the relations you give; fix what it
   rejects and submit again.
-- `finish(note)` ends the session.
+
+The session ends when the tool accepts the record. Use the evidence in the task message.
 
 ## Input
 

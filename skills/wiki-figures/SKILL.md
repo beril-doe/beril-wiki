@@ -7,9 +7,9 @@ Choose where existing figures support a scientific wiki page.
 
 ## Tools
 
-- `claims` and `read_source` let you inspect the reports for context.
 - `submit_record(record)` submits your placements and visualization flags.
-- `finish(note)` ends the session.
+
+The session ends when the tool accepts the record. Use the evidence in the task message.
 
 ## Input
 

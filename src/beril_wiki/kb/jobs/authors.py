@@ -62,8 +62,10 @@ def _checker(
 
 
 def jobs(scope: Scope) -> list[Job]:
-    """Return owed Contributions jobs for the authors of the run's report."""
-    if not scope.source:
+    """Return owed Contributions jobs for the authors of the selected reports."""
+    corpus = scope.reason == "compile" and not scope.source
+    reports = set(scope.sources) if corpus else {scope.source} - {""}
+    if not reports:
         return []
     wiki = scope.root / "wiki"
     state_path = scope.root / "state" / "authors.json"
@@ -91,9 +93,11 @@ def jobs(scope: Scope) -> list[Job]:
             and scope.reason == "revise"
             and bool(previous and scope.source in cited_ids(previous.body))
         )
-        if scope.source not in ids and not removed:
+        if not ids & reports and not removed:
             continue
         saved = state.get(page.name)
+        if corpus and previous and previous.body:
+            continue
         if previous and previous.body and saved and not removed:
             if scope.run and saved == stamp:
                 continue
@@ -107,7 +111,7 @@ def jobs(scope: Scope) -> list[Job]:
             path = wiki / "summaries" / f"{pid}__REPORT.md"
             if path.is_file():
                 summaries[pid] = C.parse_fm(path.read_text(encoding="utf-8", errors="replace"))[1]
-        if not summaries or (scope.source not in summaries and not removed):
+        if not summaries or (not reports.intersection(summaries) and not removed):
             continue
         if inputs is None:
             inputs = source_ids(scope.root), C.wikilink_targets(scope.root)

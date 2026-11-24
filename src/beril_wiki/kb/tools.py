@@ -37,7 +37,16 @@ ROLES: dict[str, tuple[str, ...]] = {
     # input arrives in the task message and the result leaves through one gate.
     "card": ("claims", "read_source", "submit_record", "finish"),
     "card_review": ("claims", "read_source", "review", "finish"),
+    # Packed sessions: the task message carries everything the work rests on, so the
+    # session has one tool, its result, and ends when that call is accepted.
+    "record": ("submit_record",),
+    "verdict": ("review",),
+    "page": ("write_page",),
+    # One part of a report, given in the task message, read into claims.
+    "claims": ("submit_claims",),
 }
+# Roles whose first accepted result is final: a later call cannot replace it.
+PACKED = ("record", "verdict", "page")
 # Tool calls and disclosed characters one session may spend. Four characters are about
 # one token, so 96,000 characters is the curator's 24,000-token reading allowance.
 BUDGETS = {
@@ -49,6 +58,10 @@ BUDGETS = {
     "review": (12, 120_000),
     "card": (16, 200_000),
     "card_review": (10, 120_000),
+    "record": (4, 60_000),
+    "verdict": (3, 30_000),
+    "page": (4, 80_000),
+    "claims": (3, 60_000),
 }
 # Calls a session may still make after its budget is spent, so it can submit and finish.
 GRACE = 4
@@ -96,6 +109,8 @@ ENTITY_TYPES = (
 )
 # Sections that propose work or cite outside papers: ``check`` asks no report support
 # for the figures in them.
+# Why a claim is on record as declined when its writer never accounted for it.
+NOT_PLACED = "not placed by the writer"
 FORWARD = ("Literature Context", "Open Directions", "Resolving Work", "Possible Reconciliations")
 
 
@@ -148,6 +163,35 @@ class Session:
         """True once the call in flight is past the budget."""
         return self.used_calls > self.calls or self.used_chars >= self.chars
 
+    @property
+    def exhausted(self) -> bool:
+        """A one-tool session whose every allowed attempt was refused by the checks."""
+        return self.role in PACKED and max(self.rejections.values(), default=0) >= REJECTIONS
+
+    @property
+    def done(self) -> bool:
+        """The session has produced the one result it was started for, or has used its
+        attempts at it.
+
+        The harness ends the session at that point: a turn spent on calling finish or
+        on a closing remark re-sends the whole context for nothing.
+        """
+        return self.finished or self.produced or self.exhausted
+
+    @property
+    def produced(self) -> bool:
+        produced = {
+            "card": self.record is not None,
+            "record": self.record is not None,
+            "card_review": bool(self.reviews),
+            "verdict": bool(self.reviews),
+            "review": bool(self.reviews),
+            "page": bool(self.candidates),
+            "edit": self.task.get("section") in self.candidates,
+            "curate": self.plan is not None,
+        }
+        return produced.get(self.role, False)
+
 
 def fts_query(text: str) -> str:
     """Free text as an FTS5 query: any of its words, each quoted so punctuation is inert."""
@@ -185,7 +229,7 @@ class Tools:
         s.used_calls += 1
         writes = name not in READ
         reply: dict[str, Any]
-        if s.finished:
+        if s.finished or (s.done and s.role in PACKED):
             reply = {"ok": False, "error": "this session has finished; make no more calls"}
         elif s.used_calls > s.calls + GRACE:
             reply = {"ok": False, "error": "call budget exhausted; stop now"}
@@ -207,6 +251,8 @@ class Tools:
         size = len(json.dumps(reply, ensure_ascii=False))
         s.used_chars += size
         s.log.append({"tool": name, "ok": reply["ok"], "chars": size})
+        if s.done and not s.finished:
+            reply["done"] = "Your result is on file and the session is over. Make no more calls."
         if not reply["ok"] or writes:
             reply["budget"] = {
                 "calls_left": max(0, s.calls - s.used_calls),
@@ -538,7 +584,9 @@ class Tools:
         """
         source = self._task("source")
         text = self.store.source_text(source)
-        stored = self.store.claims(source)
+        # A compile reads a report part by part into an empty store; what is on disk
+        # there is an earlier attempt's, and the compile writes the file whole.
+        stored = [] if self.session.role == "claims" else self.store.claims(source)
         # A rerun must not record a passage twice, but one sentence can carry two claims
         # of a kind, so within a session only the same wording is a duplicate.
         known = {(c["quote"], c["kind"]) for c in stored if c.get("status", "active") == "active"}
@@ -602,6 +650,13 @@ class Tools:
         }
         if objections:
             reply["rejected"] = objections
+        if self.session.role == "claims":
+            # How many claims the checks refused in the latest call, for the run's record.
+            self.session.rejections["claims"] = len(objections)
+        if self.session.role == "claims" and (not objections or self.session.used_calls >= 2):
+            # One submission, and one more for what the checks refused.
+            self.session.finished = True
+            reply["done"] = "The claims are on file and the session is over. Make no more calls."
         return reply
 
     def propose_plan(self, targets: list[dict], skipped: list[dict] | None = None) -> dict:
@@ -841,7 +896,7 @@ class Tools:
         if self.check is None:
             raise Rejected("this session has no record to submit")
         if s.rejections.get("record", 0) >= REJECTIONS:
-            raise Rejected(f"the record was rejected {REJECTIONS} times; call finish")
+            raise Rejected(f"the record was rejected {REJECTIONS} times; stop here")
         if not isinstance(record, dict):
             raise Rejected("record must be a JSON object")
         try:
@@ -856,6 +911,44 @@ class Tools:
                 exc.objections or [str(exc)],
             ) from None
         return {"staged": True, "sha": record_sha(s.record)}
+
+    def write_page(self, body: str, declined: list[dict] | None = None) -> dict:
+        """Submit the complete page named in the task message, as Markdown.
+
+        body starts with the lead paragraphs and continues with `## Heading` sections;
+        it has no title line. End every factual sentence or list item with the tags of
+        the claims it rests on, such as [C4] or [C4, C9]. declined is
+        [{"claim": "C7", "reason": ...}] for each claim given to you that the page does
+        not use. A rejected page returns the objections; fix each and submit the whole
+        page again.
+        """
+        s = self.session
+        page = str(s.task.get("page", ""))
+        if not page:
+            raise Rejected("this session has no page to write")
+        if s.rejections.get(page, 0) >= REJECTIONS:
+            raise Rejected(f"the page was rejected {REJECTIONS} times; make no more calls")
+        body = str(body).strip()
+        declined = [d for d in declined or [] if isinstance(d, dict)]
+        candidate, objections = page_candidate(self.store, s.task, body, declined)
+        unplaced = candidate.pop("left", [])
+        # On the last attempt, a page whose every statement holds is taken with the
+        # claims it did not place recorded as such. A writer asked to weave sixty
+        # claims into prose misses a few each time, and a third refusal for that alone
+        # threw the whole pass away in the second compile pilot.
+        last = s.rejections.get(page, 0) >= REJECTIONS - 1
+        if unplaced and len(objections) == 1 and last:
+            declined = [*declined, *({"claim": c, "reason": NOT_PLACED} for c in unplaced)]
+            candidate, objections = page_candidate(self.store, s.task, body, declined)
+            candidate.pop("left", None)
+        if objections:
+            self._count_rejection(page)
+            left = REJECTIONS - s.rejections[page]
+            raise Rejected(
+                f"page rejected ({left} attempts left); fix every objection", objections[:20]
+            )
+        s.candidates[page] = candidate
+        return {"staged": page, "sha": candidate["sha"], "words": len(body.split())}
 
     def review(
         self, section: str, sha: str, verdict: str, objections: list[dict] | None = None
@@ -887,7 +980,7 @@ class Tools:
             candidate = str(task.get("candidate", ""))
             loose = [o["quote"] for o in usable if o.get("quote") and o["quote"] not in candidate]
             # A record is reviewed as JSON, where a copied passage can differ by escapes.
-            if loose and self.session.role == "review":
+            if loose and (self.session.role == "review" or task.get("quoted")):
                 raise Rejected("each objection's quote must be copied from the new text", loose[:5])
             objections = usable[:8]
         self.session.reviews[section] = {"sha": sha, "verdict": verdict, "objections": objections}
@@ -1109,6 +1202,227 @@ class Tools:
             ):
                 out.append(f"a paragraph states figures without a [src: id] tag: {par[:60]!r}")
         return out
+
+
+CLAIM_TAG = re.compile(r"\[(C\d+(?:\s*[,;]\s*C\d+)*)\]")
+LIST_ITEM = re.compile(r"^\s*(?:[-*+]|\d+[.)])\s+")
+# A paragraph this short is a connective or a list introduction, not a claim.
+UNCITED_WORDS = 14
+
+
+def tags_in(text: str) -> list[str]:
+    """Claim tags a text carries, in first-cited order."""
+    out: list[str] = []
+    for m in CLAIM_TAG.finditer(text):
+        for tag in re.split(r"\s*[,;]\s*", m.group(1)):
+            if tag not in out:
+                out.append(tag)
+    return out
+
+
+ADJACENT_TAGS = re.compile(r"\[(C\d+(?:\s*[,;]\s*C\d+)*)\][ \t]*\[(C\d+(?:\s*[,;]\s*C\d+)*)\]")
+TAG_THEN_STOP = re.compile(r"[ \t]*(\[src: [^\]]+\])([.!?])(?=[ \t]|$)", re.M)
+
+
+def render_tags(text: str, claims: dict[str, dict]) -> str:
+    """The published form of a tagged draft: each claim tag becomes its reports."""
+
+    def swap(m: re.Match) -> str:
+        reports: list[str] = []
+        for tag in re.split(r"\s*[,;]\s*", m.group(1)):
+            source = claims[tag]["source"] if tag in claims else ""
+            if source and source not in reports:
+                reports.append(source)
+        return f"[src: {', '.join(reports)}]" if reports else ""
+
+    # Tags written one after another are one citation: "[C1] [C2]." cites both.
+    while (joined := ADJACENT_TAGS.sub(r"[\1, \2]", text)) != text:
+        text = joined
+    # The wiki closes a sentence and then cites it: "... on glucose. [src: alpha]".
+    return TAG_THEN_STOP.sub(r"\2 \1", CLAIM_TAG.sub(swap, text))
+
+
+# Where one statement of a tagged draft ends: at its closing punctuation, with any claim
+# tags that follow it, before the next sentence begins.
+STATEMENT_END = re.compile(
+    r"(?:[.!?][\"')\]]*\s*(?:\[C[^\]]*\])+[.!?]?|(?:\[C[^\]]*\])+[.!?]?|[.!?][\"')]*)"
+    r"\s+(?=[A-Z\[*_(`\"'])"
+)
+
+
+def statements(line: str) -> list[tuple[int, int]]:
+    """Character spans of the statements on one line of a draft: its sentences, each
+    with the tags that close it. A heading or a blank line has none; a table row is one."""
+    stripped = line.strip()
+    if not stripped or stripped.startswith("#"):
+        return []
+    if stripped.startswith("|"):
+        return [(len(line) - len(line.lstrip()), len(line.rstrip()))]
+    marker = LIST_ITEM.match(line)
+    start = marker.end() if marker else len(line) - len(line.lstrip())
+    spans = []
+    for end in STATEMENT_END.finditer(line, start):
+        spans.append((start, end.end()))
+        start = end.end()
+    if line[start:].strip():
+        spans.append((start, len(line.rstrip())))
+    return spans
+
+
+WORDS = re.compile(r"[a-z0-9][a-z0-9'-]{3,}")
+
+
+def restates(sentence: str, given: list[str]) -> bool:
+    """Whether a sentence says nothing beyond the page's own description: at least
+    four fifths of its longer words are words of the title, description, other names
+    or glossary the writer was given."""
+    words = WORDS.findall(sentence.lower())
+    known = set(given)
+    return bool(words) and sum(w in known for w in words) >= 0.8 * len(words)
+
+
+def statement_texts(body: str) -> list[str]:
+    return [line[a:b].strip() for line in body.splitlines() for a, b in statements(line)]
+
+
+def page_candidate(
+    store: Store, task: dict, body: str, declined: list[dict]
+) -> tuple[dict, list[str]]:
+    """Check a whole page written from a pack of claims.
+
+    The draft cites claims by tag, so each statement's support is exact: the gate can
+    say which claim a figure must come from, and the sidecar records which claims each
+    section rests on. Returns the candidate and every reason to refuse it.
+    """
+    claims: dict[str, dict] = task.get("claims", {})
+    kept = set(task.get("kept", []))
+    out: list[str] = []
+    if not body:
+        return {}, ["the body is empty"]
+    if escaped_breaks(body):
+        out.append(ESCAPED)
+    bare = check.FENCED.sub("", body)
+    if re.search(r"^(`{3,}|~{3,})", bare, re.M):
+        # Left open, a fence turns every section after it into code that no check reads.
+        out.append("a code fence is opened and never closed")
+    if re.search(r"^# ", bare, re.M):
+        out.append("the body must not contain a # title line; start with the lead paragraph")
+    if "[src:" in body:
+        out.append("cite claims by tag, such as [C4]; do not write [src: ...] yourself")
+    parsed = pages.parse(f"# T\n\n{body}\n")
+    lead = parsed.section(pages.LEAD)
+    if lead is None or not lead.body:
+        out.append("the page needs a lead paragraph before its first ## section")
+    # Read from the text: a section headed "Lead" parses to the lead's own anchor.
+    headings = [h.strip() for h in re.findall(r"^##[ \t]+(.+)$", bare, re.M)]
+    # Two headings with one anchor share a sidecar entry, so each claim would be
+    # recorded under both: "Results?" and "Results" are the same section to the store.
+    anchors = [pages.slug(h) for h in headings]
+    repeated = sorted({h for h, a in zip(headings, anchors, strict=True) if anchors.count(a) > 1})
+    if repeated:
+        out.append(f"section headings are repeated: {', '.join(repeated)}")
+    if pages.LEAD in anchors:
+        out.append("no section may be headed Lead; the lead is the text before the first ##")
+    if any(CLAIM_TAG.search(h) for h in headings):
+        out.append("a heading carries a claim tag; tags go on statements")
+    if task.get("part") and headings:
+        out.append("this is one section of a longer page: use ### headings inside it, not ##")
+    missing = [h for h in task.get("required", []) if h not in headings]
+    if missing:
+        out.append(f"the page needs these sections: {', '.join('## ' + h for h in missing)}")
+    unknown = [c for c in tags_in(body) if c not in claims]
+    if unknown:
+        out.append(f"tags that are not in your claim list: {', '.join(unknown[:10])}")
+    allowed = set(task.get("links", []))
+    dead = [t for t in pages.links_in(body) if t not in allowed]
+    if dead:
+        out.append(
+            "wikilinks to pages that are not in the list you were given: " + ", ".join(dead[:8])
+        )
+    rendered = render_tags(body, claims)
+    texts: dict[str, str] = {}
+    sections: dict[str, list[str]] = {}
+    # What the task message itself says about the page: its title, description, other
+    # names and glossary. A sentence that only restates these needs no claim.
+    given = WORDS.findall(str(task.get("describes", "")).lower())
+    # The sentence the host puts in place of a lead that was refused or struck: the
+    # page's accepted description. It may hold a number of the title and cites nothing.
+    stock = check.prose_only(str(task.get("stock", ""))).strip()
+    # A claim counts as used where a statement of evidence cites it. A tag in a
+    # section that proposes work supports nothing a reader can check.
+    cited: list[str] = []
+    for section in parsed.sections:
+        words = len(section.body.split())
+        if words > SECTION_WORDS:
+            name = section.heading or "the lead"
+            out.append(f"{name} has {words} words; the limit for a section is {SECTION_WORDS}")
+        if section.heading.strip() in FORWARD:
+            continue
+        for par in check.paragraphs(section.body):
+            rows = LIST_ITEM.match(par) or par.lstrip().startswith("|")
+            for unit in par.splitlines() if rows else [par]:
+                if not unit.strip():
+                    continue
+                tags = [c for c in tags_in(unit) if c in claims]
+                plain = check.prose_only(unit)
+                stated = check.numbers_in(plain)
+                if not tags:
+                    # Bare navigation and table rules state nothing.
+                    if check.is_table_or_links(unit) and not stated:
+                        continue
+                    if stock and plain.strip() == stock:
+                        continue
+                    long = len(plain.split()) >= UNCITED_WORDS and not plain.rstrip().endswith(":")
+                    if stated or (long and not restates(plain, given)):
+                        out.append(
+                            f"a statement carries no claim tag: {unit.strip()[:70]!r}. Cite the "
+                            "claims it rests on, or cut it"
+                        )
+                    continue
+                cited += [c for c in tags if c not in cited]
+                held = sections.setdefault(section.anchor, [])
+                held += [claims[c]["id"] for c in tags if claims[c]["id"] not in held]
+                ids = sorted({claims[c]["source"] for c in tags})
+                for sid in ids:
+                    if sid not in texts:
+                        texts[sid] = store.source_text(sid)
+                shown = render_tags(unit, claims)
+                derived = check.derivable_numbers(shown, ids, texts)
+                fresh = [
+                    n for n in check.unsupported_numbers(shown, ids, texts) if n not in derived
+                ]
+                if fresh:
+                    out.append(
+                        f"figures not found in the reports this statement cites: "
+                        f"{', '.join(fresh[:8])}, in the statement starting {unit.strip()[:60]!r}"
+                    )
+    passed = {str(d.get("claim", "")).strip() for d in declined}
+    if any(not str(d.get("reason", "")).strip() for d in declined):
+        out.append("every declined claim needs a reason")
+    undisposed = sorted(set(claims) - set(cited) - passed, key=lambda c: int(c[1:]))
+    if undisposed:
+        # Named in full: a writer shown fifteen at a time fixes fifteen at a time.
+        out.append(
+            f"{len(undisposed)} claims are neither cited by a statement of evidence nor "
+            "declined with a reason; cite or decline every one: " + ", ".join(undisposed)
+        )
+    lost = sorted((kept & passed) | (kept - set(cited) - passed), key=lambda c: int(c[1:]))
+    if lost:
+        out.append(
+            "claims the accepted page already cited must stay cited: " + ", ".join(lost[:15])
+        )
+    candidate = {
+        "page": task.get("page", ""),
+        "body": body,
+        "rendered": rendered,
+        "sha": pages.body_sha(body),
+        "sections": sections,
+        "cited": cited,
+        "declined": declined,
+        # Claims the writer neither cited nor declined, new to this pass.
+        "left": [c for c in undisposed if c not in kept],
+    }
+    return candidate, out
 
 
 def record_sha(record: dict) -> str:

@@ -11,12 +11,11 @@ rewrite it.
 
 ## Tools
 
-- `claims(ids, quotes=true)` and `read_source(source, start, end)` retrieve a
-  claim or a passage of a report, for the cases the input alone cannot
-  settle. Verify the most consequential numbers and caveats first.
 - `review(section, sha, verdict, objections)` records your verdict. `section`
   is the record's key and `sha` its sha, both given in the task message.
-- `finish(note)` ends the session, after `review` has recorded your verdict.
+
+The session ends when the tool accepts the verdict. Use the packed evidence
+to verify the most consequential numbers and caveats first.
 
 ## What to object to
 
@@ -30,6 +29,14 @@ rewrite it.
 - A label or category the evidence does not fit.
 - A reference (a claim id, a paper, a table, a project) that is not in the
   input or does not say what the record says it does.
+
+A record is short by design, so an omission is not an error. A plain summary
+(a record with a `gist`) leaves out caveats, limits and statistics on purpose:
+the page shows them next to it. Do not ask for a caveat, a limit, a sample
+size or a statistic to be added to one. Object to a plain summary only when
+it states more than the finding measured, or states as solid a result that
+the input calls an artifact, circular, true by construction or not a
+refutation.
 
 Do not object to style, length or word choice that code already checked, and
 do not ask for material that is not in the input. Code has already matched

@@ -13,11 +13,12 @@ claims novelty or tension stands only when a model of the other vendor assigns i
 from __future__ import annotations
 
 import json
+import threading
 from pathlib import Path
 
 from beril_wiki.kb.jobs import Job, Scope, legacy, write_state
 from beril_wiki.kb.store import write_text
-from beril_wiki.records import FINDINGS, finding_text, source_path
+from beril_wiki.records import FINDINGS, caveat_quote, finding_text, source_path
 from beril_wiki.stages import cards, novelty
 
 retrieve = novelty.retrieve
@@ -42,16 +43,23 @@ def _owed(scope: Scope) -> dict[str, dict]:
         if label and label != novelty.NOT_ASSESSED and not saved.get("failed"):
             continue
         fields, body = cards.read_page(page)
-        out[page.stem] = finding_text(fields, body)
+        out[page.stem] = finding_text(fields, body) | {"caveat_quote": caveat_quote(body)}
     return out
+
+
+# The labels of every report are one file. A compile reads several reports' findings
+# side by side, and this stage also writes that file while it lists its jobs, outside
+# the run's lock.
+STATE_LOCK = threading.Lock()
 
 
 def _save(scope: Scope, fid: str, entry: dict) -> None:
     path = scope.root / novelty.STATE
-    state = cards.load_state(path)
     decision = novelty.load_decisions(scope.root).get(fid)
-    state[fid] = novelty.apply_decision(entry, decision)
-    write_state(path, dict(sorted(state.items())))
+    with STATE_LOCK:
+        state = cards.load_state(path)
+        state[fid] = novelty.apply_decision(entry, decision)
+        write_state(path, dict(sorted(state.items())))
 
 
 def _cited(scope: Scope) -> list[str]:
@@ -132,13 +140,14 @@ def judgments(scope: Scope) -> list[Job]:
         except Exception as exc:  # any PubMed fault belongs to this finding, not the run
             print(f"  novelty/{fid}: retrieval failed ({type(exc).__name__}: {exc}); label kept")
             state_path = scope.root / novelty.STATE
-            state = cards.load_state(state_path)
-            kept = state.get(fid) or {
-                "label": novelty.NOT_ASSESSED,
-                "pipeline_label": novelty.NOT_ASSESSED,
-            }
-            state[fid] = kept | {"failed": True}
-            write_state(state_path, dict(sorted(state.items())))
+            with STATE_LOCK:
+                state = cards.load_state(state_path)
+                kept = state.get(fid) or {
+                    "label": novelty.NOT_ASSESSED,
+                    "pipeline_label": novelty.NOT_ASSESSED,
+                }
+                state[fid] = kept | {"failed": True}
+                write_state(state_path, dict(sorted(state.items())))
             continue
         notes |= {
             "candidates": sorted(papers),
@@ -224,7 +233,8 @@ def after(scope: Scope, outcomes: dict[str, dict]) -> None:
     """Drop the labels of findings that no longer exist, as the curator does; the
     strict check rejects a label with no finding."""
     path = scope.root / novelty.STATE
-    state = cards.load_state(path)
-    live = {page.stem for page in (scope.root / FINDINGS).glob("*.md")}
-    if state.keys() - live:
-        write_state(path, {fid: entry for fid, entry in sorted(state.items()) if fid in live})
+    with STATE_LOCK:
+        state = cards.load_state(path)
+        live = {page.stem for page in (scope.root / FINDINGS).glob("*.md")}
+        if state.keys() - live:
+            write_state(path, {f: entry for f, entry in sorted(state.items()) if f in live})

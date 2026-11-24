@@ -9,9 +9,8 @@ description: Classify related findings or references between microbial-biology r
 
 - `submit_record(record)` submits one JSON object for the batch. Fix any
   objections and submit again. You have three attempts.
-- `claims(ids, quotes=true)` and `read_source(source, start, end)` let you
-  read claims or report passages again.
-- `finish(note)` ends the session.
+
+The session ends when the tool accepts the record. Use the evidence in the task message.
 
 ## Input
 

@@ -8,6 +8,7 @@ from typing import Literal, get_args
 
 from beril_wiki.agentic.runtime import digest
 from beril_wiki.kb.jobs import Job, Scope, legacy, write_state
+from beril_wiki.kb.jobs.conflicts import tension_groups
 from beril_wiki.stages import cards, links
 
 
@@ -29,14 +30,19 @@ class _Candidate:
         return self.a, self.b
 
 
-def _candidates(root: Path) -> list[_Candidate]:
+def _candidates(root: Path, corpus: bool = False) -> list[_Candidate]:
     findings = links.read_findings(root)
     titles = links.report_titles(root)
+    memberships = links.memberships(root)
+    if corpus:
+        # The conflict stage runs later, but its pages can cite these projects together.
+        groups, _ = tension_groups(root)
+        memberships.extend(set().union(*(block["projects"] for block in g)) for g in groups)
     pairs = [
         _Candidate(
             "pair", a, b, {"A": links.pair_text(findings[a]), "B": links.pair_text(findings[b])}
         )
-        for a, b in links.pair_candidates(findings, links.memberships(root))
+        for a, b in links.pair_candidates(findings, memberships)
     ]
     refs = [
         _Candidate(
@@ -131,14 +137,15 @@ def _batch(scope: Scope, current: list[_Candidate], chunk: list[_Candidate]) -> 
 
 
 def jobs(scope: Scope) -> list[Job]:
-    """Batch unanswered candidates that involve the run's report."""
-    current = _candidates(scope.root)
+    """Batch unanswered candidates for this report or the whole corpus."""
+    corpus = scope.reason == "compile" and not scope.source
+    current = _candidates(scope.root, corpus)
     entries = cards.load_state(scope.root / links.STATE).get("candidates", {})
     pairs = []
     refs: dict[str, list[_Candidate]] = {}
     for candidate in current:
         entry = entries.get(candidate.key, {})
-        if scope.source not in candidate.reports or _answered(entry, candidate):
+        if _answered(entry, candidate) or (not corpus and scope.source not in candidate.reports):
             continue
         if candidate.kind == "pair":
             pairs.append(candidate)
@@ -157,6 +164,9 @@ def after(scope: Scope, outcomes: dict[str, dict]) -> None:
     if not path.exists() or any(o["status"] == "accepted" for o in outcomes.values()):
         return
     state = cards.load_state(path)
-    current = _current_links(_candidates(scope.root), state.get("candidates", {}))
+    current = _current_links(
+        _candidates(scope.root, scope.reason == "compile" and not scope.source),
+        state.get("candidates", {}),
+    )
     if state.get("links") != current:
         write_state(path, state | {"links": current})

@@ -9,9 +9,8 @@ description: Classify one finding by the kind of result its evidence shows so sc
 
 - `submit_record(record)` submits your answer as one JSON object. Fix any
   objections and submit again. You have three attempts.
-- `claims(ids, quotes=true)` and `read_source(source, start, end)` let you
-  inspect the claims and report again.
-- `finish(note)` ends the session.
+
+The session ends when the tool accepts the record. Use the evidence in the task message.
 
 ## Input
 

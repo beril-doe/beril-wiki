@@ -14,8 +14,12 @@ then, so the run folder is disposable.
 
 from __future__ import annotations
 
+import copy
 import json
+import os
+import random
 import re
+import sys
 import threading
 import time
 import uuid
@@ -66,6 +70,8 @@ DEFAULT_ROLES = {
 }
 # Each writing role and the role that reviews it: never the same vendor.
 REVIEWED_BY = {
+    # A compile's glossary and page list.
+    "curate": "review",
     "edit": "review",
     "write": "review",
     "cards": ("card_review", "findings_review"),
@@ -80,6 +86,42 @@ QUOTA = re.compile(
     r"|quota|\b429\b|too many requests|credit balance|out of credits",
     re.I,
 )
+# A vendor that turns away a burst of requests takes the same request a minute later.
+# Measured on GPT-6.1 Sol: six sessions started together, two got "429 Too Many
+# Requests", and each passed on its next attempt.
+BURST = re.compile(r"\b429\b|too many requests", re.I)
+SPENT = re.compile(
+    r"(usage|session|weekly|daily)[ _-]?limit|hit your limit|resets|quota|credit", re.I
+)
+BURST_PAUSE = 60.0
+# A vendor that refuses the login refuses every session, so the first one stops the run.
+# Seen from the Claude Agent SDK as the whole reply "Not logged in · Please run /login".
+# Matched as the start of the reply or in the harness's error, never inside a model's
+# prose: a page may say that study participants were not logged in.
+LOGIN_REPLY = re.compile(r"\s*not logged in\b.{0,5}please run /login", re.I)
+LOGIN_ERROR = re.compile(
+    r"\b401\b[^\n]{0,20}unauthori[sz]ed|invalid api key|please run /login", re.I
+)
+
+
+def logged_out(run: Run) -> bool:
+    return not run.ok and bool(LOGIN_REPLY.match(run.text) or LOGIN_ERROR.search(run.error))
+
+
+# What a session stages. A retried session starts again from what it held before.
+SESSION_RESULTS = ("claims", "plan", "candidates", "reviews", "record", "covered", "note")
+QUOTA_PAUSE = 900.0
+# A vendor that is briefly full says so and takes the same request a minute later.
+BUSY = re.compile(
+    r"at capacity|overloaded|temporarily unavailable|routing discovery timed out"
+    r"|\b(502|503|529)\b",
+    re.I,
+)
+BUSY_PAUSE = 45.0
+BUSY_TRIES = 6
+# Sessions that failed one after another, in any stage, before the run stops: a broken
+# login or a harness that cannot start fails every session the same way.
+FAIL_STREAK = 10
 Launch = Callable[[Agent, str, str, Tools, Path], Run]
 
 
@@ -102,6 +144,10 @@ class Config:
     reserve_usd: float = 0.30
     max_sections: int = 12
     jobs: int = 3
+    # Seconds to keep waiting when a vendor reports its quota is used up, asking again
+    # every ``QUOTA_PAUSE``. Zero stops the run at once, which is what a run someone
+    # is watching wants; an unattended compile sets hours.
+    quota_wait: float = 0.0
     # Run the curator's deterministic stages (author stubs, titles, names, errata)
     # around the record stages. Off only where a caller does that itself.
     tidy: bool = True
@@ -123,6 +169,8 @@ class Config:
 
     def check(self) -> None:
         """Nothing is reviewed by the vendor that wrote it."""
+        if self.jobs < 1 or self.rounds < 1:
+            raise Stop("jobs and rounds must be 1 or more")
         for writer, reviewers in REVIEWED_BY.items():
             for reviewer in (reviewers,) if isinstance(reviewers, str) else reviewers:
                 if self.roles[writer].provider == self.roles[reviewer].provider:
@@ -170,6 +218,7 @@ def default_launch(config: Config, run_dir: Path, usd_left: Callable[[], float |
                 max_turns=session.calls + 8,
                 # Only the Claude harness can stop itself at a spend limit.
                 max_usd=usd_left(),
+                stop=lambda: session.done,
             )
 
     return launch
@@ -225,7 +274,26 @@ class Runner:
                 "sessions": [],
             }
         )
+        self.state["started"] = round(time.time())
         self.state["status"] = "running"
+        # What `beril-wiki status` reads to tell a working run from a dead or idle one.
+        self.state |= {"pid": os.getpid(), "open": {}, "waiting": {}}
+        # Sessions on record when this process took the run over: its health is judged
+        # from the ones after them.
+        self.state["since"] = len(self.state["sessions"])
+        # What a process that died held for sessions that never reported is given back.
+        self.state["tokens"] -= self.state.get("held", 0)
+        self.state["held"] = 0
+        self.streak = 0
+        # However many thread pools a workflow nests, ``jobs`` sessions run at once.
+        self.active = 0
+        # Sessions each model runs at once. A vendor does not say how many it takes, so
+        # a refusal lowers the model's limit to what was running and successes raise it
+        # again: measured on GPT-6.1 Sol, the fifth session at once was refused.
+        self.turn = threading.Condition(self.lock)
+        self.limits: dict[str, int] = {}
+        self.running: dict[str, int] = defaultdict(int)
+        self.taken: dict[str, int] = defaultdict(int)
         self.launch = launch or default_launch(config, self.dir, self.usd_left)
         self.save()
 
@@ -245,6 +313,28 @@ class Runner:
 
     def save(self) -> None:
         write_text(self.dir / "run.json", json.dumps(self.state, ensure_ascii=False, indent=1))
+
+    def note(self, message: str) -> None:
+        """A line for whoever watches the run: its log file, and standard error."""
+        line = f"{time.strftime('%H:%M:%S')} {message}"
+        with (self.dir / "notes.log").open("a", encoding="utf-8") as out:
+            out.write(line + "\n")
+        print(line, file=sys.stderr, flush=True)
+
+    def stage(
+        self, label: str, done: int | None = None, total: int | None = None, code: bool = False
+    ) -> None:
+        """Say what the run is on, for whoever asks its status. ``code`` marks a step
+        that starts no session, such as the site's deterministic stages."""
+        with self.lock:
+            self.state["stage"] = {
+                "label": label,
+                "done": done,
+                "total": total,
+                "code": code,
+                "at": round(time.time()),
+            }
+            self.save()
 
     def step(self, key: str, make: Callable[[], Any]) -> Any:
         """Run a step once; a resumed run reuses what the step recorded.
@@ -296,6 +386,43 @@ class Runner:
             if self.state["usd"] + self.held_usd + c.reserve_usd > c.max_usd:
                 raise Stop(f"spend cap reached: USD {self.state['usd']:.2f} of {c.max_usd:.2f}")
 
+    def enter(self, model: str) -> None:
+        """Wait for a place among the run's sessions and among the model's, then hold
+        the session's budget. Raises ``Stop`` when the run has halted or the budget
+        cannot pay for one more session; a session that waits is charged nothing."""
+        jobs = max(1, self.config.jobs)
+        with self.turn:
+            while True:
+                self.admit()
+                if self.active < jobs and self.running[model] < self.limits.get(model, jobs):
+                    break
+                self.turn.wait(timeout=5)
+            self.active += 1
+            self.running[model] += 1
+            # Held until the session reports, so parallel sessions cannot both spend
+            # the same remainder.
+            self.state["tokens"] += self.config.reserve_tokens
+            self.state["held"] += self.config.reserve_tokens
+            self.held_usd += self.config.reserve_usd
+
+    def leave(self, model: str, ok: bool, turned_away: bool) -> None:
+        """Give the places back and move the model's limit. Called with the lock held."""
+        jobs = max(1, self.config.jobs)
+        self.active -= 1
+        self.running[model] -= 1
+        limit = self.limits.get(model, jobs)
+        if turned_away:
+            # The vendor took what is still running and no more.
+            self.limits[model] = max(1, min(limit, self.running[model]))
+            self.taken[model] = 0
+        elif ok:
+            self.taken[model] += 1
+            if self.taken[model] >= limit and limit < jobs:
+                self.limits[model], self.taken[model] = limit + 1, 0
+        if self.limits.get(model, limit) != limit:
+            self.note(f"{model} now runs {self.limits[model]} sessions at once (was {limit})")
+        self.turn.notify_all()
+
     def dispatch(
         self,
         name: str,
@@ -313,12 +440,6 @@ class Runner:
         instructions."""
         tools = tools or role
         skill = skill or SKILLS[role]
-        with self.lock:
-            self.admit()
-            # Held until the session reports, so parallel sessions cannot both spend
-            # the same remainder.
-            self.state["tokens"] += self.config.reserve_tokens
-            self.held_usd += self.config.reserve_usd
         agent = self.config.roles[role]
         fresh = Session.start(tools, task, run=self.id)
         if budget:
@@ -330,50 +451,126 @@ class Runner:
             session.calls, session.chars = fresh.calls, fresh.chars
             session.used_calls = session.used_chars = 0
         session.path = str(self.dir / f"{name}.json")
-        session.save()
-        try:
-            run = self.launch(
-                agent,
-                instructions(self.root, skill),
-                brief,
-                Tools(self.root, session, check),
-                self.dir,
-            )
-        except Exception as exc:
-            run = Run(str(agent), error=f"{type(exc).__name__}: {exc}"[:300])
-        if not run.ok and QUOTA.search(f"{run.error} {run.text}"):
-            # Nothing is retried on another vendor or model: the run stops and says so.
-            self.halted = (
-                f"{agent.provider} ({agent.model}) reported a usage or rate limit: "
-                f"{(run.error or run.text)[:200]}. Nothing else was started; run the same "
-                "command again when the quota is back, and it resumes here."
-            )
-        with self.lock:
-            # A session that failed without reporting usage still spent something; it
-            # keeps its reservation instead of being counted as free.
-            spent = run.tokens if run.ok or run.tokens else self.config.reserve_tokens
-            self.state["tokens"] += spent - self.config.reserve_tokens
-            self.held_usd -= self.config.reserve_usd
-            # Likewise for money: an unmetered failure is charged its hold, or a run
-            # of timeouts would never reach the cap.
-            unmetered = not run.ok and not run.tokens and run.cost_usd is None
-            self.state["usd"] += self.config.reserve_usd if unmetered else self.cost(agent, run)
-            self.state["sessions"].append(
-                {
-                    "name": name,
-                    "role": role,
-                    **asdict(run),
-                    "text": run.text[:300],
-                    "calls": session.used_calls,
-                    "chars": session.used_chars,
-                }
-            )
-            self.save()
+        # What the session held before this dispatch: a second attempt starts from it,
+        # not from whatever a failed attempt staged.
+        before = copy.deepcopy({f: getattr(session, f) for f in SESSION_RESULTS})
+        waited, tries, bursts, attempt = 0.0, 0, 0, 0
+        while True:
+            attempt += 1
+            try:
+                # Every attempt passes the same door: the halt, the budget, a place.
+                self.enter(agent.model)
+            except Stop:
+                with self.lock:
+                    self.state["waiting"].pop(name, None)
+                raise
+            with self.lock:
+                self.state["waiting"].pop(name, None)
+                self.state["open"][name] = round(time.time())
+                self.save()
+            session.save()
+            try:
+                run = self.launch(
+                    agent,
+                    instructions(self.root, skill),
+                    brief,
+                    Tools(self.root, session, check),
+                    self.dir,
+                )
+            except Exception as exc:
+                run = Run(str(agent), error=f"{type(exc).__name__}: {exc}"[:300])
+            told = f"{run.error} {run.text}"
+            # A refused login is neither a limit nor a full vendor: nothing is retried.
+            out = logged_out(run)
+            limited = not run.ok and not out and bool(QUOTA.search(told))
+            busy = not run.ok and not out and not limited and bool(BUSY.search(run.error))
+            if (limited or busy) and (session.finished or session.produced):
+                # The result was on file before the vendor failed; it stands.
+                run.ok, run.error, limited, busy = True, "", False, False
+            pause = 0.0
+            if busy and tries < BUSY_TRIES:
+                tries += 1
+                pause = BUSY_PAUSE * tries
+            elif limited:
+                # A burst limit doubles its wait up to the quota's, so one that never
+                # lifts is waited on like a spent allowance. Sessions refused together
+                # do not all come back together.
+                burst = bool(BURST.search(told)) and not SPENT.search(told)
+                wait = min(BURST_PAUSE * 2**bursts, QUOTA_PAUSE) if burst else QUOTA_PAUSE
+                wait += random.uniform(0, wait / 2) if burst else 0.0
+                bursts += burst
+                if waited + wait <= self.config.quota_wait:
+                    pause = wait
+                    waited += wait
+            why = "is at capacity" if busy else "reports a usage or rate limit"
+            with self.lock:
+                again = bool(pause) and not self.halted
+                self.leave(agent.model, run.ok, limited and bool(BURST.search(told)))
+                # A request the vendor turned away before the model did anything used
+                # nothing. Any other failure without reported usage keeps its
+                # reservation, or a run of timeouts would never reach a cap.
+                refused = (limited or busy) and not run.tokens and not session.used_calls
+                silent = not run.ok and not run.tokens and not refused
+                spent = self.config.reserve_tokens if silent else run.tokens
+                self.state["tokens"] += spent - self.config.reserve_tokens
+                self.state["held"] -= self.config.reserve_tokens
+                self.held_usd -= self.config.reserve_usd
+                unmetered = silent and run.cost_usd is None
+                self.state["usd"] += self.config.reserve_usd if unmetered else self.cost(agent, run)
+                self.state["sessions"].append(
+                    {
+                        "name": name if attempt == 1 else f"{name}#{attempt}",
+                        "role": role,
+                        **asdict(run),
+                        "text": run.text[:300],
+                        "calls": session.used_calls,
+                        "chars": session.used_chars,
+                        "at": round(time.time()),
+                        # Asked again after a pause: not a failed session.
+                        "retry": again,
+                    }
+                )
+                self.state["open"].pop(name, None)
+                if again:
+                    until = round(time.time() + pause)
+                    self.state["waiting"][name] = {"until": until, "why": f"{agent.model} {why}"}
+                else:
+                    self.streak = 0 if run.ok else self.streak + 1
+                    if limited and not self.halted:
+                        # Nothing is retried on another vendor or model: the run stops
+                        # and says so, before a queued session can take the place.
+                        self.halted = (
+                            f"{agent.provider} ({agent.model}) reported a usage or rate "
+                            f"limit: {(run.error or run.text)[:200]}. Nothing else was "
+                            "started; run the same command again when the quota is back, "
+                            "and it resumes here."
+                        )
+                    if out and not self.halted:
+                        self.halted = (
+                            f"{agent.provider} ({agent.model}) refused the login: "
+                            f"{(run.text or run.error)[:200]}. Nothing else was started; "
+                            "sign in again and run the same command, and it resumes here."
+                        )
+                    if self.streak >= FAIL_STREAK and not self.halted:
+                        self.halted = (
+                            f"{self.streak} sessions in a row failed, the last ({name}) "
+                            f"with: {run.error[:200]}. Nothing else was started."
+                        )
+                self.save()
+            if not again:
+                break
+            self.note(f"{agent.model} {why}; asking again in {pause:.0f}s ({name})")
+            time.sleep(pause)
+            for name_, value in copy.deepcopy(before).items():
+                setattr(session, name_, value)
+            session.finished, session.rejections = False, {}
+            session.used_calls = session.used_chars = 0
         return session, run
 
     def finish(self, status: str, **summary: Any) -> dict:
         self.state["status"] = status
         self.state["summary"] = summary
+        self.state |= {"open": {}, "waiting": {}}
         self.save()
         return {
             "run": self.id,
@@ -382,6 +579,69 @@ class Runner:
             "usd": round(self.state["usd"], 4),
             **summary,
         }
+
+
+# Whether a run is working
+
+# Seconds: a vendor wait longer than this, or a run with no session open and none
+# finished for this long, is worth a person's look.
+LONG_WAIT = 300
+IDLE = 600
+CODE_STEP = 4 * 3600
+
+
+def turned_away(error: str) -> bool:
+    return bool(QUOTA.search(error) or BUSY.search(error))
+
+
+def alive(pid: int) -> bool:
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    return True
+
+
+def health(state: dict, now: float, running: bool, timeout: float = 1200.0) -> tuple[str, str]:
+    """A verdict on a run's record and the reason: ``ok`` and ``done`` need nobody;
+    ``stopped``, ``dead``, ``failing``, ``waiting``, ``stuck`` and ``idle`` do."""
+    if state["status"] != "running":
+        reason = str((state.get("summary") or {}).get("reason", ""))
+        return state["status"], reason
+    if not running:
+        return "dead", f"the record says running but process {state.get('pid')} is gone"
+    # Judged from the sessions of the process that holds the run now. A request a
+    # vendor turned away and the run asks again is not a failed session.
+    sessions = state["sessions"][state.get("since", 0) :]
+    recent = [s for s in sessions if not s.get("retry", turned_away(s["error"]))][-20:]
+    failed = [s for s in recent if not s["ok"]]
+    if len(recent) >= 10 and 2 * len(failed) >= len(recent):
+        return "failing", f"{len(failed)} of the last {len(recent)} sessions failed: " + (
+            failed[-1]["error"][:160]
+        )
+    late = {n: w for n, w in state.get("waiting", {}).items() if w["until"] - now > LONG_WAIT}
+    if late:
+        name, wait = max(late.items(), key=lambda kv: kv[1]["until"])
+        return "waiting", (
+            f"{len(late)} sessions wait on a vendor, the last until "
+            f"{time.strftime('%H:%M:%S', time.localtime(wait['until']))}: {wait['why']} ({name})"
+        )
+    opened = {n: t for n, t in state.get("open", {}).items() if n not in state.get("waiting", {})}
+    old = {n: t for n, t in opened.items() if now - t > timeout + 120}
+    if old:
+        name, start = min(old.items(), key=lambda kv: kv[1])
+        return "stuck", f"{name} has run for {(now - start) / 60:.0f} min"
+    stage = state.get("stage") or {}
+    last = max(
+        [s.get("at", 0) for s in sessions[-50:]] + [state.get("started", 0), stage.get("at", 0)]
+    )
+    # A step in code starts no session; the site's stages may each take hours.
+    quiet = CODE_STEP if stage.get("code") else IDLE
+    if not opened and not state.get("waiting") and last and now - last > quiet:
+        return "idle", f"no session is open and none has finished for {(now - last) / 60:.0f} min"
+    return "ok", ""
 
 
 # What would run, and why

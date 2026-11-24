@@ -116,7 +116,7 @@ def _edited(scope: Scope) -> set[str]:
     }
 
 
-def _groups(root: Path) -> tuple[list[list[dict]], dict[str, str]]:
+def tension_groups(root: Path) -> tuple[list[list[dict]], dict[str, str]]:
     """Every disagreement the concept pages state, grouped as the curator groups them.
 
     All concepts are read, not only the edited ones: two concepts that state one
@@ -132,16 +132,17 @@ def _groups(root: Path) -> tuple[list[list[dict]], dict[str, str]]:
 
 
 def jobs(scope: Scope) -> list[Job]:
-    """Schedule missing conflict pages from this run's accepted Tensions edits."""
+    """Schedule missing conflict pages from edited concepts or the whole corpus."""
     edited = _edited(scope)
-    if not edited:
+    corpus = scope.reason == "compile" and not scope.source
+    if not (corpus or edited):
         return []
-    groups, concepts = _groups(scope.root)
+    groups, concepts = tension_groups(scope.root)
     out = scope.root / "wiki/conflicts"
     missing = []
     for group in groups:
         path = out / f"{conflicts.conflict_slug(group)}.md"
-        if not path.exists() and edited & {block["concept"] for block in group}:
+        if not path.exists() and (corpus or edited & {block["concept"] for block in group}):
             missing.append((path, group))
     if not missing:
         return []
@@ -160,7 +161,7 @@ def after(scope: Scope, outcomes: dict[str, dict]) -> None:
     edited = _edited(scope)
     if not edited or any(o["status"] != "accepted" for o in outcomes.values()):
         return
-    groups, _ = _groups(scope.root)
+    groups, _ = tension_groups(scope.root)
     live = {conflicts.conflict_slug(group) for group in groups}
     for page in sorted((scope.root / "wiki/conflicts").glob("conflict--*.md")):
         concept = page.stem.removeprefix("conflict--").rpartition("--")[0]

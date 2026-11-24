@@ -117,6 +117,7 @@ def config_from(args: argparse.Namespace):
         max_usd=args.max_usd,
         max_sections=args.max_sections,
         jobs=args.jobs,
+        quota_wait=getattr(args, "quota_wait", None),
     )
 
 
@@ -142,6 +143,27 @@ def cmd_workflow(args: argparse.Namespace) -> int:
     return report(result, args.json)
 
 
+def cmd_compile(args: argparse.Namespace) -> int:
+    from beril_wiki.kb import compile as compiler
+    from beril_wiki.kb import workflow
+
+    try:
+        result = compiler.compile_corpus(
+            args.root,
+            config_from(args),
+            [s for s in args.sources.split(",") if s] or None,
+            records=not args.pages_only,
+            retry=args.retry_rejected,
+            write=not args.claims_only,
+            route=not args.routes_only,
+        )
+    except workflow.Stop as exc:
+        raise SystemExit(f"compile: {exc}") from None
+    print(json.dumps(result, ensure_ascii=False, indent=None if args.json else 1))
+    # A compile that stopped where a --…-only flag asked it to did what it was asked.
+    return 0 if result["status"] == "done" or result.get("checkpoint") else 2
+
+
 def cmd_runs(args: argparse.Namespace) -> int:
     runs = args.root / ".agentic" / "runs"
     for path in sorted(runs.glob("*/run.json")) if runs.is_dir() else []:
@@ -151,6 +173,59 @@ def cmd_runs(args: argparse.Namespace) -> int:
             f"USD {state['usd']:.2f}  {len(state['sessions'])} sessions"
         )
     return 0
+
+
+def cmd_status(args: argparse.Namespace) -> int:
+    """One screen on the newest run: what it is on, what is open or waiting, what
+    failed, and a verdict. Exits 0 while nobody is needed, 3 when someone is."""
+    import time
+
+    from beril_wiki.kb import workflow
+
+    records = list((args.root / ".agentic" / "runs").glob("*/run.json"))
+    if not records:
+        raise SystemExit("status: no run in this checkout")
+
+    def taken_over(record: Path) -> tuple[int, str]:
+        # A run resumed today is newer than one started yesterday and begun after it.
+        started = json.loads(record.read_text(encoding="utf-8")).get("started", 0)
+        return started, record.parent.name
+
+    path = max(records, key=taken_over)
+    deadline = time.time() + args.watch
+    while True:
+        state = json.loads(path.read_text(encoding="utf-8"))
+        now = time.time()
+        running = workflow.alive(int(state.get("pid", 0) or 0)) if state.get("pid") else False
+        verdict, reason = workflow.health(state, now, running)
+        if verdict != "ok" or now >= deadline:
+            break
+        time.sleep(min(15.0, deadline - now))
+    sessions = state["sessions"]
+    stage = state.get("stage") or {}
+    progress = f" {stage.get('done') or 0}/{stage['total']}" if stage.get("total") else ""
+    lately = [s for s in sessions if now - s.get("at", 0) <= 300]
+    refused = [s for s in sessions[-20:] if s.get("retry", workflow.turned_away(s["error"]))]
+    failed = [s for s in sessions[-20:] if not s["ok"] and s not in refused]
+    waiting = state.get("waiting", {})
+    opened = [n for n in state.get("open", {}) if n not in waiting]
+    print(f"{state['run']}  {state['status']}")
+    print(f"stage    {stage.get('label', '?')}{progress}")
+    print(
+        f"sessions {len(sessions)} finished, {len(lately)} in the last 5 min, "
+        f"{len(opened)} open, {len(waiting)} waiting on a vendor"
+    )
+    print(
+        f"failed   {len(failed)} of the last {len(sessions[-20:])}; a vendor turned away "
+        f"{len(refused)} more, which are asked again"
+    )
+    for error in sorted({s["error"][:110] for s in failed}):
+        print(f"         {error}")
+    print(f"spend    {state['tokens']:,} tokens held or used, USD {state['usd']:.2f}")
+    if sessions and sessions[-1].get("at"):
+        print(f"last     {sessions[-1]['name'][:70]}, {now - sessions[-1]['at']:.0f}s ago")
+    print(f"verdict  {verdict}" + (f": {reason}" if reason else ""))
+    return 0 if verdict in ("ok", "done") else 3
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -180,6 +255,15 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--write", action="store_true", help="allow gated edits")
     p.set_defaults(run=cmd_mcp)
     sub.add_parser("runs", help="past runs and their spend").set_defaults(run=cmd_runs)
+    p = sub.add_parser("status", help="whether the newest run is working, on one screen")
+    p.add_argument(
+        "--watch",
+        type=float,
+        default=0.0,
+        metavar="SECONDS",
+        help="return when the run needs someone or ends, or after this long",
+    )
+    p.set_defaults(run=cmd_status)
 
     def model_flags(p: argparse.ArgumentParser) -> None:
         for role in ("extract", "curate", "edit", "review"):
@@ -203,6 +287,24 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--why", required=True, help="the instruction the editor receives")
     model_flags(p)
     p.set_defaults(run=cmd_workflow)
+
+    p = sub.add_parser("compile", help="build every page and record from the reports")
+    p.add_argument("--sources", default="", help="report ids, comma separated (default: all)")
+    p.add_argument("--claims-only", action="store_true", help="stop when the reports are read")
+    p.add_argument("--routes-only", action="store_true", help="stop when the claims are routed")
+    p.add_argument("--pages-only", action="store_true", help="stop before the record stages")
+    p.add_argument(
+        "--retry-rejected",
+        action="store_true",
+        help="write again the pages an earlier attempt of this run refused",
+    )
+    p.add_argument(
+        "--quota-wait",
+        type=float,
+        help="seconds to keep waiting when a vendor is out of quota (default: stop at once)",
+    )
+    model_flags(p)
+    p.set_defaults(run=cmd_compile)
 
     args = parser.parse_args(argv)
     args.root = args.root.resolve()

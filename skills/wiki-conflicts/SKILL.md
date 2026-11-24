@@ -11,9 +11,8 @@ Write a first-class record of the disagreement between projects in `TENSION`.
 
 - `submit_record(record)` submits the page. Fix any objections and submit again.
   You have three attempts.
-- `claims(ids, quotes=true)` and `read_source(source, start, end)` let you check
-  claims and report passages.
-- `finish(note)` ends the session.
+
+The session ends when the tool accepts the record. Use the evidence in the task message.
 
 ## Input
 

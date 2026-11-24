@@ -117,7 +117,7 @@ def test_links_ask_only_unanswered_pairs_and_references_involving_this_report(sc
     state["candidates"][f"pair:{A}|{B}"]["input"] = "old-curator-hash"
     write_state(path, state)
     assert (
-        links_jobs.jobs(Scope(scope.root, "alpha", "revise", "run-2", models={"cards": "new"}))
+        links_jobs.jobs(Scope(scope.root, "alpha", "revise", run="run-2", models={"cards": "new"}))
         == []
     )
 
@@ -194,4 +194,4 @@ def test_shared_checks_and_stores_only_missing_statements_for_this_reports_group
         },
         other_group: unrelated,
     }
-    assert shared_jobs.jobs(Scope(scope.root, "alpha", "revise", "run-2")) == []
+    assert shared_jobs.jobs(Scope(scope.root, "alpha", "revise", run="run-2")) == []

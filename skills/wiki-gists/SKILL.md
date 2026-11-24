@@ -13,7 +13,8 @@ biological terms, and why a microbiologist would find it interesting.
 - `submit_record(record)` submits your answer. Code checks length, wording
   and figures and returns objections; fix them and submit again. You have
   three attempts.
-- `finish(note)` ends the session.
+
+The session ends when the tool accepts the record. Use the evidence in the task message.
 
 ## Input
 

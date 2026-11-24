@@ -15,24 +15,26 @@ evolutionary explanation, or a prediction that could fail.
 
 - `submit_record(record)` submits the complete reply as one JSON object.
   If the checks return objections, fix them and submit again.
-- `claims(ids, quotes=true)` and `read_source(source, start, end)` let you
-  consult claims and source text again.
-- `finish(note)` ends the session.
+
+The session ends when the tool accepts the record. Use the evidence in the task message.
 
 ## Input
 
-`SOURCE` gives the report that prompted this run. `FINDINGS` gives headline
-results with their report IDs, literature labels from PubMed comparisons and
+`SOURCE` gives the report that prompted a report run. `TOPIC` identifies
+the topic in a corpus compile. `FINDINGS` gives headline results with
+their report IDs, evidence and caveat quotes, literature labels from PubMed comparisons and
 closest papers. `CONFLICTS` describes where projects disagree. `PROPOSALS`
 lists ideas already on the wiki. `PAPERS` lists retrieved papers you may cite.
-`DATABASES` gives the catalog directory and its first table names per
-database. `TABLES` gives tables matched to the topic with columns and sample
-values. `OTHER_TOPICS` lists directions already proposed in other topics.
+`DATABASES` lists catalog databases. `TABLES` gives tables matched to the
+topic with columns and, where supplied, sample values. `OTHER_TOPICS` lists
+directions already proposed in other topics.
 `ACCEPTED` lists this topic's previously accepted directions, if any.
 
 ## The record
 
-Submit `{"directions": [...]}` with 3 to 8 directions. Each direction has:
+Submit `{"directions": [...]}` with 3 to 8 directions in a report run.
+When `MAX_NEW` is present in a corpus compile, return up to that many new
+directions. Each direction has:
 
 - `id`, starting with `D1`, `D2` and so on in order. Keep a direction's ID
   when revising it, even if you rewrite it. Give each new direction the next

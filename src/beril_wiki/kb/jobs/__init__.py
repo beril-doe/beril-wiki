@@ -54,8 +54,9 @@ class Scope:
     """What one run touched, which is all a stage may use to decide what it owes."""
 
     root: Path
+    # One report; empty when a compile runs the stages that span the corpus.
     source: str
-    reason: str  # "ingest", "revise" or "refresh"
+    reason: str  # "ingest", "revise", "refresh" or "compile"
     run: str = ""
     # Section ids accepted in this run, and page ids it created.
     edited: list[str] = field(default_factory=list)
@@ -66,6 +67,8 @@ class Scope:
     models: dict[str, str] = field(default_factory=dict)
     # Filled as stages run, for the stages after them.
     notes: dict[str, Any] = field(default_factory=dict)
+    # Every report of a compile; empty in a one-report run.
+    sources: list[str] = field(default_factory=list)
 
     @property
     def store(self) -> Store:
@@ -86,12 +89,20 @@ class Job:
     writer: str = "cards"
     reviewer: str = "card_review"  # "" for a job code alone can judge
     skill: str = ""  # default: wiki-<stage>
-    # The tool set of the writer session, a key of tools.ROLES.
-    tools: str = "card"
+    review_skill: str = "wiki-card-review"
+    # The tool set of the writer session, a key of tools.ROLES. "record" has the one
+    # submit tool: the pack must then hold everything the record rests on. "card" adds
+    # claims and read_source for a stage that cannot pack its evidence.
+    tools: str = "record"
     # The page id this job creates, so later stages (figures) see it as new.
     creates: str = ""
     # JSON schema of the record, shown to the writer.
     schema: dict | None = None
+    # A record code can build without a model, stored when the last round is still
+    # refused: for a record the wiki cannot do without, such as a topic hub or the page
+    # list. It is given the record the reviewer refused last (or None) and the
+    # objections, so it can keep what was not faulted.
+    fallback: Callable[[dict | None, list[dict]], dict] | None = None
 
 
 def legacy(parse: Callable[[str], Any]) -> Callable[[dict], dict]:
@@ -101,12 +112,25 @@ def legacy(parse: Callable[[str], Any]) -> Callable[[dict], dict]:
     problem in one message; the gate wants a dict in and objections out.
     """
     from beril_wiki.agentic.runtime import CandidateError
+    from beril_wiki.wording import MULTIPLE_TESTING, STAT_WORDS, STATS
 
     def check(record: dict) -> dict:
+        text = json.dumps(record, ensure_ascii=False)
         try:
-            value = parse(json.dumps(record, ensure_ascii=False))
+            value = parse(text)
         except CandidateError as exc:
             problems = exc.objections or [p.strip() for p in str(exc).split("; ") if p.strip()]
+            if any("statistic" in p for p in problems):
+                # The checkers say a record has statistical wording, not which words: a
+                # writer in the first compile pilot used all its attempts looking.
+                found = sorted(
+                    {
+                        m.group(0)
+                        for pattern in (STATS, STAT_WORDS, MULTIPLE_TESTING)
+                        for m in pattern.finditer(text)
+                    }
+                )
+                problems.append("the statistical wording is: " + ", ".join(map(repr, found[:8])))
             raise Rejected("the record fails its checks", problems) from None
         dump = getattr(value, "model_dump", None)
         return dump() if dump else record
@@ -175,8 +199,8 @@ def brief(job: Job, objections: list[dict] | None) -> str:
         lines += [f"- {o.get('quote', '')!r}: {o['problem']}" for o in objections]
     lines += [
         "",
-        "Call submit_record with the record. Call finish only after it has returned "
-        "staged, in a later step: a finish sent beside a rejected record ends the session.",
+        "Call submit_record with the record. The session ends when it is accepted; if it "
+        "is rejected, fix each objection and call it again.",
     ]
     return "\n".join(lines)
 
@@ -216,11 +240,16 @@ def run_job(runner: Runner, job: Job) -> dict:
             # is not paid for twice.
             with runner.lock:
                 job.publish(saved["accepted"])
-            return {"status": "accepted", "rounds": saved.get("round", 1), "creates": job.creates}
+            status = "fallback" if saved.get("fallback") else "accepted"
+            return {"status": status, "rounds": saved.get("round", 1), "creates": job.creates}
         # What the reviewer said last time survives a stop, so a resumed run cannot
         # send the same refused record for a fresh opinion.
         objections: list[dict] | None = saved.get("objections")
         refused = saved.get("refused", "")
+        # The refused record goes with its objections: the fallback keeps what the
+        # reviewer did not fault in it, also after a stop.
+        last: dict | None = saved.get("record")
+        exhausted = False
         name = job.key.replace("/", "-")[-80:]
         for round_ in range(saved.get("round", 0) + 1, runner.config.rounds + 1):
             try:
@@ -238,6 +267,12 @@ def run_job(runner: Runner, job: Job) -> dict:
             if runner.halted:
                 return {"status": "budget", "detail": runner.halted}
             record = session.record
+            if record is None and session.exhausted:
+                # Every attempt failed the checks. That is an answer, not an outage:
+                # asking again on resume would buy the same refusals. The reviewer's
+                # objections to the round before stay as they are for the fallback.
+                exhausted = True
+                break
             # With no reviewer to read it, a record from a session that broke off is
             # not taken: the writer may have been about to correct it.
             if record is None or not (job.reviewer or run.ok):
@@ -253,8 +288,8 @@ def run_job(runner: Runner, job: Job) -> dict:
                         job.reviewer,
                         task,
                         review_brief(job, record, objections),
-                        tools="card_review",
-                        skill="wiki-card-review",
+                        tools="verdict",
+                        skill=job.review_skill,
                     )
                 except Stop as exc:
                     return {"status": "budget", "detail": str(exc)}
@@ -264,15 +299,31 @@ def run_job(runner: Runner, job: Job) -> dict:
                 if verdict is None:
                     return {"status": "unreviewed", "detail": review_run.error or "no verdict"}
                 if verdict["verdict"] != "accept":
-                    objections, refused = verdict["objections"], sha
+                    objections, refused, last = verdict["objections"], sha, record
                     with runner.lock:
-                        note({"round": round_, "objections": objections, "refused": refused})
+                        note(
+                            {
+                                "round": round_,
+                                "objections": objections,
+                                "refused": refused,
+                                "record": record,
+                            }
+                        )
                     continue
             with runner.lock:
                 note({"round": round_, "accepted": record})
                 job.publish(record)
             return {"status": "accepted", "rounds": round_, "creates": job.creates}
-        return {"status": "rejected", "detail": [o["problem"] for o in objections or []]}
+        detail = [o["problem"] for o in objections or []]
+        if exhausted:
+            detail.append("no record passed the checks")
+        if job.fallback is None:
+            return {"status": "rejected", "detail": detail}
+        record = job.fallback(last, objections or [])
+        with runner.lock:
+            note({"round": runner.config.rounds, "accepted": record, "fallback": True})
+            job.publish(record)
+        return {"status": "fallback", "detail": detail, "creates": job.creates}
 
     return runner.step(step, make)
 
@@ -289,21 +340,35 @@ def run_all(runner: Runner, scope: Scope, stages: tuple[str, ...] = STAGES) -> d
 
     summary: dict[str, dict] = {}
     for name in stages:
+        if not scope.source:
+            runner.stage(f"records for the corpus: {name}")
         module = importlib.import_module(f"beril_wiki.kb.jobs.{name}")
         # A stage whose later jobs read its earlier ones (queries, then labels) lists
         # its steps in PHASES; each sees what the one before it stored.
         outcomes: dict[str, dict] = {}
+        # A stage whose jobs must each see what the one before it stored (a topic's
+        # directions are checked against every other topic's) says so with SERIAL.
+        serial = bool(getattr(module, "SERIAL", False)) and scope.reason == "compile"
         for phase in getattr(module, "PHASES", None) or (module.jobs,):
             owed = phase(scope)
-            outcomes |= run_jobs(runner, owed) if owed else {}
+            while serial and owed:
+                job = owed[0]
+                outcomes[job.key] = run_job(runner, job)
+                if outcomes[job.key]["status"] == "budget":
+                    break
+                owed = [j for j in phase(scope) if j.key not in outcomes]
+            outcomes |= run_jobs(runner, owed) if owed and not serial else {}
             if any(o["status"] == "budget" for o in outcomes.values()):
                 break
         # Read from the run's record, so a resumed run still knows the pages an
         # earlier attempt created when their jobs are no longer owed.
+        with runner.lock:
+            # Another report's worker records its steps while this one reads.
+            steps = dict(runner.state["steps"])
         scope.created += sorted(
             {
                 str(outcome["creates"])
-                for key, outcome in runner.state["steps"].items()
+                for key, outcome in steps.items()
                 if key.startswith(f"job-{name}/")
                 and isinstance(outcome, dict)
                 and outcome.get("creates")

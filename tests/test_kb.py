@@ -212,11 +212,11 @@ class Script:
                 verdict=verdict,
                 objections=objections if verdict == "revise" else [],
             )
-        elif role == "card":
+        elif role in ("card", "record"):
             key, _, rest = prompt.removeprefix("Record to write: ").partition("\n")
             pack = json.JSONDecoder().raw_decode(rest[rest.index("{") :])[0]
             self.replies.append(call("submit_record", record=self.record(key, pack)))
-        elif role == "card_review":
+        elif role in ("card_review", "verdict"):
             task = tools.session.task
             call("review", section=task["section"], sha=task["sha"], verdict="accept")
         call("finish", note="done")
@@ -445,7 +445,11 @@ def test_reading_budget_stops_reads_but_lets_the_agent_finish(root: Path):
     assert refused["ok"] is False and "budget exhausted" in refused["error"]
     assert tools.call("finish", note="out of budget")["ok"] is True
     assert tools.call("outline", page="concepts/growth-yield")["error"].startswith("this session")
-    assert set(BUDGETS) == set(workflow.SKILLS) | {"reader", "maintain", "card", "card_review"}
+    packed = {"record", "verdict", "page", "claims"}
+    assert (
+        set(BUDGETS)
+        == set(workflow.SKILLS) | {"reader", "maintain", "card", "card_review"} | packed
+    )
 
 
 def test_a_reviewer_is_held_to_a_verdict_and_a_decorated_one_counts(root: Path):
@@ -459,7 +463,8 @@ def test_a_reviewer_is_held_to_a_verdict_and_a_decorated_one_counts(root: Path):
     mixed = reviewer.call("review", section=LEAD, sha="abc", verdict="accept", objections=doubt)
     assert mixed["ok"] is False and "takes no objections" in mixed["error"]
     said = reviewer.call("review", section=LEAD, sha="abc", verdict="Accept.")
-    assert said == {"ok": True, "recorded": "accept", "budget": said["budget"]}
+    # The verdict is what the session was for, so the reply also ends it.
+    assert said["recorded"] == "accept" and "session is over" in said["done"]
     assert reviewer.call("finish", note="accepted")["ok"] is True
 
 
@@ -514,27 +519,127 @@ def test_an_extraction_that_did_not_read_the_report_records_nothing(root: Path):
     assert Store(root).claims("alpha") == [] and "alpha" not in Store(root).sources()
 
 
-@pytest.mark.parametrize("nth", [1, 2])
-def test_a_vendor_quota_error_stops_the_run_and_starts_nothing_else(root: Path, nth: int):
+LIMIT = Run("", error="Claude run ended: You've hit your limit · resets 9pm")
+LOGGED_OUT = Run(
+    "",
+    error="Exception: Claude Code returned an error result: success",
+    text="Not logged in · Please run /login",
+)
+
+
+@pytest.mark.parametrize(
+    ("nth", "refusal", "reason"),
+    [
+        (1, LIMIT, "usage or rate limit"),
+        (2, LIMIT, "usage or rate limit"),
+        (1, LOGGED_OUT, "refused the login"),
+    ],
+)
+def test_a_vendor_quota_error_stops_the_run_and_starts_nothing_else(
+    root: Path, nth: int, refusal: Run, reason: str, monkeypatch
+):
     """Whichever session meets the limit, the last of the run included, the run stops
-    and the report is not marked as read."""
+    and the report is not marked as read. A vendor that is logged out stops it too."""
     script = Script()
+    pauses: list[float] = []
+    monkeypatch.setattr(workflow.time, "sleep", pauses.append)
 
     def launch(agent: Agent, system: str, prompt: str, kit: Tools, work: Path) -> Run:
         if kit.session.role == "review" and script.roles.count("review") == nth - 1:
             script.roles.append("review")
-            return Run(str(agent), error="Claude run ended: You've hit your limit · resets 9pm")
+            return Run(str(agent), error=refusal.error, text=refusal.text)
         return script(agent, system, prompt, kit, work)
 
     stopped = workflow.ingest(root, "alpha", config(), launch)
-    assert stopped["status"] == "stopped" and "usage or rate limit" in stopped["reason"]
+    assert stopped["status"] == "stopped" and reason in stopped["reason"]
     assert "alpha" not in Store(root).sources()
     # Nothing was started after the review that hit the limit.
     assert script.roles == ["extract", "curate", "edit", "review", "edit", "review"][: 2 + 2 * nth]
-    resumed = workflow.ingest(root, "alpha", config(), script)
+    # A burst the vendor turned away is asked again within minutes, on the same model;
+    # only a spent allowance waits the long pause.
+    refusals = ["exceeded retry limit, last status: 429 Too Many Requests"] * 2
+
+    def burst(agent: Agent, system: str, prompt: str, kit: Tools, work: Path) -> Run:
+        if kit.session.role == "review" and refusals:
+            return Run(str(agent), error=f"Codex turn failed: {refusals.pop()}")
+        return script(agent, system, prompt, kit, work)
+
+    resumed = workflow.ingest(root, "alpha", config(quota_wait=3600.0), burst)
     assert resumed["status"] == "done" and resumed["run"] == stopped["run"]
+    assert len(pauses) == 2 and 60 <= pauses[0] <= 90 and 120 <= pauses[1] <= 180, pauses
     # A session that ran out of tool calls is not a vendor limit.
     assert not workflow.QUOTA.search("maximum tool-call limit reached")
+    # A reply that mentions a login in passing is not a refused login, and a refused
+    # login is one even when the error beside it reads like a full vendor.
+    prose = "The participants were not logged in when recording started."
+    assert not workflow.logged_out(Run("", error="error_max_turns", text=prose))
+    assert workflow.logged_out(Run("", error="status 503", text=LOGGED_OUT.text))
+
+
+def test_sessions_refused_and_failing_side_by_side_leak_no_place_and_no_budget(
+    root: Path, monkeypatch
+):
+    """Eight threads, sixty sessions, a vendor that turns some away and some that
+    crash. Afterwards every place is free, nothing is held, and the run's tokens are
+    the sum of what its sessions reported."""
+    from concurrent.futures import ThreadPoolExecutor
+
+    monkeypatch.setattr(workflow.time, "sleep", lambda seconds: None)
+    seen: dict[str, int] = {}
+    most = [0]
+
+    def launch(agent: Agent, system: str, prompt: str, kit: Tools, work: Path) -> Run:
+        n = int(prompt)
+        seen[prompt] = seen.get(prompt, 0) + 1
+        most[0] = max(most[0], runner.active)
+        if n % 7 == 0 and seen[prompt] < 3:
+            return Run(str(agent), error="Codex turn failed: last status: 429 Too Many Requests")
+        if n % 13 == 0 and seen[prompt] < 2:
+            # A vendor outage of a few minutes: the same session is asked again.
+            return Run(str(agent), error="Codex turn failed: workspace routing discovery timed out")
+        if n % 11 == 0:
+            raise RuntimeError("harness crashed")
+        return Run(str(agent), ok=True, input_tokens=100, output_tokens=10)
+
+    runner = workflow.Runner(root, config(jobs=4, quota_wait=10**6), "probe", "limits", launch)
+
+    def one(n: int) -> bool:
+        return runner.dispatch(f"s{n}", "extract", {"source": "alpha"}, str(n))[1].ok
+
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        done = list(pool.map(one, range(1, 61)))
+    assert done.count(False) == 5 and most[0] <= 4, (done.count(False), most)
+    assert runner.active == 0 and not any(runner.running.values()) and not runner.halted
+    assert abs(runner.held_usd) < 1e-9 and not runner.state["open"] and not runner.state["waiting"]
+    used = sum(s["input_tokens"] + s["output_tokens"] for s in runner.state["sessions"])
+    # A crash reports no usage and keeps what was held for it.
+    assert runner.state["tokens"] == used + 5 * config().reserve_tokens
+    assert runner.state["held"] == 0
+    # The vendor's refusals lowered the model's limit, and successes raised it again.
+    assert 1 <= runner.limits["gpt-x"] <= 4
+
+
+def test_status_tells_a_working_run_from_one_that_needs_someone():
+    now = 10_000.0
+    ok = {"ok": True, "error": "", "at": now - 20}
+    bad = {"ok": False, "error": "TimeoutError: no reply", "at": now - 20}
+    state = {"status": "running", "pid": 1, "sessions": [ok] * 12, "open": {"a": now - 60}}
+    health = workflow.health
+    assert health(state, now, True) == ("ok", "")
+    assert health(state, now, False)[0] == "dead"
+    assert health(state | {"sessions": [ok] * 6 + [bad] * 6}, now, True)[0] == "failing"
+    # A vendor that turns requests away is waited on; that is not the run failing.
+    busy = bad | {"error": "Codex turn failed: last status: 429 Too Many Requests"}
+    assert health(state | {"sessions": [ok] * 6 + [busy] * 9}, now, True)[0] == "ok"
+    # A short vendor pause is the run working; a long one is worth a look.
+    brief = {"b": {"until": now + 90, "why": "gpt-x reports a usage or rate limit"}}
+    assert health(state | {"waiting": brief}, now, True)[0] == "ok"
+    brief["b"]["until"] = now + 900
+    assert health(state | {"waiting": brief}, now, True)[0] == "waiting"
+    assert health(state | {"open": {"a": now - 1500}}, now, True)[0] == "stuck"
+    quiet = state | {"open": {}, "sessions": [ok | {"at": now - 700}]}
+    assert health(quiet, now, True)[0] == "idle"
+    assert health(state | {"status": "done"}, now, False)[0] == "done"
 
 
 def test_a_rejected_summary_stops_the_run_before_anything_links_to_it(root: Path):
@@ -607,7 +712,7 @@ def test_a_record_job_keeps_a_refusal_and_an_accepted_record_across_a_stop(root:
             started.append(kit.session.role)
             if len(started) > fail_after:
                 return Run(str(agent), error="connection reset")
-            if kit.session.role == "card":
+            if kit.session.role == "record":
                 kit.call("submit_record", record={"gist": "the same words"})
             else:
                 task = kit.session.task

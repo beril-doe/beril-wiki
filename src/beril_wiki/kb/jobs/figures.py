@@ -84,7 +84,7 @@ def _drop_withdrawn(root: Path, manifest: dict[str, list[dict]], keys: set[str])
 def _job(scope: Scope, page_id: str, text: str, candidates: list[dict]) -> Job:
     max_place = figures.MAX_PLACE[page_id.split("/", 1)[0]]
     paragraphs = figures.paragraphs(text)
-    limit = min(300, 80_000 // max(1, len(paragraphs)))
+    limit = min(1200, 80_000 // max(1, len(paragraphs)))
     page_hash = sha256(text)[:16]
 
     def parse(raw: str) -> dict:
@@ -144,7 +144,10 @@ def _job(scope: Scope, page_id: str, text: str, candidates: list[dict]) -> Job:
         key=f"figures/{page_id}",
         pack={
             "MAX_PLACE": max_place,
-            "PAGE_PARAGRAPHS": [paragraph[:limit] for paragraph in paragraphs],
+            "PAGE_PARAGRAPHS": [
+                paragraph if len(paragraph) <= limit else paragraph[:limit] + " […]"
+                for paragraph in paragraphs
+            ],
             "CANDIDATE_FIGURES": [
                 c | {"caption": c["caption"][:300], "context": c["context"][:200]}
                 for c in candidates
@@ -160,27 +163,37 @@ def _job(scope: Scope, page_id: str, text: str, candidates: list[dict]) -> Job:
 def jobs(scope: Scope) -> list[Job]:
     """Publish the deterministic manifest, then queue one job per owed page."""
     root, store = scope.root, scope.store
-    projects = set(store.corpus_sources()) - set(DIGESTS)
     suffix = "__REPORT"
-    projects.update(
-        path.stem.removesuffix(suffix) for path in (root / "wiki/sources").glob("*__REPORT.md")
-    )
-    # The run's raw report needs its figures even when no page needs new placements.
-    wanted = {scope.source} & projects
+    corpus = scope.reason == "compile" and not scope.source
+    if corpus:
+        projects = set(scope.sources) - set(DIGESTS)
+        touched = {
+            f"{kind}/{path.stem}"
+            for kind in figures.MAX_PLACE
+            for path in (root / "wiki" / kind).glob("*.md")
+            if path.stem != "index"
+        }
+    else:
+        projects = set(store.corpus_sources()) - set(DIGESTS)
+        projects.update(
+            path.stem.removesuffix(suffix) for path in (root / "wiki/sources").glob("*__REPORT.md")
+        )
+        touched = set(scope.created) | {section.split("#", 1)[0] for section in scope.edited}
+    # A raw report needs its figures even when no page needs new placements.
+    wanted = projects.copy() if corpus else {scope.source} & projects
     saved = cards.load_state(root / PLACEMENTS)
     todo = []
-    touched = set(scope.created) | {section.split("#", 1)[0] for section in scope.edited}
     for page_id in sorted(touched):
         kind, _, slug = page_id.partition("/")
         page = store.page_path(page_id)
         if kind not in figures.MAX_PLACE or not page.is_file():
             continue
         text = page.read_text(encoding="utf-8", errors="replace")
-        sources = (
-            [slug.removesuffix(suffix)]
-            if kind == "summaries"
-            else figures.cited_projects(text, projects)
-        )
+        if kind == "summaries":
+            project = slug.removesuffix(suffix)
+            sources = [project] if not corpus or project in projects else []
+        else:
+            sources = figures.cited_projects(text, projects)
         wanted.update(sources)
         if saved.get(f"{page_id}.md", {}).get("page_hash") != sha256(text)[:16]:
             todo.append((page_id, text, sources))

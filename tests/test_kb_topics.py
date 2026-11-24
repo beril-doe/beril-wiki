@@ -164,7 +164,7 @@ def test_literature_resumes_queries_rejects_bad_evidence_and_splices_once(
     state.write_text('{"old-topic.md": "old-value"}', encoding="utf-8")
     assert run_all(runner, resumed, stages=("literature",)) == {"literature": {"accepted": 1}}
     assert calls == [QUERIES, ["Growth Research bacteria", "Growth Research"]]
-    assert script.roles == ["card", "card", "card_review"]
+    assert script.roles == ["record", "record", "verdict"]
     assert hub.read_text() == HUB.replace("\n## Where", f"\n{SECTION}\n\n## Where")
     assert json.loads(state.read_text()) == {
         "growth-research.md": f"kb:{runner.id}",

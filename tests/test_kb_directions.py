@@ -66,8 +66,8 @@ def proposal(number: int, *, finding: str = SOURCE_FINDING, **changes: object) -
 
 def test_only_top_topic_is_owed_and_a_tie_breaks_alphabetically(direction_root: Path) -> None:
     root = direction_root
-    ingested = Scope(root, "alpha", "ingest", "ingest-alpha")
-    revised = Scope(root, "alpha", "revise", "revise-alpha")
+    ingested = Scope(root, "alpha", "ingest", run="ingest-alpha")
+    revised = Scope(root, "alpha", "revise", run="revise-alpha")
     (job,) = jobs(ingested)
     assert job.key == "directions/zeta"
     assert (job.writer, job.reviewer) == ("cards", "card_review")
@@ -128,7 +128,7 @@ def test_live_accepted_directions_cannot_be_dropped_or_edited(direction_root: Pa
 
 def test_publish_uses_curator_shape_and_preserves_other_topics(direction_root: Path) -> None:
     root = direction_root
-    scope = Scope(root, "alpha", "ingest", "directions-run")
+    scope = Scope(root, "alpha", "ingest", run="directions-run")
     (job,) = jobs(scope)
     reply = job.check(
         {

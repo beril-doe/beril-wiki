@@ -18,6 +18,7 @@ import json
 import os
 import threading
 import time
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, cast
@@ -90,9 +91,13 @@ def run(
     max_turns: int = 40,
     native: Path | None = None,
     max_usd: float | None = None,
+    stop: Callable[[], bool] | None = None,
 ) -> Run:
     """Run one agent to completion. Never raises for a model or transport failure:
     the returned ``Run`` says what happened, and the staged session says what it did.
+
+    ``stop`` is asked after every tool call; once it returns true the session is ended
+    there and counts as a success, so no turn is spent on a closing message.
 
     ``native`` gives the harness its own read-only file tools in that folder. Pipeline
     runs leave it unset; it exists to measure what the wiki tools save.
@@ -113,6 +118,7 @@ def run(
                 timeout,
                 native,
                 max_turns,
+                stop,
             )
         else:
             result = asyncio.run(
@@ -128,6 +134,7 @@ def run(
                     max_turns,
                     native,
                     max_usd,
+                    stop,
                 )
             )
     except Exception as exc:  # reported, not raised: the caller decides what a failure costs
@@ -195,6 +202,7 @@ def _codex(
     timeout: float,
     native: Path | None,
     max_turns: int,
+    stop: Callable[[], bool] | None = None,
 ) -> Run:
     from openai_codex import ApprovalMode, Codex, CodexConfig, Sandbox, TextInput
     from openai_codex.types import ReasoningEffort
@@ -212,7 +220,14 @@ def _codex(
     # for a model the bundled release does not list yet.
     binary = os.environ.get("BERIL_WIKI_CODEX_BIN") or None
     client = Codex(CodexConfig(codex_bin=binary, env=env, config_overrides=overrides))
-    state: dict[str, Any] = {"items": [], "usage": None, "turn": None, "error": None, "calls": 0}
+    state: dict[str, Any] = {
+        "items": [],
+        "usage": None,
+        "turn": None,
+        "error": None,
+        "calls": 0,
+        "stopped": False,
+    }
     try:
         thread = client.thread_start(
             model=agent.model,
@@ -244,6 +259,15 @@ def _codex(
                                 turn.interrupt()
                     if event.method == "item/completed" and payload.turn_id == turn.id:
                         state["items"].append(payload.item)
+                        done = getattr(payload.item, "root", payload.item)
+                        if (
+                            stop is not None
+                            and not state["stopped"]
+                            and getattr(done, "type", None) == "mcpToolCall"
+                            and stop()
+                        ):
+                            state["stopped"] = True
+                            turn.interrupt()
                     elif event.method == "thread/tokenUsage/updated":
                         state["usage"] = payload.token_usage
                     elif event.method == "turn/completed" and payload.turn.id == turn.id:
@@ -276,7 +300,9 @@ def _codex(
     result.text = (messages[-1].text or "") if messages else ""
     finished = state["turn"]
     status = getattr(getattr(finished, "status", None), "value", getattr(finished, "status", None))
-    if timed_out:
+    if state["stopped"] and not timed_out:
+        pass
+    elif timed_out:
         result.error = f"timed out after {timeout:g}s; the turn was interrupted"
     elif state["calls"] > max_turns:
         result.error = f"interrupted after {state['calls']} tool calls; the limit is {max_turns}"
@@ -306,8 +332,18 @@ async def _claude(
     max_turns: int,
     native: Path | None,
     max_usd: float | None,
+    stop: Callable[[], bool] | None = None,
 ) -> Run:
-    from claude_agent_sdk import ClaudeAgentOptions, ResultMessage, query
+    from claude_agent_sdk import ClaudeAgentOptions, HookMatcher, ResultMessage, query
+
+    stopped = False
+
+    async def after_tool(_input: Any, _tool_use_id: Any, _context: Any) -> dict:
+        nonlocal stopped
+        if stop is not None and stop():
+            stopped = True
+            return {"continue_": False, "stopReason": "the result is on file"}
+        return {}
 
     result = Run(str(agent))
     env = {"CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"}
@@ -331,6 +367,7 @@ async def _claude(
         max_budget_usd=max_usd,
         fallback_model=None,
         effort=cast(Any, agent.effort),
+        hooks={"PostToolUse": [HookMatcher(hooks=[cast(Any, after_tool)])]} if stop else None,
         extra_args={"no-session-persistence": None, "disable-slash-commands": None},
     )
 
@@ -362,7 +399,9 @@ async def _claude(
         result.cost_usd = terminal.total_cost_usd
         result.turns = int(getattr(terminal, "num_turns", 0) or 0)
         result.text = terminal.result or ""
-        if terminal.is_error or terminal.subtype != "success":
+        if stopped:
+            result.error = ""
+        elif terminal.is_error or terminal.subtype != "success":
             result.error = result.error or f"Claude run ended {terminal.subtype}"
     elif not result.error:
         result.error = "Claude run ended without a result"
