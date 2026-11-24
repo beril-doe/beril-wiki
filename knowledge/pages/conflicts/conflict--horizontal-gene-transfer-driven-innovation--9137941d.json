@@ -1,0 +1,14 @@
+{
+ "sections": {
+  "evidence-sides": {
+   "claims": {
+    "plant_microbiome_ecotypes:48000:48": "number"
+   }
+  },
+  "resolving-work": {
+   "claims": {
+    "plant_microbiome_ecotypes:80000:28": "overlap"
+   }
+  }
+ }
+}

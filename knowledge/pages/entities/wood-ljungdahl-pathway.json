@@ -1,0 +1,22 @@
+{
+ "sections": {
+  "cohort-level-enrichment": {
+   "claims": {
+    "clay_confined_subsurface:0:33": "number"
+   }
+  },
+  "literature-context": {
+   "claims": {
+    "clay_confined_subsurface:0:41": "overlap"
+   }
+  },
+  "phylogenetic-confound-bacillota-b": {
+   "claims": {
+    "clay_confined_subsurface:0:17": "number",
+    "clay_confined_subsurface:0:18": "number",
+    "discoveries:112000:6": "number",
+    "discoveries:112000:7": "number"
+   }
+  }
+ }
+}

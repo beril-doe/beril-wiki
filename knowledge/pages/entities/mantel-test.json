@@ -1,0 +1,16 @@
+{
+ "sections": {
+  "interpretation-and-limitations": {
+   "claims": {
+    "amr_strain_variation:0:29": "number"
+   }
+  },
+  "use-in-genomic-variation-and-ecology": {
+   "claims": {
+    "amr_strain_variation:0:6": "number",
+    "amr_strain_variation:0:7": "number",
+    "enigma_sso_asv_ecology:0:2": "number"
+   }
+  }
+ }
+}

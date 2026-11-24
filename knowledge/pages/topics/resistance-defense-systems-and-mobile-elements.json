@@ -1,0 +1,69 @@
+{
+ "sections": {
+  "tensions-and-caveats": {
+   "claims": {
+    "field_vs_lab_fitness:0:37": "overlap",
+    "field_vs_lab_fitness:0:38": "overlap",
+    "field_vs_lab_fitness:0:39": "overlap",
+    "metal_fitness_atlas:0:36": "number",
+    "prophage_ecology:0:44": "number"
+   }
+  },
+  "what-the-corpus-shows": {
+   "claims": {
+    "amr_fitness_cost:0:1": "number",
+    "amr_fitness_cost:0:10": "number",
+    "amr_fitness_cost:0:11": "number",
+    "amr_fitness_cost:0:14": "number",
+    "amr_fitness_cost:0:19": "number",
+    "amr_fitness_cost:0:32": "number",
+    "amr_fitness_cost:0:33": "overlap",
+    "amr_fitness_cost:0:42": "number",
+    "amr_fitness_cost:0:43": "number",
+    "amr_fitness_cost:0:46": "number",
+    "amr_fitness_cost:0:47": "number",
+    "amr_fitness_cost:0:48": "number",
+    "amr_fitness_cost:0:9": "overlap",
+    "amr_fitness_cost:16000:2": "number",
+    "amr_fitness_cost:16000:7": "number",
+    "amr_strain_variation:0:3": "overlap",
+    "amr_strain_variation:0:4": "number",
+    "discoveries:32000:23": "number",
+    "discoveries:32000:25": "number",
+    "discoveries:32000:26": "number",
+    "discoveries:32000:30": "overlap",
+    "metal_cross_resistance:0:15": "overlap",
+    "metal_cross_resistance:0:30": "number",
+    "metal_cross_resistance:0:4": "number",
+    "metal_fitness_atlas:0:0": "number",
+    "metal_fitness_atlas:0:1": "overlap",
+    "metal_fitness_atlas:0:19": "overlap",
+    "metal_specificity:0:0": "number",
+    "metal_specificity:0:12": "overlap",
+    "metal_specificity:0:19": "overlap",
+    "metal_specificity:0:20": "overlap",
+    "metal_specificity:0:21": "overlap",
+    "metal_specificity:0:22": "overlap",
+    "metal_specificity:0:23": "overlap",
+    "metal_specificity:0:24": "overlap",
+    "metal_specificity:0:25": "overlap",
+    "metal_specificity:0:26": "overlap",
+    "metal_specificity:0:27": "overlap",
+    "phage_defense_arsenal:0:1": "number",
+    "phage_defense_arsenal:0:24": "number",
+    "phage_defense_arsenal:0:3": "number",
+    "phage_defense_arsenal:16000:2": "number",
+    "prophage_amr_comobilization:0:0": "overlap",
+    "prophage_amr_comobilization:0:10": "number",
+    "prophage_amr_comobilization:0:11": "number",
+    "prophage_amr_comobilization:0:15": "number",
+    "prophage_amr_comobilization:0:29": "overlap",
+    "snipe_defense_system:0:39": "number",
+    "snipe_defense_system:16000:17": "number",
+    "snipe_defense_system:16000:19": "number",
+    "snipe_defense_system:16000:33": "number",
+    "snipe_defense_system:16000:4": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,95 @@
+{
+ "claims": {
+  "adp1_triple_essentiality:0:21": "plan",
+  "genotype_to_phenotype_enigma:0:1": "plan",
+  "genotype_to_phenotype_enigma:0:29": "plan",
+  "genotype_to_phenotype_enigma:0:3": "plan",
+  "genotype_to_phenotype_enigma:16000:11": "plan",
+  "genotype_to_phenotype_enigma:16000:46": "plan",
+  "genotype_to_phenotype_enigma:16000:5": "plan",
+  "genotype_to_phenotype_enigma:16000:8": "plan",
+  "genotype_to_phenotype_enigma:32000:30": "plan",
+  "pitfalls:112000:10": "plan"
+ },
+ "sections": {
+  "capability-prediction-is-conditional-not-universal": {
+   "claims": {
+    "genotype_to_phenotype_enigma:0:0": "number",
+    "genotype_to_phenotype_enigma:0:23": "overlap",
+    "genotype_to_phenotype_enigma:0:24": "number",
+    "genotype_to_phenotype_enigma:0:26": "number",
+    "genotype_to_phenotype_enigma:0:30": "number",
+    "genotype_to_phenotype_enigma:16000:10": "number",
+    "genotype_to_phenotype_enigma:16000:12": "number",
+    "genotype_to_phenotype_enigma:16000:2": "number",
+    "genotype_to_phenotype_enigma:16000:3": "number",
+    "genotype_to_phenotype_enigma:16000:47": "number",
+    "genotype_to_phenotype_enigma:32000:22": "number",
+    "genotype_to_phenotype_enigma:32000:23": "overlap",
+    "genotype_to_phenotype_enigma:32000:35": "number",
+    "genotype_to_phenotype_enigma:32000:39": "number"
+   }
+  },
+  "codon-usage-bias-is-a-confounded-substitute-for-measured-kinetics": {
+   "claims": {
+    "cf_formulation_design:16000:64": "number",
+    "cf_formulation_design:32000:0": "number",
+    "cf_formulation_design:32000:33": "number",
+    "pitfalls:112000:9": "number"
+   }
+  },
+  "continuous-kinetics-did-not-transfer-across-genera": {
+   "claims": {
+    "genotype_to_phenotype_enigma:16000:7": "number",
+    "genotype_to_phenotype_enigma:32000:29": "overlap"
+   }
+  },
+  "evidence-from-the-enigma-growth-corpus": {
+   "claims": {
+    "genotype_to_phenotype_enigma:0:9": "number",
+    "genotype_to_phenotype_enigma:32000:44": "number"
+   }
+  },
+  "implications-for-experimental-design": {
+   "claims": {
+    "genotype_to_phenotype_enigma:16000:27": "number",
+    "genotype_to_phenotype_enigma:16000:28": "overlap",
+    "genotype_to_phenotype_enigma:32000:26": "number",
+    "genotype_to_phenotype_enigma:48000:7": "number"
+   }
+  },
+  "measured-kinetics-carry-information-that-binary-and-endpoint-readouts-miss": {
+   "claims": {
+    "cf_formulation_design:0:35": "number",
+    "cf_formulation_design:0:44": "number",
+    "cf_formulation_design:0:45": "number",
+    "cf_formulation_design:0:46": "number",
+    "cf_formulation_design:0:51": "number",
+    "cf_formulation_design:48000:5": "overlap"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "adp1_triple_essentiality:32000:9": "overlap",
+    "cf_formulation_design:0:52": "number",
+    "genotype_to_phenotype_enigma:0:22": "overlap",
+    "genotype_to_phenotype_enigma:48000:59": "overlap"
+   }
+  },
+  "tensions-and-limits": {
+   "claims": {
+    "genotype_to_phenotype_enigma:16000:43": "overlap",
+    "pgp_pangenome_ecology:16000:24": "overlap"
+   }
+  },
+  "training-scale-changes-what-the-model-learns": {
+   "claims": {
+    "genotype_to_phenotype_enigma:0:21": "number",
+    "genotype_to_phenotype_enigma:16000:0": "number",
+    "genotype_to_phenotype_enigma:16000:23": "number",
+    "genotype_to_phenotype_enigma:16000:24": "overlap",
+    "genotype_to_phenotype_enigma:32000:28": "overlap"
+   }
+  }
+ }
+}

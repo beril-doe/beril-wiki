@@ -1,0 +1,13 @@
+{
+ "sections": {
+  "findings-from-the-source-project": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:27": "number",
+    "clay_confined_subsurface:0:3": "number",
+    "clay_confined_subsurface:0:4": "number",
+    "clay_confined_subsurface:0:5": "number",
+    "clay_confined_subsurface:0:6": "number"
+   }
+  }
+ }
+}

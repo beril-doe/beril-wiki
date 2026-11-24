@@ -1,0 +1,106 @@
+{
+ "claims": {
+  "annotation_gap_discovery:0:31": "plan",
+  "annotation_gap_discovery:0:34": "plan",
+  "annotation_gap_discovery:0:45": "plan",
+  "annotation_gap_discovery:0:46": "plan",
+  "annotation_gap_discovery:0:47": "plan",
+  "annotation_gap_discovery:0:48": "plan",
+  "annotation_gap_discovery:0:49": "plan",
+  "annotation_gap_discovery:0:50": "plan",
+  "annotation_gap_discovery:0:52": "plan",
+  "annotation_gap_discovery:0:56": "plan",
+  "annotation_gap_discovery:16000:10": "plan",
+  "annotation_gap_discovery:16000:11": "plan",
+  "annotation_gap_discovery:16000:14": "plan",
+  "annotation_gap_discovery:16000:16": "plan",
+  "annotation_gap_discovery:16000:2": "plan",
+  "annotation_gap_discovery:16000:3": "plan",
+  "annotation_gap_discovery:16000:4": "plan",
+  "annotation_gap_discovery:16000:5": "plan",
+  "annotation_gap_discovery:16000:6": "plan",
+  "annotation_gap_discovery:16000:7": "plan",
+  "annotation_gap_discovery:16000:8": "plan",
+  "annotation_gap_discovery:16000:9": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "annotation_gap_discovery:0:19": "overlap",
+    "annotation_gap_discovery:0:20": "overlap",
+    "annotation_gap_discovery:0:23": "number",
+    "annotation_gap_discovery:0:24": "number",
+    "annotation_gap_discovery:0:35": "number",
+    "annotation_gap_discovery:0:40": "overlap"
+   }
+  },
+  "figures": {
+   "claims": {
+    "annotation_gap_discovery:0:51": "overlap",
+    "annotation_gap_discovery:0:53": "overlap",
+    "annotation_gap_discovery:0:54": "overlap",
+    "annotation_gap_discovery:0:55": "overlap",
+    "annotation_gap_discovery:16000:0": "overlap",
+    "annotation_gap_discovery:16000:1": "overlap"
+   }
+  },
+  "future-directions": {
+   "claims": {
+    "annotation_gap_discovery:16000:12": "overlap",
+    "annotation_gap_discovery:16000:13": "overlap",
+    "annotation_gap_discovery:16000:17": "overlap",
+    "annotation_gap_discovery:16000:18": "overlap",
+    "annotation_gap_discovery:16000:20": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "annotation_gap_discovery:0:0": "number",
+    "annotation_gap_discovery:0:1": "number",
+    "annotation_gap_discovery:0:10": "number",
+    "annotation_gap_discovery:0:11": "number",
+    "annotation_gap_discovery:0:12": "number",
+    "annotation_gap_discovery:0:13": "number",
+    "annotation_gap_discovery:0:14": "overlap",
+    "annotation_gap_discovery:0:15": "number",
+    "annotation_gap_discovery:0:17": "overlap",
+    "annotation_gap_discovery:0:2": "number",
+    "annotation_gap_discovery:0:21": "number",
+    "annotation_gap_discovery:0:22": "number",
+    "annotation_gap_discovery:0:3": "number",
+    "annotation_gap_discovery:0:4": "number",
+    "annotation_gap_discovery:0:5": "number",
+    "annotation_gap_discovery:0:6": "number",
+    "annotation_gap_discovery:0:7": "overlap",
+    "annotation_gap_discovery:0:8": "number",
+    "annotation_gap_discovery:0:9": "number"
+   }
+  },
+  "literature-context-and-data-sources": {
+   "claims": {
+    "annotation_gap_discovery:0:29": "number",
+    "annotation_gap_discovery:0:30": "number",
+    "annotation_gap_discovery:0:32": "number",
+    "annotation_gap_discovery:0:33": "number",
+    "annotation_gap_discovery:0:42": "overlap",
+    "annotation_gap_discovery:0:43": "overlap",
+    "annotation_gap_discovery:0:44": "overlap"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "annotation_gap_discovery:0:16": "overlap",
+    "annotation_gap_discovery:0:37": "overlap",
+    "annotation_gap_discovery:0:38": "overlap",
+    "annotation_gap_discovery:16000:19": "overlap"
+   }
+  },
+  "study-design-and-evidence-pipeline": {
+   "claims": {
+    "annotation_gap_discovery:0:25": "number",
+    "annotation_gap_discovery:0:26": "number",
+    "annotation_gap_discovery:0:27": "overlap"
+   }
+  }
+ }
+}

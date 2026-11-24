@@ -1,0 +1,68 @@
+{
+ "claims": {
+  "prophage_amr_comobilization:0:33": "plan",
+  "prophage_amr_comobilization:0:39": "plan",
+  "prophage_amr_comobilization:0:40": "plan",
+  "prophage_amr_comobilization:0:41": "plan",
+  "prophage_amr_comobilization:0:42": "plan",
+  "prophage_amr_comobilization:0:43": "plan",
+  "prophage_amr_comobilization:0:44": "plan",
+  "prophage_amr_comobilization:0:45": "plan",
+  "prophage_amr_comobilization:0:46": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "prophage_amr_comobilization:0:27": "overlap",
+    "prophage_amr_comobilization:0:29": "overlap",
+    "prophage_amr_comobilization:0:32": "overlap"
+   }
+  },
+  "data-sources-and-figures": {
+   "claims": {
+    "prophage_amr_comobilization:0:34": "overlap"
+   }
+  },
+  "future-directions": {
+   "claims": {
+    "prophage_amr_comobilization:0:35": "overlap",
+    "prophage_amr_comobilization:0:36": "overlap",
+    "prophage_amr_comobilization:0:37": "overlap",
+    "prophage_amr_comobilization:0:38": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "prophage_amr_comobilization:0:0": "number",
+    "prophage_amr_comobilization:0:1": "overlap",
+    "prophage_amr_comobilization:0:10": "number",
+    "prophage_amr_comobilization:0:11": "number",
+    "prophage_amr_comobilization:0:12": "number",
+    "prophage_amr_comobilization:0:13": "number",
+    "prophage_amr_comobilization:0:14": "number",
+    "prophage_amr_comobilization:0:15": "number",
+    "prophage_amr_comobilization:0:16": "number",
+    "prophage_amr_comobilization:0:17": "number",
+    "prophage_amr_comobilization:0:18": "number",
+    "prophage_amr_comobilization:0:19": "number",
+    "prophage_amr_comobilization:0:2": "number",
+    "prophage_amr_comobilization:0:20": "number",
+    "prophage_amr_comobilization:0:22": "number",
+    "prophage_amr_comobilization:0:23": "number",
+    "prophage_amr_comobilization:0:24": "number",
+    "prophage_amr_comobilization:0:26": "number",
+    "prophage_amr_comobilization:0:4": "number",
+    "prophage_amr_comobilization:0:5": "number",
+    "prophage_amr_comobilization:0:8": "number",
+    "prophage_amr_comobilization:0:9": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "prophage_amr_comobilization:0:21": "overlap",
+    "prophage_amr_comobilization:0:30": "overlap",
+    "prophage_amr_comobilization:0:31": "overlap"
+   }
+  }
+ }
+}

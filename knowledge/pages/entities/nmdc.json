@@ -1,0 +1,33 @@
+{
+ "sections": {
+  "key-facts-from-the-context-audit": {
+   "claims": {
+    "nmdc_context_audit:0:0": "overlap",
+    "nmdc_context_audit:0:11": "number",
+    "nmdc_context_audit:0:16": "number",
+    "nmdc_context_audit:0:19": "number",
+    "nmdc_context_audit:0:20": "overlap",
+    "nmdc_context_audit:0:21": "overlap",
+    "nmdc_context_audit:0:26": "overlap",
+    "nmdc_context_audit:0:5": "overlap",
+    "nmdc_context_audit:0:8": "number",
+    "nmdc_context_audit:0:9": "overlap",
+    "phb_granule_ecology:0:21": "number",
+    "phb_granule_ecology:0:24": "number",
+    "phb_granule_ecology:0:39": "number",
+    "prophage_ecology:0:18": "number",
+    "prophage_ecology:0:19": "overlap",
+    "prophage_ecology:0:23": "overlap",
+    "prophage_ecology:16000:18": "number"
+   }
+  },
+  "provenance-and-discovery-implications": {
+   "claims": {
+    "nmdc_context_audit:0:29": "overlap",
+    "phb_granule_ecology:0:23": "number",
+    "phb_granule_ecology:16000:27": "number",
+    "prophage_ecology:0:20": "number"
+   }
+  }
+ }
+}

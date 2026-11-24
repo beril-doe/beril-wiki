@@ -1,0 +1,21 @@
+{
+ "sections": {
+  "limitations": {
+   "claims": {
+    "microbeatlas_metal_ecology:64000:6": "number"
+   }
+  },
+  "use-in-lignin-community-enrichment": {
+   "claims": {
+    "lignin_community_enrichment:0:22": "number",
+    "lignin_community_enrichment:16000:25": "number"
+   }
+  },
+  "use-in-microbeatlas-metal-ecology": {
+   "claims": {
+    "microbeatlas_metal_ecology:48000:2": "number",
+    "microbeatlas_metal_ecology:48000:4": "number"
+   }
+  }
+ }
+}

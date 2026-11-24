@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "uses-in-the-corpus": {
+   "claims": {
+    "enigma_sso_asv_ecology:0:1": "number",
+    "enigma_sso_asv_ecology:0:48": "overlap",
+    "enigma_sso_asv_ecology:16000:27": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "sections": {
+  "importance-ranking": {
+   "claims": {
+    "functional_dark_matter:32000:20": "overlap",
+    "functional_dark_matter:32000:54": "overlap",
+    "functional_dark_matter:48000:0": "overlap",
+    "functional_dark_matter:48000:1": "number",
+    "functional_dark_matter:64000:28": "overlap",
+    "functional_dark_matter:96000:12": "number"
+   }
+  },
+  "pangenome-breadth": {
+   "claims": {
+    "discoveries:80000:18": "number",
+    "functional_dark_matter:32000:17": "number",
+    "functional_dark_matter:32000:43": "number"
+   }
+  }
+ }
+}

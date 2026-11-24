@@ -1,0 +1,13 @@
+{
+ "sections": {
+  "key-facts-from-the-document": {
+   "claims": {
+    "ecotype_functional_differentiation:0:23": "number",
+    "ecotype_functional_differentiation:0:3": "overlap",
+    "ecotype_functional_differentiation:0:32": "overlap",
+    "ecotype_functional_differentiation:0:33": "number",
+    "ecotype_functional_differentiation:0:4": "overlap"
+   }
+  }
+ }
+}

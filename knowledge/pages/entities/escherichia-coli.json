@@ -1,0 +1,37 @@
+{
+ "sections": {
+  "findings-in-annotation-gap-discovery": {
+   "claims": {
+    "annotation_gap_discovery:0:12": "number"
+   }
+  },
+  "functional-dark-matter-prioritization": {
+   "claims": {
+    "functional_dark_matter:48000:33": "number",
+    "functional_dark_matter:48000:4": "number",
+    "functional_dark_matter:96000:74": "number"
+   }
+  },
+  "ibd-pathobiont-and-phage-targeting-evidence": {
+   "claims": {
+    "ibd_phage_targeting:112000:3": "overlap",
+    "ibd_phage_targeting:16000:30": "number",
+    "ibd_phage_targeting:256000:44": "number",
+    "ibd_phage_targeting:272000:42": "number",
+    "ibd_phage_targeting:32000:11": "number",
+    "ibd_phage_targeting:64000:18": "overlap"
+   }
+  },
+  "literature-coverage": {
+   "claims": {
+    "paperblast_explorer:0:3": "overlap"
+   }
+  },
+  "pangenome-and-gapmind-coverage": {
+   "claims": {
+    "conservation_vs_fitness:0:25": "number",
+    "essential_metabolome:0:11": "overlap"
+   }
+  }
+ }
+}

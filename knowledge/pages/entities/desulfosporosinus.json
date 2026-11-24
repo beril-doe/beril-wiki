@@ -1,0 +1,22 @@
+{
+ "sections": {
+  "occurrence-in-deep-clay-cohorts": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:29": "overlap",
+    "bacillota_b_subsurface_accessory:16000:22": "overlap",
+    "clay_confined_subsurface:0:27": "overlap"
+   }
+  },
+  "sporulation": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:36": "overlap"
+   }
+  },
+  "sulfate-reduction-and-hydrogen-metabolism": {
+   "claims": {
+    "discoveries:112000:6": "number",
+    "discoveries:112000:7": "number"
+   }
+  }
+ }
+}

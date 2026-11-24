@@ -1,0 +1,66 @@
+{
+ "claims": {
+  "enigma_carbon_census_1:0:19": "plan",
+  "enigma_carbon_census_1:0:21": "plan",
+  "pgp_pangenome_ecology:0:6": "plan",
+  "pgp_pangenome_ecology:16000:19": "plan",
+  "pgp_pangenome_ecology:16000:20": "plan"
+ },
+ "sections": {
+  "co-occurrence-is-not-physical-linkage": {
+   "claims": {
+    "snipe_defense_system:0:21": "overlap",
+    "t4ss_cazy_environmental_hgt:0:17": "number",
+    "t4ss_cazy_environmental_hgt:0:18": "overlap"
+   }
+  },
+  "environmental-support-and-qualification": {
+   "claims": {
+    "cofitness_coinheritance:0:23": "overlap",
+    "cofitness_coinheritance:0:24": "number",
+    "cofitness_coinheritance:0:28": "number",
+    "cofitness_coinheritance:0:30": "number",
+    "cofitness_coinheritance:0:45": "overlap",
+    "pgp_pangenome_ecology:16000:23": "number",
+    "plant_microbiome_ecotypes:48000:54": "number",
+    "plant_microbiome_ecotypes:96000:14": "overlap"
+   }
+  },
+  "evidence-from-plant-growth-promoting-genes": {
+   "claims": {
+    "discoveries:96000:22": "number",
+    "pgp_pangenome_ecology:0:0": "number",
+    "pgp_pangenome_ecology:0:1": "number",
+    "pgp_pangenome_ecology:0:2": "number",
+    "pgp_pangenome_ecology:0:3": "number",
+    "pgp_pangenome_ecology:0:4": "number",
+    "pgp_pangenome_ecology:0:5": "number",
+    "pgp_pangenome_ecology:0:7": "number",
+    "pgp_pangenome_ecology:0:8": "overlap",
+    "pgp_pangenome_ecology:0:9": "overlap"
+   }
+  },
+  "odds-ratios-versus-co-occurrence-share": {
+   "claims": {
+    "enigma_carbon_census_1:0:16": "number",
+    "enigma_carbon_census_1:0:17": "number",
+    "enigma_carbon_census_1:0:18": "number",
+    "enigma_carbon_census_1:0:20": "number",
+    "enigma_carbon_census_1:16000:4": "number"
+   }
+  },
+  "taxon-level-guild-co-occurrence": {
+   "claims": {
+    "enigma_sso_asv_ecology:0:30": "overlap",
+    "enigma_sso_asv_ecology:0:31": "number",
+    "enigma_sso_asv_ecology:0:32": "number",
+    "enigma_sso_asv_ecology:0:33": "number",
+    "enigma_sso_asv_ecology:0:34": "number",
+    "enigma_sso_asv_ecology:0:35": "number",
+    "enigma_sso_asv_ecology:0:68": "overlap",
+    "enigma_sso_asv_ecology:16000:6": "number",
+    "genotype_to_phenotype_enigma:32000:46": "overlap"
+   }
+  }
+ }
+}

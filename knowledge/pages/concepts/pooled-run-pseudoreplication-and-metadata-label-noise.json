@@ -1,0 +1,30 @@
+{
+ "claims": {
+  "clay_confined_subsurface:0:47": "plan",
+  "euk_in_prok_correlates:0:38": "plan"
+ },
+ "sections": {
+  "evidence-from-the-nmdc-analysis": {
+   "claims": {
+    "euk_in_prok_correlates:0:22": "overlap"
+   }
+  },
+  "lead": {
+   "claims": {
+    "euk_in_prok_correlates:0:23": "number"
+   }
+  },
+  "related-non-independence-and-label-noise-problems-in-other-projects": {
+   "claims": {
+    "enigma_carbon_census_1:16000:41": "number",
+    "ibd_phage_targeting:144000:16": "overlap",
+    "ibd_phage_targeting:224000:23": "number",
+    "ibd_phage_targeting:240000:15": "number",
+    "ibd_phage_targeting:32000:25": "number",
+    "ibd_phage_targeting:32000:29": "number",
+    "lab_field_ecology:0:33": "overlap",
+    "pitfalls:0:24": "number"
+   }
+  }
+ }
+}

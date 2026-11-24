@@ -1,0 +1,219 @@
+{
+ "claims": {
+  "amr_cofitness_networks:0:12": "plan",
+  "amr_cofitness_networks:0:28": "plan",
+  "amr_cofitness_networks:0:29": "plan",
+  "amr_cofitness_networks:0:30": "plan",
+  "amr_cofitness_networks:0:31": "plan",
+  "amr_cofitness_networks:0:39": "plan",
+  "amr_cofitness_networks:0:40": "plan",
+  "amr_cofitness_networks:0:5": "plan",
+  "amr_cofitness_networks:0:52": "plan",
+  "amr_cofitness_networks:16000:19": "plan",
+  "amr_cofitness_networks:16000:20": "plan",
+  "amr_cofitness_networks:16000:34": "plan",
+  "amr_environmental_resistome:0:21": "plan",
+  "amr_environmental_resistome:16000:3": "plan",
+  "amr_fitness_cost:16000:5": "plan",
+  "amr_fitness_cost:16000:6": "plan",
+  "amr_pangenome_atlas:0:13": "plan",
+  "amr_pangenome_atlas:0:14": "plan",
+  "amr_pangenome_atlas:16000:20": "plan",
+  "amr_pangenome_atlas:16000:21": "plan",
+  "bacillota_b_subsurface_accessory:0:13": "plan",
+  "bacillota_b_subsurface_accessory:0:40": "plan",
+  "bacillota_b_subsurface_accessory:0:41": "plan",
+  "bacillota_b_subsurface_accessory:0:7": "plan",
+  "bacillota_b_subsurface_accessory:0:8": "plan",
+  "bacillota_b_subsurface_accessory:16000:13": "plan",
+  "bacillota_b_subsurface_accessory:16000:21": "plan",
+  "caulobacter_fur_lipida_loss:0:36": "plan",
+  "clay_confined_subsurface:0:10": "plan",
+  "cog_analysis:0:19": "plan",
+  "cog_analysis:0:22": "plan",
+  "discoveries:0:22": "plan",
+  "discoveries:0:24": "plan",
+  "discoveries:0:26": "plan",
+  "discoveries:0:28": "plan",
+  "discoveries:0:29": "plan",
+  "discoveries:112000:14": "plan",
+  "discoveries:112000:20": "plan",
+  "discoveries:112000:9": "plan",
+  "discoveries:16000:4": "plan",
+  "discoveries:32000:20": "plan",
+  "discoveries:32000:43": "plan",
+  "discoveries:48000:30": "plan",
+  "discoveries:48000:31": "plan",
+  "discoveries:48000:33": "plan",
+  "ecotype_env_reanalysis:0:12": "plan",
+  "ecotype_env_reanalysis:0:20": "plan",
+  "ecotype_env_reanalysis:0:25": "plan",
+  "ecotype_env_reanalysis:0:34": "plan",
+  "ecotype_functional_differentiation:0:7": "plan",
+  "env_embedding_explorer:0:20": "plan",
+  "env_embedding_explorer:0:21": "plan",
+  "fitness_modules:0:39": "plan",
+  "gene_function_ecological_agora:112000:33": "plan",
+  "gene_function_ecological_agora:128000:6": "plan",
+  "gene_function_ecological_agora:144000:38": "plan",
+  "gene_function_ecological_agora:144000:7": "plan",
+  "gene_function_ecological_agora:64000:5": "plan",
+  "gene_function_ecological_agora:64000:9": "plan",
+  "gene_function_ecological_agora:80000:21": "plan",
+  "gene_function_ecological_agora:80000:24": "plan",
+  "gene_function_ecological_agora:80000:30": "plan",
+  "ibd_phage_targeting:256000:19": "plan",
+  "ibd_phage_targeting:80000:31": "plan",
+  "ibd_phage_targeting:80000:34": "plan",
+  "ibd_phage_targeting:80000:35": "plan",
+  "ibd_phage_targeting:80000:37": "plan",
+  "metal_specificity:0:42": "plan",
+  "microbeatlas_metal_ecology:16000:2": "plan",
+  "microbeatlas_metal_ecology:32000:32": "plan",
+  "microbeatlas_metal_ecology:32000:33": "plan",
+  "microbeatlas_metal_ecology:64000:26": "plan",
+  "microbeatlas_metal_ecology:64000:30": "plan",
+  "pitfalls:64000:28": "plan",
+  "pitfalls:64000:6": "plan",
+  "plant_microbiome_ecotypes:0:19": "plan",
+  "plant_microbiome_ecotypes:48000:12": "plan"
+ },
+ "sections": {
+  "annotation-vocabulary-and-grain-change-module-and-dark-gene-conclusions": {
+   "claims": {
+    "fitness_modules:0:17": "number",
+    "fitness_modules:0:2": "number",
+    "fitness_modules:0:3": "overlap",
+    "functional_dark_matter:0:34": "number",
+    "functional_dark_matter:32000:38": "number"
+   }
+  },
+  "category-definitions-can-reverse-pathway-conclusions": {
+   "claims": {
+    "discoveries:0:23": "overlap",
+    "discoveries:0:27": "number",
+    "ibd_phage_targeting:16000:1": "number",
+    "ibd_phage_targeting:208000:44": "number",
+    "ibd_phage_targeting:208000:45": "overlap",
+    "ibd_phage_targeting:256000:20": "number",
+    "ibd_phage_targeting:80000:22": "overlap",
+    "ibd_phage_targeting:80000:24": "number",
+    "ibd_phage_targeting:80000:30": "number",
+    "ibd_phage_targeting:96000:10": "overlap",
+    "ibd_phage_targeting:96000:11": "number",
+    "ibd_phage_targeting:96000:15": "number",
+    "ibd_phage_targeting:96000:21": "number",
+    "ibd_phage_targeting:96000:9": "number"
+   }
+  },
+  "coarse-habitat-categories-and-leave-one-out-sensitivity": {
+   "claims": {
+    "microbeatlas_metal_ecology:16000:1": "overlap",
+    "microbeatlas_metal_ecology:16000:3": "number",
+    "microbeatlas_metal_ecology:16000:4": "number",
+    "microbeatlas_metal_ecology:16000:5": "number",
+    "microbeatlas_metal_ecology:16000:6": "number",
+    "microbeatlas_metal_ecology:16000:7": "overlap",
+    "microbeatlas_metal_ecology:32000:2": "number",
+    "microbeatlas_metal_ecology:32000:31": "overlap",
+    "microbeatlas_metal_ecology:80000:10": "number"
+   }
+  },
+  "domain-architecture-resolution": {
+   "claims": {
+    "gene_function_ecological_agora:0:23": "number",
+    "gene_function_ecological_agora:144000:17": "number",
+    "gene_function_ecological_agora:144000:18": "number",
+    "gene_function_ecological_agora:144000:19": "number",
+    "gene_function_ecological_agora:144000:20": "number",
+    "gene_function_ecological_agora:144000:36": "number",
+    "gene_function_ecological_agora:144000:37": "number",
+    "gene_function_ecological_agora:144000:46": "number",
+    "gene_function_ecological_agora:144000:9": "number",
+    "gene_function_ecological_agora:160000:11": "number",
+    "gene_function_ecological_agora:160000:12": "number",
+    "gene_function_ecological_agora:160000:36": "number",
+    "gene_function_ecological_agora:160000:37": "number",
+    "gene_function_ecological_agora:16000:15": "number",
+    "gene_function_ecological_agora:16000:45": "number",
+    "gene_function_ecological_agora:176000:0": "number",
+    "gene_function_ecological_agora:176000:1": "number"
+   }
+  },
+  "identifier-and-label-vocabularies-silently-empty-categories": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:0:16": "overlap",
+    "phb_granule_ecology:0:25": "number",
+    "phb_granule_ecology:16000:29": "overlap",
+    "phb_granule_ecology:16000:41": "number",
+    "pitfalls:32000:17": "overlap",
+    "pitfalls:32000:35": "overlap",
+    "pitfalls:80000:26": "number",
+    "snipe_defense_system:0:22": "overlap"
+   }
+  },
+  "manual-condition-and-environment-categories-embed-judgment": {
+   "claims": {
+    "env_embedding_explorer:0:36": "number",
+    "env_embedding_explorer:0:5": "number",
+    "field_vs_lab_fitness:0:59": "overlap",
+    "functional_dark_matter:0:72": "overlap",
+    "pseudomonas_carbon_ecology:0:32": "number",
+    "pseudomonas_carbon_ecology:0:33": "overlap"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "phb_granule_ecology:16000:30": "overlap"
+   }
+  },
+  "schema-choice-interacts-with-integration-and-transfer": {
+   "claims": {
+    "ibd_phage_targeting:224000:33": "number"
+   }
+  },
+  "sequence-cluster-ko-and-domain-architecture-grains-give-different-evolutionary-answers": {
+   "claims": {
+    "gene_function_ecological_agora:112000:3": "number",
+    "gene_function_ecological_agora:224000:34": "overlap",
+    "gene_function_ecological_agora:32000:21": "overlap",
+    "gene_function_ecological_agora:32000:22": "number",
+    "gene_function_ecological_agora:32000:24": "number",
+    "gene_function_ecological_agora:48000:12": "number",
+    "gene_function_ecological_agora:48000:13": "number",
+    "gene_function_ecological_agora:48000:14": "number",
+    "gene_function_ecological_agora:64000:3": "overlap",
+    "gene_function_ecological_agora:64000:40": "number",
+    "gene_function_ecological_agora:80000:12": "overlap",
+    "gene_function_ecological_agora:80000:13": "number",
+    "gene_function_ecological_agora:80000:22": "number",
+    "gene_function_ecological_agora:80000:31": "number",
+    "gene_function_ecological_agora:80000:33": "number",
+    "gene_function_ecological_agora:96000:29": "number"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "gene_function_ecological_agora:32000:20": "number"
+   }
+  },
+  "theme-backgrounds-dilute-or-restrict-enrichment": {
+   "claims": {
+    "ibd_phage_targeting:112000:21": "number",
+    "ibd_phage_targeting:112000:22": "number",
+    "ibd_phage_targeting:128000:33": "number"
+   }
+  },
+  "threshold-and-membership-rules-define-gene-categories": {
+   "claims": {
+    "metal_fitness_atlas:0:36": "number",
+    "metal_fitness_atlas:0:43": "number",
+    "metal_specificity:0:41": "number",
+    "module_conservation:0:14": "number",
+    "pitfalls:48000:26": "overlap",
+    "plant_microbiome_ecotypes:0:18": "number",
+    "plant_microbiome_ecotypes:80000:21": "number"
+   }
+  }
+ }
+}

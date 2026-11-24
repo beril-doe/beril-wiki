@@ -1,0 +1,64 @@
+{
+ "claims": {
+  "amr_strain_variation:0:38": "plan",
+  "amr_strain_variation:16000:7": "plan",
+  "amr_strain_variation:16000:8": "plan",
+  "amr_strain_variation:16000:9": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "amr_strain_variation:0:26": "overlap",
+    "amr_strain_variation:0:27": "number",
+    "amr_strain_variation:0:29": "number",
+    "amr_strain_variation:0:30": "overlap"
+   }
+  },
+  "figures": {
+   "claims": {
+    "amr_strain_variation:0:35": "overlap",
+    "amr_strain_variation:0:36": "overlap",
+    "amr_strain_variation:0:37": "overlap"
+   }
+  },
+  "future-directions": {
+   "claims": {
+    "amr_strain_variation:16000:0": "overlap",
+    "amr_strain_variation:16000:2": "overlap",
+    "amr_strain_variation:16000:4": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "amr_strain_variation:0:0": "number",
+    "amr_strain_variation:0:1": "number",
+    "amr_strain_variation:0:10": "number",
+    "amr_strain_variation:0:13": "overlap",
+    "amr_strain_variation:0:14": "number",
+    "amr_strain_variation:0:15": "overlap",
+    "amr_strain_variation:0:17": "number",
+    "amr_strain_variation:0:18": "number",
+    "amr_strain_variation:0:19": "overlap",
+    "amr_strain_variation:0:2": "number",
+    "amr_strain_variation:0:20": "number",
+    "amr_strain_variation:0:21": "number",
+    "amr_strain_variation:0:22": "number",
+    "amr_strain_variation:0:24": "number",
+    "amr_strain_variation:0:25": "number",
+    "amr_strain_variation:0:3": "number",
+    "amr_strain_variation:0:4": "number",
+    "amr_strain_variation:0:5": "overlap",
+    "amr_strain_variation:0:6": "number",
+    "amr_strain_variation:0:7": "number",
+    "amr_strain_variation:0:9": "number"
+   }
+  },
+  "scale-and-generated-data": {
+   "claims": {
+    "amr_strain_variation:0:32": "overlap",
+    "amr_strain_variation:0:33": "number",
+    "amr_strain_variation:0:34": "number"
+   }
+  }
+ }
+}

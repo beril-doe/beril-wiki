@@ -1,0 +1,12 @@
+{
+ "sections": {
+  "key-facts-across-projects": {
+   "claims": {
+    "amr_strain_variation:0:10": "number",
+    "amr_strain_variation:0:9": "number",
+    "env_embedding_explorer:0:39": "number",
+    "env_embedding_explorer:0:47": "overlap"
+   }
+  }
+ }
+}

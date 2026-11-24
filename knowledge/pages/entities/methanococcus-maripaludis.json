@@ -1,0 +1,14 @@
+{
+ "sections": {
+  "evidence-from-the-snipe-analysis": {
+   "claims": {
+    "snipe_defense_system:0:26": "number"
+   }
+  },
+  "what-this-entity-is": {
+   "claims": {
+    "truly_dark_genes:16000:17": "number"
+   }
+  }
+ }
+}

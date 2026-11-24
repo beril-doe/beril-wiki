@@ -1,0 +1,63 @@
+{
+ "claims": {
+  "alphafold_msa_annotation:16000:1": "plan",
+  "alphafold_msa_annotation:16000:2": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "alphafold_msa_annotation:0:25": "number",
+    "alphafold_msa_annotation:0:26": "overlap",
+    "alphafold_msa_annotation:0:27": "overlap",
+    "alphafold_msa_annotation:0:29": "overlap"
+   }
+  },
+  "data-and-outputs": {
+   "claims": {
+    "alphafold_msa_annotation:0:30": "overlap",
+    "alphafold_msa_annotation:0:31": "overlap",
+    "alphafold_msa_annotation:0:32": "number",
+    "alphafold_msa_annotation:0:33": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "alphafold_msa_annotation:0:0": "number",
+    "alphafold_msa_annotation:0:1": "number",
+    "alphafold_msa_annotation:0:12": "number",
+    "alphafold_msa_annotation:0:13": "number",
+    "alphafold_msa_annotation:0:14": "number",
+    "alphafold_msa_annotation:0:17": "overlap",
+    "alphafold_msa_annotation:0:18": "number",
+    "alphafold_msa_annotation:0:2": "number",
+    "alphafold_msa_annotation:0:20": "overlap",
+    "alphafold_msa_annotation:0:22": "overlap",
+    "alphafold_msa_annotation:0:23": "number",
+    "alphafold_msa_annotation:0:24": "number",
+    "alphafold_msa_annotation:0:4": "number",
+    "alphafold_msa_annotation:0:5": "number",
+    "alphafold_msa_annotation:0:6": "number",
+    "alphafold_msa_annotation:0:7": "number",
+    "alphafold_msa_annotation:0:8": "number",
+    "alphafold_msa_annotation:0:9": "number"
+   }
+  },
+  "overview": {
+   "claims": {
+    "alphafold_msa_annotation:0:10": "number",
+    "alphafold_msa_annotation:0:11": "number"
+   }
+  },
+  "proposed-future-work": {
+   "claims": {
+    "alphafold_msa_annotation:0:34": "overlap",
+    "alphafold_msa_annotation:16000:0": "overlap"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "alphafold_msa_annotation:0:19": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "key-facts-from-the-document": {
+   "claims": {
+    "plant_microbiome_ecotypes:48000:22": "number",
+    "plant_microbiome_ecotypes:48000:27": "number",
+    "plant_microbiome_ecotypes:48000:29": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,10 @@
+{
+ "sections": {
+  "evidence-sides": {
+   "claims": {
+    "berdl_data_atlas:16000:0": "overlap",
+    "nmdc_context_audit:0:15": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "discoveries:16000:28": "number",
+    "discoveries:16000:34": "number",
+    "ibd_phage_targeting:0:25": "number",
+    "ibd_phage_targeting:224000:35": "number",
+    "ibd_phage_targeting:240000:24": "number",
+    "ibd_phage_targeting:256000:11": "number",
+    "ibd_phage_targeting:48000:13": "number",
+    "ibd_phage_targeting:48000:21": "number",
+    "pitfalls:0:21": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,85 @@
+{
+ "claims": {
+  "nmdc_community_metabolic_ecology:0:0": "plan",
+  "nmdc_community_metabolic_ecology:0:13": "plan",
+  "nmdc_community_metabolic_ecology:0:3": "plan",
+  "nmdc_community_metabolic_ecology:0:6": "plan",
+  "nmdc_community_metabolic_ecology:0:8": "plan",
+  "nmdc_community_metabolic_ecology:16000:12": "plan",
+  "nmdc_community_metabolic_ecology:16000:2": "plan",
+  "nmdc_community_metabolic_ecology:16000:21": "plan",
+  "nmdc_community_metabolic_ecology:16000:29": "plan",
+  "nmdc_community_metabolic_ecology:16000:31": "plan",
+  "nmdc_community_metabolic_ecology:16000:7": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:0:27": "overlap",
+    "nmdc_community_metabolic_ecology:0:28": "number",
+    "nmdc_community_metabolic_ecology:0:29": "number",
+    "nmdc_community_metabolic_ecology:0:31": "overlap"
+   }
+  },
+  "future-directions": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:16000:25": "overlap",
+    "nmdc_community_metabolic_ecology:16000:26": "overlap",
+    "nmdc_community_metabolic_ecology:16000:27": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:0:1": "number",
+    "nmdc_community_metabolic_ecology:0:14": "number",
+    "nmdc_community_metabolic_ecology:0:15": "number",
+    "nmdc_community_metabolic_ecology:0:16": "overlap",
+    "nmdc_community_metabolic_ecology:0:18": "number",
+    "nmdc_community_metabolic_ecology:0:2": "overlap",
+    "nmdc_community_metabolic_ecology:0:20": "overlap",
+    "nmdc_community_metabolic_ecology:0:22": "number",
+    "nmdc_community_metabolic_ecology:0:4": "number",
+    "nmdc_community_metabolic_ecology:0:5": "overlap"
+   }
+  },
+  "methods-and-data-products": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:16000:0": "overlap",
+    "nmdc_community_metabolic_ecology:16000:1": "overlap",
+    "nmdc_community_metabolic_ecology:16000:10": "overlap",
+    "nmdc_community_metabolic_ecology:16000:11": "overlap",
+    "nmdc_community_metabolic_ecology:16000:13": "overlap",
+    "nmdc_community_metabolic_ecology:16000:14": "overlap",
+    "nmdc_community_metabolic_ecology:16000:15": "overlap",
+    "nmdc_community_metabolic_ecology:16000:16": "overlap",
+    "nmdc_community_metabolic_ecology:16000:4": "number",
+    "nmdc_community_metabolic_ecology:16000:5": "overlap",
+    "nmdc_community_metabolic_ecology:16000:6": "number",
+    "nmdc_community_metabolic_ecology:16000:8": "overlap",
+    "nmdc_community_metabolic_ecology:16000:9": "overlap"
+   }
+  },
+  "overview": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:0:10": "number",
+    "nmdc_community_metabolic_ecology:0:23": "number",
+    "nmdc_community_metabolic_ecology:0:32": "overlap",
+    "nmdc_community_metabolic_ecology:0:33": "number",
+    "nmdc_community_metabolic_ecology:0:34": "overlap",
+    "nmdc_community_metabolic_ecology:16000:17": "overlap",
+    "nmdc_community_metabolic_ecology:16000:19": "overlap",
+    "nmdc_community_metabolic_ecology:16000:20": "overlap",
+    "nmdc_community_metabolic_ecology:16000:22": "overlap",
+    "nmdc_community_metabolic_ecology:16000:23": "overlap"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:0:30": "number",
+    "nmdc_community_metabolic_ecology:16000:18": "overlap",
+    "nmdc_community_metabolic_ecology:16000:3": "overlap",
+    "nmdc_community_metabolic_ecology:16000:30": "overlap"
+   }
+  }
+ }
+}

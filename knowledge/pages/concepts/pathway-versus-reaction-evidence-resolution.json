@@ -1,0 +1,49 @@
+{
+ "claims": {
+  "annotation_gap_discovery:0:18": "plan",
+  "fw300_metabolic_consistency:0:41": "plan",
+  "fw300_metabolic_consistency:16000:6": "plan",
+  "metabolic_capability_dependency:0:41": "plan"
+ },
+ "sections": {
+  "direction-filters-and-dark-compounds-in-pathway-calls": {
+   "claims": {
+    "enigma_carbon_census_1:0:51": "overlap",
+    "enigma_carbon_census_1:0:8": "overlap",
+    "enigma_carbon_census_1:16000:48": "overlap"
+   }
+  },
+  "module-level-predictions-are-process-context-not-exact-assignments": {
+   "claims": {
+    "fitness_modules:0:15": "number",
+    "fitness_modules:0:16": "number",
+    "fitness_modules:0:17": "number",
+    "fitness_modules:0:18": "overlap",
+    "fitness_modules:0:34": "number"
+   }
+  },
+  "organism-level-co-occurrence-is-not-gene-to-step-assignment": {
+   "claims": {
+    "functional_dark_matter:0:9": "overlap",
+    "functional_dark_matter:64000:42": "number",
+    "functional_dark_matter:64000:43": "number",
+    "functional_dark_matter:64000:44": "overlap",
+    "functional_dark_matter:80000:20": "number",
+    "functional_dark_matter:96000:4": "number"
+   }
+  },
+  "reaction-level-assignment-required-additional-evidence": {
+   "claims": {
+    "annotation_gap_discovery:0:14": "overlap"
+   }
+  },
+  "why-the-mapping-is-difficult": {
+   "claims": {
+    "metabolic_capability_dependency:0:29": "overlap",
+    "plant_microbiome_ecotypes:112000:7": "overlap",
+    "plant_microbiome_ecotypes:112000:8": "overlap",
+    "pseudomonas_carbon_ecology:0:28": "overlap"
+   }
+  }
+ }
+}

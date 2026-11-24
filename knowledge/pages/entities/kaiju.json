@@ -1,0 +1,25 @@
+{
+ "sections": {
+  "classifier-mismatch-with-metaphlan3": {
+   "claims": {
+    "ibd_phage_targeting:208000:28": "overlap",
+    "ibd_phage_targeting:224000:40": "overlap",
+    "ibd_phage_targeting:256000:8": "overlap"
+   }
+  },
+  "technical-reliability": {
+   "claims": {
+    "ibd_phage_targeting:0:10": "number",
+    "ibd_phage_targeting:176000:65": "number",
+    "ibd_phage_targeting:224000:23": "number",
+    "ibd_phage_targeting:272000:3": "number"
+   }
+  },
+  "use-in-the-kuehl-wgs-uc-davis-cohort": {
+   "claims": {
+    "ibd_phage_targeting:176000:37": "number",
+    "ibd_phage_targeting:48000:13": "number"
+   }
+  }
+ }
+}

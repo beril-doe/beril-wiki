@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:0:23": "number",
+    "caulobacter_fur_lipida_loss:0:31": "overlap",
+    "caulobacter_fur_lipida_loss:16000:20": "number"
+   }
+  }
+ }
+}

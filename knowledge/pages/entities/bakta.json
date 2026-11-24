@@ -1,0 +1,49 @@
+{
+ "sections": {
+  "annotation-data-and-integration": {
+   "claims": {
+    "amr_fitness_cost:0:34": "number",
+    "amr_fitness_cost:0:55": "number",
+    "amr_fitness_cost:0:7": "number",
+    "annotation_gap_discovery:0:26": "number",
+    "lanthanide_methylotrophy_atlas:16000:11": "overlap",
+    "lanthanide_methylotrophy_atlas:16000:12": "overlap",
+    "lanthanide_methylotrophy_atlas:16000:28": "number",
+    "pgp_pangenome_ecology:0:20": "number",
+    "pgp_pangenome_ecology:0:39": "number",
+    "pgp_pangenome_ecology:16000:2": "number",
+    "pitfalls:112000:21": "overlap",
+    "pitfalls:112000:22": "overlap",
+    "pitfalls:32000:30": "overlap",
+    "prophage_amr_comobilization:0:10": "number",
+    "prophage_amr_comobilization:0:11": "number",
+    "prophage_amr_comobilization:0:15": "number",
+    "prophage_amr_comobilization:0:27": "overlap",
+    "prophage_amr_comobilization:0:29": "overlap",
+    "prophage_amr_comobilization:0:8": "number",
+    "prophage_amr_comobilization:0:9": "number"
+   }
+  },
+  "mechanism-classification-and-conservation": {
+   "claims": {
+    "amr_fitness_cost:0:32": "number",
+    "amr_fitness_cost:0:33": "number",
+    "amr_pangenome_atlas:0:14": "number",
+    "prophage_amr_comobilization:0:18": "number",
+    "prophage_amr_comobilization:0:2": "number",
+    "prophage_amr_comobilization:0:22": "number"
+   }
+  },
+  "pan-bacterial-annotation-and-dark-genes": {
+   "claims": {
+    "discoveries:32000:36": "number",
+    "discoveries:32000:39": "overlap",
+    "functional_dark_matter:32000:34": "number",
+    "functional_dark_matter:32000:37": "number",
+    "truly_dark_genes:0:8": "number",
+    "truly_dark_genes:16000:13": "number",
+    "truly_dark_genes:16000:14": "number"
+   }
+  }
+ }
+}

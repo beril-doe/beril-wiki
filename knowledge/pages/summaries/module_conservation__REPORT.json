@@ -1,0 +1,54 @@
+{
+ "claims": {
+  "module_conservation:0:17": "plan",
+  "module_conservation:0:19": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "module_conservation:0:11": "number",
+    "module_conservation:0:12": "overlap",
+    "module_conservation:0:13": "number",
+    "module_conservation:0:14": "number"
+   }
+  },
+  "data-and-provenance": {
+   "claims": {
+    "module_conservation:0:18": "overlap",
+    "module_conservation:0:23": "overlap",
+    "module_conservation:0:24": "overlap"
+   }
+  },
+  "interpretation-and-context": {
+   "claims": {
+    "module_conservation:0:20": "number",
+    "module_conservation:0:21": "number",
+    "module_conservation:0:22": "number",
+    "module_conservation:0:5": "number"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "module_conservation:0:0": "number",
+    "module_conservation:0:15": "overlap",
+    "module_conservation:0:2": "overlap",
+    "module_conservation:0:3": "number",
+    "module_conservation:0:6": "number",
+    "module_conservation:0:7": "overlap",
+    "module_conservation:0:8": "number"
+   }
+  },
+  "overview": {
+   "claims": {
+    "module_conservation:0:16": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "module_conservation:0:1": "overlap",
+    "module_conservation:0:10": "overlap",
+    "module_conservation:0:4": "number"
+   }
+  }
+ }
+}

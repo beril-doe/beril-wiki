@@ -1,0 +1,29 @@
+{
+ "sections": {
+  "enrichment-in-clay-confined-deep-subsurface-genomes": {
+   "claims": {
+    "clay_confined_subsurface:0:12": "number",
+    "clay_confined_subsurface:0:13": "number",
+    "clay_confined_subsurface:0:35": "number",
+    "clay_confined_subsurface:0:38": "number",
+    "clay_confined_subsurface:0:39": "number",
+    "clay_confined_subsurface:0:40": "number",
+    "discoveries:112000:2": "number",
+    "discoveries:112000:3": "number"
+   }
+  },
+  "phylogenetic-control-within-bacillota-b": {
+   "claims": {
+    "clay_confined_subsurface:0:19": "number",
+    "clay_confined_subsurface:0:37": "number",
+    "discoveries:112000:7": "number"
+   }
+  },
+  "robustness-after-the-iron-reduction-marker-correction": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:28": "number",
+    "clay_confined_subsurface:0:7": "number"
+   }
+  }
+ }
+}

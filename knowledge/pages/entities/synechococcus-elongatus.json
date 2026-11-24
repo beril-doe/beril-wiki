@@ -1,0 +1,23 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "pitfalls:96000:1": "overlap"
+   }
+  },
+  "metal-sensitivity": {
+   "claims": {
+    "metal_fitness_atlas:0:10": "number",
+    "metal_fitness_atlas:0:19": "number",
+    "metal_fitness_atlas:0:39": "number",
+    "metal_fitness_atlas:0:55": "overlap",
+    "metal_fitness_atlas:16000:2": "overlap"
+   }
+  },
+  "nacl-dose-response-outlier": {
+   "claims": {
+    "pitfalls:96000:2": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "claims": {
+  "essential_genome:0:18": "plan",
+  "essential_genome:0:35": "plan",
+  "essential_genome:0:36": "plan",
+  "essential_genome:0:37": "plan",
+  "essential_genome:0:40": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "essential_genome:0:27": "overlap",
+    "essential_genome:0:28": "overlap",
+    "essential_genome:0:31": "overlap",
+    "essential_genome:0:32": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "essential_genome:0:0": "overlap",
+    "essential_genome:0:1": "number",
+    "essential_genome:0:10": "number",
+    "essential_genome:0:11": "number",
+    "essential_genome:0:12": "number",
+    "essential_genome:0:13": "number",
+    "essential_genome:0:14": "number",
+    "essential_genome:0:15": "number",
+    "essential_genome:0:16": "number",
+    "essential_genome:0:17": "number",
+    "essential_genome:0:19": "overlap",
+    "essential_genome:0:2": "overlap",
+    "essential_genome:0:22": "number",
+    "essential_genome:0:24": "overlap",
+    "essential_genome:0:25": "overlap",
+    "essential_genome:0:26": "number",
+    "essential_genome:0:3": "number",
+    "essential_genome:0:33": "overlap",
+    "essential_genome:0:34": "overlap",
+    "essential_genome:0:38": "number",
+    "essential_genome:0:39": "number",
+    "essential_genome:0:4": "number",
+    "essential_genome:0:41": "overlap",
+    "essential_genome:0:42": "overlap",
+    "essential_genome:0:5": "number",
+    "essential_genome:0:6": "number",
+    "essential_genome:0:7": "number",
+    "essential_genome:0:8": "number",
+    "essential_genome:0:9": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "essential_genome:0:23": "overlap",
+    "essential_genome:0:30": "overlap"
+   }
+  }
+ }
+}

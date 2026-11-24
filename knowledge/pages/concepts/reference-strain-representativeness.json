@@ -1,0 +1,35 @@
+{
+ "claims": {
+  "cf_formulation_design:48000:30": "plan"
+ },
+ "sections": {
+  "consequence-for-generalizing-the-assay-results": {
+   "claims": {
+    "cf_formulation_design:32000:13": "number",
+    "cf_formulation_design:48000:18": "number"
+   }
+  },
+  "genotypic-divergence-between-the-two-common-reference-strains": {
+   "claims": {
+    "cf_formulation_design:32000:4": "overlap"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "cf_formulation_design:48000:31": "number"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "cf_formulation_design:48000:13": "number"
+   }
+  },
+  "what-the-cf-population-actually-looks-like": {
+   "claims": {
+    "cf_formulation_design:32000:6": "number",
+    "cf_formulation_design:48000:3": "number",
+    "cf_formulation_design:48000:4": "number"
+   }
+  }
+ }
+}

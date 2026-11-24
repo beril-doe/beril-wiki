@@ -1,0 +1,92 @@
+{
+ "claims": {
+  "truly_dark_genes:0:45": "plan",
+  "truly_dark_genes:0:47": "plan",
+  "truly_dark_genes:16000:2": "plan",
+  "truly_dark_genes:16000:3": "plan",
+  "truly_dark_genes:16000:6": "plan",
+  "truly_dark_genes:16000:8": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "truly_dark_genes:0:31": "number",
+    "truly_dark_genes:0:33": "overlap",
+    "truly_dark_genes:0:35": "number",
+    "truly_dark_genes:0:36": "overlap"
+   }
+  },
+  "data-sources": {
+   "claims": {
+    "truly_dark_genes:0:37": "overlap",
+    "truly_dark_genes:0:38": "overlap",
+    "truly_dark_genes:0:39": "overlap",
+    "truly_dark_genes:0:40": "overlap",
+    "truly_dark_genes:0:41": "overlap",
+    "truly_dark_genes:0:42": "overlap",
+    "truly_dark_genes:0:43": "overlap",
+    "truly_dark_genes:0:44": "overlap",
+    "truly_dark_genes:0:46": "overlap",
+    "truly_dark_genes:16000:19": "overlap",
+    "truly_dark_genes:16000:4": "overlap",
+    "truly_dark_genes:16000:5": "overlap",
+    "truly_dark_genes:16000:7": "overlap"
+   }
+  },
+  "future-directions": {
+   "claims": {
+    "truly_dark_genes:16000:11": "number",
+    "truly_dark_genes:16000:13": "number",
+    "truly_dark_genes:16000:15": "overlap",
+    "truly_dark_genes:16000:16": "number",
+    "truly_dark_genes:16000:17": "number",
+    "truly_dark_genes:16000:18": "number"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "truly_dark_genes:0:1": "number",
+    "truly_dark_genes:0:10": "number",
+    "truly_dark_genes:0:11": "number",
+    "truly_dark_genes:0:12": "number",
+    "truly_dark_genes:0:13": "number",
+    "truly_dark_genes:0:14": "number",
+    "truly_dark_genes:0:15": "number",
+    "truly_dark_genes:0:16": "number",
+    "truly_dark_genes:0:17": "overlap",
+    "truly_dark_genes:0:18": "overlap",
+    "truly_dark_genes:0:19": "number",
+    "truly_dark_genes:0:2": "number",
+    "truly_dark_genes:0:20": "number",
+    "truly_dark_genes:0:21": "number",
+    "truly_dark_genes:0:22": "number",
+    "truly_dark_genes:0:23": "number",
+    "truly_dark_genes:0:24": "number",
+    "truly_dark_genes:0:25": "number",
+    "truly_dark_genes:0:26": "number",
+    "truly_dark_genes:0:27": "number",
+    "truly_dark_genes:0:29": "number",
+    "truly_dark_genes:0:3": "number",
+    "truly_dark_genes:0:4": "number",
+    "truly_dark_genes:0:5": "number",
+    "truly_dark_genes:0:6": "number",
+    "truly_dark_genes:0:7": "number",
+    "truly_dark_genes:0:8": "number",
+    "truly_dark_genes:0:9": "number",
+    "truly_dark_genes:16000:0": "overlap",
+    "truly_dark_genes:16000:1": "overlap",
+    "truly_dark_genes:16000:12": "number"
+   }
+  },
+  "overview": {
+   "claims": {
+    "truly_dark_genes:0:0": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "truly_dark_genes:16000:14": "number"
+   }
+  }
+ }
+}

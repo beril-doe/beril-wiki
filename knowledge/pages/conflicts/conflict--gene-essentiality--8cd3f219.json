@@ -1,0 +1,10 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "discoveries:48000:16": "number",
+    "discoveries:48000:7": "number"
+   }
+  }
+ }
+}

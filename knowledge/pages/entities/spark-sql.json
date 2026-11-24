@@ -1,0 +1,15 @@
+{
+ "sections": {
+  "key-facts-from-pitfalls": {
+   "claims": {
+    "pitfalls:48000:47": "number",
+    "pitfalls:64000:19": "overlap"
+   }
+  },
+  "related-pages": {
+   "claims": {
+    "pitfalls:16000:21": "overlap"
+   }
+  }
+ }
+}

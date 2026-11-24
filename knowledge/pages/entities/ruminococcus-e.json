@@ -1,0 +1,10 @@
+{
+ "sections": {
+  "key-facts-from-the-document": {
+   "claims": {
+    "metabolic_capability_dependency:0:14": "overlap",
+    "metabolic_capability_dependency:0:18": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,39 @@
+{
+ "sections": {
+  "interpretation-and-limitations-in-soil-metal-genomics": {
+   "claims": {
+    "soil_metal_functional_genomics:0:10": "number",
+    "soil_metal_functional_genomics:0:15": "overlap",
+    "soil_metal_functional_genomics:0:17": "number"
+   }
+  },
+  "use-in-metal-resistance-biogeography": {
+   "claims": {
+    "metal_resistance_global_biogeography:0:11": "number",
+    "metal_resistance_global_biogeography:0:12": "number",
+    "metal_resistance_global_biogeography:0:13": "overlap",
+    "metal_resistance_global_biogeography:0:19": "number",
+    "soil_metal_functional_genomics:0:2": "overlap"
+   }
+  },
+  "use-in-pgp-pangenome-ecology": {
+   "claims": {
+    "pgp_pangenome_ecology:0:1": "overlap",
+    "pgp_pangenome_ecology:0:2": "number",
+    "pgp_pangenome_ecology:0:4": "overlap"
+   }
+  },
+  "use-in-phage-defense-and-prophage-ecology": {
+   "claims": {
+    "prophage_ecology:0:19": "overlap"
+   }
+  },
+  "use-in-pseudomonas-carbon-ecology": {
+   "claims": {
+    "pseudomonas_carbon_ecology:0:15": "number",
+    "pseudomonas_carbon_ecology:0:19": "number",
+    "pseudomonas_carbon_ecology:0:4": "number"
+   }
+  }
+ }
+}

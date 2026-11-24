@@ -1,0 +1,15 @@
+{
+ "sections": {
+  "evidence-from-caulobacter-fur-lipida-loss": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:0:10": "number",
+    "caulobacter_fur_lipida_loss:0:11": "number",
+    "caulobacter_fur_lipida_loss:0:2": "number",
+    "caulobacter_fur_lipida_loss:0:8": "number",
+    "caulobacter_fur_lipida_loss:16000:28": "overlap",
+    "caulobacter_fur_lipida_loss:16000:45": "number",
+    "caulobacter_fur_lipida_loss:16000:7": "number"
+   }
+  }
+ }
+}

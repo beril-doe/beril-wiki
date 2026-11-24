@@ -1,0 +1,26 @@
+{
+ "sections": {
+  "cross-species-fitness-atlas": {
+   "claims": {
+    "metal_fitness_atlas:0:19": "overlap",
+    "metal_fitness_atlas:0:33": "number"
+   }
+  },
+  "evidence-from-lab-field-ecology": {
+   "claims": {
+    "lab_field_ecology:0:12": "number",
+    "lab_field_ecology:0:14": "overlap",
+    "lab_field_ecology:0:4": "number",
+    "lab_field_ecology:0:5": "number",
+    "lab_field_ecology:0:7": "number",
+    "lab_field_ecology:0:8": "number",
+    "lab_field_ecology:0:9": "number"
+   }
+  },
+  "interpretation-and-next-analyses": {
+   "claims": {
+    "metal_specificity:0:53": "number"
+   }
+  }
+ }
+}

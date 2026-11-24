@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "evidence-from-alphafold-msa-annotation": {
+   "claims": {
+    "alphafold_msa_annotation:0:11": "number",
+    "alphafold_msa_annotation:0:2": "number",
+    "alphafold_msa_annotation:0:29": "overlap"
+   }
+  }
+ }
+}

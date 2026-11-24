@@ -1,0 +1,30 @@
+{
+ "claims": {
+  "ibd_phage_targeting:192000:39": "plan",
+  "ibd_phage_targeting:288000:37": "plan"
+ },
+ "sections": {
+  "figure": {
+   "claims": {
+    "ibd_phage_targeting:272000:33": "overlap"
+   }
+  },
+  "lead": {
+   "claims": {
+    "ibd_phage_targeting:192000:37": "overlap",
+    "ibd_phage_targeting:208000:11": "number"
+   }
+  },
+  "signaling-lipid-families-as-a-second-mechanism-class": {
+   "claims": {
+    "ibd_phage_targeting:208000:15": "overlap"
+   }
+  },
+  "what-the-catalog-does-not-explain": {
+   "claims": {
+    "ibd_phage_targeting:208000:12": "overlap",
+    "ibd_phage_targeting:208000:13": "number"
+   }
+  }
+ }
+}

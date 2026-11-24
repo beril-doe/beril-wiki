@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "evidence": {
+   "claims": {
+    "lab_field_ecology:0:14": "overlap",
+    "lab_field_ecology:0:15": "overlap",
+    "lab_field_ecology:0:23": "number"
+   }
+  }
+ }
+}

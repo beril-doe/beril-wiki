@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "evidence-from-condition-specific-respiratory-chain-wiring": {
+   "claims": {
+    "respiratory_chain_wiring:0:1": "overlap",
+    "respiratory_chain_wiring:0:3": "overlap",
+    "respiratory_chain_wiring:0:4": "overlap"
+   }
+  }
+ }
+}

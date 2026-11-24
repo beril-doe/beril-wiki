@@ -1,0 +1,15 @@
+{
+ "sections": {
+  "acquisition-and-defense-arsenal-evidence": {
+   "claims": {
+    "gene_function_ecological_agora:0:24": "number",
+    "gene_function_ecological_agora:16000:19": "number",
+    "gene_function_ecological_agora:224000:23": "number",
+    "gene_function_ecological_agora:64000:25": "number",
+    "gene_function_ecological_agora:96000:10": "number",
+    "phage_defense_arsenal:0:24": "number",
+    "phage_defense_arsenal:16000:2": "number"
+   }
+  }
+ }
+}

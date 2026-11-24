@@ -1,0 +1,60 @@
+{
+ "claims": {
+  "ecotype_analysis:0:19": "plan",
+  "ecotype_analysis:0:24": "plan",
+  "ecotype_analysis:0:25": "plan",
+  "ecotype_analysis:0:26": "plan",
+  "ecotype_analysis:0:27": "plan",
+  "ecotype_analysis:0:28": "plan"
+ },
+ "sections": {
+  "analysis-and-data": {
+   "claims": {
+    "ecotype_analysis:0:13": "number",
+    "ecotype_analysis:0:14": "number",
+    "ecotype_analysis:0:20": "overlap",
+    "ecotype_analysis:0:21": "overlap",
+    "ecotype_analysis:0:22": "number",
+    "ecotype_analysis:0:23": "overlap"
+   }
+  },
+  "caveats": {
+   "claims": {
+    "ecotype_analysis:0:15": "number",
+    "ecotype_analysis:0:16": "overlap",
+    "ecotype_analysis:0:17": "overlap"
+   }
+  },
+  "figures": {
+   "claims": {
+    "ecotype_analysis:0:29": "overlap",
+    "ecotype_analysis:0:30": "overlap",
+    "ecotype_analysis:0:31": "overlap",
+    "ecotype_analysis:0:32": "overlap",
+    "ecotype_analysis:0:33": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "ecotype_analysis:0:1": "number",
+    "ecotype_analysis:0:10": "overlap",
+    "ecotype_analysis:0:11": "overlap",
+    "ecotype_analysis:0:12": "overlap",
+    "ecotype_analysis:0:18": "overlap",
+    "ecotype_analysis:0:2": "number",
+    "ecotype_analysis:0:3": "number",
+    "ecotype_analysis:0:4": "number",
+    "ecotype_analysis:0:5": "number",
+    "ecotype_analysis:0:6": "number",
+    "ecotype_analysis:0:7": "number",
+    "ecotype_analysis:0:8": "number",
+    "ecotype_analysis:0:9": "overlap"
+   }
+  },
+  "overview": {
+   "claims": {
+    "ecotype_analysis:0:0": "overlap"
+   }
+  }
+ }
+}

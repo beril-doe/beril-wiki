@@ -1,0 +1,22 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "berdl_data_atlas:0:29": "overlap",
+    "ibd_phage_targeting:160000:45": "overlap",
+    "ibd_phage_targeting:16000:28": "number",
+    "ibd_phage_targeting:16000:29": "number",
+    "ibd_phage_targeting:224000:18": "number",
+    "ibd_phage_targeting:224000:44": "number",
+    "ibd_phage_targeting:256000:44": "number",
+    "ibd_phage_targeting:272000:42": "number",
+    "snipe_defense_system:0:29": "number",
+    "snipe_defense_system:0:39": "number",
+    "snipe_defense_system:16000:17": "number",
+    "snipe_defense_system:16000:27": "overlap",
+    "snipe_defense_system:16000:33": "number",
+    "snipe_defense_system:16000:4": "number"
+   }
+  }
+ }
+}

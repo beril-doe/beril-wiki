@@ -1,0 +1,40 @@
+{
+ "sections": {
+  "use-in-lignin-enrichment-community-ecology": {
+   "claims": {
+    "lignin_community_enrichment:0:33": "number",
+    "lignin_community_enrichment:0:56": "number",
+    "lignin_community_enrichment:16000:1": "overlap"
+   }
+  },
+  "use-in-long-term-soil-warming": {
+   "claims": {
+    "harvard_forest_warming:0:4": "number"
+   }
+  },
+  "use-in-prophage-module-ecology": {
+   "claims": {
+    "prophage_ecology:0:3": "number",
+    "prophage_ecology:0:4": "number"
+   }
+  },
+  "use-in-pseudomonas-carbon-pathway-ecology": {
+   "claims": {
+    "pseudomonas_carbon_ecology:0:19": "number",
+    "pseudomonas_carbon_ecology:0:4": "number",
+    "pseudomonas_carbon_ecology:16000:9": "overlap"
+   }
+  },
+  "use-in-sso-subsurface-community-ecology": {
+   "claims": {
+    "enigma_sso_asv_ecology:0:12": "number",
+    "enigma_sso_asv_ecology:0:13": "number",
+    "enigma_sso_asv_ecology:0:39": "number",
+    "enigma_sso_asv_ecology:0:40": "number",
+    "enigma_sso_asv_ecology:0:41": "number",
+    "enigma_sso_asv_ecology:0:42": "number",
+    "enigma_sso_asv_ecology:16000:0": "number"
+   }
+  }
+ }
+}

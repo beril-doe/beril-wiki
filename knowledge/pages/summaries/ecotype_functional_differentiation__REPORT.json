@@ -1,0 +1,73 @@
+{
+ "claims": {
+  "ecotype_functional_differentiation:0:12": "plan",
+  "ecotype_functional_differentiation:0:16": "plan",
+  "ecotype_functional_differentiation:0:17": "plan",
+  "ecotype_functional_differentiation:0:18": "plan",
+  "ecotype_functional_differentiation:0:2": "plan",
+  "ecotype_functional_differentiation:0:48": "plan",
+  "ecotype_functional_differentiation:0:49": "plan",
+  "ecotype_functional_differentiation:0:50": "plan",
+  "ecotype_functional_differentiation:0:51": "plan",
+  "ecotype_functional_differentiation:16000:0": "plan",
+  "ecotype_functional_differentiation:16000:1": "plan",
+  "ecotype_functional_differentiation:16000:2": "plan",
+  "ecotype_functional_differentiation:16000:3": "plan",
+  "ecotype_functional_differentiation:16000:4": "plan",
+  "ecotype_functional_differentiation:16000:5": "plan",
+  "ecotype_functional_differentiation:16000:6": "plan",
+  "ecotype_functional_differentiation:16000:7": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "ecotype_functional_differentiation:0:41": "number",
+    "ecotype_functional_differentiation:0:42": "overlap",
+    "ecotype_functional_differentiation:0:43": "number",
+    "ecotype_functional_differentiation:0:44": "number"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "ecotype_functional_differentiation:0:1": "number",
+    "ecotype_functional_differentiation:0:10": "number",
+    "ecotype_functional_differentiation:0:11": "number",
+    "ecotype_functional_differentiation:0:13": "number",
+    "ecotype_functional_differentiation:0:14": "number",
+    "ecotype_functional_differentiation:0:20": "number",
+    "ecotype_functional_differentiation:0:21": "number",
+    "ecotype_functional_differentiation:0:22": "number",
+    "ecotype_functional_differentiation:0:23": "number",
+    "ecotype_functional_differentiation:0:24": "number",
+    "ecotype_functional_differentiation:0:25": "number",
+    "ecotype_functional_differentiation:0:26": "number",
+    "ecotype_functional_differentiation:0:27": "number",
+    "ecotype_functional_differentiation:0:28": "number",
+    "ecotype_functional_differentiation:0:29": "number",
+    "ecotype_functional_differentiation:0:3": "number",
+    "ecotype_functional_differentiation:0:30": "number",
+    "ecotype_functional_differentiation:0:31": "number",
+    "ecotype_functional_differentiation:0:32": "overlap",
+    "ecotype_functional_differentiation:0:33": "number",
+    "ecotype_functional_differentiation:0:34": "number",
+    "ecotype_functional_differentiation:0:35": "number",
+    "ecotype_functional_differentiation:0:36": "number",
+    "ecotype_functional_differentiation:0:37": "number",
+    "ecotype_functional_differentiation:0:38": "overlap",
+    "ecotype_functional_differentiation:0:4": "number",
+    "ecotype_functional_differentiation:0:45": "number",
+    "ecotype_functional_differentiation:0:46": "number",
+    "ecotype_functional_differentiation:0:47": "overlap",
+    "ecotype_functional_differentiation:0:6": "overlap",
+    "ecotype_functional_differentiation:0:8": "number",
+    "ecotype_functional_differentiation:0:9": "number"
+   }
+  },
+  "overview": {
+   "claims": {
+    "ecotype_functional_differentiation:0:0": "number",
+    "ecotype_functional_differentiation:0:39": "number"
+   }
+  }
+ }
+}

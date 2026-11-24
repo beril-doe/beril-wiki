@@ -1,0 +1,99 @@
+{
+ "claims": {
+  "bacdive_metal_validation:0:15": "plan",
+  "caulobacter_fur_lipida_loss:16000:22": "plan",
+  "enigma_carbon_census_1:16000:8": "plan",
+  "ibd_phage_targeting:208000:29": "plan",
+  "ibd_phage_targeting:48000:31": "plan",
+  "ibd_phage_targeting:80000:20": "plan",
+  "metal_cross_resistance:0:24": "plan",
+  "pitfalls:0:18": "plan",
+  "pitfalls:0:6": "plan",
+  "pitfalls:112000:59": "plan",
+  "pitfalls:32000:12": "plan",
+  "pitfalls:32000:16": "plan",
+  "pitfalls:32000:9": "plan",
+  "pitfalls:64000:12": "plan",
+  "pitfalls:64000:13": "plan",
+  "pitfalls:96000:29": "plan",
+  "webofmicrobes_explorer:0:16": "plan",
+  "webofmicrobes_explorer:0:21": "plan"
+ },
+ "sections": {
+  "bridges-across-classifiers-ranks-and-identifier-types": {
+   "claims": {
+    "berdl_data_atlas:0:13": "overlap",
+    "enigma_contamination_functional_potential:0:20": "overlap",
+    "metabolic_capability_dependency:0:53": "overlap",
+    "microbeatlas_metal_ecology:64000:17": "overlap",
+    "microbeatlas_metal_ecology:64000:6": "number",
+    "nmdc_community_metabolic_ecology:0:10": "number",
+    "nmdc_community_metabolic_ecology:0:30": "number",
+    "nmdc_community_metabolic_ecology:16000:13": "overlap",
+    "pitfalls:32000:13": "overlap",
+    "pitfalls:96000:27": "overlap",
+    "plant_microbiome_ecotypes:48000:14": "number",
+    "plant_microbiome_ecotypes:80000:44": "number",
+    "webofmicrobes_explorer:0:4": "number"
+   }
+  },
+  "evidence-for-analytical-consequences": {
+   "claims": {
+    "ibd_phage_targeting:0:16": "number",
+    "ibd_phage_targeting:240000:20": "number",
+    "ibd_phage_targeting:64000:29": "number",
+    "ibd_phage_targeting:64000:44": "number",
+    "ibd_phage_targeting:80000:19": "number",
+    "pitfalls:0:16": "number",
+    "pitfalls:0:17": "overlap",
+    "pitfalls:32000:15": "overlap",
+    "pitfalls:32000:5": "overlap",
+    "pitfalls:64000:14": "number",
+    "pitfalls:96000:6": "overlap",
+    "pitfalls:96000:8": "overlap",
+    "plant_microbiome_ecotypes:16000:13": "overlap",
+    "plant_microbiome_ecotypes:16000:14": "number",
+    "plant_microbiome_ecotypes:16000:15": "overlap",
+    "plant_microbiome_ecotypes:48000:15": "number",
+    "plant_microbiome_ecotypes:80000:11": "number",
+    "plant_microbiome_ecotypes:80000:49": "number"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "microbeatlas_metal_ecology:32000:42": "number",
+    "pitfalls:32000:28": "overlap"
+   }
+  },
+  "species-name-bridges-between-phenotype-and-pangenome-databases": {
+   "claims": {
+    "bacdive_metal_validation:0:12": "number",
+    "bacdive_metal_validation:0:14": "number",
+    "bacdive_metal_validation:0:21": "overlap",
+    "bacdive_metal_validation:0:37": "number",
+    "bacdive_phenotype_metal_tolerance:0:32": "number",
+    "bacdive_phenotype_metal_tolerance:16000:3": "number",
+    "discoveries:96000:6": "number",
+    "pitfalls:96000:26": "number",
+    "pitfalls:96000:28": "overlap",
+    "pitfalls:96000:30": "overlap"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:0:7": "number"
+   }
+  },
+  "why-reconciliation-is-necessary": {
+   "claims": {
+    "cf_formulation_design:0:11": "overlap",
+    "genotype_to_phenotype_enigma:0:18": "overlap",
+    "genotype_to_phenotype_enigma:0:19": "number",
+    "genotype_to_phenotype_enigma:32000:40": "overlap",
+    "pitfalls:0:15": "overlap",
+    "pitfalls:0:4": "number",
+    "pitfalls:0:5": "overlap"
+   }
+  }
+ }
+}

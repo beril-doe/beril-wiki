@@ -1,0 +1,14 @@
+{
+ "sections": {
+  "environmental-partitioning-and-data-integration": {
+   "claims": {
+    "genotype_to_phenotype_enigma:0:19": "number"
+   }
+  },
+  "evidence-from-sso-subsurface-communities": {
+   "claims": {
+    "enigma_sso_asv_ecology:0:22": "number"
+   }
+  }
+ }
+}

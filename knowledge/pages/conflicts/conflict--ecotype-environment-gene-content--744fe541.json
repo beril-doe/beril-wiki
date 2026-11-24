@@ -1,0 +1,10 @@
+{
+ "sections": {
+  "evidence-sides": {
+   "claims": {
+    "ecotype_env_reanalysis:0:0": "number",
+    "ecotype_env_reanalysis:0:7": "overlap"
+   }
+  }
+ }
+}

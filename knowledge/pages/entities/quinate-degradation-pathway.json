@@ -1,0 +1,33 @@
+{
+ "sections": {
+  "evidence-from-the-deletion-phenotype-analysis": {
+   "claims": {
+    "adp1_deletion_phenotypes:0:7": "number",
+    "adp1_deletion_phenotypes:0:9": "overlap",
+    "aromatic_catabolism_network:0:1": "number",
+    "aromatic_catabolism_network:0:3": "overlap",
+    "respiratory_chain_wiring:0:11": "number"
+   }
+  },
+  "evidence-limitations": {
+   "claims": {
+    "adp1_deletion_phenotypes:0:29": "number",
+    "aromatic_catabolism_network:0:4": "number",
+    "respiratory_chain_wiring:0:25": "overlap"
+   }
+  },
+  "relation-to-broader-phenotype-architecture": {
+   "claims": {
+    "adp1_deletion_phenotypes:0:8": "number",
+    "aromatic_catabolism_network:0:11": "number",
+    "aromatic_catabolism_network:0:34": "number",
+    "aromatic_catabolism_network:0:6": "number"
+   }
+  },
+  "what-this-entity-is": {
+   "claims": {
+    "aromatic_catabolism_network:0:16": "overlap"
+   }
+  }
+ }
+}

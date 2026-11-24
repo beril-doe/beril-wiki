@@ -1,0 +1,15 @@
+{
+ "sections": {
+  "key-findings": {
+   "claims": {
+    "plant_microbiome_ecotypes:16000:14": "number",
+    "plant_microbiome_ecotypes:48000:15": "number"
+   }
+  },
+  "limitations-and-next-steps": {
+   "claims": {
+    "plant_microbiome_ecotypes:80000:12": "overlap"
+   }
+  }
+ }
+}

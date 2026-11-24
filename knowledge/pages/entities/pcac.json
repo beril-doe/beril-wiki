@@ -1,0 +1,21 @@
+{
+ "sections": {
+  "keyword-misclassification": {
+   "claims": {
+    "pitfalls:80000:26": "number"
+   }
+  },
+  "lead": {
+   "claims": {
+    "pitfalls:80000:27": "number"
+   }
+  },
+  "recovery-by-co-fitness": {
+   "claims": {
+    "aromatic_catabolism_network:0:24": "overlap",
+    "pitfalls:80000:28": "number",
+    "pitfalls:80000:29": "number"
+   }
+  }
+ }
+}

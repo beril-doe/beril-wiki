@@ -1,0 +1,38 @@
+{
+ "claims": {
+  "soil_metal_functional_genomics:0:1": "plan",
+  "soil_metal_functional_genomics:0:16": "plan"
+ },
+ "sections": {
+  "caveats-and-pending-validation": {
+   "claims": {
+    "soil_metal_functional_genomics:0:10": "number",
+    "soil_metal_functional_genomics:0:11": "number",
+    "soil_metal_functional_genomics:0:15": "overlap",
+    "soil_metal_functional_genomics:0:17": "number",
+    "soil_metal_functional_genomics:0:20": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "soil_metal_functional_genomics:0:2": "number",
+    "soil_metal_functional_genomics:0:4": "number",
+    "soil_metal_functional_genomics:0:5": "number",
+    "soil_metal_functional_genomics:0:6": "number",
+    "soil_metal_functional_genomics:0:7": "overlap",
+    "soil_metal_functional_genomics:0:8": "overlap"
+   }
+  },
+  "overview": {
+   "claims": {
+    "soil_metal_functional_genomics:0:0": "overlap",
+    "soil_metal_functional_genomics:0:3": "overlap"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "soil_metal_functional_genomics:0:18": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "claims": {
+  "gene_function_ecological_agora:192000:16": "plan",
+  "gene_function_ecological_agora:192000:30": "plan",
+  "gene_function_ecological_agora:192000:35": "plan",
+  "phage_defense_arsenal:0:19": "plan",
+  "plant_microbiome_ecotypes:0:8": "plan",
+  "plant_microbiome_ecotypes:112000:10": "plan",
+  "plant_microbiome_ecotypes:112000:11": "plan",
+  "plant_microbiome_ecotypes:16000:0": "plan",
+  "plant_microbiome_ecotypes:48000:13": "plan",
+  "plant_microbiome_ecotypes:64000:20": "plan",
+  "prophage_amr_comobilization:0:3": "plan",
+  "prophage_amr_comobilization:0:35": "plan"
+ },
+ "sections": {
+  "evidence-across-scales": {
+   "claims": {
+    "prophage_amr_comobilization:0:0": "number",
+    "prophage_amr_comobilization:0:11": "number",
+    "prophage_amr_comobilization:0:12": "number",
+    "prophage_amr_comobilization:0:13": "number",
+    "prophage_amr_comobilization:0:14": "number",
+    "prophage_amr_comobilization:0:15": "number",
+    "prophage_amr_comobilization:0:16": "number",
+    "prophage_amr_comobilization:0:17": "number",
+    "prophage_amr_comobilization:0:18": "number",
+    "prophage_amr_comobilization:0:2": "number",
+    "prophage_amr_comobilization:0:22": "number"
+   }
+  },
+  "measurement-and-inference-limits": {
+   "claims": {
+    "prophage_amr_comobilization:0:27": "overlap",
+    "prophage_amr_comobilization:0:37": "overlap"
+   }
+  },
+  "mobile-element-proxies-beyond-prophage-amr-pairs": {
+   "claims": {
+    "amr_environmental_resistome:0:11": "number",
+    "amr_environmental_resistome:16000:25": "overlap",
+    "amr_pangenome_atlas:16000:19": "overlap",
+    "amr_strain_variation:16000:2": "overlap",
+    "discoveries:32000:15": "number",
+    "discoveries:96000:8": "number",
+    "field_vs_lab_fitness:16000:5": "overlap",
+    "gene_function_ecological_agora:0:28": "overlap",
+    "gene_function_ecological_agora:16000:0": "number",
+    "gene_function_ecological_agora:16000:1": "number",
+    "gene_function_ecological_agora:16000:49": "number",
+    "gene_function_ecological_agora:192000:17": "overlap",
+    "gene_function_ecological_agora:192000:20": "number",
+    "gene_function_ecological_agora:192000:27": "overlap",
+    "gene_function_ecological_agora:192000:28": "number",
+    "gene_function_ecological_agora:192000:29": "number",
+    "gene_function_ecological_agora:208000:11": "overlap",
+    "gene_function_ecological_agora:208000:3": "number",
+    "metal_resistance_global_biogeography:0:24": "number",
+    "plant_microbiome_ecotypes:48000:51": "number",
+    "plant_microbiome_ecotypes:64000:19": "number",
+    "plant_microbiome_ecotypes:80000:20": "overlap",
+    "plant_microbiome_ecotypes:80000:31": "number",
+    "plant_microbiome_ecotypes:80000:32": "overlap",
+    "plant_microbiome_ecotypes:80000:45": "number",
+    "t4ss_cazy_environmental_hgt:0:14": "overlap",
+    "t4ss_cazy_environmental_hgt:0:15": "overlap",
+    "t4ss_cazy_environmental_hgt:0:17": "number",
+    "t4ss_cazy_environmental_hgt:0:19": "overlap",
+    "t4ss_cazy_environmental_hgt:0:2": "number"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "plant_microbiome_ecotypes:0:40": "number"
+   }
+  }
+ }
+}

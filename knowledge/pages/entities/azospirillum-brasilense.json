@@ -1,0 +1,15 @@
+{
+ "sections": {
+  "role-in-annotation-gap-discovery": {
+   "claims": {
+    "annotation_gap_discovery:0:10": "number"
+   }
+  },
+  "role-in-metal-tolerance-validation-and-field-ecology": {
+   "claims": {
+    "lab_field_ecology:0:0": "overlap",
+    "lab_field_ecology:0:9": "number"
+   }
+  }
+ }
+}

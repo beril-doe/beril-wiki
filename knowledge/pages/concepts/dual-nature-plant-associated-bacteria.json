@@ -1,0 +1,10 @@
+{
+ "sections": {
+  "cohort-distribution-across-species": {
+   "claims": {
+    "plant_microbiome_ecotypes:80000:40": "number",
+    "plant_microbiome_ecotypes:80000:41": "number"
+   }
+  }
+ }
+}

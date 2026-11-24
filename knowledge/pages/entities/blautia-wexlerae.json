@@ -1,0 +1,14 @@
+{
+ "sections": {
+  "candidate-status-in-the-e3-differential-abundance-screen": {
+   "claims": {
+    "discoveries:16000:12": "number"
+   }
+  },
+  "non-replication-under-the-stricter-e3-test": {
+   "claims": {
+    "ibd_phage_targeting:64000:15": "number"
+   }
+  }
+ }
+}

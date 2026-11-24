@@ -1,0 +1,34 @@
+{
+ "sections": {
+  "anaerobic-toolkit-and-corrected-multi-heme-cytochrome-comparison": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:27": "number",
+    "bacillota_b_subsurface_accessory:0:28": "number",
+    "clay_confined_subsurface:0:18": "number",
+    "clay_confined_subsurface:0:37": "number"
+   }
+  },
+  "evidence-from-deep-clay-comparisons": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:1": "number",
+    "bacillota_b_subsurface_accessory:0:15": "number",
+    "bacillota_b_subsurface_accessory:0:16": "number",
+    "bacillota_b_subsurface_accessory:0:17": "number",
+    "bacillota_b_subsurface_accessory:0:18": "number",
+    "bacillota_b_subsurface_accessory:0:19": "number",
+    "bacillota_b_subsurface_accessory:0:20": "number",
+    "bacillota_b_subsurface_accessory:0:31": "number",
+    "clay_confined_subsurface:0:24": "overlap",
+    "clay_confined_subsurface:0:28": "number",
+    "clay_confined_subsurface:0:30": "number",
+    "clay_confined_subsurface:0:32": "number"
+   }
+  },
+  "functional-and-taxonomic-context": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:39": "overlap",
+    "bacillota_b_subsurface_accessory:16000:22": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "sections": {
+  "evidence-across-amr-studies": {
+   "claims": {
+    "amr_environmental_resistome:0:25": "number",
+    "amr_environmental_resistome:0:28": "overlap",
+    "amr_environmental_resistome:0:8": "overlap",
+    "discoveries:32000:18": "number",
+    "discoveries:96000:13": "number"
+   }
+  }
+ }
+}

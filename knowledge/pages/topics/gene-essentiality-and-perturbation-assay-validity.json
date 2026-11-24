@@ -1,0 +1,56 @@
+{
+ "sections": {
+  "tensions-and-caveats": {
+   "claims": {
+    "adp1_triple_essentiality:0:44": "number",
+    "conservation_fitness_synthesis:0:1": "number",
+    "conservation_fitness_synthesis:0:13": "number",
+    "conservation_fitness_synthesis:0:2": "number",
+    "conservation_fitness_synthesis:0:8": "overlap",
+    "conservation_vs_fitness:0:19": "number",
+    "conservation_vs_fitness:0:6": "number",
+    "conservation_vs_fitness:0:7": "number",
+    "core_gene_tradeoffs:0:11": "number",
+    "discoveries:48000:34": "number",
+    "discoveries:64000:3": "overlap",
+    "discoveries:64000:4": "overlap",
+    "discoveries:64000:9": "number",
+    "field_vs_lab_fitness:0:0": "overlap",
+    "field_vs_lab_fitness:0:16": "overlap",
+    "field_vs_lab_fitness:0:18": "overlap",
+    "field_vs_lab_fitness:0:23": "overlap",
+    "field_vs_lab_fitness:0:37": "overlap",
+    "field_vs_lab_fitness:0:38": "overlap",
+    "field_vs_lab_fitness:0:39": "overlap",
+    "field_vs_lab_fitness:0:60": "overlap",
+    "fitness_effects_conservation:0:2": "number",
+    "metal_fitness_atlas:0:1": "overlap",
+    "metal_fitness_atlas:0:19": "overlap",
+    "metal_fitness_atlas:0:36": "number",
+    "truly_dark_genes:0:12": "overlap",
+    "truly_dark_genes:0:20": "overlap"
+   }
+  },
+  "what-the-corpus-shows": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:11": "overlap",
+    "adp1_deletion_phenotypes:0:22": "number",
+    "adp1_triple_essentiality:16000:1": "overlap",
+    "adp1_triple_essentiality:16000:2": "overlap",
+    "adp1_triple_essentiality:32000:5": "number",
+    "adp1_triple_essentiality:48000:1": "overlap",
+    "adp1_triple_essentiality:48000:2": "number",
+    "adp1_triple_essentiality:48000:4": "number",
+    "core_gene_tradeoffs:0:5": "number",
+    "enigma_carbon_census_1:0:5": "number",
+    "enigma_carbon_census_1:16000:28": "number",
+    "essential_genome:0:6": "number",
+    "essential_genome:0:7": "number",
+    "essential_genome:0:9": "number",
+    "fitness_effects_conservation:0:24": "overlap",
+    "fitness_effects_conservation:0:6": "overlap",
+    "respiratory_chain_wiring:0:7": "overlap"
+   }
+  }
+ }
+}

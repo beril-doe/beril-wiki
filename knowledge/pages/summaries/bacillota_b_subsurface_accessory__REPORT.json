@@ -1,0 +1,76 @@
+{
+ "claims": {
+  "bacillota_b_subsurface_accessory:0:29": "plan",
+  "bacillota_b_subsurface_accessory:0:30": "plan",
+  "bacillota_b_subsurface_accessory:16000:16": "plan",
+  "bacillota_b_subsurface_accessory:16000:17": "plan",
+  "bacillota_b_subsurface_accessory:16000:18": "plan",
+  "bacillota_b_subsurface_accessory:16000:2": "plan",
+  "bacillota_b_subsurface_accessory:16000:3": "plan",
+  "bacillota_b_subsurface_accessory:16000:6": "plan",
+  "bacillota_b_subsurface_accessory:16000:9": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:39": "overlap",
+    "bacillota_b_subsurface_accessory:0:40": "number",
+    "bacillota_b_subsurface_accessory:16000:22": "overlap",
+    "bacillota_b_subsurface_accessory:16000:24": "overlap",
+    "bacillota_b_subsurface_accessory:16000:28": "overlap"
+   }
+  },
+  "data-artifacts-and-figures": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:16000:10": "overlap",
+    "bacillota_b_subsurface_accessory:16000:11": "overlap",
+    "bacillota_b_subsurface_accessory:16000:15": "overlap",
+    "bacillota_b_subsurface_accessory:16000:19": "overlap",
+    "bacillota_b_subsurface_accessory:16000:4": "number",
+    "bacillota_b_subsurface_accessory:16000:5": "number",
+    "bacillota_b_subsurface_accessory:16000:7": "number",
+    "bacillota_b_subsurface_accessory:16000:8": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:1": "number",
+    "bacillota_b_subsurface_accessory:0:10": "overlap",
+    "bacillota_b_subsurface_accessory:0:11": "overlap",
+    "bacillota_b_subsurface_accessory:0:12": "overlap",
+    "bacillota_b_subsurface_accessory:0:13": "overlap",
+    "bacillota_b_subsurface_accessory:0:14": "number",
+    "bacillota_b_subsurface_accessory:0:15": "number",
+    "bacillota_b_subsurface_accessory:0:16": "number",
+    "bacillota_b_subsurface_accessory:0:17": "number",
+    "bacillota_b_subsurface_accessory:0:18": "number",
+    "bacillota_b_subsurface_accessory:0:19": "number",
+    "bacillota_b_subsurface_accessory:0:20": "number",
+    "bacillota_b_subsurface_accessory:0:21": "overlap",
+    "bacillota_b_subsurface_accessory:0:22": "overlap",
+    "bacillota_b_subsurface_accessory:0:23": "overlap",
+    "bacillota_b_subsurface_accessory:0:25": "number",
+    "bacillota_b_subsurface_accessory:0:26": "number",
+    "bacillota_b_subsurface_accessory:0:27": "number",
+    "bacillota_b_subsurface_accessory:0:28": "number",
+    "bacillota_b_subsurface_accessory:0:31": "number",
+    "bacillota_b_subsurface_accessory:0:33": "overlap",
+    "bacillota_b_subsurface_accessory:0:35": "overlap",
+    "bacillota_b_subsurface_accessory:0:36": "overlap",
+    "bacillota_b_subsurface_accessory:0:37": "number",
+    "bacillota_b_subsurface_accessory:0:8": "overlap",
+    "bacillota_b_subsurface_accessory:16000:26": "overlap"
+   }
+  },
+  "overview": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:0": "overlap"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:43": "overlap"
+   }
+  }
+ }
+}

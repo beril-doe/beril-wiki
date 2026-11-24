@@ -1,0 +1,40 @@
+{
+ "sections": {
+  "use-in-microbeatlas-metal-ecology": {
+   "claims": {
+    "microbeatlas_metal_ecology:0:46": "number",
+    "microbeatlas_metal_ecology:0:6": "number",
+    "microbeatlas_metal_ecology:16000:17": "number",
+    "microbeatlas_metal_ecology:16000:18": "number",
+    "microbeatlas_metal_ecology:48000:7": "overlap"
+   }
+  },
+  "use-in-the-gene-function-ecological-agora": {
+   "claims": {
+    "gene_function_ecological_agora:144000:27": "overlap",
+    "gene_function_ecological_agora:144000:29": "number",
+    "gene_function_ecological_agora:160000:22": "number",
+    "gene_function_ecological_agora:160000:23": "number",
+    "gene_function_ecological_agora:160000:7": "number",
+    "gene_function_ecological_agora:16000:14": "overlap",
+    "gene_function_ecological_agora:16000:16": "number",
+    "gene_function_ecological_agora:16000:44": "number",
+    "gene_function_ecological_agora:16000:50": "number",
+    "gene_function_ecological_agora:176000:11": "overlap",
+    "gene_function_ecological_agora:176000:12": "overlap",
+    "gene_function_ecological_agora:208000:27": "number",
+    "gene_function_ecological_agora:208000:40": "number",
+    "gene_function_ecological_agora:240000:34": "overlap",
+    "gene_function_ecological_agora:240000:35": "overlap",
+    "gene_function_ecological_agora:240000:38": "number",
+    "gene_function_ecological_agora:240000:39": "number",
+    "gene_function_ecological_agora:256000:16": "number"
+   }
+  },
+  "use-in-the-snipe-defense-system-analysis": {
+   "claims": {
+    "snipe_defense_system:0:0": "number"
+   }
+  }
+ }
+}

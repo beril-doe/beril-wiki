@@ -1,0 +1,103 @@
+{
+ "claims": {
+  "discoveries:96000:3": "plan",
+  "field_vs_lab_fitness:0:52": "plan",
+  "field_vs_lab_fitness:0:53": "plan",
+  "metal_cross_resistance:0:17": "plan",
+  "metal_cross_resistance:0:28": "plan",
+  "metal_cross_resistance:0:6": "plan",
+  "metal_cross_resistance:0:7": "plan",
+  "metal_cross_resistance:16000:6": "plan",
+  "microbeatlas_metal_ecology:80000:9": "plan"
+ },
+ "sections": {
+  "chemistry-dependent-magnitudes": {
+   "claims": {
+    "metal_cross_resistance:0:1": "number",
+    "metal_cross_resistance:0:10": "number",
+    "metal_cross_resistance:0:11": "number",
+    "metal_cross_resistance:0:2": "number",
+    "metal_cross_resistance:0:29": "number",
+    "metal_cross_resistance:0:3": "number",
+    "metal_cross_resistance:0:4": "number",
+    "metal_cross_resistance:0:5": "number",
+    "metal_cross_resistance:0:8": "overlap",
+    "metal_cross_resistance:0:9": "number",
+    "metal_specificity:0:6": "number"
+   }
+  },
+  "environmental-validation-and-its-limits": {
+   "claims": {
+    "lab_field_ecology:0:4": "number",
+    "lab_field_ecology:0:5": "number",
+    "lab_field_ecology:0:6": "number",
+    "metal_cross_resistance:0:21": "number",
+    "soil_metal_functional_genomics:0:2": "number",
+    "soil_metal_functional_genomics:0:4": "number",
+    "soil_metal_functional_genomics:0:7": "overlap",
+    "soil_metal_functional_genomics:0:8": "overlap"
+   }
+  },
+  "evidence-for-a-universal-directional-layer": {
+   "claims": {
+    "discoveries:80000:49": "number",
+    "metal_cross_resistance:0:0": "number",
+    "metal_cross_resistance:0:36": "overlap",
+    "metal_specificity:0:0": "number"
+   }
+  },
+  "limitations": {
+   "claims": {
+    "metal_cross_resistance:0:32": "overlap",
+    "metal_cross_resistance:0:33": "overlap",
+    "metal_fitness_atlas:0:41": "number",
+    "pitfalls:96000:23": "overlap",
+    "soil_metal_functional_genomics:0:19": "overlap"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "amr_fitness_cost:16000:31": "overlap",
+    "bacdive_phenotype_metal_tolerance:16000:9": "overlap",
+    "metal_cross_resistance:16000:9": "overlap",
+    "metal_fitness_atlas:16000:13": "overlap",
+    "metal_specificity:16000:2": "overlap",
+    "metal_specificity:16000:4": "overlap",
+    "microbeatlas_metal_ecology:64000:24": "overlap"
+   }
+  },
+  "overlap-with-osmotic-and-ionic-stress": {
+   "claims": {
+    "counter_ion_effects:0:1": "number",
+    "counter_ion_effects:0:19": "overlap",
+    "counter_ion_effects:0:33": "overlap",
+    "counter_ion_effects:0:7": "number",
+    "discoveries:80000:38": "number",
+    "discoveries:80000:40": "number",
+    "metal_cross_resistance:0:31": "overlap"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "metal_cross_resistance:0:25": "number",
+    "metal_specificity:0:58": "number",
+    "metal_specificity:0:59": "number",
+    "metal_specificity:0:7": "number"
+   }
+  },
+  "three-tier-gene-architecture": {
+   "claims": {
+    "discoveries:80000:39": "number",
+    "discoveries:96000:2": "number",
+    "metal_cross_resistance:0:12": "number",
+    "metal_cross_resistance:0:13": "number",
+    "metal_cross_resistance:0:14": "number",
+    "metal_cross_resistance:0:15": "number",
+    "metal_cross_resistance:0:19": "overlap",
+    "metal_fitness_atlas:0:12": "overlap",
+    "metal_specificity:0:28": "overlap",
+    "metal_specificity:16000:6": "number"
+   }
+  }
+ }
+}

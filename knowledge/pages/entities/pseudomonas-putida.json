@@ -1,0 +1,20 @@
+{
+ "sections": {
+  "evidence-from-co-fitness-and-co-inheritance-analysis": {
+   "claims": {
+    "cofitness_coinheritance:0:18": "overlap"
+   }
+  },
+  "evidence-from-functional-dark-matter-prioritization": {
+   "claims": {
+    "functional_dark_matter:0:46": "overlap",
+    "functional_dark_matter:16000:15": "number"
+   }
+  },
+  "evidence-from-pathway-completeness-fitness-and-carbon-ecology": {
+   "claims": {
+    "pseudomonas_carbon_ecology:0:2": "overlap"
+   }
+  }
+ }
+}

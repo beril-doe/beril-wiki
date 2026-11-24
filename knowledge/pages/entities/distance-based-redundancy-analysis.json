@@ -1,0 +1,13 @@
+{
+ "sections": {
+  "key-facts-from-the-documents": {
+   "claims": {
+    "plant_microbiome_ecotypes:32000:20": "overlap",
+    "plant_microbiome_ecotypes:32000:22": "number",
+    "plant_microbiome_ecotypes:32000:24": "number",
+    "plant_microbiome_ecotypes:32000:26": "number",
+    "soil_metal_functional_genomics:0:6": "number"
+   }
+  }
+ }
+}

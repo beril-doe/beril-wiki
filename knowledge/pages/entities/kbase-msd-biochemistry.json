@@ -1,0 +1,10 @@
+{
+ "sections": {
+  "evidence-from-the-adp1-data-explorer": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:16": "number",
+    "acinetobacter_adp1_explorer:0:45": "overlap"
+   }
+  }
+ }
+}

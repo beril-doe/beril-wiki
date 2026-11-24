@@ -1,0 +1,17 @@
+{
+ "claims": {
+  "annotation_gap_discovery:0:28": "plan"
+ },
+ "sections": {
+  "gapfilling-dependence-across-whole-prediction-sets": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:16": "number"
+   }
+  },
+  "the-circularity-problem": {
+   "claims": {
+    "annotation_gap_discovery:0:40": "overlap"
+   }
+  }
+ }
+}

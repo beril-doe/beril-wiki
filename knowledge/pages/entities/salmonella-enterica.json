@@ -1,0 +1,21 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "amr_environmental_resistome:0:27": "overlap",
+    "amr_environmental_resistome:0:7": "overlap",
+    "amr_environmental_resistome:0:8": "overlap",
+    "metabolic_capability_dependency:0:14": "number",
+    "metabolic_capability_dependency:0:15": "overlap",
+    "metabolic_capability_dependency:0:16": "overlap",
+    "metabolic_capability_dependency:0:17": "overlap",
+    "metabolic_capability_dependency:0:18": "overlap",
+    "metabolic_capability_dependency:0:19": "overlap",
+    "metabolic_capability_dependency:0:20": "overlap",
+    "metabolic_capability_dependency:0:21": "overlap",
+    "metabolic_capability_dependency:0:22": "overlap",
+    "metabolic_capability_dependency:0:23": "overlap"
+   }
+  }
+ }
+}

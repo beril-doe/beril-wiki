@@ -1,0 +1,79 @@
+{
+ "claims": {
+  "env_embedding_explorer:0:40": "plan",
+  "env_embedding_explorer:0:41": "plan",
+  "env_embedding_explorer:0:43": "plan",
+  "env_embedding_explorer:0:46": "plan",
+  "env_embedding_explorer:0:48": "plan",
+  "env_embedding_explorer:0:50": "plan",
+  "env_embedding_explorer:0:53": "plan",
+  "env_embedding_explorer:16000:1": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "env_embedding_explorer:0:33": "number",
+    "env_embedding_explorer:0:34": "number",
+    "env_embedding_explorer:0:36": "number",
+    "env_embedding_explorer:0:37": "overlap",
+    "env_embedding_explorer:0:38": "number",
+    "env_embedding_explorer:0:39": "number"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "env_embedding_explorer:0:0": "number",
+    "env_embedding_explorer:0:1": "number",
+    "env_embedding_explorer:0:10": "number",
+    "env_embedding_explorer:0:11": "number",
+    "env_embedding_explorer:0:12": "number",
+    "env_embedding_explorer:0:14": "overlap",
+    "env_embedding_explorer:0:16": "overlap",
+    "env_embedding_explorer:0:19": "number",
+    "env_embedding_explorer:0:2": "number",
+    "env_embedding_explorer:0:20": "number",
+    "env_embedding_explorer:0:21": "number",
+    "env_embedding_explorer:0:22": "number",
+    "env_embedding_explorer:0:23": "number",
+    "env_embedding_explorer:0:26": "overlap",
+    "env_embedding_explorer:0:27": "number",
+    "env_embedding_explorer:0:28": "number",
+    "env_embedding_explorer:0:29": "number",
+    "env_embedding_explorer:0:3": "number",
+    "env_embedding_explorer:0:30": "number",
+    "env_embedding_explorer:0:31": "number",
+    "env_embedding_explorer:0:4": "number",
+    "env_embedding_explorer:0:5": "number",
+    "env_embedding_explorer:0:8": "number",
+    "env_embedding_explorer:0:9": "number",
+    "env_embedding_explorer:16000:0": "overlap"
+   }
+  },
+  "outputs-and-figures": {
+   "claims": {
+    "env_embedding_explorer:0:42": "number",
+    "env_embedding_explorer:0:44": "overlap",
+    "env_embedding_explorer:0:45": "overlap",
+    "env_embedding_explorer:0:47": "overlap",
+    "env_embedding_explorer:0:49": "overlap",
+    "env_embedding_explorer:0:51": "overlap",
+    "env_embedding_explorer:0:52": "overlap",
+    "env_embedding_explorer:0:54": "overlap",
+    "env_embedding_explorer:0:55": "overlap"
+   }
+  },
+  "overview": {
+   "claims": {
+    "env_embedding_explorer:0:17": "number",
+    "env_embedding_explorer:0:24": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "env_embedding_explorer:0:13": "overlap",
+    "env_embedding_explorer:0:35": "overlap",
+    "env_embedding_explorer:0:6": "number"
+   }
+  }
+ }
+}

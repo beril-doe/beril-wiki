@@ -1,0 +1,64 @@
+{
+ "claims": {
+  "enigma_contamination_functional_potential:0:0": "plan",
+  "enigma_contamination_functional_potential:0:43": "plan",
+  "enigma_contamination_functional_potential:0:44": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "enigma_contamination_functional_potential:0:32": "overlap",
+    "enigma_contamination_functional_potential:0:33": "overlap",
+    "enigma_contamination_functional_potential:0:34": "overlap",
+    "enigma_contamination_functional_potential:0:35": "number",
+    "enigma_contamination_functional_potential:0:37": "overlap"
+   }
+  },
+  "data-sources-and-figures": {
+   "claims": {
+    "enigma_contamination_functional_potential:0:39": "overlap",
+    "enigma_contamination_functional_potential:0:40": "overlap",
+    "enigma_contamination_functional_potential:0:41": "overlap",
+    "enigma_contamination_functional_potential:0:42": "overlap",
+    "enigma_contamination_functional_potential:16000:0": "overlap",
+    "enigma_contamination_functional_potential:16000:1": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "enigma_contamination_functional_potential:0:10": "number",
+    "enigma_contamination_functional_potential:0:11": "overlap",
+    "enigma_contamination_functional_potential:0:12": "number",
+    "enigma_contamination_functional_potential:0:13": "number",
+    "enigma_contamination_functional_potential:0:15": "number",
+    "enigma_contamination_functional_potential:0:16": "overlap",
+    "enigma_contamination_functional_potential:0:17": "number",
+    "enigma_contamination_functional_potential:0:18": "number",
+    "enigma_contamination_functional_potential:0:19": "number",
+    "enigma_contamination_functional_potential:0:2": "overlap",
+    "enigma_contamination_functional_potential:0:21": "overlap",
+    "enigma_contamination_functional_potential:0:22": "overlap",
+    "enigma_contamination_functional_potential:0:23": "number",
+    "enigma_contamination_functional_potential:0:24": "number",
+    "enigma_contamination_functional_potential:0:25": "number",
+    "enigma_contamination_functional_potential:0:26": "overlap",
+    "enigma_contamination_functional_potential:0:27": "overlap",
+    "enigma_contamination_functional_potential:0:29": "number",
+    "enigma_contamination_functional_potential:0:3": "number",
+    "enigma_contamination_functional_potential:0:30": "number",
+    "enigma_contamination_functional_potential:0:31": "number",
+    "enigma_contamination_functional_potential:0:4": "number",
+    "enigma_contamination_functional_potential:0:5": "overlap",
+    "enigma_contamination_functional_potential:0:6": "number",
+    "enigma_contamination_functional_potential:0:7": "number",
+    "enigma_contamination_functional_potential:0:8": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "enigma_contamination_functional_potential:0:20": "overlap",
+    "enigma_contamination_functional_potential:0:36": "overlap"
+   }
+  }
+ }
+}

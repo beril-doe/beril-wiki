@@ -1,0 +1,82 @@
+{
+ "claims": {
+  "fw300_metabolic_consistency:0:15": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "fw300_metabolic_consistency:0:35": "number",
+    "fw300_metabolic_consistency:0:36": "overlap",
+    "fw300_metabolic_consistency:0:37": "overlap",
+    "fw300_metabolic_consistency:0:40": "overlap"
+   }
+  },
+  "cross-database-coverage-and-interpretation": {
+   "claims": {
+    "fw300_metabolic_consistency:0:16": "number",
+    "fw300_metabolic_consistency:0:17": "number",
+    "fw300_metabolic_consistency:0:18": "number",
+    "fw300_metabolic_consistency:0:27": "overlap",
+    "fw300_metabolic_consistency:0:30": "overlap",
+    "fw300_metabolic_consistency:0:38": "overlap"
+   }
+  },
+  "data-sources-and-outputs": {
+   "claims": {
+    "fw300_metabolic_consistency:0:44": "overlap",
+    "fw300_metabolic_consistency:0:45": "overlap",
+    "fw300_metabolic_consistency:16000:0": "overlap",
+    "fw300_metabolic_consistency:16000:1": "overlap",
+    "fw300_metabolic_consistency:16000:14": "overlap",
+    "fw300_metabolic_consistency:16000:2": "overlap"
+   }
+  },
+  "future-directions": {
+   "claims": {
+    "fw300_metabolic_consistency:16000:10": "overlap",
+    "fw300_metabolic_consistency:16000:12": "overlap",
+    "fw300_metabolic_consistency:16000:13": "overlap",
+    "fw300_metabolic_consistency:16000:7": "overlap",
+    "fw300_metabolic_consistency:16000:8": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "fw300_metabolic_consistency:0:0": "overlap",
+    "fw300_metabolic_consistency:0:1": "number",
+    "fw300_metabolic_consistency:0:10": "overlap",
+    "fw300_metabolic_consistency:0:12": "overlap",
+    "fw300_metabolic_consistency:0:14": "overlap",
+    "fw300_metabolic_consistency:0:2": "number",
+    "fw300_metabolic_consistency:0:20": "number",
+    "fw300_metabolic_consistency:0:21": "number",
+    "fw300_metabolic_consistency:0:22": "overlap",
+    "fw300_metabolic_consistency:0:23": "number",
+    "fw300_metabolic_consistency:0:24": "number",
+    "fw300_metabolic_consistency:0:25": "overlap",
+    "fw300_metabolic_consistency:0:3": "number",
+    "fw300_metabolic_consistency:0:31": "number",
+    "fw300_metabolic_consistency:0:32": "number",
+    "fw300_metabolic_consistency:0:4": "overlap",
+    "fw300_metabolic_consistency:0:5": "overlap",
+    "fw300_metabolic_consistency:0:6": "overlap",
+    "fw300_metabolic_consistency:0:8": "number",
+    "fw300_metabolic_consistency:16000:3": "overlap",
+    "fw300_metabolic_consistency:16000:4": "overlap",
+    "fw300_metabolic_consistency:16000:5": "overlap"
+   }
+  },
+  "literature-context": {
+   "claims": {
+    "fw300_metabolic_consistency:0:28": "number",
+    "fw300_metabolic_consistency:0:29": "number",
+    "fw300_metabolic_consistency:0:33": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "fw300_metabolic_consistency:0:9": "overlap"
+   }
+  }
+ }
+}

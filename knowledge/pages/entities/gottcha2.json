@@ -1,0 +1,14 @@
+{
+ "sections": {
+  "evidence-from-euk-in-prok-correlates": {
+   "claims": {
+    "euk_in_prok_correlates:0:1": "overlap"
+   }
+  },
+  "interpretation-and-limitations": {
+   "claims": {
+    "euk_in_prok_correlates:0:36": "overlap"
+   }
+  }
+ }
+}

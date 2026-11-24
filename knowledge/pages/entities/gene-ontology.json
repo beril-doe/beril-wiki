@@ -1,0 +1,25 @@
+{
+ "sections": {
+  "key-facts-from-amr-cofitness-analysis": {
+   "claims": {
+    "amr_cofitness_networks:0:10": "number",
+    "amr_cofitness_networks:0:11": "number",
+    "amr_cofitness_networks:0:18": "number",
+    "amr_cofitness_networks:0:29": "number",
+    "amr_cofitness_networks:0:30": "number",
+    "amr_cofitness_networks:0:38": "number",
+    "amr_cofitness_networks:0:39": "number",
+    "amr_cofitness_networks:0:6": "number",
+    "amr_cofitness_networks:0:7": "number",
+    "amr_cofitness_networks:0:8": "number",
+    "amr_cofitness_networks:0:9": "number",
+    "amr_cofitness_networks:16000:29": "overlap"
+   }
+  },
+  "what-this-entity-is": {
+   "claims": {
+    "nmdc_context_audit:0:15": "overlap"
+   }
+  }
+ }
+}

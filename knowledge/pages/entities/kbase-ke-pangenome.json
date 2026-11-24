@@ -1,0 +1,144 @@
+{
+ "sections": {
+  "annotation-environmental-and-amr-integration": {
+   "claims": {
+    "amr_cofitness_networks:0:29": "number",
+    "amr_cofitness_networks:0:36": "number",
+    "amr_cofitness_networks:0:5": "number",
+    "amr_fitness_cost:0:10": "number",
+    "amr_fitness_cost:0:27": "number",
+    "amr_fitness_cost:16000:7": "number",
+    "annotation_gap_discovery:0:1": "number",
+    "annotation_gap_discovery:0:15": "number",
+    "annotation_gap_discovery:0:2": "number",
+    "annotation_gap_discovery:0:23": "number",
+    "annotation_gap_discovery:0:3": "number",
+    "annotation_gap_discovery:0:4": "number",
+    "cog_analysis:0:0": "number",
+    "truly_dark_genes:0:21": "number",
+    "truly_dark_genes:0:5": "number"
+   }
+  },
+  "conservation-fitness-and-modules": {
+   "claims": {
+    "conservation_fitness_synthesis:0:1": "number",
+    "conservation_fitness_synthesis:0:14": "number",
+    "conservation_fitness_synthesis:0:2": "number",
+    "conservation_fitness_synthesis:0:3": "number",
+    "conservation_fitness_synthesis:0:8": "number",
+    "conservation_fitness_synthesis:0:9": "number",
+    "conservation_vs_fitness:0:0": "overlap",
+    "conservation_vs_fitness:0:6": "number",
+    "core_gene_tradeoffs:0:10": "number",
+    "core_gene_tradeoffs:0:12": "number",
+    "core_gene_tradeoffs:0:13": "number",
+    "core_gene_tradeoffs:0:14": "number",
+    "core_gene_tradeoffs:0:5": "number",
+    "core_gene_tradeoffs:0:6": "number",
+    "core_gene_tradeoffs:0:9": "number",
+    "costly_dispensable_genes:0:0": "number",
+    "costly_dispensable_genes:0:1": "number",
+    "discoveries:48000:34": "number",
+    "discoveries:64000:1": "number",
+    "discoveries:64000:12": "number",
+    "fitness_modules:0:13": "number",
+    "fitness_modules:0:14": "overlap",
+    "fitness_modules:0:15": "overlap",
+    "fitness_modules:0:16": "overlap",
+    "fitness_modules:0:33": "number",
+    "fitness_modules:0:5": "number",
+    "fitness_modules:0:8": "overlap",
+    "fitness_modules:0:9": "number",
+    "metal_fitness_atlas:0:0": "number",
+    "metal_fitness_atlas:0:1": "overlap",
+    "metal_fitness_atlas:0:19": "number",
+    "metal_fitness_atlas:0:3": "overlap",
+    "metal_fitness_atlas:0:39": "number",
+    "module_conservation:0:3": "overlap",
+    "module_conservation:0:4": "number",
+    "module_conservation:0:5": "number",
+    "pitfalls:112000:41": "overlap"
+   }
+  },
+  "data-integrity-and-limitations": {
+   "claims": {
+    "ecotype_analysis:0:15": "number",
+    "pitfalls:112000:21": "overlap",
+    "pitfalls:112000:6": "overlap",
+    "pitfalls:32000:30": "overlap",
+    "pitfalls:64000:14": "number",
+    "truly_dark_genes:0:35": "number",
+    "truly_dark_genes:0:36": "overlap",
+    "truly_dark_genes:16000:14": "number",
+    "webofmicrobes_explorer:0:17": "number",
+    "webofmicrobes_explorer:0:27": "number"
+   }
+  },
+  "pangenome-wide-functional-and-ecological-integration": {
+   "claims": {
+    "pgp_pangenome_ecology:0:12": "number",
+    "pgp_pangenome_ecology:0:13": "overlap",
+    "pgp_pangenome_ecology:0:14": "overlap",
+    "pgp_pangenome_ecology:0:15": "overlap",
+    "pgp_pangenome_ecology:0:2": "number",
+    "pgp_pangenome_ecology:0:20": "number",
+    "pgp_pangenome_ecology:0:21": "overlap",
+    "pgp_pangenome_ecology:0:29": "number",
+    "pgp_pangenome_ecology:0:31": "number",
+    "pgp_pangenome_ecology:0:39": "number",
+    "pgp_pangenome_ecology:0:40": "number",
+    "pgp_pangenome_ecology:0:41": "number",
+    "pgp_pangenome_ecology:0:53": "overlap",
+    "phage_defense_arsenal:0:1": "number",
+    "phage_defense_arsenal:0:24": "number",
+    "phage_defense_arsenal:0:27": "overlap",
+    "phage_defense_arsenal:0:6": "overlap",
+    "phage_defense_arsenal:16000:2": "number",
+    "pseudomonas_carbon_ecology:0:19": "number",
+    "pseudomonas_carbon_ecology:0:4": "number",
+    "pseudomonas_carbon_ecology:0:8": "number",
+    "truly_dark_genes:0:0": "number",
+    "truly_dark_genes:0:13": "number",
+    "truly_dark_genes:0:20": "number",
+    "truly_dark_genes:0:24": "overlap",
+    "truly_dark_genes:16000:13": "number"
+   }
+  },
+  "pathway-capability-and-community-metabolism": {
+   "claims": {
+    "metabolic_capability_dependency:0:1": "number",
+    "metabolic_capability_dependency:0:32": "number",
+    "metabolic_capability_dependency:0:47": "number",
+    "metabolic_capability_dependency:0:48": "overlap",
+    "metabolic_capability_dependency:16000:5": "number",
+    "nmdc_community_metabolic_ecology:0:10": "number",
+    "nmdc_community_metabolic_ecology:0:23": "number",
+    "nmdc_community_metabolic_ecology:0:4": "number",
+    "nmdc_community_metabolic_ecology:16000:3": "overlap",
+    "nmdc_community_metabolic_ecology:16000:4": "number",
+    "pitfalls:32000:7": "number",
+    "pseudomonas_carbon_ecology:0:6": "number"
+   }
+  },
+  "soil-metal-functional-genomics": {
+   "claims": {
+    "soil_metal_functional_genomics:0:10": "number",
+    "soil_metal_functional_genomics:0:11": "number",
+    "soil_metal_functional_genomics:0:15": "overlap",
+    "soil_metal_functional_genomics:0:17": "number",
+    "soil_metal_functional_genomics:0:2": "number",
+    "soil_metal_functional_genomics:0:3": "overlap",
+    "soil_metal_functional_genomics:0:5": "number",
+    "soil_metal_functional_genomics:0:6": "number",
+    "soil_metal_functional_genomics:0:7": "overlap"
+   }
+  },
+  "what-this-is": {
+   "claims": {
+    "berdl_data_atlas:0:3": "overlap",
+    "pitfalls:16000:21": "overlap",
+    "webofmicrobes_explorer:0:21": "overlap"
+   }
+  }
+ }
+}

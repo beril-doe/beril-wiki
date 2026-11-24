@@ -1,0 +1,41 @@
+{
+ "sections": {
+  "cross-study-metabolic-ecological-and-literature-evidence": {
+   "claims": {
+    "lignin_community_enrichment:0:10": "number",
+    "pseudomonas_carbon_ecology:0:19": "number",
+    "pseudomonas_carbon_ecology:0:4": "number",
+    "pseudomonas_carbon_ecology:0:8": "number"
+   }
+  },
+  "key-facts-from-the-formulation-design-study": {
+   "claims": {
+    "cf_formulation_design:0:23": "number",
+    "cf_formulation_design:0:24": "number",
+    "cf_formulation_design:0:25": "number",
+    "cf_formulation_design:0:29": "number",
+    "cf_formulation_design:0:30": "number",
+    "cf_formulation_design:0:38": "number",
+    "cf_formulation_design:0:51": "number",
+    "cf_formulation_design:16000:16": "number",
+    "cf_formulation_design:16000:42": "overlap",
+    "cf_formulation_design:16000:45": "number",
+    "cf_formulation_design:16000:46": "number",
+    "cf_formulation_design:16000:52": "number",
+    "cf_formulation_design:32000:11": "number",
+    "cf_formulation_design:32000:13": "number",
+    "cf_formulation_design:32000:14": "number",
+    "cf_formulation_design:32000:16": "number",
+    "cf_formulation_design:32000:3": "number",
+    "cf_formulation_design:32000:6": "number",
+    "cf_formulation_design:48000:11": "number",
+    "cf_formulation_design:48000:30": "overlap"
+   }
+  },
+  "what-this-entity-is": {
+   "claims": {
+    "cf_formulation_design:0:6": "overlap"
+   }
+  }
+ }
+}

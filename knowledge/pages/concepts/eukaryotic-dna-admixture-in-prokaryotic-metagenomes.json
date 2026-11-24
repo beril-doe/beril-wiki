@@ -1,0 +1,32 @@
+{
+ "claims": {
+  "euk_in_prok_correlates:16000:5": "plan"
+ },
+ "sections": {
+  "habitat-specific-sources": {
+   "claims": {
+    "euk_in_prok_correlates:0:3": "number",
+    "euk_in_prok_correlates:0:4": "number",
+    "euk_in_prok_correlates:0:5": "number"
+   }
+  },
+  "interpretation-co-sampled-environmental-dna-not-contamination": {
+   "claims": {
+    "euk_in_prok_correlates:0:26": "overlap"
+   }
+  },
+  "literature-context": {
+   "claims": {
+    "euk_in_prok_correlates:0:27": "number",
+    "euk_in_prok_correlates:0:28": "number",
+    "euk_in_prok_correlates:0:29": "number",
+    "euk_in_prok_correlates:0:30": "number"
+   }
+  },
+  "prevalence-of-the-eukaryotic-signal": {
+   "claims": {
+    "euk_in_prok_correlates:0:0": "number"
+   }
+  }
+ }
+}

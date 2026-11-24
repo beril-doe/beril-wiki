@@ -1,0 +1,12 @@
+{
+ "sections": {
+  "evidence-from-the-lignin-enrichment-study": {
+   "claims": {
+    "lignin_community_enrichment:0:12": "number",
+    "lignin_community_enrichment:0:42": "number",
+    "lignin_community_enrichment:0:43": "number",
+    "lignin_community_enrichment:0:56": "number"
+   }
+  }
+ }
+}

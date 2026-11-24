@@ -1,0 +1,31 @@
+{
+ "sections": {
+  "evidence-from-cross-resistance": {
+   "claims": {
+    "metal_cross_resistance:0:1": "number"
+   }
+  },
+  "evidence-from-field-vs-lab-fitness": {
+   "claims": {
+    "field_vs_lab_fitness:0:21": "number",
+    "metal_cross_resistance:0:21": "number"
+   }
+  },
+  "evidence-from-soil-functional-genomics": {
+   "claims": {
+    "soil_metal_functional_genomics:0:2": "number"
+   }
+  },
+  "evidence-from-the-pan-bacterial-metal-fitness-atlas": {
+   "claims": {
+    "metal_fitness_atlas:0:31": "number",
+    "metal_specificity:0:51": "number"
+   }
+  },
+  "related-pages": {
+   "claims": {
+    "metal_fitness_atlas:0:19": "overlap"
+   }
+  }
+ }
+}

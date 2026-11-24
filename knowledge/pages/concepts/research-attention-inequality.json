@@ -1,0 +1,74 @@
+{
+ "claims": {
+  "caulobacter_fur_lipida_loss:0:20": "plan",
+  "paperblast_explorer:0:21": "plan",
+  "paperblast_explorer:0:25": "plan",
+  "paperblast_explorer:0:26": "plan",
+  "paperblast_explorer:0:30": "plan",
+  "paperblast_explorer:16000:2": "plan"
+ },
+ "sections": {
+  "evidence-from-paperblast": {
+   "claims": {
+    "paperblast_explorer:0:0": "number",
+    "paperblast_explorer:0:1": "number",
+    "paperblast_explorer:0:13": "number",
+    "paperblast_explorer:0:14": "number",
+    "paperblast_explorer:0:18": "overlap",
+    "paperblast_explorer:0:19": "number",
+    "paperblast_explorer:0:2": "number",
+    "paperblast_explorer:0:20": "number",
+    "paperblast_explorer:0:22": "number",
+    "paperblast_explorer:0:3": "number",
+    "paperblast_explorer:0:43": "overlap",
+    "paperblast_explorer:0:6": "number"
+   }
+  },
+  "interpretation": {
+   "claims": {
+    "alphafold_msa_annotation:0:11": "number",
+    "bacdive_phenotype_metal_tolerance:0:34": "overlap",
+    "caulobacter_fur_lipida_loss:32000:13": "number",
+    "discoveries:32000:34": "number",
+    "ecotype_functional_differentiation:0:15": "overlap",
+    "functional_dark_matter:0:0": "number",
+    "functional_dark_matter:0:2": "number",
+    "functional_dark_matter:32000:10": "number",
+    "functional_dark_matter:32000:11": "number",
+    "functional_dark_matter:32000:19": "number",
+    "functional_dark_matter:32000:34": "number",
+    "functional_dark_matter:32000:35": "overlap",
+    "functional_dark_matter:48000:36": "number",
+    "functional_dark_matter:64000:18": "number",
+    "functional_dark_matter:80000:0": "number",
+    "functional_dark_matter:96000:46": "overlap",
+    "gene_function_ecological_agora:208000:10": "number",
+    "plant_microbiome_ecotypes:0:24": "overlap",
+    "plant_microbiome_ecotypes:0:28": "number",
+    "truly_dark_genes:0:0": "number",
+    "truly_dark_genes:0:20": "number",
+    "truly_dark_genes:16000:17": "number",
+    "truly_dark_genes:16000:19": "overlap"
+   }
+  },
+  "measurement-limits": {
+   "claims": {
+    "functional_dark_matter:80000:17": "number",
+    "functional_dark_matter:96000:77": "number",
+    "paperblast_explorer:0:29": "number",
+    "paperblast_explorer:16000:0": "number",
+    "paperblast_explorer:16000:1": "overlap"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "paperblast_explorer:0:24": "number"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "functional_dark_matter:32000:38": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,10 @@
+{
+ "sections": {
+  "reduced-predicted-utilization-in-lung-pseudomonas-aeruginosa-genomes": {
+   "claims": {
+    "cf_formulation_design:48000:10": "overlap",
+    "cf_formulation_design:48000:11": "number"
+   }
+  }
+ }
+}

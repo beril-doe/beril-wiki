@@ -1,0 +1,135 @@
+{
+ "claims": {
+  "ecotype_functional_differentiation:0:39": "plan",
+  "ecotype_functional_differentiation:0:40": "plan",
+  "ecotype_functional_differentiation:0:42": "plan",
+  "ibd_phage_targeting:0:13": "plan",
+  "ibd_phage_targeting:160000:25": "plan",
+  "ibd_phage_targeting:192000:33": "plan",
+  "ibd_phage_targeting:224000:12": "plan",
+  "ibd_phage_targeting:224000:30": "plan",
+  "ibd_phage_targeting:224000:42": "plan",
+  "ibd_phage_targeting:272000:16": "plan",
+  "ibd_phage_targeting:272000:17": "plan",
+  "ibd_phage_targeting:272000:25": "plan",
+  "ibd_phage_targeting:288000:1": "plan",
+  "ibd_phage_targeting:48000:6": "plan",
+  "ibd_phage_targeting:48000:7": "plan",
+  "ibd_phage_targeting:64000:24": "plan",
+  "pathway_capability_dependency:0:24": "plan",
+  "pitfalls:16000:2": "plan",
+  "plant_microbiome_ecotypes:112000:2": "plan"
+ },
+ "sections": {
+  "cluster-model-limitations": {
+   "claims": {
+    "ecotype_functional_differentiation:0:32": "overlap",
+    "pathway_capability_dependency:0:40": "number",
+    "pathway_capability_dependency:16000:8": "number"
+   }
+  },
+  "evidence-for-ecotype-structure": {
+   "claims": {
+    "amr_strain_variation:0:9": "number",
+    "cf_formulation_design:16000:60": "number",
+    "ecotype_functional_differentiation:0:0": "number",
+    "ecotype_functional_differentiation:0:20": "number",
+    "ecotype_functional_differentiation:0:21": "number",
+    "ecotype_functional_differentiation:0:22": "number",
+    "ecotype_functional_differentiation:0:23": "number",
+    "ecotype_functional_differentiation:0:24": "number",
+    "ecotype_functional_differentiation:0:25": "number",
+    "ecotype_functional_differentiation:0:26": "number",
+    "ecotype_functional_differentiation:0:27": "number",
+    "ecotype_functional_differentiation:0:28": "number",
+    "ecotype_functional_differentiation:0:29": "number",
+    "ecotype_functional_differentiation:0:30": "number",
+    "ecotype_functional_differentiation:0:31": "number",
+    "ecotype_functional_differentiation:0:37": "number",
+    "metabolic_capability_dependency:0:13": "number",
+    "metabolic_capability_dependency:0:14": "number",
+    "plant_microbiome_ecotypes:80000:2": "number"
+   }
+  },
+  "lead": {
+   "claims": {
+    "ibd_phage_targeting:240000:24": "number"
+   }
+  },
+  "model-selection-and-cross-study-stability-of-community-composition-ecotypes": {
+   "claims": {
+    "discoveries:16000:28": "number",
+    "ibd_phage_targeting:0:14": "number",
+    "ibd_phage_targeting:0:15": "number",
+    "ibd_phage_targeting:0:18": "number",
+    "ibd_phage_targeting:0:9": "number",
+    "ibd_phage_targeting:144000:32": "overlap",
+    "ibd_phage_targeting:144000:33": "number",
+    "ibd_phage_targeting:144000:34": "overlap",
+    "ibd_phage_targeting:144000:36": "number",
+    "ibd_phage_targeting:144000:39": "number",
+    "ibd_phage_targeting:160000:0": "overlap",
+    "ibd_phage_targeting:160000:2": "overlap",
+    "ibd_phage_targeting:160000:5": "overlap",
+    "ibd_phage_targeting:160000:6": "overlap",
+    "ibd_phage_targeting:176000:64": "number",
+    "ibd_phage_targeting:176000:66": "number",
+    "ibd_phage_targeting:192000:13": "number",
+    "ibd_phage_targeting:192000:19": "number",
+    "ibd_phage_targeting:192000:28": "overlap",
+    "ibd_phage_targeting:192000:34": "number",
+    "ibd_phage_targeting:208000:26": "overlap",
+    "ibd_phage_targeting:208000:28": "overlap",
+    "ibd_phage_targeting:208000:30": "number",
+    "ibd_phage_targeting:208000:41": "number",
+    "ibd_phage_targeting:208000:42": "number",
+    "ibd_phage_targeting:208000:43": "overlap",
+    "ibd_phage_targeting:224000:29": "number",
+    "ibd_phage_targeting:224000:31": "number",
+    "ibd_phage_targeting:224000:32": "number",
+    "ibd_phage_targeting:224000:33": "number",
+    "ibd_phage_targeting:224000:35": "number",
+    "ibd_phage_targeting:240000:21": "number",
+    "ibd_phage_targeting:256000:11": "number",
+    "ibd_phage_targeting:256000:12": "overlap",
+    "ibd_phage_targeting:256000:36": "number",
+    "ibd_phage_targeting:256000:37": "overlap",
+    "ibd_phage_targeting:256000:8": "overlap",
+    "ibd_phage_targeting:272000:14": "overlap",
+    "ibd_phage_targeting:272000:15": "overlap",
+    "ibd_phage_targeting:272000:23": "number",
+    "ibd_phage_targeting:272000:24": "overlap",
+    "ibd_phage_targeting:288000:0": "overlap",
+    "ibd_phage_targeting:48000:18": "number",
+    "ibd_phage_targeting:48000:3": "overlap",
+    "ibd_phage_targeting:48000:35": "number",
+    "ibd_phage_targeting:48000:4": "number",
+    "ibd_phage_targeting:64000:11": "overlap",
+    "ibd_phage_targeting:64000:20": "number",
+    "ibd_phage_targeting:64000:22": "number",
+    "ibd_phage_targeting:64000:23": "number",
+    "ibd_phage_targeting:64000:25": "number",
+    "ibd_phage_targeting:64000:26": "number",
+    "ibd_phage_targeting:64000:27": "overlap",
+    "pitfalls:16000:3": "number"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "ibd_phage_targeting:0:28": "number",
+    "ibd_phage_targeting:240000:25": "number",
+    "pseudomonas_carbon_ecology:16000:2": "overlap"
+   }
+  },
+  "phylogenetic-and-sampling-confounding": {
+   "claims": {
+    "ecotype_functional_differentiation:0:19": "overlap"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "ibd_phage_targeting:144000:37": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,95 @@
+{
+ "claims": {
+  "harvard_forest_warming:0:24": "plan",
+  "harvard_forest_warming:0:30": "plan",
+  "harvard_forest_warming:0:5": "plan",
+  "harvard_forest_warming:16000:11": "plan",
+  "harvard_forest_warming:16000:13": "plan",
+  "harvard_forest_warming:16000:19": "plan",
+  "harvard_forest_warming:16000:20": "plan",
+  "harvard_forest_warming:16000:6": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "harvard_forest_warming:0:10": "number",
+    "harvard_forest_warming:0:40": "number",
+    "harvard_forest_warming:0:41": "overlap",
+    "harvard_forest_warming:16000:0": "overlap",
+    "harvard_forest_warming:16000:1": "overlap",
+    "harvard_forest_warming:16000:2": "overlap",
+    "harvard_forest_warming:16000:3": "overlap"
+   }
+  },
+  "data-products-and-provenance": {
+   "claims": {
+    "harvard_forest_warming:16000:10": "number",
+    "harvard_forest_warming:16000:12": "number",
+    "harvard_forest_warming:16000:15": "overlap",
+    "harvard_forest_warming:16000:17": "overlap",
+    "harvard_forest_warming:16000:31": "number",
+    "harvard_forest_warming:16000:5": "overlap",
+    "harvard_forest_warming:16000:7": "overlap",
+    "harvard_forest_warming:16000:8": "number",
+    "harvard_forest_warming:16000:9": "number"
+   }
+  },
+  "follow-up-directions-proposed-in-the-report": {
+   "claims": {
+    "harvard_forest_warming:16000:26": "overlap"
+   }
+  },
+  "interpretation-and-literature-context": {
+   "claims": {
+    "harvard_forest_warming:0:11": "number",
+    "harvard_forest_warming:0:33": "number",
+    "harvard_forest_warming:0:34": "number",
+    "harvard_forest_warming:0:35": "number",
+    "harvard_forest_warming:0:36": "number",
+    "harvard_forest_warming:0:37": "number",
+    "harvard_forest_warming:0:38": "number",
+    "harvard_forest_warming:16000:28": "overlap",
+    "harvard_forest_warming:16000:29": "number",
+    "harvard_forest_warming:16000:30": "number"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "harvard_forest_warming:0:14": "overlap",
+    "harvard_forest_warming:0:15": "number",
+    "harvard_forest_warming:0:16": "number",
+    "harvard_forest_warming:0:17": "number",
+    "harvard_forest_warming:0:18": "overlap",
+    "harvard_forest_warming:0:19": "overlap",
+    "harvard_forest_warming:0:2": "overlap",
+    "harvard_forest_warming:0:20": "number",
+    "harvard_forest_warming:0:21": "overlap",
+    "harvard_forest_warming:0:22": "number",
+    "harvard_forest_warming:0:23": "number",
+    "harvard_forest_warming:0:25": "number",
+    "harvard_forest_warming:0:26": "overlap",
+    "harvard_forest_warming:0:27": "number",
+    "harvard_forest_warming:0:29": "overlap",
+    "harvard_forest_warming:0:3": "number",
+    "harvard_forest_warming:0:31": "overlap",
+    "harvard_forest_warming:0:32": "overlap",
+    "harvard_forest_warming:0:4": "number",
+    "harvard_forest_warming:0:6": "number",
+    "harvard_forest_warming:0:7": "number",
+    "harvard_forest_warming:0:8": "number",
+    "harvard_forest_warming:16000:16": "overlap",
+    "harvard_forest_warming:16000:18": "overlap",
+    "harvard_forest_warming:16000:21": "overlap",
+    "harvard_forest_warming:16000:22": "overlap",
+    "harvard_forest_warming:16000:23": "overlap",
+    "harvard_forest_warming:16000:24": "overlap"
+   }
+  },
+  "overview": {
+   "claims": {
+    "harvard_forest_warming:0:0": "overlap",
+    "harvard_forest_warming:0:1": "overlap"
+   }
+  }
+ }
+}

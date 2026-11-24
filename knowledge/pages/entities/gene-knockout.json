@@ -1,0 +1,40 @@
+{
+ "sections": {
+  "discordance-with-rb-tnseq": {
+   "claims": {
+    "adp1_triple_essentiality:0:41": "number",
+    "adp1_triple_essentiality:16000:25": "number",
+    "adp1_triple_essentiality:16000:9": "number",
+    "adp1_triple_essentiality:48000:16": "number",
+    "amr_fitness_cost:0:5": "number",
+    "amr_fitness_cost:16000:4": "overlap"
+   }
+  },
+  "evidence-from-adp1": {
+   "claims": {
+    "adp1_triple_essentiality:0:44": "number",
+    "adp1_triple_essentiality:16000:1": "number",
+    "adp1_triple_essentiality:16000:2": "number",
+    "adp1_triple_essentiality:16000:4": "overlap",
+    "adp1_triple_essentiality:32000:32": "number",
+    "adp1_triple_essentiality:32000:52": "number",
+    "adp1_triple_essentiality:32000:53": "number",
+    "adp1_triple_essentiality:48000:0": "number",
+    "adp1_triple_essentiality:48000:1": "overlap"
+   }
+  },
+  "relation-to-essentiality-and-model-gaps": {
+   "claims": {
+    "adp1_triple_essentiality:0:30": "number",
+    "adp1_triple_essentiality:0:32": "number",
+    "adp1_triple_essentiality:16000:28": "overlap",
+    "annotation_gap_discovery:0:40": "overlap",
+    "annotation_gap_discovery:16000:12": "overlap",
+    "fitness_effects_conservation:0:14": "number",
+    "fitness_effects_conservation:0:24": "overlap",
+    "fitness_effects_conservation:0:6": "number",
+    "fitness_effects_conservation:0:9": "number"
+   }
+  }
+ }
+}

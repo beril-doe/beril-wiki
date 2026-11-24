@@ -1,0 +1,55 @@
+{
+ "claims": {
+  "lignin_community_enrichment:0:2": "plan",
+  "lignin_community_enrichment:0:4": "plan",
+  "lignin_community_enrichment:0:45": "plan",
+  "lignin_community_enrichment:16000:10": "plan",
+  "lignin_community_enrichment:16000:14": "plan",
+  "lignin_community_enrichment:16000:2": "plan",
+  "lignin_community_enrichment:16000:22": "plan",
+  "lignin_community_enrichment:16000:49": "plan",
+  "lignin_community_enrichment:16000:54": "plan"
+ },
+ "sections": {
+  "core-evidence": {
+   "claims": {
+    "lignin_community_enrichment:0:24": "number",
+    "lignin_community_enrichment:0:29": "number",
+    "lignin_community_enrichment:0:30": "number",
+    "lignin_community_enrichment:0:31": "number",
+    "lignin_community_enrichment:0:32": "number",
+    "lignin_community_enrichment:0:38": "number",
+    "lignin_community_enrichment:0:41": "number",
+    "lignin_community_enrichment:0:42": "number",
+    "lignin_community_enrichment:0:43": "number",
+    "lignin_community_enrichment:0:5": "number",
+    "lignin_community_enrichment:16000:12": "number",
+    "lignin_community_enrichment:16000:13": "overlap"
+   }
+  },
+  "interpretation": {
+   "claims": {
+    "lignin_community_enrichment:0:0": "number",
+    "lignin_community_enrichment:0:56": "number",
+    "lignin_community_enrichment:0:57": "overlap",
+    "lignin_community_enrichment:0:58": "overlap",
+    "lignin_community_enrichment:0:59": "number",
+    "lignin_community_enrichment:0:60": "number",
+    "lignin_community_enrichment:0:7": "overlap",
+    "lignin_community_enrichment:0:8": "number",
+    "lignin_community_enrichment:16000:0": "number",
+    "lignin_community_enrichment:16000:1": "number",
+    "lignin_community_enrichment:16000:11": "overlap",
+    "lignin_community_enrichment:16000:15": "overlap",
+    "lignin_community_enrichment:16000:20": "number",
+    "lignin_community_enrichment:16000:3": "overlap"
+   }
+  },
+  "scope-and-limitations": {
+   "claims": {
+    "lignin_community_enrichment:0:33": "number",
+    "lignin_community_enrichment:16000:55": "overlap"
+   }
+  }
+ }
+}

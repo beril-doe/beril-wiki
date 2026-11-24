@@ -1,0 +1,37 @@
+{
+ "sections": {
+  "cross-database-integration-and-limitations": {
+   "claims": {
+    "fw300_metabolic_consistency:0:3": "number",
+    "webofmicrobes_explorer:0:3": "number"
+   }
+  },
+  "evidence-from-fw300-metabolic-consistency": {
+   "claims": {
+    "fw300_metabolic_consistency:0:16": "number",
+    "fw300_metabolic_consistency:0:17": "number",
+    "fw300_metabolic_consistency:0:18": "number",
+    "genotype_to_phenotype_enigma:0:27": "number",
+    "genotype_to_phenotype_enigma:0:28": "overlap",
+    "genotype_to_phenotype_enigma:0:4": "overlap",
+    "genotype_to_phenotype_enigma:16000:0": "number",
+    "genotype_to_phenotype_enigma:48000:49": "number",
+    "pitfalls:112000:69": "overlap",
+    "pitfalls:112000:70": "number",
+    "webofmicrobes_explorer:0:0": "number",
+    "webofmicrobes_explorer:0:1": "number"
+   }
+  },
+  "key-cross-database-observations": {
+   "claims": {
+    "fw300_metabolic_consistency:0:23": "number",
+    "fw300_metabolic_consistency:0:24": "number"
+   }
+  },
+  "source": {
+   "claims": {
+    "fw300_metabolic_consistency:0:5": "overlap"
+   }
+  }
+ }
+}

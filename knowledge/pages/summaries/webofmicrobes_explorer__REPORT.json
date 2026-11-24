@@ -1,0 +1,40 @@
+{
+ "claims": {
+  "webofmicrobes_explorer:0:28": "plan"
+ },
+ "sections": {
+  "caveats-and-future-directions": {
+   "claims": {
+    "webofmicrobes_explorer:0:26": "overlap",
+    "webofmicrobes_explorer:0:27": "number",
+    "webofmicrobes_explorer:0:31": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "webofmicrobes_explorer:0:1": "number",
+    "webofmicrobes_explorer:0:10": "number",
+    "webofmicrobes_explorer:0:11": "number",
+    "webofmicrobes_explorer:0:13": "number",
+    "webofmicrobes_explorer:0:14": "number",
+    "webofmicrobes_explorer:0:16": "overlap",
+    "webofmicrobes_explorer:0:17": "number",
+    "webofmicrobes_explorer:0:18": "number",
+    "webofmicrobes_explorer:0:19": "number",
+    "webofmicrobes_explorer:0:2": "number",
+    "webofmicrobes_explorer:0:20": "overlap",
+    "webofmicrobes_explorer:0:22": "overlap",
+    "webofmicrobes_explorer:0:3": "number",
+    "webofmicrobes_explorer:0:30": "overlap",
+    "webofmicrobes_explorer:0:4": "number",
+    "webofmicrobes_explorer:0:5": "overlap",
+    "webofmicrobes_explorer:0:6": "overlap"
+   }
+  },
+  "overview": {
+   "claims": {
+    "webofmicrobes_explorer:0:0": "number"
+   }
+  }
+ }
+}

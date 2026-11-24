@@ -1,0 +1,116 @@
+{
+ "claims": {
+  "alphafold_msa_annotation:0:29": "plan",
+  "berdl_data_atlas:16000:53": "plan",
+  "discoveries:16000:40": "plan",
+  "discoveries:16000:41": "plan",
+  "discoveries:48000:24": "plan",
+  "nmdc_context_audit:0:10": "plan",
+  "nmdc_context_audit:0:21": "plan",
+  "nmdc_context_audit:0:23": "plan",
+  "nmdc_context_audit:0:30": "plan",
+  "nmdc_context_audit:0:7": "plan",
+  "pitfalls:112000:30": "plan",
+  "pitfalls:48000:15": "plan",
+  "pitfalls:64000:22": "plan",
+  "webofmicrobes_explorer:0:24": "plan",
+  "webofmicrobes_explorer:0:25": "plan"
+ },
+ "sections": {
+  "core-claim": {
+   "claims": {
+    "nmdc_context_audit:0:0": "overlap",
+    "nmdc_context_audit:0:22": "overlap",
+    "nmdc_context_audit:0:29": "overlap",
+    "pitfalls:0:0": "overlap",
+    "pitfalls:0:1": "overlap",
+    "pitfalls:0:2": "overlap",
+    "pitfalls:0:3": "overlap"
+   }
+  },
+  "currency-must-be-visible": {
+   "claims": {
+    "berdl_data_atlas:16000:58": "overlap",
+    "discoveries:16000:35": "overlap",
+    "discoveries:16000:44": "overlap",
+    "nmdc_context_audit:0:11": "number",
+    "nmdc_context_audit:0:12": "overlap",
+    "nmdc_context_audit:0:16": "number",
+    "nmdc_context_audit:0:18": "overlap",
+    "nmdc_context_audit:0:31": "overlap",
+    "paperblast_explorer:0:9": "number",
+    "pitfalls:112000:47": "overlap",
+    "pitfalls:112000:72": "number",
+    "webofmicrobes_explorer:0:27": "number"
+   }
+  },
+  "discovery-has-multiple-access-surfaces": {
+   "claims": {
+    "discoveries:16000:36": "overlap",
+    "discoveries:16000:37": "overlap",
+    "discoveries:16000:38": "overlap",
+    "discoveries:16000:39": "overlap",
+    "discoveries:48000:23": "overlap",
+    "nmdc_context_audit:0:13": "overlap",
+    "nmdc_context_audit:0:14": "overlap",
+    "nmdc_context_audit:0:20": "overlap",
+    "nmdc_context_audit:0:28": "overlap",
+    "pitfalls:128000:10": "overlap",
+    "pitfalls:128000:2": "overlap",
+    "pitfalls:128000:4": "overlap",
+    "pitfalls:128000:8": "overlap",
+    "pitfalls:128000:9": "overlap",
+    "pitfalls:48000:12": "overlap",
+    "pitfalls:48000:13": "overlap",
+    "pitfalls:48000:14": "number",
+    "pitfalls:48000:16": "overlap",
+    "snipe_defense_system:0:36": "overlap"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "pitfalls:128000:11": "overlap"
+   }
+  },
+  "provenance-and-authority-are-separate-fields": {
+   "claims": {
+    "berdl_data_atlas:16000:56": "number",
+    "berdl_data_atlas:16000:59": "number",
+    "discoveries:32000:3": "overlap",
+    "ibd_phage_targeting:288000:7": "overlap",
+    "ibd_phage_targeting:288000:8": "overlap",
+    "pitfalls:112000:54": "overlap",
+    "pitfalls:128000:12": "overlap",
+    "pitfalls:128000:13": "overlap",
+    "pitfalls:64000:9": "number"
+   }
+  },
+  "scale-is-a-selection-variable": {
+   "claims": {
+    "berdl_data_atlas:0:24": "number",
+    "berdl_data_atlas:0:25": "number",
+    "berdl_data_atlas:0:26": "number",
+    "berdl_data_atlas:0:27": "number",
+    "berdl_data_atlas:0:28": "number",
+    "berdl_data_atlas:0:29": "number",
+    "berdl_data_atlas:0:30": "number",
+    "berdl_data_atlas:0:6": "number",
+    "berdl_data_atlas:16000:3": "overlap",
+    "berdl_data_atlas:16000:42": "number",
+    "berdl_data_atlas:16000:54": "overlap",
+    "berdl_data_atlas:16000:8": "number",
+    "berdl_data_atlas:16000:9": "overlap",
+    "nmdc_context_audit:0:19": "number",
+    "nmdc_context_audit:0:8": "number",
+    "nmdc_context_audit:0:9": "overlap"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "berdl_data_atlas:16000:0": "overlap",
+    "nmdc_context_audit:0:15": "overlap",
+    "webofmicrobes_explorer:0:31": "overlap"
+   }
+  }
+ }
+}

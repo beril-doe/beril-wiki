@@ -1,0 +1,65 @@
+{
+ "claims": {
+  "acinetobacter_adp1_explorer:0:31": "plan",
+  "acinetobacter_adp1_explorer:0:32": "plan",
+  "acinetobacter_adp1_explorer:0:34": "plan",
+  "acinetobacter_adp1_explorer:0:36": "plan",
+  "acinetobacter_adp1_explorer:0:37": "plan",
+  "acinetobacter_adp1_explorer:0:38": "plan",
+  "acinetobacter_adp1_explorer:0:39": "plan",
+  "acinetobacter_adp1_explorer:0:40": "plan",
+  "acinetobacter_adp1_explorer:0:41": "plan",
+  "acinetobacter_adp1_explorer:0:42": "plan",
+  "acinetobacter_adp1_explorer:0:43": "plan",
+  "acinetobacter_adp1_explorer:0:44": "plan",
+  "acinetobacter_adp1_explorer:0:46": "plan",
+  "acinetobacter_adp1_explorer:0:47": "plan",
+  "acinetobacter_adp1_explorer:0:48": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:23": "number",
+    "acinetobacter_adp1_explorer:0:25": "overlap"
+   }
+  },
+  "figures": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:33": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:0": "number",
+    "acinetobacter_adp1_explorer:0:1": "overlap",
+    "acinetobacter_adp1_explorer:0:10": "number",
+    "acinetobacter_adp1_explorer:0:12": "number",
+    "acinetobacter_adp1_explorer:0:13": "number",
+    "acinetobacter_adp1_explorer:0:15": "number",
+    "acinetobacter_adp1_explorer:0:16": "number",
+    "acinetobacter_adp1_explorer:0:17": "overlap",
+    "acinetobacter_adp1_explorer:0:18": "overlap",
+    "acinetobacter_adp1_explorer:0:19": "number",
+    "acinetobacter_adp1_explorer:0:20": "number",
+    "acinetobacter_adp1_explorer:0:22": "number",
+    "acinetobacter_adp1_explorer:0:26": "number",
+    "acinetobacter_adp1_explorer:0:27": "overlap",
+    "acinetobacter_adp1_explorer:0:28": "overlap",
+    "acinetobacter_adp1_explorer:0:29": "overlap",
+    "acinetobacter_adp1_explorer:0:3": "number",
+    "acinetobacter_adp1_explorer:0:45": "overlap",
+    "acinetobacter_adp1_explorer:0:5": "number",
+    "acinetobacter_adp1_explorer:0:7": "number",
+    "acinetobacter_adp1_explorer:0:8": "number",
+    "acinetobacter_adp1_explorer:0:9": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:14": "overlap",
+    "acinetobacter_adp1_explorer:0:24": "number",
+    "acinetobacter_adp1_explorer:0:35": "overlap"
+   }
+  }
+ }
+}

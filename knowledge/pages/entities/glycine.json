@@ -1,0 +1,15 @@
+{
+ "sections": {
+  "evidence-from-fw300-n2e3": {
+   "claims": {
+    "fw300_metabolic_consistency:0:18": "overlap",
+    "fw300_metabolic_consistency:0:6": "overlap"
+   }
+  },
+  "related-context": {
+   "claims": {
+    "fw300_metabolic_consistency:0:5": "overlap"
+   }
+  }
+ }
+}

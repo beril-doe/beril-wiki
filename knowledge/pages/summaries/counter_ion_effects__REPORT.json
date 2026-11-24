@@ -1,0 +1,80 @@
+{
+ "claims": {
+  "counter_ion_effects:0:24": "plan",
+  "counter_ion_effects:16000:14": "plan",
+  "counter_ion_effects:16000:15": "plan",
+  "counter_ion_effects:16000:2": "plan",
+  "counter_ion_effects:16000:3": "plan",
+  "counter_ion_effects:16000:4": "plan",
+  "counter_ion_effects:16000:6": "plan",
+  "counter_ion_effects:16000:7": "plan",
+  "counter_ion_effects:16000:9": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "counter_ion_effects:0:31": "number",
+    "counter_ion_effects:0:33": "overlap",
+    "counter_ion_effects:16000:16": "overlap",
+    "counter_ion_effects:16000:18": "overlap",
+    "counter_ion_effects:16000:20": "overlap",
+    "counter_ion_effects:16000:21": "number",
+    "counter_ion_effects:16000:22": "number",
+    "counter_ion_effects:16000:23": "number",
+    "counter_ion_effects:16000:24": "number"
+   }
+  },
+  "data-sources": {
+   "claims": {
+    "counter_ion_effects:0:35": "overlap",
+    "counter_ion_effects:0:36": "overlap",
+    "counter_ion_effects:0:37": "overlap",
+    "counter_ion_effects:0:38": "number",
+    "counter_ion_effects:16000:0": "number",
+    "counter_ion_effects:16000:5": "number",
+    "counter_ion_effects:16000:8": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "counter_ion_effects:0:0": "overlap",
+    "counter_ion_effects:0:1": "number",
+    "counter_ion_effects:0:10": "overlap",
+    "counter_ion_effects:0:11": "number",
+    "counter_ion_effects:0:12": "overlap",
+    "counter_ion_effects:0:13": "number",
+    "counter_ion_effects:0:15": "number",
+    "counter_ion_effects:0:16": "number",
+    "counter_ion_effects:0:17": "number",
+    "counter_ion_effects:0:18": "number",
+    "counter_ion_effects:0:19": "overlap",
+    "counter_ion_effects:0:2": "number",
+    "counter_ion_effects:0:20": "number",
+    "counter_ion_effects:0:21": "number",
+    "counter_ion_effects:0:22": "overlap",
+    "counter_ion_effects:0:23": "overlap",
+    "counter_ion_effects:0:27": "overlap",
+    "counter_ion_effects:0:28": "number",
+    "counter_ion_effects:0:29": "number",
+    "counter_ion_effects:0:3": "overlap",
+    "counter_ion_effects:0:4": "number",
+    "counter_ion_effects:0:5": "overlap",
+    "counter_ion_effects:0:6": "overlap",
+    "counter_ion_effects:0:7": "number",
+    "counter_ion_effects:0:8": "overlap",
+    "counter_ion_effects:0:9": "number",
+    "counter_ion_effects:16000:1": "number",
+    "counter_ion_effects:16000:10": "overlap",
+    "counter_ion_effects:16000:11": "overlap",
+    "counter_ion_effects:16000:12": "overlap",
+    "counter_ion_effects:16000:13": "overlap"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "counter_ion_effects:0:26": "number",
+    "counter_ion_effects:0:32": "number"
+   }
+  }
+ }
+}

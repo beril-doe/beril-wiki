@@ -1,0 +1,76 @@
+{
+ "claims": {
+  "adp1_deletion_phenotypes:0:26": "plan",
+  "adp1_deletion_phenotypes:0:34": "plan",
+  "annotation_gap_discovery:16000:20": "plan",
+  "discoveries:48000:21": "plan",
+  "discoveries:48000:33": "plan",
+  "fitness_modules:0:3": "plan",
+  "fitness_modules:0:39": "plan",
+  "metal_specificity:0:40": "plan",
+  "pitfalls:64000:30": "plan"
+ },
+ "sections": {
+  "activity-normalization-determines-which-modules-look-condition-responsive": {
+   "claims": {
+    "metal_cross_resistance:16000:7": "overlap",
+    "metal_fitness_atlas:0:14": "number",
+    "metal_fitness_atlas:0:35": "number",
+    "metal_specificity:0:38": "overlap",
+    "metal_specificity:0:39": "number",
+    "pitfalls:96000:24": "number",
+    "pitfalls:96000:25": "overlap"
+   }
+  },
+  "annotation-thresholds-do-not-equal-discovery-thresholds": {
+   "claims": {
+    "fitness_modules:0:2": "number",
+    "pitfalls:64000:33": "number"
+   }
+  },
+  "cross-organism-stability-is-alignment-and-depth-dependent": {
+   "claims": {
+    "pitfalls:64000:31": "overlap"
+   }
+  },
+  "discrete-modules-depend-on-method-and-condition-space": {
+   "claims": {
+    "adp1_deletion_phenotypes:0:6": "number",
+    "adp1_deletion_phenotypes:0:7": "number",
+    "aromatic_catabolism_network:0:29": "overlap",
+    "discoveries:48000:18": "number"
+   }
+  },
+  "experimental-depth-and-decomposition-constrain-reliability": {
+   "claims": {
+    "discoveries:48000:22": "number",
+    "fitness_modules:0:37": "number",
+    "fitness_modules:0:38": "number",
+    "pitfalls:64000:29": "number"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "adp1_deletion_phenotypes:0:25": "number",
+    "discoveries:48000:26": "overlap"
+   }
+  },
+  "process-level-modules-are-not-gene-level-function-calls": {
+   "claims": {
+    "discoveries:64000:6": "number",
+    "module_conservation:0:15": "overlap"
+   }
+  },
+  "threshold-choice-changes-module-quality": {
+   "claims": {
+    "discoveries:32000:22": "number",
+    "discoveries:48000:20": "overlap",
+    "fitness_modules:0:0": "number",
+    "fitness_modules:0:1": "number",
+    "fitness_modules:0:5": "number",
+    "module_conservation:0:13": "number",
+    "pitfalls:64000:32": "number"
+   }
+  }
+ }
+}

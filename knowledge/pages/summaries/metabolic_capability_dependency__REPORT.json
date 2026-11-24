@@ -1,0 +1,119 @@
+{
+ "claims": {
+  "metabolic_capability_dependency:0:34": "plan",
+  "metabolic_capability_dependency:16000:0": "plan",
+  "metabolic_capability_dependency:16000:1": "plan",
+  "metabolic_capability_dependency:16000:10": "plan",
+  "metabolic_capability_dependency:16000:15": "plan",
+  "metabolic_capability_dependency:16000:18": "plan",
+  "metabolic_capability_dependency:16000:21": "plan",
+  "metabolic_capability_dependency:16000:22": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "metabolic_capability_dependency:0:41": "overlap",
+    "metabolic_capability_dependency:0:42": "overlap",
+    "metabolic_capability_dependency:0:48": "overlap",
+    "metabolic_capability_dependency:0:50": "overlap",
+    "metabolic_capability_dependency:0:51": "overlap",
+    "metabolic_capability_dependency:0:53": "overlap"
+   }
+  },
+  "data-and-exclusions": {
+   "claims": {
+    "metabolic_capability_dependency:0:36": "overlap",
+    "metabolic_capability_dependency:16000:11": "overlap",
+    "metabolic_capability_dependency:16000:12": "overlap",
+    "metabolic_capability_dependency:16000:14": "overlap",
+    "metabolic_capability_dependency:16000:2": "number",
+    "metabolic_capability_dependency:16000:3": "number",
+    "metabolic_capability_dependency:16000:4": "number",
+    "metabolic_capability_dependency:16000:6": "number",
+    "metabolic_capability_dependency:16000:7": "number",
+    "metabolic_capability_dependency:16000:8": "overlap",
+    "metabolic_capability_dependency:16000:9": "number"
+   }
+  },
+  "figures": {
+   "claims": {
+    "metabolic_capability_dependency:0:0": "overlap",
+    "metabolic_capability_dependency:0:10": "overlap",
+    "metabolic_capability_dependency:0:11": "overlap",
+    "metabolic_capability_dependency:0:12": "overlap",
+    "metabolic_capability_dependency:0:26": "overlap",
+    "metabolic_capability_dependency:0:27": "overlap",
+    "metabolic_capability_dependency:0:28": "overlap",
+    "metabolic_capability_dependency:0:33": "overlap",
+    "metabolic_capability_dependency:0:4": "overlap",
+    "metabolic_capability_dependency:0:5": "overlap",
+    "metabolic_capability_dependency:16000:16": "overlap",
+    "metabolic_capability_dependency:16000:17": "overlap",
+    "metabolic_capability_dependency:16000:19": "overlap",
+    "metabolic_capability_dependency:16000:23": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "metabolic_capability_dependency:0:1": "number",
+    "metabolic_capability_dependency:0:13": "number",
+    "metabolic_capability_dependency:0:14": "number",
+    "metabolic_capability_dependency:0:15": "number",
+    "metabolic_capability_dependency:0:16": "number",
+    "metabolic_capability_dependency:0:17": "number",
+    "metabolic_capability_dependency:0:18": "number",
+    "metabolic_capability_dependency:0:19": "number",
+    "metabolic_capability_dependency:0:2": "number",
+    "metabolic_capability_dependency:0:20": "number",
+    "metabolic_capability_dependency:0:21": "number",
+    "metabolic_capability_dependency:0:22": "number",
+    "metabolic_capability_dependency:0:23": "number",
+    "metabolic_capability_dependency:0:24": "number",
+    "metabolic_capability_dependency:0:3": "number",
+    "metabolic_capability_dependency:0:30": "number",
+    "metabolic_capability_dependency:0:32": "number",
+    "metabolic_capability_dependency:0:35": "number",
+    "metabolic_capability_dependency:0:47": "number",
+    "metabolic_capability_dependency:0:7": "number",
+    "metabolic_capability_dependency:0:8": "number",
+    "metabolic_capability_dependency:0:9": "number",
+    "metabolic_capability_dependency:16000:5": "number"
+   }
+  },
+  "literature-context-and-interpretation": {
+   "claims": {
+    "metabolic_capability_dependency:0:25": "number",
+    "metabolic_capability_dependency:0:37": "number",
+    "metabolic_capability_dependency:0:38": "overlap",
+    "metabolic_capability_dependency:0:44": "number",
+    "metabolic_capability_dependency:0:45": "number",
+    "metabolic_capability_dependency:0:46": "number",
+    "metabolic_capability_dependency:16000:29": "number"
+   }
+  },
+  "overview": {
+   "claims": {
+    "metabolic_capability_dependency:0:29": "overlap"
+   }
+  },
+  "proposed-future-work": {
+   "claims": {
+    "metabolic_capability_dependency:16000:24": "overlap",
+    "metabolic_capability_dependency:16000:25": "overlap",
+    "metabolic_capability_dependency:16000:27": "overlap",
+    "metabolic_capability_dependency:16000:28": "overlap"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "metabolic_capability_dependency:0:39": "overlap",
+    "metabolic_capability_dependency:0:40": "overlap",
+    "metabolic_capability_dependency:0:49": "overlap",
+    "metabolic_capability_dependency:0:52": "number",
+    "metabolic_capability_dependency:0:6": "overlap",
+    "metabolic_capability_dependency:16000:13": "overlap",
+    "metabolic_capability_dependency:16000:20": "number"
+   }
+  }
+ }
+}

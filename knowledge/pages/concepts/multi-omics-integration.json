@@ -1,0 +1,156 @@
+{
+ "claims": {
+  "acinetobacter_adp1_explorer:0:1": "plan",
+  "cf_formulation_design:0:55": "plan",
+  "cf_formulation_design:16000:56": "plan",
+  "discoveries:0:17": "plan",
+  "discoveries:80000:7": "plan",
+  "genotype_to_phenotype_enigma:32000:42": "plan",
+  "genotype_to_phenotype_enigma:48000:5": "plan",
+  "harvard_forest_warming:0:12": "plan",
+  "harvard_forest_warming:0:13": "plan",
+  "harvard_forest_warming:0:39": "plan",
+  "harvard_forest_warming:0:9": "plan",
+  "ibd_phage_targeting:128000:19": "plan",
+  "ibd_phage_targeting:144000:31": "plan",
+  "ibd_phage_targeting:144000:9": "plan",
+  "ibd_phage_targeting:160000:15": "plan",
+  "ibd_phage_targeting:160000:16": "plan",
+  "ibd_phage_targeting:160000:27": "plan",
+  "ibd_phage_targeting:16000:16": "plan",
+  "ibd_phage_targeting:256000:40": "plan",
+  "ibd_phage_targeting:256000:41": "plan",
+  "ibd_phage_targeting:272000:25": "plan",
+  "ibd_phage_targeting:272000:34": "plan",
+  "ibd_phage_targeting:272000:40": "plan",
+  "ibd_phage_targeting:272000:69": "plan",
+  "ibd_phage_targeting:288000:39": "plan"
+ },
+ "sections": {
+  "cross-dataset-integration-and-limitations": {
+   "claims": {
+    "discoveries:80000:6": "number"
+   }
+  },
+  "evidence-from-databases-fitness-and-orthogonal-measurements": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:0": "number",
+    "acinetobacter_adp1_explorer:0:17": "overlap",
+    "acinetobacter_adp1_explorer:0:19": "number",
+    "acinetobacter_adp1_explorer:0:22": "number",
+    "adp1_triple_essentiality:0:39": "number",
+    "adp1_triple_essentiality:16000:13": "number",
+    "adp1_triple_essentiality:16000:14": "number",
+    "adp1_triple_essentiality:16000:15": "overlap",
+    "adp1_triple_essentiality:32000:10": "number",
+    "adp1_triple_essentiality:32000:3": "number",
+    "adp1_triple_essentiality:32000:35": "overlap",
+    "adp1_triple_essentiality:48000:3": "number",
+    "adp1_triple_essentiality:48000:7": "number",
+    "adp1_triple_essentiality:48000:8": "number",
+    "caulobacter_fur_lipida_loss:32000:9": "overlap",
+    "genotype_to_phenotype_enigma:0:27": "number",
+    "genotype_to_phenotype_enigma:0:29": "overlap",
+    "genotype_to_phenotype_enigma:0:4": "overlap",
+    "genotype_to_phenotype_enigma:16000:0": "number",
+    "genotype_to_phenotype_enigma:32000:25": "overlap",
+    "genotype_to_phenotype_enigma:32000:36": "number",
+    "genotype_to_phenotype_enigma:48000:49": "number",
+    "genotype_to_phenotype_enigma:48000:6": "overlap"
+   }
+  },
+  "lead": {
+   "claims": {
+    "respiratory_chain_wiring:0:16": "number",
+    "respiratory_chain_wiring:0:45": "overlap"
+   }
+  },
+  "molecular-ecological-and-metadata-integration": {
+   "claims": {
+    "berdl_data_atlas:16000:59": "number",
+    "caulobacter_fur_lipida_loss:0:22": "number",
+    "caulobacter_fur_lipida_loss:0:29": "number",
+    "caulobacter_fur_lipida_loss:0:30": "overlap",
+    "caulobacter_fur_lipida_loss:0:32": "number",
+    "caulobacter_fur_lipida_loss:0:34": "overlap",
+    "caulobacter_fur_lipida_loss:16000:32": "number",
+    "caulobacter_fur_lipida_loss:16000:34": "number",
+    "caulobacter_fur_lipida_loss:16000:35": "number",
+    "caulobacter_fur_lipida_loss:16000:36": "overlap",
+    "caulobacter_fur_lipida_loss:32000:2": "number",
+    "caulobacter_fur_lipida_loss:32000:5": "number",
+    "cf_formulation_design:16000:51": "overlap",
+    "discoveries:0:15": "overlap",
+    "discoveries:0:25": "overlap",
+    "functional_dark_matter:96000:79": "number",
+    "functional_dark_matter:96000:80": "number",
+    "gene_function_ecological_agora:0:7": "overlap",
+    "gene_function_ecological_agora:240000:23": "overlap",
+    "harvard_forest_warming:0:10": "number",
+    "harvard_forest_warming:0:11": "number",
+    "harvard_forest_warming:0:7": "number",
+    "harvard_forest_warming:16000:1": "overlap",
+    "harvard_forest_warming:16000:14": "overlap",
+    "harvard_forest_warming:16000:2": "overlap",
+    "ibd_phage_targeting:0:0": "number",
+    "ibd_phage_targeting:0:1": "overlap",
+    "ibd_phage_targeting:0:35": "number",
+    "ibd_phage_targeting:112000:1": "number",
+    "ibd_phage_targeting:112000:12": "number",
+    "ibd_phage_targeting:144000:11": "overlap",
+    "ibd_phage_targeting:160000:10": "number",
+    "ibd_phage_targeting:160000:11": "number",
+    "ibd_phage_targeting:160000:12": "number",
+    "ibd_phage_targeting:160000:13": "number",
+    "ibd_phage_targeting:160000:14": "number",
+    "ibd_phage_targeting:160000:17": "number",
+    "ibd_phage_targeting:160000:18": "overlap",
+    "ibd_phage_targeting:160000:19": "number",
+    "ibd_phage_targeting:160000:20": "number",
+    "ibd_phage_targeting:160000:21": "number",
+    "ibd_phage_targeting:160000:23": "overlap",
+    "ibd_phage_targeting:160000:24": "overlap",
+    "ibd_phage_targeting:160000:25": "overlap",
+    "ibd_phage_targeting:160000:26": "number",
+    "ibd_phage_targeting:160000:8": "overlap",
+    "ibd_phage_targeting:160000:9": "number",
+    "ibd_phage_targeting:16000:0": "overlap",
+    "ibd_phage_targeting:16000:15": "number",
+    "ibd_phage_targeting:16000:7": "overlap",
+    "ibd_phage_targeting:16000:9": "number",
+    "ibd_phage_targeting:192000:21": "number",
+    "ibd_phage_targeting:192000:22": "number",
+    "ibd_phage_targeting:208000:21": "number",
+    "ibd_phage_targeting:208000:23": "overlap",
+    "ibd_phage_targeting:224000:17": "number",
+    "ibd_phage_targeting:224000:18": "number",
+    "ibd_phage_targeting:224000:5": "overlap",
+    "ibd_phage_targeting:240000:11": "number",
+    "ibd_phage_targeting:256000:23": "number",
+    "ibd_phage_targeting:256000:38": "overlap",
+    "ibd_phage_targeting:256000:39": "number",
+    "ibd_phage_targeting:272000:37": "overlap",
+    "ibd_phage_targeting:272000:68": "overlap",
+    "ibd_phage_targeting:272000:9": "number",
+    "ibd_phage_targeting:288000:31": "overlap",
+    "ibd_phage_targeting:288000:38": "overlap",
+    "ibd_phage_targeting:288000:40": "overlap",
+    "nmdc_community_metabolic_ecology:0:21": "overlap",
+    "nmdc_community_metabolic_ecology:0:23": "number"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "functional_dark_matter:0:70": "overlap",
+    "harvard_forest_warming:0:8": "number"
+   }
+  },
+  "tensions-and-evidence-hierarchy": {
+   "claims": {
+    "discoveries:0:16": "number",
+    "genotype_to_phenotype_enigma:0:28": "overlap",
+    "harvard_forest_warming:0:35": "number"
+   }
+  }
+ }
+}

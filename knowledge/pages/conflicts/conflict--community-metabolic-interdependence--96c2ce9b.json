@@ -1,0 +1,10 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "discoveries:80000:3": "number",
+    "nmdc_community_metabolic_ecology:0:15": "number"
+   }
+  }
+ }
+}

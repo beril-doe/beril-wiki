@@ -1,0 +1,57 @@
+{
+ "claims": {
+  "costly_dispensable_genes:0:12": "plan",
+  "costly_dispensable_genes:0:16": "plan",
+  "costly_dispensable_genes:0:20": "plan",
+  "costly_dispensable_genes:0:26": "plan",
+  "costly_dispensable_genes:0:27": "plan",
+  "costly_dispensable_genes:0:41": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "costly_dispensable_genes:0:32": "number",
+    "costly_dispensable_genes:0:33": "overlap",
+    "costly_dispensable_genes:0:35": "number"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "costly_dispensable_genes:0:1": "number",
+    "costly_dispensable_genes:0:10": "number",
+    "costly_dispensable_genes:0:11": "overlap",
+    "costly_dispensable_genes:0:13": "overlap",
+    "costly_dispensable_genes:0:14": "number",
+    "costly_dispensable_genes:0:17": "number",
+    "costly_dispensable_genes:0:19": "overlap",
+    "costly_dispensable_genes:0:2": "number",
+    "costly_dispensable_genes:0:21": "number",
+    "costly_dispensable_genes:0:23": "overlap",
+    "costly_dispensable_genes:0:3": "overlap",
+    "costly_dispensable_genes:0:4": "overlap",
+    "costly_dispensable_genes:0:5": "number",
+    "costly_dispensable_genes:0:7": "number",
+    "costly_dispensable_genes:0:8": "overlap",
+    "costly_dispensable_genes:0:9": "number"
+   }
+  },
+  "overview": {
+   "claims": {
+    "costly_dispensable_genes:0:29": "number",
+    "costly_dispensable_genes:0:38": "overlap",
+    "costly_dispensable_genes:0:39": "overlap",
+    "costly_dispensable_genes:0:40": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "costly_dispensable_genes:0:0": "number",
+    "costly_dispensable_genes:0:15": "overlap",
+    "costly_dispensable_genes:0:24": "number",
+    "costly_dispensable_genes:0:34": "number",
+    "costly_dispensable_genes:0:37": "overlap",
+    "costly_dispensable_genes:0:6": "overlap"
+   }
+  }
+ }
+}

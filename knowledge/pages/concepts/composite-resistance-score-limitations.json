@@ -1,0 +1,96 @@
+{
+ "claims": {
+  "bacdive_metal_validation:0:33": "plan",
+  "bacdive_phenotype_metal_tolerance:0:31": "plan",
+  "enigma_contamination_functional_potential:0:14": "plan",
+  "lab_field_ecology:0:32": "plan",
+  "microbeatlas_metal_ecology:16000:0": "plan",
+  "microbeatlas_metal_ecology:32000:7": "plan",
+  "microbeatlas_metal_ecology:80000:9": "plan",
+  "soil_metal_functional_genomics:0:9": "plan"
+ },
+ "sections": {
+  "evidence-that-the-composite-score-is-not-mechanistically-specific": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:0:0": "number",
+    "bacdive_phenotype_metal_tolerance:0:13": "number",
+    "bacdive_phenotype_metal_tolerance:0:14": "number",
+    "bacdive_phenotype_metal_tolerance:0:15": "number",
+    "bacdive_phenotype_metal_tolerance:0:16": "number",
+    "bacdive_phenotype_metal_tolerance:0:17": "number",
+    "bacdive_phenotype_metal_tolerance:0:18": "number",
+    "bacdive_phenotype_metal_tolerance:0:19": "number",
+    "bacdive_phenotype_metal_tolerance:0:30": "overlap"
+   }
+  },
+  "lead": {
+   "claims": {
+    "metal_fitness_atlas:0:15": "number",
+    "metal_fitness_atlas:0:16": "number",
+    "metal_fitness_atlas:0:17": "overlap",
+    "metal_fitness_atlas:16000:15": "overlap",
+    "metal_fitness_atlas:16000:28": "number",
+    "metal_fitness_atlas:16000:29": "number",
+    "metal_fitness_atlas:16000:30": "overlap"
+   }
+  },
+  "limits-of-direct-and-ecological-validation": {
+   "claims": {
+    "bacdive_metal_validation:0:2": "overlap",
+    "bacdive_metal_validation:0:26": "number",
+    "bacdive_metal_validation:0:32": "number",
+    "bacdive_metal_validation:0:34": "overlap",
+    "bacdive_metal_validation:0:38": "overlap",
+    "bacdive_phenotype_metal_tolerance:16000:2": "overlap",
+    "discoveries:96000:5": "number",
+    "discoveries:96000:7": "number",
+    "enigma_contamination_functional_potential:0:15": "number",
+    "enigma_contamination_functional_potential:0:22": "overlap",
+    "enigma_contamination_functional_potential:0:36": "overlap",
+    "lab_field_ecology:0:17": "overlap"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:16000:8": "overlap"
+   }
+  },
+  "predictive-models-and-circularity-risk": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:0:2": "overlap",
+    "bacdive_phenotype_metal_tolerance:0:5": "overlap"
+   }
+  },
+  "repertoire-breadth-versus-gene-count-in-ecological-association": {
+   "claims": {
+    "metal_fitness_atlas:0:44": "overlap",
+    "microbeatlas_metal_ecology:0:15": "overlap",
+    "microbeatlas_metal_ecology:0:24": "number",
+    "microbeatlas_metal_ecology:0:25": "number",
+    "microbeatlas_metal_ecology:0:30": "number",
+    "microbeatlas_metal_ecology:0:31": "number",
+    "microbeatlas_metal_ecology:0:72": "number",
+    "microbeatlas_metal_ecology:0:73": "number",
+    "microbeatlas_metal_ecology:0:74": "number",
+    "microbeatlas_metal_ecology:0:75": "number",
+    "microbeatlas_metal_ecology:0:76": "number",
+    "microbeatlas_metal_ecology:0:77": "number",
+    "microbeatlas_metal_ecology:0:78": "number",
+    "microbeatlas_metal_ecology:0:79": "number",
+    "microbeatlas_metal_ecology:0:80": "number",
+    "microbeatlas_metal_ecology:16000:25": "number",
+    "microbeatlas_metal_ecology:32000:2": "number",
+    "microbeatlas_metal_ecology:32000:4": "number",
+    "microbeatlas_metal_ecology:64000:24": "overlap",
+    "microbeatlas_metal_ecology:64000:35": "overlap"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:0:23": "number",
+    "bacdive_phenotype_metal_tolerance:0:29": "number",
+    "discoveries:96000:21": "number"
+   }
+  }
+ }
+}

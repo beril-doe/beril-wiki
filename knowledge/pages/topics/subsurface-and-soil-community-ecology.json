@@ -1,0 +1,23 @@
+{
+ "sections": {
+  "tensions-and-caveats": {
+   "claims": {
+    "discoveries:112000:0": "overlap",
+    "soil_frontier_genomics:0:2": "number"
+   }
+  },
+  "what-the-corpus-shows": {
+   "claims": {
+    "clay_confined_subsurface:0:37": "overlap",
+    "enigma_sso_asv_ecology:0:12": "number",
+    "enigma_sso_asv_ecology:0:13": "number",
+    "enigma_sso_asv_ecology:0:25": "number",
+    "lab_field_ecology:0:14": "overlap",
+    "lab_field_ecology:0:15": "overlap",
+    "lab_field_ecology:0:23": "number",
+    "lab_field_ecology:0:47": "number",
+    "lignin_community_enrichment:16000:12": "number"
+   }
+  }
+ }
+}

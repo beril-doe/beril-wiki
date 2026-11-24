@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "evidence-sides": {
+   "claims": {
+    "metal_cross_resistance:0:21": "number",
+    "metal_cross_resistance:0:25": "number",
+    "metal_cross_resistance:0:40": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "sections": {
+  "interpretation-and-validation": {
+   "claims": {
+    "soil_frontier_genomics:0:14": "overlap",
+    "soil_frontier_genomics:0:18": "number"
+   }
+  },
+  "key-facts-from-soil-frontier-genomics": {
+   "claims": {
+    "soil_frontier_genomics:0:12": "number",
+    "soil_frontier_genomics:0:7": "number",
+    "soil_frontier_genomics:0:8": "number"
+   }
+  }
+ }
+}

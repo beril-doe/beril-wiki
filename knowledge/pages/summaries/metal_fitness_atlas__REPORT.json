@@ -1,0 +1,122 @@
+{
+ "claims": {
+  "metal_fitness_atlas:0:47": "plan",
+  "metal_fitness_atlas:0:51": "plan",
+  "metal_fitness_atlas:0:52": "plan",
+  "metal_fitness_atlas:0:53": "plan",
+  "metal_fitness_atlas:0:54": "plan",
+  "metal_fitness_atlas:0:56": "plan",
+  "metal_fitness_atlas:0:57": "plan",
+  "metal_fitness_atlas:0:58": "plan",
+  "metal_fitness_atlas:0:59": "plan",
+  "metal_fitness_atlas:0:8": "plan",
+  "metal_fitness_atlas:16000:0": "plan",
+  "metal_fitness_atlas:16000:1": "plan",
+  "metal_fitness_atlas:16000:10": "plan",
+  "metal_fitness_atlas:16000:2": "plan",
+  "metal_fitness_atlas:16000:4": "plan",
+  "metal_fitness_atlas:16000:5": "plan",
+  "metal_fitness_atlas:16000:6": "plan",
+  "metal_fitness_atlas:16000:7": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "metal_fitness_atlas:0:40": "overlap",
+    "metal_fitness_atlas:0:41": "number",
+    "metal_fitness_atlas:0:42": "overlap",
+    "metal_fitness_atlas:0:43": "number",
+    "metal_fitness_atlas:0:45": "number",
+    "metal_fitness_atlas:0:46": "overlap",
+    "metal_fitness_atlas:16000:12": "overlap",
+    "metal_fitness_atlas:16000:13": "overlap",
+    "metal_fitness_atlas:16000:15": "overlap"
+   }
+  },
+  "data-sources-and-output-files": {
+   "claims": {
+    "metal_fitness_atlas:0:48": "overlap",
+    "metal_fitness_atlas:0:49": "overlap",
+    "metal_fitness_atlas:0:50": "number"
+   }
+  },
+  "figures": {
+   "claims": {
+    "metal_fitness_atlas:16000:3": "overlap",
+    "metal_fitness_atlas:16000:8": "overlap",
+    "metal_fitness_atlas:16000:9": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "field_vs_lab_fitness:0:23": "overlap",
+    "metal_fitness_atlas:0:0": "number",
+    "metal_fitness_atlas:0:1": "number",
+    "metal_fitness_atlas:0:10": "number",
+    "metal_fitness_atlas:0:11": "number",
+    "metal_fitness_atlas:0:12": "overlap",
+    "metal_fitness_atlas:0:14": "number",
+    "metal_fitness_atlas:0:15": "number",
+    "metal_fitness_atlas:0:16": "number",
+    "metal_fitness_atlas:0:17": "overlap",
+    "metal_fitness_atlas:0:18": "overlap",
+    "metal_fitness_atlas:0:2": "number",
+    "metal_fitness_atlas:0:20": "number",
+    "metal_fitness_atlas:0:21": "number",
+    "metal_fitness_atlas:0:22": "number",
+    "metal_fitness_atlas:0:23": "number",
+    "metal_fitness_atlas:0:24": "number",
+    "metal_fitness_atlas:0:25": "number",
+    "metal_fitness_atlas:0:26": "number",
+    "metal_fitness_atlas:0:27": "number",
+    "metal_fitness_atlas:0:28": "number",
+    "metal_fitness_atlas:0:29": "number",
+    "metal_fitness_atlas:0:3": "number",
+    "metal_fitness_atlas:0:30": "number",
+    "metal_fitness_atlas:0:31": "number",
+    "metal_fitness_atlas:0:32": "number",
+    "metal_fitness_atlas:0:33": "number",
+    "metal_fitness_atlas:0:34": "number",
+    "metal_fitness_atlas:0:35": "number",
+    "metal_fitness_atlas:0:37": "overlap",
+    "metal_fitness_atlas:0:39": "number",
+    "metal_fitness_atlas:0:4": "number",
+    "metal_fitness_atlas:0:5": "number",
+    "metal_fitness_atlas:0:55": "overlap",
+    "metal_fitness_atlas:0:6": "number",
+    "metal_fitness_atlas:0:7": "number",
+    "metal_fitness_atlas:0:9": "number"
+   }
+  },
+  "overview": {
+   "claims": {
+    "metal_fitness_atlas:0:19": "number"
+   }
+  },
+  "proposed-experiments-and-coverage-gaps": {
+   "claims": {
+    "metal_fitness_atlas:16000:17": "number",
+    "metal_fitness_atlas:16000:18": "overlap",
+    "metal_fitness_atlas:16000:19": "number",
+    "metal_fitness_atlas:16000:20": "number",
+    "metal_fitness_atlas:16000:22": "number",
+    "metal_fitness_atlas:16000:23": "number",
+    "metal_fitness_atlas:16000:24": "overlap",
+    "metal_fitness_atlas:16000:25": "overlap",
+    "metal_fitness_atlas:16000:26": "overlap",
+    "metal_fitness_atlas:16000:27": "overlap",
+    "metal_fitness_atlas:16000:28": "number",
+    "metal_fitness_atlas:16000:30": "overlap",
+    "metal_fitness_atlas:16000:31": "overlap"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "metal_fitness_atlas:0:36": "number",
+    "metal_fitness_atlas:0:38": "overlap",
+    "metal_fitness_atlas:0:44": "overlap",
+    "metal_fitness_atlas:16000:29": "number"
+   }
+  }
+ }
+}

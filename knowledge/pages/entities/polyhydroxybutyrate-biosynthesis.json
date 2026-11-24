@@ -1,0 +1,66 @@
+{
+ "sections": {
+  "accessory-status-and-putative-horizontal-transfer": {
+   "claims": {
+    "phb_granule_ecology:0:17": "number",
+    "phb_granule_ecology:0:18": "number",
+    "phb_granule_ecology:0:19": "number",
+    "phb_granule_ecology:0:20": "number",
+    "phb_granule_ecology:16000:1": "number",
+    "phb_granule_ecology:16000:17": "number"
+   }
+  },
+  "distribution-across-gtdb-species": {
+   "claims": {
+    "phb_granule_ecology:0:0": "number",
+    "phb_granule_ecology:0:1": "number",
+    "phb_granule_ecology:0:2": "number",
+    "phb_granule_ecology:0:3": "number",
+    "phb_granule_ecology:16000:11": "number",
+    "phb_granule_ecology:16000:20": "number"
+   }
+  },
+  "environmental-distribution-and-genome-size-effects": {
+   "claims": {
+    "phb_granule_ecology:0:10": "number",
+    "phb_granule_ecology:0:11": "number",
+    "phb_granule_ecology:0:5": "number",
+    "phb_granule_ecology:0:6": "number",
+    "phb_granule_ecology:0:7": "number",
+    "phb_granule_ecology:16000:34": "number",
+    "phb_granule_ecology:16000:35": "number",
+    "phb_granule_ecology:16000:4": "overlap",
+    "phb_granule_ecology:16000:8": "number",
+    "phb_granule_ecology:16000:9": "number"
+   }
+  },
+  "gene-level-composition": {
+   "claims": {
+    "phb_granule_ecology:0:26": "number",
+    "phb_granule_ecology:0:27": "number",
+    "phb_granule_ecology:0:4": "number",
+    "phb_granule_ecology:16000:33": "number"
+   }
+  },
+  "limitations": {
+   "claims": {
+    "phb_granule_ecology:0:25": "number",
+    "phb_granule_ecology:16000:29": "overlap",
+    "phb_granule_ecology:16000:31": "number",
+    "phb_granule_ecology:16000:32": "number",
+    "phb_granule_ecology:16000:54": "number"
+   }
+  },
+  "nmdc-cross-validation": {
+   "claims": {
+    "phb_granule_ecology:0:21": "number",
+    "phb_granule_ecology:0:22": "number",
+    "phb_granule_ecology:0:23": "number",
+    "phb_granule_ecology:0:24": "number",
+    "phb_granule_ecology:0:39": "number",
+    "phb_granule_ecology:16000:27": "number",
+    "phb_granule_ecology:16000:53": "overlap"
+   }
+  }
+ }
+}

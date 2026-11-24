@@ -1,0 +1,13 @@
+{
+ "sections": {
+  "amr-findings": {
+   "claims": {
+    "amr_environmental_resistome:0:26": "number",
+    "amr_environmental_resistome:0:28": "overlap",
+    "amr_environmental_resistome:0:29": "overlap",
+    "amr_environmental_resistome:0:8": "overlap",
+    "amr_environmental_resistome:0:9": "overlap"
+   }
+  }
+ }
+}

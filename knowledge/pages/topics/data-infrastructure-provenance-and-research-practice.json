@@ -1,0 +1,19 @@
+{
+ "sections": {
+  "tensions-and-caveats": {
+   "claims": {
+    "snipe_defense_system:0:29": "number"
+   }
+  },
+  "what-the-corpus-shows": {
+   "claims": {
+    "berdl_data_atlas:0:0": "number",
+    "berdl_data_atlas:0:2": "overlap",
+    "berdl_data_atlas:0:7": "number",
+    "berdl_data_atlas:16000:1": "overlap",
+    "discoveries:0:32": "overlap",
+    "ibd_phage_targeting:192000:18": "overlap"
+   }
+  }
+ }
+}

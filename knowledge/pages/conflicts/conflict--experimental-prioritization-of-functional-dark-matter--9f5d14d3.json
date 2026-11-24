@@ -1,0 +1,10 @@
+{
+ "sections": {
+  "evidence-sides": {
+   "claims": {
+    "discoveries:48000:32": "number",
+    "functional_dark_matter:64000:35": "number"
+   }
+  }
+ }
+}

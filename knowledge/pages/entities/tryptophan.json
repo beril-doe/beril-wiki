@@ -1,0 +1,22 @@
+{
+ "sections": {
+  "evidence-from-fw300-metabolic-consistency": {
+   "claims": {
+    "fw300_metabolic_consistency:0:8": "number"
+   }
+  },
+  "evidence-from-pgp-pangenome-ecology": {
+   "claims": {
+    "pgp_pangenome_ecology:0:33": "number",
+    "pgp_pangenome_ecology:0:34": "number",
+    "pgp_pangenome_ecology:0:36": "overlap",
+    "pgp_pangenome_ecology:0:53": "number"
+   }
+  },
+  "related-pages": {
+   "claims": {
+    "fw300_metabolic_consistency:0:5": "overlap"
+   }
+  }
+ }
+}

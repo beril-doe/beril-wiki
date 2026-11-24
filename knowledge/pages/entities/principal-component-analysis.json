@@ -1,0 +1,18 @@
+{
+ "sections": {
+  "community-and-ecosystem-metabolic-ecology-applications": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:0:4": "number"
+   }
+  },
+  "use-in-ecotype-functional-differentiation": {
+   "claims": {
+    "ecotype_functional_differentiation:0:1": "number",
+    "ecotype_functional_differentiation:0:20": "number",
+    "ecotype_functional_differentiation:0:23": "number",
+    "ecotype_functional_differentiation:0:29": "number",
+    "ecotype_functional_differentiation:0:30": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "evidence-from-the-formulation-study": {
+   "claims": {
+    "cf_formulation_design:16000:20": "number",
+    "cf_formulation_design:16000:3": "number",
+    "cf_formulation_design:16000:7": "number"
+   }
+  }
+ }
+}

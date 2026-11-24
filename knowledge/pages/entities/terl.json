@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "findings-in-prophage-ecology": {
+   "claims": {
+    "prophage_ecology:0:16": "number",
+    "prophage_ecology:0:32": "overlap",
+    "prophage_ecology:16000:22": "number"
+   }
+  }
+ }
+}

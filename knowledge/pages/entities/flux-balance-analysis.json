@@ -1,0 +1,43 @@
+{
+ "sections": {
+  "key-facts-and-concordance-evidence": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:20": "number",
+    "adp1_triple_essentiality:0:11": "overlap",
+    "adp1_triple_essentiality:0:12": "number",
+    "adp1_triple_essentiality:0:22": "number",
+    "adp1_triple_essentiality:0:30": "number",
+    "adp1_triple_essentiality:0:32": "number",
+    "adp1_triple_essentiality:16000:1": "number",
+    "adp1_triple_essentiality:16000:2": "number",
+    "adp1_triple_essentiality:16000:28": "overlap",
+    "adp1_triple_essentiality:16000:4": "overlap",
+    "adp1_triple_essentiality:32000:11": "overlap",
+    "adp1_triple_essentiality:32000:4": "number",
+    "adp1_triple_essentiality:32000:52": "number",
+    "adp1_triple_essentiality:32000:53": "number",
+    "adp1_triple_essentiality:48000:0": "number",
+    "adp1_triple_essentiality:48000:14": "number",
+    "aromatic_catabolism_network:0:4": "number",
+    "aromatic_catabolism_network:0:5": "overlap",
+    "aromatic_catabolism_network:0:9": "overlap",
+    "discoveries:48000:12": "number",
+    "discoveries:48000:7": "number"
+   }
+  },
+  "reaction-conservation-and-gapfilling": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:16": "number",
+    "acinetobacter_adp1_explorer:0:24": "number",
+    "acinetobacter_adp1_explorer:0:45": "overlap",
+    "annotation_gap_discovery:0:15": "overlap",
+    "annotation_gap_discovery:0:23": "number",
+    "annotation_gap_discovery:0:24": "number",
+    "annotation_gap_discovery:0:35": "number",
+    "annotation_gap_discovery:0:4": "number",
+    "annotation_gap_discovery:0:40": "overlap",
+    "discoveries:80000:31": "number"
+   }
+  }
+ }
+}

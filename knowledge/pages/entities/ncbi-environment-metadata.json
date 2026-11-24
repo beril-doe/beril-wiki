@@ -1,0 +1,78 @@
+{
+ "sections": {
+  "key-facts-in-the-source": {
+   "claims": {
+    "amr_environmental_resistome:0:36": "number",
+    "amr_environmental_resistome:0:37": "number",
+    "amr_environmental_resistome:16000:8": "number",
+    "amr_pangenome_atlas:0:7": "number",
+    "amr_strain_variation:0:17": "number",
+    "amr_strain_variation:0:18": "number",
+    "ecotype_analysis:0:1": "number",
+    "ecotype_analysis:0:2": "number",
+    "ecotype_analysis:0:3": "number",
+    "ecotype_analysis:0:6": "overlap",
+    "ecotype_analysis:0:7": "number",
+    "ecotype_analysis:0:8": "number",
+    "ecotype_env_reanalysis:0:0": "number",
+    "ecotype_env_reanalysis:0:13": "number",
+    "ecotype_env_reanalysis:0:2": "number",
+    "ecotype_env_reanalysis:0:3": "number",
+    "ecotype_env_reanalysis:0:5": "number",
+    "env_embedding_explorer:0:0": "number",
+    "env_embedding_explorer:0:1": "number",
+    "env_embedding_explorer:0:19": "number",
+    "env_embedding_explorer:0:20": "number",
+    "env_embedding_explorer:0:34": "number",
+    "pitfalls:32000:24": "number",
+    "pitfalls:80000:16": "number",
+    "plant_microbiome_ecotypes:0:1": "number",
+    "plant_microbiome_ecotypes:16000:4": "number",
+    "plant_microbiome_ecotypes:32000:19": "overlap",
+    "plant_microbiome_ecotypes:64000:21": "number",
+    "plant_microbiome_ecotypes:80000:9": "number",
+    "prophage_ecology:0:10": "number",
+    "prophage_ecology:0:18": "number",
+    "prophage_ecology:0:19": "overlap",
+    "prophage_ecology:0:3": "number",
+    "prophage_ecology:0:4": "number",
+    "prophage_ecology:16000:18": "number",
+    "prophage_ecology:16000:8": "number"
+   }
+  },
+  "limitations-in-interpretation": {
+   "claims": {
+    "amr_environmental_resistome:0:52": "number",
+    "amr_environmental_resistome:0:53": "overlap",
+    "amr_pangenome_atlas:0:24": "number",
+    "amr_strain_variation:0:10": "number",
+    "ecotype_analysis:0:15": "number",
+    "ecotype_analysis:0:5": "number",
+    "ecotype_env_reanalysis:0:14": "number",
+    "ecotype_env_reanalysis:0:23": "overlap",
+    "ecotype_env_reanalysis:0:7": "number",
+    "ecotype_env_reanalysis:0:8": "number",
+    "env_embedding_explorer:0:23": "number",
+    "env_embedding_explorer:0:38": "number",
+    "env_embedding_explorer:0:6": "number",
+    "pitfalls:80000:18": "number",
+    "pitfalls:80000:19": "number",
+    "plant_microbiome_ecotypes:48000:25": "overlap",
+    "plant_microbiome_ecotypes:48000:26": "overlap",
+    "plant_microbiome_ecotypes:64000:28": "number",
+    "plant_microbiome_ecotypes:80000:12": "overlap",
+    "prophage_ecology:16000:11": "number"
+   }
+  },
+  "what-this-entity-is": {
+   "claims": {
+    "amr_environmental_resistome:0:16": "overlap",
+    "amr_environmental_resistome:0:17": "overlap",
+    "amr_environmental_resistome:0:18": "overlap",
+    "amr_environmental_resistome:0:19": "overlap",
+    "pgp_pangenome_ecology:0:42": "number",
+    "pgp_pangenome_ecology:0:50": "number"
+   }
+  }
+ }
+}

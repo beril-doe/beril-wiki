@@ -1,0 +1,10 @@
+{
+ "sections": {
+  "findings-in-metabolic-capability-dependency-analysis": {
+   "claims": {
+    "metabolic_capability_dependency:0:19": "number",
+    "metabolic_capability_dependency:0:25": "number"
+   }
+  }
+ }
+}

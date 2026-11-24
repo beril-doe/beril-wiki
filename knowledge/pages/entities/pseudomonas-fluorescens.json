@@ -1,0 +1,19 @@
+{
+ "sections": {
+  "key-facts-from-fw300-metabolic-consistency": {
+   "claims": {
+    "fw300_metabolic_consistency:0:17": "overlap",
+    "pseudomonas_carbon_ecology:0:19": "number",
+    "pseudomonas_carbon_ecology:0:21": "overlap",
+    "pseudomonas_carbon_ecology:0:33": "overlap",
+    "pseudomonas_carbon_ecology:0:4": "number",
+    "pseudomonas_carbon_ecology:0:6": "number"
+   }
+  },
+  "what-this-entity-is": {
+   "claims": {
+    "genotype_to_phenotype_enigma:0:14": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,57 @@
+{
+ "claims": {
+  "fitness_effects_conservation:0:22": "plan",
+  "fitness_effects_conservation:0:29": "plan",
+  "fitness_effects_conservation:0:30": "plan",
+  "fitness_effects_conservation:0:31": "plan",
+  "fitness_effects_conservation:0:33": "plan",
+  "fitness_effects_conservation:0:34": "plan",
+  "fitness_effects_conservation:0:35": "plan",
+  "fitness_effects_conservation:0:36": "plan",
+  "fitness_effects_conservation:0:37": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "fitness_effects_conservation:0:18": "overlap",
+    "fitness_effects_conservation:0:19": "overlap"
+   }
+  },
+  "data-sources": {
+   "claims": {
+    "fitness_effects_conservation:0:21": "number",
+    "fitness_effects_conservation:0:23": "overlap",
+    "fitness_effects_conservation:0:24": "overlap",
+    "fitness_effects_conservation:0:25": "overlap",
+    "fitness_effects_conservation:0:26": "number"
+   }
+  },
+  "figures": {
+   "claims": {
+    "fitness_effects_conservation:0:32": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "fitness_effects_conservation:0:0": "number",
+    "fitness_effects_conservation:0:1": "number",
+    "fitness_effects_conservation:0:10": "number",
+    "fitness_effects_conservation:0:12": "overlap",
+    "fitness_effects_conservation:0:14": "number",
+    "fitness_effects_conservation:0:17": "overlap",
+    "fitness_effects_conservation:0:2": "number",
+    "fitness_effects_conservation:0:3": "number",
+    "fitness_effects_conservation:0:4": "number",
+    "fitness_effects_conservation:0:6": "number",
+    "fitness_effects_conservation:0:8": "overlap",
+    "fitness_effects_conservation:0:9": "number"
+   }
+  },
+  "literature-context": {
+   "claims": {
+    "fitness_effects_conservation:0:27": "number",
+    "fitness_effects_conservation:0:28": "number"
+   }
+  }
+ }
+}

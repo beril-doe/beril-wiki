@@ -1,0 +1,62 @@
+{
+ "claims": {
+  "bacdive_phenotype_metal_tolerance:16000:10": "plan",
+  "gene_function_ecological_agora:192000:2": "plan",
+  "plant_microbiome_ecotypes:80000:6": "plan"
+ },
+ "sections": {
+  "coverage-of-the-bacdive-pangenome-bridge": {
+   "claims": {
+    "bacdive_metal_validation:0:13": "number",
+    "bacdive_metal_validation:0:16": "overlap",
+    "bacdive_metal_validation:0:17": "number",
+    "bacdive_metal_validation:0:21": "overlap",
+    "bacdive_metal_validation:0:36": "overlap",
+    "bacdive_phenotype_metal_tolerance:0:12": "number",
+    "bacdive_phenotype_metal_tolerance:0:34": "overlap",
+    "bacdive_phenotype_metal_tolerance:0:35": "number",
+    "bacdive_phenotype_metal_tolerance:16000:5": "overlap",
+    "bacillota_b_subsurface_accessory:0:43": "overlap",
+    "discoveries:0:7": "overlap",
+    "discoveries:0:8": "number",
+    "gene_function_ecological_agora:0:34": "number",
+    "gene_function_ecological_agora:16000:47": "overlap",
+    "gene_function_ecological_agora:176000:41": "number",
+    "gene_function_ecological_agora:176000:54": "number",
+    "gene_function_ecological_agora:176000:66": "number",
+    "gene_function_ecological_agora:208000:5": "number",
+    "genotype_to_phenotype_enigma:0:13": "number",
+    "ibd_phage_targeting:80000:4": "number",
+    "lanthanide_methylotrophy_atlas:16000:25": "overlap",
+    "pgp_pangenome_ecology:0:45": "number",
+    "pgp_pangenome_ecology:0:50": "number",
+    "pitfalls:112000:60": "overlap",
+    "pitfalls:112000:61": "overlap",
+    "pitfalls:96000:3": "overlap",
+    "pitfalls:96000:30": "overlap",
+    "pitfalls:96000:5": "overlap",
+    "plant_microbiome_ecotypes:48000:20": "number",
+    "plant_microbiome_ecotypes:64000:28": "number",
+    "plant_microbiome_ecotypes:80000:5": "number"
+   }
+  },
+  "direct-validation-coverage-limits": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:0:24": "overlap"
+   }
+  },
+  "lineage-composition-and-phenotype-associations": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:0:1": "number",
+    "bacdive_phenotype_metal_tolerance:0:20": "number",
+    "bacdive_phenotype_metal_tolerance:0:22": "number"
+   }
+  },
+  "model-evidence-for-coverage-driven-interpretation": {
+   "claims": {
+    "discoveries:96000:21": "number",
+    "discoveries:96000:7": "number"
+   }
+  }
+ }
+}

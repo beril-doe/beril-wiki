@@ -1,0 +1,14 @@
+{
+ "sections": {
+  "evidence-from-gene-function-ecological-agora": {
+   "claims": {
+    "gene_function_ecological_agora:96000:11": "number"
+   }
+  },
+  "interpretation-and-limitations": {
+   "claims": {
+    "gene_function_ecological_agora:240000:3": "overlap"
+   }
+  }
+ }
+}

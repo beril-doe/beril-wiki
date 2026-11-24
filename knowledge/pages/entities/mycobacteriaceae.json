@@ -1,0 +1,21 @@
+{
+ "sections": {
+  "ecology-and-phenotype": {
+   "claims": {
+    "gene_function_ecological_agora:176000:58": "number"
+   }
+  },
+  "findings-from-the-gene-function-ecological-agora": {
+   "claims": {
+    "gene_function_ecological_agora:128000:0": "number",
+    "gene_function_ecological_agora:128000:3": "number",
+    "gene_function_ecological_agora:160000:21": "number"
+   }
+  },
+  "mobile-genetic-element-context": {
+   "claims": {
+    "gene_function_ecological_agora:208000:3": "number"
+   }
+  }
+ }
+}

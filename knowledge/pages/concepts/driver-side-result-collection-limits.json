@@ -1,0 +1,31 @@
+{
+ "claims": {
+  "pitfalls:48000:48": "plan",
+  "pitfalls:48000:49": "plan",
+  "pitfalls:48000:50": "plan",
+  "pitfalls:48000:51": "plan",
+  "pitfalls:64000:4": "plan",
+  "pitfalls:64000:5": "plan"
+ },
+ "sections": {
+  "driver-memory-not-just-result-size": {
+   "claims": {
+    "pitfalls:64000:3": "number"
+   }
+  },
+  "remedies": {
+   "claims": {
+    "pitfalls:48000:46": "overlap",
+    "pitfalls:80000:14": "overlap"
+   }
+  },
+  "the-hard-ceiling-on-collected-results": {
+   "claims": {
+    "pitfalls:48000:45": "number",
+    "pitfalls:48000:47": "number",
+    "pitfalls:80000:12": "number",
+    "pitfalls:80000:13": "number"
+   }
+  }
+ }
+}

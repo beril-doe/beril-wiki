@@ -1,0 +1,75 @@
+{
+ "claims": {
+  "bacdive_phenotype_metal_tolerance:0:39": "plan",
+  "bacdive_phenotype_metal_tolerance:0:40": "plan",
+  "bacdive_phenotype_metal_tolerance:0:41": "plan",
+  "bacdive_phenotype_metal_tolerance:0:42": "plan",
+  "bacdive_phenotype_metal_tolerance:0:43": "plan",
+  "bacdive_phenotype_metal_tolerance:0:44": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:0:31": "overlap",
+    "bacdive_phenotype_metal_tolerance:0:32": "number",
+    "bacdive_phenotype_metal_tolerance:0:35": "number",
+    "bacdive_phenotype_metal_tolerance:16000:11": "overlap",
+    "bacdive_phenotype_metal_tolerance:16000:2": "overlap",
+    "bacdive_phenotype_metal_tolerance:16000:3": "number",
+    "bacdive_phenotype_metal_tolerance:16000:4": "overlap",
+    "bacdive_phenotype_metal_tolerance:16000:5": "overlap",
+    "bacdive_phenotype_metal_tolerance:16000:6": "number",
+    "bacdive_phenotype_metal_tolerance:16000:7": "overlap",
+    "bacdive_phenotype_metal_tolerance:16000:8": "overlap",
+    "bacdive_phenotype_metal_tolerance:16000:9": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:0:0": "number",
+    "bacdive_phenotype_metal_tolerance:0:1": "number",
+    "bacdive_phenotype_metal_tolerance:0:11": "overlap",
+    "bacdive_phenotype_metal_tolerance:0:12": "number",
+    "bacdive_phenotype_metal_tolerance:0:13": "number",
+    "bacdive_phenotype_metal_tolerance:0:14": "number",
+    "bacdive_phenotype_metal_tolerance:0:15": "number",
+    "bacdive_phenotype_metal_tolerance:0:16": "number",
+    "bacdive_phenotype_metal_tolerance:0:17": "number",
+    "bacdive_phenotype_metal_tolerance:0:18": "number",
+    "bacdive_phenotype_metal_tolerance:0:2": "number",
+    "bacdive_phenotype_metal_tolerance:0:21": "number",
+    "bacdive_phenotype_metal_tolerance:0:22": "number",
+    "bacdive_phenotype_metal_tolerance:0:23": "number",
+    "bacdive_phenotype_metal_tolerance:0:24": "overlap",
+    "bacdive_phenotype_metal_tolerance:0:25": "overlap",
+    "bacdive_phenotype_metal_tolerance:0:27": "number",
+    "bacdive_phenotype_metal_tolerance:0:28": "number",
+    "bacdive_phenotype_metal_tolerance:0:29": "number",
+    "bacdive_phenotype_metal_tolerance:0:3": "number",
+    "bacdive_phenotype_metal_tolerance:0:30": "overlap",
+    "bacdive_phenotype_metal_tolerance:0:4": "number",
+    "bacdive_phenotype_metal_tolerance:0:5": "overlap",
+    "bacdive_phenotype_metal_tolerance:0:8": "number",
+    "bacdive_phenotype_metal_tolerance:16000:0": "overlap"
+   }
+  },
+  "overview": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:0:10": "overlap",
+    "bacdive_phenotype_metal_tolerance:0:36": "overlap",
+    "bacdive_phenotype_metal_tolerance:0:37": "number",
+    "bacdive_phenotype_metal_tolerance:0:38": "overlap",
+    "bacdive_phenotype_metal_tolerance:0:6": "number",
+    "bacdive_phenotype_metal_tolerance:0:9": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:0:34": "overlap",
+    "bacdive_phenotype_metal_tolerance:0:7": "number",
+    "bacdive_phenotype_metal_tolerance:16000:1": "overlap",
+    "bacdive_phenotype_metal_tolerance:16000:12": "overlap"
+   }
+  }
+ }
+}

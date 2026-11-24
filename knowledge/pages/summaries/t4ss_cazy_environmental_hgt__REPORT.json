@@ -1,0 +1,44 @@
+{
+ "claims": {
+  "t4ss_cazy_environmental_hgt:0:12": "plan",
+  "t4ss_cazy_environmental_hgt:0:13": "plan",
+  "t4ss_cazy_environmental_hgt:0:16": "plan"
+ },
+ "sections": {
+  "gt2-neighborhood-and-metal-resistance-results": {
+   "claims": {
+    "t4ss_cazy_environmental_hgt:0:15": "overlap",
+    "t4ss_cazy_environmental_hgt:0:17": "number",
+    "t4ss_cazy_environmental_hgt:0:18": "overlap"
+   }
+  },
+  "interpretation-and-caveats": {
+   "claims": {
+    "t4ss_cazy_environmental_hgt:0:19": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "t4ss_cazy_environmental_hgt:0:1": "number",
+    "t4ss_cazy_environmental_hgt:0:2": "number",
+    "t4ss_cazy_environmental_hgt:0:3": "number",
+    "t4ss_cazy_environmental_hgt:0:4": "number",
+    "t4ss_cazy_environmental_hgt:0:5": "number",
+    "t4ss_cazy_environmental_hgt:0:6": "overlap"
+   }
+  },
+  "nb05-hgt-characterization": {
+   "claims": {
+    "t4ss_cazy_environmental_hgt:0:10": "number",
+    "t4ss_cazy_environmental_hgt:0:11": "overlap",
+    "t4ss_cazy_environmental_hgt:0:8": "number",
+    "t4ss_cazy_environmental_hgt:0:9": "number"
+   }
+  },
+  "overview": {
+   "claims": {
+    "t4ss_cazy_environmental_hgt:0:0": "overlap"
+   }
+  }
+ }
+}

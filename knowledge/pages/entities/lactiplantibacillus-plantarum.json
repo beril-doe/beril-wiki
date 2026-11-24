@@ -1,0 +1,15 @@
+{
+ "sections": {
+  "candidate-host-for-dark-gene-experiments": {
+   "claims": {
+    "functional_dark_matter:16000:34": "overlap"
+   }
+  },
+  "probiotic-safety-caution-in-cystic-fibrosis-formulation-design": {
+   "claims": {
+    "cf_formulation_design:48000:1": "overlap",
+    "cf_formulation_design:64000:18": "overlap"
+   }
+  }
+ }
+}

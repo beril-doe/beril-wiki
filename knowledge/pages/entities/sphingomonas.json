@@ -1,0 +1,15 @@
+{
+ "sections": {
+  "environmental-and-plant-associated-ecology": {
+   "claims": {
+    "genotype_to_phenotype_enigma:0:5": "number",
+    "genotype_to_phenotype_enigma:32000:17": "number"
+   }
+  },
+  "lignin-community-enrichment": {
+   "claims": {
+    "lignin_community_enrichment:0:15": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,71 @@
+{
+ "claims": {
+  "aromatic_catabolism_network:0:15": "plan",
+  "aromatic_catabolism_network:0:19": "plan",
+  "aromatic_catabolism_network:0:20": "plan",
+  "aromatic_catabolism_network:0:21": "plan",
+  "aromatic_catabolism_network:0:26": "plan",
+  "aromatic_catabolism_network:0:33": "plan",
+  "aromatic_catabolism_network:0:9": "plan",
+  "discoveries:48000:10": "plan",
+  "discoveries:48000:11": "plan",
+  "discoveries:48000:13": "plan",
+  "discoveries:48000:6": "plan",
+  "discoveries:48000:7": "plan",
+  "discoveries:48000:9": "plan",
+  "respiratory_chain_wiring:0:10": "plan",
+  "respiratory_chain_wiring:0:18": "plan",
+  "respiratory_chain_wiring:0:21": "plan",
+  "respiratory_chain_wiring:0:22": "plan",
+  "respiratory_chain_wiring:0:24": "plan",
+  "respiratory_chain_wiring:0:43": "plan",
+  "respiratory_chain_wiring:0:45": "plan"
+ },
+ "sections": {
+  "core-interpretation": {
+   "claims": {
+    "adp1_deletion_phenotypes:0:16": "overlap",
+    "adp1_deletion_phenotypes:0:17": "number",
+    "aromatic_catabolism_network:0:3": "number",
+    "discoveries:48000:14": "number",
+    "discoveries:48000:5": "overlap",
+    "respiratory_chain_wiring:0:0": "overlap",
+    "respiratory_chain_wiring:0:1": "overlap",
+    "respiratory_chain_wiring:0:19": "number",
+    "respiratory_chain_wiring:0:2": "overlap",
+    "respiratory_chain_wiring:0:20": "number",
+    "respiratory_chain_wiring:0:3": "overlap",
+    "respiratory_chain_wiring:0:4": "overlap",
+    "respiratory_chain_wiring:0:5": "overlap"
+   }
+  },
+  "evidence-from-metabolic-flux-and-gene-phenotypes": {
+   "claims": {
+    "aromatic_catabolism_network:0:4": "number",
+    "discoveries:48000:12": "number",
+    "respiratory_chain_wiring:0:11": "number",
+    "respiratory_chain_wiring:0:12": "number",
+    "respiratory_chain_wiring:0:13": "number",
+    "respiratory_chain_wiring:0:14": "number"
+   }
+  },
+  "evidence-from-transferred-fitness-data": {
+   "claims": {
+    "aromatic_catabolism_network:0:13": "number",
+    "aromatic_catabolism_network:0:14": "number",
+    "discoveries:48000:16": "number",
+    "respiratory_chain_wiring:0:15": "number",
+    "respiratory_chain_wiring:0:6": "number",
+    "respiratory_chain_wiring:0:8": "number",
+    "respiratory_chain_wiring:0:9": "overlap"
+   }
+  },
+  "limits-of-the-inference": {
+   "claims": {
+    "discoveries:48000:8": "overlap",
+    "respiratory_chain_wiring:0:16": "number",
+    "respiratory_chain_wiring:0:42": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,15 @@
+{
+ "sections": {
+  "evidence-sides": {
+   "claims": {
+    "pangenome_openness:0:1": "number",
+    "pangenome_openness:0:2": "number"
+   }
+  },
+  "lead": {
+   "claims": {
+    "pangenome_openness:0:0": "overlap"
+   }
+  }
+ }
+}

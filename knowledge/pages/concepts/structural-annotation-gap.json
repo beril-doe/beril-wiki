@@ -1,0 +1,62 @@
+{
+ "claims": {
+  "alphafold_msa_annotation:0:28": "plan",
+  "alphafold_msa_annotation:0:3": "plan",
+  "alphafold_msa_annotation:0:34": "plan",
+  "alphafold_msa_annotation:0:35": "plan",
+  "amr_pangenome_atlas:16000:23": "plan"
+ },
+ "sections": {
+  "connections-to-other-research": {
+   "claims": {
+    "amr_pangenome_atlas:16000:22": "overlap"
+   }
+  },
+  "core-evidence": {
+   "claims": {
+    "alphafold_msa_annotation:0:1": "overlap",
+    "alphafold_msa_annotation:0:13": "number",
+    "alphafold_msa_annotation:0:15": "number",
+    "alphafold_msa_annotation:0:2": "number",
+    "alphafold_msa_annotation:0:24": "number"
+   }
+  },
+  "interpretation-and-limits": {
+   "claims": {
+    "alphafold_msa_annotation:0:26": "overlap",
+    "gene_function_ecological_agora:0:21": "number",
+    "gene_function_ecological_agora:16000:4": "number",
+    "paperblast_explorer:0:28": "number",
+    "pitfalls:112000:46": "number",
+    "pitfalls:112000:48": "overlap",
+    "pitfalls:112000:52": "overlap"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "truly_dark_genes:16000:9": "overlap"
+   }
+  },
+  "pangenome-structure-and-research-attention-bias": {
+   "claims": {
+    "alphafold_msa_annotation:0:0": "number",
+    "functional_dark_matter:0:2": "number",
+    "paperblast_explorer:0:17": "number",
+    "paperblast_explorer:0:18": "overlap",
+    "paperblast_explorer:0:19": "number",
+    "paperblast_explorer:0:5": "number",
+    "paperblast_explorer:0:6": "number"
+   }
+  },
+  "the-core-gene-annotation-paradox": {
+   "claims": {
+    "truly_dark_genes:0:1": "number",
+    "truly_dark_genes:0:2": "number",
+    "truly_dark_genes:0:21": "number",
+    "truly_dark_genes:0:35": "number",
+    "truly_dark_genes:0:4": "number",
+    "truly_dark_genes:0:9": "number"
+   }
+  }
+ }
+}

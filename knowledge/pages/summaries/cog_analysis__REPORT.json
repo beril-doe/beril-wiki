@@ -1,0 +1,47 @@
+{
+ "claims": {
+  "cog_analysis:0:18": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "cog_analysis:0:19": "number",
+    "cog_analysis:0:20": "overlap",
+    "cog_analysis:0:21": "overlap",
+    "cog_analysis:0:22": "overlap"
+   }
+  },
+  "data-and-outputs": {
+   "claims": {
+    "cog_analysis:0:23": "overlap",
+    "cog_analysis:0:24": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "cog_analysis:0:1": "number",
+    "cog_analysis:0:10": "number",
+    "cog_analysis:0:11": "overlap",
+    "cog_analysis:0:12": "overlap",
+    "cog_analysis:0:13": "overlap",
+    "cog_analysis:0:14": "overlap",
+    "cog_analysis:0:15": "number",
+    "cog_analysis:0:16": "overlap",
+    "cog_analysis:0:17": "overlap",
+    "cog_analysis:0:2": "number",
+    "cog_analysis:0:3": "number",
+    "cog_analysis:0:4": "number",
+    "cog_analysis:0:5": "number",
+    "cog_analysis:0:6": "number",
+    "cog_analysis:0:7": "number",
+    "cog_analysis:0:8": "number",
+    "cog_analysis:0:9": "overlap"
+   }
+  },
+  "overview": {
+   "claims": {
+    "cog_analysis:0:0": "number"
+   }
+  }
+ }
+}

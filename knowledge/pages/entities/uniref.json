@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "collections-in-the-kbase-data-lakehouse": {
+   "claims": {
+    "berdl_data_atlas:0:25": "number",
+    "berdl_data_atlas:16000:19": "number",
+    "pitfalls:128000:9": "overlap"
+   }
+  }
+ }
+}

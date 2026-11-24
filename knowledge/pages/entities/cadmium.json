@@ -1,0 +1,19 @@
+{
+ "sections": {
+  "evidence-from-metal-specificity": {
+   "claims": {
+    "metal_specificity:0:48": "number"
+   }
+  },
+  "evidence-from-microbeatlas-metal-ecology": {
+   "claims": {
+    "microbeatlas_metal_ecology:0:76": "number"
+   }
+  },
+  "evidence-from-soil-metal-functional-genomics": {
+   "claims": {
+    "soil_metal_functional_genomics:0:2": "number"
+   }
+  }
+ }
+}

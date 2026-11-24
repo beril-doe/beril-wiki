@@ -1,0 +1,37 @@
+{
+ "claims": {
+  "soil_frontier_genomics:0:1": "plan",
+  "soil_frontier_genomics:0:15": "plan"
+ },
+ "sections": {
+  "caveats-and-required-validation": {
+   "claims": {
+    "soil_frontier_genomics:0:11": "overlap",
+    "soil_frontier_genomics:0:12": "number",
+    "soil_frontier_genomics:0:13": "number",
+    "soil_frontier_genomics:0:14": "overlap",
+    "soil_frontier_genomics:0:18": "number"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "soil_frontier_genomics:0:2": "number",
+    "soil_frontier_genomics:0:3": "number",
+    "soil_frontier_genomics:0:4": "number",
+    "soil_frontier_genomics:0:5": "number",
+    "soil_frontier_genomics:0:7": "number",
+    "soil_frontier_genomics:0:8": "number"
+   }
+  },
+  "overview": {
+   "claims": {
+    "soil_frontier_genomics:0:0": "overlap"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "soil_frontier_genomics:0:16": "overlap"
+   }
+  }
+ }
+}

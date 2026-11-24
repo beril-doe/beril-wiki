@@ -1,0 +1,10 @@
+{
+ "sections": {
+  "key-facts-from-ibd-phage-targeting": {
+   "claims": {
+    "ibd_phage_targeting:128000:28": "overlap",
+    "ibd_phage_targeting:224000:49": "number"
+   }
+  }
+ }
+}

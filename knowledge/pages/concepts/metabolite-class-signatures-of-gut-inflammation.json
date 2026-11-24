@@ -1,0 +1,13 @@
+{
+ "claims": {
+  "ibd_phage_targeting:112000:17": "plan",
+  "ibd_phage_targeting:208000:25": "plan"
+ },
+ "sections": {
+  "lead": {
+   "claims": {
+    "ibd_phage_targeting:112000:29": "overlap"
+   }
+  }
+ }
+}

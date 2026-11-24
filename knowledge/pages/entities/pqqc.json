@@ -1,0 +1,14 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "pgp_pangenome_ecology:0:13": "number",
+    "pgp_pangenome_ecology:0:2": "number",
+    "pgp_pangenome_ecology:0:20": "number",
+    "pgp_pangenome_ecology:0:22": "number",
+    "pgp_pangenome_ecology:0:29": "number",
+    "pgp_pangenome_ecology:0:3": "number"
+   }
+  }
+ }
+}

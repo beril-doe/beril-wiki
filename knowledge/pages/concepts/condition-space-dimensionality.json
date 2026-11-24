@@ -1,0 +1,34 @@
+{
+ "sections": {
+  "general-sensitivity-and-substrate-specific-requirements": {
+   "claims": {
+    "adp1_deletion_phenotypes:0:0": "number",
+    "discoveries:80000:48": "overlap",
+    "respiratory_chain_wiring:0:5": "overlap"
+   }
+  },
+  "key-evidence": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:12": "number",
+    "adp1_deletion_phenotypes:0:4": "number",
+    "adp1_deletion_phenotypes:0:5": "number"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "adp1_deletion_phenotypes:0:7": "number"
+   }
+  },
+  "scope-and-interpretation": {
+   "claims": {
+    "aromatic_catabolism_network:0:29": "overlap",
+    "aromatic_catabolism_network:0:35": "overlap"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "adp1_deletion_phenotypes:0:30": "overlap"
+   }
+  }
+ }
+}

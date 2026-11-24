@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "evidence-from-ibd-phage-targeting": {
+   "claims": {
+    "ibd_phage_targeting:128000:16": "number",
+    "ibd_phage_targeting:192000:0": "number",
+    "ibd_phage_targeting:256000:6": "number"
+   }
+  }
+ }
+}

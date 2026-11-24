@@ -1,0 +1,16 @@
+{
+ "sections": {
+  "evidence-from-the-lanthanide-methylotrophy-atlas": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:0:18": "number",
+    "lanthanide_methylotrophy_atlas:0:19": "number",
+    "lanthanide_methylotrophy_atlas:0:46": "number"
+   }
+  },
+  "interpretation-and-limitations": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:16000:43": "overlap"
+   }
+  }
+ }
+}

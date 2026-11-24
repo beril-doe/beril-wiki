@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "metabolic-ecotypes": {
+   "claims": {
+    "pathway_capability_dependency:0:25": "overlap",
+    "pathway_capability_dependency:0:40": "number",
+    "pathway_capability_dependency:16000:8": "number"
+   }
+  }
+ }
+}

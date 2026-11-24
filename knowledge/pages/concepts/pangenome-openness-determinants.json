@@ -1,0 +1,85 @@
+{
+ "claims": {
+  "discoveries:80000:37": "plan",
+  "gene_function_ecological_agora:0:5": "plan",
+  "pangenome_openness:0:12": "plan",
+  "pangenome_openness:0:4": "plan",
+  "pangenome_openness:0:5": "plan",
+  "pangenome_openness:0:6": "plan",
+  "pathway_capability_dependency:0:23": "plan",
+  "pathway_capability_dependency:0:34": "plan",
+  "pathway_capability_dependency:0:39": "plan",
+  "pathway_capability_dependency:0:41": "plan",
+  "pgp_pangenome_ecology:16000:17": "plan",
+  "webofmicrobes_explorer:0:33": "plan"
+ },
+ "sections": {
+  "core-evidence": {
+   "claims": {
+    "amr_pangenome_atlas:0:3": "number",
+    "amr_strain_variation:0:2": "number",
+    "discoveries:32000:32": "number",
+    "discoveries:32000:33": "number",
+    "discoveries:32000:54": "number",
+    "discoveries:80000:11": "number",
+    "discoveries:80000:12": "number",
+    "discoveries:80000:13": "number",
+    "discoveries:80000:14": "number",
+    "discoveries:80000:15": "number",
+    "discoveries:80000:33": "number",
+    "discoveries:80000:36": "number",
+    "gene_function_ecological_agora:16000:51": "number",
+    "gene_function_ecological_agora:176000:18": "overlap",
+    "gene_function_ecological_agora:176000:22": "number",
+    "gene_function_ecological_agora:176000:23": "number",
+    "gene_function_ecological_agora:176000:24": "number",
+    "gene_function_ecological_agora:176000:28": "overlap",
+    "gene_function_ecological_agora:176000:29": "overlap",
+    "metabolic_capability_dependency:0:35": "number",
+    "metabolic_capability_dependency:0:9": "number",
+    "metabolic_capability_dependency:16000:20": "number",
+    "pangenome_openness:0:0": "overlap",
+    "pangenome_openness:0:1": "number",
+    "pangenome_openness:0:2": "number",
+    "pangenome_openness:0:3": "overlap",
+    "pangenome_openness:0:9": "overlap",
+    "pathway_capability_dependency:0:18": "number",
+    "pathway_capability_dependency:0:19": "overlap",
+    "pathway_capability_dependency:0:2": "number",
+    "pathway_capability_dependency:0:26": "number",
+    "pathway_capability_dependency:0:37": "overlap",
+    "pathway_capability_dependency:16000:2": "number",
+    "pgp_pangenome_ecology:0:30": "overlap",
+    "pgp_pangenome_ecology:0:31": "number",
+    "prophage_amr_comobilization:0:32": "overlap",
+    "pseudomonas_carbon_ecology:0:23": "number",
+    "webofmicrobes_explorer:0:14": "number"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "microbeatlas_metal_ecology:64000:22": "overlap"
+   }
+  },
+  "sampling-and-representation-limits": {
+   "claims": {
+    "gene_function_ecological_agora:16000:3": "number",
+    "gene_function_ecological_agora:176000:19": "number",
+    "gene_function_ecological_agora:176000:20": "number",
+    "gene_function_ecological_agora:176000:25": "number",
+    "gene_function_ecological_agora:176000:26": "number",
+    "gene_function_ecological_agora:176000:30": "overlap",
+    "metal_fitness_atlas:0:17": "overlap",
+    "pangenome_openness:0:11": "overlap",
+    "pathway_capability_dependency:16000:10": "overlap"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "discoveries:80000:34": "overlap",
+    "pathway_capability_dependency:0:20": "overlap",
+    "pathway_capability_dependency:16000:20": "overlap"
+   }
+  }
+ }
+}

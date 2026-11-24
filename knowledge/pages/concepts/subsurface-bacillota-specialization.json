@@ -1,0 +1,101 @@
+{
+ "claims": {
+  "bacillota_b_subsurface_accessory:0:3": "plan",
+  "bacillota_b_subsurface_accessory:0:34": "plan",
+  "bacillota_b_subsurface_accessory:0:4": "plan",
+  "bacillota_b_subsurface_accessory:0:42": "plan",
+  "bacillota_b_subsurface_accessory:0:5": "plan",
+  "bacillota_b_subsurface_accessory:0:6": "plan",
+  "bacillota_b_subsurface_accessory:0:7": "plan",
+  "bacillota_b_subsurface_accessory:0:9": "plan",
+  "bacillota_b_subsurface_accessory:16000:13": "plan",
+  "bacillota_b_subsurface_accessory:16000:14": "plan",
+  "bacillota_b_subsurface_accessory:16000:20": "plan",
+  "bacillota_b_subsurface_accessory:16000:24": "plan",
+  "bacillota_b_subsurface_accessory:16000:25": "plan",
+  "bacillota_b_subsurface_accessory:16000:27": "plan",
+  "clay_confined_subsurface:16000:16": "plan",
+  "clay_confined_subsurface:16000:20": "plan",
+  "discoveries:112000:8": "plan"
+ },
+ "sections": {
+  "accessory-functions-and-anaerobic-specialization": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:1": "number",
+    "bacillota_b_subsurface_accessory:0:10": "overlap",
+    "bacillota_b_subsurface_accessory:0:11": "overlap",
+    "bacillota_b_subsurface_accessory:0:12": "overlap",
+    "bacillota_b_subsurface_accessory:0:13": "overlap",
+    "bacillota_b_subsurface_accessory:0:2": "overlap",
+    "bacillota_b_subsurface_accessory:0:35": "overlap",
+    "bacillota_b_subsurface_accessory:0:36": "overlap",
+    "bacillota_b_subsurface_accessory:16000:21": "overlap",
+    "clay_confined_subsurface:0:12": "number",
+    "clay_confined_subsurface:0:13": "number",
+    "clay_confined_subsurface:0:16": "number",
+    "clay_confined_subsurface:0:17": "number",
+    "clay_confined_subsurface:0:18": "number",
+    "clay_confined_subsurface:0:19": "number",
+    "clay_confined_subsurface:0:27": "overlap",
+    "clay_confined_subsurface:0:33": "number",
+    "clay_confined_subsurface:0:34": "number",
+    "clay_confined_subsurface:0:35": "number",
+    "clay_confined_subsurface:0:36": "number",
+    "clay_confined_subsurface:0:37": "number",
+    "clay_confined_subsurface:0:38": "number",
+    "clay_confined_subsurface:0:39": "number",
+    "clay_confined_subsurface:0:41": "overlap",
+    "clay_confined_subsurface:0:42": "overlap",
+    "clay_confined_subsurface:16000:11": "overlap",
+    "clay_confined_subsurface:16000:14": "overlap",
+    "clay_confined_subsurface:16000:21": "number",
+    "discoveries:112000:3": "number",
+    "discoveries:112000:5": "number",
+    "discoveries:112000:6": "number",
+    "discoveries:112000:7": "number"
+   }
+  },
+  "cohorts-and-comparative-design": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:16000:23": "overlap"
+   }
+  },
+  "genome-expansion-and-biosynthetic-interpretation": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:14": "number",
+    "bacillota_b_subsurface_accessory:0:15": "number",
+    "bacillota_b_subsurface_accessory:0:16": "number",
+    "bacillota_b_subsurface_accessory:0:17": "number",
+    "bacillota_b_subsurface_accessory:0:18": "number",
+    "bacillota_b_subsurface_accessory:0:19": "number",
+    "bacillota_b_subsurface_accessory:0:20": "number",
+    "bacillota_b_subsurface_accessory:0:21": "overlap",
+    "bacillota_b_subsurface_accessory:16000:26": "overlap",
+    "bacillota_b_subsurface_accessory:16000:28": "overlap",
+    "discoveries:96000:24": "number"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "clay_confined_subsurface:16000:18": "overlap"
+   }
+  },
+  "respiratory-marker-correction": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:28": "number",
+    "bacillota_b_subsurface_accessory:16000:11": "overlap",
+    "bacillota_b_subsurface_accessory:16000:12": "overlap",
+    "clay_confined_subsurface:0:7": "number",
+    "clay_confined_subsurface:16000:12": "number",
+    "clay_confined_subsurface:16000:7": "number",
+    "discoveries:96000:25": "number"
+   }
+  },
+  "tensions-and-limits": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:16000:22": "overlap",
+    "clay_confined_subsurface:16000:19": "overlap"
+   }
+  }
+ }
+}

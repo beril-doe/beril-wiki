@@ -1,0 +1,14 @@
+{
+ "sections": {
+  "evidence-sides": {
+   "claims": {
+    "metal_cross_resistance:0:30": "number"
+   }
+  },
+  "lead": {
+   "claims": {
+    "metal_fitness_atlas:0:19": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,76 @@
+{
+ "claims": {
+  "clay_confined_subsurface:0:11": "plan",
+  "clay_confined_subsurface:0:15": "plan",
+  "clay_confined_subsurface:0:20": "plan",
+  "clay_confined_subsurface:16000:3": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "clay_confined_subsurface:0:44": "number",
+    "clay_confined_subsurface:16000:0": "overlap",
+    "clay_confined_subsurface:16000:1": "overlap",
+    "clay_confined_subsurface:16000:16": "overlap",
+    "clay_confined_subsurface:16000:17": "overlap",
+    "clay_confined_subsurface:16000:18": "overlap",
+    "clay_confined_subsurface:16000:2": "number",
+    "clay_confined_subsurface:16000:20": "overlap",
+    "clay_confined_subsurface:16000:21": "number"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "clay_confined_subsurface:0:1": "overlap",
+    "clay_confined_subsurface:0:12": "number",
+    "clay_confined_subsurface:0:13": "number",
+    "clay_confined_subsurface:0:14": "overlap",
+    "clay_confined_subsurface:0:16": "number",
+    "clay_confined_subsurface:0:17": "number",
+    "clay_confined_subsurface:0:18": "number",
+    "clay_confined_subsurface:0:19": "number",
+    "clay_confined_subsurface:0:23": "number",
+    "clay_confined_subsurface:0:24": "overlap",
+    "clay_confined_subsurface:0:25": "overlap",
+    "clay_confined_subsurface:0:27": "overlap",
+    "clay_confined_subsurface:0:28": "number",
+    "clay_confined_subsurface:0:29": "number",
+    "clay_confined_subsurface:0:3": "number",
+    "clay_confined_subsurface:0:30": "number",
+    "clay_confined_subsurface:0:31": "number",
+    "clay_confined_subsurface:0:32": "number",
+    "clay_confined_subsurface:0:35": "overlap",
+    "clay_confined_subsurface:0:36": "overlap",
+    "clay_confined_subsurface:0:37": "number",
+    "clay_confined_subsurface:0:38": "number",
+    "clay_confined_subsurface:0:39": "number",
+    "clay_confined_subsurface:0:4": "number",
+    "clay_confined_subsurface:0:40": "number",
+    "clay_confined_subsurface:0:41": "overlap",
+    "clay_confined_subsurface:0:42": "overlap",
+    "clay_confined_subsurface:0:43": "number",
+    "clay_confined_subsurface:0:45": "overlap",
+    "clay_confined_subsurface:0:5": "number",
+    "clay_confined_subsurface:0:6": "number",
+    "clay_confined_subsurface:0:7": "number",
+    "clay_confined_subsurface:16000:10": "overlap",
+    "clay_confined_subsurface:16000:11": "overlap",
+    "clay_confined_subsurface:16000:12": "number",
+    "clay_confined_subsurface:16000:14": "overlap",
+    "clay_confined_subsurface:16000:15": "overlap",
+    "clay_confined_subsurface:16000:4": "overlap",
+    "clay_confined_subsurface:16000:5": "overlap",
+    "clay_confined_subsurface:16000:6": "overlap",
+    "clay_confined_subsurface:16000:7": "number",
+    "clay_confined_subsurface:16000:8": "overlap"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "clay_confined_subsurface:0:0": "overlap",
+    "clay_confined_subsurface:0:34": "overlap",
+    "clay_confined_subsurface:16000:19": "overlap"
+   }
+  }
+ }
+}

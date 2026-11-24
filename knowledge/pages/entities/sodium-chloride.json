@@ -1,0 +1,20 @@
+{
+ "sections": {
+  "counter-ion-interpretation": {
+   "claims": {
+    "counter_ion_effects:0:18": "number",
+    "counter_ion_effects:0:7": "number"
+   }
+  },
+  "evidence-from-counter-ion-analysis": {
+   "claims": {
+    "counter_ion_effects:0:1": "number"
+   }
+  },
+  "limitations-and-follow-up-tests": {
+   "claims": {
+    "counter_ion_effects:0:31": "number"
+   }
+  }
+ }
+}

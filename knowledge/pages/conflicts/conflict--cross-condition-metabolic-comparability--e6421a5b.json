@@ -1,0 +1,15 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "webofmicrobes_explorer:0:17": "number"
+   }
+  },
+  "possible-reconciliations": {
+   "claims": {
+    "webofmicrobes_explorer:0:0": "number",
+    "webofmicrobes_explorer:0:3": "number"
+   }
+  }
+ }
+}

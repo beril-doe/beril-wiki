@@ -1,0 +1,65 @@
+{
+ "claims": {
+  "conservation_vs_fitness:0:34": "plan",
+  "conservation_vs_fitness:0:35": "plan",
+  "conservation_vs_fitness:0:36": "plan",
+  "conservation_vs_fitness:0:37": "plan",
+  "conservation_vs_fitness:0:39": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "conservation_vs_fitness:0:24": "number",
+    "conservation_vs_fitness:0:25": "number",
+    "conservation_vs_fitness:0:27": "number",
+    "conservation_vs_fitness:0:28": "number"
+   }
+  },
+  "data-sources-and-outputs": {
+   "claims": {
+    "conservation_vs_fitness:0:29": "overlap",
+    "conservation_vs_fitness:0:30": "number",
+    "conservation_vs_fitness:0:32": "overlap",
+    "conservation_vs_fitness:0:33": "number",
+    "conservation_vs_fitness:0:38": "overlap",
+    "conservation_vs_fitness:0:40": "overlap",
+    "conservation_vs_fitness:0:41": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "conservation_vs_fitness:0:1": "number",
+    "conservation_vs_fitness:0:10": "number",
+    "conservation_vs_fitness:0:11": "number",
+    "conservation_vs_fitness:0:12": "number",
+    "conservation_vs_fitness:0:14": "overlap",
+    "conservation_vs_fitness:0:15": "number",
+    "conservation_vs_fitness:0:16": "number",
+    "conservation_vs_fitness:0:2": "number",
+    "conservation_vs_fitness:0:20": "number",
+    "conservation_vs_fitness:0:21": "number",
+    "conservation_vs_fitness:0:22": "overlap",
+    "conservation_vs_fitness:0:3": "overlap",
+    "conservation_vs_fitness:0:4": "number",
+    "conservation_vs_fitness:0:5": "number",
+    "conservation_vs_fitness:0:6": "number",
+    "conservation_vs_fitness:0:7": "number",
+    "conservation_vs_fitness:0:8": "number",
+    "conservation_vs_fitness:0:9": "number"
+   }
+  },
+  "overview": {
+   "claims": {
+    "conservation_vs_fitness:0:0": "overlap"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "conservation_vs_fitness:0:17": "overlap",
+    "conservation_vs_fitness:0:18": "overlap",
+    "conservation_vs_fitness:0:19": "number",
+    "conservation_vs_fitness:0:26": "overlap"
+   }
+  }
+ }
+}

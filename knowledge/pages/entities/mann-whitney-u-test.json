@@ -1,0 +1,16 @@
+{
+ "sections": {
+  "application-in-pseudomonas-carbon-ecology": {
+   "claims": {
+    "pseudomonas_carbon_ecology:0:15": "number"
+   }
+  },
+  "key-facts-from-fitness-modules": {
+   "claims": {
+    "fitness_modules:0:5": "number",
+    "fitness_modules:0:7": "number",
+    "fitness_modules:0:8": "number"
+   }
+  }
+ }
+}

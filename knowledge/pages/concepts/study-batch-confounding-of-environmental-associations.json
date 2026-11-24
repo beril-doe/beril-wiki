@@ -1,0 +1,154 @@
+{
+ "claims": {
+  "discoveries:0:14": "plan",
+  "discoveries:16000:47": "plan",
+  "discoveries:32000:0": "plan",
+  "discoveries:80000:4": "plan",
+  "enigma_carbon_census_1:32000:41": "plan",
+  "harvard_forest_warming:16000:4": "plan",
+  "ibd_phage_targeting:144000:37": "plan",
+  "ibd_phage_targeting:144000:6": "plan",
+  "ibd_phage_targeting:160000:1": "plan",
+  "ibd_phage_targeting:16000:14": "plan",
+  "ibd_phage_targeting:192000:20": "plan",
+  "ibd_phage_targeting:192000:25": "plan",
+  "ibd_phage_targeting:192000:35": "plan",
+  "ibd_phage_targeting:208000:27": "plan",
+  "ibd_phage_targeting:208000:32": "plan",
+  "ibd_phage_targeting:208000:37": "plan",
+  "ibd_phage_targeting:224000:12": "plan",
+  "ibd_phage_targeting:256000:10": "plan",
+  "ibd_phage_targeting:256000:37": "plan",
+  "ibd_phage_targeting:48000:37": "plan",
+  "ibd_phage_targeting:48000:39": "plan",
+  "ibd_phage_targeting:48000:40": "plan",
+  "ibd_phage_targeting:48000:41": "plan",
+  "ibd_phage_targeting:64000:17": "plan",
+  "ibd_phage_targeting:64000:19": "plan",
+  "lignin_community_enrichment:16000:23": "plan",
+  "pitfalls:0:19": "plan",
+  "pitfalls:0:22": "plan",
+  "pitfalls:16000:0": "plan",
+  "pitfalls:16000:8": "plan",
+  "soil_frontier_genomics:0:10": "plan",
+  "soil_frontier_genomics:0:16": "plan",
+  "soil_metal_functional_genomics:0:12": "plan"
+ },
+ "sections": {
+  "batch-can-dominate-cluster-structure-in-pooled-multi-cohort-data": {
+   "claims": {
+    "discoveries:0:11": "number",
+    "ibd_phage_targeting:144000:34": "overlap",
+    "ibd_phage_targeting:144000:35": "number",
+    "ibd_phage_targeting:192000:28": "overlap",
+    "ibd_phage_targeting:208000:41": "number",
+    "ibd_phage_targeting:224000:10": "number",
+    "ibd_phage_targeting:224000:11": "overlap",
+    "ibd_phage_targeting:224000:30": "number",
+    "ibd_phage_targeting:224000:9": "overlap",
+    "ibd_phage_targeting:256000:36": "number",
+    "ibd_phage_targeting:272000:39": "number"
+   }
+  },
+  "conditioning-on-batch-changes-what-an-explained-variance-figure-means": {
+   "claims": {
+    "soil_frontier_genomics:0:3": "number",
+    "soil_metal_functional_genomics:0:6": "number"
+   }
+  },
+  "design-confounds-inside-a-single-study": {
+   "claims": {
+    "enigma_sso_asv_ecology:0:44": "number",
+    "enigma_sso_asv_ecology:16000:8": "number",
+    "harvard_forest_warming:0:32": "overlap",
+    "harvard_forest_warming:0:6": "number",
+    "harvard_forest_warming:0:7": "number",
+    "harvard_forest_warming:0:8": "number",
+    "harvard_forest_warming:16000:25": "overlap"
+   }
+  },
+  "evidence-from-eukaryotic-read-fractions": {
+   "claims": {
+    "euk_in_prok_correlates:0:10": "number",
+    "euk_in_prok_correlates:0:11": "number",
+    "euk_in_prok_correlates:0:12": "number",
+    "euk_in_prok_correlates:0:20": "number",
+    "euk_in_prok_correlates:0:31": "number",
+    "euk_in_prok_correlates:0:34": "number",
+    "euk_in_prok_correlates:0:6": "number",
+    "euk_in_prok_correlates:0:7": "overlap",
+    "euk_in_prok_correlates:0:9": "number"
+   }
+  },
+  "metadata-classifier-and-join-limitations": {
+   "claims": {
+    "microbeatlas_metal_ecology:64000:11": "number"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "enigma_contamination_functional_potential:0:38": "overlap",
+    "euk_in_prok_correlates:16000:4": "overlap",
+    "euk_in_prok_correlates:16000:8": "overlap",
+    "ibd_phage_targeting:272000:70": "overlap",
+    "nmdc_community_metabolic_ecology:16000:24": "overlap",
+    "soil_metal_functional_genomics:0:11": "number"
+   }
+  },
+  "pooled-analysis-can-change-the-interpretation-of-a-directional-call": {
+   "claims": {
+    "discoveries:16000:13": "number",
+    "discoveries:16000:45": "number",
+    "discoveries:16000:46": "number",
+    "ibd_phage_targeting:208000:38": "overlap",
+    "ibd_phage_targeting:48000:23": "overlap",
+    "ibd_phage_targeting:48000:43": "overlap"
+   }
+  },
+  "single-study-dominance-and-pseudo-replication-inflate-significance": {
+   "claims": {
+    "discoveries:64000:30": "number",
+    "discoveries:80000:3": "number",
+    "enigma_carbon_census_1:16000:41": "number",
+    "metal_resistance_global_biogeography:0:27": "number",
+    "nmdc_community_metabolic_ecology:0:14": "number",
+    "nmdc_community_metabolic_ecology:0:15": "number",
+    "nmdc_community_metabolic_ecology:0:24": "overlap"
+   }
+  },
+  "site-aggregation-can-pull-a-site-local-association-toward-null": {
+   "claims": {
+    "ibd_phage_targeting:144000:10": "number",
+    "ibd_phage_targeting:144000:27": "number",
+    "ibd_phage_targeting:16000:10": "number",
+    "ibd_phage_targeting:224000:16": "number",
+    "ibd_phage_targeting:256000:31": "number"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "discoveries:80000:5": "overlap",
+    "ibd_phage_targeting:272000:65": "number"
+   }
+  },
+  "when-case-and-control-come-from-different-studies-the-confound-is-unadjustable": {
+   "claims": {
+    "ibd_phage_targeting:208000:31": "overlap",
+    "ibd_phage_targeting:240000:23": "overlap",
+    "ibd_phage_targeting:288000:6": "overlap",
+    "ibd_phage_targeting:48000:38": "number",
+    "pitfalls:0:20": "overlap",
+    "pitfalls:0:21": "number",
+    "pitfalls:0:23": "overlap"
+   }
+  },
+  "why-within-study-analysis-changes-but-does-not-settle-the-conclusion": {
+   "claims": {
+    "euk_in_prok_correlates:0:14": "number",
+    "euk_in_prok_correlates:0:15": "number",
+    "euk_in_prok_correlates:0:17": "number",
+    "euk_in_prok_correlates:0:37": "overlap"
+   }
+  }
+ }
+}

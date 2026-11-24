@@ -1,0 +1,20 @@
+{
+ "sections": {
+  "key-facts-from-ibd-phage-targeting": {
+   "claims": {
+    "ibd_phage_targeting:144000:21": "number",
+    "ibd_phage_targeting:144000:39": "number",
+    "ibd_phage_targeting:16000:11": "number",
+    "ibd_phage_targeting:192000:24": "number",
+    "ibd_phage_targeting:224000:10": "number",
+    "ibd_phage_targeting:224000:13": "overlap",
+    "ibd_phage_targeting:224000:14": "number",
+    "ibd_phage_targeting:240000:24": "number",
+    "ibd_phage_targeting:240000:25": "number",
+    "ibd_phage_targeting:256000:34": "number",
+    "ibd_phage_targeting:256000:36": "number",
+    "ibd_phage_targeting:272000:38": "number"
+   }
+  }
+ }
+}

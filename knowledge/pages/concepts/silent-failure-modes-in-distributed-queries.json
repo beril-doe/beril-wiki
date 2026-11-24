@@ -1,0 +1,19 @@
+{
+ "claims": {
+  "pitfalls:16000:24": "plan",
+  "pitfalls:32000:19": "plan",
+  "pitfalls:48000:18": "plan"
+ },
+ "sections": {
+  "cold-databases-valid-counts-alongside-empty-queries": {
+   "claims": {
+    "pitfalls:48000:17": "overlap"
+   }
+  },
+  "temporary-views-lost-on-server-reconnection": {
+   "claims": {
+    "pitfalls:32000:18": "overlap"
+   }
+  }
+ }
+}

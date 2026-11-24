@@ -1,0 +1,96 @@
+{
+ "claims": {
+  "adp1_deletion_phenotypes:0:29": "plan",
+  "fitness_effects_conservation:0:13": "plan",
+  "fitness_effects_conservation:0:19": "plan",
+  "functional_dark_matter:16000:24": "plan",
+  "functional_dark_matter:16000:29": "plan",
+  "functional_dark_matter:16000:31": "plan",
+  "functional_dark_matter:16000:32": "plan",
+  "functional_dark_matter:16000:34": "plan",
+  "functional_dark_matter:80000:22": "plan",
+  "metal_fitness_atlas:0:18": "plan",
+  "metal_specificity:0:3": "plan",
+  "metal_specificity:0:5": "plan",
+  "prophage_amr_comobilization:0:6": "plan",
+  "respiratory_chain_wiring:0:17": "plan",
+  "snipe_defense_system:0:27": "plan",
+  "snipe_defense_system:0:38": "plan"
+ },
+ "sections": {
+  "annotation-bias-and-uncertain-genes": {
+   "claims": {
+    "adp1_deletion_phenotypes:0:23": "number"
+   }
+  },
+  "consequences-for-inference": {
+   "claims": {
+    "adp1_triple_essentiality:0:9": "overlap",
+    "cofitness_coinheritance:0:35": "overlap",
+    "fitness_effects_conservation:0:11": "overlap",
+    "module_conservation:0:9": "overlap"
+   }
+  },
+  "evidence-from-the-adp1-deletion-collection": {
+   "claims": {
+    "adp1_deletion_phenotypes:0:18": "number",
+    "adp1_deletion_phenotypes:0:19": "overlap",
+    "adp1_deletion_phenotypes:0:20": "number",
+    "adp1_deletion_phenotypes:0:21": "number",
+    "adp1_deletion_phenotypes:0:22": "number",
+    "discoveries:48000:19": "number",
+    "respiratory_chain_wiring:0:23": "overlap",
+    "respiratory_chain_wiring:0:7": "overlap",
+    "respiratory_chain_wiring:0:9": "overlap"
+   }
+  },
+  "fitness-panel-limits-in-downstream-analyses": {
+   "claims": {
+    "lab_field_ecology:0:47": "number",
+    "metabolic_capability_dependency:0:52": "number",
+    "metal_fitness_atlas:16000:29": "number",
+    "metal_fitness_atlas:16000:30": "overlap",
+    "metal_fitness_atlas:16000:31": "overlap",
+    "metal_fitness_atlas:16000:32": "overlap",
+    "metal_specificity:0:4": "number",
+    "metal_specificity:0:63": "number",
+    "metal_specificity:0:64": "overlap",
+    "snipe_defense_system:0:24": "overlap",
+    "snipe_defense_system:0:37": "overlap"
+   }
+  },
+  "organism-level-coverage-of-the-fitness-browser-panel": {
+   "claims": {
+    "essential_genome:0:31": "overlap",
+    "functional_dark_matter:16000:23": "number",
+    "functional_dark_matter:16000:25": "overlap",
+    "functional_dark_matter:16000:26": "overlap",
+    "functional_dark_matter:16000:27": "overlap",
+    "functional_dark_matter:16000:30": "number",
+    "functional_dark_matter:16000:33": "number",
+    "functional_dark_matter:16000:35": "number",
+    "functional_dark_matter:16000:36": "overlap",
+    "functional_dark_matter:32000:31": "number",
+    "functional_dark_matter:48000:21": "number",
+    "functional_dark_matter:48000:22": "overlap",
+    "functional_dark_matter:48000:23": "overlap",
+    "functional_dark_matter:48000:24": "number",
+    "functional_dark_matter:48000:25": "number",
+    "functional_dark_matter:48000:26": "number",
+    "functional_dark_matter:64000:30": "overlap",
+    "functional_dark_matter:64000:32": "number",
+    "functional_dark_matter:80000:37": "number",
+    "functional_dark_matter:96000:53": "overlap",
+    "functional_dark_matter:96000:60": "overlap",
+    "functional_dark_matter:96000:82": "number"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "functional_dark_matter:48000:27": "overlap",
+    "functional_dark_matter:80000:8": "overlap",
+    "functional_dark_matter:96000:81": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "evidence-sides": {
+   "claims": {
+    "cog_analysis:0:5": "overlap",
+    "cog_analysis:0:6": "overlap",
+    "cog_analysis:0:7": "number"
+   }
+  }
+ }
+}

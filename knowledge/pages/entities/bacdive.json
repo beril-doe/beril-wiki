@@ -1,0 +1,78 @@
+{
+ "sections": {
+  "fw300-n2e3-metabolic-utilization-evidence": {
+   "claims": {
+    "bacdive_metal_validation:0:36": "overlap",
+    "bacdive_phenotype_metal_tolerance:0:34": "overlap",
+    "fw300_metabolic_consistency:0:10": "overlap",
+    "fw300_metabolic_consistency:0:16": "number",
+    "fw300_metabolic_consistency:0:17": "number",
+    "fw300_metabolic_consistency:0:18": "number",
+    "fw300_metabolic_consistency:0:23": "number",
+    "fw300_metabolic_consistency:0:24": "number",
+    "fw300_metabolic_consistency:0:5": "overlap"
+   }
+  },
+  "key-facts-from-bacdive-metal-tolerance-studies": {
+   "claims": {
+    "bacdive_metal_validation:0:0": "number",
+    "bacdive_metal_validation:0:1": "number",
+    "bacdive_metal_validation:0:10": "number",
+    "bacdive_metal_validation:0:12": "number",
+    "bacdive_metal_validation:0:13": "number",
+    "bacdive_metal_validation:0:14": "number",
+    "bacdive_metal_validation:0:16": "overlap",
+    "bacdive_metal_validation:0:17": "number",
+    "bacdive_metal_validation:0:19": "number",
+    "bacdive_metal_validation:0:22": "number",
+    "bacdive_metal_validation:0:23": "number",
+    "bacdive_metal_validation:0:3": "number",
+    "bacdive_metal_validation:0:37": "number",
+    "bacdive_metal_validation:0:4": "number",
+    "bacdive_metal_validation:0:5": "overlap",
+    "bacdive_metal_validation:0:6": "overlap",
+    "bacdive_metal_validation:0:7": "overlap",
+    "bacdive_metal_validation:0:8": "overlap",
+    "bacdive_metal_validation:0:9": "number",
+    "bacdive_phenotype_metal_tolerance:0:0": "number",
+    "bacdive_phenotype_metal_tolerance:0:1": "number",
+    "bacdive_phenotype_metal_tolerance:0:22": "number",
+    "bacdive_phenotype_metal_tolerance:0:23": "number",
+    "bacdive_phenotype_metal_tolerance:0:24": "overlap",
+    "bacdive_phenotype_metal_tolerance:0:25": "overlap",
+    "bacdive_phenotype_metal_tolerance:0:27": "number",
+    "bacdive_phenotype_metal_tolerance:0:3": "number",
+    "bacdive_phenotype_metal_tolerance:0:4": "number",
+    "bacdive_phenotype_metal_tolerance:0:6": "number",
+    "bacdive_phenotype_metal_tolerance:0:7": "number",
+    "bacdive_phenotype_metal_tolerance:0:8": "number",
+    "bacdive_phenotype_metal_tolerance:0:9": "number",
+    "gene_function_ecological_agora:176000:55": "overlap",
+    "gene_function_ecological_agora:176000:58": "number",
+    "gene_function_ecological_agora:176000:62": "overlap",
+    "metal_cross_resistance:0:21": "number",
+    "metal_cross_resistance:0:23": "overlap",
+    "metal_cross_resistance:0:24": "overlap"
+   }
+  },
+  "plant-microbiome-and-pathway-validation-evidence": {
+   "claims": {
+    "plant_microbiome_ecotypes:0:11": "number",
+    "plant_microbiome_ecotypes:48000:20": "number",
+    "plant_microbiome_ecotypes:48000:43": "number",
+    "plant_microbiome_ecotypes:64000:28": "number"
+   }
+  },
+  "related-pages": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:0:37": "overlap",
+    "gene_function_ecological_agora:208000:5": "overlap"
+   }
+  },
+  "what-it-is": {
+   "claims": {
+    "plant_microbiome_ecotypes:80000:5": "number"
+   }
+  }
+ }
+}

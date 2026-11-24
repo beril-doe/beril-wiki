@@ -1,0 +1,16 @@
+{
+ "sections": {
+  "key-facts-in-paperblast-analysis": {
+   "claims": {
+    "paperblast_explorer:0:17": "number",
+    "paperblast_explorer:0:19": "number",
+    "paperblast_explorer:0:28": "number"
+   }
+  },
+  "prophage-ecology-application": {
+   "claims": {
+    "prophage_ecology:16000:22": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,44 @@
+{
+ "sections": {
+  "extension-to-soil-metal-functional-genomics": {
+   "claims": {
+    "soil_metal_functional_genomics:0:7": "overlap"
+   }
+  },
+  "phylogenetic-signal-and-robustness": {
+   "claims": {
+    "microbeatlas_metal_ecology:0:37": "number",
+    "microbeatlas_metal_ecology:0:42": "number",
+    "microbeatlas_metal_ecology:0:44": "number",
+    "microbeatlas_metal_ecology:0:45": "number",
+    "microbeatlas_metal_ecology:0:46": "number",
+    "microbeatlas_metal_ecology:0:47": "number",
+    "microbeatlas_metal_ecology:0:49": "number",
+    "microbeatlas_metal_ecology:0:5": "number",
+    "microbeatlas_metal_ecology:0:57": "number",
+    "microbeatlas_metal_ecology:0:63": "number",
+    "microbeatlas_metal_ecology:0:64": "number",
+    "microbeatlas_metal_ecology:0:66": "overlap",
+    "microbeatlas_metal_ecology:0:67": "number",
+    "microbeatlas_metal_ecology:0:68": "number",
+    "microbeatlas_metal_ecology:0:69": "number",
+    "microbeatlas_metal_ecology:0:70": "number",
+    "microbeatlas_metal_ecology:0:9": "number",
+    "microbeatlas_metal_ecology:16000:21": "overlap",
+    "microbeatlas_metal_ecology:32000:22": "number",
+    "microbeatlas_metal_ecology:64000:33": "number",
+    "microbeatlas_metal_ecology:64000:47": "number",
+    "microbeatlas_metal_ecology:80000:2": "number"
+   }
+  },
+  "use-in-the-microbeatlas-metal-ecology-study": {
+   "claims": {
+    "microbeatlas_metal_ecology:0:13": "number",
+    "microbeatlas_metal_ecology:0:30": "number",
+    "microbeatlas_metal_ecology:0:31": "number",
+    "microbeatlas_metal_ecology:0:6": "number",
+    "microbeatlas_metal_ecology:0:7": "number"
+   }
+  }
+ }
+}

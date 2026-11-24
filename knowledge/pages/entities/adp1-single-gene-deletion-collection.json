@@ -1,0 +1,16 @@
+{
+ "sections": {
+  "contents-and-measurements": {
+   "claims": {
+    "adp1_deletion_phenotypes:0:24": "number",
+    "adp1_triple_essentiality:0:8": "number",
+    "adp1_triple_essentiality:32000:40": "number"
+   }
+  },
+  "lead": {
+   "claims": {
+    "adp1_deletion_phenotypes:0:35": "number"
+   }
+  }
+ }
+}

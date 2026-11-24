@@ -1,0 +1,52 @@
+{
+ "claims": {
+  "nmdc_context_audit:0:32": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "nmdc_context_audit:0:22": "overlap",
+    "nmdc_context_audit:0:28": "overlap",
+    "nmdc_context_audit:0:29": "overlap",
+    "nmdc_context_audit:0:31": "overlap"
+   }
+  },
+  "figures": {
+   "claims": {
+    "nmdc_context_audit:0:33": "overlap",
+    "nmdc_context_audit:0:34": "overlap"
+   }
+  },
+  "interpretation": {
+   "claims": {
+    "nmdc_context_audit:0:23": "overlap",
+    "nmdc_context_audit:0:25": "overlap",
+    "nmdc_context_audit:0:26": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "nmdc_context_audit:0:1": "overlap",
+    "nmdc_context_audit:0:11": "number",
+    "nmdc_context_audit:0:12": "overlap",
+    "nmdc_context_audit:0:13": "overlap",
+    "nmdc_context_audit:0:14": "overlap",
+    "nmdc_context_audit:0:15": "overlap",
+    "nmdc_context_audit:0:16": "number",
+    "nmdc_context_audit:0:18": "overlap",
+    "nmdc_context_audit:0:19": "number",
+    "nmdc_context_audit:0:2": "overlap",
+    "nmdc_context_audit:0:20": "overlap",
+    "nmdc_context_audit:0:21": "overlap",
+    "nmdc_context_audit:0:5": "overlap",
+    "nmdc_context_audit:0:8": "number",
+    "nmdc_context_audit:0:9": "overlap"
+   }
+  },
+  "overview": {
+   "claims": {
+    "nmdc_context_audit:0:0": "overlap"
+   }
+  }
+ }
+}

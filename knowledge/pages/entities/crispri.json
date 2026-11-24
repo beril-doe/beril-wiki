@@ -1,0 +1,18 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "functional_dark_matter:16000:38": "number",
+    "functional_dark_matter:48000:33": "number",
+    "functional_dark_matter:48000:4": "number",
+    "functional_dark_matter:48000:6": "number",
+    "functional_dark_matter:64000:10": "number",
+    "functional_dark_matter:96000:74": "number",
+    "functional_dark_matter:96000:75": "number",
+    "functional_dark_matter:96000:76": "number",
+    "truly_dark_genes:0:36": "overlap",
+    "truly_dark_genes:16000:12": "number"
+   }
+  }
+ }
+}

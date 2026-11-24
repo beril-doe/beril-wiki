@@ -1,0 +1,111 @@
+{
+ "claims": {
+  "phb_granule_ecology:0:29": "plan",
+  "phb_granule_ecology:0:33": "plan",
+  "phb_granule_ecology:0:34": "plan",
+  "phb_granule_ecology:0:36": "plan",
+  "phb_granule_ecology:0:37": "plan",
+  "phb_granule_ecology:0:38": "plan",
+  "phb_granule_ecology:0:40": "plan",
+  "phb_granule_ecology:0:41": "plan",
+  "phb_granule_ecology:16000:0": "plan",
+  "phb_granule_ecology:16000:10": "plan",
+  "phb_granule_ecology:16000:45": "plan",
+  "phb_granule_ecology:16000:52": "plan",
+  "phb_granule_ecology:32000:2": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "phb_granule_ecology:16000:24": "number",
+    "phb_granule_ecology:16000:25": "number",
+    "phb_granule_ecology:16000:27": "number",
+    "phb_granule_ecology:16000:28": "overlap",
+    "phb_granule_ecology:16000:31": "number",
+    "phb_granule_ecology:16000:32": "number",
+    "phb_granule_ecology:16000:33": "number",
+    "phb_granule_ecology:16000:36": "overlap",
+    "phb_granule_ecology:16000:9": "number"
+   }
+  },
+  "data-sources": {
+   "claims": {
+    "phb_granule_ecology:16000:39": "overlap",
+    "phb_granule_ecology:16000:40": "overlap"
+   }
+  },
+  "figures": {
+   "claims": {
+    "phb_granule_ecology:0:32": "overlap",
+    "phb_granule_ecology:0:35": "overlap",
+    "phb_granule_ecology:16000:44": "overlap",
+    "phb_granule_ecology:16000:47": "overlap",
+    "phb_granule_ecology:16000:48": "overlap",
+    "phb_granule_ecology:16000:49": "overlap",
+    "phb_granule_ecology:16000:50": "overlap",
+    "phb_granule_ecology:16000:53": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "phb_granule_ecology:0:0": "number",
+    "phb_granule_ecology:0:1": "number",
+    "phb_granule_ecology:0:10": "number",
+    "phb_granule_ecology:0:11": "number",
+    "phb_granule_ecology:0:12": "number",
+    "phb_granule_ecology:0:14": "overlap",
+    "phb_granule_ecology:0:15": "overlap",
+    "phb_granule_ecology:0:17": "number",
+    "phb_granule_ecology:0:18": "number",
+    "phb_granule_ecology:0:19": "number",
+    "phb_granule_ecology:0:2": "number",
+    "phb_granule_ecology:0:20": "number",
+    "phb_granule_ecology:0:21": "number",
+    "phb_granule_ecology:0:22": "number",
+    "phb_granule_ecology:0:23": "number",
+    "phb_granule_ecology:0:24": "number",
+    "phb_granule_ecology:0:25": "number",
+    "phb_granule_ecology:0:26": "number",
+    "phb_granule_ecology:0:27": "number",
+    "phb_granule_ecology:0:3": "number",
+    "phb_granule_ecology:0:39": "number",
+    "phb_granule_ecology:0:4": "number",
+    "phb_granule_ecology:0:5": "number",
+    "phb_granule_ecology:0:6": "number",
+    "phb_granule_ecology:0:7": "number",
+    "phb_granule_ecology:16000:1": "number",
+    "phb_granule_ecology:16000:11": "number",
+    "phb_granule_ecology:16000:14": "overlap",
+    "phb_granule_ecology:16000:15": "overlap",
+    "phb_granule_ecology:16000:17": "number",
+    "phb_granule_ecology:16000:18": "overlap",
+    "phb_granule_ecology:16000:19": "overlap",
+    "phb_granule_ecology:16000:2": "overlap",
+    "phb_granule_ecology:16000:20": "number",
+    "phb_granule_ecology:16000:21": "number",
+    "phb_granule_ecology:16000:22": "overlap",
+    "phb_granule_ecology:16000:26": "number",
+    "phb_granule_ecology:16000:29": "overlap",
+    "phb_granule_ecology:16000:3": "number",
+    "phb_granule_ecology:16000:34": "number",
+    "phb_granule_ecology:16000:35": "number",
+    "phb_granule_ecology:16000:4": "number",
+    "phb_granule_ecology:16000:41": "number",
+    "phb_granule_ecology:16000:42": "number",
+    "phb_granule_ecology:16000:43": "number",
+    "phb_granule_ecology:16000:46": "overlap",
+    "phb_granule_ecology:16000:5": "number",
+    "phb_granule_ecology:16000:51": "overlap",
+    "phb_granule_ecology:16000:54": "number",
+    "phb_granule_ecology:16000:6": "overlap",
+    "phb_granule_ecology:16000:7": "number",
+    "phb_granule_ecology:16000:8": "number"
+   }
+  },
+  "proposed-future-work": {
+   "claims": {
+    "phb_granule_ecology:32000:1": "overlap"
+   }
+  }
+ }
+}

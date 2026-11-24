@@ -1,0 +1,24 @@
+{
+ "sections": {
+  "tensions-and-caveats": {
+   "claims": {
+    "discoveries:80000:3": "number",
+    "metabolic_capability_dependency:0:52": "number",
+    "nmdc_community_metabolic_ecology:0:15": "number"
+   }
+  },
+  "what-the-corpus-shows": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:0:6": "number",
+    "bacdive_phenotype_metal_tolerance:0:7": "number",
+    "costly_dispensable_genes:0:14": "number",
+    "enigma_carbon_census_1:0:5": "number",
+    "enigma_carbon_census_1:0:50": "overlap",
+    "enigma_carbon_census_1:16000:3": "overlap",
+    "genotype_to_phenotype_enigma:0:10": "number",
+    "nmdc_community_metabolic_ecology:0:14": "number",
+    "phb_granule_ecology:16000:11": "number"
+   }
+  }
+ }
+}

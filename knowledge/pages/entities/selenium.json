@@ -1,0 +1,16 @@
+{
+ "sections": {
+  "evidence-from-the-metal-fitness-atlas": {
+   "claims": {
+    "metal_fitness_atlas:0:19": "number",
+    "metal_fitness_atlas:0:26": "number",
+    "metal_fitness_atlas:0:39": "number"
+   }
+  },
+  "specificity-across-conditions": {
+   "claims": {
+    "metal_specificity:0:55": "number"
+   }
+  }
+ }
+}

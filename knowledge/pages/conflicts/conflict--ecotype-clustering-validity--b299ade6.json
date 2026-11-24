@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "evidence-sides": {
+   "claims": {
+    "ibd_phage_targeting:144000:39": "number",
+    "ibd_phage_targeting:16000:14": "number",
+    "ibd_phage_targeting:256000:11": "number"
+   }
+  }
+ }
+}

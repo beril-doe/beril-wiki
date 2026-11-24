@@ -1,0 +1,28 @@
+{
+ "sections": {
+  "habitat-associations-and-niche-partitioning": {
+   "claims": {
+    "microbeatlas_metal_ecology:48000:43": "number"
+   }
+  },
+  "limitations": {
+   "claims": {
+    "genotype_to_phenotype_enigma:32000:45": "overlap"
+   }
+  },
+  "soil-genomic-representation-gaps": {
+   "claims": {
+    "soil_frontier_genomics:0:13": "number",
+    "soil_frontier_genomics:0:7": "number",
+    "soil_frontier_genomics:0:8": "number"
+   }
+  },
+  "what-this-entity-is": {
+   "claims": {
+    "microbeatlas_metal_ecology:0:3": "number",
+    "soil_frontier_genomics:0:2": "number",
+    "soil_frontier_genomics:0:6": "overlap"
+   }
+  }
+ }
+}

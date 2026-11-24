@@ -1,0 +1,49 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "amr_fitness_cost:0:27": "number",
+    "amr_fitness_cost:16000:7": "number",
+    "gene_function_ecological_agora:0:30": "overlap",
+    "pitfalls:48000:20": "number",
+    "pitfalls:48000:21": "number"
+   }
+  },
+  "tensions-and-caveats": {
+   "claims": {
+    "cog_analysis:0:15": "overlap",
+    "metal_cross_resistance:0:21": "number"
+   }
+  },
+  "what-the-corpus-shows": {
+   "claims": {
+    "amr_pangenome_atlas:0:3": "number",
+    "cog_analysis:0:0": "number",
+    "cog_analysis:0:1": "number",
+    "cog_analysis:0:2": "number",
+    "cog_analysis:0:4": "number",
+    "conservation_vs_fitness:0:24": "number",
+    "conservation_vs_fitness:0:27": "number",
+    "conservation_vs_fitness:0:6": "number",
+    "conservation_vs_fitness:0:7": "number",
+    "costly_dispensable_genes:0:1": "number",
+    "discoveries:32000:54": "number",
+    "discoveries:80000:11": "number",
+    "discoveries:80000:12": "number",
+    "fitness_effects_conservation:0:14": "number",
+    "fitness_effects_conservation:0:2": "number",
+    "gene_function_ecological_agora:0:20": "number",
+    "gene_function_ecological_agora:0:24": "number",
+    "gene_function_ecological_agora:16000:19": "number",
+    "metal_fitness_atlas:0:0": "number",
+    "metal_fitness_atlas:0:1": "overlap",
+    "pangenome_openness:0:1": "number",
+    "pangenome_openness:0:2": "number",
+    "pathway_capability_dependency:0:18": "number",
+    "pathway_capability_dependency:0:33": "number",
+    "pathway_capability_dependency:16000:2": "number",
+    "t4ss_cazy_environmental_hgt:0:1": "number"
+   }
+  }
+ }
+}

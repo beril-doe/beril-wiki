@@ -1,0 +1,33 @@
+{
+ "sections": {
+  "key-applications-and-findings": {
+   "claims": {
+    "ecotype_analysis:0:1": "number",
+    "ecotype_analysis:0:2": "number",
+    "ecotype_analysis:0:3": "number",
+    "ecotype_analysis:0:4": "number",
+    "ecotype_analysis:0:6": "overlap",
+    "ecotype_analysis:0:7": "number",
+    "ecotype_analysis:0:8": "number",
+    "prophage_ecology:0:8": "number"
+   }
+  },
+  "limitations-in-this-use": {
+   "claims": {
+    "ecotype_analysis:0:12": "overlap",
+    "ecotype_analysis:0:15": "number",
+    "ecotype_analysis:0:16": "overlap",
+    "ecotype_analysis:0:20": "overlap",
+    "prophage_ecology:16000:11": "number"
+   }
+  },
+  "reanalysis-and-methodological-refinement": {
+   "claims": {
+    "ecotype_env_reanalysis:0:0": "number",
+    "ecotype_env_reanalysis:0:7": "number",
+    "ecotype_env_reanalysis:0:8": "overlap",
+    "soil_metal_functional_genomics:0:16": "overlap"
+   }
+  }
+ }
+}

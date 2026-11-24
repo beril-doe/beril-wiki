@@ -1,0 +1,101 @@
+{
+ "claims": {
+  "prophage_ecology:0:12": "plan",
+  "prophage_ecology:0:14": "plan",
+  "prophage_ecology:0:36": "plan",
+  "prophage_ecology:0:7": "plan",
+  "prophage_ecology:16000:20": "plan",
+  "prophage_ecology:16000:25": "plan",
+  "prophage_ecology:16000:30": "plan",
+  "prophage_ecology:16000:33": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "prophage_ecology:0:38": "overlap",
+    "prophage_ecology:0:44": "number",
+    "prophage_ecology:16000:11": "number",
+    "prophage_ecology:16000:34": "overlap",
+    "prophage_ecology:16000:35": "overlap",
+    "prophage_ecology:16000:6": "overlap",
+    "prophage_ecology:16000:7": "number",
+    "prophage_ecology:16000:8": "number",
+    "prophage_ecology:16000:9": "overlap"
+   }
+  },
+  "data-sources-and-outputs": {
+   "claims": {
+    "prophage_ecology:16000:12": "overlap",
+    "prophage_ecology:16000:13": "overlap",
+    "prophage_ecology:16000:14": "number",
+    "prophage_ecology:16000:15": "number",
+    "prophage_ecology:16000:16": "number",
+    "prophage_ecology:16000:17": "number",
+    "prophage_ecology:16000:18": "number",
+    "prophage_ecology:16000:19": "overlap",
+    "prophage_ecology:16000:21": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "prophage_ecology:0:0": "number",
+    "prophage_ecology:0:1": "overlap",
+    "prophage_ecology:0:10": "number",
+    "prophage_ecology:0:13": "number",
+    "prophage_ecology:0:15": "overlap",
+    "prophage_ecology:0:16": "number",
+    "prophage_ecology:0:17": "overlap",
+    "prophage_ecology:0:18": "number",
+    "prophage_ecology:0:19": "overlap",
+    "prophage_ecology:0:20": "number",
+    "prophage_ecology:0:21": "overlap",
+    "prophage_ecology:0:22": "overlap",
+    "prophage_ecology:0:23": "overlap",
+    "prophage_ecology:0:24": "overlap",
+    "prophage_ecology:0:25": "number",
+    "prophage_ecology:0:26": "overlap",
+    "prophage_ecology:0:27": "overlap",
+    "prophage_ecology:0:28": "number",
+    "prophage_ecology:0:29": "overlap",
+    "prophage_ecology:0:3": "number",
+    "prophage_ecology:0:31": "overlap",
+    "prophage_ecology:0:32": "number",
+    "prophage_ecology:0:34": "overlap",
+    "prophage_ecology:0:35": "number",
+    "prophage_ecology:0:37": "number",
+    "prophage_ecology:0:39": "number",
+    "prophage_ecology:0:4": "number",
+    "prophage_ecology:0:40": "number",
+    "prophage_ecology:0:42": "overlap",
+    "prophage_ecology:0:45": "number",
+    "prophage_ecology:0:46": "number",
+    "prophage_ecology:0:47": "overlap",
+    "prophage_ecology:0:48": "number",
+    "prophage_ecology:0:5": "number",
+    "prophage_ecology:0:6": "overlap",
+    "prophage_ecology:0:8": "number",
+    "prophage_ecology:16000:22": "number",
+    "prophage_ecology:16000:23": "overlap",
+    "prophage_ecology:16000:24": "overlap",
+    "prophage_ecology:16000:26": "overlap",
+    "prophage_ecology:16000:27": "overlap",
+    "prophage_ecology:16000:28": "overlap",
+    "prophage_ecology:16000:29": "overlap",
+    "prophage_ecology:16000:3": "number",
+    "prophage_ecology:16000:31": "overlap",
+    "prophage_ecology:16000:32": "overlap",
+    "prophage_ecology:16000:5": "number"
+   }
+  },
+  "overview": {
+   "claims": {
+    "prophage_ecology:16000:1": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "prophage_ecology:16000:4": "overlap"
+   }
+  }
+ }
+}

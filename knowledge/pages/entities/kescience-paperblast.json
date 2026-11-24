@@ -1,0 +1,19 @@
+{
+ "sections": {
+  "identity": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:0:48": "number",
+    "caulobacter_fur_lipida_loss:32000:14": "number",
+    "paperblast_explorer:0:7": "number"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "berdl_data_atlas:0:0": "number",
+    "paperblast_explorer:0:24": "number",
+    "paperblast_explorer:0:6": "overlap",
+    "paperblast_explorer:16000:0": "number"
+   }
+  }
+ }
+}

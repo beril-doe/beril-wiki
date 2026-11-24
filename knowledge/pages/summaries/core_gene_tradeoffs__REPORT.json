@@ -1,0 +1,47 @@
+{
+ "claims": {
+  "core_gene_tradeoffs:0:16": "plan",
+  "core_gene_tradeoffs:0:18": "plan"
+ },
+ "sections": {
+  "data-sources": {
+   "claims": {
+    "core_gene_tradeoffs:0:29": "number",
+    "core_gene_tradeoffs:0:30": "overlap",
+    "core_gene_tradeoffs:0:31": "overlap",
+    "core_gene_tradeoffs:0:32": "overlap",
+    "core_gene_tradeoffs:0:33": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "core_gene_tradeoffs:0:1": "number",
+    "core_gene_tradeoffs:0:10": "number",
+    "core_gene_tradeoffs:0:11": "number",
+    "core_gene_tradeoffs:0:12": "number",
+    "core_gene_tradeoffs:0:13": "number",
+    "core_gene_tradeoffs:0:14": "number",
+    "core_gene_tradeoffs:0:15": "overlap",
+    "core_gene_tradeoffs:0:17": "overlap",
+    "core_gene_tradeoffs:0:2": "number",
+    "core_gene_tradeoffs:0:20": "overlap",
+    "core_gene_tradeoffs:0:21": "number",
+    "core_gene_tradeoffs:0:22": "number",
+    "core_gene_tradeoffs:0:24": "overlap",
+    "core_gene_tradeoffs:0:3": "overlap",
+    "core_gene_tradeoffs:0:4": "overlap",
+    "core_gene_tradeoffs:0:5": "number",
+    "core_gene_tradeoffs:0:8": "overlap",
+    "core_gene_tradeoffs:0:9": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "core_gene_tradeoffs:0:25": "overlap",
+    "core_gene_tradeoffs:0:27": "number",
+    "core_gene_tradeoffs:0:28": "overlap",
+    "core_gene_tradeoffs:0:6": "number"
+   }
+  }
+ }
+}

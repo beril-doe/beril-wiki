@@ -1,0 +1,14 @@
+{
+ "sections": {
+  "evidence-sides": {
+   "claims": {
+    "discoveries:48000:16": "number"
+   }
+  },
+  "lead": {
+   "claims": {
+    "aromatic_catabolism_network:0:3": "overlap"
+   }
+  }
+ }
+}

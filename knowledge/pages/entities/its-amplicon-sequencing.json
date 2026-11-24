@@ -1,0 +1,19 @@
+{
+ "sections": {
+  "reproducibility-and-limitations": {
+   "claims": {
+    "lignin_community_enrichment:0:8": "number",
+    "lignin_community_enrichment:16000:18": "number",
+    "lignin_community_enrichment:16000:21": "number",
+    "lignin_community_enrichment:16000:26": "number",
+    "lignin_community_enrichment:16000:4": "overlap",
+    "lignin_community_enrichment:16000:7": "number"
+   }
+  },
+  "use-in-the-lignin-enrichment-study": {
+   "claims": {
+    "lignin_community_enrichment:0:19": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "key-facts-from-the-source": {
+   "claims": {
+    "soil_metal_functional_genomics:0:10": "number",
+    "soil_metal_functional_genomics:0:2": "number",
+    "soil_metal_functional_genomics:0:3": "overlap"
+   }
+  }
+ }
+}

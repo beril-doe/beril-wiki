@@ -1,0 +1,173 @@
+{
+ "claims": {
+  "conservation_fitness_synthesis:0:28": "plan",
+  "field_vs_lab_fitness:0:22": "plan",
+  "field_vs_lab_fitness:0:51": "plan",
+  "field_vs_lab_fitness:0:52": "plan",
+  "field_vs_lab_fitness:0:57": "plan",
+  "functional_dark_matter:0:62": "plan",
+  "functional_dark_matter:80000:16": "plan",
+  "functional_dark_matter:80000:26": "plan",
+  "functional_dark_matter:80000:31": "plan",
+  "functional_dark_matter:96000:29": "plan",
+  "lab_field_ecology:0:21": "plan",
+  "lab_field_ecology:0:28": "plan",
+  "metal_cross_resistance:16000:1": "plan"
+ },
+ "sections": {
+  "core-evidence": {
+   "claims": {
+    "discoveries:80000:21": "number",
+    "functional_dark_matter:0:38": "number",
+    "functional_dark_matter:0:39": "number",
+    "functional_dark_matter:0:40": "number",
+    "functional_dark_matter:0:41": "number",
+    "functional_dark_matter:0:42": "number",
+    "functional_dark_matter:0:43": "number",
+    "functional_dark_matter:0:44": "number",
+    "functional_dark_matter:0:45": "number",
+    "functional_dark_matter:0:46": "number",
+    "functional_dark_matter:0:47": "number",
+    "functional_dark_matter:0:48": "number",
+    "functional_dark_matter:0:49": "overlap",
+    "functional_dark_matter:0:53": "number",
+    "functional_dark_matter:0:54": "number",
+    "functional_dark_matter:0:55": "number",
+    "functional_dark_matter:0:56": "number",
+    "functional_dark_matter:0:57": "number",
+    "functional_dark_matter:0:58": "number",
+    "functional_dark_matter:0:59": "number",
+    "functional_dark_matter:0:60": "overlap",
+    "functional_dark_matter:0:63": "number",
+    "functional_dark_matter:16000:5": "number",
+    "functional_dark_matter:48000:41": "number",
+    "functional_dark_matter:64000:38": "number",
+    "functional_dark_matter:64000:39": "number",
+    "functional_dark_matter:80000:11": "number",
+    "functional_dark_matter:80000:32": "number",
+    "functional_dark_matter:80000:5": "overlap",
+    "functional_dark_matter:96000:32": "overlap",
+    "functional_dark_matter:96000:33": "overlap",
+    "functional_dark_matter:96000:38": "overlap"
+   }
+  },
+  "independent-metagenomic-validation": {
+   "claims": {
+    "functional_dark_matter:0:64": "number",
+    "functional_dark_matter:0:65": "number",
+    "functional_dark_matter:0:66": "number",
+    "functional_dark_matter:0:67": "number",
+    "functional_dark_matter:0:68": "number",
+    "functional_dark_matter:0:69": "number",
+    "functional_dark_matter:0:70": "overlap",
+    "functional_dark_matter:0:71": "number",
+    "functional_dark_matter:0:74": "number",
+    "functional_dark_matter:48000:42": "overlap",
+    "functional_dark_matter:64000:40": "number",
+    "functional_dark_matter:64000:41": "overlap"
+   }
+  },
+  "interpretation-and-limits": {
+   "claims": {
+    "field_vs_lab_fitness:0:16": "number",
+    "field_vs_lab_fitness:0:17": "number",
+    "field_vs_lab_fitness:0:18": "number",
+    "field_vs_lab_fitness:0:19": "number",
+    "field_vs_lab_fitness:0:20": "number",
+    "field_vs_lab_fitness:0:21": "number",
+    "field_vs_lab_fitness:0:24": "number",
+    "field_vs_lab_fitness:0:25": "number",
+    "field_vs_lab_fitness:0:26": "number",
+    "field_vs_lab_fitness:0:29": "overlap",
+    "field_vs_lab_fitness:0:4": "number",
+    "field_vs_lab_fitness:0:41": "number",
+    "field_vs_lab_fitness:0:46": "number",
+    "field_vs_lab_fitness:0:47": "overlap",
+    "field_vs_lab_fitness:0:5": "overlap",
+    "field_vs_lab_fitness:0:50": "overlap",
+    "field_vs_lab_fitness:0:61": "overlap",
+    "field_vs_lab_fitness:0:62": "number",
+    "field_vs_lab_fitness:16000:1": "number",
+    "functional_dark_matter:0:72": "overlap",
+    "functional_dark_matter:80000:30": "overlap",
+    "gene_function_ecological_agora:176000:44": "number",
+    "pathway_capability_dependency:16000:19": "number"
+   }
+  },
+  "isolation-ecology-test-of-genome-predicted-metal-tolerance": {
+   "claims": {
+    "bacdive_metal_validation:0:0": "number",
+    "bacdive_metal_validation:0:1": "number",
+    "bacdive_metal_validation:0:10": "number",
+    "bacdive_metal_validation:0:11": "number",
+    "bacdive_metal_validation:0:17": "number",
+    "bacdive_metal_validation:0:18": "overlap",
+    "bacdive_metal_validation:0:19": "number",
+    "bacdive_metal_validation:0:2": "overlap",
+    "bacdive_metal_validation:0:20": "number",
+    "bacdive_metal_validation:0:22": "number",
+    "bacdive_metal_validation:0:23": "number",
+    "bacdive_metal_validation:0:24": "number",
+    "bacdive_metal_validation:0:25": "number",
+    "bacdive_metal_validation:0:32": "number",
+    "bacdive_metal_validation:0:35": "overlap",
+    "bacdive_metal_validation:0:4": "number",
+    "bacdive_metal_validation:0:5": "number",
+    "bacdive_metal_validation:0:6": "number",
+    "bacdive_metal_validation:0:7": "number",
+    "bacdive_metal_validation:0:8": "number",
+    "bacdive_metal_validation:0:9": "number",
+    "metal_cross_resistance:0:21": "number",
+    "metal_cross_resistance:0:22": "overlap",
+    "metal_cross_resistance:0:23": "overlap",
+    "metal_cross_resistance:0:25": "number",
+    "metal_cross_resistance:0:35": "overlap",
+    "metal_fitness_atlas:0:16": "number"
+   }
+  },
+  "oak-ridge-genus-level-field-test-in-detail": {
+   "claims": {
+    "lab_field_ecology:0:0": "overlap",
+    "lab_field_ecology:0:1": "number",
+    "lab_field_ecology:0:10": "number",
+    "lab_field_ecology:0:12": "number",
+    "lab_field_ecology:0:13": "overlap",
+    "lab_field_ecology:0:17": "overlap",
+    "lab_field_ecology:0:18": "overlap",
+    "lab_field_ecology:0:19": "overlap",
+    "lab_field_ecology:0:2": "number",
+    "lab_field_ecology:0:27": "number",
+    "lab_field_ecology:0:29": "overlap",
+    "lab_field_ecology:0:30": "overlap",
+    "lab_field_ecology:0:31": "overlap",
+    "lab_field_ecology:0:34": "overlap",
+    "lab_field_ecology:0:4": "number",
+    "lab_field_ecology:0:5": "number",
+    "lab_field_ecology:0:6": "number",
+    "lab_field_ecology:0:7": "number",
+    "lab_field_ecology:0:8": "number",
+    "lab_field_ecology:0:9": "number"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "amr_pangenome_atlas:16000:16": "overlap",
+    "conservation_fitness_synthesis:0:27": "overlap",
+    "metal_cross_resistance:16000:2": "overlap",
+    "pseudomonas_carbon_ecology:16000:3": "overlap"
+   }
+  },
+  "relation-to-fitness-experiments": {
+   "claims": {
+    "discoveries:80000:22": "number"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "bacdive_metal_validation:0:29": "number",
+    "lab_field_ecology:0:16": "number",
+    "lab_field_ecology:0:3": "overlap"
+   }
+  }
+ }
+}

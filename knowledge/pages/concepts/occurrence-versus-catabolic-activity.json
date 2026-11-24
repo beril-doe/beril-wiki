@@ -1,0 +1,88 @@
+{
+ "claims": {
+  "enigma_carbon_census_1:0:37": "plan",
+  "enigma_carbon_census_1:16000:37": "plan",
+  "enigma_carbon_census_1:16000:38": "plan",
+  "enigma_carbon_census_1:16000:43": "plan",
+  "fw300_metabolic_consistency:16000:6": "plan",
+  "ibd_phage_targeting:128000:11": "plan",
+  "ibd_phage_targeting:208000:20": "plan",
+  "ibd_phage_targeting:256000:24": "plan",
+  "lignin_community_enrichment:16000:56": "plan",
+  "nmdc_community_metabolic_ecology:0:27": "plan",
+  "webofmicrobes_explorer:0:23": "plan"
+ },
+ "sections": {
+  "activity-evidence-imported-from-other-studies": {
+   "claims": {
+    "cf_formulation_design:16000:52": "number",
+    "clay_confined_subsurface:16000:21": "number",
+    "harvard_forest_warming:0:37": "number",
+    "harvard_forest_warming:16000:29": "number",
+    "phb_granule_ecology:0:23": "number",
+    "phb_granule_ecology:0:44": "overlap"
+   }
+  },
+  "enrichment-response-is-not-catabolic-proof": {
+   "claims": {
+    "lignin_community_enrichment:0:10": "number",
+    "lignin_community_enrichment:0:11": "number",
+    "lignin_community_enrichment:0:12": "number",
+    "lignin_community_enrichment:0:13": "number",
+    "lignin_community_enrichment:0:14": "number",
+    "lignin_community_enrichment:16000:8": "overlap",
+    "lignin_community_enrichment:16000:9": "overlap"
+   }
+  },
+  "evidence-from-the-enigma-carbon-census": {
+   "claims": {
+    "enigma_carbon_census_1:0:27": "number",
+    "enigma_carbon_census_1:0:39": "number",
+    "enigma_carbon_census_1:0:40": "overlap",
+    "enigma_carbon_census_1:0:41": "number",
+    "enigma_carbon_census_1:0:43": "number",
+    "enigma_carbon_census_1:0:44": "number",
+    "enigma_carbon_census_1:16000:39": "number",
+    "enigma_carbon_census_1:16000:53": "overlap",
+    "enigma_carbon_census_1:16000:7": "number"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "enigma_carbon_census_1:32000:42": "overlap",
+    "nmdc_community_metabolic_ecology:16000:26": "overlap"
+   }
+  },
+  "pool-level-evidence-in-a-human-cohort": {
+   "claims": {
+    "ibd_phage_targeting:112000:18": "number",
+    "ibd_phage_targeting:112000:19": "number",
+    "ibd_phage_targeting:112000:20": "overlap",
+    "ibd_phage_targeting:112000:25": "number",
+    "ibd_phage_targeting:112000:28": "overlap",
+    "ibd_phage_targeting:144000:24": "number",
+    "ibd_phage_targeting:16000:8": "overlap",
+    "ibd_phage_targeting:208000:2": "number",
+    "ibd_phage_targeting:208000:22": "overlap",
+    "ibd_phage_targeting:208000:24": "number",
+    "ibd_phage_targeting:208000:3": "overlap",
+    "ibd_phage_targeting:208000:49": "number",
+    "ibd_phage_targeting:224000:0": "number",
+    "ibd_phage_targeting:224000:1": "overlap",
+    "ibd_phage_targeting:80000:28": "number"
+   }
+  },
+  "production-pools-and-flux-are-different-measurements": {
+   "claims": {
+    "discoveries:0:17": "overlap",
+    "discoveries:96000:14": "number",
+    "fw300_metabolic_consistency:0:10": "overlap",
+    "fw300_metabolic_consistency:0:26": "overlap",
+    "fw300_metabolic_consistency:0:30": "overlap",
+    "fw300_metabolic_consistency:0:4": "overlap",
+    "pitfalls:112000:70": "number",
+    "webofmicrobes_explorer:0:3": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "sections": {
+  "key-facts-from-the-studies": {
+   "claims": {
+    "metal_cross_resistance:0:36": "overlap",
+    "metal_fitness_atlas:0:21": "overlap",
+    "metal_fitness_atlas:0:22": "overlap",
+    "metal_fitness_atlas:0:23": "overlap",
+    "metal_fitness_atlas:0:24": "overlap",
+    "metal_fitness_atlas:0:25": "overlap",
+    "metal_fitness_atlas:0:26": "overlap",
+    "metal_fitness_atlas:0:27": "number",
+    "metal_fitness_atlas:0:28": "overlap",
+    "metal_fitness_atlas:0:29": "overlap",
+    "metal_fitness_atlas:0:30": "overlap",
+    "metal_fitness_atlas:0:31": "overlap",
+    "metal_fitness_atlas:0:32": "overlap",
+    "metal_specificity:0:59": "number"
+   }
+  }
+ }
+}

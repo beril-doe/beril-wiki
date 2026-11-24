@@ -1,0 +1,25 @@
+{
+ "sections": {
+  "evidence-from-adp1-triple-essentiality": {
+   "claims": {
+    "adp1_triple_essentiality:0:30": "number",
+    "aromatic_catabolism_network:0:4": "number"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "respiratory_chain_wiring:0:34": "overlap"
+   }
+  },
+  "related-evidence": {
+   "claims": {
+    "adp1_triple_essentiality:0:22": "number"
+   }
+  },
+  "what-this-entity-is": {
+   "claims": {
+    "aromatic_catabolism_network:0:16": "overlap"
+   }
+  }
+ }
+}

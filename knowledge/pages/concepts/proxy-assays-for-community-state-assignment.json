@@ -1,0 +1,23 @@
+{
+ "sections": {
+  "clinical-covariates-alone-do-not-reproduce-metagenomic-calls": {
+   "claims": {
+    "ibd_phage_targeting:272000:19": "overlap",
+    "ibd_phage_targeting:272000:20": "number",
+    "ibd_phage_targeting:272000:49": "number",
+    "ibd_phage_targeting:272000:63": "overlap"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "ibd_phage_targeting:272000:18": "overlap"
+   }
+  },
+  "targeted-qpcr-as-a-candidate-cheaper-proxy": {
+   "claims": {
+    "ibd_phage_targeting:272000:61": "number",
+    "ibd_phage_targeting:272000:62": "overlap"
+   }
+  }
+ }
+}

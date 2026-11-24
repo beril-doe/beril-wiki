@@ -1,0 +1,24 @@
+{
+ "sections": {
+  "evidence-from-pgp-pangenome-ecology": {
+   "claims": {
+    "pgp_pangenome_ecology:0:15": "number",
+    "pgp_pangenome_ecology:0:18": "number",
+    "pgp_pangenome_ecology:0:4": "number",
+    "pgp_pangenome_ecology:0:5": "number",
+    "pgp_pangenome_ecology:0:7": "number"
+   }
+  },
+  "pangenome-distribution": {
+   "claims": {
+    "pgp_pangenome_ecology:0:20": "number",
+    "pgp_pangenome_ecology:0:27": "number"
+   }
+  },
+  "related-pages": {
+   "claims": {
+    "pgp_pangenome_ecology:0:22": "overlap"
+   }
+  }
+ }
+}

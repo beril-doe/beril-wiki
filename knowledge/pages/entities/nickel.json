@@ -1,0 +1,39 @@
+{
+ "sections": {
+  "cross-metal-fitness-evidence": {
+   "claims": {
+    "metal_cross_resistance:0:1": "number"
+   }
+  },
+  "environmental-metal-resistance-ecology": {
+   "claims": {
+    "microbeatlas_metal_ecology:0:75": "number",
+    "microbeatlas_metal_ecology:0:78": "number"
+   }
+  },
+  "field-versus-lab-fitness-evidence": {
+   "claims": {
+    "field_vs_lab_fitness:0:16": "overlap",
+    "field_vs_lab_fitness:0:18": "overlap",
+    "field_vs_lab_fitness:0:21": "number",
+    "field_vs_lab_fitness:0:39": "number"
+   }
+  },
+  "fitness-and-stress-response-evidence": {
+   "claims": {
+    "metal_specificity:0:56": "number"
+   }
+  },
+  "pan-bacterial-atlas-evidence": {
+   "claims": {
+    "metal_fitness_atlas:0:30": "number"
+   }
+  },
+  "soil-functional-genomics-evidence": {
+   "claims": {
+    "soil_metal_functional_genomics:0:10": "number",
+    "soil_metal_functional_genomics:0:2": "number"
+   }
+  }
+ }
+}

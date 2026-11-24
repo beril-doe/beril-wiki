@@ -1,0 +1,13 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "snipe_defense_system:0:25": "overlap",
+    "snipe_defense_system:0:26": "number",
+    "snipe_defense_system:0:4": "overlap",
+    "snipe_defense_system:16000:19": "number",
+    "snipe_defense_system:16000:4": "number"
+   }
+  }
+ }
+}

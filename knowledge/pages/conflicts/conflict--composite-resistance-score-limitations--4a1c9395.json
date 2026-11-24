@@ -1,0 +1,14 @@
+{
+ "sections": {
+  "evidence-sides": {
+   "claims": {
+    "bacdive_metal_validation:0:12": "overlap"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:0:8": "number"
+   }
+  }
+ }
+}

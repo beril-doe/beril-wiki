@@ -1,0 +1,112 @@
+{
+ "sections": {
+  "condition-specific-fitness": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:12": "number",
+    "adp1_triple_essentiality:0:24": "number",
+    "adp1_triple_essentiality:0:25": "number",
+    "adp1_triple_essentiality:16000:34": "number",
+    "aromatic_catabolism_network:0:14": "number"
+   }
+  },
+  "deletion-collection-coverage-and-pangenome": {
+   "claims": {
+    "adp1_deletion_phenotypes:0:18": "overlap",
+    "adp1_deletion_phenotypes:0:22": "number",
+    "adp1_triple_essentiality:0:35": "number"
+   }
+  },
+  "essentiality-and-metabolism": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:13": "number",
+    "acinetobacter_adp1_explorer:0:14": "overlap",
+    "acinetobacter_adp1_explorer:0:15": "number",
+    "acinetobacter_adp1_explorer:0:16": "number",
+    "acinetobacter_adp1_explorer:0:20": "number",
+    "acinetobacter_adp1_explorer:0:45": "overlap",
+    "adp1_deletion_phenotypes:0:45": "number",
+    "adp1_triple_essentiality:0:11": "number",
+    "adp1_triple_essentiality:0:12": "number",
+    "adp1_triple_essentiality:16000:1": "number",
+    "adp1_triple_essentiality:16000:2": "number",
+    "adp1_triple_essentiality:16000:25": "number",
+    "adp1_triple_essentiality:32000:4": "number",
+    "adp1_triple_essentiality:32000:52": "number",
+    "adp1_triple_essentiality:32000:53": "number",
+    "adp1_triple_essentiality:48000:0": "number",
+    "adp1_triple_essentiality:48000:1": "number",
+    "adp1_triple_essentiality:48000:14": "number",
+    "adp1_triple_essentiality:48000:16": "number",
+    "adp1_triple_essentiality:48000:2": "overlap",
+    "adp1_triple_essentiality:48000:4": "overlap",
+    "aromatic_catabolism_network:0:3": "number",
+    "aromatic_catabolism_network:0:4": "number"
+   }
+  },
+  "kbase-data-lakehouse-integration": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:5": "number"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:1": "overlap",
+    "acinetobacter_adp1_explorer:0:18": "overlap",
+    "acinetobacter_adp1_explorer:0:19": "number"
+   }
+  },
+  "limitations": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:22": "number",
+    "acinetobacter_adp1_explorer:0:23": "number",
+    "acinetobacter_adp1_explorer:0:24": "number",
+    "acinetobacter_adp1_explorer:0:25": "overlap",
+    "respiratory_chain_wiring:0:29": "overlap"
+   }
+  },
+  "model-gaps-and-multi-omic-evidence": {
+   "claims": {
+    "adp1_triple_essentiality:0:22": "number",
+    "adp1_triple_essentiality:0:30": "number",
+    "adp1_triple_essentiality:0:32": "number",
+    "adp1_triple_essentiality:0:33": "number",
+    "adp1_triple_essentiality:16000:13": "number",
+    "adp1_triple_essentiality:16000:14": "number",
+    "adp1_triple_essentiality:16000:28": "overlap",
+    "adp1_triple_essentiality:16000:33": "number",
+    "adp1_triple_essentiality:32000:3": "overlap",
+    "adp1_triple_essentiality:48000:3": "number",
+    "adp1_triple_essentiality:48000:6": "number",
+    "adp1_triple_essentiality:48000:7": "number",
+    "adp1_triple_essentiality:48000:8": "number",
+    "aromatic_catabolism_network:0:11": "number",
+    "aromatic_catabolism_network:0:34": "number",
+    "aromatic_catabolism_network:0:6": "number"
+   }
+  },
+  "pangenome-cluster-bridge": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:26": "number",
+    "acinetobacter_adp1_explorer:0:8": "number",
+    "acinetobacter_adp1_explorer:0:9": "number"
+   }
+  },
+  "respiratory-chain-wiring": {
+   "claims": {
+    "respiratory_chain_wiring:0:1": "overlap",
+    "respiratory_chain_wiring:0:15": "number",
+    "respiratory_chain_wiring:0:16": "number",
+    "respiratory_chain_wiring:0:19": "number",
+    "respiratory_chain_wiring:0:2": "overlap",
+    "respiratory_chain_wiring:0:25": "overlap",
+    "respiratory_chain_wiring:0:27": "overlap",
+    "respiratory_chain_wiring:0:3": "overlap",
+    "respiratory_chain_wiring:0:4": "overlap",
+    "respiratory_chain_wiring:0:5": "overlap",
+    "respiratory_chain_wiring:0:6": "number",
+    "respiratory_chain_wiring:0:8": "number",
+    "respiratory_chain_wiring:0:9": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "sections": {
+  "findings-in-ecotype-functional-differentiation": {
+   "claims": {
+    "ecotype_functional_differentiation:0:33": "number"
+   }
+  },
+  "interpretation-and-limitations": {
+   "claims": {
+    "ecotype_functional_differentiation:0:41": "number"
+   }
+  }
+ }
+}

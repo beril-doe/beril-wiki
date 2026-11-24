@@ -1,0 +1,54 @@
+{
+ "claims": {
+  "discoveries:16000:24": "plan",
+  "euk_in_prok_correlates:0:21": "plan",
+  "euk_in_prok_correlates:16000:11": "plan",
+  "ibd_phage_targeting:208000:28": "plan",
+  "ibd_phage_targeting:48000:14": "plan",
+  "nmdc_community_metabolic_ecology:16000:1": "plan",
+  "pitfalls:0:15": "plan",
+  "pitfalls:32000:32": "plan"
+ },
+ "sections": {
+  "cross-classifier-projection-in-gut-microbiome-cohorts": {
+   "claims": {
+    "discoveries:16000:25": "number",
+    "discoveries:16000:26": "number",
+    "discoveries:16000:27": "overlap",
+    "ibd_phage_targeting:0:10": "number",
+    "ibd_phage_targeting:176000:37": "number",
+    "ibd_phage_targeting:176000:59": "overlap",
+    "ibd_phage_targeting:176000:65": "number",
+    "ibd_phage_targeting:224000:40": "overlap",
+    "ibd_phage_targeting:240000:10": "number",
+    "ibd_phage_targeting:272000:3": "number",
+    "ibd_phage_targeting:32000:3": "number",
+    "ibd_phage_targeting:48000:13": "number",
+    "ibd_phage_targeting:48000:18": "number",
+    "ibd_phage_targeting:48000:5": "number",
+    "ibd_phage_targeting:64000:30": "overlap"
+   }
+  },
+  "evidence-from-the-nmdc-eukaryotic-read-analysis": {
+   "claims": {
+    "euk_in_prok_correlates:0:1": "overlap",
+    "euk_in_prok_correlates:0:36": "overlap",
+    "euk_in_prok_correlates:16000:7": "overlap"
+   }
+  },
+  "reference-coverage-and-taxonomy-key-reconciliation": {
+   "claims": {
+    "lignin_community_enrichment:16000:18": "number",
+    "lignin_community_enrichment:16000:19": "overlap",
+    "lignin_community_enrichment:16000:7": "number",
+    "microbeatlas_metal_ecology:64000:17": "overlap",
+    "microbeatlas_metal_ecology:64000:6": "number",
+    "nmdc_community_metabolic_ecology:0:10": "number",
+    "nmdc_community_metabolic_ecology:0:30": "number",
+    "pitfalls:0:14": "overlap",
+    "pitfalls:0:16": "number",
+    "pitfalls:32000:2": "overlap"
+   }
+  }
+ }
+}

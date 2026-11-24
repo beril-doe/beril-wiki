@@ -1,0 +1,106 @@
+{
+ "claims": {
+  "amr_cofitness_networks:0:24": "plan",
+  "amr_cofitness_networks:0:32": "plan",
+  "amr_cofitness_networks:16000:1": "plan",
+  "amr_cofitness_networks:16000:15": "plan",
+  "amr_cofitness_networks:16000:17": "plan",
+  "amr_cofitness_networks:16000:18": "plan",
+  "amr_cofitness_networks:16000:2": "plan",
+  "amr_cofitness_networks:16000:26": "plan",
+  "amr_cofitness_networks:16000:28": "plan",
+  "amr_cofitness_networks:16000:6": "plan",
+  "amr_cofitness_networks:16000:8": "plan",
+  "amr_cofitness_networks:16000:9": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "amr_cofitness_networks:0:51": "overlap",
+    "amr_cofitness_networks:0:53": "number",
+    "amr_cofitness_networks:16000:0": "number"
+   }
+  },
+  "data-sources-and-outputs": {
+   "claims": {
+    "amr_cofitness_networks:16000:10": "number",
+    "amr_cofitness_networks:16000:11": "number",
+    "amr_cofitness_networks:16000:12": "number",
+    "amr_cofitness_networks:16000:13": "number",
+    "amr_cofitness_networks:16000:14": "number",
+    "amr_cofitness_networks:16000:16": "number",
+    "amr_cofitness_networks:16000:22": "overlap",
+    "amr_cofitness_networks:16000:24": "overlap",
+    "amr_cofitness_networks:16000:25": "overlap",
+    "amr_cofitness_networks:16000:29": "overlap",
+    "amr_cofitness_networks:16000:3": "overlap",
+    "amr_cofitness_networks:16000:4": "overlap",
+    "amr_cofitness_networks:16000:5": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "amr_cofitness_networks:0:0": "overlap",
+    "amr_cofitness_networks:0:1": "number",
+    "amr_cofitness_networks:0:10": "number",
+    "amr_cofitness_networks:0:11": "number",
+    "amr_cofitness_networks:0:14": "overlap",
+    "amr_cofitness_networks:0:15": "overlap",
+    "amr_cofitness_networks:0:16": "number",
+    "amr_cofitness_networks:0:17": "number",
+    "amr_cofitness_networks:0:18": "number",
+    "amr_cofitness_networks:0:19": "overlap",
+    "amr_cofitness_networks:0:2": "number",
+    "amr_cofitness_networks:0:20": "overlap",
+    "amr_cofitness_networks:0:21": "number",
+    "amr_cofitness_networks:0:22": "number",
+    "amr_cofitness_networks:0:23": "number",
+    "amr_cofitness_networks:0:25": "number",
+    "amr_cofitness_networks:0:26": "number",
+    "amr_cofitness_networks:0:27": "number",
+    "amr_cofitness_networks:0:28": "number",
+    "amr_cofitness_networks:0:29": "number",
+    "amr_cofitness_networks:0:3": "number",
+    "amr_cofitness_networks:0:30": "number",
+    "amr_cofitness_networks:0:31": "number",
+    "amr_cofitness_networks:0:33": "number",
+    "amr_cofitness_networks:0:34": "number",
+    "amr_cofitness_networks:0:35": "number",
+    "amr_cofitness_networks:0:36": "number",
+    "amr_cofitness_networks:0:37": "number",
+    "amr_cofitness_networks:0:38": "number",
+    "amr_cofitness_networks:0:39": "number",
+    "amr_cofitness_networks:0:4": "overlap",
+    "amr_cofitness_networks:0:40": "overlap",
+    "amr_cofitness_networks:0:41": "number",
+    "amr_cofitness_networks:0:44": "number",
+    "amr_cofitness_networks:0:45": "number",
+    "amr_cofitness_networks:0:46": "number",
+    "amr_cofitness_networks:0:47": "number",
+    "amr_cofitness_networks:0:48": "number",
+    "amr_cofitness_networks:0:49": "number",
+    "amr_cofitness_networks:0:5": "number",
+    "amr_cofitness_networks:0:50": "number",
+    "amr_cofitness_networks:0:6": "number",
+    "amr_cofitness_networks:0:7": "number",
+    "amr_cofitness_networks:0:8": "number",
+    "amr_cofitness_networks:0:9": "number",
+    "amr_cofitness_networks:16000:23": "overlap",
+    "amr_cofitness_networks:16000:27": "overlap",
+    "amr_cofitness_networks:16000:31": "number",
+    "amr_cofitness_networks:16000:7": "number"
+   }
+  },
+  "proposed-follow-up-analyses": {
+   "claims": {
+    "amr_cofitness_networks:16000:34": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "amr_cofitness_networks:0:12": "overlap",
+    "amr_cofitness_networks:16000:30": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,10 @@
+{
+ "sections": {
+  "evidence-from-genotype-to-phenotype-enigma": {
+   "claims": {
+    "genotype_to_phenotype_enigma:32000:26": "number",
+    "genotype_to_phenotype_enigma:48000:8": "overlap"
+   }
+  }
+ }
+}

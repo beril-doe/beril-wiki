@@ -1,0 +1,13 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "metal_cross_resistance:0:34": "overlap",
+    "metal_cross_resistance:0:4": "number",
+    "metal_fitness_atlas:0:19": "overlap",
+    "metal_fitness_atlas:0:28": "number",
+    "metal_specificity:0:57": "number"
+   }
+  }
+ }
+}

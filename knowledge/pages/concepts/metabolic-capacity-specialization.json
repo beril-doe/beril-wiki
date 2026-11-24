@@ -1,0 +1,41 @@
+{
+ "claims": {
+  "enigma_carbon_census_1:0:50": "plan",
+  "enigma_carbon_census_1:0:52": "plan",
+  "enigma_carbon_census_1:0:53": "plan",
+  "pseudomonas_carbon_ecology:0:1": "plan",
+  "pseudomonas_carbon_ecology:0:16": "plan",
+  "pseudomonas_carbon_ecology:0:24": "plan"
+ },
+ "sections": {
+  "co-occurrence-does-not-imply-a-portable-module": {
+   "claims": {
+    "enigma_carbon_census_1:0:20": "number",
+    "enigma_carbon_census_1:32000:11": "overlap"
+   }
+  },
+  "evidence-for-specialist-dominated-capacity": {
+   "claims": {
+    "enigma_carbon_census_1:0:15": "number",
+    "genotype_to_phenotype_enigma:0:10": "number"
+   }
+  },
+  "lineage-level-pathway-loss-the-pseudomonas-case": {
+   "claims": {
+    "discoveries:80000:29": "number",
+    "pseudomonas_carbon_ecology:0:0": "number",
+    "pseudomonas_carbon_ecology:0:15": "number",
+    "pseudomonas_carbon_ecology:0:17": "overlap",
+    "pseudomonas_carbon_ecology:0:25": "number"
+   }
+  },
+  "taxonomic-concentration": {
+   "claims": {
+    "enigma_carbon_census_1:0:22": "overlap",
+    "enigma_carbon_census_1:0:54": "overlap",
+    "enigma_carbon_census_1:16000:3": "overlap",
+    "phb_granule_ecology:0:3": "number"
+   }
+  }
+ }
+}

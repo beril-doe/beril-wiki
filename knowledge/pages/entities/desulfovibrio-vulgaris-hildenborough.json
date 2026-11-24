@@ -1,0 +1,35 @@
+{
+ "sections": {
+  "findings-in-counter-ion-effects": {
+   "claims": {
+    "counter_ion_effects:0:7": "number"
+   }
+  },
+  "findings-in-field-vs-lab-fitness": {
+   "claims": {
+    "field_vs_lab_fitness:0:14": "number",
+    "field_vs_lab_fitness:0:15": "number",
+    "field_vs_lab_fitness:0:16": "number",
+    "field_vs_lab_fitness:0:20": "number",
+    "field_vs_lab_fitness:0:21": "number"
+   }
+  },
+  "findings-in-lab-field-ecology": {
+   "claims": {
+    "lab_field_ecology:0:2": "number",
+    "lab_field_ecology:0:22": "number"
+   }
+  },
+  "findings-in-truly-dark-genes": {
+   "claims": {
+    "truly_dark_genes:0:16": "number"
+   }
+  },
+  "limitations": {
+   "claims": {
+    "essential_metabolome:0:20": "overlap",
+    "truly_dark_genes:0:36": "overlap"
+   }
+  }
+ }
+}

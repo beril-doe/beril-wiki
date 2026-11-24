@@ -1,0 +1,16 @@
+{
+ "sections": {
+  "key-facts-from-the-reports": {
+   "claims": {
+    "amr_environmental_resistome:0:21": "number",
+    "amr_environmental_resistome:0:8": "overlap",
+    "amr_environmental_resistome:16000:3": "number",
+    "amr_pangenome_atlas:0:11": "number",
+    "amr_pangenome_atlas:16000:20": "number",
+    "metal_resistance_global_biogeography:0:24": "number",
+    "microbeatlas_metal_ecology:0:2": "number",
+    "microbeatlas_metal_ecology:32000:14": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "sections": {
+  "annotation-context-and-limitations": {
+   "claims": {
+    "cog_analysis:0:19": "number",
+    "cog_analysis:0:22": "overlap",
+    "core_gene_tradeoffs:0:26": "overlap",
+    "ecotype_functional_differentiation:0:41": "number",
+    "enigma_contamination_functional_potential:0:35": "number",
+    "enigma_contamination_functional_potential:0:36": "overlap"
+   }
+  },
+  "composite-categories": {
+   "claims": {
+    "cog_analysis:0:10": "number",
+    "cog_analysis:0:20": "overlap"
+   }
+  },
+  "key-facts-from-cog-analysis": {
+   "claims": {
+    "cog_analysis:0:1": "number",
+    "cog_analysis:0:15": "number",
+    "cog_analysis:0:17": "overlap",
+    "cog_analysis:0:2": "number",
+    "cog_analysis:0:3": "number",
+    "cog_analysis:0:4": "number",
+    "cog_analysis:0:5": "number",
+    "cog_analysis:0:6": "number",
+    "cog_analysis:0:7": "number",
+    "cog_analysis:0:8": "number",
+    "core_gene_tradeoffs:0:1": "number",
+    "core_gene_tradeoffs:0:2": "number",
+    "core_gene_tradeoffs:0:6": "number",
+    "ecotype_functional_differentiation:0:10": "number",
+    "ecotype_functional_differentiation:0:3": "number",
+    "ecotype_functional_differentiation:0:33": "number",
+    "ecotype_functional_differentiation:0:9": "overlap",
+    "soil_metal_functional_genomics:0:7": "overlap"
+   }
+  },
+  "what-this-entity-is": {
+   "claims": {
+    "cog_analysis:0:0": "number",
+    "ecotype_functional_differentiation:0:1": "number",
+    "soil_metal_functional_genomics:0:2": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "sections": {
+  "prophage-validation-species": {
+   "claims": {
+    "prophage_ecology:0:31": "overlap"
+   }
+  },
+  "proposed-fitness-browser-library-addition": {
+   "claims": {
+    "functional_dark_matter:16000:29": "overlap",
+    "functional_dark_matter:32000:31": "number",
+    "functional_dark_matter:96000:19": "number"
+   }
+  }
+ }
+}

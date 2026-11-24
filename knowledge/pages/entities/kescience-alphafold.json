@@ -1,0 +1,25 @@
+{
+ "sections": {
+  "key-facts-from-alphafold-msa-annotation": {
+   "claims": {
+    "alphafold_msa_annotation:0:0": "number",
+    "alphafold_msa_annotation:0:1": "overlap",
+    "alphafold_msa_annotation:0:10": "number",
+    "alphafold_msa_annotation:0:2": "number",
+    "alphafold_msa_annotation:0:26": "overlap",
+    "alphafold_msa_annotation:0:4": "number",
+    "alphafold_msa_annotation:0:5": "number",
+    "alphafold_msa_annotation:0:9": "number"
+   }
+  },
+  "validated-structural-fitness-integration": {
+   "claims": {
+    "berdl_data_atlas:0:19": "number",
+    "berdl_data_atlas:0:21": "overlap",
+    "berdl_data_atlas:0:22": "number",
+    "berdl_data_atlas:0:23": "number",
+    "berdl_data_atlas:16000:56": "number"
+   }
+  }
+ }
+}

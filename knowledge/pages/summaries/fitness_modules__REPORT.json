@@ -1,0 +1,64 @@
+{
+ "claims": {
+  "fitness_modules:0:10": "plan",
+  "fitness_modules:0:11": "plan",
+  "fitness_modules:0:19": "plan",
+  "fitness_modules:0:20": "plan",
+  "fitness_modules:0:21": "plan",
+  "fitness_modules:0:6": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "fitness_modules:0:37": "number",
+    "fitness_modules:0:38": "number"
+   }
+  },
+  "figures": {
+   "claims": {
+    "fitness_modules:0:26": "overlap",
+    "fitness_modules:0:31": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "fitness_modules:0:0": "number",
+    "fitness_modules:0:1": "number",
+    "fitness_modules:0:12": "number",
+    "fitness_modules:0:13": "number",
+    "fitness_modules:0:14": "number",
+    "fitness_modules:0:15": "number",
+    "fitness_modules:0:16": "number",
+    "fitness_modules:0:17": "number",
+    "fitness_modules:0:2": "number",
+    "fitness_modules:0:22": "number",
+    "fitness_modules:0:23": "overlap",
+    "fitness_modules:0:24": "number",
+    "fitness_modules:0:25": "overlap",
+    "fitness_modules:0:28": "number",
+    "fitness_modules:0:29": "number",
+    "fitness_modules:0:30": "overlap",
+    "fitness_modules:0:35": "number",
+    "fitness_modules:0:36": "number",
+    "fitness_modules:0:5": "number",
+    "fitness_modules:0:7": "number",
+    "fitness_modules:0:8": "number"
+   }
+  },
+  "methods-and-data": {
+   "claims": {
+    "fitness_modules:0:40": "overlap",
+    "fitness_modules:0:41": "overlap"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "fitness_modules:0:27": "number",
+    "fitness_modules:0:3": "overlap",
+    "fitness_modules:0:32": "overlap",
+    "fitness_modules:0:33": "number",
+    "fitness_modules:0:9": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "sections": {
+  "predicted-pathway-gaps-across-organisms": {
+   "claims": {
+    "functional_dark_matter:0:8": "number",
+    "functional_dark_matter:0:9": "overlap",
+    "functional_dark_matter:48000:38": "number",
+    "functional_dark_matter:64000:42": "number",
+    "functional_dark_matter:80000:43": "number"
+   }
+  }
+ }
+}

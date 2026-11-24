@@ -1,0 +1,18 @@
+{
+ "sections": {
+  "analytical-use": {
+   "claims": {
+    "genotype_to_phenotype_enigma:32000:29": "overlap"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "genotype_to_phenotype_enigma:16000:39": "number",
+    "genotype_to_phenotype_enigma:32000:14": "overlap",
+    "genotype_to_phenotype_enigma:32000:16": "overlap",
+    "genotype_to_phenotype_enigma:32000:2": "number",
+    "genotype_to_phenotype_enigma:48000:3": "number"
+   }
+  }
+ }
+}

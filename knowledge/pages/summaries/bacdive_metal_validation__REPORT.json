@@ -1,0 +1,63 @@
+{
+ "claims": {
+  "bacdive_metal_validation:0:30": "plan",
+  "bacdive_metal_validation:0:39": "plan",
+  "bacdive_metal_validation:0:40": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "bacdive_metal_validation:0:18": "overlap",
+    "bacdive_metal_validation:0:38": "overlap"
+   }
+  },
+  "figures": {
+   "claims": {
+    "bacdive_metal_validation:0:41": "overlap",
+    "bacdive_metal_validation:0:42": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "bacdive_metal_validation:0:1": "number",
+    "bacdive_metal_validation:0:10": "number",
+    "bacdive_metal_validation:0:11": "number",
+    "bacdive_metal_validation:0:12": "number",
+    "bacdive_metal_validation:0:13": "number",
+    "bacdive_metal_validation:0:14": "number",
+    "bacdive_metal_validation:0:16": "overlap",
+    "bacdive_metal_validation:0:17": "number",
+    "bacdive_metal_validation:0:19": "number",
+    "bacdive_metal_validation:0:20": "number",
+    "bacdive_metal_validation:0:22": "number",
+    "bacdive_metal_validation:0:23": "number",
+    "bacdive_metal_validation:0:24": "number",
+    "bacdive_metal_validation:0:25": "number",
+    "bacdive_metal_validation:0:26": "number",
+    "bacdive_metal_validation:0:29": "number",
+    "bacdive_metal_validation:0:3": "number",
+    "bacdive_metal_validation:0:31": "overlap",
+    "bacdive_metal_validation:0:32": "number",
+    "bacdive_metal_validation:0:4": "number",
+    "bacdive_metal_validation:0:5": "number",
+    "bacdive_metal_validation:0:6": "number",
+    "bacdive_metal_validation:0:7": "number",
+    "bacdive_metal_validation:0:8": "number",
+    "bacdive_metal_validation:0:9": "number"
+   }
+  },
+  "overview": {
+   "claims": {
+    "bacdive_metal_validation:0:0": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "bacdive_metal_validation:0:21": "overlap",
+    "bacdive_metal_validation:0:27": "number",
+    "bacdive_metal_validation:0:36": "overlap",
+    "bacdive_metal_validation:0:37": "number"
+   }
+  }
+ }
+}

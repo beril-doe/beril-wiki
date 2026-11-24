@@ -1,0 +1,294 @@
+{
+ "claims": {
+  "amr_pangenome_atlas:0:23": "plan",
+  "bacillota_b_subsurface_accessory:0:42": "plan",
+  "bacillota_b_subsurface_accessory:16000:12": "plan",
+  "bacillota_b_subsurface_accessory:16000:20": "plan",
+  "clay_confined_subsurface:0:0": "plan",
+  "clay_confined_subsurface:0:10": "plan",
+  "clay_confined_subsurface:0:8": "plan",
+  "clay_confined_subsurface:16000:5": "plan",
+  "clay_confined_subsurface:16000:6": "plan",
+  "clay_confined_subsurface:16000:9": "plan",
+  "discoveries:112000:10": "plan",
+  "discoveries:112000:17": "plan",
+  "discoveries:32000:12": "plan",
+  "enigma_carbon_census_1:0:29": "plan",
+  "enigma_carbon_census_1:16000:22": "plan",
+  "enigma_carbon_census_1:16000:35": "plan",
+  "enigma_sso_asv_ecology:0:67": "plan",
+  "enigma_sso_asv_ecology:16000:10": "plan",
+  "enigma_sso_asv_ecology:16000:48": "plan",
+  "enigma_sso_asv_ecology:16000:7": "plan",
+  "gene_function_ecological_agora:192000:2": "plan",
+  "gene_function_ecological_agora:192000:45": "plan",
+  "gene_function_ecological_agora:48000:31": "plan",
+  "gene_function_ecological_agora:64000:24": "plan",
+  "gene_function_ecological_agora:64000:35": "plan",
+  "gene_function_ecological_agora:80000:27": "plan",
+  "gene_function_ecological_agora:80000:28": "plan",
+  "gene_function_ecological_agora:80000:32": "plan",
+  "gene_function_ecological_agora:96000:30": "plan",
+  "ibd_phage_targeting:144000:14": "plan",
+  "ibd_phage_targeting:144000:17": "plan",
+  "ibd_phage_targeting:144000:7": "plan",
+  "lanthanide_methylotrophy_atlas:16000:16": "plan",
+  "microbeatlas_metal_ecology:32000:1": "plan",
+  "microbeatlas_metal_ecology:32000:3": "plan",
+  "pgp_pangenome_ecology:0:52": "plan",
+  "phage_defense_arsenal:0:31": "plan",
+  "phage_defense_arsenal:0:37": "plan",
+  "plant_microbiome_ecotypes:0:19": "plan",
+  "plant_microbiome_ecotypes:0:22": "plan",
+  "plant_microbiome_ecotypes:16000:26": "plan",
+  "plant_microbiome_ecotypes:16000:27": "plan",
+  "plant_microbiome_ecotypes:32000:15": "plan",
+  "plant_microbiome_ecotypes:32000:3": "plan",
+  "plant_microbiome_ecotypes:48000:12": "plan",
+  "plant_microbiome_ecotypes:48000:8": "plan",
+  "plant_microbiome_ecotypes:48000:9": "plan",
+  "plant_microbiome_ecotypes:64000:15": "plan",
+  "plant_microbiome_ecotypes:80000:1": "plan",
+  "prophage_amr_comobilization:0:28": "plan",
+  "prophage_ecology:0:2": "plan",
+  "prophage_ecology:0:30": "plan",
+  "snipe_defense_system:16000:1": "plan"
+ },
+ "sections": {
+  "annotation-proxy-panels-for-prophages": {
+   "claims": {
+    "prophage_ecology:0:31": "overlap",
+    "prophage_ecology:0:40": "number",
+    "prophage_ecology:0:43": "overlap",
+    "prophage_ecology:0:44": "number",
+    "prophage_ecology:16000:6": "overlap"
+   }
+  },
+  "annotation-source-disagreement-for-named-markers": {
+   "claims": {
+    "amr_fitness_cost:0:55": "number",
+    "amr_pangenome_atlas:0:26": "overlap",
+    "cf_formulation_design:16000:64": "number",
+    "cf_formulation_design:32000:0": "number",
+    "cf_formulation_design:32000:33": "number",
+    "discoveries:112000:11": "overlap",
+    "discoveries:112000:12": "overlap",
+    "discoveries:112000:13": "overlap",
+    "discoveries:112000:14": "overlap",
+    "discoveries:112000:15": "number",
+    "discoveries:112000:16": "overlap",
+    "discoveries:112000:18": "number",
+    "discoveries:112000:19": "number",
+    "discoveries:112000:20": "number",
+    "discoveries:112000:21": "overlap",
+    "discoveries:112000:9": "overlap",
+    "discoveries:32000:11": "number",
+    "discoveries:32000:14": "number",
+    "discoveries:32000:8": "number",
+    "lanthanide_methylotrophy_atlas:0:47": "overlap",
+    "lanthanide_methylotrophy_atlas:0:48": "number",
+    "lanthanide_methylotrophy_atlas:0:49": "number",
+    "lanthanide_methylotrophy_atlas:0:50": "overlap",
+    "lanthanide_methylotrophy_atlas:0:51": "overlap",
+    "lanthanide_methylotrophy_atlas:0:53": "overlap",
+    "lanthanide_methylotrophy_atlas:0:55": "overlap",
+    "lanthanide_methylotrophy_atlas:16000:11": "overlap",
+    "lanthanide_methylotrophy_atlas:16000:12": "overlap",
+    "lanthanide_methylotrophy_atlas:16000:2": "overlap",
+    "lanthanide_methylotrophy_atlas:16000:22": "overlap",
+    "lanthanide_methylotrophy_atlas:16000:3": "overlap",
+    "lanthanide_methylotrophy_atlas:16000:30": "overlap",
+    "lanthanide_methylotrophy_atlas:16000:45": "overlap"
+   }
+  },
+  "broad-domain-anchors-versus-specific-markers": {
+   "claims": {
+    "phage_defense_arsenal:0:20": "overlap",
+    "phage_defense_arsenal:0:21": "overlap",
+    "phage_defense_arsenal:0:24": "number",
+    "phage_defense_arsenal:0:36": "number",
+    "phage_defense_arsenal:16000:1": "overlap",
+    "phage_defense_arsenal:16000:2": "number",
+    "phage_defense_arsenal:16000:3": "overlap",
+    "phage_defense_arsenal:16000:4": "overlap",
+    "phage_defense_arsenal:16000:5": "number",
+    "phage_defense_arsenal:16000:6": "number",
+    "phb_granule_ecology:0:27": "number",
+    "phb_granule_ecology:0:42": "overlap",
+    "phb_granule_ecology:16000:33": "number",
+    "pitfalls:112000:15": "number",
+    "pitfalls:112000:16": "overlap",
+    "pitfalls:112000:17": "overlap"
+   }
+  },
+  "clinical-and-serological-proxy-markers": {
+   "claims": {
+    "ibd_phage_targeting:144000:8": "number",
+    "ibd_phage_targeting:224000:27": "overlap",
+    "ibd_phage_targeting:240000:19": "overlap"
+   }
+  },
+  "control-panels-for-marker-based-metrics": {
+   "claims": {
+    "gene_function_ecological_agora:176000:67": "overlap",
+    "gene_function_ecological_agora:240000:11": "number",
+    "gene_function_ecological_agora:64000:23": "overlap",
+    "gene_function_ecological_agora:64000:33": "number",
+    "gene_function_ecological_agora:80000:20": "number",
+    "gene_function_ecological_agora:80000:21": "number",
+    "gene_function_ecological_agora:80000:22": "number",
+    "gene_function_ecological_agora:80000:24": "overlap",
+    "gene_function_ecological_agora:80000:25": "number",
+    "gene_function_ecological_agora:80000:29": "number",
+    "gene_function_ecological_agora:80000:30": "overlap",
+    "gene_function_ecological_agora:96000:13": "number",
+    "gene_function_ecological_agora:96000:29": "number"
+   }
+  },
+  "core-principle": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:22": "overlap",
+    "bacillota_b_subsurface_accessory:0:37": "number",
+    "clay_confined_subsurface:0:1": "overlap"
+   }
+  },
+  "corrected-multi-heme-cytochrome-detector": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:23": "overlap",
+    "bacillota_b_subsurface_accessory:0:24": "number",
+    "bacillota_b_subsurface_accessory:0:25": "number",
+    "bacillota_b_subsurface_accessory:0:26": "number",
+    "bacillota_b_subsurface_accessory:0:27": "number",
+    "clay_confined_subsurface:0:2": "overlap",
+    "clay_confined_subsurface:0:3": "number",
+    "clay_confined_subsurface:0:4": "number",
+    "clay_confined_subsurface:0:5": "number",
+    "clay_confined_subsurface:0:6": "number",
+    "discoveries:96000:25": "number"
+   }
+  },
+  "curated-lists-and-coarse-proxies": {
+   "claims": {
+    "enigma_contamination_functional_potential:0:32": "overlap",
+    "enigma_contamination_functional_potential:0:36": "overlap",
+    "harvard_forest_warming:0:15": "number",
+    "harvard_forest_warming:16000:15": "overlap"
+   }
+  },
+  "marker-availability-and-functional-resolution": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:33": "overlap",
+    "clay_confined_subsurface:16000:2": "number"
+   }
+  },
+  "mis-scored-reactions-and-single-signature-calls": {
+   "claims": {
+    "enigma_carbon_census_1:0:12": "overlap",
+    "enigma_carbon_census_1:0:51": "overlap",
+    "enigma_carbon_census_1:0:57": "overlap",
+    "enigma_carbon_census_1:16000:15": "number",
+    "enigma_carbon_census_1:16000:18": "number",
+    "enigma_carbon_census_1:16000:21": "overlap"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:16000:11": "overlap",
+    "microbeatlas_metal_ecology:64000:27": "overlap"
+   }
+  },
+  "panel-breadth-and-phenotype-labels": {
+   "claims": {
+    "plant_microbiome_ecotypes:0:17": "number",
+    "plant_microbiome_ecotypes:0:18": "number",
+    "plant_microbiome_ecotypes:0:21": "number",
+    "plant_microbiome_ecotypes:0:31": "number",
+    "plant_microbiome_ecotypes:0:32": "number",
+    "plant_microbiome_ecotypes:0:33": "number",
+    "plant_microbiome_ecotypes:0:34": "overlap",
+    "plant_microbiome_ecotypes:0:35": "number",
+    "plant_microbiome_ecotypes:16000:20": "number",
+    "plant_microbiome_ecotypes:16000:22": "overlap",
+    "plant_microbiome_ecotypes:16000:23": "number",
+    "plant_microbiome_ecotypes:16000:24": "number",
+    "plant_microbiome_ecotypes:16000:25": "overlap",
+    "plant_microbiome_ecotypes:32000:14": "overlap",
+    "plant_microbiome_ecotypes:32000:16": "overlap",
+    "plant_microbiome_ecotypes:32000:17": "number",
+    "plant_microbiome_ecotypes:32000:6": "number",
+    "plant_microbiome_ecotypes:32000:7": "overlap",
+    "plant_microbiome_ecotypes:48000:16": "overlap",
+    "plant_microbiome_ecotypes:48000:32": "number",
+    "plant_microbiome_ecotypes:48000:35": "number",
+    "plant_microbiome_ecotypes:48000:6": "number",
+    "plant_microbiome_ecotypes:48000:61": "overlap",
+    "plant_microbiome_ecotypes:64000:14": "number",
+    "plant_microbiome_ecotypes:64000:27": "number",
+    "plant_microbiome_ecotypes:64000:3": "number",
+    "plant_microbiome_ecotypes:64000:35": "overlap",
+    "plant_microbiome_ecotypes:64000:4": "overlap",
+    "plant_microbiome_ecotypes:80000:0": "number",
+    "plant_microbiome_ecotypes:80000:21": "number",
+    "plant_microbiome_ecotypes:80000:23": "number",
+    "plant_microbiome_ecotypes:80000:25": "overlap",
+    "plant_microbiome_ecotypes:80000:27": "number",
+    "plant_microbiome_ecotypes:80000:38": "number",
+    "plant_microbiome_ecotypes:80000:42": "number",
+    "plant_microbiome_ecotypes:96000:43": "overlap"
+   }
+  },
+  "pipeline-level-validation-of-annotation-calls": {
+   "claims": {
+    "microbeatlas_metal_ecology:32000:0": "overlap",
+    "microbeatlas_metal_ecology:64000:35": "overlap"
+   }
+  },
+  "preserving-supported-and-unsupported-ecological-inferences": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:28": "number",
+    "discoveries:112000:2": "number"
+   }
+  },
+  "relation-to-the-source-reports": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:16000:15": "overlap",
+    "clay_confined_subsurface:16000:12": "number",
+    "clay_confined_subsurface:16000:15": "overlap",
+    "clay_confined_subsurface:16000:7": "number",
+    "clay_confined_subsurface:16000:8": "overlap"
+   }
+  },
+  "taxonomy-inferred-function-as-a-marker": {
+   "claims": {
+    "enigma_sso_asv_ecology:0:20": "number",
+    "enigma_sso_asv_ecology:0:21": "number",
+    "enigma_sso_asv_ecology:16000:1": "overlap",
+    "enigma_sso_asv_ecology:16000:12": "number",
+    "enigma_sso_asv_ecology:16000:14": "number",
+    "enigma_sso_asv_ecology:16000:16": "overlap",
+    "enigma_sso_asv_ecology:16000:3": "overlap"
+   }
+  },
+  "wrong-family-and-clan-level-marker-confusion": {
+   "claims": {
+    "respiratory_chain_wiring:0:28": "overlap",
+    "snipe_defense_system:0:2": "overlap",
+    "snipe_defense_system:0:22": "overlap",
+    "snipe_defense_system:0:3": "number",
+    "snipe_defense_system:0:5": "overlap",
+    "snipe_defense_system:16000:0": "overlap",
+    "snipe_defense_system:16000:12": "number",
+    "snipe_defense_system:16000:13": "number",
+    "snipe_defense_system:16000:14": "number",
+    "snipe_defense_system:16000:15": "number",
+    "snipe_defense_system:16000:19": "number",
+    "snipe_defense_system:16000:2": "overlap",
+    "snipe_defense_system:16000:20": "overlap",
+    "snipe_defense_system:16000:29": "number",
+    "snipe_defense_system:16000:3": "number",
+    "snipe_defense_system:16000:30": "overlap",
+    "snipe_defense_system:16000:4": "number"
+   }
+  }
+ }
+}

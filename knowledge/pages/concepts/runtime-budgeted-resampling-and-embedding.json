@@ -1,0 +1,17 @@
+{
+ "claims": {
+  "pitfalls:80000:21": "plan"
+ },
+ "sections": {
+  "bootstrap-budgets": {
+   "claims": {
+    "pitfalls:80000:11": "overlap"
+   }
+  },
+  "embedding-budgets": {
+   "claims": {
+    "pitfalls:80000:20": "overlap"
+   }
+  }
+ }
+}

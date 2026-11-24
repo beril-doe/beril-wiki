@@ -1,0 +1,16 @@
+{
+ "sections": {
+  "evidence-sides": {
+   "claims": {
+    "metabolic_capability_dependency:0:1": "overlap",
+    "pathway_capability_dependency:0:42": "overlap",
+    "pathway_capability_dependency:0:5": "overlap"
+   }
+  },
+  "lead": {
+   "claims": {
+    "fw300_metabolic_consistency:0:18": "overlap"
+   }
+  }
+ }
+}

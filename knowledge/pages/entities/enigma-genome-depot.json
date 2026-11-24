@@ -1,0 +1,17 @@
+{
+ "sections": {
+  "integration-and-linkage-validation": {
+   "claims": {
+    "genotype_to_phenotype_enigma:0:18": "overlap",
+    "genotype_to_phenotype_enigma:0:19": "number",
+    "genotype_to_phenotype_enigma:16000:39": "number"
+   }
+  },
+  "key-facts-from-the-enigma-carbon-census": {
+   "claims": {
+    "enigma_carbon_census_1:0:0": "overlap",
+    "enigma_carbon_census_1:0:18": "overlap"
+   }
+  }
+ }
+}

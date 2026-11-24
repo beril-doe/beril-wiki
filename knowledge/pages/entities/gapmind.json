@@ -1,0 +1,103 @@
+{
+ "sections": {
+  "annotation-gap-discovery-and-pathway-interpretation": {
+   "claims": {
+    "annotation_gap_discovery:0:16": "overlap",
+    "functional_dark_matter:0:19": "number",
+    "functional_dark_matter:0:8": "number",
+    "functional_dark_matter:48000:38": "number",
+    "functional_dark_matter:64000:42": "number",
+    "functional_dark_matter:80000:20": "number",
+    "functional_dark_matter:80000:43": "number",
+    "functional_dark_matter:96000:4": "number"
+   }
+  },
+  "community-scale-integration": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:0:10": "number",
+    "nmdc_community_metabolic_ecology:0:11": "overlap",
+    "nmdc_community_metabolic_ecology:0:23": "number",
+    "nmdc_community_metabolic_ecology:0:28": "number",
+    "nmdc_community_metabolic_ecology:0:30": "number",
+    "nmdc_community_metabolic_ecology:0:4": "number",
+    "nmdc_community_metabolic_ecology:16000:3": "overlap",
+    "nmdc_community_metabolic_ecology:16000:4": "number"
+   }
+  },
+  "comparative-and-fitness-validation": {
+   "claims": {
+    "discoveries:80000:31": "number",
+    "fw300_metabolic_consistency:0:5": "overlap",
+    "genotype_to_phenotype_enigma:0:26": "number",
+    "metabolic_capability_dependency:0:1": "number",
+    "metabolic_capability_dependency:0:32": "number",
+    "metabolic_capability_dependency:0:8": "number",
+    "metabolic_capability_dependency:0:9": "number",
+    "metabolic_capability_dependency:16000:20": "number",
+    "metabolic_capability_dependency:16000:5": "number",
+    "pathway_capability_dependency:0:14": "number",
+    "pathway_capability_dependency:0:6": "number",
+    "pathway_capability_dependency:16000:17": "number"
+   }
+  },
+  "formulation-cultured-cohorts-and-scope": {
+   "claims": {
+    "cf_formulation_design:16000:20": "number",
+    "cf_formulation_design:16000:42": "overlap",
+    "cf_formulation_design:16000:45": "number",
+    "cf_formulation_design:16000:46": "number",
+    "cf_formulation_design:32000:3": "number",
+    "cf_formulation_design:48000:22": "number",
+    "clay_confined_subsurface:0:28": "number",
+    "clay_confined_subsurface:0:29": "number",
+    "clay_confined_subsurface:0:30": "number",
+    "clay_confined_subsurface:0:31": "number",
+    "webofmicrobes_explorer:0:10": "number",
+    "webofmicrobes_explorer:0:17": "number"
+   }
+  },
+  "pangenome-ecology-and-pseudomonas-integration": {
+   "claims": {
+    "pathway_capability_dependency:0:18": "number",
+    "pathway_capability_dependency:0:21": "number",
+    "pathway_capability_dependency:0:33": "number",
+    "pathway_capability_dependency:16000:2": "number",
+    "pgp_pangenome_ecology:0:31": "number",
+    "pgp_pangenome_ecology:0:34": "number",
+    "pgp_pangenome_ecology:0:36": "number",
+    "pgp_pangenome_ecology:0:38": "number",
+    "pgp_pangenome_ecology:0:41": "number",
+    "pgp_pangenome_ecology:0:53": "number",
+    "plant_microbiome_ecotypes:48000:27": "number",
+    "plant_microbiome_ecotypes:48000:43": "number",
+    "pseudomonas_carbon_ecology:0:0": "number",
+    "pseudomonas_carbon_ecology:0:15": "number",
+    "pseudomonas_carbon_ecology:0:19": "number",
+    "pseudomonas_carbon_ecology:0:2": "number",
+    "pseudomonas_carbon_ecology:0:21": "overlap",
+    "pseudomonas_carbon_ecology:0:3": "number",
+    "pseudomonas_carbon_ecology:0:31": "number",
+    "pseudomonas_carbon_ecology:0:4": "number",
+    "pseudomonas_carbon_ecology:0:6": "overlap",
+    "pseudomonas_carbon_ecology:0:8": "number"
+   }
+  },
+  "reproducibility-and-provenance-safeguards": {
+   "claims": {
+    "pitfalls:32000:7": "number",
+    "pitfalls:80000:24": "overlap",
+    "pitfalls:80000:25": "overlap",
+    "plant_microbiome_ecotypes:16000:4": "number",
+    "plant_microbiome_ecotypes:32000:19": "number",
+    "plant_microbiome_ecotypes:48000:17": "number",
+    "plant_microbiome_ecotypes:48000:23": "overlap",
+    "plant_microbiome_ecotypes:48000:26": "overlap",
+    "plant_microbiome_ecotypes:64000:21": "number",
+    "plant_microbiome_ecotypes:64000:28": "number",
+    "plant_microbiome_ecotypes:80000:9": "number",
+    "webofmicrobes_explorer:0:0": "number",
+    "webofmicrobes_explorer:0:27": "number"
+   }
+  }
+ }
+}

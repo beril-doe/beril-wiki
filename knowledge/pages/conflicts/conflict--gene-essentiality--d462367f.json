@@ -1,0 +1,14 @@
+{
+ "sections": {
+  "evidence-sides": {
+   "claims": {
+    "fitness_effects_conservation:0:1": "overlap"
+   }
+  },
+  "lead": {
+   "claims": {
+    "fitness_effects_conservation:0:24": "overlap"
+   }
+  }
+ }
+}

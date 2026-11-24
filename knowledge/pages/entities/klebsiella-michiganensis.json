@@ -1,0 +1,13 @@
+{
+ "sections": {
+  "key-facts-across-studies": {
+   "claims": {
+    "annotation_gap_discovery:0:10": "number",
+    "annotation_gap_discovery:0:11": "number",
+    "annotation_gap_discovery:0:12": "number",
+    "annotation_gap_discovery:0:13": "number",
+    "annotation_gap_discovery:0:8": "number"
+   }
+  }
+ }
+}

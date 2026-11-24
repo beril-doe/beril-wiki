@@ -1,0 +1,21 @@
+{
+ "sections": {
+  "interpretation-and-limitations": {
+   "claims": {
+    "cofitness_coinheritance:0:34": "number"
+   }
+  },
+  "module-level-results": {
+   "claims": {
+    "cofitness_coinheritance:0:10": "number",
+    "cofitness_coinheritance:0:8": "number",
+    "cofitness_coinheritance:0:9": "number"
+   }
+  },
+  "use-in-co-fitness-and-co-inheritance-analysis": {
+   "claims": {
+    "cofitness_coinheritance:0:18": "overlap"
+   }
+  }
+ }
+}

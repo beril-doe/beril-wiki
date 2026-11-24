@@ -1,0 +1,63 @@
+{
+ "claims": {
+  "ecotype_env_reanalysis:0:33": "plan",
+  "plant_microbiome_ecotypes:16000:10": "plan",
+  "plant_microbiome_ecotypes:16000:15": "plan",
+  "plant_microbiome_ecotypes:16000:16": "plan",
+  "plant_microbiome_ecotypes:16000:17": "plan"
+ },
+ "sections": {
+  "core-interpretation": {
+   "claims": {
+    "ecotype_analysis:0:14": "number",
+    "plant_microbiome_ecotypes:16000:36": "number"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "ecotype_analysis:0:11": "overlap"
+   }
+  },
+  "pathway-level-nulls-beside-lineage-level-structure": {
+   "claims": {
+    "cf_formulation_design:32000:11": "number",
+    "cf_formulation_design:32000:22": "overlap",
+    "ibd_phage_targeting:16000:5": "overlap",
+    "ibd_phage_targeting:224000:49": "number",
+    "ibd_phage_targeting:256000:29": "overlap",
+    "ibd_phage_targeting:256000:5": "number"
+   }
+  },
+  "scope-and-limitations": {
+   "claims": {
+    "plant_microbiome_ecotypes:48000:15": "number",
+    "plant_microbiome_ecotypes:80000:11": "number",
+    "plant_microbiome_ecotypes:80000:50": "number"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "plant_microbiome_ecotypes:64000:24": "overlap"
+   }
+  },
+  "within-species-subclade-evidence-in-plant-associated-bacteria": {
+   "claims": {
+    "plant_microbiome_ecotypes:112000:14": "overlap",
+    "plant_microbiome_ecotypes:16000:11": "overlap",
+    "plant_microbiome_ecotypes:16000:29": "number",
+    "plant_microbiome_ecotypes:16000:30": "number",
+    "plant_microbiome_ecotypes:16000:31": "number",
+    "plant_microbiome_ecotypes:16000:32": "number",
+    "plant_microbiome_ecotypes:16000:33": "number",
+    "plant_microbiome_ecotypes:16000:34": "number",
+    "plant_microbiome_ecotypes:16000:38": "overlap",
+    "plant_microbiome_ecotypes:16000:8": "number",
+    "plant_microbiome_ecotypes:48000:62": "overlap",
+    "plant_microbiome_ecotypes:48000:63": "number",
+    "plant_microbiome_ecotypes:80000:12": "overlap",
+    "plant_microbiome_ecotypes:80000:15": "overlap",
+    "plant_microbiome_ecotypes:96000:0": "overlap"
+   }
+  }
+ }
+}

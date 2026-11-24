@@ -1,0 +1,48 @@
+{
+ "claims": {
+  "essential_metabolome:0:0": "plan",
+  "essential_metabolome:0:12": "plan",
+  "essential_metabolome:0:17": "plan",
+  "essential_metabolome:0:29": "plan"
+ },
+ "sections": {
+  "hypothesis-test": {
+   "claims": {
+    "essential_metabolome:0:21": "overlap",
+    "essential_metabolome:0:24": "overlap"
+   }
+  },
+  "interpretation-and-caveats": {
+   "claims": {
+    "essential_metabolome:0:15": "number",
+    "essential_metabolome:0:27": "overlap",
+    "essential_metabolome:0:31": "number"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "essential_metabolome:0:14": "overlap",
+    "essential_metabolome:0:18": "overlap",
+    "essential_metabolome:0:19": "overlap",
+    "essential_metabolome:0:2": "number",
+    "essential_metabolome:0:20": "overlap",
+    "essential_metabolome:0:26": "overlap",
+    "essential_metabolome:0:5": "overlap",
+    "essential_metabolome:0:7": "number",
+    "essential_metabolome:0:8": "number",
+    "essential_metabolome:0:9": "overlap"
+   }
+  },
+  "overview": {
+   "claims": {
+    "essential_metabolome:0:32": "overlap"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "essential_metabolome:0:13": "overlap",
+    "essential_metabolome:0:30": "overlap"
+   }
+  }
+ }
+}

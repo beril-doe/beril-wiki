@@ -1,0 +1,75 @@
+{
+ "claims": {
+  "cofitness_coinheritance:0:0": "plan",
+  "cofitness_coinheritance:0:12": "plan",
+  "cofitness_coinheritance:0:19": "plan",
+  "cofitness_coinheritance:0:22": "plan",
+  "cofitness_coinheritance:0:25": "plan",
+  "cofitness_coinheritance:0:26": "plan",
+  "cofitness_coinheritance:0:35": "plan",
+  "cofitness_coinheritance:0:4": "plan",
+  "cofitness_coinheritance:0:41": "plan",
+  "cofitness_coinheritance:0:43": "plan",
+  "cofitness_coinheritance:0:5": "plan",
+  "cofitness_coinheritance:0:6": "plan",
+  "conservation_fitness_synthesis:0:22": "plan",
+  "discoveries:64000:5": "plan"
+ },
+ "sections": {
+  "ica-modules-show-stronger-co-inheritance": {
+   "claims": {
+    "cofitness_coinheritance:0:10": "number",
+    "cofitness_coinheritance:0:11": "number",
+    "cofitness_coinheritance:0:20": "number",
+    "cofitness_coinheritance:0:38": "overlap",
+    "cofitness_coinheritance:0:8": "number",
+    "cofitness_coinheritance:0:9": "number",
+    "conservation_fitness_synthesis:0:16": "number",
+    "conservation_fitness_synthesis:0:17": "number",
+    "conservation_fitness_synthesis:0:30": "overlap",
+    "discoveries:64000:4": "overlap",
+    "field_vs_lab_fitness:0:41": "number",
+    "field_vs_lab_fitness:0:43": "number",
+    "field_vs_lab_fitness:0:44": "number",
+    "field_vs_lab_fitness:0:45": "number",
+    "module_conservation:0:0": "number",
+    "module_conservation:0:1": "overlap",
+    "module_conservation:0:10": "number",
+    "module_conservation:0:4": "number",
+    "module_conservation:0:8": "number",
+    "pathway_capability_dependency:16000:21": "number"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "module_conservation:0:3": "number"
+   }
+  },
+  "pairwise-signal-and-the-prevalence-ceiling": {
+   "claims": {
+    "cofitness_coinheritance:0:16": "number",
+    "cofitness_coinheritance:0:17": "number",
+    "cofitness_coinheritance:0:18": "number",
+    "cofitness_coinheritance:0:2": "overlap",
+    "cofitness_coinheritance:0:34": "number"
+   }
+  },
+  "prevalence-aware-interpretation-and-pangenome-integration": {
+   "claims": {
+    "cofitness_coinheritance:0:40": "overlap",
+    "cofitness_coinheritance:0:44": "overlap",
+    "conservation_fitness_synthesis:0:21": "number",
+    "module_conservation:0:5": "number",
+    "pathway_capability_dependency:16000:23": "overlap"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "cofitness_coinheritance:0:1": "overlap",
+    "cofitness_coinheritance:0:21": "overlap",
+    "cofitness_coinheritance:0:3": "overlap",
+    "cofitness_coinheritance:0:7": "number"
+   }
+  }
+ }
+}

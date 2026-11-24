@@ -1,0 +1,54 @@
+{
+ "sections": {
+  "atlas-scale-conservation-context": {
+   "claims": {
+    "metal_fitness_atlas:0:0": "number",
+    "metal_fitness_atlas:0:1": "overlap",
+    "metal_fitness_atlas:0:22": "number",
+    "metal_fitness_atlas:16000:3": "overlap",
+    "metal_specificity:0:12": "overlap",
+    "metal_specificity:0:14": "number",
+    "metal_specificity:0:9": "overlap"
+   }
+  },
+  "environmental-resistance-ecology": {
+   "claims": {
+    "microbeatlas_metal_ecology:48000:43": "number",
+    "microbeatlas_metal_ecology:48000:44": "number",
+    "soil_metal_functional_genomics:0:2": "number",
+    "soil_metal_functional_genomics:0:4": "number",
+    "soil_metal_functional_genomics:0:5": "number",
+    "soil_metal_functional_genomics:0:6": "overlap",
+    "soil_metal_functional_genomics:0:7": "overlap"
+   }
+  },
+  "field-versus-lab-conservation-context": {
+   "claims": {
+    "field_vs_lab_fitness:0:16": "overlap",
+    "field_vs_lab_fitness:0:20": "overlap",
+    "field_vs_lab_fitness:0:21": "number"
+   }
+  },
+  "interpretation-and-limitations": {
+   "claims": {
+    "metal_specificity:0:66": "number",
+    "metal_specificity:0:69": "number",
+    "microbeatlas_metal_ecology:80000:7": "number",
+    "soil_metal_functional_genomics:0:10": "number"
+   }
+  },
+  "key-facts-from-counter-ion-analysis": {
+   "claims": {
+    "counter_ion_effects:0:18": "number",
+    "counter_ion_effects:0:4": "number"
+   }
+  },
+  "zinc-specificity-and-cross-metal-relationships": {
+   "claims": {
+    "metal_cross_resistance:0:0": "overlap",
+    "metal_cross_resistance:0:36": "overlap",
+    "metal_specificity:0:54": "number"
+   }
+  }
+ }
+}

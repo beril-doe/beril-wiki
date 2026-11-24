@@ -1,0 +1,138 @@
+{
+ "claims": {
+  "amr_strain_variation:0:11": "plan",
+  "amr_strain_variation:16000:4": "plan",
+  "cf_formulation_design:16000:61": "plan",
+  "cf_formulation_design:48000:10": "plan",
+  "discoveries:64000:16": "plan",
+  "discoveries:64000:17": "plan",
+  "ibd_phage_targeting:288000:20": "plan",
+  "metabolic_capability_dependency:0:43": "plan",
+  "metabolic_capability_dependency:0:51": "plan",
+  "pangenome_openness:0:3": "plan",
+  "pangenome_openness:0:6": "plan",
+  "pathway_capability_dependency:0:24": "plan",
+  "plant_microbiome_ecotypes:112000:0": "plan",
+  "plant_microbiome_ecotypes:64000:25": "plan",
+  "plant_microbiome_ecotypes:64000:9": "plan",
+  "pseudomonas_carbon_ecology:0:20": "plan",
+  "pseudomonas_carbon_ecology:0:21": "plan",
+  "pseudomonas_carbon_ecology:0:26": "plan",
+  "pseudomonas_carbon_ecology:0:29": "plan",
+  "pseudomonas_carbon_ecology:0:30": "plan"
+ },
+ "sections": {
+  "core-finding": {
+   "claims": {
+    "discoveries:80000:30": "number",
+    "discoveries:80000:36": "number",
+    "ecotype_analysis:0:1": "number",
+    "ecotype_analysis:0:17": "overlap",
+    "ecotype_analysis:0:2": "number",
+    "ecotype_analysis:0:3": "number",
+    "ecotype_analysis:0:4": "number",
+    "ecotype_analysis:0:5": "number",
+    "ecotype_analysis:0:6": "number",
+    "ecotype_analysis:0:7": "number",
+    "ecotype_analysis:0:8": "number",
+    "ecotype_analysis:0:9": "overlap",
+    "ecotype_env_reanalysis:0:0": "number",
+    "ecotype_env_reanalysis:0:1": "number",
+    "ecotype_env_reanalysis:0:20": "number",
+    "ecotype_env_reanalysis:0:4": "overlap",
+    "pathway_capability_dependency:0:2": "number",
+    "plant_microbiome_ecotypes:0:2": "number",
+    "plant_microbiome_ecotypes:32000:19": "number",
+    "plant_microbiome_ecotypes:32000:20": "overlap",
+    "plant_microbiome_ecotypes:32000:21": "number",
+    "plant_microbiome_ecotypes:32000:22": "number",
+    "plant_microbiome_ecotypes:32000:24": "number",
+    "plant_microbiome_ecotypes:32000:25": "number",
+    "plant_microbiome_ecotypes:32000:26": "number",
+    "plant_microbiome_ecotypes:48000:17": "number",
+    "plant_microbiome_ecotypes:48000:29": "overlap",
+    "plant_microbiome_ecotypes:48000:30": "overlap",
+    "plant_microbiome_ecotypes:48000:31": "overlap",
+    "plant_microbiome_ecotypes:48000:41": "number",
+    "plant_microbiome_ecotypes:48000:7": "overlap",
+    "plant_microbiome_ecotypes:64000:32": "number",
+    "plant_microbiome_ecotypes:64000:8": "number",
+    "plant_microbiome_ecotypes:80000:16": "number",
+    "plant_microbiome_ecotypes:80000:19": "number",
+    "plant_microbiome_ecotypes:80000:2": "number",
+    "plant_microbiome_ecotypes:80000:29": "number",
+    "pseudomonas_carbon_ecology:0:18": "number",
+    "pseudomonas_carbon_ecology:0:19": "number",
+    "pseudomonas_carbon_ecology:0:3": "number",
+    "pseudomonas_carbon_ecology:0:4": "number",
+    "pseudomonas_carbon_ecology:0:5": "overlap"
+   }
+  },
+  "host-associated-and-clinical-ecotypes": {
+   "claims": {
+    "amr_strain_variation:0:12": "overlap",
+    "cf_formulation_design:16000:53": "number",
+    "cf_formulation_design:16000:60": "number",
+    "cf_formulation_design:32000:5": "number",
+    "cf_formulation_design:32000:8": "number",
+    "ibd_phage_targeting:272000:36": "overlap",
+    "ibd_phage_targeting:288000:21": "overlap"
+   }
+  },
+  "interpretation-and-limits": {
+   "claims": {
+    "ecotype_env_reanalysis:0:7": "number",
+    "plant_microbiome_ecotypes:80000:20": "overlap",
+    "pseudomonas_carbon_ecology:16000:2": "overlap"
+   }
+  },
+  "local-environment-spatial-scale-and-community-structure": {
+   "claims": {
+    "ecotype_env_reanalysis:0:13": "number",
+    "ecotype_env_reanalysis:0:14": "number",
+    "ecotype_env_reanalysis:0:2": "number",
+    "harvard_forest_warming:0:36": "number",
+    "metabolic_capability_dependency:0:13": "number",
+    "metabolic_capability_dependency:0:24": "number",
+    "metabolic_capability_dependency:0:25": "number"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "metabolic_capability_dependency:16000:27": "overlap",
+    "pangenome_openness:0:0": "overlap"
+   }
+  },
+  "pangenome-architecture-host-ecotypes-and-functional-acquisition": {
+   "claims": {
+    "genotype_to_phenotype_enigma:0:11": "number",
+    "genotype_to_phenotype_enigma:0:12": "number",
+    "pangenome_openness:0:1": "number",
+    "pangenome_openness:0:2": "number",
+    "plant_microbiome_ecotypes:0:14": "number",
+    "plant_microbiome_ecotypes:0:24": "overlap",
+    "plant_microbiome_ecotypes:0:25": "number",
+    "plant_microbiome_ecotypes:0:26": "number",
+    "plant_microbiome_ecotypes:0:27": "number",
+    "plant_microbiome_ecotypes:0:29": "number",
+    "plant_microbiome_ecotypes:16000:1": "number",
+    "plant_microbiome_ecotypes:32000:10": "number",
+    "plant_microbiome_ecotypes:48000:39": "number",
+    "plant_microbiome_ecotypes:64000:18": "overlap",
+    "plant_microbiome_ecotypes:80000:37": "number",
+    "plant_microbiome_ecotypes:80000:47": "number",
+    "plant_microbiome_ecotypes:96000:47": "overlap",
+    "pseudomonas_carbon_ecology:0:25": "number",
+    "pseudomonas_carbon_ecology:0:27": "number",
+    "pseudomonas_carbon_ecology:0:6": "number"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "env_embedding_explorer:0:27": "number",
+    "plant_microbiome_ecotypes:0:1": "number",
+    "plant_microbiome_ecotypes:32000:23": "number"
+   }
+  }
+ }
+}

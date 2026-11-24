@@ -1,0 +1,210 @@
+{
+ "claims": {
+  "cf_formulation_design:0:0": "plan",
+  "cf_formulation_design:0:1": "plan",
+  "cf_formulation_design:0:28": "plan",
+  "cf_formulation_design:0:31": "plan",
+  "cf_formulation_design:0:37": "plan",
+  "cf_formulation_design:0:4": "plan",
+  "cf_formulation_design:0:40": "plan",
+  "cf_formulation_design:0:47": "plan",
+  "cf_formulation_design:0:55": "plan",
+  "cf_formulation_design:0:63": "plan",
+  "cf_formulation_design:0:64": "plan",
+  "cf_formulation_design:0:66": "plan",
+  "cf_formulation_design:0:69": "plan",
+  "cf_formulation_design:0:8": "plan",
+  "cf_formulation_design:0:9": "plan",
+  "cf_formulation_design:16000:0": "plan",
+  "cf_formulation_design:16000:29": "plan",
+  "cf_formulation_design:16000:40": "plan",
+  "cf_formulation_design:16000:56": "plan",
+  "cf_formulation_design:16000:61": "plan",
+  "cf_formulation_design:32000:24": "plan",
+  "cf_formulation_design:32000:31": "plan",
+  "cf_formulation_design:32000:32": "plan",
+  "cf_formulation_design:32000:37": "plan",
+  "cf_formulation_design:48000:1": "plan",
+  "cf_formulation_design:48000:10": "plan",
+  "cf_formulation_design:48000:14": "plan",
+  "cf_formulation_design:48000:17": "plan",
+  "cf_formulation_design:48000:27": "plan",
+  "cf_formulation_design:48000:28": "plan",
+  "cf_formulation_design:48000:29": "plan",
+  "cf_formulation_design:48000:5": "plan",
+  "cf_formulation_design:48000:6": "plan",
+  "cf_formulation_design:48000:7": "plan",
+  "cf_formulation_design:48000:8": "plan",
+  "cf_formulation_design:48000:9": "plan",
+  "discoveries:96000:17": "plan",
+  "discoveries:96000:18": "plan",
+  "discoveries:96000:19": "plan",
+  "discoveries:96000:20": "plan",
+  "ibd_phage_targeting:0:22": "plan",
+  "ibd_phage_targeting:0:29": "plan",
+  "ibd_phage_targeting:0:31": "plan",
+  "ibd_phage_targeting:0:7": "plan",
+  "ibd_phage_targeting:176000:69": "plan",
+  "ibd_phage_targeting:192000:10": "plan",
+  "ibd_phage_targeting:192000:23": "plan",
+  "ibd_phage_targeting:192000:27": "plan",
+  "ibd_phage_targeting:192000:3": "plan",
+  "ibd_phage_targeting:192000:30": "plan",
+  "ibd_phage_targeting:192000:43": "plan",
+  "ibd_phage_targeting:192000:8": "plan",
+  "ibd_phage_targeting:208000:10": "plan",
+  "ibd_phage_targeting:208000:46": "plan",
+  "ibd_phage_targeting:208000:47": "plan",
+  "ibd_phage_targeting:224000:21": "plan",
+  "ibd_phage_targeting:224000:25": "plan",
+  "ibd_phage_targeting:224000:4": "plan",
+  "ibd_phage_targeting:240000:7": "plan",
+  "ibd_phage_targeting:256000:15": "plan",
+  "ibd_phage_targeting:256000:16": "plan",
+  "ibd_phage_targeting:256000:27": "plan",
+  "ibd_phage_targeting:256000:44": "plan",
+  "ibd_phage_targeting:256000:47": "plan",
+  "ibd_phage_targeting:272000:0": "plan",
+  "ibd_phage_targeting:288000:11": "plan",
+  "ibd_phage_targeting:288000:17": "plan",
+  "ibd_phage_targeting:288000:25": "plan",
+  "ibd_phage_targeting:288000:26": "plan",
+  "ibd_phage_targeting:64000:41": "plan",
+  "pitfalls:112000:11": "plan",
+  "pitfalls:112000:12": "plan",
+  "pitfalls:112000:7": "plan",
+  "pitfalls:112000:8": "plan",
+  "plant_microbiome_ecotypes:112000:12": "plan",
+  "plant_microbiome_ecotypes:112000:13": "plan",
+  "plant_microbiome_ecotypes:112000:15": "plan",
+  "plant_microbiome_ecotypes:16000:3": "plan",
+  "plant_microbiome_ecotypes:48000:60": "plan",
+  "plant_microbiome_ecotypes:64000:23": "plan"
+ },
+ "sections": {
+  "core-species-profiles-and-lung-adaptation": {
+   "claims": {
+    "cf_formulation_design:0:3": "number",
+    "cf_formulation_design:16000:1": "number",
+    "cf_formulation_design:16000:12": "number",
+    "cf_formulation_design:16000:13": "number",
+    "cf_formulation_design:16000:14": "number",
+    "cf_formulation_design:16000:2": "number",
+    "cf_formulation_design:16000:28": "number",
+    "cf_formulation_design:16000:3": "number",
+    "cf_formulation_design:16000:4": "number",
+    "cf_formulation_design:32000:39": "overlap"
+   }
+  },
+  "coverage-safety-and-engraftability-can-oppose-one-another": {
+   "claims": {
+    "cf_formulation_design:0:2": "number",
+    "cf_formulation_design:0:61": "overlap",
+    "cf_formulation_design:0:62": "overlap",
+    "cf_formulation_design:0:67": "number",
+    "cf_formulation_design:0:68": "number",
+    "cf_formulation_design:0:71": "overlap",
+    "cf_formulation_design:0:72": "number",
+    "cf_formulation_design:16000:10": "number",
+    "cf_formulation_design:16000:5": "number",
+    "cf_formulation_design:16000:6": "number",
+    "cf_formulation_design:16000:8": "number",
+    "cf_formulation_design:16000:9": "number",
+    "cf_formulation_design:48000:12": "number"
+   }
+  },
+  "engraftability-is-a-prioritization-proxy-not-a-measurement-of-establishment": {
+   "claims": {
+    "cf_formulation_design:0:57": "overlap",
+    "cf_formulation_design:0:58": "number",
+    "cf_formulation_design:0:59": "number",
+    "cf_formulation_design:16000:7": "number",
+    "cf_formulation_design:32000:29": "number",
+    "cf_formulation_design:32000:30": "number"
+   }
+  },
+  "evidence-base-and-working-theory": {
+   "claims": {
+    "cf_formulation_design:0:30": "number",
+    "cf_formulation_design:0:45": "number",
+    "cf_formulation_design:0:46": "number",
+    "cf_formulation_design:32000:26": "overlap",
+    "cf_formulation_design:32000:34": "number"
+   }
+  },
+  "external-context-and-probiotic-precedent": {
+   "claims": {
+    "cf_formulation_design:32000:40": "overlap",
+    "cf_formulation_design:32000:41": "overlap",
+    "cf_formulation_design:48000:2": "overlap"
+   }
+  },
+  "measurement-representation-and-translation-limits": {
+   "claims": {
+    "cf_formulation_design:16000:39": "number"
+   }
+  },
+  "metabolic-competition-explains-part-of-antagonism": {
+   "claims": {
+    "cf_formulation_design:0:23": "number",
+    "cf_formulation_design:0:24": "number",
+    "cf_formulation_design:0:25": "number",
+    "cf_formulation_design:0:29": "number",
+    "cf_formulation_design:0:35": "number",
+    "cf_formulation_design:0:36": "number",
+    "cf_formulation_design:0:38": "number",
+    "cf_formulation_design:0:52": "number",
+    "cf_formulation_design:32000:25": "overlap",
+    "cf_formulation_design:32000:27": "number",
+    "cf_formulation_design:32000:35": "number",
+    "cf_formulation_design:48000:26": "number"
+   }
+  },
+  "no-selective-prebiotic-was-found-among-the-tested-substrates": {
+   "claims": {
+    "cf_formulation_design:16000:15": "overlap",
+    "cf_formulation_design:16000:16": "number",
+    "cf_formulation_design:16000:18": "overlap",
+    "cf_formulation_design:16000:42": "overlap",
+    "cf_formulation_design:16000:43": "number",
+    "cf_formulation_design:16000:44": "number",
+    "cf_formulation_design:16000:45": "number",
+    "cf_formulation_design:16000:46": "number",
+    "cf_formulation_design:16000:47": "number",
+    "cf_formulation_design:16000:48": "number",
+    "cf_formulation_design:16000:49": "overlap",
+    "cf_formulation_design:16000:51": "overlap",
+    "cf_formulation_design:16000:52": "number",
+    "cf_formulation_design:32000:43": "overlap"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "cf_formulation_design:0:39": "number",
+    "cf_formulation_design:32000:28": "number",
+    "cf_formulation_design:48000:19": "overlap"
+   }
+  },
+  "pa-side-invariance-bounds-what-the-formulation-can-target": {
+   "claims": {
+    "cf_formulation_design:16000:58": "number",
+    "cf_formulation_design:32000:11": "number",
+    "cf_formulation_design:32000:3": "number",
+    "cf_formulation_design:32000:36": "number"
+   }
+  },
+  "pairwise-evidence-does-not-establish-community-level-effects": {
+   "claims": {
+    "cf_formulation_design:0:5": "overlap",
+    "cf_formulation_design:16000:30": "overlap",
+    "cf_formulation_design:16000:31": "number",
+    "cf_formulation_design:16000:32": "number",
+    "cf_formulation_design:16000:33": "number",
+    "cf_formulation_design:16000:34": "number",
+    "cf_formulation_design:16000:35": "number",
+    "cf_formulation_design:16000:36": "number",
+    "cf_formulation_design:48000:23": "number"
+   }
+  }
+ }
+}

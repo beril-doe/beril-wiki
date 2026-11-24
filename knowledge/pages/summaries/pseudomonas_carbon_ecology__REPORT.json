@@ -1,0 +1,75 @@
+{
+ "claims": {
+  "pseudomonas_carbon_ecology:0:11": "plan",
+  "pseudomonas_carbon_ecology:0:38": "plan",
+  "pseudomonas_carbon_ecology:0:39": "plan",
+  "pseudomonas_carbon_ecology:0:41": "plan",
+  "pseudomonas_carbon_ecology:0:42": "plan",
+  "pseudomonas_carbon_ecology:0:43": "plan",
+  "pseudomonas_carbon_ecology:0:9": "plan",
+  "pseudomonas_carbon_ecology:16000:11": "plan",
+  "pseudomonas_carbon_ecology:16000:13": "plan",
+  "pseudomonas_carbon_ecology:16000:6": "plan",
+  "pseudomonas_carbon_ecology:16000:8": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "pseudomonas_carbon_ecology:0:20": "overlap",
+    "pseudomonas_carbon_ecology:0:31": "number",
+    "pseudomonas_carbon_ecology:0:32": "number",
+    "pseudomonas_carbon_ecology:0:33": "overlap",
+    "pseudomonas_carbon_ecology:0:34": "overlap",
+    "pseudomonas_carbon_ecology:16000:2": "overlap",
+    "pseudomonas_carbon_ecology:16000:4": "overlap",
+    "pseudomonas_carbon_ecology:16000:5": "overlap"
+   }
+  },
+  "figures": {
+   "claims": {
+    "pseudomonas_carbon_ecology:0:37": "overlap",
+    "pseudomonas_carbon_ecology:0:40": "overlap",
+    "pseudomonas_carbon_ecology:16000:10": "overlap",
+    "pseudomonas_carbon_ecology:16000:12": "overlap",
+    "pseudomonas_carbon_ecology:16000:7": "overlap",
+    "pseudomonas_carbon_ecology:16000:9": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "pseudomonas_carbon_ecology:0:0": "number",
+    "pseudomonas_carbon_ecology:0:10": "number",
+    "pseudomonas_carbon_ecology:0:12": "overlap",
+    "pseudomonas_carbon_ecology:0:13": "overlap",
+    "pseudomonas_carbon_ecology:0:14": "number",
+    "pseudomonas_carbon_ecology:0:15": "number",
+    "pseudomonas_carbon_ecology:0:17": "overlap",
+    "pseudomonas_carbon_ecology:0:18": "number",
+    "pseudomonas_carbon_ecology:0:19": "number",
+    "pseudomonas_carbon_ecology:0:2": "number",
+    "pseudomonas_carbon_ecology:0:22": "number",
+    "pseudomonas_carbon_ecology:0:23": "number",
+    "pseudomonas_carbon_ecology:0:24": "overlap",
+    "pseudomonas_carbon_ecology:0:25": "number",
+    "pseudomonas_carbon_ecology:0:27": "number",
+    "pseudomonas_carbon_ecology:0:28": "overlap",
+    "pseudomonas_carbon_ecology:0:3": "number",
+    "pseudomonas_carbon_ecology:0:36": "overlap",
+    "pseudomonas_carbon_ecology:0:4": "number",
+    "pseudomonas_carbon_ecology:0:5": "overlap",
+    "pseudomonas_carbon_ecology:0:6": "number"
+   }
+  },
+  "overview": {
+   "claims": {
+    "pseudomonas_carbon_ecology:0:8": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "pseudomonas_carbon_ecology:16000:0": "overlap",
+    "pseudomonas_carbon_ecology:16000:3": "overlap"
+   }
+  }
+ }
+}

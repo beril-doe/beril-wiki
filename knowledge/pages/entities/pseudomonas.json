@@ -1,0 +1,26 @@
+{
+ "sections": {
+  "evidence-from-pseudomonas-carbon-ecology": {
+   "claims": {
+    "pseudomonas_carbon_ecology:0:12": "overlap",
+    "pseudomonas_carbon_ecology:0:14": "number",
+    "pseudomonas_carbon_ecology:0:15": "number",
+    "pseudomonas_carbon_ecology:0:17": "overlap",
+    "pseudomonas_carbon_ecology:0:19": "number",
+    "pseudomonas_carbon_ecology:0:2": "number",
+    "pseudomonas_carbon_ecology:0:21": "overlap",
+    "pseudomonas_carbon_ecology:0:22": "number",
+    "pseudomonas_carbon_ecology:0:4": "number",
+    "pseudomonas_carbon_ecology:0:5": "overlap",
+    "pseudomonas_carbon_ecology:0:6": "number",
+    "pseudomonas_carbon_ecology:0:8": "number"
+   }
+  },
+  "limitations-and-next-tests": {
+   "claims": {
+    "pseudomonas_carbon_ecology:0:31": "number",
+    "pseudomonas_carbon_ecology:0:33": "overlap"
+   }
+  }
+ }
+}

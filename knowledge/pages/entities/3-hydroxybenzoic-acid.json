@@ -1,0 +1,14 @@
+{
+ "sections": {
+  "evidence-from-the-enigma-carbon-census": {
+   "claims": {
+    "enigma_carbon_census_1:16000:12": "number"
+   }
+  },
+  "related-pages": {
+   "claims": {
+    "enigma_carbon_census_1:0:2": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,45 @@
+{
+ "claims": {
+  "ecotype_env_reanalysis:0:24": "plan"
+ },
+ "sections": {
+  "caveats-and-future-analyses": {
+   "claims": {
+    "ecotype_env_reanalysis:0:21": "overlap",
+    "ecotype_env_reanalysis:0:23": "overlap",
+    "ecotype_env_reanalysis:0:25": "number"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "ecotype_env_reanalysis:0:0": "number",
+    "ecotype_env_reanalysis:0:1": "number",
+    "ecotype_env_reanalysis:0:12": "overlap",
+    "ecotype_env_reanalysis:0:13": "number",
+    "ecotype_env_reanalysis:0:14": "number",
+    "ecotype_env_reanalysis:0:19": "number",
+    "ecotype_env_reanalysis:0:2": "number",
+    "ecotype_env_reanalysis:0:20": "number",
+    "ecotype_env_reanalysis:0:22": "number",
+    "ecotype_env_reanalysis:0:26": "overlap",
+    "ecotype_env_reanalysis:0:27": "overlap",
+    "ecotype_env_reanalysis:0:28": "number",
+    "ecotype_env_reanalysis:0:29": "overlap",
+    "ecotype_env_reanalysis:0:3": "number",
+    "ecotype_env_reanalysis:0:30": "overlap",
+    "ecotype_env_reanalysis:0:31": "overlap",
+    "ecotype_env_reanalysis:0:32": "overlap",
+    "ecotype_env_reanalysis:0:4": "overlap",
+    "ecotype_env_reanalysis:0:5": "number",
+    "ecotype_env_reanalysis:0:6": "overlap",
+    "ecotype_env_reanalysis:0:7": "number",
+    "ecotype_env_reanalysis:0:8": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "ecotype_env_reanalysis:0:16": "overlap"
+   }
+  }
+ }
+}

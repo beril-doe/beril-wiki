@@ -1,0 +1,35 @@
+{
+ "sections": {
+  "key-facts-from-the-enigma-carbon-census": {
+   "claims": {
+    "enigma_carbon_census_1:0:0": "overlap",
+    "enigma_carbon_census_1:0:12": "overlap",
+    "enigma_carbon_census_1:0:5": "number",
+    "enigma_carbon_census_1:16000:28": "number",
+    "enigma_carbon_census_1:16000:5": "number"
+   }
+  },
+  "related-pages": {
+   "claims": {
+    "enigma_carbon_census_1:0:2": "overlap"
+   }
+  },
+  "relation-to-fitness-module-annotation": {
+   "claims": {
+    "fitness_modules:0:13": "number",
+    "fitness_modules:0:15": "number",
+    "fitness_modules:0:31": "overlap",
+    "fitness_modules:0:33": "number"
+   }
+  },
+  "role-in-genotype-to-phenotype-prediction": {
+   "claims": {
+    "genotype_to_phenotype_enigma:0:1": "overlap",
+    "genotype_to_phenotype_enigma:16000:39": "number",
+    "genotype_to_phenotype_enigma:32000:29": "overlap",
+    "metal_fitness_atlas:0:16": "number",
+    "metal_fitness_atlas:0:17": "overlap"
+   }
+  }
+ }
+}

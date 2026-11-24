@@ -1,0 +1,62 @@
+{
+ "claims": {
+  "aromatic_catabolism_network:0:28": "plan",
+  "aromatic_catabolism_network:0:36": "plan",
+  "aromatic_catabolism_network:0:37": "plan",
+  "aromatic_catabolism_network:0:38": "plan",
+  "aromatic_catabolism_network:0:39": "plan",
+  "aromatic_catabolism_network:0:41": "plan",
+  "aromatic_catabolism_network:0:42": "plan",
+  "aromatic_catabolism_network:0:43": "plan",
+  "aromatic_catabolism_network:0:44": "plan",
+  "aromatic_catabolism_network:16000:2": "plan"
+ },
+ "sections": {
+  "caveats-and-open-directions": {
+   "claims": {
+    "aromatic_catabolism_network:0:32": "overlap",
+    "aromatic_catabolism_network:0:33": "overlap"
+   }
+  },
+  "cited-background-literature": {
+   "claims": {
+    "aromatic_catabolism_network:0:45": "overlap",
+    "aromatic_catabolism_network:16000:0": "overlap",
+    "aromatic_catabolism_network:16000:1": "overlap"
+   }
+  },
+  "figures": {
+   "claims": {
+    "aromatic_catabolism_network:0:40": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "aromatic_catabolism_network:0:1": "number",
+    "aromatic_catabolism_network:0:10": "overlap",
+    "aromatic_catabolism_network:0:12": "number",
+    "aromatic_catabolism_network:0:13": "number",
+    "aromatic_catabolism_network:0:14": "number",
+    "aromatic_catabolism_network:0:16": "overlap",
+    "aromatic_catabolism_network:0:17": "overlap",
+    "aromatic_catabolism_network:0:2": "overlap",
+    "aromatic_catabolism_network:0:23": "number",
+    "aromatic_catabolism_network:0:24": "overlap",
+    "aromatic_catabolism_network:0:25": "overlap",
+    "aromatic_catabolism_network:0:27": "overlap",
+    "aromatic_catabolism_network:0:3": "number",
+    "aromatic_catabolism_network:0:4": "number",
+    "aromatic_catabolism_network:0:6": "number",
+    "aromatic_catabolism_network:0:8": "overlap",
+    "aromatic_catabolism_network:0:9": "overlap"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "aromatic_catabolism_network:0:11": "number",
+    "aromatic_catabolism_network:0:34": "number",
+    "aromatic_catabolism_network:0:35": "overlap"
+   }
+  }
+ }
+}

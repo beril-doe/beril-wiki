@@ -1,0 +1,100 @@
+{
+ "claims": {
+  "amr_environmental_resistome:0:0": "plan",
+  "amr_environmental_resistome:0:12": "plan",
+  "amr_environmental_resistome:0:22": "plan",
+  "amr_environmental_resistome:0:32": "plan",
+  "amr_environmental_resistome:0:38": "plan",
+  "amr_environmental_resistome:16000:10": "plan",
+  "amr_environmental_resistome:16000:11": "plan",
+  "amr_environmental_resistome:16000:12": "plan",
+  "amr_environmental_resistome:16000:13": "plan",
+  "amr_environmental_resistome:16000:14": "plan",
+  "amr_environmental_resistome:16000:15": "plan"
+ },
+ "sections": {
+  "caveats-and-unperformed-analyses": {
+   "claims": {
+    "amr_environmental_resistome:0:52": "number",
+    "amr_environmental_resistome:0:53": "overlap",
+    "amr_environmental_resistome:0:54": "number",
+    "amr_environmental_resistome:0:56": "number",
+    "amr_environmental_resistome:16000:2": "number",
+    "amr_environmental_resistome:16000:4": "overlap"
+   }
+  },
+  "data-assembly-and-statistical-results": {
+   "claims": {
+    "amr_environmental_resistome:0:35": "number",
+    "amr_environmental_resistome:0:36": "number",
+    "amr_environmental_resistome:0:37": "number",
+    "amr_environmental_resistome:0:39": "number",
+    "amr_environmental_resistome:0:40": "number",
+    "amr_environmental_resistome:0:42": "number",
+    "amr_environmental_resistome:16000:18": "overlap",
+    "amr_environmental_resistome:16000:20": "overlap",
+    "amr_environmental_resistome:16000:5": "overlap",
+    "amr_environmental_resistome:16000:6": "number",
+    "amr_environmental_resistome:16000:7": "number",
+    "amr_environmental_resistome:16000:8": "number",
+    "amr_environmental_resistome:16000:9": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "amr_environmental_resistome:0:1": "number",
+    "amr_environmental_resistome:0:10": "number",
+    "amr_environmental_resistome:0:11": "number",
+    "amr_environmental_resistome:0:13": "overlap",
+    "amr_environmental_resistome:0:14": "number",
+    "amr_environmental_resistome:0:15": "number",
+    "amr_environmental_resistome:0:16": "number",
+    "amr_environmental_resistome:0:17": "number",
+    "amr_environmental_resistome:0:18": "number",
+    "amr_environmental_resistome:0:19": "number",
+    "amr_environmental_resistome:0:2": "number",
+    "amr_environmental_resistome:0:20": "number",
+    "amr_environmental_resistome:0:21": "number",
+    "amr_environmental_resistome:0:23": "overlap",
+    "amr_environmental_resistome:0:24": "number",
+    "amr_environmental_resistome:0:25": "number",
+    "amr_environmental_resistome:0:26": "number",
+    "amr_environmental_resistome:0:27": "number",
+    "amr_environmental_resistome:0:28": "number",
+    "amr_environmental_resistome:0:29": "number",
+    "amr_environmental_resistome:0:3": "overlap",
+    "amr_environmental_resistome:0:30": "number",
+    "amr_environmental_resistome:0:31": "number",
+    "amr_environmental_resistome:0:33": "number",
+    "amr_environmental_resistome:0:34": "number",
+    "amr_environmental_resistome:0:4": "number",
+    "amr_environmental_resistome:0:45": "number",
+    "amr_environmental_resistome:0:46": "number",
+    "amr_environmental_resistome:0:47": "number",
+    "amr_environmental_resistome:0:5": "number",
+    "amr_environmental_resistome:0:6": "number",
+    "amr_environmental_resistome:0:7": "number",
+    "amr_environmental_resistome:0:8": "number",
+    "amr_environmental_resistome:0:9": "number",
+    "amr_environmental_resistome:16000:16": "overlap",
+    "amr_environmental_resistome:16000:17": "overlap",
+    "amr_environmental_resistome:16000:19": "overlap",
+    "amr_environmental_resistome:16000:3": "number"
+   }
+  },
+  "literature-context": {
+   "claims": {
+    "amr_environmental_resistome:0:48": "number",
+    "amr_environmental_resistome:0:49": "number",
+    "amr_environmental_resistome:0:50": "number",
+    "amr_environmental_resistome:0:51": "number"
+   }
+  },
+  "proposed-future-work": {
+   "claims": {
+    "amr_environmental_resistome:16000:21": "overlap",
+    "amr_environmental_resistome:16000:22": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "claims": {
+  "paperblast_explorer:0:15": "plan",
+  "paperblast_explorer:0:34": "plan",
+  "paperblast_explorer:0:41": "plan",
+  "paperblast_explorer:16000:3": "plan",
+  "paperblast_explorer:16000:4": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "paperblast_explorer:0:27": "number",
+    "paperblast_explorer:0:28": "number",
+    "paperblast_explorer:0:29": "number",
+    "paperblast_explorer:0:30": "overlap"
+   }
+  },
+  "database-scale-and-coverage": {
+   "claims": {
+    "paperblast_explorer:0:10": "number",
+    "paperblast_explorer:0:11": "number",
+    "paperblast_explorer:0:12": "number",
+    "paperblast_explorer:0:13": "number",
+    "paperblast_explorer:0:14": "number",
+    "paperblast_explorer:0:16": "number",
+    "paperblast_explorer:0:24": "number",
+    "paperblast_explorer:0:7": "number",
+    "paperblast_explorer:0:8": "number",
+    "paperblast_explorer:0:9": "number"
+   }
+  },
+  "generated-data-and-figures": {
+   "claims": {
+    "paperblast_explorer:0:31": "number",
+    "paperblast_explorer:0:32": "number",
+    "paperblast_explorer:0:33": "overlap",
+    "paperblast_explorer:0:35": "overlap",
+    "paperblast_explorer:0:36": "overlap",
+    "paperblast_explorer:0:37": "overlap",
+    "paperblast_explorer:0:38": "overlap",
+    "paperblast_explorer:0:39": "number",
+    "paperblast_explorer:0:40": "overlap",
+    "paperblast_explorer:0:42": "overlap",
+    "paperblast_explorer:0:43": "overlap"
+   }
+  },
+  "interpretation-and-contribution": {
+   "claims": {
+    "paperblast_explorer:0:20": "number",
+    "paperblast_explorer:0:21": "number",
+    "paperblast_explorer:0:22": "number",
+    "paperblast_explorer:0:23": "number",
+    "paperblast_explorer:16000:5": "number",
+    "paperblast_explorer:16000:6": "number",
+    "paperblast_explorer:16000:7": "number"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "paperblast_explorer:0:0": "number",
+    "paperblast_explorer:0:1": "number",
+    "paperblast_explorer:0:17": "number",
+    "paperblast_explorer:0:18": "overlap",
+    "paperblast_explorer:0:19": "number",
+    "paperblast_explorer:0:3": "number",
+    "paperblast_explorer:0:4": "number",
+    "paperblast_explorer:0:5": "number",
+    "paperblast_explorer:0:6": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "paperblast_explorer:0:2": "number",
+    "paperblast_explorer:16000:0": "number"
+   }
+  }
+ }
+}

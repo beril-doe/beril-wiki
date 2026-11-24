@@ -1,0 +1,88 @@
+{
+ "claims": {
+  "amr_pangenome_atlas:0:37": "plan",
+  "amr_pangenome_atlas:0:39": "plan",
+  "amr_pangenome_atlas:0:41": "plan",
+  "amr_pangenome_atlas:0:42": "plan",
+  "amr_pangenome_atlas:0:44": "plan",
+  "amr_pangenome_atlas:16000:15": "plan",
+  "amr_pangenome_atlas:16000:2": "plan",
+  "amr_pangenome_atlas:16000:8": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "amr_pangenome_atlas:0:10": "number",
+    "amr_pangenome_atlas:0:26": "overlap",
+    "amr_pangenome_atlas:0:27": "overlap"
+   }
+  },
+  "figures": {
+   "claims": {
+    "amr_pangenome_atlas:0:36": "overlap",
+    "amr_pangenome_atlas:0:38": "overlap",
+    "amr_pangenome_atlas:0:40": "overlap",
+    "amr_pangenome_atlas:0:43": "overlap",
+    "amr_pangenome_atlas:16000:0": "overlap",
+    "amr_pangenome_atlas:16000:1": "overlap",
+    "amr_pangenome_atlas:16000:10": "overlap",
+    "amr_pangenome_atlas:16000:11": "overlap",
+    "amr_pangenome_atlas:16000:12": "overlap",
+    "amr_pangenome_atlas:16000:13": "overlap",
+    "amr_pangenome_atlas:16000:14": "overlap",
+    "amr_pangenome_atlas:16000:3": "overlap",
+    "amr_pangenome_atlas:16000:4": "overlap",
+    "amr_pangenome_atlas:16000:5": "overlap",
+    "amr_pangenome_atlas:16000:6": "overlap",
+    "amr_pangenome_atlas:16000:7": "overlap",
+    "amr_pangenome_atlas:16000:9": "overlap"
+   }
+  },
+  "future-directions": {
+   "claims": {
+    "amr_pangenome_atlas:16000:16": "overlap",
+    "amr_pangenome_atlas:16000:20": "number",
+    "amr_pangenome_atlas:16000:21": "overlap",
+    "amr_pangenome_atlas:16000:24": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "amr_pangenome_atlas:0:0": "number",
+    "amr_pangenome_atlas:0:12": "number",
+    "amr_pangenome_atlas:0:2": "number",
+    "amr_pangenome_atlas:0:20": "overlap",
+    "amr_pangenome_atlas:0:21": "number",
+    "amr_pangenome_atlas:0:23": "overlap",
+    "amr_pangenome_atlas:0:29": "number",
+    "amr_pangenome_atlas:0:3": "number",
+    "amr_pangenome_atlas:0:31": "number",
+    "amr_pangenome_atlas:0:32": "number",
+    "amr_pangenome_atlas:0:33": "number",
+    "amr_pangenome_atlas:0:34": "number",
+    "amr_pangenome_atlas:0:35": "number",
+    "amr_pangenome_atlas:0:5": "number",
+    "amr_pangenome_atlas:0:6": "number",
+    "amr_pangenome_atlas:0:7": "number",
+    "amr_pangenome_atlas:0:8": "number",
+    "amr_pangenome_atlas:0:9": "overlap"
+   }
+  },
+  "overview": {
+   "claims": {
+    "amr_pangenome_atlas:0:11": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "amr_pangenome_atlas:0:14": "number",
+    "amr_pangenome_atlas:0:22": "overlap",
+    "amr_pangenome_atlas:0:24": "number",
+    "amr_pangenome_atlas:0:25": "overlap",
+    "amr_pangenome_atlas:0:28": "number",
+    "amr_pangenome_atlas:16000:19": "overlap",
+    "amr_pangenome_atlas:16000:22": "overlap"
+   }
+  }
+ }
+}

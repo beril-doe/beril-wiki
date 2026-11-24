@@ -1,0 +1,57 @@
+{
+ "claims": {
+  "conservation_fitness_synthesis:0:4": "plan",
+  "conservation_fitness_synthesis:0:5": "plan",
+  "conservation_fitness_synthesis:0:6": "plan"
+ },
+ "sections": {
+  "caveats-and-stated-non-findings": {
+   "claims": {
+    "conservation_fitness_synthesis:0:23": "overlap"
+   }
+  },
+  "data-and-provenance": {
+   "claims": {
+    "conservation_fitness_synthesis:0:32": "number",
+    "conservation_fitness_synthesis:0:34": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "conservation_fitness_synthesis:0:0": "overlap",
+    "conservation_fitness_synthesis:0:12": "overlap",
+    "conservation_fitness_synthesis:0:13": "number",
+    "conservation_fitness_synthesis:0:14": "number",
+    "conservation_fitness_synthesis:0:15": "overlap",
+    "conservation_fitness_synthesis:0:16": "number",
+    "conservation_fitness_synthesis:0:17": "number",
+    "conservation_fitness_synthesis:0:18": "number",
+    "conservation_fitness_synthesis:0:19": "overlap",
+    "conservation_fitness_synthesis:0:2": "number",
+    "conservation_fitness_synthesis:0:33": "number",
+    "conservation_fitness_synthesis:0:9": "number"
+   }
+  },
+  "open-questions": {
+   "claims": {
+    "conservation_fitness_synthesis:0:29": "overlap"
+   }
+  },
+  "overview": {
+   "claims": {
+    "conservation_fitness_synthesis:0:3": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "conservation_fitness_synthesis:0:1": "number",
+    "conservation_fitness_synthesis:0:21": "number",
+    "conservation_fitness_synthesis:0:22": "overlap",
+    "conservation_fitness_synthesis:0:24": "overlap",
+    "conservation_fitness_synthesis:0:26": "number",
+    "conservation_fitness_synthesis:0:7": "number",
+    "conservation_fitness_synthesis:0:8": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,87 @@
+{
+ "claims": {
+  "acinetobacter_adp1_explorer:0:21": "plan",
+  "acinetobacter_adp1_explorer:0:6": "plan",
+  "berdl_data_atlas:0:33": "plan",
+  "berdl_data_atlas:16000:57": "plan",
+  "berdl_data_atlas:16000:7": "plan",
+  "discoveries:16000:41": "plan",
+  "discoveries:16000:43": "plan",
+  "essential_metabolome:0:10": "plan",
+  "field_vs_lab_fitness:0:1": "plan",
+  "nmdc_context_audit:0:1": "plan",
+  "nmdc_context_audit:0:17": "plan",
+  "nmdc_context_audit:0:3": "plan",
+  "nmdc_context_audit:0:6": "plan",
+  "pitfalls:16000:20": "plan",
+  "webofmicrobes_explorer:0:23": "plan",
+  "webofmicrobes_explorer:0:26": "plan"
+ },
+ "sections": {
+  "boundary-conditions": {
+   "claims": {
+    "berdl_data_atlas:16000:35": "overlap",
+    "berdl_data_atlas:16000:6": "overlap"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:0:0": "number"
+   }
+  },
+  "name-based-discovery-hides-ownership": {
+   "claims": {
+    "berdl_data_atlas:16000:0": "overlap",
+    "berdl_data_atlas:16000:52": "overlap",
+    "berdl_data_atlas:16000:53": "overlap",
+    "nmdc_context_audit:0:0": "overlap",
+    "nmdc_context_audit:0:16": "number",
+    "nmdc_context_audit:0:2": "overlap",
+    "nmdc_context_audit:0:24": "number",
+    "nmdc_context_audit:0:25": "overlap",
+    "nmdc_context_audit:0:26": "overlap",
+    "nmdc_context_audit:0:27": "overlap",
+    "nmdc_context_audit:0:4": "overlap",
+    "nmdc_context_audit:0:5": "overlap",
+    "nmdc_context_audit:0:8": "number",
+    "nmdc_context_audit:0:9": "number"
+   }
+  },
+  "organism-and-resource-level-coverage-gaps": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:28": "overlap",
+    "discoveries:16000:42": "overlap",
+    "essential_metabolome:0:11": "overlap",
+    "field_vs_lab_fitness:0:2": "overlap",
+    "field_vs_lab_fitness:0:3": "number",
+    "field_vs_lab_fitness:0:4": "number",
+    "snipe_defense_system:0:36": "overlap",
+    "webofmicrobes_explorer:0:17": "number",
+    "webofmicrobes_explorer:0:18": "number"
+   }
+  },
+  "ownership-affects-realized-integration": {
+   "claims": {
+    "berdl_data_atlas:0:3": "number",
+    "berdl_data_atlas:0:9": "number"
+   }
+  },
+  "ownership-concentration-produces-coverage-bias": {
+   "claims": {
+    "berdl_data_atlas:0:1": "number",
+    "berdl_data_atlas:0:31": "number",
+    "berdl_data_atlas:0:7": "number"
+   }
+  },
+  "tenant-breadth-is-uneven": {
+   "claims": {
+    "berdl_data_atlas:0:32": "number"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "nmdc_context_audit:0:15": "overlap"
+   }
+  }
+ }
+}

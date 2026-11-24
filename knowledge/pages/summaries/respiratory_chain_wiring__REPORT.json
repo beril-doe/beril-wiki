@@ -1,0 +1,53 @@
+{
+ "sections": {
+  "caveats-and-open-tests": {
+   "claims": {
+    "respiratory_chain_wiring:0:23": "overlap",
+    "respiratory_chain_wiring:0:24": "overlap",
+    "respiratory_chain_wiring:0:26": "overlap",
+    "respiratory_chain_wiring:0:29": "overlap",
+    "respiratory_chain_wiring:0:42": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "respiratory_chain_wiring:0:1": "overlap",
+    "respiratory_chain_wiring:0:14": "number",
+    "respiratory_chain_wiring:0:15": "number",
+    "respiratory_chain_wiring:0:16": "number",
+    "respiratory_chain_wiring:0:18": "overlap",
+    "respiratory_chain_wiring:0:19": "number",
+    "respiratory_chain_wiring:0:2": "overlap",
+    "respiratory_chain_wiring:0:20": "number",
+    "respiratory_chain_wiring:0:21": "overlap",
+    "respiratory_chain_wiring:0:27": "overlap",
+    "respiratory_chain_wiring:0:3": "overlap",
+    "respiratory_chain_wiring:0:30": "overlap",
+    "respiratory_chain_wiring:0:31": "overlap",
+    "respiratory_chain_wiring:0:32": "overlap",
+    "respiratory_chain_wiring:0:33": "overlap",
+    "respiratory_chain_wiring:0:34": "overlap",
+    "respiratory_chain_wiring:0:35": "overlap",
+    "respiratory_chain_wiring:0:36": "overlap",
+    "respiratory_chain_wiring:0:37": "overlap",
+    "respiratory_chain_wiring:0:38": "overlap",
+    "respiratory_chain_wiring:0:39": "overlap",
+    "respiratory_chain_wiring:0:4": "overlap",
+    "respiratory_chain_wiring:0:40": "overlap",
+    "respiratory_chain_wiring:0:41": "overlap",
+    "respiratory_chain_wiring:0:46": "overlap",
+    "respiratory_chain_wiring:0:5": "overlap",
+    "respiratory_chain_wiring:0:8": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "respiratory_chain_wiring:0:11": "number",
+    "respiratory_chain_wiring:0:12": "number",
+    "respiratory_chain_wiring:0:13": "number",
+    "respiratory_chain_wiring:0:25": "overlap",
+    "respiratory_chain_wiring:0:6": "number"
+   }
+  }
+ }
+}

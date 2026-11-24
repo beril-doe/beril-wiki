@@ -1,0 +1,10 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "genotype_to_phenotype_enigma:0:26": "number",
+    "genotype_to_phenotype_enigma:16000:39": "number"
+   }
+  }
+ }
+}

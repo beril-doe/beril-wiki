@@ -1,0 +1,65 @@
+{
+ "claims": {
+  "euk_in_prok_correlates:16000:0": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "euk_in_prok_correlates:0:18": "overlap",
+    "euk_in_prok_correlates:0:21": "overlap",
+    "euk_in_prok_correlates:0:34": "number",
+    "euk_in_prok_correlates:0:36": "overlap",
+    "euk_in_prok_correlates:0:37": "overlap",
+    "euk_in_prok_correlates:0:38": "number"
+   }
+  },
+  "future-directions": {
+   "claims": {
+    "euk_in_prok_correlates:16000:4": "overlap",
+    "euk_in_prok_correlates:16000:5": "overlap",
+    "euk_in_prok_correlates:16000:6": "overlap",
+    "euk_in_prok_correlates:16000:8": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "euk_in_prok_correlates:0:0": "number",
+    "euk_in_prok_correlates:0:1": "overlap",
+    "euk_in_prok_correlates:0:10": "number",
+    "euk_in_prok_correlates:0:11": "number",
+    "euk_in_prok_correlates:0:12": "number",
+    "euk_in_prok_correlates:0:13": "overlap",
+    "euk_in_prok_correlates:0:14": "number",
+    "euk_in_prok_correlates:0:15": "number",
+    "euk_in_prok_correlates:0:16": "number",
+    "euk_in_prok_correlates:0:17": "number",
+    "euk_in_prok_correlates:0:19": "overlap",
+    "euk_in_prok_correlates:0:2": "overlap",
+    "euk_in_prok_correlates:0:20": "number",
+    "euk_in_prok_correlates:0:22": "overlap",
+    "euk_in_prok_correlates:0:23": "number",
+    "euk_in_prok_correlates:0:24": "number",
+    "euk_in_prok_correlates:0:25": "number",
+    "euk_in_prok_correlates:0:26": "overlap",
+    "euk_in_prok_correlates:0:27": "number",
+    "euk_in_prok_correlates:0:28": "number",
+    "euk_in_prok_correlates:0:29": "number",
+    "euk_in_prok_correlates:0:3": "number",
+    "euk_in_prok_correlates:0:30": "number",
+    "euk_in_prok_correlates:0:31": "number",
+    "euk_in_prok_correlates:0:32": "number",
+    "euk_in_prok_correlates:0:33": "number",
+    "euk_in_prok_correlates:0:4": "number",
+    "euk_in_prok_correlates:0:5": "number",
+    "euk_in_prok_correlates:0:6": "number",
+    "euk_in_prok_correlates:0:7": "overlap",
+    "euk_in_prok_correlates:0:8": "overlap",
+    "euk_in_prok_correlates:0:9": "number",
+    "euk_in_prok_correlates:16000:1": "overlap",
+    "euk_in_prok_correlates:16000:2": "overlap",
+    "euk_in_prok_correlates:16000:3": "overlap",
+    "euk_in_prok_correlates:16000:9": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "sections": {
+  "evidence-from-community-metabolomics-and-pangenomes": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:0:18": "number"
+   }
+  },
+  "interpretation-and-limitations": {
+   "claims": {
+    "pathway_capability_dependency:0:42": "overlap"
+   }
+  }
+ }
+}

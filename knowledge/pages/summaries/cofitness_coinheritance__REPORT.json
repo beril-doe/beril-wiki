@@ -1,0 +1,46 @@
+{
+ "sections": {
+  "caveats-and-open-directions": {
+   "claims": {
+    "cofitness_coinheritance:0:34": "number"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "cofitness_coinheritance:0:10": "number",
+    "cofitness_coinheritance:0:11": "number",
+    "cofitness_coinheritance:0:14": "overlap",
+    "cofitness_coinheritance:0:16": "number",
+    "cofitness_coinheritance:0:18": "number",
+    "cofitness_coinheritance:0:20": "number",
+    "cofitness_coinheritance:0:21": "overlap",
+    "cofitness_coinheritance:0:23": "overlap",
+    "cofitness_coinheritance:0:24": "number",
+    "cofitness_coinheritance:0:26": "overlap",
+    "cofitness_coinheritance:0:28": "number",
+    "cofitness_coinheritance:0:29": "number",
+    "cofitness_coinheritance:0:3": "overlap",
+    "cofitness_coinheritance:0:30": "number",
+    "cofitness_coinheritance:0:36": "overlap",
+    "cofitness_coinheritance:0:37": "overlap",
+    "cofitness_coinheritance:0:39": "overlap",
+    "cofitness_coinheritance:0:40": "overlap",
+    "cofitness_coinheritance:0:7": "number",
+    "cofitness_coinheritance:0:8": "number",
+    "cofitness_coinheritance:0:9": "number"
+   }
+  },
+  "overview": {
+   "claims": {
+    "cofitness_coinheritance:0:17": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "cofitness_coinheritance:0:15": "overlap",
+    "cofitness_coinheritance:0:35": "overlap",
+    "cofitness_coinheritance:0:45": "overlap"
+   }
+  }
+ }
+}

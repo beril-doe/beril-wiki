@@ -1,0 +1,101 @@
+{
+ "claims": {
+  "amr_fitness_cost:0:23": "plan",
+  "amr_fitness_cost:0:28": "plan",
+  "amr_fitness_cost:0:3": "plan",
+  "amr_fitness_cost:16000:11": "plan",
+  "amr_fitness_cost:16000:19": "plan",
+  "amr_fitness_cost:16000:20": "plan",
+  "amr_fitness_cost:16000:24": "plan",
+  "amr_fitness_cost:16000:25": "plan",
+  "amr_fitness_cost:16000:28": "plan",
+  "amr_fitness_cost:16000:8": "plan",
+  "amr_fitness_cost:16000:9": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "amr_fitness_cost:0:33": "overlap",
+    "amr_fitness_cost:0:54": "overlap",
+    "amr_fitness_cost:0:55": "number",
+    "amr_fitness_cost:0:56": "overlap",
+    "amr_fitness_cost:16000:1": "number",
+    "amr_fitness_cost:16000:2": "number",
+    "amr_fitness_cost:16000:4": "overlap",
+    "amr_fitness_cost:16000:7": "number"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "amr_fitness_cost:0:0": "overlap",
+    "amr_fitness_cost:0:1": "number",
+    "amr_fitness_cost:0:10": "number",
+    "amr_fitness_cost:0:11": "number",
+    "amr_fitness_cost:0:12": "number",
+    "amr_fitness_cost:0:13": "overlap",
+    "amr_fitness_cost:0:14": "number",
+    "amr_fitness_cost:0:15": "overlap",
+    "amr_fitness_cost:0:16": "number",
+    "amr_fitness_cost:0:17": "number",
+    "amr_fitness_cost:0:18": "overlap",
+    "amr_fitness_cost:0:19": "number",
+    "amr_fitness_cost:0:20": "number",
+    "amr_fitness_cost:0:21": "overlap",
+    "amr_fitness_cost:0:22": "overlap",
+    "amr_fitness_cost:0:25": "overlap",
+    "amr_fitness_cost:0:26": "number",
+    "amr_fitness_cost:0:29": "overlap",
+    "amr_fitness_cost:0:31": "overlap",
+    "amr_fitness_cost:0:32": "number",
+    "amr_fitness_cost:0:34": "number",
+    "amr_fitness_cost:0:35": "overlap",
+    "amr_fitness_cost:0:36": "overlap",
+    "amr_fitness_cost:0:37": "overlap",
+    "amr_fitness_cost:0:38": "number",
+    "amr_fitness_cost:0:39": "number",
+    "amr_fitness_cost:0:4": "number",
+    "amr_fitness_cost:0:40": "number",
+    "amr_fitness_cost:0:41": "number",
+    "amr_fitness_cost:0:42": "number",
+    "amr_fitness_cost:0:43": "number",
+    "amr_fitness_cost:0:44": "number",
+    "amr_fitness_cost:0:45": "number",
+    "amr_fitness_cost:0:46": "number",
+    "amr_fitness_cost:0:47": "number",
+    "amr_fitness_cost:0:48": "number",
+    "amr_fitness_cost:0:49": "number",
+    "amr_fitness_cost:0:5": "number",
+    "amr_fitness_cost:0:50": "number",
+    "amr_fitness_cost:0:51": "number",
+    "amr_fitness_cost:0:52": "number",
+    "amr_fitness_cost:0:7": "number",
+    "amr_fitness_cost:0:8": "overlap",
+    "amr_fitness_cost:0:9": "overlap",
+    "amr_fitness_cost:16000:10": "overlap",
+    "amr_fitness_cost:16000:12": "number",
+    "amr_fitness_cost:16000:13": "number",
+    "amr_fitness_cost:16000:14": "overlap",
+    "amr_fitness_cost:16000:15": "overlap",
+    "amr_fitness_cost:16000:16": "overlap",
+    "amr_fitness_cost:16000:17": "overlap",
+    "amr_fitness_cost:16000:18": "number",
+    "amr_fitness_cost:16000:21": "overlap",
+    "amr_fitness_cost:16000:22": "overlap",
+    "amr_fitness_cost:16000:23": "overlap",
+    "amr_fitness_cost:16000:26": "overlap",
+    "amr_fitness_cost:16000:27": "overlap"
+   }
+  },
+  "overview": {
+   "claims": {
+    "amr_fitness_cost:0:2": "overlap"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "amr_fitness_cost:0:27": "number",
+    "amr_fitness_cost:0:6": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,15 @@
+{
+ "sections": {
+  "fitness-browser-bacdive-taxonomy-match": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:0:25": "overlap"
+   }
+  },
+  "plant-microbiome-ecotypes-subclade-host-association-h6": {
+   "claims": {
+    "plant_microbiome_ecotypes:16000:12": "overlap",
+    "plant_microbiome_ecotypes:16000:37": "number"
+   }
+  }
+ }
+}

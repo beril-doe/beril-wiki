@@ -1,0 +1,93 @@
+{
+ "claims": {
+  "cf_formulation_design:48000:15": "plan",
+  "enigma_carbon_census_1:32000:8": "plan",
+  "fw300_metabolic_consistency:0:1": "plan",
+  "fw300_metabolic_consistency:0:36": "plan",
+  "fw300_metabolic_consistency:0:43": "plan",
+  "fw300_metabolic_consistency:16000:7": "plan",
+  "fw300_metabolic_consistency:16000:9": "plan",
+  "genotype_to_phenotype_enigma:0:7": "plan",
+  "genotype_to_phenotype_enigma:32000:14": "plan",
+  "genotype_to_phenotype_enigma:32000:15": "plan",
+  "genotype_to_phenotype_enigma:32000:35": "plan",
+  "genotype_to_phenotype_enigma:32000:43": "plan",
+  "genotype_to_phenotype_enigma:48000:60": "plan",
+  "harvard_forest_warming:0:28": "plan",
+  "harvard_forest_warming:16000:12": "plan",
+  "ibd_phage_targeting:112000:16": "plan",
+  "ibd_phage_targeting:112000:24": "plan",
+  "ibd_phage_targeting:112000:27": "plan",
+  "ibd_phage_targeting:128000:6": "plan",
+  "ibd_phage_targeting:144000:20": "plan",
+  "nmdc_community_metabolic_ecology:0:18": "plan",
+  "nmdc_community_metabolic_ecology:0:28": "plan",
+  "nmdc_community_metabolic_ecology:16000:27": "plan",
+  "nmdc_community_metabolic_ecology:16000:32": "plan",
+  "pitfalls:0:10": "plan",
+  "pitfalls:0:11": "plan",
+  "pitfalls:112000:38": "plan",
+  "pitfalls:112000:68": "plan",
+  "pitfalls:112000:69": "plan",
+  "pitfalls:112000:70": "plan",
+  "pitfalls:112000:71": "plan",
+  "pseudomonas_carbon_ecology:0:33": "plan",
+  "pseudomonas_carbon_ecology:16000:0": "plan",
+  "webofmicrobes_explorer:0:11": "plan",
+  "webofmicrobes_explorer:0:12": "plan",
+  "webofmicrobes_explorer:0:13": "plan",
+  "webofmicrobes_explorer:0:19": "plan",
+  "webofmicrobes_explorer:0:7": "plan",
+  "webofmicrobes_explorer:0:8": "plan",
+  "webofmicrobes_explorer:0:9": "plan"
+ },
+ "sections": {
+  "coverage-annotation-and-taxonomic-limits": {
+   "claims": {
+    "annotation_gap_discovery:0:37": "overlap",
+    "discoveries:80000:6": "number",
+    "discoveries:80000:8": "overlap",
+    "fw300_metabolic_consistency:0:16": "number",
+    "fw300_metabolic_consistency:0:17": "number",
+    "fw300_metabolic_consistency:0:18": "number",
+    "fw300_metabolic_consistency:0:19": "overlap",
+    "fw300_metabolic_consistency:0:35": "number",
+    "fw300_metabolic_consistency:0:39": "overlap",
+    "webofmicrobes_explorer:0:10": "overlap"
+   }
+  },
+  "evidence-from-fw300-n2e3": {
+   "claims": {
+    "discoveries:80000:43": "overlap",
+    "discoveries:80000:47": "number",
+    "fw300_metabolic_consistency:0:0": "overlap",
+    "fw300_metabolic_consistency:0:2": "number",
+    "fw300_metabolic_consistency:0:3": "number",
+    "fw300_metabolic_consistency:0:42": "overlap",
+    "fw300_metabolic_consistency:0:44": "overlap",
+    "fw300_metabolic_consistency:0:5": "overlap",
+    "fw300_metabolic_consistency:16000:3": "overlap",
+    "fw300_metabolic_consistency:16000:4": "overlap"
+   }
+  },
+  "fitness-evidence-and-four-way-agreement": {
+   "claims": {
+    "fw300_metabolic_consistency:0:23": "number",
+    "fw300_metabolic_consistency:0:24": "number",
+    "fw300_metabolic_consistency:0:38": "overlap"
+   }
+  },
+  "why-assay-outputs-disagree": {
+   "claims": {
+    "acinetobacter_adp1_explorer:0:20": "number",
+    "adp1_triple_essentiality:0:22": "number",
+    "cf_formulation_design:32000:38": "overlap",
+    "cf_formulation_design:48000:14": "overlap",
+    "cf_formulation_design:48000:32": "number",
+    "discoveries:96000:14": "number",
+    "fw300_metabolic_consistency:16000:13": "overlap",
+    "webofmicrobes_explorer:0:3": "number"
+   }
+  }
+ }
+}

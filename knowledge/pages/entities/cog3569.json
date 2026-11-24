@@ -1,0 +1,20 @@
+{
+ "sections": {
+  "evidence-from-plant-microbiome-ecotypes": {
+   "claims": {
+    "plant_microbiome_ecotypes:0:15": "number",
+    "plant_microbiome_ecotypes:0:25": "number",
+    "plant_microbiome_ecotypes:0:27": "number",
+    "plant_microbiome_ecotypes:64000:5": "number",
+    "plant_microbiome_ecotypes:80000:37": "number"
+   }
+  },
+  "statistical-context-and-limitations": {
+   "claims": {
+    "plant_microbiome_ecotypes:0:14": "number",
+    "plant_microbiome_ecotypes:48000:36": "number",
+    "plant_microbiome_ecotypes:48000:37": "number"
+   }
+  }
+ }
+}

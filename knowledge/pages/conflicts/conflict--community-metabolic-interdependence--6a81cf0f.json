@@ -1,0 +1,10 @@
+{
+ "sections": {
+  "evidence-sides": {
+   "claims": {
+    "discoveries:32000:13": "number",
+    "plant_microbiome_ecotypes:32000:27": "number"
+   }
+  }
+ }
+}

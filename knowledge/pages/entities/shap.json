@@ -1,0 +1,18 @@
+{
+ "sections": {
+  "use-in-enigma-genotype-to-phenotype-prediction": {
+   "claims": {
+    "genotype_to_phenotype_enigma:0:2": "number",
+    "genotype_to_phenotype_enigma:16000:17": "number",
+    "genotype_to_phenotype_enigma:32000:24": "number",
+    "genotype_to_phenotype_enigma:48000:63": "number"
+   }
+  },
+  "use-in-the-bacdive-metal-tolerance-study": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:0:9": "number",
+    "bacdive_phenotype_metal_tolerance:16000:0": "overlap"
+   }
+  }
+ }
+}

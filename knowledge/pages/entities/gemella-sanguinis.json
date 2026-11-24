@@ -1,0 +1,10 @@
+{
+ "sections": {
+  "evidence-from-cf-formulation-design": {
+   "claims": {
+    "cf_formulation_design:0:30": "number",
+    "cf_formulation_design:16000:4": "number"
+   }
+  }
+ }
+}

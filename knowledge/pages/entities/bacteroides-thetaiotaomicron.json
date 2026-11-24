@@ -1,0 +1,15 @@
+{
+ "sections": {
+  "interpretation-and-limitations": {
+   "claims": {
+    "costly_dispensable_genes:0:0": "overlap"
+   }
+  },
+  "key-study-findings": {
+   "claims": {
+    "cofitness_coinheritance:0:18": "overlap",
+    "costly_dispensable_genes:0:17": "number"
+   }
+  }
+ }
+}

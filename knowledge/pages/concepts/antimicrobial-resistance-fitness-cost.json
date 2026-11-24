@@ -1,0 +1,113 @@
+{
+ "claims": {
+  "amr_environmental_resistome:16000:23": "plan",
+  "amr_fitness_cost:0:24": "plan",
+  "amr_fitness_cost:0:30": "plan",
+  "amr_fitness_cost:0:53": "plan",
+  "amr_fitness_cost:0:54": "plan",
+  "amr_fitness_cost:0:6": "plan",
+  "amr_fitness_cost:16000:0": "plan",
+  "amr_fitness_cost:16000:29": "plan",
+  "amr_fitness_cost:16000:3": "plan",
+  "amr_fitness_cost:16000:30": "plan",
+  "amr_fitness_cost:16000:31": "plan",
+  "amr_pangenome_atlas:0:18": "plan",
+  "amr_pangenome_atlas:16000:24": "plan",
+  "prophage_amr_comobilization:0:7": "plan"
+ },
+ "sections": {
+  "baseline-relative-fitness-cost": {
+   "claims": {
+    "amr_fitness_cost:0:1": "overlap",
+    "amr_fitness_cost:0:2": "overlap",
+    "amr_fitness_cost:0:38": "number",
+    "amr_fitness_cost:0:39": "number",
+    "amr_fitness_cost:0:4": "number",
+    "amr_fitness_cost:0:40": "number",
+    "amr_fitness_cost:0:41": "number",
+    "amr_fitness_cost:0:46": "number",
+    "amr_fitness_cost:0:47": "number",
+    "amr_fitness_cost:0:48": "number",
+    "amr_fitness_cost:16000:2": "number",
+    "discoveries:32000:23": "number"
+   }
+  },
+  "conditional-benefit-under-antibiotic-exposure": {
+   "claims": {
+    "amr_fitness_cost:0:10": "number",
+    "amr_fitness_cost:0:11": "number",
+    "amr_fitness_cost:0:12": "number",
+    "amr_fitness_cost:0:14": "number",
+    "amr_fitness_cost:0:15": "overlap",
+    "amr_fitness_cost:0:16": "number",
+    "amr_fitness_cost:0:17": "number",
+    "amr_fitness_cost:0:56": "overlap",
+    "amr_fitness_cost:0:9": "number",
+    "amr_strain_variation:0:0": "number",
+    "caulobacter_fur_lipida_loss:48000:14": "number",
+    "caulobacter_fur_lipida_loss:48000:15": "number",
+    "discoveries:32000:26": "number"
+   }
+  },
+  "essentiality-and-measurement-limits": {
+   "claims": {
+    "amr_fitness_cost:0:5": "number",
+    "amr_fitness_cost:0:55": "number",
+    "amr_fitness_cost:0:7": "number",
+    "amr_fitness_cost:16000:1": "number",
+    "amr_pangenome_atlas:0:10": "number",
+    "amr_pangenome_atlas:0:25": "overlap",
+    "amr_pangenome_atlas:0:28": "number",
+    "prophage_amr_comobilization:0:31": "overlap",
+    "prophage_amr_comobilization:0:36": "overlap",
+    "prophage_amr_comobilization:0:6": "overlap"
+   }
+  },
+  "mechanism-conservation-and-compensation": {
+   "claims": {
+    "amr_cofitness_networks:0:45": "number",
+    "amr_cofitness_networks:0:47": "number",
+    "amr_cofitness_networks:0:48": "number",
+    "amr_cofitness_networks:0:49": "number",
+    "amr_environmental_resistome:0:20": "number",
+    "amr_fitness_cost:0:19": "number",
+    "amr_fitness_cost:0:20": "number",
+    "amr_fitness_cost:0:21": "overlap",
+    "amr_fitness_cost:0:22": "overlap",
+    "amr_fitness_cost:0:26": "number",
+    "amr_fitness_cost:0:33": "number",
+    "amr_fitness_cost:0:44": "number",
+    "amr_fitness_cost:0:45": "number",
+    "amr_fitness_cost:0:49": "number",
+    "amr_fitness_cost:0:50": "number",
+    "amr_fitness_cost:0:51": "number",
+    "amr_fitness_cost:0:52": "number",
+    "amr_pangenome_atlas:0:1": "overlap",
+    "amr_pangenome_atlas:0:9": "overlap",
+    "discoveries:32000:24": "number",
+    "discoveries:32000:25": "number"
+   }
+  },
+  "network-breadth-and-fitness-cost": {
+   "claims": {
+    "amr_cofitness_networks:0:25": "number",
+    "amr_cofitness_networks:0:26": "number",
+    "amr_cofitness_networks:0:27": "number",
+    "discoveries:32000:19": "number",
+    "discoveries:32000:21": "number",
+    "discoveries:32000:22": "number"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "amr_cofitness_networks:0:54": "overlap"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "amr_fitness_cost:0:32": "number",
+    "amr_fitness_cost:0:43": "number"
+   }
+  }
+ }
+}

@@ -1,0 +1,71 @@
+{
+ "claims": {
+  "pathway_capability_dependency:0:1": "plan",
+  "pathway_capability_dependency:0:27": "plan",
+  "pathway_capability_dependency:0:7": "plan",
+  "pathway_capability_dependency:16000:27": "plan"
+ },
+ "sections": {
+  "caveats": {
+   "claims": {
+    "pathway_capability_dependency:16000:4": "overlap",
+    "pathway_capability_dependency:16000:5": "overlap",
+    "pathway_capability_dependency:16000:6": "number",
+    "pathway_capability_dependency:16000:7": "overlap",
+    "pathway_capability_dependency:16000:8": "number",
+    "pathway_capability_dependency:16000:9": "number"
+   }
+  },
+  "data-and-workflow": {
+   "claims": {
+    "pathway_capability_dependency:16000:24": "number",
+    "pathway_capability_dependency:16000:25": "number",
+    "pathway_capability_dependency:16000:26": "overlap",
+    "pathway_capability_dependency:16000:28": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "pathway_capability_dependency:0:10": "number",
+    "pathway_capability_dependency:0:12": "overlap",
+    "pathway_capability_dependency:0:14": "number",
+    "pathway_capability_dependency:0:16": "number",
+    "pathway_capability_dependency:0:18": "number",
+    "pathway_capability_dependency:0:21": "number",
+    "pathway_capability_dependency:0:25": "overlap",
+    "pathway_capability_dependency:0:26": "number",
+    "pathway_capability_dependency:0:28": "overlap",
+    "pathway_capability_dependency:0:29": "number",
+    "pathway_capability_dependency:0:32": "number",
+    "pathway_capability_dependency:0:33": "number",
+    "pathway_capability_dependency:0:38": "overlap",
+    "pathway_capability_dependency:0:40": "number",
+    "pathway_capability_dependency:0:43": "number",
+    "pathway_capability_dependency:0:5": "overlap",
+    "pathway_capability_dependency:0:6": "number",
+    "pathway_capability_dependency:16000:0": "number",
+    "pathway_capability_dependency:16000:12": "overlap",
+    "pathway_capability_dependency:16000:15": "number",
+    "pathway_capability_dependency:16000:16": "overlap",
+    "pathway_capability_dependency:16000:17": "number",
+    "pathway_capability_dependency:16000:19": "number",
+    "pathway_capability_dependency:16000:2": "number",
+    "pathway_capability_dependency:16000:21": "number",
+    "pathway_capability_dependency:16000:22": "overlap",
+    "pathway_capability_dependency:16000:3": "number"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "pathway_capability_dependency:0:17": "overlap",
+    "pathway_capability_dependency:0:2": "number",
+    "pathway_capability_dependency:0:20": "overlap",
+    "pathway_capability_dependency:0:22": "overlap",
+    "pathway_capability_dependency:0:9": "overlap",
+    "pathway_capability_dependency:16000:10": "overlap",
+    "pathway_capability_dependency:16000:13": "overlap",
+    "pathway_capability_dependency:16000:14": "number"
+   }
+  }
+ }
+}

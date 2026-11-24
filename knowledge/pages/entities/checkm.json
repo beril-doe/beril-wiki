@@ -1,0 +1,25 @@
+{
+ "sections": {
+  "use-in-bacillota-b-subsurface-genome-comparisons": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:0:15": "overlap",
+    "bacillota_b_subsurface_accessory:0:16": "number",
+    "bacillota_b_subsurface_accessory:0:18": "overlap",
+    "bacillota_b_subsurface_accessory:0:19": "number",
+    "bacillota_b_subsurface_accessory:0:20": "number",
+    "bacillota_b_subsurface_accessory:16000:26": "overlap",
+    "bacillota_b_subsurface_accessory:16000:9": "overlap"
+   }
+  },
+  "use-in-clay-confined-subsurface-cohorts": {
+   "claims": {
+    "clay_confined_subsurface:0:23": "number",
+    "clay_confined_subsurface:0:24": "overlap",
+    "clay_confined_subsurface:0:29": "overlap",
+    "clay_confined_subsurface:0:30": "number",
+    "clay_confined_subsurface:0:31": "number",
+    "clay_confined_subsurface:16000:13": "overlap"
+   }
+  }
+ }
+}

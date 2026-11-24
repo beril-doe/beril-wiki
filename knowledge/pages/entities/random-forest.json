@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "use-in-the-pseudomonas-carbon-ecology-analysis": {
+   "claims": {
+    "pseudomonas_carbon_ecology:0:19": "number",
+    "pseudomonas_carbon_ecology:0:4": "number",
+    "pseudomonas_carbon_ecology:0:5": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "sections": {
+  "caveats-on-its-evidential-weight": {
+   "claims": {
+    "ibd_phage_targeting:224000:43": "overlap"
+   }
+  },
+  "role-as-a-second-differential-abundance-method": {
+   "claims": {
+    "discoveries:16000:12": "number",
+    "discoveries:16000:8": "number",
+    "ibd_phage_targeting:192000:36": "overlap",
+    "ibd_phage_targeting:288000:9": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "sections": {
+  "evidence-from-respiratory-chain-wiring": {
+   "claims": {
+    "respiratory_chain_wiring:0:19": "number"
+   }
+  },
+  "what-this-entity-is": {
+   "claims": {
+    "respiratory_chain_wiring:0:27": "overlap"
+   }
+  }
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "sections": {
+  "use-in-clay-confined-subsurface-genomes": {
+   "claims": {
+    "clay_confined_subsurface:0:28": "number",
+    "clay_confined_subsurface:0:29": "number",
+    "clay_confined_subsurface:0:30": "number",
+    "clay_confined_subsurface:0:31": "number",
+    "clay_confined_subsurface:0:32": "number",
+    "clay_confined_subsurface:0:44": "number"
+   }
+  },
+  "use-in-the-gene-function-ecological-agora": {
+   "claims": {
+    "gene_function_ecological_agora:112000:3": "number",
+    "gene_function_ecological_agora:112000:8": "number",
+    "gene_function_ecological_agora:144000:24": "number",
+    "gene_function_ecological_agora:144000:25": "overlap",
+    "gene_function_ecological_agora:144000:26": "overlap",
+    "gene_function_ecological_agora:144000:3": "number",
+    "gene_function_ecological_agora:160000:28": "number",
+    "gene_function_ecological_agora:176000:13": "number",
+    "gene_function_ecological_agora:176000:6": "number",
+    "gene_function_ecological_agora:208000:24": "number",
+    "gene_function_ecological_agora:240000:6": "overlap",
+    "gene_function_ecological_agora:80000:31": "number",
+    "gene_function_ecological_agora:96000:26": "number",
+    "gene_function_ecological_agora:96000:3": "number",
+    "gene_function_ecological_agora:96000:5": "number"
+   }
+  }
+ }
+}

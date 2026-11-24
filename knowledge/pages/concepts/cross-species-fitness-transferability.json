@@ -1,0 +1,91 @@
+{
+ "claims": {
+  "aromatic_catabolism_network:0:26": "plan",
+  "aromatic_catabolism_network:0:30": "plan",
+  "discoveries:48000:26": "plan",
+  "discoveries:48000:27": "plan",
+  "discoveries:48000:28": "plan",
+  "discoveries:48000:29": "plan",
+  "essential_genome:0:23": "plan",
+  "functional_dark_matter:64000:34": "plan"
+ },
+ "sections": {
+  "conserved-fitness-phenotypes-among-unannotated-genes": {
+   "claims": {
+    "discoveries:80000:22": "number",
+    "functional_dark_matter:0:21": "overlap",
+    "functional_dark_matter:0:22": "number",
+    "functional_dark_matter:0:23": "number",
+    "functional_dark_matter:0:24": "number",
+    "functional_dark_matter:0:25": "number",
+    "functional_dark_matter:0:26": "number",
+    "functional_dark_matter:0:27": "number",
+    "functional_dark_matter:0:28": "number",
+    "functional_dark_matter:0:29": "number",
+    "functional_dark_matter:0:30": "number",
+    "functional_dark_matter:0:31": "overlap",
+    "functional_dark_matter:16000:16": "overlap",
+    "functional_dark_matter:16000:22": "overlap",
+    "functional_dark_matter:48000:39": "overlap",
+    "functional_dark_matter:64000:4": "number",
+    "functional_dark_matter:80000:29": "overlap"
+   }
+  },
+  "direction-transfers-better-than-magnitude": {
+   "claims": {
+    "metal_cross_resistance:0:11": "number",
+    "metal_cross_resistance:0:5": "number",
+    "metal_cross_resistance:0:9": "number"
+   }
+  },
+  "evidence-from-complex-i-fitness-transfer": {
+   "claims": {
+    "aromatic_catabolism_network:0:13": "number",
+    "discoveries:48000:13": "overlap"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "functional_dark_matter:80000:12": "overlap"
+   }
+  },
+  "organism-context-can-outweigh-mechanism-identity": {
+   "claims": {
+    "amr_cofitness_networks:0:16": "number",
+    "amr_cofitness_networks:0:17": "number",
+    "amr_cofitness_networks:0:18": "number"
+   }
+  },
+  "ortholog-transfer-as-a-function-prediction-method": {
+   "claims": {
+    "discoveries:48000:32": "number",
+    "essential_genome:0:17": "number",
+    "essential_genome:0:32": "overlap",
+    "essential_genome:0:4": "number"
+   }
+  },
+  "scope-of-the-ortholog-graph-sets-measured-conservation": {
+   "claims": {
+    "fitness_modules:0:22": "number",
+    "fitness_modules:0:23": "overlap",
+    "fitness_modules:0:24": "number",
+    "fitness_modules:0:25": "overlap",
+    "pitfalls:64000:31": "overlap"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "discoveries:48000:16": "number",
+    "functional_dark_matter:64000:37": "overlap",
+    "respiratory_chain_wiring:0:15": "number",
+    "respiratory_chain_wiring:0:25": "overlap"
+   }
+  },
+  "transfer-across-wider-phylogenetic-and-mechanistic-distance": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:32000:36": "overlap",
+    "snipe_defense_system:0:26": "number"
+   }
+  }
+ }
+}

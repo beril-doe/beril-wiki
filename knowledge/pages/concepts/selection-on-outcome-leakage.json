@@ -1,0 +1,69 @@
+{
+ "claims": {
+  "discoveries:16000:3": "plan",
+  "functional_dark_matter:80000:25": "plan",
+  "ibd_phage_targeting:192000:20": "plan",
+  "ibd_phage_targeting:192000:25": "plan",
+  "ibd_phage_targeting:208000:34": "plan",
+  "ibd_phage_targeting:208000:37": "plan",
+  "ibd_phage_targeting:240000:0": "plan",
+  "ibd_phage_targeting:48000:43": "plan",
+  "ibd_phage_targeting:64000:21": "plan",
+  "pitfalls:16000:1": "plan",
+  "pitfalls:16000:10": "plan",
+  "pitfalls:16000:11": "plan",
+  "pitfalls:16000:13": "plan",
+  "pitfalls:16000:2": "plan",
+  "pitfalls:16000:5": "plan",
+  "pitfalls:16000:8": "plan",
+  "pitfalls:16000:9": "plan"
+ },
+ "sections": {
+  "designs-that-remove-the-leakage": {
+   "claims": {
+    "discoveries:16000:16": "overlap",
+    "ibd_phage_targeting:256000:10": "overlap",
+    "ibd_phage_targeting:48000:37": "overlap",
+    "ibd_phage_targeting:64000:2": "overlap",
+    "pitfalls:16000:12": "overlap"
+   }
+  },
+  "detection-by-adversarial-review": {
+   "claims": {
+    "discoveries:0:30": "overlap",
+    "discoveries:16000:18": "number"
+   }
+  },
+  "evidence-from-the-ibd-ecotype-analysis": {
+   "claims": {
+    "discoveries:16000:10": "overlap",
+    "discoveries:16000:11": "overlap",
+    "discoveries:16000:13": "number",
+    "discoveries:16000:6": "overlap",
+    "discoveries:16000:9": "number",
+    "ibd_phage_targeting:0:19": "number",
+    "ibd_phage_targeting:208000:35": "number",
+    "ibd_phage_targeting:256000:9": "overlap",
+    "ibd_phage_targeting:48000:34": "number",
+    "ibd_phage_targeting:48000:36": "number",
+    "ibd_phage_targeting:64000:0": "overlap",
+    "pitfalls:16000:3": "number",
+    "pitfalls:16000:4": "number",
+    "pitfalls:16000:7": "number"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "ibd_phage_targeting:208000:36": "number",
+    "pitfalls:16000:6": "overlap"
+   }
+  },
+  "related-forms-of-circularity": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:0:31": "overlap",
+    "field_vs_lab_fitness:0:42": "number",
+    "plant_microbiome_ecotypes:80000:29": "number"
+   }
+  }
+ }
+}

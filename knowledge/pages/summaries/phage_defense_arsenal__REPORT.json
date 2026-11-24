@@ -1,0 +1,80 @@
+{
+ "claims": {
+  "phage_defense_arsenal:0:0": "plan",
+  "phage_defense_arsenal:0:11": "plan",
+  "phage_defense_arsenal:0:14": "plan",
+  "phage_defense_arsenal:0:2": "plan",
+  "phage_defense_arsenal:0:29": "plan",
+  "phage_defense_arsenal:0:32": "plan",
+  "phage_defense_arsenal:0:33": "plan",
+  "phage_defense_arsenal:0:34": "plan",
+  "phage_defense_arsenal:0:35": "plan",
+  "phage_defense_arsenal:0:8": "plan",
+  "phage_defense_arsenal:16000:13": "plan",
+  "phage_defense_arsenal:16000:14": "plan",
+  "phage_defense_arsenal:16000:15": "plan"
+ },
+ "sections": {
+  "caveats-and-limitations": {
+   "claims": {
+    "phage_defense_arsenal:0:24": "number",
+    "phage_defense_arsenal:0:36": "number",
+    "phage_defense_arsenal:16000:2": "number",
+    "phage_defense_arsenal:16000:3": "overlap",
+    "phage_defense_arsenal:16000:4": "overlap",
+    "phage_defense_arsenal:16000:5": "number",
+    "phage_defense_arsenal:16000:6": "number",
+    "phage_defense_arsenal:16000:8": "overlap",
+    "phage_defense_arsenal:16000:9": "number"
+   }
+  },
+  "future-directions": {
+   "claims": {
+    "phage_defense_arsenal:16000:21": "overlap",
+    "phage_defense_arsenal:16000:22": "overlap",
+    "phage_defense_arsenal:16000:23": "overlap"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "phage_defense_arsenal:0:15": "overlap",
+    "phage_defense_arsenal:0:16": "number",
+    "phage_defense_arsenal:0:26": "overlap",
+    "phage_defense_arsenal:0:27": "overlap",
+    "phage_defense_arsenal:0:3": "number",
+    "phage_defense_arsenal:0:30": "overlap",
+    "phage_defense_arsenal:0:40": "overlap",
+    "phage_defense_arsenal:0:41": "overlap",
+    "phage_defense_arsenal:0:43": "number",
+    "phage_defense_arsenal:0:5": "overlap",
+    "phage_defense_arsenal:0:6": "overlap",
+    "phage_defense_arsenal:16000:0": "number",
+    "phage_defense_arsenal:16000:1": "overlap",
+    "phage_defense_arsenal:16000:10": "overlap",
+    "phage_defense_arsenal:16000:11": "number",
+    "phage_defense_arsenal:16000:12": "number",
+    "phage_defense_arsenal:16000:16": "overlap",
+    "phage_defense_arsenal:16000:17": "overlap",
+    "phage_defense_arsenal:16000:18": "overlap",
+    "phage_defense_arsenal:16000:19": "number",
+    "phage_defense_arsenal:16000:20": "overlap"
+   }
+  },
+  "overview": {
+   "claims": {
+    "phage_defense_arsenal:0:1": "number",
+    "phage_defense_arsenal:0:38": "overlap",
+    "phage_defense_arsenal:0:39": "overlap",
+    "phage_defense_arsenal:0:4": "overlap",
+    "phage_defense_arsenal:0:42": "overlap"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "phage_defense_arsenal:0:17": "overlap",
+    "phage_defense_arsenal:0:19": "overlap",
+    "phage_defense_arsenal:16000:7": "number"
+   }
+  }
+ }
+}

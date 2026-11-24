@@ -1,0 +1,26 @@
+{
+ "claims": {
+  "bacdive_metal_validation:0:28": "plan",
+  "caulobacter_fur_lipida_loss:0:44": "plan"
+ },
+ "sections": {
+  "between-species-divergence-beyond-metal-tolerance": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:0:43": "overlap",
+    "caulobacter_fur_lipida_loss:16000:20": "number",
+    "caulobacter_fur_lipida_loss:16000:48": "overlap",
+    "cf_formulation_design:16000:58": "number",
+    "cf_formulation_design:32000:42": "number",
+    "cf_formulation_design:48000:11": "number",
+    "discoveries:80000:29": "number",
+    "pseudomonas_carbon_ecology:0:0": "number",
+    "pseudomonas_carbon_ecology:0:29": "overlap"
+   }
+  },
+  "conserved-and-specialized-functional-layers": {
+   "claims": {
+    "bacdive_metal_validation:0:27": "number"
+   }
+  }
+ }
+}

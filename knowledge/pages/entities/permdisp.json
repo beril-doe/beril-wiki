@@ -1,0 +1,11 @@
+{
+ "sections": {
+  "use-in-the-plant-microbiome-ecotypes-analysis": {
+   "claims": {
+    "plant_microbiome_ecotypes:32000:22": "number",
+    "plant_microbiome_ecotypes:32000:23": "number",
+    "plant_microbiome_ecotypes:32000:24": "number"
+   }
+  }
+ }
+}
